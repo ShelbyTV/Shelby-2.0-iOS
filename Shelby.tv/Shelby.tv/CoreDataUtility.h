@@ -10,18 +10,11 @@
 
 @interface CoreDataUtility : NSObject
 
-@property (strong, nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
-@property (strong, nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
 // Public Methods
++ (NSManagedObjectContext*)createContext;
 + (void)saveContext:(NSManagedObjectContext *)context;
 + (void)dumpAllData;
 + (void)storeStream:(NSDictionary *)resultsDictionary;
-+ (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray;
-+ (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
-+ (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
-+ (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
 // Singleton Methods
 + (CoreDataUtility*)sharedInstance;

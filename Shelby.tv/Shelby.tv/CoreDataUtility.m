@@ -23,7 +23,10 @@
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
 
-+ (void)saveContext:(NSManagedObjectContext *)context;
++ (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray;
++ (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
++ (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
++ (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
 @end
 
@@ -54,19 +57,70 @@ static CoreDataUtility *sharedInstance = nil;
 }
 
 #pragma mark - Public Methods
++ (NSManagedObjectContext*)createContext;
+{
+    
+    NSPersistentStoreCoordinator *coordinator = [[self sharedInstance] persistentStoreCoordinator];
+    
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    [context setUndoManager:nil];
+    [context setPersistentStoreCoordinator:coordinator];
+    [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    return context;
+
+}
+
+
++ (void)saveContext:(NSManagedObjectContext *)context
+{
+
+    if ( context ) {
+
+        NSError *error = nil;
+        
+        if( ![context save:&error] ) { // Error
+            
+            DLog(@"Failed to save to data store: %@", [error localizedDescription]);
+          
+            NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+            if(detailedErrors != nil && [detailedErrors count] > 0) {
+                for(NSError* detailedError in detailedErrors) {
+                    DLog(@"  DetailedError: %@", [detailedError userInfo]);
+                }
+            } else {
+                DLog(@"%@", [error userInfo]);
+            }
+            
+        } else { // Success
+            DLog(@"Core Data Updated!");
+        }
+    }
+}
+
++ (void)dumpAllData
+{
+    
+    NSPersistentStoreCoordinator *coordinator =  [[self sharedInstance] persistentStoreCoordinator];
+    NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
+    [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
+    [coordinator removePersistentStore:store error:nil];
+    [[self sharedInstance] setPersistentStoreCoordinator:nil];
+    
+}
+
 + (void)storeStream:(NSDictionary *)resultsDictionary
 {
     NSArray *resultsArray = [resultsDictionary objectForKey:@"result"];
     
     for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
         
-        @autoreleasepool {            
-        
+        @autoreleasepool {
+            
             // Conditions for saving entires into database
             BOOL sourceURLExists = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"source_url"] isKindOfClass:[NSNull class]] ? NO : YES;
             BOOL embedURLExists = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"embed_url"] isKindOfClass:[NSNull class]] ? NO : YES;
-            Frame *returnedFrame = [[resultsArray objectAtIndex:i] valueForKey:@"frame"];
-            BOOL frameExists = [returnedFrame isKindOfClass:([NSNull class])] ? NO : YES;
+            NSArray *frameArray = [[resultsArray objectAtIndex:i] valueForKey:@"frame"];
+            BOOL frameExists = [frameArray isKindOfClass:([NSNull class])] ? NO : YES;
             
             
             if ( !frameExists ) {
@@ -87,9 +141,7 @@ static CoreDataUtility *sharedInstance = nil;
                     
                     NSDate *timestamp = [NSDate dataFromBSONstring:streamID];
                     [stream setValue:timestamp forKey:kCoreDataStreamTimestamp];
-
-                    NSArray *frameArray = [[resultsArray objectAtIndex:i] valueForKey:@"frame"];
-
+                    
                     Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
                                            withIDValue:[frameArray valueForKey:@"id"]
                                               forIDKey:kCoreDataFrameID];
@@ -103,13 +155,44 @@ static CoreDataUtility *sharedInstance = nil;
         }
     }
     
+    // Save changes
     [self saveContext:[CoreDataUtility sharedInstance].managedObjectContext];
-    
+
 }
+
+#pragma mark - Private Methods
++ (id)checkIfEntity:(NSString *)entityName
+        withIDValue:(NSString *)entityIDValue
+           forIDKey:(NSString *)entityIDKey
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Fetch messages data
+    NSManagedObjectContext *context = [[CoreDataUtility sharedInstance] managedObjectContext];
+    NSEntityDescription *description = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+    [request setEntity:description];
+    
+    // Only include objects that exist (i.e. entityIDKey and entityIDValue's must exist)
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", entityIDKey, entityIDValue];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array with one object, the requested entity
+    NSArray *array = [context executeFetchRequest:request error:nil];
+    
+    if ( [array count] ) {
+        return [array objectAtIndex:0];
+    }
+    
+    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:context];
+}
+
 
 + (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray
 {
-
+    
     NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
     [frame setValue:frameID forKey:kCoreDataFrameID ];
     
@@ -140,7 +223,7 @@ static CoreDataUtility *sharedInstance = nil;
     frame.video = video;
     [video addFrameObject:frame];
     [self storeVideo:video fromFrameArray:frameArray];
-
+    
 }
 
 + (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray
@@ -241,6 +324,8 @@ static CoreDataUtility *sharedInstance = nil;
         sourceURL = [sourceURL stringByReplacingOccurrencesOfString:@"=" withString:@""];
         [video setValue:sourceURL forKey:kCoreDataVideoSourceURL];
         
+        NSLog(@"url: %@", embedURL);
+        
         NSString *providerID;
         NSScanner *providerIDScanner = [NSScanner scannerWithString:sourceURL];
         [providerIDScanner scanUpToString:@"/video/" intoString:nil];
@@ -257,105 +342,8 @@ static CoreDataUtility *sharedInstance = nil;
     
 }
 
-+ (void)saveContext:(NSManagedObjectContext *)context
-{
-
-    if ( context ) {
-
-        NSError *error = nil;
-        
-        if( ![context save:&error] ) { // Error
-            
-            DLog(@"Failed to save to data store: %@", [error localizedDescription]);
-          
-            NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
-            if(detailedErrors != nil && [detailedErrors count] > 0) {
-                for(NSError* detailedError in detailedErrors) {
-                    DLog(@"  DetailedError: %@", [detailedError userInfo]);
-                }
-            } else {
-                DLog(@"%@", [error userInfo]);
-            }
-            
-        } else { // Success
-            DLog(@"Core Data Updated!");
-        }
-    }
-}
-
-+ (void)dumpAllData
-{
-    
-    NSPersistentStoreCoordinator *coordinator =  [[self sharedInstance] persistentStoreCoordinator];
-    NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
-    [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
-    [coordinator removePersistentStore:store error:nil];
-    [[self sharedInstance] setPersistentStoreCoordinator:nil];
-    [[self sharedInstance] setManagedObjectContext:nil];
-    
-}
-
-#pragma mark - Private Methods
-+ (id)checkIfEntity:(NSString *)entityName
-        withIDValue:(NSString *)entityIDValue
-           forIDKey:(NSString *)entityIDKey
-{
-    
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Fetch messages data
-    NSManagedObjectContext *context = [CoreDataUtility sharedInstance].managedObjectContext;
-    NSEntityDescription *description = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
-    [request setEntity:description];
-    
-    // Only include objects that exist (i.e. entityIDKey and entityIDValue's must exist)
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", entityIDKey, entityIDValue];
-    [request setPredicate:predicate];
-    
-    // Execute request that returns array with one object, the requested entity
-    NSArray *array = [context executeFetchRequest:request error:nil];
-    
-    if ( [array count] ) {
-        return [array objectAtIndex:0];
-    }
-    
-    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:context];
-}
 
 #pragma mark - Accessor Methods
-/*
- 
- Returns the application's instance of NSManagedObjectConteext.
- If an instance doesn't exist, it's created and bound to the application's instance of NSPersistentStoreCoordinator.
- 
- */
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if ( _managedObjectContext ) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if ( coordinator ){
-        
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setUndoManager:nil];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-        [_managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-        
-    }
-    
-    return _managedObjectContext;
-}
-
-/*
- 
- Returns the application's instance of NSManagedObjectModel.
- If an instance of the model doesn't exist, it is created from the application's model.
- 
- */
 - (NSManagedObjectModel *)managedObjectModel
 {
     
@@ -368,12 +356,28 @@ static CoreDataUtility *sharedInstance = nil;
     
 }
 
-/*
- 
- Returns the application's instance NSPersistentStoreCoordinator.
- If the coordinator doesn't already exist, it is created and the application's store added to it.
- 
- */
+- (NSManagedObjectContext*)managedObjectContext;
+{
+    
+    if ( _managedObjectContext ) {
+        return _managedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [[CoreDataUtility sharedInstance] persistentStoreCoordinator];
+    
+    if ( coordinator ){
+        
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setUndoManager:nil];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+        [_managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+    
+    }
+    
+    return _managedObjectContext;
+    
+}
+
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
     if ( _persistentStoreCoordinator ) {
