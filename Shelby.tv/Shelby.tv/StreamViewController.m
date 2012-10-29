@@ -87,7 +87,6 @@
         
         [operation start];
 
-
 }
 
 #pragma mark - UICollectionViewDataSource Methods

@@ -9,18 +9,31 @@
 #endif
 
 #ifdef __OBJC__
+
+    // Apple Frameworks
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <CoreData/CoreData.h>
+
+    // Third Party Libraries
     #import "AFNetworking.h"
+
+    // Models
+    #import "AppDelegate.h"
+
+    // Constants
     #import "Constants.h"
+
+    // Cateogories
     #import "NSDate+DateFromBSONString.h"
     #import "NSString+CoreDataNullTest.h"
+
 #endif
 
-#ifdef DEBUG
+
+#ifdef DEBUG // DLog
 #   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
 #   define DLog(...)

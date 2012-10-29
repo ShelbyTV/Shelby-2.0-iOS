@@ -16,8 +16,22 @@
 #import "ExploreViewController.h"
 #import "LoginViewController.h"
 
-@implementation AppDelegate
+@interface AppDelegate ()
+{
+    NSManagedObjectModel *_managedObjectModel;
+    NSPersistentStoreCoordinator *_persistentStoreCoordinator;
+}
 
+@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+@end
+
+@implementation AppDelegate
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+#pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -68,6 +82,48 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Core Data Accessor Methods
+- (NSManagedObjectModel *)managedObjectModel
+{
+    
+    if ( _managedObjectModel ) {
+        return _managedObjectModel;
+    }
+    
+    _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    return _managedObjectModel;
+    
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if ( _persistentStoreCoordinator ) {
+        return _persistentStoreCoordinator;
+    }
+    
+    NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    
+    NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:@"Shelby.tv.sqlite"];
+    
+    NSError *error = nil;
+    
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    
+    if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
+    {
+        // Delete datastore if there's a conflict. User can re-login to repopulate the datastore.
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+        
+        // Retry
+        if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
+        {
+            NSLog(@"Could not save changes to Core Data. Error: %@, %@", error, [error userInfo]);
+        }
+    }
+    
+    return _persistentStoreCoordinator;
 }
 
 @end

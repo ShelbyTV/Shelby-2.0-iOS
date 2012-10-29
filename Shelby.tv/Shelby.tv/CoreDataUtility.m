@@ -7,14 +7,18 @@
 //
 
 #import "CoreDataUtility.h"
-#import "CoreDataSingleton.h"
 
 @interface CoreDataUtility ()
+{
+    NSManagedObjectContext *_context;
+}
+
+@property (strong ,nonatomic) NSManagedObjectContext *context;
+@property (strong, nonatomic) AppDelegate *appDelegate;
 
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
-           forIDKey:(NSString *)entityIDKey
-        withContext:(NSManagedObjectContext*)context;
+           forIDKey:(NSString *)entityIDKey;
 
 - (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
@@ -24,34 +28,23 @@
 @end
 
 @implementation CoreDataUtility
+@synthesize context = _context;
+@synthesize appDelegate = _appDelegate;
 
-#pragma mark - Public Methods
-- (NSManagedObjectContext*)createContext;
+#pragma mark - Initialization Methods
+- (id)init
 {
-    
-    NSPersistentStoreCoordinator *coordinator = [[CoreDataSingleton sharedInstance] persistentStoreCoordinator];
-    
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    [context setUndoManager:nil];
-    [context setPersistentStoreCoordinator:coordinator];
-    
-    if ( [NSThread isMainThread] ) {
-        [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-        NSLog(@"Main Thread");
-    } else {
-        [context setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Background Thread");
-        });
+    if ( self = [super init] ) {
+        self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     }
-
-
-    return context;
+    
+    return self;
 }
 
-
+#pragma mark - Public Methods
 - (void)saveContext:(NSManagedObjectContext *)context
 {
+    
         if ( context ) {
             
             NSError *error = nil;
@@ -84,7 +77,7 @@
 - (void)dumpAllData
 {
     
-    NSPersistentStoreCoordinator *coordinator =  [[CoreDataSingleton sharedInstance] persistentStoreCoordinator];
+    NSPersistentStoreCoordinator *coordinator =  [self.appDelegate persistentStoreCoordinator];
     NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
     [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
     [coordinator removePersistentStore:store error:nil];
@@ -94,8 +87,6 @@
 - (void)storeStream:(NSDictionary *)resultsDictionary
 {
     NSArray *resultsArray = [resultsDictionary objectForKey:@"result"];
-    
-    NSManagedObjectContext *context = [self createContext];
     
     for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
         
@@ -109,17 +100,15 @@
             
             if ( !frameExists ) {
                 
-                // Do Nothing
+                // Do nothing (e.g., don't store this frame in context)
                 
             } else {
                 
                 if ( sourceURLExists || embedURLExists ) {
                     
-                    // Store dashboardEntry attirubutes
                     Stream *stream = [self checkIfEntity:kCoreDataEntityStream
                                              withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
-                                                forIDKey:kCoreDataStreamID
-                                             withContext:context];
+                                                forIDKey:kCoreDataStreamID];
                     
                     NSString *streamID = [NSString coreDataNullTest:[[resultsArray objectAtIndex:i] valueForKey:@"id"]];
                     [stream setValue:streamID forKey:kCoreDataStreamID];
@@ -129,20 +118,17 @@
                     
                     Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
                                            withIDValue:[frameArray valueForKey:@"id"]
-                                              forIDKey:kCoreDataFrameID
-                                        withContext:[stream managedObjectContext]];
+                                              forIDKey:kCoreDataFrameID];
                     stream.frame = frame;
                     
-                    // Check to make sure messages exist
                     [self storeFrame:frame forFrameArray:frameArray];
                     
-                    [context refreshObject:stream mergeChanges:YES];
                 }
             }
         }
     }
     
-    [self saveContext:context];
+    [self saveContext:self.context];
     
 }
 
@@ -150,19 +136,13 @@
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey
-        withContext:(NSManagedObjectContext *)context
 {
     
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Fetch messages data
-    if ( !context ) {
-        context = [self createContext];
-    }
-    
-    NSEntityDescription *description = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.context];
     [request setEntity:description];
     
     // Only include objects that exist (i.e. entityIDKey and entityIDValue's must exist)
@@ -170,13 +150,13 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array with one object, the requested entity
-    NSArray *array = [context executeFetchRequest:request error:nil];
+    NSArray *array = [self.context executeFetchRequest:request error:nil];
     
     if ( [array count] ) {
         return [array objectAtIndex:0];
     }
     
-    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:context];
+    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.context];
 }
 
 
@@ -200,8 +180,7 @@
     
     Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
                                          withIDValue:conversationID
-                                            forIDKey:kCoreDataFrameConversationID
-                                         withContext:[frame managedObjectContext]];
+                                            forIDKey:kCoreDataFrameConversationID];
     
     frame.conversation = conversation;
     [conversation addFrameObject:frame];
@@ -209,8 +188,7 @@
     
     Video *video = [self checkIfEntity:kCoreDataEntityVideo
                            withIDValue:videoID
-                              forIDKey:kCoreDataFrameVideoID
-                           withContext:[frame managedObjectContext]];
+                              forIDKey:kCoreDataFrameVideoID];
     
     frame.video = video;
     [video addFrameObject:frame];
@@ -242,8 +220,7 @@
         
         Messages *messages = [self checkIfEntity:kCoreDataEntityMessages
                                      withIDValue:[[messagesArray objectAtIndex:i] valueForKey:@"id"]
-                                        forIDKey:kCoreDataMessagesID
-                              withContext:[conversation managedObjectContext]];
+                                        forIDKey:kCoreDataMessagesID];
         
         [conversation addMessagesObject:messages];
         
@@ -332,6 +309,43 @@
         
     }
     
+}
+
+#pragma mark - Accessor Methods
+- (NSManagedObjectContext*)context;
+{
+
+    if ( _context  ) { // If context is already initialized, return it.
+        
+        return _context;
+        
+    } else { // Initialize context iVar (should only be called once)
+
+        NSPersistentStoreCoordinator *coordinator = [self.appDelegate persistentStoreCoordinator];
+        
+        _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [_context setUndoManager:nil];
+        [_context setPersistentStoreCoordinator:coordinator];
+        
+        // Instance of CoreDataUtility may be created either in mainthread or background thread. Set context with appropriate merge policy
+        if ( [NSThread isMainThread] ) {
+
+            [_context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+            NSLog(@"Main Thread");
+        
+        } else {
+            
+            [_context setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"Background Thread");
+            });
+        
+        }
+    
+    }
+    
+    return _context;
+
 }
 
 @end

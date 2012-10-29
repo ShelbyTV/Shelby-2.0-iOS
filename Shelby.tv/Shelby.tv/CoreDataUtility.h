@@ -10,8 +10,9 @@
 
 @interface CoreDataUtility : NSObject
 
+@property (strong, nonatomic, readonly) NSManagedObjectContext *context;
+
 // Public Methods
-- (NSManagedObjectContext*)createContext;
 - (void)saveContext:(NSManagedObjectContext *)context;
 - (void)dumpAllData;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
