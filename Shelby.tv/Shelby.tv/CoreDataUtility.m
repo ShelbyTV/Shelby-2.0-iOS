@@ -327,7 +327,7 @@
         [_context setUndoManager:nil];
         [_context setPersistentStoreCoordinator:coordinator];
         
-        // Instance of CoreDataUtility may be created either in mainthread or background thread. Set context with appropriate merge policy
+        // Set context with appropriate merge policy (depending on context's execution thread)
         if ( [NSThread isMainThread] ) {
 
             [_context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
