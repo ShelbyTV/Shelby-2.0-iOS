@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * messageCount;
 @property (nonatomic, retain) NSSet *frame;
 @property (nonatomic, retain) NSSet *messages;
+
 @end
 
 @interface Conversation (CoreDataGeneratedAccessors)

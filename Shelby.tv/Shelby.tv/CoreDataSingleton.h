@@ -1,0 +1,18 @@
+//
+//  CoreDataSingleton.h
+//  Shelby.tv
+//
+//  Created by Arthur Ariel Sabintsev on 10/29/12.
+//  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface CoreDataSingleton : NSObject
+
+@property (strong, nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
+@property (strong, nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
++ (CoreDataSingleton*)sharedInstance;
+
+@end

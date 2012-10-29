@@ -11,12 +11,9 @@
 @interface CoreDataUtility : NSObject
 
 // Public Methods
-+ (NSManagedObjectContext*)createContext;
-+ (void)saveContext:(NSManagedObjectContext *)context;
-+ (void)dumpAllData;
-+ (void)storeStream:(NSDictionary *)resultsDictionary;
-
-// Singleton Methods
-+ (CoreDataUtility*)sharedInstance;
+- (NSManagedObjectContext*)createContext;
+- (void)saveContext:(NSManagedObjectContext *)context;
+- (void)dumpAllData;
+- (void)storeStream:(NSDictionary *)resultsDictionary;
 
 @end

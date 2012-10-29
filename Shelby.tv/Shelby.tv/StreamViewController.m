@@ -59,27 +59,35 @@
 #pragma mark - Private Methods
 - (void)fetchStreamData
 {
+    
     NSString *authToken = [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetStream, authToken]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                CoreDataUtility *cdu = [[CoreDataUtility alloc] init];
+                [cdu storeStream:JSON];
+                
+            });
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Stream Error"
+                                                                message:@"Please try again"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil, nil];
+            [alertView show];
+            
+        }];
         
-        [CoreDataUtility storeStream:JSON];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Stream Error"
-                                                            message:@"Please try again"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
-        
-    }];
-    
-    [operation start];
+        [operation start];
+
+
 }
 
 #pragma mark - UICollectionViewDataSource Methods

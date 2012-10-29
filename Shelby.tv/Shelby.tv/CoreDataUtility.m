@@ -7,110 +7,95 @@
 //
 
 #import "CoreDataUtility.h"
+#import "CoreDataSingleton.h"
 
 @interface CoreDataUtility ()
-{
-    NSManagedObjectModel *_managedObjectModel;
-    NSManagedObjectContext *_managedObjectContext;
-    NSPersistentStoreCoordinator *_persistentStoreCoordinator;
-}
 
-@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-+ (id)checkIfEntity:(NSString *)entityName
+- (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
-           forIDKey:(NSString *)entityIDKey;
+           forIDKey:(NSString *)entityIDKey
+        withContext:(NSManagedObjectContext*)context;
 
-+ (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray;
-+ (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
-+ (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
-+ (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
+- (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray;
+- (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
+- (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
+- (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
 @end
 
 @implementation CoreDataUtility
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-
-static CoreDataUtility *sharedInstance = nil;
-
-#pragma mark - Singleton Methods
-+ (CoreDataUtility*)sharedInstance
-{
-    if ( nil == sharedInstance) {
-        sharedInstance = [[super allocWithZone:NULL] init];
-    }
-    return sharedInstance;
-}
-
-+ (id)allocWithZone:(NSZone *)zone
-{
-    return [self sharedInstance];
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
 
 #pragma mark - Public Methods
-+ (NSManagedObjectContext*)createContext;
+- (NSManagedObjectContext*)createContext;
 {
     
-    NSPersistentStoreCoordinator *coordinator = [[self sharedInstance] persistentStoreCoordinator];
+    NSPersistentStoreCoordinator *coordinator = [[CoreDataSingleton sharedInstance] persistentStoreCoordinator];
     
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [context setUndoManager:nil];
     [context setPersistentStoreCoordinator:coordinator];
-    [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-    return context;
-
-}
-
-
-+ (void)saveContext:(NSManagedObjectContext *)context
-{
-
-    if ( context ) {
-
-        NSError *error = nil;
-        
-        if( ![context save:&error] ) { // Error
-            
-            DLog(@"Failed to save to data store: %@", [error localizedDescription]);
-          
-            NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
-            if(detailedErrors != nil && [detailedErrors count] > 0) {
-                for(NSError* detailedError in detailedErrors) {
-                    DLog(@"  DetailedError: %@", [detailedError userInfo]);
-                }
-            } else {
-                DLog(@"%@", [error userInfo]);
-            }
-            
-        } else { // Success
-            DLog(@"Core Data Updated!");
-        }
+    
+    if ( [NSThread isMainThread] ) {
+        [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+        NSLog(@"Main Thread");
+    } else {
+        [context setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"Background Thread");
+        });
     }
+
+
+    return context;
 }
 
-+ (void)dumpAllData
+
+- (void)saveContext:(NSManagedObjectContext *)context
+{
+        if ( context ) {
+            
+            NSError *error = nil;
+            
+            if( ![context save:&error] ) { // Error
+                
+                DLog(@"Failed to save to data store: %@", [error localizedDescription]);
+                
+                NSArray *detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+                
+                if( detailedErrors != nil && [detailedErrors count] > 0 ) {
+                    
+                    for(NSError* detailedError in detailedErrors) {
+                        DLog(@"  Detailed Error: %@", [detailedError userInfo]);
+                    }
+                
+                } else {
+                
+                    DLog(@"%@", [error userInfo]);
+                
+                }
+                
+            } else { // Success
+                DLog(@"Core Data Updated!");
+            }
+        }
+
+}
+
+- (void)dumpAllData
 {
     
-    NSPersistentStoreCoordinator *coordinator =  [[self sharedInstance] persistentStoreCoordinator];
+    NSPersistentStoreCoordinator *coordinator =  [[CoreDataSingleton sharedInstance] persistentStoreCoordinator];
     NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
     [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
     [coordinator removePersistentStore:store error:nil];
-    [[self sharedInstance] setPersistentStoreCoordinator:nil];
     
 }
 
-+ (void)storeStream:(NSDictionary *)resultsDictionary
+- (void)storeStream:(NSDictionary *)resultsDictionary
 {
     NSArray *resultsArray = [resultsDictionary objectForKey:@"result"];
+    
+    NSManagedObjectContext *context = [self createContext];
     
     for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
         
@@ -121,7 +106,6 @@ static CoreDataUtility *sharedInstance = nil;
             BOOL embedURLExists = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"embed_url"] isKindOfClass:[NSNull class]] ? NO : YES;
             NSArray *frameArray = [[resultsArray objectAtIndex:i] valueForKey:@"frame"];
             BOOL frameExists = [frameArray isKindOfClass:([NSNull class])] ? NO : YES;
-            
             
             if ( !frameExists ) {
                 
@@ -134,7 +118,8 @@ static CoreDataUtility *sharedInstance = nil;
                     // Store dashboardEntry attirubutes
                     Stream *stream = [self checkIfEntity:kCoreDataEntityStream
                                              withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
-                                                forIDKey:kCoreDataStreamID];
+                                                forIDKey:kCoreDataStreamID
+                                             withContext:context];
                     
                     NSString *streamID = [NSString coreDataNullTest:[[resultsArray objectAtIndex:i] valueForKey:@"id"]];
                     [stream setValue:streamID forKey:kCoreDataStreamID];
@@ -144,26 +129,28 @@ static CoreDataUtility *sharedInstance = nil;
                     
                     Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
                                            withIDValue:[frameArray valueForKey:@"id"]
-                                              forIDKey:kCoreDataFrameID];
+                                              forIDKey:kCoreDataFrameID
+                                        withContext:[stream managedObjectContext]];
                     stream.frame = frame;
                     
                     // Check to make sure messages exist
                     [self storeFrame:frame forFrameArray:frameArray];
                     
+                    [context refreshObject:stream mergeChanges:YES];
                 }
             }
         }
     }
     
-    // Save changes
-    [self saveContext:[CoreDataUtility sharedInstance].managedObjectContext];
-
+    [self saveContext:context];
+    
 }
 
 #pragma mark - Private Methods
-+ (id)checkIfEntity:(NSString *)entityName
+- (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey
+        withContext:(NSManagedObjectContext *)context
 {
     
     // Create fetch request
@@ -171,7 +158,10 @@ static CoreDataUtility *sharedInstance = nil;
     [request setReturnsObjectsAsFaults:NO];
     
     // Fetch messages data
-    NSManagedObjectContext *context = [[CoreDataUtility sharedInstance] managedObjectContext];
+    if ( !context ) {
+        context = [self createContext];
+    }
+    
     NSEntityDescription *description = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
     [request setEntity:description];
     
@@ -190,7 +180,7 @@ static CoreDataUtility *sharedInstance = nil;
 }
 
 
-+ (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray
+- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray
 {
     
     NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
@@ -210,7 +200,8 @@ static CoreDataUtility *sharedInstance = nil;
     
     Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
                                          withIDValue:conversationID
-                                            forIDKey:kCoreDataFrameConversationID];
+                                            forIDKey:kCoreDataFrameConversationID
+                                         withContext:[frame managedObjectContext]];
     
     frame.conversation = conversation;
     [conversation addFrameObject:frame];
@@ -218,7 +209,8 @@ static CoreDataUtility *sharedInstance = nil;
     
     Video *video = [self checkIfEntity:kCoreDataEntityVideo
                            withIDValue:videoID
-                              forIDKey:kCoreDataFrameVideoID];
+                              forIDKey:kCoreDataFrameVideoID
+                           withContext:[frame managedObjectContext]];
     
     frame.video = video;
     [video addFrameObject:frame];
@@ -226,7 +218,7 @@ static CoreDataUtility *sharedInstance = nil;
     
 }
 
-+ (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray
+- (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray
 {
     
     NSArray *conversationArray = [frameArray valueForKey:@"conversation"];
@@ -239,7 +231,7 @@ static CoreDataUtility *sharedInstance = nil;
     
 }
 
-+ (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray
+- (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray
 {
     
     NSArray *messagesArray = [conversationsArray valueForKey:@"messages"];
@@ -250,7 +242,8 @@ static CoreDataUtility *sharedInstance = nil;
         
         Messages *messages = [self checkIfEntity:kCoreDataEntityMessages
                                      withIDValue:[[messagesArray objectAtIndex:i] valueForKey:@"id"]
-                                        forIDKey:kCoreDataMessagesID];
+                                        forIDKey:kCoreDataMessagesID
+                              withContext:[conversation managedObjectContext]];
         
         [conversation addMessagesObject:messages];
         
@@ -282,7 +275,7 @@ static CoreDataUtility *sharedInstance = nil;
     
 }
 
-+ (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray
+- (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray
 {
     NSArray *videoArray = [frameArray valueForKey:@"video"];
     
@@ -300,6 +293,7 @@ static CoreDataUtility *sharedInstance = nil;
     
     NSString *title = [NSString coreDataNullTest:[videoArray valueForKey:@"title"]];
     [video setValue:title forKey:kCoreDataVideoTitle];
+    
     
     if ( [providerName isEqualToString:@"youtube"] ) {
         
@@ -324,8 +318,6 @@ static CoreDataUtility *sharedInstance = nil;
         sourceURL = [sourceURL stringByReplacingOccurrencesOfString:@"=" withString:@""];
         [video setValue:sourceURL forKey:kCoreDataVideoSourceURL];
         
-        NSLog(@"url: %@", embedURL);
-        
         NSString *providerID;
         NSScanner *providerIDScanner = [NSScanner scannerWithString:sourceURL];
         [providerIDScanner scanUpToString:@"/video/" intoString:nil];
@@ -340,71 +332,6 @@ static CoreDataUtility *sharedInstance = nil;
         
     }
     
-}
-
-
-#pragma mark - Accessor Methods
-- (NSManagedObjectModel *)managedObjectModel
-{
-    
-    if ( _managedObjectModel ) {
-        return _managedObjectModel;
-    }
-    
-    _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-    return _managedObjectModel;
-    
-}
-
-- (NSManagedObjectContext*)managedObjectContext;
-{
-    
-    if ( _managedObjectContext ) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [[CoreDataUtility sharedInstance] persistentStoreCoordinator];
-    
-    if ( coordinator ){
-        
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setUndoManager:nil];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-        [_managedObjectContext setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-    
-    }
-    
-    return _managedObjectContext;
-    
-}
-
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    if ( _persistentStoreCoordinator ) {
-        return _persistentStoreCoordinator;
-    }
-    
-    NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    
-    NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:@"Shelby.tv.sqlite"];
-    
-    NSError *error = nil;
-    
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
-    if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
-    {
-        // Delete datastore if there's a conflict. User can re-login to repopulate the datastore.
-        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
-        
-        // Retry
-        if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
-        {
-            NSLog(@"Could not save changes to Core Data. Error: %@, %@", error, [error userInfo]);
-        }
-    }
-    
-    return _persistentStoreCoordinator;
 }
 
 @end
