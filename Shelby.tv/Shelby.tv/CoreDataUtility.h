@@ -16,5 +16,6 @@
 - (void)saveContext:(NSManagedObjectContext *)context;
 - (void)dumpAllData;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
+- (NSArray*)fetchStreamEntries;
 
 @end

@@ -132,6 +132,26 @@
     
 }
 
+- (NSArray*)fetchStreamEntries
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search dashboardEntry data
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    // Execute request that returns array of dashboardEntrys
+    return [self.context executeFetchRequest:request error:nil];
+    
+}
+
 #pragma mark - Private Methods
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue

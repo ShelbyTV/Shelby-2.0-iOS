@@ -11,7 +11,7 @@
 
 @interface StreamViewController ()
 
-- (void)fetchStreamData;
+- (void)getStreamFromShelby;
 
 @end
 
@@ -53,11 +53,20 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if ( [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken] ) [self fetchStreamData];
+    if ( [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken] ) {
+        
+        [self getStreamFromShelby];
+        
+        // Test to make sure fetching works (will not work on first load, but will work on subsequent loads)
+        CoreDataUtility *coreDataUtility = [[CoreDataUtility alloc] init];
+        NSArray *entries = [coreDataUtility fetchStreamEntries];
+        Stream *stream = [entries objectAtIndex:0];
+        DLog(@"%@", stream.streamID); 
+    }
 }
 
 #pragma mark - Private Methods
-- (void)fetchStreamData
+- (void)getStreamFromShelby
 {
     
     NSString *authToken = [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken];
