@@ -9,12 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface StreamViewController : UIViewController
-<
-UICollectionViewDataSource,
-UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout // Also references UICollectionViewDelegate
->
 
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
 @end

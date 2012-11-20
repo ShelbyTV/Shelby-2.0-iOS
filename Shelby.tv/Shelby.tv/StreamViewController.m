@@ -7,34 +7,21 @@
 //
 
 #import "StreamViewController.h"
-#import "CoreDataUtility.h"
 
 @interface StreamViewController ()
 
-- (void)getStreamFromShelby;
+- (void)getStream;
 
 @end
 
 @implementation StreamViewController
-@synthesize collectionView = _collectionView;
+@synthesize button = _button;
 
-#pragma mark - Initialization
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if ( self ) {
-        self.title = @"Stream";
-    }
-    
-    return self;
-}
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
 {
-    self.collectionView = nil;
+    self.button = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,31 +29,31 @@
     [super didReceiveMemoryWarning];
 }
 
-
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"StreamCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
     if ( [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken] ) {
         
-        [self getStreamFromShelby];
-        
-        // Test to make sure fetching works (will not work on first load, but will work on subsequent loads)
-        CoreDataUtility *coreDataUtility = [[CoreDataUtility alloc] init];
-        NSArray *entries = [coreDataUtility fetchStreamEntries];
-        Stream *stream = [entries objectAtIndex:0];
-        DLog(@"%@", stream.streamID); 
+//        [self getStream];
+//        
+//        // Test to make sure fetching works (will not work on first load, but will work on subsequent loads)
+//        CoreDataUtility *coreDataUtility = [[CoreDataUtility alloc] init];
+//        NSArray *entries = [coreDataUtility fetchStreamEntries];
+//        Stream *stream = [entries objectAtIndex:0];
+//        DLog(@"%@", stream.streamID); 
     }
+    
 }
 
 #pragma mark - Private Methods
-- (void)getStreamFromShelby
+- (void)getStream
 {
     
     NSString *authToken = [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken];
@@ -95,42 +82,6 @@
         }];
         
         [operation start];
-
-}
-
-#pragma mark - UICollectionViewDataSource Methods
-- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
-{
-    return 9;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
-{
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StreamCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
-    return cell;
-}
-
-#pragma mark - UICollectionViewDelegate Methods
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
-{
-    return 1.0f;
-}
-
-#pragma mark - UICollectionViewFlowDelegate Methods
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CGSizeMake(256,256);
 }
 
 @end

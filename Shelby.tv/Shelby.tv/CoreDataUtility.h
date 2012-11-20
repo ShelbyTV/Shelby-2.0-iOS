@@ -12,10 +12,16 @@
 
 @property (strong, nonatomic, readonly) NSManagedObjectContext *context;
 
-// Public Methods
+/// Public Methods
+// Persistance Methods
 - (void)saveContext:(NSManagedObjectContext *)context;
 - (void)dumpAllData;
-- (void)storeStream:(NSDictionary *)resultsDictionary;
+
+// Storage Methods
+- (void)storeUser:(NSDictionary*)resultsDictionary;
+- (void)storeStream:(NSDictionary*)resultsDictionary;
+
+// Fetching Methods
 - (NSArray*)fetchStreamEntries;
 
 @end

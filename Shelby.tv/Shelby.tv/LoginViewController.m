@@ -51,9 +51,12 @@
         [request setHTTPMethod:@"POST"];
         
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+
+            CoreDataUtility *utility = [[CoreDataUtility alloc] init];
+            [utility storeUser:JSON];
             
-            [[NSUserDefaults standardUserDefaults] setObject:[kJSONDataReceived valueForKey:@"authentication_token"] forKey:kStoredShelbyAuthToken];
-            [self dismissModalViewControllerAnimated:YES];
+//            [[NSUserDefaults standardUserDefaults] setObject:[kJSONDataReceived valueForKey:@"authentication_token"] forKey:kStoredShelbyAuthToken];
+//            [self dismissModalViewControllerAnimated:YES];
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             

@@ -32,6 +32,14 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="stream" inverseEntity="Frame" syncable="YES"/>
     </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="queueID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Video" representedClassName="Video" syncable="YES">
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="providerID" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,5 +56,6 @@
         <element name="Messages" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Stream" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Video" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>

@@ -41,7 +41,7 @@
     return self;
 }
 
-#pragma mark - Public Methods
+#pragma mark - Public Methods (Persistance)
 - (void)saveContext:(NSManagedObjectContext *)context
 {
     
@@ -81,6 +81,37 @@
     NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
     [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
     [coordinator removePersistentStore:store error:nil];
+    
+}
+
+#pragma mark - Public Methods (Store)
+- (void)storeUser:(NSDictionary *)resultsDictionary
+{
+    NSArray *resultsArray = [resultsDictionary objectForKey:@"result"];
+    
+    User *user = [self checkIfEntity:kCoreDataEntityUser
+                         withIDValue:[resultsArray valueForKey:@"id"]
+                            forIDKey:kCoreDataUserID];
+    
+    NSString *userID = [NSString coreDataNullTest:[resultsArray valueForKey:@"id"]];
+    [user setValue:userID forKey:kCoreDataUserID];
+    
+    NSString *userImage = [NSString coreDataNullTest:[resultsArray valueForKey:@"user_image"]];
+    [user setValue:userImage forKey:kCoreDataUserImage];
+    
+    NSString *token = [NSString coreDataNullTest:[resultsArray valueForKey:@"authentication_token"]];
+    [user setValue:token forKey:kCoreDataUserToken];
+    
+    NSString *nickname = [NSString coreDataNullTest:[resultsArray valueForKey:@"nickname"]];
+    [user setValue:nickname forKey:kCoreDataUserNickname];
+    
+    NSString *rollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"personal_roll_id"]];
+    [user setValue:rollID forKey:kCoreDataUserRollID];
+    
+    NSString *queueID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
+    [user setValue:queueID forKey:kCoreDataUserQueueID];
+    
+    [self saveContext:self.context];
     
 }
 
@@ -132,6 +163,7 @@
     
 }
 
+#pragma mark - Public Methods (Fetch)
 - (NSArray*)fetchStreamEntries
 {
     

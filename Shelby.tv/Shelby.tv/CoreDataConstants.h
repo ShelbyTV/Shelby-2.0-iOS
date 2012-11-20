@@ -10,6 +10,7 @@
 #import "Frame.h"
 #import "Messages.h"
 #import "Stream.h"
+#import "User.h"
 #import "Video.h"
 
 // Entity Constants
@@ -17,22 +18,12 @@
 #define kCoreDataEntityFrame                        @"Frame"
 #define kCoreDataEntityMessages                     @"Messages"
 #define kCoreDataEntityStream                       @"Stream"
+#define kCoreDataEntityUser                         @"User"
 #define kCoreDataEntityVideo                        @"Video"
-
-// Relationship Constants
-#define kCoreDataRelationshipConversation           @"conversation"
-#define kCoreDataRelationshipStream                 @"stream"
-#define kCoreDataRelationshipFrame                  @"frame"
-#define kCoreDataRelationshipMessages               @"messages"
-#define kCoreDataRelationshipVideo                  @"video"
 
 // Conversation Attribute Constants
 #define kCoreDataConversationID                     @"conversationID"
 #define kCoreDataConversationMessageCount           @"messageCount"
-
-// Stream Attribute Constants
-#define kCoreDataStreamID                           @"streamID"
-#define kCoreDataStreamTimestamp                    @"timestamp"
 
 // Frame Attribute Constants
 #define kCoreDataFrameConversationID                @"conversationID"
@@ -50,6 +41,18 @@
 #define kCoreDataMessagesText                       @"text"
 #define kCoreDataMessagesTimestamp                  @"timestamp"
 #define kCoreDataMessagesUserImage                  @"userImage"
+
+// Stream Attribute Constants
+#define kCoreDataStreamID                           @"streamID"
+#define kCoreDataStreamTimestamp                    @"timestamp"
+
+// User Attribute Constants
+#define kCoreDataUserID                             @"userID"
+#define kCoreDataUserImage                          @"userImage"
+#define kCoreDataUserToken                          @"token"
+#define kCoreDataUserNickname                       @"nickname"
+#define kCoreDataUserRollID                         @"rollID"
+#define kCoreDataUserQueueID                        @"queueID"
 
 // Video Attribute Constants
 #define kCoreDataVideoID                            @"videoID"
