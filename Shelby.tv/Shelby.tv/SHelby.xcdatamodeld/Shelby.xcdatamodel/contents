@@ -10,6 +10,7 @@
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="frameID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isSynced" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="frame" inverseEntity="Conversation" syncable="YES"/>
@@ -52,10 +53,10 @@
     </entity>
     <elements>
         <element name="Conversation" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Frame" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="Frame" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Messages" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Stream" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="Video" positionX="160" positionY="192" width="128" height="165"/>
         <element name="User" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="Video" positionX="160" positionY="192" width="128" height="165"/>
     </elements>
 </model>

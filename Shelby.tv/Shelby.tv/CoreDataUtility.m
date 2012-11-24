@@ -113,6 +113,32 @@
     
     [self saveContext:self.context];
     
+    
+//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetStream, token]];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//    [request setHTTPMethod:@"GET"];
+//    
+//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+//        
+//        CoreDataUtility *utility = [[CoreDataUtility alloc] init];
+//        [utility storeStream:JSON];
+//        
+//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+//        
+//        NSLog(@"%@", error);
+//        
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
+//                                                            message:@"Please try again"
+//                                                           delegate:nil
+//                                                  cancelButtonTitle:@"OK"
+//                                                  otherButtonTitles:nil, nil];
+//        [alertView show];
+//        
+//    }];
+//    
+//    [operation start];
+
+
 }
 
 - (void)storeStream:(NSDictionary *)resultsDictionary
@@ -228,7 +254,10 @@
     [frame setValue:timestamp forKey:kCoreDataFrameTimestamp];
     
     NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
-    [frame setValue:videoID forKey:kCoreDataFrameVideoID ];
+    [frame setValue:videoID forKey:kCoreDataFrameVideoID];
+    
+    //  This method (storeFrame:forFrameArray:) is only entered from API, so isSynced == YES
+    [frame setValue:[NSNumber numberWithBool:YES] forKey:kCoreDataFrameIsSynced];
     
     Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
                                          withIDValue:conversationID

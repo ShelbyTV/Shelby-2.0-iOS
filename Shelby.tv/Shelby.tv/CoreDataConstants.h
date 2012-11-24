@@ -29,6 +29,7 @@
 #define kCoreDataFrameConversationID                @"conversationID"
 #define kCoreDataFrameCreatedAt                     @"createdAt"
 #define kCoreDataFrameID                            @"frameID"
+#define kCoreDataFrameIsSynced                      @"isSynced"
 #define kCoreDataFrameTimestamp                     @"timestamp"
 #define kCoreDataFrameVideoID                       @"videoID"
 

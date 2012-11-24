@@ -18,7 +18,6 @@
 		8E209726162F3A61000A2DFD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E209725162F3A61000A2DFD /* Default@2x.png */; };
 		8E405419163A3429002C8874 /* NSDate+DateFromBSONString.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE55163A286700AEF100 /* NSDate+DateFromBSONString.m */; };
 		8E405484163A3C05002C8874 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405483163A3C05002C8874 /* Conversation.m */; };
-		8E405487163A3C05002C8874 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405486163A3C05002C8874 /* Frame.m */; };
 		8E40548A163A3C06002C8874 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405489163A3C05002C8874 /* Messages.m */; };
 		8E40548D163A3C06002C8874 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E40548C163A3C06002C8874 /* Stream.m */; };
 		8E405490163A3C06002C8874 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E40548F163A3C06002C8874 /* Video.m */; };
@@ -40,6 +39,7 @@
 		8E98F7BF165C46D20095E985 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98F7BE165C46D20095E985 /* User.m */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
+		8EF263B6166084AC00476258 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF263B5166084AC00476258 /* Frame.m */; };
 		8EF5C34C162F415D0075C35F /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5C34B162F415D0075C35F /* StreamViewController.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
@@ -61,8 +61,6 @@
 		8E209729162F3A61000A2DFD /* StreamViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamViewController.h; sourceTree = "<group>"; };
 		8E405482163A3C05002C8874 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		8E405483163A3C05002C8874 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
-		8E405485163A3C05002C8874 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		8E405486163A3C05002C8874 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8E405488163A3C05002C8874 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
 		8E405489163A3C05002C8874 /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
 		8E40548B163A3C06002C8874 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
@@ -105,6 +103,8 @@
 		8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtility.m; sourceTree = "<group>"; };
 		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
 		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
+		8EF263B4166084AC00476258 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		8EF263B5166084AC00476258 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8EF5C34B162F415D0075C35F /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamViewController.m; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -134,14 +134,14 @@
 				8E98F7BD165C46D20095E985 /* User.h */,
 				8E98F7BE165C46D20095E985 /* User.m */,
 				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
+				8EF263B4166084AC00476258 /* Frame.h */,
+				8EF263B5166084AC00476258 /* Frame.m */,
 				8E40548E163A3C06002C8874 /* Video.h */,
 				8E40548F163A3C06002C8874 /* Video.m */,
 				8E40548B163A3C06002C8874 /* Stream.h */,
 				8E40548C163A3C06002C8874 /* Stream.m */,
 				8E405488163A3C05002C8874 /* Messages.h */,
 				8E405489163A3C05002C8874 /* Messages.m */,
-				8E405485163A3C05002C8874 /* Frame.h */,
-				8E405486163A3C05002C8874 /* Frame.m */,
 				8E405482163A3C05002C8874 /* Conversation.h */,
 				8E405483163A3C05002C8874 /* Conversation.m */,
 			);
@@ -402,11 +402,11 @@
 				8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */,
 				8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */,
 				8E405484163A3C05002C8874 /* Conversation.m in Sources */,
-				8E405487163A3C05002C8874 /* Frame.m in Sources */,
 				8E40548A163A3C06002C8874 /* Messages.m in Sources */,
 				8E40548D163A3C06002C8874 /* Stream.m in Sources */,
 				8E405490163A3C06002C8874 /* Video.m in Sources */,
 				8E98F7BF165C46D20095E985 /* User.m in Sources */,
+				8EF263B6166084AC00476258 /* Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
