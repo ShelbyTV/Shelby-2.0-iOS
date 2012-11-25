@@ -15,6 +15,7 @@
 
 @property (strong ,nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) AppDelegate *appDelegate;
+@property (assign, nonatomic) APIRequestType requestType;
 
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
@@ -30,12 +31,14 @@
 @implementation CoreDataUtility
 @synthesize context = _context;
 @synthesize appDelegate = _appDelegate;
+@synthesize requestType = _requestType;
 
 #pragma mark - Initialization Methods
-- (id)init
+- (id)initWithRequestType:(APIRequestType)requestType
 {
     if ( self = [super init] ) {
         self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        self.requestType = requestType;
     }
     
     return self;
@@ -68,6 +71,30 @@
                 }
                 
             } else { // Success
+                
+                
+                switch (_requestType) {
+                    case APIRequestType_None:{
+                        
+                        
+                } break;
+                    
+                    case APIRequestType_PostAuthorization:{
+                        
+                    } break;
+                    
+                    case APIRequestType_GetStream:{
+                        
+                    } break;
+                    
+                    case APIRequestType_GetQueue:{
+                        
+                    } break;
+                        
+                    default:
+                        break;
+                }
+                
                 DLog(@"Core Data Updated!");
             }
         }

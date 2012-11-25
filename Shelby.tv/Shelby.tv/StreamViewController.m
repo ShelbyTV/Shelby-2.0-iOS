@@ -42,12 +42,7 @@
     if ( [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken] ) {
         
 //        [self getStream];
-//        
-//        // Test to make sure fetching works (will not work on first load, but will work on subsequent loads)
-//        CoreDataUtility *coreDataUtility = [[CoreDataUtility alloc] init];
-//        NSArray *entries = [coreDataUtility fetchStreamEntries];
-//        Stream *stream = [entries objectAtIndex:0];
-//        DLog(@"%@", stream.streamID); 
+
     }
     
 }
@@ -65,7 +60,7 @@
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
-                CoreDataUtility *cdu = [[CoreDataUtility alloc] init];
+                CoreDataUtility *cdu = [[CoreDataUtility alloc] initWithRequestType:APIRequestType_GetStream];
                 [cdu storeStream:JSON];
                 
             });

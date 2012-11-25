@@ -52,7 +52,7 @@
         
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 
-            CoreDataUtility *utility = [[CoreDataUtility alloc] init];
+            CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:APIRequestType_PostAuthorization];
             [utility storeUser:JSON];
             
 //            [[NSUserDefaults standardUserDefaults] setObject:[kJSONDataReceived valueForKey:@"authentication_token"] forKey:kStoredShelbyAuthToken];

@@ -8,6 +8,7 @@
 
 #import "APIConstants.h"
 #import "CoreDataConstants.h"
+#import "Structures.h"
 
 // General Constants
 #define kJSONDataFromShelbyReceived         [JSON valueForKey:@"result"]

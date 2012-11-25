@@ -103,6 +103,7 @@
 		8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtility.m; sourceTree = "<group>"; };
 		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
 		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
+		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF263B4166084AC00476258 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		8EF263B5166084AC00476258 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8EF5C34B162F415D0075C35F /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamViewController.m; sourceTree = "<group>"; };
@@ -131,9 +132,9 @@
 		8E0E7031163869B800BA0A24 /* Core Data Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
+				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
 				8E98F7BD165C46D20095E985 /* User.h */,
 				8E98F7BE165C46D20095E985 /* User.m */,
-				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
 				8EF263B4166084AC00476258 /* Frame.h */,
 				8EF263B5166084AC00476258 /* Frame.m */,
 				8E40548E163A3C06002C8874 /* Video.h */,
@@ -312,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				8EF5C35C162F431B0075C35F /* Constants.h */,
+				8EF092361662A325008EE1DD /* Structures.h */,
 				8EAAEE52163A275400AEF100 /* APIConstants.h */,
 				8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */,
 			);

@@ -13,6 +13,10 @@
 @property (strong, nonatomic, readonly) NSManagedObjectContext *context;
 
 /// Public Methods
+
+// Initialization Methods
+- (id)initWithRequestType:(APIRequestType)requestType;
+
 // Persistance Methods
 - (void)saveContext:(NSManagedObjectContext *)context;
 - (void)dumpAllData;
