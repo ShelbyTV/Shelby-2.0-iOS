@@ -39,7 +39,7 @@
 {
     [super viewWillAppear:animated];
 
-    if ( [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken] ) {
+    if ( [[NSUserDefaults standardUserDefaults] objectForKey:kUserAuthorizedDefault] ) {
         
 //        [self getStream];
 
@@ -51,7 +51,7 @@
 - (void)getStream
 {
     
-    NSString *authToken = [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken];
+    NSString *authToken = [[NSUserDefaults standardUserDefaults] objectForKey:kUserAuthorizedDefault];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetStream, authToken]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];

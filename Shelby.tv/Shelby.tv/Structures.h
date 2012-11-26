@@ -15,3 +15,13 @@ typedef enum _APIRequestType
     APIRequestType_GetQueue
     
 } APIRequestType;
+
+typedef enum _DataRequestType
+{
+    
+    DataRequestType_None = 0,
+    DataAPIRequestType_User,
+    DataAPIRequestType_Stream,
+    DataAPIRequestType_Queue
+    
+} DataRequestType;

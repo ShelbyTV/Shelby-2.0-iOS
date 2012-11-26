@@ -10,6 +10,7 @@
 #import "Frame.h"
 #import "Messages.h"
 #import "Stream.h"
+#import "Roll.h"
 #import "User.h"
 #import "Video.h"
 
@@ -17,6 +18,7 @@
 #define kCoreDataEntityConversation                 @"Conversation"
 #define kCoreDataEntityFrame                        @"Frame"
 #define kCoreDataEntityMessages                     @"Messages"
+#define kCoreDataEntityRoll                         @"Roll"
 #define kCoreDataEntityStream                       @"Stream"
 #define kCoreDataEntityUser                         @"User"
 #define kCoreDataEntityVideo                        @"Video"
@@ -42,6 +44,12 @@
 #define kCoreDataMessagesText                       @"text"
 #define kCoreDataMessagesTimestamp                  @"timestamp"
 #define kCoreDataMessagesUserImage                  @"userImage"
+
+// Roll Attribute Constants
+#define kCoreDataRollID                             @"rollID"
+#define kCoreDataRollCreatorID                      @"creatorID"
+#define kCoreDataRollThumbnailURL                   @"thumbnailURL"
+#define kCoreDataRollTitle                          @"title"
 
 // Stream Attribute Constants
 #define kCoreDataStreamID                           @"streamID"

@@ -42,6 +42,7 @@
 		8EF263B6166084AC00476258 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF263B5166084AC00476258 /* Frame.m */; };
 		8EF5C34C162F415D0075C35F /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5C34B162F415D0075C35F /* StreamViewController.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
+		8EF939911664171200AE738F /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF939901664171200AE738F /* Roll.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +110,8 @@
 		8EF5C34B162F415D0075C35F /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamViewController.m; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		8EF9398F1664171200AE738F /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
+		8EF939901664171200AE738F /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
+				8EF9398F1664171200AE738F /* Roll.h */,
+				8EF939901664171200AE738F /* Roll.m */,
 				8E98F7BD165C46D20095E985 /* User.h */,
 				8E98F7BE165C46D20095E985 /* User.m */,
 				8EF263B4166084AC00476258 /* Frame.h */,
@@ -409,6 +414,7 @@
 				8E405490163A3C06002C8874 /* Video.m in Sources */,
 				8E98F7BF165C46D20095E985 /* User.m in Sources */,
 				8EF263B6166084AC00476258 /* Frame.m in Sources */,
+				8EF939911664171200AE738F /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

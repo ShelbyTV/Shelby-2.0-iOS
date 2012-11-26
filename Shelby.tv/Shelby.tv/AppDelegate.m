@@ -23,26 +23,39 @@
 
 @property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic) LoginViewController *loginViewController;
+
+- (void)createObservers;
 
 @end
 
 @implementation AppDelegate
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize loginViewController = _loginViewController;
+@synthesize loggedInUser = _loggedInUser;
 
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    // Create Observers
+    [self createObservers];
+    
+    // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     UIViewController *viewController = [[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil];
     self.window.rootViewController = viewController;
     [self.window makeKeyAndVisible];
     
-    if ( NULL == [[NSUserDefaults standardUserDefaults] objectForKey:kStoredShelbyAuthToken] ) {
+    if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kUserAuthorizedDefault] ) {
         
-        LoginViewController *loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-        [self.window.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+        self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+        [self.window.rootViewController presentViewController:self.loginViewController animated:NO completion:nil];
+        
+    } else {
+        
+        [self userIsAuthorized];
         
     }
 
@@ -62,6 +75,32 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - Private Methods
+- (void)createObservers
+{
+ 
+}
+
+- (void)userIsAuthorized
+{
+    
+    // Set NSUserDefault
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthorizedDefault];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    // Set User object in AppDelegate for quick reference
+    CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataAPIRequestType_User];
+    self.loggedInUser = [utility fetchUser];
+    
+    // Remove _loginViewController if it exists
+    if ( _loginViewController ) [self.loginViewController dismissModalViewControllerAnimated:YES];
+    
+    // Begin Polling API
+    DLog(@"%@", self.loggedInUser);
+    
+}
+
 
 #pragma mark - Core Data Accessor Methods
 - (NSManagedObjectModel *)managedObjectModel

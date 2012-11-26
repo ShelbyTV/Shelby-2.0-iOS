@@ -15,13 +15,13 @@
 
 @property (strong ,nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) AppDelegate *appDelegate;
-@property (assign, nonatomic) APIRequestType requestType;
+@property (assign, nonatomic) DataRequestType requestType;
 
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
 
-- (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray;
+- (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
 - (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
 - (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
@@ -34,7 +34,7 @@
 @synthesize requestType = _requestType;
 
 #pragma mark - Initialization Methods
-- (id)initWithRequestType:(APIRequestType)requestType
+- (id)initWithRequestType:(DataRequestType)requestType
 {
     if ( self = [super init] ) {
         self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -72,22 +72,24 @@
                 
             } else { // Success
                 
-                
                 switch (_requestType) {
-                    case APIRequestType_None:{
                         
+                    case DataRequestType_None:{
                         
-                } break;
-                    
-                    case APIRequestType_PostAuthorization:{
                         
                     } break;
                     
-                    case APIRequestType_GetStream:{
+                    case DataAPIRequestType_User:{
+                        
+                        [self.appDelegate userIsAuthorized];
                         
                     } break;
                     
-                    case APIRequestType_GetQueue:{
+                    case DataAPIRequestType_Stream:{
+                        
+                    } break;
+                    
+                    case DataAPIRequestType_Queue:{
                         
                     } break;
                         
@@ -205,7 +207,7 @@
                                               forIDKey:kCoreDataFrameID];
                     stream.frame = frame;
                     
-                    [self storeFrame:frame forFrameArray:frameArray];
+                    [self storeFrame:frame forFrameArray:frameArray withSyncStatus:YES];
                     
                 }
             }
@@ -216,7 +218,28 @@
     
 }
 
+- (void)storeRoll:(NSDictionary *)resultsDictionary
+{
+
+}
+
 #pragma mark - Public Methods (Fetch)
+- (User *)fetchUser
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search dashboardEntry data
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityUser inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Execute request that returns array of Users
+    NSArray *resultsArray = [self.context executeFetchRequest:request error:nil];
+    return ( [resultsArray count] ) ? [resultsArray objectAtIndex:0] : [NSNull null];
+    
+}
+
 - (NSArray*)fetchStreamEntries
 {
     
@@ -234,6 +257,32 @@
     
     // Execute request that returns array of dashboardEntrys
     return [self.context executeFetchRequest:request error:nil];
+    
+}
+
+- (NSArray*)fetchQueueEntries
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search dashboardEntry data
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO]; // Add this param
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    // Execute request that returns array of frames in Watch Later Roll (e.g., Queue)
+    return [self.context executeFetchRequest:request error:nil];
+    
+}
+
+- (NSArray*)fetchRollEntries
+{
+    
     
 }
 
@@ -265,7 +314,7 @@
 }
 
 
-- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray
+- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
 {
     
     NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
@@ -283,8 +332,7 @@
     NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
     [frame setValue:videoID forKey:kCoreDataFrameVideoID];
     
-    //  This method (storeFrame:forFrameArray:) is only entered from API, so isSynced == YES
-    [frame setValue:[NSNumber numberWithBool:YES] forKey:kCoreDataFrameIsSynced];
+    [frame setValue:[NSNumber numberWithBool:syncStatus] forKey:kCoreDataFrameIsSynced];
     
     Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
                                          withIDValue:conversationID

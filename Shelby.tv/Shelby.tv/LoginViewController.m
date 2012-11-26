@@ -55,9 +55,6 @@
             CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:APIRequestType_PostAuthorization];
             [utility storeUser:JSON];
             
-//            [[NSUserDefaults standardUserDefaults] setObject:[kJSONDataReceived valueForKey:@"authentication_token"] forKey:kStoredShelbyAuthToken];
-//            [self dismissModalViewControllerAnimated:YES];
-            
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             
             NSLog(@"%@", error);

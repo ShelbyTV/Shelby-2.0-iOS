@@ -15,17 +15,21 @@
 /// Public Methods
 
 // Initialization Methods
-- (id)initWithRequestType:(APIRequestType)requestType;
+- (id)initWithRequestType:(DataRequestType)requestType;
 
 // Persistance Methods
-- (void)saveContext:(NSManagedObjectContext *)context;
+- (void)saveContext:(NSManagedObjectContext*)context;
 - (void)dumpAllData;
 
 // Storage Methods
 - (void)storeUser:(NSDictionary*)resultsDictionary;
 - (void)storeStream:(NSDictionary*)resultsDictionary;
+- (void)storeRoll:(NSDictionary*)resultsDictionary;
 
 // Fetching Methods
+- (User*)fetchUser;
 - (NSArray*)fetchStreamEntries;
+- (NSArray*)fetchQueueEntries;
+- (NSArray*)fetchRollEntries;
 
 @end

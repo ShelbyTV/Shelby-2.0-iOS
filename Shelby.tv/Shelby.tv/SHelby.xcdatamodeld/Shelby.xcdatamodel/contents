@@ -28,6 +28,12 @@
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
+    <entity name="Roll" representedClassName="Roll" syncable="YES">
+        <attribute name="creatorID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Stream" representedClassName="Stream" syncable="YES">
         <attribute name="streamID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
@@ -58,5 +64,6 @@
         <element name="Stream" positionX="160" positionY="192" width="128" height="90"/>
         <element name="User" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Video" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="Roll" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

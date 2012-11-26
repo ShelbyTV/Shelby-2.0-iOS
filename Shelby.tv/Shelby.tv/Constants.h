@@ -10,11 +10,5 @@
 #import "CoreDataConstants.h"
 #import "Structures.h"
 
-// General Constants
-#define kJSONDataFromShelbyReceived         [JSON valueForKey:@"result"]
-
-// Observer Constants
-#define kStoredShelbyUserObject             @"Stored Shelby User Object"
-
 // NSUserDefault Constants
-#define kStoredShelbyAuthToken              @"Shelby Authentication Token"
+#define kUserAuthorizedDefault              @"Shelby User Authorization Stored Default"
