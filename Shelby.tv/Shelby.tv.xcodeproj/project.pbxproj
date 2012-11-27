@@ -133,7 +133,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8E0E7031163869B800BA0A24 /* Core Data Managed Objects */ = {
+		8E0E7031163869B800BA0A24 /* Core Data Managed Objects and Model */ = {
 			isa = PBXGroup;
 			children = (
 				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
@@ -152,7 +152,7 @@
 				8E405482163A3C05002C8874 /* Conversation.h */,
 				8E405483163A3C05002C8874 /* Conversation.m */,
 			);
-			name = "Core Data Managed Objects";
+			name = "Core Data Managed Objects and Model";
 			sourceTree = "<group>";
 		};
 		8E209702162F3A60000A2DFD = {
@@ -194,7 +194,7 @@
 				8EF5C351162F41BA0075C35F /* Views */,
 				8EF5C354162F41CC0075C35F /* Controllers */,
 				8EF5C352162F41BF0075C35F /* View Controllers */,
-				8E0E7031163869B800BA0A24 /* Core Data Managed Objects */,
+				8E0E7031163869B800BA0A24 /* Core Data Managed Objects and Model */,
 				8EF5C355162F41D20075C35F /* Constants */,
 				8EAAEE58163A286B00AEF100 /* Categories */,
 				8E82EDF11631C7770044D97E /* External Libraries */,
