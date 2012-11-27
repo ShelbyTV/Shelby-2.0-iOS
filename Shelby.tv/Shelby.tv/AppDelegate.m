@@ -12,7 +12,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 // View Controlles
-#import "StreamViewController.h"
+#import "MeViewController.h"
 #import "LoginViewController.h"
 
 @interface AppDelegate ()
@@ -48,8 +48,8 @@
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    UIViewController *viewController = [[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil];
-    self.window.rootViewController = viewController;
+    MeViewController *meVC = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
+    self.window.rootViewController = meVC;
     [self.window makeKeyAndVisible];
     
     if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kUserAuthorizedDefault] ) {
@@ -96,10 +96,10 @@
     // Begin Polling API
     self.pollAPICounter = 0;
     self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
-    DLog(@"Timer Started");
+    DLog(@"Poll Timer Started");
     
     // Remove _loginViewController if it exists
-    if ( _loginViewController ) [self.loginViewController dismissModalViewControllerAnimated:YES];
+    if ( _loginViewController ) [self.loginViewController dismissViewControllerAnimated:YES completion:nil];
     
 }
 
@@ -143,7 +143,7 @@
             
         case 1: { // Queue
             
-            self.pollAPICounter = 0;
+            self.pollAPICounter = 2;
             
             NSString *authToken = [user token];
             NSString *queueID = [user queueID];
@@ -168,6 +168,36 @@
             [operation start];
             
         } break;
+            
+            
+        case 2: { // Personal Roll
+            
+            self.pollAPICounter = 0;
+            
+            NSString *authToken = [user token];
+            NSString *rollID = [user rollID];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRoll, rollID, authToken]];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            [request setHTTPMethod:@"GET"];
+            
+            AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    
+                    DLog(@"Successfully fetched Roll");
+                    
+                });
+                
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                
+                DLog(@"Problem fetching Roll");
+                
+            }];
+            
+            [operation start];
+            
+        } break;
+
             
         default:
             break;

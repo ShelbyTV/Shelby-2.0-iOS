@@ -99,6 +99,12 @@
                         
                     } break;
                         
+                    case DataAPIRequestType_Roll:{
+                        
+                        DLog(@"Successfully stored Roll");
+                        
+                    } break;
+                        
                     default:
                         break;
                 }
@@ -159,18 +165,20 @@
         @autoreleasepool {
             
             // Conditions for saving entires into database
-            BOOL sourceURLExists = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"source_url"] isKindOfClass:[NSNull class]] ? NO : YES;
-            BOOL embedURLExists = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"embed_url"] isKindOfClass:[NSNull class]] ? NO : YES;
             NSArray *frameArray = [[resultsArray objectAtIndex:i] valueForKey:@"frame"];
             BOOL frameExists = [frameArray isKindOfClass:([NSNull class])] ? NO : YES;
             
             if ( !frameExists ) {
                 
-                // Do nothing (e.g., don't store this frame in context)
+                // Do nothing (e.g., don't store this frame in core data)
                 
             } else {
                 
-                if ( sourceURLExists || embedURLExists ) {
+                NSString *provider = [[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"provider_name"];
+                BOOL sourceURL = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"source_url"] isEqual:[NSNull null]] ? NO : YES;
+                BOOL embedURL = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"emebd_url"] isEqual:[NSNull null]] ? NO : YES;
+                
+                if ( ([provider isEqualToString:@"youtube"] && sourceURL) || ([provider isEqualToString:@"vimeo"] && embedURL) ) {
                     
                     Stream *stream = [self checkIfEntity:kCoreDataEntityStream
                                              withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
@@ -414,6 +422,8 @@
         [providerIDScanner scanUpToString:@"&" intoString:&providerID];
         providerID = [providerID stringByReplacingOccurrencesOfString:@"=" withString:@""];
         
+        DLog(@"YouTube | %@", providerID);
+        
         [video setValue:providerID forKey:kCoreDataVideoProviderID];
         
     } else if ( [providerName isEqualToString:@"vimeo"] ) {
@@ -431,6 +441,8 @@
         [providerIDScanner scanUpToString:@"/video/" intoString:nil];
         [providerIDScanner scanUpToString:@"\"" intoString:&providerID];
         providerID = [providerID stringByReplacingOccurrencesOfString:@"/video/" withString:@""];
+        
+        DLog(@"Vimeo | %@", providerID);
         
         [video setValue:providerID forKey:kCoreDataVideoProviderID];
         

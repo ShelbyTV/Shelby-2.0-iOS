@@ -21,6 +21,9 @@
 		8E40548A163A3C06002C8874 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405489163A3C05002C8874 /* Messages.m */; };
 		8E40548D163A3C06002C8874 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E40548C163A3C06002C8874 /* Stream.m */; };
 		8E405490163A3C06002C8874 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E40548F163A3C06002C8874 /* Video.m */; };
+		8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9616652E6E00A565BF /* MeViewController.m */; };
+		8E4A92DB1665383F00FF742D /* LoginViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE91631ABDE0044D97E /* LoginViewController.xib */; };
+		8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9716652E6E00A565BF /* MeViewController.xib */; };
 		8E4F580B1635E05F0048585C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4F580A1635E05F0048585C /* CoreData.framework */; };
 		8E82EDEA1631ABDE0044D97E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE81631ABDE0044D97E /* LoginViewController.m */; };
 		8E82EDEB1631ABDE0044D97E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E82EDE91631ABDE0044D97E /* LoginViewController.xib */; };
@@ -35,18 +38,19 @@
 		8E82EE0E1631C7860044D97E /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EE051631C7860044D97E /* UIImageView+AFNetworking.m */; };
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
-		8E98F7B9165C3A870095E985 /* StreamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E98F7B8165C3A870095E985 /* StreamViewController.xib */; };
 		8E98F7BF165C46D20095E985 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98F7BE165C46D20095E985 /* User.m */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EF263B6166084AC00476258 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF263B5166084AC00476258 /* Frame.m */; };
-		8EF5C34C162F415D0075C35F /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5C34B162F415D0075C35F /* StreamViewController.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
 		8EF939911664171200AE738F /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF939901664171200AE738F /* Roll.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8E0E7037163869F100BA0A24 /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
+		8E1FAB9516652E6E00A565BF /* MeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
+		8E1FAB9616652E6E00A565BF /* MeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
+		8E1FAB9716652E6E00A565BF /* MeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeViewController.xib; sourceTree = "<group>"; };
 		8E20970D162F3A60000A2DFD /* Shelby.tv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shelby.tv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E209711162F3A60000A2DFD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8E209713162F3A60000A2DFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -59,7 +63,6 @@
 		8E209721162F3A61000A2DFD /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8E209723162F3A61000A2DFD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8E209725162F3A61000A2DFD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		8E209729162F3A61000A2DFD /* StreamViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamViewController.h; sourceTree = "<group>"; };
 		8E405482163A3C05002C8874 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		8E405483163A3C05002C8874 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		8E405488163A3C05002C8874 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
@@ -93,7 +96,6 @@
 		8E82EE051631C7860044D97E /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		8E98F7B8165C3A870095E985 /* StreamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamViewController.xib; sourceTree = "<group>"; };
 		8E98F7BD165C46D20095E985 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		8E98F7BE165C46D20095E985 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
@@ -107,7 +109,6 @@
 		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF263B4166084AC00476258 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		8EF263B5166084AC00476258 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
-		8EF5C34B162F415D0075C35F /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamViewController.m; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		8EF9398F1664171200AE738F /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
@@ -272,7 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				8E82EDE91631ABDE0044D97E /* LoginViewController.xib */,
-				8E98F7B8165C3A870095E985 /* StreamViewController.xib */,
+				8E1FAB9716652E6E00A565BF /* MeViewController.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -290,8 +291,8 @@
 			children = (
 				8E82EDE71631ABDE0044D97E /* LoginViewController.h */,
 				8E82EDE81631ABDE0044D97E /* LoginViewController.m */,
-				8E209729162F3A61000A2DFD /* StreamViewController.h */,
-				8EF5C34B162F415D0075C35F /* StreamViewController.m */,
+				8E1FAB9516652E6E00A565BF /* MeViewController.h */,
+				8E1FAB9616652E6E00A565BF /* MeViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -380,7 +381,6 @@
 				8E209724162F3A61000A2DFD /* Default.png in Resources */,
 				8E209726162F3A61000A2DFD /* Default@2x.png in Resources */,
 				8E82EDEB1631ABDE0044D97E /* LoginViewController.xib in Resources */,
-				8E98F7B9165C3A870095E985 /* StreamViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,11 +391,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E4A92DB1665383F00FF742D /* LoginViewController.xib in Sources */,
+				8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */,
+				8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */,
 				8E405419163A3429002C8874 /* NSDate+DateFromBSONString.m in Sources */,
 				8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */,
 				8E20971E162F3A61000A2DFD /* main.m in Sources */,
 				8E209722162F3A61000A2DFD /* AppDelegate.m in Sources */,
-				8EF5C34C162F415D0075C35F /* StreamViewController.m in Sources */,
 				8E82EDEA1631ABDE0044D97E /* LoginViewController.m in Sources */,
 				8E82EE061631C7860044D97E /* AFHTTPClient.m in Sources */,
 				8E82EE071631C7860044D97E /* AFHTTPRequestOperation.m in Sources */,
@@ -441,7 +443,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -455,6 +458,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PROVISIONING_PROFILE = "F112D3B5-CBC1-4110-BA82-A339BCCA8286";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F112D3B5-CBC1-4110-BA82-A339BCCA8286";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -469,7 +474,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -477,6 +483,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "F112D3B5-CBC1-4110-BA82-A339BCCA8286";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F112D3B5-CBC1-4110-BA82-A339BCCA8286";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -489,7 +497,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -501,7 +509,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

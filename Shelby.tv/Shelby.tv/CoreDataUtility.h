@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface CoreDataUtility : NSObject
 
 @property (strong, nonatomic, readonly) NSManagedObjectContext *context;
