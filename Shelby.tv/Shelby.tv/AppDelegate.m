@@ -38,7 +38,6 @@
 @synthesize loginViewController = _loginViewController;
 @synthesize pollAPITimer = _pollAPITimer;
 @synthesize pollAPICounter = _pollAPICounter;
-@synthesize loggedInUser = _loggedInUser;
 
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -84,7 +83,7 @@
 #pragma mark - Private Methods
 - (void)createObservers
 {
- 
+
 }
 
 - (void)userIsAuthorized
@@ -94,29 +93,29 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthorizedDefault];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    // Set User object in AppDelegate for quick reference
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataAPIRequestType_User];
-    self.loggedInUser = [dataUtility fetchUser];
-    
-    // Remove _loginViewController if it exists
-    if ( _loginViewController ) [self.loginViewController dismissModalViewControllerAnimated:YES];
-    
     // Begin Polling API
     self.pollAPICounter = 0;
     self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
     DLog(@"Timer Started");
     
+    // Remove _loginViewController if it exists
+    if ( _loginViewController ) [self.loginViewController dismissModalViewControllerAnimated:YES];
+    
 }
 
 - (void)pollAPI
 {
+    
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataAPIRequestType_User];
+    User *user = [dataUtility fetchUser];
+    
     switch ( _pollAPICounter ) {
         
         case 0: { // Stream
             
             self.pollAPICounter = 1;
             
-            NSString *authToken = [self.loggedInUser token];
+            NSString *authToken = [user token];
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetStream, authToken]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             [request setHTTPMethod:@"GET"];
@@ -146,8 +145,8 @@
             
             self.pollAPICounter = 0;
             
-            NSString *authToken = [self.loggedInUser token];
-            NSString *queueID = [self.loggedInUser queueID];
+            NSString *authToken = [user token];
+            NSString *queueID = [user queueID];
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRoll, queueID, authToken]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             [request setHTTPMethod:@"GET"];

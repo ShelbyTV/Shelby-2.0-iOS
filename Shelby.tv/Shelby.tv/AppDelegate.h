@@ -11,7 +11,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) User *loggedInUser;
 @property (strong, nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
 @property (strong, nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 

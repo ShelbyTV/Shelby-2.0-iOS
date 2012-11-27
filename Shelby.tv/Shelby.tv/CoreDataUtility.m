@@ -217,7 +217,7 @@
     // Execute request that returns array of Users
     NSArray *resultsArray = [self.context executeFetchRequest:request error:nil];
     
-    return ( [resultsArray count] ) ? [resultsArray objectAtIndex:0] : [NSNull null];
+    return [resultsArray objectAtIndex:0];
     
 }
 
@@ -258,12 +258,6 @@
     
     // Execute request that returns array of frames in Watch Later Roll (e.g., Queue)
     return [self.context executeFetchRequest:request error:nil];
-    
-}
-
-- (NSArray*)fetchRollEntries
-{
-    
     
 }
 
@@ -468,14 +462,12 @@
         if ( [NSThread isMainThread] ) {
 
             [_context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-            NSLog(@"Main Thread");
+            DLog(@"Main Thread");
         
         } else {
             
             [_context setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"Background Thread");
-            });
+            DLog(@"Background Thread");
         
         }
     
