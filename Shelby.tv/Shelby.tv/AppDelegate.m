@@ -95,7 +95,7 @@
     
     // Begin Polling API
     self.pollAPICounter = 0;
-    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
+    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
     DLog(@"Poll Timer Started");
     
     // Remove _loginViewController if it exists
@@ -123,9 +123,7 @@
             AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    
-                    DLog(@"Successfully fetched Stream");
-                    
+
                     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Stream];
                     [dataUtility storeStream:JSON];
                     
@@ -146,8 +144,8 @@
             self.pollAPICounter = 2;
             
             NSString *authToken = [user token];
-            NSString *queueID = [user queueID];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, queueID, authToken]];
+            NSString *queueRollID = [user queueRollID];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, queueRollID, authToken]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             [request setHTTPMethod:@"GET"];
             
@@ -155,14 +153,14 @@
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     
-//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_RollFrames];
-//                    [dataUtility storeRollFrames:JSON];
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_QueueRoll];
+                    [dataUtility storeRollFrames:JSON];
                     
                 });
                 
             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                 
-                DLog(@"Problem fetching Queue");
+                DLog(@"Problem fetching Queue Roll");
                 
             }];
             
@@ -176,8 +174,8 @@
             self.pollAPICounter = 0;
             
             NSString *authToken = [user token];
-            NSString *rollID = [user rollID];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, rollID, authToken]];
+            NSString *personalRollID = [user personalRollID];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, personalRollID, authToken]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             [request setHTTPMethod:@"GET"];
             
@@ -185,13 +183,14 @@
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     
-                    DLog(@"Successfully fetched Roll");
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_PersonalRoll];
+                    [dataUtility storeRollFrames:JSON];
                     
                 });
                 
             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                 
-                DLog(@"Problem fetching Roll");
+                DLog(@"Problem fetching User Personal Roll");
                 
             }];
             

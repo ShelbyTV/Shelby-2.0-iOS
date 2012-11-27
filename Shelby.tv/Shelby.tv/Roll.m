@@ -16,6 +16,7 @@
 @dynamic rollID;
 @dynamic thumbnailURL;
 @dynamic title;
+@dynamic frameCount;
 @dynamic frame;
 
 @end

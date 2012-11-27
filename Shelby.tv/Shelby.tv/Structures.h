@@ -22,6 +22,8 @@ typedef enum _DataRequestType
     DataRequestType_None = 0,
     DataRequestType_User,
     DataRequestType_Stream,
-    DataRequestType_RollFrames
+    DataRequestType_QueueRoll,
+    DataRequestType_PersonalRoll,
+    DataRequestType_CategoryRoll
     
 } DataRequestType;

@@ -77,6 +77,7 @@
                         
                     case DataRequestType_None:{
                         
+                        DLog(@"Core Data Updated!");
                         
                     } break;
                     
@@ -94,9 +95,21 @@
                         
                     } break;
                         
-                    case DataRequestType_RollFrames:{
+                    case DataRequestType_QueueRoll:{
                         
-                        DLog(@"Successfully stored Frames from Roll");
+                        DLog(@"Successfully stored Queue Roll");
+                        
+                    } break;
+                        
+                    case DataRequestType_PersonalRoll:{
+                        
+                        DLog(@"Successfully stored Personal Roll");
+                        
+                    } break;
+                        
+                    case DataRequestType_CategoryRoll:{
+                        
+                        DLog(@"Successfully stored Catogory Roll");
                         
                     } break;
                         
@@ -104,7 +117,6 @@
                         break;
                 }
                 
-                DLog(@"Core Data Updated!");
             }
         }
 
@@ -141,11 +153,11 @@
     NSString *nickname = [NSString coreDataNullTest:[resultsArray valueForKey:@"nickname"]];
     [user setValue:nickname forKey:kCoreDataUserNickname];
     
-    NSString *rollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"personal_roll_id"]];
-    [user setValue:rollID forKey:kCoreDataUserRollID];
+    NSString *personalRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"personal_roll_id"]];
+    [user setValue:personalRollID forKey:kCoreDataUserPersonalRollID];
     
-    NSString *queueID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
-    [user setValue:queueID forKey:kCoreDataUserQueueID];
+    NSString *queueRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
+    [user setValue:queueRollID forKey:kCoreDataUserQueueRollID];
     
     [self saveContext:self.context];
 
@@ -203,7 +215,30 @@
 
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary
 {
+    NSArray *resultsArray = [[resultsDictionary objectForKey:@"result"] valueForKey:@"frames"];
     
+    for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
+        
+        @autoreleasepool {
+                
+                NSString *provider = [[[resultsArray objectAtIndex:i] valueForKey:@"video"] valueForKey:@"provider_name"];
+                BOOL sourceURL = [[[[resultsArray objectAtIndex:i] valueForKey:@"video"] valueForKey:@"source_url"] isEqual:[NSNull null]] ? NO : YES;
+                BOOL embedURL = [[[[resultsArray objectAtIndex:i]valueForKey:@"video"] valueForKey:@"emebd_url"] isEqual:[NSNull null]] ? NO : YES;
+                
+                if ( ([provider isEqualToString:@"youtube"] && sourceURL) || ([provider isEqualToString:@"vimeo"] && embedURL) ) {
+                    
+                    Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
+                                           withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
+                                              forIDKey:kCoreDataFrameID];
+                    
+                    [self storeFrame:frame forFrameArray:[resultsArray objectAtIndex:i] withSyncStatus:YES];
+                    
+                    
+                }
+            }
+        }
+    
+    [self saveContext:self.context];
 }
 
 #pragma mark - Public Methods (Fetch)
@@ -304,6 +339,9 @@
     NSString *createdAt = [NSString coreDataNullTest:[frameArray valueForKey:@"created_at"]];
     [frame setValue:createdAt forKey:kCoreDataFrameCreatedAt ];
     
+    NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
+    [frame setValue:rollID forKey:kCoreDataFrameRollID];
+    
     NSDate *timestamp = [NSDate dataFromBSONstring:frameID];
     [frame setValue:timestamp forKey:kCoreDataFrameTimestamp];
     
@@ -312,6 +350,7 @@
     
     [frame setValue:[NSNumber numberWithBool:syncStatus] forKey:kCoreDataFrameIsSynced];
     
+    // Store Conversation (and Messages)
     Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
                                          withIDValue:conversationID
                                             forIDKey:kCoreDataFrameConversationID];
@@ -320,6 +359,17 @@
     [conversation addFrameObject:frame];
     [self storeConversation:conversation fromFrameArray:frameArray];
     
+    
+    // Store Roll
+    Roll *roll = [self checkIfEntity:kCoreDataEntityRoll
+                         withIDValue:rollID
+                            forIDKey:kCoreDataRollID];
+    
+    frame.roll = roll;
+    [roll addFrameObject:frame];
+    [self storeRoll:roll fromFrameArray:frameArray];
+    
+    // Store Video
     Video *video = [self checkIfEntity:kCoreDataEntityVideo
                            withIDValue:videoID
                               forIDKey:kCoreDataFrameVideoID];
@@ -388,6 +438,22 @@
 
 - (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray
 {
+    NSArray *rollArray = [frameArray valueForKey:@"roll"];
+    
+    NSString *rollID = [NSString coreDataNullTest:[rollArray valueForKey:@"id"]];
+    [roll setValue:rollID forKey:kCoreDataRollID];
+    
+    NSString *creatorID = [NSString coreDataNullTest:[rollArray valueForKey:@"creator_id"]];
+    [roll setValue:creatorID forKey:kCoreDataRollCreatorID];
+    
+    NSString *frameCount = [rollArray valueForKey:@"frame_count"];
+    [roll setValue:[NSNumber numberWithInteger:[frameCount integerValue]] forKey:kCoreDataRollFrameCount];
+    
+    NSString *thumbnailURL = [NSString coreDataNullTest:[rollArray valueForKey:@"thumbnail_url"]];
+    [roll setValue:thumbnailURL forKey:kCoreDataRollThumbnailURL];
+
+    NSString *title = [NSString coreDataNullTest:[rollArray valueForKey:@"title"]];
+    [roll setValue:title forKey:kCoreDataRollTitle];
     
 }
 
@@ -422,8 +488,6 @@
         [providerIDScanner scanUpToString:@"&" intoString:&providerID];
         providerID = [providerID stringByReplacingOccurrencesOfString:@"=" withString:@""];
         
-        DLog(@"YouTube | %@", providerID);
-        
         [video setValue:providerID forKey:kCoreDataVideoProviderID];
         
     } else if ( [providerName isEqualToString:@"vimeo"] ) {
@@ -441,8 +505,6 @@
         [providerIDScanner scanUpToString:@"/video/" intoString:nil];
         [providerIDScanner scanUpToString:@"\"" intoString:&providerID];
         providerID = [providerID stringByReplacingOccurrencesOfString:@"/video/" withString:@""];
-        
-        DLog(@"Vimeo | %@", providerID);
         
         [video setValue:providerID forKey:kCoreDataVideoProviderID];
         
@@ -474,12 +536,12 @@
         if ( [NSThread isMainThread] ) {
 
             [_context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-            DLog(@"Main Thread");
+//            DLog(@"Main Thread");
         
         } else {
             
             [_context setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
-            DLog(@"Background Thread");
+//            DLog(@"Background Thread");
         
         }
     

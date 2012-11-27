@@ -32,6 +32,7 @@
 #define kCoreDataFrameCreatedAt                     @"createdAt"
 #define kCoreDataFrameID                            @"frameID"
 #define kCoreDataFrameIsSynced                      @"isSynced"
+#define kCoreDataFrameRollID                        @"rollID"
 #define kCoreDataFrameTimestamp                     @"timestamp"
 #define kCoreDataFrameVideoID                       @"videoID"
 
@@ -48,6 +49,7 @@
 // Roll Attribute Constants
 #define kCoreDataRollID                             @"rollID"
 #define kCoreDataRollCreatorID                      @"creatorID"
+#define kCoreDataRollFrameCount                     @"frameCount"
 #define kCoreDataRollThumbnailURL                   @"thumbnailURL"
 #define kCoreDataRollTitle                          @"title"
 
@@ -60,8 +62,8 @@
 #define kCoreDataUserImage                          @"userImage"
 #define kCoreDataUserToken                          @"token"
 #define kCoreDataUserNickname                       @"nickname"
-#define kCoreDataUserRollID                         @"rollID"
-#define kCoreDataUserQueueID                        @"queueID"
+#define kCoreDataUserPersonalRollID                 @"personalRollID"
+#define kCoreDataUserQueueRollID                    @"queueRollID"
 
 // Video Attribute Constants
 #define kCoreDataVideoID                            @"videoID"

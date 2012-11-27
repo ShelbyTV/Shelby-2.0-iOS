@@ -21,6 +21,7 @@
 @dynamic isSynced;
 @dynamic timestamp;
 @dynamic videoID;
+@dynamic rollID;
 @dynamic conversation;
 @dynamic stream;
 @dynamic video;

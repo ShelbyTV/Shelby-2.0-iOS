@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSNumber * frameCount;
 @property (nonatomic, retain) NSSet *frame;
 @end
 

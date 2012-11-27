@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSNumber * isSynced;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * videoID;
+@property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, retain) NSSet *stream;
 @property (nonatomic, retain) Video *video;
