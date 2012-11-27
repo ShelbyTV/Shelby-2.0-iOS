@@ -10,10 +10,9 @@ typedef enum _APIRequestType
 {
     
     APIRequestType_None = 0,
-    APIRequestType_PostAuthorization,
+    APIRequestType_PostUserAuthorization,
     APIRequestType_GetStream,
-    APIRequestType_GetQueue,
-    APIRequestType_GetRoll
+    APIRequestType_GetRollFrames
     
 } APIRequestType;
 
@@ -21,9 +20,8 @@ typedef enum _DataRequestType
 {
     
     DataRequestType_None = 0,
-    DataAPIRequestType_User,
-    DataAPIRequestType_Stream,
-    DataAPIRequestType_Queue,
-    DataAPIRequestType_Roll
+    DataRequestType_User,
+    DataRequestType_Stream,
+    DataRequestType_RollFrames
     
 } DataRequestType;

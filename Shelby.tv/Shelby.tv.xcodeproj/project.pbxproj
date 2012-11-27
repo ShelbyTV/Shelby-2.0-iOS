@@ -24,6 +24,8 @@
 		8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9616652E6E00A565BF /* MeViewController.m */; };
 		8E4A92DB1665383F00FF742D /* LoginViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE91631ABDE0044D97E /* LoginViewController.xib */; };
 		8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9716652E6E00A565BF /* MeViewController.xib */; };
+		8E4A92DF16654F0800FF742D /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92DE16654F0800FF742D /* Roll.m */; };
+		8E4A92E216654F0900FF742D /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92E116654F0900FF742D /* Frame.m */; };
 		8E4F580B1635E05F0048585C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4F580A1635E05F0048585C /* CoreData.framework */; };
 		8E82EDEA1631ABDE0044D97E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE81631ABDE0044D97E /* LoginViewController.m */; };
 		8E82EDEB1631ABDE0044D97E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E82EDE91631ABDE0044D97E /* LoginViewController.xib */; };
@@ -41,9 +43,7 @@
 		8E98F7BF165C46D20095E985 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98F7BE165C46D20095E985 /* User.m */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
-		8EF263B6166084AC00476258 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF263B5166084AC00476258 /* Frame.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
-		8EF939911664171200AE738F /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF939901664171200AE738F /* Roll.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +71,10 @@
 		8E40548C163A3C06002C8874 /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
 		8E40548E163A3C06002C8874 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		8E40548F163A3C06002C8874 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		8E4A92DD16654F0800FF742D /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
+		8E4A92DE16654F0800FF742D /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
+		8E4A92E016654F0900FF742D /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		8E4A92E116654F0900FF742D /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8E4F580A1635E05F0048585C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		8E82EDE71631ABDE0044D97E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		8E82EDE81631ABDE0044D97E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -107,12 +111,8 @@
 		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
 		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
 		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
-		8EF263B4166084AC00476258 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		8EF263B5166084AC00476258 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		8EF9398F1664171200AE738F /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
-		8EF939901664171200AE738F /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,12 +137,12 @@
 			isa = PBXGroup;
 			children = (
 				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
-				8EF9398F1664171200AE738F /* Roll.h */,
-				8EF939901664171200AE738F /* Roll.m */,
+				8E4A92DD16654F0800FF742D /* Roll.h */,
+				8E4A92E016654F0900FF742D /* Frame.h */,
+				8E4A92E116654F0900FF742D /* Frame.m */,
+				8E4A92DE16654F0800FF742D /* Roll.m */,
 				8E98F7BD165C46D20095E985 /* User.h */,
 				8E98F7BE165C46D20095E985 /* User.m */,
-				8EF263B4166084AC00476258 /* Frame.h */,
-				8EF263B5166084AC00476258 /* Frame.m */,
 				8E40548E163A3C06002C8874 /* Video.h */,
 				8E40548F163A3C06002C8874 /* Video.m */,
 				8E40548B163A3C06002C8874 /* Stream.h */,
@@ -415,8 +415,8 @@
 				8E40548D163A3C06002C8874 /* Stream.m in Sources */,
 				8E405490163A3C06002C8874 /* Video.m in Sources */,
 				8E98F7BF165C46D20095E985 /* User.m in Sources */,
-				8EF263B6166084AC00476258 /* Frame.m in Sources */,
-				8EF939911664171200AE738F /* Roll.m in Sources */,
+				8E4A92DF16654F0800FF742D /* Roll.m in Sources */,
+				8E4A92E216654F0900FF742D /* Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

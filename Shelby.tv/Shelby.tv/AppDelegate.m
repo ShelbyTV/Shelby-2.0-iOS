@@ -106,7 +106,7 @@
 - (void)pollAPI
 {
     
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataAPIRequestType_User];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_User];
     User *user = [dataUtility fetchUser];
     
     switch ( _pollAPICounter ) {
@@ -126,7 +126,7 @@
                     
                     DLog(@"Successfully fetched Stream");
                     
-                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:APIRequestType_GetStream];
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Stream];
                     [dataUtility storeStream:JSON];
                     
                 });
@@ -141,13 +141,13 @@
             
         } break;
             
-        case 1: { // Queue
+        case 1: { // Queue Roll
             
             self.pollAPICounter = 2;
             
             NSString *authToken = [user token];
             NSString *queueID = [user queueID];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRoll, queueID, authToken]];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, queueID, authToken]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             [request setHTTPMethod:@"GET"];
             
@@ -155,7 +155,8 @@
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     
-                    DLog(@"Successfully fetched Queue");
+//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_RollFrames];
+//                    [dataUtility storeRollFrames:JSON];
                     
                 });
                 
@@ -176,7 +177,7 @@
             
             NSString *authToken = [user token];
             NSString *rollID = [user rollID];
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRoll, rollID, authToken]];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, rollID, authToken]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             [request setHTTPMethod:@"GET"];
             

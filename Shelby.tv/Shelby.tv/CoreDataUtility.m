@@ -24,6 +24,7 @@
 - (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
 - (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
+- (void)storeRoll:(Roll*)roll fromFrameArray:(NSArray *)frameArray;
 - (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
 @end
@@ -79,7 +80,7 @@
                         
                     } break;
                     
-                    case DataAPIRequestType_User:{
+                    case DataRequestType_User:{
                         
                         DLog(@"Successfully stored User");
                         
@@ -87,21 +88,15 @@
                         
                     } break;
                     
-                    case DataAPIRequestType_Stream:{
+                    case DataRequestType_Stream:{
                         
                         DLog(@"Successfully stored Stream");
                         
                     } break;
-                    
-                    case DataAPIRequestType_Queue:{
                         
-                        DLog(@"Successfully stored Queue");
+                    case DataRequestType_RollFrames:{
                         
-                    } break;
-                        
-                    case DataAPIRequestType_Roll:{
-                        
-                        DLog(@"Successfully stored Roll");
+                        DLog(@"Successfully stored Frames from Roll");
                         
                     } break;
                         
@@ -206,9 +201,9 @@
     
 }
 
-- (void)storeRoll:(NSDictionary *)resultsDictionary
+- (void)storeRollFrames:(NSDictionary *)resultsDictionary
 {
-
+    
 }
 
 #pragma mark - Public Methods (Fetch)
@@ -388,6 +383,11 @@
         [messages setValue:userImage forKey:kCoreDataMessagesUserImage];
         
     }
+    
+}
+
+- (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray
+{
     
 }
 

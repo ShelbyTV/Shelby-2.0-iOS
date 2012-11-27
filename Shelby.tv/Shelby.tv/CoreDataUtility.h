@@ -22,7 +22,7 @@
 // Storage Methods
 - (void)storeUser:(NSDictionary*)resultsDictionary;
 - (void)storeStream:(NSDictionary*)resultsDictionary;
-- (void)storeRoll:(NSDictionary*)resultsDictionary;
+- (void)storeRollFrames:(NSDictionary*)resultsDictionary;
 
 // Fetching Methods
 - (User*)fetchUser;
