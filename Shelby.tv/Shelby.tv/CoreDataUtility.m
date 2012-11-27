@@ -81,15 +81,21 @@
                     
                     case DataAPIRequestType_User:{
                         
+                        DLog(@"Successfully stored User");
+                        
                         [self.appDelegate userIsAuthorized];
                         
                     } break;
                     
                     case DataAPIRequestType_Stream:{
                         
+                        DLog(@"Successfully stored Stream");
+                        
                     } break;
                     
                     case DataAPIRequestType_Queue:{
+                        
+                        DLog(@"Successfully stored Queue");
                         
                     } break;
                         
@@ -141,32 +147,6 @@
     [user setValue:queueID forKey:kCoreDataUserQueueID];
     
     [self saveContext:self.context];
-    
-    
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetStream, token]];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        
-//        CoreDataUtility *utility = [[CoreDataUtility alloc] init];
-//        [utility storeStream:JSON];
-//        
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        
-//        NSLog(@"%@", error);
-//        
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
-//                                                            message:@"Please try again"
-//                                                           delegate:nil
-//                                                  cancelButtonTitle:@"OK"
-//                                                  otherButtonTitles:nil, nil];
-//        [alertView show];
-//        
-//    }];
-//    
-//    [operation start];
-
 
 }
 
@@ -236,6 +216,7 @@
     
     // Execute request that returns array of Users
     NSArray *resultsArray = [self.context executeFetchRequest:request error:nil];
+    
     return ( [resultsArray count] ) ? [resultsArray objectAtIndex:0] : [NSNull null];
     
 }

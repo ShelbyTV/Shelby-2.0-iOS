@@ -24,8 +24,11 @@
 @property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) LoginViewController *loginViewController;
+@property (strong, nonatomic) NSTimer *pollAPITimer;
+@property (assign, nonatomic) NSUInteger pollAPICounter;
 
 - (void)createObservers;
+- (void)pollAPI;
 
 @end
 
@@ -33,6 +36,8 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize loginViewController = _loginViewController;
+@synthesize pollAPITimer = _pollAPITimer;
+@synthesize pollAPICounter = _pollAPICounter;
 @synthesize loggedInUser = _loggedInUser;
 
 #pragma mark - UIApplicationDelegate Methods
@@ -90,17 +95,85 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // Set User object in AppDelegate for quick reference
-    CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataAPIRequestType_User];
-    self.loggedInUser = [utility fetchUser];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataAPIRequestType_User];
+    self.loggedInUser = [dataUtility fetchUser];
     
     // Remove _loginViewController if it exists
     if ( _loginViewController ) [self.loginViewController dismissModalViewControllerAnimated:YES];
     
     // Begin Polling API
-    DLog(@"%@", self.loggedInUser);
+    self.pollAPICounter = 0;
+    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
+    DLog(@"Timer Started");
     
 }
 
+- (void)pollAPI
+{
+    switch ( _pollAPICounter ) {
+        
+        case 0: { // Stream
+            
+            self.pollAPICounter = 1;
+            
+            NSString *authToken = [self.loggedInUser token];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetStream, authToken]];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            [request setHTTPMethod:@"GET"];
+            
+            AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    
+                    DLog(@"Successfully fetched Stream");
+                    
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:APIRequestType_GetStream];
+                    [dataUtility storeStream:JSON];
+                    
+                });
+                
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                
+                DLog(@"Problem fetching Stream");
+                
+            }];
+            
+            [operation start];
+            
+        } break;
+            
+        case 1: { // Queue
+            
+            self.pollAPICounter = 0;
+            
+            NSString *authToken = [self.loggedInUser token];
+            NSString *queueID = [self.loggedInUser queueID];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRoll, queueID, authToken]];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            [request setHTTPMethod:@"GET"];
+            
+            AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    
+                    DLog(@"Successfully fetched Queue");
+                    
+                });
+                
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                
+                DLog(@"Problem fetching Queue");
+                
+            }];
+            
+            [operation start];
+            
+        } break;
+            
+        default:
+            break;
+    }
+}
 
 #pragma mark - Core Data Accessor Methods
 - (NSManagedObjectModel *)managedObjectModel

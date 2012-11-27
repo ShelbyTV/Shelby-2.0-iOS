@@ -9,3 +9,4 @@
 // API Calls
 #define kAPIShelbyPostAuthorizeEmail        @"https://api.shelby.tv/v1/token?email=%@&password=%@"
 #define kAPIShelbyGetStream                 @"https://api.shelby.tv/v1/dashboard?auth_token=%@"
+#define kAPIShelbyGetRoll                   @"https://api.shelby.tv/v1/roll/%@?auth_token=%@"

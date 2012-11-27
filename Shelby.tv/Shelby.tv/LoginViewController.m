@@ -52,8 +52,8 @@
         
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 
-            CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:APIRequestType_PostAuthorization];
-            [utility storeUser:JSON];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:APIRequestType_PostAuthorization];
+            [dataUtility storeUser:JSON];
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             

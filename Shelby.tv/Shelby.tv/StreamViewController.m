@@ -10,7 +10,7 @@
 
 @interface StreamViewController ()
 
-- (void)getStream;
+
 
 @end
 
@@ -38,45 +38,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    if ( [[NSUserDefaults standardUserDefaults] objectForKey:kUserAuthorizedDefault] ) {
-        
-//        [self getStream];
-
-    }
-    
 }
 
 #pragma mark - Private Methods
-- (void)getStream
-{
-    
-    NSString *authToken = [[NSUserDefaults standardUserDefaults] objectForKey:kUserAuthorizedDefault];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetStream, authToken]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
 
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
-                CoreDataUtility *cdu = [[CoreDataUtility alloc] initWithRequestType:APIRequestType_GetStream];
-                [cdu storeStream:JSON];
-                
-            });
-            
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Stream Error"
-                                                                message:@"Please try again"
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil, nil];
-            [alertView show];
-            
-        }];
-        
-        [operation start];
-}
 
 @end
