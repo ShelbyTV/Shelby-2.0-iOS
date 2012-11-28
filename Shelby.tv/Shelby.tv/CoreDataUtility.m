@@ -17,11 +17,11 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (assign, nonatomic) DataRequestType requestType;
 
+- (void)mergeChanges:(NSNotification*)notification;
+
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
-
-- (void)mergeChanges:(NSNotification*)notification;
 
 - (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
@@ -85,13 +85,13 @@
                         
                     case DataRequestType_None:{
                         
-                        DLog(@"Core Data Updated!");
+                        DLog(@"General Data Saved Successfully!");
                         
                     } break;
                     
                     case DataRequestType_User:{
                         
-                        DLog(@"Successfully stored User");
+                        DLog(@"User Data Saved Successfully!");
                         
                         [self.appDelegate userIsAuthorized];
                         
@@ -99,25 +99,25 @@
                     
                     case DataRequestType_Stream:{
                         
-                        DLog(@"Successfully stored Stream");
+                        DLog(@"Stream Data Saved Successfully!");
                         
                     } break;
                         
                     case DataRequestType_QueueRoll:{
                         
-                        DLog(@"Successfully stored Queue Roll");
+                        DLog(@"Queue Roll Data Saved Successfully!");
                         
                     } break;
                         
                     case DataRequestType_PersonalRoll:{
                         
-                        DLog(@"Successfully stored Personal Roll");
+                        DLog(@"Personal Roll Data Saved Successfully!");
                         
                     } break;
                         
                     case DataRequestType_CategoryRoll:{
                         
-                        DLog(@"Successfully stored Catogory Roll");
+                        DLog(@"Catogory Roll Data Saved Successfully!");
                         
                     } break;
                         
@@ -328,6 +328,17 @@
 }
 
 #pragma mark - Private Methods
+- (void)mergeChanges:(NSNotification *)notification
+{
+    
+    // Merge changes into the main context on the main thread
+    [self.context performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:)
+                                   withObject:notification
+                                waitUntilDone:YES];
+    
+    DLog(@"Data Merged!");
+}
+
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey
@@ -352,15 +363,6 @@
     }
     
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.context];
-}
-
-- (void)mergeChanges:(NSNotification *)notification
-{
-    
-    // Merge changes into the main context on the main thread
-    [self.context performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:)
-                                  withObject:notification
-                               waitUntilDone:YES];
 }
 
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
@@ -556,7 +558,7 @@
 - (NSManagedObjectContext*)context;
 {
 
-    if ( _context  ) { // If context is already initialized, return it.
+    if ( _context ) { // If context is already initialized, return it.
         
         return _context;
         
@@ -567,6 +569,7 @@
         _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [_context setUndoManager:nil];
         [_context setPersistentStoreCoordinator:coordinator];
+        [_context setRetainsRegisteredObjects:YES];
         
         // Set context with appropriate merge policy (depending on context's execution thread)
         if ( [NSThread isMainThread] ) {

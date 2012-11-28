@@ -104,7 +104,13 @@
 - (void)loadVideo:(NSNotification*)notification;
 {
 
-    if ( self.video == [notification.userInfo valueForKey:kSPCurrentVideo] ) {
+    CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+    NSManagedObjectContext *context = [utility context];
+    self.video = (Video*)[context existingObjectWithID:[self.video objectID] error:nil];
+    
+    Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
+    
+    if ( [self.video.providerID isEqualToString:video.providerID] ) {
         
         [[NSNotificationCenter defaultCenter] removeObserver:self];
 

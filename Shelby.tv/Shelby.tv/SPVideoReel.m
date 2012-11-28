@@ -43,7 +43,20 @@
 - (id)initWithVideoFrames:(NSArray *)videoFrames
 {
     if ( self == [super init] ) {
-        self.arrayOfVideoFrames = [[NSMutableArray alloc] initWithArray:videoFrames];
+        
+        self.arrayOfVideoFrames = [[NSMutableArray alloc] init];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+        NSManagedObjectContext *context = [dataUtility context];
+        
+        for ( NSUInteger i = 0; i < [videoFrames count]; i++ ) {
+            
+            Frame *frame = [videoFrames objectAtIndex:i];
+            NSError *error;
+            [self.arrayOfVideoFrames addObject:[context existingObjectWithID:[frame objectID] error:&error]];
+            if ( error ) DLog(@"Load Error: %@", error);
+            
+        }
+        
     }
     
     return self;
@@ -58,7 +71,7 @@
     
     [self populateScrollView];
     
-    DLog(@"%@", self.arrayOfVideoFrames);
+//    DLog(@"%@", self.arrayOfVideoFrames);
 }
 
 #pragma mark - Private Methods
@@ -73,6 +86,9 @@
 
 - (void)populateScrollView
 {
+    
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_QueueRoll];
+    self.arrayOfVideoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchQueueRollEntries]];
     
     // Local Variables
     NSUInteger numberOfVideos = [self.arrayOfVideoFrames count];
