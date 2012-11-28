@@ -86,7 +86,7 @@
     
     // Instantiate SPControlView
     SPOverlayController *overlayController = [[SPOverlayController alloc] initWithNibName:@"SPOverlayController" bundle:nil andVideoFrames:_arrayOfVideoFrames];
-    [self.appDelegate.window addSubview:overlayController.view];
+    [self.view addSubview:overlayController.view];
     
     // Instantiate Video Players
     for ( NSUInteger i = 0; i < numberOfVideos; i++ ) {
