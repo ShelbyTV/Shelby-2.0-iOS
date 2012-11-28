@@ -1,15 +1,15 @@
 //
-//  SPPlayerController.m
+//  SPVideoPlayer.m
 //  Shelby.tv
 //
 //  Created by Arthur Ariel Sabintsev on 11/1/12.
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "SPPlayerController.h"
+#import "SPVideoPlayer.h"
 #import "SPVideoExtractor.h"
 
-@interface SPPlayerController ()
+@interface SPVideoPlayer ()
 
 @property (strong, nonatomic) Video *video;
 @property (assign, nonatomic) BOOL autoPlay;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation SPPlayerController
+@implementation SPVideoPlayer
 @synthesize video = _video;
 @synthesize autoPlay = _autoPlay;
 @synthesize player = _player;

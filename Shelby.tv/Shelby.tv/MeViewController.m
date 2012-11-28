@@ -7,6 +7,7 @@
 //
 
 #import "MeViewController.h"
+#import "SPVideoReel.h"
 
 @interface MeViewController ()
 
@@ -44,30 +45,31 @@
     [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
 #pragma mark - Private Methods
 - (void)launchPlayerWithStreamEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Stream];
-    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchStreamEntries]];
+    NSArray *videoFrames = [dataUtility fetchStreamEntries];
+    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames];
+    [self presentViewController:reel animated:YES completion:nil];
     DLog(@"Stream Frames Count: %d", [videoFrames count]);
 }
 
 - (void)launchPlayerWithQueueRollEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_QueueRoll];
-    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchQueueRollEntries]];
+    NSArray *videoFrames = [dataUtility fetchQueueRollEntries];
+    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames];
+    [self presentViewController:reel animated:YES completion:nil];
     DLog(@"Queue Frames Count: %d", [videoFrames count]);
 }
 
 - (void)launchPlayerWithPersonalRollEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_PersonalRoll];
-    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchPersonalRollEntries]];
+    NSArray *videoFrames = [dataUtility fetchPersonalRollEntries];
+    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames];
+    [self presentViewController:reel animated:YES completion:nil];
     DLog(@"Roll Frames Count: %d", [videoFrames count]);
 }
 
