@@ -265,7 +265,7 @@
     
 }
 
-- (NSArray*)fetchStreamEntries
+- (NSMutableArray*)fetchStreamEntries
 {
     
     // Create fetch request
@@ -281,8 +281,18 @@
     [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     // Execute request that returns array of dashboardEntrys
-    return [self.context executeFetchRequest:request error:nil];
+    NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
     
+    // Extract Frames
+    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
+        
+        Stream *stream = (Stream*)[streamEntries objectAtIndex:0];
+        [frames addObject:stream.frame];
+        
+    }
+    
+    return frames;
 }
 
 - (NSArray*)fetchQueueRollEntries

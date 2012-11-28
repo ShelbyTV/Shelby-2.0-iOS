@@ -26,7 +26,7 @@
 
 // Fetching Methods
 - (User*)fetchUser;
-- (NSArray*)fetchStreamEntries;
+- (NSMutableArray*)fetchStreamEntries;
 - (NSArray*)fetchQueueRollEntries;
 - (NSArray*)fetchPersonalRollEntries;
 

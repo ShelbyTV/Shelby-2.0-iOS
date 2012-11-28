@@ -49,7 +49,7 @@
 - (void)launchPlayerWithStreamEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Stream];
-    NSArray *videoFrames = [dataUtility fetchStreamEntries];
+    NSArray *videoFrames = [[NSArray alloc] initWithArray:[dataUtility fetchStreamEntries]];
     SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames];
     [self presentViewController:reel animated:YES completion:nil];
     DLog(@"Stream Frames Count: %d", [videoFrames count]);
