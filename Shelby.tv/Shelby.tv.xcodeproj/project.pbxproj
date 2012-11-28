@@ -43,7 +43,7 @@
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
-		8EE50E9D1665B8EF00DF42B8 /* SPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247AF1665B7E30008F439 /* SPViewController.m */; };
+		8EE50E9D1665B8EF00DF42B8 /* SPPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247AF1665B7E30008F439 /* SPPlayerController.m */; };
 		8EE50EA11665B97300DF42B8 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE50EA01665B97300DF42B8 /* Video.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
@@ -81,8 +81,8 @@
 		8E58294216657A500098FA3A /* SPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPConstants.h; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
-		8E7247AE1665B7E30008F439 /* SPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPViewController.h; sourceTree = "<group>"; };
-		8E7247AF1665B7E30008F439 /* SPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPViewController.m; sourceTree = "<group>"; };
+		8E7247AE1665B7E30008F439 /* SPPlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPPlayerController.h; sourceTree = "<group>"; };
+		8E7247AF1665B7E30008F439 /* SPPlayerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPPlayerController.m; sourceTree = "<group>"; };
 		8E82EDE71631ABDE0044D97E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		8E82EDE81631ABDE0044D97E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		8E82EDE91631ABDE0044D97E /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -263,8 +263,8 @@
 			children = (
 				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
 				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
-				8E7247AE1665B7E30008F439 /* SPViewController.h */,
-				8E7247AF1665B7E30008F439 /* SPViewController.m */,
+				8E7247AE1665B7E30008F439 /* SPPlayerController.h */,
+				8E7247AF1665B7E30008F439 /* SPPlayerController.m */,
 			);
 			name = ShelbyPlayer;
 			sourceTree = "<group>";
@@ -404,7 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */,
-				8EE50E9D1665B8EF00DF42B8 /* SPViewController.m in Sources */,
+				8EE50E9D1665B8EF00DF42B8 /* SPPlayerController.m in Sources */,
 				8E4A92DB1665383F00FF742D /* LoginViewController.xib in Sources */,
 				8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */,
 				8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */,
