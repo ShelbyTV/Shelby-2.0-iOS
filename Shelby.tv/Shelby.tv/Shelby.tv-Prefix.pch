@@ -9,6 +9,7 @@
     // Apple Frameworks
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <AVFoundation/AVFoundation.h>
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <CoreData/CoreData.h>

@@ -27,3 +27,13 @@ typedef enum _DataRequestType
     DataRequestType_CategoryRoll
     
 } DataRequestType;
+
+typedef enum _VideoProvider
+{
+    
+    VideoProvider_None = 0,
+    VideoProvider_YouTube,
+    VideoProvider_Vimeo,
+    VideoProvider_DailyMotion
+    
+} VideoProvider;

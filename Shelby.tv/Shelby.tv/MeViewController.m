@@ -10,7 +10,7 @@
 
 @interface MeViewController ()
 
-- (void)launchPlayerWithStreamEntires;
+- (void)launchPlayerWithStreamEntries;
 - (void)launchPlayerWithQueueRollEntries;
 - (void)launchPlayerWithPersonalRollEntries;
 
@@ -50,22 +50,25 @@
 }
 
 #pragma mark - Private Methods
-- (void)launchPlayerWithStreamEntires
+- (void)launchPlayerWithStreamEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Stream];
-    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchStreamEntries] copyItems:YES];
+    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchStreamEntries]];
+    DLog(@"Stream Frames Count: %d", [videoFrames count]);
 }
 
 - (void)launchPlayerWithQueueRollEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_QueueRoll];
-    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchQueueRollEntries] copyItems:YES];
+    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchQueueRollEntries]];
+    DLog(@"Queue Frames Count: %d", [videoFrames count]);
 }
 
 - (void)launchPlayerWithPersonalRollEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_PersonalRoll];
-    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchPersonalRollEntries] copyItems:YES];
+    NSMutableArray *videoFrames = [[NSMutableArray alloc] initWithArray:[dataUtility fetchPersonalRollEntries]];
+    DLog(@"Roll Frames Count: %d", [videoFrames count]);
 }
 
 @end

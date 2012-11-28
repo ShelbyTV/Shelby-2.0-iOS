@@ -54,6 +54,7 @@
     </entity>
     <entity name="Video" representedClassName="Video" syncable="YES">
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="extractedURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="providerID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="providerName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sourceURL" optional="YES" attributeType="String" syncable="YES"/>
@@ -69,6 +70,6 @@
         <element name="Roll" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Stream" positionX="160" positionY="192" width="128" height="90"/>
         <element name="User" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="Video" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="Video" positionX="160" positionY="192" width="128" height="180"/>
     </elements>
 </model>

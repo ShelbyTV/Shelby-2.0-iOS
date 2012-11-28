@@ -9,6 +9,7 @@
 #import "APIConstants.h"
 #import "CoreDataConstants.h"
 #import "Structures.h"
+#import "SPConstants.h"
 
 // NSUserDefault Constants
 #define kUserAuthorizedDefault              @"Shelby User Authorization Stored Default"

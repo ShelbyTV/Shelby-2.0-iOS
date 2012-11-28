@@ -20,7 +20,6 @@
 		8E405484163A3C05002C8874 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405483163A3C05002C8874 /* Conversation.m */; };
 		8E40548A163A3C06002C8874 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405489163A3C05002C8874 /* Messages.m */; };
 		8E40548D163A3C06002C8874 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E40548C163A3C06002C8874 /* Stream.m */; };
-		8E405490163A3C06002C8874 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E40548F163A3C06002C8874 /* Video.m */; };
 		8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9616652E6E00A565BF /* MeViewController.m */; };
 		8E4A92DB1665383F00FF742D /* LoginViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE91631ABDE0044D97E /* LoginViewController.xib */; };
 		8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9716652E6E00A565BF /* MeViewController.xib */; };
@@ -43,6 +42,9 @@
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
+		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
+		8EE50E9D1665B8EF00DF42B8 /* SPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247AF1665B7E30008F439 /* SPViewController.m */; };
+		8EE50EA11665B97300DF42B8 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE50EA01665B97300DF42B8 /* Video.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,8 +71,6 @@
 		8E405489163A3C05002C8874 /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
 		8E40548B163A3C06002C8874 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
 		8E40548C163A3C06002C8874 /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
-		8E40548E163A3C06002C8874 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
-		8E40548F163A3C06002C8874 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		8E4A92E31665531200FF742D /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		8E4A92E41665531200FF742D /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		8E4A92E6166556C700FF742D /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
@@ -78,6 +78,11 @@
 		8E4A92E9166558A200FF742D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		8E4A92EA166558A200FF742D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E4F580A1635E05F0048585C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		8E58294216657A500098FA3A /* SPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPConstants.h; sourceTree = "<group>"; };
+		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
+		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
+		8E7247AE1665B7E30008F439 /* SPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPViewController.h; sourceTree = "<group>"; };
+		8E7247AF1665B7E30008F439 /* SPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPViewController.m; sourceTree = "<group>"; };
 		8E82EDE71631ABDE0044D97E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		8E82EDE81631ABDE0044D97E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		8E82EDE91631ABDE0044D97E /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -110,6 +115,8 @@
 		8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtility.m; sourceTree = "<group>"; };
 		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
 		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
+		8EE50E9F1665B97300DF42B8 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		8EE50EA01665B97300DF42B8 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -137,14 +144,14 @@
 			isa = PBXGroup;
 			children = (
 				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
+				8EE50E9F1665B97300DF42B8 /* Video.h */,
+				8EE50EA01665B97300DF42B8 /* Video.m */,
 				8E4A92E9166558A200FF742D /* User.h */,
 				8E4A92EA166558A200FF742D /* User.m */,
 				8E4A92E6166556C700FF742D /* Frame.h */,
 				8E4A92E7166556C700FF742D /* Frame.m */,
 				8E4A92E31665531200FF742D /* Roll.h */,
 				8E4A92E41665531200FF742D /* Roll.m */,
-				8E40548E163A3C06002C8874 /* Video.h */,
-				8E40548F163A3C06002C8874 /* Video.m */,
 				8E40548B163A3C06002C8874 /* Stream.h */,
 				8E40548C163A3C06002C8874 /* Stream.m */,
 				8E405488163A3C05002C8874 /* Messages.h */,
@@ -254,6 +261,10 @@
 		8E98F7B3165C2F750095E985 /* ShelbyPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
+				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
+				8E7247AE1665B7E30008F439 /* SPViewController.h */,
+				8E7247AF1665B7E30008F439 /* SPViewController.m */,
 			);
 			name = ShelbyPlayer;
 			sourceTree = "<group>";
@@ -322,6 +333,7 @@
 				8EF092361662A325008EE1DD /* Structures.h */,
 				8EAAEE52163A275400AEF100 /* APIConstants.h */,
 				8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */,
+				8E58294216657A500098FA3A /* SPConstants.h */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -391,6 +403,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */,
+				8EE50E9D1665B8EF00DF42B8 /* SPViewController.m in Sources */,
 				8E4A92DB1665383F00FF742D /* LoginViewController.xib in Sources */,
 				8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */,
 				8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */,
@@ -413,10 +427,10 @@
 				8E405484163A3C05002C8874 /* Conversation.m in Sources */,
 				8E40548A163A3C06002C8874 /* Messages.m in Sources */,
 				8E40548D163A3C06002C8874 /* Stream.m in Sources */,
-				8E405490163A3C06002C8874 /* Video.m in Sources */,
 				8E4A92E51665531200FF742D /* Roll.m in Sources */,
 				8E4A92E8166556C700FF742D /* Frame.m in Sources */,
 				8E4A92EB166558A200FF742D /* User.m in Sources */,
+				8EE50EA11665B97300DF42B8 /* Video.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

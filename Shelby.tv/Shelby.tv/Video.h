@@ -2,7 +2,7 @@
 //  Video.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 10/25/12.
+//  Created by Arthur Ariel Sabintsev on 11/27/12.
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * videoID;
+@property (nonatomic, retain) NSString * extractedURL;
 @property (nonatomic, retain) NSSet *frame;
 @end
 
