@@ -112,22 +112,27 @@
     
     if ( [self.video.providerID isEqualToString:video.providerID] ) {
         
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-        [self.indicator stopAnimating];
+        dispatch_async(dispatch_get_main_queue(), ^{
         
-        self.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.video.extractedURL]];
-        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-        self.playerLayer.frame = modifiedFrame;
-        self.playerLayer.bounds = modifiedFrame;
-        [self.view.layer addSublayer:self.playerLayer];
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            
+            [self.indicator stopAnimating];
+            
+            self.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.video.extractedURL]];
+            self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+            CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
+            self.playerLayer.frame = modifiedFrame;
+            self.playerLayer.bounds = modifiedFrame;
+            [self.view.layer addSublayer:self.playerLayer];
+            
+            if ( self.autoPlay ) {
+                [self play];
+            } else {
+                [self pause];
+            }
+            
+        });
         
-        if ( self.autoPlay ) {
-            [self play];
-        } else {
-            [self pause];
-        }
     }
     
 }
