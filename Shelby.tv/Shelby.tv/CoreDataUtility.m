@@ -129,13 +129,11 @@
 }
 
 - (void)dumpAllData
-{
-    
+{ 
     NSPersistentStoreCoordinator *coordinator =  [self.appDelegate persistentStoreCoordinator];
     NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
     [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
     [coordinator removePersistentStore:store error:nil];
-    
 }
 
 #pragma mark - Public Methods (Store)

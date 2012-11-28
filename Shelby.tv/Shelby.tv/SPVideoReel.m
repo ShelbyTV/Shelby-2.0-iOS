@@ -119,8 +119,7 @@
     CGFloat pageWidth = self.scrollView.frame.size.width;
     CGFloat scrollAmount = (self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
     int page = floor(scrollAmount) + 1;
-    
-    
+
     if ( page != self.currentVideo ) {
         SPVideoPlayer *oldPlayer = [self.arrayOfVideoPlayers objectAtIndex:self.currentVideo];
         [oldPlayer pause];

@@ -51,7 +51,7 @@ static SPVideoExtractor *sharedInstance = nil;
     return self;
 }
 
-#pragma mark - Video Extraction Methods
+#pragma mark - Public Methods
 - (void)queueVideo:(Video *)video
 {
     @synchronized(self) {
@@ -72,6 +72,13 @@ static SPVideoExtractor *sharedInstance = nil;
     }
 }
 
+- (void)cancelRemaningExtractions
+{
+    [self.videoQueue removeAllObjects];
+    [self.extractedVideoURLs removeAllObjects];
+}
+
+#pragma mark - Private Methods
 - (void)extractNextVideoFromQueue
 {
     if ( ![self isExtracting] && [self.videoQueue count] ) {
