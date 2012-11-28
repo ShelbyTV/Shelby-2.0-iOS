@@ -95,7 +95,8 @@
     
     // Begin Polling API
     self.pollAPICounter = 0;
-    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
+    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
+    [self.pollAPITimer fire];
     DLog(@"Poll Timer Started");
     
     // Remove _loginViewController if it exists

@@ -12,4 +12,6 @@
 
 - (id)initWithVideoFrames:(NSArray*)videoFrames;
 
+- (IBAction)homeButtonAction:(id)sender;
+
 @end

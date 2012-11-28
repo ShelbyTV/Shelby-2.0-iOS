@@ -8,7 +8,7 @@
 
 #import "SPVideoReel.h"
 #import "SPVideoPlayer.h"
-#import "SPOverlayController.h"
+#import "SPOverlayView.h"
 #import "SPVideoExtractor.h"
 
 @interface SPVideoReel ()
@@ -60,9 +60,15 @@
     [self setup];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
 {
     [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+}
+
+#pragma mark - Public Methods
+- (IBAction)homeButtonAction:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private Methods
@@ -90,12 +96,10 @@
     self.scrollView.scrollsToTop = NO;
     [self.view addSubview:self.scrollView];
     
-    // Instantiate SPControlView
-    SPOverlayController *overlayController = [[SPOverlayController alloc] initWithNibName:@"SPOverlayController"
-                                                                                   bundle:nil
-                                                                                videoReel:self
-                                                                              videoFrames:_videoFrames];
-    [self.view addSubview:overlayController.view];
+    // Instantiate SPOverlayView
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+    SPOverlayView *overlayView = [nib objectAtIndex:0];
+    [self.view addSubview:overlayView];
     
     // Instantiate Video Players
     for ( NSUInteger i = 0; i < numberOfVideos; i++ ) {

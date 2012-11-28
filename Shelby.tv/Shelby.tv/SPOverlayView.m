@@ -8,6 +8,10 @@
 
 #import "SPOverlayView.h"
 
+@interface SPOverlayView ()
+
+@end
+
 @implementation SPOverlayView
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event

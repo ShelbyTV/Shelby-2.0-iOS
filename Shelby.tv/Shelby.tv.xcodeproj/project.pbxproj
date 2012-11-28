@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */; };
 		8E209712162F3A60000A2DFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
 		8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
@@ -26,8 +27,6 @@
 		8E4A92E51665531200FF742D /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92E41665531200FF742D /* Roll.m */; };
 		8E4A92E8166556C700FF742D /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92E7166556C700FF742D /* Frame.m */; };
 		8E4A92EB166558A200FF742D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92EA166558A200FF742D /* User.m */; };
-		8E4C55731666A76C0019DD15 /* SPOverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55711666A76C0019DD15 /* SPOverlayController.m */; };
-		8E4C55741666A76C0019DD15 /* SPOverlayController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E4C55721666A76C0019DD15 /* SPOverlayController.xib */; };
 		8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		8E4F580B1635E05F0048585C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4F580A1635E05F0048585C /* CoreData.framework */; };
 		8E82EDEA1631ABDE0044D97E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE81631ABDE0044D97E /* LoginViewController.m */; };
@@ -53,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
 		8E0E7037163869F100BA0A24 /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
 		8E1FAB9516652E6E00A565BF /* MeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
 		8E1FAB9616652E6E00A565BF /* MeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
@@ -81,9 +81,6 @@
 		8E4A92E7166556C700FF742D /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8E4A92E9166558A200FF742D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		8E4A92EA166558A200FF742D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		8E4C55701666A76C0019DD15 /* SPOverlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPOverlayController.h; sourceTree = "<group>"; };
-		8E4C55711666A76C0019DD15 /* SPOverlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPOverlayController.m; sourceTree = "<group>"; };
-		8E4C55721666A76C0019DD15 /* SPOverlayController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayController.xib; sourceTree = "<group>"; };
 		8E4C55751666A9F90019DD15 /* SPOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPOverlayView.h; sourceTree = "<group>"; };
 		8E4C55761666A9F90019DD15 /* SPOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPOverlayView.m; sourceTree = "<group>"; };
 		8E4F580A1635E05F0048585C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -273,11 +270,9 @@
 			isa = PBXGroup;
 			children = (
 				8E58294216657A500098FA3A /* SPConstants.h */,
-				8E4C55701666A76C0019DD15 /* SPOverlayController.h */,
-				8E4C55711666A76C0019DD15 /* SPOverlayController.m */,
-				8E4C55721666A76C0019DD15 /* SPOverlayController.xib */,
 				8E4C55751666A9F90019DD15 /* SPOverlayView.h */,
 				8E4C55761666A9F90019DD15 /* SPOverlayView.m */,
+				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
 				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
 				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
 				8EB950511665BCF100E965E0 /* SPVideoPlayer.h */,
@@ -411,7 +406,7 @@
 				8E209724162F3A61000A2DFD /* Default.png in Resources */,
 				8E209726162F3A61000A2DFD /* Default@2x.png in Resources */,
 				8E82EDEB1631ABDE0044D97E /* LoginViewController.xib in Resources */,
-				8E4C55741666A76C0019DD15 /* SPOverlayController.xib in Resources */,
+				8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,7 +446,6 @@
 				8E4A92E8166556C700FF742D /* Frame.m in Sources */,
 				8E4A92EB166558A200FF742D /* User.m in Sources */,
 				8EE50EA11665B97300DF42B8 /* Video.m in Sources */,
-				8E4C55731666A76C0019DD15 /* SPOverlayController.m in Sources */,
 				8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
