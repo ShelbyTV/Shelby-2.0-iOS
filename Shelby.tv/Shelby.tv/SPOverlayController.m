@@ -8,14 +8,18 @@
 
 #import "SPOverlayController.h"
 #import "SPOverlayView.h"
+#import "SPVideoReel.h"
 
 @interface SPOverlayController ()
+
+@property (strong, nonatomic) SPVideoReel *videoReel;
 
 - (void)homeButtonAction;
 
 @end
 
 @implementation SPOverlayController
+@synthesize videoReel = _videoReel;
 @synthesize videoFrames = _videoFrames;
 @synthesize homeButton = _homeButton;
 
@@ -31,13 +35,17 @@
 }
 
 #pragma mark - Initialization Methods
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andVideoFrames:(NSMutableArray*)videoFrames
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+            videoReel:(SPVideoReel *)videoReel
+          videoFrames:(NSMutableArray *)videoFrames
 {
     
     if ( self == [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil] ) {
-        
+
+        self.videoReel = videoReel;
         self.videoFrames = videoFrames;
-        
+
     }
     
     return self;
@@ -54,6 +62,7 @@
 - (void)homeButtonAction
 {
     DLog(@"Home Button Tapped");
+    [self.videoReel dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

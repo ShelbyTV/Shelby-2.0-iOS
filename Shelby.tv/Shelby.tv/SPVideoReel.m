@@ -9,6 +9,7 @@
 #import "SPVideoReel.h"
 #import "SPVideoPlayer.h"
 #import "SPOverlayController.h"
+#import "SPVideoExtractor.h"
 
 @interface SPVideoReel ()
 
@@ -23,8 +24,8 @@
 
 @implementation SPVideoReel
 @synthesize appDelegate = _appDelegate;
-@synthesize videoFrames = _arrayOfVideoFrames;
-@synthesize videoPlayers = _arrayOfVideoPlayers;
+@synthesize videoFrames = _videoFrames;
+@synthesize videoPlayers = _videoPlayers;
 @synthesize scrollView = _scrollView;
 @synthesize currentVideo = _currentVideo;
 
@@ -59,6 +60,11 @@
     [self setup];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+}
+
 #pragma mark - Private Methods
 - (void)setup
 {
@@ -85,7 +91,10 @@
     [self.view addSubview:self.scrollView];
     
     // Instantiate SPControlView
-    SPOverlayController *overlayController = [[SPOverlayController alloc] initWithNibName:@"SPOverlayController" bundle:nil andVideoFrames:_arrayOfVideoFrames];
+    SPOverlayController *overlayController = [[SPOverlayController alloc] initWithNibName:@"SPOverlayController"
+                                                                                   bundle:nil
+                                                                                videoReel:self
+                                                                              videoFrames:_videoFrames];
     [self.view addSubview:overlayController.view];
     
     // Instantiate Video Players
