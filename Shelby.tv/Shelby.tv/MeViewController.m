@@ -50,7 +50,7 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Stream];
     NSArray *videoFrames = [[NSArray alloc] initWithArray:[dataUtility fetchStreamEntries]];
-    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames];
+    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames andCategoryTitle:@"Stream"];
     [self presentViewController:reel animated:YES completion:nil];
     DLog(@"Stream Frames Count: %d", [videoFrames count]);
 }
@@ -59,7 +59,7 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_QueueRoll];
     NSArray *videoFrames = [dataUtility fetchQueueRollEntries];
-    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames];
+    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames andCategoryTitle:@"Queue"];
     [self presentViewController:reel animated:YES completion:nil];
     DLog(@"Queue Frames Count: %d", [videoFrames count]);
 }
@@ -68,7 +68,7 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_PersonalRoll];
     NSArray *videoFrames = [dataUtility fetchPersonalRollEntries];
-    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames];
+    SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames andCategoryTitle:@"Personal Roll"];
     [self presentViewController:reel animated:YES completion:nil];
     DLog(@"Roll Frames Count: %d", [videoFrames count]);
 }

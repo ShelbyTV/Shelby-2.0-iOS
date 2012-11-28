@@ -16,7 +16,9 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
+@property (strong, nonatomic) UIScrollView *videoScrollView;
 @property (assign, nonatomic) NSUInteger currentVideo;
+@property (copy, nonatomic) NSString *categoryTitle;
 
 - (void)setup;
 
@@ -26,8 +28,9 @@
 @synthesize appDelegate = _appDelegate;
 @synthesize videoFrames = _videoFrames;
 @synthesize videoPlayers = _videoPlayers;
-@synthesize scrollView = _scrollView;
+@synthesize videoScrollView = _videoScrollView;
 @synthesize currentVideo = _currentVideo;
+@synthesize categoryTitle = _categoryTitle;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -41,12 +44,15 @@
 }
 
 #pragma mark - Initialization
-- (id)initWithVideoFrames:(NSArray *)videoFrames
+- (id)initWithVideoFrames:(NSArray *)videoFrames andCategoryTitle:(NSString *)title
 {
-    if ( self == [super init] ) {
+    
+    self = [super init];
+    
+    if ( self ) {
         
         self.videoFrames = [[NSMutableArray alloc] initWithArray:videoFrames];
-        
+        self.categoryTitle = title;
     }
     
     return self;
@@ -63,6 +69,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+    [self.videoFrames removeAllObjects];
+    [self.videoPlayers removeAllObjects];
 }
 
 #pragma mark - Public Methods
@@ -87,18 +95,19 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     // Instantiate ScrollView
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.scrollView.contentSize = CGSizeMake(1024.0f*numberOfVideos, 768.0f);
-    self.scrollView.delegate = self;
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    self.scrollView.scrollsToTop = NO;
-    [self.view addSubview:self.scrollView];
+    self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    self.videoScrollView.contentSize = CGSizeMake(1024.0f*numberOfVideos, 768.0f);
+    self.videoScrollView.delegate = self;
+    self.videoScrollView.pagingEnabled = YES;
+    self.videoScrollView.showsHorizontalScrollIndicator = NO;
+    self.videoScrollView.showsVerticalScrollIndicator = NO;
+    self.videoScrollView.scrollsToTop = NO;
+    [self.view addSubview:self.videoScrollView];
     
     // Instantiate SPOverlayView
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
     SPOverlayView *overlayView = [nib objectAtIndex:0];
+    [overlayView.titleLabel setText:self.categoryTitle];
     [self.view addSubview:overlayView];
     
     // Instantiate Video Players
@@ -114,12 +123,12 @@
             autoPlay = NO;
         }
         
-        CGRect viewframe = self.scrollView.frame;
+        CGRect viewframe = self.videoScrollView.frame;
         viewframe.origin.x = viewframe.size.width * i;
         viewframe.origin.y = 0.0f;
         SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe forVideo:videoFrame.video andAutoPlay:autoPlay];
         [self.videoPlayers addObject:player];
-        [self.scrollView addSubview:player.view];
+        [self.videoScrollView addSubview:player.view];
     
     }
     
@@ -129,8 +138,8 @@
 - (void)scrollViewDidScroll:(UIScrollView *)sender
 {
     // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = self.scrollView.frame.size.width;
-    CGFloat scrollAmount = (self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
+    CGFloat pageWidth = self.videoScrollView.frame.size.width;
+    CGFloat scrollAmount = (self.videoScrollView.contentOffset.x - pageWidth / 2) / pageWidth;
     int page = floor(scrollAmount) + 1;
 
     if ( page != self.currentVideo ) {

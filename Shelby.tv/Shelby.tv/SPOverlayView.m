@@ -29,4 +29,9 @@
     return NO;
 }
 
+- (void)awakeFromNib
+{
+
+}
+
 @end

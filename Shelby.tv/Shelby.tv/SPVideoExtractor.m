@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIWebView *webView;
 @property (assign, nonatomic) BOOL isExtracting;
 @property (strong, nonatomic) NSMutableArray *extractedVideoURLs;
+@property (strong, nonatomic) NSTimer *extractionTimer;
 
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
@@ -29,6 +30,7 @@
 @synthesize videoQueue = _videoQueue;
 @synthesize webView = _webView;
 @synthesize isExtracting = _isExtracting;
+@synthesize extractionTimer = _extractionTimer;
 
 #pragma mark - Singleton Methods
 static SPVideoExtractor *sharedInstance = nil;
@@ -56,14 +58,14 @@ static SPVideoExtractor *sharedInstance = nil;
 {
     @synchronized(self) {
         
-        // If th
-        if ( ![self extractedVideoURLs] ) {
-            self.extractedVideoURLs = [NSMutableArray array];
-        }
-        
         // If queue is empty
         if ( ![self videoQueue] ) {
             self.videoQueue = [NSMutableArray array];
+        }
+        
+        // If no videos have been extracted since latest creation of current instance of SPVideoReel object
+        if ( ![self extractedVideoURLs] ) {
+            self.extractedVideoURLs = [NSMutableArray array];
         }
         
         [self.videoQueue addObject:video];
@@ -75,8 +77,10 @@ static SPVideoExtractor *sharedInstance = nil;
 - (void)cancelRemainingExtractions
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.extractionTimer invalidate];
     [self.videoQueue removeAllObjects];
     [self.extractedVideoURLs removeAllObjects];
+    DLog(@"Remaining Extractions Cancelled!");
 }
 
 #pragma mark - Private Methods
@@ -220,16 +224,14 @@ static SPVideoExtractor *sharedInstance = nil;
                             
                         });
 
-                        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
+                        self.extractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
                         
                     }
                     
                 }
             }
-            
         }
     }
-    
 }
 
 @end

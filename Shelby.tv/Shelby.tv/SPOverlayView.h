@@ -9,5 +9,6 @@
 @interface SPOverlayView : UIView
 
 @property (weak, nonatomic) IBOutlet UIButton *homeButton;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @end

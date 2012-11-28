@@ -8,9 +8,7 @@
 
 @interface SPVideoReel : UIViewController <UIScrollViewDelegate>
 
-@property (strong, nonatomic) UIScrollView *scrollView;
-
-- (id)initWithVideoFrames:(NSArray*)videoFrames;
+- (id)initWithVideoFrames:(NSArray*)videoFrames andCategoryTitle:(NSString*)title;
 
 - (IBAction)homeButtonAction:(id)sender;
 
