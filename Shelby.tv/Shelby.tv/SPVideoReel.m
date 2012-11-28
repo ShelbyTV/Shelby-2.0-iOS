@@ -8,23 +8,23 @@
 
 #import "SPVideoReel.h"
 #import "SPVideoPlayer.h"
+#import "SPOverlayController.h"
 
 @interface SPVideoReel ()
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
-@property (strong, nonatomic) NSMutableArray *arrayOfVideoFrames;
-@property (strong, nonatomic) NSMutableArray *arrayOfVideoPlayers;
+@property (strong, nonatomic) NSMutableArray *videoFrames;
+@property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (assign, nonatomic) NSUInteger currentVideo;
 
 - (void)setup;
-- (void)populateScrollView;
 
 @end
 
 @implementation SPVideoReel
 @synthesize appDelegate = _appDelegate;
-@synthesize arrayOfVideoFrames = _arrayOfVideoFrames;
-@synthesize arrayOfVideoPlayers = _arrayOfVideoPlayers;
+@synthesize videoFrames = _arrayOfVideoFrames;
+@synthesize videoPlayers = _arrayOfVideoPlayers;
 @synthesize scrollView = _scrollView;
 @synthesize currentVideo = _currentVideo;
 
@@ -44,7 +44,7 @@
 {
     if ( self == [super init] ) {
         
-        self.arrayOfVideoFrames = [[NSMutableArray alloc] initWithArray:videoFrames];
+        self.videoFrames = [[NSMutableArray alloc] initWithArray:videoFrames];
         
     }
     
@@ -57,27 +57,24 @@
     [super viewDidLoad];
     
     [self setup];
-    
-    [self populateScrollView];
-
 }
 
 #pragma mark - Private Methods
 - (void)setup
 {
+    
+    // Declare Class-Local Variables
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.videoPlayers = [[NSMutableArray alloc] init];
+    
+    // Declare Method-Local Variables
+    NSUInteger numberOfVideos = [self.videoFrames count];
+    
+    // Customzie View
     self.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
     self.view.backgroundColor = [UIColor blackColor];
-    self.arrayOfVideoPlayers = [NSMutableArray array];
-}
-
-- (void)populateScrollView
-{
     
-    // Local Variables
-    NSUInteger numberOfVideos = [self.arrayOfVideoFrames count];
-    
-    // Configure ScrollView
+    // Instantiate ScrollView
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
     self.scrollView.contentSize = CGSizeMake(1024.0f*numberOfVideos, 768.0f);
     self.scrollView.delegate = self;
@@ -85,13 +82,16 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.scrollsToTop = NO;
-
     [self.view addSubview:self.scrollView];
     
-    // Initialize Video Players
+    // Instantiate SPControlView
+    SPOverlayController *overlayController = [[SPOverlayController alloc] initWithNibName:@"SPOverlayController" bundle:nil andVideoFrames:_arrayOfVideoFrames];
+    [self.appDelegate.window addSubview:overlayController.view];
+    
+    // Instantiate Video Players
     for ( NSUInteger i = 0; i < numberOfVideos; i++ ) {
         
-        Frame *videoFrame = [self.arrayOfVideoFrames objectAtIndex:i];
+        Frame *videoFrame = [self.videoFrames objectAtIndex:i];
         
         BOOL autoPlay;
         if ( 0 == i ) {
@@ -105,7 +105,7 @@
         viewframe.origin.x = viewframe.size.width * i;
         viewframe.origin.y = 0.0f;
         SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe forVideo:videoFrame.video andAutoPlay:autoPlay];
-        [self.arrayOfVideoPlayers addObject:player];
+        [self.videoPlayers addObject:player];
         [self.scrollView addSubview:player.view];
     
     }
@@ -121,9 +121,9 @@
     int page = floor(scrollAmount) + 1;
 
     if ( page != self.currentVideo ) {
-        SPVideoPlayer *oldPlayer = [self.arrayOfVideoPlayers objectAtIndex:self.currentVideo];
+        SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:self.currentVideo];
         [oldPlayer pause];
-        SPVideoPlayer *newPlayer = [self.arrayOfVideoPlayers objectAtIndex:page];
+        SPVideoPlayer *newPlayer = [self.videoPlayers objectAtIndex:page];
         [newPlayer play];
         self.currentVideo = page;
     }

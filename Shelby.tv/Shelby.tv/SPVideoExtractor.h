@@ -11,7 +11,7 @@
 @interface SPVideoExtractor : NSObject
 
 - (void)queueVideo:(Video*)video;
-- (void)cancelRemaningExtractions;
+- (void)cancelRemainingExtractions;
 
 + (SPVideoExtractor*)sharedInstance;
 

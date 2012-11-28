@@ -56,7 +56,7 @@ static SPVideoExtractor *sharedInstance = nil;
 {
     @synchronized(self) {
         
-        // Initialize
+        // If th
         if ( ![self extractedVideoURLs] ) {
             self.extractedVideoURLs = [NSMutableArray array];
         }
@@ -72,7 +72,7 @@ static SPVideoExtractor *sharedInstance = nil;
     }
 }
 
-- (void)cancelRemaningExtractions
+- (void)cancelRemainingExtractions
 {
     [self.videoQueue removeAllObjects];
     [self.extractedVideoURLs removeAllObjects];

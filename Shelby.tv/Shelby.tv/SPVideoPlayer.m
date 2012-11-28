@@ -101,7 +101,7 @@
 }
 
 #pragma mark - Video Loading Methods
-- (void)loadVideo:(NSNotification*)notification;
+- (void)loadVideo:(NSNotification*)notification
 {
 
     CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
