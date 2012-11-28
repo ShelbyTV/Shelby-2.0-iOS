@@ -21,6 +21,8 @@
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
 
+- (void)mergeChanges:(NSNotification*)notification;
+
 - (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
 - (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
@@ -33,6 +35,12 @@
 @synthesize context = _context;
 @synthesize appDelegate = _appDelegate;
 @synthesize requestType = _requestType;
+
+#pragma mark - Memory Management
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_context];
+}
 
 #pragma mark - Initialization Methods
 - (id)initWithRequestType:(DataRequestType)requestType
@@ -116,10 +124,8 @@
                     default:
                         break;
                 }
-                
             }
         }
-
 }
 
 - (void)dumpAllData
@@ -159,7 +165,7 @@
     NSString *queueRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
     [user setValue:queueRollID forKey:kCoreDataUserQueueRollID];
     
-    [self saveContext:self.context];
+    [self saveContext:_context];
 
 }
 
@@ -209,7 +215,7 @@
         }
     }
     
-    [self saveContext:self.context];
+    [self saveContext:_context];
     
 }
 
@@ -238,7 +244,7 @@
             }
         }
     
-    [self saveContext:self.context];
+    [self saveContext:_context];
 }
 
 #pragma mark - Public Methods (Fetch)
@@ -348,6 +354,14 @@
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.context];
 }
 
+- (void)mergeChanges:(NSNotification *)notification
+{
+    
+    // Merge changes into the main context on the main thread
+    [self.context performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:)
+                                  withObject:notification
+                               waitUntilDone:YES];
+}
 
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
 {
@@ -568,6 +582,9 @@
         }
     
     }
+    
+    // Add observer for mergining contexts
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeChanges:) name:NSManagedObjectContextDidSaveNotification object:_context];
     
     return _context;
 
