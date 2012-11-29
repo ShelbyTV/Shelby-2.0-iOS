@@ -17,10 +17,16 @@
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
+@property (strong, nonatomic) SPOverlayView *overlayView;
 @property (assign, nonatomic) NSUInteger currentVideo;
+@property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (copy, nonatomic) NSString *categoryTitle;
 
-- (void)setup;
+- (void)setupVariables;
+- (void)setupVideoScrollView;
+- (void)setupOverlayView;
+- (void)loadPlayers;
+- (void)toggleOverlay;
 
 @end
 
@@ -29,7 +35,9 @@
 @synthesize videoFrames = _videoFrames;
 @synthesize videoPlayers = _videoPlayers;
 @synthesize videoScrollView = _videoScrollView;
+@synthesize overlayView = _overlayView;
 @synthesize currentVideo = _currentVideo;
+@synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 
 #pragma mark - Memory Management
@@ -46,7 +54,6 @@
 #pragma mark - Initialization
 - (id)initWithVideoFrames:(NSArray *)videoFrames andCategoryTitle:(NSString *)title
 {
-    
     self = [super init];
     
     if ( self ) {
@@ -63,7 +70,13 @@
 {
     [super viewDidLoad];
     
-    [self setup];
+    self.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
+    self.view.backgroundColor = [UIColor blackColor];
+    
+    [self setupVariables];
+    [self setupVideoScrollView];
+    [self setupOverlayView];
+    [self loadPlayers];
 }
 
 #pragma mark - Public Methods
@@ -73,38 +86,43 @@
 }
 
 #pragma mark - Private Methods
-- (void)setup
+- (void)setupVariables
 {
-    
-    // Declare Class-Local Variables
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.videoPlayers = [[NSMutableArray alloc] init];
+    self.numberOfVideos = [self.videoFrames count];
     
-    // Declare Method-Local Variables
-    NSUInteger numberOfVideos = [self.videoFrames count];
-    
-    // Customzie View
-    self.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
-    self.view.backgroundColor = [UIColor blackColor];
-    
-    // Instantiate ScrollView
+}
+
+- (void)setupVideoScrollView
+{
     self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.videoScrollView.contentSize = CGSizeMake(1024.0f*numberOfVideos, 768.0f);
+    self.videoScrollView.contentSize = CGSizeMake(1024.0f*_numberOfVideos, 768.0f);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;
     self.videoScrollView.showsHorizontalScrollIndicator = NO;
     self.videoScrollView.showsVerticalScrollIndicator = NO;
     self.videoScrollView.scrollsToTop = NO;
     [self.view addSubview:self.videoScrollView];
-    
-    // Instantiate SPOverlayView
+}
+
+- (void)setupOverlayView
+{
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
-    SPOverlayView *overlayView = [nib objectAtIndex:0];
-    [overlayView.titleLabel setText:self.categoryTitle];
-    [self.view addSubview:overlayView];
+    self.overlayView = [nib objectAtIndex:0];
+    [_overlayView.titleLabel setText:self.categoryTitle];
+    [self.view addSubview:_overlayView];
     
-    // Instantiate Video Players
-    for ( NSUInteger i = 0; i < numberOfVideos; i++ ) {
+    UITapGestureRecognizer *toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOverlay)];
+    [toggleOverlayGesuture setNumberOfTapsRequired:1];
+    [self.view addGestureRecognizer:toggleOverlayGesuture];
+}
+
+
+- (void)loadPlayers
+{
+    
+    for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
         Frame *videoFrame = [self.videoFrames objectAtIndex:i];
         
@@ -124,7 +142,23 @@
         [self.videoScrollView addSubview:player.view];
     
     }
-    
+}
+
+- (void)toggleOverlay
+{
+    if ( self.overlayView.alpha < 1.0f ) {
+        
+        [UIView animateWithDuration:0.5f animations:^{
+            [self.overlayView setAlpha:1.0f];
+        }];
+        
+    } else {
+        
+        [UIView animateWithDuration:0.5f animations:^{
+            [self.overlayView setAlpha:0.0f];
+        }];
+        
+    }
 }
 
 #pragma mark - UIScrollViewDelegate Methods
