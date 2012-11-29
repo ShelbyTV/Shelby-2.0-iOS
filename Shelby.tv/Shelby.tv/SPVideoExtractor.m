@@ -212,7 +212,9 @@ static SPVideoExtractor *sharedInstance = nil;
                             Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
                             video.extractedURL = extractedURL;
                             [dataUtility saveContext:context];
+                            
                             DLog(@"Extracted: %@", video.title);
+                            
                             NSDictionary *videoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:video, kSPCurrentVideo, nil];
                             [[NSNotificationCenter defaultCenter] postNotificationName:kSPVideoExtracted
                                                                                 object:nil

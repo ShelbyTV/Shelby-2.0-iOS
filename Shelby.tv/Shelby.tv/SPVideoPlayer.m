@@ -32,6 +32,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+    self.player.load
 }
 
 #pragma mark - Initialization Methods
@@ -73,12 +74,6 @@
     [self.indicator startAnimating];
     [self.view addSubview:self.indicator];
     
-}
-
-- (void)viewDiDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    self.player = nil;
 }
 
 #pragma mark - Player Controls

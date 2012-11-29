@@ -492,7 +492,7 @@
     NSString *creatorID = [NSString coreDataNullTest:[rollArray valueForKey:@"creator_id"]];
     [roll setValue:creatorID forKey:kCoreDataRollCreatorID];
     
-    NSString *frameCount = [rollArray valueForKey:@"frame_count"];
+    NSString *frameCount = [NSString coreDataNullTest:[rollArray valueForKey:@"frame_count"]];
     [roll setValue:[NSNumber numberWithInteger:[frameCount integerValue]] forKey:kCoreDataRollFrameCount];
     
     NSString *thumbnailURL = [NSString coreDataNullTest:[rollArray valueForKey:@"thumbnail_url"]];

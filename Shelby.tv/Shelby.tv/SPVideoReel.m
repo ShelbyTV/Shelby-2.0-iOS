@@ -35,7 +35,7 @@
 #pragma mark - Memory Management
 - (void)dealloc
 {
-    
+    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,13 +64,6 @@
     [super viewDidLoad];
     
     [self setup];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-    [self.videoFrames removeAllObjects];
-    [self.videoPlayers removeAllObjects];
 }
 
 #pragma mark - Public Methods
