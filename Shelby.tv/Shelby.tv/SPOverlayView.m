@@ -13,7 +13,37 @@
 @end
 
 @implementation SPOverlayView
+@synthesize homeButton = _homeButton;
+@synthesize titleLabel = _titleLabel;
+@synthesize controlBarView = _controlBarView;
+@synthesize containerView = _containerView;
+@synthesize currentVideoInfoView = _currentVideoInfoView;
+@synthesize videoListScrollView = _videoListScrollView;
+@synthesize shareButton = _shareButton;
+@synthesize playButton = _playButton;
+@synthesize airPlayButton = _airPlayButton;
 
+#pragma mark - Memory Management
+- (void)dealloc
+{
+    self.homeButton = nil;
+    self.titleLabel = nil;
+    self.controlBarView = nil;
+    self.containerView = nil;
+    self.currentVideoInfoView = nil;
+    self.videoListScrollView = nil;
+    self.shareButton = nil;
+    self.playButton = nil;
+    self.airPlayButton = nil;
+}
+
+#pragma mark - Customization on Instantiation
+- (void)awakeFromNib
+{
+    
+}
+
+#pragma mark - UIView Overridden Methods
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
     // If one of our subviews wants it, return YES
@@ -27,11 +57,6 @@
     
     // Return NO (acts like userInteractionEnabled = NO)
     return NO;
-}
-
-- (void)awakeFromNib
-{
-
 }
 
 @end

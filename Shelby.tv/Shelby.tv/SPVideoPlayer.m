@@ -32,7 +32,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
-    self.player.load
 }
 
 #pragma mark - Initialization Methods
