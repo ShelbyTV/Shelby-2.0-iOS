@@ -136,7 +136,10 @@
     NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", frame.video.title, shareLink];
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
-    [self.sharePopOverController presentPopoverFromRect:self.overlayView.shareButton.frame inView:self.overlayView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    [self.sharePopOverController presentPopoverFromRect:self.overlayView.shareButton.frame
+                                                 inView:self.overlayView.currentVideoInfoView
+                               permittedArrowDirections:UIPopoverArrowDirectionDown
+                                               animated:YES];
 }
 
 #pragma mark - Video Loading Methods
