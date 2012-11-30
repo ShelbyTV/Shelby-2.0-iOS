@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
 @property (strong, nonatomic) SPOverlayView *overlayView;
+@property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (copy, nonatomic) NSString *categoryTitle;
@@ -37,16 +38,12 @@
 @synthesize videoPlayers = _videoPlayers;
 @synthesize videoScrollView = _videoScrollView;
 @synthesize overlayView = _overlayView;
+@synthesize currentVideoPlayer = _currentVideoPlayer;
 @synthesize currentVideo = _currentVideo;
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 
 #pragma mark - Memory Management
-- (void)dealloc
-{
-    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -85,6 +82,33 @@
 - (IBAction)homeButtonAction:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // Stops residual video playback
+    for ( SPVideoPlayer *player in _videoPlayers ) {
+        DLog(@"HERE");
+        [player.player pause];
+        
+    }
+    
+    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+    [self.videoPlayers removeAllObjects];
+    [self.videoFrames removeAllObjects];
+    
+}
+
+- (IBAction)playButtonAction:(id)sender
+{
+    [self.currentVideoPlayer play];
+}
+
+- (IBAction)airplayButtonAction:(id)sender
+{
+    [self.currentVideoPlayer airPlay];
+}
+
+- (IBAction)shareButtonAction:(id)sender
+{
+    [self.currentVideoPlayer share];
 }
 
 #pragma mark - Private Methods
@@ -117,6 +141,7 @@
     UITapGestureRecognizer *toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOverlay)];
     [toggleOverlayGesuture setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:toggleOverlayGesuture];
+    
 }
 
 - (void)setupVideoPlayers
@@ -136,12 +161,21 @@
         CGRect viewframe = self.videoScrollView.frame;
         viewframe.origin.x = viewframe.size.width * i;
         viewframe.origin.y = 0.0f;
-        SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe forVideo:videoFrame.video andAutoPlay:autoPlay];
+        SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
+                                                        forVideoFrame:videoFrame
+                                                        inOverlayView:_overlayView
+                                                    andShouldAutoPlay:autoPlay];
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
         
-        // begin extracting video for first two SPVideoPlayer objects
-        if ( 0 == i || 1 == i ) {
+        // Extracting video for the first two SPVideoPlayer objects
+        if ( 0 == i ) {
+            
+            [self extractVideoForVideoPlayer:i];
+            self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
+        
+        } else if ( 1 == i ) {
+            
             [self extractVideoForVideoPlayer:i];
         }
 
@@ -185,21 +219,29 @@
     CGFloat scrollAmount = (self.videoScrollView.contentOffset.x - pageWidth / 2) / pageWidth;
     int page = floor(scrollAmount) + 1;
 
+    // Toggle playback on old and new SPVideoPlayer objects
     if ( page != self.currentVideo ) {
         
         SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:self.currentVideo];
-        [oldPlayer pause];
+        [oldPlayer.player pause];
+        
         SPVideoPlayer *newPlayer = [self.videoPlayers objectAtIndex:page];
         [newPlayer play];
-        self.currentVideo = page;
         
+        self.currentVideo = page;
     }
     
     // Load video for newly visible SPVideoPlayer object, and SPVideoPlayer objects flanking the currently visible player.
     if ( page > 0 ) [self extractVideoForVideoPlayer:page-1];
     [self extractVideoForVideoPlayer:page];
-    if ( page < _numberOfVideos ) [self extractVideoForVideoPlayer:page+1];
+    if ( page < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1];
     
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // Reset currentVideoPlayer reference after scrolling has finished
+    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
 }
 
 @end

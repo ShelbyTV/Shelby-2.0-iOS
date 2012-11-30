@@ -8,3 +8,4 @@
 
 #define kSPVideoExtracted       @"Video Extracted"
 #define kSPCurrentVideo         @"Current Video"
+#define kSPVideoShareLink       @"http://www.shelby.tv/roll/%@/frames/%@"

@@ -29,6 +29,7 @@
 		8E4A92EB166558A200FF742D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92EA166558A200FF742D /* User.m */; };
 		8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		8E4F580B1635E05F0048585C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4F580A1635E05F0048585C /* CoreData.framework */; };
+		8E80C5CC16696994004DAB04 /* ShareActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E80C5CB16696994004DAB04 /* ShareActivity.m */; };
 		8E82EDEA1631ABDE0044D97E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE81631ABDE0044D97E /* LoginViewController.m */; };
 		8E82EDEB1631ABDE0044D97E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E82EDE91631ABDE0044D97E /* LoginViewController.xib */; };
 		8E82EE061631C7860044D97E /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDF41631C7860044D97E /* AFHTTPClient.m */; };
@@ -87,6 +88,8 @@
 		8E58294216657A500098FA3A /* SPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPConstants.h; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
+		8E80C5CA16696994004DAB04 /* ShareActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareActivity.h; sourceTree = "<group>"; };
+		8E80C5CB16696994004DAB04 /* ShareActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareActivity.m; sourceTree = "<group>"; };
 		8E82EDE71631ABDE0044D97E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		8E82EDE81631ABDE0044D97E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		8E82EDE91631ABDE0044D97E /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -307,6 +310,8 @@
 			isa = PBXGroup;
 			children = (
 				8EF5C350162F41B00075C35F /* Xibs */,
+				8E80C5CA16696994004DAB04 /* ShareActivity.h */,
+				8E80C5CB16696994004DAB04 /* ShareActivity.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -447,6 +452,7 @@
 				8E4A92EB166558A200FF742D /* User.m in Sources */,
 				8EE50EA11665B97300DF42B8 /* Video.m in Sources */,
 				8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */,
+				8E80C5CC16696994004DAB04 /* ShareActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

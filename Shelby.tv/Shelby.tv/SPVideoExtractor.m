@@ -204,7 +204,7 @@ static SPVideoExtractor *sharedInstance = nil;
                         
                     } else {
                         
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        dispatch_async(dispatch_get_main_queue(), ^{
                             
                             [self.extractedVideoURLs addObject:extractedURL];
                             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
@@ -224,9 +224,9 @@ static SPVideoExtractor *sharedInstance = nil;
                             [self.videoQueue removeObjectAtIndex:0];
                             [self setIsExtracting:NO];
                             
+                            self.extractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
+                            
                         });
-
-                        self.extractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
                         
                     }
                     
