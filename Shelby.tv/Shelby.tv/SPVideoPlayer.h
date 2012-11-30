@@ -8,8 +8,10 @@
 
 @interface SPVideoPlayer : UIViewController
 
-- (id)initWithBounds:(CGRect)bounds forVideo:(Video*)video andAutoPlay:(BOOL)autoPlay;
+@property (assign, nonatomic) BOOL videoQueued;
 
+- (id)initWithBounds:(CGRect)bounds forVideo:(Video*)video andAutoPlay:(BOOL)autoPlay;
+- (void)queueVideo;
 - (void)play;
 - (void)pause;
 - (void)airPlay;

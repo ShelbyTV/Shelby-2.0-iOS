@@ -27,6 +27,7 @@
 @synthesize player = _player;
 @synthesize playerLayer = _playerLayer;
 @synthesize indicator = _indicator;
+@synthesize videoQueued = _videoQueued;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -42,25 +43,28 @@
         [self.view setFrame:bounds];
         [self setVideo:video];
         [self setAutoPlay:autoPlay];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(loadVideo:)
-                                                     name:kSPVideoExtracted
-                                                   object:nil];
-
-        [[SPVideoExtractor sharedInstance] queueVideo:video];
+        [self setVideoQueued:NO];
         
     }
     
     return self;
 }
 
-#pragma mark - View Lifecycle Methods
-- (void)viewDidLoad
+#pragma mark - Public Methods
+- (void)queueVideo
 {
-    [super viewDidLoad];
+ 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadVideo:)
+                                                 name:kSPVideoExtracted
+                                               object:nil];
+    
+    [[SPVideoExtractor sharedInstance] queueVideo:_video];
+    
+    [self setVideoQueued:YES];
 }
 
+#pragma mark - View Lifecycle Methods
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -78,7 +82,7 @@
 #pragma mark - Player Controls
 - (void)play
 {
-    if ( 0.0 == self.player.rate ) {
+    if ( 0.0 == self.player.rate && _videoQueued ) {
         
         NSError *activationError = nil;
         NSError *setCategoryError = nil;
@@ -87,12 +91,13 @@
         
         [self.player play];
     } 
-    
 }
 
 - (void)pause
 {
-    [self.player pause];
+    if ( _videoQueued ) {
+        [self.player pause];
+    }
 }
 
 - (void)airPlay

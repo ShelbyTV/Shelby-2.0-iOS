@@ -25,7 +25,8 @@
 - (void)setupVariables;
 - (void)setupVideoScrollView;
 - (void)setupOverlayView;
-- (void)loadPlayers;
+- (void)setupVideoPlayers;
+- (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
 - (void)toggleOverlay;
 
 @end
@@ -76,7 +77,8 @@
     [self setupVariables];
     [self setupVideoScrollView];
     [self setupOverlayView];
-    [self loadPlayers];
+    [self setupVideoPlayers];
+    
 }
 
 #pragma mark - Public Methods
@@ -91,7 +93,6 @@
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.videoPlayers = [[NSMutableArray alloc] init];
     self.numberOfVideos = [self.videoFrames count];
-    
 }
 
 - (void)setupVideoScrollView
@@ -118,10 +119,8 @@
     [self.view addGestureRecognizer:toggleOverlayGesuture];
 }
 
-
-- (void)loadPlayers
+- (void)setupVideoPlayers
 {
-    
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
         Frame *videoFrame = [self.videoFrames objectAtIndex:i];
@@ -140,8 +139,25 @@
         SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe forVideo:videoFrame.video andAutoPlay:autoPlay];
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
-    
+        
+        // begin extracting video for first two SPVideoPlayer objects
+        if ( 0 == i || 1 == i ) {
+            [self extractVideoForVideoPlayer:i];
+        }
+
     }
+}
+- (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
+{
+    
+    SPVideoPlayer *player = [self.videoPlayers objectAtIndex:videoPlayerNumber];
+    
+    if ( (videoPlayerNumber > _numberOfVideos) || [player videoQueued] ) {
+        return;
+    } else {
+       [player queueVideo];
+    }
+
 }
 
 - (void)toggleOverlay
@@ -170,12 +186,19 @@
     int page = floor(scrollAmount) + 1;
 
     if ( page != self.currentVideo ) {
+        
         SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:self.currentVideo];
         [oldPlayer pause];
         SPVideoPlayer *newPlayer = [self.videoPlayers objectAtIndex:page];
         [newPlayer play];
         self.currentVideo = page;
+        
     }
+    
+    // Load video for newly visible SPVideoPlayer object, and SPVideoPlayer objects flanking the currently visible player.
+    if ( page > 0 ) [self extractVideoForVideoPlayer:page-1];
+    [self extractVideoForVideoPlayer:page];
+    if ( page < _numberOfVideos ) [self extractVideoForVideoPlayer:page+1];
     
 }
 
