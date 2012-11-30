@@ -99,8 +99,8 @@
         
             NSError *activationError = nil;
             NSError *setCategoryError = nil;
-            [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryError];
-            [[AVAudioSession sharedInstance] setActive: YES error: &activationError];
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+            [[AVAudioSession sharedInstance] setActive:YES error:&activationError];
             
             [self.player play];
             
@@ -146,7 +146,6 @@
 - (void)loadVideo:(NSNotification*)notification
 {
 
-    dispatch_async(dispatch_get_main_queue(), ^{
 
         CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
         NSManagedObjectContext *context = [utility context];
@@ -156,7 +155,6 @@
         
         if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
             
-                    
                 [[NSNotificationCenter defaultCenter] removeObserver:self];
                 
                 [self.indicator stopAnimating];
@@ -171,7 +169,11 @@
                 if ( self.autoPlay ) { // Start AVPlayer object in play mode
                     
                     [self play];
-                
+                    
+                    [UIView animateWithDuration:1.0f animations:^{
+                        [self.overlayView setAlpha:0.0f];
+                    }];
+                    
                 }  else { // Start AVPlayer object in 'pause' mode
                 
                     [self.player pause];
@@ -181,7 +183,6 @@
             
             }
         
-    });
 }
 
 @end

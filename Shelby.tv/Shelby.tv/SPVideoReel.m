@@ -81,11 +81,12 @@
 #pragma mark - Public Methods
 - (IBAction)homeButtonAction:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+    DLog(@"BEFORE: %@", self.videoPlayers);
     
     // Stops residual video playback
     for ( SPVideoPlayer *player in _videoPlayers ) {
-        DLog(@"HERE");
+        
         [player.player pause];
         
     }
@@ -94,6 +95,14 @@
     [self.videoPlayers removeAllObjects];
     [self.videoFrames removeAllObjects];
     
+    NSError *activationError = nil;
+    NSError *setCategoryError = nil;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    [[AVAudioSession sharedInstance] setActive:NO error:&activationError];
+    
+    DLog(@"AFTER: %@", self.videoPlayers);
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)playButtonAction:(id)sender
