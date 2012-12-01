@@ -82,8 +82,6 @@
 - (IBAction)homeButtonAction:(id)sender
 {
 
-    DLog(@"BEFORE: %@", self.videoPlayers);
-    
     // Stops residual video playback
     for ( SPVideoPlayer *player in _videoPlayers ) {
         
@@ -99,8 +97,6 @@
     NSError *setCategoryError = nil;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
     [[AVAudioSession sharedInstance] setActive:NO error:&activationError];
-    
-    DLog(@"AFTER: %@", self.videoPlayers);
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -223,11 +219,17 @@
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidScroll:(UIScrollView *)sender
 {
+
+    
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
     // Switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = self.videoScrollView.frame.size.width;
     CGFloat scrollAmount = (self.videoScrollView.contentOffset.x - pageWidth / 2) / pageWidth;
     int page = floor(scrollAmount) + 1;
-
+    
     // Toggle playback on old and new SPVideoPlayer objects
     if ( page != self.currentVideo ) {
         
@@ -245,10 +247,6 @@
     [self extractVideoForVideoPlayer:page];
     if ( page < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1];
     
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
 }
