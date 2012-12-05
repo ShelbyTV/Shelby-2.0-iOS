@@ -46,8 +46,10 @@
         
     } else {
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyPostAuthorizeEmail, self.emailField.text, self.passwordField.text]];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        NSString *requestString = [NSString stringWithFormat:kAPIShelbyPostAuthorizeEmail, self.emailField.text, self.passwordField.text];
+        [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL *requestURL = [NSURL URLWithString:requestString];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
         [request setHTTPMethod:@"POST"];
         
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {

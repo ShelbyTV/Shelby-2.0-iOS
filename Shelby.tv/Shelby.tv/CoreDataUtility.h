@@ -9,9 +9,9 @@
 @interface CoreDataUtility : NSObject
 
 @property (strong, nonatomic, readonly) NSManagedObjectContext *context;
+@property (copy, nonatomic) NSString *videoID;
 
 /// Public Methods
-
 // Initialization Methods
 - (id)initWithRequestType:(DataRequestType)requestType;
 
@@ -19,12 +19,12 @@
 - (void)saveContext:(NSManagedObjectContext*)context;
 - (void)dumpAllData;
 
-// Storage Methods
+// Public Storage Methods
 - (void)storeUser:(NSDictionary*)resultsDictionary;
 - (void)storeStream:(NSDictionary*)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary*)resultsDictionary;
 
-// Fetching Methods
+// Public Fetching Methods
 - (User*)fetchUser;
 - (NSMutableArray*)fetchStreamEntries;
 - (NSArray*)fetchQueueRollEntries;

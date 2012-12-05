@@ -96,11 +96,6 @@
     if ( 0.0 == self.player.rate  ) { // Play
         
         if ( _videoQueued ) {
-        
-            NSError *activationError = nil;
-            NSError *setCategoryError = nil;
-            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
-            [[AVAudioSession sharedInstance] setActive:YES error:&activationError];
             
             [self.player play];
             
@@ -146,43 +141,44 @@
 - (void)loadVideo:(NSNotification*)notification
 {
 
-
-        CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
-        NSManagedObjectContext *context = [utility context];
-        self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+    CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+    NSManagedObjectContext *context = [utility context];
+    self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+    
+    Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
+    
+    if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
         
-        Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         
-        if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
+        DLog(@"LOADED: %@", video.title);
+        
+        [self.indicator stopAnimating];
+        
+        self.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:_videoFrame.video.extractedURL]];
+        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
+        self.playerLayer.frame = modifiedFrame;
+        self.playerLayer.bounds = modifiedFrame;
+        [self.view.layer addSublayer:self.playerLayer];
+        
+        if ( self.autoPlay ) { // Start AVPlayer object in 'play' mode
             
-                [[NSNotificationCenter defaultCenter] removeObserver:self];
-                
-                [self.indicator stopAnimating];
-                
-                self.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:self.videoFrame.video.extractedURL]];
-                self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-                CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-                self.playerLayer.frame = modifiedFrame;
-                self.playerLayer.bounds = modifiedFrame;
-                [self.view.layer addSublayer:self.playerLayer];
-                
-                if ( self.autoPlay ) { // Start AVPlayer object in play mode
-                    
-                    [self play];
-                    
-                    [UIView animateWithDuration:1.0f animations:^{
-                        [self.overlayView setAlpha:0.0f];
-                    }];
-                    
-                }  else { // Start AVPlayer object in 'pause' mode
-                
-                    [self.player pause];
-                    [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
-                
-                }
+            [self play];
             
-            }
+            [UIView animateWithDuration:1.0f animations:^{
+                [self.overlayView setAlpha:0.0f];
+            }];
+            
+        }  else { // Start AVPlayer object in 'pause' mode
         
+            [self.player pause];
+            [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
+        
+        }
+    
+    }
+    
 }
 
 @end

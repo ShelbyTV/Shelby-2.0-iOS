@@ -219,19 +219,13 @@ static SPVideoExtractor *sharedInstance = nil;
                         } else {
                             
                             [self.extractedVideoURLs addObject:extractedURL];
-                            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
-                            NSManagedObjectContext *context = [dataUtility context];
                             
+                            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
+                            NSManagedObjectContext *context = [dataUtility context];
                             Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
                             video.extractedURL = extractedURL;
+                            [dataUtility setVideoID:video.videoID];
                             [dataUtility saveContext:context];
-                            
-                            DLog(@"Extracted: %@", video.title);
-                            
-                            NSDictionary *videoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:video, kSPCurrentVideo, nil];
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kSPVideoExtracted
-                                                                                object:nil
-                                                                              userInfo:videoDictionary];
                             
                             // Reset variables for next search
                             [self.videoQueue removeObjectAtIndex:0];

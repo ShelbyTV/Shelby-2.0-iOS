@@ -24,7 +24,8 @@ typedef enum _DataRequestType
     DataRequestType_Stream,
     DataRequestType_QueueRoll,
     DataRequestType_PersonalRoll,
-    DataRequestType_CategoryRoll
+    DataRequestType_CategoryRoll,
+    DataRequestType_VideoExtracted
     
 } DataRequestType;
 

@@ -17,22 +17,28 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (assign, nonatomic) DataRequestType requestType;
 
+// Private Persistance Methods
 - (void)mergeChanges:(NSNotification*)notification;
 
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
 
+// Private Storage Methods
 - (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
 - (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
 - (void)storeRoll:(Roll*)roll fromFrameArray:(NSArray *)frameArray;
 - (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
+// Private Fetching Methods
+- (void)postNotificationVideoInContext:(NSManagedObjectContext*)context;
+
 @end
 
 @implementation CoreDataUtility
 @synthesize context = _context;
+@synthesize videoID = _videoID;
 @synthesize appDelegate = _appDelegate;
 @synthesize requestType = _requestType;
 
@@ -53,7 +59,7 @@
     return self;
 }
 
-#pragma mark - Public Methods (Persistance)
+#pragma mark - Public Persistance Methods
 - (void)saveContext:(NSManagedObjectContext *)context
 {
     
@@ -121,6 +127,13 @@
                         
                     } break;
                         
+                    case DataRequestType_VideoExtracted:{
+                        
+                        DLog(@"Video Extracted and Data Stored Successfully!");
+                        [self postNotificationVideoInContext:context];
+                        
+                    } break;
+                        
                     default:
                         break;
                 }
@@ -136,7 +149,7 @@
     [coordinator removePersistentStore:store error:nil];
 }
 
-#pragma mark - Public Methods (Store)
+#pragma mark - Public Storage Methods
 - (void)storeUser:(NSDictionary *)resultsDictionary
 {
     NSArray *resultsArray = [resultsDictionary objectForKey:@"result"];
@@ -245,7 +258,7 @@
     [self saveContext:_context];
 }
 
-#pragma mark - Public Methods (Fetch)
+#pragma mark - Public Fetch Methods
 - (User *)fetchUser
 {
     // Create fetch request
@@ -335,7 +348,7 @@
     
 }
 
-#pragma mark - Private Methods
+#pragma mark - Private Persistance Methods
 - (void)mergeChanges:(NSNotification *)notification
 {
     
@@ -373,6 +386,7 @@
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.context];
 }
 
+#pragma mark - Private Storage mMthods
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
 {
     
@@ -562,6 +576,38 @@
     
 }
 
+#pragma mark - Private Fetching Methods
+- (void)postNotificationVideoInContext:(NSManagedObjectContext *)context
+{
+    
+    if ( _videoID ) {
+    
+        // Create fetch request
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setReturnsObjectsAsFaults:NO];
+        
+        // Search video data
+        NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:context];
+        [request setEntity:description];
+        
+        // Filter by videoID
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"videoID == %@", [self videoID]];
+        [request setPredicate:predicate];
+        
+        // Execute request that returns array of Videos (should only have one object)
+        NSArray *videoArray = [self.context executeFetchRequest:request error:nil];
+        
+        // Extract video from videoArray
+        Video *video = (Video*)[videoArray objectAtIndex:0];
+        
+        // Post notification
+        NSDictionary *videoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:video, kSPCurrentVideo, nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSPVideoExtracted
+                                                            object:nil
+                                                          userInfo:videoDictionary];
+    }
+}
+
 #pragma mark - Accessor Methods
 - (NSManagedObjectContext*)context;
 {
@@ -595,7 +641,10 @@
     }
     
     // Add observer for mergining contexts
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mergeChanges:) name:NSManagedObjectContextDidSaveNotification object:_context];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(mergeChanges:)
+                                                 name:NSManagedObjectContextDidSaveNotification
+                                               object:_context];
     
     return _context;
 
