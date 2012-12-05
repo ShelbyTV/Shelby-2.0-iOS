@@ -60,12 +60,12 @@ static SPVideoExtractor *sharedInstance = nil;
         
         // If queue is empty
         if ( ![self videoQueue] ) {
-            self.videoQueue = [NSMutableArray array];
+            self.videoQueue = [[NSMutableArray alloc] init];;
         }
         
         // If no videos have been extracted since latest creation of current instance of SPVideoReel object
         if ( ![self extractedVideoURLs] ) {
-            self.extractedVideoURLs = [NSMutableArray array];
+            self.extractedVideoURLs = [[NSMutableArray alloc] init];
         }
         
         [self.videoQueue addObject:video];
@@ -76,10 +76,15 @@ static SPVideoExtractor *sharedInstance = nil;
 
 - (void)cancelRemainingExtractions
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self setIsExtracting:NO];
     [self.extractionTimer invalidate];
     [self.videoQueue removeAllObjects];
     [self.extractedVideoURLs removeAllObjects];
+    [self.webView stopLoading];
+    [self.webView removeFromSuperview];
+    [self setWebView:nil];
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
     DLog(@"Remaining Extractions Cancelled!");
 }
 
@@ -87,7 +92,7 @@ static SPVideoExtractor *sharedInstance = nil;
 - (void)extractNextVideoFromQueue
 {
     if ( ![self isExtracting] && [self.videoQueue count] ) {
-    
+        
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
         NSManagedObjectContext *context = [dataUtility context];
         Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
@@ -144,7 +149,6 @@ static SPVideoExtractor *sharedInstance = nil;
     
     static NSString *vimeoExtractor = @"<html><body><center><iframe id=\"player_1\" src=\"http://player.vimeo.com/video/%@?api=1&amp;player_id=player_1\" webkit-playsinline ></iframe><script src=\"http://a.vimeocdn.com/js/froogaloop2.min.js?cdbdb\"></script><script>(function(){var vimeoPlayers = document.querySelectorAll('iframe');$f(vimeoPlayers[0]).addEvent('ready', ready);function ready(player_id) {$f(player_id).api('play');}})();</script></center></body></html>";
     
-    
     NSString *vimeoRequestString = [NSString stringWithFormat:vimeoExtractor, video.providerID];
     
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -155,7 +159,6 @@ static SPVideoExtractor *sharedInstance = nil;
 
 - (void)loadDailyMotionVideo:(Video *)video
 {
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processNotification:) name:nil object:nil];
     
     static NSString *dailymotionExtractor = @"<html><body><div id=\"player\"></div><script>(function(){var e=document.createElement('script');e.async=true;e.src='http://api.dmcdn.net/all.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(e, s);}());window.dmAsyncInit=function(){var player=DM.player(\"player\",{video: \"%@\", width: \"%f\", height: \"%f\", params:{api: postMessage}});player.addEventListener(\"apiready\", function(e){e.target.play();});};</script></body></html>";
@@ -169,9 +172,8 @@ static SPVideoExtractor *sharedInstance = nil;
 
 - (void)processNotification:(NSNotification *)notification
 {
-    
     @synchronized(self) {
-    
+        
         if ( notification.userInfo && ![notification.userInfo isKindOfClass:[NSNull class]] ) {
             
             NSArray *allValues = [notification.userInfo allValues];
@@ -198,7 +200,6 @@ static SPVideoExtractor *sharedInstance = nil;
                     if ( [self.extractedVideoURLs containsObject:extractedURL] ) { 
                         
                         /*
-                         In case the HOME button is pushed in SPVideoReel while a video is being processed
                          Try again, but don't remove video from queue
                          This may cause a problem if two of the exact same videos are next to each other.
                         */
@@ -209,22 +210,23 @@ static SPVideoExtractor *sharedInstance = nil;
                         
                         if ( 0 == [self.videoQueue count] ) { 
                             
-                            /*
-                             
-                             Do nothing if the HOME button is pushed in SPVideoReel
-                             while a video was being processed.
-                             
-                             */
+                            // Do nothing if the HOME button is pushed in SPVideoReel while a video was being processed.
                             
                         } else {
                             
+                            // Add newly extractedURL to array of seen/extractedURLs
                             [self.extractedVideoURLs addObject:extractedURL];
                             
+                            // Update Core Data video object
                             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
                             NSManagedObjectContext *context = [dataUtility context];
                             Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
                             video.extractedURL = extractedURL;
                             [dataUtility setVideoID:video.videoID];
+                                      
+                            DLog(@"Extracted URL %@", video.title);
+                            
+                            // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
                             [dataUtility saveContext:context];
                             
                             // Reset variables for next search
@@ -232,11 +234,9 @@ static SPVideoExtractor *sharedInstance = nil;
                             [self setIsExtracting:NO];
                             
                             self.extractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
-                            
-                        }
 
+                        }
                     }
-                    
                 }
             }
         }

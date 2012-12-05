@@ -530,11 +530,15 @@
 		8E209740162F3A61000A2DFD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F2B776AC-E2BA-40FD-A617-7E771E080D44";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F2B776AC-E2BA-40FD-A617-7E771E080D44";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -542,11 +546,15 @@
 		8E209741162F3A61000A2DFD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F2B776AC-E2BA-40FD-A617-7E771E080D44";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F2B776AC-E2BA-40FD-A617-7E771E080D44";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

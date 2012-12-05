@@ -7,6 +7,7 @@
 //
 
 #import "CoreDataUtility.h"
+#import "SPVideoExtractor.h"
 
 @interface CoreDataUtility ()
 {
@@ -45,7 +46,9 @@
 #pragma mark - Memory Management
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:_context];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSManagedObjectContextDidSaveNotification
+                                                  object:_context];
 }
 
 #pragma mark - Initialization Methods
@@ -98,7 +101,6 @@
                     case DataRequestType_User:{
                         
                         DLog(@"User Data Saved Successfully!");
-                        
                         [self.appDelegate userIsAuthorized];
                         
                     } break;
@@ -600,7 +602,7 @@
         // Extract video from videoArray
         Video *video = (Video*)[videoArray objectAtIndex:0];
         
-        // Post notification
+        // Post notification if SPVideoReel object is available
         NSDictionary *videoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:video, kSPCurrentVideo, nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kSPVideoExtracted
                                                             object:nil

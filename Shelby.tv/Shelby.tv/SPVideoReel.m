@@ -43,12 +43,6 @@
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 
-#pragma mark - Memory Management
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark - Initialization
 - (id)initWithVideoFrames:(NSArray *)videoFrames andCategoryTitle:(NSString *)title
 {
@@ -58,6 +52,7 @@
         
         self.videoFrames = [[NSMutableArray alloc] initWithArray:videoFrames];
         self.categoryTitle = title;
+        
     }
     
     return self;
@@ -81,24 +76,22 @@
 #pragma mark - Public Methods
 - (IBAction)homeButtonAction:(id)sender
 {
-
-    // Stops residual video playback
+    
+    // Pause and stop residual video playback
     for ( SPVideoPlayer *player in _videoPlayers ) {
         
         [player.player pause];
-        
+
     }
     
     [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
     [self.videoPlayers removeAllObjects];
     [self.videoFrames removeAllObjects];
-    
-    NSError *activationError = nil;
-    NSError *setCategoryError = nil;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
-    [[AVAudioSession sharedInstance] setActive:NO error:&activationError];
+    [self setNumberOfVideos:0];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    DLog(@"%@ Reel Dismissed", _categoryTitle);
 }
 
 - (IBAction)playButtonAction:(id)sender
@@ -146,7 +139,6 @@
     UITapGestureRecognizer *toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOverlay)];
     [toggleOverlayGesuture setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:toggleOverlayGesuture];
-    
 }
 
 - (void)setupVideoPlayers
@@ -182,10 +174,11 @@
         } else if ( 1 == i ) {
             
             [self extractVideoForVideoPlayer:i];
+        
         }
-
     }
 }
+
 - (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
 {
     
@@ -242,7 +235,7 @@
         self.currentVideo = page;
     }
     
-    // Load video for newly visible SPVideoPlayer object, and SPVideoPlayer objects flanking the currently visible player.
+    // Load video for newly visible SPVideoPlayer object, and SPVideoPlayer objects flanking each side of the currently visible player.
     if ( page > 0 ) [self extractVideoForVideoPlayer:page-1];
     [self extractVideoForVideoPlayer:page];
     if ( page < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1];

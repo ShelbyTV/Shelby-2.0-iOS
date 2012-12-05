@@ -148,15 +148,14 @@
     Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
     
     if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
-        
+
+        // Clear notification and indicator
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        
-        DLog(@"LOADED: %@", video.title);
-        
         [self.indicator stopAnimating];
         
-        self.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:_videoFrame.video.extractedURL]];
-        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+        AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:_videoFrame.video.extractedURL]];
+        self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
         self.playerLayer.frame = modifiedFrame;
         self.playerLayer.bounds = modifiedFrame;
@@ -168,10 +167,11 @@
             
             [UIView animateWithDuration:1.0f animations:^{
                 [self.overlayView setAlpha:0.0f];
+          
             }];
             
         }  else { // Start AVPlayer object in 'pause' mode
-        
+            
             [self.player pause];
             [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
         
