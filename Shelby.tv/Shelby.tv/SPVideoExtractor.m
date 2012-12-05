@@ -76,7 +76,7 @@ static SPVideoExtractor *sharedInstance = nil;
 
 - (void)cancelRemainingExtractions
 {
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setIsExtracting:NO];
     [self.extractionTimer invalidate];
     [self.videoQueue removeAllObjects];

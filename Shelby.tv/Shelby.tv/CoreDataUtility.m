@@ -102,6 +102,9 @@
                         
                         DLog(@"User Data Saved Successfully!");
                         [self.appDelegate userIsAuthorized];
+                        [ShelbyAPIClient getStream];
+                        [ShelbyAPIClient getQueueRoll];
+                        [ShelbyAPIClient getPersonalRoll];
                         
                     } break;
                     

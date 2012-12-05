@@ -29,6 +29,7 @@
 
     // Controllers
     #import "CoreDataUtility.h"
+    #import "ShelbyAPIClient.h"
 
 #endif
 
