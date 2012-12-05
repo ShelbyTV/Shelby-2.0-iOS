@@ -107,9 +107,6 @@
 - (void)pollAPI
 {
     
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_User];
-    User *user = [dataUtility fetchUser];
-    
     switch ( _pollAPICounter ) {
         
         case 0: { // Stream

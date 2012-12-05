@@ -137,6 +137,18 @@
                                                animated:YES];
 }
 
+- (CMTime)elapsedDuration
+{
+    AVPlayerItem *playerItem = [self.player currentItem];
+	
+    if (playerItem.status == AVPlayerItemStatusReadyToPlay) {
+        
+		return [playerItem duration] ;
+	}
+	
+	return kCMTimeInvalid;
+}
+
 #pragma mark - Video Loading Methods
 - (void)loadVideo:(NSNotification*)notification
 {

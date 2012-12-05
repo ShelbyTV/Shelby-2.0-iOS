@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *airPlayButton;
+@property (weak, nonatomic) IBOutlet UISlider *scrubber;
 
 @end

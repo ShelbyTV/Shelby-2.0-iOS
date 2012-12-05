@@ -13,6 +13,7 @@
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <CoreData/CoreData.h>
+    #import <CoreMedia/CoreMedia.h>
 
     // Third Party Libraries
     #import "AFNetworking.h"

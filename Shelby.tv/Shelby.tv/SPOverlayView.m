@@ -22,6 +22,7 @@
 @synthesize shareButton = _shareButton;
 @synthesize playButton = _playButton;
 @synthesize airPlayButton = _airPlayButton;
+@synthesize scrubber = _scrubber;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -35,6 +36,7 @@
     self.shareButton = nil;
     self.playButton = nil;
     self.airPlayButton = nil;
+    self.scrubber = nil;
 }
 
 #pragma mark - Customization on Instantiation

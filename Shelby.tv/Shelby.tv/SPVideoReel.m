@@ -12,6 +12,9 @@
 #import "SPVideoExtractor.h"
 
 @interface SPVideoReel ()
+{
+    id _scrubberTimeObserver;
+}
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
@@ -23,12 +26,16 @@
 @property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (copy, nonatomic) NSString *categoryTitle;
 
+
 - (void)setupVariables;
 - (void)setupVideoScrollView;
 - (void)setupOverlayView;
 - (void)setupVideoPlayers;
 - (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
 - (void)toggleOverlay;
+
+- (void)setupScrubber;
+- (void)syncScrubber;
 
 @end
 
@@ -170,6 +177,8 @@
             
             [self extractVideoForVideoPlayer:i];
             self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
+            
+            [self setupScrubber];
         
         } else if ( 1 == i ) {
             
@@ -209,13 +218,101 @@
     }
 }
 
-#pragma mark - UIScrollViewDelegate Methods
-- (void)scrollViewDidScroll:(UIScrollView *)sender
+#pragma mark - Scrubber Code
+- (void)setupScrubber
 {
-
+	
+    double interval = .1f;
+	CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
+    
+	if (CMTIME_IS_INVALID(playerDuration)) {
+		return;
+	}
+	
+    double duration = CMTimeGetSeconds(playerDuration);
+	if (isfinite(duration)) {
+		CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
+		interval = 0.5f * duration / width;
+	}
+    
+    __block SPVideoReel *blockSelf = self;
+	_scrubberTimeObserver = [self.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
+                                                                                    queue:NULL /* If you pass NULL, the main queue is used. */
+                                                                               usingBlock:^(CMTime time) {
+                          [blockSelf syncScrubber];
+                      }];
     
 }
 
+- (void)syncScrubber
+{
+	CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
+	if (CMTIME_IS_INVALID(playerDuration)) {
+		self.overlayView.scrubber.minimumValue = 0.0;
+		return;
+	}
+    
+	double duration = CMTimeGetSeconds(playerDuration);
+	if (isfinite(duration)) {
+		float minValue = [self.overlayView.scrubber minimumValue];
+		float maxValue = [self.overlayView.scrubber maximumValue];
+		double time = CMTimeGetSeconds([self.currentVideoPlayer.player currentTime]);
+		
+		[self.overlayView.scrubber setValue:(maxValue - minValue) * time / duration + minValue];
+	}
+}
+
+- (IBAction)scrub:(id)sender
+{
+    CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
+    if (CMTIME_IS_INVALID(playerDuration)) {
+        return;
+    }
+    
+    double duration = CMTimeGetSeconds(playerDuration);
+    if (isfinite(duration)) {
+        
+        float minValue = [self.overlayView.scrubber minimumValue];
+        float maxValue = [self.overlayView.scrubber maximumValue];
+        float value = [self.overlayView.scrubber value];
+        double time = duration * (value - minValue) / (maxValue - minValue);
+        [self.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
+    }
+}
+
+
+- (IBAction)beginScrubbing:(id)sender
+{
+	_scrubberTimeObserver = nil;
+}
+
+
+/* The user has released the movie thumb control to stop scrubbing through the movie. */
+- (IBAction)endScrubbing:(id)sender
+{
+	if ( !_scrubberTimeObserver ) {
+		
+        CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
+		if (CMTIME_IS_INVALID(playerDuration)) {
+			return;
+		}
+		
+		double duration = CMTimeGetSeconds(playerDuration);
+        
+		if (isfinite(duration)) {
+			CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
+			double tolerance = 0.5f * duration / width;
+            __block SPVideoReel *blockSelf = self;
+			_scrubberTimeObserver = [self.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
+                                                                                                  queue:NULL
+                                                                                             usingBlock: ^(CMTime time) {
+                                  [blockSelf syncScrubber];
+                              }];
+		}
+	}
+}
+
+#pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     // Switch the indicator when more than 50% of the previous/next page is visible
@@ -242,6 +339,9 @@
     
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
+    
+    // Sync Scrubber
+    [self syncScrubber];
 }
 
 @end

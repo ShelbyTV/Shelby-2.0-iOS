@@ -10,6 +10,35 @@
 
 @implementation ShelbyAPIClient
 
++ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password
+{
+    NSString *requestString = [NSString stringWithFormat:kAPIShelbyPostAuthorizeEmail, email, password];
+    [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *requestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setHTTPMethod:@"POST"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_User];
+        [dataUtility storeUser:JSON];
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        NSLog(@"%@", error);
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
+                                                            message:@"Please try again"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+        
+    }];
+    
+    [operation start];
+}
+
 + (void)getStream
 {
  

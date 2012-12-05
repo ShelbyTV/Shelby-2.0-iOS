@@ -22,5 +22,6 @@
 - (void)play;
 - (void)airPlay;
 - (void)share;
+- (CMTime)elapsedDuration;
 
 @end

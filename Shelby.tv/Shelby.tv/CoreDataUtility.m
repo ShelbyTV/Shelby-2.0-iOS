@@ -296,10 +296,10 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
-    // Execute request that returns array of dashboardEntrys
+    // Execute request that returns array of stream entries
     NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
     
-    // Extract Frames
+    // Typecast each entry in streamEntries and place in NSMutableArray object
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
     for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
