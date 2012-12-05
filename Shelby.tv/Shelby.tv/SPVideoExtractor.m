@@ -223,8 +223,6 @@ static SPVideoExtractor *sharedInstance = nil;
                             Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
                             video.extractedURL = extractedURL;
                             [dataUtility setVideoID:video.videoID];
-                                      
-                            DLog(@"Extracted URL %@", video.title);
                             
                             // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
                             [dataUtility saveContext:context];

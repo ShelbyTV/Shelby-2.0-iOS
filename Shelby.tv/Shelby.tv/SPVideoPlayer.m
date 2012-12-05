@@ -147,6 +147,8 @@
     
     Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
     
+    DLog(@"Loaded and PLaying: %@", video.title);
+    
     if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
 
         // Clear notification and indicator
@@ -166,8 +168,7 @@
             [self play];
             
             [UIView animateWithDuration:1.0f animations:^{
-                [self.overlayView setAlpha:0.0f];
-          
+                [self.overlayView setAlpha:0.0f]; 
             }];
             
         }  else { // Start AVPlayer object in 'pause' mode

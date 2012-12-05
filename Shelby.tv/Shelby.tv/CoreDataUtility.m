@@ -301,9 +301,10 @@
     
     // Extract Frames
     NSMutableArray *frames = [[NSMutableArray alloc] init];
+    
     for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
         
-        Stream *stream = (Stream*)[streamEntries objectAtIndex:0];
+        Stream *stream = (Stream*)[streamEntries objectAtIndex:i];
         [frames addObject:stream.frame];
         
     }
