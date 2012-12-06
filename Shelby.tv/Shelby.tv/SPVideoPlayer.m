@@ -21,6 +21,7 @@
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 
 - (void)loadVideo:(NSNotification*)notification;
+- (void)itemDidFinishPlaying:(NSNotification*)notification;
 
 @end
 
@@ -219,11 +220,22 @@
         // Instantiate AVPlayer object with extractedURL
         AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:_videoFrame.video.extractedURL]];
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+        
+        // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
         self.playerLayer.frame = modifiedFrame;
         self.playerLayer.bounds = modifiedFrame;
         [self.view.layer addSublayer:self.playerLayer];
+        
+        // Add Observers
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(itemDidFinishPlaying:)
+                                                     name:AVPlayerItemDidPlayToEndTimeNotification
+                                                   object:playerItem];
+
+        
+        // Video begins in 'pause'-mode by default
         [self.player pause];
         
         if ( _autoPlay ) { // Start AVPlayer object in 'play' mode
@@ -236,6 +248,29 @@
             
         } 
     }
+}
+
+- (void)itemDidFinishPlaying:(NSNotification*)notification
+{
+    if ( self.player.currentItem == notification.object ) {
+        
+        // Force scroll videoScrollView
+        CGFloat x = self.videoReel.videoScrollView.contentOffset.x + 1024.0f;
+        CGFloat y = self.videoReel.videoScrollView.contentOffset.y;
+        NSUInteger position = self.videoReel.videoScrollView.contentOffset.x/1024;
+        [self.videoReel.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+        
+        // Force methods to update
+        [self.videoReel currentVideoDidChangeToVideo:position+1];
+        
+        // Load videos
+        if ( position+2 < self.videoReel.numberOfVideos-1 ) [self.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
+        
+        // Force play next video
+        [self.videoReel playButtonAction:nil];
+        
+    }
+        
 }
 
 @end

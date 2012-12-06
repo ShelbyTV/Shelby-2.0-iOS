@@ -1,6 +1,6 @@
 //
-//  ViewController.m
-//  ShelbyPlayer
+//  SPVideoReel.m
+//  Shelby.tv
 //
 //  Created by Arthur Ariel Sabintsev on 11/1/12.
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
@@ -16,18 +16,15 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
-@property (strong, nonatomic) UIScrollView *videoScrollView;
 @property (strong, nonatomic) SPOverlayView *overlayView;
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (assign, nonatomic) NSUInteger currentVideo;
-@property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (copy, nonatomic) NSString *categoryTitle;
 
 - (void)setupVariables;
 - (void)setupVideoScrollView;
 - (void)setupOverlayView;
 - (void)setupVideoPlayers;
-- (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
 - (void)toggleOverlay;
 
 @end
@@ -138,7 +135,7 @@
             // Set first video to currentVideo
             [self extractVideoForVideoPlayer:0];
             self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
-            [self currentVideoDidChange];
+            [self currentVideoDidChangeToVideo:0];
         
         } else if ( 1 == i ) {
             
@@ -177,8 +174,12 @@
     }
 }
 
-- (void)currentVideoDidChange
+- (void)currentVideoDidChangeToVideo:(NSUInteger)videoPosition
 {
+    
+    // Reset currentVideoPlayer reference after scrolling has finished
+    self.currentVideo = videoPosition;
+    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:videoPosition];
     
     // Clear old values
     [self.overlayView.videoTitleLabel setText:nil];
@@ -196,6 +197,9 @@
     self.overlayView.captionLabel.text = frame.video.caption;
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", frame.creator.nickname];
     [AsynchronousFreeloader loadImageFromLink:frame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:nil];
+    
+    // Sync Scrubber
+    [self.currentVideoPlayer syncScrubber];
     
 }
 
@@ -306,21 +310,13 @@
             
         }
         
-        // Reset currentVideoPlayer reference after scrolling has finished
-        self.currentVideo = page;
-        self.currentVideoPlayer = [self.videoPlayers objectAtIndex:page];
-        [self currentVideoDidChange];
+        [self currentVideoDidChangeToVideo:page];
         
-        // Load and pre-load videos
+        // Load videos
         [self extractVideoForVideoPlayer:page]; // Load video for current visible view
-        if ( page < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1]; // Load video positioned after current visible view
+        if ( page+1 < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1]; // Load video positioned after current visible view
         if ( page > 0 ) [self extractVideoForVideoPlayer:page-1]; // Load video positioned beforecurrent visible view
-        
-        // Sync Scrubber
-        [self.currentVideoPlayer syncScrubber];
-        
     }
-
 }
 
 @end
