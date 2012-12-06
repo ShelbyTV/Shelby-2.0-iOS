@@ -115,7 +115,7 @@
 {
     [self setPlaybackFinished:NO];
     [self.overlayView.restartPlaybackButton setHidden:YES];
-    [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC)];
     [self syncScrubber];
     [self.player play];
 }
@@ -263,26 +263,28 @@
 
 - (void)itemDidFinishPlaying:(NSNotification*)notification
 {
-    if ( self.player.currentItem == notification.object ) {
+    DLog(@"%@", notification);
+    
+    if ( self.player.currentItem == notification.object && ![self playbackFinished]) {
         
         // 
         [self setPlaybackFinished:YES];
         [self.overlayView.restartPlaybackButton setHidden:NO];
         
-//        // Force scroll videoScrollView
-//        CGFloat x = self.videoReel.videoScrollView.contentOffset.x + 1024.0f;
-//        CGFloat y = self.videoReel.videoScrollView.contentOffset.y;
-//        NSUInteger position = self.videoReel.videoScrollView.contentOffset.x/1024;
-//        [self.videoReel.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-//        
-//        // Force methods to update
-//        [self.videoReel currentVideoDidChangeToVideo:position+1];
-//        
-//        // Load videos
-//        if ( position+2 < self.videoReel.numberOfVideos-1 ) [self.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
-//        
-//        // Force next video to begin playing (video should already be loaded)
-//        [self.videoReel playButtonAction:nil];
+        // Force scroll videoScrollView
+        CGFloat x = self.videoReel.videoScrollView.contentOffset.x + 1024.0f;
+        CGFloat y = self.videoReel.videoScrollView.contentOffset.y;
+        NSUInteger position = self.videoReel.videoScrollView.contentOffset.x/1024;
+        [self.videoReel.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+        
+        // Force methods to update
+        [self.videoReel currentVideoDidChangeToVideo:position+1];
+        
+        // Load videos
+        if ( position+2 < self.videoReel.numberOfVideos-1 ) [self.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
+        
+        // Force next video to begin playing (video should already be loaded)
+        [self.videoReel playButtonAction:nil];
         
     }    
 }
