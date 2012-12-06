@@ -10,6 +10,7 @@
 
 @interface SPVideoPlayer : UIViewController
 
+@property (strong, nonatomic) Frame *videoFrame;
 @property (strong, nonatomic) AVPlayer *player;
 @property (assign, nonatomic) BOOL videoQueued;
 
@@ -19,7 +20,9 @@
    andShouldAutoPlay:(BOOL)autoPlay;
 
 - (void)queueVideo;
+- (void)togglePlayback;
 - (void)play;
+- (void)pause;
 - (void)airPlay;
 - (void)share;
 - (CMTime)elapsedDuration;

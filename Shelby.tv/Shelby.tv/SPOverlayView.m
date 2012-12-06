@@ -14,29 +14,31 @@
 
 @implementation SPOverlayView
 @synthesize homeButton = _homeButton;
-@synthesize titleLabel = _titleLabel;
+@synthesize categoryTitleLabel = _categoryTitleLabel;
 @synthesize controlBarView = _controlBarView;
 @synthesize containerView = _containerView;
-@synthesize currentVideoInfoView = _currentVideoInfoView;
 @synthesize videoListScrollView = _videoListScrollView;
 @synthesize shareButton = _shareButton;
 @synthesize playButton = _playButton;
 @synthesize airPlayButton = _airPlayButton;
 @synthesize scrubber = _scrubber;
+@synthesize videoTitleLabel = _videoTitleLabel;
+@synthesize captionLabel = _captionLabel;
 
 #pragma mark - Memory Management
 - (void)dealloc
 {
     self.homeButton = nil;
-    self.titleLabel = nil;
+    self.categoryTitleLabel = nil;
     self.controlBarView = nil;
     self.containerView = nil;
-    self.currentVideoInfoView = nil;
     self.videoListScrollView = nil;
     self.shareButton = nil;
     self.playButton = nil;
     self.airPlayButton = nil;
     self.scrubber = nil;
+    self.videoTitleLabel = nil;
+    self.captionLabel = nil;
 }
 
 #pragma mark - Customization on Instantiation

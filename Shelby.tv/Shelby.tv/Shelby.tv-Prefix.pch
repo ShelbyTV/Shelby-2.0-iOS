@@ -28,6 +28,9 @@
     // Models
     #import "AppDelegate.h"
 
+    // Views
+    #import "TopAlignedLabel.h"
+
     // Controllers
     #import "CoreDataUtility.h"
     #import "ShelbyAPIClient.h"

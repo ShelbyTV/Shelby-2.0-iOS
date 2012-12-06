@@ -10,6 +10,8 @@
 
 - (id)initWithVideoFrames:(NSArray*)videoFrames andCategoryTitle:(NSString*)title;
 
+- (void)currentVideoDidChange;
+
 - (IBAction)homeButtonAction:(id)sender;
 - (IBAction)playButtonAction:(id)sender;
 - (IBAction)airplayButtonAction:(id)sender;

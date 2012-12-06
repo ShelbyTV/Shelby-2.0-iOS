@@ -12,7 +12,6 @@
 
 @interface SPVideoPlayer ()
 
-@property (strong, nonatomic) Frame *videoFrame;
 @property (assign, nonatomic) BOOL autoPlay;
 @property (strong, nonatomic) AVPlayerLayer *playerLayer;
 @property (strong, nonatomic) UIActivityIndicatorView *indicator;
@@ -61,7 +60,9 @@
 #pragma mark - Public Methods
 - (void)queueVideo
 {
- 
+
+    [self setVideoQueued:YES];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loadVideo:)
                                                  name:kSPVideoExtracted
@@ -71,8 +72,7 @@
     NSManagedObjectContext *context = [dataUtility context];
     Frame *tempFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
     [[SPVideoExtractor sharedInstance] queueVideo:tempFrame.video];
-    
-    [self setVideoQueued:YES];
+
 }
 
 #pragma mark - View Lifecycle Methods
@@ -91,29 +91,28 @@
 }
 
 #pragma mark - Player Controls
+- (void)togglePlayback
+{
+    if ( 0.0 == self.player.rate && _videoQueued ) { // Play
+        
+        [self play];
+        
+    } else { // Pause
+            
+        [self pause];
+    }
+}
+
 - (void)play
 {
-    if ( 0.0 == self.player.rate  ) { // Play
-        
-        if ( _videoQueued ) {
-            
-            [self.player play];
-            
-            [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
-            
-        }
-    
-    } else { // Pause
-        
-        if ( _videoQueued ) {
-         
-            [self.player pause];
-            
-            [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
-            
-        }
-    }
+    [self.player play];
+    [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
+}
 
+- (void)pause
+{
+    [self.player pause];
+    [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
 }
 
 - (void)airPlay
@@ -132,7 +131,7 @@
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
     [self.sharePopOverController presentPopoverFromRect:self.overlayView.shareButton.frame
-                                                 inView:self.overlayView.currentVideoInfoView
+                                                 inView:self.overlayView
                                permittedArrowDirections:UIPopoverArrowDirectionDown
                                                animated:YES];
 }
@@ -159,14 +158,13 @@
     
     Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
     
-    DLog(@"Loaded and PLaying: %@", video.title);
-    
     if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
 
         // Clear notification and indicator
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [self.indicator stopAnimating];
         
+        // Instantiate AVPlayer object with extractedURL
         AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:_videoFrame.video.extractedURL]];
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
@@ -175,7 +173,9 @@
         self.playerLayer.bounds = modifiedFrame;
         [self.view.layer addSublayer:self.playerLayer];
         
-        if ( self.autoPlay ) { // Start AVPlayer object in 'play' mode
+        if ( _autoPlay ) { // Start AVPlayer object in 'play' mode
+
+            DLog(@"Loaded and Playing: %@", video.title);
             
             [self play];
             
@@ -184,14 +184,13 @@
             }];
             
         }  else { // Start AVPlayer object in 'pause' mode
+
+            DLog(@"Loaded and Paused: %@", video.title);
             
-            [self.player pause];
-            [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
+            [self pause];
         
         }
-    
     }
-    
 }
 
 @end
