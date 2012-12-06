@@ -12,9 +12,6 @@
 #import "SPVideoExtractor.h"
 
 @interface SPVideoReel ()
-{
-    id _scrubberTimeObserver;
-}
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
@@ -32,8 +29,6 @@
 - (void)setupVideoPlayers;
 - (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
 - (void)toggleOverlay;
-- (void)setupScrubber;
-- (void)syncScrubber;
 - (void)pauseAllInactiveVideos;
 
 @end
@@ -48,6 +43,7 @@
 @synthesize currentVideo = _currentVideo;
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
+@synthesize scrubberTimeObserver = _scrubberTimeObserver;
 
 #pragma mark - Initialization
 - (id)initWithVideoFrames:(NSArray *)videoFrames andCategoryTitle:(NSString *)title
@@ -130,8 +126,10 @@
         viewframe.origin.y = 0.0f;
         SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
                                                         forVideoFrame:videoFrame
-                                                        inOverlayView:_overlayView
+                                                      withOverlayView:_overlayView
+                                                          inVideoReel:self
                                                     andShouldAutoPlay:autoPlay];
+        
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
         
@@ -142,9 +140,6 @@
             [self extractVideoForVideoPlayer:0];
             self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
             [self currentVideoDidChange];
-            
-            // Setup UISlider
-            [self setupScrubber];
         
         } else if ( 1 == i ) {
             
@@ -152,31 +147,6 @@
         
         }
     }
-}
-
-- (void)setupScrubber
-{
-	
-    double interval = .1f;
-	CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
-    
-	if (CMTIME_IS_INVALID(playerDuration)) {
-		return;
-	}
-	
-    double duration = CMTimeGetSeconds(playerDuration);
-	if (isfinite(duration)) {
-		CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
-		interval = 0.5f * duration / width;
-	}
-    
-    __block SPVideoReel *blockSelf = self;
-	_scrubberTimeObserver = [self.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
-                                                                                         queue:NULL /* If you pass NULL, the main queue is used. */
-                                                                                    usingBlock:^(CMTime time) {
-                                                                                        [blockSelf syncScrubber];
-                                                                                    }];
-
 }
 
 #pragma mark - Misc. Methods
@@ -215,24 +185,6 @@
     Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:_currentVideo] objectID] error:nil];
     self.overlayView.videoTitleLabel.text = frame.video.title;
     self.overlayView.captionLabel.text = frame.video.caption;
-}
-
-- (void)syncScrubber
-{
-	CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
-	if ( CMTIME_IS_INVALID(playerDuration) ) {
-		self.overlayView.scrubber.minimumValue = 0.0;
-		return;
-	}
-    
-	double duration = CMTimeGetSeconds(playerDuration);
-	if ( isfinite(duration) ) {
-		float minValue = [self.overlayView.scrubber minimumValue];
-		float maxValue = [self.overlayView.scrubber maximumValue];
-		double time = CMTimeGetSeconds([self.currentVideoPlayer.player currentTime]);
-		
-		[self.overlayView.scrubber setValue:(maxValue - minValue) * time / duration + minValue];
-	}
 }
 
 - (void)pauseAllInactiveVideos
@@ -284,6 +236,11 @@
     [self.currentVideoPlayer share];
 }
 
+- (IBAction)beginScrubbing:(id)sender
+{
+	_scrubberTimeObserver = nil;
+}
+
 - (IBAction)scrub:(id)sender
 {
     CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
@@ -301,13 +258,6 @@
         [self.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
     }
 }
-
-
-- (IBAction)beginScrubbing:(id)sender
-{
-	_scrubberTimeObserver = nil;
-}
-
 
 /* The user has released the movie thumb control to stop scrubbing through the movie. */
 - (IBAction)endScrubbing:(id)sender
@@ -328,7 +278,7 @@
 			_scrubberTimeObserver = [self.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
                                                                                                   queue:NULL
                                                                                              usingBlock: ^(CMTime time) {
-                                  [blockSelf syncScrubber];
+                                  [blockSelf.currentVideoPlayer syncScrubber];
                               }];
 		
         }
@@ -353,8 +303,7 @@
         [newPlayer play];
         
     }
-    
-    
+ 
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideo = page;
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:page];
@@ -366,7 +315,7 @@
     if ( page < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1];
     
     // Sync Scrubber
-    [self syncScrubber];
+    [self.currentVideoPlayer syncScrubber];
 }
 
 @end

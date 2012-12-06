@@ -27,7 +27,6 @@
 @property (strong, nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 
-- (void)createObservers;
 - (void)pollAPI;
 
 @end
@@ -42,9 +41,6 @@
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    // Create Observers
-    [self createObservers];
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -70,6 +66,7 @@
 {
     // Enable Audio Play in Vibrate and Background Modes
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
     // Disable Idle Timer
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
@@ -78,12 +75,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-#pragma mark - Private Methods
-- (void)createObservers
-{
-
 }
 
 - (void)userIsAuthorized

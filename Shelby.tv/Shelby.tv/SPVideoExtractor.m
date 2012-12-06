@@ -191,6 +191,7 @@ static SPVideoExtractor *sharedInstance = nil;
                     // Remove webView
                     [self.webView stopLoading];
                     [self.webView removeFromSuperview];
+                    self.webView = nil;
                     [[NSURLCache sharedURLCache] removeAllCachedResponses];
                     
                     // Get videoURL to playable video file
@@ -231,7 +232,8 @@ static SPVideoExtractor *sharedInstance = nil;
                             [self.videoQueue removeObjectAtIndex:0];
                             [self setIsExtracting:NO];
                             
-                            self.extractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
+                            
+                            self.extractionTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
 
                         }
                     }

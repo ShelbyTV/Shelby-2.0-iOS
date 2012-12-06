@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-@class SPOverlayView;
+@class SPOverlayView, SPVideoReel;
 
 @interface SPVideoPlayer : UIViewController
 
@@ -16,7 +16,8 @@
 
 - (id)initWithBounds:(CGRect)bounds
        forVideoFrame:(Frame*)videoFrame
-       inOverlayView:(SPOverlayView*)overlayView
+     withOverlayView:(SPOverlayView*)overlayView
+         inVideoReel:(SPVideoReel*)videoReel
    andShouldAutoPlay:(BOOL)autoPlay;
 
 - (void)queueVideo;
@@ -26,5 +27,7 @@
 - (void)airPlay;
 - (void)share;
 - (CMTime)elapsedDuration;
+- (void)setupScrubber;
+- (void)syncScrubber;
 
 @end

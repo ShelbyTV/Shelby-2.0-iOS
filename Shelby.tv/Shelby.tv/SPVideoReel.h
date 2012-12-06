@@ -7,6 +7,11 @@
 //
 
 @interface SPVideoReel : UIViewController <UIScrollViewDelegate>
+{
+    id _scrubberTimeObserver;
+}
+
+@property (strong, nonatomic) id scrubberTimeObserver;
 
 - (id)initWithVideoFrames:(NSArray*)videoFrames andCategoryTitle:(NSString*)title;
 
