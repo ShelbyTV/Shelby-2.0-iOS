@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *scrubber;
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *captionLabel;
-
+@property (weak, nonatomic) IBOutlet UIImageView *userImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
 
 @end

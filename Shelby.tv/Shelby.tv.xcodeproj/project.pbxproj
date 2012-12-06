@@ -10,6 +10,10 @@
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */; };
 		8E1B2E9B16700B1F00D2C0DC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */; };
+		8E1B2EE01670506B00D2C0DC /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EDF1670506B00D2C0DC /* Creator.m */; };
+		8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
+		8E1B2EE4167051C700D2C0DC /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EE3167051C700D2C0DC /* Frame.m */; };
+		8E1B2EF31670539400D2C0DC /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EF01670539400D2C0DC /* AsynchronousFreeloader.m */; };
 		8E209712162F3A60000A2DFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
 		8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
 		8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209715162F3A60000A2DFD /* CoreGraphics.framework */; };
@@ -26,7 +30,6 @@
 		8E4A92DB1665383F00FF742D /* LoginViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE91631ABDE0044D97E /* LoginViewController.xib */; };
 		8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9716652E6E00A565BF /* MeViewController.xib */; };
 		8E4A92E51665531200FF742D /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92E41665531200FF742D /* Roll.m */; };
-		8E4A92E8166556C700FF742D /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92E7166556C700FF742D /* Frame.m */; };
 		8E4A92EB166558A200FF742D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A92EA166558A200FF742D /* User.m */; };
 		8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		8E4F580B1635E05F0048585C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4F580A1635E05F0048585C /* CoreData.framework */; };
@@ -60,6 +63,12 @@
 		8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopAlignedLabel.h; sourceTree = "<group>"; };
 		8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopAlignedLabel.m; sourceTree = "<group>"; };
+		8E1B2EDE1670506A00D2C0DC /* Creator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creator.h; sourceTree = "<group>"; };
+		8E1B2EDF1670506B00D2C0DC /* Creator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Creator.m; sourceTree = "<group>"; };
+		8E1B2EE2167051C700D2C0DC /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		8E1B2EE3167051C700D2C0DC /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		8E1B2EEF1670539400D2C0DC /* AsynchronousFreeloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousFreeloader.h; sourceTree = "<group>"; };
+		8E1B2EF01670539400D2C0DC /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
 		8E1FAB9516652E6E00A565BF /* MeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
 		8E1FAB9616652E6E00A565BF /* MeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
 		8E1FAB9716652E6E00A565BF /* MeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeViewController.xib; sourceTree = "<group>"; };
@@ -83,8 +92,6 @@
 		8E40548C163A3C06002C8874 /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
 		8E4A92E31665531200FF742D /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		8E4A92E41665531200FF742D /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
-		8E4A92E6166556C700FF742D /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		8E4A92E7166556C700FF742D /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8E4A92E9166558A200FF742D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		8E4A92EA166558A200FF742D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E4C55751666A9F90019DD15 /* SPOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPOverlayView.h; sourceTree = "<group>"; };
@@ -163,12 +170,14 @@
 			isa = PBXGroup;
 			children = (
 				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
+				8E1B2EE2167051C700D2C0DC /* Frame.h */,
+				8E1B2EE3167051C700D2C0DC /* Frame.m */,
+				8E1B2EDE1670506A00D2C0DC /* Creator.h */,
+				8E1B2EDF1670506B00D2C0DC /* Creator.m */,
 				8EE50E9F1665B97300DF42B8 /* Video.h */,
 				8EE50EA01665B97300DF42B8 /* Video.m */,
 				8E4A92E9166558A200FF742D /* User.h */,
 				8E4A92EA166558A200FF742D /* User.m */,
-				8E4A92E6166556C700FF742D /* Frame.h */,
-				8E4A92E7166556C700FF742D /* Frame.m */,
 				8E4A92E31665531200FF742D /* Roll.h */,
 				8E4A92E41665531200FF742D /* Roll.m */,
 				8E40548B163A3C06002C8874 /* Stream.h */,
@@ -179,6 +188,16 @@
 				8E405483163A3C05002C8874 /* Conversation.m */,
 			);
 			name = "Core Data Managed Objects and Model";
+			sourceTree = "<group>";
+		};
+		8E1B2EED1670539400D2C0DC /* Asynchronous-Freeloader */ = {
+			isa = PBXGroup;
+			children = (
+				8E1B2EEF1670539400D2C0DC /* AsynchronousFreeloader.h */,
+				8E1B2EF01670539400D2C0DC /* AsynchronousFreeloader.m */,
+			);
+			name = "Asynchronous-Freeloader";
+			path = "../../External Libraries/Asynchronous-Freeloader";
 			sourceTree = "<group>";
 		};
 		8E209702162F3A60000A2DFD = {
@@ -246,6 +265,7 @@
 		8E82EDF11631C7770044D97E /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8E1B2EED1670539400D2C0DC /* Asynchronous-Freeloader */,
 				8E82EDF21631C7860044D97E /* AFNetworking */,
 			);
 			name = "External Libraries";
@@ -435,6 +455,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */,
 				8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */,
 				8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */,
 				8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */,
@@ -461,12 +482,14 @@
 				8E40548A163A3C06002C8874 /* Messages.m in Sources */,
 				8E40548D163A3C06002C8874 /* Stream.m in Sources */,
 				8E4A92E51665531200FF742D /* Roll.m in Sources */,
-				8E4A92E8166556C700FF742D /* Frame.m in Sources */,
 				8E4A92EB166558A200FF742D /* User.m in Sources */,
 				8EE50EA11665B97300DF42B8 /* Video.m in Sources */,
 				8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */,
 				8E80C5CC16696994004DAB04 /* ShareActivity.m in Sources */,
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
+				8E1B2EE01670506B00D2C0DC /* Creator.m in Sources */,
+				8E1B2EE4167051C700D2C0DC /* Frame.m in Sources */,
+				8E1B2EF31670539400D2C0DC /* AsynchronousFreeloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

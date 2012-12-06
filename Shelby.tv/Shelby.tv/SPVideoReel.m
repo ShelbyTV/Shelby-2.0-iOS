@@ -180,11 +180,23 @@
 
 - (void)currentVideoDidChange
 {
+    
+    // Clear old values
+    [self.overlayView.videoTitleLabel setText:nil];
+    [self.overlayView.captionLabel setText:nil];
+    [self.overlayView.nicknameLabel setText:nil];
+    [self.overlayView.userImageView setImage:nil];
+    
+    // Reference NSManageObjectContext
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
     NSManagedObjectContext *context = [dataUtility context];
     Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:_currentVideo] objectID] error:nil];
+    
+    // Set new values
     self.overlayView.videoTitleLabel.text = frame.video.title;
     self.overlayView.captionLabel.text = frame.video.caption;
+    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", frame.creator.nickname];
+    [AsynchronousFreeloader loadImageFromLink:frame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:nil];
 }
 
 - (void)pauseAllInactiveVideos

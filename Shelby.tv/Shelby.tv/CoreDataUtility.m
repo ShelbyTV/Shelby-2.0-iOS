@@ -28,6 +28,7 @@
 // Private Storage Methods
 - (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
+- (void)storeCreator:(Creator*)creator fromFrameArray:(NSArray*)frameArray;
 - (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
 - (void)storeRoll:(Roll*)roll fromFrameArray:(NSArray *)frameArray;
 - (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
@@ -397,13 +398,16 @@
 {
     
     NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
-    [frame setValue:frameID forKey:kCoreDataFrameID ];
+    [frame setValue:frameID forKey:kCoreDataFrameID];
     
     NSString *conversationID = [NSString coreDataNullTest:[frameArray valueForKey:@"conversation_id"]];
     [frame setValue:conversationID forKey:kCoreDataFrameConversationID];
     
     NSString *createdAt = [NSString coreDataNullTest:[frameArray valueForKey:@"created_at"]];
-    [frame setValue:createdAt forKey:kCoreDataFrameCreatedAt ];
+    [frame setValue:createdAt forKey:kCoreDataFrameCreatedAt];
+    
+    NSString *creatorID = [NSString coreDataNullTest:[frameArray valueForKey:@"creator_id"]];
+    [frame setValue:creatorID forKey:kCoreDataFrameCreatorID];
     
     NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
     [frame setValue:rollID forKey:kCoreDataFrameRollID];
@@ -420,17 +424,22 @@
     Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
                                          withIDValue:conversationID
                                             forIDKey:kCoreDataFrameConversationID];
-    
     frame.conversation = conversation;
     [conversation addFrameObject:frame];
     [self storeConversation:conversation fromFrameArray:frameArray];
     
+    // Store Creator
+    Creator *creator = [self checkIfEntity:kCoreDataEntityCreator
+                               withIDValue:creatorID
+                                  forIDKey:kCoreDataFrameCreatorID];
+    frame.creator = creator;
+    [creator addFrameObject:frame];
+    [self storeCreator:creator fromFrameArray:frameArray];
     
     // Store Roll
     Roll *roll = [self checkIfEntity:kCoreDataEntityRoll
                          withIDValue:rollID
                             forIDKey:kCoreDataRollID];
-    
     frame.roll = roll;
     [roll addFrameObject:frame];
     [self storeRoll:roll fromFrameArray:frameArray];
@@ -439,7 +448,6 @@
     Video *video = [self checkIfEntity:kCoreDataEntityVideo
                            withIDValue:videoID
                               forIDKey:kCoreDataFrameVideoID];
-    
     frame.video = video;
     [video addFrameObject:frame];
     [self storeVideo:video fromFrameArray:frameArray];
@@ -500,6 +508,20 @@
         
     }
     
+}
+
+- (void)storeCreator:(Creator *)creator fromFrameArray:(NSArray *)frameArray
+{
+    NSArray *creatorArray = [frameArray valueForKey:@"creator"];
+    
+    NSString *creatorID = [NSString coreDataNullTest:[creatorArray valueForKey:@"id"]];
+    [creator setValue:creatorID forKey:kCoreDataCreatorID];
+    
+    NSString *nickname = [NSString coreDataNullTest:[creatorArray valueForKey:@"nickname"]];
+    [creator setValue:nickname forKey:kCoreDataCreatorNickname];
+    
+    NSString *userImage = [NSString coreDataNullTest:[creatorArray valueForKey:@"user_image"]];
+    [creator setValue:userImage forKey:kCoreDataCreatorUserImage];
 }
 
 - (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray

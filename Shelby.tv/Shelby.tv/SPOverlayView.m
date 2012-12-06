@@ -24,6 +24,8 @@
 @synthesize scrubber = _scrubber;
 @synthesize videoTitleLabel = _videoTitleLabel;
 @synthesize captionLabel = _captionLabel;
+@synthesize userImageView = _userImageView;
+@synthesize nicknameLabel = _nicknameLabel;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -39,6 +41,8 @@
     self.scrubber = nil;
     self.videoTitleLabel = nil;
     self.captionLabel = nil;
+    self.userImageView = nil;
+    self.nicknameLabel = nil;
 }
 
 #pragma mark - Customization on Instantiation

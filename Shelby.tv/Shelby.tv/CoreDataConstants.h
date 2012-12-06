@@ -7,6 +7,7 @@
 //
 
 #import "Conversation.h"
+#import "Creator.h"
 #import "Frame.h"
 #import "Messages.h"
 #import "Stream.h"
@@ -16,6 +17,7 @@
 
 // Entity Constants
 #define kCoreDataEntityConversation                 @"Conversation"
+#define kCoreDataEntityCreator                      @"Creator"
 #define kCoreDataEntityFrame                        @"Frame"
 #define kCoreDataEntityMessages                     @"Messages"
 #define kCoreDataEntityRoll                         @"Roll"
@@ -27,10 +29,15 @@
 #define kCoreDataConversationID                     @"conversationID"
 #define kCoreDataConversationMessageCount           @"messageCount"
 
+#define kCoreDataCreatorID                          @"creatorID"
+#define kCoreDataCreatorNickname                    @"nickname"
+#define kCoreDataCreatorUserImage                   @"userImage"
+
 // Frame Attribute Constants
+#define kCoreDataFrameID                            @"frameID"
 #define kCoreDataFrameConversationID                @"conversationID"
 #define kCoreDataFrameCreatedAt                     @"createdAt"
-#define kCoreDataFrameID                            @"frameID"
+#define kCoreDataFrameCreatorID                     @"creatorID"
 #define kCoreDataFrameIsSynced                      @"isSynced"
 #define kCoreDataFrameRollID                        @"rollID"
 #define kCoreDataFrameTimestamp                     @"timestamp"
