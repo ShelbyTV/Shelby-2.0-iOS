@@ -101,6 +101,9 @@
     UITapGestureRecognizer *toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOverlay)];
     [toggleOverlayGesuture setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:toggleOverlayGesuture];
+    
+    UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
+    [self.view addGestureRecognizer:pinchOverlayGesuture];
 }
 
 - (void)setupVideoPlayers
@@ -181,6 +184,12 @@
     self.currentVideo = videoPosition;
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:videoPosition];
     
+    if ( self.currentVideoPlayer.playbackFinished ) {
+        [self.overlayView.restartPlaybackButton setHidden:NO];
+    } else {
+        [self.overlayView.restartPlaybackButton setHidden:YES];
+    }
+    
     // Clear old values
     [self.overlayView.videoTitleLabel setText:nil];
     [self.overlayView.captionLabel setText:nil];
@@ -237,6 +246,10 @@
 - (IBAction)shareButtonAction:(id)sender
 {
     [self.currentVideoPlayer share];
+}
+ - (void)restartPlaybackButtonAction:(id)sender
+{
+    [self.currentVideoPlayer restartPlayback];
 }
 
 - (IBAction)beginScrubbing:(id)sender

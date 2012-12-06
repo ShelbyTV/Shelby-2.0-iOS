@@ -26,6 +26,7 @@
 @synthesize captionLabel = _captionLabel;
 @synthesize userImageView = _userImageView;
 @synthesize nicknameLabel = _nicknameLabel;
+@synthesize restartPlaybackButton = _restartPlaybackButton;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -43,6 +44,7 @@
     self.captionLabel = nil;
     self.userImageView = nil;
     self.nicknameLabel = nil;
+    self.restartPlaybackButton = nil;
 }
 
 #pragma mark - Customization on Instantiation

@@ -21,5 +21,6 @@
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *captionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;
 
 @end

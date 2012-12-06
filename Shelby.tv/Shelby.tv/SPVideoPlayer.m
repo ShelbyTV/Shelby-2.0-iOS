@@ -35,6 +35,7 @@
 @synthesize videoReel = _videoReel;
 @synthesize sharePopOverController = _sharePopOverController;
 @synthesize videoQueued = _videoQueued;
+@synthesize playbackFinished = _playbackFinished;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -57,6 +58,7 @@
         [self setOverlayView:overlayView];
         [self setVideoReel:videoReel];
         [self setVideoQueued:NO];
+        [self setPlaybackFinished:NO];
         
     }
     
@@ -107,6 +109,15 @@
             
         [self pause];
     }
+}
+
+- (void)restartPlayback
+{
+    [self setPlaybackFinished:NO];
+    [self.overlayView.restartPlaybackButton setHidden:YES];
+    [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC) toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    [self syncScrubber];
+    [self.player play];
 }
 
 - (void)play
@@ -254,23 +265,26 @@
 {
     if ( self.player.currentItem == notification.object ) {
         
-        // Force scroll videoScrollView
-        CGFloat x = self.videoReel.videoScrollView.contentOffset.x + 1024.0f;
-        CGFloat y = self.videoReel.videoScrollView.contentOffset.y;
-        NSUInteger position = self.videoReel.videoScrollView.contentOffset.x/1024;
-        [self.videoReel.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+        // 
+        [self setPlaybackFinished:YES];
+        [self.overlayView.restartPlaybackButton setHidden:NO];
         
-        // Force methods to update
-        [self.videoReel currentVideoDidChangeToVideo:position+1];
+//        // Force scroll videoScrollView
+//        CGFloat x = self.videoReel.videoScrollView.contentOffset.x + 1024.0f;
+//        CGFloat y = self.videoReel.videoScrollView.contentOffset.y;
+//        NSUInteger position = self.videoReel.videoScrollView.contentOffset.x/1024;
+//        [self.videoReel.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+//        
+//        // Force methods to update
+//        [self.videoReel currentVideoDidChangeToVideo:position+1];
+//        
+//        // Load videos
+//        if ( position+2 < self.videoReel.numberOfVideos-1 ) [self.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
+//        
+//        // Force next video to begin playing (video should already be loaded)
+//        [self.videoReel playButtonAction:nil];
         
-        // Load videos
-        if ( position+2 < self.videoReel.numberOfVideos-1 ) [self.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
-        
-        // Force play next video
-        [self.videoReel playButtonAction:nil];
-        
-    }
-        
+    }    
 }
 
 @end

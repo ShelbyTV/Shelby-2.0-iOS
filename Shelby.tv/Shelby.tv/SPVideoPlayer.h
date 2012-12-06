@@ -13,6 +13,7 @@
 @property (strong, nonatomic) Frame *videoFrame;
 @property (strong, nonatomic) AVPlayer *player;
 @property (assign, nonatomic) BOOL videoQueued;
+@property (assign, nonatomic) BOOL playbackFinished;
 
 - (id)initWithBounds:(CGRect)bounds
        forVideoFrame:(Frame*)videoFrame
@@ -22,6 +23,7 @@
 
 - (void)queueVideo;
 - (void)togglePlayback;
+- (void)restartPlayback;
 - (void)play;
 - (void)pause;
 - (void)airPlay;
