@@ -74,6 +74,7 @@
             if( ![context save:&error] ) { // Error
                 
                 DLog(@"Failed to save to data store: %@", [error localizedDescription]);
+                DLog(@"Error for Data_Request: %d", self.requestType);
                 
                 NSArray *detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
                 

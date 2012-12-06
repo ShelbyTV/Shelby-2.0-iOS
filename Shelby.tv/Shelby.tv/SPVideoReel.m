@@ -29,7 +29,6 @@
 - (void)setupVideoPlayers;
 - (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
 - (void)toggleOverlay;
-- (void)pauseAllInactiveVideos;
 
 @end
 
@@ -197,19 +196,7 @@
     self.overlayView.captionLabel.text = frame.video.caption;
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", frame.creator.nickname];
     [AsynchronousFreeloader loadImageFromLink:frame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:nil];
-}
-
-- (void)pauseAllInactiveVideos
-{
-    for (SPVideoPlayer *player in _videoPlayers ) {
-        
-        if ( player != self.currentVideoPlayer ) {
-          
-            [player pause];
-        
-        }
-        
-    }
+    
 }
 
 #pragma mark - Action Methods
@@ -300,34 +287,40 @@
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = self.videoScrollView.frame.size.width;
-    CGFloat scrollAmount = (self.videoScrollView.contentOffset.x - pageWidth / 2) / pageWidth;
-    int page = floor(scrollAmount) + 1;
     
-    // Toggle playback on old and new SPVideoPlayer objects
-    if ( page != self.currentVideo ) {
+    if ( scrollView == self.videoScrollView ) {
         
-        SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
-        [oldPlayer pause];
+        // Switch the indicator when more than 50% of the previous/next page is visible
+        CGFloat pageWidth = scrollView.frame.size.width;
+        CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
+        int page = floor(scrollAmount) + 1;
         
-        SPVideoPlayer *newPlayer = [self.videoPlayers objectAtIndex:page];
-        [newPlayer play];
+        // Toggle playback on old and new SPVideoPlayer objects
+        if ( page != self.currentVideo ) {
+            
+            SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
+            [oldPlayer pause];
+            
+            SPVideoPlayer *newPlayer = [self.videoPlayers objectAtIndex:page];
+            [newPlayer play];
+            
+        }
+        
+        // Reset currentVideoPlayer reference after scrolling has finished
+        self.currentVideo = page;
+        self.currentVideoPlayer = [self.videoPlayers objectAtIndex:page];
+        [self currentVideoDidChange];
+        
+        // Load and pre-load videos
+        [self extractVideoForVideoPlayer:page]; // Load video for current visible view
+        if ( page < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1]; // Load video positioned after current visible view
+        if ( page > 0 ) [self extractVideoForVideoPlayer:page-1]; // Load video positioned beforecurrent visible view
+        
+        // Sync Scrubber
+        [self.currentVideoPlayer syncScrubber];
         
     }
- 
-    // Reset currentVideoPlayer reference after scrolling has finished
-    self.currentVideo = page;
-    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:page];
-    [self currentVideoDidChange];
-    
-    // Load video for newly visible SPVideoPlayer object, and SPVideoPlayer objects flanking each side of the currently visible player.
-    if ( page > 0 ) [self extractVideoForVideoPlayer:page-1];
-    [self extractVideoForVideoPlayer:page];
-    if ( page < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1];
-    
-    // Sync Scrubber
-    [self.currentVideoPlayer syncScrubber];
+
 }
 
 @end
