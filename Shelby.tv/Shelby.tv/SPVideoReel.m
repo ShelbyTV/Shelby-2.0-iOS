@@ -186,8 +186,14 @@
     
     if ( self.currentVideoPlayer.playbackFinished ) {
         [self.overlayView.restartPlaybackButton setHidden:NO];
+        [self.overlayView.playButton setEnabled:NO];
+        [self.overlayView.airPlayButton setEnabled:NO];
+        [self.overlayView.scrubber setEnabled:NO];
     } else {
         [self.overlayView.restartPlaybackButton setHidden:YES];
+        [self.overlayView.playButton setEnabled:YES];
+        [self.overlayView.airPlayButton setEnabled:YES];
+        [self.overlayView.scrubber setEnabled:YES];
     }
     
     // Clear old values
