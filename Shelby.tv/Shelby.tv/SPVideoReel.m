@@ -10,6 +10,7 @@
 #import "SPVideoPlayer.h"
 #import "SPOverlayView.h"
 #import "SPVideoExtractor.h"
+#import "SPVideoItemView.h"
 
 @interface SPVideoReel ()
 
@@ -23,6 +24,7 @@
 
 - (void)setupVariables;
 - (void)setupVideoScrollView;
+- (void)setupVideoListScrollView;
 - (void)setupOverlayView;
 - (void)setupVideoPlayers;
 - (void)toggleOverlay;
@@ -68,7 +70,12 @@
     [self setupVideoScrollView];
     [self setupOverlayView];
     [self setupVideoPlayers];
-    
+//    [self setupVideoListScrollView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 #pragma mark - Setup Methods
@@ -104,6 +111,36 @@
     
     UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];
+}
+
+- (void)setupVideoListScrollView
+{
+    self.videoScrollView.contentSize = CGSizeMake((220.0f+10.0f)*_numberOfVideos, 187.0f);
+    self.overlayView.videoListScrollView.delegate = self;
+    self.overlayView.videoListScrollView.pagingEnabled = YES;
+    self.overlayView.videoListScrollView.showsHorizontalScrollIndicator = NO;
+    self.overlayView.videoListScrollView.showsVerticalScrollIndicator = NO;
+    self.overlayView.videoListScrollView.scrollsToTop = NO;
+    
+    for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
+        
+        Frame *videoFrame = [self.videoFrames objectAtIndex:i];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+        SPVideoItemView *itemView = [nib objectAtIndex:0];
+        
+        CGRect itemFrame = self.overlayView.videoListScrollView.frame;
+        itemFrame.origin.x = (220.0f * i) + 10.0f;
+        itemFrame.origin.y = 10.0f;
+        [itemView setFrame:itemFrame];
+        
+        [itemView.videoTitleLabel setText:videoFrame.video.title];
+        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
+        [self.overlayView.videoListScrollView addSubview:itemView];
+    }
+    [self.overlayView layoutSubviews];
+    
+    DLog(@"%@", self.overlayView.videoListScrollView.subviews);
+    
 }
 
 - (void)setupVideoPlayers

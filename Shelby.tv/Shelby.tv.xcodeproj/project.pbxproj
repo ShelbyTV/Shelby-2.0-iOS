@@ -48,6 +48,8 @@
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
+		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
+		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
@@ -128,6 +130,9 @@
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
+		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
+		8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemView.m; sourceTree = "<group>"; };
+		8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemView.xib; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
 		8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataConstants.h; sourceTree = "<group>"; };
 		8EAAEE54163A286700AEF100 /* NSDate+DateFromBSONString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONString.h"; sourceTree = "<group>"; };
@@ -307,6 +312,9 @@
 				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
 				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
 				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
+				8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */,
+				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
+				8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */,
 				8EB950511665BCF100E965E0 /* SPVideoPlayer.h */,
 				8EB950521665BCF100E965E0 /* SPVideoPlayer.m */,
 				8EB950551665BD4000E965E0 /* SPVideoReel.h */,
@@ -445,6 +453,7 @@
 				8E209726162F3A61000A2DFD /* Default@2x.png in Resources */,
 				8E82EDEB1631ABDE0044D97E /* LoginViewController.xib in Resources */,
 				8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */,
+				8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +499,7 @@
 				8E1B2EE01670506B00D2C0DC /* Creator.m in Sources */,
 				8E1B2EE4167051C700D2C0DC /* Frame.m in Sources */,
 				8E1B2EF31670539400D2C0DC /* AsynchronousFreeloader.m in Sources */,
+				8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -207,7 +207,6 @@
 						<string key="NSFrame">{{512, 551}, {512, 197}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -216,6 +215,8 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<bool key="IBUIPagingEnabled">YES</bool>
+						<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 					</object>
 					<object class="IBUIView" id="598985494">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -591,7 +592,6 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="1051778690"/>
 							<reference ref="598985494"/>
-							<reference ref="477942657"/>
 							<reference ref="72839172"/>
 							<reference ref="850128962"/>
 							<reference ref="627050986"/>
@@ -599,6 +599,7 @@
 							<reference ref="216755980"/>
 							<reference ref="679135398"/>
 							<reference ref="725982105"/>
+							<reference ref="477942657"/>
 							<reference ref="883161448"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -661,11 +662,6 @@
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">12</int>
-						<reference key="object" ref="477942657"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">38</int>
 						<reference key="object" ref="627050986"/>
 						<reference key="parent" ref="191373211"/>
@@ -688,6 +684,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">47</int>
 						<reference key="object" ref="883161448"/>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">12</int>
+						<reference key="object" ref="477942657"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -719,7 +720,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">50</int>
+			<int key="maxID">51</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
