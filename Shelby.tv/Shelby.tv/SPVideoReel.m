@@ -70,14 +70,14 @@
     [self setupVideoScrollView];
     [self setupOverlayView];
     [self setupVideoPlayers];
-
+    [self setupVideoListScrollView];
 
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self setupVideoListScrollView];
+
 }
 
 
@@ -118,7 +118,6 @@
 
 - (void)setupVideoListScrollView
 {
-    DLog(@"HERE");
     CGRect scrollViewFrame = CGRectMake(512.0f, 551.0f, 512.0f, 197.0f);
     self.overlayView.videoListScrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
     self.overlayView.videoListScrollView.contentSize = CGSizeMake((220.0f+10.0f)*_numberOfVideos, 197.0f);
@@ -148,9 +147,7 @@
     }
     
     [self.overlayView addSubview:_overlayView.videoListScrollView];
-    
-    DLog(@"%@", self.overlayView.videoListScrollView.subviews);
-    
+     
 }
 
 - (void)setupVideoPlayers
