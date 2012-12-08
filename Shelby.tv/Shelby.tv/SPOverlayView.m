@@ -35,7 +35,7 @@
     self.categoryTitleLabel = nil;
     self.controlBarView = nil;
     self.containerView = nil;
-    self.videoListScrollView = nil;
+//    self.videoListScrollView = nil;
     self.shareButton = nil;
     self.playButton = nil;
     self.airPlayButton = nil;

@@ -11,11 +11,13 @@
 @implementation SPVideoItemView
 @synthesize videoTitleLabel = _videoTitleLabel;
 @synthesize thumbnailImageView = _thumbnailImageView;
+@synthesize invisibleButton = _invisibleButton;
 
 - (void)dealloc
 {
     self.videoTitleLabel = nil;
     self.thumbnailImageView = nil;
+    self.invisibleButton = nil;
 }
 
 - (void)awakeFromNib

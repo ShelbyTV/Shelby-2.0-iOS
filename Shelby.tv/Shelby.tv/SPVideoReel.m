@@ -70,13 +70,16 @@
     [self setupVideoScrollView];
     [self setupOverlayView];
     [self setupVideoPlayers];
-//    [self setupVideoListScrollView];
+
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self setupVideoListScrollView];
 }
+
 
 #pragma mark - Setup Methods
 - (void)setupVariables
@@ -115,7 +118,10 @@
 
 - (void)setupVideoListScrollView
 {
-    self.videoScrollView.contentSize = CGSizeMake((220.0f+10.0f)*_numberOfVideos, 187.0f);
+    DLog(@"HERE");
+    CGRect scrollViewFrame = CGRectMake(512.0f, 551.0f, 512.0f, 197.0f);
+    self.overlayView.videoListScrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
+    self.overlayView.videoListScrollView.contentSize = CGSizeMake((220.0f+10.0f)*_numberOfVideos, 197.0f);
     self.overlayView.videoListScrollView.delegate = self;
     self.overlayView.videoListScrollView.pagingEnabled = YES;
     self.overlayView.videoListScrollView.showsHorizontalScrollIndicator = NO;
@@ -127,17 +133,21 @@
         Frame *videoFrame = [self.videoFrames objectAtIndex:i];
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
         SPVideoItemView *itemView = [nib objectAtIndex:0];
-        
+            
         CGRect itemFrame = self.overlayView.videoListScrollView.frame;
         itemFrame.origin.x = (220.0f * i) + 10.0f;
-        itemFrame.origin.y = 10.0f;
+        itemFrame.origin.y = 0.0f;
         [itemView setFrame:itemFrame];
         
         [itemView.videoTitleLabel setText:videoFrame.video.title];
         [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
+        [itemView setTag:i];
+
+        
         [self.overlayView.videoListScrollView addSubview:itemView];
     }
-    [self.overlayView layoutSubviews];
+    
+    [self.overlayView addSubview:_overlayView.videoListScrollView];
     
     DLog(@"%@", self.overlayView.videoListScrollView.subviews);
     
@@ -233,7 +243,7 @@
         [self.overlayView.scrubber setEnabled:YES];
     }
     
-    // Clear old values
+    // Clear old values on infoCard
     [self.overlayView.videoTitleLabel setText:nil];
     [self.overlayView.captionLabel setText:nil];
     [self.overlayView.nicknameLabel setText:nil];
@@ -244,7 +254,7 @@
     NSManagedObjectContext *context = [dataUtility context];
     Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:_currentVideo] objectID] error:nil];
     
-    // Set new values
+    // Set new values on infoCard
     self.overlayView.videoTitleLabel.text = frame.video.title;
     self.overlayView.captionLabel.text = frame.video.caption;
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", frame.creator.nickname];
@@ -290,7 +300,39 @@
 {
     [self.currentVideoPlayer share];
 }
- - (void)restartPlaybackButtonAction:(id)sender
+
+- (IBAction)videoItemButtonAction:(id)sender
+{
+
+    // Pause currentVideo Player
+    [self.currentVideoPlayer pause];
+
+    // Reference SPVideoItemView from position in videoListScrollView object
+    SPVideoItemView *itemView = (SPVideoItemView*)[sender superview];
+    NSUInteger position = itemView.tag;
+    
+    // Force scroll videoScrollView
+    CGFloat x = 1024 * itemView.tag;
+    CGFloat y = self.videoScrollView.contentOffset.y;
+    if ( position <= self.numberOfVideos ) 
+        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+    
+    // Force next video to load
+    if ( position <= self.numberOfVideos ) {
+        [self extractVideoForVideoPlayer:position];
+        [self currentVideoDidChangeToVideo:position];
+    }
+    
+    // Begin extraction of next video
+    if ( position + 1 <= self.numberOfVideos )
+        [self extractVideoForVideoPlayer:position+1];
+    
+    // Force next video to begin playing (video should already be loaded)
+    [self playButtonAction:nil];
+
+}
+
+- (void)restartPlaybackButtonAction:(id)sender
 {
     [self.currentVideoPlayer restartPlayback];
 }
@@ -370,8 +412,8 @@
         
         // Load videos
         [self extractVideoForVideoPlayer:page]; // Load video for current visible view
-        if ( page+1 < _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1]; // Load video positioned after current visible view
-        if ( page > 0 ) [self extractVideoForVideoPlayer:page-1]; // Load video positioned beforecurrent visible view
+        if ( page + 1 <= _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1]; // Load video positioned after current visible view
+        if ( page - 1 > 0 ) [self extractVideoForVideoPlayer:page-1]; // Load video positioned beforecurrent visible view
     }
 }
 

@@ -284,13 +284,16 @@
         CGFloat x = self.videoReel.videoScrollView.contentOffset.x + 1024.0f;
         CGFloat y = self.videoReel.videoScrollView.contentOffset.y;
         NSUInteger position = self.videoReel.videoScrollView.contentOffset.x/1024;
-        if ( position+1 < self.videoReel.numberOfVideos-1 ) [self.videoReel.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+        if ( position+1 <= self.videoReel.numberOfVideos-1 )
+            [self.videoReel.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
         
         // Force methods to update
-        if ( position+1 < self.videoReel.numberOfVideos-1 ) [self.videoReel currentVideoDidChangeToVideo:position+1];
+        if ( position+1 <= self.videoReel.numberOfVideos-1 )
+            [self.videoReel currentVideoDidChangeToVideo:position+1];
         
         // Load videos
-        if ( position+2 < self.videoReel.numberOfVideos-1 ) [self.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
+        if ( position+2 <= self.videoReel.numberOfVideos-1 )
+            [self.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
         
         // Force next video to begin playing (video should already be loaded)
         [self.videoReel playButtonAction:nil];
