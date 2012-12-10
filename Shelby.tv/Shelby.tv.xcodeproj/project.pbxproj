@@ -337,6 +337,7 @@
 		8EF5C350162F41B00075C35F /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
 				8E82EDE91631ABDE0044D97E /* LoginViewController.xib */,
 				8E1FAB9716652E6E00A565BF /* MeViewController.xib */,
 			);
@@ -348,8 +349,6 @@
 			children = (
 				8EF5C350162F41B00075C35F /* Xibs */,
 				8E80C5CA16696994004DAB04 /* ShareActivity.h */,
-				8E80C5CB16696994004DAB04 /* ShareActivity.m */,
-				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
 				8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */,
 			);
 			name = Views;
@@ -379,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				8EAAEE59163A29A900AEF100 /* CoreDataUtility.h */,
+				8E80C5CB16696994004DAB04 /* ShareActivity.m */,
 				8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */,
 				8E888986166FB0B40040D28D /* ShelbyAPIClient.h */,
 				8E888987166FB0B40040D28D /* ShelbyAPIClient.m */,

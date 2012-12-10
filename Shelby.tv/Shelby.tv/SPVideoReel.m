@@ -21,6 +21,7 @@
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (copy, nonatomic) NSString *categoryTitle;
+@property (strong, nonatomic) NSMutableArray *itemViews;
 
 - (void)setupVariables;
 - (void)setupVideoScrollView;
@@ -42,6 +43,7 @@
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 @synthesize scrubberTimeObserver = _scrubberTimeObserver;
+@synthesize itemViews = _itemViews;
 
 #pragma mark - Initialization
 - (id)initWithVideoFrames:(NSArray *)videoFrames andCategoryTitle:(NSString *)title
@@ -87,6 +89,7 @@
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.videoPlayers = [[NSMutableArray alloc] init];
     self.numberOfVideos = [self.videoFrames count];
+    self.itemViews = [[NSMutableArray alloc] init];
 }
 
 - (void)setupVideoScrollView
@@ -114,40 +117,6 @@
     
     UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];
-}
-
-- (void)setupVideoListScrollView
-{
-    CGRect scrollViewFrame = CGRectMake(512.0f, 551.0f, 512.0f, 197.0f);
-    self.overlayView.videoListScrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
-    self.overlayView.videoListScrollView.contentSize = CGSizeMake((220.0f+10.0f)*_numberOfVideos, 197.0f);
-    self.overlayView.videoListScrollView.delegate = self;
-    self.overlayView.videoListScrollView.pagingEnabled = YES;
-    self.overlayView.videoListScrollView.showsHorizontalScrollIndicator = NO;
-    self.overlayView.videoListScrollView.showsVerticalScrollIndicator = NO;
-    self.overlayView.videoListScrollView.scrollsToTop = NO;
-    
-    for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
-        
-        Frame *videoFrame = [self.videoFrames objectAtIndex:i];
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-        SPVideoItemView *itemView = [nib objectAtIndex:0];
-            
-        CGRect itemFrame = self.overlayView.videoListScrollView.frame;
-        itemFrame.origin.x = (220.0f * i) + 10.0f;
-        itemFrame.origin.y = 0.0f;
-        [itemView setFrame:itemFrame];
-        
-        [itemView.videoTitleLabel setText:videoFrame.video.title];
-        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
-        [itemView setTag:i];
-
-        
-        [self.overlayView.videoListScrollView addSubview:itemView];
-    }
-    
-    [self.overlayView addSubview:_overlayView.videoListScrollView];
-     
 }
 
 - (void)setupVideoPlayers
@@ -183,13 +152,40 @@
             [self extractVideoForVideoPlayer:0];
             self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
             [self currentVideoDidChangeToVideo:0];
-        
+            
         } else if ( 1 == i ) {
             
             [self extractVideoForVideoPlayer:1];
-        
+            
         }
     }
+    
+}
+
+- (void)setupVideoListScrollView
+{
+
+    self.overlayView.videoListScrollView.contentSize = CGSizeMake((220.0f+10.0f)*_numberOfVideos, 197.0f);
+    
+    for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
+        
+        Frame *videoFrame = [self.videoFrames objectAtIndex:i];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+        SPVideoItemView *itemView = [nib objectAtIndex:0];
+        [self.itemViews addObject:itemView];
+            
+        CGRect itemFrame = self.overlayView.videoListScrollView.frame;
+        itemFrame.origin.x = (220.0f * i) + 10.0f;
+        itemFrame.origin.y = 0.0f;
+        [itemView setFrame:itemFrame];
+        
+        [itemView.videoTitleLabel setText:videoFrame.video.title];
+        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
+        [itemView setTag:i];
+        
+        [self.overlayView.videoListScrollView addSubview:itemView];
+    }
+
 }
 
 #pragma mark - Misc. Methods
