@@ -378,8 +378,8 @@
 			isa = PBXGroup;
 			children = (
 				8EAAEE59163A29A900AEF100 /* CoreDataUtility.h */,
-				8E80C5CB16696994004DAB04 /* ShareActivity.m */,
 				8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */,
+				8E80C5CB16696994004DAB04 /* ShareActivity.m */,
 				8E888986166FB0B40040D28D /* ShelbyAPIClient.h */,
 				8E888987166FB0B40040D28D /* ShelbyAPIClient.m */,
 			);

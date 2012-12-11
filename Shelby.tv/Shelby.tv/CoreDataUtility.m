@@ -272,7 +272,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search dashboardEntry data
+    // Search User table
     NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityUser inManagedObjectContext:self.context];
     [request setEntity:description];
     
@@ -290,7 +290,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search dashboardEntry data
+    // Search Stream table
     NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
     [request setEntity:description];
     
@@ -321,16 +321,20 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search dashboardEntry data
+    // Search Frame table
     NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
     [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     // Filter by rollID
     User *user = [self fetchUser];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user queueRollID]];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of dashboardEntrys
+    // Execute request that returns array of frames in Queue Roll
     return [self.context executeFetchRequest:request error:nil];
     
 }
@@ -342,16 +346,20 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search dashboardEntry data
+    // Search Frame table
     NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
     [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     // Filter by rollID
     User *user = [self fetchUser];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of dashboardEntrys
+    // Execute request that returns array of frames in Personal Roll
     return [self.context executeFetchRequest:request error:nil];
     
 }
@@ -463,7 +471,7 @@
     NSString *conversationID = [NSString coreDataNullTest:[conversationArray valueForKey:@"id"]];
     [conversation setValue:conversationID forKey:kCoreDataConversationID];
     
-    // Store dashboard.frame.conversation.messages attributes
+    // Store Messages
     [self storeMessagesFromConversation:conversation withConversationsArray:conversationArray];
     
 }
