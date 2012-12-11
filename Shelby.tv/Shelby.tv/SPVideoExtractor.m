@@ -93,7 +93,7 @@ static SPVideoExtractor *sharedInstance = nil;
 {
     if ( ![self isExtracting] && [self.videoQueue count] ) {
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSManagedObjectContext *context = [dataUtility context];
         Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
         [self setIsExtracting:YES];

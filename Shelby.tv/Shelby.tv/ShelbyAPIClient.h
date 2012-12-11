@@ -11,6 +11,8 @@
 + (void)postAuthenticationWithEmail:(NSString*)email andPassword:(NSString*)password;
 + (void)getStream;
 + (void)getQueueRoll;
++ (void)getMoreFramesInQueueRoll:(NSString*)skipParam;
 + (void)getPersonalRoll;
++ (void)getMoreFramesInPersonalRoll:(NSString*)skipParam;
 
 @end

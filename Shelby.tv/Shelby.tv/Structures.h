@@ -19,13 +19,11 @@ typedef enum _APIRequestType
 typedef enum _DataRequestType
 {
     
-    DataRequestType_None = 0,
-    DataRequestType_User,
-    DataRequestType_Stream,
-    DataRequestType_QueueRoll,
-    DataRequestType_PersonalRoll,
-    DataRequestType_CategoryRoll,
-    DataRequestType_VideoExtracted
+    DataRequestType_Fetch = 0,          // Fetch NSManagedObjects or NSManagedObjectContext
+    DataRequestType_StoreUser,          // Store User
+    DataRequestType_BackgroundUpdate,   // Store data from background API poller
+    DataRequestType_ActionUpdate,       // Store data from user action (e.g., when user scrolls far in stream)
+    DataRequestType_VideoExtracted      // Store video data from results of SPVideoExtractor
     
 } DataRequestType;
 

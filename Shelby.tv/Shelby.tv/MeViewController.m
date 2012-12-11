@@ -48,7 +48,7 @@
 #pragma mark - Private Methods
 - (void)launchPlayerWithStreamEntries
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Stream];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSArray *videoFrames = [[NSArray alloc] initWithArray:[dataUtility fetchStreamEntries]];
     SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames andCategoryTitle:@"Stream"];
     [self presentViewController:reel animated:YES completion:nil];
@@ -57,7 +57,7 @@
 
 - (void)launchPlayerWithQueueRollEntries
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_QueueRoll];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSArray *videoFrames = [dataUtility fetchQueueRollEntries];
     SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames andCategoryTitle:@"Queue"];
     [self presentViewController:reel animated:YES completion:nil];
@@ -66,7 +66,7 @@
 
 - (void)launchPlayerWithPersonalRollEntries
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_PersonalRoll];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSArray *videoFrames = [dataUtility fetchPersonalRollEntries];
     SPVideoReel *reel = [[SPVideoReel alloc] initWithVideoFrames:videoFrames andCategoryTitle:@"Personal Roll"];
     [self presentViewController:reel animated:YES completion:nil];

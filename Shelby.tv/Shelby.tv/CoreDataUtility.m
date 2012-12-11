@@ -94,13 +94,13 @@
                 
                 switch (_requestType) {
                         
-                    case DataRequestType_None:{
+                    case DataRequestType_Fetch:{
                         
-                        DLog(@"General Data Saved Successfully!");
+                        NSAssert((_requestType == DataRequestType_Fetch), @"DataRequestType_Fetch should not be used when storing data!");
                         
                     } break;
                     
-                    case DataRequestType_User:{
+                    case DataRequestType_StoreUser:{
                         
                         DLog(@"User Data Saved Successfully!");
                         [ShelbyAPIClient getStream];
@@ -110,27 +110,17 @@
                         
                     } break;
                     
-                    case DataRequestType_Stream:{
+                    case DataRequestType_BackgroundUpdate:{
                         
-                        DLog(@"Stream Data Saved Successfully!");
-                        
-                    } break;
-                        
-                    case DataRequestType_QueueRoll:{
-                        
-                        DLog(@"Queue Roll Data Saved Successfully!");
+                        DLog(@"Background Update Successful");
                         
                     } break;
                         
-                    case DataRequestType_PersonalRoll:{
+                    case DataRequestType_ActionUpdate:{
                         
-                        DLog(@"Personal Roll Data Saved Successfully!");
+                        DLog(@"User Action Update Successful");
                         
-                    } break;
-                        
-                    case DataRequestType_CategoryRoll:{
-                        
-                        DLog(@"Catogory Roll Data Saved Successfully!");
+                        // Send NSNotification to SPVideoReel
                         
                     } break;
                         

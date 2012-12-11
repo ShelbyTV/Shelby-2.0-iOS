@@ -76,7 +76,7 @@
                                                  name:kSPVideoExtracted
                                                object:nil];
     
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [dataUtility context];
     Frame *tempFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
     [[SPVideoExtractor sharedInstance] queueVideo:tempFrame.video];
@@ -146,7 +146,7 @@
 
 - (void)share
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [dataUtility context];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
     
@@ -221,7 +221,7 @@
 - (void)loadVideo:(NSNotification*)notification
 {
 
-    CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+    CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [utility context];
     self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
     

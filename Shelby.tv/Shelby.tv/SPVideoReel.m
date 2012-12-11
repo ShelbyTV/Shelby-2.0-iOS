@@ -164,7 +164,7 @@
     
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSManagedObjectContext *context = [dataUtility context];
         Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
         
@@ -176,15 +176,12 @@
         itemFrame.origin.y = 0.0f;
         [itemView setFrame:itemFrame];
         
-        DLog(@"%@", NSStringFromCGRect(itemFrame));
-        
         [itemView.videoTitleLabel setText:videoFrame.video.title];
         [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
         [itemView setTag:i];
         
         [self.overlayView.videoListScrollView addSubview:itemView];
     }
-
 }
 
 #pragma mark - Misc. Methods
@@ -243,7 +240,7 @@
     [self.overlayView.userImageView setImage:nil];
     
     // Reference NSManageObjectContext
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [dataUtility context];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:_currentVideo] objectID] error:nil];
     
