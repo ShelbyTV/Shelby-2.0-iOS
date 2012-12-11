@@ -17,6 +17,7 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
+@property (strong, nonatomic) NSMutableArray *itemViews;
 @property (strong, nonatomic) SPOverlayView *overlayView;
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (assign, nonatomic) NSUInteger currentVideo;
@@ -29,6 +30,7 @@
 - (void)setupOverlayView;
 - (void)setupVideoPlayers;
 - (void)toggleOverlay;
+- (void)updateVideoListAndVideoPlayersWithOlderData;
 
 @end
 
@@ -36,6 +38,7 @@
 @synthesize appDelegate = _appDelegate;
 @synthesize videoFrames = _videoFrames;
 @synthesize videoPlayers = _videoPlayers;
+@synthesize itemViews = _itemViews;
 @synthesize videoScrollView = _videoScrollView;
 @synthesize overlayView = _overlayView;
 @synthesize currentVideoPlayer = _currentVideoPlayer;
@@ -43,6 +46,12 @@
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 @synthesize scrubberTimeObserver = _scrubberTimeObserver;
+
+#pragma mark - Memory Management
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark - Initialization
 - (id)initWithVideoFrames:(NSArray *)videoFrames andCategoryTitle:(NSString *)title
@@ -78,7 +87,7 @@
 {
     [super viewDidAppear:animated];
     [self setupVideoListScrollView];
-}
+}  
 
 
 #pragma mark - Setup Methods
@@ -86,12 +95,16 @@
 {
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.videoPlayers = [[NSMutableArray alloc] init];
+    self.itemViews = [[NSMutableArray alloc] init];
     self.numberOfVideos = [self.videoFrames count];
 }
 
 - (void)setupObservers
 {
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateVideoListAndVideoPlayersWithOlderData)
+                                                 name:kSPUserDidScrollToUpdate
+                                               object:nil];
 }
 
 - (void)setupVideoScrollView
@@ -188,6 +201,8 @@
         [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
         [itemView setTag:i];
         
+        [self.itemViews addObject:itemView];
+        
         [self.overlayView.videoListScrollView addSubview:itemView];
     }
     
@@ -264,6 +279,11 @@
     
 }
 
+- (void)updateVideoListAndVideoPlayersWithOlderData
+{
+    
+}
+
 #pragma mark - Action Methods
 - (IBAction)homeButtonAction:(id)sender
 {
@@ -307,7 +327,7 @@
     [self.currentVideoPlayer pause];
 
     // Remove selected state color from all SPVideoItemView objects
-    for (SPVideoItemView *itemView in self.overlayView.videoListScrollView.subviews) {
+    for (SPVideoItemView *itemView in self.itemViews) {
         itemView.backgroundColor = [UIColor clearColor];
     }
     
@@ -318,14 +338,20 @@
     // Change itemView Color to show selected state
     itemView.backgroundColor = kColorBlue;
     
-    // Force scroll videoScrollView
-    CGFloat x = 1024 * itemView.tag;
-    CGFloat y = self.videoScrollView.contentOffset.y;
-    if ( position <= self.numberOfVideos ) 
-        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-    
-    // Force next video to load
+    // Force sscrollView and video changes
     if ( position <= self.numberOfVideos-1 ) {
+        
+        // Force scroll videoScrollView
+        CGFloat itemX = itemView.frame.size.width * (itemView.tag+1);
+        CGFloat itemY = 0.0f;
+        [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
+        
+        // Force scroll videoScrollView
+        CGFloat videoX = 1024 * itemView.tag;
+        CGFloat videoY = self.videoScrollView.contentOffset.y;
+        [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
+    
+        // Force next video to load
         [self extractVideoForVideoPlayer:position];
         [self currentVideoDidChangeToVideo:position];
     }
@@ -402,8 +428,7 @@
         // Switch the indicator when more than 50% of the previous/next page is visible
         CGFloat pageWidth = scrollView.frame.size.width;
         CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
-        int page = floor(scrollAmount) + 1;
-        
+        NSUInteger page = (NSUInteger)floor(scrollAmount) + 1;
         // Toggle playback on old and new SPVideoPlayer objects
         if ( page != self.currentVideo ) {
             
@@ -426,8 +451,8 @@
         
         // Switch the indicator when more than 50% of the previous/next page is visible
         CGFloat pageWidth = scrollView.frame.size.width;
-        CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by 3 since each visible section has ~3 videos.
-        int page = floor(scrollAmount) + 1;
+        CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
+        NSUInteger page = (NSUInteger)floor(scrollAmount) + 1;
         
         DLog(@"VIDEO LIST SCROLLVIEW | %d of %d", page, self.numberOfVideos);
         
