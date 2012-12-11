@@ -21,7 +21,6 @@
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (copy, nonatomic) NSString *categoryTitle;
-@property (strong, nonatomic) NSMutableArray *itemViews;
 
 - (void)setupVariables;
 - (void)setupVideoScrollView;
@@ -43,7 +42,6 @@
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 @synthesize scrubberTimeObserver = _scrubberTimeObserver;
-@synthesize itemViews = _itemViews;
 
 #pragma mark - Initialization
 - (id)initWithVideoFrames:(NSArray *)videoFrames andCategoryTitle:(NSString *)title
@@ -72,14 +70,12 @@
     [self setupVideoScrollView];
     [self setupOverlayView];
     [self setupVideoPlayers];
-    [self setupVideoListScrollView];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    [self setupVideoListScrollView];
 }
 
 
@@ -89,7 +85,6 @@
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.videoPlayers = [[NSMutableArray alloc] init];
     self.numberOfVideos = [self.videoFrames count];
-    self.itemViews = [[NSMutableArray alloc] init];
 }
 
 - (void)setupVideoScrollView
@@ -169,10 +164,12 @@
     
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
-        Frame *videoFrame = [self.videoFrames objectAtIndex:i];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
+        NSManagedObjectContext *context = [dataUtility context];
+        Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
+        
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
         SPVideoItemView *itemView = [nib objectAtIndex:0];
-        [self.itemViews addObject:itemView];
             
         CGRect itemFrame = self.overlayView.videoListScrollView.frame;
         itemFrame.origin.x = (220.0f * i) + 10.0f;
@@ -198,6 +195,7 @@
     } else {
        [player queueVideo];
     }
+
 }
 
 - (void)toggleOverlay
@@ -245,13 +243,13 @@
     // Reference NSManageObjectContext
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
     NSManagedObjectContext *context = [dataUtility context];
-    Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:_currentVideo] objectID] error:nil];
+    Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:_currentVideo] objectID] error:nil];
     
     // Set new values on infoCard
-    self.overlayView.videoTitleLabel.text = frame.video.title;
-    self.overlayView.captionLabel.text = frame.video.caption;
-    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", frame.creator.nickname];
-    [AsynchronousFreeloader loadImageFromLink:frame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:nil];
+    self.overlayView.videoTitleLabel.text = videoFrame.video.title;
+    self.overlayView.captionLabel.text = videoFrame.video.caption;
+    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", videoFrame.creator.nickname];
+    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:nil];
     
     // Sync Scrubber
     [self.currentVideoPlayer syncScrubber];

@@ -148,10 +148,10 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_None];
     NSManagedObjectContext *context = [dataUtility context];
-    Frame *frame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+    Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
     
-    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, frame.rollID, frame.frameID];
-    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", frame.video.title, shareLink];
+    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, videoFrame.rollID, videoFrame.frameID];
+    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", videoFrame.video.title, shareLink];
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
     [self.sharePopOverController presentPopoverFromRect:self.overlayView.shareButton.frame
