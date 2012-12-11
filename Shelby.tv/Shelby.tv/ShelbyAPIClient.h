@@ -10,6 +10,7 @@
 
 + (void)postAuthenticationWithEmail:(NSString*)email andPassword:(NSString*)password;
 + (void)getStream;
++ (void)getMoreFramesInStream:(NSString*)skipParam;
 + (void)getQueueRoll;
 + (void)getMoreFramesInQueueRoll:(NSString*)skipParam;
 + (void)getPersonalRoll;

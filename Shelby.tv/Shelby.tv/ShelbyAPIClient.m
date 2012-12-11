@@ -68,6 +68,35 @@
     [operation start];
 }
 
++ (void)getMoreFramesInStream:(NSString *)skipParam
+{
+    
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    
+    NSString *authToken = [user token];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetMoreStream, authToken, skipParam]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+            [dataUtility storeStream:JSON];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Stream");
+        
+    }];
+    
+    [operation start];
+}
+
 + (void)getQueueRoll
 {
     

@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#define kSPVideoExtracted       @"Video Extracted"
-#define kSPCurrentVideo         @"Current Video"
-#define kSPVideoShareLink       @"http://shelby.tv/roll/%@/frame/%@"
+#define kSPVideoExtracted           @"Video Extracted"
+#define kSPCurrentVideo             @"Current Video"
+#define kSPUserDidScrollToUpdate    @"User Did Scroll To Update"
+#define kSPVideoShareLink           @"http://shelby.tv/roll/%@/frame/%@"

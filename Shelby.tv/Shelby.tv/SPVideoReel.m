@@ -23,6 +23,7 @@
 @property (copy, nonatomic) NSString *categoryTitle;
 
 - (void)setupVariables;
+- (void)setupObservers;
 - (void)setupVideoScrollView;
 - (void)setupVideoListScrollView;
 - (void)setupOverlayView;
@@ -67,6 +68,7 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     [self setupVariables];
+    [self setupObservers];
     [self setupVideoScrollView];
     [self setupOverlayView];
     [self setupVideoPlayers];
@@ -85,6 +87,11 @@
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.videoPlayers = [[NSMutableArray alloc] init];
     self.numberOfVideos = [self.videoFrames count];
+}
+
+- (void)setupObservers
+{
+    
 }
 
 - (void)setupVideoScrollView
@@ -160,7 +167,8 @@
 - (void)setupVideoListScrollView
 {
 
-    self.overlayView.videoListScrollView.contentSize = CGSizeMake((220.0f+10.0f)*_numberOfVideos, 197.0f);
+    self.overlayView.videoListScrollView.delegate = self;
+    self.overlayView.videoListScrollView.contentSize = CGSizeMake(220.0f*_numberOfVideos, 197.0f);
     
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
@@ -172,7 +180,7 @@
         SPVideoItemView *itemView = [nib objectAtIndex:0];
             
         CGRect itemFrame = itemView.frame;
-        itemFrame.origin.x = (220.0f * i) + 10.0f;
+        itemFrame.origin.x = 220.0f * i;
         itemFrame.origin.y = 0.0f;
         [itemView setFrame:itemFrame];
         
@@ -182,6 +190,7 @@
         
         [self.overlayView.videoListScrollView addSubview:itemView];
     }
+    
 }
 
 #pragma mark - Misc. Methods
@@ -297,9 +306,17 @@
     // Pause currentVideo Player
     [self.currentVideoPlayer pause];
 
+    // Remove selected state color from all SPVideoItemView objects
+    for (SPVideoItemView *itemView in self.overlayView.videoListScrollView.subviews) {
+        itemView.backgroundColor = [UIColor clearColor];
+    }
+    
     // Reference SPVideoItemView from position in videoListScrollView object
     SPVideoItemView *itemView = (SPVideoItemView*)[sender superview];
     NSUInteger position = itemView.tag;
+    
+    // Change itemView Color to show selected state
+    itemView.backgroundColor = kColorBlue;
     
     // Force scroll videoScrollView
     CGFloat x = 1024 * itemView.tag;
@@ -308,13 +325,13 @@
         [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
     
     // Force next video to load
-    if ( position <= self.numberOfVideos ) {
+    if ( position <= self.numberOfVideos-1 ) {
         [self extractVideoForVideoPlayer:position];
         [self currentVideoDidChangeToVideo:position];
     }
     
     // Begin extraction of next video
-    if ( position + 1 <= self.numberOfVideos )
+    if ( position + 1 <= self.numberOfVideos-1 )
         [self extractVideoForVideoPlayer:position+1];
     
     // Force next video to begin playing (video should already be loaded)
@@ -404,6 +421,22 @@
         [self extractVideoForVideoPlayer:page]; // Load video for current visible view
         if ( page + 1 <= _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1]; // Load video positioned after current visible view
         if ( page - 1 > 0 ) [self extractVideoForVideoPlayer:page-1]; // Load video positioned beforecurrent visible view
+    
+    } else if ( scrollView == self.overlayView.videoListScrollView ) {
+        
+        // Switch the indicator when more than 50% of the previous/next page is visible
+        CGFloat pageWidth = scrollView.frame.size.width;
+        CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by 3 since each visible section has ~3 videos.
+        int page = floor(scrollAmount) + 1;
+        
+        DLog(@"VIDEO LIST SCROLLVIEW | %d of %d", page, self.numberOfVideos);
+        
+        if ( page >= self.numberOfVideos - 6 ) {
+            
+            DLog(@"Scrolled to Refresh %d", page);
+            
+        }
+        
     }
 }
 

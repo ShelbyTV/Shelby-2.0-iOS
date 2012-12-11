@@ -13,3 +13,6 @@
 
 // NSUserDefault Constants
 #define kUserAuthorizedDefault              @"Shelby User Authorization Stored Default"
+
+// Colors
+#define kColorBlue                          [UIColor colorWithRed:49.0f/255.0f green:160/255.0f blue:202.0f/255.0f alpha:1.0f]
