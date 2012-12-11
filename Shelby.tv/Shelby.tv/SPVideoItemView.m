@@ -22,7 +22,7 @@
 
 - (void)awakeFromNib
 {
-    
+    self.thumbnailImageView.frame = CGRectMake(10, 40, 200, 147);
 }
 
 @end

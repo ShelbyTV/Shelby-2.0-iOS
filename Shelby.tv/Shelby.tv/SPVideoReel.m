@@ -171,10 +171,12 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
         SPVideoItemView *itemView = [nib objectAtIndex:0];
             
-        CGRect itemFrame = self.overlayView.videoListScrollView.frame;
+        CGRect itemFrame = itemView.frame;
         itemFrame.origin.x = (220.0f * i) + 10.0f;
         itemFrame.origin.y = 0.0f;
         [itemView setFrame:itemFrame];
+        
+        DLog(@"%@", NSStringFromCGRect(itemFrame));
         
         [itemView.videoTitleLabel setText:videoFrame.video.title];
         [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
