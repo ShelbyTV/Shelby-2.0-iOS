@@ -15,6 +15,7 @@
 @interface SPVideoReel ()
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
+@property (assign, nonatomic) CategoryType categoryType;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (strong, nonatomic) NSMutableArray *itemViews;
@@ -36,6 +37,7 @@
 
 @implementation SPVideoReel
 @synthesize appDelegate = _appDelegate;
+@synthesize categoryType = _categoryType;
 @synthesize videoFrames = _videoFrames;
 @synthesize videoPlayers = _videoPlayers;
 @synthesize itemViews = _itemViews;
@@ -54,14 +56,15 @@
 }
 
 #pragma mark - Initialization
-- (id)initWithVideoFrames:(NSArray *)videoFrames andCategoryTitle:(NSString *)title
+- (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString *)title andVideoFrames:(NSArray *)videoFrames
 {
     self = [super init];
     
     if ( self ) {
         
-        self.videoFrames = [[NSMutableArray alloc] initWithArray:videoFrames];
+        self.categoryType = categoryType;
         self.categoryTitle = title;
+        self.videoFrames = [[NSMutableArray alloc] initWithArray:videoFrames];
         
     }
     
@@ -281,6 +284,9 @@
 
 - (void)updateVideoListAndVideoPlayersWithOlderData
 {
+    DLog(@"Received More Datas!");
+    
+//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     
 }
 
@@ -458,7 +464,36 @@
         
         if ( page >= self.numberOfVideos - 6 ) {
             
-            DLog(@"Scrolled to Refresh %d", page);
+            switch ( _categoryType ) {
+                    
+                case CategoryType_Unknown:{
+                    
+                } break;
+                
+                case CategoryType_Stream:{
+                    
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
+                
+                } break;
+                
+                case CategoryType_QueueRoll:{
+                
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                    [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
+                    
+                } break;
+                
+                case CategoryType_PersonalRoll:{
+                
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
+                    
+                } break;
+                    
+                default:
+                    break;
+            }
             
         }
         

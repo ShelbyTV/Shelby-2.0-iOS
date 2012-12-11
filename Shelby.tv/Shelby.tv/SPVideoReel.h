@@ -15,7 +15,7 @@
 @property (strong, nonatomic) id scrubberTimeObserver;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
 
-- (id)initWithVideoFrames:(NSArray*)videoFrames andCategoryTitle:(NSString*)title;
+- (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString*)title andVideoFrames:(NSArray*)videoFrames;
 - (void)currentVideoDidChangeToVideo:(NSUInteger)videoPosition;
 - (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
 

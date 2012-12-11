@@ -27,6 +27,16 @@ typedef enum _DataRequestType
     
 } DataRequestType;
 
+typedef enum _CategoryType
+{
+    
+    CategoryType_Unknown = 0,
+    CategoryType_Stream,
+    CategoryType_QueueRoll,
+    CategoryType_PersonalRoll
+    
+} CategoryType;
+
 typedef enum _VideoProvider
 {
     
