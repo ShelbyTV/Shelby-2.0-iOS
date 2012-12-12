@@ -15,16 +15,24 @@
 @property (strong, nonatomic) id scrubberTimeObserver;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
 
+/// Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString*)title andVideoFrames:(NSArray*)videoFrames;
-- (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+
+/// Extract new video
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 
+/// Update UI and perform new extractions when videoScrollView or _overlay.videoList ScrollView is scrolled
+- (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+
+/// UI Actions
 - (IBAction)homeButtonAction:(id)sender;
 - (IBAction)playButtonAction:(id)sender;
 - (IBAction)airplayButtonAction:(id)sender;
 - (IBAction)shareButtonAction:(id)sender;
 - (IBAction)itemButtonAction:(id)sender;
 - (IBAction)restartPlaybackButtonAction:(id)sender;
+
+/// Video Scrubber Methods
 - (IBAction)scrub:(id)sender;
 - (IBAction)beginScrubbing:(id)sender;
 - (IBAction)endScrubbing:(id)sender;

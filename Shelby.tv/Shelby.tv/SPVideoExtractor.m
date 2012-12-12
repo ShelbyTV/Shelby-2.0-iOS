@@ -74,6 +74,17 @@ static SPVideoExtractor *sharedInstance = nil;
     }
 }
 
+- (void)emptyQueue
+{
+    if ( [self.videoQueue count] ) {
+        
+        for ( NSUInteger i = 1; i < [self.videoQueue count]; i++ ) {
+            [self.videoQueue removeObjectAtIndex:i];
+        }
+        
+    }
+}
+
 - (void)cancelRemainingExtractions
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
