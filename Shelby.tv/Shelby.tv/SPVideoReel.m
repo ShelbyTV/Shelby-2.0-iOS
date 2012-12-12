@@ -204,6 +204,10 @@
         [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
         [itemView setTag:i];
         
+        if ( 0 == i ) {
+            itemView.backgroundColor = kColorBlue;
+        }
+        
         [self.itemViews addObject:itemView];
         
         [self.overlayView.videoListScrollView addSubview:itemView];
@@ -269,7 +273,8 @@
     // Reference NSManageObjectContext
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [dataUtility context];
-    Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:_currentVideo] objectID] error:nil];
+    NSManagedObjectID *videoFrameObjectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
+    Frame *videoFrame = (Frame*)[context existingObjectWithID:videoFrameObjectID error:nil];
     
     // Set new values on infoCard
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
