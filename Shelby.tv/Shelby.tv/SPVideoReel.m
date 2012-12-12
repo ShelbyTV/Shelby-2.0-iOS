@@ -20,7 +20,6 @@
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (strong, nonatomic) NSMutableArray *itemViews;
 @property (strong, nonatomic) SPOverlayView *overlayView;
-@property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (copy, nonatomic) NSString *categoryTitle;
 
@@ -33,7 +32,7 @@
 - (void)setupVideoPlayers;
 
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
-- (void)toggleOverlay;
+
 
 @end
 
@@ -145,13 +144,8 @@
         
         Frame *videoFrame = [self.videoFrames objectAtIndex:i];
         
-        BOOL autoPlay;
-        if ( 0 == i ) {
-            autoPlay = YES;
+        if ( 0 == i ) 
             self.currentVideo = i;
-        } else {
-            autoPlay = NO;
-        }
         
         CGRect viewframe = self.videoScrollView.frame;
         viewframe.origin.x = viewframe.size.width * i;
@@ -159,8 +153,7 @@
         SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
                                                         forVideoFrame:videoFrame
                                                       withOverlayView:_overlayView
-                                                          inVideoReel:self
-                                                    andShouldAutoPlay:autoPlay];
+                                                          inVideoReel:self];
         
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
@@ -245,19 +238,21 @@
     // Pause current videoPlayer
     [self.currentVideoPlayer pause];
     
-    // Stop autoplay for new video
-    [self.currentVideoPlayer setAutoPlay:NO];
-    
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideo = position;
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
-    [self.overlayView.scrubber setValue:0.0f];
     
     // Pause and stop residual video playback
     if ( self.currentVideoPlayer.playbackFinished ) {
         [self.overlayView.restartPlaybackButton setHidden:NO];
         [self.overlayView.playButton setEnabled:NO];
         [self.overlayView.airPlayButton setEnabled:NO];
+        [self.overlayView.scrubber setEnabled:NO];
+    } else if ( ![self.currentVideoPlayer videoPlayable] ) {
+        [self.overlayView.restartPlaybackButton setHidden:YES];
+        [self.overlayView.playButton setEnabled:NO];
+        [self.overlayView.airPlayButton setEnabled:NO];
+        [self.overlayView.scrubber setValue:0.0f];
         [self.overlayView.scrubber setEnabled:NO];
     } else {
         [self.overlayView.restartPlaybackButton setHidden:YES];
@@ -319,9 +314,10 @@
         
     }
     
-    // Turn on AutoPlay for current video
-    [self.currentVideoPlayer setAutoPlay:YES];
-    [self.currentVideoPlayer play];
+    // Play currentVideo
+    if ( _currentVideoPlayer.videoPlayable ) {
+        [self.currentVideoPlayer play];
+    }
     
     // Sync Scrubber
     [self.currentVideoPlayer syncScrubber];
@@ -473,9 +469,6 @@
             
             SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
             [oldPlayer pause];
-            
-            SPVideoPlayer *newPlayer = [self.videoPlayers objectAtIndex:page];
-            [newPlayer play];
             
         }
         

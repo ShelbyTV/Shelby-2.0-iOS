@@ -26,7 +26,6 @@
 
 @implementation SPVideoPlayer
 @synthesize videoFrame = _videoFrame;
-@synthesize autoPlay = _autoPlay;
 @synthesize player = _player;
 @synthesize playerLayer = _playerLayer;
 @synthesize indicator = _indicator;
@@ -35,6 +34,7 @@
 @synthesize sharePopOverController = _sharePopOverController;
 @synthesize videoQueued = _videoQueued;
 @synthesize playbackFinished = _playbackFinished;
+@synthesize videoPlayable = _videoPlayable;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -47,17 +47,16 @@
        forVideoFrame:(Frame *)videoFrame
      withOverlayView:(SPOverlayView *)overlayView
          inVideoReel:(id)videoReel
-   andShouldAutoPlay:(BOOL)autoPlay
 {
     if ( self = [super init] ) {
         
         [self.view setFrame:bounds];
         [self setVideoFrame:videoFrame];
-        [self setAutoPlay:autoPlay];
         [self setOverlayView:overlayView];
         [self setVideoReel:videoReel];
         [self setVideoQueued:NO];
         [self setPlaybackFinished:NO];
+        [self setVideoPlayable:NO];
         
     }
     
@@ -100,7 +99,7 @@
 #pragma mark - Player Controls
 - (void)togglePlayback
 {
-    if ( 0.0 == self.player.rate && _videoQueued ) { // Play
+    if ( 0.0 == self.player.rate && _videoPlayable ) { // Play
         
         [self play];
         
@@ -129,6 +128,8 @@
     [self.player play];
     [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
     [self setupScrubber];
+    
+    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self.videoReel selector:@selector(toggleOverlay) userInfo:nil repeats:NO];
     
 }
 
@@ -243,31 +244,36 @@
         self.playerLayer.bounds = modifiedFrame;
         [self.view.layer addSublayer:self.playerLayer];
         
+        // Set videoPlayable Flag
+        [self setVideoPlayable:YES];
+        [self.overlayView.restartPlaybackButton setHidden:YES];
+        [self.overlayView.playButton setEnabled:YES];
+        [self.overlayView.airPlayButton setEnabled:YES];
+        [self.overlayView.scrubber setEnabled:YES];
+        
         // Add Observers
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(itemDidFinishPlaying:)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:playerItem];
 
-        
-        // Video begins in 'pause'-mode by default
-        [self.player pause];
-        
-        if ( _autoPlay ) { // Start AVPlayer object in 'play' mode
+        // Toggle video playback
+        if ( self == _videoReel.currentVideoPlayer ) { // Start AVPlayer object in 'play' mode
             
             [self play];
             
-            [UIView animateWithDuration:1.0f animations:^{
-                [self.overlayView setAlpha:0.0f]; 
-            }];
-            
-        } 
+        } else {
+
+            [self.player pause];
+        
+        }
+        
+        [self syncScrubber];
     }
 }
 
 - (void)itemDidFinishPlaying:(NSNotification*)notification
 {
-    DLog(@"%@", notification);
     
     if ( self.player.currentItem == notification.object && ![self playbackFinished]) {
         

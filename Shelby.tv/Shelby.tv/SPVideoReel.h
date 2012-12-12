@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
+@class SPVideoPlayer;
+
 @interface SPVideoReel : UIViewController <UIScrollViewDelegate>
 {
     id _scrubberTimeObserver;
@@ -14,6 +16,7 @@
 @property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (strong, nonatomic) id scrubberTimeObserver;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
+@property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 
 /// Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString*)title andVideoFrames:(NSArray*)videoFrames;
@@ -23,6 +26,7 @@
 
 /// Update UI and perform new extractions when videoScrollView or _overlay.videoList ScrollView is scrolled
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+- (void)toggleOverlay;
 
 /// UI Actions
 - (IBAction)homeButtonAction:(id)sender;

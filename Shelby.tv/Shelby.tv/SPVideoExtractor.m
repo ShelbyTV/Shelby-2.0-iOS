@@ -208,13 +208,16 @@ static SPVideoExtractor *sharedInstance = nil;
                     // Get videoURL to playable video file
                     NSString *extractedURL = [value performSelector:pathSelector];
                     
-                    // Load player with URL
+//                    // Load player with URL
 //                    if ( [self.extractedVideoURLs containsObject:extractedURL] ) { 
 //                        
 //                        /*
 //                         Try this again, but don't remove video from queue
 //                         This may cause a problem if two of the exact same videos are next to each other.
 //                        */
+//                        
+//                        DLog(@"Video Previously Extracted");
+//                        
 //                        [self setIsExtracting:NO];
 //                        [self extractNextVideoFromQueue];
 //                        
