@@ -16,14 +16,14 @@
 @property (strong, nonatomic) UIScrollView *videoScrollView;
 
 - (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString*)title andVideoFrames:(NSArray*)videoFrames;
-- (void)currentVideoDidChangeToVideo:(NSUInteger)videoPosition;
-- (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
+- (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+- (void)extractVideoForVideoPlayer:(NSUInteger)position;
 
 - (IBAction)homeButtonAction:(id)sender;
 - (IBAction)playButtonAction:(id)sender;
 - (IBAction)airplayButtonAction:(id)sender;
 - (IBAction)shareButtonAction:(id)sender;
-- (IBAction)videoItemButtonAction:(id)sender;
+- (IBAction)itemButtonAction:(id)sender;
 - (IBAction)restartPlaybackButtonAction:(id)sender;
 - (IBAction)scrub:(id)sender;
 - (IBAction)beginScrubbing:(id)sender;

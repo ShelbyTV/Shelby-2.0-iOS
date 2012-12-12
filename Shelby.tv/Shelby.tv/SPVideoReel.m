@@ -212,11 +212,11 @@
 }
 
 #pragma mark - Misc. Methods
-- (void)extractVideoForVideoPlayer:(NSUInteger)videoPlayerNumber;
+- (void)extractVideoForVideoPlayer:(NSUInteger)position;
 {
-    SPVideoPlayer *player = [self.videoPlayers objectAtIndex:videoPlayerNumber];
+    SPVideoPlayer *player = [self.videoPlayers objectAtIndex:position];
     
-    if ( (videoPlayerNumber > _numberOfVideos) || [player videoQueued] ) {
+    if ( (position > _numberOfVideos) || [player videoQueued] ) {
         return;
     } else {
        [player queueVideo];
@@ -241,12 +241,12 @@
     }
 }
 
-- (void)currentVideoDidChangeToVideo:(NSUInteger)videoPosition
+- (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
     
     // Reset currentVideoPlayer reference after scrolling has finished
-    self.currentVideo = videoPosition;
-    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:videoPosition];
+    self.currentVideo = position;
+    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
     
     if ( self.currentVideoPlayer.playbackFinished ) {
         [self.overlayView.restartPlaybackButton setHidden:NO];
@@ -279,7 +279,35 @@
     
     // Sync Scrubber
     [self.currentVideoPlayer syncScrubber];
+
     
+    // Update videoListScrollView (if _itemViews is initialized)
+    if ( [self.itemViews count] ) {
+        
+        // Remove selected state color from all SPVideoItemView objects
+        for (SPVideoItemView *itemView in self.itemViews) {
+            itemView.backgroundColor = [UIColor clearColor];
+        }
+        
+        // Reference SPVideoItemView from position in videoListScrollView object
+        SPVideoItemView *itemView = [self.itemViews objectAtIndex:position];
+        
+        // Change itemView Color to show selected state
+        itemView.backgroundColor = kColorBlue;
+        
+        // Force scrollView and video changes
+        if ( position <= self.numberOfVideos-1 ) {
+            
+            // Force scroll videoScrollView
+            CGFloat itemX = itemView.frame.size.width * itemView.tag;
+            CGFloat itemY = 0.0f;
+            [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
+            
+            // Force next video to load
+            [self extractVideoForVideoPlayer:position];
+        }
+
+    }
 }
 
 - (void)updateVideoListAndVideoPlayersWithOlderData
@@ -326,41 +354,26 @@
     [self.currentVideoPlayer share];
 }
 
-- (IBAction)videoItemButtonAction:(id)sender
+- (IBAction)itemButtonAction:(id)sender
 {
 
     // Pause currentVideo Player
     [self.currentVideoPlayer pause];
 
-    // Remove selected state color from all SPVideoItemView objects
-    for (SPVideoItemView *itemView in self.itemViews) {
-        itemView.backgroundColor = [UIColor clearColor];
-    }
-    
     // Reference SPVideoItemView from position in videoListScrollView object
     SPVideoItemView *itemView = (SPVideoItemView*)[sender superview];
     NSUInteger position = itemView.tag;
     
-    // Change itemView Color to show selected state
-    itemView.backgroundColor = kColorBlue;
+    // Force scroll videoScrollView
+    CGFloat videoX = 1024 * itemView.tag;
+    CGFloat videoY = self.videoScrollView.contentOffset.y;
     
-    // Force sscrollView and video changes
     if ( position <= self.numberOfVideos-1 ) {
-        
-        // Force scroll videoScrollView
-        CGFloat itemX = itemView.frame.size.width * (itemView.tag+1);
-        CGFloat itemY = 0.0f;
-        [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
-        
-        // Force scroll videoScrollView
-        CGFloat videoX = 1024 * itemView.tag;
-        CGFloat videoY = self.videoScrollView.contentOffset.y;
         [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-    
-        // Force next video to load
-        [self extractVideoForVideoPlayer:position];
-        [self currentVideoDidChangeToVideo:position];
     }
+    
+    // Perform actions on videoChange
+    [self currentVideoDidChangeToVideo:position];
     
     // Begin extraction of next video
     if ( position + 1 <= self.numberOfVideos-1 )
