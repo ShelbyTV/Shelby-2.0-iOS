@@ -32,9 +32,8 @@
 @synthesize overlayView = _overlayView;
 @synthesize videoReel = _videoReel;
 @synthesize sharePopOverController = _sharePopOverController;
-@synthesize videoQueued = _videoQueued;
 @synthesize playbackFinished = _playbackFinished;
-@synthesize videoPlayable = _videoPlayable;
+@synthesize isPlayable = _isPlayable;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -54,9 +53,8 @@
         [self setVideoFrame:videoFrame];
         [self setOverlayView:overlayView];
         [self setVideoReel:videoReel];
-        [self setVideoQueued:NO];
         [self setPlaybackFinished:NO];
-        [self setVideoPlayable:NO];
+        [self setIsPlayable:NO];
         
     }
     
@@ -66,19 +64,20 @@
 #pragma mark - Public Methods
 - (void)queueVideo
 {
-
-    [self setVideoQueued:YES];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loadVideo:)
-                                                 name:kSPVideoExtracted
-                                               object:nil];
-    
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSManagedObjectContext *context = [dataUtility context];
-    Frame *tempFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
-    [[SPVideoExtractor sharedInstance] queueVideo:tempFrame.video];
-
+    if ( ![self isPlayable] ) {
+     
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loadVideo:)
+                                                     name:kSPVideoExtracted
+                                                   object:nil];
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        NSManagedObjectContext *context = [dataUtility context];
+        Frame *tempFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+        [[SPVideoExtractor sharedInstance] queueVideo:tempFrame.video];
+        
+    }
 }
 
 #pragma mark - View Lifecycle Methods
@@ -99,7 +98,7 @@
 #pragma mark - Player Controls
 - (void)togglePlayback
 {
-    if ( 0.0 == self.player.rate && _videoPlayable ) { // Play
+    if ( 0.0 == self.player.rate && _isPlayable ) { // Play
         
         [self play];
         
@@ -128,9 +127,6 @@
     [self.player play];
     [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
     [self setupScrubber];
-    
-    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self.videoReel selector:@selector(toggleOverlay) userInfo:nil repeats:NO];
-    
 }
 
 - (void)pause
@@ -244,8 +240,8 @@
         self.playerLayer.bounds = modifiedFrame;
         [self.view.layer addSublayer:self.playerLayer];
         
-        // Set videoPlayable Flag
-        [self setVideoPlayable:YES];
+        // Set isPlayable Flag
+        [self setIsPlayable:YES];
         [self.overlayView.restartPlaybackButton setHidden:YES];
         [self.overlayView.playButton setEnabled:YES];
         [self.overlayView.airPlayButton setEnabled:YES];
@@ -267,8 +263,7 @@
             [self.player pause];
         
         }
-        
-        [self syncScrubber];
+    
     }
 }
 

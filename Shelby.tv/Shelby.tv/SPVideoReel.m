@@ -140,12 +140,12 @@
 
 - (void)setupVideoPlayers
 {
+    
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
         Frame *videoFrame = [self.videoFrames objectAtIndex:i];
         
-        if ( 0 == i ) 
-            self.currentVideo = i;
+        
         
         CGRect viewframe = self.videoScrollView.frame;
         viewframe.origin.x = viewframe.size.width * i;
@@ -157,21 +157,18 @@
         
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
-        
-        // Extracting video for the first two SPVideoPlayer objects
-        if ( 0 == i ) {
-            
-            // Set first video to currentVideo
-            [self extractVideoForVideoPlayer:0];
-            self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
-            [self currentVideoDidChangeToVideo:0];
-            
-        } else if ( 1 == i ) {
-            
-            [self extractVideoForVideoPlayer:1];
-            
-        }
+    
     }
+
+    // Begin setu
+    self.currentVideo = 0;
+    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
+    
+    /*
+     Update UI and begin video extraction
+     This method must be called after the for loop, since it depends on the existence of the first four SPVideoPlayer's 
+     */
+    [self currentVideoDidChangeToVideo:0];
     
 }
 
@@ -216,7 +213,7 @@
 {
     SPVideoPlayer *player = [self.videoPlayers objectAtIndex:position];
     
-    if ( (position >= _numberOfVideos) || [player videoQueued] ) {
+    if ( (position >= _numberOfVideos) ) {
         return;
     } else {
        [player queueVideo];
@@ -236,7 +233,7 @@
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
     // Pause current videoPlayer
-    [self.currentVideoPlayer pause];
+    if ( self.currentVideoPlayer.isPlayable ) [self.currentVideoPlayer pause];
     
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideo = position;
@@ -248,7 +245,7 @@
         [self.overlayView.playButton setEnabled:NO];
         [self.overlayView.airPlayButton setEnabled:NO];
         [self.overlayView.scrubber setEnabled:NO];
-    } else if ( ![self.currentVideoPlayer videoPlayable] ) {
+    } else if ( ![self.currentVideoPlayer isPlayable] ) {
         [self.overlayView.restartPlaybackButton setHidden:YES];
         [self.overlayView.playButton setEnabled:NO];
         [self.overlayView.airPlayButton setEnabled:NO];
@@ -305,22 +302,23 @@
             [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
         }
         
-        // Load current and next 4 videos
+    }
+    
+    // Load current and next 4 videos
+    if ( 0 < [self.videoPlayers count] ) {
         [[SPVideoExtractor sharedInstance] emptyQueue];
         [self extractVideoForVideoPlayer:position]; // Load video for current visible view
         if ( position + 1 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+1];
         if ( position + 2 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+2];
         if ( position + 3 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+3];
-        
     }
     
-    // Play currentVideo
-    if ( _currentVideoPlayer.videoPlayable ) {
+    // Play currentVideo and sync the scrubber
+    if ( _currentVideoPlayer.isPlayable ) {
         [self.currentVideoPlayer play];
+        [self.currentVideoPlayer syncScrubber];
     }
-    
-    // Sync Scrubber
-    [self.currentVideoPlayer syncScrubber];
+
 }
 
 - (void)toggleOverlay
