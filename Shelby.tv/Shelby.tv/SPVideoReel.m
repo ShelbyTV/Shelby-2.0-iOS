@@ -213,7 +213,6 @@
         
         [self.itemViews addObject:itemView];
 
-        
         [self.overlayView.videoListScrollView addSubview:itemView];
     }
     
@@ -246,9 +245,13 @@
     // Pause current videoPlayer
     [self.currentVideoPlayer pause];
     
+    // Stop autoplay for new video
+    [self.currentVideoPlayer setAutoPlay:NO];
+    
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideo = position;
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
+    [self.overlayView.scrubber setValue:0.0f];
     
     // Pause and stop residual video playback
     if ( self.currentVideoPlayer.playbackFinished ) {
@@ -315,6 +318,10 @@
         if ( position + 3 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+3];
         
     }
+    
+    // Turn on AutoPlay for current video
+    [self.currentVideoPlayer setAutoPlay:YES];
+    [self.currentVideoPlayer play];
     
     // Sync Scrubber
     [self.currentVideoPlayer syncScrubber];

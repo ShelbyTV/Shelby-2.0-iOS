@@ -209,17 +209,17 @@ static SPVideoExtractor *sharedInstance = nil;
                     NSString *extractedURL = [value performSelector:pathSelector];
                     
                     // Load player with URL
-                    if ( [self.extractedVideoURLs containsObject:extractedURL] ) { 
-                        
-                        /*
-                         Try again, but don't remove video from queue
-                         This may cause a problem if two of the exact same videos are next to each other.
-                        */
-                        [self setIsExtracting:NO];
-                        [self extractNextVideoFromQueue];
-                        
-                    } else {
-                        
+//                    if ( [self.extractedVideoURLs containsObject:extractedURL] ) { 
+//                        
+//                        /*
+//                         Try this again, but don't remove video from queue
+//                         This may cause a problem if two of the exact same videos are next to each other.
+//                        */
+//                        [self setIsExtracting:NO];
+//                        [self extractNextVideoFromQueue];
+//                        
+//                    } else {
+                    
                         if ( 0 == [self.videoQueue count] ) { 
                             
                             // Do nothing if the HOME button is pushed in SPVideoReel while a video was being processed.
@@ -247,7 +247,7 @@ static SPVideoExtractor *sharedInstance = nil;
                             self.extractionTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
 
                         }
-                    }
+//                    }
                 }
             }
         }

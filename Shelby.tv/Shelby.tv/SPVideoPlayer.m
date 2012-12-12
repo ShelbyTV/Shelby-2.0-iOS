@@ -13,7 +13,6 @@
 
 @interface SPVideoPlayer ()
 
-@property (assign, nonatomic) BOOL autoPlay;
 @property (strong, nonatomic) AVPlayerLayer *playerLayer;
 @property (strong, nonatomic) UIActivityIndicatorView *indicator;
 @property (strong, nonatomic) SPOverlayView *overlayView;
