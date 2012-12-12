@@ -306,7 +306,7 @@
     return frames;
 }
 
-- (NSArray*)fetchQueueRollEntries
+- (NSMutableArray*)fetchQueueRollEntries
 {
     
     // Create fetch request
@@ -327,11 +327,11 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Queue Roll
-    return [self.context executeFetchRequest:request error:nil];
+    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
 }
 
-- (NSArray*)fetchPersonalRollEntries
+- (NSMutableArray*)fetchPersonalRollEntries
 {
     
     // Create fetch request
@@ -352,7 +352,7 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
-    return [self.context executeFetchRequest:request error:nil];
+    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
 }
 

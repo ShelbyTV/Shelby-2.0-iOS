@@ -27,7 +27,7 @@
 // Public Fetching Methods
 - (User*)fetchUser;
 - (NSMutableArray*)fetchStreamEntries;
-- (NSArray*)fetchQueueRollEntries;
-- (NSArray*)fetchPersonalRollEntries;
+- (NSMutableArray*)fetchQueueRollEntries;
+- (NSMutableArray*)fetchPersonalRollEntries;
 
 @end

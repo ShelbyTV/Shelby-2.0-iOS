@@ -280,7 +280,6 @@
     // Sync Scrubber
     [self.currentVideoPlayer syncScrubber];
 
-    
     // Update videoListScrollView (if _itemViews is initialized)
     if ( [self.itemViews count] ) {
         
