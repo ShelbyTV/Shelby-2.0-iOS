@@ -206,6 +206,7 @@
         
         if ( 0 == i ) {
             itemView.backgroundColor = kColorBlue;
+            itemView.videoTitleLabel.textColor = [UIColor whiteColor];
         }
         
         [self.itemViews addObject:itemView];
@@ -291,6 +292,7 @@
         // Remove selected state color from all SPVideoItemView objects
         for (SPVideoItemView *itemView in self.itemViews) {
             itemView.backgroundColor = [UIColor clearColor];
+            itemView.videoTitleLabel.textColor = [UIColor blackColor];
         }
         
         // Reference SPVideoItemView from position in videoListScrollView object
@@ -298,6 +300,7 @@
         
         // Change itemView Color to show selected state
         itemView.backgroundColor = kColorBlue;
+        itemView.videoTitleLabel.textColor = [UIColor whiteColor];
         
         // Force scrollView and video changes
         if ( position <= self.numberOfVideos-1 ) {
