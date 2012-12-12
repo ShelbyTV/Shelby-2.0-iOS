@@ -221,7 +221,7 @@
 {
     SPVideoPlayer *player = [self.videoPlayers objectAtIndex:position];
     
-    if ( (position > _numberOfVideos) || [player videoQueued] ) {
+    if ( (position >= _numberOfVideos) || [player videoQueued] ) {
         return;
     } else {
        [player queueVideo];
@@ -309,11 +309,15 @@
             CGFloat itemX = itemView.frame.size.width * itemView.tag;
             CGFloat itemY = 0.0f;
             [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
-            
-            // Force next video to load
-            [self extractVideoForVideoPlayer:position];
-        }
 
+        }
+        
+        // Load current and next 4 videos
+        [self extractVideoForVideoPlayer:position]; // Load video for current visible view
+        if ( position + 1 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+1];
+        if ( position + 2 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+2];
+        if ( position + 3 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+3];
+        
     }
 }
 
@@ -381,10 +385,6 @@
     
     // Perform actions on videoChange
     [self currentVideoDidChangeToVideo:position];
-    
-    // Begin extraction of next video
-    if ( position + 1 <= self.numberOfVideos-1 )
-        [self extractVideoForVideoPlayer:position+1];
     
     // Force next video to begin playing (video should already be loaded)
     [self playButtonAction:nil];
@@ -466,12 +466,8 @@
             
         }
         
-        [self currentVideoDidChangeToVideo:page];
         
-        // Load videos
-        [self extractVideoForVideoPlayer:page]; // Load video for current visible view
-        if ( page + 1 <= _numberOfVideos-1 ) [self extractVideoForVideoPlayer:page+1]; // Load video positioned after current visible view
-        if ( page - 1 > 0 ) [self extractVideoForVideoPlayer:page-1]; // Load video positioned beforecurrent visible view
+        [self currentVideoDidChangeToVideo:page];
     
     } else if ( scrollView == self.overlayView.videoListScrollView ) {
         
