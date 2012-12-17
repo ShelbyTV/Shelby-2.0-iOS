@@ -19,13 +19,17 @@
     [request setHTTPMethod:@"POST"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+  
+        if ( response.statusCode == 200 ) {
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
-        [dataUtility storeUser:JSON];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
+            [dataUtility storeUser:JSON];
+            
+        }
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        NSLog(@"%@", error);
+        DLog(@"%@", error);
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
                                                             message:@"Please try again"
@@ -136,6 +140,7 @@
     
     NSString *authToken = [user token];
     NSString *queueRollID = [user queueRollID];
+    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetMoreRollFrames, queueRollID, authToken, skipParam]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];

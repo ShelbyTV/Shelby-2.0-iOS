@@ -50,7 +50,10 @@
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
 {
-    
+    // Customize Scrubber
+    [self.scrubber setMinimumTrackImage:[UIImage imageNamed:@"scrubberBarOn"] forState:UIControlStateNormal];
+    [self.scrubber setMaximumTrackImage:[UIImage imageNamed:@"scrubberBarOff"] forState:UIControlStateNormal];
+    [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
 }
 
 #pragma mark - UIView Overridden Methods
