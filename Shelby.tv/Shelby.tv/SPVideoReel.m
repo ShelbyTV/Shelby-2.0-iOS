@@ -277,7 +277,8 @@
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
     self.overlayView.videoCaptionLabel.text = videoFrame.video.caption;
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", videoFrame.creator.nickname];
-    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:nil];
+    UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
+    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:infoPanelIconPlaceholderView];
 
     // Update videoListScrollView (if _itemViews is initialized)
     if ( 0 < [self.itemViews count] ) {

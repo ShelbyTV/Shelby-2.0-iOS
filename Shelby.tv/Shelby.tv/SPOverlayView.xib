@@ -60,14 +60,14 @@
 						<string key="NSFrame">{{36, 518}, {825, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="407908746"/>
+						<reference key="NSNextKeyView" ref="22011574"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 					</object>
-					<object class="IBUILabel" id="407908746">
+					<object class="IBUILabel" id="22011574">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{867, 518}, {119, 21}}</string>
@@ -251,13 +251,17 @@
 					<object class="IBUIImageView" id="216755980">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{11, 599}, {50, 50}}</string>
+						<string key="NSFrame">{{11, 603}, {47, 47}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="725982105"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">infoPanelIconPlaceholder.png</string>
+						</object>
 					</object>
 					<object class="IBUILabel" id="725982105">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -534,7 +538,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">scrubberTimeLabel</string>
 						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="407908746"/>
+						<reference key="destination" ref="22011574"/>
 					</object>
 					<int key="connectionID">63</int>
 				</object>
@@ -662,7 +666,7 @@
 							<reference ref="1051778690"/>
 							<reference ref="903081563"/>
 							<reference ref="725982105"/>
-							<reference ref="407908746"/>
+							<reference ref="22011574"/>
 							<reference ref="679135398"/>
 							<reference ref="756358227"/>
 						</array>
@@ -777,7 +781,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">62</int>
-						<reference key="object" ref="407908746"/>
+						<reference key="object" ref="22011574"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -969,6 +973,7 @@
 			<string key="divider.png">{8, 197}</string>
 			<string key="homeButton.png">{59, 59}</string>
 			<string key="infoPanel.png">{518, 197}</string>
+			<string key="infoPanelIconPlaceholder.png">{47, 47}</string>
 			<string key="playButton.png">{19, 21}</string>
 			<string key="shareButton.png">{37, 38}</string>
 			<string key="videoListPanel.png">{505, 197}</string>
