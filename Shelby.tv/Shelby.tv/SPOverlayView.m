@@ -49,8 +49,10 @@
 - (void)awakeFromNib
 {
     // Customize Scrubber
-    [self.scrubber setMinimumTrackImage:[UIImage imageNamed:@"scrubberBarOn"] forState:UIControlStateNormal];
-    [self.scrubber setMaximumTrackImage:[UIImage imageNamed:@"scrubberBarOff"] forState:UIControlStateNormal];
+    UIImage *scrubberBarOn = [UIImage imageNamed:@"scrubberBarOn"];
+    [self.scrubber setMinimumTrackImage:scrubberBarOn forState:UIControlStateNormal];
+    UIImage *scrubberBarOff = [UIImage imageNamed:@"scrubberBarOff"];
+    [self.scrubber setMaximumTrackImage:scrubberBarOff forState:UIControlStateNormal];
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
     
     // Customize Fonts
@@ -65,7 +67,9 @@
     [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.videoTitleLabel.font.pointSize]];
     [self.videoTitleLabel setTextColor:kColorBlack];
     
-
+    // Customize thumbnail
+    [self.userImageView.layer setBorderColor: [[UIColor colorWithRed:173.0f/255.0f green:173.0f/255.0f blue:173.0f/255.0f alpha:1.0f] CGColor]];
+    [self.userImageView.layer setBorderWidth: 0.5];
 }
 
 #pragma mark - UIView Overridden Methods
