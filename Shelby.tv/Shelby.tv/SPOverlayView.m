@@ -50,6 +50,11 @@
     [self.scrubber setMinimumTrackImage:[UIImage imageNamed:@"scrubberBarOn"] forState:UIControlStateNormal];
     [self.scrubber setMaximumTrackImage:[UIImage imageNamed:@"scrubberBarOff"] forState:UIControlStateNormal];
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
+    
+    // Customize Fonts
+    [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
+    [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.videoTitleLabel.font.pointSize]];
+
 }
 
 #pragma mark - UIView Overridden Methods

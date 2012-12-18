@@ -25,7 +25,7 @@
 #pragma mark - View Loading Methods
 - (void)awakeFromNib
 {
-
+    [self.videoCaptionLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.videoCaptionLabel.font.pointSize]];
 }
 
 #pragma mark - Class Methods
