@@ -20,8 +20,9 @@
 @synthesize playButton = _playButton;
 @synthesize airPlayButton = _airPlayButton;
 @synthesize scrubber = _scrubber;
+@synthesize scrubberTimeLabel = _scrubberTimeLabel;
 @synthesize videoTitleLabel = _videoTitleLabel;
-@synthesize captionLabel = _captionLabel;
+@synthesize videoCaptionLabel = _videoCaptionLabel;
 @synthesize userImageView = _userImageView;
 @synthesize nicknameLabel = _nicknameLabel;
 @synthesize restartPlaybackButton = _restartPlaybackButton;
@@ -36,8 +37,9 @@
     self.playButton = nil;
     self.airPlayButton = nil;
     self.scrubber = nil;
+    self.scrubberTimeLabel = nil;
     self.videoTitleLabel = nil;
-    self.captionLabel = nil;
+    self.videoCaptionLabel = nil;
     self.userImageView = nil;
     self.nicknameLabel = nil;
     self.restartPlaybackButton = nil;
@@ -52,8 +54,17 @@
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
     
     // Customize Fonts
+    [self.scrubberTimeLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.scrubberTimeLabel.font.pointSize]];
+    [self.scrubberTimeLabel setTextColor:kColorBlack];
+    
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
+    [self.categoryTitleLabel setTextColor:kColorWhite];
+    
+    [self.videoCaptionLabel setTextColor:kColorBlack];
+    
     [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.videoTitleLabel.font.pointSize]];
+    [self.videoTitleLabel setTextColor:kColorBlack];
+    
 
 }
 

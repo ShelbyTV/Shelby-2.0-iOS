@@ -15,4 +15,6 @@
 #define kUserAuthorizedDefault              @"Shelby User Authorization Stored Default"
 
 // Colors
-#define kColorBlue                          [UIColor colorWithRed:49.0f/255.0f green:160/255.0f blue:202.0f/255.0f alpha:1.0f]
+#define kColorBlue                          [UIColor colorWithRed:49.0f/255.0f green:160.0f/255.0f blue:202.0f/255.0f alpha:1.0f]
+#define kColorBlack                         [UIColor colorWithRed:51.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f]
+#define kColorWhite                         [UIColor colorWithRed:238.0f/255.0f green:238.0f/255.0f blue:238.0f/255.0f alpha:1.0f]

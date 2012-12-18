@@ -15,8 +15,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *airPlayButton;
 @property (weak, nonatomic) IBOutlet UISlider *scrubber;
+@property (weak, nonatomic) IBOutlet UILabel *scrubberTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
-@property (weak, nonatomic) IBOutlet TopAlignedLabel *captionLabel;
+@property (weak, nonatomic) IBOutlet TopAlignedLabel *videoCaptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;

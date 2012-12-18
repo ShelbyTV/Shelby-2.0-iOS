@@ -263,7 +263,7 @@
     
     // Clear old values on infoCard
     [self.overlayView.videoTitleLabel setText:nil];
-    [self.overlayView.captionLabel setText:nil];
+    [self.overlayView.videoCaptionLabel setText:nil];
     [self.overlayView.nicknameLabel setText:nil];
     [self.overlayView.userImageView setImage:nil];
     
@@ -275,7 +275,7 @@
 
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
-    self.overlayView.captionLabel.text = videoFrame.video.caption;
+    self.overlayView.videoCaptionLabel.text = videoFrame.video.caption;
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", videoFrame.creator.nickname];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:nil];
 
@@ -285,7 +285,7 @@
         // Remove selected state color from all SPVideoItemView objects
         for (SPVideoItemView *itemView in self.itemViews) {
             itemView.backgroundColor = [UIColor clearColor];
-            itemView.videoCaptionLabel.textColor = [UIColor blackColor];
+            itemView.videoCaptionLabel.textColor = kColorBlack;
         }
         
         // Reference SPVideoItemView from position in videoListScrollView object
@@ -293,7 +293,7 @@
         
         // Change itemView Color to show selected state
         itemView.backgroundColor = kColorBlue;
-        itemView.videoCaptionLabel.textColor = [UIColor whiteColor];
+        itemView.videoCaptionLabel.textColor = kColorWhite;
         
         // Force scrollView and video changes
         if ( position <= self.numberOfVideos-1 ) {
@@ -307,7 +307,7 @@
         
     }
     
-    // Load current and next 4 videos
+    // Load current and next 3 videos
     if ( 0 < [self.videoPlayers count] ) {
         [[SPVideoExtractor sharedInstance] emptyQueue];
         [self extractVideoForVideoPlayer:position]; // Load video for current visible view
@@ -316,7 +316,7 @@
         if ( position + 3 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+3];
     }
     
-    // Play currentVideo and sync the scrubber
+    // Play currentVideo and sync the scrubber, if currentVideo was loaded before
     if ( _currentVideoPlayer.isPlayable ) {
         [self.currentVideoPlayer play];
         [self.currentVideoPlayer syncScrubber];
