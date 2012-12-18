@@ -44,6 +44,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 507}, {1024, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="973182751"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -58,6 +59,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{36, 518}, {825, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="756358227"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -70,6 +72,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{11, 518}, {19, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="579414753"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -96,7 +99,7 @@
 							<int key="type">2</int>
 							<double key="pointSize">15</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="169789758">
+						<object class="NSFont" key="IBUIFont" id="619963121">
 							<string key="NSName">Helvetica-Bold</string>
 							<double key="NSSize">15</double>
 							<int key="NSfFlags">16</int>
@@ -107,6 +110,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{989, 519}, {25, 17}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="995945933"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -124,13 +128,14 @@
 							<string key="NSResourceName">airplayButton.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="766121361"/>
-						<reference key="IBUIFont" ref="169789758"/>
+						<reference key="IBUIFont" ref="619963121"/>
 					</object>
 					<object class="IBUIImageView" id="992062704">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{519, 551}, {505, 197}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="903081563"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -145,6 +150,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{519, 551}, {505, 217}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="658285190"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -161,6 +167,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{519, 551}, {8, 197}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -175,6 +182,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 551}, {518, 197}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="627050986"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -189,6 +197,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{11, 570}, {484, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="216755980"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -215,6 +224,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{11, 599}, {50, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="725982105"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -225,6 +235,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{81, 599}, {424, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="850128962"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -253,6 +264,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{81, 628}, {424, 100}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="992062704"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -283,6 +295,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{11, 690}, {37, 38}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="626961961"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -300,13 +313,14 @@
 							<string key="NSResourceName">shareButton.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="766121361"/>
-						<reference key="IBUIFont" ref="169789758"/>
+						<reference key="IBUIFont" ref="619963121"/>
 					</object>
 					<object class="IBUIButton" id="679135398">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 0}, {59, 59}}</string>
+						<string key="NSFrame">{{20, 11}, {59, 59}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1051778690"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -324,13 +338,14 @@
 							<string key="NSResourceName">homeButton.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="766121361"/>
-						<reference key="IBUIFont" ref="169789758"/>
+						<reference key="IBUIFont" ref="619963121"/>
 					</object>
 					<object class="IBUILabel" id="1051778690">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{372, 13}, {281, 57}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="883161448"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -359,6 +374,7 @@
 						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrame">{{437, 256}, {150, 54}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="719733321"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -378,11 +394,12 @@
 							<int key="traits">2</int>
 							<double key="pointSize">15</double>
 						</object>
-						<reference key="IBUIFont" ref="169789758"/>
+						<reference key="IBUIFont" ref="619963121"/>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {1024, 748}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="679135398"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 					<int key="IBUIStatusBarStyle">2</int>
@@ -608,8 +625,8 @@
 							<reference ref="626961961"/>
 							<reference ref="883161448"/>
 							<reference ref="1051778690"/>
-							<reference ref="679135398"/>
 							<reference ref="903081563"/>
+							<reference ref="679135398"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -753,7 +770,147 @@
 			<nil key="sourceID"/>
 			<int key="maxID">61</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">SPOverlayView</string>
+					<string key="superclassName">UIView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="airPlayButton">UIButton</string>
+						<string key="captionLabel">TopAlignedLabel</string>
+						<string key="categoryTitleLabel">UILabel</string>
+						<string key="homeButton">UIButton</string>
+						<string key="nicknameLabel">UILabel</string>
+						<string key="playButton">UIButton</string>
+						<string key="restartPlaybackButton">UIButton</string>
+						<string key="scrubber">UISlider</string>
+						<string key="shareButton">UIButton</string>
+						<string key="userImageView">UIImageView</string>
+						<string key="videoListScrollView">UIScrollView</string>
+						<string key="videoTitleLabel">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="airPlayButton">
+							<string key="name">airPlayButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="captionLabel">
+							<string key="name">captionLabel</string>
+							<string key="candidateClassName">TopAlignedLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="categoryTitleLabel">
+							<string key="name">categoryTitleLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="homeButton">
+							<string key="name">homeButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="nicknameLabel">
+							<string key="name">nicknameLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="playButton">
+							<string key="name">playButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="restartPlaybackButton">
+							<string key="name">restartPlaybackButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scrubber">
+							<string key="name">scrubber</string>
+							<string key="candidateClassName">UISlider</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="shareButton">
+							<string key="name">shareButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="userImageView">
+							<string key="name">userImageView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="videoListScrollView">
+							<string key="name">videoListScrollView</string>
+							<string key="candidateClassName">UIScrollView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="videoTitleLabel">
+							<string key="name">videoTitleLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SPOverlayView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SPVideoReel</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="airplayButtonAction:">id</string>
+						<string key="beginScrubbing:">id</string>
+						<string key="endScrubbing:">id</string>
+						<string key="homeButtonAction:">id</string>
+						<string key="itemButtonAction:">id</string>
+						<string key="playButtonAction:">id</string>
+						<string key="restartPlaybackButtonAction:">id</string>
+						<string key="scrub:">id</string>
+						<string key="shareButtonAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="airplayButtonAction:">
+							<string key="name">airplayButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="beginScrubbing:">
+							<string key="name">beginScrubbing:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="endScrubbing:">
+							<string key="name">endScrubbing:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="homeButtonAction:">
+							<string key="name">homeButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="itemButtonAction:">
+							<string key="name">itemButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="playButtonAction:">
+							<string key="name">playButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="restartPlaybackButtonAction:">
+							<string key="name">restartPlaybackButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="scrub:">
+							<string key="name">scrub:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareButtonAction:">
+							<string key="name">shareButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SPVideoReel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TopAlignedLabel</string>
+					<string key="superclassName">UILabel</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TopAlignedLabel.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBIPadFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
