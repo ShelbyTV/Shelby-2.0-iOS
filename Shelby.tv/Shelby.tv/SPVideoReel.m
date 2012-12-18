@@ -175,8 +175,10 @@
 - (void)setupVideoListScrollView
 {
 
+    CGFloat itemViewWidth = [SPVideoItemView width];
+    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_numberOfVideos, 217.0f);
     self.overlayView.videoListScrollView.delegate = self;
-    self.overlayView.videoListScrollView.contentSize = CGSizeMake(220.0f*_numberOfVideos, 197.0f);
+    
     
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
@@ -188,17 +190,17 @@
         SPVideoItemView *itemView = [nib objectAtIndex:0];
             
         CGRect itemFrame = itemView.frame;
-        itemFrame.origin.x = 220.0f * i;
-        itemFrame.origin.y = 0.0f;
+        itemFrame.origin.x = itemViewWidth * i;
+        itemFrame.origin.y = 20.0f;
         [itemView setFrame:itemFrame];
         
-        [itemView.videoTitleLabel setText:videoFrame.video.title];
+        [itemView.videoCaptionLabel setText:videoFrame.video.caption];
         [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
         [itemView setTag:i];
         
         if ( 0 == i ) {
             itemView.backgroundColor = kColorBlue;
-            itemView.videoTitleLabel.textColor = [UIColor whiteColor];
+            itemView.videoCaptionLabel.textColor = [UIColor whiteColor];
         }
         
         [self.itemViews addObject:itemView];
@@ -270,7 +272,7 @@
     NSManagedObjectID *videoFrameObjectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:videoFrameObjectID error:nil];
 
-    // Set new values on infoCard
+    // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
     self.overlayView.captionLabel.text = videoFrame.video.caption;
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", videoFrame.creator.nickname];
@@ -282,7 +284,7 @@
         // Remove selected state color from all SPVideoItemView objects
         for (SPVideoItemView *itemView in self.itemViews) {
             itemView.backgroundColor = [UIColor clearColor];
-            itemView.videoTitleLabel.textColor = [UIColor blackColor];
+            itemView.videoCaptionLabel.textColor = [UIColor blackColor];
         }
         
         // Reference SPVideoItemView from position in videoListScrollView object
@@ -290,7 +292,7 @@
         
         // Change itemView Color to show selected state
         itemView.backgroundColor = kColorBlue;
-        itemView.videoTitleLabel.textColor = [UIColor whiteColor];
+        itemView.videoCaptionLabel.textColor = [UIColor whiteColor];
         
         // Force scrollView and video changes
         if ( position <= self.numberOfVideos-1 ) {

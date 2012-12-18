@@ -15,8 +15,6 @@
 @implementation SPOverlayView
 @synthesize homeButton = _homeButton;
 @synthesize categoryTitleLabel = _categoryTitleLabel;
-@synthesize controlBarView = _controlBarView;
-@synthesize containerView = _containerView;
 @synthesize videoListScrollView = _videoListScrollView;
 @synthesize shareButton = _shareButton;
 @synthesize playButton = _playButton;
@@ -33,8 +31,6 @@
 {
     self.homeButton = nil;
     self.categoryTitleLabel = nil;
-    self.controlBarView = nil;
-    self.containerView = nil;
     self.videoListScrollView = nil;
     self.shareButton = nil;
     self.playButton = nil;

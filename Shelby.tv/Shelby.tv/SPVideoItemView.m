@@ -9,20 +9,29 @@
 #import "SPVideoItemView.h"
 
 @implementation SPVideoItemView
-@synthesize videoTitleLabel = _videoTitleLabel;
+@synthesize videoCaptionLabel = _videoCaptionLabel;
 @synthesize thumbnailImageView = _thumbnailImageView;
 @synthesize invisibleButton = _invisibleButton;
 
+
+#pragma mark - Memory Mangement Methods
 - (void)dealloc
 {
-    self.videoTitleLabel = nil;
+    self.videoCaptionLabel = nil;
     self.thumbnailImageView = nil;
     self.invisibleButton = nil;
 }
 
+#pragma mark - View Loading Methods
 - (void)awakeFromNib
 {
-    self.thumbnailImageView.frame = CGRectMake(10, 40, 200, 147);
+
+}
+
+#pragma mark - Class Methods
++ (CGFloat)width
+{
+    return 234.0f;
 }
 
 @end
