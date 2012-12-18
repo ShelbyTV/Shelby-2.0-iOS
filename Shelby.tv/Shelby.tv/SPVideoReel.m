@@ -195,7 +195,8 @@
         [itemView setFrame:itemFrame];
         
         [itemView.videoCaptionLabel setText:videoFrame.video.caption];
-        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:nil];
+        UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
+        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:videoListThumbnailPlaceholderView];
         [itemView setTag:i];
         
         if ( 0 == i ) {

@@ -126,6 +126,7 @@
 {
     [self.player play];
     [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
+    [self.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
     [self setupScrubber];
 }
 
@@ -133,6 +134,7 @@
 {
     [self.player pause];
     [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
+    [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
 }
 
 - (void)airPlay

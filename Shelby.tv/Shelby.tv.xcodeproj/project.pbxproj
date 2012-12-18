@@ -43,8 +43,8 @@
 		8E59804B1680104A00027181 /* infoPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980311680104A00027181 /* infoPanel@2x.png */; };
 		8E59804C1680104A00027181 /* pauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980321680104A00027181 /* pauseButton.png */; };
 		8E59804D1680104A00027181 /* pauseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980331680104A00027181 /* pauseButton@2x.png */; };
-		8E59804E1680104A00027181 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980341680104A00027181 /* play.png */; };
-		8E59804F1680104A00027181 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980351680104A00027181 /* play@2x.png */; };
+		8E59804E1680104A00027181 /* playButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980341680104A00027181 /* playButton.png */; };
+		8E59804F1680104A00027181 /* playButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980351680104A00027181 /* playButton@2x.png */; };
 		8E5980501680104A00027181 /* scrubberBarOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980361680104A00027181 /* scrubberBarOff.png */; };
 		8E5980511680104A00027181 /* scrubberBarOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980371680104A00027181 /* scrubberBarOff@2x.png */; };
 		8E5980521680104A00027181 /* scrubberBarOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980381680104A00027181 /* scrubberBarOn.png */; };
@@ -139,8 +139,8 @@
 		8E5980311680104A00027181 /* infoPanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoPanel@2x.png"; sourceTree = "<group>"; };
 		8E5980321680104A00027181 /* pauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseButton.png; sourceTree = "<group>"; };
 		8E5980331680104A00027181 /* pauseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pauseButton@2x.png"; sourceTree = "<group>"; };
-		8E5980341680104A00027181 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
-		8E5980351680104A00027181 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
+		8E5980341680104A00027181 /* playButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playButton.png; sourceTree = "<group>"; };
+		8E5980351680104A00027181 /* playButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playButton@2x.png"; sourceTree = "<group>"; };
 		8E5980361680104A00027181 /* scrubberBarOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scrubberBarOff.png; sourceTree = "<group>"; };
 		8E5980371680104A00027181 /* scrubberBarOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrubberBarOff@2x.png"; sourceTree = "<group>"; };
 		8E5980381680104A00027181 /* scrubberBarOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scrubberBarOn.png; sourceTree = "<group>"; };
@@ -349,8 +349,8 @@
 				8E5980311680104A00027181 /* infoPanel@2x.png */,
 				8E5980321680104A00027181 /* pauseButton.png */,
 				8E5980331680104A00027181 /* pauseButton@2x.png */,
-				8E5980341680104A00027181 /* play.png */,
-				8E5980351680104A00027181 /* play@2x.png */,
+				8E5980341680104A00027181 /* playButton.png */,
+				8E5980351680104A00027181 /* playButton@2x.png */,
 				8E5980361680104A00027181 /* scrubberBarOff.png */,
 				8E5980371680104A00027181 /* scrubberBarOff@2x.png */,
 				8E5980381680104A00027181 /* scrubberBarOn.png */,
@@ -580,8 +580,8 @@
 				8E59804B1680104A00027181 /* infoPanel@2x.png in Resources */,
 				8E59804C1680104A00027181 /* pauseButton.png in Resources */,
 				8E59804D1680104A00027181 /* pauseButton@2x.png in Resources */,
-				8E59804E1680104A00027181 /* play.png in Resources */,
-				8E59804F1680104A00027181 /* play@2x.png in Resources */,
+				8E59804E1680104A00027181 /* playButton.png in Resources */,
+				8E59804F1680104A00027181 /* playButton@2x.png in Resources */,
 				8E5980501680104A00027181 /* scrubberBarOff.png in Resources */,
 				8E5980511680104A00027181 /* scrubberBarOff@2x.png in Resources */,
 				8E5980521680104A00027181 /* scrubberBarOn.png in Resources */,
