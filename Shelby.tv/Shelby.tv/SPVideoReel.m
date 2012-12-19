@@ -145,8 +145,6 @@
         
         Frame *videoFrame = [self.videoFrames objectAtIndex:i];
         
-        
-        
         CGRect viewframe = self.videoScrollView.frame;
         viewframe.origin.x = viewframe.size.width * i;
         viewframe.origin.y = 0.0f;
@@ -160,7 +158,7 @@
     
     }
 
-    // Begin setu
+    // Begin setup
     self.currentVideo = 0;
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
     
@@ -182,10 +180,11 @@
     
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
+        
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSManagedObjectContext *context = [dataUtility context];
         Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
-        
+
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
         SPVideoItemView *itemView = [nib objectAtIndex:0];
             

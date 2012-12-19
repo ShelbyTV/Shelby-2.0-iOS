@@ -123,7 +123,8 @@ static SPVideoExtractor *sharedInstance = nil;
             [self loadDailyMotionVideo:video];
             
         }
-    } 
+
+    }
 }
 
 - (void)createWebView
@@ -208,53 +209,37 @@ static SPVideoExtractor *sharedInstance = nil;
                     // Get videoURL to playable video file
                     NSString *extractedURL = [value performSelector:pathSelector];
                     
-//                    // Load player with URL
-//                    if ( [self.extractedVideoURLs containsObject:extractedURL] ) { 
-//                        
-//                        /*
-//                         Try this again, but don't remove video from queue
-//                         This may cause a problem if two of the exact same videos are next to each other.
-//                        */
-//                        
-//                        DLog(@"Video Previously Extracted");
-//                        
-//                        [self setIsExtracting:NO];
-//                        [self extractNextVideoFromQueue];
-//                        
-//                    } else {
-                    
-                        if ( 0 == [self.videoQueue count] ) { 
-                            
-                            // Do nothing if the HOME button is pushed in SPVideoReel while a video was being processed.
-                            
-                        } else {
-                            
-                            // Add newly extractedURL to array of seen/extractedURLs
-                            [self.extractedVideoURLs addObject:extractedURL];
-                            
-                            // Update Core Data video object
-                            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
-                            NSManagedObjectContext *context = [dataUtility context];
-                            Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
-                            video.extractedURL = extractedURL;
-                            [dataUtility setVideoID:video.videoID];
-                            
-                            // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
-                            [dataUtility saveContext:context];
-                            
-                            // Reset variables for next search
-                            [self.videoQueue removeObjectAtIndex:0];
-                            [self setIsExtracting:NO];
-                            
-                            
-                            self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
+                    if ( 0 == [self.videoQueue count] ) {
+                        
+                        // Do nothing if the HOME button is pushed in SPVideoReel while a video was being processed.
+                        
+                    } else {
+                        
+                        // Add newly extractedURL to array of seen/extractedURLs
+                        [self.extractedVideoURLs addObject:extractedURL];
+                        
+                        // Update Core Data video object
+                        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
+                        NSManagedObjectContext *context = [dataUtility context];
+                        Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
+                        video.extractedURL = extractedURL;
+                        [dataUtility setVideoID:video.videoID];
+                        
+                        // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
+                        [dataUtility saveContext:context];
+                        
+                        // Reset variables for next search
+                        [self.videoQueue removeObjectAtIndex:0];
+                        [self setIsExtracting:NO];
+                        
+                        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
 
-                        }
-//                    }
+                    }
                 }
             }
         }
     }
 }
+
 
 @end

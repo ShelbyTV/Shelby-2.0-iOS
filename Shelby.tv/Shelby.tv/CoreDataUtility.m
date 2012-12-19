@@ -80,7 +80,7 @@
             
             NSError *error = nil;
             
-            if( ![context save:&error] ) { // Error
+            if( ![context save:&error] && [self.appDelegate persistentStoreCoordinator] ) { // Error
                 
                 DLog(@"Failed to save to data store: %@", [error localizedDescription]);
                 DLog(@"Error for Data_Request: %d", self.requestType);
@@ -198,15 +198,14 @@
                 
             } else {
                 
-                NSString *provider = [[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"provider_name"];
-                BOOL sourceURL = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"source_url"] isEqual:[NSNull null]] ? NO : YES;
-                BOOL embedURL = [[[[[resultsArray objectAtIndex:i] valueForKey:@"frame"] valueForKey:@"video"] valueForKey:@"emebd_url"] isEqual:[NSNull null]] ? NO : YES;
+                NSString *providerName = [[frameArray valueForKey:@"video"] valueForKey:@"provider_name"];
                 
-                if ( ([provider isEqualToString:@"youtube"] && sourceURL) || ([provider isEqualToString:@"vimeo"] && embedURL) ) {
+                if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"vimeo"] ) {
                     
                     Stream *stream = [self checkIfEntity:kCoreDataEntityStream
                                              withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
                                                 forIDKey:kCoreDataStreamID];
+
                     
                     NSString *streamID = [NSString coreDataNullTest:[[resultsArray objectAtIndex:i] valueForKey:@"id"]];
                     [stream setValue:streamID forKey:kCoreDataStreamID];
@@ -237,23 +236,22 @@
     for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
         
         @autoreleasepool {
+            
+            NSArray *videoArray = [[resultsArray objectAtIndex:i] valueForKey:@"video"];
+            NSString *providerName = [videoArray valueForKey:@"provider_name"];
                 
-                NSString *provider = [[[resultsArray objectAtIndex:i] valueForKey:@"video"] valueForKey:@"provider_name"];
-                BOOL sourceURL = [[[[resultsArray objectAtIndex:i] valueForKey:@"video"] valueForKey:@"source_url"] isEqual:[NSNull null]] ? NO : YES;
-                BOOL embedURL = [[[[resultsArray objectAtIndex:i]valueForKey:@"video"] valueForKey:@"emebd_url"] isEqual:[NSNull null]] ? NO : YES;
+            if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"vimeo"]  ) {
                 
-                if ( ([provider isEqualToString:@"youtube"] && sourceURL) || ([provider isEqualToString:@"vimeo"] && embedURL) ) {
-                    
-                    Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
-                                           withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
-                                              forIDKey:kCoreDataFrameID];
-                    
-                    [self storeFrame:frame forFrameArray:[resultsArray objectAtIndex:i] withSyncStatus:YES];
-                    
-                    
-                }
+                Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
+                                       withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
+                                          forIDKey:kCoreDataFrameID];
+                
+                [self storeFrame:frame forFrameArray:[resultsArray objectAtIndex:i] withSyncStatus:YES];
+                
+                
             }
         }
+    }
     
     [self saveContext:_context];
 }
@@ -442,7 +440,7 @@
                          withIDValue:rollID
                             forIDKey:kCoreDataRollID];
     frame.roll = roll;
-    [roll addFrameObject:frame];
+    roll.frame = frame;
     [self storeRoll:roll fromFrameArray:frameArray];
     
     // Store Video
@@ -565,43 +563,8 @@
     NSString *title = [NSString coreDataNullTest:[videoArray valueForKey:@"title"]];
     [video setValue:title forKey:kCoreDataVideoTitle];
     
-    
-    if ( [providerName isEqualToString:@"youtube"] ) {
-        
-        NSString *sourceURL = [NSString coreDataNullTest:[videoArray valueForKey:@"source_url"]];
-        [video setValue:sourceURL forKey:kCoreDataVideoSourceURL];
-        
-        NSString *providerID;
-        NSScanner *providerIDScanner = [NSScanner scannerWithString:sourceURL];
-        [providerIDScanner scanUpToString:@"=" intoString:nil];
-        [providerIDScanner scanUpToString:@"&" intoString:&providerID];
-        providerID = [providerID stringByReplacingOccurrencesOfString:@"=" withString:@""];
-        
-        [video setValue:providerID forKey:kCoreDataVideoProviderID];
-        
-    } else if ( [providerName isEqualToString:@"vimeo"] ) {
-        
-        NSString *embedURL = [NSString coreDataNullTest:[videoArray valueForKey:@"embed_url"]];
-        NSString *sourceURL;
-        NSScanner *scanner = [NSScanner scannerWithString:embedURL];
-        [scanner scanUpToString:@"http://" intoString:nil];
-        [scanner scanUpToString:@"\"" intoString:&sourceURL];
-        sourceURL = [sourceURL stringByReplacingOccurrencesOfString:@"=" withString:@""];
-        [video setValue:sourceURL forKey:kCoreDataVideoSourceURL];
-        
-        NSString *providerID;
-        NSScanner *providerIDScanner = [NSScanner scannerWithString:sourceURL];
-        [providerIDScanner scanUpToString:@"/video/" intoString:nil];
-        [providerIDScanner scanUpToString:@"\"" intoString:&providerID];
-        providerID = [providerID stringByReplacingOccurrencesOfString:@"/video/" withString:@""];
-        
-        [video setValue:providerID forKey:kCoreDataVideoProviderID];
-        
-    } else {
-        
-        // Do nothing
-        
-    }
+    NSString *providerID = [NSString coreDataNullTest:[videoArray valueForKey:@"provider_id"]];
+    [video setValue:providerID forKey:kCoreDataVideoProviderID];
     
 }
 

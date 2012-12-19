@@ -44,7 +44,7 @@
         <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="frame" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Frame" inverseName="roll" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="roll" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="Stream" representedClassName="Stream" syncable="YES">
         <attribute name="streamID" optional="YES" attributeType="String" syncable="YES"/>
@@ -65,7 +65,6 @@
         <attribute name="extractedURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="providerID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="providerName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sourceURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
@@ -73,12 +72,12 @@
     </entity>
     <elements>
         <element name="Conversation" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Creator" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Frame" positionX="160" positionY="192" width="128" height="240"/>
         <element name="Messages" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Roll" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Stream" positionX="160" positionY="192" width="128" height="90"/>
         <element name="User" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="Video" positionX="160" positionY="192" width="128" height="180"/>
-        <element name="Creator" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Video" positionX="160" positionY="192" width="128" height="165"/>
     </elements>
 </model>

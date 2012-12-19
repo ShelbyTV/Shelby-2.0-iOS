@@ -77,6 +77,5 @@
 #define kCoreDataVideoCaption                       @"caption"
 #define kCoreDataVideoProviderName                  @"providerName"
 #define kCoreDataVideoProviderID                    @"providerID"
-#define kCoreDataVideoSourceURL                     @"sourceURL"
 #define kCoreDataVideoTitle                         @"title"
 #define kCoreDataVideoThumbnailURL                  @"thumbnailURL"
