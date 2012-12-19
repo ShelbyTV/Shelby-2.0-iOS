@@ -66,7 +66,7 @@
 #pragma mark - Public Persistance Methods
 + (void)dumpAllData
 {
-    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication];
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     NSPersistentStoreCoordinator *coordinator =  [appDelegate persistentStoreCoordinator];
     NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
     [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];

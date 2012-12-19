@@ -16,7 +16,6 @@
 @property (assign, nonatomic) BOOL isExtracting;
 @property (strong, nonatomic) NSMutableArray *extractedVideoURLs;
 @property (strong, nonatomic) NSTimer *nextExtractionTimer;
-@property (strong, nonatomic) NSTimer *currentExtractionTimer;
 
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
@@ -32,7 +31,6 @@
 @synthesize webView = _webView;
 @synthesize isExtracting = _isExtracting;
 @synthesize nextExtractionTimer = _nextExtractionTimer;
-@synthesize currentExtractionTimer = _currentExtractionTimer;
 
 #pragma mark - Singleton Methods
 static SPVideoExtractor *sharedInstance = nil;

@@ -13,5 +13,6 @@
 @property (strong, nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (void)userIsAuthorized;
+- (void)logout;
 
 @end

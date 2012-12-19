@@ -88,11 +88,34 @@
     self.pollAPICounter = 0;
     self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
     [self.pollAPITimer fire];
-    DLog(@"Poll Timer Started");
     
     // Remove _loginViewController if it exists
-    if ( _loginViewController ) [self.loginViewController dismissViewControllerAnimated:YES completion:nil];
+    if ( _loginViewController ) {
+     
+        [self.loginViewController dismissViewControllerAnimated:YES completion:nil];
+        
+    }
+}
+
+- (void)logout
+{
+    // Invalidate pollAPITimer
+    [self.pollAPITimer invalidate];
     
+    // Empty Core Data Store
+    [CoreDataUtility dumpAllData];
+    
+    // Set NSUserDefault
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthorizedDefault];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    // Pop View Controller
+    if ( _loginViewController ) {
+        [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:nil];
+    } else {
+        self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+        [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:nil];
+    }
 }
 
 - (void)pollAPI

@@ -14,7 +14,7 @@
 - (void)launchPlayerWithStreamEntries;
 - (void)launchPlayerWithQueueRollEntries;
 - (void)launchPlayerWithPersonalRollEntries;
-- (void)emptyCacheButtonAction;
+- (void)logoutButtonAction;
 
 @end
 
@@ -22,7 +22,7 @@
 @synthesize streamButton = _streamButton;
 @synthesize queueRollButton = _queueRollButton;
 @synthesize personalRollButton = _personalRollButton;
-@synthesize emptyCacheButton = _emptyCacheButton;
+@synthesize logoutButton = _logoutButton;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
@@ -30,7 +30,7 @@
     self.streamButton = nil;
     self.queueRollButton = nil;
     self.personalRollButton = nil;
-    self.emptyCacheButton = nil;
+    self.logoutButton = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,7 +46,7 @@
     [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.queueRollButton addTarget:self action:@selector(launchPlayerWithQueueRollEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
-    [self.emptyCacheButton addTarget:self action:@selector(emptyCacheButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.logoutButton addTarget:self action:@selector(logoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Private Methods
@@ -77,16 +77,10 @@
     DLog(@"Roll Frames Count: %d", [videoFrames count]);
 }
 
-- (void)emptyCacheButtonAction
+- (void)logoutButtonAction
 {
-    [CoreDataUtility dumpAllData];
-    [ShelbyAPIClient getStream];
-    [ShelbyAPIClient getQueueRoll];
-    [ShelbyAPIClient getPersonalRoll];
-    
-    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication];
-    [appDelegate userIsAuthorized];
-    DLog(@"Cache Emptied and Repopulated");
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [appDelegate logout];
 }
 
 @end
