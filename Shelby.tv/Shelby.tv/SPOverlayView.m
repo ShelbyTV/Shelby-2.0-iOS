@@ -56,11 +56,13 @@
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
     
     // Customize Fonts
+    [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
+    [self.categoryTitleLabel setTextColor:kColorWhite];
+    
     [self.scrubberTimeLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.scrubberTimeLabel.font.pointSize]];
     [self.scrubberTimeLabel setTextColor:kColorBlack];
     
-    [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
-    [self.categoryTitleLabel setTextColor:kColorWhite];
+    [self.nicknameLabel setTextColor:kColorBlack];
     
     [self.videoCaptionLabel setTextColor:kColorBlack];
     

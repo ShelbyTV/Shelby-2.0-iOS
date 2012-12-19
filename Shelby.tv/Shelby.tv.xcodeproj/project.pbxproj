@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */; };
+		8E12B175168252C200657D32 /* videoListThumbnailOverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B173168252C200657D32 /* videoListThumbnailOverlay.png */; };
+		8E12B176168252C200657D32 /* videoListThumbnailOverlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B174168252C200657D32 /* videoListThumbnailOverlay@2x.png */; };
 		8E1B2E9B16700B1F00D2C0DC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */; };
 		8E1B2EE01670506B00D2C0DC /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EDF1670506B00D2C0DC /* Creator.m */; };
 		8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
@@ -94,6 +96,8 @@
 /* Begin PBXFileReference section */
 		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
 		8E0E7037163869F100BA0A24 /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
+		8E12B173168252C200657D32 /* videoListThumbnailOverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoListThumbnailOverlay.png; sourceTree = "<group>"; };
+		8E12B174168252C200657D32 /* videoListThumbnailOverlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoListThumbnailOverlay@2x.png"; sourceTree = "<group>"; };
 		8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopAlignedLabel.h; sourceTree = "<group>"; };
 		8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopAlignedLabel.m; sourceTree = "<group>"; };
@@ -236,7 +240,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8E0E7031163869B800BA0A24 /* Core Data Managed Objects and Model */ = {
+		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
 				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
@@ -257,7 +261,7 @@
 				8E405482163A3C05002C8874 /* Conversation.h */,
 				8E405483163A3C05002C8874 /* Conversation.m */,
 			);
-			name = "Core Data Managed Objects and Model";
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 		8E1B2EED1670539400D2C0DC /* Asynchronous-Freeloader */ = {
@@ -313,7 +317,7 @@
 				8EF5C351162F41BA0075C35F /* Views */,
 				8EF5C354162F41CC0075C35F /* Controllers */,
 				8EF5C352162F41BF0075C35F /* View Controllers */,
-				8E0E7031163869B800BA0A24 /* Core Data Managed Objects and Model */,
+				8E0E7031163869B800BA0A24 /* Core Data */,
 				8EF5C355162F41D20075C35F /* Constants */,
 				8EAAEE58163A286B00AEF100 /* Categories */,
 				8E209718162F3A61000A2DFD /* Supporting Files */,
@@ -369,6 +373,8 @@
 				8E5980391680104A00027181 /* scrubberBarOn@2x.png */,
 				8E59803A1680104A00027181 /* scrubberIcon.png */,
 				8E59803B1680104A00027181 /* scrubberIcon@2x.png */,
+				8E12B173168252C200657D32 /* videoListThumbnailOverlay.png */,
+				8E12B174168252C200657D32 /* videoListThumbnailOverlay@2x.png */,
 				8E59803E1680104A00027181 /* videoListThumbnail.png */,
 				8E59803F1680104A00027181 /* videoListThumbnail@2x.png */,
 				8E5980401680104A00027181 /* videoListPanel.png */,
@@ -608,6 +614,8 @@
 				8E59805D1680104A00027181 /* videoPlayerBar@2x.png in Resources */,
 				8E285DE31680F82C002A7935 /* infoPanelIconPlaceholder.png in Resources */,
 				8E285DE41680F82C002A7935 /* infoPanelIconPlaceholder@2x.png in Resources */,
+				8E12B175168252C200657D32 /* videoListThumbnailOverlay.png in Resources */,
+				8E12B176168252C200657D32 /* videoListThumbnailOverlay@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,9 +15,9 @@
 // Initialization Methods
 - (id)initWithRequestType:(DataRequestType)requestType;
 
-// Persistance Methods
+// Public Persistance Methods
++ (void)dumpAllData;
 - (void)saveContext:(NSManagedObjectContext*)context;
-- (void)dumpAllData;
 
 // Public Storage Methods
 - (void)storeUser:(NSDictionary*)resultsDictionary;

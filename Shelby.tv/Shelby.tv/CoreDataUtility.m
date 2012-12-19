@@ -64,6 +64,14 @@
 }
 
 #pragma mark - Public Persistance Methods
+- (void)dumpAllData
+{
+    NSPersistentStoreCoordinator *coordinator =  [self.appDelegate persistentStoreCoordinator];
+    NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
+    [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
+    [coordinator removePersistentStore:store error:nil];
+}
+
 - (void)saveContext:(NSManagedObjectContext *)context
 {
     
@@ -138,14 +146,6 @@
                 }
             }
         }
-}
-
-- (void)dumpAllData
-{ 
-    NSPersistentStoreCoordinator *coordinator =  [self.appDelegate persistentStoreCoordinator];
-    NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
-    [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
-    [coordinator removePersistentStore:store error:nil];
 }
 
 #pragma mark - Public Storage Methods
@@ -271,8 +271,7 @@
     // Execute request that returns array of Users
     NSArray *resultsArray = [self.context executeFetchRequest:request error:nil];
     
-    return [resultsArray objectAtIndex:0];
-    
+    return [resultsArray objectAtIndex:0]; 
 }
 
 - (NSMutableArray*)fetchStreamEntries
