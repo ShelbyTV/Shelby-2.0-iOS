@@ -41,6 +41,15 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
 }
 
+#pragma mark - Did Receive memory Warning
+- (void)didReceiveMemoryWarning
+{
+    
+    DLog(@"MEMORY WARNING %@", self.videoFrame.video.title);
+    
+    [super didReceiveMemoryWarning];
+}
+
 #pragma mark - Initialization Methods
 - (id)initWithBounds:(CGRect)bounds
        forVideoFrame:(Frame *)videoFrame

@@ -9,7 +9,7 @@
 #import "SPVideoItemView.h"
 
 @implementation SPVideoItemView
-@synthesize videoCaptionLabel = _videoCaptionLabel;
+@synthesize videoTitleLabel = _videoTitleLabel;
 @synthesize thumbnailImageView = _thumbnailImageView;
 @synthesize invisibleButton = _invisibleButton;
 
@@ -17,7 +17,7 @@
 #pragma mark - Memory Mangement Methods
 - (void)dealloc
 {
-    self.videoCaptionLabel = nil;
+    self.videoTitleLabel = nil;
     self.thumbnailImageView = nil;
     self.invisibleButton = nil;
 }
@@ -25,7 +25,7 @@
 #pragma mark - View Loading Methods
 - (void)awakeFromNib
 {
-    [self.videoCaptionLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.videoCaptionLabel.font.pointSize]];
+    [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.videoTitleLabel.font.pointSize]];
 }
 
 #pragma mark - Class Methods

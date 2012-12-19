@@ -15,7 +15,8 @@
 @property (strong, nonatomic) UIWebView *webView;
 @property (assign, nonatomic) BOOL isExtracting;
 @property (strong, nonatomic) NSMutableArray *extractedVideoURLs;
-@property (strong, nonatomic) NSTimer *extractionTimer;
+@property (strong, nonatomic) NSTimer *nextExtractionTimer;
+@property (strong, nonatomic) NSTimer *currentExtractionTimer;
 
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
@@ -30,7 +31,8 @@
 @synthesize videoQueue = _videoQueue;
 @synthesize webView = _webView;
 @synthesize isExtracting = _isExtracting;
-@synthesize extractionTimer = _extractionTimer;
+@synthesize nextExtractionTimer = _nextExtractionTimer;
+@synthesize currentExtractionTimer = _currentExtractionTimer;
 
 #pragma mark - Singleton Methods
 static SPVideoExtractor *sharedInstance = nil;
@@ -89,7 +91,7 @@ static SPVideoExtractor *sharedInstance = nil;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self setIsExtracting:NO];
-    [self.extractionTimer invalidate];
+    [self.nextExtractionTimer invalidate];
     [self.videoQueue removeAllObjects];
     [self.extractedVideoURLs removeAllObjects];
     [self.webView stopLoading];
@@ -247,7 +249,7 @@ static SPVideoExtractor *sharedInstance = nil;
                             [self setIsExtracting:NO];
                             
                             
-                            self.extractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
+                            self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
 
                         }
 //                    }

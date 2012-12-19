@@ -43,7 +43,7 @@
 						<string key="NSFrame">{{10, 10}, {214, 126}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1035828786"/>
+						<reference key="NSNextKeyView" ref="123969082"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="471712335">
 							<int key="NSColorSpace">3</int>
@@ -56,7 +56,7 @@
 							<string key="NSResourceName">videoListThumbnail.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="1035828786">
+					<object class="IBUIImageView" id="123969082">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{10, 10}, {214, 126}}</string>
@@ -77,7 +77,6 @@
 						<string key="NSFrame">{{10, 144}, {214, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -167,11 +166,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">videoCaptionLabel</string>
+						<string key="label">videoTitleLabel</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="619962646"/>
 					</object>
-					<int key="connectionID">14</int>
+					<int key="connectionID">16</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -198,7 +197,7 @@
 							<reference ref="302927589"/>
 							<reference ref="662330263"/>
 							<reference ref="619962646"/>
-							<reference ref="1035828786"/>
+							<reference ref="123969082"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -230,7 +229,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">15</int>
-						<reference key="object" ref="1035828786"/>
+						<reference key="object" ref="123969082"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -252,7 +251,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">15</int>
+			<int key="maxID">16</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -262,7 +261,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="invisibleButton">UIButton</string>
 						<string key="thumbnailImageView">UIImageView</string>
-						<string key="videoCaptionLabel">TopAlignedLabel</string>
+						<string key="videoTitleLabel">TopAlignedLabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="invisibleButton">
@@ -273,8 +272,8 @@
 							<string key="name">thumbnailImageView</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="videoCaptionLabel">
-							<string key="name">videoCaptionLabel</string>
+						<object class="IBToOneOutletInfo" key="videoTitleLabel">
+							<string key="name">videoTitleLabel</string>
 							<string key="candidateClassName">TopAlignedLabel</string>
 						</object>
 					</dictionary>

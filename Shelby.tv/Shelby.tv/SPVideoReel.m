@@ -106,7 +106,7 @@
 - (void)setupObservers
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(videoDataSourceDidUpdate:)
+                                             selector:@selector(dataSourceDidUpdate:)
                                                  name:kSPUserDidScrollToUpdate
                                                object:nil];
 }
@@ -194,14 +194,14 @@
         itemFrame.origin.y = 20.0f;
         [itemView setFrame:itemFrame];
         
-        [itemView.videoCaptionLabel setText:videoFrame.video.caption];
+        [itemView.videoTitleLabel setText:videoFrame.video.title];
         UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
         [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:videoListThumbnailPlaceholderView];
         [itemView setTag:i];
         
         if ( 0 == i ) {
             itemView.backgroundColor = kColorBlue;
-            itemView.videoCaptionLabel.textColor = [UIColor whiteColor];
+            itemView.videoTitleLabel.textColor = [UIColor whiteColor];
         }
         
         [self.itemViews addObject:itemView];
@@ -226,7 +226,7 @@
 
 - (void)dataSourceDidUpdate:(NSNotification*)notification
 {
-    DLog(@"Received More Datas!");
+    DLog(@"Received More Data!");
     
     //    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     
@@ -286,7 +286,7 @@
         // Remove selected state color from all SPVideoItemView objects
         for (SPVideoItemView *itemView in self.itemViews) {
             itemView.backgroundColor = [UIColor clearColor];
-            itemView.videoCaptionLabel.textColor = kColorBlack;
+            itemView.videoTitleLabel.textColor = kColorBlack;
         }
         
         // Reference SPVideoItemView from position in videoListScrollView object
@@ -294,7 +294,7 @@
         
         // Change itemView Color to show selected state
         itemView.backgroundColor = kColorBlue;
-        itemView.videoCaptionLabel.textColor = kColorWhite;
+        itemView.videoTitleLabel.textColor = kColorWhite;
         
         // Force scrollView and video changes
         if ( position <= self.numberOfVideos-1 ) {
@@ -429,7 +429,6 @@
     }
 }
 
-/* The user has released the movie thumb control to stop scrubbing through the movie. */
 - (IBAction)endScrubbing:(id)sender
 {
 	if ( !_scrubberTimeObserver ) {
