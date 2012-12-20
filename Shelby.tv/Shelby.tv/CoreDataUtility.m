@@ -302,6 +302,41 @@
     return frames;
 }
 
+- (NSMutableArray*)fetchMoreStreamEntriesAfterDate:(NSDate *)date
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Set Predicate
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(date <= %@)", date];
+    [request setPredicate:predicate];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    // Execute request that returns array of stream entries
+    NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
+    
+    // Typecast each entry in streamEntries and place in NSMutableArray object
+    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
+        
+        Stream *stream = (Stream*)[streamEntries objectAtIndex:i];
+        [frames addObject:stream.frame];
+        
+    }
+    
+    return frames;
+}
+
 - (NSMutableArray*)fetchQueueRollEntries
 {
     

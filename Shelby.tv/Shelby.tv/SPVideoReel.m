@@ -227,7 +227,10 @@
 {
     DLog(@"Received More Data!");
     
-    //    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//    Frame *frame = (Frame*)[self.videoFrames lastObject];
+//    NSDate *date = frame.timestamp;
+//    [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
     
 }
 
