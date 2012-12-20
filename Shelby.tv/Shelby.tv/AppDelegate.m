@@ -84,10 +84,14 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthorizedDefault];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    // On login, perform API requests
+    [ShelbyAPIClient getStream];
+    [ShelbyAPIClient getQueueRoll];
+    [ShelbyAPIClient getPersonalRoll];
+    
     // Begin Polling API
     self.pollAPICounter = 0;
     self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
- 
     
     // Remove _loginViewController if it exists
     if ( _loginViewController ) {
@@ -116,6 +120,9 @@
         self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
         [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:nil];
     }
+    
+    // Reinitialize persistantStoreCoordinator
+    [self persistentStoreCoordinator];
 }
 
 - (void)pollAPI

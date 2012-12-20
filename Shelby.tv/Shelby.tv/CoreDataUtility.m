@@ -112,9 +112,6 @@
                     case DataRequestType_StoreUser:{
                         
                         DLog(@"User Data Saved Successfully!");
-                        [ShelbyAPIClient getStream];
-                        [ShelbyAPIClient getQueueRoll];
-                        [ShelbyAPIClient getPersonalRoll];
                         [self.appDelegate userIsAuthorized];
                         
                     } break;
