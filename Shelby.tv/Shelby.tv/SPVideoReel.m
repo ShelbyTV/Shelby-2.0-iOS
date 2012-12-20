@@ -225,12 +225,36 @@
 
 - (void)dataSourceDidUpdate:(NSNotification*)notification
 {
+    
     DLog(@"Received More Data!");
     
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    Frame *frame = (Frame*)[self.videoFrames lastObject];
-//    NSDate *date = frame.timestamp;
-//    [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    NSManagedObjectContext *context = [dataUtility context];
+    Frame *frame = (Frame*)[self.videoFrames lastObject];
+    frame = (Frame*)[context existingObjectWithID:[frame objectID] error:nil];
+    NSDate *date = frame.timestamp;
+    
+    switch (self.categoryType) {
+        case CategoryType_Stream:
+            [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+            break;
+            
+        case CategoryType_QueueRoll:
+//            [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+            break;
+            
+        case CategoryType_PersonalRoll:
+//            [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+            break;
+            
+        default:
+            break;
+    }
+    
+
+    [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+
+    DLog(@"NEXT: %@", self.videoFrames);
     
 }
 

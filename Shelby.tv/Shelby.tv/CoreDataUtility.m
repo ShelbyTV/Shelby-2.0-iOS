@@ -314,7 +314,7 @@
     [request setEntity:description];
     
     // Set Predicate
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(date <= %@)", date];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp <= %@", date];
     [request setPredicate:predicate];
     
     // Sort by timestamp
