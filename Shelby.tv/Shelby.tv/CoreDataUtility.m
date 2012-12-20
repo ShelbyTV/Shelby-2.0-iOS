@@ -71,6 +71,7 @@
     NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
     [[NSFileManager defaultManager] removeItemAtURL:store.URL error:nil];
     [coordinator removePersistentStore:store error:nil];
+    [appDelegate setPersistentStoreCoordinator:nil];
 }
 
 - (void)saveContext:(NSManagedObjectContext *)context
@@ -80,7 +81,7 @@
             
             NSError *error = nil;
             
-            if( ![context save:&error] && [self.appDelegate persistentStoreCoordinator] ) { // Error
+            if( ![context save:&error] ) { // Error
                 
                 DLog(@"Failed to save to data store: %@", [error localizedDescription]);
                 DLog(@"Error for Data_Request: %d", self.requestType);
@@ -90,7 +91,7 @@
                 if( detailedErrors != nil && [detailedErrors count] > 0 ) {
                     
                     for(NSError* detailedError in detailedErrors) {
-                        DLog(@"  Detailed Error: %@", [detailedError userInfo]);
+                        DLog(@"Detailed Error: %@", [detailedError userInfo]);
                     }
                 
                 } else {

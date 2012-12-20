@@ -46,7 +46,7 @@
         
     } else {
         
-        [ShelbyAPIClient postAuthenticationWithEmail:_emailField.text andPassword:_passwordField.text];
+        [ShelbyAPIClient postAuthenticationWithEmail:[_emailField.text lowercaseString] andPassword:_passwordField.text];
         
     }
     

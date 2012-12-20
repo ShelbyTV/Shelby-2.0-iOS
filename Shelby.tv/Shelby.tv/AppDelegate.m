@@ -18,11 +18,9 @@
 @interface AppDelegate ()
 {
     NSManagedObjectModel *_managedObjectModel;
-    NSPersistentStoreCoordinator *_persistentStoreCoordinator;
 }
 
 @property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) LoginViewController *loginViewController;
 @property (strong, nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
@@ -200,6 +198,7 @@
         }
     }
     
+    DLog(@"Creating new persistantStoreCoordinator");
     return _persistentStoreCoordinator;
 }
 
