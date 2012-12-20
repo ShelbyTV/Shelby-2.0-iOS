@@ -52,7 +52,6 @@
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
     
     UIImage *scrubberBarOn = [UIImage imageNamed:@"scrubberBarOn"];
-//    [scrubberBarOn stretchableImageWithLeftCapWidth:10.0f topCapHeight:0.0f];
     [self.scrubber setMinimumTrackImage:scrubberBarOn forState:UIControlStateNormal] ;
     UIImage *scrubberBarOff = [UIImage imageNamed:@"scrubberBarOff"];
     [self.scrubber setMaximumTrackImage:scrubberBarOff forState:UIControlStateNormal];
