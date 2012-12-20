@@ -160,11 +160,11 @@
 
     // Begin setup
     self.currentVideo = 0;
-    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:0];
+    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
     
     /*
      Update UI and begin video extraction
-     This method must be called after the for loop, since it depends on the existence of the first four SPVideoPlayer's 
+     This method must be called after the 'for loop', since it depends on the existence of the first four SPVideoPlayer's
      */
     [self currentVideoDidChangeToVideo:0];
     

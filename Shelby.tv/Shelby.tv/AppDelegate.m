@@ -89,7 +89,7 @@
     
     // Begin Polling API
     self.pollAPICounter = 0;
-    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
+    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:30.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
     
     // Remove _loginViewController if it exists
     if ( _loginViewController ) {
@@ -198,7 +198,7 @@
         }
     }
     
-    DLog(@"Creating new persistantStoreCoordinator");
+    DLog(@"--- Creating new persistantStoreCoordinator ---");
     return _persistentStoreCoordinator;
 }
 
