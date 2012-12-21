@@ -29,6 +29,8 @@
 - (NSMutableArray*)fetchStreamEntries;
 - (NSMutableArray*)fetchMoreStreamEntriesAfterDate:(NSDate*)date;
 - (NSMutableArray*)fetchQueueRollEntries;
+- (NSMutableArray*)fetchMoreQueueRollEntriesAfterDate:(NSDate*)date;
 - (NSMutableArray*)fetchPersonalRollEntries;
+- (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate*)date;
 
 @end

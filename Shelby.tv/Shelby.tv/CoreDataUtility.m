@@ -197,13 +197,13 @@
             } else {
                 
                 NSString *providerName = [[frameArray valueForKey:@"video"] valueForKey:@"provider_name"];
+                NSString *providerID = [[frameArray valueForKey:@"video"] valueForKey:@"provider_id"];
                 
-                if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"vimeo"] ) {
+                if ( [providerName isEqualToString:@"youtube"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
                     
                     Stream *stream = [self checkIfEntity:kCoreDataEntityStream
                                              withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
                                                 forIDKey:kCoreDataStreamID];
-
                     
                     NSString *streamID = [NSString coreDataNullTest:[[resultsArray objectAtIndex:i] valueForKey:@"id"]];
                     [stream setValue:streamID forKey:kCoreDataStreamID];
@@ -237,8 +237,9 @@
             
             NSArray *videoArray = [[resultsArray objectAtIndex:i] valueForKey:@"video"];
             NSString *providerName = [videoArray valueForKey:@"provider_name"];
-                
-            if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"vimeo"]  ) {
+            NSString *providerID = [[videoArray valueForKey:@"video"] valueForKey:@"provider_id"];
+            
+            if ( [providerName isEqualToString:@"youtube"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
                 
                 Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
                                        withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
@@ -313,13 +314,13 @@
     NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
     [request setEntity:description];
     
-    // Set Predicate
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp <= %@", date];
-    [request setPredicate:predicate];
-    
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    // Filter by timestamp
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp < %@", date];
+    [request setPredicate:predicate];
     
     // Execute request that returns array of stream entries
     NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
@@ -362,6 +363,32 @@
     
 }
 
+- (NSMutableArray*)fetchMoreQueueRollEntriesAfterDate:(NSDate *)date
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    // Set Predicate
+    
+    // Filter by rollID and timestamp
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", [user queueRollID], date];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Queue Roll
+    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+}
+
 - (NSMutableArray*)fetchPersonalRollEntries
 {
     
@@ -383,6 +410,32 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
+    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+}
+
+- (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    // Set Predicate
+    
+    // Filter by rollID and timestamp
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", [user personalRollID], date];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Queue Roll
     return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
 }

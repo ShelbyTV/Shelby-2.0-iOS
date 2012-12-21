@@ -22,6 +22,7 @@
 @property (strong, nonatomic) SPOverlayView *overlayView;
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (copy, nonatomic) NSString *categoryTitle;
+@property (assign, nonatomic) BOOL fetchingOlderVideos;
 
 /// Setup Methods
 - (void)setupVariables;
@@ -49,6 +50,7 @@
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 @synthesize scrubberTimeObserver = _scrubberTimeObserver;
+@synthesize fetchingOlderVideos = _fetchingOlderVideos;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -155,6 +157,7 @@
         
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
+        [self.videoScrollView setNeedsDisplay];
     
     }
 
@@ -204,13 +207,14 @@
         }
         
         [self.itemViews addObject:itemView];
-
         [self.overlayView.videoListScrollView addSubview:itemView];
+        [self.overlayView.videoListScrollView setNeedsDisplay];
+        
     }
     
 }
 
-#pragma mark - DataSource Manipulation
+#pragma mark - UI and DataSource Manipulation
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 {
     SPVideoPlayer *player = [self.videoPlayers objectAtIndex:position];
@@ -230,7 +234,7 @@
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [dataUtility context];
-    Frame *frame = (Frame*)[self.videoFrames lastObject];
+    Frame *frame = [self.videoFrames objectAtIndex:_numberOfVideos-1];
     frame = (Frame*)[context existingObjectWithID:[frame objectID] error:nil];
     NSDate *date = frame.timestamp;
     
@@ -240,25 +244,80 @@
             break;
             
         case CategoryType_QueueRoll:
-//            [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+            [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
             break;
             
         case CategoryType_PersonalRoll:
-//            [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+            [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
             break;
             
         default:
             break;
     }
-    
 
-    [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+    // Update variables
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSUInteger numberOfVideosBeforeUpdate = _numberOfVideos;
+        [self setNumberOfVideos:[self.videoFrames count]];
+        
+        // Expand videoScrollView and videoListScrollView
+        self.videoScrollView.contentSize = CGSizeMake(1024.0f*_numberOfVideos, 768.0f);
+        self.overlayView.videoListScrollView.contentSize = CGSizeMake(1024.0f*_numberOfVideos, 217.0f);
+        
+        // Update videoScrollView and videoListScrollView
+        for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _numberOfVideos; i++ ) {
+            
+            // videoScrollView
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            NSManagedObjectContext *context = [dataUtility context];
+            Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
+            
+            DLog(@"Video #%d | Title: %@", i, videoFrame.video.title);
+            
+            CGRect viewframe = self.videoScrollView.frame;
+            viewframe.origin.x = viewframe.size.width * i;
+            viewframe.origin.y = 0.0f;
+            SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
+                                                            forVideoFrame:videoFrame
+                                                          withOverlayView:_overlayView
+                                                              inVideoReel:self];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.videoPlayers addObject:player];
+                [self.videoScrollView addSubview:player.view];
+                [self.videoScrollView setNeedsDisplay];
+            });
+            
+            // videoListScrollView
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+            SPVideoItemView *itemView = [nib objectAtIndex:0];
+            
+            CGFloat itemViewWidth = [SPVideoItemView width];
+            CGRect itemFrame = itemView.frame;
+            itemFrame.origin.x = itemViewWidth * i;
+            itemFrame.origin.y = 20.0f;
+            [itemView setFrame:itemFrame];
+            
+            [itemView.videoTitleLabel setText:videoFrame.video.title];
+            UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
+            [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:videoListThumbnailPlaceholderView];
+            [itemView setTag:i];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.itemViews addObject:itemView];
+                [self.overlayView.videoListScrollView addSubview:itemView];
+                [self.overlayView.videoListScrollView setNeedsDisplay];
+            });
 
-    DLog(@"NEXT: %@", self.videoFrames);
+        }
+
+    });
     
+    [self setFetchingOlderVideos:NO];
+
 }
 
-#pragma mark - UI Manipulation
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
     // Pause current videoPlayer
@@ -508,7 +567,9 @@
         CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
         NSUInteger page = (NSUInteger)floor(scrollAmount) + 1;
         
-        if ( page >= self.numberOfVideos - 6 ) {
+        if ( page >= self.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+            
+            self.fetchingOlderVideos = YES;
             
             switch ( _categoryType ) {
                     
