@@ -234,7 +234,8 @@
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [dataUtility context];
-    Frame *frame = [self.videoFrames objectAtIndex:_numberOfVideos-1];
+    DLog(@"Count: %d", [self.videoFrames count]);
+    Frame *frame = [self.videoFrames lastObject];
     frame = (Frame*)[context existingObjectWithID:[frame objectID] error:nil];
     NSDate *date = frame.timestamp;
     
@@ -255,11 +256,14 @@
             break;
     }
 
-    // Update variables
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
+        // Update variables
         NSUInteger numberOfVideosBeforeUpdate = _numberOfVideos;
         [self setNumberOfVideos:[self.videoFrames count]];
+        DLog(@"Before %d | After %d", numberOfVideosBeforeUpdate, _numberOfVideos );
+
         
         // Expand videoScrollView and videoListScrollView
         self.videoScrollView.contentSize = CGSizeMake(1024.0f*_numberOfVideos, 768.0f);
