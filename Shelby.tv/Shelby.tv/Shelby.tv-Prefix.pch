@@ -19,6 +19,7 @@
     // Third Party Libraries
     #import "AFNetworking.h"
     #import "AsynchronousFreeloader.h"
+    #import <Crashlytics/Crashlytics.h>
 
     // Constants
     #import "Constants.h"

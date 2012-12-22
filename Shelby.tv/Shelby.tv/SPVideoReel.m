@@ -324,30 +324,45 @@
 
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
+    
     // Pause current videoPlayer
-    if ( self.currentVideoPlayer.isPlayable ) [self.currentVideoPlayer pause];
+    if ( self.currentVideoPlayer.isPlayable )
+        [self.currentVideoPlayer pause];
     
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideo = position;
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
+    [self.currentVideoPlayer setupScrubber];
     
-    // Pause and stop residual video playback
-    if ( self.currentVideoPlayer.playbackFinished ) {
-        [self.overlayView.restartPlaybackButton setHidden:NO];
-        [self.overlayView.playButton setEnabled:NO];
-        [self.overlayView.airPlayButton setEnabled:NO];
-        [self.overlayView.scrubber setEnabled:NO];
-    } else if ( ![self.currentVideoPlayer isPlayable] ) {
+    // Deal with playback of current and previous video
+    if ( [self.currentVideoPlayer isPlayable] ) { // If video is loaded and playable
+        
+        [self.currentVideoPlayer play];
+        [self.currentVideoPlayer syncScrubber];
+        
+        if ( [self.currentVideoPlayer playbackFinished] ) { // If loaded video finished playing
+            
+            [self.overlayView.restartPlaybackButton setHidden:NO];
+            [self.overlayView.playButton setEnabled:NO];
+            [self.overlayView.airPlayButton setEnabled:NO];
+            [self.overlayView.scrubber setEnabled:NO];
+            
+        } else { // If loaded video didn't finish playing
+            
+            [self.overlayView.restartPlaybackButton setHidden:YES];
+            [self.overlayView.playButton setEnabled:YES];
+            [self.overlayView.airPlayButton setEnabled:YES];
+            [self.overlayView.scrubber setEnabled:YES];
+            
+        }
+        
+    } else { // Video is queued but not loaded
+        
         [self.overlayView.restartPlaybackButton setHidden:YES];
         [self.overlayView.playButton setEnabled:NO];
         [self.overlayView.airPlayButton setEnabled:NO];
-        [self.overlayView.scrubber setValue:0.0f];
         [self.overlayView.scrubber setEnabled:NO];
-    } else {
-        [self.overlayView.restartPlaybackButton setHidden:YES];
-        [self.overlayView.playButton setEnabled:YES];
-        [self.overlayView.airPlayButton setEnabled:YES];
-        [self.overlayView.scrubber setEnabled:YES];
+        
     }
     
     // Clear old values on infoCard
@@ -361,14 +376,14 @@
     NSManagedObjectContext *context = [dataUtility context];
     NSManagedObjectID *videoFrameObjectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:videoFrameObjectID error:nil];
-
+    
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
     self.overlayView.videoCaptionLabel.text = videoFrame.video.caption;
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", videoFrame.creator.nickname];
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:infoPanelIconPlaceholderView];
-
+    
     // Update videoListScrollView (if _itemViews is initialized)
     if ( 0 < [self.itemViews count] ) {
         
@@ -406,12 +421,6 @@
         if ( position + 3 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+3];
     }
     
-    // Play currentVideo and sync the scrubber, if currentVideo was loaded before
-    if ( _currentVideoPlayer.isPlayable ) {
-        [self.currentVideoPlayer play];
-        [self.currentVideoPlayer syncScrubber];
-    }
-
 }
 
 - (void)toggleOverlay

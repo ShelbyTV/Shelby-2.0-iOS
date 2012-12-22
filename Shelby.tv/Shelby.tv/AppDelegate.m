@@ -7,11 +7,6 @@
 //
 
 #import "AppDelegate.h"
-
-// Apple Libraries
-#import <AVFoundation/AVFoundation.h>
-
-// View Controlles
 #import "MeViewController.h"
 #import "LoginViewController.h"
 
@@ -26,6 +21,7 @@
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 
 - (void)pollAPI;
+- (void)analytics;
 
 @end
 
@@ -39,6 +35,9 @@
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    // Add analytics
+    [self analytics];
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -152,6 +151,11 @@
         default:
             break;
     }
+}
+
+- (void)analytics
+{
+    [Crashlytics startWithAPIKey:@"84a79b7ee6f2eca13877cd17b9b9a290790f99aa"];
 }
 
 #pragma mark - Core Data Accessor Methods

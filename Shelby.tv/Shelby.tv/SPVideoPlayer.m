@@ -188,6 +188,8 @@
     
 	if (CMTIME_IS_INVALID(playerDuration)) {
         [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(setupScrubber) userInfo:nil repeats:NO];
+        self.overlayView.scrubber.value = 0.0;
+        self.overlayView.scrubberTimeLabel.text = @"00:00:00 / 00:00:00";
         return;
 	}
 	
@@ -211,7 +213,8 @@
 {
 	CMTime playerDuration = [self elapsedDuration];
 	if ( CMTIME_IS_INVALID(playerDuration) ) {
-		self.overlayView.scrubber.minimumValue = 0.0;
+		self.overlayView.scrubber.value = 0.0;
+        self.overlayView.scrubberTimeLabel.text = @"00:00:00 / 00:00:00";
 		return;
 	}
     

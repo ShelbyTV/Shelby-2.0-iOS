@@ -10,6 +10,7 @@
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E09174D168536D400503EF9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E09174C168536D400503EF9 /* Icon@2x.png */; };
 		8E09174F168536DA00503EF9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E09174E168536DA00503EF9 /* Icon.png */; };
+		8E09175716853ED700503EF9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E09175616853ED700503EF9 /* Crashlytics.framework */; };
 		8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */; };
 		8E12B18416825B4100657D32 /* actionButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B17C16825B4100657D32 /* actionButton.png */; };
 		8E12B18516825B4100657D32 /* actionButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B17D16825B4100657D32 /* actionButton@2x.png */; };
@@ -98,6 +99,7 @@
 		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
 		8E09174C168536D400503EF9 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		8E09174E168536DA00503EF9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		8E09175616853ED700503EF9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8E0E7037163869F100BA0A24 /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
 		8E12B17C16825B4100657D32 /* actionButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = actionButton.png; sourceTree = "<group>"; };
 		8E12B17D16825B4100657D32 /* actionButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "actionButton@2x.png"; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				8E209712162F3A60000A2DFD /* UIKit.framework in Frameworks */,
 				8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */,
 				8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */,
+				8E09175716853ED700503EF9 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +404,7 @@
 		8E82EDF11631C7770044D97E /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8E09175616853ED700503EF9 /* Crashlytics.framework */,
 				8EB15AC51683715200941572 /* AFNetworking */,
 				8E1B2EED1670539400D2C0DC /* Asynchronous-Freeloader */,
 			);
@@ -548,6 +552,7 @@
 				8E209709162F3A60000A2DFD /* Sources */,
 				8E20970A162F3A60000A2DFD /* Frameworks */,
 				8E20970B162F3A60000A2DFD /* Resources */,
+				8E09175516853EC500503EF9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -634,6 +639,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8E09175516853EC500503EF9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 84a79b7ee6f2eca13877cd17b9b9a290790f99aa";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8E209709162F3A60000A2DFD /* Sources */ = {
@@ -754,6 +775,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Shelby.tv\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
@@ -770,6 +795,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shelby TV, Inc.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shelby TV, Inc.";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Shelby.tv\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
