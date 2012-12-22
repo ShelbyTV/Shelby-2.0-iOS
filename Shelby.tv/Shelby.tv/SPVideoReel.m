@@ -235,7 +235,7 @@
     NSManagedObjectContext *context = [dataUtility context];
     
     
-    if ( (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil] ) {
+    if ( (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
         
         Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil];
         NSDate *date = frame.timestamp;
