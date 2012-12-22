@@ -31,7 +31,6 @@
 - (void)setupVideoListScrollView;
 - (void)setupOverlayView;
 - (void)setupVideoPlayers;
-
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
 
 
@@ -263,21 +262,19 @@
         NSUInteger numberOfVideosBeforeUpdate = _numberOfVideos;
         [self setNumberOfVideos:[self.videoFrames count]];
         DLog(@"Before %d | After %d", numberOfVideosBeforeUpdate, _numberOfVideos );
-
         
-        // Expand videoScrollView and videoListScrollView
-        self.videoScrollView.contentSize = CGSizeMake(1024.0f*_numberOfVideos, 768.0f);
-        self.overlayView.videoListScrollView.contentSize = CGSizeMake(1024.0f*_numberOfVideos, 217.0f);
         
         // Update videoScrollView and videoListScrollView
         for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _numberOfVideos; i++ ) {
+        
+            // Expand videoScrollView and videoListScrollView
+            self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
+            self.overlayView.videoListScrollView.contentSize = CGSizeMake(1024.0f*i, 217.0f);
             
             // videoScrollView
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSManagedObjectContext *context = [dataUtility context];
             Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
-            
-            DLog(@"Video #%d | Title: %@", i, videoFrame.video.title);
             
             CGRect viewframe = self.videoScrollView.frame;
             viewframe.origin.x = viewframe.size.width * i;
