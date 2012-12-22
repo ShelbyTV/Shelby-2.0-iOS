@@ -10,7 +10,6 @@
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E09174D168536D400503EF9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E09174C168536D400503EF9 /* Icon@2x.png */; };
 		8E09174F168536DA00503EF9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E09174E168536DA00503EF9 /* Icon.png */; };
-		8E09175716853ED700503EF9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E09175616853ED700503EF9 /* Crashlytics.framework */; };
 		8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */; };
 		8E12B18416825B4100657D32 /* actionButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B17C16825B4100657D32 /* actionButton.png */; };
 		8E12B18516825B4100657D32 /* actionButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B17D16825B4100657D32 /* actionButton@2x.png */; };
@@ -88,6 +87,7 @@
 		8EB15AE91683C7CC00941572 /* airplayButtonOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB15AE51683C7CC00941572 /* airplayButtonOn@2x.png */; };
 		8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
 		8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
+		8ED52A01168557B900AC4108 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ED52A00168557B900AC4108 /* Crashlytics.framework */; };
 		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		8EEED7A816800DAC00D9F4CD /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */; };
 		8EEED7A916800DAC00D9F4CD /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */; };
@@ -99,7 +99,6 @@
 		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
 		8E09174C168536D400503EF9 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		8E09174E168536DA00503EF9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
-		8E09175616853ED700503EF9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8E0E7037163869F100BA0A24 /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
 		8E12B17C16825B4100657D32 /* actionButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = actionButton.png; sourceTree = "<group>"; };
 		8E12B17D16825B4100657D32 /* actionButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "actionButton@2x.png"; sourceTree = "<group>"; };
@@ -216,6 +215,7 @@
 		8EB950521665BCF100E965E0 /* SPVideoPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoPlayer.m; sourceTree = "<group>"; };
 		8EB950551665BD4000E965E0 /* SPVideoReel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoReel.h; sourceTree = "<group>"; };
 		8EB950561665BD4000E965E0 /* SPVideoReel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoReel.m; sourceTree = "<group>"; };
+		8ED52A00168557B900AC4108 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = "../../External Libraries/Crashlytics.framework"; sourceTree = "<group>"; };
 		8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
 		8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
 		8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
@@ -238,7 +238,7 @@
 				8E209712162F3A60000A2DFD /* UIKit.framework in Frameworks */,
 				8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */,
 				8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */,
-				8E09175716853ED700503EF9 /* Crashlytics.framework in Frameworks */,
+				8ED52A01168557B900AC4108 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +404,7 @@
 		8E82EDF11631C7770044D97E /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8E09175616853ED700503EF9 /* Crashlytics.framework */,
+				8ED52A00168557B900AC4108 /* Crashlytics.framework */,
 				8EB15AC51683715200941572 /* AFNetworking */,
 				8E1B2EED1670539400D2C0DC /* Asynchronous-Freeloader */,
 			);
@@ -778,6 +778,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
+					"\"$(SRCROOT)/../External Libraries\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -798,6 +799,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
+					"\"$(SRCROOT)/../External Libraries\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
