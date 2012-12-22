@@ -16,6 +16,8 @@
 @property (assign, nonatomic) BOOL isExtracting;
 @property (strong, nonatomic) NSMutableArray *extractedVideoURLs;
 @property (strong, nonatomic) NSTimer *nextExtractionTimer;
+@property (strong, nonatomic) NSTimer *currentExtractionTimer;
+
 
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
@@ -23,6 +25,7 @@
 - (void)loadVimeoVideo:(Video *)video;
 - (void)loadDailyMotionVideo:(Video *)video;
 - (void)processNotification:(NSNotification *)notification;
+- (void)timerExpired;
 
 @end
 
@@ -31,6 +34,7 @@
 @synthesize webView = _webView;
 @synthesize isExtracting = _isExtracting;
 @synthesize nextExtractionTimer = _nextExtractionTimer;
+@synthesize currentExtractionTimer = _currentExtractionTimer;
 
 #pragma mark - Singleton Methods
 static SPVideoExtractor *sharedInstance = nil;
@@ -124,6 +128,8 @@ static SPVideoExtractor *sharedInstance = nil;
             
         }
 
+        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:20.0f target:self selector:@selector(timerExpired) userInfo:nil repeats:NO];
+        
     }
 }
 
@@ -209,6 +215,8 @@ static SPVideoExtractor *sharedInstance = nil;
                     // Get videoURL to playable video file
                     NSString *extractedURL = [value performSelector:pathSelector];
                     
+                    [self.currentExtractionTimer invalidate];
+                    
                     if ( 0 == [self.videoQueue count] ) {
                         
                         // Do nothing if the HOME button is pushed in SPVideoReel while a video was being processed.
@@ -241,5 +249,18 @@ static SPVideoExtractor *sharedInstance = nil;
     }
 }
 
+- (void)timerExpired
+{
+    [self setIsExtracting:NO];
+    [self.nextExtractionTimer invalidate];
+    [self.currentExtractionTimer invalidate];
+    [self.extractedVideoURLs removeAllObjects];
+    [self.webView stopLoading];
+    [self.webView removeFromSuperview];
+    [self setWebView:nil];
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    
+    [self extractNextVideoFromQueue];
+}
 
 @end

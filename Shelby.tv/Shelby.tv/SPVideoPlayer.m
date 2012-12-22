@@ -240,8 +240,6 @@
     NSInteger durationMinutes = 0;
     NSInteger durationHours = 0;
     
-    DLog("Time: %f || %d", currentTime, (NSInteger)currentTime);
-    
     // Current Time        
     currentTimeSeconds = ((NSInteger)currentTime % 60);
     currentTimeMinutes = (((NSInteger)currentTime / 60) % 60);
@@ -252,7 +250,7 @@
     durationMinutes = (((NSInteger)duration / 60) % 60);
     durationHours = ((NSInteger)duration / 3600);
 
-    convertedTime= [NSString stringWithFormat:@"%.2d:%.2d:%d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
+    convertedTime= [NSString stringWithFormat:@"%.2d:%.2d:%.2d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
     
     return convertedTime;
 }
