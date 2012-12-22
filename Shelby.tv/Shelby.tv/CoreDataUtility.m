@@ -218,13 +218,11 @@
                     
                     [self storeFrame:frame forFrameArray:frameArray withSyncStatus:YES];
                     
+                    [self saveContext:_context];
                 }
             }
         }
     }
-    
-    [self saveContext:_context];
-    
 }
 
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary
@@ -247,12 +245,10 @@
                 
                 [self storeFrame:frame forFrameArray:[resultsArray objectAtIndex:i] withSyncStatus:YES];
                 
-                
+                [self saveContext:_context];
             }
         }
     }
-    
-    [self saveContext:_context];
 }
 
 #pragma mark - Public Fetch Methods
