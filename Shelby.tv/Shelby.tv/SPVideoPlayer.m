@@ -21,6 +21,7 @@
 
 - (void)loadVideo:(NSNotification*)notification;
 - (void)itemDidFinishPlaying:(NSNotification*)notification;
+- (NSString*)convertElapsedTime:(double)currentTime andDuration:(double)duration;
 
 @end
 
@@ -218,10 +219,42 @@
 	if ( isfinite(duration) ) {
 		float minValue = [self.overlayView.scrubber minimumValue];
 		float maxValue = [self.overlayView.scrubber maximumValue];
-		double time = CMTimeGetSeconds([self.player currentTime]);
-		
-		[self.overlayView.scrubber setValue:(maxValue - minValue) * time / duration + minValue];
+		double currentTime = CMTimeGetSeconds([self.player currentTime]);
+		double duration = CMTimeGetSeconds([self.player.currentItem duration]);
+        
+		[self.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
+        
+        [self.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
+        
 	}
+}
+
+- (NSString *)convertElapsedTime:(double)currentTime andDuration:(double)duration
+{
+    
+    NSString *convertedTime = nil;
+    NSInteger currentTimeSeconds = 0;
+    NSInteger currentTimeHours = 0;
+    NSInteger currentTimeMinutes = 0;
+    NSInteger durationSeconds = 0;
+    NSInteger durationMinutes = 0;
+    NSInteger durationHours = 0;
+    
+    DLog("Time: %f || %d", currentTime, (NSInteger)currentTime);
+    
+    // Current Time        
+    currentTimeSeconds = ((NSInteger)currentTime % 60);
+    currentTimeMinutes = (((NSInteger)currentTime / 60) % 60);
+    currentTimeHours = ((NSInteger)currentTime / 3600);
+
+    // Duration
+    durationSeconds = ((NSInteger)duration % 60);
+    durationMinutes = (((NSInteger)duration / 60) % 60);
+    durationHours = ((NSInteger)duration / 3600);
+
+    convertedTime= [NSString stringWithFormat:@"%.2d:%.2d:%d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
+    
+    return convertedTime;
 }
 
 #pragma mark - Video Loading Methods

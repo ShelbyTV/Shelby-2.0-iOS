@@ -61,8 +61,8 @@
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
     [self.categoryTitleLabel setTextColor:kColorWhite];
     
-    [self.scrubberTimeLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.scrubberTimeLabel.font.pointSize]];
-    [self.scrubberTimeLabel setTextColor:kColorBlack];
+    [self.scrubberTimeLabel setFont:[UIFont fontWithName:@"Arial" size:self.scrubberTimeLabel.font.pointSize]];
+    [self.scrubberTimeLabel setTextColor:kColorWhite];
     
     [self.nicknameLabel setTextColor:kColorBlack];
     
