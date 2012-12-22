@@ -104,9 +104,6 @@
     // Invalidate pollAPITimer
     [self.pollAPITimer invalidate];
     
-    // Empty Core Data Store
-    [CoreDataUtility dumpAllData];
-    
     // Set NSUserDefault
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthorizedDefault];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -118,9 +115,7 @@
         self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
         [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:nil];
     }
-    
-    // Reinitialize persistantStoreCoordinator
-    [self persistentStoreCoordinator];
+
 }
 
 - (void)pollAPI

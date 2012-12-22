@@ -22,6 +22,9 @@
   
         if ( response.statusCode == 200 ) {
         
+            // Empty Core Data Store
+            [CoreDataUtility dumpAllData];
+            
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
             [dataUtility storeUser:JSON];
             
