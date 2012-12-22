@@ -234,8 +234,7 @@
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [dataUtility context];
     DLog(@"Count: %d", [self.videoFrames count]);
-    Frame *frame = [self.videoFrames lastObject];
-    frame = (Frame*)[context existingObjectWithID:[frame objectID] error:nil];
+    Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:self.numberOfVideos-1] objectID] error:nil];
     NSDate *date = frame.timestamp;
     
     switch (self.categoryType) {
@@ -263,13 +262,8 @@
         [self setNumberOfVideos:[self.videoFrames count]];
         DLog(@"Before %d | After %d", numberOfVideosBeforeUpdate, _numberOfVideos );
         
-        
         // Update videoScrollView and videoListScrollView
         for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _numberOfVideos; i++ ) {
-        
-            // Expand videoScrollView and videoListScrollView
-            self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
-            self.overlayView.videoListScrollView.contentSize = CGSizeMake(1024.0f*i, 217.0f);
             
             // videoScrollView
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -285,6 +279,7 @@
                                                               inVideoReel:self];
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
                 [self.videoPlayers addObject:player];
                 [self.videoScrollView addSubview:player.view];
                 [self.videoScrollView setNeedsDisplay];
@@ -306,6 +301,7 @@
             [itemView setTag:i];
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
                 [self.overlayView.videoListScrollView setNeedsDisplay];
