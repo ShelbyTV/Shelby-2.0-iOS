@@ -137,7 +137,7 @@
     [self.player play];
     [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
     [self.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
-    [self setupScrubber];
+//    [self setupScrubber];
 }
 
 - (void)pause
@@ -291,6 +291,7 @@
         [self.overlayView.playButton setEnabled:YES];
         [self.overlayView.airPlayButton setEnabled:YES];
         [self.overlayView.scrubber setEnabled:YES];
+        [self setupScrubber];
         
         // Add Observers
         [[NSNotificationCenter defaultCenter] addObserver:self

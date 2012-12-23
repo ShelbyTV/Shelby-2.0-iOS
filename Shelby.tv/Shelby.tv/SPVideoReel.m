@@ -329,7 +329,6 @@
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideo = position;
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
-    [self.currentVideoPlayer setupScrubber];
     
     // Deal with playback of current and previous video
     if ( [self.currentVideoPlayer isPlayable] ) { // If video is loaded and playable

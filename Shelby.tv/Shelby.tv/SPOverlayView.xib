@@ -45,7 +45,7 @@
 						<string key="NSFrame">{{0, 501}, {1024, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="883161448"/>
+						<reference key="NSNextKeyView" ref="973182751"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -70,7 +70,6 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<float key="IBUIValue">0.5</float>
 						<object class="NSColor" key="IBUIMinimumTrackTintColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC45MzMzMzMzMzMzIDAuOTMzMzMzMzMzMyAwLjkzMzMzMzMzMzMAA</bytes>
@@ -376,7 +375,7 @@
 						<string key="NSFrame">{{372, 13}, {281, 57}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="653716736"/>
+						<reference key="NSNextKeyView" ref="883161448"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -405,7 +404,7 @@
 						<string key="NSFrame">{{437, 256}, {150, 54}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="973182751"/>
+						<reference key="NSNextKeyView" ref="653716736"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -676,11 +675,11 @@
 							<reference ref="216755980"/>
 							<reference ref="725982105"/>
 							<reference ref="850128962"/>
-							<reference ref="579414753"/>
 							<reference ref="756358227"/>
 							<reference ref="973182751"/>
 							<reference ref="181245343"/>
 							<reference ref="653716736"/>
+							<reference ref="579414753"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
