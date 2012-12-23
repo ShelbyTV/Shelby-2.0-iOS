@@ -31,8 +31,8 @@
 - (void)setupVideoListScrollView;
 - (void)setupOverlayView;
 - (void)setupVideoPlayers;
+- (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
-
 
 @end
 
@@ -235,7 +235,7 @@
     NSManagedObjectContext *context = [dataUtility context];
     
     
-    if ( (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
+    if ( [[self.videoFrames lastObject] objectID] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
         
         Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil];
         NSDate *date = frame.timestamp;
@@ -262,7 +262,6 @@
             // Update variables
             NSUInteger numberOfVideosBeforeUpdate = _numberOfVideos;
             [self setNumberOfVideos:[self.videoFrames count]];
-            DLog(@"Before %d | After %d", numberOfVideosBeforeUpdate, _numberOfVideos );
             
             // Update videoScrollView and videoListScrollView
             for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _numberOfVideos; i++ ) {
@@ -399,7 +398,7 @@
         itemView.videoTitleLabel.textColor = kColorWhite;
         
         // Force scrollView and video changes
-        if ( position <= self.numberOfVideos-1 ) {
+        if ( position < self.numberOfVideos ) {
             
             // Force scroll videoScrollView
             CGFloat itemX = itemView.frame.size.width * position;
@@ -414,11 +413,50 @@
     if ( 0 < [self.videoPlayers count] ) {
         [[SPVideoExtractor sharedInstance] emptyQueue];
         [self extractVideoForVideoPlayer:position]; // Load video for current visible view
-        if ( position + 1 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+1];
-        if ( position + 2 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+2];
-        if ( position + 3 <= self.numberOfVideos-1 ) [self extractVideoForVideoPlayer:position+3];
+        if ( position + 1 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
+        if ( position + 2 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
+        if ( position + 3 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
     }
     
+}
+
+- (void)fetchOlderVideos:(NSUInteger)position
+{
+    if ( position >= self.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+        
+        self.fetchingOlderVideos = YES;
+        
+        switch ( _categoryType ) {
+                
+            case CategoryType_Unknown:{
+                
+            } break;
+                
+            case CategoryType_Stream:{
+                
+                NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                [ShelbyAPIClient getMoreFramesInStream:numberToString];
+                
+            } break;
+                
+            case CategoryType_QueueRoll:{
+                
+                NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
+                
+            } break;
+                
+            case CategoryType_PersonalRoll:{
+                
+                NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
+                
+            } break;
+                
+            default:
+                break;
+        }
+    }
 }
 
 - (void)toggleOverlay
@@ -488,7 +526,7 @@
     CGFloat videoX = 1024 * position;
     CGFloat videoY = self.videoScrollView.contentOffset.y;
     
-    if ( position <= self.numberOfVideos-1 ) {
+    if ( position < self.numberOfVideos ) {
         [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
     }
     
@@ -570,6 +608,7 @@
         }
         
         [self currentVideoDidChangeToVideo:page];
+        [self fetchOlderVideos:page];
     
     } else if ( scrollView == self.overlayView.videoListScrollView ) {
         
@@ -577,43 +616,7 @@
         CGFloat pageWidth = scrollView.frame.size.width;
         CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
         NSUInteger page = (NSUInteger)floor(scrollAmount) + 1;
-        
-        if ( page >= self.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
-            
-            self.fetchingOlderVideos = YES;
-            
-            switch ( _categoryType ) {
-                    
-                case CategoryType_Unknown:{
-                    
-                } break;
-                
-                case CategoryType_Stream:{
-                    
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
-                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
-                
-                } break;
-                
-                case CategoryType_QueueRoll:{
-                
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
-                    [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
-                    
-                } break;
-                
-                case CategoryType_PersonalRoll:{
-                
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
-                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
-                    
-                } break;
-                    
-                default:
-                    break;
-            }
-            
-        }
+        [self fetchOlderVideos:page];
         
     }
 }
