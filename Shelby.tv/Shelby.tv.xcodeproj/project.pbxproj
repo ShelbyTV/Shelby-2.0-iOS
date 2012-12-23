@@ -190,7 +190,6 @@
 		8E5980431680104A00027181 /* videoPlayerBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoPlayerBar@2x.png"; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
-		8E80C5CA16696994004DAB04 /* ShareActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareActivity.h; sourceTree = "<group>"; };
 		8E82EDE71631ABDE0044D97E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		8E82EDE81631ABDE0044D97E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		8E82EDE91631ABDE0044D97E /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -498,7 +497,6 @@
 			isa = PBXGroup;
 			children = (
 				8EF5C350162F41B00075C35F /* Xibs */,
-				8E80C5CA16696994004DAB04 /* ShareActivity.h */,
 				8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */,
 			);
 			name = Views;
