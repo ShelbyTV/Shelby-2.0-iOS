@@ -342,7 +342,7 @@
             [self.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
         
         // Force next video to begin playing (video should already be loaded)
-        [self.videoReel playButtonAction:nil];
+        [self.videoReel.currentVideoPlayer play];
         
     }    
 }

@@ -579,8 +579,9 @@
             __block SPVideoReel *blockSelf = self;
 			_scrubberTimeObserver = [self.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
                                                                                                   queue:NULL
-                                                                                             usingBlock: ^(CMTime time) {
-                                  [blockSelf.currentVideoPlayer syncScrubber];
+                                                                                             usingBlock:^(CMTime time) {
+                                                                                                 
+                                                                                                 [blockSelf.currentVideoPlayer syncScrubber];
                               }];
 		
         }
