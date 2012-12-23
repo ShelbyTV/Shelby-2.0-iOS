@@ -181,7 +181,9 @@ static SPVideoExtractor *sharedInstance = nil;
     
     static NSString *dailymotionExtractor = @"<html><body><div id=\"player\"></div><script>(function(){var e=document.createElement('script');e.async=true;e.src='http://api.dmcdn.net/all.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(e, s);}());window.dmAsyncInit=function(){var player=DM.player(\"player\",{video: \"%@\", width: \"%f\", height: \"%f\", params:{api: postMessage}});player.addEventListener(\"apiready\", function(e){e.target.play();});};</script></body></html>";
     
-    NSString *dailymotionRequestString = [NSString stringWithFormat:dailymotionExtractor, 2048.0f, 1536.0f, video.providerID];
+    NSString *dailymotionRequestString = [NSString stringWithFormat:dailymotionExtractor, video.providerID, 2048.0f, 1536.0f];
+    
+    DLog(@"%@", dailymotionRequestString);
     
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [appDelegate.window addSubview:self.webView];

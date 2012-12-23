@@ -199,7 +199,7 @@
                 NSString *providerName = [[frameArray valueForKey:@"video"] valueForKey:@"provider_name"];
                 NSString *providerID = [[frameArray valueForKey:@"video"] valueForKey:@"provider_id"];
                 
-                if ( [providerName isEqualToString:@"youtube"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+                if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
                     
                     Stream *stream = [self checkIfEntity:kCoreDataEntityStream
                                              withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
