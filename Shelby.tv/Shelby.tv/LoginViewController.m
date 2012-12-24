@@ -17,6 +17,7 @@
 @synthesize passwordField = _passwordField;
 @synthesize loginButton = _loginButton;
 @synthesize versionLabel = _versionLabel;
+@synthesize indicator = _indicator;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -24,6 +25,8 @@
     self.emailField = nil;
     self.passwordField = nil;
     self.loginButton = nil;
+    self.versionLabel = nil;
+    self.indicator = nil;
 }
 
 #pragma mark - View Lifecycle Methods
@@ -39,6 +42,10 @@
     [self.passwordField setFont:[UIFont fontWithName:@"Ubuntu" size:self.passwordField.font.pointSize]];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.loginButton.titleLabel.font.pointSize]];
     [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.versionLabel.font.pointSize]];
+    
+    [self.indicator setHidden:YES];
+    [self.indicator setHidesWhenStopped:YES];
+    
 }
 
 #pragma mark - Action Methods
@@ -52,7 +59,10 @@
         
     } else {
         
-        [ShelbyAPIClient postAuthenticationWithEmail:[_emailField.text lowercaseString] andPassword:_passwordField.text];
+        // Start Animating
+        [self.indicator startAnimating];
+        
+        [ShelbyAPIClient postAuthenticationWithEmail:[_emailField.text lowercaseString] andPassword:_passwordField.text withIndicator:_indicator];
         
     }
     

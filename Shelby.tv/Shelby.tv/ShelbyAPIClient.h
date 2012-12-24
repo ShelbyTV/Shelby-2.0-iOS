@@ -8,7 +8,7 @@
 
 @interface ShelbyAPIClient : NSObject
 
-+ (void)postAuthenticationWithEmail:(NSString*)email andPassword:(NSString*)password;
++ (void)postAuthenticationWithEmail:(NSString*)email andPassword:(NSString*)password withIndicator:(UIActivityIndicatorView*)indicator;
 + (void)getStream;
 + (void)getMoreFramesInStream:(NSString*)skipParam;
 + (void)getQueueRoll;

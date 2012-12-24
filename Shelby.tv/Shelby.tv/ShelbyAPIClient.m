@@ -10,7 +10,7 @@
 
 @implementation ShelbyAPIClient
 
-+ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password
++ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withIndicator:(UIActivityIndicatorView *)indicator
 {
     NSString *requestString = [NSString stringWithFormat:kAPIShelbyPostAuthorizeEmail, email, password];
     [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -19,12 +19,13 @@
     [request setHTTPMethod:@"POST"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-  
+
         if ( response.statusCode == 200 ) {
-        
-            // Empty Core Data Store
+            
+            // Empty Existing Core Data Store (if one exists)
             [CoreDataUtility dumpAllData];
             
+            // Store User Data
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
             [dataUtility storeUser:JSON];
             
@@ -33,6 +34,9 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"%@", error);
+        
+        // Stop Animating
+        [indicator stopAnimating];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
                                                             message:@"Please try again"

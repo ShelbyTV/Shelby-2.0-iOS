@@ -22,6 +22,7 @@
 
 - (void)pollAPI;
 - (void)analytics;
+- (void)dismissLoginViewController;
 
 @end
 
@@ -74,6 +75,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - Public Methods
 - (void)userIsAuthorized
 {
     
@@ -93,7 +95,7 @@
     // Remove _loginViewController if it exists
     if ( _loginViewController ) {
      
-        [self.loginViewController dismissViewControllerAnimated:YES completion:nil];
+        [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(dismissLoginViewController) userInfo:nil repeats:NO];
         
     }
 }
@@ -117,6 +119,13 @@
 
 }
 
+- (void)dismissLoginViewController
+{
+    [self.loginViewController.indicator stopAnimating];
+    [self.loginViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Private Methods
 - (void)pollAPI
 {
     
