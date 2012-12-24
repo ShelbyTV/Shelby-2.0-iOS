@@ -17,6 +17,7 @@
 
 // Public Persistance Methods
 + (void)dumpAllData;
+- (void)removeAllVideoExtractionURLReferences;
 - (void)saveContext:(NSManagedObjectContext*)context;
 
 // Public Storage Methods

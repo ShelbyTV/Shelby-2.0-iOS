@@ -72,7 +72,9 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    [dataUtility removeAllVideoExtractionURLReferences];
 }
 
 #pragma mark - Public Methods
