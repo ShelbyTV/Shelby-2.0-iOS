@@ -75,6 +75,7 @@
 // Video Attribute Constants
 #define kCoreDataVideoID                            @"videoID"
 #define kCoreDataVideoCaption                       @"caption"
+#define kCoreDataVideoExtractedURL                  @"extractedURL"
 #define kCoreDataVideoProviderName                  @"providerName"
 #define kCoreDataVideoProviderID                    @"providerID"
 #define kCoreDataVideoTitle                         @"title"
