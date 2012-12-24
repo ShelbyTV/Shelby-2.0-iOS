@@ -137,7 +137,6 @@
     [self.player play];
     [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
     [self.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
-//    [self setupScrubber];
 }
 
 - (void)pause

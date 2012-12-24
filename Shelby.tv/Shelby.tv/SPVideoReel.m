@@ -582,6 +582,7 @@
                                                                                              usingBlock:^(CMTime time) {
                                                                                                  
                                                                                                  [blockSelf.currentVideoPlayer syncScrubber];
+                                                                                                 [self.currentVideoPlayer play];
                               }];
 		
         }
