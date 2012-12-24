@@ -52,6 +52,7 @@
         <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="stream" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="admin" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="personalRollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="queueRollID" optional="YES" attributeType="String" syncable="YES"/>
@@ -61,6 +62,7 @@
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Video" representedClassName="Video" syncable="YES">
+        <attribute name="cachedURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="extractedURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="providerID" optional="YES" attributeType="String" syncable="YES"/>
@@ -77,7 +79,7 @@
         <element name="Messages" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Roll" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Stream" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="User" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="Video" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="Video" positionX="160" positionY="192" width="128" height="180"/>
     </elements>
 </model>

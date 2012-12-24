@@ -2,7 +2,7 @@
 //  User.m
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 11/27/12.
+//  Created by Arthur Ariel Sabintsev on 12/24/12.
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
@@ -12,11 +12,12 @@
 @implementation User
 
 @dynamic nickname;
+@dynamic personalRollID;
 @dynamic queueRollID;
 @dynamic rollID;
 @dynamic token;
 @dynamic userID;
 @dynamic userImage;
-@dynamic personalRollID;
+@dynamic admin;
 
 @end

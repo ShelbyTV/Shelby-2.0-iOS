@@ -232,7 +232,7 @@ static SPVideoExtractor *sharedInstance = nil;
                         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
                         NSManagedObjectContext *context = [dataUtility context];
                         Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
-                        video.extractedURL = extractedURL;
+                        [video setValue:extractedURL forKey:kCoreDataVideoExtractedURL];
                         [dataUtility setVideoID:video.videoID];
                         
                         // Saved updated Core Data video entry, and post notification for SPVideoPlayer object

@@ -66,6 +66,7 @@
 
 // User Attribute Constants
 #define kCoreDataUserID                             @"userID"
+#define kCoreDataUserAdmin                          @"admin"
 #define kCoreDataUserImage                          @"userImage"
 #define kCoreDataUserToken                          @"token"
 #define kCoreDataUserNickname                       @"nickname"
@@ -75,6 +76,8 @@
 // Video Attribute Constants
 #define kCoreDataVideoID                            @"videoID"
 #define kCoreDataVideoCaption                       @"caption"
+#define kCoreDataVideoCachedURL                     @"cachedURL"
+#define kCoreDataVideoExtractedURL                  @"extractedURL"
 #define kCoreDataVideoProviderName                  @"providerName"
 #define kCoreDataVideoProviderID                    @"providerID"
 #define kCoreDataVideoTitle                         @"title"
