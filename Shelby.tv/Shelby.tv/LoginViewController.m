@@ -16,6 +16,7 @@
 @synthesize emailField = _emailField;
 @synthesize passwordField = _passwordField;
 @synthesize loginButton = _loginButton;
+@synthesize versionLabel = _versionLabel;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -29,6 +30,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Version
+    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kCurrentVersion]];
+    
+    // Fonts
+    [self.emailField setFont:[UIFont fontWithName:@"Ubuntu" size:self.emailField.font.pointSize]];
+    [self.passwordField setFont:[UIFont fontWithName:@"Ubuntu" size:self.passwordField.font.pointSize]];
+    [self.loginButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.loginButton.titleLabel.font.pointSize]];
+    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.versionLabel.font.pointSize]];
 }
 
 #pragma mark - Action Methods

@@ -11,6 +11,9 @@
 #import "Structures.h"
 #import "SPConstants.h"
 
+// Misc.
+#define kCurrentVersion                     [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey]
+
 // NSUserDefault Constants
 #define kUserAuthorizedDefault              @"Shelby User Authorization Stored Default"
 

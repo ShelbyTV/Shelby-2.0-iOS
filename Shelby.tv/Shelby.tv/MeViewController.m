@@ -23,6 +23,7 @@
 @synthesize queueRollButton = _queueRollButton;
 @synthesize personalRollButton = _personalRollButton;
 @synthesize logoutButton = _logoutButton;
+@synthesize versionLabel = _versionLabel;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
@@ -31,17 +32,29 @@
     self.queueRollButton = nil;
     self.personalRollButton = nil;
     self.logoutButton = nil;
+    self.versionLabel = nil;
 }
 
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+ 
+    // Version
+    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kCurrentVersion]];
     
+    // Actions
     [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.queueRollButton addTarget:self action:@selector(launchPlayerWithQueueRollEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.logoutButton addTarget:self action:@selector(logoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    // Fonts
+    [self.streamButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.streamButton.titleLabel.font.pointSize]];
+    [self.queueRollButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.queueRollButton.titleLabel.font.pointSize]];
+    [self.personalRollButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.personalRollButton.titleLabel.font.pointSize]];
+    [self.logoutButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.logoutButton.titleLabel.font.pointSize]];
+    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.versionLabel.font.pointSize]];
 }
 
 #pragma mark - Private Methods
