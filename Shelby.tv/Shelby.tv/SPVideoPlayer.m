@@ -111,27 +111,33 @@
     NSManagedObjectContext *context = [dataUtility context];
     self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
     
-    NSString *videoTitle = self.videoFrame.video.title;
-    NSString *videoProviderID = self.videoFrame.video.providerID;
-    
     if ( _videoFrame.video.extractedURL ) {
 
+        // Create videoFilename string
+        NSString *videoTitle = self.videoFrame.video.title;
+        NSString *videoProviderID = self.videoFrame.video.providerID;
+        NSString *videoFilename = [NSString stringWithFormat:@"%@-%@.mp4", videoProviderID, videoTitle];
+        
+        // Perform request
+        NSURLResponse *response = nil;
+        NSError *requestError = nil;
         NSURL *requestURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:requestURL];
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:queue
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   
-                                   if ( data ) {
-                                       
-                                       NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//                                       NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", video.provider, video.providerId]];
-                                       
-                                       
-                                   }
-                                   
-                               }];
+        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&requestError];
+
+        // Reference Cache Path
+        NSError *fileManagerError = nil;
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        [[NSFileManager defaultManager] createDirectoryAtPath:[paths objectAtIndex:0] withIntermediateDirectories:YES attributes:nil error:&fileManagerError];
+       
+        // Write video to path
+        NSError *fileWriteError;
+        NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:videoFilename];
+        [data writeToFile:path options:0 error:&fileWriteError];
+        
+        // Store path in Core Data 
+        self.videoFrame.video.cachedURL = [NSURL URLWithString:path];
+        [dataUtility saveContext:context];
     }
 
 }
