@@ -38,6 +38,7 @@
 #define kCoreDataFrameConversationID                @"conversationID"
 #define kCoreDataFrameCreatedAt                     @"createdAt"
 #define kCoreDataFrameCreatorID                     @"creatorID"
+#define kCoreDataFrameIsCached                      @"isCached"
 #define kCoreDataFrameIsSynced                      @"isSynced"
 #define kCoreDataFrameRollID                        @"rollID"
 #define kCoreDataFrameTimestamp                     @"timestamp"

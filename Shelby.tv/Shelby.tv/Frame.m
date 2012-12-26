@@ -2,7 +2,7 @@
 //  Frame.m
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 12/19/12.
+//  Created by Arthur Ariel Sabintsev on 12/26/12.
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
@@ -24,6 +24,7 @@
 @dynamic rollID;
 @dynamic timestamp;
 @dynamic videoID;
+@dynamic isCached;
 @dynamic conversation;
 @dynamic creator;
 @dynamic roll;

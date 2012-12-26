@@ -53,6 +53,8 @@
 + (void)getStream
 {
  
+    DLog(@"Get Stream");
+    
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
     
@@ -110,6 +112,8 @@
 
 + (void)getQueueRoll
 {
+    
+    DLog(@"Get Queue");
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
@@ -173,6 +177,9 @@
 
 + (void)getPersonalRoll
 {
+    
+    DLog(@"Get Personal Roll");
+    
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
     

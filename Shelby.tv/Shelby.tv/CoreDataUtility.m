@@ -49,7 +49,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:NSManagedObjectContextDidSaveNotification
-                                                  object:_context];
+                                                  object:self.context];
 }
 
 #pragma mark - Initialization Methods
@@ -81,7 +81,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:self.context];
     [request setEntity:description];
     
     // Execute request that returns array of stream entries
@@ -198,7 +198,10 @@
     NSString *queueRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
     [user setValue:queueRollID forKey:kCoreDataUserQueueRollID];
     
-    [self saveContext:_context];
+    BOOL admin = [[resultsArray valueForKey:@"admin"] boolValue];
+    [user setValue:[NSNumber numberWithBool:admin] forKey:kCoreDataUserAdmin];
+    
+    [self saveContext:self.context];
 
 }
 
@@ -242,7 +245,7 @@
                     
                     [self storeFrame:frame forFrameArray:frameArray withSyncStatus:YES];
                     
-                    [self saveContext:_context];
+                    [self saveContext:self.context];
                 }
             }
         }
@@ -269,7 +272,7 @@
                 
                 [self storeFrame:frame forFrameArray:[resultsArray objectAtIndex:i] withSyncStatus:YES];
                 
-                [self saveContext:_context];
+                [self saveContext:self.context];
             }
         }
     }
@@ -456,6 +459,30 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Queue Roll
+    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+}
+
+- (NSMutableArray*)fetchCachedEntries
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isSynced == true"];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Personal Roll
     return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
 }

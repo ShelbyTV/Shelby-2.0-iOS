@@ -11,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *streamButton;
 @property (weak, nonatomic) IBOutlet UIButton *queueRollButton;
 @property (weak, nonatomic) IBOutlet UIButton *personalRollButton;
+@property (weak, nonatomic) IBOutlet UIButton *cachedButton;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 

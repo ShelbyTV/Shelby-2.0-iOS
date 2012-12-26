@@ -32,7 +32,6 @@
 		8E12B18A16825B4100657D32 /* videoListThumbnailOverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B18216825B4100657D32 /* videoListThumbnailOverlay.png */; };
 		8E12B18B16825B4100657D32 /* videoListThumbnailOverlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B18316825B4100657D32 /* videoListThumbnailOverlay@2x.png */; };
 		8E12B19816827B3900657D32 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E12B19716827B3900657D32 /* Roll.m */; };
-		8E12B19B16827B3900657D32 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E12B19A16827B3900657D32 /* Frame.m */; };
 		8E12B19E16827C0C00657D32 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E12B19D16827C0C00657D32 /* Stream.m */; };
 		8E12B1A11682897500657D32 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E12B1A01682897500657D32 /* Video.m */; };
 		8E1B2E9B16700B1F00D2C0DC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */; };
@@ -85,6 +84,7 @@
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F326F1683F4040049EECD /* scrubberBarOff.png */; };
 		8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */; };
+		8E9F6561168B7E0F000B39FC /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6560168B7E0F000B39FC /* Frame.m */; };
 		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
@@ -141,8 +141,6 @@
 		8E12B18316825B4100657D32 /* videoListThumbnailOverlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoListThumbnailOverlay@2x.png"; sourceTree = "<group>"; };
 		8E12B19616827B3900657D32 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		8E12B19716827B3900657D32 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
-		8E12B19916827B3900657D32 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		8E12B19A16827B3900657D32 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8E12B19C16827C0C00657D32 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
 		8E12B19D16827C0C00657D32 /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
 		8E12B19F1682897500657D32 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
@@ -211,6 +209,8 @@
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
 		8E9F326F1683F4040049EECD /* scrubberBarOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scrubberBarOff.png; sourceTree = "<group>"; };
 		8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrubberBarOff@2x.png"; sourceTree = "<group>"; };
+		8E9F655F168B7E0F000B39FC /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		8E9F6560168B7E0F000B39FC /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
 		8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemView.m; sourceTree = "<group>"; };
 		8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemView.xib; sourceTree = "<group>"; };
@@ -278,10 +278,10 @@
 			isa = PBXGroup;
 			children = (
 				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
+				8E9F655F168B7E0F000B39FC /* Frame.h */,
+				8E9F6560168B7E0F000B39FC /* Frame.m */,
 				8E12B19F1682897500657D32 /* Video.h */,
 				8E12B1A01682897500657D32 /* Video.m */,
-				8E12B19916827B3900657D32 /* Frame.h */,
-				8E12B19A16827B3900657D32 /* Frame.m */,
 				8E12B19616827B3900657D32 /* Roll.h */,
 				8E12B19716827B3900657D32 /* Roll.m */,
 				8E1B2EDE1670506A00D2C0DC /* Creator.h */,
@@ -711,7 +711,6 @@
 				8E1B2EE01670506B00D2C0DC /* Creator.m in Sources */,
 				8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */,
 				8E12B19816827B3900657D32 /* Roll.m in Sources */,
-				8E12B19B16827B3900657D32 /* Frame.m in Sources */,
 				8E12B19E16827C0C00657D32 /* Stream.m in Sources */,
 				8E12B1A11682897500657D32 /* Video.m in Sources */,
 				8E1018831686695D009698B3 /* AsynchronousFreeloader.m in Sources */,
@@ -724,6 +723,7 @@
 				8E1018A01686696B009698B3 /* AFURLConnectionOperation.m in Sources */,
 				8E1018A11686696B009698B3 /* AFXMLRequestOperation.m in Sources */,
 				8E1018A21686696B009698B3 /* UIImageView+AFNetworking.m in Sources */,
+				8E9F6561168B7E0F000B39FC /* Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@
         <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creatorID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="frameID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isCached" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isSynced" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
@@ -75,7 +76,7 @@
     <elements>
         <element name="Conversation" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Creator" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Frame" positionX="160" positionY="192" width="128" height="240"/>
+        <element name="Frame" positionX="160" positionY="192" width="128" height="255"/>
         <element name="Messages" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Roll" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Stream" positionX="160" positionY="192" width="128" height="90"/>
