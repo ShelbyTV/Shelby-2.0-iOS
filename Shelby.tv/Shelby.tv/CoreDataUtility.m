@@ -479,7 +479,7 @@
     [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     // Filter by rollID
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isSynced == true"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isCached == YES"];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll

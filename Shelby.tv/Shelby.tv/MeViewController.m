@@ -68,16 +68,16 @@
     
     if ( YES == [[NSUserDefaults standardUserDefaults] boolForKey:kUserAuthorizedDefault] ) {
         
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//        User *user = [dataUtility fetchUser];
-//        
-//        if ( YES == [user.admin boolValue] ) {
-//            
-//            [self.cachedButton setHidden:NO];
-//            [self.cachedButton addTarget:self action:@selector(launchPlayerWithCachedEntries) forControlEvents:UIControlEventTouchUpInside];
-//            [self.cachedButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.cachedButton.titleLabel.font.pointSize]];
-//            
-//        }
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        
+        if ( YES == [user.admin boolValue] ) {
+            
+            [self.cachedButton setHidden:NO];
+            [self.cachedButton addTarget:self action:@selector(launchPlayerWithCachedEntries) forControlEvents:UIControlEventTouchUpInside];
+            [self.cachedButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.cachedButton.titleLabel.font.pointSize]];
+            
+        }
     }
 
 }
@@ -113,17 +113,17 @@
 - (void)launchPlayerWithCachedEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSMutableArray *videoFrames = [dataUtility fetchPersonalRollEntries];
-    SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Cached categoryTitle:@"Cached Videos" andVideoFrames:videoFrames];
-    
+    NSMutableArray *videoFrames = [dataUtility fetchCachedEntries];
+
     if ( [videoFrames count] ) {
         
+        SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Cached categoryTitle:@"Cached Videos" andVideoFrames:videoFrames];
         [self presentViewController:reel animated:YES completion:nil];
         
     } else {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:@"No videos/frames have been cached"
+                                                            message:@"No videos have been cached."
                                                            delegate:self
                                                   cancelButtonTitle:@"Dismiss"
                                                   otherButtonTitles:nil];
