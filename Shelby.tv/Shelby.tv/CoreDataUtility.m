@@ -164,6 +164,12 @@
                         
                     } break;
                         
+                    case DataRequestType_StoreVideoInCache:{
+                        
+                        DLog(@"Video Stored in Cache");
+                        
+                    } break;
+                        
                     default:
                         break;
                 }

@@ -107,7 +107,7 @@
 
 - (void)cacheVideo
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_BackgroundUpdate];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreVideoInCache];
     NSManagedObjectContext *context = [dataUtility context];
     self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
     

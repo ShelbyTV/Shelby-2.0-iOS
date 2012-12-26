@@ -23,8 +23,8 @@ typedef enum _DataRequestType
     DataRequestType_StoreUser,          // Store User
     DataRequestType_BackgroundUpdate,   // Store data from background API poller
     DataRequestType_ActionUpdate,       // Store data from user action (e.g., when user scrolls far in stream)
-    DataRequestType_VideoExtracted      // Store video data from results of SPVideoExtractor
-    DataRequestType_StoreCache          // Store video data in local cache
+    DataRequestType_VideoExtracted,     // Store video data from results of SPVideoExtractor
+    DataRequestType_StoreVideoInCache   // Store video data in local cache
     
 } DataRequestType;
 
