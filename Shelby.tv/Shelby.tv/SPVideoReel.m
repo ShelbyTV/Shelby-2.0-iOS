@@ -381,12 +381,30 @@
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:infoPanelIconPlaceholderView];
     
     // Cached/Downloaded Button
-    if ( videoFrame.isCached ) {
-        [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
-        [self.overlayView.downloadButton.titleLabel setEnabled:NO];
+    [self.overlayView.downloadButton addTarget:self.currentVideoPlayer action:@selector(cacheVideo) forControlEvents:UIControlEventTouchUpInside];
+    
+    if ( videoFrame.video.extractedURL ) {
+        
+        [self.overlayView.downloadButton setHidden:NO];
+
+        if ( videoFrame.isCached ) { // Cached
+                        
+            [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setEnabled:NO];
+        
+        } else { // Not Cached
+            
+            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setEnabled:YES];
+            
+        }
+    
     } else {
+        
+        [self.overlayView.downloadButton setHidden:YES];
         [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
         [self.overlayView.downloadButton.titleLabel setEnabled:YES];
+
     }
     
     // Update videoListScrollView (if _itemViews is initialized)

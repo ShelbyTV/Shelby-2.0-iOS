@@ -73,7 +73,6 @@
     [self.userImageView.layer setBorderWidth: 0.5];
     
     // Customize Dowload button
-    [self.downloadButton setHidden:YES];
     [self.downloadButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.downloadButton.titleLabel.font.pointSize]];
 }
 

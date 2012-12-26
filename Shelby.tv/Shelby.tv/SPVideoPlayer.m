@@ -138,7 +138,10 @@
         // Reference Cache Path
         NSError *fileManagerError = nil;
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        [[NSFileManager defaultManager] createDirectoryAtPath:[paths objectAtIndex:0] withIntermediateDirectories:YES attributes:nil error:&fileManagerError];
+        [[NSFileManager defaultManager] createDirectoryAtPath:[paths objectAtIndex:0]
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:&fileManagerError];
        
         if ( fileManagerError ) {
             
@@ -150,19 +153,22 @@
         NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:videoFilename];
         [data writeToFile:path options:0 error:&fileWriteError];
         
+        DLog(@"Video Cached at Location: %@", path);
+        
         if ( fileWriteError ) {
 
             DLog(@"File Write Error %@", requestError);
         }
         
         // Store path in Core Data 
-        self.videoFrame.video.cachedURL = [NSURL URLWithString:path];
+        self.videoFrame.video.cachedURL = path;
         self.videoFrame.isCached = [NSNumber numberWithBool:YES];
         [dataUtility saveContext:context];
         
         // Change text on downloadButton and make sure button stays disabled
         [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
         if ( [self.overlayView.downloadButton isEnabled] ) [self.overlayView.downloadButton setEnabled:NO];
+        
     
     }
 }
@@ -359,6 +365,17 @@
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:playerItem];
 
+        // Configure Cached/Downloaded Button
+        [self.overlayView.downloadButton setHidden:NO];
+        [self.overlayView.downloadButton addTarget:self action:@selector(cacheVideo) forControlEvents:UIControlEventTouchUpInside];
+        if ( _videoFrame.isCached ) {
+            [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setEnabled:NO];
+        } else {
+            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setEnabled:YES];
+        }
+        
         // Toggle video playback
         if ( self == _videoReel.currentVideoPlayer ) { // Start AVPlayer object in 'play' mode
             
