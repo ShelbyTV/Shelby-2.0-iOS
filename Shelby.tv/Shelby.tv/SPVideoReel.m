@@ -380,6 +380,15 @@
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:infoPanelIconPlaceholderView];
     
+    // Cached/Downloaded Button
+    if ( videoFrame.isCached ) {
+        [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+        [self.overlayView.downloadButton.titleLabel setEnabled:NO];
+    } else {
+        [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+        [self.overlayView.downloadButton.titleLabel setEnabled:YES];
+    }
+    
     // Update videoListScrollView (if _itemViews is initialized)
     if ( 0 < [self.itemViews count] ) {
         

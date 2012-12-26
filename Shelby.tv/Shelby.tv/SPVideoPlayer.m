@@ -113,6 +113,10 @@
     
     if ( _videoFrame.video.extractedURL ) {
 
+        // Change test on button and disable button
+        [self.overlayView.downloadButton setTitle:@"Downloading" forState:UIControlStateNormal];
+        [self.overlayView.downloadButton setEnabled:NO];
+        
         // Create videoFilename string
         NSString *videoTitle = self.videoFrame.video.title;
         NSString *videoProviderID = self.videoFrame.video.providerID;
@@ -155,8 +159,12 @@
         self.videoFrame.video.cachedURL = [NSURL URLWithString:path];
         self.videoFrame.isCached = [NSNumber numberWithBool:YES];
         [dataUtility saveContext:context];
+        
+        // Change text on downloadButton and make sure button stays disabled
+        [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+        if ( [self.overlayView.downloadButton isEnabled] ) [self.overlayView.downloadButton setEnabled:NO];
+    
     }
-
 }
 
 #pragma mark - Video Playback Methods
