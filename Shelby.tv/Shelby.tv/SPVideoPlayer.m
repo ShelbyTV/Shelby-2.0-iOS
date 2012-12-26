@@ -36,13 +36,12 @@
 @synthesize playbackFinished = _playbackFinished;
 @synthesize isPlayable = _isPlayable;
 
-#pragma mark - Memory Management
+#pragma mark - Memory Management Methods
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
 }
 
-#pragma mark - Did Receive memory Warning
 - (void)didReceiveMemoryWarning
 {
     
@@ -71,25 +70,6 @@
     return self;
 }
 
-#pragma mark - Public Methods
-- (void)queueVideo
-{
-    
-    if ( ![self isPlayable] ) {
-     
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(loadVideo:)
-                                                     name:kSPVideoExtracted
-                                                   object:nil];
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSManagedObjectContext *context = [dataUtility context];
-        Frame *tempFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
-        [[SPVideoExtractor sharedInstance] queueVideo:tempFrame.video];
-        
-    }
-}
-
 #pragma mark - View Lifecycle Methods
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -105,7 +85,58 @@
     
 }
 
-#pragma mark - Player Controls
+
+#pragma mark - Video Fetching Methods
+- (void)queueVideo
+{
+    
+    if ( ![self isPlayable] ) {
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loadVideo:)
+                                                     name:kSPVideoExtracted
+                                                   object:nil];
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        NSManagedObjectContext *context = [dataUtility context];
+        Frame *tempFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+        [[SPVideoExtractor sharedInstance] queueVideo:tempFrame.video];
+        
+    }
+}
+
+- (void)cacheVideo
+{
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    NSManagedObjectContext *context = [dataUtility context];
+    self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+    
+    NSString *videoTitle = self.videoFrame.video.title;
+    NSString *videoProviderID = self.videoFrame.video.providerID;
+    
+    if ( _videoFrame.video.extractedURL ) {
+
+        NSURL *requestURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:requestURL];
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:queue
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   
+                                   if ( data ) {
+                                       
+                                       NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//                                       NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", video.provider, video.providerId]];
+                                       
+                                       
+                                   }
+                                   
+                               }];
+    }
+
+}
+
+#pragma mark - Video Playback Methods
 - (void)togglePlayback
 {
     if ( 0.0 == self.player.rate && _isPlayable ) { // Play
@@ -167,6 +198,7 @@
                                                animated:YES];
 }
 
+#pragma mark - Video Scrubber Methods
 - (CMTime)elapsedDuration
 {
     AVPlayerItem *playerItem = [self.player currentItem];

@@ -20,15 +20,22 @@
      withOverlayView:(SPOverlayView*)overlayView
          inVideoReel:(SPVideoReel*)videoReel;
 
+/// Video Fetching
 - (void)queueVideo;
+- (void)cacheVideo;
+
+/// Video Playback
 - (void)togglePlayback;
 - (void)restartPlayback;
 - (void)play;
 - (void)pause;
 - (void)airPlay;
 - (void)share;
+
+/// Video Scrubber
 - (CMTime)elapsedDuration;
 - (void)setupScrubber;
 - (void)syncScrubber;
+
 
 @end
