@@ -114,11 +114,11 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSManagedObjectContext *context = [dataUtility context];
         NSError *error = nil;
-        self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
+        Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
         
         DLog(@"Cache Add Error: %@", error);
         
-        [[SPCacheUtility sharedInstance] addVideoFrame:_videoFrame inOverlay:_overlayView];
+        [[SPCacheUtility sharedInstance] addVideoFrame:videoFrame inOverlay:_overlayView];
    
     });
 
@@ -131,10 +131,10 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSManagedObjectContext *context = [dataUtility context];
         NSError *error = nil;
-        self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
+        Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
         
         DLog(@"Cache Remove Error: %@", error);
-        [[SPCacheUtility sharedInstance] removeVideoFrame:_videoFrame inOverlay:_overlayView];
+        [[SPCacheUtility sharedInstance] removeVideoFrame:videoFrame inOverlay:_overlayView];
    
     });
     

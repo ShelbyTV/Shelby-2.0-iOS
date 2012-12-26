@@ -45,6 +45,9 @@ static SPCacheUtility *sharedInstance = nil;
 - (void)addVideoFrame:(Frame *)videoFrame inOverlay:(SPOverlayView *)overlayView
 {
     
+    self.videoFrame = videoFrame;
+    self.overlayView = overlayView;
+    
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreVideoInCache];
     NSManagedObjectContext *context = [dataUtility context];
     self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
