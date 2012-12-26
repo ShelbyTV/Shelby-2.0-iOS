@@ -107,7 +107,7 @@
 
 - (void)cacheVideo
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_BackgroundUpdate];
     NSManagedObjectContext *context = [dataUtility context];
     self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
     
@@ -125,18 +125,35 @@
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:requestURL];
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&requestError];
 
+        if ( requestError ) {
+        
+            DLog(@"Response %@", response);
+            DLog(@"Request Error %@", requestError);
+        }
+        
         // Reference Cache Path
         NSError *fileManagerError = nil;
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         [[NSFileManager defaultManager] createDirectoryAtPath:[paths objectAtIndex:0] withIntermediateDirectories:YES attributes:nil error:&fileManagerError];
        
+        if ( fileManagerError ) {
+            
+            DLog(@"FileManager Error %@", requestError);
+        }
+        
         // Write video to path
-        NSError *fileWriteError;
+        NSError *fileWriteError = nil;
         NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:videoFilename];
         [data writeToFile:path options:0 error:&fileWriteError];
         
+        if ( fileWriteError ) {
+
+            DLog(@"File Write Error %@", requestError);
+        }
+        
         // Store path in Core Data 
         self.videoFrame.video.cachedURL = [NSURL URLWithString:path];
+        self.videoFrame.isCached = [NSNumber numberWithBool:YES];
         [dataUtility saveContext:context];
     }
 
