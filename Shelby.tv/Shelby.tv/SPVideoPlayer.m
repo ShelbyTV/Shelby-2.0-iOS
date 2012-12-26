@@ -187,8 +187,7 @@
     
 	if (CMTIME_IS_INVALID(playerDuration)) {
         [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(setupScrubber) userInfo:nil repeats:NO];
-        self.overlayView.scrubber.value = 0.0;
-        self.overlayView.scrubberTimeLabel.text = @"00:00:00 / 00:00:00";
+
         return;
 	}
 	
@@ -212,8 +211,7 @@
 {
 	CMTime playerDuration = [self elapsedDuration];
 	if ( CMTIME_IS_INVALID(playerDuration) ) {
-		self.overlayView.scrubber.value = 0.0;
-        self.overlayView.scrubberTimeLabel.text = @"00:00:00 / 00:00:00";
+
 		return;
 	}
     
@@ -221,8 +219,8 @@
 	if ( isfinite(duration) ) {
 		float minValue = [self.overlayView.scrubber minimumValue];
 		float maxValue = [self.overlayView.scrubber maximumValue];
-		double currentTime = CMTimeGetSeconds([self.player currentTime]);
-		double duration = CMTimeGetSeconds([self.player.currentItem duration]);
+		double currentTime = CMTimeGetSeconds([self.videoReel.currentVideoPlayer.player currentTime]);
+		double duration = CMTimeGetSeconds([self.videoReel.currentVideoPlayer.player.currentItem duration]);
         
 		[self.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
         
@@ -314,7 +312,7 @@
 
 - (void)itemDidFinishPlaying:(NSNotification*)notification
 {
-    
+
     if ( self.player.currentItem == notification.object && ![self playbackFinished]) {
         
         [self setPlaybackFinished:YES];
