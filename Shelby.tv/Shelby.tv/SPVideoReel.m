@@ -7,10 +7,11 @@
 //
 
 #import "SPVideoReel.h"
-#import "SPVideoPlayer.h"
+#import "SPCacheUtility.h"
 #import "SPOverlayView.h"
 #import "SPVideoExtractor.h"
 #import "SPVideoItemView.h"
+#import "SPVideoPlayer.h"
 
 @interface SPVideoReel ()
 
@@ -378,31 +379,36 @@
     self.overlayView.videoCaptionLabel.text = videoFrame.video.caption;
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", videoFrame.creator.nickname];
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
-    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage forImageView:self.overlayView.userImageView withPlaceholderView:infoPanelIconPlaceholderView];
+    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
+                                 forImageView:self.overlayView.userImageView
+                          withPlaceholderView:infoPanelIconPlaceholderView];
     
-    // Cached/Downloaded Button
-    [self.overlayView.downloadButton addTarget:self.currentVideoPlayer action:@selector(cacheVideo) forControlEvents:UIControlEventTouchUpInside];
-    
-    if ( videoFrame.video.extractedURL ) {
-
+    // Configure downloadButton
+    if ( self.currentVideoPlayer.isPlayable ) { // Video extracted and is playable
+        
+        [self.overlayView.downloadButton setHidden:NO];
+        [self.overlayView.downloadButton setEnabled:YES];
+        
         if ( videoFrame.isCached ) { // Cached
             
-            [self.overlayView.downloadButton setHidden:NO];
-            [self.overlayView.downloadButton setEnabled:NO];
-            [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+            [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
+            [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
         
         } else { // Not Cached
             
-            [self.overlayView.downloadButton setHidden:NO];
-            [self.overlayView.downloadButton setEnabled:YES];
+            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+            [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
             [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
             
         }
     
-    } else {
+    } else { // Video NOT extracted and NOT playable
         
         [self.overlayView.downloadButton setHidden:YES];
         [self.overlayView.downloadButton setEnabled:YES];
+        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+        [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
         [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
 
     }

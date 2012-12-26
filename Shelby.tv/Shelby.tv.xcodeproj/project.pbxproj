@@ -85,6 +85,7 @@
 		8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F326F1683F4040049EECD /* scrubberBarOff.png */; };
 		8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */; };
 		8E9F6561168B7E0F000B39FC /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6560168B7E0F000B39FC /* Frame.m */; };
+		8E9F6566168BBA75000B39FC /* SPCacheUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F6564168BB8C5000B39FC /* SPCacheUtility.m */; };
 		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
@@ -211,6 +212,8 @@
 		8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrubberBarOff@2x.png"; sourceTree = "<group>"; };
 		8E9F655F168B7E0F000B39FC /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		8E9F6560168B7E0F000B39FC /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		8E9F6563168BB8C5000B39FC /* SPCacheUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCacheUtility.h; sourceTree = "<group>"; };
+		8E9F6564168BB8C5000B39FC /* SPCacheUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPCacheUtility.m; sourceTree = "<group>"; };
 		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
 		8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemView.m; sourceTree = "<group>"; };
 		8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemView.xib; sourceTree = "<group>"; };
@@ -464,6 +467,8 @@
 			isa = PBXGroup;
 			children = (
 				8E58294216657A500098FA3A /* SPConstants.h */,
+				8E9F6563168BB8C5000B39FC /* SPCacheUtility.h */,
+				8E9F6564168BB8C5000B39FC /* SPCacheUtility.m */,
 				8E4C55751666A9F90019DD15 /* SPOverlayView.h */,
 				8E4C55761666A9F90019DD15 /* SPOverlayView.m */,
 				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
@@ -689,6 +694,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E9F6566168BBA75000B39FC /* SPCacheUtility.m in Sources */,
 				8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */,
 				8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */,
 				8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */,

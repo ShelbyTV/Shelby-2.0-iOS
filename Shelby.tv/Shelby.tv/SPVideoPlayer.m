@@ -7,6 +7,7 @@
 //
 
 #import "SPVideoPlayer.h"
+#import "SPCacheUtility.h"
 #import "SPVideoExtractor.h"
 #import "SPOverlayView.h"
 #import "SPVideoReel.h"
@@ -105,72 +106,38 @@
     }
 }
 
-- (void)cacheVideo
+
+- (void)addToCache
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreVideoInCache];
-    NSManagedObjectContext *context = [dataUtility context];
-    self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        NSManagedObjectContext *context = [dataUtility context];
+        NSError *error = nil;
+        self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
+        
+        DLog(@"Cache Add Error: %@", error);
+        
+        [[SPCacheUtility sharedInstance] addVideoFrame:_videoFrame inOverlay:_overlayView];
+   
+    });
+
+}
+
+- (void)removeFromCache
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        NSManagedObjectContext *context = [dataUtility context];
+        NSError *error = nil;
+        self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
+        
+        DLog(@"Cache Remove Error: %@", error);
+        [[SPCacheUtility sharedInstance] removeVideoFrame:_videoFrame inOverlay:_overlayView];
+   
+    });
     
-    if ( _videoFrame.video.extractedURL ) {
-
-        // Change test on button and disable button
-        [self.overlayView.downloadButton setTitle:@"Downloading" forState:UIControlStateNormal];
-        [self.overlayView.downloadButton setEnabled:NO];
-        
-        // Create videoFilename string
-        NSString *videoTitle = self.videoFrame.video.title;
-        NSString *videoProviderID = self.videoFrame.video.providerID;
-        NSString *videoFilename = [NSString stringWithFormat:@"%@-%@.mp4", videoProviderID, videoTitle];
-        
-        // Perform request
-        NSURLResponse *response = nil;
-        NSError *requestError = nil;
-        NSURL *requestURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
-        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:requestURL];
-        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&requestError];
-
-        if ( requestError ) {
-        
-            DLog(@"Response %@", response);
-            DLog(@"Request Error %@", requestError);
-        }
-        
-        // Reference Cache Path
-        NSError *fileManagerError = nil;
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        [[NSFileManager defaultManager] createDirectoryAtPath:[paths objectAtIndex:0]
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:&fileManagerError];
-       
-        if ( fileManagerError ) {
-            
-            DLog(@"FileManager Error %@", requestError);
-        }
-        
-        // Write video to path
-        NSError *fileWriteError = nil;
-        NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:videoFilename];
-        [data writeToFile:path options:0 error:&fileWriteError];
-        
-        DLog(@"Video Cached at Location: %@", path);
-        
-        if ( fileWriteError ) {
-
-            DLog(@"File Write Error %@", requestError);
-        }
-        
-        // Store path in Core Data 
-        self.videoFrame.video.cachedURL = path;
-        self.videoFrame.isCached = [NSNumber numberWithBool:YES];
-        [dataUtility saveContext:context];
-        
-        // Change text on downloadButton and make sure button stays disabled
-        [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
-        if ( [self.overlayView.downloadButton isEnabled] ) [self.overlayView.downloadButton setEnabled:NO];
-        
-    
-    }
 }
 
 #pragma mark - Video Playback Methods
@@ -223,10 +190,10 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [dataUtility context];
-    Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+    self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
     
-    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, videoFrame.rollID, videoFrame.frameID];
-    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", videoFrame.video.title, shareLink];
+    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, _videoFrame.rollID, _videoFrame.frameID];
+    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
     [self.sharePopOverController presentPopoverFromRect:self.overlayView.shareButton.frame
@@ -365,20 +332,20 @@
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:playerItem];
 
-        // Configure Cached/Downloaded Button
+        // Configure downloadButton
         [self.overlayView.downloadButton setHidden:NO];
-        [self.overlayView.downloadButton addTarget:self action:@selector(cacheVideo) forControlEvents:UIControlEventTouchUpInside];
+        [self.overlayView.downloadButton setEnabled:YES];
         
         if ( _videoFrame.isCached ) { // Cached
             
-            [self.overlayView.downloadButton setHidden:NO];
-            [self.overlayView.downloadButton setEnabled:NO];
-            [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+            [self.overlayView.downloadButton addTarget:self action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
+            [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
             
         } else { // Not Cached
             
-            [self.overlayView.downloadButton setHidden:NO];
-            [self.overlayView.downloadButton setEnabled:YES];
+            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+            [self.overlayView.downloadButton addTarget:self action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
             [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
             
         }

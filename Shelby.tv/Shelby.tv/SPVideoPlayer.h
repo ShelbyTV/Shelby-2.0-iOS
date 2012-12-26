@@ -22,7 +22,8 @@
 
 /// Video Fetching
 - (void)queueVideo;
-- (void)cacheVideo;
+- (void)addToCache;
+- (void)removeFromCache;
 
 /// Video Playback
 - (void)togglePlayback;
