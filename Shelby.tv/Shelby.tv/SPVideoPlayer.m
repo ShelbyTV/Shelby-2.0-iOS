@@ -368,12 +368,19 @@
         // Configure Cached/Downloaded Button
         [self.overlayView.downloadButton setHidden:NO];
         [self.overlayView.downloadButton addTarget:self action:@selector(cacheVideo) forControlEvents:UIControlEventTouchUpInside];
-        if ( _videoFrame.isCached ) {
-            [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+        
+        if ( _videoFrame.isCached ) { // Cached
+            
+            [self.overlayView.downloadButton setHidden:NO];
             [self.overlayView.downloadButton setEnabled:NO];
-        } else {
-            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+            
+        } else { // Not Cached
+            
+            [self.overlayView.downloadButton setHidden:NO];
             [self.overlayView.downloadButton setEnabled:YES];
+            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+            
         }
         
         // Toggle video playback

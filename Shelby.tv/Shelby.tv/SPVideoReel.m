@@ -384,26 +384,26 @@
     [self.overlayView.downloadButton addTarget:self.currentVideoPlayer action:@selector(cacheVideo) forControlEvents:UIControlEventTouchUpInside];
     
     if ( videoFrame.video.extractedURL ) {
-        
-        [self.overlayView.downloadButton setHidden:NO];
 
         if ( videoFrame.isCached ) { // Cached
-                        
-            [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
+            
+            [self.overlayView.downloadButton setHidden:NO];
             [self.overlayView.downloadButton setEnabled:NO];
+            [self.overlayView.downloadButton setTitle:@"Downloaded" forState:UIControlStateNormal];
         
         } else { // Not Cached
             
-            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setHidden:NO];
             [self.overlayView.downloadButton setEnabled:YES];
+            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
             
         }
     
     } else {
         
         [self.overlayView.downloadButton setHidden:YES];
+        [self.overlayView.downloadButton setEnabled:YES];
         [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
-        [self.overlayView.downloadButton.titleLabel setEnabled:YES];
 
     }
     
