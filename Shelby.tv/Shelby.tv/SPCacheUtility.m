@@ -8,17 +8,20 @@
 
 #import "SPCacheUtility.h"
 #import "SPOverlayView.h"
+#import "SPVideoPlayer.h"
 
 @interface SPCacheUtility ()
 
 @property (strong, nonatomic) Frame *videoFrame;
 @property (strong, nonatomic) SPOverlayView *overlayView;
+@property (strong, nonatomic) SPVideoPlayer *videoPlayer;
 
 @end
 
 @implementation SPCacheUtility
 @synthesize videoFrame = _videoFrame;
 @synthesize overlayView = _overlayView;
+@synthesize videoPlayer = _videoPlayer;
 
 #pragma mark - Singleton Methods
 static SPCacheUtility *sharedInstance = nil;
@@ -42,11 +45,12 @@ static SPCacheUtility *sharedInstance = nil;
 }
 
 #pragma mark - Public Methods
-- (void)addVideoFrame:(Frame *)videoFrame inOverlay:(SPOverlayView *)overlayView
+- (void)addVideoFrame:(Frame *)videoFrame fromVideoPlayer:(SPVideoPlayer *)videoPlayer inOverlay:(SPOverlayView *)overlayView
 {
     
     self.videoFrame = videoFrame;
     self.overlayView = overlayView;
+    self.videoPlayer = videoPlayer;
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreVideoInCache];
     NSManagedObjectContext *context = [dataUtility context];
@@ -107,18 +111,19 @@ static SPCacheUtility *sharedInstance = nil;
         [dataUtility saveContext:context];
         
         // Change text on downloadButton and make sure button stays disabled
-//        [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
-//        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-//        [self.overlayView.downloadButton addTarget:self action:@selector(removeVideoFrameFromCache) forControlEvents:UIControlEventTouchUpInside];
+        [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
+        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+        [self.overlayView.downloadButton addTarget:self action:@selector(removeVideoFrameFromCache) forControlEvents:UIControlEventTouchUpInside];
         
     }
 }
 
-- (void)removeVideoFrame:(Frame *)videoFrame inOverlay:(SPOverlayView *)overlayView
+- (void)removeVideoFrame:(Frame *)videoFrame fromVideoPlayer:(SPVideoPlayer *)videoPlayer inOverlay:(SPOverlayView *)overlayView
 {
     
     self.videoFrame = videoFrame;
     self.overlayView = overlayView;
+    self.videoPlayer = videoPlayer;
     
     // Reference Filename
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreVideoInCache];
@@ -146,9 +151,9 @@ static SPCacheUtility *sharedInstance = nil;
             [dataUtility saveContext:context];
             
             // Change text on downloadButton and make sure button stays disabled
-//            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
-//            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-//            [self.overlayView.downloadButton addTarget:self action:@selector(removeVideoFrameFromCache) forControlEvents:UIControlEventTouchUpInside];
+            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+            [self.overlayView.downloadButton addTarget:self action:@selector(removeVideoFrameFromCache) forControlEvents:UIControlEventTouchUpInside];
             
             
             DLog(@"Cache Video Removal Error: %@", error);

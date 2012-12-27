@@ -118,7 +118,7 @@
         
         DLog(@"Cache Add Error: %@", error);
         
-        [[SPCacheUtility sharedInstance] addVideoFrame:videoFrame inOverlay:_overlayView];
+        [[SPCacheUtility sharedInstance] addVideoFrame:videoFrame fromVideoPlayer:self inOverlay:_overlayView];
    
     });
 
@@ -134,7 +134,7 @@
         Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
         
         DLog(@"Cache Remove Error: %@", error);
-        [[SPCacheUtility sharedInstance] removeVideoFrame:videoFrame inOverlay:_overlayView];
+        [[SPCacheUtility sharedInstance] removeVideoFrame:videoFrame fromVideoPlayer:self inOverlay:_overlayView];
    
     });
     
