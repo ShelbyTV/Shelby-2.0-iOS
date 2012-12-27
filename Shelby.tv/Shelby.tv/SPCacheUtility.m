@@ -140,7 +140,7 @@ static SPCacheUtility *sharedInstance = nil;
     
     for (NSString *string in contents) {
 
-        if ( [string isEqualToString:path] ) {
+        if ( [string isEqualToString:storedFilename] ) {
             
             NSError *error = nil;
             [fileManager removeItemAtPath:path error:&error];
