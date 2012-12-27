@@ -242,7 +242,7 @@ static SPVideoExtractor *sharedInstance = nil;
                         [self.videoQueue removeObjectAtIndex:0];
                         [self setIsExtracting:NO];
                         
-                        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
+                        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
 
                     }
                 }
