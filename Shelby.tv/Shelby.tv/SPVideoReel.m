@@ -19,7 +19,6 @@
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (strong, nonatomic) NSMutableArray *itemViews;
-@property (strong, nonatomic) SPOverlayView *overlayView;
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (copy, nonatomic) NSString *categoryTitle;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
@@ -394,6 +393,12 @@
             [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
             [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
         
+        } else if ( _currentVideoPlayer.isDownloading ) { // Not Cached
+            
+            [self.overlayView.downloadButton setEnabled:NO];
+            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+            [self.overlayView.downloadButton setTitle:@"Caching..." forState:UIControlStateNormal];
+            
         } else { // Not Cached
             
             [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
@@ -406,9 +411,6 @@
         
         [self.overlayView.downloadButton setHidden:YES];
         [self.overlayView.downloadButton setEnabled:YES];
-        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-        [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
-        [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
 
     }
     
@@ -519,10 +521,25 @@
 - (IBAction)homeButtonAction:(id)sender
 {
     
-    // Pause and stop residual video playback
     for ( SPVideoPlayer *player in _videoPlayers ) {
         
+        // Pause and stop residual video playback
         [player pause];
+        
+        // Check if videos are being downloaded
+        if ( YES == player.isDownloading ) {
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:@"You are still downloading at least one video, so it wouldn't be wise to dismiss this instance of SPVideoReel."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"Dismiss"
+                                                      otherButtonTitles:nil, nil];
+            
+            [alertView show];
+            
+            return;
+            
+        }
         
     }
     

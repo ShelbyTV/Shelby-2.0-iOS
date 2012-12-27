@@ -36,6 +36,7 @@
 @synthesize sharePopOverController = _sharePopOverController;
 @synthesize playbackFinished = _playbackFinished;
 @synthesize isPlayable = _isPlayable;
+@synthesize isDownloading = _isDownloading;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
@@ -65,6 +66,7 @@
         [self setVideoReel:videoReel];
         [self setPlaybackFinished:NO];
         [self setIsPlayable:NO];
+        [self setIsDownloading:NO];
         
     }
     
@@ -76,10 +78,10 @@
 {
     [super viewDidAppear:animated];
     
-    // Add indicator
     
     if ( self.videoReel.categoryType != CategoryType_Cached ) {
         
+        // Add indicator
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
         self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
         self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
@@ -128,7 +130,7 @@
         if ( error )
             DLog(@"Cache Add Error: %@", error);
         
-        [[SPCacheUtility sharedInstance] addVideoFrame:videoFrame fromVideoPlayer:self inOverlay:_overlayView];
+        [[SPCacheUtility sharedInstance] addVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
    
     });
 
@@ -146,7 +148,7 @@
         if ( error )
             DLog(@"Cache Remove Error: %@", error);
         
-        [[SPCacheUtility sharedInstance] removeVideoFrame:videoFrame fromVideoPlayer:self inOverlay:_overlayView];
+        [[SPCacheUtility sharedInstance] removeVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
    
     });
     
@@ -416,6 +418,12 @@
             [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
             [self.overlayView.downloadButton addTarget:self action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
             [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
+            
+        } else if ( self.isDownloading ) { // Not Cached
+            
+            [self.overlayView.downloadButton setEnabled:NO];
+            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+            [self.overlayView.downloadButton setTitle:@"Caching..." forState:UIControlStateNormal];
             
         } else { // Not Cached
             

@@ -6,12 +6,13 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-@class SPOverlayView, SPVideoPlayer;
+@class SPVideoReel, SPVideoPlayer;
 
 @interface SPCacheUtility : NSObject
 
-- (void)addVideoFrame:(Frame*)videoFrame fromVideoPlayer:(SPVideoPlayer*)videoPlayer inOverlay:(SPOverlayView*)overlayView;
-- (void)removeVideoFrame:(Frame*)videoFrame fromVideoPlayer:(SPVideoPlayer*)videoPlayer inOverlay:(SPOverlayView*)overlayView;
+- (void)addVideoFrame:(Frame*)videoFrame fromVideoPlayer:(SPVideoPlayer*)videoPlayer inReel:(SPVideoReel*)videoReel;
+- (void)removeVideoFrame:(Frame*)videoFrame fromVideoPlayer:(SPVideoPlayer*)videoPlayer inReel:(SPVideoReel*)videoReel;
+- (void)emptyCache;
 
 + (SPCacheUtility*)sharedInstance;
 

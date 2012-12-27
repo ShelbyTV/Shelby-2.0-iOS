@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-@class SPVideoPlayer;
+@class SPVideoPlayer, SPOverlayView;
 
 @interface SPVideoReel : UIViewController <UIScrollViewDelegate>
 {
@@ -17,6 +17,7 @@
 @property (strong, nonatomic) id scrubberTimeObserver;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
+@property (strong, nonatomic) SPOverlayView *overlayView;
 @property (assign, nonatomic) CategoryType categoryType;
 
 /// Initialization

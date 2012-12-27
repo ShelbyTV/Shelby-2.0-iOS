@@ -13,6 +13,7 @@
 @property (strong, nonatomic) Frame *videoFrame;
 @property (strong, nonatomic) AVPlayer *player;
 @property (assign, nonatomic) BOOL isPlayable;
+@property (assign, nonatomic) BOOL isDownloading;
 @property (assign, nonatomic) BOOL playbackFinished;
 
 - (id)initWithBounds:(CGRect)bounds

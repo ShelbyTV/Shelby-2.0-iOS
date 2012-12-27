@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyAPIClient.h"
+#import "SPCacheUtility.h"
 
 @implementation ShelbyAPIClient
 
@@ -24,6 +25,9 @@
             
             // Empty Existing Core Data Store (if one exists)
             [CoreDataUtility dumpAllData];
+            
+            // Empty Existing Video Cache (if one exists)
+            [[SPCacheUtility sharedInstance] emptyCache];
             
             // Store User Data
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
