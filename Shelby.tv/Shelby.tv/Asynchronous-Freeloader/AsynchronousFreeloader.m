@@ -224,7 +224,7 @@
     BOOL cacheReferenceExists = ( [namesArray containsObject:name] ) ? YES : NO;
     
     // Check if image exists at referenced path
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
     BOOL pathReferenceExists = [fileManager fileExistsAtPath:imagePath];
     
     if ( cacheReferenceExists && pathReferenceExists ) {            // If image exists in cache and on device

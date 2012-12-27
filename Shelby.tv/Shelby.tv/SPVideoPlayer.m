@@ -77,12 +77,21 @@
     [super viewDidAppear:animated];
     
     // Add indicator
-    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-    self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
-    self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    self.indicator.hidesWhenStopped = YES;
-    [self.indicator startAnimating];
-    [self.view addSubview:self.indicator];
+    
+    if ( self.videoReel.categoryType != CategoryType_Cached ) {
+        
+        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
+        self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
+        self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        self.indicator.hidesWhenStopped = YES;
+        [self.indicator startAnimating];
+        [self.view addSubview:self.indicator];
+        
+    } else {
+        
+        // No Indicator needed
+        
+    }
     
 }
 
@@ -300,17 +309,7 @@
     CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSManagedObjectContext *context = [utility context];
     self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.indicator stopAnimating];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
-    
-    DLog(@"%@", contents);
-    DLog(@"%@", _videoFrame.video.cachedURL);
-    
+
     NSURL *url = [[NSURL alloc] initFileURLWithPath:_videoFrame.video.cachedURL];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:url];
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];

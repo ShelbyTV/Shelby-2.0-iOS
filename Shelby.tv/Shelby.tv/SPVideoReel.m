@@ -16,7 +16,6 @@
 @interface SPVideoReel ()
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
-@property (assign, nonatomic) CategoryType categoryType;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (strong, nonatomic) NSMutableArray *itemViews;

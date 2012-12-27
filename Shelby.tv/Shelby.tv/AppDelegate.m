@@ -188,7 +188,9 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    
+    NSURL *applicationDocumentsDirectory = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     
     NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:@"Shelby.tv.sqlite"];
     
@@ -199,7 +201,7 @@
     if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
     {
         // Delete datastore if there's a conflict. User can re-login to repopulate the datastore.
-        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+        [fileManager removeItemAtURL:storeURL error:nil];
         
         // Retry
         if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
