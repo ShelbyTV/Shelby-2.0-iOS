@@ -132,7 +132,7 @@ static SPCacheUtility *sharedInstance = nil;
                     // Change text on downloadButton and make sure button stays disabled
                     [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
                     [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-                    [self.overlayView.downloadButton addTarget:self action:@selector(removeVideoFrameFromCache) forControlEvents:UIControlEventTouchUpInside];
+                    [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
                     
                 }
                 
@@ -150,7 +150,7 @@ static SPCacheUtility *sharedInstance = nil;
     self.overlayView = videoReel.overlayView;
     
     // Reference Filename
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreVideoInCache];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
     NSManagedObjectContext *context = [dataUtility context];
     self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
     NSString *storedFilename = [NSString stringWithFormat:@"%@-%@.mp4", _videoFrame.video.providerID, _videoFrame.video.title];
@@ -161,6 +161,8 @@ static SPCacheUtility *sharedInstance = nil;
     NSString *path = [documentsDirectory stringByAppendingPathComponent:storedFilename];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
+    
+    DLog(@"%@", contents);
     
     for (NSString *string in contents) {
 
@@ -179,9 +181,9 @@ static SPCacheUtility *sharedInstance = nil;
                 if ( self.videoPlayer == self.videoReel.currentVideoPlayer ) { // If the currently displayed video is the one being downloaded
                     
                     // Change text on downloadButton and make sure button stays disabled
-                    [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
+                    [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
                     [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-                    [self.overlayView.downloadButton addTarget:self action:@selector(removeVideoFrameFromCache) forControlEvents:UIControlEventTouchUpInside];
+                    [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
                     
                 }
                 

@@ -523,9 +523,6 @@
     
     for ( SPVideoPlayer *player in _videoPlayers ) {
         
-        // Pause and stop residual video playback
-        [player pause];
-        
         // Check if videos are being downloaded
         if ( YES == player.isDownloading ) {
             
@@ -540,6 +537,9 @@
             return;
             
         }
+        
+        // Pause and stop residual video playback
+        [player pause];
         
     }
     
