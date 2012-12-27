@@ -194,6 +194,7 @@
 						<string key="NSFrame">{{519, 551}, {505, 217}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="290922202"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -346,7 +347,7 @@
 					<object class="IBUIButton" id="679135398">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 11}, {59, 59}}</string>
+						<string key="NSFrame">{{15, 14}, {47, 47}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1051778690"/>
@@ -371,7 +372,7 @@
 					<object class="IBUILabel" id="1051778690">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{372, 13}, {281, 57}}</string>
+						<string key="NSFrame">{{372, 9}, {281, 57}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1010747803"/>
@@ -442,7 +443,7 @@
 					<object class="IBUIButton" id="1010747803">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{883, 11}, {121, 44}}</string>
+						<string key="NSFrame">{{957, 14}, {47, 47}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="883161448"/>
@@ -451,14 +452,16 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Download</string>
 						<reference key="IBUIHighlightedTitleColor" ref="290406982"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="621291759"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">downloadButtonCache.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="766121361"/>
 						<reference key="IBUIFont" ref="619963121"/>
 					</object>
@@ -696,9 +699,7 @@
 							<reference ref="992062704"/>
 							<reference ref="995945933"/>
 							<reference ref="883161448"/>
-							<reference ref="1051778690"/>
 							<reference ref="903081563"/>
-							<reference ref="679135398"/>
 							<reference ref="626961961"/>
 							<reference ref="627050986"/>
 							<reference ref="931931926"/>
@@ -708,9 +709,11 @@
 							<reference ref="756358227"/>
 							<reference ref="973182751"/>
 							<reference ref="653716736"/>
-							<reference ref="1010747803"/>
 							<reference ref="181245343"/>
 							<reference ref="579414753"/>
+							<reference ref="1051778690"/>
+							<reference ref="679135398"/>
+							<reference ref="1010747803"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1024,7 +1027,8 @@
 			<string key="actionButton.png">{40, 41}</string>
 			<string key="airplayButtonOff.png">{38, 26}</string>
 			<string key="divider.png">{488, 2}</string>
-			<string key="homeButton.png">{59, 59}</string>
+			<string key="downloadButtonCache.png">{47, 47}</string>
+			<string key="homeButton.png">{47, 47}</string>
 			<string key="infoPanel.png">{519, 197}</string>
 			<string key="infoPanelIconPlaceholder.png">{38, 38}</string>
 			<string key="playButton.png">{26, 29}</string>

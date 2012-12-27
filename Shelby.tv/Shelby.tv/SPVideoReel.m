@@ -391,19 +391,19 @@
             
             [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
             [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
-            [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
         
         } else if ( _currentVideoPlayer.isDownloading ) { // NOT Cached, BUT currently being downloaded to Cache
             
             [self.overlayView.downloadButton setEnabled:NO];
             [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton setTitle:@"Caching..." forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
             
         } else { // NOT Cached and NOT Downloading
             
             [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
             [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
-            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
             
         }
     

@@ -345,13 +345,13 @@
         
         [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
         [self.overlayView.downloadButton addTarget:self action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
-        [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
+        [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
         
-    } else { // Not Cached
+    } else { // Not Cached (this condition should never be entered)
         
         [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
         [self.overlayView.downloadButton addTarget:self action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
-        [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+        [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
         
     }
     
@@ -417,19 +417,19 @@
             
             [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
             [self.overlayView.downloadButton addTarget:self action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
-            [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
             
         } else if ( self.isDownloading ) { // Not Cached
             
             [self.overlayView.downloadButton setEnabled:NO];
             [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton setTitle:@"Caching..." forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
             
         } else { // Not Cached
             
             [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
             [self.overlayView.downloadButton addTarget:self action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
-            [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
             
         }
         
