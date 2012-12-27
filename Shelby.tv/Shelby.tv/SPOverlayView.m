@@ -61,6 +61,7 @@
     [self.scrubberTimeLabel setFont:[UIFont fontWithName:@"Arial" size:self.scrubberTimeLabel.font.pointSize]];
     [self.scrubberTimeLabel setTextColor:kColorWhite];
     
+    [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.videoTitleLabel.font.pointSize]];
     [self.nicknameLabel setTextColor:kColorBlack];
     
     [self.videoCaptionLabel setTextColor:kColorBlack];
