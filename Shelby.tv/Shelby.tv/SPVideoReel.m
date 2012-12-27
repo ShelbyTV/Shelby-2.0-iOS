@@ -441,13 +441,21 @@
         
     }
     
-    // Load current and next 3 videos
-    if ( 0 < [self.videoPlayers count] ) {
-        [[SPVideoExtractor sharedInstance] emptyQueue];
-        [self extractVideoForVideoPlayer:position]; // Load video for current visible view
-        if ( position + 1 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
-        if ( position + 2 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
-        if ( position + 3 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
+    if ( self.categoryType == CategoryType_Cached ) {
+        
+        [self.currentVideoPlayer performSelectorOnMainThread:@selector(loadFromCache) withObject:nil waitUntilDone:YES];
+        
+    } else {
+        
+        // Load current and next 3 videos
+        if ( 0 < [self.videoPlayers count] ) {
+            [[SPVideoExtractor sharedInstance] emptyQueue];
+            [self extractVideoForVideoPlayer:position]; // Load video for current visible view
+            if ( position + 1 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
+            if ( position + 2 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
+            if ( position + 3 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
+        }
+        
     }
     
 }

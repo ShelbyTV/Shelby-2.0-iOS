@@ -116,7 +116,8 @@
         NSError *error = nil;
         Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
         
-        DLog(@"Cache Add Error: %@", error);
+        if ( error )
+            DLog(@"Cache Add Error: %@", error);
         
         [[SPCacheUtility sharedInstance] addVideoFrame:videoFrame fromVideoPlayer:self inOverlay:_overlayView];
    
@@ -133,7 +134,9 @@
         NSError *error = nil;
         Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
         
-        DLog(@"Cache Remove Error: %@", error);
+        if ( error )
+            DLog(@"Cache Remove Error: %@", error);
+        
         [[SPCacheUtility sharedInstance] removeVideoFrame:videoFrame fromVideoPlayer:self inOverlay:_overlayView];
    
     });
@@ -292,6 +295,79 @@
 }
 
 #pragma mark - Video Loading Methods
+- (void)loadFromCache
+{
+    CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    NSManagedObjectContext *context = [utility context];
+    self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.indicator stopAnimating];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
+    
+    DLog(@"%@", contents);
+    DLog(@"%@", _videoFrame.video.cachedURL);
+    
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:_videoFrame.video.cachedURL];
+    AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:url];
+    self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+    
+    // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
+    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
+    self.playerLayer.frame = modifiedFrame;
+    self.playerLayer.bounds = modifiedFrame;
+    [self.view.layer addSublayer:self.playerLayer];
+    
+    // Set isPlayable Flag
+    [self setIsPlayable:YES];
+    [self.overlayView.restartPlaybackButton setHidden:YES];
+    [self.overlayView.playButton setEnabled:YES];
+    [self.overlayView.airPlayButton setEnabled:YES];
+    [self.overlayView.scrubber setEnabled:YES];
+    [self setupScrubber];
+    
+    // Add Observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemDidFinishPlaying:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:playerItem];
+    
+    // Configure downloadButton
+    [self.overlayView.downloadButton setHidden:NO];
+    [self.overlayView.downloadButton setEnabled:YES];
+    
+    if ( _videoFrame.isCached ) { // Cached
+        
+        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+        [self.overlayView.downloadButton addTarget:self action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
+        [self.overlayView.downloadButton setTitle:@"Remove" forState:UIControlStateNormal];
+        
+    } else { // Not Cached
+        
+        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+        [self.overlayView.downloadButton addTarget:self action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
+        [self.overlayView.downloadButton setTitle:@"Download" forState:UIControlStateNormal];
+        
+    }
+    
+    // Toggle video playback
+    if ( self == _videoReel.currentVideoPlayer ) { // Start AVPlayer object in 'play' mode
+        
+        [self play];
+        
+    } else {
+        
+        [self.player pause];
+        
+    }
+
+    
+}
+
 - (void)loadVideo:(NSNotification*)notification
 {
 

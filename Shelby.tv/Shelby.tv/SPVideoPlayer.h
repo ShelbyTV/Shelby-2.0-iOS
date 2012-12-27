@@ -32,6 +32,7 @@
 - (void)pause;
 - (void)airPlay;
 - (void)share;
+- (void)loadFromCache;
 
 /// Video Scrubber
 - (CMTime)elapsedDuration;
