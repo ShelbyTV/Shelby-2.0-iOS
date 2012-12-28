@@ -513,17 +513,26 @@
 {
     if ( self.overlayView.alpha < 1.0f ) {
         
-        [UIView animateWithDuration:0.5f animations:^{
-            [self.overlayView setAlpha:1.0f];
-        }];
+        [self showOverlay];
         
     } else {
         
-        [UIView animateWithDuration:0.5f animations:^{
-            [self.overlayView setAlpha:0.0f];
-        }];
-        
+        [self hideOverlay];
     }
+}
+
+- (void)showOverlay
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.overlayView setAlpha:1.0f];
+    }];
+}
+
+- (void)hideOverlay
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.overlayView setAlpha:0.0f];
+    }];
 }
 
 #pragma mark - Action Methods

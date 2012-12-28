@@ -19,6 +19,7 @@
 @property (strong, nonatomic) SPOverlayView *overlayView;
 @property (strong, nonatomic) SPVideoReel *videoReel;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
+@property (strong, nonatomic) NSTimer *overlayTimer;
 
 - (void)loadVideo:(NSNotification*)notification;
 - (void)itemDidFinishPlaying:(NSNotification*)notification;
@@ -38,6 +39,7 @@
 @synthesize playbackFinished = _playbackFinished;
 @synthesize isPlayable = _isPlayable;
 @synthesize isDownloading = _isDownloading;
+@synthesize overlayTimer = _overlayTimer;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
@@ -212,6 +214,7 @@
 
 - (void)play
 {
+    // Play video and update UI
     [self.player play];
     [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
     [self.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
@@ -220,6 +223,11 @@
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
     
+    // Add ovelray tot oggle 
+    if ( ![_overlayTimer isValid] )
+        self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
+    
+    // Add downloadButton if user is admin
     if ( YES == [user.admin boolValue] )
         [self setupDownloadButton];
 
@@ -227,6 +235,7 @@
 
 - (void)pause
 {
+    // Pause video and update UI
     [self.player pause];
     [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
     [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
@@ -498,6 +507,22 @@
         [self.videoReel.currentVideoPlayer play];
         
     }    
+}
+
+#pragma mark - UIResponder Methods
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.overlayTimer invalidate];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.overlayTimer invalidate];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
 }
 
 @end

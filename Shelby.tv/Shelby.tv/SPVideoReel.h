@@ -29,6 +29,8 @@
 /// Update UI and perform new extractions when videoScrollView or _overlay.videoList ScrollView is scrolled
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
 - (void)toggleOverlay;
+- (void)showOverlay;
+- (void)hideOverlay;
 
 /// UI Actions
 - (IBAction)homeButtonAction:(id)sender;
