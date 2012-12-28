@@ -521,28 +521,47 @@
 - (IBAction)homeButtonAction:(id)sender
 {
     
-    for ( SPVideoPlayer *player in _videoPlayers ) {
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    
+    if ( YES == [user.admin boolValue] ) {
         
-        // Check if videos are being downloaded
-        if ( YES == player.isDownloading ) {
+        for ( SPVideoPlayer *player in _videoPlayers ) {
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                message:@"You are still downloading at least one video, so it wouldn't be wise to dismiss this instance of SPVideoReel."
-                                                               delegate:self
-                                                      cancelButtonTitle:@"Dismiss"
-                                                      otherButtonTitles:nil, nil];
-            
-            [alertView show];
-            
-            return;
+            // Check if videos are being downloaded
+            if ( YES == player.isDownloading ) {
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                    message:@"You are downloading at least one video, so it wouldn't be wise to dismiss this instance of SPVideoReel."
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"Dismiss"
+                                                          otherButtonTitles:nil, nil];
+                
+                [alertView show];
+                
+                return;
+                
+            } else {
+                
+                // Pause and stop residual video playback
+                [player pause];
+                
+            }
             
         }
         
-        // Pause and stop residual video playback
-        [player pause];
+    } else {
+        
+        for ( SPVideoPlayer *player in _videoPlayers ) {
+            
+            // Pause and stop residual video playback
+            [player pause];
+        
+        }
         
     }
     
+
     [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
     [self.videoPlayers removeAllObjects];
     [self.videoFrames removeAllObjects];
@@ -550,7 +569,7 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    DLog(@"%@ Reel Dismissed", _categoryTitle);
+    DLog(@"%@ - Reel Dismissed", _categoryTitle);
 }
 
 - (IBAction)playButtonAction:(id)sender
