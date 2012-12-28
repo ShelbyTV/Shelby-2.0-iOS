@@ -75,6 +75,7 @@
     
     // Customize Dowload button
     [self.downloadButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.downloadButton.titleLabel.font.pointSize]];
+    [self.downloadButton setHidden:YES];
 }
 
 #pragma mark - UIView Overridden Methods

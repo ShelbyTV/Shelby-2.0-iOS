@@ -382,38 +382,47 @@
                           withPlaceholderView:infoPanelIconPlaceholderView];
     
     // Configure downloadButton
-    if ( self.currentVideoPlayer.isPlayable ) { // Video extracted and is playable
-        
-        [self.overlayView.downloadButton setHidden:NO];
-        [self.overlayView.downloadButton setEnabled:YES];
-        
-        if ( videoFrame.isCached ) { // Cached
-            
-            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
-            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
-        
-        } else if ( _currentVideoPlayer.isDownloading ) { // NOT Cached, BUT currently being downloaded to Cache
-            
-            [self.overlayView.downloadButton setEnabled:NO];
-            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
-            
-        } else { // NOT Cached and NOT Downloading
-            
-            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
-            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
-            
-        }
+//    User *user = [dataUtility fetchUser];
+//    
+//    if ( YES == [user.admin boolValue] ) {
+//        
+//        if ( self.currentVideoPlayer.isPlayable ) { // Video extracted and is playable
+//            
+//            [self.overlayView.downloadButton setHidden:NO];
+//            [self.overlayView.downloadButton setEnabled:YES];
+//            
+//            
+//            
+//            if ( videoFrame.isCached ) { // Cached
+//                
+//                [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+//                [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
+//                [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
+//                
+//            } else if ( _currentVideoPlayer.isDownloading ) { // NOT Cached, BUT currently being downloaded to Cache
+//                
+//                [self.overlayView.downloadButton setEnabled:NO];
+//                [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+//                [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
+//                
+//            } else { // NOT Cached and NOT Downloading
+//                
+//                [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+//                [self.overlayView.downloadButton addTarget:_currentVideoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
+//                [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
+//                
+//            }
+//            
+//        } else { // Video NOT extracted and NOT playable
+//            
+//            [self.overlayView.downloadButton setHidden:YES];
+//            [self.overlayView.downloadButton setEnabled:YES];
+//            
+//        }
+//        
+//    }
     
-    } else { // Video NOT extracted and NOT playable
         
-        [self.overlayView.downloadButton setHidden:YES];
-        [self.overlayView.downloadButton setEnabled:YES];
-
-    }
-    
     // Update videoListScrollView (if _itemViews is initialized)
     if ( 0 < [self.itemViews count] ) {
         
