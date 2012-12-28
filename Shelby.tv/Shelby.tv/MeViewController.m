@@ -73,9 +73,12 @@
         
         if ( YES == [user.admin boolValue] ) {
             
+            NSMutableArray *videoFrames = [dataUtility fetchCachedEntries];
+            
             [self.cachedButton setHidden:NO];
             [self.cachedButton addTarget:self action:@selector(launchPlayerWithCachedEntries) forControlEvents:UIControlEventTouchUpInside];
             [self.cachedButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.cachedButton.titleLabel.font.pointSize]];
+            [self.cachedButton setTitle:[NSString stringWithFormat:@"Cache (%d)", [videoFrames count]] forState:UIControlStateNormal];
             
         }
     }
