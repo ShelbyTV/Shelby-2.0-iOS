@@ -21,6 +21,7 @@
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 @property (strong, nonatomic) NSTimer *overlayTimer;
 
+
 - (void)loadVideo:(NSNotification*)notification;
 - (void)itemDidFinishPlaying:(NSNotification*)notification;
 - (NSString*)convertElapsedTime:(double)currentTime andDuration:(double)duration;
@@ -38,6 +39,7 @@
 @synthesize sharePopOverController = _sharePopOverController;
 @synthesize playbackFinished = _playbackFinished;
 @synthesize isPlayable = _isPlayable;
+@synthesize isPlaying = _isPlaying;
 @synthesize isDownloading = _isDownloading;
 @synthesize overlayTimer = _overlayTimer;
 
@@ -69,6 +71,7 @@
         [self setVideoReel:videoReel];
         [self setPlaybackFinished:NO];
         [self setIsPlayable:NO];
+        [self setIsPlaying:NO];
         [self setIsDownloading:NO];
         
     }
@@ -230,6 +233,9 @@
     // Add downloadButton if user is admin
     if ( YES == [user.admin boolValue] )
         [self setupDownloadButton];
+    
+    // Set Flag
+    [self setIsPlaying:YES];
 
 }
 
@@ -239,6 +245,9 @@
     [self.player pause];
     [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
     [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+
+    // Set Flag
+    [self setIsPlaying:NO];
 }
 
 - (void)airPlay
@@ -480,6 +489,7 @@
 
     if ( self.player.currentItem == notification.object && ![self playbackFinished]) {
         
+        // Show Restart Button
         [self setPlaybackFinished:YES];
         [self.overlayView.restartPlaybackButton setHidden:NO];
         

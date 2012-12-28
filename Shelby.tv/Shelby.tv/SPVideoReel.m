@@ -618,6 +618,7 @@
 
 - (IBAction)endScrubbing:(id)sender
 {
+    
 	if ( !_scrubberTimeObserver ) {
 		
         CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
@@ -634,9 +635,13 @@
 			_scrubberTimeObserver = [self.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
                                                                                                   queue:NULL
                                                                                              usingBlock:^(CMTime time) {
+                            
+                            // Sync the scrubber to the currentVideoPlayer
+                            [blockSelf.currentVideoPlayer syncScrubber];
+                            
+                            // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
+                            ( self.currentVideoPlayer.isPlaying ) ? [self.currentVideoPlayer play] : [self.currentVideoPlayer pause];
                                                                                                  
-                                                                                                 [blockSelf.currentVideoPlayer syncScrubber];
-                                                                                                 [self.currentVideoPlayer play];
                               }];
 		
         }

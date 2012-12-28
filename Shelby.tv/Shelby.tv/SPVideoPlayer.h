@@ -15,6 +15,7 @@
 @property (assign, nonatomic) BOOL isPlayable;
 @property (assign, nonatomic) BOOL isDownloading;
 @property (assign, nonatomic) BOOL playbackFinished;
+@property (assign, nonatomic) BOOL isPlaying;
 
 - (id)initWithBounds:(CGRect)bounds
        forVideoFrame:(Frame*)videoFrame
