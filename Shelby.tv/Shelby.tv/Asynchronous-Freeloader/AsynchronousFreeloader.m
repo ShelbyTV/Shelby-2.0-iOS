@@ -58,7 +58,7 @@
             
             // Load image from disk
             dispatch_async(dispatch_get_main_queue(), ^{
-                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.contentMode = UIViewContentModeCenter;
                 imageView.clipsToBounds = YES;
                 imageView.image = [UIImage imageWithContentsOfFile:[[cache objectForKey:AsynchronousFreeloaderCachePaths] valueForKey:link]];
             });
@@ -342,7 +342,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         // Update imageView on Main Thread
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.contentMode = UIViewContentModeCenter;
         imageView.clipsToBounds = YES;
         imageView.image = [UIImage imageWithData:data];
     

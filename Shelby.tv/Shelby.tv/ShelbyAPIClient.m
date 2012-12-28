@@ -29,6 +29,9 @@
             // Empty Existing Video Cache (if one exists)
             [[SPCacheUtility sharedInstance] emptyCache];
             
+            // Empty Existing Video Cache
+            [AsynchronousFreeloader removeAllImages];
+            
             // Store User Data
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
             [dataUtility storeUser:JSON];
