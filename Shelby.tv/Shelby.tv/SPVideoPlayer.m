@@ -459,6 +459,7 @@
         [self.overlayView.scrubber setEnabled:YES];
         [self setupScrubber];
         
+        // Add Gesture Recognizer
         UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback)];
         [togglePlaybackGesuture setNumberOfTapsRequired:2];
         [self.view addGestureRecognizer:togglePlaybackGesuture];
@@ -478,16 +479,8 @@
             [self setupDownloadButton];
         
         // Toggle video playback
-        if ( self == _videoReel.currentVideoPlayer ) { // Start AVPlayer object in 'play' mode
-            
-            [self play];
-            
-        } else {
-
-            [self.player pause];
+        ( self == _videoReel.currentVideoPlayer ) ? [self play] :[self.player pause];
         
-        }
-    
     }
 }
 
