@@ -16,6 +16,7 @@
 @property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (strong, nonatomic) id scrubberTimeObserver;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
+@property (strong, nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (strong, nonatomic) SPOverlayView *overlayView;
 @property (assign, nonatomic) CategoryType categoryType;

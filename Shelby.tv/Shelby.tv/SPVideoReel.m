@@ -37,6 +37,7 @@
 
 @implementation SPVideoReel
 @synthesize appDelegate = _appDelegate;
+@synthesize toggleOverlayGesuture = _toggleOverlayGesuture;
 @synthesize categoryType = _categoryType;
 @synthesize videoFrames = _videoFrames;
 @synthesize videoPlayers = _videoPlayers;
@@ -130,9 +131,9 @@
     [_overlayView.categoryTitleLabel setText:self.categoryTitle];
     [self.view addSubview:_overlayView];
     
-    UITapGestureRecognizer *toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOverlay)];
-    [toggleOverlayGesuture setNumberOfTapsRequired:1];
-    [self.view addGestureRecognizer:toggleOverlayGesuture];
+    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOverlay)];
+    [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
+    [self.view addGestureRecognizer:_toggleOverlayGesuture];
     
     UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];

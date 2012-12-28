@@ -191,6 +191,7 @@
 #pragma mark - Video Playback Methods
 - (void)togglePlayback
 {
+    DLog(@"TOGGLE PLAYBACK");
     if ( 0.0 == self.player.rate && _isPlayable ) { // Play
         
         [self play];
@@ -457,6 +458,12 @@
         [self.overlayView.airPlayButton setEnabled:YES];
         [self.overlayView.scrubber setEnabled:YES];
         [self setupScrubber];
+        
+        UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback)];
+        [togglePlaybackGesuture setNumberOfTapsRequired:2];
+        [self.view addGestureRecognizer:togglePlaybackGesuture];
+        
+        [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
         
         // Add Observers
         [[NSNotificationCenter defaultCenter] addObserver:self
