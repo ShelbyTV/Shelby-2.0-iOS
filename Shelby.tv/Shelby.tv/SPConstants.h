@@ -10,3 +10,4 @@
 #define kSPCurrentVideo             @"Current Video"
 #define kSPUserDidScrollToUpdate    @"User Did Scroll To Update"
 #define kSPVideoShareLink           @"http://shelby.tv/roll/%@/frame/%@"
+#define kSPCurrentVideoStreamID     @"Stream Current Video"

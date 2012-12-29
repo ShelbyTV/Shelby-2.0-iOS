@@ -11,7 +11,6 @@
 		8E09174D168536D400503EF9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E09174C168536D400503EF9 /* Icon@2x.png */; };
 		8E09174F168536DA00503EF9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E09174E168536DA00503EF9 /* Icon.png */; };
 		8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */; };
-		8E1018821686695D009698B3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8E10187E1686695D009698B3 /* .gitignore */; };
 		8E1018831686695D009698B3 /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018801686695D009698B3 /* AsynchronousFreeloader.m */; };
 		8E1018841686695D009698B3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E1018811686695D009698B3 /* README.md */; };
 		8E10189A1686696B009698B3 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018881686696B009698B3 /* AFHTTPClient.m */; };
@@ -115,7 +114,6 @@
 		8E09174C168536D400503EF9 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		8E09174E168536DA00503EF9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		8E0E7037163869F100BA0A24 /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
-		8E10187E1686695D009698B3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8E10187F1686695D009698B3 /* AsynchronousFreeloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousFreeloader.h; sourceTree = "<group>"; };
 		8E1018801686695D009698B3 /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
 		8E1018811686695D009698B3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -316,7 +314,6 @@
 		8E10187D1686695D009698B3 /* Asynchronous-Freeloader */ = {
 			isa = PBXGroup;
 			children = (
-				8E10187E1686695D009698B3 /* .gitignore */,
 				8E10187F1686695D009698B3 /* AsynchronousFreeloader.h */,
 				8E1018801686695D009698B3 /* AsynchronousFreeloader.m */,
 				8E1018811686695D009698B3 /* README.md */,
@@ -678,7 +675,6 @@
 				8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */,
 				8E09174D168536D400503EF9 /* Icon@2x.png in Resources */,
 				8E09174F168536DA00503EF9 /* Icon.png in Resources */,
-				8E1018821686695D009698B3 /* .gitignore in Resources */,
 				8E1018841686695D009698B3 /* README.md in Resources */,
 				8E4980AD1688C556007AF267 /* tempLogo.png in Resources */,
 				8E4980AE1688C556007AF267 /* tempLogo@2x.png in Resources */,

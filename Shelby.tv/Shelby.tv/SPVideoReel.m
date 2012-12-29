@@ -145,7 +145,7 @@
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
         Frame *videoFrame = [self.videoFrames objectAtIndex:i];
-        
+
         CGRect viewframe = self.videoScrollView.frame;
         viewframe.origin.x = viewframe.size.width * i;
         viewframe.origin.y = 0.0f;
@@ -157,19 +157,39 @@
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
         [self.videoScrollView setNeedsDisplay];
-    
+
+        
     }
 
-    // Begin setup
-    self.currentVideo = 0;
-    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
-    
-    /*
-     Update UI and begin video extraction
-     This method must be called after the 'for loop', since it depends on the existence of the first four SPVideoPlayer's
-     */
-    [self currentVideoDidChangeToVideo:0];
-    
+    // If not stream, play video in zeroeth position
+    if ( self.categoryType != CategoryType_Stream ) {
+        
+        self.currentVideo = 0;
+        self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
+        [self currentVideoDidChangeToVideo:_currentVideo];
+        
+        
+    } else {
+        
+        self.currentVideo = 0;
+        self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
+        
+        for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
+            
+            Frame *videoFrame = [self.videoFrames objectAtIndex:i];
+            NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kSPCurrentVideoStreamID];
+            
+            if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
+             
+                self.currentVideo = i;
+                self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
+                
+            }
+        }
+        
+        [self currentVideoDidChangeToVideo:_currentVideo];
+        
+    }
 }
 
 - (void)setupVideoListScrollView
@@ -178,7 +198,6 @@
     CGFloat itemViewWidth = [SPVideoItemView width];
     self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_numberOfVideos, 217.0f);
     self.overlayView.videoListScrollView.delegate = self;
-    
     
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
@@ -200,17 +219,31 @@
         [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:videoListThumbnailPlaceholderView];
         [itemView setTag:i];
         
-        if ( 0 == i ) {
-            itemView.backgroundColor = kColorBlue;
-            itemView.videoTitleLabel.textColor = [UIColor whiteColor];
-        }
-        
         [self.itemViews addObject:itemView];
         [self.overlayView.videoListScrollView addSubview:itemView];
         [self.overlayView.videoListScrollView setNeedsDisplay];
         
     }
+
     
+    // Add visual selected state (e.g., blue background, white text) to currentVideo
+    SPVideoItemView *itemView = [self.itemViews objectAtIndex:_currentVideo];
+    itemView.backgroundColor = kColorBlue;
+    itemView.videoTitleLabel.textColor = [UIColor whiteColor];
+
+    // Scroll To currentVideo if self.currentVideo != 0
+    if ( 0 != _currentVideo) {
+        
+        CGFloat x = self.videoScrollView.frame.size.width * _currentVideo;
+        CGFloat y = self.videoScrollView.contentOffset.y;
+        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+        
+        CGFloat itemViewX = itemView.frame.size.width * (_currentVideo-1);
+        CGFloat itemViewY = self.overlayView.videoListScrollView.contentOffset.y;
+        [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
+        
+    }
+
 }
 
 #pragma mark - UI and DataSource Manipulation
@@ -329,6 +362,19 @@
     // Reset currentVideoPlayer reference after scrolling has finished
     self.currentVideo = position;
     self.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
+    
+    // If videoReel is instance of Stream, store currentVideoID
+    if ( self.categoryType == CategoryType_Stream ) {
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        NSManagedObjectContext *context = [dataUtility context];
+        NSManagedObjectID *videoFrameObjectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
+        Frame *videoFrame = (Frame*)[context existingObjectWithID:videoFrameObjectID error:nil];
+     
+        [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+    }
     
     // Deal with playback of current and previous video
     if ( [self.currentVideoPlayer isPlayable] ) { // If video is loaded and playable
