@@ -161,13 +161,18 @@
         NSError *error = nil;
         Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
         
-        if ( error )
+        if ( error ) {
+            
             DLog(@"Cache Add Error: %@", error);
+            
+        } else {
+            
+            SPCacheUtility *cacheUtility = [[SPCacheUtility alloc] init];
+            [cacheUtility addVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
+            
+        }
         
-        [[SPCacheUtility sharedInstance] addVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
-   
     });
-
 }
 
 - (void)removeFromCache
@@ -179,11 +184,17 @@
         NSError *error = nil;
         Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
         
-        if ( error )
-            DLog(@"Cache Remove Error: %@", error);
+        if ( error ) {
+            
+            DLog(@"Cache Add Error: %@", error);
+            
+        } else {
+            
+            SPCacheUtility *cacheUtility = [[SPCacheUtility alloc] init];
+            [cacheUtility removeVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
+            
+        }
         
-        [[SPCacheUtility sharedInstance] removeVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
-   
     });
     
 }

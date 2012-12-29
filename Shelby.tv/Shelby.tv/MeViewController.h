@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
+@class SPVideoReel;
+
 @interface MeViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *streamButton;
@@ -14,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cachedButton;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+
+- (void)dismissVideoReel:(SPVideoReel*)reel;
 
 @end

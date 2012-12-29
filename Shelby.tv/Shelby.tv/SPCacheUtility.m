@@ -26,28 +26,26 @@
 @synthesize videoPlayer = _videoPlayer;
 @synthesize videoReel = _videoReel;
 
-#pragma mark - Singleton Methods
-static SPCacheUtility *sharedInstance = nil;
-
-+ (SPCacheUtility *)sharedInstance
+#pragma mark - Public Class Methods
++ (void)emptyCache
 {
-    if (sharedInstance == nil) {
-        sharedInstance = [[super allocWithZone:NULL] init];
+    // Reference Cache Path
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
+    
+    for (NSString *string in contents) {
+        
+        NSString *path = [documentsDirectory stringByAppendingPathComponent:string];
+        [fileManager removeItemAtPath:path error:nil];
+        
     }
-    return sharedInstance;
+    
+    DLog(@"Emptyed Cached Videos");
 }
 
-+ (id)allocWithZone:(NSZone *)zone
-{
-    return [self sharedInstance];
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
-#pragma mark - Public Methods
+#pragma mark - Public Instance Methods
 - (void)addVideoFrame:(Frame *)videoFrame fromVideoPlayer:(SPVideoPlayer *)videoPlayer inReel:(SPVideoReel *)videoReel
 {
     
@@ -197,24 +195,6 @@ static SPCacheUtility *sharedInstance = nil;
         
     }
     
-}
-
-- (void)emptyCache
-{
-    // Reference Cache Path
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
-    
-    for (NSString *string in contents) {
-   
-        NSString *path = [documentsDirectory stringByAppendingPathComponent:string];
-        [fileManager removeItemAtPath:path error:nil];
-        
-    }
-
-    DLog(@"Emptyed Cached Videos");
 }
 
 @end

@@ -12,8 +12,6 @@
 
 - (void)addVideoFrame:(Frame*)videoFrame fromVideoPlayer:(SPVideoPlayer*)videoPlayer inReel:(SPVideoReel*)videoReel;
 - (void)removeVideoFrame:(Frame*)videoFrame fromVideoPlayer:(SPVideoPlayer*)videoPlayer inReel:(SPVideoReel*)videoReel;
-- (void)emptyCache;
-
-+ (SPCacheUtility*)sharedInstance;
++ (void)emptyCache;
 
 @end

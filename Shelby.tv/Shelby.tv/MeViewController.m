@@ -82,7 +82,6 @@
             
         }
     }
-
 }
 
 #pragma mark - Private Methods
@@ -181,6 +180,17 @@
         
     }
     
+}
+
+- (void)dismissVideoReel:(SPVideoReel*)reel
+{
+    [reel dismissViewControllerAnimated:YES completion:^{
+        
+        DLog(@"%@", [self childViewControllers]);
+        DLog(@"Reel Dismissed");
+        
+    }];
+
 }
 
 - (void)logoutButtonAction

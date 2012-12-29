@@ -12,6 +12,7 @@
 #import "SPVideoExtractor.h"
 #import "SPVideoItemView.h"
 #import "SPVideoPlayer.h"
+#import "MeViewController.h"
 
 @interface SPVideoReel ()
 
@@ -592,9 +593,9 @@
     [self.videoFrames removeAllObjects];
     [self setNumberOfVideos:0];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    DLog(@"%@ - Reel Dismissed", _categoryTitle);
+    MeViewController *meViewController = (MeViewController*)self.presentingViewController;
+    [meViewController dismissVideoReel:self];
+
 }
 
 - (IBAction)playButtonAction:(id)sender

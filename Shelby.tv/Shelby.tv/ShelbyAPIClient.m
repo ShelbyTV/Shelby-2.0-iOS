@@ -27,7 +27,7 @@
             [CoreDataUtility dumpAllData];
             
             // Empty Existing Video Cache (if one exists)
-            [[SPCacheUtility sharedInstance] emptyCache];
+            [SPCacheUtility emptyCache];
             
             // Empty Existing Video Cache
             [AsynchronousFreeloader removeAllImages];
