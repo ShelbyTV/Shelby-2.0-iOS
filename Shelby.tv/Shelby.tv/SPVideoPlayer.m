@@ -109,7 +109,6 @@
     [self.overlayView.downloadButton setHidden:NO];
     [self.overlayView.downloadButton setEnabled:YES];
     
-    
     if ( _videoFrame.isCached ) { // Cached
         
         [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
@@ -404,24 +403,6 @@
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
                                                object:playerItem];
     
-    // Configure downloadButton
-    [self.overlayView.downloadButton setHidden:NO];
-    [self.overlayView.downloadButton setEnabled:YES];
-    
-    if ( _videoFrame.isCached ) { // Cached
-        
-        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-        [self.overlayView.downloadButton addTarget:self action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
-        [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
-        
-    } else { // Not Cached (this condition should never be entered)
-        
-        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-        [self.overlayView.downloadButton addTarget:self action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
-        [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
-        
-    }
-    
     // Toggle video playback
     if ( self == _videoReel.currentVideoPlayer ) { // Start AVPlayer object in 'play' mode
         
@@ -482,12 +463,6 @@
                                                  selector:@selector(itemDidFinishPlaying:)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:playerItem];
-
-        // Configure downloadButton
-        User *user = [dataUtility fetchUser];
-        
-        if ( YES == [user.admin boolValue] )
-            [self setupDownloadButton];
         
         // Toggle video playback
         ( self == _videoReel.currentVideoPlayer ) ? [self play] :[self.player pause];
