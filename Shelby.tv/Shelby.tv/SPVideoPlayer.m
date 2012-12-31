@@ -366,7 +366,18 @@
     durationMinutes = (((NSInteger)duration / 60) % 60);
     durationHours = ((NSInteger)duration / 3600);
 
-    convertedTime= [NSString stringWithFormat:@"%.2d:%.2d:%.2d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
+    if ( durationHours > 0 ) {
+        
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
+        
+    } else if ( durationMinutes > 0 ) {
+        
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d / %.2d:%.2d", currentTimeMinutes, currentTimeSeconds, durationMinutes, durationSeconds];
+        
+    } else {
+        
+        convertedTime = [NSString stringWithFormat:@"0:%.2d / 0:%.2d", currentTimeSeconds, durationSeconds];
+    }
     
     return convertedTime;
 }
