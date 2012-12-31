@@ -33,7 +33,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSFileManager *fileManager = [[NSFileManager alloc] init];
-    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:NULL];
     
     for (NSString *string in contents) {
         
@@ -64,11 +64,11 @@
     if ( _videoFrame.video.extractedURL ) {
 
             // Change test on button and disable button
-            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
             [self.overlayView.downloadButton setEnabled:NO];
+            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
             
             // Create videoFilename string
-            NSString *videoFilename = [NSString stringWithFormat:@"%@-%@.mp4", _videoFrame.video.providerID, _videoFrame.video.title];
+            NSString *videoFilename = [NSString stringWithFormat:@"%@-%@.mp4", _videoFrame.frameID, videoFrame.videoID];
             
             // Perform request
             NSURL *requestURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
@@ -141,25 +141,26 @@
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
     NSManagedObjectContext *context = [dataUtility context];
     self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
-    NSString *storedFilename = [NSString stringWithFormat:@"%@-%@.mp4", _videoFrame.video.providerID, _videoFrame.video.title];
+    NSString *storedFilename = [NSString stringWithFormat:@"%@-%@.mp4", _videoFrame.frameID, videoFrame.videoID];
     
     // Reference Cache Path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *path = [documentsDirectory stringByAppendingPathComponent:storedFilename];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:NULL];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:NULL];
+    
+    // Remove video
+    [fileManager removeItemAtPath:path error:nil];
     
     DLog(@"Cached Objects: %@", contents);
     
     for (NSString *string in contents) {
-
+        
         if ( [string isEqualToString:storedFilename] ) {
             
-            [fileManager removeItemAtPath:path error:nil];
-            
             dispatch_async(dispatch_get_main_queue(), ^{
-                
+
                 // Remove path from Core Data
                 CoreDataUtility *syncDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreVideoInCache];
                 NSManagedObjectContext *syncContext = [syncDataUtility context];
@@ -169,18 +170,20 @@
                 syncVideoFrame.isCached = [NSNumber numberWithBool:NO];
                 [dataUtility saveContext:syncContext];
                 
-                if ( self.videoPlayer == self.videoReel.currentVideoPlayer ) { // If the currently displayed video is the one being downloaded
+                // To avoid crashes in Cached Videos SPVideoReel instance, remove the instance once the video is removed from cache.
+                if ( self.videoReel.categoryType == CategoryType_Cached ) {
                     
-                    // Change text on downloadButton and make sure button stays disabled
-                    [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
-                    [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-                    [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
+                    [self.videoReel.currentVideoPlayer pause];
+                    [self.videoReel homeButtonAction:nil];
                     
-                    // To avoid crashes in Cached Videos SPVideoReel instance, remove the instance once the video is removed from cache. 
-                    if ( self.videoReel.categoryType == CategoryType_Cached ) {
+                } else {
+                    
+                    if ( self.videoPlayer == self.videoReel.currentVideoPlayer ) { // If the currently displayed video is the one being downloaded
                         
-                        [self.videoPlayer pause];
-                        [self.videoReel homeButtonAction:nil];
+                        // Change text on downloadButton and make sure button stays disabled
+                        [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
+                        [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+                        [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
                         
                     }
                     

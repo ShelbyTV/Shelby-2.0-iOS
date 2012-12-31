@@ -115,12 +115,6 @@
             [self.overlayView.downloadButton addTarget:self action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
             [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
             
-        } else if ( self.isDownloading ) { // Not Cached
-            
-            [self.overlayView.downloadButton setEnabled:NO];
-            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
-            
         } else { // Not Cached
             
             [self.overlayView.downloadButton setEnabled:YES];
@@ -130,6 +124,14 @@
             
         }
 
+         if ( self.isDownloading ) { // Currently Downloading
+            
+            [self.overlayView.downloadButton setEnabled:NO];
+            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
+
+         }
+        
     } else {
         
         [self.overlayView.downloadButton setHidden:YES];
