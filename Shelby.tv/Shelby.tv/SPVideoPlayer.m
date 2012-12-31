@@ -525,8 +525,14 @@
     [self.overlayTimer invalidate];
 }
 
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.overlayTimer invalidate];
+}
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self.overlayTimer invalidate];
     self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
 }
 
