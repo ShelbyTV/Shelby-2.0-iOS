@@ -137,8 +137,6 @@
     self.videoReel = videoReel;
     self.overlayView = videoReel.overlayView;
     
-    [self.videoPlayer pause];
-    
     // Reference Filename
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
     NSManagedObjectContext *context = [dataUtility context];
@@ -181,6 +179,7 @@
                     // To avoid crashes in Cached Videos SPVideoReel instance, remove the instance once the video is removed from cache. 
                     if ( self.videoReel.categoryType == CategoryType_Cached ) {
                         
+                        [self.videoPlayer pause];
                         [self.videoReel homeButtonAction:nil];
                         
                     }
