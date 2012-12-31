@@ -80,63 +80,49 @@
                 if ( data && !error ) {
                     
                     // Reference Cache Path
-                    NSError *fileManagerError = nil;
                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    NSFileManager *fileManager = [[NSFileManager alloc] init];
                     [fileManager createDirectoryAtPath:[paths objectAtIndex:0]
                            withIntermediateDirectories:YES
                                             attributes:nil
-                                                 error:&fileManagerError];
-                    
-                    if ( fileManagerError ) {
-                        
-                        DLog(@"FileManager Error %@", fileManagerError);
-                    }
+                                                 error:nil];
                     
                     // Write video to path
-                    NSError *fileWriteError = nil;
                     NSString *documentsDirectory = [paths objectAtIndex:0];
                     NSString *path = [documentsDirectory stringByAppendingPathComponent:videoFilename];
                     [data writeToFile:path atomically:YES];
-                    
-                    if ( fileWriteError ) {
+
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         
-                        DLog(@"File Write Error %@", fileWriteError);
-                        [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
+                        CoreDataUtility *syncDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+                        NSManagedObjectContext *syncContext = [syncDataUtility context];
+                        Frame *syncVideoFrame = (Frame*)[syncContext existingObjectWithID:[self.videoFrame objectID] error:nil];
                         
-                    } else {
+                        syncVideoFrame.video.cachedURL = path;
+                        syncVideoFrame.isCached = [NSNumber numberWithBool:YES];
+                        [syncDataUtility saveContext:syncContext];
                         
-                        dispatch_async(dispatch_get_main_queue(), ^{
+                        DLog(@"Video Cached at Location: %@", path);
+                        self.videoPlayer.isDownloading = NO;
+                        
+                        if ( self.videoPlayer == self.videoReel.currentVideoPlayer ) { // If the currently displayed video is the one being downloaded
                             
-                            CoreDataUtility *syncDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
-                            NSManagedObjectContext *syncContext = [syncDataUtility context];
-                            Frame *syncVideoFrame = (Frame*)[syncContext existingObjectWithID:[self.videoFrame objectID] error:nil];
+                            // Change text on downloadButton and make sure button stays disabled
+                            [self.overlayView.downloadButton setEnabled:YES];
+                            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
+                            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+                            [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
                             
-                            syncVideoFrame.video.cachedURL = path;
-                            syncVideoFrame.isCached = [NSNumber numberWithBool:YES];
-                            [syncDataUtility saveContext:syncContext];
-                            
-                            DLog(@"Video Cached at Location: %@", path);
-                            self.videoPlayer.isDownloading = NO;
-                            
-                            if ( self.videoPlayer == self.videoReel.currentVideoPlayer ) { // If the currently displayed video is the one being downloaded
-                                
-                                // Change text on downloadButton and make sure button stays disabled
-                                [self.overlayView.downloadButton setEnabled:YES];
-                                [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
-                                [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-                                [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
-                                
-                                UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-                                localNotification.fireDate = nil;
-                                localNotification.soundName = UILocalNotificationDefaultSoundName;
-                                localNotification.alertAction = @"Finished Downloading Video!";
-                                localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", syncVideoFrame.video.title];
-                                localNotification.hasAction = YES;
-                                [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-                            }
-                        });
-                    }
+                            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+                            localNotification.fireDate = nil;
+                            localNotification.soundName = UILocalNotificationDefaultSoundName;
+                            localNotification.alertAction = @"Finished Downloading Video!";
+                            localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", syncVideoFrame.video.title];
+                            localNotification.hasAction = YES;
+                            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+
+                        };
+                    });
                 }
             }];
     }

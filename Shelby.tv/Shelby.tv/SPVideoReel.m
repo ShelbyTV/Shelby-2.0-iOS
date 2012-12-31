@@ -356,6 +356,9 @@
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
     
+    // Disable timer
+    [self.currentVideoPlayer.overlayTimer invalidate];
+    
     // Pause current videoPlayer
     if ( self.currentVideoPlayer.isPlayable )
         [self.currentVideoPlayer pause];

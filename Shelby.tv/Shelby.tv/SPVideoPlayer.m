@@ -19,8 +19,6 @@
 @property (strong, nonatomic) SPOverlayView *overlayView;
 @property (strong, nonatomic) SPVideoReel *videoReel;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
-@property (strong, nonatomic) NSTimer *overlayTimer;
-
 
 - (void)loadVideo:(NSNotification*)notification;
 - (void)itemDidFinishPlaying:(NSNotification*)notification;
@@ -521,11 +519,6 @@
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.overlayTimer invalidate];
-}
-
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.overlayTimer invalidate];
 }
