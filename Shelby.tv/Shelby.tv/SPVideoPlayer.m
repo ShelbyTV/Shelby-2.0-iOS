@@ -333,14 +333,15 @@
 	}
     
 	double duration = CMTimeGetSeconds(playerDuration);
+    
 	if ( isfinite(duration) ) {
+        
 		float minValue = [self.overlayView.scrubber minimumValue];
 		float maxValue = [self.overlayView.scrubber maximumValue];
 		double currentTime = CMTimeGetSeconds([self.videoReel.currentVideoPlayer.player currentTime]);
 		double duration = CMTimeGetSeconds([self.videoReel.currentVideoPlayer.player.currentItem duration]);
         
 		[self.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
-        
         [self.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
         
 	}
@@ -456,11 +457,16 @@
         
         // Set isPlayable Flag
         [self setIsPlayable:YES];
-        [self.overlayView.restartPlaybackButton setHidden:YES];
-        [self.overlayView.playButton setEnabled:YES];
-        [self.overlayView.airPlayButton setEnabled:YES];
-        [self.overlayView.scrubber setEnabled:YES];
         [self setupScrubber];
+        
+        if ( self == self.videoReel.currentVideoPlayer ) {
+         
+            [self.overlayView.restartPlaybackButton setHidden:YES];
+            [self.overlayView.playButton setEnabled:YES];
+            [self.overlayView.airPlayButton setEnabled:YES];
+            [self.overlayView.scrubber setEnabled:YES];
+            
+        }
         
         // Add Gesture Recognizer
         UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback)];
