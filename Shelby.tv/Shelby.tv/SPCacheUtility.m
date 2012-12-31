@@ -114,7 +114,8 @@
                             [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
                             
                             UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-                            localNotification.fireDate = nil;
+                            UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+                            localNotification.fireDate = [[datePicker date] dateByAddingTimeInterval:60];
                             localNotification.soundName = UILocalNotificationDefaultSoundName;
                             localNotification.alertAction = @"Finished Downloading Video!";
                             localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", syncVideoFrame.video.title];
@@ -135,6 +136,8 @@
     self.videoPlayer = videoPlayer;
     self.videoReel = videoReel;
     self.overlayView = videoReel.overlayView;
+    
+    [self.videoPlayer pause];
     
     // Reference Filename
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];

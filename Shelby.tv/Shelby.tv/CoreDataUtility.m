@@ -365,7 +365,6 @@
     // Execute request that returns array of stream entries
     NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
     
-    // Typecast each entry in streamEntries and place in NSMutableArray object
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
     for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
@@ -408,7 +407,6 @@
     // Execute request that returns array of stream entries
     NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
     
-    // Typecast each entry in streamEntries and place in NSMutableArray object
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
     for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
@@ -452,7 +450,6 @@
     // Execute request that returns array of frames in Queue Roll
     NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
-    // Typecast each entry in streamEntries and place in NSMutableArray object
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
     for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
@@ -497,7 +494,6 @@
     // Execute request that returns array of frames in Queue Roll
     NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
-    // Typecast each entry in streamEntries and place in NSMutableArray object
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
     for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
@@ -542,7 +538,6 @@
     // Execute request that returns array of frames in Personal Roll
     NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
-    // Typecast each entry in streamEntries and place in NSMutableArray object
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
     for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
@@ -587,8 +582,7 @@
     
     // Execute request that returns array of frames in Personal Roll
     NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
-    
-    // Typecast each entry in streamEntries and place in NSMutableArray object
+
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
     for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
@@ -629,7 +623,27 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
-    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    NSMutableArray *frames = [[NSMutableArray alloc] initWithArray:frameResults];
+    
+    if ( [frameResults count] > 40 ) {
+        
+        for (NSUInteger i = [frameResults count]-1; i >= 40; i-- ) {
+            
+            Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+            frame.video.cachedURL = [NSString coreDataNullTest:nil];
+            frame.isCached = [NSNumber numberWithBool:NO];
+            [self saveContext:_context];
+            
+            [frames removeObjectAtIndex:i];
+            
+        }
+        
+    }
+    
+    // Execute request that returns array of frames in Personal Roll
+    return frames;
     
 }
 
