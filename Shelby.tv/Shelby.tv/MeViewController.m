@@ -137,7 +137,6 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSMutableArray *videoFrames = [dataUtility fetchPersonalRollEntries];
-
     
     if ( [videoFrames count] ) {
         

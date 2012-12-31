@@ -230,30 +230,24 @@
                 
             } else {
                 
-                NSString *providerName = [[frameArray valueForKey:@"video"] valueForKey:@"provider_name"];
-                NSString *providerID = [[frameArray valueForKey:@"video"] valueForKey:@"provider_id"];
+                Stream *stream = [self checkIfEntity:kCoreDataEntityStream
+                                         withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
+                                            forIDKey:kCoreDataStreamID];
                 
-                if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-                    
-                    Stream *stream = [self checkIfEntity:kCoreDataEntityStream
-                                             withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
-                                                forIDKey:kCoreDataStreamID];
-                    
-                    NSString *streamID = [NSString coreDataNullTest:[[resultsArray objectAtIndex:i] valueForKey:@"id"]];
-                    [stream setValue:streamID forKey:kCoreDataStreamID];
-                    
-                    NSDate *timestamp = [NSDate dataFromBSONstring:streamID];
-                    [stream setValue:timestamp forKey:kCoreDataStreamTimestamp];
-                    
-                    Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
-                                           withIDValue:[frameArray valueForKey:@"id"]
-                                              forIDKey:kCoreDataFrameID];
-                    stream.frame = frame;
-                    
-                    [self storeFrame:frame forFrameArray:frameArray withSyncStatus:YES];
-                    
-                    [self saveContext:self.context];
-                }
+                NSString *streamID = [NSString coreDataNullTest:[[resultsArray objectAtIndex:i] valueForKey:@"id"]];
+                [stream setValue:streamID forKey:kCoreDataStreamID];
+                
+                NSDate *timestamp = [NSDate dataFromBSONstring:streamID];
+                [stream setValue:timestamp forKey:kCoreDataStreamTimestamp];
+                
+                Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
+                                       withIDValue:[frameArray valueForKey:@"id"]
+                                          forIDKey:kCoreDataFrameID];
+                stream.frame = frame;
+                
+                [self storeFrame:frame forFrameArray:frameArray withSyncStatus:YES];
+                
+                [self saveContext:self.context];
             }
         }
     }
@@ -266,21 +260,15 @@
     for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
         
         @autoreleasepool {
+                            
+            Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
+                                   withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
+                                      forIDKey:kCoreDataFrameID];
             
-            NSArray *videoArray = [[resultsArray objectAtIndex:i] valueForKey:@"video"];
-            NSString *providerName = [videoArray valueForKey:@"provider_name"];
-            NSString *providerID = [[videoArray valueForKey:@"video"] valueForKey:@"provider_id"];
+            [self storeFrame:frame forFrameArray:[resultsArray objectAtIndex:i] withSyncStatus:YES];
             
-            if ( [providerName isEqualToString:@"youtube"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-                
-                Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
-                                       withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
-                                          forIDKey:kCoreDataFrameID];
-                
-                [self storeFrame:frame forFrameArray:[resultsArray objectAtIndex:i] withSyncStatus:YES];
-                
-                [self saveContext:self.context];
-            }
+            [self saveContext:self.context];
+
         }
     }
 }
@@ -300,6 +288,63 @@
     NSArray *resultsArray = [self.context executeFetchRequest:request error:nil];
     
     return [resultsArray objectAtIndex:0]; 
+}
+
+- (NSUInteger)fetchStreamCount
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
+    
+    return [streamEntries count];
+}
+
+- (NSUInteger)fetchQueueRollCount
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user queueRollID]];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    return [frameResults count];
+}
+
+- (NSUInteger)fetchPersonalRollCount
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    [request setPredicate:predicate];
+    
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    return [frameResults count];
 }
 
 - (NSMutableArray*)fetchStreamEntries
@@ -326,8 +371,16 @@
     for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
         
         Stream *stream = (Stream*)[streamEntries objectAtIndex:i];
-        [frames addObject:stream.frame];
         
+        NSString *providerName = stream.frame.video.providerName;
+        NSString *providerID = stream.frame.video.providerID;
+        
+        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+        
+            [frames addObject:stream.frame];
+        
+        }
+    
     }
     
     return frames;
@@ -361,7 +414,15 @@
     for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
         
         Stream *stream = (Stream*)[streamEntries objectAtIndex:i];
-        [frames addObject:stream.frame];
+        
+        NSString *providerName = stream.frame.video.providerName;
+        NSString *providerID = stream.frame.video.providerID;
+        
+        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+            
+            [frames addObject:stream.frame];
+            
+        }
         
     }
     
@@ -389,8 +450,27 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Queue Roll
-    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
+    // Typecast each entry in streamEntries and place in NSMutableArray object
+    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
+        
+        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        
+        NSString *providerName = frame.video.providerName;
+        NSString *providerID = frame.video.providerID;
+        
+        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+            
+            [frames addObject:frame];
+            
+        }
+        
+    }
+    
+    return frames;    
 }
 
 - (NSMutableArray*)fetchMoreQueueRollEntriesAfterDate:(NSDate *)date
@@ -415,7 +495,27 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Queue Roll
-    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Typecast each entry in streamEntries and place in NSMutableArray object
+    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
+        
+        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        
+        NSString *providerName = frame.video.providerName;
+        NSString *providerID = frame.video.providerID;
+        
+        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+            
+            [frames addObject:frame];
+            
+        }
+        
+    }
+    
+    return frames;
     
 }
 
@@ -440,7 +540,27 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
-    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Typecast each entry in streamEntries and place in NSMutableArray object
+    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
+        
+        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        
+        NSString *providerName = frame.video.providerName;
+        NSString *providerID = frame.video.providerID;
+        
+        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+            
+            [frames addObject:frame];
+            
+        }
+        
+    }
+    
+    return frames;
     
 }
 
@@ -465,9 +585,28 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", [user personalRollID], date];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of frames in Queue Roll
-    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    // Execute request that returns array of frames in Personal Roll
+    NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
+    // Typecast each entry in streamEntries and place in NSMutableArray object
+    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
+        
+        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        
+        NSString *providerName = frame.video.providerName;
+        NSString *providerID = frame.video.providerID;
+        
+        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+            
+            [frames addObject:frame];
+            
+        }
+        
+    }
+    
+    return frames;
 }
 
 - (NSMutableArray*)fetchCachedEntries

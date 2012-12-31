@@ -27,6 +27,9 @@
 
 // Public Fetching Methods
 - (User*)fetchUser;
+- (NSUInteger)fetchStreamCount;
+- (NSUInteger)fetchQueueRollCount;
+- (NSUInteger)fetchPersonalRollCount;
 - (NSMutableArray*)fetchStreamEntries;
 - (NSMutableArray*)fetchMoreStreamEntriesAfterDate:(NSDate*)date;
 - (NSMutableArray*)fetchQueueRollEntries;

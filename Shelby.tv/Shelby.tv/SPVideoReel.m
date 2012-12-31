@@ -49,7 +49,6 @@
 @synthesize currentVideo = _currentVideo;
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
-@synthesize scrubberTimeObserver = _scrubberTimeObserver;
 @synthesize fetchingOlderVideos = _fetchingOlderVideos;
 
 #pragma mark - Memory Management
@@ -274,7 +273,8 @@
         Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil];
         NSDate *date = frame.timestamp;
         
-        switch (self.categoryType) {
+        switch ( _categoryType ) {
+                
             case CategoryType_Stream:
                 [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
                 break;
@@ -493,6 +493,8 @@
         
         self.fetchingOlderVideos = YES;
         
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        
         switch ( _categoryType ) {
                 
             case CategoryType_Unknown:{
@@ -501,21 +503,24 @@
                 
             case CategoryType_Stream:{
                 
-                NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
+                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                 [ShelbyAPIClient getMoreFramesInStream:numberToString];
                 
             } break;
                 
             case CategoryType_QueueRoll:{
                 
-                NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchQueueRollCount];
+                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                 [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
                 
             } break;
                 
             case CategoryType_PersonalRoll:{
                 
-                NSString *numberToString = [NSString stringWithFormat:@"%d", _numberOfVideos];
+                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
+                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                 [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
                 
             } break;
