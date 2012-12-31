@@ -107,8 +107,9 @@
     // Invalidate pollAPITimer
     [self.pollAPITimer invalidate];
     
-    // Set NSUserDefault
+    // Set NSUserDefaults
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthorizedDefault];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     // Pop View Controller

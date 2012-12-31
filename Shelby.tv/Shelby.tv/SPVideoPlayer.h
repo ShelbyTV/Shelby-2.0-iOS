@@ -26,6 +26,7 @@
 - (void)queueVideo;
 - (void)addToCache;
 - (void)removeFromCache;
+- (void)setupDownloadButton;
 
 /// Video Playback
 - (void)togglePlayback;
@@ -40,6 +41,5 @@
 - (CMTime)elapsedDuration;
 - (void)setupScrubber;
 - (void)syncScrubber;
-
 
 @end

@@ -430,7 +430,13 @@
                                  forImageView:self.overlayView.userImageView
                           withPlaceholderView:infoPanelIconPlaceholderView];
     
-        
+    
+    // Add downloadButton if user is admin
+    User *user = [dataUtility fetchUser];
+    if ( YES == [user.admin boolValue] ) {
+        [self.currentVideoPlayer setupDownloadButton];
+    }
+    
     // Update videoListScrollView (if _itemViews is initialized)
     if ( 0 < [self.itemViews count] ) {
         

@@ -131,10 +131,18 @@
                 if ( self.videoPlayer == self.videoReel.currentVideoPlayer ) { // If the currently displayed video is the one being downloaded
                     
                     // Change text on downloadButton and make sure button stays disabled
+                    [self.overlayView.downloadButton setEnabled:YES];
                     [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
                     [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
                     [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
                     
+                    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+                    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+                    localNotification.fireDate = [[datePicker date] dateByAddingTimeInterval:5];
+                    localNotification.soundName = UILocalNotificationDefaultSoundName;
+                    localNotification.alertAction = @"Finished Downloading Video!";
+                    localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", syncVideoFrame.video.title];
+                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
                 }
                 
             });
@@ -172,12 +180,16 @@
             NSError *error = nil;
             [fileManager removeItemAtPath:path error:&error];
             
-            // Remove path from Core Data
-            self.videoFrame.video.cachedURL = [NSString coreDataNullTest:nil];
-            self.videoFrame.isCached = [NSNumber numberWithBool:NO];
-            [dataUtility saveContext:context];
-            
             dispatch_async(dispatch_get_main_queue(), ^{
+                
+                // Remove path from Core Data
+                CoreDataUtility *syncDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreVideoInCache];
+                NSManagedObjectContext *syncContext = [syncDataUtility context];
+                Frame *syncVideoFrame = (Frame*)[syncContext existingObjectWithID:[self.videoFrame objectID] error:nil];
+                
+                syncVideoFrame.video.cachedURL = [NSString coreDataNullTest:nil];
+                syncVideoFrame.isCached = [NSNumber numberWithBool:NO];
+                [dataUtility saveContext:syncContext];
                 
                 if ( self.videoPlayer == self.videoReel.currentVideoPlayer ) { // If the currently displayed video is the one being downloaded
                     
