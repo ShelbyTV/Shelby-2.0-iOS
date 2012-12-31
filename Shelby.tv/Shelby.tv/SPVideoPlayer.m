@@ -176,7 +176,6 @@
             [cacheUtility addVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
             
         }
-        
     });
 }
 
@@ -191,7 +190,7 @@
         
         if ( error ) {
             
-            DLog(@"Cache Add Error: %@", error);
+            DLog(@"Cache Removal Error: %@", error);
             
         } else {
             

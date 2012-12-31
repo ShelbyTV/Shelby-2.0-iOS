@@ -60,9 +60,8 @@
 #pragma mark - Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString *)title andVideoFrames:(NSArray *)videoFrames
 {
-    self = [super init];
     
-    if ( self ) {
+    if ( self = [super init] ) {
         
         self.categoryType = categoryType;
         self.categoryTitle = title;

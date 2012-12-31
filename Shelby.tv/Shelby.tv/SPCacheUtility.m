@@ -178,6 +178,13 @@
                     [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
                     [self.overlayView.downloadButton addTarget:self.videoPlayer action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
                     
+                    // To avoid crashes in Cached Videos SPVideoReel instance, remove the instance once the video is removed from cache. 
+                    if ( self.videoReel.categoryType == CategoryType_Cached ) {
+                        
+                        [self.videoReel homeButtonAction:nil];
+                        
+                    }
+                    
                 }
                 
             });
