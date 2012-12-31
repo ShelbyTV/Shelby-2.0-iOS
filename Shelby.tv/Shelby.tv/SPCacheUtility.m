@@ -138,10 +138,11 @@
                     
                     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
                     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-                    localNotification.fireDate = [[datePicker date] dateByAddingTimeInterval:5];
+                    localNotification.fireDate = nil;
                     localNotification.soundName = UILocalNotificationDefaultSoundName;
                     localNotification.alertAction = @"Finished Downloading Video!";
                     localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", syncVideoFrame.video.title];
+                    localNotification.hasAction = YES;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
                 }
                 

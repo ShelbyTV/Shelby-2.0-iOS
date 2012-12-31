@@ -406,8 +406,16 @@
                                                object:playerItem];
 
     // Toggle video playback
-    ( self == _videoReel.currentVideoPlayer ) ? [self play] :[self.player pause];
-    
+    if ( self == _videoReel.currentVideoPlayer ) {
+        
+        [self play];
+        self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
+        
+    } else {
+     
+        [self pause];
+        
+    }
 }
 
 - (void)loadVideo:(NSNotification*)notification
@@ -458,8 +466,16 @@
                                                    object:playerItem];
         
         // Toggle video playback
-        ( self == _videoReel.currentVideoPlayer ) ? [self play] :[self.player pause];
-        
+        if ( self == _videoReel.currentVideoPlayer ) {
+            
+            [self play];
+            self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
+            
+        } else {
+            
+            [self pause];
+            
+        }
     }
 }
 
