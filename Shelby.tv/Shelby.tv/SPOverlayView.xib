@@ -401,7 +401,7 @@
 					<object class="IBUIButton" id="883161448">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483356</int>
-						<string key="NSFrame">{{437, 256}, {150, 54}}</string>
+						<string key="NSFrame">{{462, 261}, {100, 100}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="653716736"/>
@@ -410,13 +410,15 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Restart Video</string>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="621291759"/>
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">restartButton</string>
+						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<string key="name">Helvetica-Bold</string>
 							<string key="family">Helvetica</string>
@@ -698,7 +700,6 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="992062704"/>
 							<reference ref="995945933"/>
-							<reference ref="883161448"/>
 							<reference ref="903081563"/>
 							<reference ref="626961961"/>
 							<reference ref="627050986"/>
@@ -714,6 +715,7 @@
 							<reference ref="850128962"/>
 							<reference ref="216755980"/>
 							<reference ref="725982105"/>
+							<reference ref="883161448"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1032,6 +1034,7 @@
 			<string key="infoPanel.png">{519, 197}</string>
 			<string key="infoPanelIconPlaceholder.png">{38, 38}</string>
 			<string key="playButton.png">{26, 29}</string>
+			<string key="restartButton">{16, 16}</string>
 			<string key="videoListPanel.png">{505, 197}</string>
 			<string key="videoPlayerBar.png">{1024, 50}</string>
 		</dictionary>

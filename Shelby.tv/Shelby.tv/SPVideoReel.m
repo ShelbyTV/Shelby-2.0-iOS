@@ -57,6 +57,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    
+    DLog(@"MEMORY WARNING - SPVideoReel");
+    
+    [super didReceiveMemoryWarning];
+}
+
 #pragma mark - Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString *)title andVideoFrames:(NSArray *)videoFrames
 {

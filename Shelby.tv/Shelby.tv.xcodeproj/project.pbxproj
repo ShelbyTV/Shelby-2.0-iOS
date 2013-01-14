@@ -56,6 +56,8 @@
 		8E405419163A3429002C8874 /* NSDate+DateFromBSONString.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE55163A286700AEF100 /* NSDate+DateFromBSONString.m */; };
 		8E405484163A3C05002C8874 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405483163A3C05002C8874 /* Conversation.m */; };
 		8E40548A163A3C06002C8874 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405489163A3C05002C8874 /* Messages.m */; };
+		8E40AF6916A4B339007A66CA /* restartButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6716A4B339007A66CA /* restartButton.png */; };
+		8E40AF6A16A4B339007A66CA /* restartButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6816A4B339007A66CA /* restartButton@2x.png */; };
 		8E4980AD1688C556007AF267 /* tempLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AB1688C556007AF267 /* tempLogo.png */; };
 		8E4980AE1688C556007AF267 /* tempLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AC1688C556007AF267 /* tempLogo@2x.png */; };
 		8E4980BB1688C94E007AF267 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980B71688C94E007AF267 /* Icon-Small-50.png */; };
@@ -183,6 +185,8 @@
 		8E405483163A3C05002C8874 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		8E405488163A3C05002C8874 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
 		8E405489163A3C05002C8874 /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
+		8E40AF6716A4B339007A66CA /* restartButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restartButton.png; sourceTree = "<group>"; };
+		8E40AF6816A4B339007A66CA /* restartButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "restartButton@2x.png"; sourceTree = "<group>"; };
 		8E4980AB1688C556007AF267 /* tempLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempLogo.png; sourceTree = "<group>"; };
 		8E4980AC1688C556007AF267 /* tempLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tempLogo@2x.png"; sourceTree = "<group>"; };
 		8E4980B71688C94E007AF267 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = SOURCE_ROOT; };
@@ -428,6 +432,8 @@
 		8E5980291680104A00027181 /* Shelby Player Images */ = {
 			isa = PBXGroup;
 			children = (
+				8E40AF6716A4B339007A66CA /* restartButton.png */,
+				8E40AF6816A4B339007A66CA /* restartButton@2x.png */,
 				8E2EB820168CCA5F004B7CBD /* downloadButtonCache.png */,
 				8E2EB821168CCA5F004B7CBD /* downloadButtonCache@2x.png */,
 				8E2EB822168CCA5F004B7CBD /* downloadButtonCaching.png */,
@@ -688,6 +694,8 @@
 				8E2EB829168CCA5F004B7CBD /* downloadButtonCaching@2x.png in Resources */,
 				8E2EB82A168CCA5F004B7CBD /* downloadButtonRemove.png in Resources */,
 				8E2EB82B168CCA5F004B7CBD /* downloadButtonRemove@2x.png in Resources */,
+				8E40AF6916A4B339007A66CA /* restartButton.png in Resources */,
+				8E40AF6A16A4B339007A66CA /* restartButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
