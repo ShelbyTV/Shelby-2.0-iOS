@@ -55,6 +55,11 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    [dataUtility removeAllVideoExtractionURLReferences];
+    
 }
 
 - (void)didReceiveMemoryWarning
