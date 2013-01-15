@@ -144,7 +144,7 @@
                     
                     case DataRequestType_BackgroundUpdate:{
                         
-                        DLog(@"Background Update Successful");
+//                        DLog(@"Background Update Successful");
                         
                     } break;
                         
@@ -656,7 +656,7 @@
                                    withObject:notification
                                 waitUntilDone:YES];
     
-    DLog(@"Data Merged!");
+//    DLog(@"Data Merged!");
 }
 
 - (id)checkIfEntity:(NSString *)entityName

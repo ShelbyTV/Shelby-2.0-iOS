@@ -16,6 +16,7 @@
 
 @interface SPVideoReel ()
 
+
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
@@ -33,6 +34,7 @@
 - (void)setupVideoPlayers;
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
+- (void)extractedVideoDidLoad:(NSNotification*)notification;
 
 @end
 
@@ -50,6 +52,7 @@
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 @synthesize fetchingOlderVideos = _fetchingOlderVideos;
+@synthesize extractedVideoReferencer = _extractedVideoReferencer;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -66,7 +69,7 @@
 {
     
     DLog(@"MEMORY WARNING - SPVideoReel");
-    
+
     [super didReceiveMemoryWarning];
 }
 
@@ -113,6 +116,7 @@
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.videoPlayers = [[NSMutableArray alloc] init];
     self.itemViews = [[NSMutableArray alloc] init];
+    self.extractedVideoReferencer = [[NSMutableArray alloc] init];
     self.numberOfVideos = [self.videoFrames count];
 }
 
@@ -121,6 +125,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dataSourceDidUpdate:)
                                                  name:kSPUserDidScrollToUpdate
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(extractedVideoDidLoad:)
+                                                 name:kSPExtractedVideoDidLoad
                                                object:nil];
 }
 
@@ -164,7 +173,8 @@
         SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
                                                         forVideoFrame:videoFrame
                                                       withOverlayView:_overlayView
-                                                          inVideoReel:self];
+                                                          inVideoReel:self
+                                                           atPosition:i];
         
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
@@ -323,7 +333,8 @@
                 SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
                                                                 forVideoFrame:videoFrame
                                                               withOverlayView:_overlayView
-                                                                  inVideoReel:self];
+                                                                  inVideoReel:self
+                                                                   atPosition:i];
                 
                 // videoListScrollView
                 NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
@@ -363,6 +374,26 @@
         
     }
     
+}
+
+- (void)extractedVideoDidLoad:(NSNotification *)notification
+{
+    // Extract position from notification.userInfo and store in extractedVideoReferencer array
+    NSNumber *positionInReel = [notification.userInfo valueForKey:kSPVideoPlayerPositionInReel];
+    [self.extractedVideoReferencer addObject:positionInReel];
+    
+    if ( [self.extractedVideoReferencer count] > 5 ) {
+        
+        NSUInteger position = [[self.extractedVideoReferencer objectAtIndex:0] intValue];
+        SPVideoPlayer *playerToRecreate = [self.videoPlayers objectAtIndex:position];
+        [playerToRecreate recreate];
+
+        DLog(@"Video at index %d dropped and recreated", position);
+        
+        // De-reference video player, since SPVideoPlayer object is no longer loaded
+        [self.extractedVideoReferencer removeObjectAtIndex:0];
+        
+    }
 }
 
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position

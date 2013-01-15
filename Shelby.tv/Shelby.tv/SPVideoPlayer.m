@@ -20,6 +20,9 @@
 @property (strong, nonatomic) SPVideoReel *videoReel;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 
+- (void)setupIndicator;
+- (void)setupInitialConditions;
+
 - (void)loadVideo:(NSNotification*)notification;
 - (void)itemDidFinishPlaying:(NSNotification*)notification;
 - (NSString*)convertElapsedTime:(double)currentTime andDuration:(double)duration;
@@ -39,6 +42,7 @@
 @synthesize isPlaying = _isPlaying;
 @synthesize isDownloading = _isDownloading;
 @synthesize overlayTimer = _overlayTimer;
+@synthesize positionInReel = _positionInReel;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
@@ -49,9 +53,28 @@
 - (void)didReceiveMemoryWarning
 {
     
-    DLog(@"MEMORY WARNING %@", self.videoFrame.video.title);
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    NSManagedObjectContext *context = [dataUtility context];
+    self.videoFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+    DLog(@"MEMORY WARNING %@", _videoFrame.video.title);
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+    [self.playerLayer removeFromSuperlayer];
+    [self.player pause];
+    [self setPlayer:nil];
     
     [super didReceiveMemoryWarning];
+}
+
+- (void)recreate
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+    [self.playerLayer removeFromSuperlayer];
+    [self.player pause];
+    [self setPlayer:nil];
+    [self setupInitialConditions];
+    [self setupIndicator];
+
 }
 
 #pragma mark - Initialization Methods
@@ -59,6 +82,7 @@
        forVideoFrame:(Frame *)videoFrame
      withOverlayView:(SPOverlayView *)overlayView
          inVideoReel:(id)videoReel
+          atPosition:(NSUInteger)position
 {
     if ( self = [super init] ) {
         
@@ -66,41 +90,32 @@
         [self setVideoFrame:videoFrame];
         [self setOverlayView:overlayView];
         [self setVideoReel:videoReel];
-        [self setPlaybackFinished:NO];
-        [self setIsPlayable:NO];
-        [self setIsPlaying:NO];
-        [self setIsDownloading:NO];
+        [self setPositionInReel:[NSNumber numberWithInt:position]];
+        [self setupInitialConditions];
         
     }
     
     return self;
 }
 
+
 #pragma mark - View Lifecycle Methods
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    
-    if ( self.videoReel.categoryType != CategoryType_Cached ) {
-        
-        // Add indicator
-        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-        self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
-        self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-        self.indicator.hidesWhenStopped = YES;
-        [self.indicator startAnimating];
-        [self.view addSubview:self.indicator];
-        
-    } else {
-        
-        // No Indicator needed
-        
-    }
-    
+    [self setupIndicator];
 }
 
 #pragma mark - Setup Methods
+- (void)setupInitialConditions
+{
+    [self setPlaybackFinished:NO];
+    [self setIsPlayable:NO];
+    [self setIsPlaying:NO];
+    [self setIsDownloading:NO];
+}
+
 - (void)setupDownloadButton
 {
     
@@ -139,6 +154,26 @@
     }
 }
 
+- (void)setupIndicator
+{
+    if ( self.videoReel.categoryType != CategoryType_Cached ) {
+        
+        // Add indicator
+        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
+        self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
+        self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        self.indicator.hidesWhenStopped = YES;
+        [self.indicator startAnimating];
+        [self.view addSubview:self.indicator];
+        
+    } else {
+        
+        // No Indicator needed
+        
+    }
+
+}
+
 #pragma mark - Video Fetching Methods
 - (void)queueVideo
 {
@@ -152,8 +187,8 @@
         
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSManagedObjectContext *context = [dataUtility context];
-        Frame *tempFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
-        [[SPVideoExtractor sharedInstance] queueVideo:tempFrame.video];
+        self.videoFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+        [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
         
     }
 }
@@ -440,6 +475,11 @@
     
     if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
 
+
+        // Post kSPExtractedVideoDidLoad to video reel for memory management
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:_positionInReel, kSPVideoPlayerPositionInReel, nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSPExtractedVideoDidLoad object:nil userInfo:userInfo];
+        
         // Clear notification and indicator
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [self.indicator stopAnimating];

@@ -60,6 +60,10 @@
 		8E40AF6A16A4B339007A66CA /* restartButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6816A4B339007A66CA /* restartButton@2x.png */; };
 		8E40AF6D16A4B6A7007A66CA /* infoPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6B16A4B6A7007A66CA /* infoPanel.png */; };
 		8E40AF6E16A4B6A7007A66CA /* infoPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */; };
+		8E40AF7316A4BF39007A66CA /* overlayPauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6F16A4BF38007A66CA /* overlayPauseButton.png */; };
+		8E40AF7416A4BF39007A66CA /* overlayPauseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF7016A4BF38007A66CA /* overlayPauseButton@2x.png */; };
+		8E40AF7516A4BF39007A66CA /* overlayPlayButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF7116A4BF38007A66CA /* overlayPlayButton@2x.png */; };
+		8E40AF7616A4BF39007A66CA /* overlayPlayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF7216A4BF38007A66CA /* overlayPlayButton.png */; };
 		8E4980AD1688C556007AF267 /* tempLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AB1688C556007AF267 /* tempLogo.png */; };
 		8E4980AE1688C556007AF267 /* tempLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AC1688C556007AF267 /* tempLogo@2x.png */; };
 		8E4980BB1688C94E007AF267 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980B71688C94E007AF267 /* Icon-Small-50.png */; };
@@ -189,6 +193,10 @@
 		8E40AF6816A4B339007A66CA /* restartButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "restartButton@2x.png"; sourceTree = "<group>"; };
 		8E40AF6B16A4B6A7007A66CA /* infoPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoPanel.png; sourceTree = "<group>"; };
 		8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoPanel@2x.png"; sourceTree = "<group>"; };
+		8E40AF6F16A4BF38007A66CA /* overlayPauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlayPauseButton.png; sourceTree = "<group>"; };
+		8E40AF7016A4BF38007A66CA /* overlayPauseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlayPauseButton@2x.png"; sourceTree = "<group>"; };
+		8E40AF7116A4BF38007A66CA /* overlayPlayButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlayPlayButton@2x.png"; sourceTree = "<group>"; };
+		8E40AF7216A4BF38007A66CA /* overlayPlayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlayPlayButton.png; sourceTree = "<group>"; };
 		8E4980AB1688C556007AF267 /* tempLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempLogo.png; sourceTree = "<group>"; };
 		8E4980AC1688C556007AF267 /* tempLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tempLogo@2x.png"; sourceTree = "<group>"; };
 		8E4980B71688C94E007AF267 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = SOURCE_ROOT; };
@@ -432,6 +440,10 @@
 		8E5980291680104A00027181 /* Shelby Player Images */ = {
 			isa = PBXGroup;
 			children = (
+				8E40AF6F16A4BF38007A66CA /* overlayPauseButton.png */,
+				8E40AF7016A4BF38007A66CA /* overlayPauseButton@2x.png */,
+				8E40AF7116A4BF38007A66CA /* overlayPlayButton@2x.png */,
+				8E40AF7216A4BF38007A66CA /* overlayPlayButton.png */,
 				8E40AF6B16A4B6A7007A66CA /* infoPanel.png */,
 				8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */,
 				8E40AF6716A4B339007A66CA /* restartButton.png */,
@@ -696,6 +708,10 @@
 				8E40AF6A16A4B339007A66CA /* restartButton@2x.png in Resources */,
 				8E40AF6D16A4B6A7007A66CA /* infoPanel.png in Resources */,
 				8E40AF6E16A4B6A7007A66CA /* infoPanel@2x.png in Resources */,
+				8E40AF7316A4BF39007A66CA /* overlayPauseButton.png in Resources */,
+				8E40AF7416A4BF39007A66CA /* overlayPauseButton@2x.png in Resources */,
+				8E40AF7516A4BF39007A66CA /* overlayPlayButton@2x.png in Resources */,
+				8E40AF7616A4BF39007A66CA /* overlayPlayButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

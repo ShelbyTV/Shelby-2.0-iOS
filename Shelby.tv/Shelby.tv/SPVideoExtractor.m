@@ -14,7 +14,6 @@
 @property (strong, nonatomic) NSMutableArray *videoQueue;
 @property (strong, nonatomic) UIWebView *webView;
 @property (assign, nonatomic) BOOL isExtracting;
-@property (strong, nonatomic) NSMutableArray *extractedVideoURLs;
 @property (strong, nonatomic) NSTimer *nextExtractionTimer;
 @property (strong, nonatomic) NSTimer *currentExtractionTimer;
 
@@ -67,11 +66,6 @@ static SPVideoExtractor *sharedInstance = nil;
             self.videoQueue = [[NSMutableArray alloc] init];;
         }
         
-        // If no videos have been extracted since latest creation of current instance of SPVideoReel object
-        if ( ![self extractedVideoURLs] ) {
-            self.extractedVideoURLs = [[NSMutableArray alloc] init];
-        }
-        
         [self.videoQueue addObject:video];
         [self extractNextVideoFromQueue];
         
@@ -95,7 +89,6 @@ static SPVideoExtractor *sharedInstance = nil;
     [self setIsExtracting:NO];
     [self.nextExtractionTimer invalidate];
     [self.videoQueue removeAllObjects];
-    [self.extractedVideoURLs removeAllObjects];
     [self.webView stopLoading];
     [self.webView removeFromSuperview];
     [self setWebView:nil];
@@ -225,9 +218,6 @@ static SPVideoExtractor *sharedInstance = nil;
                         
                     } else {
                         
-                        // Add newly extractedURL to array of seen/extractedURLs
-                        [self.extractedVideoURLs addObject:extractedURL];
-                        
                         // Update Core Data video object
                         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
                         NSManagedObjectContext *context = [dataUtility context];
@@ -256,7 +246,6 @@ static SPVideoExtractor *sharedInstance = nil;
     [self setIsExtracting:NO];
     [self.nextExtractionTimer invalidate];
     [self.currentExtractionTimer invalidate];
-    [self.extractedVideoURLs removeAllObjects];
     [self.webView stopLoading];
     [self.webView removeFromSuperview];
     [self setWebView:nil];

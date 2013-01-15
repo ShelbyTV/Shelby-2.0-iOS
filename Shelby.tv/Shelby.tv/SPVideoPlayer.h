@@ -17,11 +17,15 @@
 @property (assign, nonatomic) BOOL playbackFinished;
 @property (assign, nonatomic) BOOL isPlaying;
 @property (strong, nonatomic) NSTimer *overlayTimer;
+@property (strong, nonatomic) NSNumber *positionInReel;
 
 - (id)initWithBounds:(CGRect)bounds
        forVideoFrame:(Frame*)videoFrame
      withOverlayView:(SPOverlayView*)overlayView
-         inVideoReel:(SPVideoReel*)videoReel;
+         inVideoReel:(SPVideoReel*)videoReel
+          atPosition:(NSUInteger)position;
+
+- (void)recreate;
 
 /// Video Fetching
 - (void)queueVideo;
