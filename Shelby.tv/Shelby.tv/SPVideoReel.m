@@ -228,7 +228,7 @@
         
         [itemView.videoTitleLabel setText:videoFrame.video.title];
         UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
-        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:videoListThumbnailPlaceholderView];
+        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:videoListThumbnailPlaceholderView andContentMode:UIViewContentModeCenter];
         [itemView setTag:i];
         
         [self.itemViews addObject:itemView];
@@ -337,7 +337,10 @@
                 [itemView setTag:i];
                 
                 UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
-                [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:videoListThumbnailPlaceholderView];
+                [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                             forImageView:itemView.thumbnailImageView
+                                      withPlaceholderView:videoListThumbnailPlaceholderView
+                                           andContentMode:UIViewContentModeCenter];
                 
                 // Update UI on Main Thread
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -443,7 +446,9 @@
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
                                  forImageView:self.overlayView.userImageView
-                          withPlaceholderView:infoPanelIconPlaceholderView];
+                          withPlaceholderView:infoPanelIconPlaceholderView
+                               andContentMode:UIViewContentModeScaleAspectFill];
+
     
     
     // Add downloadButton if user is admin

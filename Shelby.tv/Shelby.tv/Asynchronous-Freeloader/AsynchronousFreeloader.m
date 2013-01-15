@@ -31,7 +31,8 @@
 
 + (void)successfulResponseForImageView:(UIImageView*)imageView              // Asynchronous request succeeded
                               withData:(NSData *)data
-                              fromLink:(NSString*)link;
+                              fromLink:(NSString*)link
+                        andContentMode:(UIViewContentMode)contentMode;
 
 + (void)failedResponseForImageView:(UIImageView*)imageView;                 // Asynchronous request failed
 
@@ -40,7 +41,10 @@
 @implementation AsynchronousFreeloader
 
 #pragma mark - Public Methods
-+ (void)loadImageFromLink:(NSString *)link forImageView:(UIImageView *)imageView withPlaceholderView:(UIView *)placeholderView
++ (void)loadImageFromLink:(NSString *)link
+             forImageView:(UIImageView *)imageView
+      withPlaceholderView:(UIView *)placeholderView
+           andContentMode:(UIViewContentMode)contentMode
 {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -58,7 +62,7 @@
             
             // Load image from disk
             dispatch_async(dispatch_get_main_queue(), ^{
-                imageView.contentMode = UIViewContentModeCenter;
+                imageView.contentMode = contentMode;
                 imageView.clipsToBounds = YES;
                 imageView.image = [UIImage imageWithContentsOfFile:[[cache objectForKey:AsynchronousFreeloaderCachePaths] valueForKey:link]];
             });
@@ -78,7 +82,7 @@
                 
                 if ([data length] > 0 && error == nil) {    // Successful asynchronous response
                     
-                    [AsynchronousFreeloader successfulResponseForImageView:imageView withData:data fromLink:link];
+                    [AsynchronousFreeloader successfulResponseForImageView:imageView withData:data fromLink:link andContentMode:contentMode];
                     
                 } else {                                    // Failed asynchronous response
                     
@@ -335,6 +339,7 @@
 + (void)successfulResponseForImageView:(UIImageView *)imageView 
                               withData:(NSData *)data 
                               fromLink:(NSString *)link
+                        andContentMode:(UIViewContentMode)contentMode
 {
     
     [AsynchronousFreeloader saveImageWithName:link fromData:data];
@@ -342,7 +347,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         // Update imageView on Main Thread
-        imageView.contentMode = UIViewContentModeCenter;
+        imageView.contentMode = contentMode;
         imageView.clipsToBounds = YES;
         imageView.image = [UIImage imageWithData:data];
     

@@ -187,6 +187,7 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{519, 551}, {505, 217}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="290922202"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -237,7 +238,7 @@
 					<object class="IBUIImageView" id="216755980">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{69, 698}, {38, 38}}</string>
+						<string key="NSFrame">{{69, 696}, {40, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="725982105"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -309,7 +310,7 @@
 					<object class="IBUIButton" id="850128962">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 696}, {40, 41}}</string>
+						<string key="NSFrame">{{18, 696}, {41, 41}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="216755980"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -895,13 +896,13 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="actionButton.png">{40, 41}</string>
+			<string key="actionButton.png">{41, 41}</string>
 			<string key="airplayButtonOff.png">{38, 26}</string>
 			<string key="divider.png">{488, 2}</string>
 			<string key="downloadButtonCache.png">{47, 47}</string>
 			<string key="homeButton.png">{47, 47}</string>
 			<string key="infoPanel.png">{519, 197}</string>
-			<string key="infoPanelIconPlaceholder.png">{38, 38}</string>
+			<string key="infoPanelIconPlaceholder.png">{40, 40}</string>
 			<string key="overlayPlayButton.png">{100, 100}</string>
 			<string key="playButton.png">{26, 29}</string>
 			<string key="restartButton.png">{100, 100}</string>
