@@ -240,8 +240,8 @@
     
     // Add visual selected state (e.g., blue background, white text) to currentVideo
     SPVideoItemView *itemView = [self.itemViews objectAtIndex:_currentVideo];
-    itemView.backgroundColor = kColorBlue;
-    itemView.videoTitleLabel.textColor = [UIColor whiteColor];
+    itemView.backgroundColor = kColorGreen;
+    itemView.videoTitleLabel.textColor = kColorBlack;
 
     // Scroll To currentVideo if self.currentVideo != 0
     if ( 0 != _currentVideo) {
@@ -470,8 +470,8 @@
         SPVideoItemView *itemView = [self.itemViews objectAtIndex:position];
         
         // Change itemView Color to show selected state
-        itemView.backgroundColor = kColorBlue;
-        itemView.videoTitleLabel.textColor = kColorWhite;
+        itemView.backgroundColor = kColorGreen;
+        itemView.videoTitleLabel.textColor = kColorBlack;
         
         // Force scrollView and video changes
         if ( position < self.numberOfVideos ) {

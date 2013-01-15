@@ -23,6 +23,7 @@
 // Setup Methods
 - (void)setupIndicator;
 - (void)setupInitialConditions;
+- (void)resheduleOverlayTimer;
 
 // Notifications
 - (void)loadVideo:(NSNotification*)notification;
@@ -162,6 +163,16 @@
         // No Indicator needed
         
     }
+
+}
+
+- (void)resheduleOverlayTimer
+{
+    
+    if ( [self.overlayTimer isValid] )
+        [self.overlayTimer invalidate];
+    
+    self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
 
 }
 
@@ -446,7 +457,7 @@
     if ( self == _videoReel.currentVideoPlayer ) {
         
         [self play];
-        self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
+        [self resheduleOverlayTimer];
         
     } else {
      
@@ -511,7 +522,7 @@
         if ( self == _videoReel.currentVideoPlayer ) {
             
             [self play];
-            self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
+            [self resheduleOverlayTimer];
             
         } else {
             
@@ -569,8 +580,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.overlayTimer invalidate];
-    self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f target:self.videoReel selector:@selector(hideOverlay) userInfo:nil repeats:NO];
+    [self resheduleOverlayTimer];
 }
 
 @end
