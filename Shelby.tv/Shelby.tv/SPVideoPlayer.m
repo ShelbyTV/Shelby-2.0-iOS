@@ -20,11 +20,15 @@
 @property (strong, nonatomic) SPVideoReel *videoReel;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 
+// Setup Methods
 - (void)setupIndicator;
 - (void)setupInitialConditions;
 
+// Notifications
 - (void)loadVideo:(NSNotification*)notification;
 - (void)itemDidFinishPlaying:(NSNotification*)notification;
+
+// Convert CMTime to NSString
 - (NSString*)convertElapsedTime:(double)currentTime andDuration:(double)duration;
 
 @end
@@ -42,7 +46,6 @@
 @synthesize isPlaying = _isPlaying;
 @synthesize isDownloading = _isDownloading;
 @synthesize overlayTimer = _overlayTimer;
-@synthesize positionInReel = _positionInReel;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
@@ -66,23 +69,12 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)recreate
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
-    [self.playerLayer removeFromSuperlayer];
-    [self.player pause];
-    [self setPlayer:nil];
-    [self setupInitialConditions];
-    [self setupIndicator];
-
-}
 
 #pragma mark - Initialization Methods
 - (id)initWithBounds:(CGRect)bounds
        forVideoFrame:(Frame *)videoFrame
      withOverlayView:(SPOverlayView *)overlayView
          inVideoReel:(id)videoReel
-          atPosition:(NSUInteger)position
 {
     if ( self = [super init] ) {
         
@@ -90,7 +82,6 @@
         [self setVideoFrame:videoFrame];
         [self setOverlayView:overlayView];
         [self setVideoReel:videoReel];
-        [self setPositionInReel:[NSNumber numberWithInt:position]];
         [self setupInitialConditions];
         
     }
@@ -474,11 +465,6 @@
     Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
     
     if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
-
-
-        // Post kSPExtractedVideoDidLoad to video reel for memory management
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:_positionInReel, kSPVideoPlayerPositionInReel, nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSPExtractedVideoDidLoad object:nil userInfo:userInfo];
         
         // Clear notification and indicator
         [[NSNotificationCenter defaultCenter] removeObserver:self];

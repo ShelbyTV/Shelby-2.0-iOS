@@ -20,10 +20,11 @@
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (strong, nonatomic) SPOverlayView *overlayView;
 @property (assign, nonatomic) CategoryType categoryType;
-@property (strong, nonatomic) NSMutableArray *extractedVideoReferencer;
 
 /// Initialization
-- (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString*)title andVideoFrames:(NSArray*)videoFrames;
+- (id)initWithCategoryType:(CategoryType)categoryType
+             categoryTitle:(NSString*)title
+            andVideoFrames:(NSArray*)videoFrames;
 
 /// Extract new video
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;

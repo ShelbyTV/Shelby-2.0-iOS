@@ -11,6 +11,3 @@
 #define kSPUserDidScrollToUpdate        @"User Did Scroll To Update"
 #define kSPVideoShareLink               @"http://shelby.tv/roll/%@/frame/%@"
 #define kSPCurrentVideoStreamID         @"Stream Current Video"
-
-#define kSPExtractedVideoDidLoad        @"Extracted Video Did Load"
-#define kSPVideoPlayerPositionInReel    @"Video Player To Recreate"
