@@ -38,7 +38,6 @@
 #define kCoreDataFrameConversationID                @"conversationID"
 #define kCoreDataFrameCreatedAt                     @"createdAt"
 #define kCoreDataFrameCreatorID                     @"creatorID"
-#define kCoreDataFrameIsCached                      @"isCached"
 #define kCoreDataFrameIsSynced                      @"isSynced"
 #define kCoreDataFrameRollID                        @"rollID"
 #define kCoreDataFrameTimestamp                     @"timestamp"
@@ -77,7 +76,6 @@
 // Video Attribute Constants
 #define kCoreDataVideoID                            @"videoID"
 #define kCoreDataVideoCaption                       @"caption"
-#define kCoreDataVideoCachedURL                     @"cachedURL"
 #define kCoreDataVideoExtractedURL                  @"extractedURL"
 #define kCoreDataVideoProviderName                  @"providerName"
 #define kCoreDataVideoProviderID                    @"providerID"

@@ -363,13 +363,13 @@
     [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     // Execute request that returns array of stream entries
-    NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
+    NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
     
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
-    for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
+    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
         
-        Stream *stream = (Stream*)[streamEntries objectAtIndex:i];
+        Stream *stream = (Stream*)[requestResults objectAtIndex:i];
         
         NSString *providerName = stream.frame.video.providerName;
         NSString *providerID = stream.frame.video.providerID;
@@ -405,13 +405,13 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of stream entries
-    NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
+    NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
     
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
-    for (NSUInteger i = 0; i < [streamEntries count]; i++ ) {
+    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
         
-        Stream *stream = (Stream*)[streamEntries objectAtIndex:i];
+        Stream *stream = (Stream*)[requestResults objectAtIndex:i];
         
         NSString *providerName = stream.frame.video.providerName;
         NSString *providerID = stream.frame.video.providerID;
@@ -448,13 +448,13 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Queue Roll
-    NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
-    for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
+    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
         
-        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        Frame *frame = (Frame*)[requestResults objectAtIndex:i];
         
         NSString *providerName = frame.video.providerName;
         NSString *providerID = frame.video.providerID;
@@ -492,13 +492,13 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Queue Roll
-    NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
-    for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
+    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
         
-        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        Frame *frame = (Frame*)[requestResults objectAtIndex:i];
         
         NSString *providerName = frame.video.providerName;
         NSString *providerID = frame.video.providerID;
@@ -536,13 +536,13 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
-    NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
     NSMutableArray *frames = [[NSMutableArray alloc] init];
     
-    for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
+    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
         
-        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        Frame *frame = (Frame*)[requestResults objectAtIndex:i];
         
         NSString *providerName = frame.video.providerName;
         NSString *providerID = frame.video.providerID;
@@ -601,50 +601,6 @@
     }
     
     return frames;
-}
-
-- (NSMutableArray*)fetchCachedEntries
-{
-    
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
-    [request setEntity:description];
-    
-    // Sort by timestamp
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    
-    // Filter by rollID
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isCached == YES"];
-    [request setPredicate:predicate];
-    
-    // Execute request that returns array of frames in Personal Roll
-    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
-    
-    NSMutableArray *frames = [[NSMutableArray alloc] initWithArray:frameResults];
-    
-    if ( [frameResults count] > 40 ) {
-        
-        for (NSUInteger i = [frameResults count]-1; i >= 40; i-- ) {
-            
-            Frame *frame = (Frame*)[frameResults objectAtIndex:i];
-            frame.video.cachedURL = [NSString coreDataNullTest:nil];
-            frame.isCached = [NSNumber numberWithBool:NO];
-            [self saveContext:_context];
-            
-            [frames removeObjectAtIndex:i];
-            
-        }
-        
-    }
-    
-    // Execute request that returns array of frames in Personal Roll
-    return frames;
-    
 }
 
 #pragma mark - Private Persistance Methods

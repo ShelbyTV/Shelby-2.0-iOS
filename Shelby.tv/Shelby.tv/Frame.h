@@ -2,8 +2,8 @@
 //  Frame.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 12/26/12.
-//  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
+//  Created by Arthur Ariel Sabintsev on 1/15/13.
+//  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -21,7 +21,6 @@
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * videoID;
-@property (nonatomic, retain) NSNumber * isCached;
 @property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, retain) Creator *creator;
 @property (nonatomic, retain) Roll *roll;

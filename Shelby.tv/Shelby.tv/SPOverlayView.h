@@ -21,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;
-@property (weak, nonatomic) IBOutlet UIButton *downloadButton;
 @property (weak, nonatomic) IBOutlet UIButton *overlayPlaybackButton;
 
 @end

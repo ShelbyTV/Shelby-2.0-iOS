@@ -25,9 +25,6 @@
 
 /// Video Fetching
 - (void)queueVideo;
-- (void)addToCache;
-- (void)removeFromCache;
-- (void)setupDownloadButton;
 
 /// Video Playback
 - (void)togglePlayback;
@@ -36,7 +33,6 @@
 - (void)pause;
 - (void)airPlay;
 - (void)share;
-- (void)loadFromCache;
 
 /// Video Scrubber
 - (CMTime)elapsedDuration;

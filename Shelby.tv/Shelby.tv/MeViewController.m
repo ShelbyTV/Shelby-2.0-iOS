@@ -14,7 +14,6 @@
 - (void)launchPlayerWithStreamEntries;
 - (void)launchPlayerWithQueueRollEntries;
 - (void)launchPlayerWithPersonalRollEntries;
-- (void)launchPlayerWithCachedEntries;
 - (void)logoutButtonAction;
 
 @end
@@ -23,7 +22,6 @@
 @synthesize streamButton = _streamButton;
 @synthesize queueRollButton = _queueRollButton;
 @synthesize personalRollButton = _personalRollButton;
-@synthesize cachedButton = _cachedButton;
 @synthesize logoutButton = _logoutButton;
 @synthesize versionLabel = _versionLabel;
 
@@ -33,7 +31,6 @@
     self.streamButton = nil;
     self.queueRollButton = nil;
     self.personalRollButton = nil;
-    self.cachedButton = nil;
     self.logoutButton = nil;
     self.versionLabel = nil;
 }
@@ -59,29 +56,6 @@
     [self.logoutButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.logoutButton.titleLabel.font.pointSize]];
     [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.versionLabel.font.pointSize]];
     
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    
-    [super viewWillAppear:animated];
-    
-    if ( YES == [[NSUserDefaults standardUserDefaults] boolForKey:kUserAuthorizedDefault] ) {
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        User *user = [dataUtility fetchUser];
-        
-        if ( YES == [user.admin boolValue] ) {
-            
-            NSMutableArray *videoFrames = [dataUtility fetchCachedEntries];
-            
-            [self.cachedButton setHidden:NO];
-            [self.cachedButton addTarget:self action:@selector(launchPlayerWithCachedEntries) forControlEvents:UIControlEventTouchUpInside];
-            [self.cachedButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.cachedButton.titleLabel.font.pointSize]];
-            [self.cachedButton setTitle:[NSString stringWithFormat:@"Cache (%d)", [videoFrames count]] forState:UIControlStateNormal];
-            
-        }
-    }
 }
 
 #pragma mark - Private Methods
@@ -147,30 +121,6 @@
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:@"No videos in Personal Roll."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Dismiss"
-                                                  otherButtonTitles:nil];
-        
-        [alertView show];
-        
-    }
-    
-}
-
-- (void)launchPlayerWithCachedEntries
-{
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSMutableArray *videoFrames = [dataUtility fetchCachedEntries];
-
-    if ( [videoFrames count] ) {
-        
-        SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Cached categoryTitle:@"Cached Videos" andVideoFrames:videoFrames];
-        [self presentViewController:reel animated:YES completion:nil];
-        
-    } else {
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:@"No videos in Cache."
                                                            delegate:self
                                                   cancelButtonTitle:@"Dismiss"
                                                   otherButtonTitles:nil];

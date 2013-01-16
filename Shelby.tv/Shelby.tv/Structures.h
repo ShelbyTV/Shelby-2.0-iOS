@@ -35,7 +35,6 @@ typedef enum _CategoryType
     CategoryType_Stream,
     CategoryType_QueueRoll,
     CategoryType_PersonalRoll,
-    CategoryType_Cached
     
 } CategoryType;
 

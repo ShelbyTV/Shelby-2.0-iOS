@@ -26,7 +26,6 @@
 @synthesize userImageView = _userImageView;
 @synthesize nicknameLabel = _nicknameLabel;
 @synthesize restartPlaybackButton = _restartPlaybackButton;
-@synthesize downloadButton = _downloadButton;
 @synthesize overlayPlaybackButton = _overlayPlaybackButton;
 
 #pragma mark - Memory Management
@@ -45,7 +44,6 @@
     self.userImageView = nil;
     self.nicknameLabel = nil;
     self.restartPlaybackButton = nil;
-    self.downloadButton = nil;
     self.overlayPlaybackButton = nil;
 }
 
@@ -74,10 +72,6 @@
     // Customize thumbnail
     [self.userImageView.layer setBorderColor: [[UIColor colorWithRed:173.0f/255.0f green:173.0f/255.0f blue:173.0f/255.0f alpha:1.0f] CGColor]];
     [self.userImageView.layer setBorderWidth: 0.5];
-    
-    // Customize Dowload button
-    [self.downloadButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.downloadButton.titleLabel.font.pointSize]];
-    [self.downloadButton setHidden:YES];
 }
 
 #pragma mark - UIView Overridden Methods

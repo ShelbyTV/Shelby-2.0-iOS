@@ -7,7 +7,6 @@
 //
 
 #import "SPVideoPlayer.h"
-#import "SPCacheUtility.h"
 #import "SPVideoExtractor.h"
 #import "SPOverlayView.h"
 #import "SPVideoReel.h"
@@ -108,62 +107,16 @@
     [self setIsDownloading:NO];
 }
 
-- (void)setupDownloadButton
-{
-    
-    if ( self.isPlayable ) {
-     
-        [self.overlayView.downloadButton setHidden:NO];
-        
-        if ( _videoFrame.isCached ) { // Cached
-        
-            [self.overlayView.downloadButton setEnabled:YES];
-            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton addTarget:self action:@selector(removeFromCache) forControlEvents:UIControlEventTouchUpInside];
-            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonRemove"] forState:UIControlStateNormal];
-            
-        } else { // Not Cached
-            
-            [self.overlayView.downloadButton setEnabled:YES];
-            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton addTarget:self action:@selector(addToCache) forControlEvents:UIControlEventTouchUpInside];
-            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCache"] forState:UIControlStateNormal];
-            
-        }
-
-         if ( self.isDownloading ) { // Currently Downloading
-            
-            [self.overlayView.downloadButton setEnabled:NO];
-            [self.overlayView.downloadButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-            [self.overlayView.downloadButton setImage:[UIImage imageNamed:@"downloadButtonCaching"] forState:UIControlStateNormal];
-
-         }
-        
-    } else {
-        
-        [self.overlayView.downloadButton setHidden:YES];
-        
-    }
-}
-
 - (void)setupIndicator
 {
-    if ( self.videoReel.categoryType != CategoryType_Cached ) {
         
-        // Add indicator
-        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-        self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
-        self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-        self.indicator.hidesWhenStopped = YES;
-        [self.indicator startAnimating];
-        [self.view addSubview:self.indicator];
-        
-    } else {
-        
-        // No Indicator needed
-        
-    }
-
+    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
+    self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
+    self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.indicator.hidesWhenStopped = YES;
+    [self.indicator startAnimating];
+    [self.view addSubview:self.indicator];
+    
 }
 
 - (void)resheduleOverlayTimer
@@ -193,53 +146,6 @@
         [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
         
     }
-}
-
-
-- (void)addToCache
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSManagedObjectContext *context = [dataUtility context];
-        NSError *error = nil;
-        Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
-        
-        if ( error ) {
-            
-            DLog(@"Cache Add Error: %@", error);
-            
-        } else {
-            
-            SPCacheUtility *cacheUtility = [[SPCacheUtility alloc] init];
-            [cacheUtility addVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
-            
-        }
-    });
-}
-
-- (void)removeFromCache
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSManagedObjectContext *context = [dataUtility context];
-        NSError *error = nil;
-        Frame *videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:&error];
-        
-        if ( error ) {
-            
-            DLog(@"Cache Removal Error: %@", error);
-            
-        } else {
-            
-            SPCacheUtility *cacheUtility = [[SPCacheUtility alloc] init];
-            [cacheUtility removeVideoFrame:videoFrame fromVideoPlayer:self inReel:_videoReel];
-            
-        }
-        
-    });
-    
 }
 
 #pragma mark - Video Playback Methods
@@ -279,13 +185,6 @@
     
     // Set Flag
     [self setIsPlaying:YES];
-
-    // Add downloadButton if user is admin
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    User *user = [dataUtility fetchUser];
-    if ( YES == [user.admin boolValue] ) {
-        [self setupDownloadButton];
-    }
 }
 
 - (void)pause
@@ -419,51 +318,6 @@
     }
     
     return convertedTime;
-}
-
-#pragma mark - Video Loading Methods
-- (void)loadFromCache
-{
-    CoreDataUtility *utility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSManagedObjectContext *context = [utility context];
-    self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
-
-    NSURL *url = [[NSURL alloc] initFileURLWithPath:_videoFrame.video.cachedURL];
-    AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:url];
-    self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-    
-    // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-    self.playerLayer.frame = modifiedFrame;
-    self.playerLayer.bounds = modifiedFrame;
-    [self.view.layer addSublayer:self.playerLayer];
-    
-    // Set isPlayable Flag
-    [self setIsPlayable:YES];
-    [self.overlayView.restartPlaybackButton setHidden:YES];
-    [self.overlayView.playButton setEnabled:YES];
-    [self.overlayView.airPlayButton setEnabled:YES];
-    [self.overlayView.scrubber setEnabled:YES];
-    [self setupScrubber];
-    
-    // Add Observers
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(itemDidFinishPlaying:)
-                                                 name:AVPlayerItemDidPlayToEndTimeNotification
-                                               object:playerItem];
-
-    // Toggle video playback
-    if ( self == _videoReel.currentVideoPlayer ) {
-        
-        [self play];
-        [self resheduleOverlayTimer];
-        
-    } else {
-     
-        [self pause];
-        
-    }
 }
 
 - (void)loadVideo:(NSNotification*)notification

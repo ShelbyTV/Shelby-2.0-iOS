@@ -36,6 +36,5 @@
 - (NSMutableArray*)fetchMoreQueueRollEntriesAfterDate:(NSDate*)date;
 - (NSMutableArray*)fetchPersonalRollEntries;
 - (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate*)date;
-- (NSMutableArray*)fetchCachedEntries;
 
 @end
