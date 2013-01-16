@@ -15,7 +15,7 @@
     NSManagedObjectModel *_managedObjectModel;
 }
 
-@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) LoginViewController *loginViewController;
 @property (strong, nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
@@ -170,7 +170,7 @@
     [Crashlytics startWithAPIKey:@"84a79b7ee6f2eca13877cd17b9b9a290790f99aa"];
 }
 
-#pragma mark - Core Data Accessor Methods
+#pragma mark - Core Data Methods
 - (NSManagedObjectModel *)managedObjectModel
 {
     
@@ -214,8 +214,6 @@
     DLog(@"--- Creating new persistantStoreCoordinator ---");
     return _persistentStoreCoordinator;
 }
-
-#pragma mark - Accessor Methods
 - (NSManagedObjectContext*)context;
 {
     
@@ -242,5 +240,16 @@
     return context;
     
 }
+
+- (void)dumpAllData
+{
+    NSPersistentStoreCoordinator *coordinator =  [self persistentStoreCoordinator];
+    NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    [fileManager removeItemAtURL:store.URL error:nil];
+    [coordinator removePersistentStore:store error:nil];
+    [self setPersistentStoreCoordinator:nil];
+}
+
 
 @end

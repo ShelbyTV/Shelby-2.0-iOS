@@ -23,7 +23,8 @@
         if ( response.statusCode == 200 ) {
             
             // Empty Existing Core Data Store (if one exists)
-            [CoreDataUtility dumpAllData];
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate dumpAllData];
 
             // Empty Existing Video Cache
             [AsynchronousFreeloader removeAllImages];

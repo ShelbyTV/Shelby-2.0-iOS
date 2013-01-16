@@ -15,7 +15,6 @@
 - (id)initWithRequestType:(DataRequestType)requestType;
 
 // Public Persistance Methods
-+ (void)dumpAllData;
 - (void)removeAllVideoExtractionURLReferences;
 - (void)saveContext:(NSManagedObjectContext*)context;
 

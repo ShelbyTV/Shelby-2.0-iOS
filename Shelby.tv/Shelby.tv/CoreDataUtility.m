@@ -70,17 +70,6 @@
 }
 
 #pragma mark - Public Persistance Methods
-+ (void)dumpAllData
-{
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    NSPersistentStoreCoordinator *coordinator =  [appDelegate persistentStoreCoordinator];
-    NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    [fileManager removeItemAtURL:store.URL error:nil];
-    [coordinator removePersistentStore:store error:nil];
-    [appDelegate setPersistentStoreCoordinator:nil];
-}
-
 - (void)removeAllVideoExtractionURLReferences
 {
     // Create fetch request
