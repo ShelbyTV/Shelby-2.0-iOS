@@ -212,10 +212,9 @@
     
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSManagedObjectContext *context = [dataUtility context];
-        Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:i] objectID];
+        Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
 
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
         SPVideoItemView *itemView = [nib objectAtIndex:0];
@@ -275,14 +274,13 @@
     
     DLog(@"Received More Data!");
     
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSManagedObjectContext *context = [dataUtility context];
-    
-    
     if ( [[self.videoFrames lastObject] objectID] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
-        
+    
+        NSManagedObjectContext *context = [self.appDelegate context];
         Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil];
         NSDate *date = frame.timestamp;
+    
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         
         switch ( _categoryType ) {
                 
@@ -312,8 +310,7 @@
             for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _numberOfVideos; i++ ) {
                 
                 // videoScrollView
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                NSManagedObjectContext *context = [dataUtility context];
+                NSManagedObjectContext *context = [self.appDelegate context];
                 Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
                 
                 CGRect viewframe = self.videoScrollView.frame;
@@ -384,10 +381,9 @@
     // If videoReel is instance of Stream, store currentVideoID
     if ( self.categoryType == CategoryType_Stream ) {
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSManagedObjectContext *context = [dataUtility context];
-        NSManagedObjectID *videoFrameObjectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
-        Frame *videoFrame = (Frame*)[context existingObjectWithID:videoFrameObjectID error:nil];
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
+        Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
      
         [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -433,8 +429,7 @@
     [self.overlayView.userImageView setImage:nil];
     
     // Reference NSManageObjectContext
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSManagedObjectContext *context = [dataUtility context];
+    NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *videoFrameObjectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:videoFrameObjectID error:nil];
     

@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSTimer *nextExtractionTimer;
 @property (strong, nonatomic) NSTimer *currentExtractionTimer;
 
-
+- (NSManagedObjectContext*)context;
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
 - (void)loadYouTubeVideo:(Video *)video;
@@ -97,13 +97,20 @@ static SPVideoExtractor *sharedInstance = nil;
 }
 
 #pragma mark - Private Methods
+- (NSManagedObjectContext*)context
+{
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    return [appDelegate context];
+}
+
 - (void)extractNextVideoFromQueue
 {
     if ( ![self isExtracting] && [self.videoQueue count] ) {
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSManagedObjectContext *context = [dataUtility context];
-        Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
+        NSManagedObjectContext *context = [self context];
+        NSManagedObjectID *objectID = [[self.videoQueue objectAtIndex:0] objectID];
+        Video *video = (Video*)[context existingObjectWithID:objectID error:nil];
         [self setIsExtracting:YES];
         [self createWebView];
         
@@ -219,13 +226,14 @@ static SPVideoExtractor *sharedInstance = nil;
                     } else {
                         
                         // Update Core Data video object
-                        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
-                        NSManagedObjectContext *context = [dataUtility context];
-                        Video *video = (Video*)[context existingObjectWithID:[[self.videoQueue objectAtIndex:0] objectID] error:nil];
+                        NSManagedObjectContext *context = [self context];
+                        NSManagedObjectID *objectID = [[self.videoQueue objectAtIndex:0] objectID];
+                        Video *video = (Video*)[context existingObjectWithID:objectID error:nil];
                         [video setValue:extractedURL forKey:kCoreDataVideoExtractedURL];
-                        [dataUtility setVideoID:video.videoID];
-                        
+                       
                         // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
+                        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
+                        [dataUtility setVideoID:video.videoID];
                         [dataUtility saveContext:context];
                         
                         // Reset variables for next search

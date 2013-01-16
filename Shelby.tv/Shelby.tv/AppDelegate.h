@@ -11,6 +11,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic, readonly) NSManagedObjectContext *context;
 
 - (void)userIsAuthorized;
 - (void)logout;

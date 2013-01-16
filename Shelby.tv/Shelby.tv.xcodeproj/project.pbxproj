@@ -48,12 +48,6 @@
 		8E285DE7168124FC002A7935 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E285DE6168124FC002A7935 /* QuartzCore.framework */; };
 		8E2E2A5216A632F600F7ADCD /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2A5116A632F600F7ADCD /* Frame.m */; };
 		8E2E2A5516A632F600F7ADCD /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2E2A5416A632F600F7ADCD /* Video.m */; };
-		8E2EB826168CCA5F004B7CBD /* downloadButtonCache.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2EB820168CCA5F004B7CBD /* downloadButtonCache.png */; };
-		8E2EB827168CCA5F004B7CBD /* downloadButtonCache@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2EB821168CCA5F004B7CBD /* downloadButtonCache@2x.png */; };
-		8E2EB828168CCA5F004B7CBD /* downloadButtonCaching.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2EB822168CCA5F004B7CBD /* downloadButtonCaching.png */; };
-		8E2EB829168CCA5F004B7CBD /* downloadButtonCaching@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2EB823168CCA5F004B7CBD /* downloadButtonCaching@2x.png */; };
-		8E2EB82A168CCA5F004B7CBD /* downloadButtonRemove.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2EB824168CCA5F004B7CBD /* downloadButtonRemove.png */; };
-		8E2EB82B168CCA5F004B7CBD /* downloadButtonRemove@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2EB825168CCA5F004B7CBD /* downloadButtonRemove@2x.png */; };
 		8E405419163A3429002C8874 /* NSDate+DateFromBSONString.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE55163A286700AEF100 /* NSDate+DateFromBSONString.m */; };
 		8E405484163A3C05002C8874 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405483163A3C05002C8874 /* Conversation.m */; };
 		8E40548A163A3C06002C8874 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E405489163A3C05002C8874 /* Messages.m */; };
@@ -180,12 +174,6 @@
 		8E2E2A5116A632F600F7ADCD /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8E2E2A5316A632F600F7ADCD /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		8E2E2A5416A632F600F7ADCD /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
-		8E2EB820168CCA5F004B7CBD /* downloadButtonCache.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downloadButtonCache.png; sourceTree = "<group>"; };
-		8E2EB821168CCA5F004B7CBD /* downloadButtonCache@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downloadButtonCache@2x.png"; sourceTree = "<group>"; };
-		8E2EB822168CCA5F004B7CBD /* downloadButtonCaching.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downloadButtonCaching.png; sourceTree = "<group>"; };
-		8E2EB823168CCA5F004B7CBD /* downloadButtonCaching@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downloadButtonCaching@2x.png"; sourceTree = "<group>"; };
-		8E2EB824168CCA5F004B7CBD /* downloadButtonRemove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downloadButtonRemove.png; sourceTree = "<group>"; };
-		8E2EB825168CCA5F004B7CBD /* downloadButtonRemove@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downloadButtonRemove@2x.png"; sourceTree = "<group>"; };
 		8E405482163A3C05002C8874 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		8E405483163A3C05002C8874 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		8E405488163A3C05002C8874 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
@@ -445,12 +433,6 @@
 				8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */,
 				8E40AF6716A4B339007A66CA /* restartButton.png */,
 				8E40AF6816A4B339007A66CA /* restartButton@2x.png */,
-				8E2EB820168CCA5F004B7CBD /* downloadButtonCache.png */,
-				8E2EB821168CCA5F004B7CBD /* downloadButtonCache@2x.png */,
-				8E2EB822168CCA5F004B7CBD /* downloadButtonCaching.png */,
-				8E2EB823168CCA5F004B7CBD /* downloadButtonCaching@2x.png */,
-				8E2EB824168CCA5F004B7CBD /* downloadButtonRemove.png */,
-				8E2EB825168CCA5F004B7CBD /* downloadButtonRemove@2x.png */,
 				8E9F326F1683F4040049EECD /* scrubberBarOff.png */,
 				8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */,
 				8EB15AE21683C7CB00941572 /* airplayButtonOff.png */,
@@ -693,12 +675,6 @@
 				8E4980BC1688C94E007AF267 /* Icon-Small-50@2x.png in Resources */,
 				8E4980BD1688C94E007AF267 /* iTunesArtwork in Resources */,
 				8E4980BE1688C94E007AF267 /* iTunesArtwork@2x in Resources */,
-				8E2EB826168CCA5F004B7CBD /* downloadButtonCache.png in Resources */,
-				8E2EB827168CCA5F004B7CBD /* downloadButtonCache@2x.png in Resources */,
-				8E2EB828168CCA5F004B7CBD /* downloadButtonCaching.png in Resources */,
-				8E2EB829168CCA5F004B7CBD /* downloadButtonCaching@2x.png in Resources */,
-				8E2EB82A168CCA5F004B7CBD /* downloadButtonRemove.png in Resources */,
-				8E2EB82B168CCA5F004B7CBD /* downloadButtonRemove@2x.png in Resources */,
 				8E40AF6916A4B339007A66CA /* restartButton.png in Resources */,
 				8E40AF6A16A4B339007A66CA /* restartButton@2x.png in Resources */,
 				8E40AF6D16A4B6A7007A66CA /* infoPanel.png in Resources */,

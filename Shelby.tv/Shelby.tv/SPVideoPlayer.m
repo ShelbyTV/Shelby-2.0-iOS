@@ -13,6 +13,7 @@
 
 @interface SPVideoPlayer ()
 
+@property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) AVPlayerLayer *playerLayer;
 @property (strong, nonatomic) UIActivityIndicatorView *indicator;
 @property (strong, nonatomic) SPOverlayView *overlayView;
@@ -34,6 +35,7 @@
 @end
 
 @implementation SPVideoPlayer
+@synthesize appDelegate = _appDelegate;
 @synthesize videoFrame = _videoFrame;
 @synthesize player = _player;
 @synthesize playerLayer = _playerLayer;
@@ -56,9 +58,9 @@
 - (void)didReceiveMemoryWarning
 {
     
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSManagedObjectContext *context = [dataUtility context];
-    self.videoFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     DLog(@"MEMORY WARNING %@", _videoFrame.video.title);
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
@@ -83,6 +85,7 @@
         [self setOverlayView:overlayView];
         [self setVideoReel:videoReel];
         [self setupInitialConditions];
+        [self setAppDelegate:(AppDelegate*)[[UIApplication sharedApplication] delegate]];
         
     }
     
@@ -140,9 +143,9 @@
                                                      name:kSPVideoExtracted
                                                    object:nil];
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSManagedObjectContext *context = [dataUtility context];
-        self.videoFrame = (Frame*)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [self.videoFrame objectID];
+        self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
         [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
         
     }
@@ -205,9 +208,10 @@
 
 - (void)share
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSManagedObjectContext *context = [dataUtility context];
-    self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
     NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, _videoFrame.rollID, _videoFrame.frameID];
     NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
@@ -323,9 +327,9 @@
 - (void)loadVideo:(NSNotification*)notification
 {
 
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSManagedObjectContext *context = [dataUtility context];
-    self.videoFrame = (Frame*)[context existingObjectWithID:[self.videoFrame objectID] error:nil];
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
     Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
     

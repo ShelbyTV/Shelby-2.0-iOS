@@ -8,7 +8,6 @@
 
 @interface CoreDataUtility : NSObject
 
-@property (strong, nonatomic, readonly) NSManagedObjectContext *context;
 @property (copy, nonatomic) NSString *videoID;
 
 /// Public Methods

@@ -10,9 +10,6 @@
 #import "SPVideoExtractor.h"
 
 @interface CoreDataUtility ()
-{
-    NSManagedObjectContext *_context;
-}
 
 @property (strong ,nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) AppDelegate *appDelegate;
@@ -39,10 +36,10 @@
 @end
 
 @implementation CoreDataUtility
-@synthesize context = _context;
 @synthesize videoID = _videoID;
 @synthesize appDelegate = _appDelegate;
 @synthesize requestType = _requestType;
+@synthesize context = _context;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -56,8 +53,17 @@
 - (id)initWithRequestType:(DataRequestType)requestType
 {
     if ( self = [super init] ) {
+   
         self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        self.context = [self.appDelegate context];
         self.requestType = requestType;
+        
+        // Add observer for mergining contexts
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(mergeChanges:)
+                                                     name:NSManagedObjectContextDidSaveNotification
+                                                   object:self.context];
+        
     }
     
     return self;
@@ -101,7 +107,9 @@
 
 - (void)saveContext:(NSManagedObjectContext *)context
 {
-    
+    @synchronized(self) {
+
+        
         if ( context ) {
             
             NSError *error = nil;
@@ -118,11 +126,11 @@
                     for(NSError* detailedError in detailedErrors) {
                         DLog(@"Detailed Error: %@", [detailedError userInfo]);
                     }
-                
+                    
                 } else {
-                
+                    
                     DLog(@"%@", [error userInfo]);
-                
+                    
                 }
                 
             } else { // Success
@@ -134,17 +142,17 @@
                         NSAssert((_requestType == DataRequestType_Fetch), @"DataRequestType_Fetch should not be used when storing data!");
                         
                     } break;
-                    
+                        
                     case DataRequestType_StoreUser:{
                         
                         DLog(@"User Data Saved Successfully!");
                         [self.appDelegate userIsAuthorized];
                         
                     } break;
-                    
+                        
                     case DataRequestType_BackgroundUpdate:{
                         
-//                        DLog(@"Background Update Successful");
+                        //                        DLog(@"Background Update Successful");
                         
                     } break;
                         
@@ -176,6 +184,9 @@
                 }
             }
         }
+
+        
+    }
 }
 
 #pragma mark - Public Storage Methods
@@ -847,48 +858,6 @@
                                                             object:nil
                                                           userInfo:videoDictionary];
     }
-}
-
-#pragma mark - Accessor Methods
-- (NSManagedObjectContext*)context;
-{
-
-    if ( _context ) { // If context is already initialized, return it.
-        
-        return _context;
-        
-    } else { // Initialize context iVar (should only be called once)
-
-        NSPersistentStoreCoordinator *coordinator = [self.appDelegate persistentStoreCoordinator];
-        
-        _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        [_context setUndoManager:nil];
-        [_context setPersistentStoreCoordinator:coordinator];
-        [_context setRetainsRegisteredObjects:YES];
-        
-        // Set context with appropriate merge policy (depending on context's execution thread)
-        if ( [NSThread isMainThread] ) {
-
-            [_context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-//            DLog(@"Main Thread");
-        
-        } else {
-            
-            [_context setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
-//            DLog(@"Background Thread");
-        
-        }
-    
-    }
-    
-    // Add observer for mergining contexts
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(mergeChanges:)
-                                                 name:NSManagedObjectContextDidSaveNotification
-                                               object:_context];
-    
-    return _context;
-
 }
 
 @end

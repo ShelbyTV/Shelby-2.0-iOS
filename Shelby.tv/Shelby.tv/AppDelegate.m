@@ -215,4 +215,32 @@
     return _persistentStoreCoordinator;
 }
 
+#pragma mark - Accessor Methods
+- (NSManagedObjectContext*)context;
+{
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    
+    NSManagedObjectContext *context;
+    if ( [NSThread isMainThread] ) {
+        
+        context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        [context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
+        
+    } else {
+        
+        context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [context setMergePolicy:NSMergeByPropertyStoreTrumpMergePolicy];
+        
+    }
+    
+    // Set Properties
+    [context setUndoManager:nil];
+    [context setPersistentStoreCoordinator:coordinator];
+    [context setRetainsRegisteredObjects:YES];
+    
+    return context;
+    
+}
+
 @end
