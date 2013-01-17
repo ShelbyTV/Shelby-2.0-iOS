@@ -15,6 +15,7 @@
     NSManagedObjectModel *_managedObjectModel;
 }
 
+@property (strong, nonatomic) NSManagedObjectModel *_managedObjectModel;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) LoginViewController *loginViewController;
 @property (strong, nonatomic) NSTimer *pollAPITimer;
