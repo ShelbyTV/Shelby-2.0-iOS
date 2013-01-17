@@ -218,6 +218,7 @@
 - (NSManagedObjectContext*)context;
 {
     
+    // Initialize persistantStoreCoordinator
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     
     NSManagedObjectContext *context;
@@ -233,7 +234,7 @@
         
     }
     
-    // Set Properties
+    // Set thread-independent properties
     [context setUndoManager:nil];
     [context setPersistentStoreCoordinator:coordinator];
     [context setRetainsRegisteredObjects:YES];

@@ -96,85 +96,79 @@
 
 - (void)saveContext:(NSManagedObjectContext *)context
 {
-    @synchronized(self) {
-
+    if ( context ) {
         
-        if ( context ) {
+        NSError *error = nil;
+        
+        if( ![context save:&error] ) { // Error
             
-            NSError *error = nil;
+            DLog(@"Failed to save to data store: %@", [error localizedDescription]);
+            DLog(@"Error for Data_Request: %d", self.requestType);
             
-            if( ![context save:&error] ) { // Error
+            NSArray *detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+            
+            if( detailedErrors != nil && [detailedErrors count] > 0 ) {
                 
-                DLog(@"Failed to save to data store: %@", [error localizedDescription]);
-                DLog(@"Error for Data_Request: %d", self.requestType);
-                
-                NSArray *detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
-                
-                if( detailedErrors != nil && [detailedErrors count] > 0 ) {
-                    
-                    for(NSError* detailedError in detailedErrors) {
-                        DLog(@"Detailed Error: %@", [detailedError userInfo]);
-                    }
-                    
-                } else {
-                    
-                    DLog(@"%@", [error userInfo]);
-                    
+                for(NSError* detailedError in detailedErrors) {
+                    DLog(@"Detailed Error: %@", [detailedError userInfo]);
                 }
                 
-            } else { // Success
+            } else {
                 
-                switch (_requestType) {
-                        
-                    case DataRequestType_Fetch:{
-                        
-                        NSAssert((_requestType == DataRequestType_Fetch), @"DataRequestType_Fetch should not be used when storing data!");
-                        
-                    } break;
-                        
-                    case DataRequestType_StoreUser:{
-                        
-                        DLog(@"User Data Saved Successfully!");
-                        [self.appDelegate userIsAuthorized];
-                        
-                    } break;
-                        
-                    case DataRequestType_BackgroundUpdate:{
-                        
-                        //                        DLog(@"Background Update Successful");
-                        
-                    } break;
-                        
-                    case DataRequestType_ActionUpdate:{
-                        
-                        DLog(@"User Action Update Successful");
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kSPUserDidScrollToUpdate object:nil];
-                        });
-                        
-                    } break;
-                        
-                    case DataRequestType_VideoExtracted:{
-                        
-                        DLog(@"Video Extracted and Data Stored Successfully!");
-                        [self postNotificationVideoInContext:context];
-                        
-                    } break;
-                        
-                    case DataRequestType_StoreVideoInCache:{
-                        
-                        DLog(@"Video Stored in Cache");
-                        
-                    } break;
-                        
-                    default:
-                        break;
-                }
+                DLog(@"%@", [error userInfo]);
+                
+            }
+            
+        } else { // Success
+            
+            switch (_requestType) {
+                    
+                case DataRequestType_Fetch:{
+                    
+                    NSAssert((_requestType == DataRequestType_Fetch), @"DataRequestType_Fetch should not be used when storing data!");
+                    
+                } break;
+                    
+                case DataRequestType_StoreUser:{
+                    
+                    DLog(@"User Data Saved Successfully!");
+                    [self.appDelegate userIsAuthorized];
+                    
+                } break;
+                    
+                case DataRequestType_BackgroundUpdate:{
+                    
+                    // DLog(@"Background Update Successful");
+                    
+                } break;
+                    
+                case DataRequestType_ActionUpdate:{
+                    
+                    DLog(@"User Action Update Successful");
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kSPUserDidScrollToUpdate object:nil];
+                    });
+                    
+                } break;
+                    
+                case DataRequestType_VideoExtracted:{
+                    
+                    DLog(@"Video Extracted and Data Stored Successfully!");
+                    [self postNotificationVideoInContext:context];
+                    
+                } break;
+                    
+                case DataRequestType_StoreVideoInCache:{
+                    
+                    DLog(@"Video Stored in Cache");
+                    
+                } break;
+                    
+                default:
+                    break;
             }
         }
-
-        
     }
 }
 
@@ -608,11 +602,15 @@
 {
     
     // Merge changes into the main context on the main thread
-    [self.context performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:)
-                                   withObject:notification
-                                waitUntilDone:YES];
     
-//    DLog(@"Data Merged!");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSManagedObjectContext *mainThreadContext = [self.appDelegate context];
+        [mainThreadContext performBlock:^{
+            [mainThreadContext mergeChangesFromContextDidSaveNotification:notification];
+        }];
+
+    });
+
 }
 
 - (id)checkIfEntity:(NSString *)entityName
