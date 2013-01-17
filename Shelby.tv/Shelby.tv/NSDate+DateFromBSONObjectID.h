@@ -1,5 +1,5 @@
 //
-//  NSDate+DateFromBSONString.h
+//  NSDate+DateFromBSONObjectID.h
 //  Shelby.tv
 //
 //  Created by Arthur Ariel Sabintsev on 5/24/12.
@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDate (DateFromBSONString)
+@interface NSDate (DateFromBSONObjectID)
 
-+ (NSDate*)dataFromBSONString:(NSString*)string;
++ (NSDate*)dataFromBSONObjectID:(NSString*)identifier;
 
 @end

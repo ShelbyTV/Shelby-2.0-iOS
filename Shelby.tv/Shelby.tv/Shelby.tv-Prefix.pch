@@ -25,7 +25,7 @@
     #import "Constants.h"
 
     // Cateogories
-    #import "NSDate+DateFromBSONString.h"
+    #import "NSDate+DateFromBSONObjectID.h"
     #import "NSString+CoreDataNullTest.h"
     
     // Models
