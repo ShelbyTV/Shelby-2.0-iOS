@@ -10,6 +10,6 @@
 
 @interface NSDate (DateFromBSONString)
 
-+ (NSDate*)dataFromBSONstring:(NSString*)string;
++ (NSDate*)dataFromBSONString:(NSString*)string;
 
 @end

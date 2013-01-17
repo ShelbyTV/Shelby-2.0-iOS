@@ -237,7 +237,7 @@
                 NSString *streamID = [NSString coreDataNullTest:[[resultsArray objectAtIndex:i] valueForKey:@"id"]];
                 [stream setValue:streamID forKey:kCoreDataStreamID];
                 
-                NSDate *timestamp = [NSDate dataFromBSONstring:streamID];
+                NSDate *timestamp = [NSDate dataFromBSONString:streamID];
                 [stream setValue:timestamp forKey:kCoreDataStreamTimestamp];
                 
                 Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
@@ -660,7 +660,7 @@
     NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
     [frame setValue:rollID forKey:kCoreDataFrameRollID];
     
-    NSDate *timestamp = [NSDate dataFromBSONstring:frameID];
+    NSDate *timestamp = [NSDate dataFromBSONString:frameID];
     [frame setValue:timestamp forKey:kCoreDataFrameTimestamp];
     
     NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
@@ -745,7 +745,7 @@
         NSString *originNetwork = [NSString coreDataNullTest:[[messagesArray objectAtIndex:i] valueForKey:@"origin_network"]];
         [messages setValue:originNetwork forKey:kCoreDataMessagesOriginNetwork];
         
-        NSDate *timestamp = [NSDate dataFromBSONstring:messageID];
+        NSDate *timestamp = [NSDate dataFromBSONString:messageID];
         [messages setValue:timestamp forKey:kCoreDataMessagesTimestamp];
         
         NSString *text = [NSString coreDataNullTest:[[messagesArray objectAtIndex:i]  valueForKey:@"text"]];

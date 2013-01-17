@@ -10,11 +10,12 @@
 
 @implementation NSDate (DateFromBSONString)
 
-+ (NSDate*)dataFromBSONstring:(NSString *)string
++ (NSDate*)dataFromBSONString:(NSString *)string
 {
-    unsigned long long result;
-    [[NSScanner scannerWithString:[string substringToIndex:8]] scanHexLongLong:&result];
-    return [[NSDate alloc] initWithTimeIntervalSince1970:result];
+    NSUInteger result;
+    [[NSScanner scannerWithString:[string substringToIndex:8]] scanHexInt:&result];
+    DLog(@"Date: %@", [NSDate dateWithTimeIntervalSince1970:result]);
+    return [NSDate dateWithTimeIntervalSince1970:result];
 }
 
 @end
