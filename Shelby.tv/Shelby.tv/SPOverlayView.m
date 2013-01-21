@@ -70,8 +70,8 @@
     [self.videoTitleLabel setTextColor:kColorBlack];
     
     // Customize thumbnail
-    [self.userImageView.layer setBorderColor: [[UIColor colorWithRed:173.0f/255.0f green:173.0f/255.0f blue:173.0f/255.0f alpha:1.0f] CGColor]];
-    [self.userImageView.layer setBorderWidth: 0.5];
+    [self.userImageView.layer setBorderColor:[kColorGray CGColor]];
+    [self.userImageView.layer setBorderWidth:0.5];
 }
 
 #pragma mark - UIView Overridden Methods

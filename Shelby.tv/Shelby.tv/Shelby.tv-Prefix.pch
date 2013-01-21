@@ -16,10 +16,12 @@
     #import <CoreMedia/CoreMedia.h>
     #import <QuartzCore/QuartzCore.h>
 
+    // Analytics
+    #import <Crashlytics/Crashlytics.h>
+
     // Third Party Libraries
     #import "AFNetworking.h"
     #import "AsynchronousFreeloader.h"
-    #import <Crashlytics/Crashlytics.h>
 
     // Constants
     #import "Constants.h"
@@ -27,6 +29,7 @@
     // Cateogories
     #import "NSDate+DateFromBSONObjectID.h"
     #import "NSString+CoreDataNullTest.h"
+    #import "UIColor+ColorWithHexAndAlpha.h"
     
     // Models
     #import "AppDelegate.h"
@@ -40,9 +43,10 @@
 
 #endif
 
+#ifdef DEBUG 
 
-#ifdef DEBUG // DLog
 #   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
 #   define DLog(...)
+
 #endif
