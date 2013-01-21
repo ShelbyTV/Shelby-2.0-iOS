@@ -47,16 +47,6 @@
     return sharedInstance;
 }
 
-+ (id)allocWithZone:(NSZone *)zone
-{
-    return [self sharedInstance];
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
 #pragma mark - Public Methods
 - (void)queueVideo:(Video *)video
 {
