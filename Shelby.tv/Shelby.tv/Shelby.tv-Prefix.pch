@@ -10,11 +10,11 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <AVFoundation/AVFoundation.h>
-    #import <SystemConfiguration/SystemConfiguration.h>
-    #import <MobileCoreServices/MobileCoreServices.h>
     #import <CoreData/CoreData.h>
     #import <CoreMedia/CoreMedia.h>
+    #import <MobileCoreServices/MobileCoreServices.h>
     #import <QuartzCore/QuartzCore.h>
+    #import <SystemConfiguration/SystemConfiguration.h>
 
     // Analytics
     #import <Crashlytics/Crashlytics.h>
@@ -44,9 +44,7 @@
 #endif
 
 #ifdef DEBUG 
-
 #   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
 #   define DLog(...)
-
 #endif

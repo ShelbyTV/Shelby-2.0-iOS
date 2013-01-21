@@ -30,8 +30,14 @@
 - (void)setupVideoListScrollView;
 - (void)setupOverlayView;
 - (void)setupVideoPlayers;
+
+/// Update Methods
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
+
+/// AirPlay Methods
+- (void)externalScreenDidConnect:(NSNotification*)notification;
+- (void)externalScreenDidDisconnect:(NSNotification*)notification;
 
 @end
 
@@ -53,7 +59,9 @@
 #pragma mark - Memory Management
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidConnectNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidDisconnectNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPUserDidScrollToUpdate object:nil];
     
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -93,10 +101,10 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     [self setupVariables];
-    [self setupObservers];
     [self setupVideoScrollView];
     [self setupOverlayView];
     [self setupVideoPlayers];
+    [self setupObservers];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -117,9 +125,22 @@
 
 - (void)setupObservers
 {
+    
+    // DataSource
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dataSourceDidUpdate:)
                                                  name:kSPUserDidScrollToUpdate
+                                               object:nil];
+    
+    // AirPlay 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(externalScreenDidConnect:)
+                                                 name:UIScreenDidConnectNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(externalScreenDidDisconnect:)
+                                                 name:UIScreenDidDisconnectNotification
                                                object:nil];
 }
 
@@ -703,6 +724,21 @@
 		
         }
 	}
+}
+
+#pragma mark - AirPlay Observer Methods
+- (void)externalScreenDidConnect:(NSNotification *)notification
+{
+    DLog(@"External Screen Did Connect");
+    DLog(@"%@", notification.userInfo);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"CONNECTED" message:@"SCREEN CONNECTED" delegate:self cancelButtonTitle:@"CANCEL" otherButtonTitles:nil, nil];
+    [alertView show];
+}
+
+- (void)externalScreenDidDisconnect:(NSNotification *)notification
+{
+    DLog(@"External Screen Did Disconnect");
+    
 }
 
 #pragma mark - UIScrollViewDelegate Methods

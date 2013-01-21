@@ -203,7 +203,7 @@
 
 - (void)airPlay
 {
-
+    
 }
 
 - (void)share
@@ -349,6 +349,9 @@
         self.playerLayer.frame = modifiedFrame;
         self.playerLayer.bounds = modifiedFrame;
         [self.view.layer addSublayer:self.playerLayer];
+        
+        // Make sure video can be played via AirPlay
+        self.player.allowsExternalPlayback = YES;
         
         // Set isPlayable Flag
         [self setIsPlayable:YES];
