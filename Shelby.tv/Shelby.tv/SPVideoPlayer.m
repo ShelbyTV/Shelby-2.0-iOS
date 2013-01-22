@@ -218,7 +218,7 @@
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
-    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, _videoFrame.rollID, _videoFrame.frameID];
+    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, _videoFrame.video.providerName, _videoFrame.video.providerID, _videoFrame.frameID];
     NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
