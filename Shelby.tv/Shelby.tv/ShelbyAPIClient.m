@@ -234,4 +234,40 @@
     [operation start];
 }
 
++ (void)getQueueForSync
+{
+        
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    NSString *authToken = [user token];
+    NSString *queueRollID = [user queueRollID];
+    NSUInteger frameCount = [dataUtility fetchQueueRollCount];
+    
+    if ( frameCount ) {
+        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFramesForSync, queueRollID, authToken, frameCount]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setHTTPMethod:@"GET"];
+        
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+                [dataUtility syncQueueRoll:JSON];
+                
+            });
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            
+            DLog(@"Problem fetching Queue Roll for sync");
+            
+        }];
+        
+        [operation start];
+        
+    }
+    
+}
+
 @end

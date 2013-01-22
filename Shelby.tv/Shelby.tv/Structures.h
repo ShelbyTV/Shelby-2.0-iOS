@@ -22,6 +22,7 @@ typedef enum _DataRequestType
     DataRequestType_Fetch = 0,          // Fetch NSManagedObjects or NSManagedObjectContext
     DataRequestType_StoreUser,          // Store User
     DataRequestType_BackgroundUpdate,   // Store data from background API poller
+    DataRequestType_Sync,               // Sync Core Data Objects with Web
     DataRequestType_ActionUpdate,       // Store data from user action (e.g., when user scrolls far in stream)
     DataRequestType_VideoExtracted,     // Store video data from results of SPVideoExtractor
     DataRequestType_StoreVideoInCache   // Store video data in local cache

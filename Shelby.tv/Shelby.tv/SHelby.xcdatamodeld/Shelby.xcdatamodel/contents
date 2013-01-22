@@ -21,11 +21,11 @@
         <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="frame" inverseEntity="Conversation" syncable="YES"/>
-        <relationship name="creator" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Creator" inverseName="frame" inverseEntity="Creator" syncable="YES"/>
-        <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Roll" inverseName="frame" inverseEntity="Roll" syncable="YES"/>
-        <relationship name="stream" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stream" inverseName="frame" inverseEntity="Stream" syncable="YES"/>
-        <relationship name="video" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Conversation" inverseName="frame" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="creator" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Creator" inverseName="frame" inverseEntity="Creator" syncable="YES"/>
+        <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Roll" inverseName="frame" inverseEntity="Roll" syncable="YES"/>
+        <relationship name="stream" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Stream" inverseName="frame" inverseEntity="Stream" syncable="YES"/>
+        <relationship name="video" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
     </entity>
     <entity name="Messages" representedClassName="Messages" syncable="YES">
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
@@ -74,7 +74,7 @@
     <elements>
         <element name="Conversation" positionX="63" positionY="-81" width="128" height="105"/>
         <element name="Creator" positionX="-180" positionY="18" width="128" height="105"/>
-        <element name="Frame" positionX="-72" positionY="270" width="128" height="240"/>
+        <element name="Frame" positionX="-72" positionY="270" width="128" height="238"/>
         <element name="Messages" positionX="268" positionY="-216" width="128" height="180"/>
         <element name="Roll" positionX="270" positionY="135" width="128" height="135"/>
         <element name="Stream" positionX="331" positionY="333" width="128" height="90"/>

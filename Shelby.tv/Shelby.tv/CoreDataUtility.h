@@ -35,4 +35,7 @@
 - (NSMutableArray*)fetchPersonalRollEntries;
 - (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate*)date;
 
+// Sync Methods
+- (void)syncQueueRoll:(NSDictionary*)webResultsDictionary;
+
 @end

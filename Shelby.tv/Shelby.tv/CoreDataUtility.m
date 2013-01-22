@@ -142,6 +142,12 @@
                     
                 } break;
                     
+                case DataRequestType_Sync:{
+                    
+                    DLog(@"Core Data Sync Successful");
+                    
+                } break;
+                    
                 case DataRequestType_ActionUpdate:{
                     
                     DLog(@"User Action Update Successful");
@@ -294,7 +300,7 @@
     NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
     [request setEntity:description];
     
-    // Execute request that returns array of streamEntries
+    // Execute request that returns array of Stream entries
     NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
     
     return [streamEntries count];
@@ -315,7 +321,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user queueRollID]];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of streamEntries
+    // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
     
     return [frameResults count];
@@ -336,6 +342,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
     [request setPredicate:predicate];
     
+    // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
     
     return [frameResults count];
@@ -356,7 +363,7 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
-    // Execute request that returns array of stream entries
+    // Execute request that returns array of Stream entries
     NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
     
     NSMutableArray *frames = [[NSMutableArray alloc] init];
@@ -398,7 +405,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp < %@", date];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of stream entries
+    // Execute request that returns array of Stream entries
     NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
     
     NSMutableArray *frames = [[NSMutableArray alloc] init];
@@ -595,6 +602,52 @@
     }
     
     return frames;
+}
+
+#pragma mark - Public Sync Methods
+- (void)syncQueueRoll:(NSDictionary *)webResultsDictionary
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user queueRollID]];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+
+    // Extract frameIDs from results from Shelby's Web Database
+    NSArray *webResultsArray = [[webResultsDictionary objectForKey:@"result"] valueForKey:@"frames"];
+    NSMutableArray *webFrameIdentifiersInQueue = [[NSMutableArray alloc] init];
+    for (NSUInteger i = 0; i < [webResultsArray count]; i++) {
+        
+        NSString *frameID = [[webResultsArray objectAtIndex:i] valueForKey:@"id"];
+        [webFrameIdentifiersInQueue addObject:frameID];
+    }
+
+    // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
+    for ( NSUInteger i = 0; i < [frameResults count]; i++ ) {
+        
+        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        NSString *frameID = frame.frameID;
+        
+        // Delete object if it doesn't exist on web any more
+        if ( ![webFrameIdentifiersInQueue containsObject:frameID] ) {
+        
+            DLog(@"FrameID doesn't exist on web: %@", frameID);
+            
+            [self.context deleteObject:frame];
+            [self saveContext:self.context];
+        }
+        
+    }
 }
 
 #pragma mark - Private Persistance Methods

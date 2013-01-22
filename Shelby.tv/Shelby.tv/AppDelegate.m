@@ -56,6 +56,7 @@
         
         [self userIsAuthorized];
         
+        
     }
 
     return YES;
@@ -90,6 +91,9 @@
     [ShelbyAPIClient getStream];
     [ShelbyAPIClient getQueueRoll];
     [ShelbyAPIClient getPersonalRoll];
+    
+    // Perform Sync on Queue
+    [ShelbyAPIClient getQueueForSync];
     
     // Begin Polling API
     self.pollAPICounter = 0;
