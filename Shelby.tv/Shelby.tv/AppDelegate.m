@@ -70,6 +70,14 @@
     
     // Disable Idle Timer
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
+    // Sync Queue if suer is logged in (this may cause app to crash if user launches app on queue and videos were removed)
+    if ( [[NSUserDefaults standardUserDefaults] valueForKey:kUserAuthorizedDefault] ) {
+        
+        // Perform Sync on Queue
+        [ShelbyAPIClient getQueueForSync];
+        
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
