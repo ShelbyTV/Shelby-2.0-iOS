@@ -186,6 +186,9 @@
     [self.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
     [self.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
     
+    // Reschedule Timer
+    [self resheduleOverlayTimer];
+    
     // Set Flag
     [self setIsPlaying:YES];
 }
@@ -197,6 +200,9 @@
     [self.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
     [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
 
+    // Invalide Timer
+    [self.overlayTimer invalidate];
+    
     // Set Flag
     [self setIsPlaying:NO];
 }

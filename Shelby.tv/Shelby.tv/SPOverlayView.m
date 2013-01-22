@@ -62,7 +62,7 @@
     [self.scrubberTimeLabel setTextColor:kColorWhite];
     
     [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.videoTitleLabel.font.pointSize]];
-    [self.nicknameLabel setTextColor:kColorBlack];
+    [self.nicknameLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
     
     [self.videoCaptionLabel setTextColor:kColorBlack];
     

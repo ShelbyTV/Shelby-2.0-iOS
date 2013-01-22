@@ -457,12 +457,12 @@
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
     self.overlayView.videoCaptionLabel.text = videoFrame.video.caption;
-    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"shared by %@", videoFrame.creator.nickname];
+    self.overlayView.nicknameLabel.text = videoFrame.creator.nickname;
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
                                  forImageView:self.overlayView.userImageView
                           withPlaceholderView:infoPanelIconPlaceholderView
-                               andContentMode:UIViewContentModeScaleAspectFill];
+                               andContentMode:UIViewContentModeScaleAspectFit];
     
     // Update videoListScrollView (if _itemViews is initialized)
     if ( 0 < [self.itemViews count] ) {
