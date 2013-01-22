@@ -34,7 +34,6 @@
 /// Update Methods
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
-- (void)removeDuplicateVideos;
 
 /// AirPlay Methods
 - (void)externalScreenDidConnect:(NSNotification*)notification;
@@ -73,7 +72,7 @@
 - (void)didReceiveMemoryWarning
 {
     
-    DLog(@"MEMORY WARNING - SPVideoReel");
+    DLog(@"MEMORY WARNING");
 
     [super didReceiveMemoryWarning];
 }
@@ -100,8 +99,6 @@
     
     self.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
     self.view.backgroundColor = [UIColor blackColor];
-    
-    [self removeDuplicateVideos];
     
     [self setupVariables];
     [self setupVideoScrollView];
@@ -359,8 +356,8 @@
     
     // Reference NSManageObjectContext
     NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *videoFrameObjectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
-    Frame *videoFrame = (Frame*)[context existingObjectWithID:videoFrameObjectID error:nil];
+    NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
+    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
@@ -411,10 +408,52 @@
     
 }
 
+- (void)fetchOlderVideos:(NSUInteger)position
+{
+    if ( position >= self.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+        
+        self.fetchingOlderVideos = YES;
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        
+        switch ( _categoryType ) {
+                
+            case CategoryType_Unknown:{
+                
+            } break;
+                
+            case CategoryType_Stream:{
+                
+                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
+                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                [ShelbyAPIClient getMoreFramesInStream:numberToString];
+                
+            } break;
+                
+            case CategoryType_QueueRoll:{
+                
+                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchQueueRollCount];
+                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
+                
+            } break;
+                
+            case CategoryType_PersonalRoll:{
+                
+                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
+                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
+                
+            } break;
+                
+            default:
+                break;
+        }
+    }
+}
+
 - (void)dataSourceDidUpdate:(NSNotification*)notification
 {
-    
-    DLog(@"Received More Data!");
     
     if ( [[self.videoFrames lastObject] objectID] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
     
@@ -431,17 +470,16 @@
                 break;
                 
             case CategoryType_QueueRoll:
-                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreQueueRollEntriesAfterDate:date]];
                 break;
                 
             case CategoryType_PersonalRoll:
-                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+                [self.videoFrames addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
                 break;
                 
             default:
                 break;
         }
-        
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
@@ -505,72 +543,6 @@
         
     }
     
-}
-
-- (void)fetchOlderVideos:(NSUInteger)position
-{
-    if ( position >= self.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
-        
-        self.fetchingOlderVideos = YES;
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        
-        switch ( _categoryType ) {
-                
-            case CategoryType_Unknown:{
-                
-            } break;
-                
-            case CategoryType_Stream:{
-                
-                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
-                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                [ShelbyAPIClient getMoreFramesInStream:numberToString];
-                
-            } break;
-                
-            case CategoryType_QueueRoll:{
-                
-                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchQueueRollCount];
-                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
-                
-            } break;
-                
-            case CategoryType_PersonalRoll:{
-                
-                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
-                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
-                
-            } break;
-                
-            default:
-                break;
-        }
-    }
-}
-
-- (void)removeDuplicateVideos
-{
-    NSMutableArray *tempVideoFrames = [[NSMutableArray alloc] initWithArray:self.videoFrames];
-    
-    for (NSUInteger i = 0; i < [tempVideoFrames count]; i++) {
-        
-        Frame *frame = (Frame*)[tempVideoFrames objectAtIndex:i];
-        NSString *videoID = frame.video.videoID;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"videoID == %@", videoID];
-        NSMutableArray *filteredArray = [NSMutableArray arrayWithArray:[self.videoFrames filteredArrayUsingPredicate:predicate]];
-        
-        if ( [filteredArray count] > 1 ) {
-            
-            for (NSUInteger j = 1; j < [filteredArray count]; j++ ) {
-                
-                [self.videoFrames removeObjectIdenticalTo:[filteredArray objectAtIndex:j]];
-                
-            }
-        }
-    }
 }
 
 - (void)toggleOverlay

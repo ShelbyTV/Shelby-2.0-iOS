@@ -154,7 +154,6 @@
 #pragma mark - Video Playback Methods
 - (void)togglePlayback
 {
-    DLog(@"TOGGLE PLAYBACK");
     if ( 0.0 == self.player.rate && _isPlayable ) { // Play
         
         [self play];

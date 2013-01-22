@@ -31,6 +31,9 @@
 - (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
 // Private Fetching Methods
+- (NSMutableArray*)filterPlayableStreamFrames:(NSArray*)frames;
+- (NSMutableArray*)filterPlayableFrames:(NSArray*)frames;
+- (NSMutableArray*)removeDuplicateFrames:(NSMutableArray*)frames;
 - (void)postNotificationVideoInContext:(NSManagedObjectContext*)context;
 
 @end
@@ -366,24 +369,13 @@
     // Execute request that returns array of Stream entries
     NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
     
-    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableStreamFrames:requestResults];
     
-    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
-        
-        Stream *stream = (Stream*)[requestResults objectAtIndex:i];
-        
-        NSString *providerName = stream.frame.video.providerName;
-        NSString *providerID = stream.frame.video.providerID;
-        
-        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-        
-            [frames addObject:stream.frame];
-        
-        }
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    }
-    
-    return frames;
+    return deduplicatedFrames;
 }
 
 - (NSMutableArray*)fetchMoreStreamEntriesAfterDate:(NSDate *)date
@@ -408,24 +400,13 @@
     // Execute request that returns array of Stream entries
     NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
     
-    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableStreamFrames:requestResults];
     
-    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
-        
-        Stream *stream = (Stream*)[requestResults objectAtIndex:i];
-        
-        NSString *providerName = stream.frame.video.providerName;
-        NSString *providerID = stream.frame.video.providerID;
-        
-        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-            
-            [frames addObject:stream.frame];
-            
-        }
-        
-    }
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return frames;
+    return deduplicatedFrames;
 }
 
 - (NSMutableArray*)fetchQueueRollEntries
@@ -451,24 +432,13 @@
     // Execute request that returns array of frames in Queue Roll
     NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
-    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
     
-    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
-        
-        Frame *frame = (Frame*)[requestResults objectAtIndex:i];
-        
-        NSString *providerName = frame.video.providerName;
-        NSString *providerID = frame.video.providerID;
-        
-        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-            
-            [frames addObject:frame];
-            
-        }
-        
-    }
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return frames;    
+    return deduplicatedFrames;
 }
 
 - (NSMutableArray*)fetchMoreQueueRollEntriesAfterDate:(NSDate *)date
@@ -495,25 +465,13 @@
     // Execute request that returns array of frames in Queue Roll
     NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
-    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
     
-    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
-        
-        Frame *frame = (Frame*)[requestResults objectAtIndex:i];
-        
-        NSString *providerName = frame.video.providerName;
-        NSString *providerID = frame.video.providerID;
-        
-        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-            
-            [frames addObject:frame];
-            
-        }
-        
-    }
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return frames;
-    
+    return deduplicatedFrames;
 }
 
 - (NSMutableArray*)fetchPersonalRollEntries
@@ -539,25 +497,13 @@
     // Execute request that returns array of frames in Personal Roll
     NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
     
-    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
     
-    for (NSUInteger i = 0; i < [requestResults count]; i++ ) {
-        
-        Frame *frame = (Frame*)[requestResults objectAtIndex:i];
-        
-        NSString *providerName = frame.video.providerName;
-        NSString *providerID = frame.video.providerID;
-        
-        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-            
-            [frames addObject:frame];
-            
-        }
-        
-    }
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return frames;
-    
+    return deduplicatedFrames;
 }
 
 - (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date
@@ -582,26 +528,15 @@
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
-    NSArray *frameResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
 
-    NSMutableArray *frames = [[NSMutableArray alloc] init];
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
     
-    for (NSUInteger i = 0; i < [frameResults count]; i++ ) {
-        
-        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
-        
-        NSString *providerName = frame.video.providerName;
-        NSString *providerID = frame.video.providerID;
-        
-        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-            
-            [frames addObject:frame];
-            
-        }
-        
-    }
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return frames;
+    return deduplicatedFrames;
 }
 
 #pragma mark - Public Sync Methods
@@ -869,9 +804,75 @@
 }
 
 #pragma mark - Private Fetching Methods
+- (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames
+{
+    NSMutableArray *playableFrames = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i = 0; i < [frames count]; i++ ) {
+        
+        Stream *stream = (Stream*)[frames objectAtIndex:i];
+        
+        NSString *providerName = stream.frame.video.providerName;
+        NSString *providerID = stream.frame.video.providerID;
+        
+        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+            
+            [playableFrames addObject:stream.frame];
+            
+        }
+        
+    }
+    
+    return playableFrames;
+}
+
+- (NSMutableArray *)filterPlayableFrames:(NSArray *)frames
+{
+    NSMutableArray *playableFrames = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i = 0; i < [frames count]; i++ ) {
+        
+        Frame *frame = (Frame*)[frames objectAtIndex:i];
+        
+        NSString *providerName = frame.video.providerName;
+        NSString *providerID = frame.video.providerID;
+        
+        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+            
+            [playableFrames addObject:frame];
+            
+        }
+    }
+    
+    return playableFrames;
+}
+
+- (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames
+{
+    NSMutableArray *tempFrames = [[NSMutableArray alloc] initWithArray:frames];
+    
+    for (NSUInteger i = 0; i < [tempFrames count]; i++) {
+        
+        Frame *frame = (Frame*)[tempFrames objectAtIndex:i];
+        NSString *videoID = frame.video.videoID;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"videoID == %@", videoID];
+        NSMutableArray *filteredArray = [NSMutableArray arrayWithArray:[frames filteredArrayUsingPredicate:predicate]];
+        
+        if ( [filteredArray count] > 1 ) {
+            
+            for (NSUInteger j = 1; j < [filteredArray count]; j++ ) {
+                
+                [frames removeObjectIdenticalTo:[filteredArray objectAtIndex:j]];
+                
+            }
+        }
+    }
+
+    return frames;
+}
+
 - (void)postNotificationVideoInContext:(NSManagedObjectContext *)context
 {
-    
     if ( _videoID ) {
     
         // Create fetch request
