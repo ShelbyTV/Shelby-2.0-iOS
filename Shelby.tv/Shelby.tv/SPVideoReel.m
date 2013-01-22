@@ -34,6 +34,7 @@
 /// Update Methods
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
+- (void)removeDuplicateVideos;
 
 /// AirPlay Methods
 - (void)externalScreenDidConnect:(NSNotification*)notification;
@@ -100,6 +101,8 @@
     self.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
     self.view.backgroundColor = [UIColor blackColor];
     
+    [self removeDuplicateVideos];
+    
     [self setupVariables];
     [self setupVideoScrollView];
     [self setupOverlayView];
@@ -118,9 +121,9 @@
 - (void)setupVariables
 {
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.numberOfVideos = [self.videoFrames count];
     self.videoPlayers = [[NSMutableArray alloc] init];
     self.itemViews = [[NSMutableArray alloc] init];
-    self.numberOfVideos = [self.videoFrames count];
 }
 
 - (void)setupObservers
@@ -290,101 +293,6 @@
 
 }
 
-- (void)dataSourceDidUpdate:(NSNotification*)notification
-{
-    
-    DLog(@"Received More Data!");
-    
-    if ( [[self.videoFrames lastObject] objectID] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
-    
-        NSManagedObjectContext *context = [self.appDelegate context];
-        Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil];
-        NSDate *date = frame.timestamp;
-    
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        
-        switch ( _categoryType ) {
-                
-            case CategoryType_Stream:
-                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
-                break;
-                
-            case CategoryType_QueueRoll:
-                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
-                break;
-                
-            case CategoryType_PersonalRoll:
-                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
-                break;
-                
-            default:
-                break;
-        }
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            // Update variables
-            NSUInteger numberOfVideosBeforeUpdate = _numberOfVideos;
-            [self setNumberOfVideos:[self.videoFrames count]];
-            
-            // Update videoScrollView and videoListScrollView
-            for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _numberOfVideos; i++ ) {
-                
-                // videoScrollView
-                NSManagedObjectContext *context = [self.appDelegate context];
-                Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
-                
-                CGRect viewframe = self.videoScrollView.frame;
-                viewframe.origin.x = viewframe.size.width * i;
-                viewframe.origin.y = 0.0f;
-                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
-                                                                forVideoFrame:videoFrame
-                                                              withOverlayView:_overlayView
-                                                                  inVideoReel:self];
-                
-                // videoListScrollView
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-                SPVideoItemView *itemView = [nib objectAtIndex:0];
-                
-                CGFloat itemViewWidth = [SPVideoItemView width];
-                CGRect itemFrame = itemView.frame;
-                itemFrame.origin.x = itemViewWidth * i;
-                itemFrame.origin.y = 20.0f;
-                [itemView setFrame:itemFrame];
-                [itemView setTag:i];
-                
-                UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
-                [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
-                                             forImageView:itemView.thumbnailImageView
-                                      withPlaceholderView:videoListThumbnailPlaceholderView
-                                           andContentMode:UIViewContentModeCenter];
-                
-                // Update UI on Main Thread
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
-                    [self.videoPlayers addObject:player];
-                    [self.videoScrollView addSubview:player.view];
-                    [self.videoScrollView setNeedsDisplay];
-                    
-                    itemView.backgroundColor = [UIColor clearColor];
-                    itemView.videoTitleLabel.textColor = kColorBlack;
-                    [itemView.videoTitleLabel setText:videoFrame.video.title];
-                    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
-                    [self.itemViews addObject:itemView];
-                    [self.overlayView.videoListScrollView addSubview:itemView];
-                    [self.overlayView.videoListScrollView setNeedsDisplay];
-                    
-                    [self setFetchingOlderVideos:NO];
-                });
-                
-            }
-            
-        });
-        
-    }
-    
-}
-
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
     
@@ -405,7 +313,7 @@
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
         Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-     
+        
         [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -491,7 +399,7 @@
         }
         
     }
-        
+    
     // Load current and next 3 videos
     if ( 0 < [self.videoPlayers count] ) {
         [[SPVideoExtractor sharedInstance] emptyQueue];
@@ -499,6 +407,102 @@
         if ( position + 1 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
         if ( position + 2 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
         if ( position + 3 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
+    }
+    
+}
+
+- (void)dataSourceDidUpdate:(NSNotification*)notification
+{
+    
+    DLog(@"Received More Data!");
+    
+    if ( [[self.videoFrames lastObject] objectID] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
+    
+        NSManagedObjectContext *context = [self.appDelegate context];
+        Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil];
+        NSDate *date = frame.timestamp;
+    
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        
+        switch ( _categoryType ) {
+                
+            case CategoryType_Stream:
+                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+                break;
+                
+            case CategoryType_QueueRoll:
+                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+                break;
+                
+            case CategoryType_PersonalRoll:
+                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            // Update variables
+            NSUInteger numberOfVideosBeforeUpdate = _numberOfVideos;
+            [self setNumberOfVideos:[self.videoFrames count]];
+            
+            // Update videoScrollView and videoListScrollView
+            for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _numberOfVideos; i++ ) {
+                
+                // videoScrollView
+                NSManagedObjectContext *context = [self.appDelegate context];
+                Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
+                
+                CGRect viewframe = self.videoScrollView.frame;
+                viewframe.origin.x = viewframe.size.width * i;
+                viewframe.origin.y = 0.0f;
+                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
+                                                                forVideoFrame:videoFrame
+                                                              withOverlayView:_overlayView
+                                                                  inVideoReel:self];
+                
+                // videoListScrollView
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+                SPVideoItemView *itemView = [nib objectAtIndex:0];
+                
+                CGFloat itemViewWidth = [SPVideoItemView width];
+                CGRect itemFrame = itemView.frame;
+                itemFrame.origin.x = itemViewWidth * i;
+                itemFrame.origin.y = 20.0f;
+                [itemView setFrame:itemFrame];
+                [itemView setTag:i];
+                
+                UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
+                [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                             forImageView:itemView.thumbnailImageView
+                                      withPlaceholderView:videoListThumbnailPlaceholderView
+                                           andContentMode:UIViewContentModeCenter];
+                
+                // Update UI on Main Thread
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
+                    [self.videoPlayers addObject:player];
+                    [self.videoScrollView addSubview:player.view];
+                    [self.videoScrollView setNeedsDisplay];
+                    
+                    itemView.backgroundColor = [UIColor clearColor];
+                    itemView.videoTitleLabel.textColor = kColorBlack;
+                    [itemView.videoTitleLabel setText:videoFrame.video.title];
+                    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
+                    [self.itemViews addObject:itemView];
+                    [self.overlayView.videoListScrollView addSubview:itemView];
+                    [self.overlayView.videoListScrollView setNeedsDisplay];
+                    
+                    [self setFetchingOlderVideos:NO];
+                });
+                
+            }
+            
+        });
+        
     }
     
 }
@@ -543,6 +547,28 @@
                 
             default:
                 break;
+        }
+    }
+}
+
+- (void)removeDuplicateVideos
+{
+    NSMutableArray *tempVideoFrames = [[NSMutableArray alloc] initWithArray:self.videoFrames];
+    
+    for (NSUInteger i = 0; i < [tempVideoFrames count]; i++) {
+        
+        Frame *frame = (Frame*)[tempVideoFrames objectAtIndex:i];
+        NSString *videoID = frame.video.videoID;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"videoID == %@", videoID];
+        NSMutableArray *filteredArray = [NSMutableArray arrayWithArray:[self.videoFrames filteredArrayUsingPredicate:predicate]];
+        
+        if ( [filteredArray count] > 1 ) {
+            
+            for (NSUInteger j = 1; j < [filteredArray count]; j++ ) {
+                
+                [self.videoFrames removeObjectIdenticalTo:[filteredArray objectAtIndex:j]];
+                
+            }
         }
     }
 }
