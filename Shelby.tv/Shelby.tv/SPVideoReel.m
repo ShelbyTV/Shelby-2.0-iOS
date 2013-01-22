@@ -247,7 +247,10 @@
         
         [itemView.videoTitleLabel setText:videoFrame.video.title];
         UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
-        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL forImageView:itemView.thumbnailImageView withPlaceholderView:videoListThumbnailPlaceholderView andContentMode:UIViewContentModeCenter];
+        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                     forImageView:itemView.thumbnailImageView
+                              withPlaceholderView:videoListThumbnailPlaceholderView
+                                   andContentMode:UIViewContentModeCenter];
         [itemView setTag:i];
         
         [self.itemViews addObject:itemView];
@@ -295,6 +298,9 @@
     
     // Disable timer
     [self.currentVideoPlayer.overlayTimer invalidate];
+    
+    // Show Overlay
+    [self showOverlay];
     
     // Pause current videoPlayer
     if ( self.currentVideoPlayer.isPlayable )
@@ -492,7 +498,8 @@
                 
                 // videoScrollView
                 NSManagedObjectContext *context = [self.appDelegate context];
-                Frame *videoFrame = (Frame*)[context existingObjectWithID:[[self.videoFrames objectAtIndex:i] objectID] error:nil];
+                NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:i] objectID];
+                Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
                 
                 CGRect viewframe = self.videoScrollView.frame;
                 viewframe.origin.x = viewframe.size.width * i;
@@ -536,13 +543,9 @@
                     
                     [self setFetchingOlderVideos:NO];
                 });
-                
             }
-            
         });
-        
     }
-    
 }
 
 - (void)toggleOverlay
