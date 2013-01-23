@@ -10,10 +10,13 @@
 
 @interface SPVideoExtractor : NSObject
 
+/// Singleton Methods
++ (SPVideoExtractor*)sharedInstance;
+
+/// Video Processing Methods
 - (void)queueVideo:(Video*)video;
 - (void)emptyQueue;
 - (void)cancelRemainingExtractions;
 
-+ (SPVideoExtractor*)sharedInstance;
 
 @end

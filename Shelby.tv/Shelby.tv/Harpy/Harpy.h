@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#warning Please customize Harpy's static variables
-
 // Your AppID - found in iTunes Connect
-static NSString *appID = @"556665733";      
+static NSString *appID = @"467849037";      
 
 // Set to your region's local
 #define kCurrentLocale  @"en_US"

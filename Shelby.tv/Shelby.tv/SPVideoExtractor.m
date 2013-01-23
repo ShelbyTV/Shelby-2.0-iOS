@@ -36,11 +36,11 @@
 @synthesize currentExtractionTimer = _currentExtractionTimer;
 
 #pragma mark - Singleton Methods
-+ (SPVideoExtractor *)sharedInstance
++ (SPVideoExtractor*)sharedInstance
 {    
     static SPVideoExtractor *sharedInstance = nil;
-    static dispatch_once_t onceToken = 0;
-    dispatch_once(&onceToken, ^{
+    static dispatch_once_t extractorToken = 0;
+    dispatch_once(&extractorToken, ^{
         sharedInstance = [[super allocWithZone:NULL] init];
     });
     

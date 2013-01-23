@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-@class SPOverlayView, SPVideoReel;
+#import "SPModel.h"
 
-@interface SPVideoPlayer : UIViewController
+@interface SPVideoPlayer : UIViewController <SPVideoScrubberDelegate>
 
 @property (strong, nonatomic) Frame *videoFrame;
 @property (strong, nonatomic) AVPlayer *player;
@@ -16,27 +16,18 @@
 @property (assign, nonatomic) BOOL isDownloading;
 @property (assign, nonatomic) BOOL playbackFinished;
 @property (assign, nonatomic) BOOL isPlaying;
-@property (strong, nonatomic) NSTimer *overlayTimer;
 
-- (id)initWithBounds:(CGRect)bounds
-       forVideoFrame:(Frame*)videoFrame
-     withOverlayView:(SPOverlayView*)overlayView
-         inVideoReel:(SPVideoReel*)videoReel;
+/// Initialization Methods
+- (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame*)videoFrame;
 
-/// Video Fetching
+/// Video Fetching Methods
 - (void)queueVideo;
-- (void)resheduleOverlayTimer;
 
-/// Video Playback
+/// Video Playback Methods
 - (void)togglePlayback;
 - (void)restartPlayback;
 - (void)play;
 - (void)pause;
 - (void)share;
-
-/// Video Scrubber
-- (CMTime)elapsedDuration;
-- (void)setupScrubber;
-- (void)syncScrubber;
 
 @end

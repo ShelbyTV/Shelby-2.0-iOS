@@ -7,6 +7,7 @@
 //
 
 #import "SPVideoReel.h"
+#import "SPModel.h"
 #import "SPOverlayView.h"
 #import "SPVideoExtractor.h"
 #import "SPVideoItemView.h"
@@ -16,10 +17,10 @@
 @interface SPVideoReel ()
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) SPModel *model;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (strong, nonatomic) NSMutableArray *itemViews;
-@property (assign, nonatomic) NSUInteger currentVideo;
 @property (copy, nonatomic) NSString *categoryTitle;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL isAirPlayConnected;
@@ -38,24 +39,20 @@
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
 
-
 @end
 
 @implementation SPVideoReel
 @synthesize appDelegate = _appDelegate;
+@synthesize model = _model;
+@synthesize categoryTitle = _categoryTitle;
 @synthesize toggleOverlayGesuture = _toggleOverlayGesuture;
 @synthesize categoryType = _categoryType;
 @synthesize videoFrames = _videoFrames;
 @synthesize videoPlayers = _videoPlayers;
 @synthesize itemViews = _itemViews;
 @synthesize videoScrollView = _videoScrollView;
-@synthesize overlayView = _overlayView;
-@synthesize currentVideoPlayer = _currentVideoPlayer;
-@synthesize currentVideo = _currentVideo;
 @synthesize numberOfVideos = _numberOfVideos;
-@synthesize categoryTitle = _categoryTitle;
 @synthesize fetchingOlderVideos = _fetchingOlderVideos;
-@synthesize isAirPlayConnected = _isAirPlayConnected;
 @synthesize airPlayButton = _airPlayButton;
 
 #pragma mark - Memory Management
@@ -68,12 +65,10 @@
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility removeAllVideoExtractionURLReferences];
-    
 }
 
 - (void)didReceiveMemoryWarning
 {
-    
     DLog(@"MEMORY WARNING");
 
     [super didReceiveMemoryWarning];
@@ -126,6 +121,7 @@
 - (void)setupVariables
 {
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.model = [SPModel sharedInstance];
     self.numberOfVideos = [self.videoFrames count];
     self.videoPlayers = [[NSMutableArray alloc] init];
     self.itemViews = [[NSMutableArray alloc] init];
@@ -133,8 +129,7 @@
 
 - (void)setupObservers
 {
-    
-    // Data Source
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dataSourceDidUpdate:)
                                                  name:kSPUserDidScrollToUpdate
@@ -156,15 +151,15 @@
 - (void)setupOverlayView
 {
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
-    self.overlayView = [nib objectAtIndex:0];
-    [_overlayView.categoryTitleLabel setText:self.categoryTitle];
-    [self.view addSubview:_overlayView];
+    self.model.overlayView = [nib objectAtIndex:0];
+    [self.model.overlayView.categoryTitleLabel setText:self.categoryTitle];
+    [self.view addSubview:self.model.overlayView];
     
-    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOverlay)];
+    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self.model action:@selector(toggleOverlay)];
     [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:_toggleOverlayGesuture];
     
-    UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
+    UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self.model action:@selector(homeButtonAction:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];
 }
 
@@ -178,10 +173,7 @@
         CGRect viewframe = self.videoScrollView.frame;
         viewframe.origin.x = viewframe.size.width * i;
         viewframe.origin.y = 0.0f;
-        SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
-                                                        forVideoFrame:videoFrame
-                                                      withOverlayView:_overlayView
-                                                          inVideoReel:self];
+        SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
         
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
@@ -193,15 +185,15 @@
     // If not stream, play video in zeroeth position
     if ( self.categoryType != CategoryType_Stream ) {
         
-        self.currentVideo = 0;
-        self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
-        [self currentVideoDidChangeToVideo:_currentVideo];
+        self.model.currentVideo = 0;
+        self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
+        [self currentVideoDidChangeToVideo:self.model.currentVideo];
         
         
     } else {
         
-        self.currentVideo = 0;
-        self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
+        self.model.currentVideo = 0;
+        self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
         
         for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
             
@@ -210,13 +202,13 @@
             
             if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
              
-                self.currentVideo = i;
-                self.currentVideoPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
+                self.model.currentVideo = i;
+                self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
                 
             }
         }
         
-        [self currentVideoDidChangeToVideo:_currentVideo];
+        [self currentVideoDidChangeToVideo:self.model.currentVideo];
         
     }
 }
@@ -225,8 +217,8 @@
 {
 
     CGFloat itemViewWidth = [SPVideoItemView width];
-    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_numberOfVideos, 217.0f);
-    self.overlayView.videoListScrollView.delegate = self;
+    self.model.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_numberOfVideos, 217.0f);
+    self.model.overlayView.videoListScrollView.delegate = self;
     
     for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
         
@@ -251,27 +243,27 @@
         [itemView setTag:i];
         
         [self.itemViews addObject:itemView];
-        [self.overlayView.videoListScrollView addSubview:itemView];
-        [self.overlayView.videoListScrollView setNeedsDisplay];
+        [self.model.overlayView.videoListScrollView addSubview:itemView];
+        [self.model.overlayView.videoListScrollView setNeedsDisplay];
         
     }
 
     
     // Add visual selected state (e.g., blue background, white text) to currentVideo
-    SPVideoItemView *itemView = [self.itemViews objectAtIndex:_currentVideo];
+    SPVideoItemView *itemView = [self.itemViews objectAtIndex:self.model.currentVideo];
     itemView.backgroundColor = kColorGreen;
     itemView.videoTitleLabel.textColor = kColorBlack;
 
     // Scroll To currentVideo if self.currentVideo != 0
-    if ( 0 != _currentVideo) {
+    if ( 0 != self.model.currentVideo) {
         
-        CGFloat x = self.videoScrollView.frame.size.width * _currentVideo;
+        CGFloat x = self.videoScrollView.frame.size.width * self.model.currentVideo;
         CGFloat y = self.videoScrollView.contentOffset.y;
         [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
         
-        CGFloat itemViewX = itemView.frame.size.width * (_currentVideo-1);
-        CGFloat itemViewY = self.overlayView.videoListScrollView.contentOffset.y;
-        [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
+        CGFloat itemViewX = itemView.frame.size.width * (self.model.currentVideo-1);
+        CGFloat itemViewY = self.model.overlayView.videoListScrollView.contentOffset.y;
+        [self.model.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
         
     }
 
@@ -281,10 +273,10 @@
 {
     
     // Instantiate AirPlay button for MPVolumeView
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:_overlayView.airPlayView.bounds];
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.model.overlayView.airPlayView.bounds];
     [volumeView setShowsVolumeSlider:NO];
     [volumeView setShowsRouteButton:YES];
-    [self.overlayView.airPlayView addSubview:volumeView];
+    [self.model.overlayView.airPlayView addSubview:volumeView];
     
     for (UIView *view in volumeView.subviews) {
         
@@ -292,10 +284,6 @@
             
             self.airPlayButton = (UIButton*)view;
             
-//            [self.airPlayButton addObserver:self
-//                                 forKeyPath:@"alpha"
-//                                    options:NSKeyValueObservingOptionNew
-//                                    context:nil];
         }
     }
 }
@@ -317,24 +305,24 @@
 {
     
     // Disable timer
-    [self.currentVideoPlayer.overlayTimer invalidate];
+    [self.model.overlayTimer invalidate];
     
     // Show Overlay
-    [self showOverlay];
+    [self.model showOverlay];
     
     // Pause current videoPlayer
-    if ( self.currentVideoPlayer.isPlayable )
-        [self.currentVideoPlayer pause];
+    if ( self.model.currentVideoPlayer.isPlayable )
+        [self.model.currentVideoPlayer pause];
     
     // Reset currentVideoPlayer reference after scrolling has finished
-    self.currentVideo = position;
-    self.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
+    self.model.currentVideo = position;
+    self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
     
     // If videoReel is instance of Stream, store currentVideoID
     if ( self.categoryType == CategoryType_Stream ) {
         
         NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
+        NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:self.model.currentVideo] objectID];
         Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
         
         [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
@@ -343,54 +331,54 @@
     }
     
     // Deal with playback of current and previous video
-    if ( [self.currentVideoPlayer isPlayable] ) { // If video is loaded and playable
+    if ( [self.model.currentVideoPlayer isPlayable] ) { // If video is loaded and playable
         
-        [self.currentVideoPlayer play];
-        [self.currentVideoPlayer syncScrubber];
+        [self.model.currentVideoPlayer play];
+        [self.model.currentVideoPlayer syncScrubber];
         
-        if ( [self.currentVideoPlayer playbackFinished] ) { // If loaded video finished playing
+        if ( [self.model.currentVideoPlayer playbackFinished] ) { // If loaded video finished playing
             
-            [self.overlayView.restartPlaybackButton setHidden:NO];
-            [self.overlayView.playButton setEnabled:NO];
-            [self.overlayView.scrubber setEnabled:NO];
-            [self showOverlay];
+            [self.model.overlayView.restartPlaybackButton setHidden:NO];
+            [self.model.overlayView.playButton setEnabled:NO];
+            [self.model.overlayView.scrubber setEnabled:NO];
+            [self.model showOverlay];
             
         } else { // If loaded video didn't finish playing
             
-            [self.overlayView.restartPlaybackButton setHidden:YES];
-            [self.overlayView.playButton setEnabled:YES];
-            [self.overlayView.scrubber setEnabled:YES];
+            [self.model.overlayView.restartPlaybackButton setHidden:YES];
+            [self.model.overlayView.playButton setEnabled:YES];
+            [self.model.overlayView.scrubber setEnabled:YES];
             
         }
         
     } else { // Video is queued but not loaded
         
-        [self.overlayView.restartPlaybackButton setHidden:YES];
-        [self.overlayView.playButton setEnabled:NO];
-        [self.overlayView.scrubber setEnabled:NO];
+        [self.model.overlayView.restartPlaybackButton setHidden:YES];
+        [self.model.overlayView.playButton setEnabled:NO];
+        [self.model.overlayView.scrubber setEnabled:NO];
         
     }
     
     // Clear old values on infoCard
-    [self.overlayView.videoTitleLabel setText:nil];
-    [self.overlayView.videoCaptionLabel setText:nil];
-    [self.overlayView.nicknameLabel setText:nil];
-    [self.overlayView.userImageView setImage:nil];
+    [self.model.overlayView.videoTitleLabel setText:nil];
+    [self.model.overlayView.videoCaptionLabel setText:nil];
+    [self.model.overlayView.nicknameLabel setText:nil];
+    [self.model.overlayView.userImageView setImage:nil];
     
     // Reference NSManageObjectContext
     NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:_currentVideo] objectID];
+    NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:self.model.currentVideo] objectID];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
     // Set new values on infoPanel
-    self.overlayView.videoTitleLabel.text = videoFrame.video.title;
+    self.model.overlayView.videoTitleLabel.text = videoFrame.video.title;
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    self.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
-    self.overlayView.nicknameLabel.text = videoFrame.creator.nickname;
+    self.model.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
+    self.model.overlayView.nicknameLabel.text = videoFrame.creator.nickname;
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
-                                 forImageView:self.overlayView.userImageView
+                                 forImageView:self.model.overlayView.userImageView
                           withPlaceholderView:infoPanelIconPlaceholderView
                                andContentMode:UIViewContentModeScaleAspectFit];
     
@@ -417,7 +405,7 @@
             CGFloat itemX = itemView.frame.size.width * position;
             CGFloat itemY = 0.0f;
             
-            [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
+            [self.model.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
         }
         
     }
@@ -523,10 +511,7 @@
                 CGRect viewframe = self.videoScrollView.frame;
                 viewframe.origin.x = viewframe.size.width * i;
                 viewframe.origin.y = 0.0f;
-                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe
-                                                                forVideoFrame:videoFrame
-                                                              withOverlayView:_overlayView
-                                                                  inVideoReel:self];
+                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
                 
                 // videoListScrollView
                 NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
@@ -555,50 +540,16 @@
                     itemView.backgroundColor = [UIColor clearColor];
                     itemView.videoTitleLabel.textColor = kColorBlack;
                     [itemView.videoTitleLabel setText:videoFrame.video.title];
-                    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
+                    self.model.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
                     [self.itemViews addObject:itemView];
-                    [self.overlayView.videoListScrollView addSubview:itemView];
-                    [self.overlayView.videoListScrollView setNeedsDisplay];
+                    [self.model.overlayView.videoListScrollView addSubview:itemView];
+                    [self.model.overlayView.videoListScrollView setNeedsDisplay];
                     
                     [self setFetchingOlderVideos:NO];
                 });
             }
         });
     }
-}
-
-- (void)toggleOverlay
-{
-    if ( self.overlayView.alpha < 1.0f ) {
-        
-        [self showOverlay];
-        
-    } else {
-        
-        [self hideOverlay];
-    }
-}
-
-- (void)showOverlay
-{
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.overlayView setAlpha:1.0f];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-    }];
-}
-
-- (void)hideOverlay
-{
-    
-//    if ( NO == [self isAirPlayConnected] ) {
-        
-        [UIView animateWithDuration:0.5f animations:^{
-            [self.overlayView setAlpha:0.0f];
-            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-        }];
-        
-//    }
-
 }
 
 #pragma mark - Action Methods
@@ -658,19 +609,19 @@
 
 - (IBAction)playButtonAction:(id)sender
 {
-    [self.currentVideoPlayer togglePlayback];
+    [self.model.currentVideoPlayer togglePlayback];
 }
 
 - (IBAction)shareButtonAction:(id)sender
 {
-    [self.currentVideoPlayer share];
+    [self.model.currentVideoPlayer share];
 }
 
 - (IBAction)itemButtonAction:(id)sender
 {
 
     // Pause currentVideo Player
-    [self.currentVideoPlayer pause];
+    [self.model.currentVideoPlayer pause];
 
     // Reference SPVideoItemView from position in videoListScrollView object
     SPVideoItemView *itemView = (SPVideoItemView*)[sender superview];
@@ -691,7 +642,7 @@
 
 - (void)restartPlaybackButtonAction:(id)sender
 {
-    [self.currentVideoPlayer restartPlayback];
+    [self.model.currentVideoPlayer restartPlayback];
 }
 
 - (IBAction)beginScrubbing:(id)sender
@@ -701,7 +652,7 @@
 
 - (IBAction)scrub:(id)sender
 {
-    CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
+    CMTime playerDuration = [self.model.currentVideoPlayer elapsedDuration];
     if (CMTIME_IS_INVALID(playerDuration)) {
         return;
     }
@@ -709,11 +660,11 @@
     double duration = CMTimeGetSeconds(playerDuration);
     if (isfinite(duration)) {
         
-        float minValue = [self.overlayView.scrubber minimumValue];
-        float maxValue = [self.overlayView.scrubber maximumValue];
-        float value = [self.overlayView.scrubber value];
+        float minValue = [self.model.overlayView.scrubber minimumValue];
+        float maxValue = [self.model.overlayView.scrubber maximumValue];
+        float value = [self.model.overlayView.scrubber value];
         double time = duration * (value - minValue) / (maxValue - minValue);
-        [self.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
+        [self.model.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
     }
 }
 
@@ -722,7 +673,7 @@
     
 	if ( !_scrubberTimeObserver ) {
 		
-        CMTime playerDuration = [self.currentVideoPlayer elapsedDuration];
+        CMTime playerDuration = [self.model.currentVideoPlayer elapsedDuration];
 		if (CMTIME_IS_INVALID(playerDuration)) {
 			return;
 		}
@@ -730,21 +681,19 @@
 		double duration = CMTimeGetSeconds(playerDuration);
         
 		if (isfinite(duration)) {
-			CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
+			CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
 			double tolerance = 0.5f * duration / width;
-            __block SPVideoReel *blockSelf = self;
-			_scrubberTimeObserver = [self.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
+			_scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
                                                                                                   queue:NULL
                                                                                              usingBlock:^(CMTime time) {
-                            
+                                                                                                 
                             // Sync the scrubber to the currentVideoPlayer
-                            [blockSelf.currentVideoPlayer syncScrubber];
+                            [self.model.currentVideoPlayer syncScrubber];
                             
                             // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
-                            ( self.currentVideoPlayer.isPlaying ) ? [self.currentVideoPlayer play] : [self.currentVideoPlayer pause];
+                            ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
                                                                                                  
                               }];
-		
         }
 	}
 }
@@ -761,9 +710,9 @@
         NSInteger page = (NSInteger)floor(scrollAmount) + 1;
         
         // Toggle playback on old and new SPVideoPlayer objects
-        if ( page != self.currentVideo ) {
+        if ( page != self.model.currentVideo ) {
             
-            SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:_currentVideo];
+            SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
             [oldPlayer pause];
             
         }
@@ -771,7 +720,7 @@
         [self currentVideoDidChangeToVideo:page];
         [self fetchOlderVideos:page];
     
-    } else if ( scrollView == self.overlayView.videoListScrollView ) {
+    } else if ( scrollView == self.model.overlayView.videoListScrollView ) {
         
         // Switch the indicator when more than 50% of the previous/next page is visible
         CGFloat pageWidth = scrollView.frame.size.width;

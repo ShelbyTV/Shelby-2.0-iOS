@@ -13,12 +13,10 @@
     id _scrubberTimeObserver;
 }
 
-@property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (strong, nonatomic) id scrubberTimeObserver;
+@property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
 @property (strong, nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
-@property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
-@property (strong, nonatomic) SPOverlayView *overlayView;
 @property (assign, nonatomic) CategoryType categoryType;
 
 /// Initialization
@@ -31,9 +29,6 @@
 
 /// Update UI and perform new extractions when videoScrollView or _overlay.videoList ScrollView is scrolled
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
-- (void)toggleOverlay;
-- (void)showOverlay;
-- (void)hideOverlay;
 
 /// UI Actions
 - (IBAction)homeButtonAction:(id)sender;
