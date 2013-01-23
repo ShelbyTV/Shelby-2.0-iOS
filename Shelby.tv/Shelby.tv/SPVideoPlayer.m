@@ -157,8 +157,6 @@
 {
     // Play video and update UI
     [self.player play];
-    [self.model.overlayView.playButton setTitle:@"Pause" forState:UIControlStateNormal];
-    [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
     
     // Reschedule Timer
     [self.model rescheduleOverlayTimer];
@@ -171,8 +169,6 @@
 {
     // Pause video and update UI
     [self.player pause];
-    [self.model.overlayView.playButton setTitle:@"Play" forState:UIControlStateNormal];
-    [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
 
     // Invalide Timer
     [self.model.overlayTimer invalidate];
@@ -320,6 +316,39 @@
                                                                             }];
 }
 
+- (void)syncScrubber
+{
+	CMTime playerDuration = [self elapsedDuration];
+	if ( CMTIME_IS_INVALID(playerDuration) ) {
+        [self.model.overlayView.scrubber setValue:0.0f];
+		return;
+	}
+    
+	double duration = CMTimeGetSeconds(playerDuration);
+    
+	if ( isfinite(duration) ) {
+        
+        // Update value of scrubber (slider and label)
+		float minValue = [self.model.overlayView.scrubber minimumValue];
+		float maxValue = [self.model.overlayView.scrubber maximumValue];
+		double currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
+		double duration = CMTimeGetSeconds([self.model.currentVideoPlayer.player.currentItem duration]);
+        
+		[self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
+        [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
+        
+        // Update button state
+        if ( 0.0 == self.player.rate && _isPlayable ) {
+        
+            [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+            
+        } else { 
+            
+            [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
+        }
+	}
+}
+
 - (NSString *)convertElapsedTime:(double)currentTime andDuration:(double)duration
 {
     
@@ -355,29 +384,6 @@
     }
     
     return convertedTime;
-}
-
-- (void)syncScrubber
-{
-	CMTime playerDuration = [self elapsedDuration];
-	if ( CMTIME_IS_INVALID(playerDuration) ) {
-        
-		return;
-	}
-    
-	double duration = CMTimeGetSeconds(playerDuration);
-    
-	if ( isfinite(duration) ) {
-        
-		float minValue = [self.model.overlayView.scrubber minimumValue];
-		float maxValue = [self.model.overlayView.scrubber maximumValue];
-		double currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
-		double duration = CMTimeGetSeconds([self.model.currentVideoPlayer.player.currentItem duration]);
-        
-		[self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
-        [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
-        
-	}
 }
 
 @end
