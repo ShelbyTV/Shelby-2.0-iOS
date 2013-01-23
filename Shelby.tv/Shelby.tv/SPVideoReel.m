@@ -9,7 +9,6 @@
 #import "SPVideoReel.h"
 #import "SPModel.h"
 #import "SPOverlayView.h"
-
 #import "SPVideoItemView.h"
 #import "SPVideoPlayer.h"
 #import "MeViewController.h"
@@ -57,8 +56,7 @@
 #pragma mark - Memory Management
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidConnectNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenDidDisconnectNotification object:nil];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPUserDidScrollToUpdate object:nil];
     
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
@@ -284,6 +282,7 @@
         if ( [view isKindOfClass:[UIButton class]] ) {
             
             self.airPlayButton = (UIButton*)view;
+
             
         }
     }
@@ -478,7 +477,7 @@
 - (void)dataSourceDidUpdate:(NSNotification*)notification
 {
     
-    if ( [[self.videoFrames lastObject] objectID] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
+    if ( [self fetchingOlderVideos] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
     
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
@@ -490,27 +489,31 @@
         
         switch ( _categoryType ) {
                 
-            case CategoryType_Stream:
+            case CategoryType_Stream:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
-                break;
+            } break;
                 
-            case CategoryType_QueueRoll:
+            case CategoryType_QueueRoll:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreQueueRollEntriesAfterDate:date]];
-                break;
+            } break;
                 
-            case CategoryType_PersonalRoll:
+            case CategoryType_PersonalRoll:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
-                break;
+            } break;
                 
             default:
                 break;
         }
         
         // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
-        NSManagedObjectID *firstFrameObjectID = [[olderFramesArray objectAtIndex:0] objectID];
-        Frame *firstFrame = (Frame*)[context existingObjectWithID:firstFrameObjectID error:nil];
-        if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] )
-            [olderFramesArray removeObjectAtIndex:0];
+        Frame *firstFrame = (Frame*)[olderFramesArray objectAtIndex:0];
+        NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
+        firstFrame = (Frame*)[context existingObjectWithID:firstFrameObjectID error:nil];
+        if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
+            
+            
+            
+        }
         
         // Add deduplicated frames from olderFramesArray to videoFrames 
         [self.videoFrames addObjectsFromArray:olderFramesArray];

@@ -131,7 +131,7 @@
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(frame.size.width/2.0f, frame.size.height/2.0f, 2.0f, 2.0f)];
     self.webView.allowsInlineMediaPlayback = YES;
     self.webView.mediaPlaybackRequiresUserAction = NO;
-    self.webView.mediaPlaybackAllowsAirPlay = NO;
+    self.webView.mediaPlaybackAllowsAirPlay = YES;
     self.webView.hidden = YES;
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }

@@ -11,4 +11,3 @@
 #define kSPCurrentVideoStreamID         @"Current Video in Stream"
 #define kSPUserDidScrollToUpdate        @"User Did Scroll To Update"
 #define kSPVideoShareLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
-#define kSPAirplayConnectivity          @"AirPlay Connectivity"

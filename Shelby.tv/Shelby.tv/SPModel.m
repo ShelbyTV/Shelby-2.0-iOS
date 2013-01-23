@@ -27,7 +27,6 @@
 @synthesize videoReel = _videoReel;
 @synthesize overlayView = _overlayView;
 @synthesize overlayTimer = _overlayTimer;
-@synthesize isAirPlayConnected = _isAirPlayConnected;
 @synthesize videoScrubberDelegate = _videoScrubberDelegate;
 
 #pragma mark - Singleton Methods
@@ -58,7 +57,6 @@
     [self setVideoReel:nil];
     [self setOverlayView:nil];
     [self setOverlayTimer:nil];
-    [self setIsAirPlayConnected:NO];
     [self setVideoScrubberDelegate:nil];
 }
 
@@ -69,7 +67,7 @@
         [self.overlayTimer invalidate];
     
     
-    if ( NO == [self isAirPlayConnected] ) { // Keep SPVideoOverlay visible if airPlayIsConnected
+    if ( [self.videoReel.airPlayButton state] != 4 ) { // Keep SPVideoOverlay visible if airPlayIsConnected
     
         self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
                                                              target:[SPModel sharedInstance]
@@ -82,6 +80,7 @@
 
 - (void)toggleOverlay
 {
+    
     if ( self.overlayView.alpha < 1.0f ) {
         
         [self showOverlay];
@@ -125,10 +124,5 @@
     return [SPVideoExtractor sharedInstance];
 }
 
-// isAirPlayConnected Getter
-- (BOOL)isAirPlayConnected
-{
-    return ( 1.0f == self.videoReel.airPlayButton.alpha ) ? YES : NO;
-}
 
 @end

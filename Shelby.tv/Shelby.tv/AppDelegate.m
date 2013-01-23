@@ -43,7 +43,7 @@
     MeViewController *meVC = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
     self.window.rootViewController = meVC;
     [self.window makeKeyAndVisible];
-    
+
     // Add analytics
     [self analytics];
     

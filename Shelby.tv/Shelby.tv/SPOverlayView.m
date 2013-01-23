@@ -7,12 +7,16 @@
 //
 
 #import "SPOverlayView.h"
+#import "SPModel.h"
 
 @interface SPOverlayView ()
+
+@property (strong, nonatomic) SPModel *model;
 
 @end
 
 @implementation SPOverlayView
+@synthesize model = _model;
 @synthesize homeButton = _homeButton;
 @synthesize categoryTitleLabel = _categoryTitleLabel;
 @synthesize videoListScrollView = _videoListScrollView;
@@ -48,6 +52,10 @@
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
 {
+    
+    // Reference Model
+    self.model = [SPModel sharedInstance];
+    
     // Customize Scrubber
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
     [self.scrubber setMinimumTrackTintColor:kColorGreen];
@@ -86,6 +94,22 @@
     
     // Return NO (acts like userInteractionEnabled = NO)
     return NO;
+}
+
+#pragma mark - UIResponder Methods
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.model.overlayTimer invalidate];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.model.overlayTimer invalidate];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.model rescheduleOverlayTimer];
 }
 
 @end

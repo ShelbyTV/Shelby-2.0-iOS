@@ -34,7 +34,6 @@
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (strong, nonatomic) SPVideoReel *videoReel;
 @property (strong, nonatomic) NSTimer *overlayTimer;
-@property (assign, nonatomic) BOOL isAirPlayConnected;
 @property (weak, nonatomic, readonly) SPVideoPlayer <SPVideoScrubberDelegate> *videoScrubberDelegate;
 
 /// Singleton Methods
