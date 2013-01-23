@@ -288,7 +288,7 @@
     }
 }
 
-#pragma mark - Update Methods
+#pragma mark - Public Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 {
     SPVideoPlayer *player = [self.videoPlayers objectAtIndex:position];
@@ -301,6 +301,18 @@
 
 }
 
+- (void)currentVideoDidFinishPlayback
+{
+    NSUInteger position = self.model.currentVideo + 1;
+    CGFloat x = position * 1024.0f;
+    CGFloat y = self.videoScrollView.contentOffset.y;
+    if ( position <= (self.model.numberOfVideos-1) ) {
+        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+        [self currentVideoDidChangeToVideo:position];
+    }
+}
+
+#pragma mark - Private Update Methods
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
     
@@ -330,20 +342,20 @@
         
     }
     
-    // Deal with playback of current and previous video
-    if ( [self.model.currentVideoPlayer isPlayable] ) { // If video is loaded and playable
+    // Deal with playback methods & UI of current and previous video
+    if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
         
         [self.model.currentVideoPlayer play];
-        [self.model.currentVideoPlayer syncScrubber];
+        [self.model.videoScrubberDelegate syncScrubber];
         
-        if ( [self.model.currentVideoPlayer playbackFinished] ) { // If loaded video finished playing
+        if ( [self.model.currentVideoPlayer playbackFinished] ) { // PLayable DID finish playing
             
             [self.model.overlayView.restartPlaybackButton setHidden:NO];
             [self.model.overlayView.playButton setEnabled:NO];
             [self.model.overlayView.scrubber setEnabled:NO];
             [self.model showOverlay];
             
-        } else { // If loaded video didn't finish playing
+        } else { // Playable video DID NOT finish played
             
             [self.model.overlayView.restartPlaybackButton setHidden:YES];
             [self.model.overlayView.playButton setEnabled:YES];
@@ -351,11 +363,15 @@
             
         }
         
-    } else { // Video is queued but not loaded
+    } else { // Video IS NOT Playable
         
         [self.model.overlayView.restartPlaybackButton setHidden:YES];
         [self.model.overlayView.playButton setEnabled:NO];
         [self.model.overlayView.scrubber setEnabled:NO];
+        
+        [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+        [self.model.overlayView.scrubber setValue:0.0f];
+        [self.model.overlayView.scrubberTimeLabel setText:@"00:00:00 / 00:00:00"];
         
     }
     
@@ -391,26 +407,19 @@
             itemView.videoTitleLabel.textColor = kColorBlack;
         }
         
-        // Reference SPVideoItemView from position in videoListScrollView object
+        // Update currentVideo's SPVideoItemView object UI and position in videoListScrollView object
         SPVideoItemView *itemView = [self.itemViews objectAtIndex:position];
-        
-        // Change itemView Color to show selected state
         itemView.backgroundColor = kColorGreen;
         itemView.videoTitleLabel.textColor = kColorBlack;
-        
-        // Force scrollView and video changes
         if ( position < self.model.numberOfVideos ) {
-            
-            // Force scroll videoScrollView
             CGFloat itemX = itemView.frame.size.width * position;
             CGFloat itemY = 0.0f;
-            
             [self.model.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
         }
         
     }
     
-    // Load current and next 3 videos
+    // Queue current and next 3 videos
     if ( 0 < [self.videoPlayers count] ) {
         [self.model.videoExtractor emptyQueue];
         [self extractVideoForVideoPlayer:position]; // Load video for current visible view
@@ -419,17 +428,6 @@
         if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
     }
     
-}
-
-- (void)currentVideoDidFinishPlayback
-{
-    NSUInteger position = self.model.currentVideo + 1;
-    CGFloat x = position * 1024.0f;
-    CGFloat y = self.videoScrollView.contentOffset.y;
-    if ( position <= (self.model.numberOfVideos-1) ) {
-        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-        [self currentVideoDidChangeToVideo:position];
-    }
 }
 
 - (void)fetchOlderVideos:(NSUInteger)position
@@ -563,7 +561,7 @@
     }
 }
 
-#pragma mark - Action Methods
+#pragma mark - Public Action Methods
 - (IBAction)homeButtonAction:(id)sender
 {
     
