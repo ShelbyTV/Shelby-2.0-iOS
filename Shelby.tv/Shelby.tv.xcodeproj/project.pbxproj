@@ -48,6 +48,7 @@
 		8E40AF6D16A4B6A7007A66CA /* infoPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6B16A4B6A7007A66CA /* infoPanel.png */; };
 		8E40AF6E16A4B6A7007A66CA /* infoPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */; };
 		8E41EF2816B0554400C831A4 /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018801686695D009698B3 /* AsynchronousFreeloader.m */; };
+		8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E41EF2D16B0742400C831A4 /* BigButton.m */; };
 		8E4980AD1688C556007AF267 /* tempLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AB1688C556007AF267 /* tempLogo.png */; };
 		8E4980AE1688C556007AF267 /* tempLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AC1688C556007AF267 /* tempLogo@2x.png */; };
 		8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9616652E6E00A565BF /* MeViewController.m */; };
@@ -85,10 +86,6 @@
 		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
-		8EB15AE61683C7CC00941572 /* airplayButtonOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB15AE21683C7CB00941572 /* airplayButtonOff.png */; };
-		8EB15AE71683C7CC00941572 /* airplayButtonOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB15AE31683C7CC00941572 /* airplayButtonOff@2x.png */; };
-		8EB15AE81683C7CC00941572 /* airplayButtonOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB15AE41683C7CC00941572 /* airplayButtonOn.png */; };
-		8EB15AE91683C7CC00941572 /* airplayButtonOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB15AE51683C7CC00941572 /* airplayButtonOn@2x.png */; };
 		8EB3B18C16AF68A5008587FD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */; };
 		8EB3B19816AF9E96008587FD /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19416AF9E96008587FD /* Harpy.m */; };
 		8EB3B19916AF9E96008587FD /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19716AF9E96008587FD /* Panhandler.m */; };
@@ -173,6 +170,8 @@
 		8E40AF6816A4B339007A66CA /* restartButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "restartButton@2x.png"; sourceTree = "<group>"; };
 		8E40AF6B16A4B6A7007A66CA /* infoPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoPanel.png; sourceTree = "<group>"; };
 		8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoPanel@2x.png"; sourceTree = "<group>"; };
+		8E41EF2C16B0742400C831A4 /* BigButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigButton.h; sourceTree = "<group>"; };
+		8E41EF2D16B0742400C831A4 /* BigButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigButton.m; sourceTree = "<group>"; };
 		8E4980AB1688C556007AF267 /* tempLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempLogo.png; sourceTree = "<group>"; };
 		8E4980AC1688C556007AF267 /* tempLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tempLogo@2x.png"; sourceTree = "<group>"; };
 		8E4A92E9166558A200FF742D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -219,10 +218,6 @@
 		8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtility.m; sourceTree = "<group>"; };
 		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
 		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
-		8EB15AE21683C7CB00941572 /* airplayButtonOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplayButtonOff.png; sourceTree = "<group>"; };
-		8EB15AE31683C7CC00941572 /* airplayButtonOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airplayButtonOff@2x.png"; sourceTree = "<group>"; };
-		8EB15AE41683C7CC00941572 /* airplayButtonOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplayButtonOn.png; sourceTree = "<group>"; };
-		8EB15AE51683C7CC00941572 /* airplayButtonOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airplayButtonOn@2x.png"; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		8EB3B19316AF9E96008587FD /* Harpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harpy.h; sourceTree = "<group>"; };
 		8EB3B19416AF9E96008587FD /* Harpy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Harpy.m; sourceTree = "<group>"; };
@@ -432,10 +427,6 @@
 				8E40AF6816A4B339007A66CA /* restartButton@2x.png */,
 				8E9F326F1683F4040049EECD /* scrubberBarOff.png */,
 				8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */,
-				8EB15AE21683C7CB00941572 /* airplayButtonOff.png */,
-				8EB15AE31683C7CC00941572 /* airplayButtonOff@2x.png */,
-				8EB15AE41683C7CC00941572 /* airplayButtonOn.png */,
-				8EB15AE51683C7CC00941572 /* airplayButtonOn@2x.png */,
 				8E12B17C16825B4100657D32 /* actionButton.png */,
 				8E12B17D16825B4100657D32 /* actionButton@2x.png */,
 				8E12B18016825B4100657D32 /* videoListThumbnail.png */,
@@ -552,6 +543,8 @@
 				8EF5C350162F41B00075C35F /* Xibs */,
 				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
 				8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */,
+				8E41EF2C16B0742400C831A4 /* BigButton.h */,
+				8E41EF2D16B0742400C831A4 /* BigButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -679,10 +672,6 @@
 				8E12B18916825B4100657D32 /* videoListThumbnail@2x.png in Resources */,
 				8E12B18A16825B4100657D32 /* videoListThumbnailOverlay.png in Resources */,
 				8E12B18B16825B4100657D32 /* videoListThumbnailOverlay@2x.png in Resources */,
-				8EB15AE61683C7CC00941572 /* airplayButtonOff.png in Resources */,
-				8EB15AE71683C7CC00941572 /* airplayButtonOff@2x.png in Resources */,
-				8EB15AE81683C7CC00941572 /* airplayButtonOn.png in Resources */,
-				8EB15AE91683C7CC00941572 /* airplayButtonOn@2x.png in Resources */,
 				8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */,
 				8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */,
 				8E4980AD1688C556007AF267 /* tempLogo.png in Resources */,
@@ -762,6 +751,7 @@
 				8EB3B19816AF9E96008587FD /* Harpy.m in Sources */,
 				8EB3B19916AF9E96008587FD /* Panhandler.m in Sources */,
 				8EB3B19C16AFA7FA008587FD /* SPModel.m in Sources */,
+				8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

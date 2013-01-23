@@ -39,6 +39,7 @@
 
     // Views
     #import "TopAlignedLabel.h"
+    #import "BigButton.h"
 
     // Controllers
     #import "CoreDataUtility.h"

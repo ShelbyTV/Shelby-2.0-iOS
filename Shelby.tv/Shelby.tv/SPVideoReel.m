@@ -487,6 +487,7 @@
     
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *olderFramesArray = [[NSMutableArray alloc] init];
+        
         switch ( _categoryType ) {
                 
             case CategoryType_Stream:
