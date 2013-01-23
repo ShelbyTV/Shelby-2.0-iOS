@@ -38,14 +38,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    // Add analytics
-    [self analytics];
-    
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MeViewController *meVC = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
     self.window.rootViewController = meVC;
     [self.window makeKeyAndVisible];
+    
+    // Add analytics
+    [self analytics];
+    
     
     if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kUserAuthorizedDefault] ) {
         
@@ -180,7 +181,13 @@
 
 - (void)analytics
 {
+    
+    // Harpy - App Store Auto Update Tool
+//    [Harpy checkVersion];
+    
+    // Crashlytics - Crash Logging
     [Crashlytics startWithAPIKey:@"84a79b7ee6f2eca13877cd17b9b9a290790f99aa"];
+    
 }
 
 #pragma mark - Core Data Methods

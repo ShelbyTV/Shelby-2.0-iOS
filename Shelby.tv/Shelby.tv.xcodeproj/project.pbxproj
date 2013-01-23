@@ -11,7 +11,6 @@
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */; };
 		8E1018831686695D009698B3 /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018801686695D009698B3 /* AsynchronousFreeloader.m */; };
-		8E1018841686695D009698B3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E1018811686695D009698B3 /* README.md */; };
 		8E10189A1686696B009698B3 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018881686696B009698B3 /* AFHTTPClient.m */; };
 		8E10189B1686696B009698B3 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E10188A1686696B009698B3 /* AFHTTPRequestOperation.m */; };
 		8E10189C1686696B009698B3 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E10188C1686696B009698B3 /* AFImageRequestOperation.m */; };
@@ -91,6 +90,8 @@
 		8EB15AE81683C7CC00941572 /* airplayButtonOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB15AE41683C7CC00941572 /* airplayButtonOn.png */; };
 		8EB15AE91683C7CC00941572 /* airplayButtonOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB15AE51683C7CC00941572 /* airplayButtonOn@2x.png */; };
 		8EB3B18C16AF68A5008587FD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */; };
+		8EB3B19816AF9E96008587FD /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19416AF9E96008587FD /* Harpy.m */; };
+		8EB3B19916AF9E96008587FD /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19716AF9E96008587FD /* Panhandler.m */; };
 		8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
 		8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
 		8EBE923916AE114F0077F5BF /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE923816AE114F0077F5BF /* Frame.m */; };
@@ -111,7 +112,6 @@
 		8E0E7037163869F100BA0A24 /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
 		8E10187F1686695D009698B3 /* AsynchronousFreeloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousFreeloader.h; sourceTree = "<group>"; };
 		8E1018801686695D009698B3 /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
-		8E1018811686695D009698B3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		8E1018871686696B009698B3 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		8E1018881686696B009698B3 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		8E1018891686696B009698B3 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -223,6 +223,10 @@
 		8EB15AE41683C7CC00941572 /* airplayButtonOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplayButtonOn.png; sourceTree = "<group>"; };
 		8EB15AE51683C7CC00941572 /* airplayButtonOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airplayButtonOn@2x.png"; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		8EB3B19316AF9E96008587FD /* Harpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harpy.h; sourceTree = "<group>"; };
+		8EB3B19416AF9E96008587FD /* Harpy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Harpy.m; sourceTree = "<group>"; };
+		8EB3B19616AF9E96008587FD /* Panhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panhandler.h; sourceTree = "<group>"; };
+		8EB3B19716AF9E96008587FD /* Panhandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Panhandler.m; sourceTree = "<group>"; };
 		8EB950511665BCF100E965E0 /* SPVideoPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoPlayer.h; sourceTree = "<group>"; };
 		8EB950521665BCF100E965E0 /* SPVideoPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoPlayer.m; sourceTree = "<group>"; };
 		8EB950551665BD4000E965E0 /* SPVideoReel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoReel.h; sourceTree = "<group>"; };
@@ -307,7 +311,6 @@
 			children = (
 				8E10187F1686695D009698B3 /* AsynchronousFreeloader.h */,
 				8E1018801686695D009698B3 /* AsynchronousFreeloader.m */,
-				8E1018811686695D009698B3 /* README.md */,
 			);
 			path = "Asynchronous-Freeloader";
 			sourceTree = "<group>";
@@ -459,6 +462,8 @@
 			children = (
 				8E1018861686696B009698B3 /* AFNetworking */,
 				8E10187D1686695D009698B3 /* Asynchronous-Freeloader */,
+				8EB3B19216AF9E96008587FD /* Harpy */,
+				8EB3B19516AF9E96008587FD /* Panhandler */,
 			);
 			name = "External Libraries";
 			path = Shelby.tv;
@@ -496,6 +501,26 @@
 			);
 			name = Categories;
 			sourceTree = "<group>";
+		};
+		8EB3B19216AF9E96008587FD /* Harpy */ = {
+			isa = PBXGroup;
+			children = (
+				8EB3B19316AF9E96008587FD /* Harpy.h */,
+				8EB3B19416AF9E96008587FD /* Harpy.m */,
+			);
+			name = Harpy;
+			path = Shelby.tv/Harpy;
+			sourceTree = SOURCE_ROOT;
+		};
+		8EB3B19516AF9E96008587FD /* Panhandler */ = {
+			isa = PBXGroup;
+			children = (
+				8EB3B19616AF9E96008587FD /* Panhandler.h */,
+				8EB3B19716AF9E96008587FD /* Panhandler.m */,
+			);
+			name = Panhandler;
+			path = Shelby.tv/Panhandler;
+			sourceTree = SOURCE_ROOT;
 		};
 		8EEED7A416800DAC00D9F4CD /* Fonts */ = {
 			isa = PBXGroup;
@@ -655,7 +680,6 @@
 				8EB15AE91683C7CC00941572 /* airplayButtonOn@2x.png in Resources */,
 				8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */,
 				8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */,
-				8E1018841686695D009698B3 /* README.md in Resources */,
 				8E4980AD1688C556007AF267 /* tempLogo.png in Resources */,
 				8E4980AE1688C556007AF267 /* tempLogo@2x.png in Resources */,
 				8E40AF6916A4B339007A66CA /* restartButton.png in Resources */,
@@ -730,6 +754,8 @@
 				8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				8EBE923916AE114F0077F5BF /* Frame.m in Sources */,
 				8EBE923F16AE11690077F5BF /* Video.m in Sources */,
+				8EB3B19816AF9E96008587FD /* Harpy.m in Sources */,
+				8EB3B19916AF9E96008587FD /* Panhandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
