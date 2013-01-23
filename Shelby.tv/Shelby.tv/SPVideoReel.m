@@ -9,7 +9,7 @@
 #import "SPVideoReel.h"
 #import "SPModel.h"
 #import "SPOverlayView.h"
-#import "SPVideoExtractor.h"
+
 #import "SPVideoItemView.h"
 #import "SPVideoPlayer.h"
 #import "MeViewController.h"
@@ -35,6 +35,7 @@
 - (void)setupVideoPlayers;
 
 /// Update Methods
+- (void)currentVideoDidChangeToVideo:(NSUInteger)position;
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
 
@@ -287,7 +288,7 @@
     }
 }
 
-#pragma mark - UI and DataSource Manipulation
+#pragma mark - Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 {
     SPVideoPlayer *player = [self.videoPlayers objectAtIndex:position];
@@ -411,7 +412,7 @@
     
     // Load current and next 3 videos
     if ( 0 < [self.videoPlayers count] ) {
-        [[SPVideoExtractor sharedInstance] emptyQueue];
+        [self.model.videoExtractor emptyQueue];
         [self extractVideoForVideoPlayer:position]; // Load video for current visible view
         if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
         if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
@@ -566,51 +567,16 @@
 - (IBAction)homeButtonAction:(id)sender
 {
     
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    User *user = [dataUtility fetchUser];
-    
-    if ( YES == [user.admin boolValue] ) {
+    for ( SPVideoPlayer *player in _videoPlayers ) {
         
-        for ( SPVideoPlayer *player in _videoPlayers ) {
-            
-            // Check if videos are being downloaded
-            if ( YES == player.isDownloading ) {
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                    message:@"You are downloading at least one video, so it wouldn't be wise to dismiss this instance of SPVideoReel."
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"Dismiss"
-                                                          otherButtonTitles:nil, nil];
-                
-                [alertView show];
-                
-                return;
-                
-            } else {
-                
-                // Pause and stop residual video playback
-                [player pause];
-                
-            }
-            
-        }
-        
-    } else {
-        
-        for ( SPVideoPlayer *player in _videoPlayers ) {
-            
-            // Pause and stop residual video playback
-            [player pause];
-        
-        }
+        // Pause and stop residual video playback
+        [player pause];
         
     }
-    
 
-    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
     [self.videoPlayers removeAllObjects];
     [self.videoFrames removeAllObjects];
-    [self.model setNumberOfVideos:0];
+    [self.model teardown];
     
     MeViewController *meViewController = (MeViewController*)self.presentingViewController;
     [meViewController dismissVideoReel:self];
@@ -739,6 +705,25 @@
         [self fetchOlderVideos:page];
         
     }
+}
+
+#pragma mark - UIResponder Methods
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    DLog(@"TOUCH B");
+    [self.model.overlayTimer invalidate];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    DLog(@"TOUCH M");
+    [self.model.overlayTimer invalidate];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    DLog(@"TOUCH E");
+    [self.model rescheduleOverlayTimer];
 }
 
 @end

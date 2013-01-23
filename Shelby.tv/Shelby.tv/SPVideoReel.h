@@ -22,18 +22,15 @@
 /// Extract new video
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 
-/// Update UI and perform new extractions when videoScrollView or _overlay.videoList ScrollView is scrolled
-- (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+/// Update Methods
 - (void)currentVideoDidFinishPlayback;
 
-/// UI Actions
+/// Action Methods
 - (IBAction)homeButtonAction:(id)sender;
 - (IBAction)playButtonAction:(id)sender;
 - (IBAction)shareButtonAction:(id)sender;
 - (IBAction)itemButtonAction:(id)sender;
 - (IBAction)restartPlaybackButtonAction:(id)sender;
-
-/// Video Scrubber Methods
 - (IBAction)scrub:(id)sender;
 - (IBAction)beginScrubbing:(id)sender;
 - (IBAction)endScrubbing:(id)sender;

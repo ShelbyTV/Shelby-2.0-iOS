@@ -28,9 +28,6 @@
 - (void)loadVideo:(NSNotification*)notification;
 - (void)itemDidFinishPlaying:(NSNotification*)notification;
 
-/// Convert CMTime to NSString
-- (NSString*)convertElapsedTime:(double)currentTime andDuration:(double)duration;
-
 @end
 
 @implementation SPVideoPlayer
@@ -44,7 +41,6 @@
 @synthesize playbackFinished = _playbackFinished;
 @synthesize isPlayable = _isPlayable;
 @synthesize isPlaying = _isPlaying;
-@synthesize isDownloading = _isDownloading;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
@@ -100,7 +96,6 @@
     [self setPlaybackFinished:NO];
     [self setIsPlayable:NO];
     [self setIsPlaying:NO];
-    [self setIsDownloading:NO];
 }
 
 - (void)setupIndicator
@@ -201,43 +196,6 @@
                                                  inView:self.model.overlayView
                                permittedArrowDirections:UIPopoverArrowDirectionDown
                                                animated:YES];
-}
-
-- (NSString *)convertElapsedTime:(double)currentTime andDuration:(double)duration
-{
-    
-    NSString *convertedTime = nil;
-    NSInteger currentTimeSeconds = 0;
-    NSInteger currentTimeHours = 0;
-    NSInteger currentTimeMinutes = 0;
-    NSInteger durationSeconds = 0;
-    NSInteger durationMinutes = 0;
-    NSInteger durationHours = 0;
-    
-    // Current Time        
-    currentTimeSeconds = ((NSInteger)currentTime % 60);
-    currentTimeMinutes = (((NSInteger)currentTime / 60) % 60);
-    currentTimeHours = ((NSInteger)currentTime / 3600);
-
-    // Duration
-    durationSeconds = ((NSInteger)duration % 60);
-    durationMinutes = (((NSInteger)duration / 60) % 60);
-    durationHours = ((NSInteger)duration / 3600);
-
-    if ( durationHours > 0 ) {
-        
-        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
-        
-    } else if ( durationMinutes > 0 ) {
-        
-        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d / %.2d:%.2d", currentTimeMinutes, currentTimeSeconds, durationMinutes, durationSeconds];
-        
-    } else {
-        
-        convertedTime = [NSString stringWithFormat:@"0:%.2d / 0:%.2d", currentTimeSeconds, durationSeconds];
-    }
-    
-    return convertedTime;
 }
 
 - (void)loadVideo:(NSNotification*)notification
@@ -362,6 +320,43 @@
                                                                             }];
 }
 
+- (NSString *)convertElapsedTime:(double)currentTime andDuration:(double)duration
+{
+    
+    NSString *convertedTime = nil;
+    NSInteger currentTimeSeconds = 0;
+    NSInteger currentTimeHours = 0;
+    NSInteger currentTimeMinutes = 0;
+    NSInteger durationSeconds = 0;
+    NSInteger durationMinutes = 0;
+    NSInteger durationHours = 0;
+    
+    // Current Time
+    currentTimeSeconds = ((NSInteger)currentTime % 60);
+    currentTimeMinutes = (((NSInteger)currentTime / 60) % 60);
+    currentTimeHours = ((NSInteger)currentTime / 3600);
+    
+    // Duration
+    durationSeconds = ((NSInteger)duration % 60);
+    durationMinutes = (((NSInteger)duration / 60) % 60);
+    durationHours = ((NSInteger)duration / 3600);
+    
+    if ( durationHours > 0 ) {
+        
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
+        
+    } else if ( durationMinutes > 0 ) {
+        
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d / %.2d:%.2d", currentTimeMinutes, currentTimeSeconds, durationMinutes, durationSeconds];
+        
+    } else {
+        
+        convertedTime = [NSString stringWithFormat:@"0:%.2d / 0:%.2d", currentTimeSeconds, durationSeconds];
+    }
+    
+    return convertedTime;
+}
+
 - (void)syncScrubber
 {
 	CMTime playerDuration = [self elapsedDuration];
@@ -383,22 +378,6 @@
         [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
         
 	}
-}
-
-#pragma mark - UIResponder Methods
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.model.overlayTimer invalidate];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.model.overlayTimer invalidate];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.model rescheduleOverlayTimer];
 }
 
 @end

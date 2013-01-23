@@ -7,6 +7,7 @@
 //
 
 #import "SPModel.h"
+#import "SPVideoExtractor.h"
 #import "SPOverlayView.h"
 #import "SPVideoReel.h"
 #import "SPVideoPlayer.h"
@@ -22,6 +23,7 @@
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize currentVideo = _currentVideo;
 @synthesize currentVideoPlayer = _currentVideoPlayer;
+@synthesize videoExtractor = _videoExtractor;
 @synthesize videoReel = _videoReel;
 @synthesize overlayView = _overlayView;
 @synthesize overlayTimer = _overlayTimer;
@@ -41,8 +43,14 @@
 }
 
 #pragma mark - Public Methods
-- (void)cleanup
++ (SPVideoExtractor*)videoExtractor
 {
+    return [SPVideoExtractor sharedInstance];
+}
+
+- (void)teardown
+{
+    [self.videoExtractor cancelRemainingExtractions];
     [self setScrubberTimeObserver:nil];
     [self setNumberOfVideos:0];
     [self setCurrentVideo:0];
@@ -102,23 +110,29 @@
     
 }
 
-#pragma mark - SPVideoScrubberDelegate Methods
-- (CMTime)elapsedDuration
-{
-    return [self.videoScrubberDelegate elapsedDuration];
-}
-
-- (void)setupScrubber
-{
-    [self.videoScrubberDelegate setupScrubber];
-}
-
-- (void)syncScrubber
-{
-    [self.videoScrubberDelegate syncScrubber];
-}
+//#pragma mark - SPVideoScrubberDelegate Methods
+//- (CMTime)elapsedDuration
+//{
+//    return [self.videoScrubberDelegate elapsedDuration];
+//}
+//
+//- (void)setupScrubber
+//{
+//    [self.videoScrubberDelegate setupScrubber];
+//}
+//
+//- (void)syncScrubber
+//{
+//    [self.videoScrubberDelegate syncScrubber];
+//}
 
 #pragma mark - Accessor Methods
+// videoExtractor
+- (SPVideoExtractor*)videoExtractor
+{
+    return [SPVideoExtractor sharedInstance];
+}
+
 // currentVideoPlayer
 - (void)setCurrentVideoPlayer:(SPVideoPlayer *)currentVideoPlayer
 {

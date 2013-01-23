@@ -6,19 +6,22 @@
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "SPVideoExtractor.h"
 
-@class SPVideoPlayer, SPVideoReel, SPOverlayView;
+@class SPOverlayView;
+@class SPVideoPlayer;
+@class SPVideoReel;
 
 @protocol SPVideoScrubberDelegate <NSObject>
 
 - (CMTime)elapsedDuration;
 - (void)setupScrubber;
 - (void)syncScrubber;
+- (NSString*)convertElapsedTime:(double)currentTime andDuration:(double)duration;
 
 @end
 
-@interface SPModel : NSObject <SPVideoScrubberDelegate>
+@interface SPModel : NSObject
 {
     id _scrubberTimeObserver;
 }
@@ -26,9 +29,10 @@
 @property (strong, nonatomic) id scrubberTimeObserver;
 @property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (assign, nonatomic) NSUInteger currentVideo;
+@property (strong, nonatomic, readonly) SPVideoExtractor *videoExtractor;
+@property (strong, nonatomic) SPOverlayView *overlayView;
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (strong, nonatomic) SPVideoReel *videoReel;
-@property (strong, nonatomic) SPOverlayView *overlayView;
 @property (strong, nonatomic) NSTimer *overlayTimer;
 @property (assign, nonatomic) BOOL isAirPlayConnected;
 @property (weak, nonatomic, readonly) SPVideoPlayer <SPVideoScrubberDelegate> *videoScrubberDelegate;
@@ -36,8 +40,8 @@
 /// Singleton Methods
 + (SPModel*)sharedInstance;
 
-/// Cleanup Methods
-- (void)cleanup;
+/// Destruction Methods
+- (void)teardown;
 
 /// UI Methods
 - (void)rescheduleOverlayTimer;

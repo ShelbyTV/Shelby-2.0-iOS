@@ -18,5 +18,4 @@
 - (void)emptyQueue;
 - (void)cancelRemainingExtractions;
 
-
 @end
