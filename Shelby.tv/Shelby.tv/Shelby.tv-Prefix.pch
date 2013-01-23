@@ -12,6 +12,7 @@
     #import <AVFoundation/AVFoundation.h>
     #import <CoreData/CoreData.h>
     #import <CoreMedia/CoreMedia.h>
+    #import <MediaPlayer/MediaPlayer.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <QuartzCore/QuartzCore.h>
     #import <SystemConfiguration/SystemConfiguration.h>

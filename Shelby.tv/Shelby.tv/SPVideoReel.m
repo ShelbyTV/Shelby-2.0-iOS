@@ -22,6 +22,8 @@
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (copy, nonatomic) NSString *categoryTitle;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
+@property (assign, nonatomic) BOOL isAirPlayConnected;
+@property (strong, nonatomic) UIButton *airPlayButton;
 
 /// Setup Methods
 - (void)setupVariables;
@@ -29,6 +31,7 @@
 - (void)setupVideoScrollView;
 - (void)setupVideoListScrollView;
 - (void)setupOverlayView;
+- (void)setupAirPlay;
 - (void)setupVideoPlayers;
 
 /// Update Methods
@@ -36,8 +39,7 @@
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
 
 /// AirPlay Methods
-- (void)externalScreenDidConnect:(NSNotification*)notification;
-- (void)externalScreenDidDisconnect:(NSNotification*)notification;
+- (void)airPlayConnectivityDidChange:(NSNotification*)notification;
 
 @end
 
@@ -55,6 +57,8 @@
 @synthesize numberOfVideos = _numberOfVideos;
 @synthesize categoryTitle = _categoryTitle;
 @synthesize fetchingOlderVideos = _fetchingOlderVideos;
+@synthesize isAirPlayConnected = _isAirPlayConnected;
+@synthesize airPlayButton = _airPlayButton;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -107,6 +111,12 @@
     [self setupObservers];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setupAirPlay];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -126,21 +136,15 @@
 - (void)setupObservers
 {
     
-    // DataSource
+    // Data Source
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dataSourceDidUpdate:)
                                                  name:kSPUserDidScrollToUpdate
                                                object:nil];
     
-    // AirPlay 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(externalScreenDidConnect:)
-                                                 name:UIScreenDidConnectNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(externalScreenDidDisconnect:)
-                                                 name:UIScreenDidDisconnectNotification
+                                             selector:@selector(airPlayConnectivityDidChange:)
+                                                 name:kSPAirplayConnectivity
                                                object:nil];
 }
 
@@ -280,6 +284,29 @@
 
 }
 
+- (void)setupAirPlay
+{
+    
+    // Instantiate AirPlay button for MPVolumeView
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:_overlayView.airPlayView.bounds];
+    [volumeView setShowsVolumeSlider:NO];
+    [volumeView setShowsRouteButton:YES];
+    [self.overlayView.airPlayView addSubview:volumeView];
+    
+    for (UIView *view in volumeView.subviews) {
+        
+        if ([view isKindOfClass:[UIButton class]]) {
+            
+            self.airPlayButton = (UIButton*)view;
+            
+            [self.airPlayButton addObserver:self
+                                 forKeyPath:@"alpha"
+                                    options:NSKeyValueObservingOptionNew
+                                    context:nil];
+        }
+    }
+}
+
 #pragma mark - UI and DataSource Manipulation
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 {
@@ -332,7 +359,7 @@
             
             [self.overlayView.restartPlaybackButton setHidden:NO];
             [self.overlayView.playButton setEnabled:NO];
-            [self.overlayView.airPlayButton setEnabled:NO];
+//            [self.overlayView.airPlayButton setEnabled:NO];
             [self.overlayView.scrubber setEnabled:NO];
             [self showOverlay];
             
@@ -340,7 +367,7 @@
             
             [self.overlayView.restartPlaybackButton setHidden:YES];
             [self.overlayView.playButton setEnabled:YES];
-            [self.overlayView.airPlayButton setEnabled:YES];
+//            [self.overlayView.airPlayButton setEnabled:YES];
             [self.overlayView.scrubber setEnabled:YES];
             
         }
@@ -349,7 +376,7 @@
         
         [self.overlayView.restartPlaybackButton setHidden:YES];
         [self.overlayView.playButton setEnabled:NO];
-        [self.overlayView.airPlayButton setEnabled:NO];
+//        [self.overlayView.airPlayButton setEnabled:NO];
         [self.overlayView.scrubber setEnabled:NO];
         
     }
@@ -634,11 +661,6 @@
     [self.currentVideoPlayer togglePlayback];
 }
 
-- (IBAction)airplayButtonAction:(id)sender
-{
-    [self.currentVideoPlayer airPlay];
-}
-
 - (IBAction)shareButtonAction:(id)sender
 {
     [self.currentVideoPlayer share];
@@ -727,19 +749,37 @@
 	}
 }
 
-#pragma mark - AirPlay Observer Methods
-- (void)externalScreenDidConnect:(NSNotification *)notification
+#pragma mark - AirPlay Methods
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    DLog(@"External Screen Did Connect");
-    DLog(@"%@", notification.userInfo);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"CONNECTED" message:@"SCREEN CONNECTED" delegate:self cancelButtonTitle:@"CANCEL" otherButtonTitles:nil, nil];
-    [alertView show];
+    
+    if ( object == _airPlayButton ) {
+    
+        BOOL airPlayButtonState = [[change valueForKey:NSKeyValueChangeNewKey] floatValue] == 1.0f;
+        
+        if ( airPlayButtonState != _isAirPlayConnected ) {
+        
+            self.isAirPlayConnected = airPlayButtonState;
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSPAirplayConnectivity object:self];
+        
+        }
+    }
 }
 
-- (void)externalScreenDidDisconnect:(NSNotification *)notification
+- (void)airPlayConnectivityDidChange:(NSNotification *)notification
 {
-    DLog(@"External Screen Did Disconnect");
-    
+    if ( self.isAirPlayConnected ) {
+        DLog(@"Connected");
+        [self.currentVideoPlayer.overlayTimer invalidate];
+        [self showOverlay];
+        
+    } else {
+        
+        [self.currentVideoPlayer resheduleOverlayTimer];
+        [self showOverlay];
+        
+    }
 }
 
 #pragma mark - UIScrollViewDelegate Methods

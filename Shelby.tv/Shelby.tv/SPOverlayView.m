@@ -18,7 +18,7 @@
 @synthesize videoListScrollView = _videoListScrollView;
 @synthesize shareButton = _shareButton;
 @synthesize playButton = _playButton;
-@synthesize airPlayButton = _airPlayButton;
+@synthesize airPlayView = _airPlayView;
 @synthesize scrubber = _scrubber;
 @synthesize scrubberTimeLabel = _scrubberTimeLabel;
 @synthesize videoTitleLabel = _videoTitleLabel;
@@ -35,7 +35,7 @@
     self.videoListScrollView = nil;
     self.shareButton = nil;
     self.playButton = nil;
-    self.airPlayButton = nil;
+    self.airPlayView = nil;
     self.scrubber = nil;
     self.scrubberTimeLabel = nil;
     self.videoTitleLabel = nil;

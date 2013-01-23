@@ -38,7 +38,6 @@
 /// UI Actions
 - (IBAction)homeButtonAction:(id)sender;
 - (IBAction)playButtonAction:(id)sender;
-- (IBAction)airplayButtonAction:(id)sender;
 - (IBAction)shareButtonAction:(id)sender;
 - (IBAction)itemButtonAction:(id)sender;
 - (IBAction)restartPlaybackButtonAction:(id)sender;

@@ -25,13 +25,13 @@
 
 /// Video Fetching
 - (void)queueVideo;
+- (void)resheduleOverlayTimer;
 
 /// Video Playback
 - (void)togglePlayback;
 - (void)restartPlayback;
 - (void)play;
 - (void)pause;
-- (void)airPlay;
 - (void)share;
 
 /// Video Scrubber
