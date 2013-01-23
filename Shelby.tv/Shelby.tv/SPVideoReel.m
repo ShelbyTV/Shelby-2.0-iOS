@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) SPModel *model;
+@property (strong, nonatomic) UIScrollView *videoScrollView;
 @property (strong, nonatomic) NSMutableArray *videoFrames;
 @property (strong, nonatomic) NSMutableArray *videoPlayers;
 @property (strong, nonatomic) NSMutableArray *itemViews;
@@ -49,7 +50,6 @@
 @synthesize videoPlayers = _videoPlayers;
 @synthesize itemViews = _itemViews;
 @synthesize videoScrollView = _videoScrollView;
-@synthesize numberOfVideos = _numberOfVideos;
 @synthesize fetchingOlderVideos = _fetchingOlderVideos;
 @synthesize airPlayButton = _airPlayButton;
 
@@ -120,7 +120,8 @@
 {
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.model = [SPModel sharedInstance];
-    self.numberOfVideos = [self.videoFrames count];
+    self.model.videoReel = self;
+    self.model.numberOfVideos = [self.videoFrames count];
     self.videoPlayers = [[NSMutableArray alloc] init];
     self.itemViews = [[NSMutableArray alloc] init];
 }
@@ -137,7 +138,7 @@
 - (void)setupVideoScrollView
 {
     self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.videoScrollView.contentSize = CGSizeMake(1024.0f*_numberOfVideos, 768.0f);
+    self.videoScrollView.contentSize = CGSizeMake(1024.0f*self.model.numberOfVideos, 768.0f);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;
     self.videoScrollView.showsHorizontalScrollIndicator = NO;
@@ -164,7 +165,7 @@
 - (void)setupVideoPlayers
 {
     
-    for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
+    for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
         
         Frame *videoFrame = [self.videoFrames objectAtIndex:i];
 
@@ -193,7 +194,7 @@
         self.model.currentVideo = 0;
         self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
         
-        for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
+        for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
             
             Frame *videoFrame = [self.videoFrames objectAtIndex:i];
             NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kSPCurrentVideoStreamID];
@@ -215,10 +216,10 @@
 {
 
     CGFloat itemViewWidth = [SPVideoItemView width];
-    self.model.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_numberOfVideos, 217.0f);
+    self.model.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*self.model.numberOfVideos, 217.0f);
     self.model.overlayView.videoListScrollView.delegate = self;
     
-    for ( NSUInteger i = 0; i < _numberOfVideos; i++ ) {
+    for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
         
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:i] objectID];
@@ -291,7 +292,7 @@
 {
     SPVideoPlayer *player = [self.videoPlayers objectAtIndex:position];
     
-    if ( (position >= _numberOfVideos) ) {
+    if ( (position >= self.model.numberOfVideos) ) {
         return;
     } else {
        [player queueVideo];
@@ -309,7 +310,7 @@
     [self.model showOverlay];
     
     // Pause current videoPlayer
-    if ( self.model.currentVideoPlayer.isPlayable )
+    if ( [self.model.currentVideoPlayer isPlayable] )
         [self.model.currentVideoPlayer pause];
     
     // Reset currentVideoPlayer reference after scrolling has finished
@@ -397,7 +398,7 @@
         itemView.videoTitleLabel.textColor = kColorBlack;
         
         // Force scrollView and video changes
-        if ( position < self.numberOfVideos ) {
+        if ( position < self.model.numberOfVideos ) {
             
             // Force scroll videoScrollView
             CGFloat itemX = itemView.frame.size.width * position;
@@ -412,16 +413,27 @@
     if ( 0 < [self.videoPlayers count] ) {
         [[SPVideoExtractor sharedInstance] emptyQueue];
         [self extractVideoForVideoPlayer:position]; // Load video for current visible view
-        if ( position + 1 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
-        if ( position + 2 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
-        if ( position + 3 < self.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
+        if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
+        if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
+        if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
     }
     
 }
 
+- (void)currentVideoDidFinishPlayback
+{
+    NSUInteger position = self.model.currentVideo + 1;
+    CGFloat x = position * 1024.0f;
+    CGFloat y = self.videoScrollView.contentOffset.y;
+    if ( position <= (self.model.numberOfVideos-1) ) {
+        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+        [self currentVideoDidChangeToVideo:position];
+    }
+}
+
 - (void)fetchOlderVideos:(NSUInteger)position
 {
-    if ( position >= self.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+    if ( position >= self.model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
         
         self.fetchingOlderVideos = YES;
         
@@ -495,11 +507,11 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             // Update variables
-            NSUInteger numberOfVideosBeforeUpdate = _numberOfVideos;
-            [self setNumberOfVideos:[self.videoFrames count]];
+            NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
+            self.model.numberOfVideos = [self.videoFrames count];
             
             // Update videoScrollView and videoListScrollView
-            for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _numberOfVideos; i++ ) {
+            for ( NSUInteger i = numberOfVideosBeforeUpdate; i < self.model.numberOfVideos; i++ ) {
                 
                 // videoScrollView
                 NSManagedObjectContext *context = [self.appDelegate context];
@@ -598,7 +610,7 @@
     [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
     [self.videoPlayers removeAllObjects];
     [self.videoFrames removeAllObjects];
-    [self setNumberOfVideos:0];
+    [self.model setNumberOfVideos:0];
     
     MeViewController *meViewController = (MeViewController*)self.presentingViewController;
     [meViewController dismissVideoReel:self];
@@ -629,7 +641,7 @@
     CGFloat videoX = 1024 * position;
     CGFloat videoY = self.videoScrollView.contentOffset.y;
     
-    if ( position < self.numberOfVideos ) {
+    if ( position < self.model.numberOfVideos ) {
         [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
     }
     

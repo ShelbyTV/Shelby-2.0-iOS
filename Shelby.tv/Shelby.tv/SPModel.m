@@ -19,6 +19,7 @@
 
 @implementation SPModel
 @synthesize scrubberTimeObserver = _scrubberTimeObserver;
+@synthesize numberOfVideos = _numberOfVideos;
 @synthesize currentVideo = _currentVideo;
 @synthesize currentVideoPlayer = _currentVideoPlayer;
 @synthesize videoReel = _videoReel;
@@ -43,6 +44,7 @@
 - (void)cleanup
 {
     [self setScrubberTimeObserver:nil];
+    [self setNumberOfVideos:0];
     [self setCurrentVideo:0];
     [self setCurrentVideoPlayer:nil];
     [self setVideoReel:nil];
@@ -58,7 +60,11 @@
     if ( [self.overlayTimer isValid] )
         [self.overlayTimer invalidate];
     
-    self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:[SPModel sharedInstance] selector:@selector(hideOverlay) userInfo:nil repeats:NO];
+    self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
+                                                         target:[SPModel sharedInstance]
+                                                       selector:@selector(hideOverlay)
+                                                       userInfo:nil
+                                                        repeats:NO];
     
 }
 

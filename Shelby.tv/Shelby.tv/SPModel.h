@@ -24,6 +24,7 @@
 }
 
 @property (strong, nonatomic) id scrubberTimeObserver;
+@property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (strong, nonatomic) SPVideoReel *videoReel;

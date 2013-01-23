@@ -10,10 +10,8 @@
 
 @interface SPVideoReel : UIViewController <UIScrollViewDelegate>
 
-@property (assign, nonatomic) NSUInteger numberOfVideos;
-@property (strong, nonatomic) UIScrollView *videoScrollView;
-@property (strong, nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (assign, nonatomic) CategoryType categoryType;
+@property (strong, nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (strong, nonatomic) UIButton *airPlayButton;
 
 /// Initialization
@@ -26,6 +24,7 @@
 
 /// Update UI and perform new extractions when videoScrollView or _overlay.videoList ScrollView is scrolled
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+- (void)currentVideoDidFinishPlayback;
 
 /// UI Actions
 - (IBAction)homeButtonAction:(id)sender;

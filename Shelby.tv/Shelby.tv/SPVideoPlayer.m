@@ -315,29 +315,9 @@
         
         // Show Restart Button
         [self setPlaybackFinished:YES];
-        [self.model.overlayView.restartPlaybackButton setHidden:NO];
-        
-        // Disable playback buttons
-        [self.model.overlayView.playButton setEnabled:NO];
-        [self.model.overlayView.scrubber setEnabled:NO];
         
         // Force scroll videoScrollView
-        CGFloat x = self.model.videoReel.videoScrollView.contentOffset.x + 1024.0f;
-        CGFloat y = self.model.videoReel.videoScrollView.contentOffset.y;
-        NSUInteger position = self.model.videoReel.videoScrollView.contentOffset.x/1024;
-        if ( position+1 <= self.model.videoReel.numberOfVideos-1 )
-            [self.model.videoReel.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-        
-        // Force methods to update
-        if ( position+1 <= self.model.videoReel.numberOfVideos-1 )
-            [self.model.videoReel currentVideoDidChangeToVideo:position+1];
-        
-        // Load videos
-        if ( position+2 <= self.model.videoReel.numberOfVideos-1 )
-            [self.model.videoReel extractVideoForVideoPlayer:position+2]; // Load video positioned after current visible view
-        
-        // Force next video to begin playing (video should already be loaded)
-        [self.model.currentVideoPlayer play];
+        [self.model.videoReel currentVideoDidFinishPlayback];
         
     }    
 }
@@ -373,13 +353,11 @@
 		interval = 0.5f * duration / width;
 	}
     
-    __block SPVideoPlayer *blockSelf = self;
-    
 	self.model.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
                                                                                 queue:NULL /* If you pass NULL, the main queue is used. */
                                                                             usingBlock:^(CMTime time) {
                                                                                    
-                                                                                [blockSelf syncScrubber];
+                                                                                [self.model.videoScrubberDelegate syncScrubber];
                                                                                    
                                                                             }];
 }
