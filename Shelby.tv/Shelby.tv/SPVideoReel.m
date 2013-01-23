@@ -23,8 +23,6 @@
 @property (strong, nonatomic) NSMutableArray *itemViews;
 @property (copy, nonatomic) NSString *categoryTitle;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
-@property (assign, nonatomic) BOOL isAirPlayConnected;
-@property (strong, nonatomic) UIButton *airPlayButton;
 
 /// Setup Methods
 - (void)setupVariables;
@@ -647,7 +645,7 @@
 
 - (IBAction)beginScrubbing:(id)sender
 {
-	_scrubberTimeObserver = nil;
+	self.model.scrubberTimeObserver = nil;
 }
 
 - (IBAction)scrub:(id)sender
@@ -671,7 +669,7 @@
 - (IBAction)endScrubbing:(id)sender
 {
     
-	if ( !_scrubberTimeObserver ) {
+	if ( ![self.model scrubberTimeObserver] ) {
 		
         CMTime playerDuration = [self.model.currentVideoPlayer elapsedDuration];
 		if (CMTIME_IS_INVALID(playerDuration)) {
@@ -683,15 +681,15 @@
 		if (isfinite(duration)) {
 			CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
 			double tolerance = 0.5f * duration / width;
-			_scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
-                                                                                                  queue:NULL
-                                                                                             usingBlock:^(CMTime time) {
+			self.model.scrubberTimeObserver = [self.model.videoScrubberDelegate.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
+                                                                                                                    queue:NULL
+                                                                                                               usingBlock:^(CMTime time) {
                                                                                                  
                             // Sync the scrubber to the currentVideoPlayer
-                            [self.model.currentVideoPlayer syncScrubber];
+                            [self.model.videoScrubberDelegate syncScrubber];
                             
                             // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
-                            ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
+                            ( self.model.videoScrubberDelegate.isPlaying ) ? [self.model.videoScrubberDelegate play] : [self.model.videoScrubberDelegate pause];
                                                                                                  
                               }];
         }
@@ -729,12 +727,6 @@
         [self fetchOlderVideos:page];
         
     }
-}
-
-#pragma mark - AirPlay Accessor Methods
-- (BOOL)isAirPlayConnected
-{
-    return ( 1.0f == self.airPlayButton.alpha ) ? YES : NO;
 }
 
 @end

@@ -9,15 +9,12 @@
 @class SPVideoPlayer, SPOverlayView;
 
 @interface SPVideoReel : UIViewController <UIScrollViewDelegate>
-{
-    id _scrubberTimeObserver;
-}
 
-@property (strong, nonatomic) id scrubberTimeObserver;
 @property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (strong, nonatomic) UIScrollView *videoScrollView;
 @property (strong, nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (assign, nonatomic) CategoryType categoryType;
+@property (strong, nonatomic) UIButton *airPlayButton;
 
 /// Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType

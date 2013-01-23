@@ -374,13 +374,14 @@
 	}
     
     __block SPVideoPlayer *blockSelf = self;
-	self.model.videoReel.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
-                                                                                    queue:NULL /* If you pass NULL, the main queue is used. */
-                                                                               usingBlock:^(CMTime time) {
+    
+	self.model.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
+                                                                                queue:NULL /* If you pass NULL, the main queue is used. */
+                                                                            usingBlock:^(CMTime time) {
                                                                                    
-                                                                                   [blockSelf syncScrubber];
+                                                                                [blockSelf syncScrubber];
                                                                                    
-                                                                               }];
+                                                                            }];
 }
 
 - (void)syncScrubber

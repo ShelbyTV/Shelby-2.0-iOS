@@ -23,13 +23,14 @@
     id _scrubberTimeObserver;
 }
 
+@property (strong, nonatomic) id scrubberTimeObserver;
 @property (assign, nonatomic) NSUInteger currentVideo;
 @property (strong, nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (strong, nonatomic) SPVideoReel *videoReel;
 @property (strong, nonatomic) SPOverlayView *overlayView;
 @property (strong, nonatomic) NSTimer *overlayTimer;
 @property (assign, nonatomic) BOOL isAirPlayConnected;
-@property (weak, nonatomic) id <SPVideoScrubberDelegate> videoScrubberdelegate;
+@property (weak, nonatomic, readonly) SPVideoPlayer <SPVideoScrubberDelegate> *videoScrubberDelegate;
 
 /// Singleton Methods
 + (SPModel*)sharedInstance;
