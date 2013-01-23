@@ -34,6 +34,7 @@
 - (NSMutableArray*)fetchMoreQueueRollEntriesAfterDate:(NSDate*)date;
 - (NSMutableArray*)fetchPersonalRollEntries;
 - (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate*)date;
+- (NSString*)fetchTextFromFirstMessageInConversation:(Conversation*)conversation;
 
 // Sync Methods
 - (void)syncQueueRoll:(NSDictionary*)webResultsDictionary;

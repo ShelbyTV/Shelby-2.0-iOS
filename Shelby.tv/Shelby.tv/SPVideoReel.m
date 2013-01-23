@@ -38,8 +38,6 @@
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
 
-/// AirPlay Methods
-- (void)airPlayConnectivityDidChange:(NSNotification*)notification;
 
 @end
 
@@ -140,11 +138,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dataSourceDidUpdate:)
                                                  name:kSPUserDidScrollToUpdate
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(airPlayConnectivityDidChange:)
-                                                 name:kSPAirplayConnectivity
                                                object:nil];
 }
 
@@ -295,14 +288,14 @@
     
     for (UIView *view in volumeView.subviews) {
         
-        if ([view isKindOfClass:[UIButton class]]) {
+        if ( [view isKindOfClass:[UIButton class]] ) {
             
             self.airPlayButton = (UIButton*)view;
             
-            [self.airPlayButton addObserver:self
-                                 forKeyPath:@"alpha"
-                                    options:NSKeyValueObservingOptionNew
-                                    context:nil];
+//            [self.airPlayButton addObserver:self
+//                                 forKeyPath:@"alpha"
+//                                    options:NSKeyValueObservingOptionNew
+//                                    context:nil];
         }
     }
 }
@@ -359,7 +352,6 @@
             
             [self.overlayView.restartPlaybackButton setHidden:NO];
             [self.overlayView.playButton setEnabled:NO];
-//            [self.overlayView.airPlayButton setEnabled:NO];
             [self.overlayView.scrubber setEnabled:NO];
             [self showOverlay];
             
@@ -367,7 +359,6 @@
             
             [self.overlayView.restartPlaybackButton setHidden:YES];
             [self.overlayView.playButton setEnabled:YES];
-//            [self.overlayView.airPlayButton setEnabled:YES];
             [self.overlayView.scrubber setEnabled:YES];
             
         }
@@ -376,7 +367,6 @@
         
         [self.overlayView.restartPlaybackButton setHidden:YES];
         [self.overlayView.playButton setEnabled:NO];
-//        [self.overlayView.airPlayButton setEnabled:NO];
         [self.overlayView.scrubber setEnabled:NO];
         
     }
@@ -394,7 +384,9 @@
     
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
-    self.overlayView.videoCaptionLabel.text = videoFrame.video.caption;
+    
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    self.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
     self.overlayView.nicknameLabel.text = videoFrame.creator.nickname;
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
@@ -591,14 +583,22 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self.overlayView setAlpha:1.0f];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     }];
 }
 
 - (void)hideOverlay
 {
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.overlayView setAlpha:0.0f];
-    }];
+    
+//    if ( NO == [self isAirPlayConnected] ) {
+        
+        [UIView animateWithDuration:0.5f animations:^{
+            [self.overlayView setAlpha:0.0f];
+            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+        }];
+        
+//    }
+
 }
 
 #pragma mark - Action Methods
@@ -749,39 +749,6 @@
 	}
 }
 
-#pragma mark - AirPlay Methods
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    
-    if ( object == _airPlayButton ) {
-    
-        BOOL airPlayButtonState = [[change valueForKey:NSKeyValueChangeNewKey] floatValue] == 1.0f;
-        
-        if ( airPlayButtonState != _isAirPlayConnected ) {
-        
-            self.isAirPlayConnected = airPlayButtonState;
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSPAirplayConnectivity object:self];
-        
-        }
-    }
-}
-
-- (void)airPlayConnectivityDidChange:(NSNotification *)notification
-{
-    if ( self.isAirPlayConnected ) {
-        DLog(@"Connected");
-        [self.currentVideoPlayer.overlayTimer invalidate];
-        [self showOverlay];
-        
-    } else {
-        
-        [self.currentVideoPlayer resheduleOverlayTimer];
-        [self showOverlay];
-        
-    }
-}
-
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -813,6 +780,12 @@
         [self fetchOlderVideos:page];
         
     }
+}
+
+#pragma mark - AirPlay Accessor Methods
+- (BOOL)isAirPlayConnected
+{
+    return ( 1.0f == self.airPlayButton.alpha ) ? YES : NO;
 }
 
 @end

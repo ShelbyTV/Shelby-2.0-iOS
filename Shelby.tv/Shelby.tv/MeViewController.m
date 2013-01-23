@@ -136,6 +136,7 @@
     [reel dismissViewControllerAnimated:YES completion:^{
 
         DLog(@"Reel Dismissed");
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
         
     }];
 

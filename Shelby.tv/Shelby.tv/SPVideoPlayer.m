@@ -169,7 +169,6 @@
     [self.overlayView.restartPlaybackButton setHidden:YES];
     
     [self.overlayView.playButton setEnabled:YES];
-//    [self.overlayView.airPlayButton setEnabled:YES];
     [self.overlayView.scrubber setEnabled:YES];
     
     [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC)];
@@ -360,7 +359,6 @@
          
             [self.overlayView.restartPlaybackButton setHidden:YES];
             [self.overlayView.playButton setEnabled:YES];
-//            [self.overlayView.airPlayButton setEnabled:YES];
             [self.overlayView.scrubber setEnabled:YES];
             
         }
@@ -403,7 +401,6 @@
         
         // Disable playback buttons
         [self.overlayView.playButton setEnabled:NO];
-//        [self.overlayView.airPlayButton setEnabled:NO];
         [self.overlayView.scrubber setEnabled:NO];
         
         // Force scroll videoScrollView

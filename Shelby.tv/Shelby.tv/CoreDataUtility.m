@@ -539,6 +539,35 @@
     return deduplicatedFrames;
 }
 
+- (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation
+{
+
+    // Create fetch request
+    NSFetchRequest *messagesRequest = [[NSFetchRequest alloc] init];
+    [messagesRequest setReturnsObjectsAsFaults:NO];
+    
+    // Fetch messages data
+    NSManagedObjectContext *context = conversation.managedObjectContext;
+    NSEntityDescription *messagesDescription = [NSEntityDescription entityForName:kCoreDataEntityMessages inManagedObjectContext:context];
+    [messagesRequest setEntity:messagesDescription];
+    
+    // Only include messages that belond to this specific conversation
+    NSPredicate *messagesPredicate = [NSPredicate predicateWithFormat:@"conversationID == %@", conversation.conversationID];
+    [messagesRequest setPredicate:messagesPredicate];
+    
+    // Sort by timestamp
+    NSSortDescriptor *messagesTimestampSorter = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [messagesRequest setSortDescriptors:[NSArray arrayWithObject:messagesTimestampSorter]];
+    
+    // Execute request that returns array of dashboardEntrys
+    NSArray *messagesArray = [context executeFetchRequest:messagesRequest error:nil];
+    
+    Messages *message = (Messages*) [messagesArray objectAtIndex:0];
+    NSString *messageText = message.text;
+    
+    return messageText;
+}
+
 #pragma mark - Public Sync Methods
 - (void)syncQueueRoll:(NSDictionary *)webResultsDictionary
 {
