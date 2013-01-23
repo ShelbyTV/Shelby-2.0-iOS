@@ -10,7 +10,6 @@
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0E7038163869F100BA0A24 /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */; };
-		8E1018831686695D009698B3 /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018801686695D009698B3 /* AsynchronousFreeloader.m */; };
 		8E10189A1686696B009698B3 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018881686696B009698B3 /* AFHTTPClient.m */; };
 		8E10189B1686696B009698B3 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E10188A1686696B009698B3 /* AFHTTPRequestOperation.m */; };
 		8E10189C1686696B009698B3 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E10188C1686696B009698B3 /* AFImageRequestOperation.m */; };
@@ -48,6 +47,7 @@
 		8E40AF6A16A4B339007A66CA /* restartButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6816A4B339007A66CA /* restartButton@2x.png */; };
 		8E40AF6D16A4B6A7007A66CA /* infoPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6B16A4B6A7007A66CA /* infoPanel.png */; };
 		8E40AF6E16A4B6A7007A66CA /* infoPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */; };
+		8E41EF2816B0554400C831A4 /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018801686695D009698B3 /* AsynchronousFreeloader.m */; };
 		8E4980AD1688C556007AF267 /* tempLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AB1688C556007AF267 /* tempLogo.png */; };
 		8E4980AE1688C556007AF267 /* tempLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AC1688C556007AF267 /* tempLogo@2x.png */; };
 		8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9616652E6E00A565BF /* MeViewController.m */; };
@@ -288,11 +288,11 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
 				8EBE923716AE114F0077F5BF /* Frame.h */,
 				8EBE923816AE114F0077F5BF /* Frame.m */,
 				8EBE923D16AE11690077F5BF /* Video.h */,
 				8EBE923E16AE11690077F5BF /* Video.m */,
-				8E0E7036163869F100BA0A24 /* Shelby.xcdatamodeld */,
 				8E12B19616827B3900657D32 /* Roll.h */,
 				8E12B19716827B3900657D32 /* Roll.m */,
 				8E1B2EDE1670506A00D2C0DC /* Creator.h */,
@@ -723,6 +723,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E41EF2816B0554400C831A4 /* AsynchronousFreeloader.m in Sources */,
 				8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */,
 				8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */,
 				8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */,
@@ -745,7 +746,6 @@
 				8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */,
 				8E12B19816827B3900657D32 /* Roll.m in Sources */,
 				8E12B19E16827C0C00657D32 /* Stream.m in Sources */,
-				8E1018831686695D009698B3 /* AsynchronousFreeloader.m in Sources */,
 				8E10189A1686696B009698B3 /* AFHTTPClient.m in Sources */,
 				8E10189B1686696B009698B3 /* AFHTTPRequestOperation.m in Sources */,
 				8E10189C1686696B009698B3 /* AFImageRequestOperation.m in Sources */,

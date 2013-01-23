@@ -386,4 +386,20 @@
     return convertedTime;
 }
 
+#pragma mark - UIResponder Methods
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.model.overlayTimer invalidate];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.model.overlayTimer invalidate];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.model rescheduleOverlayTimer];
+}
+
 @end

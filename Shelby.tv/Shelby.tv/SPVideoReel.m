@@ -159,8 +159,9 @@
     [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:_toggleOverlayGesuture];
     
-    UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self.model action:@selector(homeButtonAction:)];
+    UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];
+    
 }
 
 - (void)setupVideoPlayers
@@ -391,7 +392,7 @@
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     self.model.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
-    self.model.overlayView.nicknameLabel.text = videoFrame.creator.nickname;
+    self.model.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
                                  forImageView:self.model.overlayView.userImageView
@@ -703,25 +704,6 @@
         [self fetchOlderVideos:page];
         
     }
-}
-
-#pragma mark - UIResponder Methods
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    DLog(@"TOUCH B");
-    [self.model.overlayTimer invalidate];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    DLog(@"TOUCH M");
-    [self.model.overlayTimer invalidate];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    DLog(@"TOUCH E");
-    [self.model rescheduleOverlayTimer];
 }
 
 @end

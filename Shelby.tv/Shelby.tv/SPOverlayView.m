@@ -59,13 +59,13 @@
     
     [self.scrubberTimeLabel setTextColor:kColorWhite];
     
-    [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.videoTitleLabel.font.pointSize]];
-    [self.nicknameLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
+    [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.nicknameLabel.font.pointSize]];
+    [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.nicknameLabel.font.pointSize]];
+    [self.nicknameLabel setTextColor:kColorBlack];
+    
+    [self.videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
     
     [self.videoCaptionLabel setTextColor:kColorBlack];
-    
-    [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.videoTitleLabel.font.pointSize]];
-    [self.videoTitleLabel setTextColor:kColorBlack];
     
     // Customize thumbnail
     [self.userImageView.layer setBorderColor:[kColorGray CGColor]];

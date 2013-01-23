@@ -195,7 +195,7 @@
 					<object class="IBUILabel" id="627050986">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{72, 571}, {372, 21}}</string>
+						<string key="NSFrame">{{77, 571}, {434, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="725982105"/>
@@ -205,7 +205,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Title </string>
+						<string key="IBUIText">Nickname</string>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">12</float>
@@ -237,7 +237,7 @@
 					<object class="IBUILabel" id="725982105">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{72, 591}, {372, 21}}</string>
+						<string key="NSFrame">{{77, 593}, {434, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="850128962"/>
@@ -247,7 +247,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Nickname</string>
+						<string key="IBUIText">Title</string>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<reference key="IBUIFontDescription" ref="994316883"/>
@@ -257,7 +257,7 @@
 					<object class="IBUILabel" id="626961961">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{72, 620}, {433, 125}}</string>
+						<string key="NSFrame">{{77, 622}, {434, 125}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="992062704"/>
@@ -283,7 +283,7 @@
 							<double key="NSSize">14</double>
 							<int key="NSfFlags">16</int>
 						</object>
-						<double key="preferredMaxLayoutWidth">433</double>
+						<double key="preferredMaxLayoutWidth">434</double>
 					</object>
 					<object class="IBUIButton" id="850128962">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -439,14 +439,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">nicknameLabel</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="725982105"/>
-					</object>
-					<int key="connectionID">45</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">userImageView</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="216755980"/>
@@ -487,14 +479,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">videoTitleLabel</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="627050986"/>
-					</object>
-					<int key="connectionID">42</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">shareButton</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="850128962"/>
@@ -524,6 +508,22 @@
 						<reference key="destination" ref="33056269"/>
 					</object>
 					<int key="connectionID">79</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">videoTitleLabel</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="725982105"/>
+					</object>
+					<int key="connectionID">80</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">nicknameLabel</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="627050986"/>
+					</object>
+					<int key="connectionID">81</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -628,12 +628,12 @@
 							<reference ref="973182751"/>
 							<reference ref="216755980"/>
 							<reference ref="627050986"/>
-							<reference ref="626961961"/>
 							<reference ref="725982105"/>
 							<reference ref="850128962"/>
 							<reference ref="579414753"/>
 							<reference ref="33056269"/>
 							<reference ref="181245343"/>
+							<reference ref="626961961"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -676,7 +676,7 @@
 						<int key="objectID">44</int>
 						<reference key="object" ref="725982105"/>
 						<reference key="parent" ref="191373211"/>
-						<string key="objectName">infoPanel - Nickname Label</string>
+						<string key="objectName">infoPanel - Title</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">47</int>
@@ -706,7 +706,7 @@
 						<int key="objectID">38</int>
 						<reference key="object" ref="627050986"/>
 						<reference key="parent" ref="191373211"/>
-						<string key="objectName">infoPanel - videoTitle Button</string>
+						<string key="objectName">infoPanel - Nickname</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">57</int>
@@ -774,7 +774,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">79</int>
+			<int key="maxID">81</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
