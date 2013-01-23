@@ -481,28 +481,38 @@
     if ( [[self.videoFrames lastObject] objectID] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
     
         NSManagedObjectContext *context = [self.appDelegate context];
-        Frame *frame = (Frame*)[context existingObjectWithID:[[self.videoFrames lastObject] objectID] error:nil];
-        NSDate *date = frame.timestamp;
+        NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
+        Frame *lastFrame = (Frame*)[context existingObjectWithID:lastFramedObjectID error:nil];
+        NSDate *date = lastFrame.timestamp;
     
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        
+        NSMutableArray *olderFramesArray = [[NSMutableArray alloc] init];
         switch ( _categoryType ) {
                 
             case CategoryType_Stream:
-                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
                 break;
                 
             case CategoryType_QueueRoll:
-                [self.videoFrames addObjectsFromArray:[dataUtility fetchMoreQueueRollEntriesAfterDate:date]];
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreQueueRollEntriesAfterDate:date]];
                 break;
                 
             case CategoryType_PersonalRoll:
-                [self.videoFrames addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
                 break;
                 
             default:
                 break;
         }
+        
+        // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
+        NSManagedObjectID *firstFrameObjectID = [[olderFramesArray objectAtIndex:0] objectID];
+        Frame *firstFrame = (Frame*)[context existingObjectWithID:firstFrameObjectID error:nil];
+        if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] )
+            [olderFramesArray removeObjectAtIndex:0];
+        
+        // Add deduplicated frames from olderFramesArray to videoFrames 
+        [self.videoFrames addObjectsFromArray:olderFramesArray];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
