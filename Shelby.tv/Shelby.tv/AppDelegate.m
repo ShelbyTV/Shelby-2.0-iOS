@@ -231,7 +231,6 @@
         }
     }
     
-    DLog(@"--- Creating new persistantStoreCoordinator ---");
     return _persistentStoreCoordinator;
 }
 - (NSManagedObjectContext*)context;

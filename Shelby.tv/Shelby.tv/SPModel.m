@@ -68,12 +68,16 @@
     if ( [self.overlayTimer isValid] )
         [self.overlayTimer invalidate];
     
-    self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
-                                                         target:[SPModel sharedInstance]
-                                                       selector:@selector(hideOverlay)
-                                                       userInfo:nil
-                                                        repeats:NO];
     
+    if ( NO == [self isAirPlayConnected] ) { // Keep SPVideoOverlay visible if airPlayIsConnected
+    
+        self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
+                                                             target:[SPModel sharedInstance]
+                                                           selector:@selector(hideOverlay)
+                                                           userInfo:nil
+                                                            repeats:NO];
+    }
+
 }
 
 - (void)toggleOverlay
@@ -99,50 +103,32 @@
 - (void)hideOverlay
 {
     
-    //    if ( NO == [self isAirPlayConnected] ) {
-    
     [UIView animateWithDuration:0.5f animations:^{
         [self.overlayView setAlpha:0.0f];
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     }];
-    
-    //    }
+
     
 }
-
-//#pragma mark - SPVideoScrubberDelegate Methods
-//- (CMTime)elapsedDuration
-//{
-//    return [self.videoScrubberDelegate elapsedDuration];
-//}
-//
-//- (void)setupScrubber
-//{
-//    [self.videoScrubberDelegate setupScrubber];
-//}
-//
-//- (void)syncScrubber
-//{
-//    [self.videoScrubberDelegate syncScrubber];
-//}
 
 #pragma mark - Accessor Methods
-// videoExtractor
-- (SPVideoExtractor*)videoExtractor
-{
-    return [SPVideoExtractor sharedInstance];
-}
-
-// currentVideoPlayer
+// currentVideoPlayer Setter
 - (void)setCurrentVideoPlayer:(SPVideoPlayer *)currentVideoPlayer
 {
     _currentVideoPlayer = currentVideoPlayer;
     _videoScrubberDelegate = currentVideoPlayer;
 }
 
-// isAirPlayConnected
+// videoExtractor Getter
+- (SPVideoExtractor*)videoExtractor
+{
+    return [SPVideoExtractor sharedInstance];
+}
+
+// isAirPlayConnected Getter
 - (BOOL)isAirPlayConnected
 {
     return ( 1.0f == self.videoReel.airPlayButton.alpha ) ? YES : NO;
 }
+
 @end
