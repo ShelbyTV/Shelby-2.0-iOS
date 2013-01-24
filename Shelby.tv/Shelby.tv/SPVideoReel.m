@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSMutableArray *itemViews;
 @property (copy, nonatomic) NSString *categoryTitle;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
+@property (assign, nonatomic) BOOL loadingOlderVideos;
 
 /// Setup Methods
 - (void)setupVariables;
@@ -51,6 +52,7 @@
 @synthesize itemViews = _itemViews;
 @synthesize videoScrollView = _videoScrollView;
 @synthesize fetchingOlderVideos = _fetchingOlderVideos;
+@synthesize loadingOlderVideos = _loadingOlderVideos;
 @synthesize airPlayButton = _airPlayButton;
 
 #pragma mark - Memory Management
@@ -282,7 +284,6 @@
         if ( [view isKindOfClass:[UIButton class]] ) {
             
             self.airPlayButton = (UIButton*)view;
-
             
         }
     }
@@ -477,8 +478,10 @@
 - (void)dataSourceDidUpdate:(NSNotification*)notification
 {
     
-    if ( [self fetchingOlderVideos] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
+    if ( [self fetchingOlderVideos] && ![self loadingOlderVideos] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
     
+        [self setLoadingOlderVideos:YES];
+        
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
         Frame *lastFrame = (Frame*)[context existingObjectWithID:lastFramedObjectID error:nil];
@@ -510,9 +513,7 @@
         NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
         firstFrame = (Frame*)[context existingObjectWithID:firstFrameObjectID error:nil];
         if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
-            
-            
-            
+            [olderFramesArray removeObject:firstFrame];
         }
         
         // Add deduplicated frames from olderFramesArray to videoFrames 
@@ -570,6 +571,7 @@
                     [self.model.overlayView.videoListScrollView setNeedsDisplay];
                     
                     [self setFetchingOlderVideos:NO];
+                    [self setLoadingOlderVideos:NO];
                 });
             }
         });
