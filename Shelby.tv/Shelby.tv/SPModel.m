@@ -14,6 +14,7 @@
 
 @interface SPModel ()
 
+@property (strong, nonatomic) NSMutableArray *loadedVideoPlayers;
 @property (weak, nonatomic) SPVideoPlayer <SPVideoScrubberDelegate> *videoScrubberDelegate;
 
 @end
@@ -28,6 +29,7 @@
 @synthesize overlayView = _overlayView;
 @synthesize overlayTimer = _overlayTimer;
 @synthesize videoScrubberDelegate = _videoScrubberDelegate;
+@synthesize loadedVideoPlayers = _loadedVideoPlayers;
 
 #pragma mark - Singleton Methods
 + (SPModel*)sharedInstance
@@ -45,6 +47,29 @@
 + (SPVideoExtractor*)videoExtractor
 {
     return [SPVideoExtractor sharedInstance];
+}
+
+- (void)storeVideoPlayer:(SPVideoPlayer *)player
+{
+    
+    if ( ![self loadedVideoPlayers] )
+        self.loadedVideoPlayers = [[NSMutableArray alloc] init];
+    
+    [self.loadedVideoPlayers addObject:player];
+    
+    if ( [self.loadedVideoPlayers count] > 2 ) {
+        
+        DLog(@"Count: %d", [self.loadedVideoPlayers count] );
+        
+        SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)[self.loadedVideoPlayers objectAtIndex:0];
+        
+        if ( oldestPlayer != self.currentVideoPlayer ) {
+         
+            [oldestPlayer resetPlayer];
+            [self.loadedVideoPlayers removeObject:oldestPlayer];
+            
+        }
+    }
 }
 
 - (void)teardown

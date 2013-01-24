@@ -18,6 +18,7 @@
 
 /// Initialization Methods
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame*)videoFrame;
+- (void)resetPlayer;
 
 /// Video Fetching Methods
 - (void)queueVideo;

@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) SPModel *model;
+@property (strong, nonatomic) AVPlayerLayer *playerLayer;
 @property (strong, nonatomic) UIActivityIndicatorView *indicator;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 
@@ -34,6 +35,7 @@
 @synthesize model = _model;
 @synthesize videoFrame = _videoFrame;
 @synthesize player = _player;
+@synthesize playerLayer = _playerLayer;
 @synthesize indicator = _indicator;
 @synthesize sharePopOverController = _sharePopOverController;
 @synthesize playbackFinished = _playbackFinished;
@@ -62,6 +64,14 @@
     return self;
 }
 
+- (void)resetPlayer
+{
+    [self.player pause];
+    [self.playerLayer removeFromSuperlayer];
+    [self setPlayer:nil];
+    [self setupInitialConditions];
+    [self setupIndicator];
+}
 
 #pragma mark - View Lifecycle Methods
 - (void)viewDidAppear:(BOOL)animated
@@ -195,11 +205,11 @@
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
         
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-        AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-        playerLayer.frame = modifiedFrame;
-        playerLayer.bounds = modifiedFrame;
-        [self.view.layer addSublayer:playerLayer];
+        self.playerLayer.frame = modifiedFrame;
+        self.playerLayer.bounds = modifiedFrame;
+        [self.view.layer addSublayer:self.playerLayer];
         
         // Make sure video can be played via AirPlay
         self.player.allowsExternalPlayback = YES;
@@ -228,6 +238,8 @@
                                                  selector:@selector(itemDidFinishPlaying:)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:playerItem];
+        
+        [self.model storeVideoPlayer:self];
         
         // Toggle video playback
         if ( self == self.model.currentVideoPlayer ) {
