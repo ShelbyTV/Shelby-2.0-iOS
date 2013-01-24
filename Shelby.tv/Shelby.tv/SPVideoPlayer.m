@@ -201,7 +201,9 @@
         [self.indicator stopAnimating];
         
         // Instantiate AVPlayer object with extractedURL
-        AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:_videoFrame.video.extractedURL]];
+        NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
+        AVAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
+        AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
         
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
@@ -239,7 +241,7 @@
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:playerItem];
         
-        [self.model storeVideoPlayer:self];
+//        [self.model storeVideoPlayer:self];
         
         // Toggle video playback
         if ( self == self.model.currentVideoPlayer ) {

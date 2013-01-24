@@ -14,7 +14,7 @@
 #define AsynchronousFreeloaderCacheNames    @"Aynchronous Freeloader Cache Name"
 
 #pragma mark - User Customized Definitions
-#define AsynchronousFreeloaderCacheSize     100
+#define AsynchronousFreeloaderCacheSize     0
 
 @interface AsynchronousFreeloader : NSObject
 

@@ -137,7 +137,7 @@
 
         DLog(@"Reel Dismissed");
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-        
+    
     }];
 
 }
