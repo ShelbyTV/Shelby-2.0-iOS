@@ -66,13 +66,6 @@
     [dataUtility removeAllVideoExtractionURLReferences];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    DLog(@"MEMORY WARNING");
-
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark - Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString *)title andVideoFrames:(NSArray *)videoFrames
 {

@@ -9,7 +9,7 @@
 #import "SPVideoExtractor.h"
 #import "Video.h"
 
-@interface SPVideoExtractor ()
+@interface SPVideoExtractor () <UIWebViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *videoQueue;
 @property (strong, nonatomic) UIWebView *webView;
@@ -20,6 +20,7 @@
 - (NSManagedObjectContext*)context;
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
+- (void)destroyWebView;
 - (void)loadYouTubeVideo:(Video *)video;
 - (void)loadVimeoVideo:(Video *)video;
 - (void)loadDailyMotionVideo:(Video *)video;
@@ -80,10 +81,8 @@
     [self setIsExtracting:NO];
     [self.nextExtractionTimer invalidate];
     [self.videoQueue removeAllObjects];
-    [self.webView stopLoading];
-    [self.webView removeFromSuperview];
-    [self setWebView:nil];
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    [self destroyWebView];
+    
     DLog(@"Remaining Extractions Cancelled!");
 }
 
@@ -133,7 +132,21 @@
     self.webView.mediaPlaybackRequiresUserAction = NO;
     self.webView.mediaPlaybackAllowsAirPlay = YES;
     self.webView.hidden = YES;
+    self.webView.delegate = self;
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+}
+
+- (void)destroyWebView
+{
+    [self.webView loadHTMLString:@"" baseURL:nil];
+    [self.webView stopLoading];
+    [self.webView setDelegate:nil];
+    [self.webView removeFromSuperview];
+    [self setWebView:nil];
+    
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    [[NSURLCache sharedURLCache] setDiskCapacity:0];
+    [[NSURLCache sharedURLCache] setMemoryCapacity:0];
 }
 
 - (void)loadYouTubeVideo:(Video *)video
@@ -188,7 +201,7 @@
         if ( notification.userInfo && ![notification.userInfo isKindOfClass:[NSNull class]] ) {
             
             NSArray *allValues = [notification.userInfo allValues];
-            
+        
             for (id value in allValues) {
                 
                 // 'path' is an instance method on 'MPAVItem'
@@ -200,9 +213,7 @@
                     [[NSNotificationCenter defaultCenter] removeObserver:self];
                     
                     // Remove webView
-                    [self.webView stopLoading];
-                    [self.webView removeFromSuperview];
-                    self.webView = nil;
+                    [self destroyWebView];
                     [[NSURLCache sharedURLCache] removeAllCachedResponses];
                     
                     // Get videoURL to playable video file
@@ -231,7 +242,7 @@
                         [self.videoQueue removeObjectAtIndex:0];
                         [self setIsExtracting:NO];
                         
-                        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
+                        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
 
                     }
                 }
@@ -245,12 +256,20 @@
     [self setIsExtracting:NO];
     [self.nextExtractionTimer invalidate];
     [self.currentExtractionTimer invalidate];
-    [self.webView stopLoading];
-    [self.webView removeFromSuperview];
-    [self setWebView:nil];
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    [self destroyWebView];
     
     [self extractNextVideoFromQueue];
+}
+
+#pragma mark - UIWebViewDelegate Methods
+- (void) webViewDidFinishLoad:(UIWebView *)webView
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
 }
 
 @end

@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) SPModel *model;
-@property (strong, nonatomic) AVPlayerLayer *playerLayer;
 @property (strong, nonatomic) UIActivityIndicatorView *indicator;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 
@@ -35,7 +34,6 @@
 @synthesize model = _model;
 @synthesize videoFrame = _videoFrame;
 @synthesize player = _player;
-@synthesize playerLayer = _playerLayer;
 @synthesize indicator = _indicator;
 @synthesize sharePopOverController = _sharePopOverController;
 @synthesize playbackFinished = _playbackFinished;
@@ -47,23 +45,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
 }
-
-- (void)didReceiveMemoryWarning
-{
-    
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.videoFrame objectID];
-    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-    DLog(@"MEMORY WARNING %@", _videoFrame.video.title);
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
-    [self.playerLayer removeFromSuperlayer];
-    [self.player pause];
-    [self setPlayer:nil];
-    
-    [super didReceiveMemoryWarning];
-}
-
 
 #pragma mark - Initialization Methods
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame
@@ -214,11 +195,11 @@
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
         
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+        AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-        self.playerLayer.frame = modifiedFrame;
-        self.playerLayer.bounds = modifiedFrame;
-        [self.view.layer addSublayer:self.playerLayer];
+        playerLayer.frame = modifiedFrame;
+        playerLayer.bounds = modifiedFrame;
+        [self.view.layer addSublayer:playerLayer];
         
         // Make sure video can be played via AirPlay
         self.player.allowsExternalPlayback = YES;
