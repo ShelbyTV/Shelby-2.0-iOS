@@ -133,11 +133,15 @@
 
 - (void)dismissVideoReel:(SPVideoReel*)reel
 {
+    __block SPVideoReel *reelSelf = reel;
+    
     [reel dismissViewControllerAnimated:YES completion:^{
 
-        DLog(@"Reel Dismissed");
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
+        reelSelf = nil;
+        DLog(@"Reel Dismissed");
+        
     }];
 
 }

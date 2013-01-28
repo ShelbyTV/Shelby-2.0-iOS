@@ -46,6 +46,19 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    
+    [self.playerLayer removeFromSuperlayer];
+    
+    [self.player removeTimeObserver:self.model.scrubberTimeObserver];
+    [self.player replaceCurrentItemWithPlayerItem:nil];
+    self.player = nil;
+    
+    self.playerLayer = nil;
+    self.indicator = nil;
+    self.sharePopOverController = nil;
+    self.videoFrame = nil;
+
 }
 
 #pragma mark - Initialization Methods
@@ -68,6 +81,7 @@
 {
     [self.player pause];
     [self.playerLayer removeFromSuperlayer];
+    [self setPlayerLayer:nil];
     [self setPlayer:nil];
     [self setupInitialConditions];
     [self setupIndicator];
@@ -211,7 +225,7 @@
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
         self.playerLayer.frame = modifiedFrame;
         self.playerLayer.bounds = modifiedFrame;
-        [self.view.layer addSublayer:self.playerLayer];
+        [self.view.layer addSublayer:_playerLayer];
         
         // Make sure video can be played via AirPlay
         self.player.allowsExternalPlayback = YES;
@@ -274,9 +288,10 @@
 #pragma mark - SPVideoScrubberDelegate Methods
 - (CMTime)elapsedDuration
 {
-    AVPlayerItem *playerItem = [self.player currentItem];
 	
-    if (playerItem.status == AVPlayerItemStatusReadyToPlay) {
+    AVPlayerItem *playerItem = [self.player currentItem];
+    
+    if ( playerItem.status == AVPlayerItemStatusReadyToPlay ) {
         
 		return [playerItem duration] ;
 	}
