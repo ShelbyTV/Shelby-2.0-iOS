@@ -80,6 +80,8 @@
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
+		8E9182D116B857D100F2BDCF /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182CF16B857D100F2BDCF /* BrowseViewController.m */; };
+		8E9182D216B857D100F2BDCF /* BrowseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9182D016B857D100F2BDCF /* BrowseViewController.xib */; };
 		8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F326F1683F4040049EECD /* scrubberBarOff.png */; };
 		8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */; };
 		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
@@ -87,7 +89,6 @@
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EB3B18C16AF68A5008587FD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */; };
-		8EB3B19816AF9E96008587FD /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19416AF9E96008587FD /* Harpy.m */; };
 		8EB3B19916AF9E96008587FD /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19716AF9E96008587FD /* Panhandler.m */; };
 		8EB3B19C16AFA7FA008587FD /* SPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19B16AFA7F9008587FD /* SPModel.m */; };
 		8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
@@ -207,6 +208,9 @@
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
+		8E9182CE16B857D100F2BDCF /* BrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseViewController.h; sourceTree = "<group>"; };
+		8E9182CF16B857D100F2BDCF /* BrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseViewController.m; sourceTree = "<group>"; };
+		8E9182D016B857D100F2BDCF /* BrowseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseViewController.xib; sourceTree = "<group>"; };
 		8E9F326F1683F4040049EECD /* scrubberBarOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scrubberBarOff.png; sourceTree = "<group>"; };
 		8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrubberBarOff@2x.png"; sourceTree = "<group>"; };
 		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
@@ -219,8 +223,6 @@
 		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
 		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		8EB3B19316AF9E96008587FD /* Harpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harpy.h; sourceTree = "<group>"; };
-		8EB3B19416AF9E96008587FD /* Harpy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Harpy.m; sourceTree = "<group>"; };
 		8EB3B19616AF9E96008587FD /* Panhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panhandler.h; sourceTree = "<group>"; };
 		8EB3B19716AF9E96008587FD /* Panhandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Panhandler.m; sourceTree = "<group>"; };
 		8EB3B19A16AFA7F9008587FD /* SPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPModel.h; sourceTree = "<group>"; };
@@ -456,7 +458,6 @@
 			children = (
 				8E1018861686696B009698B3 /* AFNetworking */,
 				8E10187D1686695D009698B3 /* Asynchronous-Freeloader */,
-				8EB3B19216AF9E96008587FD /* Harpy */,
 				8EB3B19516AF9E96008587FD /* Panhandler */,
 			);
 			name = "External Libraries";
@@ -497,16 +498,6 @@
 			);
 			name = Categories;
 			sourceTree = "<group>";
-		};
-		8EB3B19216AF9E96008587FD /* Harpy */ = {
-			isa = PBXGroup;
-			children = (
-				8EB3B19316AF9E96008587FD /* Harpy.h */,
-				8EB3B19416AF9E96008587FD /* Harpy.m */,
-			);
-			name = Harpy;
-			path = Shelby.tv/Harpy;
-			sourceTree = SOURCE_ROOT;
 		};
 		8EB3B19516AF9E96008587FD /* Panhandler */ = {
 			isa = PBXGroup;
@@ -556,6 +547,9 @@
 				8E82EDE81631ABDE0044D97E /* LoginViewController.m */,
 				8E1FAB9516652E6E00A565BF /* MeViewController.h */,
 				8E1FAB9616652E6E00A565BF /* MeViewController.m */,
+				8E9182CE16B857D100F2BDCF /* BrowseViewController.h */,
+				8E9182CF16B857D100F2BDCF /* BrowseViewController.m */,
+				8E9182D016B857D100F2BDCF /* BrowseViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -686,6 +680,7 @@
 				8E50CDF016A9B9FC006B1ABE /* Icon@2x.png in Resources */,
 				8E50CDF116A9B9FC006B1ABE /* iTunesArtwork in Resources */,
 				8E50CDF216A9B9FC006B1ABE /* iTunesArtwork@2x in Resources */,
+				8E9182D216B857D100F2BDCF /* BrowseViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,11 +742,11 @@
 				8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				8EBE923916AE114F0077F5BF /* Frame.m in Sources */,
 				8EBE923F16AE11690077F5BF /* Video.m in Sources */,
-				8EB3B19816AF9E96008587FD /* Harpy.m in Sources */,
 				8EB3B19916AF9E96008587FD /* Panhandler.m in Sources */,
 				8EB3B19C16AFA7FA008587FD /* SPModel.m in Sources */,
 				8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */,
 				8E7EC17B16B2ED9F00EFEF07 /* Conversation.m in Sources */,
+				8E9182D116B857D100F2BDCF /* BrowseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,8 +788,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PROVISIONING_PROFILE = "F112D3B5-CBC1-4110-BA82-A339BCCA8286";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F112D3B5-CBC1-4110-BA82-A339BCCA8286";
+				PROVISIONING_PROFILE = "0F03CEA0-7AEF-4F39-B7A1-CD4032CD5354";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F03CEA0-7AEF-4F39-B7A1-CD4032CD5354";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -809,8 +804,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Arthur Sabintsev (4LHJE8Z6RH)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shelby TV, Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shelby TV, Inc.";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -818,8 +813,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "F112D3B5-CBC1-4110-BA82-A339BCCA8286";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F112D3B5-CBC1-4110-BA82-A339BCCA8286";
+				PROVISIONING_PROFILE = "28197B5D-C152-49A2-B495-9E14F2C9346A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "28197B5D-C152-49A2-B495-9E14F2C9346A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -841,8 +836,8 @@
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A2589384-F26F-4829-9537-9D856D96A2F3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A2589384-F26F-4829-9537-9D856D96A2F3";
+				PROVISIONING_PROFILE = "0F03CEA0-7AEF-4F39-B7A1-CD4032CD5354";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F03CEA0-7AEF-4F39-B7A1-CD4032CD5354";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -862,8 +857,8 @@
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1A05835A-0BFA-408B-8EC4-E602E64627A0";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1A05835A-0BFA-408B-8EC4-E602E64627A0";
+				PROVISIONING_PROFILE = "28197B5D-C152-49A2-B495-9E14F2C9346A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "28197B5D-C152-49A2-B495-9E14F2C9346A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

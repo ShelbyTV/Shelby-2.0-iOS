@@ -182,9 +182,6 @@
 - (void)analytics
 {
     
-    // Harpy - App Store Auto Update Tool
-//    [Harpy checkVersion];
-    
     // Crashlytics - Crash Logging
     [Crashlytics startWithAPIKey:@"84a79b7ee6f2eca13877cd17b9b9a290790f99aa"];
     

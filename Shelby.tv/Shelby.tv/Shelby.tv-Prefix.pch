@@ -23,7 +23,6 @@
     // Third Party Libraries
     #import "AFNetworking.h"
     #import "AsynchronousFreeloader.h"
-    #import "Harpy.h"
     #import "Panhandler.h"
 
     // Constants
