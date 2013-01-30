@@ -82,6 +82,36 @@
     return NO;
 }
 
+#pragma mark - Overlay Display Methods
+- (void)toggleOverlay
+{
+    
+    if ( self.alpha < 1.0f ) {
+        
+        [self showOverlay];
+        
+    } else {
+        
+        [self hideOverlay];
+    }
+}
+
+- (void)showOverlay
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+        [self setAlpha:1.0f];
+    }];
+}
+
+- (void)hideOverlay
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+        [self setAlpha:0.0f];
+    }];
+}
+
 #pragma mark - UIResponder Methods
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

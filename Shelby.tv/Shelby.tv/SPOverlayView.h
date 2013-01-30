@@ -22,4 +22,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;
 
+- (void)toggleOverlay;
+- (void)showOverlay;
+- (void)hideOverlay;
+
 @end

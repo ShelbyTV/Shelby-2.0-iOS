@@ -611,7 +611,6 @@
 {
     
     // Merge changes into the main context on the main thread
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         NSManagedObjectContext *mainThreadContext = [self.appDelegate context];
         [mainThreadContext performBlock:^{

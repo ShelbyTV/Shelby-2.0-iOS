@@ -95,60 +95,12 @@
     if ( [self.videoReel.airPlayButton state] != 4 ) { // Keep SPVideoOverlay visible if airPlayIsConnected
     
         self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
-                                                             target:[SPModel sharedInstance]
+                                                             target:self.overlayView
                                                            selector:@selector(hideOverlay)
                                                            userInfo:nil
                                                             repeats:NO];
     }
 
-}
-
-- (void)toggleOverlay
-{
-    
-    if ( self.overlayView.alpha < 1.0f ) {
-        
-        [self showOverlay];
-        
-    } else {
-        
-        [self hideOverlay];
-    }
-}
-
-- (void)showOverlay
-{
-    [UIView animateWithDuration:0.5f animations:^{
-        
-        [self.overlayView setAlpha:1.0f];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-        
-    } completion:^(BOOL finished) {
-        
-        CGRect videoListFrame = [self.overlayView.videoListScrollView frame];
-        CGRect shiftedVideoListFrame = CGRectMake(videoListFrame.origin.x, videoListFrame.origin.y+20.0f, videoListFrame.size.width, videoListFrame.size.height);
-        [self.overlayView.videoListScrollView setFrame:shiftedVideoListFrame];
-        
-    }];
-    
-}
-
-- (void)hideOverlay
-{
-    
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.overlayView setAlpha:0.0f];
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-
-        
-    } completion:^(BOOL finished) {
-        
-        CGRect videoListFrame = [self.overlayView.videoListScrollView frame];
-        CGRect shiftedVideoListFrame = CGRectMake(videoListFrame.origin.x, videoListFrame.origin.y-20.0f, videoListFrame.size.width, videoListFrame.size.height);
-        [self.overlayView.videoListScrollView setFrame:shiftedVideoListFrame];
-        
-    }];
-    
 }
 
 #pragma mark - Accessor Methods

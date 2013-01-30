@@ -22,6 +22,9 @@
 @end
 
 @interface SPModel : NSObject
+{
+    id _scrubberTimeObserver;
+}
 
 @property (nonatomic) id scrubberTimeObserver;
 @property (nonatomic) NSTimer *overlayTimer;
@@ -42,8 +45,5 @@
 
 /// UI Methods
 - (void)rescheduleOverlayTimer;
-- (void)toggleOverlay;
-- (void)showOverlay;
-- (void)hideOverlay;
 
 @end

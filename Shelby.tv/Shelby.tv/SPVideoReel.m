@@ -36,6 +36,7 @@
 
 /// Update Methods
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+- (void)storeIdentifierOfCurrentVideoInStream;
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
 
@@ -148,7 +149,7 @@
     [self.model.overlayView.categoryTitleLabel setText:self.categoryTitle];
     [self.view addSubview:self.model.overlayView];
     
-    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self.model action:@selector(toggleOverlay)];
+    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self.model.overlayView action:@selector(toggleOverlay)];
     [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:_toggleOverlayGesuture];
     
@@ -313,7 +314,7 @@
     [self.model.overlayTimer invalidate];
     
     // Show Overlay
-    [self.model showOverlay];
+    [self.model.overlayView showOverlay];
     
     // Pause current videoPlayer
     if ( [self.model.currentVideoPlayer isPlayable] )
@@ -324,16 +325,8 @@
     self.model.currentVideoPlayer = (self.videoPlayers)[position];
     
     // If videoReel is instance of Stream, store currentVideoID
-    if ( self.categoryType == CategoryType_Stream ) {
-        
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
-        Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-    }
+    if ( self.categoryType == CategoryType_Stream )
+        [self storeIdentifierOfCurrentVideoInStream];
     
     // Deal with playback methods & UI of current and previous video
     if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
@@ -346,7 +339,6 @@
             [self.model.overlayView.restartPlaybackButton setHidden:NO];
             [self.model.overlayView.playButton setEnabled:NO];
             [self.model.overlayView.scrubber setEnabled:NO];
-            [self.model showOverlay];
             
         } else { // Playable video DID NOT finish played
             
@@ -421,6 +413,16 @@
         if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
     }
     
+}
+
+- (void)storeIdentifierOfCurrentVideoInStream
+{
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
+    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)fetchOlderVideos:(NSUInteger)position
@@ -712,17 +714,6 @@
         CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
         NSUInteger page = (NSUInteger)floor(scrollAmount) + 1;
         [self fetchOlderVideos:page];
-        
-    }
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    if ( YES == [UIApplication sharedApplication].statusBarHidden ) {
-        
-        CGRect overlayFrame = [self.model.overlayView frame];
-        CGRect shiftedOverlayFrame = CGRectMake(overlayFrame.origin.x, overlayFrame.origin.y+20.0f, overlayFrame.size.width, overlayFrame.size.height);
-        [self.model.overlayView setFrame:shiftedOverlayFrame];
         
     }
 }
