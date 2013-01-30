@@ -14,7 +14,7 @@
 
 @interface SPModel ()
 
-@property (strong, nonatomic) NSMutableArray *loadedVideoPlayers;
+@property (nonatomic) NSMutableArray *loadedVideoPlayers;
 @property (weak, nonatomic) SPVideoPlayer <SPVideoScrubberDelegate> *videoScrubberDelegate;
 
 @end

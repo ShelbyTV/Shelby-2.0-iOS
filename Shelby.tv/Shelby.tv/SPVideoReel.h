@@ -11,8 +11,8 @@
 @interface SPVideoReel : UIViewController <UIScrollViewDelegate>
 
 @property (assign, nonatomic) CategoryType categoryType;
-@property (strong, nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
-@property (strong, nonatomic) UIButton *airPlayButton;
+@property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
+@property (nonatomic) UIButton *airPlayButton;
 
 /// Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType

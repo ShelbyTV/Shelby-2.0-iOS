@@ -11,7 +11,7 @@
 
 @interface SPOverlayView ()
 
-@property (strong, nonatomic) SPModel *model;
+@property (nonatomic) SPModel *model;
 
 @end
 

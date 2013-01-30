@@ -8,10 +8,10 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
-@property (strong, nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (strong, nonatomic, readonly) NSManagedObjectContext *context;
+@property (nonatomic) UIWindow *window;
+@property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, readonly) NSManagedObjectContext *context;
 
 - (void)userIsAuthorized;
 - (void)dumpAllData;

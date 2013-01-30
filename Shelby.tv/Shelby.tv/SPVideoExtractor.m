@@ -11,11 +11,11 @@
 
 @interface SPVideoExtractor () <UIWebViewDelegate>
 
-@property (strong, nonatomic) NSMutableArray *videoQueue;
-@property (strong, nonatomic) UIWebView *webView;
+@property (nonatomic) NSMutableArray *videoQueue;
+@property (nonatomic) UIWebView *webView;
 @property (assign, nonatomic) BOOL isExtracting;
-@property (strong, nonatomic) NSTimer *nextExtractionTimer;
-@property (strong, nonatomic) NSTimer *currentExtractionTimer;
+@property (nonatomic) NSTimer *nextExtractionTimer;
+@property (nonatomic) NSTimer *currentExtractionTimer;
 
 - (NSManagedObjectContext*)context;
 - (void)extractNextVideoFromQueue;

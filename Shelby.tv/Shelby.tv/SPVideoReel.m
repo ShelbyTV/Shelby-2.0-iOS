@@ -15,12 +15,12 @@
 
 @interface SPVideoReel ()
 
-@property (strong, nonatomic) AppDelegate *appDelegate;
-@property (strong, nonatomic) SPModel *model;
-@property (strong, nonatomic) UIScrollView *videoScrollView;
-@property (strong, nonatomic) NSMutableArray *videoFrames;
-@property (strong, nonatomic) NSMutableArray *videoPlayers;
-@property (strong, nonatomic) NSMutableArray *itemViews;
+@property (nonatomic) AppDelegate *appDelegate;
+@property (nonatomic) SPModel *model;
+@property (nonatomic) UIScrollView *videoScrollView;
+@property (nonatomic) NSMutableArray *videoFrames;
+@property (nonatomic) NSMutableArray *videoPlayers;
+@property (nonatomic) NSMutableArray *itemViews;
 @property (copy, nonatomic) NSString *categoryTitle;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
@@ -579,6 +579,8 @@
         
         // Pause and stop residual video playback
         [player pause];
+        [player.playerView removeFromSuperview];
+        [player setPlayerView:nil];
         
     }
 

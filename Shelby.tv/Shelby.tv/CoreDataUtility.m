@@ -12,7 +12,7 @@
 @interface CoreDataUtility ()
 
 @property (strong ,nonatomic) NSManagedObjectContext *context;
-@property (strong, nonatomic) AppDelegate *appDelegate;
+@property (nonatomic) AppDelegate *appDelegate;
 @property (assign, nonatomic) DataRequestType requestType;
 
 // Private Persistance Methods

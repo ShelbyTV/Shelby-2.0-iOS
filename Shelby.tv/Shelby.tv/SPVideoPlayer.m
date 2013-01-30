@@ -14,11 +14,11 @@
 
 @interface SPVideoPlayer ()
 
-@property (strong, nonatomic) AppDelegate *appDelegate;
-@property (strong, nonatomic) SPModel *model;
-@property (strong, nonatomic) AVPlayerLayer *playerLayer;
-@property (strong, nonatomic) UIActivityIndicatorView *indicator;
-@property (strong, nonatomic) UIPopoverController *sharePopOverController;
+@property (nonatomic) AppDelegate *appDelegate;
+@property (nonatomic) SPModel *model;
+@property (nonatomic) AVPlayerLayer *playerLayer;
+@property (nonatomic) UIActivityIndicatorView *indicator;
+@property (nonatomic) UIPopoverController *sharePopOverController;
 
 /// Setup Methods
 - (void)setupIndicator;

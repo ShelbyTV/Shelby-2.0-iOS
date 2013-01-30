@@ -10,8 +10,9 @@
 
 @interface SPVideoPlayer : UIViewController <SPVideoScrubberDelegate>
 
-@property (strong, nonatomic) Frame *videoFrame;
-@property (strong, nonatomic) AVPlayer *player;
+@property (nonatomic) Frame *videoFrame;
+@property (nonatomic) AVPlayer *player;
+@property (nonatomic) UIView *playerView;
 @property (assign, nonatomic) BOOL isPlayable;
 @property (assign, nonatomic) BOOL isPlaying;
 @property (assign, nonatomic) BOOL playbackFinished;

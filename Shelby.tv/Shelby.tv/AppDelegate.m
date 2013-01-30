@@ -15,10 +15,10 @@
     NSManagedObjectModel *_managedObjectModel;
 }
 
-@property (strong, nonatomic) NSManagedObjectModel *_managedObjectModel;
-@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (strong, nonatomic) LoginViewController *loginViewController;
-@property (strong, nonatomic) NSTimer *pollAPITimer;
+@property (nonatomic) NSManagedObjectModel *_managedObjectModel;
+@property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic) LoginViewController *loginViewController;
+@property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 
 - (void)pollAPI;
