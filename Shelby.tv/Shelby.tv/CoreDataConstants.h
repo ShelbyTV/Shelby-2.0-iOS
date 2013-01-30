@@ -16,6 +16,8 @@
 #import "Video.h"
 
 // Entity Constants
+#define kCoreDataEntityCategory                     @"Category"
+#define kCoreDataEntityCaregoryRoll                 @"CategoryRoll"
 #define kCoreDataEntityConversation                 @"Conversation"
 #define kCoreDataEntityCreator                      @"Creator"
 #define kCoreDataEntityFrame                        @"Frame"
@@ -25,10 +27,19 @@
 #define kCoreDataEntityUser                         @"User"
 #define kCoreDataEntityVideo                        @"Video"
 
+// Category Attribute Constants
+#define kCoreDataCategoryTitle                      @"categoryTitle"
+
+// Category Attribute Constants
+#define kCoreDataCategoryRollID                     @"rollID"
+#define kCoreDataCategoryRollDisplayTitle           @"displayTitle"
+#define kCoreDataCategoryRollDisplayDescription     @"displayDescription"
+
 // Conversation Attribute Constants
 #define kCoreDataConversationID                     @"conversationID"
 #define kCoreDataConversationMessageCount           @"messageCount"
 
+// Creator Attribute Constants
 #define kCoreDataCreatorID                          @"creatorID"
 #define kCoreDataCreatorNickname                    @"nickname"
 #define kCoreDataCreatorUserImage                   @"userImage"
@@ -67,11 +78,11 @@
 // User Attribute Constants
 #define kCoreDataUserID                             @"userID"
 #define kCoreDataUserAdmin                          @"admin"
-#define kCoreDataUserImage                          @"userImage"
-#define kCoreDataUserToken                          @"token"
 #define kCoreDataUserNickname                       @"nickname"
 #define kCoreDataUserPersonalRollID                 @"personalRollID"
 #define kCoreDataUserQueueRollID                    @"queueRollID"
+#define kCoreDataUserToken                          @"token"
+#define kCoreDataUserImage                          @"userImage"
 
 // Video Attribute Constants
 #define kCoreDataVideoID                            @"videoID"

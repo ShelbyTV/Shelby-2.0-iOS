@@ -47,18 +47,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-    
-    [self.playerLayer removeFromSuperlayer];
-    
-    [self.player removeTimeObserver:self.model.scrubberTimeObserver];
-    [self.player replaceCurrentItemWithPlayerItem:nil];
-    self.player = nil;
-    
-    self.playerLayer = nil;
-    self.indicator = nil;
-    self.sharePopOverController = nil;
-    self.videoFrame = nil;
-
 }
 
 #pragma mark - Initialization Methods
@@ -319,10 +307,10 @@
     
     __block SPVideoPlayer *blockSelf  = self;
     
-	self.model.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
+	self.model.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
                                                                                 queue:NULL /* If you pass NULL, the main queue is used. */
                                                                             usingBlock:^(CMTime time) {
-                                                                                   
+                                                                                
                                                                                 [blockSelf.model.videoScrubberDelegate syncScrubber];
                                                                                    
                                                                             }];

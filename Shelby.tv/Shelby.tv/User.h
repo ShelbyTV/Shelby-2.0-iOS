@@ -2,8 +2,8 @@
 //  User.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 12/24/12.
-//  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
+//  Created by Arthur Ariel Sabintsev on 1/29/13.
+//  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,13 +12,12 @@
 
 @interface User : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * admin;
 @property (nonatomic, retain) NSString * nickname;
 @property (nonatomic, retain) NSString * personalRollID;
 @property (nonatomic, retain) NSString * queueRollID;
-@property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSString * token;
 @property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSString * userImage;
-@property (nonatomic, retain) NSNumber * admin;
 
 @end

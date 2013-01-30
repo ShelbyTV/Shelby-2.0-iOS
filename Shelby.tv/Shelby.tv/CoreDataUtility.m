@@ -44,14 +44,6 @@
 @synthesize requestType = _requestType;
 @synthesize context = _context;
 
-#pragma mark - Memory Management
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSManagedObjectContextDidSaveNotification
-                                                  object:self.context];
-}
-
 #pragma mark - Initialization Methods
 - (id)initWithRequestType:(DataRequestType)requestType
 {

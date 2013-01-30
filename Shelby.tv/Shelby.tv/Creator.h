@@ -2,8 +2,8 @@
 //  Creator.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 12/5/12.
-//  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
+//  Created by Arthur Ariel Sabintsev on 1/29/13.
+//  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,8 +14,8 @@
 @interface Creator : NSManagedObject
 
 @property (nonatomic, retain) NSString * creatorID;
-@property (nonatomic, retain) NSString * userImage;
 @property (nonatomic, retain) NSString * nickname;
+@property (nonatomic, retain) NSString * userImage;
 @property (nonatomic, retain) NSSet *frame;
 @end
 

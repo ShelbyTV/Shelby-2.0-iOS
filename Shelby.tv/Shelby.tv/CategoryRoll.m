@@ -1,22 +1,19 @@
 //
-//  Roll.m
+//  CategoryRoll.m
 //  Shelby.tv
 //
 //  Created by Arthur Ariel Sabintsev on 1/29/13.
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "Roll.h"
-#import "Frame.h"
+#import "CategoryRoll.h"
 
 
-@implementation Roll
+@implementation CategoryRoll
 
-@dynamic creatorID;
-@dynamic frameCount;
+@dynamic displayDescription;
+@dynamic displayTitle;
 @dynamic rollID;
-@dynamic thumbnailURL;
-@dynamic title;
-@dynamic frame;
+@dynamic category;
 
 @end
