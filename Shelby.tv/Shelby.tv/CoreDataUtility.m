@@ -67,25 +67,25 @@
 #pragma mark - Public Persistance Methods
 - (void)removeAllVideoExtractionURLReferences
 {
-//    // Create fetch request
-//    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-//    [request setReturnsObjectsAsFaults:NO];
-//    
-//    // Search Stream table
-//    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:self.context];
-//    [request setEntity:description];
-//    
-//    // Execute request that returns array of stream entries
-//    NSMutableArray *entries = [[NSMutableArray alloc] initWithArray:[self.context executeFetchRequest:request error:nil]];
-//    
-//    for (NSUInteger i = 0; i < [entries count]; i++ ) {
-//        
-//        Video *video = (Video*)[entries objectAtIndex:i];
-//        [video setExtractedURL:[NSString coreDataNullTest:nil]];
-//        
-//    }
-//    
-//    DLog(@"All video extractedURLs removed");
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:self.context];
+    [request setEntity:description];
+    
+    // Execute request that returns array of stream entries
+    NSMutableArray *entries = [[NSMutableArray alloc] initWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    for (NSUInteger i = 0; i < [entries count]; i++ ) {
+        
+        Video *video = (Video*)[entries objectAtIndex:i];
+        [video setExtractedURL:[NSString coreDataNullTest:nil]];
+        
+    }
+    
+    DLog(@"All video extractedURLs removed");
 
 }
 
