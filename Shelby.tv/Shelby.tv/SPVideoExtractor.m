@@ -50,7 +50,7 @@
         
         // If queue is empty
         if ( ![self videoQueue] ) {
-            self.videoQueue = [[NSMutableArray alloc] init];;
+            self.videoQueue = [@[] mutableCopy];
         }
         
         [self.videoQueue addObject:video];

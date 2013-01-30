@@ -8,19 +8,19 @@
         <attribute name="displayDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="category" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="categoryRoll" inverseEntity="Category" syncable="YES"/>
+        <relationship name="category" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Category" inverseName="categoryRoll" inverseEntity="Category" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="frame" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="conversation" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Frame" inverseName="conversation" inverseEntity="Frame" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Messages" inverseName="conversation" inverseEntity="Messages" syncable="YES"/>
     </entity>
     <entity name="Creator" representedClassName="Creator" syncable="YES">
         <attribute name="creatorID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="creator" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Frame" inverseName="creator" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="Frame" representedClassName="Frame" syncable="YES">
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
@@ -46,7 +46,7 @@
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="conversation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="conversation" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <entity name="Roll" representedClassName="Roll" syncable="YES">
         <attribute name="creatorID" optional="YES" attributeType="String" syncable="YES"/>
@@ -78,7 +78,7 @@
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="video" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="Frame" inverseName="video" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <elements>
         <element name="Category" positionX="160" positionY="192" width="128" height="75"/>

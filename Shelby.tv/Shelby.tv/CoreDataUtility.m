@@ -76,7 +76,7 @@
     [request setEntity:description];
     
     // Execute request that returns array of stream entries
-    NSMutableArray *entries = [[NSMutableArray alloc] initWithArray:[self.context executeFetchRequest:request error:nil]];
+    NSMutableArray *entries = [[self.context executeFetchRequest:request error:nil] mutableCopy];
     
     for (NSUInteger i = 0; i < [entries count]; i++ ) {
         
@@ -581,7 +581,7 @@
 
     // Extract frameIDs from results from Shelby's Web Database
     NSArray *webResultsArray = [webResultsDictionary[@"result"] valueForKey:@"frames"];
-    NSMutableArray *webFrameIdentifiersInQueue = [[NSMutableArray alloc] init];
+    NSMutableArray *webFrameIdentifiersInQueue = [@[] mutableCopy];
     for (NSUInteger i = 0; i < [webResultsArray count]; i++) {
         
         NSString *frameID = [webResultsArray[i] valueForKey:@"id"];
@@ -827,7 +827,7 @@
 #pragma mark - Private Fetching Methods
 - (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames
 {
-    NSMutableArray *playableFrames = [[NSMutableArray alloc] init];
+    NSMutableArray *playableFrames = [@[] mutableCopy];
     
     for (NSUInteger i = 0; i < [frames count]; i++ ) {
         
@@ -849,7 +849,7 @@
 
 - (NSMutableArray *)filterPlayableFrames:(NSArray *)frames
 {
-    NSMutableArray *playableFrames = [[NSMutableArray alloc] init];
+    NSMutableArray *playableFrames = [@[] mutableCopy];
     
     for (NSUInteger i = 0; i < [frames count]; i++ ) {
         
@@ -870,7 +870,7 @@
 
 - (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames
 {
-    NSMutableArray *tempFrames = [[NSMutableArray alloc] initWithArray:frames];
+    NSMutableArray *tempFrames = [@[] mutableCopy];
     
     for (NSUInteger i = 0; i < [tempFrames count]; i++) {
         

@@ -53,7 +53,7 @@
 {
     
     if ( ![self loadedVideoPlayers] )
-        self.loadedVideoPlayers = [[NSMutableArray alloc] init];
+        self.loadedVideoPlayers = [@[] mutableCopy];
     
     [self.loadedVideoPlayers addObject:player];
     
@@ -119,9 +119,18 @@
 - (void)showOverlay
 {
     [UIView animateWithDuration:0.5f animations:^{
+        
         [self.overlayView setAlpha:1.0f];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+        
+    } completion:^(BOOL finished) {
+        
+        CGRect videoListFrame = [self.overlayView.videoListScrollView frame];
+        CGRect shiftedVideoListFrame = CGRectMake(videoListFrame.origin.x, videoListFrame.origin.y+20.0f, videoListFrame.size.width, videoListFrame.size.height);
+        [self.overlayView.videoListScrollView setFrame:shiftedVideoListFrame];
+        
     }];
+    
 }
 
 - (void)hideOverlay
@@ -130,8 +139,15 @@
     [UIView animateWithDuration:0.5f animations:^{
         [self.overlayView setAlpha:0.0f];
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-    }];
 
+        
+    } completion:^(BOOL finished) {
+        
+        CGRect videoListFrame = [self.overlayView.videoListScrollView frame];
+        CGRect shiftedVideoListFrame = CGRectMake(videoListFrame.origin.x, videoListFrame.origin.y-20.0f, videoListFrame.size.width, videoListFrame.size.height);
+        [self.overlayView.videoListScrollView setFrame:shiftedVideoListFrame];
+        
+    }];
     
 }
 

@@ -74,7 +74,7 @@
         
         self.categoryType = categoryType;
         self.categoryTitle = title;
-        self.videoFrames = [[NSMutableArray alloc] initWithArray:videoFrames];
+        self.videoFrames = [videoFrames mutableCopy];
         
     }
     
@@ -116,8 +116,8 @@
     self.model = [SPModel sharedInstance];
     self.model.videoReel = self;
     self.model.numberOfVideos = [self.videoFrames count];
-    self.videoPlayers = [[NSMutableArray alloc] init];
-    self.itemViews = [[NSMutableArray alloc] init];
+    self.videoPlayers = [@[] mutableCopy];
+    self.itemViews = [@[] mutableCopy];
 }
 
 - (void)setupObservers
@@ -238,7 +238,6 @@
         
         [self.itemViews addObject:itemView];
         [self.model.overlayView.videoListScrollView addSubview:itemView];
-        [self.model.overlayView.videoListScrollView setNeedsDisplay];
         
     }
 
@@ -481,7 +480,7 @@
         NSDate *date = lastFrame.timestamp;
     
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSMutableArray *olderFramesArray = [[NSMutableArray alloc] init];
+        NSMutableArray *olderFramesArray = [@[] mutableCopy];
         
         switch ( _categoryType ) {
                 
@@ -713,6 +712,17 @@
         CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
         NSUInteger page = (NSUInteger)floor(scrollAmount) + 1;
         [self fetchOlderVideos:page];
+        
+    }
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if ( YES == [UIApplication sharedApplication].statusBarHidden ) {
+        
+        CGRect overlayFrame = [self.model.overlayView frame];
+        CGRect shiftedOverlayFrame = CGRectMake(overlayFrame.origin.x, overlayFrame.origin.y+20.0f, overlayFrame.size.width, overlayFrame.size.height);
+        [self.model.overlayView setFrame:shiftedOverlayFrame];
         
     }
 }
