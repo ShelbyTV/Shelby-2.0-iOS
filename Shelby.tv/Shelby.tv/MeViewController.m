@@ -19,11 +19,6 @@
 @end
 
 @implementation MeViewController
-@synthesize streamButton = _streamButton;
-@synthesize queueRollButton = _queueRollButton;
-@synthesize personalRollButton = _personalRollButton;
-@synthesize logoutButton = _logoutButton;
-@synthesize versionLabel = _versionLabel;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc

@@ -61,7 +61,7 @@
         
         DLog(@"Count: %d", [self.loadedVideoPlayers count] );
         
-        SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)[self.loadedVideoPlayers objectAtIndex:0];
+        SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)(self.loadedVideoPlayers)[0];
         
         if ( oldestPlayer != self.currentVideoPlayer ) {
          

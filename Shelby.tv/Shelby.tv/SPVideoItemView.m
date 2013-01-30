@@ -8,11 +8,14 @@
 
 #import "SPVideoItemView.h"
 
+@interface SPVideoItemView ()
+
+@end
+
 @implementation SPVideoItemView
 @synthesize videoTitleLabel = _videoTitleLabel;
 @synthesize thumbnailImageView = _thumbnailImageView;
 @synthesize invisibleButton = _invisibleButton;
-
 
 #pragma mark - Memory Mangement Methods
 - (void)dealloc

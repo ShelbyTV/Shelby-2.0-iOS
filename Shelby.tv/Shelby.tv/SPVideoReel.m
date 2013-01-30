@@ -144,7 +144,7 @@
 - (void)setupOverlayView
 {
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
-    self.model.overlayView = [nib objectAtIndex:0];
+    self.model.overlayView = nib[0];
     [self.model.overlayView.categoryTitleLabel setText:self.categoryTitle];
     [self.view addSubview:self.model.overlayView];
     
@@ -162,7 +162,7 @@
     
     for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
         
-        Frame *videoFrame = [self.videoFrames objectAtIndex:i];
+        Frame *videoFrame = (self.videoFrames)[i];
 
         CGRect viewframe = self.videoScrollView.frame;
         viewframe.origin.x = viewframe.size.width * i;
@@ -180,24 +180,24 @@
     if ( self.categoryType != CategoryType_Stream ) {
         
         self.model.currentVideo = 0;
-        self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
+        self.model.currentVideoPlayer = (self.videoPlayers)[self.model.currentVideo];
         [self currentVideoDidChangeToVideo:self.model.currentVideo];
         
         
     } else {
         
         self.model.currentVideo = 0;
-        self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
+        self.model.currentVideoPlayer = (self.videoPlayers)[self.model.currentVideo];
         
         for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
             
-            Frame *videoFrame = [self.videoFrames objectAtIndex:i];
+            Frame *videoFrame = (self.videoFrames)[i];
             NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kSPCurrentVideoStreamID];
             
             if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
              
                 self.model.currentVideo = i;
-                self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
+                self.model.currentVideoPlayer = (self.videoPlayers)[self.model.currentVideo];
                 
             }
         }
@@ -217,11 +217,11 @@
     for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
         
         NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:i] objectID];
+        NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
         Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
 
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-        SPVideoItemView *itemView = [nib objectAtIndex:0];
+        SPVideoItemView *itemView = nib[0];
             
         CGRect itemFrame = itemView.frame;
         itemFrame.origin.x = itemViewWidth * i;
@@ -244,7 +244,7 @@
 
     
     // Add visual selected state (e.g., blue background, white text) to currentVideo
-    SPVideoItemView *itemView = [self.itemViews objectAtIndex:self.model.currentVideo];
+    SPVideoItemView *itemView = (self.itemViews)[self.model.currentVideo];
     itemView.backgroundColor = kColorGreen;
     itemView.videoTitleLabel.textColor = kColorBlack;
 
@@ -285,7 +285,7 @@
 #pragma mark - Public Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 {
-    SPVideoPlayer *player = [self.videoPlayers objectAtIndex:position];
+    SPVideoPlayer *player = (self.videoPlayers)[position];
     
     if ( (position >= self.model.numberOfVideos) ) {
         return;
@@ -322,13 +322,13 @@
     
     // Reset currentVideoPlayer reference after scrolling has finished
     self.model.currentVideo = position;
-    self.model.currentVideoPlayer = [self.videoPlayers objectAtIndex:position];
+    self.model.currentVideoPlayer = (self.videoPlayers)[position];
     
     // If videoReel is instance of Stream, store currentVideoID
     if ( self.categoryType == CategoryType_Stream ) {
         
         NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:self.model.currentVideo] objectID];
+        NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
         Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
         
         [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
@@ -377,7 +377,7 @@
     
     // Reference NSManageObjectContext
     NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:self.model.currentVideo] objectID];
+    NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
     // Set new values on infoPanel
@@ -402,7 +402,7 @@
         }
         
         // Update currentVideo's SPVideoItemView object UI and position in videoListScrollView object
-        SPVideoItemView *itemView = [self.itemViews objectAtIndex:position];
+        SPVideoItemView *itemView = (self.itemViews)[position];
         itemView.backgroundColor = kColorGreen;
         itemView.videoTitleLabel.textColor = kColorBlack;
         if ( position < self.model.numberOfVideos ) {
@@ -502,7 +502,7 @@
         }
         
         // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
-        Frame *firstFrame = (Frame*)[olderFramesArray objectAtIndex:0];
+        Frame *firstFrame = (Frame*)olderFramesArray[0];
         NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
         firstFrame = (Frame*)[context existingObjectWithID:firstFrameObjectID error:nil];
         if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
@@ -523,7 +523,7 @@
                 
                 // videoScrollView
                 NSManagedObjectContext *context = [self.appDelegate context];
-                NSManagedObjectID *objectID = [[self.videoFrames objectAtIndex:i] objectID];
+                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
                 Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
                 
                 CGRect viewframe = self.videoScrollView.frame;
@@ -533,7 +533,7 @@
                 
                 // videoListScrollView
                 NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-                SPVideoItemView *itemView = [nib objectAtIndex:0];
+                SPVideoItemView *itemView = nib[0];
                 
                 CGFloat itemViewWidth = [SPVideoItemView width];
                 CGRect itemFrame = itemView.frame;
@@ -698,7 +698,7 @@
         // Toggle playback on old and new SPVideoPlayer objects
         if ( page != self.model.currentVideo ) {
             
-            SPVideoPlayer *oldPlayer = [self.videoPlayers objectAtIndex:self.model.currentVideo];
+            SPVideoPlayer *oldPlayer = (self.videoPlayers)[self.model.currentVideo];
             [oldPlayer pause];
             
         }

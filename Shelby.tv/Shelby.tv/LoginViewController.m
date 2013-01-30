@@ -13,11 +13,6 @@
 @end
 
 @implementation LoginViewController
-@synthesize emailField = _emailField;
-@synthesize passwordField = _passwordField;
-@synthesize loginButton = _loginButton;
-@synthesize versionLabel = _versionLabel;
-@synthesize indicator = _indicator;
 
 #pragma mark - Memory Management
 - (void)dealloc

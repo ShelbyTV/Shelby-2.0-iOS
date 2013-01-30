@@ -100,7 +100,7 @@
             DLog(@"Failed to save to data store: %@", [error localizedDescription]);
             DLog(@"Error for Data_Request: %d", self.requestType);
             
-            NSArray *detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+            NSArray *detailedErrors = [error userInfo][NSDetailedErrorsKey];
             
             if( detailedErrors != nil && [detailedErrors count] > 0 ) {
                 
@@ -176,7 +176,7 @@
 #pragma mark - Public Storage Methods
 - (void)storeUser:(NSDictionary *)resultsDictionary
 {
-    NSArray *resultsArray = [resultsDictionary objectForKey:@"result"];
+    NSArray *resultsArray = resultsDictionary[@"result"];
     
     User *user = [self checkIfEntity:kCoreDataEntityUser
                          withIDValue:[resultsArray valueForKey:@"id"]
@@ -201,7 +201,7 @@
     [user setValue:queueRollID forKey:kCoreDataUserQueueRollID];
     
     BOOL admin = [[resultsArray valueForKey:@"admin"] boolValue];
-    [user setValue:[NSNumber numberWithBool:admin] forKey:kCoreDataUserAdmin];
+    [user setValue:@(admin) forKey:kCoreDataUserAdmin];
     
     [self saveContext:self.context];
 
@@ -209,14 +209,14 @@
 
 - (void)storeStream:(NSDictionary *)resultsDictionary
 {
-    NSArray *resultsArray = [resultsDictionary objectForKey:@"result"];
+    NSArray *resultsArray = resultsDictionary[@"result"];
     
     for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
         
         @autoreleasepool {
             
             // Conditions for saving entires into database
-            NSArray *frameArray = [[resultsArray objectAtIndex:i] valueForKey:@"frame"];
+            NSArray *frameArray = [resultsArray[i] valueForKey:@"frame"];
             BOOL frameExists = [frameArray isKindOfClass:([NSNull class])] ? NO : YES;
             
             if ( !frameExists ) {
@@ -226,10 +226,10 @@
             } else {
                 
                 Stream *stream = [self checkIfEntity:kCoreDataEntityStream
-                                         withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
+                                         withIDValue:[resultsArray[i] valueForKey:@"id"]
                                             forIDKey:kCoreDataStreamID];
                 
-                NSString *streamID = [NSString coreDataNullTest:[[resultsArray objectAtIndex:i] valueForKey:@"id"]];
+                NSString *streamID = [NSString coreDataNullTest:[resultsArray[i] valueForKey:@"id"]];
                 [stream setValue:streamID forKey:kCoreDataStreamID];
                 
                 NSDate *timestamp = [NSDate dataFromBSONObjectID:streamID];
@@ -250,17 +250,17 @@
 
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary
 {
-    NSArray *resultsArray = [[resultsDictionary objectForKey:@"result"] valueForKey:@"frames"];
+    NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
     
     for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
         
         @autoreleasepool {
                             
             Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
-                                   withIDValue:[[resultsArray objectAtIndex:i] valueForKey:@"id"]
+                                   withIDValue:[resultsArray[i] valueForKey:@"id"]
                                       forIDKey:kCoreDataFrameID];
             
-            [self storeFrame:frame forFrameArray:[resultsArray objectAtIndex:i] withSyncStatus:YES];
+            [self storeFrame:frame forFrameArray:resultsArray[i] withSyncStatus:YES];
             
             [self saveContext:self.context];
 
@@ -282,7 +282,7 @@
     // Execute request that returns array of Users
     NSArray *resultsArray = [self.context executeFetchRequest:request error:nil];
     
-    return [resultsArray objectAtIndex:0]; 
+    return resultsArray[0]; 
 }
 
 - (NSUInteger)fetchStreamCount
@@ -356,7 +356,7 @@
     
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     
     // Execute request that returns array of Stream entries
     NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
@@ -383,7 +383,7 @@
     
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     
     // Filter by timestamp
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp < %@", date];
@@ -414,7 +414,7 @@
     
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     
     // Filter by rollID
     User *user = [self fetchUser];
@@ -446,7 +446,7 @@
     
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     // Set Predicate
     
     // Filter by rollID and timestamp
@@ -479,7 +479,7 @@
     
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     
     // Filter by rollID
     User *user = [self fetchUser];
@@ -511,7 +511,7 @@
     
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     // Set Predicate
     
     // Filter by rollID and timestamp
@@ -548,13 +548,13 @@
     [messagesRequest setPredicate:messagesPredicate];
     
     // Sort by timestamp
-    NSSortDescriptor *messagesTimestampSorter = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [messagesRequest setSortDescriptors:[NSArray arrayWithObject:messagesTimestampSorter]];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [messagesRequest setSortDescriptors:@[sortDescriptor]];
     
     // Execute request that returns array of dashboardEntrys
     NSArray *messagesArray = [context executeFetchRequest:messagesRequest error:nil];
     
-    Messages *message = (Messages*) [messagesArray objectAtIndex:0];
+    Messages *message = (Messages*) messagesArray[0];
     NSString *messageText = message.text;
     
     return messageText;
@@ -580,18 +580,18 @@
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
 
     // Extract frameIDs from results from Shelby's Web Database
-    NSArray *webResultsArray = [[webResultsDictionary objectForKey:@"result"] valueForKey:@"frames"];
+    NSArray *webResultsArray = [webResultsDictionary[@"result"] valueForKey:@"frames"];
     NSMutableArray *webFrameIdentifiersInQueue = [[NSMutableArray alloc] init];
     for (NSUInteger i = 0; i < [webResultsArray count]; i++) {
         
-        NSString *frameID = [[webResultsArray objectAtIndex:i] valueForKey:@"id"];
+        NSString *frameID = [webResultsArray[i] valueForKey:@"id"];
         [webFrameIdentifiersInQueue addObject:frameID];
     }
 
     // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
     for ( NSUInteger i = 0; i < [frameResults count]; i++ ) {
         
-        Frame *frame = (Frame*)[frameResults objectAtIndex:i];
+        Frame *frame = (Frame*)frameResults[i];
         NSString *frameID = frame.frameID;
         
         // Delete object if it doesn't exist on web any more
@@ -642,7 +642,7 @@
     NSArray *array = [self.context executeFetchRequest:request error:nil];
     
     if ( [array count] ) {
-        return [array objectAtIndex:0];
+        return array[0];
     }
     
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.context];
@@ -673,7 +673,7 @@
     NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
     [frame setValue:videoID forKey:kCoreDataFrameVideoID];
     
-    [frame setValue:[NSNumber numberWithBool:syncStatus] forKey:kCoreDataFrameIsSynced];
+    [frame setValue:@(syncStatus) forKey:kCoreDataFrameIsSynced];
     
     // Store Conversation (and Messages)
     Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
@@ -732,7 +732,7 @@
     for ( NSUInteger i = 0; i < [messagesArray count]; i++ ) {
         
         Messages *messages = [self checkIfEntity:kCoreDataEntityMessages
-                                     withIDValue:[[messagesArray objectAtIndex:i] valueForKey:@"id"]
+                                     withIDValue:[messagesArray[i] valueForKey:@"id"]
                                         forIDKey:kCoreDataMessagesID];
         
         [conversation addMessagesObject:messages];
@@ -740,25 +740,25 @@
         // Hold reference to parent conversationID
         [messages setValue:conversation.conversationID forKey:kCoreDataConversationID];
         
-        NSString *messageID = [NSString coreDataNullTest:[[messagesArray objectAtIndex:i] valueForKey:@"id"]];
+        NSString *messageID = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"id"]];
         [messages setValue:messageID forKey:kCoreDataMessagesID];
         
-        NSString *createdAt = [NSString coreDataNullTest:[[messagesArray objectAtIndex:i]  valueForKey:@"created_at"]];
+        NSString *createdAt = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"created_at"]];
         [messages setValue:createdAt forKey:kCoreDataMessagesCreatedAt];
         
-        NSString *nickname = [NSString coreDataNullTest:[[messagesArray objectAtIndex:i]  valueForKey:@"nickname"]];
+        NSString *nickname = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"nickname"]];
         [messages setValue:nickname forKey:kCoreDataMessagesNickname];
         
-        NSString *originNetwork = [NSString coreDataNullTest:[[messagesArray objectAtIndex:i] valueForKey:@"origin_network"]];
+        NSString *originNetwork = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"origin_network"]];
         [messages setValue:originNetwork forKey:kCoreDataMessagesOriginNetwork];
         
         NSDate *timestamp = [NSDate dataFromBSONObjectID:messageID];
         [messages setValue:timestamp forKey:kCoreDataMessagesTimestamp];
         
-        NSString *text = [NSString coreDataNullTest:[[messagesArray objectAtIndex:i]  valueForKey:@"text"]];
+        NSString *text = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"text"]];
         [messages setValue:text forKey:kCoreDataMessagesText];
         
-        NSString *userImage = [NSString coreDataNullTest:[[messagesArray objectAtIndex:i]  valueForKey:@"user_image_url"]];
+        NSString *userImage = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"user_image_url"]];
         [messages setValue:userImage forKey:kCoreDataMessagesUserImage];
         
     }
@@ -790,7 +790,7 @@
     [roll setValue:creatorID forKey:kCoreDataRollCreatorID];
     
     NSString *frameCount = [NSString coreDataNullTest:[rollArray valueForKey:@"frame_count"]];
-    [roll setValue:[NSNumber numberWithInteger:[frameCount integerValue]] forKey:kCoreDataRollFrameCount];
+    [roll setValue:@([frameCount integerValue]) forKey:kCoreDataRollFrameCount];
     
     NSString *thumbnailURL = [NSString coreDataNullTest:[rollArray valueForKey:@"thumbnail_url"]];
     [roll setValue:thumbnailURL forKey:kCoreDataRollThumbnailURL];
@@ -831,7 +831,7 @@
     
     for (NSUInteger i = 0; i < [frames count]; i++ ) {
         
-        Stream *stream = (Stream*)[frames objectAtIndex:i];
+        Stream *stream = (Stream*)frames[i];
         
         NSString *providerName = stream.frame.video.providerName;
         NSString *providerID = stream.frame.video.providerID;
@@ -853,7 +853,7 @@
     
     for (NSUInteger i = 0; i < [frames count]; i++ ) {
         
-        Frame *frame = (Frame*)[frames objectAtIndex:i];
+        Frame *frame = (Frame*)frames[i];
         
         NSString *providerName = frame.video.providerName;
         NSString *providerID = frame.video.providerID;
@@ -874,7 +874,7 @@
     
     for (NSUInteger i = 0; i < [tempFrames count]; i++) {
         
-        Frame *frame = (Frame*)[tempFrames objectAtIndex:i];
+        Frame *frame = (Frame*)tempFrames[i];
         NSString *videoID = frame.video.videoID;
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"videoID == %@", videoID];
         NSMutableArray *filteredArray = [NSMutableArray arrayWithArray:[frames filteredArrayUsingPredicate:predicate]];
@@ -883,7 +883,7 @@
             
             for (NSUInteger j = 1; j < [filteredArray count]; j++ ) {
                 
-                [frames removeObjectIdenticalTo:[filteredArray objectAtIndex:j]];
+                [frames removeObjectIdenticalTo:filteredArray[j]];
                 
             }
         }
@@ -912,10 +912,10 @@
         NSArray *videoArray = [self.context executeFetchRequest:request error:nil];
         
         // Extract video from videoArray
-        Video *video = (Video*)[videoArray objectAtIndex:0];
+        Video *video = (Video*)videoArray[0];
         
         // Post notification if SPVideoReel object is available
-        NSDictionary *videoDictionary = [NSDictionary dictionaryWithObjectsAndKeys:video, kSPCurrentVideo, nil];
+        NSDictionary *videoDictionary = @{kSPCurrentVideo: video};
         [[NSNotificationCenter defaultCenter] postNotificationName:kSPVideoExtracted
                                                             object:nil
                                                           userInfo:videoDictionary];

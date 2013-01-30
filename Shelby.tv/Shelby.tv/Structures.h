@@ -6,20 +6,20 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-typedef enum _APIRequestType
+typedef NS_ENUM(NSUInteger, APIRequestType)
 {
     
-    APIRequestType_None = 0,
+    APIRequestType_None,
     APIRequestType_PostUserAuthorization,
     APIRequestType_GetStream,
     APIRequestType_GetRollFrames
     
-} APIRequestType;
+};
 
-typedef enum _DataRequestType
+typedef NS_ENUM(NSUInteger, DataRequestType)
 {
     
-    DataRequestType_Fetch = 0,          // Fetch NSManagedObjects or NSManagedObjectContext
+    DataRequestType_Fetch,              // Fetch NSManagedObjects or NSManagedObjectContext
     DataRequestType_StoreUser,          // Store User
     DataRequestType_BackgroundUpdate,   // Store data from background API poller
     DataRequestType_Sync,               // Sync Core Data Objects with Web
@@ -27,24 +27,24 @@ typedef enum _DataRequestType
     DataRequestType_VideoExtracted,     // Store video data from results of SPVideoExtractor
     DataRequestType_StoreVideoInCache   // Store video data in local cache
     
-} DataRequestType;
+};
 
-typedef enum _CategoryType
+typedef NS_ENUM(NSUInteger, CategoryType)
 {
     
-    CategoryType_Unknown = 0,
+    CategoryType_Unknown,
     CategoryType_Stream,
     CategoryType_QueueRoll,
     CategoryType_PersonalRoll,
     
-} CategoryType;
+};
 
-typedef enum _VideoProvider
+typedef NS_ENUM(NSUInteger, VideoProvider)
 {
     
-    VideoProvider_None = 0,
+    VideoProvider_None,
     VideoProvider_YouTube,
     VideoProvider_Vimeo,
     VideoProvider_DailyMotion
     
-} VideoProvider;
+};

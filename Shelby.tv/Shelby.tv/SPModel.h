@@ -22,18 +22,15 @@
 @end
 
 @interface SPModel : NSObject
-{
-    id _scrubberTimeObserver;
-}
 
 @property (nonatomic) id scrubberTimeObserver;
-@property (assign, nonatomic) NSUInteger numberOfVideos;
-@property (assign, nonatomic) NSUInteger currentVideo;
 @property (nonatomic) NSTimer *overlayTimer;
 @property (nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (nonatomic) SPVideoReel *videoReel;
 @property (nonatomic, readonly) SPVideoExtractor *videoExtractor;
+@property (assign, nonatomic) NSUInteger numberOfVideos;
+@property (assign, nonatomic) NSUInteger currentVideo;
 @property (weak, nonatomic, readonly) SPVideoPlayer <SPVideoScrubberDelegate> *videoScrubberDelegate;
 
 /// Singleton Methods

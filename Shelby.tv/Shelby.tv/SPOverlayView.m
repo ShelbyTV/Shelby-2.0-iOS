@@ -16,20 +16,6 @@
 @end
 
 @implementation SPOverlayView
-@synthesize model = _model;
-@synthesize homeButton = _homeButton;
-@synthesize categoryTitleLabel = _categoryTitleLabel;
-@synthesize videoListScrollView = _videoListScrollView;
-@synthesize shareButton = _shareButton;
-@synthesize playButton = _playButton;
-@synthesize airPlayView = _airPlayView;
-@synthesize scrubber = _scrubber;
-@synthesize scrubberTimeLabel = _scrubberTimeLabel;
-@synthesize videoTitleLabel = _videoTitleLabel;
-@synthesize videoCaptionLabel = _videoCaptionLabel;
-@synthesize userImageView = _userImageView;
-@synthesize nicknameLabel = _nicknameLabel;
-@synthesize restartPlaybackButton = _restartPlaybackButton;
 
 #pragma mark - Memory Management
 - (void)dealloc

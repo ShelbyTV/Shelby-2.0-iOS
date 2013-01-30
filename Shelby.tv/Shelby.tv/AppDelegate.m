@@ -11,11 +11,8 @@
 #import "LoginViewController.h"
 
 @interface AppDelegate ()
-{
-    NSManagedObjectModel *_managedObjectModel;
-}
 
-@property (nonatomic) NSManagedObjectModel *_managedObjectModel;
+@property (nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic) LoginViewController *loginViewController;
 @property (nonatomic) NSTimer *pollAPITimer;
@@ -28,11 +25,6 @@
 @end
 
 @implementation AppDelegate
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize loginViewController = _loginViewController;
-@synthesize pollAPITimer = _pollAPITimer;
-@synthesize pollAPICounter = _pollAPICounter;
 
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -261,12 +253,11 @@
 - (void)dumpAllData
 {
     NSPersistentStoreCoordinator *coordinator =  [self persistentStoreCoordinator];
-    NSPersistentStore *store = [[coordinator persistentStores] objectAtIndex:0];
+    NSPersistentStore *store = [coordinator persistentStores][0];
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     [fileManager removeItemAtURL:store.URL error:nil];
     [coordinator removePersistentStore:store error:nil];
     [self setPersistentStoreCoordinator:nil];
 }
-
 
 @end

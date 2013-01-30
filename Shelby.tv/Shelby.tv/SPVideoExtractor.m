@@ -13,9 +13,9 @@
 
 @property (nonatomic) NSMutableArray *videoQueue;
 @property (nonatomic) UIWebView *webView;
-@property (assign, nonatomic) BOOL isExtracting;
 @property (nonatomic) NSTimer *nextExtractionTimer;
 @property (nonatomic) NSTimer *currentExtractionTimer;
+@property (assign, nonatomic) BOOL isExtracting;
 
 - (NSManagedObjectContext*)context;
 - (void)extractNextVideoFromQueue;
@@ -30,11 +30,6 @@
 @end
 
 @implementation SPVideoExtractor
-@synthesize videoQueue = _videoQueue;
-@synthesize webView = _webView;
-@synthesize isExtracting = _isExtracting;
-@synthesize nextExtractionTimer = _nextExtractionTimer;
-@synthesize currentExtractionTimer = _currentExtractionTimer;
 
 #pragma mark - Singleton Methods
 + (SPVideoExtractor*)sharedInstance
@@ -99,7 +94,7 @@
     if ( ![self isExtracting] && [self.videoQueue count] ) {
         
         NSManagedObjectContext *context = [self context];
-        NSManagedObjectID *objectID = [[self.videoQueue objectAtIndex:0] objectID];
+        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
         Video *video = (Video*)[context existingObjectWithID:objectID error:nil];
         [self setIsExtracting:YES];
         [self createWebView];
@@ -229,7 +224,7 @@
                         
                         // Update Core Data video object
                         NSManagedObjectContext *context = [self context];
-                        NSManagedObjectID *objectID = [[self.videoQueue objectAtIndex:0] objectID];
+                        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
                         Video *video = (Video*)[context existingObjectWithID:objectID error:nil];
                         [video setValue:extractedURL forKey:kCoreDataVideoExtractedURL];
                        

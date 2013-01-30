@@ -31,16 +31,6 @@
 @end
 
 @implementation SPVideoPlayer
-@synthesize appDelegate = _appDelegate;
-@synthesize model = _model;
-@synthesize videoFrame = _videoFrame;
-@synthesize player = _player;
-@synthesize playerLayer = _playerLayer;
-@synthesize indicator = _indicator;
-@synthesize sharePopOverController = _sharePopOverController;
-@synthesize playbackFinished = _playbackFinished;
-@synthesize isPlayable = _isPlayable;
-@synthesize isPlaying = _isPlaying;
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
