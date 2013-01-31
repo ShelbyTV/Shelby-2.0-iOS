@@ -61,6 +61,7 @@
 
     if ( [videoFrames count] ) {
         
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
         SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Stream categoryTitle:@"Stream" andVideoFrames:videoFrames];
         [self presentViewController:reel animated:YES completion:nil];
         
@@ -85,6 +86,7 @@
     
     if ( [videoFrames count] ) {
         
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
         SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_QueueRoll categoryTitle:@"Queue Roll" andVideoFrames:videoFrames];
         [self presentViewController:reel animated:YES completion:nil];
         
@@ -109,6 +111,7 @@
     
     if ( [videoFrames count] ) {
         
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
         SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_PersonalRoll categoryTitle:@"Personal Roll" andVideoFrames:videoFrames];
         [self presentViewController:reel animated:YES completion:nil];
         
@@ -125,7 +128,6 @@
     }
     
 }
-
 
 - (void)logoutButtonAction
 {

@@ -99,7 +99,6 @@
 - (void)showOverlay
 {
     [UIView animateWithDuration:0.5f animations:^{
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
         [self setAlpha:1.0f];
     }];
 }
@@ -107,7 +106,6 @@
 - (void)hideOverlay
 {
     [UIView animateWithDuration:0.5f animations:^{
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
         [self setAlpha:0.0f];
     }];
 }

@@ -40,8 +40,6 @@
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
 
-- (void)dismissReel;
-
 @end
 
 @implementation SPVideoReel
@@ -69,16 +67,6 @@
     [dataUtility removeAllVideoExtractionURLReferences];
 }
 
-- (void)dismissReel
-{
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-        
-    }];
-}
-
 #pragma mark - Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString *)title andVideoFrames:(NSArray *)videoFrames
 {
@@ -98,29 +86,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
+    [self.view setBackgroundColor:[UIColor blackColor]];
     
-    self.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
-    self.view.backgroundColor = [UIColor blackColor];
-    
-    [self setupVariables];
-    [self setupVideoScrollView];
-    [self setupOverlayView];
-    [self setupVideoPlayers];
-    [self setupObservers];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self setupVariables];
+    [self setupVideoScrollView];
+    [self setupOverlayView];
+    [self setupVideoPlayers];
+    [self setupObservers];
     [self setupAirPlay];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     [self setupVideoListScrollView];
-}  
-
+}
 
 #pragma mark - Setup Methods
 - (void)setupVariables
@@ -145,7 +126,7 @@
 - (void)setupVideoScrollView
 {
     self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.videoScrollView.contentSize = CGSizeMake(1024.0f*self.model.numberOfVideos, 768.0f);
+    self.videoScrollView.contentSize = CGSizeMake(1024.0f*self.model.numberOfVideos, 748.0f);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;
     self.videoScrollView.showsHorizontalScrollIndicator = NO;
@@ -238,7 +219,7 @@
             
         CGRect itemFrame = itemView.frame;
         itemFrame.origin.x = itemViewWidth * i;
-        itemFrame.origin.y = 20.0f;
+        itemFrame.origin.y = 0.0f;
         [itemView setFrame:itemFrame];
         
         [itemView.videoTitleLabel setText:videoFrame.video.title];
@@ -588,20 +569,24 @@
 - (IBAction)homeButtonAction:(id)sender
 {
     
-    for ( SPVideoPlayer *player in _videoPlayers ) {
-        
-        // Pause and stop residual video playback
-        [player pause];
-        
-    }
-
-    [self.videoPlayers removeAllObjects];
-    [self.videoFrames removeAllObjects];
-    [self.itemViews removeAllObjects];
-    [self.model teardown];
+    if ( ![self isBeingDismissed] ) {
     
-    [self dismissReel];
+        // Stop residual audio playback (this shouldn't be happening to begin with)
+        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
 
+        // Empty NSMutableArrays
+        [self.videoPlayers removeAllObjects];
+        [self.videoFrames removeAllObjects];
+        [self.itemViews removeAllObjects];
+        
+        [self.model teardown];
+
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+            
+        }];
+    }
 }
 
 - (IBAction)playButtonAction:(id)sender

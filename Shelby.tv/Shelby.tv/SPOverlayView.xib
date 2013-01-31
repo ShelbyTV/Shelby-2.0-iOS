@@ -168,7 +168,10 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<bool key="IBUIDirectionalLockEnabled">YES</bool>
 						<bool key="IBUIAlwaysBounceHorizontal">YES</bool>
+						<bool key="IBUIPagingEnabled">YES</bool>
+						<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 					</object>
 					<object class="IBUIImageView" id="995945933">
 						<reference key="NSNextResponder" ref="191373211"/>

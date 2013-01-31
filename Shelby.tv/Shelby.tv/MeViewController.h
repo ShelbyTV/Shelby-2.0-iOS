@@ -16,6 +16,4 @@
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
-- (void)dismissVideoReel:(SPVideoReel*)reel;
-
 @end
