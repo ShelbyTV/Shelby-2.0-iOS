@@ -100,6 +100,11 @@
     [self setupVideoPlayers];
     [self setupObservers];
     [self setupAirPlay];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [self setupVideoListScrollView];
 }
 
@@ -165,8 +170,6 @@
         
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
-        [self.videoScrollView setNeedsDisplay];
-
         
     }
 
@@ -234,7 +237,6 @@
         [self.model.overlayView.videoListScrollView addSubview:itemView];
         
     }
-
     
     // Add visual selected state (e.g., blue background, white text) to currentVideo
     SPVideoItemView *itemView = (self.itemViews)[self.model.currentVideo];
@@ -573,11 +575,7 @@
     
         // Stop residual audio playback (this shouldn't be happening to begin with)
         [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-
-        // Empty NSMutableArrays
-        [self.videoPlayers removeAllObjects];
-        [self.videoFrames removeAllObjects];
-        [self.itemViews removeAllObjects];
+        [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         
         [self.model teardown];
 

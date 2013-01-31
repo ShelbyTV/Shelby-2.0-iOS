@@ -192,6 +192,8 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [self.indicator stopAnimating];
         
+
+        
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
         AVAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
@@ -203,7 +205,9 @@
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
         self.playerLayer.frame = modifiedFrame;
         self.playerLayer.bounds = modifiedFrame;
-        [self.view.layer addSublayer:_playerLayer];
+        UIView *videoView = [[UIView alloc] initWithFrame:modifiedFrame];
+        [videoView.layer addSublayer:_playerLayer];
+        [self.view addSubview:videoView];
         
         // Make sure video can be played via AirPlay
         self.player.allowsExternalPlayback = YES;
@@ -295,15 +299,20 @@
 		interval = 0.5f * duration / width;
 	}
     
-    __block SPVideoPlayer *blockSelf  = self;
     
-	self.model.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
-                                                                                queue:NULL /* If you pass NULL, the main queue is used. */
-                                                                            usingBlock:^(CMTime time) {
-                                                                                
-                                                                                [blockSelf.model.videoScrubberDelegate syncScrubber];
-                                                                                   
-                                                                            }];
+    if ( self.player == self.model.currentVideoPlayer.player ) {
+    
+        __block SPVideoPlayer *blockSelf  = self;
+        
+        self.model.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
+                                                                                                                queue:NULL /* If you pass NULL, the main queue is used. */
+                                                                                                           usingBlock:^(CMTime time) {
+                                                                                                               
+                                                                                                               [blockSelf syncScrubber];
+                                                                                                               
+                                                                                                           }];
+    }
+    
 }
 
 - (void)syncScrubber

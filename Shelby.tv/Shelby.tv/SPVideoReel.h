@@ -19,7 +19,6 @@
              categoryTitle:(NSString*)title
             andVideoFrames:(NSArray*)videoFrames;
 
-
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;
