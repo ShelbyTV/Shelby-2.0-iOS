@@ -126,20 +126,6 @@
     
 }
 
-- (void)dismissVideoReel:(SPVideoReel*)reel
-{
-    __block SPVideoReel *reelSelf = reel;
-    
-    [reel dismissViewControllerAnimated:YES completion:^{
-
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-    
-        reelSelf = nil;
-        DLog(@"Reel Dismissed");
-        
-    }];
-
-}
 
 - (void)logoutButtonAction
 {

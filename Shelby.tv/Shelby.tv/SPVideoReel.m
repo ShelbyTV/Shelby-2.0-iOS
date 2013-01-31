@@ -40,6 +40,8 @@
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceDidUpdate:(NSNotification*)notification;
 
+- (void)dismissReel;
+
 @end
 
 @implementation SPVideoReel
@@ -65,6 +67,16 @@
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility removeAllVideoExtractionURLReferences];
+}
+
+- (void)dismissReel
+{
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+        
+    }];
 }
 
 #pragma mark - Initialization
@@ -580,17 +592,15 @@
         
         // Pause and stop residual video playback
         [player pause];
-        [player.playerView removeFromSuperview];
-        [player setPlayerView:nil];
         
     }
 
     [self.videoPlayers removeAllObjects];
     [self.videoFrames removeAllObjects];
+    [self.itemViews removeAllObjects];
     [self.model teardown];
     
-    MeViewController *meViewController = (MeViewController*)self.presentingViewController;
-    [meViewController dismissVideoReel:self];
+    [self dismissReel];
 
 }
 
