@@ -72,7 +72,7 @@
 - (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString *)title andVideoFrames:(NSArray *)videoFrames
 {
     
-    if ( self = [super init] ) {
+    if ( (self = [super init]) ) {
         
         self.categoryType = categoryType;
         self.categoryTitle = title;
@@ -279,7 +279,7 @@
 }
 
 #pragma mark - Public Update Methods
-- (void)extractVideoForVideoPlayer:(NSUInteger)position;
+- (void)extractVideoForVideoPlayer:(NSUInteger)position
 {
     SPVideoPlayer *player = (self.videoPlayers)[position];
     
@@ -429,11 +429,8 @@
         
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         
-        switch ( _categoryType ) {
-                
-            case CategoryType_Unknown:{
-                
-            } break;
+        switch ( self.categoryType ) {
+
                 
             case CategoryType_Stream:{
                 
@@ -459,8 +456,10 @@
                 
             } break;
                 
-            default:
-                break;
+            case CategoryType_Unknown:{
+                
+            } break;
+                
         }
     }
 }
@@ -480,7 +479,7 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *olderFramesArray = [@[] mutableCopy];
         
-        switch ( _categoryType ) {
+        switch ( self.categoryType ) {
                 
             case CategoryType_Stream:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
@@ -494,8 +493,9 @@
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
             } break;
                 
-            default:
-                break;
+            case CategoryType_Unknown:{
+                
+            }
         }
         
         // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary

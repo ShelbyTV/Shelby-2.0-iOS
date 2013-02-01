@@ -115,7 +115,7 @@
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [self.videoFrame objectID];
         self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-        [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
+        [[SPVideoExtractor sharedInstance] queueVideo:self.videoFrame.video];
         
     }
 }
@@ -203,18 +203,18 @@
         [self.indicator stopAnimating];
         
         // Instantiate AVPlayer object with extractedURL
-        NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
+        NSURL *extractedURL = [NSURL URLWithString:self.videoFrame.video.extractedURL];
         AVAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
         AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
         
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
         self.playerLayer.frame = modifiedFrame;
         self.playerLayer.bounds = modifiedFrame;
         UIView *videoView = [[UIView alloc] initWithFrame:modifiedFrame];
-        [videoView.layer addSublayer:_playerLayer];
+        [videoView.layer addSublayer:self.playerLayer];
         [self.view addSubview:videoView];
         
         // Make sure video can be played via AirPlay

@@ -212,6 +212,7 @@
                     [[NSURLCache sharedURLCache] removeAllCachedResponses];
                     
                     // Get videoURL to playable video file
+                    // hard to remove warning, since 'value' is an instance of a private class - MPAVItem.
                     NSString *extractedURL = [value performSelector:pathSelector];
                     
                     [self.currentExtractionTimer invalidate];
