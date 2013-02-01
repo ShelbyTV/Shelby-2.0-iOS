@@ -22,9 +22,6 @@
 @end
 
 @interface SPModel : NSObject
-{
-    id _scrubberTimeObserver;
-}
 
 @property (nonatomic) id scrubberTimeObserver;
 @property (nonatomic) NSTimer *overlayTimer;

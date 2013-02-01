@@ -17,6 +17,7 @@
 
 @property (nonatomic) AppDelegate *appDelegate;
 @property (nonatomic) SPModel *model;
+@property (nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
 @property (nonatomic) NSMutableArray *videoFrames;
 @property (nonatomic) NSMutableArray *videoPlayers;
@@ -88,7 +89,6 @@
     [super viewDidLoad];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
     [self.view setBackgroundColor:[UIColor blackColor]];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -144,12 +144,13 @@
 {
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
     self.model.overlayView = nib[0];
-    [self.model.overlayView.categoryTitleLabel setText:self.categoryTitle];
-    [self.view addSubview:self.model.overlayView];
+    self.overlayView = self.model.overlayView;
+    [self.overlayView.categoryTitleLabel setText:self.categoryTitle];
+    [self.view addSubview:self.overlayView];
     
-    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self.model.overlayView action:@selector(toggleOverlay)];
+    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self.overlayView action:@selector(toggleOverlay)];
     [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-    [self.view addGestureRecognizer:_toggleOverlayGesuture];
+    [self.view addGestureRecognizer:self.toggleOverlayGesuture];
     
     UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];
@@ -208,8 +209,8 @@
 {
 
     CGFloat itemViewWidth = [SPVideoItemView width];
-    self.model.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*self.model.numberOfVideos, 217.0f);
-    self.model.overlayView.videoListScrollView.delegate = self;
+    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*self.model.numberOfVideos, 217.0f);
+    self.overlayView.videoListScrollView.delegate = self;
     
     for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
         
@@ -234,7 +235,7 @@
         [itemView setTag:i];
         
         [self.itemViews addObject:itemView];
-        [self.model.overlayView.videoListScrollView addSubview:itemView];
+        [self.overlayView.videoListScrollView addSubview:itemView];
         
     }
     
@@ -251,8 +252,8 @@
         [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
         
         CGFloat itemViewX = itemView.frame.size.width * (self.model.currentVideo-1);
-        CGFloat itemViewY = self.model.overlayView.videoListScrollView.contentOffset.y;
-        [self.model.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
+        CGFloat itemViewY = self.overlayView.videoListScrollView.contentOffset.y;
+        [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
         
     }
 
@@ -262,10 +263,10 @@
 {
     
     // Instantiate AirPlay button for MPVolumeView
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.model.overlayView.airPlayView.bounds];
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.overlayView.airPlayView.bounds];
     [volumeView setShowsVolumeSlider:NO];
     [volumeView setShowsRouteButton:YES];
-    [self.model.overlayView.airPlayView addSubview:volumeView];
+    [self.overlayView.airPlayView addSubview:volumeView];
     
     for (UIView *view in volumeView.subviews) {
         
@@ -309,7 +310,7 @@
     [self.model.overlayTimer invalidate];
     
     // Show Overlay
-    [self.model.overlayView showOverlay];
+    [self.overlayView showOverlay];
     
     // Pause current videoPlayer
     if ( [self.model.currentVideoPlayer isPlayable] )
@@ -331,35 +332,35 @@
         
         if ( [self.model.currentVideoPlayer playbackFinished] ) { // PLayable DID finish playing
             
-            [self.model.overlayView.restartPlaybackButton setHidden:NO];
-            [self.model.overlayView.playButton setEnabled:NO];
-            [self.model.overlayView.scrubber setEnabled:NO];
+            [self.overlayView.restartPlaybackButton setHidden:NO];
+            [self.overlayView.playButton setEnabled:NO];
+            [self.overlayView.scrubber setEnabled:NO];
             
         } else { // Playable video DID NOT finish played
             
-            [self.model.overlayView.restartPlaybackButton setHidden:YES];
-            [self.model.overlayView.playButton setEnabled:YES];
-            [self.model.overlayView.scrubber setEnabled:YES];
+            [self.overlayView.restartPlaybackButton setHidden:YES];
+            [self.overlayView.playButton setEnabled:YES];
+            [self.overlayView.scrubber setEnabled:YES];
             
         }
         
     } else { // Video IS NOT Playable
         
-        [self.model.overlayView.restartPlaybackButton setHidden:YES];
-        [self.model.overlayView.playButton setEnabled:NO];
-        [self.model.overlayView.scrubber setEnabled:NO];
+        [self.overlayView.restartPlaybackButton setHidden:YES];
+        [self.overlayView.playButton setEnabled:NO];
+        [self.overlayView.scrubber setEnabled:NO];
         
-        [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
-        [self.model.overlayView.scrubber setValue:0.0f];
-        [self.model.overlayView.scrubberTimeLabel setText:@"00:00:00 / 00:00:00"];
+        [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+        [self.overlayView.scrubber setValue:0.0f];
+        [self.overlayView.scrubberTimeLabel setText:@"00:00:00 / 00:00:00"];
         
     }
     
     // Clear old values on infoCard
-    [self.model.overlayView.videoTitleLabel setText:nil];
-    [self.model.overlayView.videoCaptionLabel setText:nil];
-    [self.model.overlayView.nicknameLabel setText:nil];
-    [self.model.overlayView.userImageView setImage:nil];
+    [self.overlayView.videoTitleLabel setText:nil];
+    [self.overlayView.videoCaptionLabel setText:nil];
+    [self.overlayView.nicknameLabel setText:nil];
+    [self.overlayView.userImageView setImage:nil];
     
     // Reference NSManageObjectContext
     NSManagedObjectContext *context = [self.appDelegate context];
@@ -367,14 +368,14 @@
     Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
     // Set new values on infoPanel
-    self.model.overlayView.videoTitleLabel.text = videoFrame.video.title;
+    self.overlayView.videoTitleLabel.text = videoFrame.video.title;
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    self.model.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
-    self.model.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
+    self.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
+    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
-                                 forImageView:self.model.overlayView.userImageView
+                                 forImageView:self.overlayView.userImageView
                           withPlaceholderView:infoPanelIconPlaceholderView
                                andContentMode:UIViewContentModeScaleAspectFit];
     
@@ -394,7 +395,7 @@
         if ( position < self.model.numberOfVideos ) {
             CGFloat itemX = itemView.frame.size.width * position;
             CGFloat itemY = 0.0f;
-            [self.model.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
+            [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
         }
         
     }
@@ -554,10 +555,10 @@
                     itemView.backgroundColor = [UIColor clearColor];
                     itemView.videoTitleLabel.textColor = kColorBlack;
                     [itemView.videoTitleLabel setText:videoFrame.video.title];
-                    self.model.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
+                    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
                     [self.itemViews addObject:itemView];
-                    [self.model.overlayView.videoListScrollView addSubview:itemView];
-                    [self.model.overlayView.videoListScrollView setNeedsDisplay];
+                    [self.overlayView.videoListScrollView addSubview:itemView];
+                    [self.overlayView.videoListScrollView setNeedsDisplay];
                     
                     [self setFetchingOlderVideos:NO];
                     [self setLoadingOlderVideos:NO];
@@ -574,14 +575,14 @@
     if ( ![self isBeingDismissed] ) {
     
         // Stop residual audio playback (this shouldn't be happening to begin with)
-        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-        [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        
-        [self.model teardown];
 
         [self dismissViewControllerAnimated:YES completion:^{
             
             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+            
+            [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+            [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [self.model teardown];
             
         }];
     }
@@ -640,9 +641,9 @@
     double duration = CMTimeGetSeconds(playerDuration);
     if (isfinite(duration)) {
         
-        float minValue = [self.model.overlayView.scrubber minimumValue];
-        float maxValue = [self.model.overlayView.scrubber maximumValue];
-        float value = [self.model.overlayView.scrubber value];
+        float minValue = [self.overlayView.scrubber minimumValue];
+        float maxValue = [self.overlayView.scrubber maximumValue];
+        float value = [self.overlayView.scrubber value];
         double time = duration * (value - minValue) / (maxValue - minValue);
         [self.model.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
     }
@@ -661,7 +662,7 @@
 		double duration = CMTimeGetSeconds(playerDuration);
         
 		if (isfinite(duration)) {
-			CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
+			CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
 			double tolerance = 0.5f * duration / width;
 			self.model.scrubberTimeObserver = [self.model.videoScrubberDelegate.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
                                                                                                                     queue:NULL
@@ -687,7 +688,7 @@
         // Switch the indicator when more than 50% of the previous/next page is visible
         CGFloat pageWidth = scrollView.frame.size.width;
         CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
-        NSInteger page = (NSInteger)floor(scrollAmount) + 1;
+        NSUInteger page = floor(scrollAmount) + 1;
         
         // Toggle playback on old and new SPVideoPlayer objects
         if ( page != self.model.currentVideo ) {
@@ -700,12 +701,12 @@
         [self currentVideoDidChangeToVideo:page];
         [self fetchOlderVideos:page];
     
-    } else if ( scrollView == self.model.overlayView.videoListScrollView ) {
+    } else if ( scrollView == self.overlayView.videoListScrollView ) {
         
         // Switch the indicator when more than 50% of the previous/next page is visible
         CGFloat pageWidth = scrollView.frame.size.width;
         CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
-        NSUInteger page = (NSUInteger)floor(scrollAmount) + 1;
+        NSUInteger page = floor(scrollAmount) + 1;
         [self fetchOlderVideos:page];
         
     }

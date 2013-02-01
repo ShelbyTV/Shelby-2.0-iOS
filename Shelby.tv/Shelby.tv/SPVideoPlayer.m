@@ -16,13 +16,16 @@
 
 @property (nonatomic) AppDelegate *appDelegate;
 @property (nonatomic) SPModel *model;
+@property (nonatomic) SPOverlayView *overlayView;
+@property (nonatomic) SPVideoReel *videoReel;
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *indicator;
 @property (nonatomic) UIPopoverController *sharePopOverController;
 
 /// Setup Methods
-- (void)setupIndicator;
+- (void)setupReferences;
 - (void)setupInitialConditions;
+- (void)setupIndicator;
 
 /// Observer Methods
 - (void)loadVideo:(NSNotification*)notification;
@@ -42,12 +45,11 @@
 #pragma mark - Initialization Methods
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame
 {
-    if ( self = [super init] ) {
+    if ( (self = [super init]) ) {
         
         [self.view setFrame:bounds];
         [self setVideoFrame:videoFrame];
-        [self setAppDelegate:(AppDelegate*)[[UIApplication sharedApplication] delegate]];
-        [self setModel:[SPModel sharedInstance]];
+        [self setupReferences];
         [self setupInitialConditions];
         
     }
@@ -74,6 +76,14 @@
 }
 
 #pragma mark - Setup Methods
+- (void)setupReferences
+{
+    [self setAppDelegate:(AppDelegate*)[[UIApplication sharedApplication] delegate]];
+    [self setModel:[SPModel sharedInstance]];
+    [self setOverlayView:self.model.overlayView];
+    [self setVideoReel:self.model.videoReel];
+}
+
 - (void)setupInitialConditions
 {
     [self setPlaybackFinished:NO];
@@ -113,7 +123,7 @@
 #pragma mark - Video Playback Methods
 - (void)togglePlayback
 {
-    if ( 0.0 == self.player.rate && _isPlayable ) { // Play
+    if ( 0.0 == self.player.rate && self.isPlayable ) { // Play
         
         [self play];
         
@@ -126,10 +136,10 @@
 - (void)restartPlayback
 {
     [self setPlaybackFinished:NO];
-    [self.model.overlayView.restartPlaybackButton setHidden:YES];
+    [self.overlayView.restartPlaybackButton setHidden:YES];
     
-    [self.model.overlayView.playButton setEnabled:YES];
-    [self.model.overlayView.scrubber setEnabled:YES];
+    [self.overlayView.playButton setEnabled:YES];
+    [self.overlayView.scrubber setEnabled:YES];
     
     [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC)];
     [self syncScrubber];
@@ -167,12 +177,12 @@
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
-    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, _videoFrame.video.providerName, _videoFrame.video.providerID, _videoFrame.frameID];
-    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
+    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, self.videoFrame.video.providerName, self.videoFrame.video.providerID, self.videoFrame.frameID];
+    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", self.videoFrame.video.title, shareLink];
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
-    [self.sharePopOverController presentPopoverFromRect:self.model.overlayView.shareButton.frame
-                                                 inView:self.model.overlayView
+    [self.sharePopOverController presentPopoverFromRect:self.overlayView.shareButton.frame
+                                                 inView:self.overlayView
                                permittedArrowDirections:UIPopoverArrowDirectionDown
                                                animated:YES];
 }
@@ -191,8 +201,6 @@
         // Clear notification and indicator
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [self.indicator stopAnimating];
-        
-
         
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
@@ -218,9 +226,9 @@
         
         if ( self == self.model.currentVideoPlayer ) {
          
-            [self.model.overlayView.restartPlaybackButton setHidden:YES];
-            [self.model.overlayView.playButton setEnabled:YES];
-            [self.model.overlayView.scrubber setEnabled:YES];
+            [self.overlayView.restartPlaybackButton setHidden:YES];
+            [self.overlayView.playButton setEnabled:YES];
+            [self.overlayView.scrubber setEnabled:YES];
             
         }
         
@@ -229,7 +237,7 @@
         [togglePlaybackGesuture setNumberOfTapsRequired:2];
         [self.view addGestureRecognizer:togglePlaybackGesuture];
         
-        [self.model.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
+        [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
         
         // Add Observers
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -262,7 +270,7 @@
         [self setPlaybackFinished:YES];
         
         // Force scroll videoScrollView
-        [self.model.videoReel currentVideoDidFinishPlayback];
+        [self.videoReel currentVideoDidFinishPlayback];
         
     }    
 }
@@ -295,7 +303,7 @@
 	
     double duration = CMTimeGetSeconds(playerDuration);
 	if (isfinite(duration)) {
-		CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
+		CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
 		interval = 0.5f * duration / width;
 	}
     
@@ -319,7 +327,7 @@
 {
 	CMTime playerDuration = [self elapsedDuration];
 	if ( CMTIME_IS_INVALID(playerDuration) ) {
-        [self.model.overlayView.scrubber setValue:0.0f];
+        [self.overlayView.scrubber setValue:0.0f];
 		return;
 	}
     
@@ -328,22 +336,22 @@
 	if ( isfinite(duration) ) {
         
         // Update value of scrubber (slider and label)
-		float minValue = [self.model.overlayView.scrubber minimumValue];
-		float maxValue = [self.model.overlayView.scrubber maximumValue];
+		float minValue = [self.overlayView.scrubber minimumValue];
+		float maxValue = [self.overlayView.scrubber maximumValue];
 		double currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
 		double duration = CMTimeGetSeconds([self.model.currentVideoPlayer.player.currentItem duration]);
         
-		[self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
-        [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
+		[self.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
+        [self.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
         
         // Update button state
-        if ( 0.0 == self.player.rate && _isPlayable ) {
+        if ( 0.0 == self.player.rate && self.isPlayable ) {
         
-            [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+            [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
             
         } else { 
             
-            [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
+            [self.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
         }
 	}
 }
