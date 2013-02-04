@@ -9,7 +9,6 @@
 typedef NS_ENUM(NSUInteger, APIRequestType)
 {
     
-    APIRequestType_None,
     APIRequestType_PostUserAuthorization,
     APIRequestType_GetStream,
     APIRequestType_GetRollFrames
@@ -42,7 +41,6 @@ typedef NS_ENUM(NSUInteger, CategoryType)
 typedef NS_ENUM(NSUInteger, VideoProvider)
 {
     
-    VideoProvider_None,
     VideoProvider_YouTube,
     VideoProvider_Vimeo,
     VideoProvider_DailyMotion

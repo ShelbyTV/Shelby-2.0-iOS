@@ -280,6 +280,8 @@
 		8E091750168536F900503EF9 /* Icons and Launch Images */ = {
 			isa = PBXGroup;
 			children = (
+				8E209723162F3A61000A2DFD /* Default.png */,
+				8E209725162F3A61000A2DFD /* Default@2x.png */,
 				8E50CDE716A9B9FC006B1ABE /* Icon-Small-50.png */,
 				8E50CDE816A9B9FC006B1ABE /* Icon-Small-50@2x.png */,
 				8E50CDE916A9B9FC006B1ABE /* Icon.png */,
@@ -288,7 +290,6 @@
 				8E50CDEC16A9B9FC006B1ABE /* iTunesArtwork@2x */,
 			);
 			name = "Icons and Launch Images";
-			path = ../Shelby.tv/Shelby.tv;
 			sourceTree = "<group>";
 		};
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
@@ -414,8 +415,7 @@
 				8E20971A162F3A61000A2DFD /* InfoPlist.strings */,
 				8E20971D162F3A61000A2DFD /* main.m */,
 				8E20971F162F3A61000A2DFD /* Shelby.tv-Prefix.pch */,
-				8E209723162F3A61000A2DFD /* Default.png */,
-				8E209725162F3A61000A2DFD /* Default@2x.png */,
+				8E091750168536F900503EF9 /* Icons and Launch Images */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -425,7 +425,6 @@
 			children = (
 				8E4980AB1688C556007AF267 /* tempLogo.png */,
 				8E4980AC1688C556007AF267 /* tempLogo@2x.png */,
-				8E091750168536F900503EF9 /* Icons and Launch Images */,
 				8E5980291680104A00027181 /* Shelby Player Images */,
 				8EEED7A416800DAC00D9F4CD /* Fonts */,
 			);
