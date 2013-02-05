@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, DataRequestType)
     DataRequestType_StoreUser,          // Store User
     DataRequestType_BackgroundUpdate,   // Store data from background API poller
     DataRequestType_Sync,               // Sync Core Data Objects with Web
-    DataRequestType_ActionUpdate,       // Store data from user action (e.g., when user scrolls far in stream)
+    DataRequestType_ActionUpdate,       // Store data from user action (e.g., when user scrolls far in video list)
     DataRequestType_VideoExtracted,     // Store video data from results of SPVideoExtractor
     DataRequestType_StoreVideoInCache   // Store video data in local cache
     
@@ -38,11 +38,11 @@ typedef NS_ENUM(NSUInteger, CategoryType)
     
 };
 
-typedef NS_ENUM(NSUInteger, VideoProvider)
+typedef NS_ENUM(NSUInteger, VideoProviderType)
 {
     
-    VideoProvider_YouTube,
-    VideoProvider_Vimeo,
-    VideoProvider_DailyMotion
+    VideoProviderType_YouTube,
+    VideoProviderType_Vimeo,
+    VideoProviderType_DailyMotion
     
 };

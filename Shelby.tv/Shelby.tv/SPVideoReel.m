@@ -160,7 +160,7 @@
 - (void)setupVideoPlayers
 {
     
-    for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
+    for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
         
         Frame *videoFrame = (self.videoFrames)[i];
 
@@ -187,7 +187,7 @@
         self.model.currentVideo = 0;
         self.model.currentVideoPlayer = (self.videoPlayers)[self.model.currentVideo];
         
-        for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
+        for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
             
             Frame *videoFrame = (self.videoFrames)[i];
             NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kSPCurrentVideoStreamID];
@@ -212,7 +212,7 @@
     self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*self.model.numberOfVideos, 217.0f);
     self.overlayView.videoListScrollView.delegate = self;
     
-    for ( NSUInteger i = 0; i < self.model.numberOfVideos; i++ ) {
+    for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
         
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
@@ -467,7 +467,7 @@
 - (void)dataSourceDidUpdate:(NSNotification*)notification
 {
     
-    if ( [self fetchingOlderVideos] && ![self loadingOlderVideos] ) { // Occasionally, this is nil, for reasons I cannot figure out, hence the condition.
+    if ( [self fetchingOlderVideos] && ![self loadingOlderVideos] ) { 
     
         [self setLoadingOlderVideos:YES];
         
@@ -516,7 +516,7 @@
             self.model.numberOfVideos = [self.videoFrames count];
             
             // Update videoScrollView and videoListScrollView
-            for ( NSUInteger i = numberOfVideosBeforeUpdate; i < self.model.numberOfVideos; i++ ) {
+            for ( NSUInteger i = numberOfVideosBeforeUpdate; i < self.model.numberOfVideos; ++i ) {
                 
                 // videoScrollView
                 NSManagedObjectContext *context = [self.appDelegate context];

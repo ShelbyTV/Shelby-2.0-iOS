@@ -20,16 +20,8 @@
 @end
 
 @implementation SPModel
-@synthesize scrubberTimeObserver = _scrubberTimeObserver;
-@synthesize numberOfVideos = _numberOfVideos;
-@synthesize currentVideo = _currentVideo;
-@synthesize currentVideoPlayer = _currentVideoPlayer;
 @synthesize videoExtractor = _videoExtractor;
-@synthesize videoReel = _videoReel;
-@synthesize overlayView = _overlayView;
-@synthesize overlayTimer = _overlayTimer;
 @synthesize videoScrubberDelegate = _videoScrubberDelegate;
-@synthesize loadedVideoPlayers = _loadedVideoPlayers;
 
 #pragma mark - Singleton Methods
 + (SPModel*)sharedInstance

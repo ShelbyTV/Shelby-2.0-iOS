@@ -78,7 +78,7 @@
     // Execute request that returns array of stream entries
     NSMutableArray *entries = [[self.context executeFetchRequest:request error:nil] mutableCopy];
     
-    for (NSUInteger i = 0; i < [entries count]; i++ ) {
+    for (NSUInteger i = 0; i < [entries count]; ++i ) {
         
         Video *video = (Video*)[entries objectAtIndex:i];
         [video setExtractedURL:[NSString coreDataNullTest:nil]];
@@ -145,7 +145,7 @@
                     
                 case DataRequestType_ActionUpdate:{
                     
-                    DLog(@"User Action Update Successful");
+//                    DLog(@"User Action Update Successful");
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [[NSNotificationCenter defaultCenter] postNotificationName:kSPUserDidScrollToUpdate object:nil];
@@ -211,7 +211,7 @@
 {
     NSArray *resultsArray = resultsDictionary[@"result"];
     
-    for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
+    for (NSUInteger i = 0; i < [resultsArray count]; ++i ) {
         
         @autoreleasepool {
             
@@ -252,7 +252,7 @@
 {
     NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
     
-    for (NSUInteger i = 0; i < [resultsArray count]; i++ ) {
+    for (NSUInteger i = 0; i < [resultsArray count]; ++i ) {
         
         @autoreleasepool {
                             
@@ -582,14 +582,14 @@
     // Extract frameIDs from results from Shelby's Web Database
     NSArray *webResultsArray = [webResultsDictionary[@"result"] valueForKey:@"frames"];
     NSMutableArray *webFrameIdentifiersInQueue = [@[] mutableCopy];
-    for (NSUInteger i = 0; i < [webResultsArray count]; i++) {
+    for (NSUInteger i = 0; i < [webResultsArray count]; ++i) {
         
         NSString *frameID = [webResultsArray[i] valueForKey:@"id"];
         [webFrameIdentifiersInQueue addObject:frameID];
     }
 
     // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
-    for ( NSUInteger i = 0; i < [frameResults count]; i++ ) {
+    for ( NSUInteger i = 0; i < [frameResults count]; ++i ) {
         
         Frame *frame = (Frame*)frameResults[i];
         NSString *frameID = frame.frameID;
@@ -730,7 +730,7 @@
     
     [conversation setValue:[NSNumber numberWithInt:[messagesArray count]] forKey:kCoreDataConversationMessageCount];
     
-    for ( NSUInteger i = 0; i < [messagesArray count]; i++ ) {
+    for ( NSUInteger i = 0; i < [messagesArray count]; ++i ) {
         
         Messages *messages = [self checkIfEntity:kCoreDataEntityMessages
                                      withIDValue:[messagesArray[i] valueForKey:@"id"]
@@ -830,7 +830,7 @@
 {
     NSMutableArray *playableFrames = [@[] mutableCopy];
     
-    for (NSUInteger i = 0; i < [frames count]; i++ ) {
+    for (NSUInteger i = 0; i < [frames count]; ++i ) {
         
         Stream *stream = (Stream*)frames[i];
         
@@ -852,7 +852,7 @@
 {
     NSMutableArray *playableFrames = [@[] mutableCopy];
     
-    for (NSUInteger i = 0; i < [frames count]; i++ ) {
+    for (NSUInteger i = 0; i < [frames count]; ++i ) {
         
         Frame *frame = (Frame*)frames[i];
         
@@ -873,7 +873,7 @@
 {
     NSMutableArray *tempFrames = [@[] mutableCopy];
     
-    for (NSUInteger i = 0; i < [tempFrames count]; i++) {
+    for (NSUInteger i = 0; i < [tempFrames count]; ++i) {
         
         Frame *frame = (Frame*)tempFrames[i];
         NSString *videoID = frame.video.videoID;

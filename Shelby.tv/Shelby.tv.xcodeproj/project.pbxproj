@@ -411,11 +411,11 @@
 		8E209718162F3A61000A2DFD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8E091750168536F900503EF9 /* Icons and Launch Images */,
 				8E209719162F3A61000A2DFD /* Shelby.tv-Info.plist */,
 				8E20971A162F3A61000A2DFD /* InfoPlist.strings */,
 				8E20971D162F3A61000A2DFD /* main.m */,
 				8E20971F162F3A61000A2DFD /* Shelby.tv-Prefix.pch */,
-				8E091750168536F900503EF9 /* Icons and Launch Images */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -465,6 +465,64 @@
 			path = "Shelby Player Images";
 			sourceTree = "<group>";
 		};
+		8E68A1C916C0C4F00031C3D2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8EB3B19A16AFA7F9008587FD /* SPModel.h */,
+				8EB3B19B16AFA7F9008587FD /* SPModel.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		8E68A1CA16C0C4F70031C3D2 /* Xibs */ = {
+			isa = PBXGroup;
+			children = (
+				8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */,
+				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
+			);
+			name = Xibs;
+			sourceTree = "<group>";
+		};
+		8E68A1CB16C0C4FC0031C3D2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E68A1CA16C0C4F70031C3D2 /* Xibs */,
+				8E4C55751666A9F90019DD15 /* SPOverlayView.h */,
+				8E4C55761666A9F90019DD15 /* SPOverlayView.m */,
+				8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */,
+				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8E68A1CC16C0C51D0031C3D2 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8EB950511665BCF100E965E0 /* SPVideoPlayer.h */,
+				8EB950521665BCF100E965E0 /* SPVideoPlayer.m */,
+				8EB950551665BD4000E965E0 /* SPVideoReel.h */,
+				8EB950561665BD4000E965E0 /* SPVideoReel.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		8E68A1CD16C0C5250031C3D2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
+				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		8E68A1CE16C0C52D0031C3D2 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				8E58294216657A500098FA3A /* SPConstants.h */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		8E82EDF11631C7770044D97E /* External Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,21 +537,11 @@
 		8E98F7B3165C2F750095E985 /* ShelbyPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				8E58294216657A500098FA3A /* SPConstants.h */,
-				8EB3B19A16AFA7F9008587FD /* SPModel.h */,
-				8EB3B19B16AFA7F9008587FD /* SPModel.m */,
-				8E4C55751666A9F90019DD15 /* SPOverlayView.h */,
-				8E4C55761666A9F90019DD15 /* SPOverlayView.m */,
-				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
-				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
-				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
-				8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */,
-				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
-				8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */,
-				8EB950511665BCF100E965E0 /* SPVideoPlayer.h */,
-				8EB950521665BCF100E965E0 /* SPVideoPlayer.m */,
-				8EB950551665BD4000E965E0 /* SPVideoReel.h */,
-				8EB950561665BD4000E965E0 /* SPVideoReel.m */,
+				8E68A1C916C0C4F00031C3D2 /* Models */,
+				8E68A1CB16C0C4FC0031C3D2 /* Views */,
+				8E68A1CD16C0C5250031C3D2 /* Controllers */,
+				8E68A1CC16C0C51D0031C3D2 /* View Controllers */,
+				8E68A1CE16C0C52D0031C3D2 /* Constants */,
 			);
 			name = ShelbyPlayer;
 			sourceTree = "<group>";
