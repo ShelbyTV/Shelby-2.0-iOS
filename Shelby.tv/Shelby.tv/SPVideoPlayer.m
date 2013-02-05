@@ -292,7 +292,7 @@
 - (void)setupScrubber
 {
 	
-    double interval = .1f;
+    CGFloat interval = .1f;
 	CMTime playerDuration = [self elapsedDuration];
     
 	if (CMTIME_IS_INVALID(playerDuration)) {
@@ -301,22 +301,21 @@
         return;
 	}
 	
-    double duration = CMTimeGetSeconds(playerDuration);
+    CGFloat duration = CMTimeGetSeconds(playerDuration);
 	if (isfinite(duration)) {
 		CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
 		interval = 0.5f * duration / width;
 	}
     
-    
         __block SPVideoPlayer *blockSelf  = self;
         
-        self.model.scrubberTimeObserver = [self.model.currentVideoPlayerDelegate.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
-                                                                                                                queue:NULL /* If you pass NULL, the main queue is used. */
-                                                                                                           usingBlock:^(CMTime time) {
+        self.model.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
+                                                                                                                     queue:NULL /* If you pass NULL, the main queue is used. */
+                                                                                                                usingBlock:^(CMTime time) {
                                                                                                                
-                                                                                                               [blockSelf syncScrubber];
-                                                                                                               
-                                                                                                           }];
+                                                                                                                    [blockSelf syncScrubber];
+                                                                                                                
+                                                                                                                }];
 }
 
 - (void)syncScrubber
@@ -329,19 +328,21 @@
     
 	double duration = CMTimeGetSeconds(playerDuration);
     
-	if ( isfinite(duration) ) {
+	if ( isfinite(duration) && self.player == self.model.currentVideoPlayerDelegate.player ) {
         
         // Update value of scrubber (slider and label)
-		float minValue = [self.overlayView.scrubber minimumValue];
-		float maxValue = [self.overlayView.scrubber maximumValue];
-		double currentTime = CMTimeGetSeconds([self.model.currentVideoPlayerDelegate.player currentTime]);
-		double duration = CMTimeGetSeconds([self.model.currentVideoPlayerDelegate.player.currentItem duration]);
+		CGFloat minValue = [self.overlayView.scrubber minimumValue];
+		CGFloat maxValue = [self.overlayView.scrubber maximumValue];
         
-		[self.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
-        [self.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
+        CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayerDelegate.player currentTime]);
+        CGFloat duration = CMTimeGetSeconds([self.model.currentVideoPlayerDelegate.player.currentItem duration]);
+
         
+            [self.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
+            [self.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
+
         // Update button state
-        if ( 0.0 == self.player.rate && self.isPlayable ) {
+        if ( 0.0 == self.player.rate && self.isPlayable && self.player == self.model.currentVideoPlayerDelegate.player ) {
         
             [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
             
