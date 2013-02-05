@@ -15,13 +15,11 @@
 @interface SPModel ()
 
 @property (nonatomic) NSMutableArray *loadedVideoPlayers;
-@property (weak, nonatomic) SPVideoPlayer <SPVideoScrubberDelegate> *videoScrubberDelegate;
 
 @end
 
 @implementation SPModel
 @synthesize videoExtractor = _videoExtractor;
-@synthesize videoScrubberDelegate = _videoScrubberDelegate;
 
 #pragma mark - Singleton Methods
 + (SPModel*)sharedInstance
@@ -55,7 +53,7 @@
         
         SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)(self.loadedVideoPlayers)[0];
         
-        if ( oldestPlayer != self.currentVideoPlayer ) {
+        if ( oldestPlayer != self.currentVideoPlayerDelegate ) {
          
             [oldestPlayer resetPlayer];
             [self.loadedVideoPlayers removeObject:oldestPlayer];
@@ -70,11 +68,10 @@
     [self setScrubberTimeObserver:nil];
     [self setNumberOfVideos:0];
     [self setCurrentVideo:0];
-    [self setCurrentVideoPlayer:nil];
+    [self setCurrentVideoPlayerDelegate:nil];
     [self setVideoReel:nil];
     [self setOverlayView:nil];
     [self setOverlayTimer:nil];
-    [self setVideoScrubberDelegate:nil];
 }
 
 - (void)rescheduleOverlayTimer
@@ -96,13 +93,6 @@
 }
 
 #pragma mark - Accessor Methods
-// currentVideoPlayer Setter
-- (void)setCurrentVideoPlayer:(SPVideoPlayer *)currentVideoPlayer
-{
-    _currentVideoPlayer = currentVideoPlayer;
-    _videoScrubberDelegate = currentVideoPlayer;
-}
-
 // videoExtractor Getter
 - (SPVideoExtractor*)videoExtractor
 {

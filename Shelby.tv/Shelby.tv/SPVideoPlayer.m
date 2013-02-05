@@ -224,7 +224,7 @@
         [self setIsPlayable:YES];
         [self setupScrubber];
         
-        if ( self == self.model.currentVideoPlayer ) {
+        if ( self == self.model.currentVideoPlayerDelegate ) {
          
             [self.overlayView.restartPlaybackButton setHidden:YES];
             [self.overlayView.playButton setEnabled:YES];
@@ -248,7 +248,7 @@
 //        [self.model storeVideoPlayer:self];
         
         // Toggle video playback
-        if ( self == self.model.currentVideoPlayer ) {
+        if ( self == self.model.currentVideoPlayerDelegate ) {
             
             [self play];
             [self.model rescheduleOverlayTimer];
@@ -310,7 +310,7 @@
     
         __block SPVideoPlayer *blockSelf  = self;
         
-        self.model.scrubberTimeObserver = [self.model.videoScrubberDelegate.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
+        self.model.scrubberTimeObserver = [self.model.currentVideoPlayerDelegate.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
                                                                                                                 queue:NULL /* If you pass NULL, the main queue is used. */
                                                                                                            usingBlock:^(CMTime time) {
                                                                                                                
@@ -334,8 +334,8 @@
         // Update value of scrubber (slider and label)
 		float minValue = [self.overlayView.scrubber minimumValue];
 		float maxValue = [self.overlayView.scrubber maximumValue];
-		double currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
-		double duration = CMTimeGetSeconds([self.model.currentVideoPlayer.player.currentItem duration]);
+		double currentTime = CMTimeGetSeconds([self.model.currentVideoPlayerDelegate.player currentTime]);
+		double duration = CMTimeGetSeconds([self.model.currentVideoPlayerDelegate.player.currentItem duration]);
         
 		[self.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
         [self.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];

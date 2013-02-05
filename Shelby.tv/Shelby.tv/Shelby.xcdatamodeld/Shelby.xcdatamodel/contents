@@ -14,7 +14,7 @@
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="conversation" inverseEntity="Frame" syncable="YES"/>
-        <relationship name="messages" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Messages" inverseName="conversation" inverseEntity="Messages" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Messages" inverseName="conversation" inverseEntity="Messages" syncable="YES"/>
     </entity>
     <entity name="Creator" representedClassName="Creator" syncable="YES">
         <attribute name="creatorID" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,15 +81,15 @@
         <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="video" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="160" positionY="192" width="128" height="75"/>
-        <element name="CategoryRoll" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Conversation" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Creator" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Frame" positionX="160" positionY="192" width="128" height="240"/>
-        <element name="Messages" positionX="160" positionY="192" width="128" height="180"/>
-        <element name="Roll" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="Stream" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="User" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="Video" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="Category" positionX="18" positionY="168" width="128" height="75"/>
+        <element name="CategoryRoll" positionX="27" positionY="9" width="128" height="105"/>
+        <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
+        <element name="Creator" positionX="133" positionY="342" width="128" height="105"/>
+        <element name="Frame" positionX="367" positionY="336" width="128" height="240"/>
+        <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
+        <element name="Roll" positionX="-155" positionY="342" width="128" height="135"/>
+        <element name="Stream" positionX="540" positionY="279" width="128" height="90"/>
+        <element name="User" positionX="-153" positionY="-9" width="128" height="150"/>
+        <element name="Video" positionX="691" positionY="420" width="128" height="165"/>
     </elements>
 </model>

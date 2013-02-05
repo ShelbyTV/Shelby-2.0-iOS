@@ -26,12 +26,11 @@
 @property (nonatomic) id scrubberTimeObserver;
 @property (nonatomic) NSTimer *overlayTimer;
 @property (nonatomic) SPOverlayView *overlayView;
-@property (nonatomic) SPVideoPlayer *currentVideoPlayer;
 @property (nonatomic) SPVideoReel *videoReel;
 @property (nonatomic, readonly) SPVideoExtractor *videoExtractor;
 @property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (assign, nonatomic) NSUInteger currentVideo;
-@property (weak, nonatomic, readonly) SPVideoPlayer <SPVideoScrubberDelegate> *videoScrubberDelegate;
+@property (weak, nonatomic) SPVideoPlayer <SPVideoScrubberDelegate> *currentVideoPlayerDelegate;
 
 /// Singleton Methods
 + (SPModel*)sharedInstance;

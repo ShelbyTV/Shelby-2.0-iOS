@@ -555,10 +555,16 @@
     // Execute request that returns array of dashboardEntrys
     NSArray *messagesArray = [context executeFetchRequest:messagesRequest error:nil];
     
-    Messages *message = (Messages*) messagesArray[0];
-    NSString *messageText = message.text;
+    NSString *messageText;
     
-    return messageText;
+    if ( [messagesArray count] ) {
+        
+        Messages *message = (Messages*) messagesArray[0];
+        messageText = message.text;
+    }
+
+    
+    return messageText.length ? messageText : @"No information available";
 }
 
 #pragma mark - Public Sync Methods

@@ -196,8 +196,7 @@
         [mainThreadContext performBlock:^{
     
             @synchronized(mainThreadContext) {
-                
-                DLog(@"MERGING!");
+
                 [mainThreadContext mergeChangesFromContextDidSaveNotification:notification];
                 
             }
