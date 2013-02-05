@@ -499,72 +499,82 @@
         }
         
         // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
-        Frame *firstFrame = (Frame*)olderFramesArray[0];
-        NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
-        firstFrame = (Frame*)[context existingObjectWithID:firstFrameObjectID error:nil];
-        if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
-            [olderFramesArray removeObject:firstFrame];
-        }
-        
-        // Add deduplicated frames from olderFramesArray to videoFrames 
-        [self.videoFrames addObjectsFromArray:olderFramesArray];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            // Update variables
-            NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
-            self.model.numberOfVideos = [self.videoFrames count];
-            
-            // Update videoScrollView and videoListScrollView
-            for ( NSUInteger i = numberOfVideosBeforeUpdate; i < self.model.numberOfVideos; ++i ) {
-                
-                // videoScrollView
-                NSManagedObjectContext *context = [self.appDelegate context];
-                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-                Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-                
-                CGRect viewframe = self.videoScrollView.frame;
-                viewframe.origin.x = viewframe.size.width * i;
-                viewframe.origin.y = 0.0f;
-                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-                
-                // videoListScrollView
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-                SPVideoItemView *itemView = nib[0];
-                
-                CGFloat itemViewWidth = [SPVideoItemView width];
-                CGRect itemFrame = itemView.frame;
-                itemFrame.origin.x = itemViewWidth * i;
-                itemFrame.origin.y = 20.0f;
-                [itemView setFrame:itemFrame];
-                [itemView setTag:i];
-                
-                UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
-                [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
-                                             forImageView:itemView.thumbnailImageView
-                                      withPlaceholderView:videoListThumbnailPlaceholderView
-                                           andContentMode:UIViewContentModeCenter];
-                
-                // Update UI on Main Thread
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
-                    [self.videoPlayers addObject:player];
-                    [self.videoScrollView addSubview:player.view];
-                    [self.videoScrollView setNeedsDisplay];
-                    
-                    itemView.backgroundColor = [UIColor clearColor];
-                    itemView.videoTitleLabel.textColor = kColorBlack;
-                    [itemView.videoTitleLabel setText:videoFrame.video.title];
-                    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
-                    [self.itemViews addObject:itemView];
-                    [self.overlayView.videoListScrollView addSubview:itemView];
-                    [self.overlayView.videoListScrollView setNeedsDisplay];
-                    
-                    [self setFetchingOlderVideos:NO];
-                    [self setLoadingOlderVideos:NO];
-                });
+        if ( [olderFramesArray count] ) {
+
+            Frame *firstFrame = (Frame*)olderFramesArray[0];
+            NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
+            firstFrame = (Frame*)[context existingObjectWithID:firstFrameObjectID error:nil];
+            if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
+                [olderFramesArray removeObject:firstFrame];
             }
-        });
+            
+            // Add deduplicated frames from olderFramesArray to videoFrames
+            [self.videoFrames addObjectsFromArray:olderFramesArray];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                // Update variables
+                NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
+                self.model.numberOfVideos = [self.videoFrames count];
+                
+                // Update videoScrollView and videoListScrollView
+                for ( NSUInteger i = numberOfVideosBeforeUpdate; i < self.model.numberOfVideos; ++i ) {
+                    
+                    // videoScrollView
+                    NSManagedObjectContext *context = [self.appDelegate context];
+                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+                    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+                    
+                    CGRect viewframe = self.videoScrollView.frame;
+                    viewframe.origin.x = viewframe.size.width * i;
+                    SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
+                    
+                    // videoListScrollView
+                    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+                    SPVideoItemView *itemView = nib[0];
+                    
+                    CGFloat itemViewWidth = [SPVideoItemView width];
+                    CGRect itemFrame = itemView.frame;
+                    itemFrame.origin.x = itemViewWidth * i;
+                    [itemView setFrame:itemFrame];
+                    [itemView setTag:i];
+                    
+                    UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
+                    [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                                 forImageView:itemView.thumbnailImageView
+                                          withPlaceholderView:videoListThumbnailPlaceholderView
+                                               andContentMode:UIViewContentModeCenter];
+                    
+                    // Update UI on Main Thread
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
+                        [self.videoPlayers addObject:player];
+                        [self.videoScrollView addSubview:player.view];
+                        [self.videoScrollView setNeedsDisplay];
+                        
+                        itemView.backgroundColor = [UIColor clearColor];
+                        itemView.videoTitleLabel.textColor = kColorBlack;
+                        [itemView.videoTitleLabel setText:videoFrame.video.title];
+                        self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
+                        [self.itemViews addObject:itemView];
+                        [self.overlayView.videoListScrollView addSubview:itemView];
+                        [self.overlayView.videoListScrollView setNeedsDisplay];
+                        
+                        [self setFetchingOlderVideos:NO];
+                        [self setLoadingOlderVideos:NO];
+                    });
+                }
+            });
+            
+        } else {
+            
+            /*
+             
+             No older videos fetched.
+             Don't rest flags to avoid unncessary API calls, since they'll return no older frames.
+             
+             */
+        }
     }
 }
 

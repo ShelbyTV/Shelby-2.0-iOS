@@ -177,9 +177,36 @@
     // Crashlytics - Crash Logging
     [Crashlytics startWithAPIKey:@"84a79b7ee6f2eca13877cd17b9b9a290790f99aa"];
     
+    // Add Harpy
+    
+    // Add Panhandler
+    
+    
 }
 
 #pragma mark - Core Data Methods
+- (void)mergeChanges:(NSNotification *)notification
+{
+    
+    // Merge changes into the main context on the main thread
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSManagedObjectContext *mainThreadContext = [self context];
+        
+        [mainThreadContext performBlock:^{
+    
+            @synchronized(mainThreadContext) {
+                
+                DLog(@"MERGING!");
+                [mainThreadContext mergeChangesFromContextDidSaveNotification:notification];
+                
+            }
+         
+        }];
+ 
+    });
+}
+
 - (NSManagedObjectModel *)managedObjectModel
 {
     

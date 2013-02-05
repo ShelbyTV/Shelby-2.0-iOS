@@ -16,8 +16,6 @@
 @property (assign, nonatomic) DataRequestType requestType;
 
 // Private Persistance Methods
-- (void)mergeChanges:(NSNotification*)notification;
-
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
@@ -54,7 +52,7 @@
         self.requestType = requestType;
         
         // Add observer for mergining contexts
-        [[NSNotificationCenter defaultCenter] addObserver:self
+        [[NSNotificationCenter defaultCenter] addObserver:self.appDelegate
                                                  selector:@selector(mergeChanges:)
                                                      name:NSManagedObjectContextDidSaveNotification
                                                    object:self.context];
@@ -241,11 +239,13 @@
                 stream.frame = frame;
                 
                 [self storeFrame:frame forFrameArray:frameArray withSyncStatus:YES];
-                
-                [self saveContext:self.context];
             }
         }
     }
+    
+    
+    [self saveContext:self.context];
+    
 }
 
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary
@@ -261,11 +261,12 @@
                                       forIDKey:kCoreDataFrameID];
             
             [self storeFrame:frame forFrameArray:resultsArray[i] withSyncStatus:YES];
-            
-            [self saveContext:self.context];
 
         }
     }
+    
+    [self saveContext:self.context];
+    
 }
 
 #pragma mark - Public Fetch Methods
@@ -600,29 +601,13 @@
             DLog(@"FrameID doesn't exist on web: %@", frameID);
             
             [self.context deleteObject:frame];
-            [self saveContext:self.context];
         }
-        
     }
+    
+    [self saveContext:self.context];
 }
 
 #pragma mark - Private Persistance Methods
-- (void)mergeChanges:(NSNotification *)notification
-{
-    
-    // Merge changes into the main context on the main thread
-    dispatch_async(dispatch_get_main_queue(), ^{
-    
-        NSManagedObjectContext *mainThreadContext = [self.appDelegate context];
-        
-        [mainThreadContext performBlock:^{
-        
-            [mainThreadContext mergeChangesFromContextDidSaveNotification:notification];
-        
-        }];
-    });
-}
-
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey
@@ -681,7 +666,7 @@
                                          withIDValue:conversationID
                                             forIDKey:kCoreDataFrameConversationID];
     frame.conversation = conversation;
-    [conversation addFrameObject:frame];
+    conversation.frame = frame;
     [self storeConversation:conversation fromFrameArray:frameArray];
     
     // Store Creator
@@ -871,7 +856,7 @@
 
 - (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames
 {
-    NSMutableArray *tempFrames = [@[] mutableCopy];
+    NSMutableArray *tempFrames = [frames mutableCopy];
     
     for (NSUInteger i = 0; i < [tempFrames count]; ++i) {
         
@@ -883,7 +868,7 @@
         if ( [filteredArray count] > 1 ) {
             
             for (NSUInteger j = 1; j < [filteredArray count]; j++ ) {
-                
+
                 [frames removeObjectIdenticalTo:filteredArray[j]];
                 
             }
