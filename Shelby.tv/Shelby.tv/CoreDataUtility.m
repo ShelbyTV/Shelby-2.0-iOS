@@ -252,7 +252,7 @@
 {
     NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
     
-    for (NSUInteger i = 0; i < [resultsArray count]; ++i ) {
+    for ( NSUInteger i = 0; i < [resultsArray count]; ++i ) {
         
         @autoreleasepool {
                             
@@ -267,6 +267,46 @@
     
     [self saveContext:self.context];
     
+}
+
+- (void)storeGroupsAndGroupRolls:(NSDictionary *)resultsDictionary
+{
+    NSArray *resultsArray = resultsDictionary[@"result"];
+    
+    if ( [resultsArray count] ) {
+        
+        for ( NSUInteger i = 0; i < [resultsArray count]; ++i ) {
+            
+            Group *group = [self checkIfEntity:kCoreDataEntityGroup
+                                   withIDValue:[resultsArray[i] valueForKey:@"category_title"]
+                                      forIDKey:kCoreDataGroupTitleID];
+            
+            group.titleID = [resultsArray[i] valueForKey:@"category_title"];
+            
+            NSArray *rolls = [resultsArray[i] valueForKey:@"rolls"];
+            
+            for ( NSUInteger j = 0; j < [rolls count]; ++j ) {
+             
+                GroupRoll *groupRoll =  [self checkIfEntity:kCoreDataEntityGroupRoll
+                                                withIDValue:[rolls[j] valueForKey:@"id"]
+                                                    forIDKey:kCoreDataGroupRollID];
+                groupRoll.group = group;
+                [group addGroupRollObject:groupRoll];
+                
+                NSString *rollID = [NSString coreDataNullTest:[rolls[j] valueForKey:@"id"]];
+                [groupRoll setValue:rollID forKey:kCoreDataGroupRollID];
+                
+                NSString *displayTitle = [NSString coreDataNullTest:[rolls[j] valueForKey:@"display_title"]];
+                [groupRoll setValue:displayTitle forKey:kCoreDataGroupRollDisplayTitle];
+                
+                NSString *displayDescription = [NSString coreDataNullTest:[rolls[j] valueForKey:@"display_description"]];
+                [groupRoll setValue:displayDescription forKey:kCoreDataGroupRollDisplayDescription];
+                
+            }
+        }
+        
+        [self saveContext:self.context];
+    }
 }
 
 #pragma mark - Public Fetch Methods

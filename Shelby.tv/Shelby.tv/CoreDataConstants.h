@@ -9,6 +9,8 @@
 #import "Conversation.h"
 #import "Creator.h"
 #import "Frame.h"
+#import "Group.h"
+#import "GroupRoll.h"
 #import "Messages.h"
 #import "Stream.h"
 #import "Roll.h"
@@ -16,11 +18,11 @@
 #import "Video.h"
 
 // Entity Constants
-#define kCoreDataEntityCategory                     @"Category"
-#define kCoreDataEntityCaregoryRoll                 @"CategoryRoll"
 #define kCoreDataEntityConversation                 @"Conversation"
 #define kCoreDataEntityCreator                      @"Creator"
 #define kCoreDataEntityFrame                        @"Frame"
+#define kCoreDataEntityGroup                        @"Group"
+#define kCoreDataEntityGroupRoll                    @"GroupRoll"
 #define kCoreDataEntityMessages                     @"Messages"
 #define kCoreDataEntityRoll                         @"Roll"
 #define kCoreDataEntityStream                       @"Stream"
@@ -28,12 +30,12 @@
 #define kCoreDataEntityVideo                        @"Video"
 
 // Category Attribute Constants
-#define kCoreDataCategoryTitle                      @"categoryTitle"
+#define kCoreDataGroupTitleID                       @"titleID"
 
-// Category Attribute Constants
-#define kCoreDataCategoryRollID                     @"rollID"
-#define kCoreDataCategoryRollDisplayTitle           @"displayTitle"
-#define kCoreDataCategoryRollDisplayDescription     @"displayDescription"
+// GroupRoll Attribute Constants
+#define kCoreDataGroupRollID                        @"rollID"
+#define kCoreDataGroupRollDisplayTitle              @"displayTitle"
+#define kCoreDataGroupRollDisplayDescription        @"displayDescription"
 
 // Conversation Attribute Constants
 #define kCoreDataConversationID                     @"conversationID"

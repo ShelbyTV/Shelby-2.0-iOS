@@ -323,6 +323,7 @@
 	CMTime playerDuration = [self elapsedDuration];
 	if ( CMTIME_IS_INVALID(playerDuration) ) {
         [self.overlayView.scrubber setValue:0.0f];
+        [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
 		return;
 	}
     

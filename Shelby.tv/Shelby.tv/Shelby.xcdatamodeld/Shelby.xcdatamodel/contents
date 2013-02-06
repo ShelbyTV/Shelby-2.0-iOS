@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Category" representedClassName="Category" syncable="YES">
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="categoryRoll" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="CategoryRoll" inverseName="category" inverseEntity="CategoryRoll" syncable="YES"/>
-    </entity>
-    <entity name="CategoryRoll" representedClassName="CategoryRoll" syncable="YES">
-        <attribute name="displayDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="category" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="categoryRoll" inverseEntity="Category" syncable="YES"/>
-    </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -36,6 +26,16 @@
         <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Roll" inverseName="frame" inverseEntity="Roll" syncable="YES"/>
         <relationship name="stream" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Stream" inverseName="frame" inverseEntity="Stream" syncable="YES"/>
         <relationship name="video" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
+    </entity>
+    <entity name="Group" representedClassName="Group" syncable="YES">
+        <attribute name="titleID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="groupRoll" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="GroupRoll" inverseName="group" inverseEntity="GroupRoll" syncable="YES"/>
+    </entity>
+    <entity name="GroupRoll" representedClassName="GroupRoll" syncable="YES">
+        <attribute name="displayDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="group" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="groupRoll" inverseEntity="Group" syncable="YES"/>
     </entity>
     <entity name="Messages" representedClassName="Messages" syncable="YES">
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,8 +81,8 @@
         <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="video" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="18" positionY="168" width="128" height="75"/>
-        <element name="CategoryRoll" positionX="27" positionY="9" width="128" height="105"/>
+        <element name="Group" positionX="18" positionY="168" width="128" height="73"/>
+        <element name="GroupRoll" positionX="27" positionY="9" width="128" height="103"/>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Creator" positionX="133" positionY="342" width="128" height="105"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="240"/>

@@ -16,5 +16,6 @@
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString*)skipParam;
 + (void)getQueueForSync;
++ (void)getGroups;
 
 @end

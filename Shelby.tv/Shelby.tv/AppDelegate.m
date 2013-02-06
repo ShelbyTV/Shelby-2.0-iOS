@@ -18,6 +18,7 @@
 @property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 
+- (void)pingAllRoutes;
 - (void)pollAPI;
 - (void)analytics;
 - (void)dismissLoginViewController;
@@ -70,6 +71,9 @@
         // Perform Sync on Queue
         [ShelbyAPIClient getQueueForSync];
         
+        // Update All Routs
+        [self pingAllRoutes];
+        
     }
 }
 
@@ -89,9 +93,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // On login, perform API requests
-    [ShelbyAPIClient getStream];
-    [ShelbyAPIClient getQueueRoll];
-    [ShelbyAPIClient getPersonalRoll];
+    [self pingAllRoutes];
     
     // Perform Sync on Queue
     [ShelbyAPIClient getQueueForSync];
@@ -135,6 +137,14 @@
 }
 
 #pragma mark - Private Methods
+- (void)pingAllRoutes
+{
+    [ShelbyAPIClient getStream];
+    [ShelbyAPIClient getQueueRoll];
+    [ShelbyAPIClient getPersonalRoll];
+    [ShelbyAPIClient getGroups];
+}
+
 - (void)pollAPI
 {
     
@@ -159,9 +169,17 @@
             
         case 2: { // Personal Roll
             
-            self.pollAPICounter = 0;
+            self.pollAPICounter = 3;
             
             [ShelbyAPIClient getPersonalRoll];
+            
+        } break;
+            
+        case 3: { // Personal Roll
+            
+            self.pollAPICounter = 0;
+            
+            [ShelbyAPIClient getGroups];
             
         } break;
 

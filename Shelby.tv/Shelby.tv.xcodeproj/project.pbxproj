@@ -75,14 +75,14 @@
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		8E8939E516C19F5100AE7B4F /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939E416C19F5100AE7B4F /* Creator.m */; };
 		8E8939E816C19F5100AE7B4F /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939E716C19F5100AE7B4F /* Frame.m */; };
-		8E8939EB16C19F5100AE7B4F /* CategoryRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939EA16C19F5100AE7B4F /* CategoryRoll.m */; };
 		8E8939F116C19F5200AE7B4F /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F016C19F5200AE7B4F /* Messages.m */; };
 		8E8939F416C19F5200AE7B4F /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F316C19F5200AE7B4F /* Stream.m */; };
 		8E8939F716C19F5200AE7B4F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F616C19F5200AE7B4F /* User.m */; };
 		8E8939FA16C19F5200AE7B4F /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F916C19F5200AE7B4F /* Roll.m */; };
-		8E8939FD16C19F5200AE7B4F /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939FC16C19F5200AE7B4F /* Category.m */; };
 		8E893A0016C19F5200AE7B4F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939FF16C19F5200AE7B4F /* Video.m */; };
 		8E893A0616C1A0D300AE7B4F /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E893A0516C1A0D300AE7B4F /* Conversation.m */; };
+		8E893A1816C1F81D00AE7B4F /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E893A1716C1F81C00AE7B4F /* Group.m */; };
+		8E893A1B16C1F81D00AE7B4F /* GroupRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E893A1A16C1F81D00AE7B4F /* GroupRoll.m */; };
 		8E9182D116B857D100F2BDCF /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182CF16B857D100F2BDCF /* BrowseViewController.m */; };
 		8E9182D216B857D100F2BDCF /* BrowseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9182D016B857D100F2BDCF /* BrowseViewController.xib */; };
 		8E9182D816B86E1700F2BDCF /* BrowseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182D716B86E1700F2BDCF /* BrowseCell.m */; };
@@ -202,8 +202,6 @@
 		8E8939E416C19F5100AE7B4F /* Creator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Creator.m; sourceTree = "<group>"; };
 		8E8939E616C19F5100AE7B4F /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		8E8939E716C19F5100AE7B4F /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
-		8E8939E916C19F5100AE7B4F /* CategoryRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryRoll.h; sourceTree = "<group>"; };
-		8E8939EA16C19F5100AE7B4F /* CategoryRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryRoll.m; sourceTree = "<group>"; };
 		8E8939EF16C19F5200AE7B4F /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
 		8E8939F016C19F5200AE7B4F /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
 		8E8939F216C19F5200AE7B4F /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
@@ -212,12 +210,14 @@
 		8E8939F616C19F5200AE7B4F /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E8939F816C19F5200AE7B4F /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		8E8939F916C19F5200AE7B4F /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
-		8E8939FB16C19F5200AE7B4F /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
-		8E8939FC16C19F5200AE7B4F /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		8E8939FE16C19F5200AE7B4F /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		8E8939FF16C19F5200AE7B4F /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		8E893A0416C1A0D300AE7B4F /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		8E893A0516C1A0D300AE7B4F /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		8E893A1616C1F81C00AE7B4F /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
+		8E893A1716C1F81C00AE7B4F /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
+		8E893A1916C1F81D00AE7B4F /* GroupRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupRoll.h; sourceTree = "<group>"; };
+		8E893A1A16C1F81D00AE7B4F /* GroupRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupRoll.m; sourceTree = "<group>"; };
 		8E9182CE16B857D100F2BDCF /* BrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseViewController.h; sourceTree = "<group>"; };
 		8E9182CF16B857D100F2BDCF /* BrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseViewController.m; sourceTree = "<group>"; };
 		8E9182D016B857D100F2BDCF /* BrowseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseViewController.xib; sourceTree = "<group>"; };
@@ -296,14 +296,16 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				8E893A1616C1F81C00AE7B4F /* Group.h */,
+				8E893A1716C1F81C00AE7B4F /* Group.m */,
+				8E893A1916C1F81D00AE7B4F /* GroupRoll.h */,
+				8E893A1A16C1F81D00AE7B4F /* GroupRoll.m */,
 				8E893A0416C1A0D300AE7B4F /* Conversation.h */,
 				8E893A0516C1A0D300AE7B4F /* Conversation.m */,
 				8E8939E316C19F5100AE7B4F /* Creator.h */,
 				8E8939E416C19F5100AE7B4F /* Creator.m */,
 				8E8939E616C19F5100AE7B4F /* Frame.h */,
 				8E8939E716C19F5100AE7B4F /* Frame.m */,
-				8E8939E916C19F5100AE7B4F /* CategoryRoll.h */,
-				8E8939EA16C19F5100AE7B4F /* CategoryRoll.m */,
 				8E8939EF16C19F5200AE7B4F /* Messages.h */,
 				8E8939F016C19F5200AE7B4F /* Messages.m */,
 				8E8939F216C19F5200AE7B4F /* Stream.h */,
@@ -312,8 +314,6 @@
 				8E8939F616C19F5200AE7B4F /* User.m */,
 				8E8939F816C19F5200AE7B4F /* Roll.h */,
 				8E8939F916C19F5200AE7B4F /* Roll.m */,
-				8E8939FB16C19F5200AE7B4F /* Category.h */,
-				8E8939FC16C19F5200AE7B4F /* Category.m */,
 				8E8939FE16C19F5200AE7B4F /* Video.h */,
 				8E8939FF16C19F5200AE7B4F /* Video.m */,
 			);
@@ -804,14 +804,14 @@
 				8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */,
 				8E8939E516C19F5100AE7B4F /* Creator.m in Sources */,
 				8E8939E816C19F5100AE7B4F /* Frame.m in Sources */,
-				8E8939EB16C19F5100AE7B4F /* CategoryRoll.m in Sources */,
 				8E8939F116C19F5200AE7B4F /* Messages.m in Sources */,
 				8E8939F416C19F5200AE7B4F /* Stream.m in Sources */,
 				8E8939F716C19F5200AE7B4F /* User.m in Sources */,
 				8E8939FA16C19F5200AE7B4F /* Roll.m in Sources */,
-				8E8939FD16C19F5200AE7B4F /* Category.m in Sources */,
 				8E893A0016C19F5200AE7B4F /* Video.m in Sources */,
 				8E893A0616C1A0D300AE7B4F /* Conversation.m in Sources */,
+				8E893A1816C1F81D00AE7B4F /* Group.m in Sources */,
+				8E893A1B16C1F81D00AE7B4F /* GroupRoll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
