@@ -20,6 +20,7 @@
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
 @property (nonatomic) NSMutableArray *videoFrames;
+@property (nonatomic) NSMutableArray *moreVideoFrames;
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (nonatomic) NSMutableArray *itemViews;
 @property (copy, nonatomic) NSString *categoryTitle;
@@ -27,6 +28,7 @@
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
 /// Setup Methods
+- (void)setupVideoFrames:(NSArray*)videoFrames;
 - (void)setupVariables;
 - (void)setupObservers;
 - (void)setupVideoScrollView;
@@ -39,7 +41,9 @@
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
 - (void)storeIdentifierOfCurrentVideoInStream;
 - (void)fetchOlderVideos:(NSUInteger)position;
-- (void)dataSourceDidUpdate:(NSNotification*)notification;
+- (void)dataSourceShouldUpdateFromLocalArray;
+- (void)dataSourceShouldUpdateFromWeb:(NSNotification*)notification;
+- (void)dataSourceDidUpdate;
 
 @end
 
@@ -125,6 +129,33 @@
 }
 
 #pragma mark - Setup Methods
+- (void)setupVideoFrames:(NSArray *)videoFrames
+{
+    
+    self.videoFrames = [@[] mutableCopy];
+    
+    if ( [videoFrames count] > 20 ) { // If there are more than 20 frames in videoFrames
+        
+        for ( NSUInteger i = 0; i<[videoFrames count]; i++ ) {
+            
+            if ( [videoFrames count] < 20) { // Load the first 20 videoFrames into _videoFrames
+             
+                [self.videoFrames addObject:videoFrames];
+                
+            } else { // Load the rest of the videoFrames into _moreVideoFrames
+                
+                [self.moreVideoFrames addObject:videoFrames];
+                
+            }
+        }
+        
+    } else { // If there are <= 20 frames in videoFrames
+        
+        self.videoFrames = [videoFrames mutableCopy];
+        
+    }
+}
+
 - (void)setupVariables
 {
     self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -139,7 +170,7 @@
 {
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(dataSourceDidUpdate:)
+                                             selector:@selector(dataSourceShouldUpdateFromWeb:)
                                                  name:kSPUserDidScrollToUpdate
                                                object:nil];
 }
@@ -439,51 +470,88 @@
 
 - (void)fetchOlderVideos:(NSUInteger)position
 {
-    if ( position >= self.model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+    
+    if ( [self.moreVideoFrames count] ) { // Load older videos from Database
         
-        self.fetchingOlderVideos = YES;
+        [self dataSourceShouldUpdateFromLocalArray];
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        
-        switch ( self.categoryType ) {
-
-                
-            case CategoryType_Stream:{
-                
-                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
-                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                [ShelbyAPIClient getMoreFramesInStream:numberToString];
-                
-            } break;
-                
-            case CategoryType_QueueRoll:{
-                
-                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchQueueRollCount];
-                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
-                
-            } break;
-                
-            case CategoryType_PersonalRoll:{
-                
-                NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
-                NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
-                
-            } break;
-                
-            case CategoryType_Unknown:{
-                
-            } break;
-                
+    } else { // Get older videos from Web
+    
+        if ( position >= self.model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+            
+            self.fetchingOlderVideos = YES;
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            
+            switch ( self.categoryType ) {
+                    
+                    
+                case CategoryType_Stream:{
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
+                    
+                } break;
+                    
+                case CategoryType_QueueRoll:{
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchQueueRollCount];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
+                    
+                } break;
+                    
+                case CategoryType_PersonalRoll:{
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
+                    
+                } break;
+                    
+                case CategoryType_Unknown:{
+                    
+                } break;
+                    
+            }
         }
+        
     }
+    
 }
 
-- (void)dataSourceDidUpdate:(NSNotification*)notification
+- (void)dataSourceShouldUpdateFromLocalArray
 {
     
-    if ( [self fetchingOlderVideos] && ![self loadingOlderVideos] ) { 
+    if ( [self.moreVideoFrames count] > 20 ) { // If there are more than 20 frames in videoFrames
+        
+        NSArray *tempMoreVideoFrames = [NSArray arrayWithArray:self.moreVideoFrames];
+        
+        for ( NSUInteger i = 0; i<20; i++ ) {
+            
+            [self.videoFrames addObject:[tempMoreVideoFrames objectAtIndex:i]];
+            [self.moreVideoFrames removeObjectAtIndex:0];
+            
+        }
+        
+    } else { // If there are <= 20 frames in videoFrames
+        
+        [self.videoFrames addObjectsFromArray:self.moreVideoFrames];
+        [self.moreVideoFrames removeAllObjects];
+        self.moreVideoFrames = nil;
+        
+    }
+    
+
+    [self dataSourceDidUpdate];
+    
+}
+
+- (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification
+{
+    
+    if ( [self fetchingOlderVideos] && ![self loadingOlderVideos] ) {
     
         [self setLoadingOlderVideos:YES];
         
@@ -527,60 +595,7 @@
             // Add deduplicated frames from olderFramesArray to videoFrames
             [self.videoFrames addObjectsFromArray:olderFramesArray];
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
-                // Update variables
-                NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
-                self.model.numberOfVideos = [self.videoFrames count];
-                
-                // Update videoScrollView and videoListScrollView
-                for ( NSUInteger i = numberOfVideosBeforeUpdate; i < self.model.numberOfVideos; ++i ) {
-                    
-                    // videoScrollView
-                    NSManagedObjectContext *context = [self.appDelegate context];
-                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-                    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-                    
-                    CGRect viewframe = self.videoScrollView.frame;
-                    viewframe.origin.x = viewframe.size.width * i;
-                    SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-                    
-                    // videoListScrollView
-                    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-                    SPVideoItemView *itemView = nib[0];
-                    
-                    CGFloat itemViewWidth = [SPVideoItemView width];
-                    CGRect itemFrame = itemView.frame;
-                    itemFrame.origin.x = itemViewWidth * i;
-                    [itemView setFrame:itemFrame];
-                    [itemView setTag:i];
-                    
-                    UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
-                    [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
-                                                 forImageView:itemView.thumbnailImageView
-                                          withPlaceholderView:videoListThumbnailPlaceholderView
-                                               andContentMode:UIViewContentModeCenter];
-                    
-                    // Update UI on Main Thread
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        self.videoScrollView.contentSize = CGSizeMake(1024.0f, 768.0f);
-                        [self.videoPlayers addObject:player];
-                        [self.videoScrollView addSubview:player.view];
-                        [self.videoScrollView setNeedsDisplay];
-                        
-                        itemView.backgroundColor = [UIColor clearColor];
-                        itemView.videoTitleLabel.textColor = kColorBlack;
-                        [itemView.videoTitleLabel setText:videoFrame.video.title];
-                        self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), 217.0f);
-                        [self.itemViews addObject:itemView];
-                        [self.overlayView.videoListScrollView addSubview:itemView];
-                        [self.overlayView.videoListScrollView setNeedsDisplay];
-                        
-                        [self setFetchingOlderVideos:NO];
-                        [self setLoadingOlderVideos:NO];
-                    });
-                }
-            });
+            [self dataSourceDidUpdate];
             
         } else {
             
@@ -592,6 +607,64 @@
              */
         }
     }
+}
+
+- (void)dataSourceDidUpdate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // Update variables
+        NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
+        self.model.numberOfVideos = [self.videoFrames count];
+        
+        // Update videoScrollView and videoListScrollView
+        for ( NSUInteger i = numberOfVideosBeforeUpdate; i < self.model.numberOfVideos; ++i ) {
+            
+            // videoScrollView
+            NSManagedObjectContext *context = [self.appDelegate context];
+            NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+            Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+            
+            CGRect viewframe = self.videoScrollView.frame;
+            viewframe.origin.x = viewframe.size.width * i;
+            SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
+            
+            // videoListScrollView
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+            SPVideoItemView *itemView = nib[0];
+            
+            CGFloat itemViewWidth = [SPVideoItemView width];
+            CGRect itemFrame = itemView.frame;
+            itemFrame.origin.x = itemViewWidth * i;
+            [itemView setFrame:itemFrame];
+            [itemView setTag:i];
+            
+            UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
+            [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                         forImageView:itemView.thumbnailImageView
+                                  withPlaceholderView:videoListThumbnailPlaceholderView
+                                       andContentMode:UIViewContentModeCenter];
+            
+            // Update UI on Main Thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.videoScrollView.contentSize = CGSizeMake(1024.0f, 768.0f);
+                [self.videoPlayers addObject:player];
+                [self.videoScrollView addSubview:player.view];
+                [self.videoScrollView setNeedsDisplay];
+                
+                itemView.backgroundColor = [UIColor clearColor];
+                itemView.videoTitleLabel.textColor = kColorBlack;
+                [itemView.videoTitleLabel setText:videoFrame.video.title];
+                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), 217.0f);
+                [self.itemViews addObject:itemView];
+                [self.overlayView.videoListScrollView addSubview:itemView];
+                [self.overlayView.videoListScrollView setNeedsDisplay];
+                
+                [self setFetchingOlderVideos:NO];
+                [self setLoadingOlderVideos:NO];
+            });
+        }
+    });
 }
 
 #pragma mark - Public Action Methods
