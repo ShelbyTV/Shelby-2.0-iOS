@@ -275,19 +275,17 @@
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
             
+                if ( i == self.model.currentVideo ) {
+                    itemView.backgroundColor = kColorGreen;
+                    itemView.videoTitleLabel.textColor = kColorBlack;
+                }
+                
             });
         }
         
         // Add visual selected state (e.g., blue background, white text) to currentVideo
         SPVideoItemView *itemView = (self.itemViews)[self.model.currentVideo];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-                    
-            itemView.backgroundColor = kColorGreen;
-            itemView.videoTitleLabel.textColor = kColorBlack;
-
-        });
-            
         // Scroll To currentVideo if self.currentVideo != 0
         if ( 0 != self.model.currentVideo) {
             
@@ -299,7 +297,7 @@
             CGFloat itemViewY = self.overlayView.videoListScrollView.contentOffset.y;
             [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
             
-    }
+        }
         
     });
     

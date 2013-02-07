@@ -44,6 +44,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     
+    _player = nil;
+    _playerLayer = nil;
+    
 }
 
 - (void)didReceiveMemoryWarning
