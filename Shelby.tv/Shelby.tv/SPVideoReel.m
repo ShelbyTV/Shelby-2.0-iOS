@@ -15,8 +15,8 @@
 
 @interface SPVideoReel ()
 
-@property (nonatomic) AppDelegate *appDelegate;
-@property (nonatomic) SPModel *model;
+@property (weak, nonatomic) AppDelegate *appDelegate;
+@property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
 @property (nonatomic) NSMutableArray *videoFrames;
@@ -70,22 +70,7 @@
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility removeAllVideoExtractionURLReferences];
-    
 
-    [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-
-    [self.videoPlayers removeAllObjects];
-    self.videoPlayers = nil;
-
-    [self.videoScrollView removeFromSuperview];
-    self.videoScrollView = nil;
-
-    [self.itemViews removeAllObjects];
-    self.itemViews = nil;
-    
-    [self.videoFrames removeAllObjects];
-    self.videoFrames = nil;
-    
 }
 
 #pragma mark - Initialization
@@ -686,12 +671,29 @@
 {
     
     if ( ![self isBeingDismissed] ) {
-    
+        
         // Remove references on model
         [self.model teardown];
         
         // Stop residual audio playback (this shouldn't be happening to begin with)
         [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+        
+        [self.videoPlayers removeAllObjects];
+        self.videoPlayers = nil;
+        
+        [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self.videoScrollView removeFromSuperview];
+        self.videoScrollView = nil;
+        
+        [self.itemViews removeAllObjects];
+        self.itemViews = nil;
+        
+        [self.videoFrames removeAllObjects];
+        self.videoFrames = nil;
+        
+        [self.moreVideoFrames removeAllObjects];
+        self.moreVideoFrames = nil;
+        
         
         [self dismissViewControllerAnimated:YES completion:^{
 

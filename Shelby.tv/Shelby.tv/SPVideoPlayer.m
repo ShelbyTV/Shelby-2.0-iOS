@@ -14,8 +14,8 @@
 
 @interface SPVideoPlayer ()
 
-@property (nonatomic) AppDelegate *appDelegate;
-@property (nonatomic) SPModel *model;
+@property (weak, nonatomic) AppDelegate *appDelegate;
+@property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (weak, nonatomic) SPVideoReel *videoReel;
 @property (nonatomic) AVPlayerLayer *playerLayer;
@@ -38,8 +38,12 @@
 #pragma mark - Memory Management Methods
 - (void)dealloc
 {
+    
+    DLog(@"Player Deallocated");
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -216,13 +220,9 @@
         
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
-        self.playerLayer.frame = modifiedFrame;
-        self.playerLayer.bounds = modifiedFrame;
+        self.playerLayer.frame = self.view.frame;
+        self.playerLayer.bounds = self.view.frame;
         [self.view.layer addSublayer:self.playerLayer];
-        
-        // Make sure video can be played via AirPlay
-        self.player.allowsExternalPlayback = YES;
         
         // Set isPlayable Flag
         [self setIsPlayable:YES];
@@ -299,7 +299,8 @@
     CGFloat interval = .1f;
 	CMTime playerDuration = [self elapsedDuration];
     
-	if (CMTIME_IS_INVALID(playerDuration)) {
+	if ( CMTIME_IS_INVALID(playerDuration) ) {
+        
         [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(setupScrubber) userInfo:nil repeats:NO];
         
         return;
