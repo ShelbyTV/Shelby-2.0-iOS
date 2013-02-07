@@ -44,7 +44,7 @@
     if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kUserAuthorizedDefault] ) {
         
         self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-        [self.window.rootViewController presentViewController:self.loginViewController animated:NO completion:nil];
+        [self.window.rootViewController presentViewController:_loginViewController animated:NO completion:nil];
         
     } else {
         

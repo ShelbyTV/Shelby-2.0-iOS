@@ -71,6 +71,8 @@
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility removeAllVideoExtractionURLReferences];
 
+    DLog(@"SPVideoRell Deallocated");
+    
 }
 
 #pragma mark - Initialization
@@ -676,6 +678,7 @@
         // Stop residual audio playback (this shouldn't be happening to begin with)
         [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
         
+        // Releas everything
         [self.videoPlayers removeAllObjects];
         self.videoPlayers = nil;
         
@@ -806,7 +809,7 @@
         // Toggle playback on old and new SPVideoPlayer objects
         if ( page != self.model.currentVideo ) {
             
-            SPVideoPlayer *oldPlayer = (self.videoPlayers)[self.model.currentVideo];
+            __weak SPVideoPlayer *oldPlayer = (self.videoPlayers)[self.model.currentVideo];
             [oldPlayer pause];
             
         }

@@ -20,6 +20,7 @@
 #pragma mark - Memory Management
 - (void)dealloc
 {
+    
     self.homeButton = nil;
     self.categoryTitleLabel = nil;
     self.videoListScrollView = nil;
@@ -33,6 +34,9 @@
     self.userImageView = nil;
     self.nicknameLabel = nil;
     self.restartPlaybackButton = nil;
+
+    DLog(@"SPOverlay Deallocated");
+    
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder

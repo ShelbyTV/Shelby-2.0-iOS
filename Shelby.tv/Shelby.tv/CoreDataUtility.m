@@ -52,10 +52,10 @@
         self.requestType = requestType;
         
         // Add observer for mergining contexts
-        [[NSNotificationCenter defaultCenter] addObserver:self.appDelegate
+        [[NSNotificationCenter defaultCenter] addObserver:_appDelegate
                                                  selector:@selector(mergeChanges:)
                                                      name:NSManagedObjectContextDidSaveNotification
-                                                   object:self.context];
+                                                   object:_context];
         
     }
     
@@ -70,7 +70,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Execute request that returns array of stream entries
@@ -114,7 +114,7 @@
             
         } else { // Success
             
-            switch (_requestType) {
+            switch ( _requestType ) {
                     
                 case DataRequestType_Fetch:{
                     
@@ -201,7 +201,7 @@
     BOOL admin = [[resultsArray valueForKey:@"admin"] boolValue];
     [user setValue:@(admin) forKey:kCoreDataUserAdmin];
     
-    [self saveContext:self.context];
+    [self saveContext:_context];
 
 }
 
@@ -244,7 +244,7 @@
     }
     
     
-    [self saveContext:self.context];
+    [self saveContext:_context];
     
 }
 
@@ -305,7 +305,7 @@
             }
         }
         
-        [self saveContext:self.context];
+        [self saveContext:_context];
     }
 }
 
@@ -317,7 +317,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search User table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityUser inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityUser inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Execute request that returns array of Users
@@ -333,7 +333,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Execute request that returns array of Stream entries
@@ -349,7 +349,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Likes table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by rollID
@@ -370,7 +370,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by rollID
@@ -392,7 +392,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -419,7 +419,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -450,7 +450,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -482,7 +482,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -515,7 +515,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -547,7 +547,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -615,7 +615,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Queue table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by rollID
@@ -650,7 +650,7 @@
         }
     }
     
-    [self saveContext:self.context];
+    [self saveContext:_context];
 }
 
 #pragma mark - Private Persistance Methods
@@ -663,7 +663,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    NSEntityDescription *description = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:entityName inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Only include objects that exist (i.e. entityIDKey and entityIDValue's must exist)
@@ -677,7 +677,7 @@
         return array[0];
     }
     
-    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.context];
+    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:_context];
 }
 
 #pragma mark - Private Storage mMthods
