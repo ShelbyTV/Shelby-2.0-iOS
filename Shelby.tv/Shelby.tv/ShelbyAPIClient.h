@@ -11,8 +11,8 @@
 + (void)postAuthenticationWithEmail:(NSString*)email andPassword:(NSString*)password withIndicator:(UIActivityIndicatorView*)indicator;
 + (void)getStream;
 + (void)getMoreFramesInStream:(NSString*)skipParam;
-+ (void)getQueueRoll;
-+ (void)getMoreFramesInQueueRoll:(NSString*)skipParam;
++ (void)getLikesRoll;
++ (void)getMoreFramesInLikes:(NSString*)skipParam;
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString*)skipParam;
 + (void)getQueueForSync;

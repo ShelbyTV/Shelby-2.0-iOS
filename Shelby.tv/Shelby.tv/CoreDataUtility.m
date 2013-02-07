@@ -195,8 +195,8 @@
     NSString *personalRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"personal_roll_id"]];
     [user setValue:personalRollID forKey:kCoreDataUserPersonalRollID];
     
-    NSString *queueRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
-    [user setValue:queueRollID forKey:kCoreDataUserQueueRollID];
+    NSString *likesRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
+    [user setValue:likesRollID forKey:kCoreDataUserLikesRollID];
     
     BOOL admin = [[resultsArray valueForKey:@"admin"] boolValue];
     [user setValue:@(admin) forKey:kCoreDataUserAdmin];
@@ -342,19 +342,19 @@
     return [streamEntries count];
 }
 
-- (NSUInteger)fetchQueueRollCount
+- (NSUInteger)fetchLikesCount
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Queue table
+    // Search Likes table
     NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:self.context];
     [request setEntity:description];
     
     // Filter by rollID
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user queueRollID]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames
@@ -442,7 +442,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray*)fetchQueueRollEntries
+- (NSMutableArray*)fetchLikesEntries
 {
     
     // Create fetch request
@@ -459,7 +459,7 @@
     
     // Filter by rollID
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user queueRollID]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Queue Roll
@@ -474,7 +474,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray*)fetchMoreQueueRollEntriesAfterDate:(NSDate *)date
+- (NSMutableArray*)fetchMoreLikesEntriesAfterDate:(NSDate *)date
 {
     
     // Create fetch request
@@ -492,7 +492,7 @@
     
     // Filter by rollID and timestamp
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", [user queueRollID], date];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", [user likesRollID], date];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Queue Roll
@@ -608,7 +608,7 @@
 }
 
 #pragma mark - Public Sync Methods
-- (void)syncQueueRoll:(NSDictionary *)webResultsDictionary
+- (void)syncLikes:(NSDictionary *)webResultsDictionary
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -620,7 +620,7 @@
     
     // Filter by rollID
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user queueRollID]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
     [request setPredicate:predicate];
     
     // Execute request that returns array of streamEntries
@@ -628,11 +628,11 @@
 
     // Extract frameIDs from results from Shelby's Web Database
     NSArray *webResultsArray = [webResultsDictionary[@"result"] valueForKey:@"frames"];
-    NSMutableArray *webFrameIdentifiersInQueue = [@[] mutableCopy];
+    NSMutableArray *webFrameIdentifiersInLikes = [@[] mutableCopy];
     for (NSUInteger i = 0; i < [webResultsArray count]; ++i) {
         
         NSString *frameID = [webResultsArray[i] valueForKey:@"id"];
-        [webFrameIdentifiersInQueue addObject:frameID];
+        [webFrameIdentifiersInLikes addObject:frameID];
     }
 
     // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
@@ -642,7 +642,7 @@
         NSString *frameID = frame.frameID;
         
         // Delete object if it doesn't exist on web any more
-        if ( ![webFrameIdentifiersInQueue containsObject:frameID] ) {
+        if ( ![webFrameIdentifiersInLikes containsObject:frameID] ) {
         
             DLog(@"FrameID doesn't exist on web: %@", frameID);
             

@@ -112,15 +112,15 @@
     [operation start];
 }
 
-+ (void)getQueueRoll
++ (void)getLikesRoll
 {
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
     
     NSString *authToken = [user token];
-    NSString *queueRollID = [user queueRollID];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, queueRollID, authToken]];
+    NSString *likesRollID = [user likesRollID];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, likesRollID, authToken]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -143,16 +143,16 @@
     
 }
 
-+ (void)getMoreFramesInQueueRoll:(NSString *)skipParam
++ (void)getMoreFramesInLikes:(NSString *)skipParam
 {
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
     
     NSString *authToken = [user token];
-    NSString *queueRollID = [user queueRollID];
+    NSString *likesRollID = [user likesRollID];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetMoreRollFrames, queueRollID, authToken, skipParam]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetMoreRollFrames, likesRollID, authToken, skipParam]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -240,12 +240,12 @@
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
     NSString *authToken = [user token];
-    NSString *queueRollID = [user queueRollID];
-    NSUInteger frameCount = [dataUtility fetchQueueRollCount];
+    NSString *likesRollID = [user likesRollID];
+    NSUInteger frameCount = [dataUtility fetchLikesCount];
     
     if ( frameCount ) {
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFramesForSync, queueRollID, authToken, frameCount]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFramesForSync, likesRollID, authToken, frameCount]];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [request setHTTPMethod:@"GET"];
         
@@ -254,13 +254,13 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
                 CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-                [dataUtility syncQueueRoll:JSON];
+                [dataUtility syncLikes:JSON];
                 
             });
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             
-            DLog(@"Problem fetching Queue Roll for sync");
+            DLog(@"Problem fetching Likes for sync");
             
         }];
         

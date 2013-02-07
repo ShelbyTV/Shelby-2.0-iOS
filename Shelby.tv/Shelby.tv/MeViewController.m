@@ -12,7 +12,7 @@
 @interface MeViewController ()
 
 - (void)launchPlayerWithStreamEntries;
-- (void)launchPlayerWithQueueRollEntries;
+- (void)launchPlayerWithLikesRollEntries;
 - (void)launchPlayerWithPersonalRollEntries;
 - (void)logoutButtonAction;
 
@@ -24,7 +24,7 @@
 - (void)dealloc
 {
     self.streamButton = nil;
-    self.queueRollButton = nil;
+    self.likesButton = nil;
     self.personalRollButton = nil;
     self.logoutButton = nil;
     self.versionLabel = nil;
@@ -40,13 +40,13 @@
     
     // Actions
     [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
-    [self.queueRollButton addTarget:self action:@selector(launchPlayerWithQueueRollEntries) forControlEvents:UIControlEventTouchUpInside];
+    [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.logoutButton addTarget:self action:@selector(logoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
     
     // Fonts
     [self.streamButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.streamButton.titleLabel.font.pointSize]];
-    [self.queueRollButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.queueRollButton.titleLabel.font.pointSize]];
+    [self.likesButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.likesButton.titleLabel.font.pointSize]];
     [self.personalRollButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.personalRollButton.titleLabel.font.pointSize]];
     [self.logoutButton.titleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.logoutButton.titleLabel.font.pointSize]];
     [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.versionLabel.font.pointSize]];
@@ -79,15 +79,15 @@
     
 }
 
-- (void)launchPlayerWithQueueRollEntries
+- (void)launchPlayerWithLikesRollEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSMutableArray *videoFrames = [dataUtility fetchQueueRollEntries];
+    NSMutableArray *videoFrames = [dataUtility fetchLikesEntries];
     
     if ( [videoFrames count] ) {
         
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-        SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_QueueRoll categoryTitle:@"Queue Roll" andVideoFrames:videoFrames];
+        SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Likes categoryTitle:@"Likes" andVideoFrames:videoFrames];
         [self presentViewController:reel animated:YES completion:nil];
         
     } else {

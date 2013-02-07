@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, CategoryType)
     
     CategoryType_Unknown,
     CategoryType_Stream,
-    CategoryType_QueueRoll,
+    CategoryType_Likes,
     CategoryType_PersonalRoll,
     
 };

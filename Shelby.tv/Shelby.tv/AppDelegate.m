@@ -100,7 +100,7 @@
     
     // Begin Polling API
     self.pollAPICounter = 0;
-    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:30.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
+    self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
     
     // Remove _loginViewController if it exists
     if ( _loginViewController ) {
@@ -140,7 +140,7 @@
 - (void)pingAllRoutes
 {
     [ShelbyAPIClient getStream];
-    [ShelbyAPIClient getQueueRoll];
+    [ShelbyAPIClient getLikesRoll];
     [ShelbyAPIClient getPersonalRoll];
     [ShelbyAPIClient getGroups];
 }
@@ -162,7 +162,7 @@
             
             self.pollAPICounter = 2;
             
-            [ShelbyAPIClient getQueueRoll];
+            [ShelbyAPIClient getLikesRoll];
             
         } break;
             

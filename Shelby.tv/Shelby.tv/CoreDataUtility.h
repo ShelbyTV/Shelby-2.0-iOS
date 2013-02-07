@@ -27,17 +27,17 @@
 // Public Fetching Methods
 - (User*)fetchUser;
 - (NSUInteger)fetchStreamCount;
-- (NSUInteger)fetchQueueRollCount;
+- (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
 - (NSMutableArray*)fetchStreamEntries;
 - (NSMutableArray*)fetchMoreStreamEntriesAfterDate:(NSDate*)date;
-- (NSMutableArray*)fetchQueueRollEntries;
-- (NSMutableArray*)fetchMoreQueueRollEntriesAfterDate:(NSDate*)date;
+- (NSMutableArray*)fetchLikesEntries;
+- (NSMutableArray*)fetchMoreLikesEntriesAfterDate:(NSDate*)date;
 - (NSMutableArray*)fetchPersonalRollEntries;
 - (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate*)date;
 - (NSString*)fetchTextFromFirstMessageInConversation:(Conversation*)conversation;
 
 // Sync Methods
-- (void)syncQueueRoll:(NSDictionary*)webResultsDictionary;
+- (void)syncLikes:(NSDictionary*)webResultsDictionary;
 
 @end

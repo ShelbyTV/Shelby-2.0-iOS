@@ -68,6 +68,7 @@
 		8E59805B1680104A00027181 /* videoListPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980411680104A00027181 /* videoListPanel@2x.png */; };
 		8E59805C1680104A00027181 /* videoPlayerBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980421680104A00027181 /* videoPlayerBar.png */; };
 		8E59805D1680104A00027181 /* videoPlayerBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980431680104A00027181 /* videoPlayerBar@2x.png */; };
+		8E6C2F5016C3825000489EF6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6C2F4F16C3825000489EF6 /* User.m */; };
 		8E82EDEA1631ABDE0044D97E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82EDE81631ABDE0044D97E /* LoginViewController.m */; };
 		8E82EDEB1631ABDE0044D97E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E82EDE91631ABDE0044D97E /* LoginViewController.xib */; };
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
@@ -77,7 +78,6 @@
 		8E8939E816C19F5100AE7B4F /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939E716C19F5100AE7B4F /* Frame.m */; };
 		8E8939F116C19F5200AE7B4F /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F016C19F5200AE7B4F /* Messages.m */; };
 		8E8939F416C19F5200AE7B4F /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F316C19F5200AE7B4F /* Stream.m */; };
-		8E8939F716C19F5200AE7B4F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F616C19F5200AE7B4F /* User.m */; };
 		8E8939FA16C19F5200AE7B4F /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F916C19F5200AE7B4F /* Roll.m */; };
 		8E893A0016C19F5200AE7B4F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939FF16C19F5200AE7B4F /* Video.m */; };
 		8E893A0616C1A0D300AE7B4F /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E893A0516C1A0D300AE7B4F /* Conversation.m */; };
@@ -189,6 +189,8 @@
 		8E5980411680104A00027181 /* videoListPanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoListPanel@2x.png"; sourceTree = "<group>"; };
 		8E5980421680104A00027181 /* videoPlayerBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoPlayerBar.png; sourceTree = "<group>"; };
 		8E5980431680104A00027181 /* videoPlayerBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoPlayerBar@2x.png"; sourceTree = "<group>"; };
+		8E6C2F4E16C3825000489EF6 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		8E6C2F4F16C3825000489EF6 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
 		8E82EDE71631ABDE0044D97E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -206,8 +208,6 @@
 		8E8939F016C19F5200AE7B4F /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
 		8E8939F216C19F5200AE7B4F /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
 		8E8939F316C19F5200AE7B4F /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
-		8E8939F516C19F5200AE7B4F /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		8E8939F616C19F5200AE7B4F /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E8939F816C19F5200AE7B4F /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		8E8939F916C19F5200AE7B4F /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		8E8939FE16C19F5200AE7B4F /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
@@ -296,6 +296,8 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				8E6C2F4E16C3825000489EF6 /* User.h */,
+				8E6C2F4F16C3825000489EF6 /* User.m */,
 				8E893A1616C1F81C00AE7B4F /* Group.h */,
 				8E893A1716C1F81C00AE7B4F /* Group.m */,
 				8E893A1916C1F81D00AE7B4F /* GroupRoll.h */,
@@ -310,8 +312,6 @@
 				8E8939F016C19F5200AE7B4F /* Messages.m */,
 				8E8939F216C19F5200AE7B4F /* Stream.h */,
 				8E8939F316C19F5200AE7B4F /* Stream.m */,
-				8E8939F516C19F5200AE7B4F /* User.h */,
-				8E8939F616C19F5200AE7B4F /* User.m */,
 				8E8939F816C19F5200AE7B4F /* Roll.h */,
 				8E8939F916C19F5200AE7B4F /* Roll.m */,
 				8E8939FE16C19F5200AE7B4F /* Video.h */,
@@ -806,12 +806,12 @@
 				8E8939E816C19F5100AE7B4F /* Frame.m in Sources */,
 				8E8939F116C19F5200AE7B4F /* Messages.m in Sources */,
 				8E8939F416C19F5200AE7B4F /* Stream.m in Sources */,
-				8E8939F716C19F5200AE7B4F /* User.m in Sources */,
 				8E8939FA16C19F5200AE7B4F /* Roll.m in Sources */,
 				8E893A0016C19F5200AE7B4F /* Video.m in Sources */,
 				8E893A0616C1A0D300AE7B4F /* Conversation.m in Sources */,
 				8E893A1816C1F81D00AE7B4F /* Group.m in Sources */,
 				8E893A1B16C1F81D00AE7B4F /* GroupRoll.m in Sources */,
+				8E6C2F5016C3825000489EF6 /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

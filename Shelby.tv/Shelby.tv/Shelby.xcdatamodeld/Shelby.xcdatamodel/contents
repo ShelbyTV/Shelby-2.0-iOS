@@ -63,9 +63,9 @@
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="admin" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="likesRollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="personalRollID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="queueRollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,11 +81,11 @@
         <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="video" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Group" positionX="18" positionY="168" width="128" height="73"/>
-        <element name="GroupRoll" positionX="27" positionY="9" width="128" height="103"/>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Creator" positionX="133" positionY="342" width="128" height="105"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="240"/>
+        <element name="Group" positionX="18" positionY="168" width="128" height="73"/>
+        <element name="GroupRoll" positionX="27" positionY="9" width="128" height="103"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
         <element name="Roll" positionX="-155" positionY="342" width="128" height="135"/>
         <element name="Stream" positionX="540" positionY="279" width="128" height="90"/>

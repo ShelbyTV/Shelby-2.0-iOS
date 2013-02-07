@@ -508,11 +508,11 @@
                     
                 } break;
                     
-                case CategoryType_QueueRoll:{
+                case CategoryType_Likes:{
                     
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchQueueRollCount];
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFramesInQueueRoll:numberToString];
+                    [ShelbyAPIClient getMoreFramesInLikes:numberToString];
                     
                 } break;
                     
@@ -583,8 +583,8 @@
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
             } break;
                 
-            case CategoryType_QueueRoll:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreQueueRollEntriesAfterDate:date]];
+            case CategoryType_Likes:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreLikesEntriesAfterDate:date]];
             } break;
                 
             case CategoryType_PersonalRoll:{

@@ -82,7 +82,7 @@
 #define kCoreDataUserAdmin                          @"admin"
 #define kCoreDataUserNickname                       @"nickname"
 #define kCoreDataUserPersonalRollID                 @"personalRollID"
-#define kCoreDataUserQueueRollID                    @"queueRollID"
+#define kCoreDataUserLikesRollID                    @"likesRollID"
 #define kCoreDataUserToken                          @"token"
 #define kCoreDataUserImage                          @"userImage"
 
