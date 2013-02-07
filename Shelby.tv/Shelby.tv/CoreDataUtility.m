@@ -131,7 +131,7 @@
                     
                 case DataRequestType_BackgroundUpdate:{
                     
-                    // DLog(@"Background Update Successful");
+                    DLog(@"Background Update Successful");
                     
                 } break;
                     
@@ -143,7 +143,7 @@
                     
                 case DataRequestType_ActionUpdate:{
                     
-//                    DLog(@"User Action Update Successful");
+                    DLog(@"User Action Update Successful");
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [[NSNotificationCenter defaultCenter] postNotificationName:kSPUserDidScrollToUpdate object:nil];

@@ -211,15 +211,14 @@
         
         NSManagedObjectContext *mainThreadContext = [self context];
         
-        [mainThreadContext performBlock:^{
-    
-            @synchronized(mainThreadContext) {
+        @synchronized(mainThreadContext) {
 
-                [mainThreadContext mergeChangesFromContextDidSaveNotification:notification];
-                
-            }
-         
-        }];
+            [mainThreadContext performBlock:^{
+        
+                    [mainThreadContext mergeChangesFromContextDidSaveNotification:notification];
+            }];
+            
+        }
  
     });
 }

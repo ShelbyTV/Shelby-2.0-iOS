@@ -35,35 +35,44 @@
     self.restartPlaybackButton = nil;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    
+    if ( (self = [super initWithCoder:aDecoder]) ) {
+        
+        // Reference Model
+        self.model = [SPModel sharedInstance];
+        
+        // Customize Colors
+        [self.categoryTitleLabel setTextColor:kColorWhite];
+        [self.scrubber setMinimumTrackTintColor:kColorGreen];
+        [self.scrubberTimeLabel setTextColor:kColorWhite];
+        [self.nicknameLabel setTextColor:kColorBlack];
+        [self.videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
+        [self.videoCaptionLabel setTextColor:kColorBlack];
+        [self.userImageView.layer setBorderColor:[kColorGray CGColor]];
+        
+    }
+    
+    return self;
+}
+
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
 {
     
-    // Reference Model
-    self.model = [SPModel sharedInstance];
-    
-    // Customize Scrubber
+    // Customize Images
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
-    [self.scrubber setMinimumTrackTintColor:kColorGreen];
     [self.scrubber setMaximumTrackImage:[UIImage imageNamed:@"scrubberBarOff"] forState:UIControlStateNormal];
-
+    
     // Customize Fonts
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
-    [self.categoryTitleLabel setTextColor:kColorWhite];
-    
-    [self.scrubberTimeLabel setTextColor:kColorWhite];
-    
     [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.nicknameLabel.font.pointSize]];
     [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.nicknameLabel.font.pointSize]];
-    [self.nicknameLabel setTextColor:kColorBlack];
     
-    [self.videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
-    
-    [self.videoCaptionLabel setTextColor:kColorBlack];
-    
-    // Customize thumbnail
-    [self.userImageView.layer setBorderColor:[kColorGray CGColor]];
+    // Customize Borders
     [self.userImageView.layer setBorderWidth:0.5];
+    
 }
 
 #pragma mark - UIView Overridden Methods

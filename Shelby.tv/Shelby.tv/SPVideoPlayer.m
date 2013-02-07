@@ -16,8 +16,8 @@
 
 @property (nonatomic) AppDelegate *appDelegate;
 @property (nonatomic) SPModel *model;
-@property (nonatomic) SPOverlayView *overlayView;
-@property (nonatomic) SPVideoReel *videoReel;
+@property (weak, nonatomic) SPOverlayView *overlayView;
+@property (weak, nonatomic) SPVideoReel *videoReel;
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *indicator;
 @property (nonatomic) UIPopoverController *sharePopOverController;
@@ -40,6 +40,16 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    
+    
+    DLog(@"%@ | %@ | %d", self, self.playerLayer, self.player);
+    
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+
 }
 
 #pragma mark - Initialization Methods
@@ -213,9 +223,7 @@
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
         self.playerLayer.frame = modifiedFrame;
         self.playerLayer.bounds = modifiedFrame;
-        UIView *videoView = [[UIView alloc] initWithFrame:modifiedFrame];
-        [videoView.layer addSublayer:self.playerLayer];
-        [self.view addSubview:videoView];
+        [self.view.layer addSublayer:self.playerLayer];
         
         // Make sure video can be played via AirPlay
         self.player.allowsExternalPlayback = YES;

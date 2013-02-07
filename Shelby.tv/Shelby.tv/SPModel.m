@@ -45,9 +45,10 @@
     if ( ![self loadedVideoPlayers] )
         self.loadedVideoPlayers = [@[] mutableCopy];
     
+    // Add newly loaded SPVideoPlayer to list of SPVideoPlayers
     [self.loadedVideoPlayers addObject:player];
     
-    if ( [self.loadedVideoPlayers count] > 2 ) {
+    if ( [self.loadedVideoPlayers count] > 2 ) { // If more than X number of videos are loaded, unload the older videos in the list
         
         DLog(@"Count: %d", [self.loadedVideoPlayers count] );
         
@@ -72,6 +73,7 @@
     [self setVideoReel:nil];
     [self setOverlayView:nil];
     [self setOverlayTimer:nil];
+    [self setLoadedVideoPlayers:nil];
 }
 
 - (void)rescheduleOverlayTimer

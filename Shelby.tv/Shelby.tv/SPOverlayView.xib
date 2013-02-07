@@ -169,14 +169,12 @@
 						<string key="NSFrame">{{519, 571}, {505, 217}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="290922202"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<bool key="IBUIDirectionalLockEnabled">YES</bool>
-						<bool key="IBUIAlwaysBounceHorizontal">YES</bool>
+						<bool key="IBUIBounces">NO</bool>
 						<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 					</object>
 					<object class="IBUIImageView" id="995945933">
