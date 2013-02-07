@@ -206,7 +206,7 @@
 
 - (void)setupVideoPlayers
 {
-    
+
     for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
         
         Frame *videoFrame = (self.videoFrames)[i];
@@ -218,22 +218,23 @@
         
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
+    
+        if ( 0 == i ) {
+        
+            self.model.currentVideo = 0;
+            self.model.currentVideoPlayerDelegate = (self.videoPlayers)[self.model.currentVideo];
+            
+        }
         
     }
 
-    // If not stream, play video in zeroeth position
-    if ( self.categoryType != CategoryType_Stream ) {
-        
-        self.model.currentVideo = 0;
-        self.model.currentVideoPlayerDelegate = (self.videoPlayers)[self.model.currentVideo];
+    if ( self.categoryType != CategoryType_Stream ) { // If not stream, play video in zeroeth position
+
         [self currentVideoDidChangeToVideo:self.model.currentVideo];
         
         
-    } else {
-        
-        self.model.currentVideo = 0;
-        self.model.currentVideoPlayerDelegate = (self.videoPlayers)[self.model.currentVideo];
-        
+    } else { // If  stream, play video stored for kSPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
+
         for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
             
             Frame *videoFrame = (self.videoFrames)[i];
@@ -248,7 +249,6 @@
         }
         
         [self currentVideoDidChangeToVideo:self.model.currentVideo];
-        
     }
 }
 
@@ -259,51 +259,65 @@
     self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*self.model.numberOfVideos, 217.0f);
     self.overlayView.videoListScrollView.delegate = self;
     
-    for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_async(group, queue, ^{
         
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-        Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-        SPVideoItemView *itemView = nib[0];
+        for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
             
-        CGRect itemFrame = itemView.frame;
-        itemFrame.origin.x = itemViewWidth * i;
-        itemFrame.origin.y = 0.0f;
-        [itemView setFrame:itemFrame];
+            NSManagedObjectContext *context = [self.appDelegate context];
+            NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+            Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+            
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+            SPVideoItemView *itemView = nib[0];
+            [itemView setTag:i];
         
-        [itemView.videoTitleLabel setText:videoFrame.video.title];
-        UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
-        [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
-                                     forImageView:itemView.thumbnailImageView
-                              withPlaceholderView:videoListThumbnailPlaceholderView
-                                   andContentMode:UIViewContentModeCenter];
-        [itemView setTag:i];
+            CGRect itemFrame = itemView.frame;
+            itemFrame.origin.x = itemViewWidth * i;
+            itemFrame.origin.y = 0.0f;
+            [itemView setFrame:itemFrame];
+            
+            UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
+            [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                         forImageView:itemView.thumbnailImageView
+                                  withPlaceholderView:videoListThumbnailPlaceholderView
+                                       andContentMode:UIViewContentModeCenter];
         
-        [self.itemViews addObject:itemView];
-        [self.overlayView.videoListScrollView addSubview:itemView];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+               [itemView.videoTitleLabel setText:videoFrame.video.title];
+                [self.itemViews addObject:itemView];
+                [self.overlayView.videoListScrollView addSubview:itemView];
+            
+            });
+        }
         
+        // Add visual selected state (e.g., blue background, white text) to currentVideo
+        SPVideoItemView *itemView = (self.itemViews)[self.model.currentVideo];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+                    
+            itemView.backgroundColor = kColorGreen;
+            itemView.videoTitleLabel.textColor = kColorBlack;
+
+        });
+            
+        // Scroll To currentVideo if self.currentVideo != 0
+        if ( 0 != self.model.currentVideo) {
+            
+            CGFloat x = self.videoScrollView.frame.size.width * self.model.currentVideo;
+            CGFloat y = self.videoScrollView.contentOffset.y;
+            [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+            
+            CGFloat itemViewX = itemView.frame.size.width * (self.model.currentVideo-1);
+            CGFloat itemViewY = self.overlayView.videoListScrollView.contentOffset.y;
+            [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
+            
     }
+        
+    });
     
-    // Add visual selected state (e.g., blue background, white text) to currentVideo
-    SPVideoItemView *itemView = (self.itemViews)[self.model.currentVideo];
-    itemView.backgroundColor = kColorGreen;
-    itemView.videoTitleLabel.textColor = kColorBlack;
-
-    // Scroll To currentVideo if self.currentVideo != 0
-    if ( 0 != self.model.currentVideo) {
-        
-        CGFloat x = self.videoScrollView.frame.size.width * self.model.currentVideo;
-        CGFloat y = self.videoScrollView.contentOffset.y;
-        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-        
-        CGFloat itemViewX = itemView.frame.size.width * (self.model.currentVideo-1);
-        CGFloat itemViewY = self.overlayView.videoListScrollView.contentOffset.y;
-        [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
-        
-    }
-
 }
 
 - (void)setupAirPlay
