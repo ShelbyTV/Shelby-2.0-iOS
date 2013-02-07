@@ -93,7 +93,7 @@
     } else {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:@"No videos in Queue Roll."
+                                                            message:@"No videos in Likes."
                                                            delegate:self
                                                   cancelButtonTitle:@"Dismiss"
                                                   otherButtonTitles:nil];
