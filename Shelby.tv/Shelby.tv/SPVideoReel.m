@@ -41,6 +41,7 @@
 
 /// Update Methods
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+- (void)queueMoreVideos:(NSUInteger)position;
 - (void)storeIdentifierOfCurrentVideoInStream;
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceShouldUpdateFromLocalArray;
@@ -390,7 +391,7 @@
     if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
         
         [self.model.currentVideoPlayer play];
-        [[SPVideoScrubber sharedInstance] syncScrubber];
+        [[SPVideoScrubber sharedInstance] setupScrubber];
         
         if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
             
@@ -463,14 +464,30 @@
     }
     
     // Queue current and next 3 videos
-    if ( 0 < [self.videoPlayers count] ) {
-        [[SPVideoExtractor sharedInstance] emptyQueue];
-        [self extractVideoForVideoPlayer:position]; // Load video for current visible view
-        if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
-        if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
-        if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
-    }
+    [self queueMoreVideos:position];
     
+}
+
+- (void)queueMoreVideos:(NSUInteger)position
+{
+    if ( [self.videoPlayers count] ) {
+    
+        if ( [UIScreen isRetina] ) { // iPad 3 or better (e.g., device with more RAM and better processor)
+        
+            [[SPVideoExtractor sharedInstance] emptyQueue];
+            [self extractVideoForVideoPlayer:position]; // Load video for current visible view
+            if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
+            if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
+            if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
+            
+        } else { // iPad 2 or iPad Mini 1
+            
+            [[SPVideoExtractor sharedInstance] emptyQueue];
+            [self extractVideoForVideoPlayer:position]; // Load video for current visible view
+            if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
+            
+        }
+    }
 }
 
 - (void)storeIdentifierOfCurrentVideoInStream

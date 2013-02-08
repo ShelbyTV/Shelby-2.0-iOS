@@ -32,6 +32,7 @@
     #import "NSDate+DateFromBSONObjectID.h"
     #import "NSString+CoreDataNullTest.h"
     #import "UIColor+ColorWithHexAndAlpha.h"
+    #import "UIScreen+Resolution.h"
     
     // Models
     #import "AppDelegate.h"

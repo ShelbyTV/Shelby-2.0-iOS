@@ -10,6 +10,7 @@
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
+		8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		8E10189A1686696B009698B3 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018881686696B009698B3 /* AFHTTPClient.m */; };
 		8E10189B1686696B009698B3 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E10188A1686696B009698B3 /* AFHTTPRequestOperation.m */; };
 		8E10189C1686696B009698B3 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E10188C1686696B009698B3 /* AFImageRequestOperation.m */; };
@@ -114,6 +115,8 @@
 		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
 		8E0CFE1116C4A87F009620F9 /* SPVideoScrubber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoScrubber.h; sourceTree = "<group>"; };
 		8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoScrubber.m; sourceTree = "<group>"; };
+		8E0CFE1416C4C54E009620F9 /* UIScreen+Resolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Resolution.h"; sourceTree = "<group>"; };
+		8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Resolution.m"; sourceTree = "<group>"; };
 		8E10187F1686695D009698B3 /* AsynchronousFreeloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousFreeloader.h; sourceTree = "<group>"; };
 		8E1018801686695D009698B3 /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
 		8E1018871686696B009698B3 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -560,6 +563,8 @@
 				8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */,
 				8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */,
 				8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */,
+				8E0CFE1416C4C54E009620F9 /* UIScreen+Resolution.h */,
+				8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -818,6 +823,7 @@
 				8E893A1B16C1F81D00AE7B4F /* GroupRoll.m in Sources */,
 				8E6C2F5016C3825000489EF6 /* User.m in Sources */,
 				8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */,
+				8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -905,7 +911,7 @@
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0F03CEA0-7AEF-4F39-B7A1-CD4032CD5354";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F03CEA0-7AEF-4F39-B7A1-CD4032CD5354";
@@ -926,7 +932,7 @@
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "28197B5D-C152-49A2-B495-9E14F2C9346A";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "28197B5D-C152-49A2-B495-9E14F2C9346A";

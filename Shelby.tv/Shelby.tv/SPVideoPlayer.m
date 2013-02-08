@@ -259,7 +259,7 @@
         The array purges an older video instance when a limit is reached.
          
          */
-//        [self.model storeVideoPlayer:self];
+        [self.model storeVideoPlayer:self];
         
         // Toggle video playback
         if ( self == _model.currentVideoPlayer ) {

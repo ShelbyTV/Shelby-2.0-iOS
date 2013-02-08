@@ -113,7 +113,7 @@
             
         }
 
-        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:20.0f target:self selector:@selector(timerExpired) userInfo:nil repeats:NO];
+        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:15.0f target:self selector:@selector(timerExpired) userInfo:nil repeats:NO];
         
     }
 }
