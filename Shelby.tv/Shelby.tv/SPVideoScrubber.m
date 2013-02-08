@@ -35,21 +35,19 @@
 #pragma mark - Persistance Methods
 - (void)setupScrubber
 {
-	
-    [self stopObserving];
     
     CGFloat interval = .1f;
 	CMTime playerDuration = [self elapsedDuration];
     
 	if ( CMTIME_IS_INVALID(playerDuration) ) {
         
-        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(setupScrubber) userInfo:nil repeats:NO];
+        [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(setupScrubber) userInfo:nil repeats:NO];
         
         return;
 	}
 	
     CGFloat duration = CMTimeGetSeconds(playerDuration);
-	if (isfinite(duration)) {
+	if ( isfinite(duration) ) {
 		CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
 		interval = 0.5f * duration / width;
 	}
@@ -84,7 +82,6 @@
         
         CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
         CGFloat duration = CMTimeGetSeconds([self.model.currentVideoPlayer.player.currentItem duration]);
-        
         
         [self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
         [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
@@ -154,10 +151,12 @@
                                                                                                 // Sync the scrubber to the currentVideoPlayer
                                                                                                 [self syncScrubber];
                                                                                                 
-                                                                                                // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
-                                                                                                ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
-                                                                                                
                                                                                             }];
+        
+        
+        // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
+        ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
+        
     }
 
 }

@@ -38,43 +38,7 @@
     return [SPVideoExtractor sharedInstance];
 }
 
-- (void)storeVideoPlayer:(SPVideoPlayer *)player
-{
-    
-    if ( ![self loadedVideoPlayers] ) {
-        self.loadedVideoPlayers = [@[] mutableCopy];
-    }
-    
-    // Add newly loaded SPVideoPlayer to list of SPVideoPlayers
-    [self.loadedVideoPlayers addObject:player];
-    
-    // If screen is retina (e.g., iPad 3 or great), allow 6 videos. Otherwise, allow only 3 videos to be stored
-    NSUInteger maxVideosAllowed = ( [UIScreen isRetina] ) ? 6 : 3;
-    
-    if ( [self.loadedVideoPlayers count] > maxVideosAllowed ) { // If more than X number of videos are loaded, unload the older videos in the list
-        
-        DLog(@"Count: %d", [self.loadedVideoPlayers count] );
-        
-        SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)(self.loadedVideoPlayers)[0];
-        
-        if ( oldestPlayer != self.currentVideoPlayer ) { // If oldestPlayer isn't currently being played, remove it
-         
-            [oldestPlayer resetPlayer];
-            [self.loadedVideoPlayers removeObject:oldestPlayer];
-
-        } else { // If oldestPlayer is being played, remove next-oldest video
-            
-            if ( [self.loadedVideoPlayers count] > 1) {
-            
-                SPVideoPlayer *nextOldestPlayer = (SPVideoPlayer*)(self.loadedVideoPlayers)[1];
-                [self.loadedVideoPlayers removeObject:nextOldestPlayer];
-                
-            }
-        }
-    }
-}
-
-- (void)destroy
+- (void)destroyModel
 {
     [self setNumberOfVideos:0];
     [self setCurrentVideo:0];

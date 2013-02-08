@@ -24,6 +24,7 @@
 @property (nonatomic) NSMutableArray *videoFrames;
 @property (nonatomic) NSMutableArray *moreVideoFrames;
 @property (nonatomic) NSMutableArray *videoPlayers;
+@property (nonatomic) NSMutableArray *playableVideoPlayers;
 @property (nonatomic) NSMutableArray *itemViews;
 @property (copy, nonatomic) NSString *categoryTitle;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
@@ -39,10 +40,13 @@
 - (void)setupAirPlay;
 - (void)setupVideoPlayers;
 
+/// Storage Methods
+- (void)storeLoadedVideoPlayer:(SPVideoPlayer*)player;
+- (void)storeIdentifierOfCurrentVideoInStream;
+
 /// Update Methods
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
 - (void)queueMoreVideos:(NSUInteger)position;
-- (void)storeIdentifierOfCurrentVideoInStream;
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceShouldUpdateFromLocalArray;
 - (void)dataSourceShouldUpdateFromWeb:(NSNotification*)notification;
@@ -74,7 +78,7 @@
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility removeAllVideoExtractionURLReferences];
 
-    DLog(@"SPVideoRell Deallocated");
+    DLog(@"SPVideoReel Deallocated");
     
 }
 
@@ -328,6 +332,53 @@
     }
 }
 
+#pragma mark - Private Storage Methods
+- (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player
+{
+    
+    if ( ![self playableVideoPlayers] ) {
+        self.playableVideoPlayers = [@[] mutableCopy];
+    }
+    
+    // Add newly loaded SPVideoPlayer to list of SPVideoPlayers
+    [self.playableVideoPlayers addObject:player];
+    
+    // If screen is retina (e.g., iPad 3 or greater), allow 56 videos. Otherwise, allow only 3 videos to be stored
+    NSUInteger maxVideosAllowed = ( [[UIScreen mainScreen] isRetinaDisplay] ) ? 4 : 2;
+    
+    if ( [self.playableVideoPlayers count] > maxVideosAllowed ) { // If more than X number of videos are loaded, unload the older videos in the list
+        
+        DLog(@"Count: %d", [self.playableVideoPlayers count] );
+        
+        SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)(self.playableVideoPlayers)[0];
+        
+        if ( oldestPlayer != self.model.currentVideoPlayer ) { // If oldestPlayer isn't currently being played, remove it
+            
+            [oldestPlayer resetPlayer];
+            [self.playableVideoPlayers removeObject:oldestPlayer];
+            
+        } else { // If oldestPlayer is being played, remove next-oldest video
+            
+            if ( [self.playableVideoPlayers count] > 1) {
+                
+                SPVideoPlayer *nextOldestPlayer = (SPVideoPlayer*)(self.playableVideoPlayers)[1];
+                [self.playableVideoPlayers removeObject:nextOldestPlayer];
+                
+            }
+        }
+    }
+}
+
+- (void)storeIdentifierOfCurrentVideoInStream
+{
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
+    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - Public Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position
 {
@@ -342,7 +393,6 @@
         [player queueVideo];
     
     }
-
 }
 
 - (void)currentVideoDidFinishPlayback
@@ -472,13 +522,13 @@
 {
     if ( [self.videoPlayers count] ) {
     
-        if ( [UIScreen isRetina] ) { // iPad 3 or better (e.g., device with more RAM and better processor)
+        if ( [[UIScreen mainScreen] isRetinaDisplay] ) { // iPad 3 or better (e.g., device with more RAM and better processor)
         
             [[SPVideoExtractor sharedInstance] emptyQueue];
             [self extractVideoForVideoPlayer:position]; // Load video for current visible view
             if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
             if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
-            if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
+//            if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
             
         } else { // iPad 2 or iPad Mini 1
             
@@ -488,16 +538,6 @@
             
         }
     }
-}
-
-- (void)storeIdentifierOfCurrentVideoInStream
-{
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
-    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)fetchOlderVideos:(NSUInteger)position
@@ -574,7 +614,6 @@
         self.moreVideoFrames = nil;
         
     }
-    
 
     [self dataSourceDidUpdate];
     
@@ -712,7 +751,7 @@
         [self.videoScrubber stopObserving];
         
         // Remove references on model
-        [self.model destroy];
+        [self.model destroyModel];
         
         // Stop residual audio playback (this shouldn't be happening to begin with)
         [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];

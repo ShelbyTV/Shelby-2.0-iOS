@@ -10,6 +10,6 @@
 
 @interface UIScreen (Resolution)
 
-+ (BOOL)isRetina;
+- (BOOL)isRetinaDisplay;
 
 @end

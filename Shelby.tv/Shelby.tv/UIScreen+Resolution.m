@@ -10,10 +10,17 @@
 
 @implementation UIScreen (Resolution)
 
-+ (BOOL)isRetina
+- (BOOL)isRetinaDisplay
 {
     
-    return [self respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0);
+    static BOOL retina;
+    static dispatch_once_t retinaToken;
+    
+	dispatch_once(&retinaToken, ^{
+		retina = ([self respondsToSelector:@selector(scale)] && [self scale] == 2);
+	});
+    
+	return retina;
 
 }
 

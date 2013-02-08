@@ -26,7 +26,7 @@
 
 /// Destruction Methods
 - (void)storeVideoPlayer:(SPVideoPlayer*)player;
-- (void)destroy;
+- (void)destroyModel;
 
 /// UI Methods
 - (void)rescheduleOverlayTimer;

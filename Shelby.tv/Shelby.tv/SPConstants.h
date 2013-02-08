@@ -11,3 +11,7 @@
 #define kSPCurrentVideoStreamID         @"Current Video in Stream"
 #define kSPUserDidScrollToUpdate        @"User Did Scroll To Update"
 #define kSPVideoShareLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
+
+
+#define kSPVideoPlayerElapsedTime       @"Video Player Elapsed Time"
+#define kSPVideoPlayerExtractedURL      @"Vide Player Extracted URL"

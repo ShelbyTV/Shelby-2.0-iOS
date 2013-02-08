@@ -22,11 +22,17 @@
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *indicator;
 @property (nonatomic) UIPopoverController *sharePopOverController;
+@property (nonatomic) NSMutableDictionary *videoInformation;
 
 /// Setup Methods
 - (void)setupReferences;
 - (void)setupInitialConditions;
 - (void)setupIndicator;
+- (void)setupPlayerForURL:(NSURL*)extractedURL;
+
+/// Storage Methods
+- (void)storeVideo;
+- (CMTime)elapsedTime;
 
 /// Observer Methods
 - (void)loadVideo:(NSNotification*)notification;
@@ -71,14 +77,15 @@
     return self;
 }
 
+
 - (void)resetPlayer
 {
+    [self storeVideo];
     [self.player pause];
     [self.playerLayer removeFromSuperlayer];
     [self setPlayerLayer:nil];
     [self setPlayer:nil];
     [self setupInitialConditions];
-    [self setupIndicator];
 }
 
 #pragma mark - View Lifecycle Methods
@@ -115,21 +122,131 @@
     [self.view addSubview:self.indicator];
 }
 
+- (void)setupPlayerForURL:(NSURL *)extractedURL
+{
+    AVAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
+    AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
+    self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+    
+    // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
+    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+    self.playerLayer.frame = modifiedFrame;
+    self.playerLayer.bounds = modifiedFrame;
+    [self.view.layer addSublayer:self.playerLayer];
+    
+    // Set isPlayable Flag
+    [self setIsPlayable:YES];
+    [[SPVideoScrubber sharedInstance] setupScrubber];
+    
+    if ( self == _model.currentVideoPlayer ) {
+        
+        [self.overlayView.restartPlaybackButton setHidden:YES];
+        [self.overlayView.playButton setEnabled:YES];
+        [self.overlayView.scrubber setEnabled:YES];
+        
+    }
+    
+    // Add Gesture Recognizer
+    UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback)];
+    [togglePlaybackGesuture setNumberOfTapsRequired:2];
+    [self.view addGestureRecognizer:togglePlaybackGesuture];
+    
+    [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
+    
+    // Add Observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemDidFinishPlaying:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:playerItem];
+    
+    /*
+     
+     This line stores a video in an array that's used for lazy memory management queue.
+     The array purges an older video instance when a limit is reached.
+     
+     */
+    [self.model storeVideoPlayer:self];
+    
+    // Toggle video playback
+    if ( self == _model.currentVideoPlayer ) {
+        
+        [self play];
+        [self.model rescheduleOverlayTimer];
+        
+    } else {
+        
+        [self pause];
+        
+    }
+    
+    // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
+    if ( [_indicator isAnimating] ) {
+        [self.indicator stopAnimating];
+    }
+    
+}
+
+#pragma mark - Video Storage Methods
+- (void)storeVideo
+{
+    NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
+    
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    
+    NSDictionary *dictionary = @{ kSPVideoPlayerElapsedTime : elapsedTime, kSPVideoPlayerExtractedURL : self.videoFrame.video.extractedURL };
+    self.videoInformation = [dictionary mutableCopy];
+
+}
+
+- (CMTime)elapsedTime
+{
+    
+    AVPlayerItem *playerItem = [self.player currentItem];
+    
+    if ( playerItem.status == AVPlayerItemStatusReadyToPlay ) {
+    
+		return [playerItem currentTime] ;
+	}
+	
+	return kCMTimeInvalid;
+}
+
 #pragma mark - Video Fetching Methods
 - (void)queueVideo
 {
     
-    if ( ![self isPlayable] ) {
+    if ( [self.videoInformation valueForKey:kSPVideoPlayerExtractedURL] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(loadVideo:)
-                                                     name:kSPVideoExtracted
-                                                   object:nil];
+        // Instantiate AVPlayer object with extractedURL
+        NSURL *extractedURL = [NSURL URLWithString:[self.videoInformation valueForKey:kSPVideoPlayerExtractedURL]];
         
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [self.videoFrame objectID];
-        self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-        [[SPVideoExtractor sharedInstance] queueVideo:self.videoFrame.video];
+        // Reload player
+        [self setupPlayerForURL:extractedURL];
+        
+        // Set Time
+        CMTime elapsedTime = [[self.videoInformation valueForKey:kSPVideoPlayerElapsedTime] CMTimeValue];
+        if ( CMTIME_IS_VALID(elapsedTime) ) {
+            [self.player seekToTime:elapsedTime];
+        }
+        
+    } else { // If video hasn't been extracted, send it to the extractor
+     
+        if ( ![self isPlayable] ) {
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(loadVideo:)
+                                                         name:kSPVideoExtracted
+                                                       object:nil];
+            
+            NSManagedObjectContext *context = [self.appDelegate context];
+            NSManagedObjectID *objectID = [self.videoFrame objectID];
+            self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+            [[SPVideoExtractor sharedInstance] queueVideo:self.videoFrame.video];
+            
+        }
         
     }
 }
@@ -217,64 +334,9 @@
         
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:self.videoFrame.video.extractedURL];
-        AVAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
-        AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
-        self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-        
-        // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-        self.playerLayer.frame = modifiedFrame;
-        self.playerLayer.bounds = modifiedFrame;
-        [self.view.layer addSublayer:self.playerLayer];
-        
-        // Set isPlayable Flag
-        [self setIsPlayable:YES];
-        [[SPVideoScrubber sharedInstance] setupScrubber];
-        
-        if ( self == _model.currentVideoPlayer ) {
-         
-            [self.overlayView.restartPlaybackButton setHidden:YES];
-            [self.overlayView.playButton setEnabled:YES];
-            [self.overlayView.scrubber setEnabled:YES];
-            
-        }
-        
-        // Add Gesture Recognizer
-        UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback)];
-        [togglePlaybackGesuture setNumberOfTapsRequired:2];
-        [self.view addGestureRecognizer:togglePlaybackGesuture];
-        
-        [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
-        
-        // Add Observers
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(itemDidFinishPlaying:)
-                                                     name:AVPlayerItemDidPlayToEndTimeNotification
-                                                   object:playerItem];
-        
-        /* 
-         
-         This line stores a video in an array that's used for lazy memory management queue.
-        The array purges an older video instance when a limit is reached.
-         
-         */
-        [self.model storeVideoPlayer:self];
-        
-        // Toggle video playback
-        if ( self == _model.currentVideoPlayer ) {
-            
-            [self play];
-            [self.model rescheduleOverlayTimer];
-            
-        } else {
-            
-            [self pause];
-            
-        }
-        
-        // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
-        [self.indicator stopAnimating];
+       
+        // Load Player
+        [self setupPlayerForURL:extractedURL];
         
     }
 }
