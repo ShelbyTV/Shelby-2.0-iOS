@@ -48,7 +48,9 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-
+    
+    [self.player pause];
+    [self.playerLayer removeFromSuperlayer];
     [self setPlayerLayer:nil];
     [self setPlayer:nil];
     
@@ -81,10 +83,16 @@
 - (void)resetPlayer
 {
     [self storeVideo];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    
     [self.player pause];
+
     [self.playerLayer removeFromSuperlayer];
     [self setPlayerLayer:nil];
     [self setPlayer:nil];
+    
     [self setupInitialConditions];
 }
 
@@ -119,7 +127,7 @@
     self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.indicator.hidesWhenStopped = YES;
     [self.indicator startAnimating];
-    [self.view addSubview:self.indicator];
+    [self.view addSubview:_indicator];
 }
 
 - (void)setupPlayerForURL:(NSURL *)extractedURL
@@ -129,15 +137,14 @@
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
     
     // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
     CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
     self.playerLayer.frame = modifiedFrame;
     self.playerLayer.bounds = modifiedFrame;
-    [self.view.layer addSublayer:self.playerLayer];
+    [self.view.layer addSublayer:_playerLayer];
     
     // Set isPlayable Flag
     [self setIsPlayable:YES];
-    [[SPVideoScrubber sharedInstance] setupScrubber];
     
     if ( self == _model.currentVideoPlayer ) {
         
@@ -166,7 +173,7 @@
      The array purges an older video instance when a limit is reached.
      
      */
-    [self.model storeVideoPlayer:self];
+    [self.videoReel storeLoadedVideoPlayer:self];
     
     // Toggle video playback
     if ( self == _model.currentVideoPlayer ) {
@@ -190,15 +197,20 @@
 #pragma mark - Video Storage Methods
 - (void)storeVideo
 {
-    NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
-    
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.videoFrame objectID];
-    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-    
-    NSDictionary *dictionary = @{ kSPVideoPlayerElapsedTime : elapsedTime, kSPVideoPlayerExtractedURL : self.videoFrame.video.extractedURL };
-    self.videoInformation = [dictionary mutableCopy];
-
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        NSDate *storageDate = [NSDate date];
+        NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [self.videoFrame objectID];
+        self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+        
+        if ( _videoFrame.video.extractedURL.length ) {
+            
+            NSDictionary *dictionary = @{ kSPVideoPlayerElapsedTime : elapsedTime, kSPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
+            self.videoInformation = [dictionary mutableCopy];
+        }
+    });
 }
 
 - (CMTime)elapsedTime
@@ -254,7 +266,7 @@
 #pragma mark - Video Playback Methods
 - (void)togglePlayback
 {
-    if ( 0.0 == self.player.rate && self.isPlayable ) { // Play
+    if ( 0.0 == _player.rate && _isPlayable ) { // Play
         
         [self play];
         
@@ -281,6 +293,9 @@
 {
     // Play video and update UI
     [self.player play];
+    
+    // Begin updating videoScrubber periodically 
+    [[SPVideoScrubber sharedInstance] setupScrubber];
     
     // Reschedule Timer
     [self.model rescheduleOverlayTimer];
@@ -330,7 +345,7 @@
     if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
         
         // Clear notification
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
         
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:self.videoFrame.video.extractedURL];
@@ -344,7 +359,7 @@
 - (void)itemDidFinishPlaying:(NSNotification*)notification
 {
 
-    if ( self.player.currentItem == notification.object && ![self playbackFinished]) {
+    if ( _player.currentItem == notification.object && ![self playbackFinished]) {
         
         // Show Restart Button
         [self setPlaybackFinished:YES];

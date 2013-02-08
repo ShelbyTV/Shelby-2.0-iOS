@@ -11,7 +11,7 @@
 
 @interface SPVideoScrubber ()
 
-@property (weak, nonatomic, readonly) SPModel *model;
+@property (weak, nonatomic) SPModel *model;
 
 - (NSString *)convertElapsedTime:(CGFloat)currentTime andDuration:(CGFloat)duration;
 
@@ -53,7 +53,7 @@
 	}
     
     
-    self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
+    self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(.1, NSEC_PER_MSEC)
                                                                                                          queue:NULL /* If you pass NULL, the main queue is used. */
                                                                                                     usingBlock:^(CMTime time) {
                                                                                                         
@@ -102,6 +102,8 @@
 {
     [self.model.currentVideoPlayer.player removeTimeObserver:_scrubberTimeObserver];
     [self setScrubberTimeObserver:nil];
+    [self setModel:nil];
+    
 }
 
 #pragma mark - Scrubbing Methods
@@ -165,11 +167,9 @@
 - (CMTime)elapsedDuration
 {
     
-    AVPlayerItem *playerItem = [self.model.currentVideoPlayer.player currentItem];
-    
-    if ( playerItem.status == AVPlayerItemStatusReadyToPlay ) {
+    if ( [self.model.currentVideoPlayer.player currentItem].status == AVPlayerItemStatusReadyToPlay ) {
         
-		return [playerItem duration] ;
+		return [self.model.currentVideoPlayer.player.currentItem duration];
 	}
 	
 	return kCMTimeInvalid;

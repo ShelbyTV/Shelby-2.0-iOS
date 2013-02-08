@@ -25,6 +25,9 @@
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;
 
+/// Storage Methods
+- (void)storeLoadedVideoPlayer:(SPVideoPlayer*)player;
+
 /// Action Methods
 - (IBAction)homeButtonAction:(id)sender;
 - (IBAction)playButtonAction:(id)sender;

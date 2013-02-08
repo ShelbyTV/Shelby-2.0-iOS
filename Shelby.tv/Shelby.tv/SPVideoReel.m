@@ -18,7 +18,6 @@
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPModel *model;
-@property (weak, nonatomic) SPVideoScrubber *videoScrubber;
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
 @property (nonatomic) NSMutableArray *videoFrames;
@@ -41,7 +40,6 @@
 - (void)setupVideoPlayers;
 
 /// Storage Methods
-- (void)storeLoadedVideoPlayer:(SPVideoPlayer*)player;
 - (void)storeIdentifierOfCurrentVideoInStream;
 
 /// Update Methods
@@ -156,7 +154,6 @@
     self.model = [SPModel sharedInstance];
     self.model.videoReel = self;
     self.model.numberOfVideos = [self.videoFrames count];
-    self.videoScrubber = [SPVideoScrubber sharedInstance];
     self.videoPlayers = [@[] mutableCopy];
     self.itemViews = [@[] mutableCopy];
 }
@@ -332,7 +329,7 @@
     }
 }
 
-#pragma mark - Private Storage Methods
+#pragma mark - Storage Methods (Public)
 - (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player
 {
     
@@ -344,7 +341,7 @@
     [self.playableVideoPlayers addObject:player];
     
     // If screen is retina (e.g., iPad 3 or greater), allow 56 videos. Otherwise, allow only 3 videos to be stored
-    NSUInteger maxVideosAllowed = ( [[UIScreen mainScreen] isRetinaDisplay] ) ? 4 : 2;
+    NSUInteger maxVideosAllowed = ( [[UIScreen mainScreen] isRetinaDisplay] ) ? 5 : 2;
     
     if ( [self.playableVideoPlayers count] > maxVideosAllowed ) { // If more than X number of videos are loaded, unload the older videos in the list
         
@@ -362,24 +359,16 @@
             if ( [self.playableVideoPlayers count] > 1) {
                 
                 SPVideoPlayer *nextOldestPlayer = (SPVideoPlayer*)(self.playableVideoPlayers)[1];
+                [nextOldestPlayer resetPlayer];
                 [self.playableVideoPlayers removeObject:nextOldestPlayer];
-                
+
             }
         }
     }
 }
 
-- (void)storeIdentifierOfCurrentVideoInStream
-{
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
-    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
 
-#pragma mark - Public Update Methods
+#pragma mark - Update Methods (Public)
 - (void)extractVideoForVideoPlayer:(NSUInteger)position
 {
     SPVideoPlayer *player = (self.videoPlayers)[position];
@@ -409,15 +398,127 @@
     }
 }
 
-#pragma mark - Private Update Methods
+#pragma mark - Action Methods (Public)
+- (IBAction)homeButtonAction:(id)sender
+{
+    
+    if ( ![self isBeingDismissed] ) {
+        
+        // Cancel remaining MP4 extractions
+        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+        
+        // Remove Scrubber Timer and Observer
+        [[SPVideoScrubber sharedInstance] stopObserving];
+        
+        // Remove references on model
+        [self.model destroyModel];
+        
+        // Stop residual audio playback (this shouldn't be happening to begin with)
+        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+        
+        // Releas everything
+        [self.videoPlayers removeAllObjects];
+        self.videoPlayers = nil;
+        
+        [self.playableVideoPlayers removeAllObjects];
+        self.videoPlayers = nil;
+    
+        [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self.videoScrollView removeFromSuperview];
+        self.videoScrollView = nil;
+        
+        [self.itemViews removeAllObjects];
+        self.itemViews = nil;
+        
+        [self.videoFrames removeAllObjects];
+        self.videoFrames = nil;
+        
+        [self.moreVideoFrames removeAllObjects];
+        self.moreVideoFrames = nil;
+        
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+            
+        }];
+    }
+}
+
+- (IBAction)playButtonAction:(id)sender
+{
+    [self.model.currentVideoPlayer togglePlayback];
+}
+
+- (IBAction)shareButtonAction:(id)sender
+{
+    [self.model.currentVideoPlayer share];
+}
+
+- (IBAction)itemButtonAction:(id)sender
+{
+    
+    // Pause currentVideo Player
+    [self.model.currentVideoPlayer pause];
+    
+    // Reference SPVideoItemView from position in videoListScrollView object
+    SPVideoItemView *itemView = (SPVideoItemView*)[sender superview];
+    NSUInteger position = itemView.tag;
+    
+    // Force scroll videoScrollView
+    CGFloat videoX = 1024 * position;
+    CGFloat videoY = self.videoScrollView.contentOffset.y;
+    
+    if ( position < self.model.numberOfVideos ) {
+        [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
+    }
+    
+    // Perform actions on videoChange
+    [self currentVideoDidChangeToVideo:position];
+    
+}
+
+- (void)restartPlaybackButtonAction:(id)sender
+{
+    [self.model.currentVideoPlayer restartPlayback];
+}
+
+- (IBAction)beginScrubbing:(id)sender
+{
+	[[SPVideoScrubber sharedInstance] beginScrubbing];
+}
+
+- (IBAction)scrub:(id)sender
+{
+    [[SPVideoScrubber sharedInstance] scrub];
+}
+
+- (IBAction)endScrubbing:(id)sender
+{
+    
+    [[SPVideoScrubber sharedInstance] endScrubbing];
+    
+}
+
+
+#pragma mark - Storage Methods (Private)
+- (void)storeIdentifierOfCurrentVideoInStream
+{
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
+    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
+#pragma mark -  Update Methods (Private)
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
     
     // Disable timer
     [self.model.overlayTimer invalidate];
-    
-    // Stop Observing Timer
-    [self.videoScrubber stopObserving];
     
     // Show Overlay
     [self.overlayView showOverlay];
@@ -428,20 +529,24 @@
         [self.model.currentVideoPlayer pause];
     
     }
+    // Stop observing video for videoScrubber
+    [[SPVideoScrubber sharedInstance] stopObserving];
     
     // Reset currentVideoPlayer reference after scrolling has finished
     self.model.currentVideo = position;
     self.model.currentVideoPlayer = (self.videoPlayers)[position];
     
     // If videoReel is instance of Stream, store currentVideoID
-    if ( self.categoryType == CategoryType_Stream )
+    if ( self.categoryType == CategoryType_Stream ) {
+        
         [self storeIdentifierOfCurrentVideoInStream];
+        
+    }
     
     // Deal with playback methods & UI of current and previous video
     if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
         
         [self.model.currentVideoPlayer play];
-        [[SPVideoScrubber sharedInstance] setupScrubber];
         
         if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
             
@@ -528,7 +633,7 @@
             [self extractVideoForVideoPlayer:position]; // Load video for current visible view
             if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
             if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
-//            if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
+            if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
             
         } else { // iPad 2 or iPad Mini 1
             
@@ -738,105 +843,6 @@
     });
 }
 
-#pragma mark - Public Action Methods
-- (IBAction)homeButtonAction:(id)sender
-{
-    
-    if ( ![self isBeingDismissed] ) {
-        
-        // Cancel remaining MP4 extractions
-        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-        
-        // Remove Scrubber Timer and Observer
-        [self.videoScrubber stopObserving];
-        
-        // Remove references on model
-        [self.model destroyModel];
-        
-        // Stop residual audio playback (this shouldn't be happening to begin with)
-        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-        
-        // Releas everything
-        [self.videoPlayers removeAllObjects];
-        self.videoPlayers = nil;
-        
-        [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [self.videoScrollView removeFromSuperview];
-        self.videoScrollView = nil;
-        
-        [self.itemViews removeAllObjects];
-        self.itemViews = nil;
-        
-        [self.videoFrames removeAllObjects];
-        self.videoFrames = nil;
-        
-        [self.moreVideoFrames removeAllObjects];
-        self.moreVideoFrames = nil;
-        
-        
-        [self dismissViewControllerAnimated:YES completion:^{
-
-            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-    
-        }];
-    }
-}
-
-- (IBAction)playButtonAction:(id)sender
-{
-    [self.model.currentVideoPlayer togglePlayback];
-}
-
-- (IBAction)shareButtonAction:(id)sender
-{
-    [self.model.currentVideoPlayer share];
-}
-
-- (IBAction)itemButtonAction:(id)sender
-{
-
-    // Pause currentVideo Player
-    [self.model.currentVideoPlayer pause];
-
-    // Reference SPVideoItemView from position in videoListScrollView object
-    SPVideoItemView *itemView = (SPVideoItemView*)[sender superview];
-    NSUInteger position = itemView.tag;
-    
-    // Force scroll videoScrollView
-    CGFloat videoX = 1024 * position;
-    CGFloat videoY = self.videoScrollView.contentOffset.y;
-    
-    if ( position < self.model.numberOfVideos ) {
-        [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-    }
-    
-    // Perform actions on videoChange
-    [self currentVideoDidChangeToVideo:position];
-
-}
-
-- (void)restartPlaybackButtonAction:(id)sender
-{
-    [self.model.currentVideoPlayer restartPlayback];
-}
-
-- (IBAction)beginScrubbing:(id)sender
-{
-	[self.videoScrubber beginScrubbing];
-}
-
-- (IBAction)scrub:(id)sender
-{
-    [self.videoScrubber scrub];
-}
-
-- (IBAction)endScrubbing:(id)sender
-{
-
-    [self.videoScrubber endScrubbing];
-    
-}
-
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -851,8 +857,7 @@
         // Toggle playback on old and new SPVideoPlayer objects
         if ( page != self.model.currentVideo ) {
             
-            __weak SPVideoPlayer *oldPlayer = (self.videoPlayers)[self.model.currentVideo];
-            [oldPlayer pause];
+            [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
             
         }
         

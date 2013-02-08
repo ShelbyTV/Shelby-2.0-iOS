@@ -24,8 +24,6 @@
 /// Singleton Methods
 + (SPModel*)sharedInstance;
 
-/// Destruction Methods
-- (void)storeVideoPlayer:(SPVideoPlayer*)player;
 - (void)destroyModel;
 
 /// UI Methods
