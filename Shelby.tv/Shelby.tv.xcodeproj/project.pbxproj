@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
+		8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
 		8E10189A1686696B009698B3 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018881686696B009698B3 /* AFHTTPClient.m */; };
 		8E10189B1686696B009698B3 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E10188A1686696B009698B3 /* AFHTTPRequestOperation.m */; };
 		8E10189C1686696B009698B3 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E10188C1686696B009698B3 /* AFImageRequestOperation.m */; };
@@ -111,6 +112,8 @@
 		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
 		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
+		8E0CFE1116C4A87F009620F9 /* SPVideoScrubber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoScrubber.h; sourceTree = "<group>"; };
+		8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoScrubber.m; sourceTree = "<group>"; };
 		8E10187F1686695D009698B3 /* AsynchronousFreeloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousFreeloader.h; sourceTree = "<group>"; };
 		8E1018801686695D009698B3 /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
 		8E1018871686696B009698B3 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -511,6 +514,8 @@
 			children = (
 				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
 				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
+				8E0CFE1116C4A87F009620F9 /* SPVideoScrubber.h */,
+				8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -812,6 +817,7 @@
 				8E893A1816C1F81D00AE7B4F /* Group.m in Sources */,
 				8E893A1B16C1F81D00AE7B4F /* GroupRoll.m in Sources */,
 				8E6C2F5016C3825000489EF6 /* User.m in Sources */,
+				8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

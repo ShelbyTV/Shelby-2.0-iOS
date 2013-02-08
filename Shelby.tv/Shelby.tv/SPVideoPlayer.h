@@ -6,9 +6,7 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "SPModel.h"
-
-@interface SPVideoPlayer : UIViewController <SPVideoScrubberDelegate>
+@interface SPVideoPlayer : UIViewController
 
 @property (nonatomic) Frame *videoFrame;
 @property (nonatomic) AVPlayer *player;

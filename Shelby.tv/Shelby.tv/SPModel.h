@@ -7,37 +7,26 @@
 //
 
 #import "SPVideoExtractor.h"
+#import "SPVideoPlayer.h"
+#import "SPOverlayView.h"
 
-@class SPOverlayView;
-@class SPVideoPlayer;
 @class SPVideoReel;
-
-@protocol SPVideoScrubberDelegate <NSObject>
-
-- (CMTime)elapsedDuration;
-- (void)setupScrubber;
-- (void)syncScrubber;
-- (NSString*)convertElapsedTime:(double)currentTime andDuration:(double)duration;
-
-@end
 
 @interface SPModel : NSObject
 
-@property (nonatomic) id scrubberTimeObserver;
 @property (nonatomic) NSTimer *overlayTimer;
 @property (assign, nonatomic) NSUInteger numberOfVideos;
 @property (assign, nonatomic) NSUInteger currentVideo;
-@property (nonatomic, readonly) SPVideoExtractor *videoExtractor;
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (weak, nonatomic) SPVideoReel *videoReel;
-@property (weak, nonatomic) SPVideoPlayer <SPVideoScrubberDelegate> *currentVideoPlayerDelegate;
+@property (weak, nonatomic) SPVideoPlayer *currentVideoPlayer;
 
 /// Singleton Methods
 + (SPModel*)sharedInstance;
 
 /// Destruction Methods
 - (void)storeVideoPlayer:(SPVideoPlayer*)player;
-- (void)teardown;
+- (void)destroy;
 
 /// UI Methods
 - (void)rescheduleOverlayTimer;

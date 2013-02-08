@@ -10,6 +10,7 @@
 #import "SPModel.h"
 #import "SPOverlayView.h"
 #import "SPVideoExtractor.h"
+#import "SPVideoScrubber.h"
 #import "SPVideoReel.h"
 
 @interface SPVideoPlayer ()
@@ -41,10 +42,9 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-    
-    [self.playerLayer removeFromSuperlayer];
-    self.playerLayer = nil;
-    self. player = nil;
+
+    [self setPlayerLayer:nil];
+    [self setPlayer:nil];
     
     DLog(@"SPVideoPlayer Deallocated");
     
@@ -156,7 +156,7 @@
     [self.overlayView.scrubber setEnabled:YES];
     
     [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC)];
-    [self syncScrubber];
+    [[SPVideoScrubber sharedInstance] syncScrubber];
     [self.player play];
 }
 
@@ -230,9 +230,9 @@
         
         // Set isPlayable Flag
         [self setIsPlayable:YES];
-        [self setupScrubber];
+        [[SPVideoScrubber sharedInstance] setupScrubber];
         
-        if ( self == _model.currentVideoPlayerDelegate ) {
+        if ( self == _model.currentVideoPlayer ) {
          
             [self.overlayView.restartPlaybackButton setHidden:YES];
             [self.overlayView.playButton setEnabled:YES];
@@ -262,7 +262,7 @@
 //        [self.model storeVideoPlayer:self];
         
         // Toggle video playback
-        if ( self == _model.currentVideoPlayerDelegate ) {
+        if ( self == _model.currentVideoPlayer ) {
             
             [self play];
             [self.model rescheduleOverlayTimer];
@@ -293,122 +293,6 @@
     }    
 }
 
-#pragma mark - SPVideoScrubberDelegate Methods
-- (CMTime)elapsedDuration
-{
-	
-    AVPlayerItem *playerItem = [self.player currentItem];
-    
-    if ( playerItem.status == AVPlayerItemStatusReadyToPlay ) {
-        
-		return [playerItem duration] ;
-	}
-	
-	return kCMTimeInvalid;
-}
-
-- (void)setupScrubber
-{
-	
-    CGFloat interval = .1f;
-	CMTime playerDuration = [self elapsedDuration];
-    
-	if ( CMTIME_IS_INVALID(playerDuration) ) {
-        
-        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(setupScrubber) userInfo:nil repeats:NO];
-        
-        return;
-	}
-	
-    CGFloat duration = CMTimeGetSeconds(playerDuration);
-	if (isfinite(duration)) {
-		CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
-		interval = 0.5f * duration / width;
-	}
-    
-        __block SPVideoPlayer *blockSelf  = self;
-        
-        self.model.scrubberTimeObserver = [self.model.currentVideoPlayerDelegate.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
-                                                                                                                     queue:NULL /* If you pass NULL, the main queue is used. */
-                                                                                                                usingBlock:^(CMTime time) {
-                                                                                                               
-                                                                                                                    [blockSelf syncScrubber];
-                                                                                                                
-                                                                                                                }];
-}
-
-- (void)syncScrubber
-{
-	CMTime playerDuration = [self elapsedDuration];
-	if ( CMTIME_IS_INVALID(playerDuration) ) {
-        [self.overlayView.scrubber setValue:0.0f];
-        [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
-		return;
-	}
-    
-	double duration = CMTimeGetSeconds(playerDuration);
-    
-	if ( isfinite(duration) && self.player == self.model.currentVideoPlayerDelegate.player ) {
-        
-        // Update value of scrubber (slider and label)
-		CGFloat minValue = [self.overlayView.scrubber minimumValue];
-		CGFloat maxValue = [self.overlayView.scrubber maximumValue];
-        
-        CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayerDelegate.player currentTime]);
-        CGFloat duration = CMTimeGetSeconds([self.model.currentVideoPlayerDelegate.player.currentItem duration]);
-
-        
-            [self.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
-            [self.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
-
-        // Update button state
-        if ( 0.0 == self.player.rate && self.isPlayable && self.player == self.model.currentVideoPlayerDelegate.player ) {
-        
-            [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
-            
-        } else { 
-            
-            [self.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
-        }
-	}
-}
-
-- (NSString *)convertElapsedTime:(double)currentTime andDuration:(double)duration
-{
-    
-    NSString *convertedTime = nil;
-    NSInteger currentTimeSeconds = 0;
-    NSInteger currentTimeHours = 0;
-    NSInteger currentTimeMinutes = 0;
-    NSInteger durationSeconds = 0;
-    NSInteger durationMinutes = 0;
-    NSInteger durationHours = 0;
-    
-    // Current Time
-    currentTimeSeconds = ((NSInteger)currentTime % 60);
-    currentTimeMinutes = (((NSInteger)currentTime / 60) % 60);
-    currentTimeHours = ((NSInteger)currentTime / 3600);
-    
-    // Duration
-    durationSeconds = ((NSInteger)duration % 60);
-    durationMinutes = (((NSInteger)duration / 60) % 60);
-    durationHours = ((NSInteger)duration / 3600);
-    
-    if ( durationHours > 0 ) {
-        
-        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
-        
-    } else if ( durationMinutes > 0 ) {
-        
-        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d / %.2d:%.2d", currentTimeMinutes, currentTimeSeconds, durationMinutes, durationSeconds];
-        
-    } else {
-        
-        convertedTime = [NSString stringWithFormat:@"0:%.2d / 0:%.2d", currentTimeSeconds, durationSeconds];
-    }
-    
-    return convertedTime;
-}
 
 #pragma mark - UIResponder Methods
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

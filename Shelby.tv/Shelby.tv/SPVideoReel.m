@@ -7,16 +7,18 @@
 //
 
 #import "SPVideoReel.h"
-#import "SPModel.h"
 #import "SPOverlayView.h"
+#import "SPVideoExtractor.h"
 #import "SPVideoItemView.h"
 #import "SPVideoPlayer.h"
+#import "SPVideoScrubber.h"
 #import "MeViewController.h"
 
 @interface SPVideoReel ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPModel *model;
+@property (weak, nonatomic) SPVideoScrubber *videoScrubber;
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
 @property (nonatomic) NSMutableArray *videoFrames;
@@ -47,7 +49,7 @@
 
 @end
 
-@implementation SPVideoReel
+@implementation SPVideoReel 
 @synthesize appDelegate = _appDelegate;
 @synthesize model = _model;
 @synthesize categoryTitle = _categoryTitle;
@@ -149,6 +151,7 @@
     self.model = [SPModel sharedInstance];
     self.model.videoReel = self;
     self.model.numberOfVideos = [self.videoFrames count];
+    self.videoScrubber = [SPVideoScrubber sharedInstance];
     self.videoPlayers = [@[] mutableCopy];
     self.itemViews = [@[] mutableCopy];
 }
@@ -209,7 +212,7 @@
         if ( 0 == i ) {
         
             self.model.currentVideo = 0;
-            self.model.currentVideoPlayerDelegate = (self.videoPlayers)[self.model.currentVideo];
+            self.model.currentVideoPlayer = (self.videoPlayers)[self.model.currentVideo];
             
         }
         
@@ -230,7 +233,7 @@
             if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
              
                 self.model.currentVideo = i;
-                self.model.currentVideoPlayerDelegate = (self.videoPlayers)[self.model.currentVideo];
+                self.model.currentVideoPlayer = (self.videoPlayers)[self.model.currentVideo];
                 
             }
         }
@@ -330,9 +333,13 @@
     SPVideoPlayer *player = (self.videoPlayers)[position];
     
     if ( (position >= self.model.numberOfVideos) ) {
+        
         return;
+    
     } else {
-       [player queueVideo];
+    
+        [player queueVideo];
+    
     }
 
 }
@@ -342,9 +349,12 @@
     NSUInteger position = self.model.currentVideo + 1;
     CGFloat x = position * 1024.0f;
     CGFloat y = self.videoScrollView.contentOffset.y;
+    
     if ( position <= (self.model.numberOfVideos-1) ) {
+    
         [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
         [self currentVideoDidChangeToVideo:position];
+    
     }
 }
 
@@ -355,28 +365,34 @@
     // Disable timer
     [self.model.overlayTimer invalidate];
     
+    // Stop Observing Timer
+    [self.videoScrubber stopObserving];
+    
     // Show Overlay
     [self.overlayView showOverlay];
     
     // Pause current videoPlayer
-    if ( [self.model.currentVideoPlayerDelegate isPlayable] )
-        [self.model.currentVideoPlayerDelegate pause];
+    if ( [self.model.currentVideoPlayer isPlayable] ) {
+        
+        [self.model.currentVideoPlayer pause];
+    
+    }
     
     // Reset currentVideoPlayer reference after scrolling has finished
     self.model.currentVideo = position;
-    self.model.currentVideoPlayerDelegate = (self.videoPlayers)[position];
+    self.model.currentVideoPlayer = (self.videoPlayers)[position];
     
     // If videoReel is instance of Stream, store currentVideoID
     if ( self.categoryType == CategoryType_Stream )
         [self storeIdentifierOfCurrentVideoInStream];
     
     // Deal with playback methods & UI of current and previous video
-    if ( [self.model.currentVideoPlayerDelegate isPlayable] ) { // Video IS Playable
+    if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
         
-        [self.model.currentVideoPlayerDelegate play];
-        [self.model.currentVideoPlayerDelegate syncScrubber];
+        [self.model.currentVideoPlayer play];
+        [[SPVideoScrubber sharedInstance] syncScrubber];
         
-        if ( [self.model.currentVideoPlayerDelegate playbackFinished] ) { // Playable video DID finish playing
+        if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
             
             [self.overlayView.restartPlaybackButton setHidden:NO];
             [self.overlayView.playButton setEnabled:NO];
@@ -448,7 +464,7 @@
     
     // Queue current and next 3 videos
     if ( 0 < [self.videoPlayers count] ) {
-        [self.model.videoExtractor emptyQueue];
+        [[SPVideoExtractor sharedInstance] emptyQueue];
         [self extractVideoForVideoPlayer:position]; // Load video for current visible view
         if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
         if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
@@ -672,8 +688,14 @@
     
     if ( ![self isBeingDismissed] ) {
         
+        // Cancel remaining MP4 extractions
+        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+        
+        // Remove Scrubber Timer and Observer
+        [self.videoScrubber stopObserving];
+        
         // Remove references on model
-        [self.model teardown];
+        [self.model destroy];
         
         // Stop residual audio playback (this shouldn't be happening to begin with)
         [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
@@ -706,19 +728,19 @@
 
 - (IBAction)playButtonAction:(id)sender
 {
-    [self.model.currentVideoPlayerDelegate togglePlayback];
+    [self.model.currentVideoPlayer togglePlayback];
 }
 
 - (IBAction)shareButtonAction:(id)sender
 {
-    [self.model.currentVideoPlayerDelegate share];
+    [self.model.currentVideoPlayer share];
 }
 
 - (IBAction)itemButtonAction:(id)sender
 {
 
     // Pause currentVideo Player
-    [self.model.currentVideoPlayerDelegate pause];
+    [self.model.currentVideoPlayer pause];
 
     // Reference SPVideoItemView from position in videoListScrollView object
     SPVideoItemView *itemView = (SPVideoItemView*)[sender superview];
@@ -739,60 +761,24 @@
 
 - (void)restartPlaybackButtonAction:(id)sender
 {
-    [self.model.currentVideoPlayerDelegate restartPlayback];
+    [self.model.currentVideoPlayer restartPlayback];
 }
 
 - (IBAction)beginScrubbing:(id)sender
 {
-	self.model.scrubberTimeObserver = nil;
+	[self.videoScrubber beginScrubbing];
 }
 
 - (IBAction)scrub:(id)sender
 {
-    CMTime playerDuration = [self.model.currentVideoPlayerDelegate elapsedDuration];
-    if (CMTIME_IS_INVALID(playerDuration)) {
-        return;
-    }
-    
-    double duration = CMTimeGetSeconds(playerDuration);
-    if (isfinite(duration)) {
-        
-        float minValue = [self.overlayView.scrubber minimumValue];
-        float maxValue = [self.overlayView.scrubber maximumValue];
-        float value = [self.overlayView.scrubber value];
-        double time = duration * (value - minValue) / (maxValue - minValue);
-        [self.model.currentVideoPlayerDelegate.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
-    }
+    [self.videoScrubber scrub];
 }
 
 - (IBAction)endScrubbing:(id)sender
 {
+
+    [self.videoScrubber endScrubbing];
     
-	if ( ![self.model scrubberTimeObserver] ) {
-		
-        CMTime playerDuration = [self.model.currentVideoPlayerDelegate elapsedDuration];
-		if (CMTIME_IS_INVALID(playerDuration)) {
-			return;
-		}
-		
-		double duration = CMTimeGetSeconds(playerDuration);
-        
-		if (isfinite(duration)) {
-			CGFloat width = CGRectGetWidth([self.overlayView.scrubber bounds]);
-			double tolerance = 0.5f * duration / width;
-			self.model.scrubberTimeObserver = [self.model.currentVideoPlayerDelegate.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
-                                                                                                                    queue:NULL
-                                                                                                               usingBlock:^(CMTime time) {
-                                                                                                 
-                            // Sync the scrubber to the currentVideoPlayer
-                            [self.model.currentVideoPlayerDelegate syncScrubber];
-                            
-                            // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
-                            ( self.model.currentVideoPlayerDelegate.isPlaying ) ? [self.model.currentVideoPlayerDelegate play] : [self.model.currentVideoPlayerDelegate pause];
-                                                                                                 
-                              }];
-        }
-	}
 }
 
 #pragma mark - UIScrollViewDelegate Methods

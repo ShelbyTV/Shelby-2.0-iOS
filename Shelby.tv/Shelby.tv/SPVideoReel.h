@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
+#import "SPModel.h"
+
 @class SPVideoPlayer, SPOverlayView;
 
 @interface SPVideoReel : UIViewController <UIScrollViewDelegate>

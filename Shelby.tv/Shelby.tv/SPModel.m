@@ -19,7 +19,6 @@
 @end
 
 @implementation SPModel
-@synthesize videoExtractor = _videoExtractor;
 
 #pragma mark - Singleton Methods
 + (SPModel*)sharedInstance
@@ -54,26 +53,24 @@
         
         SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)(self.loadedVideoPlayers)[0];
         
-        if ( oldestPlayer != self.currentVideoPlayerDelegate ) {
+        if ( oldestPlayer != self.currentVideoPlayer ) {
          
             [oldestPlayer resetPlayer];
             [self.loadedVideoPlayers removeObject:oldestPlayer];
-            
+            oldestPlayer = nil;
         }
     }
 }
 
-- (void)teardown
+- (void)destroy
 {
-    [self.videoExtractor cancelRemainingExtractions];
-    [self setScrubberTimeObserver:nil];
     [self setNumberOfVideos:0];
     [self setCurrentVideo:0];
-    [self setCurrentVideoPlayerDelegate:nil];
     [self setVideoReel:nil];
     [self setOverlayView:nil];
     [self setOverlayTimer:nil];
     [self setLoadedVideoPlayers:nil];
+    [self setCurrentVideoPlayer:nil];
 }
 
 - (void)rescheduleOverlayTimer
@@ -93,13 +90,5 @@
     }
 
 }
-
-#pragma mark - Accessor Methods
-// videoExtractor Getter
-- (SPVideoExtractor*)videoExtractor
-{
-    return [SPVideoExtractor sharedInstance];
-}
-
 
 @end
