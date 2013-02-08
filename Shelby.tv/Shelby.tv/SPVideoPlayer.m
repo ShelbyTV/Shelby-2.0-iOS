@@ -212,9 +212,8 @@
     
     if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
         
-        // Clear notification and indicator
+        // Clear notification
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        [self.indicator stopAnimating];
         
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:self.videoFrame.video.extractedURL];
@@ -233,7 +232,7 @@
         [self setIsPlayable:YES];
         [self setupScrubber];
         
-        if ( self == self.model.currentVideoPlayerDelegate ) {
+        if ( self == _model.currentVideoPlayerDelegate ) {
          
             [self.overlayView.restartPlaybackButton setHidden:YES];
             [self.overlayView.playButton setEnabled:YES];
@@ -254,10 +253,16 @@
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:playerItem];
         
+        /* 
+         
+         This line stores a video in an array that's used for lazy memory management queue.
+        The array purges an older video instance when a limit is reached.
+         
+         */
 //        [self.model storeVideoPlayer:self];
         
         // Toggle video playback
-        if ( self == self.model.currentVideoPlayerDelegate ) {
+        if ( self == _model.currentVideoPlayerDelegate ) {
             
             [self play];
             [self.model rescheduleOverlayTimer];
@@ -267,6 +272,10 @@
             [self pause];
             
         }
+        
+        // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
+        [self.indicator stopAnimating];
+        
     }
 }
 
@@ -319,7 +328,7 @@
     
         __block SPVideoPlayer *blockSelf  = self;
         
-        self.model.scrubberTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
+        self.model.scrubberTimeObserver = [self.model.currentVideoPlayerDelegate.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
                                                                                                                      queue:NULL /* If you pass NULL, the main queue is used. */
                                                                                                                 usingBlock:^(CMTime time) {
                                                                                                                
