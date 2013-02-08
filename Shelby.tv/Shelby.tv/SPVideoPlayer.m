@@ -38,8 +38,7 @@
 #pragma mark - Memory Management Methods
 - (void)dealloc
 {
-    
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     
@@ -225,8 +224,9 @@
         
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-        self.playerLayer.frame = self.view.frame;
-        self.playerLayer.bounds = self.view.frame;
+        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        self.playerLayer.frame = modifiedFrame;
+        self.playerLayer.bounds = modifiedFrame;
         [self.view.layer addSublayer:self.playerLayer];
         
         // Set isPlayable Flag
