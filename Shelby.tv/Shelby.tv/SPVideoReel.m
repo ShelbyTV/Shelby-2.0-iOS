@@ -716,7 +716,6 @@
         
         [self.videoFrames addObjectsFromArray:self.moreVideoFrames];
         [self.moreVideoFrames removeAllObjects];
-        self.moreVideoFrames = nil;
         
     }
 
@@ -823,7 +822,7 @@
             
             // Update UI on Main Thread
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.videoScrollView.contentSize = CGSizeMake(1024.0f, 768.0f);
+                self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
                 [self.videoPlayers addObject:player];
                 [self.videoScrollView addSubview:player.view];
                 [self.videoScrollView setNeedsDisplay];
@@ -831,7 +830,7 @@
                 itemView.backgroundColor = [UIColor clearColor];
                 itemView.videoTitleLabel.textColor = kColorBlack;
                 [itemView.videoTitleLabel setText:videoFrame.video.title];
-                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), 217.0f);
+                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
                 [self.overlayView.videoListScrollView setNeedsDisplay];
