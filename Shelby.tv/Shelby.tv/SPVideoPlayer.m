@@ -307,8 +307,10 @@
 - (void)pause
 {
     // Pause video and update UI
-    [self.player pause];
-
+    if ( self.player ) {
+        [self.player pause];
+    }
+    
     // Invalide Timer
     [self.model.overlayTimer invalidate];
     

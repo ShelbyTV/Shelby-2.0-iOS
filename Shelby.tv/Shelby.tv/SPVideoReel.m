@@ -524,11 +524,8 @@
     [self.overlayView showOverlay];
     
     // Pause current videoPlayer
-    if ( [self.model.currentVideoPlayer isPlayable] ) {
-        
-        [self.model.currentVideoPlayer pause];
+    [self.model.currentVideoPlayer pause];
     
-    }
     // Stop observing video for videoScrubber
     [[SPVideoScrubber sharedInstance] stopObserving];
     
