@@ -436,12 +436,8 @@
         [self.moreVideoFrames removeAllObjects];
         self.moreVideoFrames = nil;
         
-        
-        [self dismissViewControllerAnimated:YES completion:^{
-            
-            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-            
-        }];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    
     }
 }
 

@@ -8,20 +8,17 @@
 
 #import "AppDelegate.h"
 #import "MeViewController.h"
-#import "LoginViewController.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic) LoginViewController *loginViewController;
 @property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 
 - (void)pingAllRoutes;
 - (void)pollAPI;
 - (void)analytics;
-- (void)dismissLoginViewController;
 
 @end
 
@@ -33,25 +30,12 @@
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MeViewController *meVC = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
-    self.window.rootViewController = meVC;
+    MeViewController *meViewController = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
+    self.window.rootViewController = meViewController;
     [self.window makeKeyAndVisible];
 
     // Add analytics
     [self analytics];
-    
-    
-    if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kUserAuthorizedDefault] ) {
-        
-        self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-        [self.window.rootViewController presentViewController:_loginViewController animated:NO completion:nil];
-        
-    } else {
-        
-        [self userIsAuthorized];
-        
-        
-    }
 
     return YES;
 }
@@ -102,12 +86,6 @@
     self.pollAPICounter = 0;
     self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
     
-    // Remove _loginViewController if it exists
-    if ( _loginViewController ) {
-     
-        [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(dismissLoginViewController) userInfo:nil repeats:NO];
-        
-    }
 }
 
 - (void)logout
@@ -120,20 +98,6 @@
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    // Pop View Controller
-    if ( _loginViewController ) {
-        [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:nil];
-    } else {
-        self.loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-        [self.window.rootViewController presentViewController:_loginViewController animated:YES completion:nil];
-    }
-
-}
-
-- (void)dismissLoginViewController
-{
-    [self.loginViewController.indicator stopAnimating];
-    [self.loginViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private Methods

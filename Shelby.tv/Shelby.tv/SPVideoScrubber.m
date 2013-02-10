@@ -53,7 +53,7 @@
 	}
     
     
-    self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(.1, NSEC_PER_MSEC)
+    self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
                                                                                                          queue:NULL /* If you pass NULL, the main queue is used. */
                                                                                                     usingBlock:^(CMTime time) {
                                                                                                         
