@@ -13,12 +13,18 @@
 @interface MeViewController ()
 
 @property (nonatomic) LoginView *loginView;
+@property (nonatomic) UIView *backgroundLoginView;
 
+/// Video Player Launch Methods
 - (void)launchPlayerWithStreamEntries;
 - (void)launchPlayerWithLikesRollEntries;
 - (void)launchPlayerWithPersonalRollEntries;
-- (void)loginButtonAction;
-- (void)logoutButtonAction;
+
+/// Authentication Methods
+- (void)authenticationButtonAction;
+- (void)loginAction;
+- (void)logoutAction;
+- (void)userAuthenticationDidSucceed:(NSNotification*)notification;
 
 @end
 
@@ -77,7 +83,7 @@
     
     [super viewWillAppear:animated];
     
-    if ( [[NSUserDefaults standardUserDefaults] valueForKey:kUserAuthorizedDefault] ) { // Logged In User
+    if ( [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultUserAuthorized] ) { // Logged In User
  
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         User *user = [dataUtility fetchUser];
@@ -89,8 +95,8 @@
         [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
         
         [self.likesButton setEnabled:YES];
-        [self.streamTitleLabel setEnabled:YES];
-        [self.streamDescriptionLabel setEnabled:YES];
+        [self.likesTitleLabel setEnabled:YES];
+        [self.likesDescriptionLabel setEnabled:YES];
         
         [self.streamButton setEnabled:YES];
         [self.streamTitleLabel setEnabled:YES];
@@ -100,10 +106,9 @@
     } else { // Logged Out User
         
         [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-        [self.personalRollButton addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.personalRollButton addTarget:self action:@selector(authenticationButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [self.personalRollUsernameLabel setText:@"Login to view your .TV"];
         
-        [self.likesButton setEnabled:NO];
         [self.likesButton setEnabled:NO];
         [self.likesTitleLabel setEnabled:NO];
         [self.likesDescriptionLabel setEnabled:NO];
@@ -123,7 +128,48 @@
 
 }
 
-#pragma mark - Private Methods
+#pragma mark - Action Buttons (Public)
+- (void)cancelButtonAction:(id)sender
+{
+    
+    
+    for ( UITextField *textField in [_loginView subviews] ) {
+        
+        if ( [textField isFirstResponder] ) {
+            
+            [textField resignFirstResponder];
+            
+        }
+        
+    }
+    
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         
+                         CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
+                         [self.loginView setFrame:CGRectMake(xOrigin,
+                                                             self.view.frame.size.height,
+                                                             _loginView.frame.size.width,
+                                                             _loginView.frame.size.height)];
+                         
+                         [self.backgroundLoginView setAlpha:0.0f];
+                         
+                     } completion:^(BOOL finished) {
+                         [self.loginView removeFromSuperview];
+                         [self.backgroundLoginView removeFromSuperview];
+                         
+                         [self.personalRollButton setEnabled:YES];
+
+                     }];
+
+}
+
+- (void)goButtonAction:(id)sender
+{
+    [self loginAction];
+}
+
+#pragma mark - Video Player Launch Methods (Private)
 - (void)launchPlayerWithStreamEntries
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -199,23 +245,40 @@
     
 }
 
-- (void)loginButtonAction
+#pragma mark - User Authentication Methods (Private)
+- (void)authenticationButtonAction
 {
+    
+    self.backgroundLoginView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
+    [self.backgroundLoginView setBackgroundColor:[UIColor colorWithHex:@"adadad" andAlpha:1.0f]];
+    [self.backgroundLoginView setAlpha:0.0f];
+    [self.view addSubview:_backgroundLoginView];
+    
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LoginView" owner:self options:nil];
     self.loginView = nib[0];
     
     CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
     CGFloat yOrigin = self.view.frame.size.height/5.0f - _loginView.frame.size.height/4.0f;
     
-    [self.loginView setFrame:CGRectMake(xOrigin, self.view.frame.size.height, _loginView.frame.size.width, _loginView.frame.size.height)];
+    [self.loginView setFrame:CGRectMake(xOrigin,
+                                        self.view.frame.size.height,
+                                        _loginView.frame.size.width,
+                                        _loginView.frame.size.height)];
     [self.view addSubview:_loginView];
     
-    [UIView animateWithDuration:0.7f
+    
+    [UIView animateWithDuration:0.5f
                      animations:^{
                          
-                         [self.loginView setFrame:CGRectMake(xOrigin, yOrigin, _loginView.frame.size.width, _loginView.frame.size.height)];
+                         [self.backgroundLoginView setAlpha:0.5f];
+                         [self.loginView setFrame:CGRectMake(xOrigin,
+                                                             yOrigin,
+                                                             _loginView.frame.size.width,
+                                                             _loginView.frame.size.height)];
                          
                      } completion:^(BOOL finished) {
+                         
+                         [self.personalRollButton setEnabled:NO];
                          
                          [self.loginView.emailField becomeFirstResponder];
                      
@@ -223,10 +286,114 @@
     
 }
 
-- (void)logoutButtonAction
+- (void)loginAction
+{
+    
+    if ( [_loginView.emailField isFirstResponder]  ) {
+        
+        [self.loginView.emailField resignFirstResponder];
+        
+    } else if ( [_loginView.passwordField isFirstResponder] ) {
+        
+        [self.loginView.passwordField resignFirstResponder];
+        
+    } else {
+        
+        // Do nothing
+        
+    }
+    
+    if ( ![_loginView.emailField text] || ![_loginView.passwordField text] ) {
+    
+        // Do nothing
+        
+    } else {
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(userAuthenticationDidSucceed:)
+                                                     name:kNotificationUserAuthenticationDidSucceed object:nil];
+        
+        [self.loginView.cancelButton setEnabled:NO];
+        [self.loginView.goButton setEnabled:NO];
+        [self.loginView.emailField setEnabled:NO];
+        [self.loginView.passwordField setEnabled:NO];
+        
+        [self.loginView.indicator setHidden:NO];
+        [self.loginView.indicator startAnimating];
+        
+        [ShelbyAPIClient postAuthenticationWithEmail:[_loginView.emailField.text lowercaseString] andPassword:_loginView.passwordField.text withIndicator:_loginView.indicator];
+        
+    }
+}
+
+- (void)logoutAction
 {
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [appDelegate logout];
+}
+
+
+- (void)userAuthenticationDidSucceed:(NSNotification*)notification
+{
+    
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         
+                         CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
+                         [self.loginView setFrame:CGRectMake(xOrigin,
+                                                             self.view.frame.size.height,
+                                                             _loginView.frame.size.width,
+                                                             _loginView.frame.size.height)];
+                         
+                         [self.backgroundLoginView setAlpha:0.0f];
+                         
+                     } completion:^(BOOL finished) {
+                         [self.loginView removeFromSuperview];
+                         [self.backgroundLoginView removeFromSuperview];
+                         
+                         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+                         User *user = [dataUtility fetchUser];
+                         
+                         [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
+                         [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
+                         [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+                         [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
+                         [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
+                         
+                         [self.likesButton setEnabled:YES];
+                         [self.likesTitleLabel setEnabled:YES];
+                         [self.likesDescriptionLabel setEnabled:YES];
+                         
+                         [self.streamButton setEnabled:YES];
+                         [self.streamTitleLabel setEnabled:YES];
+                         [self.streamDescriptionLabel setEnabled:YES];
+                         
+                         [self.personalRollButton setEnabled:YES];
+                         
+                     }];
+}
+
+#pragma mark - UITextFieldDelegate Methods
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ( [string isEqualToString:@"\n"] ) {
+        
+        [textField resignFirstResponder];
+        return NO;
+        
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ( textField == self.loginView.emailField ) {
+        [self.loginView.passwordField becomeFirstResponder];
+        return NO;
+    } else {
+        [self loginAction];
+        return YES;
+    }
 }
 
 @end

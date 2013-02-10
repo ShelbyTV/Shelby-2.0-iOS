@@ -8,7 +8,7 @@
 
 @class SPVideoReel;
 
-@interface MeViewController : UIViewController
+@interface MeViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UILabel *likesTitleLabel;
@@ -25,5 +25,8 @@
 
 //@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+
+- (IBAction)cancelButtonAction:(id)sender;
+- (IBAction)goButtonAction:(id)sender;
 
 @end

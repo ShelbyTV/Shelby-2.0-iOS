@@ -16,6 +16,7 @@
     self.goButton = nil;
     self.emailField = nil;
     self.passwordField = nil;
+    self.indicator = nil;
 }
 
 
@@ -27,6 +28,10 @@
 
     [self.passwordField setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_passwordField.font.pointSize]];
     [self.passwordField setTextColor:kColorBlack];
+    
+    [self.indicator setHidden:YES];
+    [self.indicator setHidesWhenStopped:YES];
+
     
 }
 

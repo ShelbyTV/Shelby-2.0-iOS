@@ -18,6 +18,7 @@
 
 - (void)pingAllRoutes;
 - (void)pollAPI;
+- (void)postAuthorizationNotification;
 - (void)analytics;
 
 @end
@@ -50,7 +51,7 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     // Sync Queue if suer is logged in (this may cause app to crash if user launches app on queue and videos were removed)
-    if ( [[NSUserDefaults standardUserDefaults] valueForKey:kUserAuthorizedDefault] ) {
+    if ( [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultUserAuthorized] ) {
         
         // Perform Sync on Queue
         [ShelbyAPIClient getQueueForSync];
@@ -71,9 +72,8 @@
 #pragma mark - Public Methods
 - (void)userIsAuthorized
 {
-    
     // Set NSUserDefault
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthorizedDefault];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // On login, perform API requests
@@ -85,7 +85,8 @@
     // Begin Polling API
     self.pollAPICounter = 0;
     self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
-    
+
+    [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(postAuthorizationNotification) userInfo:nil repeats:NO];
 }
 
 - (void)logout
@@ -94,7 +95,7 @@
     [self.pollAPITimer invalidate];
     
     // Set NSUserDefaults
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthorizedDefault];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -151,6 +152,12 @@
         default:
             break;
     }
+}
+
+- (void)postAuthorizationNotification
+{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationUserAuthenticationDidSucceed object:nil];
 }
 
 - (void)analytics

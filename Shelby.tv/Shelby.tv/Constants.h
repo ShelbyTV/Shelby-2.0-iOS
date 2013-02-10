@@ -12,13 +12,16 @@
 #import "SPConstants.h"
 
 // Misc.
-#define kCurrentVersion                     [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey]
+#define kCurrentVersion                             [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey]
 
 // NSUserDefault Constants
-#define kUserAuthorizedDefault              @"Shelby User Authorization Stored Default"
+#define kDefaultUserAuthorized                      @"Shelby User Authorization Stored in NSUserDefaults"
+
+// Notifications
+#define kNotificationUserAuthenticationDidSucceed   @"User Did Successfully Authenticate with Shelby Notification"
 
 // Colors
-#define kColorBlack                         [UIColor colorWithHex:@"333" andAlpha:1.0f]
-#define kColorGray                          [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
-#define kColorGreen                         [UIColor colorWithHex:@"6fbe47" andAlpha:1.0f]
-#define kColorWhite                         [UIColor colorWithHex:@"eee" andAlpha:1.0f]
+#define kColorBlack                                 [UIColor colorWithHex:@"333" andAlpha:1.0f]
+#define kColorGray                                  [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
+#define kColorGreen                                 [UIColor colorWithHex:@"6fbe47" andAlpha:1.0f]
+#define kColorWhite                                 [UIColor colorWithHex:@"eee" andAlpha:1.0f]
