@@ -13,5 +13,6 @@
 #define kSPVideoShareLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
 
 
+#define kSPVideoPlayerStoredDate        @"Video Player Stored Date"
 #define kSPVideoPlayerElapsedTime       @"Video Player Elapsed Time"
-#define kSPVideoPlayerExtractedURL      @"Vide Player Extracted URL"
+#define kSPVideoPlayerExtractedURL      @"Video Player Extracted URL"

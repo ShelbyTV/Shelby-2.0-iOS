@@ -31,7 +31,7 @@
 - (void)setupPlayerForURL:(NSURL*)extractedURL;
 
 /// Storage Methods
-- (void)storeVideo;
+- (void)storeVideoForLater;
 - (CMTime)elapsedTime;
 
 /// Observer Methods
@@ -77,23 +77,6 @@
     }
     
     return self;
-}
-
-
-- (void)resetPlayer
-{
-    [self storeVideo];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-    
-    [self.player pause];
-
-    [self.playerLayer removeFromSuperlayer];
-    [self setPlayerLayer:nil];
-    [self setPlayer:nil];
-    
-    [self setupInitialConditions];
 }
 
 #pragma mark - View Lifecycle Methods
@@ -197,11 +180,27 @@
 }
 
 #pragma mark - Video Storage Methods
-- (void)storeVideo
+- (void)resetPlayer
+{
+    [self storeVideoForLater];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    
+    [self.player pause];
+    
+    [self.playerLayer removeFromSuperlayer];
+    [self setPlayerLayer:nil];
+    [self setPlayer:nil];
+    
+    [self setupInitialConditions];
+}
+
+- (void)storeVideoForLater
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
        
-        NSDate *storageDate = [NSDate date];
+        NSDate *storedDate = [NSDate date];
         NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [self.videoFrame objectID];
@@ -209,7 +208,7 @@
         
         if ( _videoFrame.video.extractedURL.length ) {
             
-            NSDictionary *dictionary = @{ kSPVideoPlayerElapsedTime : elapsedTime, kSPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
+            NSDictionary *dictionary = @{ kSPVideoPlayerStoredDate : storedDate, kSPVideoPlayerElapsedTime : elapsedTime, kSPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
             self.videoInformation = [dictionary mutableCopy];
         }
     });
@@ -293,7 +292,7 @@
 
 - (void)play
 {
-    // Play video and update UI
+    // Play video
     [self.player play];
     
     // Begin updating videoScrubber periodically 
@@ -308,11 +307,9 @@
 
 - (void)pause
 {
-    // Pause video and update UI
-    if ( self.player ) {
-        [self.player pause];
-    }
-    
+    // Pause video
+    [self.player pause];
+        
     // Invalide Timer
     [self.model.overlayTimer invalidate];
     

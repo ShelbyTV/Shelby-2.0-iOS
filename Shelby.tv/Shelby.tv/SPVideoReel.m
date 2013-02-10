@@ -43,6 +43,7 @@
 
 /// Update Methods
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+- (void)updatePlaybackUI;
 - (void)queueMoreVideos:(NSUInteger)position;
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceShouldUpdateFromLocalArray;
@@ -340,7 +341,7 @@
     [self.playableVideoPlayers addObject:player];
     
     // If screen is retina (e.g., iPad 3 or greater), allow 56 videos. Otherwise, allow only 3 videos to be stored
-    NSUInteger maxVideosAllowed = ( [[UIScreen mainScreen] isRetinaDisplay] ) ? 5 : 2;
+    NSUInteger maxVideosAllowed = ( [[UIScreen mainScreen] isRetinaDisplay] ) ? 4 : 2;
     
     if ( [self.playableVideoPlayers count] > maxVideosAllowed ) { // If more than X number of videos are loaded, unload the older videos in the list
         
@@ -511,7 +512,7 @@
 #pragma mark -  Update Methods (Private)
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
-    
+     
     // Disable timer
     [self.model.overlayTimer invalidate];
     
@@ -523,7 +524,7 @@
     
     // Stop observing video for videoScrubber
     [[SPVideoScrubber sharedInstance] stopObserving];
-    
+
     // Reset currentVideoPlayer reference after scrolling has finished
     self.model.currentVideo = position;
     self.model.currentVideoPlayer = (self.videoPlayers)[position];
@@ -536,35 +537,7 @@
     }
     
     // Deal with playback methods & UI of current and previous video
-    if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
-        
-        [self.model.currentVideoPlayer play];
-        
-        if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
-            
-            [self.overlayView.restartPlaybackButton setHidden:NO];
-            [self.overlayView.playButton setEnabled:NO];
-            [self.overlayView.scrubber setEnabled:NO];
-            
-        } else { // Playable video DID NOT finish played
-            
-            [self.overlayView.restartPlaybackButton setHidden:YES];
-            [self.overlayView.playButton setEnabled:YES];
-            [self.overlayView.scrubber setEnabled:YES];
-            
-        }
-        
-    } else { // Video IS NOT Playable
-        
-        [self.overlayView.restartPlaybackButton setHidden:YES];
-        [self.overlayView.playButton setEnabled:NO];
-        [self.overlayView.scrubber setEnabled:NO];
-        
-        [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
-        [self.overlayView.scrubber setValue:0.0f];
-        [self.overlayView.scrubberTimeLabel setText:@"00:00:00 / 00:00:00"];
-        
-    }
+    [self updatePlaybackUI];
     
     // Clear old values on infoCard
     [self.overlayView.videoTitleLabel setText:nil];
@@ -574,7 +547,7 @@
     
     // Reference NSManageObjectContext
     NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
+    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
     // Set new values on infoPanel
@@ -615,6 +588,45 @@
     
 }
 
+- (void)updatePlaybackUI
+{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
+            
+            [self.model.currentVideoPlayer play];
+            
+            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
+                
+                [self.overlayView.restartPlaybackButton setHidden:NO];
+                [self.overlayView.playButton setEnabled:NO];
+                [self.overlayView.scrubber setEnabled:NO];
+                
+            } else { // Playable video DID NOT finish played
+                
+                [self.overlayView.restartPlaybackButton setHidden:YES];
+                [self.overlayView.playButton setEnabled:YES];
+                [self.overlayView.scrubber setEnabled:YES];
+                
+            }
+            
+        } else { // Video IS NOT Playable
+            
+            [self.overlayView.restartPlaybackButton setHidden:YES];
+            [self.overlayView.playButton setEnabled:NO];
+            [self.overlayView.scrubber setEnabled:NO];
+            
+            [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+            [self.overlayView.scrubber setValue:0.0f];
+            [self.overlayView.scrubberTimeLabel setText:@"00:00:00 / 00:00:00"];
+            
+        }
+        
+    });
+
+}
+
 - (void)queueMoreVideos:(NSUInteger)position
 {
     if ( [self.videoPlayers count] ) {
@@ -625,7 +637,6 @@
             [self extractVideoForVideoPlayer:position]; // Load video for current visible view
             if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
             if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
-            if ( position + 3 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+3];
             
         } else { // iPad 2 or iPad Mini 1
             

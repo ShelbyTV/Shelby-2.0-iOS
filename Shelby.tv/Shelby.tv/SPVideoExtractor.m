@@ -238,7 +238,7 @@
                         [self.videoQueue removeObjectAtIndex:0];
                         [self setIsExtracting:NO];
                         
-                        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
+                        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.75 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
 
                     }
                 }

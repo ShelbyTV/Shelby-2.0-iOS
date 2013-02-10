@@ -156,7 +156,7 @@
         
         
         // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
-        ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
+        ( _model.currentVideoPlayer.isPlaying ) ? [_model.currentVideoPlayer play] : [_model.currentVideoPlayer pause];
         
     }
 

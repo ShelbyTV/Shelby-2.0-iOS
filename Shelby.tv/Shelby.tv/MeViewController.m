@@ -26,6 +26,10 @@
 - (void)logoutAction;
 - (void)userAuthenticationDidSucceed:(NSNotification*)notification;
 
+/// UI Methods
+- (void)enableCards;
+- (void)disableCards;
+
 @end
 
 @implementation MeViewController
@@ -83,42 +87,9 @@
     
     [super viewWillAppear:animated];
     
-    if ( [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultUserAuthorized] ) { // Logged In User
+    // Toggle card UI depending on if user is logged-in or logged-out
+    ( [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultUserAuthorized] ) ? [self enableCards] : [self disableCards];
  
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        User *user = [dataUtility fetchUser];
-        
-        [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
-        [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
-        [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-        [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
-        [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
-        
-        [self.likesButton setEnabled:YES];
-        [self.likesTitleLabel setEnabled:YES];
-        [self.likesDescriptionLabel setEnabled:YES];
-        
-        [self.streamButton setEnabled:YES];
-        [self.streamTitleLabel setEnabled:YES];
-        [self.streamDescriptionLabel setEnabled:YES];
-
-        
-    } else { // Logged Out User
-        
-        [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-        [self.personalRollButton addTarget:self action:@selector(authenticationButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        [self.personalRollUsernameLabel setText:@"Login to view your .TV"];
-        
-        [self.likesButton setEnabled:NO];
-        [self.likesTitleLabel setEnabled:NO];
-        [self.likesDescriptionLabel setEnabled:NO];
-        
-        [self.streamButton setEnabled:NO];
-        [self.streamTitleLabel setEnabled:NO];
-        [self.streamDescriptionLabel setEnabled:NO];
-
-    }
-    
     if ( [[UIApplication sharedApplication] isStatusBarHidden] ) {
         
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
@@ -155,9 +126,9 @@
                          [self.backgroundLoginView setAlpha:0.0f];
                          
                      } completion:^(BOOL finished) {
+                         
                          [self.loginView removeFromSuperview];
                          [self.backgroundLoginView removeFromSuperview];
-                         
                          [self.personalRollButton setEnabled:YES];
 
                      }];
@@ -278,7 +249,7 @@
                          
                      } completion:^(BOOL finished) {
                          
-                         [self.personalRollButton setEnabled:NO];
+//                         [self.personalRollButton setEnabled:NO];
                          
                          [self.loginView.emailField becomeFirstResponder];
                      
@@ -289,23 +260,12 @@
 - (void)loginAction
 {
     
-    if ( [_loginView.emailField isFirstResponder]  ) {
-        
-        [self.loginView.emailField resignFirstResponder];
-        
-    } else if ( [_loginView.passwordField isFirstResponder] ) {
-        
-        [self.loginView.passwordField resignFirstResponder];
-        
-    } else {
-        
-        // Do nothing
-        
-    }
+    // Hide Keyboard
+    [self.view endEditing:YES];
     
-    if ( ![_loginView.emailField text] || ![_loginView.passwordField text] ) {
+    if ( ![_loginView.emailField.text length] || ![_loginView.passwordField.text length] ) {
     
-        // Do nothing
+        // Do nothing if at least one text field is empty
         
     } else {
         
@@ -351,26 +311,48 @@
                          [self.loginView removeFromSuperview];
                          [self.backgroundLoginView removeFromSuperview];
                          
-                         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                         User *user = [dataUtility fetchUser];
-                         
-                         [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
-                         [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
-                         [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-                         [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
-                         [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
-                         
-                         [self.likesButton setEnabled:YES];
-                         [self.likesTitleLabel setEnabled:YES];
-                         [self.likesDescriptionLabel setEnabled:YES];
-                         
-                         [self.streamButton setEnabled:YES];
-                         [self.streamTitleLabel setEnabled:YES];
-                         [self.streamDescriptionLabel setEnabled:YES];
-                         
-                         [self.personalRollButton setEnabled:YES];
+                         [self enableCards];
                          
                      }];
+}
+
+#pragma mark - UI Methods (Private)
+- (void)enableCards
+{
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    
+    [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
+    [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
+    [self.personalRollButton setEnabled:YES];
+    
+    [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
+    [self.likesButton setEnabled:YES];
+    [self.likesTitleLabel setEnabled:YES];
+    [self.likesDescriptionLabel setEnabled:YES];
+    
+    [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
+    [self.streamButton setEnabled:YES];
+    [self.streamTitleLabel setEnabled:YES];
+    [self.streamDescriptionLabel setEnabled:YES];
+    
+    
+}
+
+- (void)disableCards
+{
+    [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [self.personalRollButton addTarget:self action:@selector(authenticationButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.personalRollUsernameLabel setText:@"Login to view your .TV"];
+    
+    [self.likesButton setEnabled:NO];
+    [self.likesTitleLabel setEnabled:NO];
+    [self.likesDescriptionLabel setEnabled:NO];
+    
+    [self.streamButton setEnabled:NO];
+    [self.streamTitleLabel setEnabled:NO];
+    [self.streamDescriptionLabel setEnabled:NO];
 }
 
 #pragma mark - UITextFieldDelegate Methods

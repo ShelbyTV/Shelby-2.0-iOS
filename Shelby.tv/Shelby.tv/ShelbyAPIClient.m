@@ -43,7 +43,7 @@
         [indicator stopAnimating];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
-                                                            message:@"Please try again"
+                                                            message:@"Please make sure you've entered your login credientials correctly."
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil, nil];
