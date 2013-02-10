@@ -132,6 +132,8 @@
 
 - (void)setupPlayerForURL:(NSURL *)extractedURL
 {
+    DLog(@"%@", [extractedURL absoluteString]);
+    
     AVAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];

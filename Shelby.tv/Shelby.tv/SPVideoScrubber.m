@@ -54,8 +54,8 @@
     
     
     self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
-                                                                                                         queue:NULL /* If you pass NULL, the main queue is used. */
-                                                                                                    usingBlock:^(CMTime time) {
+                                                                                                   queue:NULL /* If you pass NULL, the main queue is used. */
+                                                                                              usingBlock:^(CMTime time) {
                                                                                                         
                                                                                                         [self syncScrubber];
                                                                                                         
@@ -145,12 +145,11 @@
     
     if ( isfinite(duration) ) {
         CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
-        CGFloat tolerance = 0.5f * duration / width;
-        self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(tolerance, NSEC_PER_SEC)
-                                                                                                                     queue:NULL
-                                                                                                                usingBlock:^(CMTime time) {
-                                                                                                                    
-                                                                                                // Sync the scrubber to the currentVideoPlayer
+        CGFloat interval = 0.5f * duration / width;
+        self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
+                                                                                                       queue:NULL
+                                                                                                  usingBlock:^(CMTime time) {
+
                                                                                                 [self syncScrubber];
                                                                                                 
                                                                                             }];

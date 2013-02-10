@@ -12,7 +12,6 @@
 #import "SPVideoItemView.h"
 #import "SPVideoPlayer.h"
 #import "SPVideoScrubber.h"
-#import "MeViewController.h"
 
 @interface SPVideoReel ()
 
