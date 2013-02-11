@@ -1,3 +1,4 @@
+     
 //
 //  SPVideoReel.m
 //  Shelby.tv
@@ -101,6 +102,7 @@
     [super viewDidLoad];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
     [self.view setBackgroundColor:[UIColor blackColor]];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated

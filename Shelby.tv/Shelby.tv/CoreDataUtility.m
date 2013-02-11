@@ -683,8 +683,6 @@
 #pragma mark - Private Storage mMthods
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
 {
-    
-    @synchronized (frame) {
         
         NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
         [frame setValue:frameID forKey:kCoreDataFrameID];
@@ -741,7 +739,6 @@
         [video addFrameObject:frame];
         [self storeVideo:video fromFrameArray:frameArray];
  
-    }
     
 }
 
