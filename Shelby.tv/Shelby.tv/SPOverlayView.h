@@ -8,7 +8,6 @@
 
 @interface SPOverlayView : UIView
 
-@property (weak, nonatomic) IBOutlet UIButton *homeButton;
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitleLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *videoListScrollView;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;

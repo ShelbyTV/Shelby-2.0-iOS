@@ -10,6 +10,8 @@
 
 @interface SPVideoItemView ()
 
+@property (weak, nonatomic) IBOutlet UIButton *invisibleButton;
+
 @end
 
 @implementation SPVideoItemView

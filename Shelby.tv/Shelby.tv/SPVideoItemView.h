@@ -10,7 +10,6 @@
 
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *videoTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
-@property (weak, nonatomic) IBOutlet UIButton *invisibleButton;
 
 + (CGFloat)width;
 
