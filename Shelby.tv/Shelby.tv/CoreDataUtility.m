@@ -684,60 +684,64 @@
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
 {
     
-    NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
-    [frame setValue:frameID forKey:kCoreDataFrameID];
-    
-    NSString *conversationID = [NSString coreDataNullTest:[frameArray valueForKey:@"conversation_id"]];
-    [frame setValue:conversationID forKey:kCoreDataFrameConversationID];
-    
-    NSString *createdAt = [NSString coreDataNullTest:[frameArray valueForKey:@"created_at"]];
-    [frame setValue:createdAt forKey:kCoreDataFrameCreatedAt];
-    
-    NSString *creatorID = [NSString coreDataNullTest:[frameArray valueForKey:@"creator_id"]];
-    [frame setValue:creatorID forKey:kCoreDataFrameCreatorID];
-    
-    NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
-    [frame setValue:rollID forKey:kCoreDataFrameRollID];
-    
-    NSDate *timestamp = [NSDate dataFromBSONObjectID:frameID];
-    [frame setValue:timestamp forKey:kCoreDataFrameTimestamp];
-    
-    NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
-    [frame setValue:videoID forKey:kCoreDataFrameVideoID];
-    
-    [frame setValue:@(syncStatus) forKey:kCoreDataFrameIsSynced];
-    
-    // Store Conversation (and Messages)
-    Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
-                                         withIDValue:conversationID
-                                            forIDKey:kCoreDataFrameConversationID];
-    frame.conversation = conversation;
-    conversation.frame = frame;
-    [self storeConversation:conversation fromFrameArray:frameArray];
-    
-    // Store Creator
-    Creator *creator = [self checkIfEntity:kCoreDataEntityCreator
-                               withIDValue:creatorID
-                                  forIDKey:kCoreDataFrameCreatorID];
-    frame.creator = creator;
-    [creator addFrameObject:frame];
-    [self storeCreator:creator fromFrameArray:frameArray];
-    
-    // Store Roll
-    Roll *roll = [self checkIfEntity:kCoreDataEntityRoll
-                         withIDValue:rollID
-                            forIDKey:kCoreDataRollID];
-    frame.roll = roll;
-    roll.frame = frame;
-    [self storeRoll:roll fromFrameArray:frameArray];
-    
-    // Store Video
-    Video *video = [self checkIfEntity:kCoreDataEntityVideo
-                           withIDValue:videoID
-                              forIDKey:kCoreDataFrameVideoID];
-    frame.video = video;
-    [video addFrameObject:frame];
-    [self storeVideo:video fromFrameArray:frameArray];
+    @synchronized (frame) {
+        
+        NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
+        [frame setValue:frameID forKey:kCoreDataFrameID];
+        
+        NSString *conversationID = [NSString coreDataNullTest:[frameArray valueForKey:@"conversation_id"]];
+        [frame setValue:conversationID forKey:kCoreDataFrameConversationID];
+        
+        NSString *createdAt = [NSString coreDataNullTest:[frameArray valueForKey:@"created_at"]];
+        [frame setValue:createdAt forKey:kCoreDataFrameCreatedAt];
+        
+        NSString *creatorID = [NSString coreDataNullTest:[frameArray valueForKey:@"creator_id"]];
+        [frame setValue:creatorID forKey:kCoreDataFrameCreatorID];
+        
+        NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
+        [frame setValue:rollID forKey:kCoreDataFrameRollID];
+        
+        NSDate *timestamp = [NSDate dataFromBSONObjectID:frameID];
+        [frame setValue:timestamp forKey:kCoreDataFrameTimestamp];
+        
+        NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
+        [frame setValue:videoID forKey:kCoreDataFrameVideoID];
+        
+        [frame setValue:@(syncStatus) forKey:kCoreDataFrameIsSynced];
+        
+        // Store Conversation (and Messages)
+        Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
+                                             withIDValue:conversationID
+                                                forIDKey:kCoreDataFrameConversationID];
+        frame.conversation = conversation;
+        conversation.frame = frame;
+        [self storeConversation:conversation fromFrameArray:frameArray];
+        
+        // Store Creator
+        Creator *creator = [self checkIfEntity:kCoreDataEntityCreator
+                                   withIDValue:creatorID
+                                      forIDKey:kCoreDataFrameCreatorID];
+        frame.creator = creator;
+        [creator addFrameObject:frame];
+        [self storeCreator:creator fromFrameArray:frameArray];
+        
+        // Store Roll
+        Roll *roll = [self checkIfEntity:kCoreDataEntityRoll
+                             withIDValue:rollID
+                                forIDKey:kCoreDataRollID];
+        frame.roll = roll;
+        roll.frame = frame;
+        [self storeRoll:roll fromFrameArray:frameArray];
+        
+        // Store Video
+        Video *video = [self checkIfEntity:kCoreDataEntityVideo
+                               withIDValue:videoID
+                                  forIDKey:kCoreDataFrameVideoID];
+        frame.video = video;
+        [video addFrameObject:frame];
+        [self storeVideo:video fromFrameArray:frameArray];
+ 
+    }
     
 }
 
