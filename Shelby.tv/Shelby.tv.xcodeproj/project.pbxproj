@@ -43,16 +43,14 @@
 		8E2FC89116C6F19D0022B58C /* personalRollCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2FC88116C6F19D0022B58C /* personalRollCard@2x.png */; };
 		8E2FC89216C6F19D0022B58C /* streamCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2FC88216C6F19D0022B58C /* streamCard.png */; };
 		8E2FC89316C6F19D0022B58C /* streamCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2FC88316C6F19D0022B58C /* streamCard@2x.png */; };
-		8E2FC89616C6F1EA0022B58C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2FC89416C6F1EA0022B58C /* Default.png */; };
-		8E2FC89716C6F1EA0022B58C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2FC89516C6F1EA0022B58C /* Default@2x.png */; };
+		8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
+		8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
 		8E40AF6916A4B339007A66CA /* restartButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6716A4B339007A66CA /* restartButton.png */; };
 		8E40AF6A16A4B339007A66CA /* restartButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6816A4B339007A66CA /* restartButton@2x.png */; };
 		8E40AF6D16A4B6A7007A66CA /* infoPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6B16A4B6A7007A66CA /* infoPanel.png */; };
 		8E40AF6E16A4B6A7007A66CA /* infoPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */; };
 		8E41EF2816B0554400C831A4 /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1018801686695D009698B3 /* AsynchronousFreeloader.m */; };
 		8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E41EF2D16B0742400C831A4 /* BigButton.m */; };
-		8E4980AD1688C556007AF267 /* tempLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AB1688C556007AF267 /* tempLogo.png */; };
-		8E4980AE1688C556007AF267 /* tempLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4980AC1688C556007AF267 /* tempLogo@2x.png */; };
 		8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9616652E6E00A565BF /* MeViewController.m */; };
 		8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9716652E6E00A565BF /* MeViewController.xib */; };
 		8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
@@ -179,16 +177,14 @@
 		8E2FC88116C6F19D0022B58C /* personalRollCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "personalRollCard@2x.png"; sourceTree = "<group>"; };
 		8E2FC88216C6F19D0022B58C /* streamCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streamCard.png; sourceTree = "<group>"; };
 		8E2FC88316C6F19D0022B58C /* streamCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "streamCard@2x.png"; sourceTree = "<group>"; };
-		8E2FC89416C6F1EA0022B58C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
-		8E2FC89516C6F1EA0022B58C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
+		8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = SOURCE_ROOT; };
+		8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = SOURCE_ROOT; };
 		8E40AF6716A4B339007A66CA /* restartButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restartButton.png; sourceTree = "<group>"; };
 		8E40AF6816A4B339007A66CA /* restartButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "restartButton@2x.png"; sourceTree = "<group>"; };
 		8E40AF6B16A4B6A7007A66CA /* infoPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoPanel.png; sourceTree = "<group>"; };
 		8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoPanel@2x.png"; sourceTree = "<group>"; };
 		8E41EF2C16B0742400C831A4 /* BigButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigButton.h; sourceTree = "<group>"; };
 		8E41EF2D16B0742400C831A4 /* BigButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigButton.m; sourceTree = "<group>"; };
-		8E4980AB1688C556007AF267 /* tempLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempLogo.png; sourceTree = "<group>"; };
-		8E4980AC1688C556007AF267 /* tempLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tempLogo@2x.png"; sourceTree = "<group>"; };
 		8E4C55751666A9F90019DD15 /* SPOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPOverlayView.h; sourceTree = "<group>"; };
 		8E4C55761666A9F90019DD15 /* SPOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPOverlayView.m; sourceTree = "<group>"; };
 		8E4F580A1635E05F0048585C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -305,8 +301,8 @@
 		8E091750168536F900503EF9 /* Icons and Launch Images */ = {
 			isa = PBXGroup;
 			children = (
-				8E2FC89416C6F1EA0022B58C /* Default.png */,
-				8E2FC89516C6F1EA0022B58C /* Default@2x.png */,
+				8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */,
+				8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */,
 				8E50CDE716A9B9FC006B1ABE /* Icon-Small-50.png */,
 				8E50CDE816A9B9FC006B1ABE /* Icon-Small-50@2x.png */,
 				8E50CDE916A9B9FC006B1ABE /* Icon.png */,
@@ -476,8 +472,6 @@
 		8E32BF86167FA58400753723 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				8E4980AB1688C556007AF267 /* tempLogo.png */,
-				8E4980AC1688C556007AF267 /* tempLogo@2x.png */,
 				8E2FC87216C6F19D0022B58C /* Login & Signup Images */,
 				8E2FC87B16C6F19D0022B58C /* Me & Browse Images */,
 				8E5980291680104A00027181 /* Shelby Player Images */,
@@ -781,8 +775,6 @@
 				8E12B18B16825B4100657D32 /* videoListThumbnailOverlay@2x.png in Resources */,
 				8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */,
 				8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */,
-				8E4980AD1688C556007AF267 /* tempLogo.png in Resources */,
-				8E4980AE1688C556007AF267 /* tempLogo@2x.png in Resources */,
 				8E40AF6916A4B339007A66CA /* restartButton.png in Resources */,
 				8E40AF6A16A4B339007A66CA /* restartButton@2x.png in Resources */,
 				8E40AF6D16A4B6A7007A66CA /* infoPanel.png in Resources */,
@@ -799,8 +791,6 @@
 				8E2FC89116C6F19D0022B58C /* personalRollCard@2x.png in Resources */,
 				8E2FC89216C6F19D0022B58C /* streamCard.png in Resources */,
 				8E2FC89316C6F19D0022B58C /* streamCard@2x.png in Resources */,
-				8E2FC89616C6F1EA0022B58C /* Default.png in Resources */,
-				8E2FC89716C6F1EA0022B58C /* Default@2x.png in Resources */,
 				8E9FBD4D16C713BB00731912 /* LoginView.xib in Resources */,
 				8E9FBD5816C7145F00731912 /* authenticationCancelButton.png in Resources */,
 				8E9FBD5916C7145F00731912 /* authenticationCancelButton@2x.png in Resources */,
@@ -810,6 +800,8 @@
 				8E9FBD5D16C7145F00731912 /* authenticationLoginView@2x.png in Resources */,
 				8E9FBD5E16C7145F00731912 /* authenticationTextField.png in Resources */,
 				8E9FBD5F16C7145F00731912 /* authenticationTextField@2x.png in Resources */,
+				8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */,
+				8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
