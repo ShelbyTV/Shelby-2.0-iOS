@@ -52,11 +52,13 @@
 - (void)rescheduleOverlayTimer
 {
     
-    if ( [self.overlayTimer isValid] )
+    if ( [self.overlayTimer isValid] ) {
+     
         [self.overlayTimer invalidate];
+        
+    }
     
-    
-    if ( [self.videoReel.airPlayButton state] != 4 ) { // Keep SPVideoOverlay visible if airPlayIsConnected
+    if ( [self.videoReel.airPlayButton state] != 4 ) { // Keep SPVideoOverlay visible if airPlay is connected
     
         self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
                                                              target:self.overlayView

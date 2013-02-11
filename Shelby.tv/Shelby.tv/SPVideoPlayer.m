@@ -92,8 +92,8 @@
 {
     [self setAppDelegate:(AppDelegate*)[[UIApplication sharedApplication] delegate]];
     [self setModel:[SPModel sharedInstance]];
-    [self setOverlayView:self.model.overlayView];
-    [self setVideoReel:self.model.videoReel];
+    [self setOverlayView:_model.overlayView];
+    [self setVideoReel:_model.videoReel];
 }
 
 - (void)setupInitialConditions
@@ -105,7 +105,7 @@
 
 - (void)setupIndicator
 {
-    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f,self.view.frame.size.width, self.view.frame.size.height);
+    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
     self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
     self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.indicator.hidesWhenStopped = YES;
@@ -256,7 +256,7 @@
             NSManagedObjectContext *context = [self.appDelegate context];
             NSManagedObjectID *objectID = [self.videoFrame objectID];
             self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-            [[SPVideoExtractor sharedInstance] queueVideo:self.videoFrame.video];
+            [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
             
         }
         
@@ -323,12 +323,12 @@
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
-    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, self.videoFrame.video.providerName, self.videoFrame.video.providerID, self.videoFrame.frameID];
-    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", self.videoFrame.video.title, shareLink];
+    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, _videoFrame.video.providerName, _videoFrame.video.providerID, _videoFrame.frameID];
+    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
-    [self.sharePopOverController presentPopoverFromRect:self.overlayView.shareButton.frame
-                                                 inView:self.overlayView
+    [self.sharePopOverController presentPopoverFromRect:_overlayView.shareButton.frame
+                                                 inView:_overlayView
                                permittedArrowDirections:UIPopoverArrowDirectionDown
                                                animated:YES];
 }
@@ -348,7 +348,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
         
         // Instantiate AVPlayer object with extractedURL
-        NSURL *extractedURL = [NSURL URLWithString:self.videoFrame.video.extractedURL];
+        NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
        
         // Load Player
         [self setupPlayerForURL:extractedURL];

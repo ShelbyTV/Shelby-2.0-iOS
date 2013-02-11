@@ -393,7 +393,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ( textField == self.loginView.emailField ) {
+    if ( textField == _loginView.emailField ) {
         [self.loginView.passwordField becomeFirstResponder];
         return NO;
     } else {

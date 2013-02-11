@@ -103,14 +103,12 @@
 {
     [self.model.currentVideoPlayer.player removeTimeObserver:_scrubberTimeObserver];
     [self setScrubberTimeObserver:nil];
-    [self setModel:nil];
-    
 }
 
 #pragma mark - Scrubbing Methods
 - (void)beginScrubbing
 {
-	self.scrubberTimeObserver = nil;
+	[self setScrubberTimeObserver:nil];
 }
 
 - (void)scrub
@@ -157,7 +155,7 @@
         
         
         // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
-        ( _model.currentVideoPlayer.isPlaying ) ? [_model.currentVideoPlayer play] : [_model.currentVideoPlayer pause];
+        ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
         
     }
 
