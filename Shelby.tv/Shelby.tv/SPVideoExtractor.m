@@ -120,7 +120,6 @@
 
 - (void)createWebView
 {
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
     CGRect frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(frame.size.width/2.0f, frame.size.height/2.0f, 2.0f, 2.0f)];
     self.webView.allowsInlineMediaPlayback = YES;
@@ -154,7 +153,7 @@
     NSString *youtubeRequestString = [NSString stringWithFormat:videoExtractor, 2048.0f, 1536.0f, video.providerID];
     
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    [appDelegate.window addSubview:self.webView];
+    [appDelegate.window addSubview:_webView];
     [self.webView loadHTMLString:youtubeRequestString baseURL:[NSURL URLWithString:@"http://shelby.tv"]];
     
 }
@@ -169,7 +168,7 @@
     NSString *vimeoRequestString = [NSString stringWithFormat:vimeoExtractor, video.providerID];
     
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    [appDelegate.window addSubview:self.webView];
+    [appDelegate.window addSubview:_webView];
     [self.webView loadHTMLString:vimeoRequestString baseURL:[NSURL URLWithString:@"http://shelby.tv"]];
     
 }
@@ -182,10 +181,8 @@
     
     NSString *dailymotionRequestString = [NSString stringWithFormat:dailymotionExtractor, video.providerID, 2048.0f, 1536.0f];
     
-    DLog(@"%@", dailymotionRequestString);
-    
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    [appDelegate.window addSubview:self.webView];
+    [appDelegate.window addSubview:_webView];
     [self.webView loadHTMLString:dailymotionRequestString baseURL:[NSURL URLWithString:@"http://shelby.tv"]];
 }
 
@@ -209,7 +206,6 @@
                     
                     // Remove webView
                     [self destroyWebView];
-                    [[NSURLCache sharedURLCache] removeAllCachedResponses];
                     
                     // Get videoURL to playable video file
                     // hard to remove warning, since 'value' is an instance of a private class - MPAVItem.

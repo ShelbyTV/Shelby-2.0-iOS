@@ -13,6 +13,8 @@
 
 @property (weak, nonatomic) SPModel *model;
 
+@property (weak, nonatomic) IBOutlet UIButton *homeButton;
+
 @end
 
 @implementation SPOverlayView

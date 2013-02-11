@@ -15,6 +15,22 @@
 @property (nonatomic) LoginView *loginView;
 @property (nonatomic) UIView *backgroundLoginView;
 
+@property (weak, nonatomic) IBOutlet UIButton *likesButton;
+@property (weak, nonatomic) IBOutlet UILabel *likesTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *likesDescriptionLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *personalRollButton;
+@property (weak, nonatomic) IBOutlet UILabel *personalRollTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *personalRollDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *personalRollUsernameLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *streamButton;
+@property (weak, nonatomic) IBOutlet UILabel *streamTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *streamDescriptionLabel;
+
+//@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+
 /// Video Player Launch Methods
 - (void)launchPlayerWithStreamEntries;
 - (void)launchPlayerWithLikesRollEntries;
@@ -29,6 +45,10 @@
 /// UI Methods
 - (void)enableCards;
 - (void)disableCards;
+
+/// Action Methods
+- (IBAction)cancelButtonAction:(id)sender;
+- (IBAction)goButtonAction:(id)sender;
 
 @end
 
@@ -393,7 +413,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ( textField == self.loginView.emailField ) {
+    if ( textField == _loginView.emailField ) {
         [self.loginView.passwordField becomeFirstResponder];
         return NO;
     } else {

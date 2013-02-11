@@ -172,26 +172,26 @@
 - (void)setupVideoScrollView
 {
     self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.videoScrollView.contentSize = CGSizeMake(1024.0f*self.model.numberOfVideos, 748.0f);
+    self.videoScrollView.contentSize = CGSizeMake(1024.0f*_model.numberOfVideos, 748.0f);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;
     self.videoScrollView.showsHorizontalScrollIndicator = NO;
     self.videoScrollView.showsVerticalScrollIndicator = NO;
     self.videoScrollView.scrollsToTop = NO;
-    [self.view addSubview:self.videoScrollView];
+    [self.view addSubview:_videoScrollView];
 }
 
 - (void)setupOverlayView
 {
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
     self.model.overlayView = nib[0];
-    self.overlayView = self.model.overlayView;
-    [self.overlayView.categoryTitleLabel setText:self.categoryTitle];
-    [self.view addSubview:self.overlayView];
+    self.overlayView = _model.overlayView;
+    [self.overlayView.categoryTitleLabel setText:_categoryTitle];
+    [self.view addSubview:_overlayView];
     
-    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self.overlayView action:@selector(toggleOverlay)];
+    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
     [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-    [self.view addGestureRecognizer:self.toggleOverlayGesuture];
+    [self.view addGestureRecognizer:_toggleOverlayGesuture];
     
     UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];
@@ -205,7 +205,7 @@
         
         Frame *videoFrame = (self.videoFrames)[i];
 
-        CGRect viewframe = self.videoScrollView.frame;
+        CGRect viewframe = [self.videoScrollView frame];
         viewframe.origin.x = viewframe.size.width * i;
         viewframe.origin.y = 0.0f;
         SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
@@ -216,7 +216,7 @@
         if ( 0 == i ) {
         
             self.model.currentVideo = 0;
-            self.model.currentVideoPlayer = (self.videoPlayers)[self.model.currentVideo];
+            self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
             
         }
         
@@ -224,12 +224,12 @@
 
     if ( self.categoryType != CategoryType_Stream ) { // If not stream, play video in zeroeth position
 
-        [self currentVideoDidChangeToVideo:self.model.currentVideo];
+        [self currentVideoDidChangeToVideo:_model.currentVideo];
         
         
     } else { // If  stream, play video stored for kSPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
 
-        for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
+        for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
             
             Frame *videoFrame = (self.videoFrames)[i];
             NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kSPCurrentVideoStreamID];
@@ -237,12 +237,12 @@
             if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
              
                 self.model.currentVideo = i;
-                self.model.currentVideoPlayer = (self.videoPlayers)[self.model.currentVideo];
+                self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
                 
             }
         }
         
-        [self currentVideoDidChangeToVideo:self.model.currentVideo];
+        [self currentVideoDidChangeToVideo:_model.currentVideo];
     }
 }
 
@@ -250,14 +250,14 @@
 {
 
     CGFloat itemViewWidth = [SPVideoItemView width];
-    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*self.model.numberOfVideos, 217.0f);
+    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_model.numberOfVideos, 217.0f);
     self.overlayView.videoListScrollView.delegate = self;
     
     dispatch_group_t group = dispatch_group_create();
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_group_async(group, queue, ^{
         
-        for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
+        for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
             
             NSManagedObjectContext *context = [self.appDelegate context];
             NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
@@ -284,7 +284,7 @@
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
             
-                if ( i == self.model.currentVideo ) {
+                if ( i == _model.currentVideo ) {
                     itemView.backgroundColor = kColorGreen;
                     itemView.videoTitleLabel.textColor = kColorBlack;
                 }
@@ -292,18 +292,18 @@
             });
         }
         
-        // Add visual selected state (e.g., blue background, white text) to currentVideo
-        SPVideoItemView *itemView = (self.itemViews)[self.model.currentVideo];
+        // Add visual selected state (e.g., green background) to currentVideo's itemView object
+        SPVideoItemView *itemView = (self.itemViews)[_model.currentVideo];
         
         // Scroll To currentVideo if self.currentVideo != 0
         if ( 0 != self.model.currentVideo) {
             
-            CGFloat x = self.videoScrollView.frame.size.width * self.model.currentVideo;
-            CGFloat y = self.videoScrollView.contentOffset.y;
+            CGFloat x = _videoScrollView.frame.size.width * _model.currentVideo;
+            CGFloat y = _videoScrollView.contentOffset.y;
             [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
             
-            CGFloat itemViewX = itemView.frame.size.width * (self.model.currentVideo-1);
-            CGFloat itemViewY = self.overlayView.videoListScrollView.contentOffset.y;
+            CGFloat itemViewX = itemView.frame.size.width * (_model.currentVideo-1);
+            CGFloat itemViewY = _overlayView.videoListScrollView.contentOffset.y;
             [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
             
         }
@@ -316,7 +316,7 @@
 {
     
     // Instantiate AirPlay button for MPVolumeView
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.overlayView.airPlayView.bounds];
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:_overlayView.airPlayView.bounds];
     [volumeView setShowsVolumeSlider:NO];
     [volumeView setShowsRouteButton:YES];
     [self.overlayView.airPlayView addSubview:volumeView];
@@ -351,7 +351,7 @@
         
         SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)(self.playableVideoPlayers)[0];
         
-        if ( oldestPlayer != self.model.currentVideoPlayer ) { // If oldestPlayer isn't currently being played, remove it
+        if ( oldestPlayer != _model.currentVideoPlayer ) { // If oldestPlayer isn't currently being played, remove it
             
             [oldestPlayer resetPlayer];
             [self.playableVideoPlayers removeObject:oldestPlayer];
@@ -375,7 +375,7 @@
 {
     SPVideoPlayer *player = (self.videoPlayers)[position];
     
-    if ( (position >= self.model.numberOfVideos) ) {
+    if ( (position >= _model.numberOfVideos) ) {
         
         return;
     
@@ -388,11 +388,11 @@
 
 - (void)currentVideoDidFinishPlayback
 {
-    NSUInteger position = self.model.currentVideo + 1;
+    NSUInteger position = _model.currentVideo + 1;
     CGFloat x = position * 1024.0f;
-    CGFloat y = self.videoScrollView.contentOffset.y;
+    CGFloat y = _videoScrollView.contentOffset.y;
     
-    if ( position <= (self.model.numberOfVideos-1) ) {
+    if ( position <= (_model.numberOfVideos-1) ) {
     
         [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
         [self currentVideoDidChangeToVideo:position];
@@ -465,9 +465,9 @@
     
     // Force scroll videoScrollView
     CGFloat videoX = 1024 * position;
-    CGFloat videoY = self.videoScrollView.contentOffset.y;
+    CGFloat videoY = _videoScrollView.contentOffset.y;
     
-    if ( position < self.model.numberOfVideos ) {
+    if ( position < _model.numberOfVideos ) {
         [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
     }
     
@@ -503,7 +503,7 @@
 - (void)storeIdentifierOfCurrentVideoInStream
 {
     NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [(self.videoFrames)[self.model.currentVideo] objectID];
+    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
     Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
     
     [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
@@ -560,7 +560,7 @@
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
     UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
-                                 forImageView:self.overlayView.userImageView
+                                 forImageView:_overlayView.userImageView
                           withPlaceholderView:infoPanelIconPlaceholderView
                                andContentMode:UIViewContentModeScaleAspectFit];
     
@@ -659,7 +659,7 @@
         
     } else { // Get older videos from Web
     
-        if ( position >= self.model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+        if ( position >= _model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
             
             self.fetchingOlderVideos = YES;
             
@@ -708,7 +708,7 @@
     
     if ( [self.moreVideoFrames count] > 20 ) { // If there are more than 20 frames in videoFrames
         
-        NSArray *tempMoreVideoFrames = [NSArray arrayWithArray:self.moreVideoFrames];
+        NSArray *tempMoreVideoFrames = [NSArray arrayWithArray:_moreVideoFrames];
         
         for ( NSUInteger i = 0; i<20; i++ ) {
             
@@ -719,7 +719,7 @@
         
     } else { // If there are <= 20 frames in videoFrames
         
-        [self.videoFrames addObjectsFromArray:self.moreVideoFrames];
+        [self.videoFrames addObjectsFromArray:_moreVideoFrames];
         [self.moreVideoFrames removeAllObjects];
         
     }
@@ -798,14 +798,14 @@
         self.model.numberOfVideos = [self.videoFrames count];
         
         // Update videoScrollView and videoListScrollView
-        for ( NSUInteger i = numberOfVideosBeforeUpdate; i < self.model.numberOfVideos; ++i ) {
+        for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _model.numberOfVideos; ++i ) {
             
             // videoScrollView
             NSManagedObjectContext *context = [self.appDelegate context];
             NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
             Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
             
-            CGRect viewframe = self.videoScrollView.frame;
+            CGRect viewframe = [self.videoScrollView frame];
             viewframe.origin.x = viewframe.size.width * i;
             SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
             
@@ -851,7 +851,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     
-    if ( scrollView == self.videoScrollView ) {
+    if ( scrollView == _videoScrollView ) {
         
         // Switch the indicator when more than 50% of the previous/next page is visible
         CGFloat pageWidth = scrollView.frame.size.width;
@@ -859,7 +859,7 @@
         NSUInteger page = floor(scrollAmount) + 1;
         
         // Toggle playback on old and new SPVideoPlayer objects
-        if ( page != self.model.currentVideo ) {
+        if ( page != _model.currentVideo ) {
             
             [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
             
@@ -868,7 +868,7 @@
         [self currentVideoDidChangeToVideo:page];
         [self fetchOlderVideos:page];
     
-    } else if ( scrollView == self.overlayView.videoListScrollView ) {
+    } else if ( scrollView == _overlayView.videoListScrollView ) {
         
         // Switch the indicator when more than 50% of the previous/next page is visible
         CGFloat pageWidth = scrollView.frame.size.width;
