@@ -250,7 +250,11 @@
     [self.currentExtractionTimer invalidate];
     [self destroyWebView];
     
-    [self.videoQueue removeObjectAtIndex:0];
+    if ([self.videoQueue count]) {
+        
+        [self.videoQueue removeObjectAtIndex:0];
+    
+    }
     
     [self extractNextVideoFromQueue];
 }
