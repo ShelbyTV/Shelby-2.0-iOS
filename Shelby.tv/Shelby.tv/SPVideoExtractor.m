@@ -63,9 +63,7 @@
 {
     if ( [self.videoQueue count] ) {
         
-        for ( NSUInteger i = 1; i < [self.videoQueue count]; i++ ) {
-            [self.videoQueue removeObjectAtIndex:i];
-        }
+        [self.videoQueue removeAllObjects];
         
     }
 }
