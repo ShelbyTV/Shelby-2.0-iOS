@@ -245,17 +245,17 @@
 
 - (void)timerExpired
 {
+    
+    if ( [self.videoQueue count] ) {
+        
+        [self.videoQueue removeObjectAtIndex:0];
+        
+    }
+
     [self setIsExtracting:NO];
     [self.nextExtractionTimer invalidate];
     [self.currentExtractionTimer invalidate];
     [self destroyWebView];
-    
-    if ([self.videoQueue count]) {
-        
-        [self.videoQueue removeObjectAtIndex:0];
-    
-    }
-    
     [self extractNextVideoFromQueue];
 }
 
