@@ -36,7 +36,7 @@
 
 /// UI Methods
 - (void)setupCards;
-- (void)toggleAuthenticationViewEnabled:(BOOL)enabled;
+- (void)toggleCardsEnabled:(BOOL)enabled;
 - (void)enableCards;
 - (void)disableCards;
 
@@ -99,7 +99,7 @@
     [super viewWillAppear:animated];
     
     // Toggle card UI depending on if user is logged-in or logged-out
-    ( [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultUserAuthorized] ) ? [self toggleAuthenticationViewEnabled:YES] : [self toggleAuthenticationViewEnabled:NO];
+    ( [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultUserAuthorized] ) ? [self toggleCardsEnabled:YES] : [self toggleCardsEnabled:NO];
     
     // If viewWillAppear is called when SPVideoReel modalVC is removed...
     if ( [[UIApplication sharedApplication] isStatusBarHidden] ) {
@@ -156,7 +156,7 @@
     [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)toggleAuthenticationViewEnabled:(BOOL)enable
+- (void)toggleCardsEnabled:(BOOL)enable
 {
     
     [self.authenticationButton addTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
@@ -183,10 +183,10 @@
     [self.likesButton setEnabled:YES];
     [self.likesTitleLabel setEnabled:YES];
     [self.likesDescriptionLabel setEnabled:YES];
-    
-    [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
+
     [self.personalRollButton setEnabled:YES];
     [self.personalRollUsernameLabel setEnabled:YES];
+    [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
     
     [self.streamButton setEnabled:YES];
     [self.streamTitleLabel setEnabled:YES];
@@ -207,6 +207,7 @@
     [self.personalRollTitleLabel setEnabled:NO];
     [self.personalRollDescriptionLabel setEnabled:NO];
     [self.personalRollUsernameLabel setEnabled:NO];
+    [self.personalRollUsernameLabel setText:@"Login to your .TV"];
     
     [self.streamButton setEnabled:NO];
     [self.streamTitleLabel setEnabled:NO];
@@ -297,6 +298,7 @@
 
 - (void)logoutButtonAction
 {
+    [self toggleCardsEnabled:NO];
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [appDelegate logout];
 }
@@ -348,7 +350,7 @@
                          [self.loginView removeFromSuperview];
                          [self.backgroundLoginView removeFromSuperview];
                          
-                         [self toggleAuthenticationViewEnabled:YES];
+                         [self toggleCardsEnabled:YES];
                          
                      }];
 }
