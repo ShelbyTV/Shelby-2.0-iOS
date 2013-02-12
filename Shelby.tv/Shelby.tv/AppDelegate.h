@@ -17,5 +17,6 @@
 - (void)mergeChanges:(NSNotification*)notification;
 - (void)dumpAllData;
 - (void)logout;
+- (void)performCleanIfUserDidAuthenticate;
 
 @end

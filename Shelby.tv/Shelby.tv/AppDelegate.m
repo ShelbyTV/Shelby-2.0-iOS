@@ -51,7 +51,7 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     // Sync Queue if suer is logged in (this may cause app to crash if user launches app on queue and videos were removed)
-    if ( [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultUserAuthorized] ) {
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultUserAuthorized] ) {
         
         // Perform Sync on Queue
         [ShelbyAPIClient getQueueForSync];
@@ -99,14 +99,15 @@
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+}
+
+- (void)performCleanIfUserDidAuthenticate
+{
     // Empty Existing Core Data Store (if one exists)
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    [appDelegate dumpAllData];
+    [self dumpAllData];
     
     // Empty Existing Video Cache
     [AsynchronousFreeloader removeAllImages];
-
-    
 }
 
 #pragma mark - Private Methods

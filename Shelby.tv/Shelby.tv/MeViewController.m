@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *personalRollButton;
 @property (weak, nonatomic) IBOutlet UILabel *personalRollTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *personalRollDescriptionLabel;
-@property (nonatomic) UILabel *personalRollUsernameLabel;
+@property (nonatomic) IBOutlet UILabel *personalRollUsernameLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *streamButton;
 @property (weak, nonatomic) IBOutlet UILabel *streamTitleLabel;
@@ -99,7 +99,7 @@
     [super viewWillAppear:animated];
     
     // Toggle card UI depending on if user is logged-in or logged-out
-    ( [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultUserAuthorized] ) ? [self toggleCardsEnabled:YES] : [self toggleCardsEnabled:NO];
+    ( [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultUserAuthorized] ) ? [self toggleCardsEnabled:YES] : [self toggleCardsEnabled:NO];
     
     // If viewWillAppear is called when SPVideoReel modalVC is removed...
     if ( [[UIApplication sharedApplication] isStatusBarHidden] ) {
@@ -129,10 +129,6 @@
     [self.personalRollDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_personalRollDescriptionLabel.font.pointSize]];
     [self.personalRollDescriptionLabel setTextColor:kColorBlack];
     
-    self.personalRollUsernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(688.0f, 130.0f, 278, 52.0f)];
-    self.personalRollUsernameLabel.text = @"Login to your .TV";
-    [self.personalRollUsernameLabel setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:_personalRollUsernameLabel];
     [self.personalRollUsernameLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollUsernameLabel.font.pointSize]];
     [self.personalRollUsernameLabel setTextColor:[UIColor colorWithHex:@"ffffff" andAlpha:1.0f]];
     
@@ -187,7 +183,7 @@
     [self.personalRollButton setEnabled:YES];
     [self.personalRollTitleLabel setEnabled:YES];
     [self.personalRollDescriptionLabel setEnabled:YES];
-    [self.personalRollUsernameLabel setEnabled:YES];
+    [self.personalRollUsernameLabel setAlpha:1.0f]; // Change alpha when enabling card (instead of setting isEnabled)
     [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
     
     [self.streamButton setEnabled:YES];
@@ -208,7 +204,7 @@
     [self.personalRollButton setEnabled:NO];
     [self.personalRollTitleLabel setEnabled:NO];
     [self.personalRollDescriptionLabel setEnabled:NO];
-    [self.personalRollUsernameLabel setEnabled:NO];
+    [self.personalRollUsernameLabel setAlpha:0.75f]; // Change alpha when disabling card (instead of setting isEnabled)
     [self.personalRollUsernameLabel setText:@"Login to your .TV"];
     
     [self.streamButton setEnabled:NO];
@@ -279,7 +275,6 @@
                                         _loginView.frame.size.width,
                                         _loginView.frame.size.height)];
     [self.view addSubview:_loginView];
-    
     
     [UIView animateWithDuration:0.5f
                      animations:^{

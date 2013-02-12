@@ -323,8 +323,7 @@
     // Execute request that returns array of Users
     NSArray *resultsArray = [self.context executeFetchRequest:request error:nil];
     
-    
-    return ( [resultsArray count] ) ? resultsArray[0] : nil;
+    return resultsArray[0];
 }
 
 - (NSUInteger)fetchStreamCount

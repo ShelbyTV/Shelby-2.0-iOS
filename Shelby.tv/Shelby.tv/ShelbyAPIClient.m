@@ -22,7 +22,11 @@
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 
         if ( response.statusCode == 200 ) {
-                    
+            
+            // Clean Image Cache and Core Data store
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate performCleanIfUserDidAuthenticate];
+            
             // Store User Data
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
             [dataUtility storeUser:JSON];
