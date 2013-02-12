@@ -43,10 +43,10 @@
 {
 
     [self.indicator stopAnimating];
-    [self.cancelButton setEnabled:NO];
-    [self.goButton setEnabled:NO];
-    [self.emailField setEnabled:NO];
-    [self.passwordField setEnabled:NO];
+    [self.cancelButton setEnabled:YES];
+    [self.goButton setEnabled:YES];
+    [self.emailField setEnabled:YES];
+    [self.passwordField setEnabled:YES];
     
 }
 

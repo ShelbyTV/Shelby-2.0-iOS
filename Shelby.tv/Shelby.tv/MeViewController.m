@@ -158,8 +158,8 @@
 
 - (void)toggleCardsEnabled:(BOOL)enable
 {
-    
-    [self.authenticationButton addTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+
+    [self.authenticationButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     
     if ( enable ) {
         
@@ -185,6 +185,8 @@
     [self.likesDescriptionLabel setEnabled:YES];
 
     [self.personalRollButton setEnabled:YES];
+    [self.personalRollTitleLabel setEnabled:YES];
+    [self.personalRollDescriptionLabel setEnabled:YES];
     [self.personalRollUsernameLabel setEnabled:YES];
     [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
     
@@ -282,7 +284,7 @@
     [UIView animateWithDuration:0.5f
                      animations:^{
                          
-                         [self.backgroundLoginView setAlpha:0.5f];
+                         [self.backgroundLoginView setAlpha:0.75f];
                          [self.loginView setFrame:CGRectMake(xOrigin,
                                                              yOrigin,
                                                              _loginView.frame.size.width,

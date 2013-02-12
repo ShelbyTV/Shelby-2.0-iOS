@@ -22,14 +22,7 @@
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 
         if ( response.statusCode == 200 ) {
-            
-            // Empty Existing Core Data Store (if one exists)
-            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-            [appDelegate dumpAllData];
-
-            // Empty Existing Video Cache
-            [AsynchronousFreeloader removeAllImages];
-            
+                    
             // Store User Data
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
             [dataUtility storeUser:JSON];

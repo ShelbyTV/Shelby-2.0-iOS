@@ -98,7 +98,15 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    // Empty Existing Core Data Store (if one exists)
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [appDelegate dumpAllData];
+    
+    // Empty Existing Video Cache
+    [AsynchronousFreeloader removeAllImages];
 
+    
 }
 
 #pragma mark - Private Methods
