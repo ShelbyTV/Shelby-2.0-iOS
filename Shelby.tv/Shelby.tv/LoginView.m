@@ -39,4 +39,15 @@
     
 }
 
+- (void)userAuthenticationDidFail
+{
+
+    [self.indicator stopAnimating];
+    [self.cancelButton setEnabled:NO];
+    [self.goButton setEnabled:NO];
+    [self.emailField setEnabled:NO];
+    [self.passwordField setEnabled:NO];
+    
+}
+
 @end

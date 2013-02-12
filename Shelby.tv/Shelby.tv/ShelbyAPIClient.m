@@ -7,10 +7,11 @@
 //
 
 #import "ShelbyAPIClient.h"
+#import "LoginView.h"
 
 @implementation ShelbyAPIClient
 
-+ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withIndicator:(UIActivityIndicatorView *)indicator
++ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView
 {
     NSString *requestString = [NSString stringWithFormat:kAPIShelbyPostAuthorizeEmail, email, password];
     [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -37,10 +38,9 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"%@", error);
+        [loginView userAuthenticationDidFail];
         
-        // Stop Animating
-        [indicator stopAnimating];
+        DLog(@"%@", error);
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
                                                             message:@"Please make sure you've entered your login credientials correctly."

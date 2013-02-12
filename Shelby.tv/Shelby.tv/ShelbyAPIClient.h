@@ -6,15 +6,17 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
+@class LoginView;
+
 @interface ShelbyAPIClient : NSObject
 
-+ (void)postAuthenticationWithEmail:(NSString*)email andPassword:(NSString*)password withIndicator:(UIActivityIndicatorView*)indicator;
++ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView;
 + (void)getStream;
-+ (void)getMoreFramesInStream:(NSString*)skipParam;
++ (void)getMoreFramesInStream:(NSString *)skipParam;
 + (void)getLikesRoll;
-+ (void)getMoreFramesInLikes:(NSString*)skipParam;
++ (void)getMoreFramesInLikes:(NSString *)skipParam;
 + (void)getPersonalRoll;
-+ (void)getMoreFramesInPersonalRoll:(NSString*)skipParam;
++ (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
 + (void)getQueueForSync;
 + (void)getGroups;
 
