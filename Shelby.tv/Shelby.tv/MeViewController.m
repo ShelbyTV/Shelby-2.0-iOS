@@ -22,13 +22,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *personalRollButton;
 @property (weak, nonatomic) IBOutlet UILabel *personalRollTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *personalRollDescriptionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *personalRollUsernameLabel;
+@property (nonatomic) UILabel *personalRollUsernameLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *streamButton;
 @property (weak, nonatomic) IBOutlet UILabel *streamTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *streamDescriptionLabel;
 
-//@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (weak, nonatomic) IBOutlet UIButton *authenticationButton;
+@property (weak, nonatomic) IBOutlet UILabel *authenticationTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *authenticationDescriptionLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
 /// Video Player Launch Methods
@@ -43,6 +46,7 @@
 - (void)userAuthenticationDidSucceed:(NSNotification*)notification;
 
 /// UI Methods
+- (void)setupCards;
 - (void)enableCards;
 - (void)disableCards;
 
@@ -65,10 +69,15 @@
     self.personalRollDescriptionLabel = nil;
     self.personalRollTitleLabel = nil;
     self.personalRollUsernameLabel = nil;
+    
     self.streamButton = nil;
     self.streamTitleLabel = nil;
     self.streamDescriptionLabel = nil;
-//    self.logoutButton = nil;
+    
+    self.authenticationButton = nil;
+    self.authenticationTitleLabel = nil;
+    self.authenticationDescriptionLabel = nil;
+    
     self.versionLabel = nil;
 }
 
@@ -77,28 +86,8 @@
 {
     
     [super viewDidLoad];
- 
-    // Labels
-    [self.likesTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_likesTitleLabel.font.pointSize]];
-    [self.likesTitleLabel setTextColor:kColorBlack];
-    [self.likesDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_likesDescriptionLabel.font.pointSize]];
-    [self.likesDescriptionLabel setTextColor:kColorBlack];
     
-    [self.personalRollTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollTitleLabel.font.pointSize]];
-    [self.personalRollTitleLabel setTextColor:kColorBlack];
-    [self.personalRollDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_personalRollDescriptionLabel.font.pointSize]];
-    [self.personalRollDescriptionLabel setTextColor:kColorBlack];
-    [self.personalRollUsernameLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollUsernameLabel.font.pointSize]];
-    [self.personalRollUsernameLabel setTextColor:[UIColor colorWithHex:@"fff" andAlpha:1.0f]];
-    
-    [self.streamTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_streamTitleLabel.font.pointSize]];
-    [self.streamTitleLabel setTextColor:kColorBlack];
-    [self.streamDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_streamDescriptionLabel.font.pointSize]];
-    [self.streamDescriptionLabel setTextColor:kColorBlack];
-    
-    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
-    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kCurrentVersion]];
-    [self.versionLabel setTextColor:kColorBlack];
+    [self setupCards];
     
 }
 
@@ -149,7 +138,6 @@
                          
                          [self.loginView removeFromSuperview];
                          [self.backgroundLoginView removeFromSuperview];
-                         [self.personalRollButton setEnabled:YES];
 
                      }];
 
@@ -260,6 +248,94 @@
     });
 }
 
+#pragma mark - UI Methods (Private)
+- (void)setupCards
+{
+    
+    // Labels
+    [self.likesTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_likesTitleLabel.font.pointSize]];
+    [self.likesTitleLabel setTextColor:kColorBlack];
+    [self.likesDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_likesDescriptionLabel.font.pointSize]];
+    [self.likesDescriptionLabel setTextColor:kColorBlack];
+    
+    [self.personalRollTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollTitleLabel.font.pointSize]];
+    [self.personalRollTitleLabel setTextColor:kColorBlack];
+    [self.personalRollDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_personalRollDescriptionLabel.font.pointSize]];
+    [self.personalRollDescriptionLabel setTextColor:kColorBlack];
+  
+    self.personalRollUsernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(688.0f, 130.0f, 278, 52.0f)];
+    self.personalRollUsernameLabel.text = @"Login to your .TV";
+    [self.personalRollUsernameLabel setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:_personalRollUsernameLabel];
+    [self.personalRollUsernameLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollUsernameLabel.font.pointSize]];
+    [self.personalRollUsernameLabel setTextColor:[UIColor colorWithHex:@"ffffff" andAlpha:1.0f]];
+    
+    [self.streamTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_streamTitleLabel.font.pointSize]];
+    [self.streamTitleLabel setTextColor:kColorBlack];
+    [self.streamDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_streamDescriptionLabel.font.pointSize]];
+    [self.streamDescriptionLabel setTextColor:kColorBlack];
+    
+    [self.authenticationTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_authenticationTitleLabel.font.pointSize]];
+    [self.authenticationTitleLabel setTextColor:kColorBlack];
+    [self.authenticationDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_authenticationDescriptionLabel.font.pointSize]];
+    [self.authenticationDescriptionLabel setTextColor:kColorBlack];
+    
+    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
+    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kCurrentVersion]];
+    [self.versionLabel setTextColor:kColorBlack];
+    
+    
+    // Actions
+    [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
+    [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
+    [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)enableCards
+{
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    
+    [self.likesButton setEnabled:YES];
+    [self.likesTitleLabel setEnabled:YES];
+    [self.likesDescriptionLabel setEnabled:YES];
+    
+    [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
+    [self.personalRollButton setEnabled:YES];
+    [self.personalRollUsernameLabel setEnabled:YES];
+    
+    [self.streamButton setEnabled:YES];
+    [self.streamTitleLabel setEnabled:YES];
+    [self.streamDescriptionLabel setEnabled:YES];
+
+    [self.authenticationTitleLabel setText:@"Logout"];
+    [self.authenticationButton addTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
+    [self.authenticationButton addTarget:self action:@selector(logoutAction) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
+- (void)disableCards
+{
+    
+    [self.likesButton setEnabled:NO];
+    [self.likesTitleLabel setEnabled:NO];
+    [self.likesDescriptionLabel setEnabled:NO];
+    
+    [self.personalRollButton setEnabled:NO];
+    [self.personalRollTitleLabel setEnabled:NO];
+    [self.personalRollDescriptionLabel setEnabled:NO];
+    [self.personalRollUsernameLabel setEnabled:NO];
+    
+    [self.streamButton setEnabled:NO];
+    [self.streamTitleLabel setEnabled:NO];
+    [self.streamDescriptionLabel setEnabled:NO];
+    
+    [self.authenticationTitleLabel setText:@"Login"];
+    [self.authenticationButton addTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
+    [self.authenticationButton addTarget:self action:@selector(authenticationButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
 #pragma mark - User Authentication Methods (Private)
 - (void)authenticationButtonAction
 {
@@ -292,8 +368,6 @@
                                                              _loginView.frame.size.height)];
                          
                      } completion:^(BOOL finished) {
-                         
-//                         [self.personalRollButton setEnabled:NO];
                          
                          [self.loginView.emailField becomeFirstResponder];
                      
@@ -332,6 +406,7 @@
 
 - (void)logoutAction
 {
+    [self disableCards];
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [appDelegate logout];
 }
@@ -358,45 +433,6 @@
                          [self enableCards];
                          
                      }];
-}
-
-#pragma mark - UI Methods (Private)
-- (void)enableCards
-{
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    User *user = [dataUtility fetchUser];
-    
-    [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-    [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
-    [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
-    [self.personalRollButton setEnabled:YES];
-    
-    [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
-    [self.likesButton setEnabled:YES];
-    [self.likesTitleLabel setEnabled:YES];
-    [self.likesDescriptionLabel setEnabled:YES];
-    
-    [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
-    [self.streamButton setEnabled:YES];
-    [self.streamTitleLabel setEnabled:YES];
-    [self.streamDescriptionLabel setEnabled:YES];
-    
-    
-}
-
-- (void)disableCards
-{
-    [self.personalRollButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-    [self.personalRollButton addTarget:self action:@selector(authenticationButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.personalRollUsernameLabel setText:@"Login to view your .TV"];
-    
-    [self.likesButton setEnabled:NO];
-    [self.likesTitleLabel setEnabled:NO];
-    [self.likesDescriptionLabel setEnabled:NO];
-    
-    [self.streamButton setEnabled:NO];
-    [self.streamTitleLabel setEnabled:NO];
-    [self.streamDescriptionLabel setEnabled:NO];
 }
 
 #pragma mark - UITextFieldDelegate Methods
