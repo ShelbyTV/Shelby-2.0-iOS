@@ -58,6 +58,7 @@
 						<string key="NSFrame">{{651, 722}, {353, 19}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -338,7 +339,7 @@
 					<object class="IBUILabel" id="1062139851">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{703, 131}, {301, 27}}</string>
+						<string key="NSFrame">{{703, 144}, {278, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="128128979"/>
@@ -502,7 +503,6 @@
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="396976415"/>
-							<reference ref="1062139851"/>
 							<reference ref="762487377"/>
 							<reference ref="549364921"/>
 							<reference ref="329715642"/>
@@ -513,6 +513,7 @@
 							<reference ref="128128979"/>
 							<reference ref="832810256"/>
 							<reference ref="343839177"/>
+							<reference ref="1062139851"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
