@@ -22,7 +22,6 @@
 - (void)storeUser:(NSDictionary *)resultsDictionary;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary;
-- (void)storeGroupsAndGroupRolls:(NSDictionary *)resultsDictionary;
 
 // Public Fetching Methods
 - (User *)fetchUser;

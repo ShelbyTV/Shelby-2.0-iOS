@@ -123,7 +123,6 @@
     [ShelbyAPIClient getStream];
     [ShelbyAPIClient getLikesRoll];
     [ShelbyAPIClient getPersonalRoll];
-    [ShelbyAPIClient getGroups];
 }
 
 - (void)pollAPI
@@ -150,20 +149,11 @@
             
         case 2: { // Personal Roll
             
-            self.pollAPICounter = 3;
+            self.pollAPICounter = 0;
             
             [ShelbyAPIClient getPersonalRoll];
             
         } break;
-            
-        case 3: { // Personal Roll
-            
-            self.pollAPICounter = 0;
-            
-            [ShelbyAPIClient getGroups];
-            
-        } break;
-
             
         default:
             break;

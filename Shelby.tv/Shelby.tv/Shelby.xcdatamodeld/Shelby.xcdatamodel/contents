@@ -3,7 +3,7 @@
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="conversation" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="conversation" inverseEntity="Frame" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Messages" inverseName="conversation" inverseEntity="Messages" syncable="YES"/>
     </entity>
     <entity name="Creator" representedClassName="Creator" syncable="YES">
@@ -27,16 +27,6 @@
         <relationship name="stream" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Stream" inverseName="frame" inverseEntity="Stream" syncable="YES"/>
         <relationship name="video" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
     </entity>
-    <entity name="Group" representedClassName="Group" syncable="YES">
-        <attribute name="titleID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="groupRoll" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="GroupRoll" inverseName="group" inverseEntity="GroupRoll" syncable="YES"/>
-    </entity>
-    <entity name="GroupRoll" representedClassName="GroupRoll" syncable="YES">
-        <attribute name="displayDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="group" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="groupRoll" inverseEntity="Group" syncable="YES"/>
-    </entity>
     <entity name="Messages" representedClassName="Messages" syncable="YES">
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
@@ -46,7 +36,7 @@
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="conversation" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <entity name="Roll" representedClassName="Roll" syncable="YES">
         <attribute name="creatorID" optional="YES" attributeType="String" syncable="YES"/>
@@ -54,12 +44,12 @@
         <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="roll" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="roll" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="Stream" representedClassName="Stream" syncable="YES">
         <attribute name="streamID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="stream" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="stream" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="admin" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -84,8 +74,6 @@
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Creator" positionX="178" positionY="201" width="128" height="105"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="240"/>
-        <element name="Group" positionX="18" positionY="168" width="128" height="73"/>
-        <element name="GroupRoll" positionX="27" positionY="9" width="128" height="103"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
         <element name="Roll" positionX="-155" positionY="342" width="128" height="135"/>
         <element name="Stream" positionX="682" positionY="216" width="128" height="90"/>
