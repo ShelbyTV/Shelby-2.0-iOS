@@ -10,7 +10,7 @@
 
 @implementation NSDate (DateFromBSONObjectID)
 
-+ (NSDate*)dataFromBSONObjectID:(NSString *)identifier
++ (NSDate *)dataFromBSONObjectID:(NSString *)identifier
 {
     NSUInteger result;
     [[NSScanner scannerWithString:[identifier substringToIndex:8]] scanHexInt:&result];

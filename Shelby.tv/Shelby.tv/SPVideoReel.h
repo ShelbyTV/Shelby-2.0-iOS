@@ -18,15 +18,15 @@
 
 /// Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType
-             categoryTitle:(NSString*)title
-            andVideoFrames:(NSArray*)videoFrames;
+             categoryTitle:(NSString *)title
+            andVideoFrames:(NSArray *)videoFrames;
 
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;
 
 /// Storage Methods
-- (void)storeLoadedVideoPlayer:(SPVideoPlayer*)player;
+- (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player;
 
 /// Action Methods
 - (IBAction)homeButtonAction:(id)sender;

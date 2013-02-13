@@ -28,11 +28,11 @@
 
 + (void)loadImageFromLink:(NSString *)link 
              forImageView:(UIImageView *)imageView 
-      withPlaceholderView:(UIView*)placeholderView
+      withPlaceholderView:(UIView *)placeholderView
            andContentMode:(UIViewContentMode)contentMode;
 
 // Remove an image from the cache (images use links as dictionary keys)
-+ (void)removeImageFromCache:(NSString*)link;
++ (void)removeImageFromCache:(NSString *)link;
 
 // Empty the cache
 + (void)removeAllImages;

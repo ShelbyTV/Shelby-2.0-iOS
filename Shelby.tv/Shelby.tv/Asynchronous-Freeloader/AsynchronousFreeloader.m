@@ -10,31 +10,31 @@
 
 @interface AsynchronousFreeloader ()
 
-+ (void)presentPlaceholderView:(UIView*)placeholderView                     // Present placeholderView while data is loaded from disk/web
-                   inImageView:(UIImageView*)imageView;
++ (void)presentPlaceholderView:(UIView *)placeholderView                     // Present placeholderView while data is loaded from disk/web
+                   inImageView:(UIImageView *)imageView;
 
-+ (void)removePlaceholderView:(UIView*)placeholderView                      // Remove placeholderView after data is loaded from disk/web
-                fromImageView:(UIImageView*)imageView;
++ (void)removePlaceholderView:(UIView *)placeholderView                      // Remove placeholderView after data is loaded from disk/web
+                fromImageView:(UIImageView *)imageView;
 
-+ (NSMutableDictionary*)createReferenceToCache;                             // Create local instance of NSMutableDictionary
++ (NSMutableDictionary *)createReferenceToCache;                             // Create local instance of NSMutableDictionary
 
-+ (BOOL)doesImageWithName:(NSString*)name                                   // Check if image exists in cache and on device (determines if HTTP request needs to be performed)
-                   existInCache:(NSMutableDictionary*)cache;                                          
++ (BOOL)doesImageWithName:(NSString *)name                                   // Check if image exists in cache and on device (determines if HTTP request needs to be performed)
+                   existInCache:(NSMutableDictionary *)cache;                                          
 
-+ (void)saveImageWithName:(NSString*)name                                   // Save data from asynchronous response to tmp directory on device
-                 fromData:(NSData*)data;                    
++ (void)saveImageWithName:(NSString *)name                                   // Save data from asynchronous response to tmp directory on device
+                 fromData:(NSData *)data;                    
 
-+ (void)resaveImageWithName:(NSString*)name                                 // Change position of image in cache to preserve newness 
-                    inCache:(NSMutableDictionary*)cache;                         
++ (void)resaveImageWithName:(NSString *)name                                 // Change position of image in cache to preserve newness 
+                    inCache:(NSMutableDictionary *)cache;                         
 
 + (void)performGarbageCollection;                                           // Clear cache if number of entries exceeds amount defined by 'AsynchronousFreeloaderCache'
 
-+ (void)successfulResponseForImageView:(UIImageView*)imageView              // Asynchronous request succeeded
++ (void)successfulResponseForImageView:(UIImageView *)imageView              // Asynchronous request succeeded
                               withData:(NSData *)data
-                              fromLink:(NSString*)link
+                              fromLink:(NSString *)link
                         andContentMode:(UIViewContentMode)contentMode;
 
-+ (void)failedResponseForImageView:(UIImageView*)imageView;                 // Asynchronous request failed
++ (void)failedResponseForImageView:(UIImageView *)imageView;                 // Asynchronous request failed
 
 @end
 
@@ -192,7 +192,7 @@
 
 }
 
-+ (NSMutableDictionary*)createReferenceToCache
++ (NSMutableDictionary *)createReferenceToCache
 {
     
     // Create Cache

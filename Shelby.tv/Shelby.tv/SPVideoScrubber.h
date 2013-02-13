@@ -13,7 +13,7 @@
 @property (nonatomic) id scrubberTimeObserver;
 
 /// Singleton Methods
-+ (SPVideoScrubber*)sharedInstance;
++ (SPVideoScrubber *)sharedInstance;
 
 /// Persistance Methods
 - (void)setupScrubber;

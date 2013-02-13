@@ -10,7 +10,7 @@
 
 @implementation NSString (CoreDataNullTest)
 
-+ (NSString*)coreDataNullTest:(NSString*)string
++ (NSString *)coreDataNullTest:(NSString *)string
 {
     return [string isEqual:[NSNull null]] ? nil : string;
 }

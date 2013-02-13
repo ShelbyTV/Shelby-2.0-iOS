@@ -16,28 +16,28 @@
 
 // Public Persistance Methods
 - (void)removeAllVideoExtractionURLReferences;
-- (void)saveContext:(NSManagedObjectContext*)context;
+- (void)saveContext:(NSManagedObjectContext *)context;
 
 // Public Storage Methods
-- (void)storeUser:(NSDictionary*)resultsDictionary;
-- (void)storeStream:(NSDictionary*)resultsDictionary;
-- (void)storeRollFrames:(NSDictionary*)resultsDictionary;
-- (void)storeGroupsAndGroupRolls:(NSDictionary*)resultsDictionary;
+- (void)storeUser:(NSDictionary *)resultsDictionary;
+- (void)storeStream:(NSDictionary *)resultsDictionary;
+- (void)storeRollFrames:(NSDictionary *)resultsDictionary;
+- (void)storeGroupsAndGroupRolls:(NSDictionary *)resultsDictionary;
 
 // Public Fetching Methods
-- (User*)fetchUser;
+- (User *)fetchUser;
 - (NSUInteger)fetchStreamCount;
 - (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
-- (NSMutableArray*)fetchStreamEntries;
-- (NSMutableArray*)fetchMoreStreamEntriesAfterDate:(NSDate*)date;
-- (NSMutableArray*)fetchLikesEntries;
-- (NSMutableArray*)fetchMoreLikesEntriesAfterDate:(NSDate*)date;
-- (NSMutableArray*)fetchPersonalRollEntries;
-- (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate*)date;
-- (NSString*)fetchTextFromFirstMessageInConversation:(Conversation*)conversation;
+- (NSMutableArray *)fetchStreamEntries;
+- (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date;
+- (NSMutableArray *)fetchLikesEntries;
+- (NSMutableArray *)fetchMoreLikesEntriesAfterDate:(NSDate *)date;
+- (NSMutableArray *)fetchPersonalRollEntries;
+- (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date;
+- (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
 
 // Sync Methods
-- (void)syncLikes:(NSDictionary*)webResultsDictionary;
+- (void)syncLikes:(NSDictionary *)webResultsDictionary;
 
 @end

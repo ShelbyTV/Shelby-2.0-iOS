@@ -58,6 +58,6 @@
 
 - (void)recordEvent;                                // Event tracking method (adds +1 towards goals defined by trigger macros)
 - (void)recordEventWithWeight:(NSUInteger)weight;   // Weighted event tracking method (adds value of weight towards goals defined by trigger macros)
-+ (Panhandler*)sharedInstance;                      // Singleton class method
++ (Panhandler *)sharedInstance;                      // Singleton class method
 
 @end

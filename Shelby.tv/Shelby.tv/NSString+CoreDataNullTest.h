@@ -8,6 +8,6 @@
 
 @interface NSString (CoreDataNullTest)
 
-+ (NSString*)coreDataNullTest:(NSString*)string;
++ (NSString *)coreDataNullTest:(NSString *)string;
 
 @end

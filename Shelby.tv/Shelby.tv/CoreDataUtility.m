@@ -21,18 +21,18 @@
            forIDKey:(NSString *)entityIDKey;
 
 // Private Storage Methods
-- (void)storeFrame:(Frame*)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
+- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
-- (void)storeCreator:(Creator*)creator fromFrameArray:(NSArray*)frameArray;
+- (void)storeCreator:(Creator *)creator fromFrameArray:(NSArray *)frameArray;
 - (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
-- (void)storeRoll:(Roll*)roll fromFrameArray:(NSArray *)frameArray;
+- (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray;
 - (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
 // Private Fetching Methods
-- (NSMutableArray*)filterPlayableStreamFrames:(NSArray*)frames;
-- (NSMutableArray*)filterPlayableFrames:(NSArray*)frames;
-- (NSMutableArray*)removeDuplicateFrames:(NSMutableArray*)frames;
-- (void)postNotificationVideoInContext:(NSManagedObjectContext*)context;
+- (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames;
+- (NSMutableArray *)filterPlayableFrames:(NSArray *)frames;
+- (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames;
+- (void)postNotificationVideoInContext:(NSManagedObjectContext *)context;
 
 @end
 
@@ -47,7 +47,7 @@
 {
     if ( self = [super init] ) {
    
-        self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         self.context = [self.appDelegate context];
         self.requestType = requestType;
         
@@ -78,7 +78,7 @@
     
     for (NSUInteger i = 0; i < [entries count]; ++i ) {
         
-        Video *video = (Video*)[entries objectAtIndex:i];
+        Video *video = (Video *)[entries objectAtIndex:i];
         [video setExtractedURL:[NSString coreDataNullTest:nil]];
         
     }
@@ -384,7 +384,7 @@
     return [frameResults count];
 }
 
-- (NSMutableArray*)fetchStreamEntries
+- (NSMutableArray *)fetchStreamEntries
 {
     
     // Create fetch request
@@ -411,7 +411,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray*)fetchMoreStreamEntriesAfterDate:(NSDate *)date
+- (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date
 {
     
     // Create fetch request
@@ -442,7 +442,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray*)fetchLikesEntries
+- (NSMutableArray *)fetchLikesEntries
 {
     
     // Create fetch request
@@ -474,7 +474,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray*)fetchMoreLikesEntriesAfterDate:(NSDate *)date
+- (NSMutableArray *)fetchMoreLikesEntriesAfterDate:(NSDate *)date
 {
     
     // Create fetch request
@@ -507,7 +507,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray*)fetchPersonalRollEntries
+- (NSMutableArray *)fetchPersonalRollEntries
 {
     
     // Create fetch request
@@ -539,7 +539,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray*)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date
+- (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date
 {
     
     // Create fetch request
@@ -599,7 +599,7 @@
     
     if ( [messagesArray count] ) {
         
-        Messages *message = (Messages*) messagesArray[0];
+        Messages *message = (Messages *) messagesArray[0];
         messageText = message.text;
     }
 
@@ -638,7 +638,7 @@
     // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
     for ( NSUInteger i = 0; i < [frameResults count]; ++i ) {
         
-        Frame *frame = (Frame*)frameResults[i];
+        Frame *frame = (Frame *)frameResults[i];
         NSString *frameID = frame.frameID;
         
         // Delete object if it doesn't exist on web any more
@@ -864,7 +864,7 @@
     
     for (NSUInteger i = 0; i < [frames count]; ++i ) {
         
-        Stream *stream = (Stream*)frames[i];
+        Stream *stream = (Stream *)frames[i];
         
         NSString *providerName = stream.frame.video.providerName;
         NSString *providerID = stream.frame.video.providerID;
@@ -886,7 +886,7 @@
     
     for (NSUInteger i = 0; i < [frames count]; ++i ) {
         
-        Frame *frame = (Frame*)frames[i];
+        Frame *frame = (Frame *)frames[i];
         
         NSString *providerName = frame.video.providerName;
         NSString *providerID = frame.video.providerID;
@@ -907,7 +907,7 @@
     
     for (NSUInteger i = 0; i < [tempFrames count]; ++i) {
         
-        Frame *frame = (Frame*)tempFrames[i];
+        Frame *frame = (Frame *)tempFrames[i];
         NSString *videoID = frame.video.videoID;
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"videoID == %@", videoID];
         NSMutableArray *filteredArray = [NSMutableArray arrayWithArray:[frames filteredArrayUsingPredicate:predicate]];
@@ -945,7 +945,7 @@
         NSArray *videoArray = [self.context executeFetchRequest:request error:nil];
         
         // Extract video from videoArray
-        Video *video = (Video*)videoArray[0];
+        Video *video = (Video *)videoArray[0];
         
         // Post notification if SPVideoReel object is available
         NSDictionary *videoDictionary = @{kSPCurrentVideo: video};

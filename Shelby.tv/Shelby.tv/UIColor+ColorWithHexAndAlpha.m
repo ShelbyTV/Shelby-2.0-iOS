@@ -18,7 +18,7 @@
 @implementation UIColor (ColorWithHexAndAlpha)
 
 #pragma mark - Public Methods
-+ (UIColor*)colorWithHex:(NSString*)hex andAlpha:(CGFloat)alpha
++ (UIColor *)colorWithHex:(NSString *)hex andAlpha:(CGFloat)alpha
 {
 
     UIColor *color;

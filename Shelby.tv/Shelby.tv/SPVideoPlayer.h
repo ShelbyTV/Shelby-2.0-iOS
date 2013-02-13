@@ -15,7 +15,7 @@
 @property (assign, nonatomic) BOOL playbackFinished;
 
 /// Initialization Methods
-- (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame*)videoFrame;
+- (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame;
 - (void)resetPlayer;
 
 /// Video Fetching Methods

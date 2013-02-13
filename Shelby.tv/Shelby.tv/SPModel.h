@@ -22,7 +22,7 @@
 @property (weak, nonatomic) SPVideoPlayer *currentVideoPlayer;
 
 /// Singleton Methods
-+ (SPModel*)sharedInstance;
++ (SPModel *)sharedInstance;
 
 - (void)destroyModel;
 

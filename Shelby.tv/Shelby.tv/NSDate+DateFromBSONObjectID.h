@@ -10,6 +10,6 @@
 
 @interface NSDate (DateFromBSONObjectID)
 
-+ (NSDate*)dataFromBSONObjectID:(NSString*)identifier;
++ (NSDate *)dataFromBSONObjectID:(NSString *)identifier;
 
 @end

@@ -14,7 +14,7 @@
 @property (nonatomic, readonly) NSManagedObjectContext *context;
 
 - (void)userIsAuthorized;
-- (void)mergeChanges:(NSNotification*)notification;
+- (void)mergeChanges:(NSNotification *)notification;
 - (void)dumpAllData;
 - (void)logout;
 - (void)performCleanIfUserDidAuthenticate;

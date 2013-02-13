@@ -17,7 +17,7 @@
 @property (nonatomic) NSTimer *currentExtractionTimer;
 @property (assign, nonatomic) BOOL isExtracting;
 
-- (NSManagedObjectContext*)context;
+- (NSManagedObjectContext *)context;
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
 - (void)destroyWebView;
@@ -32,7 +32,7 @@
 @implementation SPVideoExtractor
 
 #pragma mark - Singleton Methods
-+ (SPVideoExtractor*)sharedInstance
++ (SPVideoExtractor *)sharedInstance
 {    
     static SPVideoExtractor *sharedInstance = nil;
     static dispatch_once_t extractorToken = 0;
@@ -80,9 +80,9 @@
 }
 
 #pragma mark - Private Methods
-- (NSManagedObjectContext*)context
+- (NSManagedObjectContext *)context
 {
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     return [appDelegate context];
 }
@@ -93,7 +93,7 @@
         
         NSManagedObjectContext *context = [self context];
         NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-        Video *video = (Video*)[context existingObjectWithID:objectID error:nil];
+        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
         [self setIsExtracting:YES];
         [self createWebView];
         
@@ -150,7 +150,7 @@
     
     NSString *youtubeRequestString = [NSString stringWithFormat:videoExtractor, 2048.0f, 1536.0f, video.providerID];
     
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.window addSubview:_webView];
     [self.webView loadHTMLString:youtubeRequestString baseURL:[NSURL URLWithString:@"http://shelby.tv"]];
     
@@ -165,7 +165,7 @@
     
     NSString *vimeoRequestString = [NSString stringWithFormat:vimeoExtractor, video.providerID];
     
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.window addSubview:_webView];
     [self.webView loadHTMLString:vimeoRequestString baseURL:[NSURL URLWithString:@"http://shelby.tv"]];
     
@@ -179,7 +179,7 @@
     
     NSString *dailymotionRequestString = [NSString stringWithFormat:dailymotionExtractor, video.providerID, 2048.0f, 1536.0f];
     
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.window addSubview:_webView];
     [self.webView loadHTMLString:dailymotionRequestString baseURL:[NSURL URLWithString:@"http://shelby.tv"]];
 }
@@ -220,7 +220,7 @@
                         // Update Core Data video object
                         NSManagedObjectContext *context = [self context];
                         NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-                        Video *video = (Video*)[context existingObjectWithID:objectID error:nil];
+                        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
                         [video setValue:extractedURL forKey:kCoreDataVideoExtractedURL];
                        
                         // Saved updated Core Data video entry, and post notification for SPVideoPlayer object

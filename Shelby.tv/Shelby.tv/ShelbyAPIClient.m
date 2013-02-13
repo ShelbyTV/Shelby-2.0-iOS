@@ -24,7 +24,7 @@
         if ( response.statusCode == 200 ) {
             
             // Clean Image Cache and Core Data store
-            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             [appDelegate performCleanIfUserDidAuthenticate];
             
             // Store User Data

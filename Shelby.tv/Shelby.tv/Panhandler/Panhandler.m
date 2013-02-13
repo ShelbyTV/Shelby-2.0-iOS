@@ -18,8 +18,8 @@
 #define PanhandlerVersion                       @"Version"                                                  
 
 // App Information
-#define PanhandlerAppName                       [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey]              
-#define PanhandlerAppVersion                    [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey]           
+#define PanhandlerAppName                       [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey]              
+#define PanhandlerAppVersion                    [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey]           
 #define PanhandlerAppStoreLink                  [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", PanhandlerAppleID]
 
 
@@ -37,7 +37,7 @@
 - (void)checkNumberOfEventsTriggered:(NSUInteger)counter;               // Pop UIAlertView instance if certain conditions are satisfied
 - (void)enableRemindMeLater;                                            // Enable 'Retrigger' state if 'Remind Me Later' is selected
 - (void)disableTracking;                                                // Disable waseteful computation cycles if alert was displayed or 'NO' was selected
-- (UIAlertView*)initializeAlertView;                                    // Create new instance of UIAlertView
+- (UIAlertView *)initializeAlertView;                                    // Create new instance of UIAlertView
 
 @end
 
@@ -46,7 +46,7 @@
 static Panhandler *sharedInstance = nil;
 
 #pragma mark - Singleton Methods
-+ (Panhandler*)sharedInstance
++ (Panhandler *)sharedInstance
 {
     if (sharedInstance == nil) {
         sharedInstance = [[super allocWithZone:NULL] init];
@@ -176,7 +176,7 @@ static Panhandler *sharedInstance = nil;
     [self setCounter:0];
 }
 
-- (UIAlertView*)initializeAlertView
+- (UIAlertView *)initializeAlertView
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:PanhandlerAlertTitle 
                                                         message:PanhandlerAlertMessage 
@@ -278,7 +278,7 @@ static Panhandler *sharedInstance = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSString*)version
+- (NSString *)version
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:PanhandlerVersion];
 }

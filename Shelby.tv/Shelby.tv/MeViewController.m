@@ -48,7 +48,7 @@
 - (void)loginButtonAction;
 - (void)logoutButtonAction;
 - (void)performAuthentication;
-- (void)userAuthenticationDidSucceed:(NSNotification*)notification;
+- (void)userAuthenticationDidSucceed:(NSNotification *)notification;
 
 /// Video Player Launch Methods
 - (void)launchPlayerWithStreamEntries;
@@ -296,7 +296,7 @@
 - (void)logoutButtonAction
 {
     [self toggleCardsEnabled:NO];
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate logout];
 }
 - (void)performAuthentication
@@ -328,7 +328,7 @@
     }
 }
 
-- (void)userAuthenticationDidSucceed:(NSNotification*)notification
+- (void)userAuthenticationDidSucceed:(NSNotification *)notification
 {
     
     [UIView animateWithDuration:0.5

@@ -245,7 +245,7 @@
     
     return _persistentStoreCoordinator;
 }
-- (NSManagedObjectContext*)context;
+- (NSManagedObjectContext *)context;
 {
     
     // Initialize persistantStoreCoordinator

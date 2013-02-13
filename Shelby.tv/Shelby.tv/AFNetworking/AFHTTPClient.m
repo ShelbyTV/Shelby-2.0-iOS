@@ -979,7 +979,7 @@ NSTimeInterval const kAFUploadStream3GSuggestedDelay = 0.2;
     return bytesRead;
 }
 
-- (BOOL)getBuffer:(__unused uint8_t **)buffer
+- (BOOL)getBuffer:(__unused uint8_t * *)buffer
            length:(__unused NSUInteger *)len
 {
     return NO;

@@ -21,7 +21,7 @@
 @implementation SPModel
 
 #pragma mark - Singleton Methods
-+ (SPModel*)sharedInstance
++ (SPModel *)sharedInstance
 {
     static SPModel *sharedInstance = nil;
     static dispatch_once_t modelToken = 0;
@@ -33,7 +33,7 @@
 }
 
 #pragma mark - Public Methods
-+ (SPVideoExtractor*)videoExtractor
++ (SPVideoExtractor *)videoExtractor
 {
     return [SPVideoExtractor sharedInstance];
 }

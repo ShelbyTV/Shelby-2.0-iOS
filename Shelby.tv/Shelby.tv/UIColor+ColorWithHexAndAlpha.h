@@ -10,6 +10,6 @@
 
 @interface UIColor (ColorWithHexAndAlpha)
 
-+ (UIColor*)colorWithHex:(NSString*)hex andAlpha:(CGFloat)alpha;
++ (UIColor *)colorWithHex:(NSString *)hex andAlpha:(CGFloat)alpha;
 
 @end

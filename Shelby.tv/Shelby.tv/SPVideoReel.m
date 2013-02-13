@@ -30,7 +30,7 @@
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
 /// Setup Methods
-- (void)setupVideoFrames:(NSArray*)videoFrames;
+- (void)setupVideoFrames:(NSArray *)videoFrames;
 - (void)setupVariables;
 - (void)setupObservers;
 - (void)setupVideoScrollView;
@@ -48,7 +48,7 @@
 - (void)queueMoreVideos:(NSUInteger)position;
 - (void)fetchOlderVideos:(NSUInteger)position;
 - (void)dataSourceShouldUpdateFromLocalArray;
-- (void)dataSourceShouldUpdateFromWeb:(NSNotification*)notification;
+- (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
 - (void)dataSourceDidUpdate;
 
 @end
@@ -152,7 +152,7 @@
 
 - (void)setupVariables
 {
-    self.appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.model = [SPModel sharedInstance];
     self.model.videoReel = self;
     self.model.numberOfVideos = [self.videoFrames count];
@@ -261,7 +261,7 @@
             
             NSManagedObjectContext *context = [self.appDelegate context];
             NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-            Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+            Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
             SPVideoItemView *itemView = nib[0];
@@ -325,7 +325,7 @@
         
         if ( [view isKindOfClass:[UIButton class]] ) {
             
-            self.airPlayButton = (UIButton*)view;
+            self.airPlayButton = (UIButton *)view;
             
         }
     }
@@ -349,7 +349,7 @@
         
         DLog(@"Count: %d", [self.playableVideoPlayers count] );
         
-        SPVideoPlayer *oldestPlayer = (SPVideoPlayer*)(self.playableVideoPlayers)[0];
+        SPVideoPlayer *oldestPlayer = (SPVideoPlayer *)(self.playableVideoPlayers)[0];
         
         if ( oldestPlayer != _model.currentVideoPlayer ) { // If oldestPlayer isn't currently being played, remove it
             
@@ -360,7 +360,7 @@
             
             if ( [self.playableVideoPlayers count] > 1) {
                 
-                SPVideoPlayer *nextOldestPlayer = (SPVideoPlayer*)(self.playableVideoPlayers)[1];
+                SPVideoPlayer *nextOldestPlayer = (SPVideoPlayer *)(self.playableVideoPlayers)[1];
                 [nextOldestPlayer resetPlayer];
                 [self.playableVideoPlayers removeObject:nextOldestPlayer];
 
@@ -460,7 +460,7 @@
     [self.model.currentVideoPlayer pause];
     
     // Reference SPVideoItemView from position in videoListScrollView object
-    SPVideoItemView *itemView = (SPVideoItemView*)[sender superview];
+    SPVideoItemView *itemView = (SPVideoItemView *)[sender superview];
     NSUInteger position = itemView.tag;
     
     // Force scroll videoScrollView
@@ -504,7 +504,7 @@
 {
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
-    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -550,7 +550,7 @@
     // Reference NSManageObjectContext
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
-    Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
@@ -737,7 +737,7 @@
         
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
-        Frame *lastFrame = (Frame*)[context existingObjectWithID:lastFramedObjectID error:nil];
+        Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
         NSDate *date = lastFrame.timestamp;
     
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -765,9 +765,9 @@
         // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
         if ( [olderFramesArray count] ) {
 
-            Frame *firstFrame = (Frame*)olderFramesArray[0];
+            Frame *firstFrame = (Frame *)olderFramesArray[0];
             NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
-            firstFrame = (Frame*)[context existingObjectWithID:firstFrameObjectID error:nil];
+            firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
             if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
                 [olderFramesArray removeObject:firstFrame];
             }
@@ -803,7 +803,7 @@
             // videoScrollView
             NSManagedObjectContext *context = [self.appDelegate context];
             NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-            Frame *videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+            Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             
             CGRect viewframe = [self.videoScrollView frame];
             viewframe.origin.x = viewframe.size.width * i;

@@ -20,7 +20,7 @@
 @implementation SPVideoScrubber
 
 #pragma mark - Singleton Methods
-+ (SPVideoScrubber*)sharedInstance
++ (SPVideoScrubber *)sharedInstance
 {
     static SPVideoScrubber *sharedInstance = nil;
     static dispatch_once_t scrubberToken = 0;
@@ -212,7 +212,7 @@
 }
 
 #pragma mark - Accessor Methods
-- (SPModel*)model
+- (SPModel *)model
 {
     return [SPModel sharedInstance];
 }

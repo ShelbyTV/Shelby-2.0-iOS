@@ -28,15 +28,15 @@
 - (void)setupReferences;
 - (void)setupInitialConditions;
 - (void)setupIndicator;
-- (void)setupPlayerForURL:(NSURL*)extractedURL;
+- (void)setupPlayerForURL:(NSURL *)extractedURL;
 
 /// Storage Methods
 - (void)storeVideoForLater;
 - (CMTime)elapsedTime;
 
 /// Observer Methods
-- (void)loadVideo:(NSNotification*)notification;
-- (void)itemDidFinishPlaying:(NSNotification*)notification;
+- (void)loadVideo:(NSNotification *)notification;
+- (void)itemDidFinishPlaying:(NSNotification *)notification;
 
 @end
 
@@ -90,7 +90,7 @@
 #pragma mark - Setup Methods
 - (void)setupReferences
 {
-    [self setAppDelegate:(AppDelegate*)[[UIApplication sharedApplication] delegate]];
+    [self setAppDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     [self setModel:[SPModel sharedInstance]];
     [self setOverlayView:_model.overlayView];
     [self setVideoReel:_model.videoReel];
@@ -203,7 +203,7 @@
         NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [self.videoFrame objectID];
-        self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+        self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
         
         if ( _videoFrame.video.extractedURL.length ) {
             
@@ -255,7 +255,7 @@
             
             NSManagedObjectContext *context = [self.appDelegate context];
             NSManagedObjectID *objectID = [self.videoFrame objectID];
-            self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+            self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
             
         }
@@ -321,7 +321,7 @@
 
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];
-    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, _videoFrame.video.providerName, _videoFrame.video.providerID, _videoFrame.frameID];
     NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
@@ -333,12 +333,12 @@
                                                animated:YES];
 }
 
-- (void)loadVideo:(NSNotification*)notification
+- (void)loadVideo:(NSNotification *)notification
 {
 
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];
-    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
     
@@ -356,7 +356,7 @@
     }
 }
 
-- (void)itemDidFinishPlaying:(NSNotification*)notification
+- (void)itemDidFinishPlaying:(NSNotification *)notification
 {
 
     if ( _player.currentItem == notification.object && ![self playbackFinished]) {
