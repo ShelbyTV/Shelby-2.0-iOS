@@ -205,7 +205,7 @@
     [self.personalRollTitleLabel setEnabled:NO];
     [self.personalRollDescriptionLabel setEnabled:NO];
     [self.personalRollUsernameLabel setAlpha:0.75f]; // Change alpha when disabling card (instead of setting isEnabled)
-    [self.personalRollUsernameLabel setText:@"Login to your .TV"];
+    [self.personalRollUsernameLabel setText:@"Your personalized .TV"];
     
     [self.streamButton setEnabled:NO];
     [self.streamTitleLabel setEnabled:NO];
