@@ -53,8 +53,12 @@
     // Sync Queue if suer is logged in (this may cause app to crash if user launches app on queue and videos were removed)
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultUserAuthorized] ) {
         
-        // Perform Sync on Queue
-        [ShelbyAPIClient getQueueForSync];
+        // Perform Sync on Likes
+        [ShelbyAPIClient getLikesForSync];
+        
+        // Perform Sync on Likes
+        [ShelbyAPIClient getPersonalRollForSync];
+        
         
         // Update All Routs
         [self pingAllRoutes];
@@ -79,8 +83,11 @@
     // On login, perform API requests
     [self pingAllRoutes];
     
-    // Perform Sync on Queue
-    [ShelbyAPIClient getQueueForSync];
+    // Perform Sync on Likes
+    [ShelbyAPIClient getLikesForSync];
+    
+    // Perform Sync on Personal Roll
+    [ShelbyAPIClient getPersonalRollForSync];
     
     // Begin Polling API
     self.pollAPICounter = 0;
@@ -116,7 +123,6 @@
     [ShelbyAPIClient getStream];
     [ShelbyAPIClient getLikesRoll];
     [ShelbyAPIClient getPersonalRoll];
-    [ShelbyAPIClient getGroups];
 }
 
 - (void)pollAPI
@@ -143,20 +149,11 @@
             
         case 2: { // Personal Roll
             
-            self.pollAPICounter = 3;
+            self.pollAPICounter = 0;
             
             [ShelbyAPIClient getPersonalRoll];
             
         } break;
-            
-        case 3: { // Personal Roll
-            
-            self.pollAPICounter = 0;
-            
-            [ShelbyAPIClient getGroups];
-            
-        } break;
-
             
         default:
             break;

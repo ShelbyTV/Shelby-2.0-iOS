@@ -37,10 +37,6 @@
 @end
 
 @implementation CoreDataUtility
-@synthesize videoID = _videoID;
-@synthesize appDelegate = _appDelegate;
-@synthesize requestType = _requestType;
-@synthesize context = _context;
 
 #pragma mark - Initialization Methods
 - (id)initWithRequestType:(DataRequestType)requestType
@@ -267,46 +263,6 @@
     
     [self saveContext:_context];
     
-}
-
-- (void)storeGroupsAndGroupRolls:(NSDictionary *)resultsDictionary
-{
-    NSArray *resultsArray = resultsDictionary[@"result"];
-    
-    if ( [resultsArray count] ) {
-        
-        for ( NSUInteger i = 0; i < [resultsArray count]; ++i ) {
-            
-            Group *group = [self checkIfEntity:kCoreDataEntityGroup
-                                   withIDValue:[resultsArray[i] valueForKey:@"category_title"]
-                                      forIDKey:kCoreDataGroupTitleID];
-            
-            group.titleID = [resultsArray[i] valueForKey:@"category_title"];
-            
-            NSArray *rolls = [resultsArray[i] valueForKey:@"rolls"];
-            
-            for ( NSUInteger j = 0; j < [rolls count]; ++j ) {
-             
-                GroupRoll *groupRoll =  [self checkIfEntity:kCoreDataEntityGroupRoll
-                                                withIDValue:[rolls[j] valueForKey:@"id"]
-                                                    forIDKey:kCoreDataGroupRollID];
-                groupRoll.group = group;
-                [group addGroupRollObject:groupRoll];
-                
-                NSString *rollID = [NSString coreDataNullTest:[rolls[j] valueForKey:@"id"]];
-                [groupRoll setValue:rollID forKey:kCoreDataGroupRollID];
-                
-                NSString *displayTitle = [NSString coreDataNullTest:[rolls[j] valueForKey:@"display_title"]];
-                [groupRoll setValue:displayTitle forKey:kCoreDataGroupRollDisplayTitle];
-                
-                NSString *displayDescription = [NSString coreDataNullTest:[rolls[j] valueForKey:@"display_description"]];
-                [groupRoll setValue:displayDescription forKey:kCoreDataGroupRollDisplayDescription];
-                
-            }
-        }
-        
-        [self saveContext:_context];
-    }
 }
 
 #pragma mark - Public Fetch Methods
@@ -607,7 +563,7 @@
     return messageText.length ? messageText : @"No information available";
 }
 
-#pragma mark - Public Sync Methods
+#pragma mark - Sync Methods (Public)
 - (void)syncLikes:(NSDictionary *)webResultsDictionary
 {
     // Create fetch request
@@ -644,7 +600,52 @@
         // Delete object if it doesn't exist on web any more
         if ( ![webFrameIdentifiersInLikes containsObject:frameID] ) {
         
-            DLog(@"FrameID doesn't exist on web: %@", frameID);
+            DLog(@"Likes FrameID no longer exist on web, so it is being removed: %@", frameID);
+            
+            [self.context deleteObject:frame];
+        }
+    }
+    
+    [self saveContext:_context];
+}
+
+- (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    // Extract frameIDs from results from Shelby's Web Database
+    NSArray *webResultsArray = [webResultsDictionary[@"result"] valueForKey:@"frames"];
+    NSMutableArray *webFrameIdentifiersInLikes = [@[] mutableCopy];
+    for (NSUInteger i = 0; i < [webResultsArray count]; ++i) {
+        
+        NSString *frameID = [webResultsArray[i] valueForKey:@"id"];
+        [webFrameIdentifiersInLikes addObject:frameID];
+    }
+    
+    // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
+    for ( NSUInteger i = 0; i < [frameResults count]; ++i ) {
+        
+        Frame *frame = (Frame *)frameResults[i];
+        NSString *frameID = frame.frameID;
+        
+        // Delete object if it doesn't exist on web any more
+        if ( ![webFrameIdentifiersInLikes containsObject:frameID] ) {
+            
+            DLog(@"Personal Roll FrameID no longer exist on web, so it is being removed: %@", frameID);
             
             [self.context deleteObject:frame];
         }

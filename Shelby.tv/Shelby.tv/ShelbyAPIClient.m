@@ -231,7 +231,7 @@
     [operation start];
 }
 
-+ (void)getQueueForSync
++ (void)getLikesForSync
 {
         
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -257,7 +257,7 @@
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             
-            DLog(@"Problem fetching Likes for sync");
+            DLog(@"Problem fetching Likes for sync.");
             
         }];
         
@@ -265,29 +265,39 @@
     }
 }
 
-+ (void)getGroups
++ (void)getPersonalRollForSync
 {
     
-    NSURL *url = [NSURL URLWithString:kAPIShelbyGetGroups];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    NSString *authToken = [user token];
+    NSString *personallRollID = [user personalRollID];
+    NSUInteger frameCount = [dataUtility fetchLikesCount];
     
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    if ( frameCount ) {
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFramesForSync, personallRollID, authToken, frameCount]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setHTTPMethod:@"GET"];
+        
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_BackgroundUpdate];
-            [dataUtility storeGroupsAndGroupRolls:JSON];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+                [dataUtility syncPersonalRoll:JSON];
+                
+            });
             
-        });
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            
+            DLog(@"Problem fetching Personal Roll for sync.");
+            
+        }];
         
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        DLog(@"Problem fetching Stream");
-        
-    }];
-    
-    [operation start];
+        [operation start];
+    }
 }
+
 
 @end

@@ -22,7 +22,6 @@
 - (void)storeUser:(NSDictionary *)resultsDictionary;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary;
-- (void)storeGroupsAndGroupRolls:(NSDictionary *)resultsDictionary;
 
 // Public Fetching Methods
 - (User *)fetchUser;
@@ -39,5 +38,7 @@
 
 // Sync Methods
 - (void)syncLikes:(NSDictionary *)webResultsDictionary;
+- (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
+
 
 @end

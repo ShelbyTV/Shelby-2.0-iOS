@@ -17,7 +17,7 @@
 + (void)getMoreFramesInLikes:(NSString *)skipParam;
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
-+ (void)getQueueForSync;
-+ (void)getGroups;
++ (void)getLikesForSync;
++ (void)getPersonalRollForSync;
 
 @end

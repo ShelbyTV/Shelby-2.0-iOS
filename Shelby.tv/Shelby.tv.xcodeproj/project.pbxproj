@@ -81,19 +81,19 @@
 		8E59805B1680104A00027181 /* videoListPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980411680104A00027181 /* videoListPanel@2x.png */; };
 		8E59805C1680104A00027181 /* videoPlayerBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980421680104A00027181 /* videoPlayerBar.png */; };
 		8E59805D1680104A00027181 /* videoPlayerBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980431680104A00027181 /* videoPlayerBar@2x.png */; };
-		8E6C2F5016C3825000489EF6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6C2F4F16C3825000489EF6 /* User.m */; };
+		8E77B3AF16CBF7FE0015D100 /* channelCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E77B3AD16CBF7FE0015D100 /* channelCard.png */; };
+		8E77B3B016CBF7FE0015D100 /* channelCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E77B3AE16CBF7FE0015D100 /* channelCard@2x.png */; };
+		8E77B3EC16CC45D50015D100 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EB16CC45D50015D100 /* Roll.m */; };
+		8E77B3EF16CC45D50015D100 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
+		8E77B3F216CC45D50015D100 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
+		8E77B3F516CC45D60015D100 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
+		8E77B3F816CC45D60015D100 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F716CC45D60015D100 /* User.m */; };
+		8E77B3FB16CC45D60015D100 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3FA16CC45D60015D100 /* Video.m */; };
+		8E77B3FE16CC45D60015D100 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3FD16CC45D60015D100 /* Frame.m */; };
+		8E77B40116CC45D60015D100 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B40016CC45D60015D100 /* Messages.m */; };
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
-		8E8939E516C19F5100AE7B4F /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939E416C19F5100AE7B4F /* Creator.m */; };
-		8E8939E816C19F5100AE7B4F /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939E716C19F5100AE7B4F /* Frame.m */; };
-		8E8939F116C19F5200AE7B4F /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F016C19F5200AE7B4F /* Messages.m */; };
-		8E8939F416C19F5200AE7B4F /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F316C19F5200AE7B4F /* Stream.m */; };
-		8E8939FA16C19F5200AE7B4F /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939F916C19F5200AE7B4F /* Roll.m */; };
-		8E893A0016C19F5200AE7B4F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8939FF16C19F5200AE7B4F /* Video.m */; };
-		8E893A0616C1A0D300AE7B4F /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E893A0516C1A0D300AE7B4F /* Conversation.m */; };
-		8E893A1816C1F81D00AE7B4F /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E893A1716C1F81C00AE7B4F /* Group.m */; };
-		8E893A1B16C1F81D00AE7B4F /* GroupRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E893A1A16C1F81D00AE7B4F /* GroupRoll.m */; };
 		8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
 		8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F326F1683F4040049EECD /* scrubberBarOff.png */; };
 		8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */; };
@@ -227,32 +227,30 @@
 		8E5980411680104A00027181 /* videoListPanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoListPanel@2x.png"; sourceTree = "<group>"; };
 		8E5980421680104A00027181 /* videoPlayerBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoPlayerBar.png; sourceTree = "<group>"; };
 		8E5980431680104A00027181 /* videoPlayerBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoPlayerBar@2x.png"; sourceTree = "<group>"; };
-		8E6C2F4E16C3825000489EF6 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		8E6C2F4F16C3825000489EF6 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
+		8E77B3AD16CBF7FE0015D100 /* channelCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = channelCard.png; sourceTree = "<group>"; };
+		8E77B3AE16CBF7FE0015D100 /* channelCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channelCard@2x.png"; sourceTree = "<group>"; };
+		8E77B3EA16CC45D50015D100 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
+		8E77B3EB16CC45D50015D100 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
+		8E77B3ED16CC45D50015D100 /* Creator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creator.h; sourceTree = "<group>"; };
+		8E77B3EE16CC45D50015D100 /* Creator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Creator.m; sourceTree = "<group>"; };
+		8E77B3F016CC45D50015D100 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
+		8E77B3F116CC45D50015D100 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		8E77B3F316CC45D50015D100 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
+		8E77B3F416CC45D60015D100 /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
+		8E77B3F616CC45D60015D100 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		8E77B3F716CC45D60015D100 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		8E77B3F916CC45D60015D100 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		8E77B3FA16CC45D60015D100 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		8E77B3FC16CC45D60015D100 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		8E77B3FD16CC45D60015D100 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		8E77B3FF16CC45D60015D100 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
+		8E77B40016CC45D60015D100 /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
 		8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
-		8E8939E316C19F5100AE7B4F /* Creator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creator.h; sourceTree = "<group>"; };
-		8E8939E416C19F5100AE7B4F /* Creator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Creator.m; sourceTree = "<group>"; };
-		8E8939E616C19F5100AE7B4F /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		8E8939E716C19F5100AE7B4F /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
-		8E8939EF16C19F5200AE7B4F /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
-		8E8939F016C19F5200AE7B4F /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
-		8E8939F216C19F5200AE7B4F /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
-		8E8939F316C19F5200AE7B4F /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
-		8E8939F816C19F5200AE7B4F /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
-		8E8939F916C19F5200AE7B4F /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
-		8E8939FE16C19F5200AE7B4F /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
-		8E8939FF16C19F5200AE7B4F /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
-		8E893A0416C1A0D300AE7B4F /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
-		8E893A0516C1A0D300AE7B4F /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
-		8E893A1616C1F81C00AE7B4F /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
-		8E893A1716C1F81C00AE7B4F /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
-		8E893A1916C1F81D00AE7B4F /* GroupRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupRoll.h; sourceTree = "<group>"; };
-		8E893A1A16C1F81D00AE7B4F /* GroupRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupRoll.m; sourceTree = "<group>"; };
 		8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
 		8E9F326F1683F4040049EECD /* scrubberBarOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scrubberBarOff.png; sourceTree = "<group>"; };
 		8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrubberBarOff@2x.png"; sourceTree = "<group>"; };
@@ -337,26 +335,22 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
-				8E6C2F4E16C3825000489EF6 /* User.h */,
-				8E6C2F4F16C3825000489EF6 /* User.m */,
-				8E893A1616C1F81C00AE7B4F /* Group.h */,
-				8E893A1716C1F81C00AE7B4F /* Group.m */,
-				8E893A1916C1F81D00AE7B4F /* GroupRoll.h */,
-				8E893A1A16C1F81D00AE7B4F /* GroupRoll.m */,
-				8E893A0416C1A0D300AE7B4F /* Conversation.h */,
-				8E893A0516C1A0D300AE7B4F /* Conversation.m */,
-				8E8939E316C19F5100AE7B4F /* Creator.h */,
-				8E8939E416C19F5100AE7B4F /* Creator.m */,
-				8E8939E616C19F5100AE7B4F /* Frame.h */,
-				8E8939E716C19F5100AE7B4F /* Frame.m */,
-				8E8939EF16C19F5200AE7B4F /* Messages.h */,
-				8E8939F016C19F5200AE7B4F /* Messages.m */,
-				8E8939F216C19F5200AE7B4F /* Stream.h */,
-				8E8939F316C19F5200AE7B4F /* Stream.m */,
-				8E8939F816C19F5200AE7B4F /* Roll.h */,
-				8E8939F916C19F5200AE7B4F /* Roll.m */,
-				8E8939FE16C19F5200AE7B4F /* Video.h */,
-				8E8939FF16C19F5200AE7B4F /* Video.m */,
+				8E77B3FF16CC45D60015D100 /* Messages.h */,
+				8E77B40016CC45D60015D100 /* Messages.m */,
+				8E77B3FC16CC45D60015D100 /* Frame.h */,
+				8E77B3FD16CC45D60015D100 /* Frame.m */,
+				8E77B3F916CC45D60015D100 /* Video.h */,
+				8E77B3FA16CC45D60015D100 /* Video.m */,
+				8E77B3F616CC45D60015D100 /* User.h */,
+				8E77B3F716CC45D60015D100 /* User.m */,
+				8E77B3F316CC45D50015D100 /* Stream.h */,
+				8E77B3F416CC45D60015D100 /* Stream.m */,
+				8E77B3F016CC45D50015D100 /* Conversation.h */,
+				8E77B3F116CC45D50015D100 /* Conversation.m */,
+				8E77B3ED16CC45D50015D100 /* Creator.h */,
+				8E77B3EE16CC45D50015D100 /* Creator.m */,
+				8E77B3EA16CC45D50015D100 /* Roll.h */,
+				8E77B3EB16CC45D50015D100 /* Roll.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -479,6 +473,8 @@
 		8E2FC87B16C6F19D0022B58C /* Me & Browse Images */ = {
 			isa = PBXGroup;
 			children = (
+				8E77B3AD16CBF7FE0015D100 /* channelCard.png */,
+				8E77B3AE16CBF7FE0015D100 /* channelCard@2x.png */,
 				8E454CB816CA9DC100B2F528 /* likesCard.png */,
 				8E454CB916CA9DC100B2F528 /* likesCard@2x.png */,
 				8E454CBA16CA9DC100B2F528 /* loginCard.png */,
@@ -838,6 +834,8 @@
 				8E454CD316CAAD3F00B2F528 /* personalRollCard@2x.png in Resources */,
 				1CC3387A16CBE20800E58375 /* PagesView.xib in Resources */,
 				1CC3388516CC1AA600E58375 /* ChannelView.xib in Resources */,
+				8E77B3AF16CBF7FE0015D100 /* channelCard.png in Resources */,
+				8E77B3B016CBF7FE0015D100 /* channelCard@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,16 +891,6 @@
 				8EB3B19C16AFA7FA008587FD /* SPModel.m in Sources */,
 				8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */,
 				8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */,
-				8E8939E516C19F5100AE7B4F /* Creator.m in Sources */,
-				8E8939E816C19F5100AE7B4F /* Frame.m in Sources */,
-				8E8939F116C19F5200AE7B4F /* Messages.m in Sources */,
-				8E8939F416C19F5200AE7B4F /* Stream.m in Sources */,
-				8E8939FA16C19F5200AE7B4F /* Roll.m in Sources */,
-				8E893A0016C19F5200AE7B4F /* Video.m in Sources */,
-				8E893A0616C1A0D300AE7B4F /* Conversation.m in Sources */,
-				8E893A1816C1F81D00AE7B4F /* Group.m in Sources */,
-				8E893A1B16C1F81D00AE7B4F /* GroupRoll.m in Sources */,
-				8E6C2F5016C3825000489EF6 /* User.m in Sources */,
 				8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */,
 				8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */,
 				8E9FBD4B16C7139300731912 /* LoginView.m in Sources */,
@@ -910,6 +898,14 @@
 				1CC3387D16CBE2C400E58375 /* PagesModel.m in Sources */,
 				1CC3388016CBE36700E58375 /* PageViewController.m in Sources */,
 				1CC3388316CBE77F00E58375 /* ChannelViewController.m in Sources */,
+				8E77B3EC16CC45D50015D100 /* Roll.m in Sources */,
+				8E77B3EF16CC45D50015D100 /* Creator.m in Sources */,
+				8E77B3F216CC45D50015D100 /* Conversation.m in Sources */,
+				8E77B3F516CC45D60015D100 /* Stream.m in Sources */,
+				8E77B3F816CC45D60015D100 /* User.m in Sources */,
+				8E77B3FB16CC45D60015D100 /* Video.m in Sources */,
+				8E77B3FE16CC45D60015D100 /* Frame.m in Sources */,
+				8E77B40116CC45D60015D100 /* Messages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
