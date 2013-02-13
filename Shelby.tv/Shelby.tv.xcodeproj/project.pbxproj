@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CC3387816CBDF2A00E58375 /* PagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* PagesViewController.m */; };
+		1CC3387A16CBE20800E58375 /* PagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* PagesView.xib */; };
+		1CC3387D16CBE2C400E58375 /* PagesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387C16CBE2C400E58375 /* PagesModel.m */; };
+		1CC3388016CBE36700E58375 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387F16CBE36700E58375 /* PageViewController.m */; };
+		1CC3388316CBE77F00E58375 /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3388216CBE77F00E58375 /* ChannelViewController.m */; };
+		1CC3388516CC1AA600E58375 /* ChannelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3388416CC1AA600E58375 /* ChannelView.xib */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
@@ -120,6 +126,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1CC3387616CBDF2A00E58375 /* PagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagesViewController.h; sourceTree = "<group>"; };
+		1CC3387716CBDF2A00E58375 /* PagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagesViewController.m; sourceTree = "<group>"; };
+		1CC3387916CBE20800E58375 /* PagesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PagesView.xib; sourceTree = "<group>"; };
+		1CC3387B16CBE2C400E58375 /* PagesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagesModel.h; sourceTree = "<group>"; };
+		1CC3387C16CBE2C400E58375 /* PagesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagesModel.m; sourceTree = "<group>"; };
+		1CC3387E16CBE36700E58375 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
+		1CC3387F16CBE36700E58375 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
+		1CC3388116CBE77F00E58375 /* ChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
+		1CC3388216CBE77F00E58375 /* ChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
+		1CC3388416CC1AA600E58375 /* ChannelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelView.xib; sourceTree = "<group>"; };
 		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
 		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
@@ -642,7 +658,9 @@
 			isa = PBXGroup;
 			children = (
 				8E9FBD4C16C713BB00731912 /* LoginView.xib */,
+				1CC3388416CC1AA600E58375 /* ChannelView.xib */,
 				8E1FAB9716652E6E00A565BF /* MeViewController.xib */,
+				1CC3387916CBE20800E58375 /* PagesView.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -664,6 +682,12 @@
 		8EF5C352162F41BF0075C35F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1CC3387616CBDF2A00E58375 /* PagesViewController.h */,
+				1CC3387716CBDF2A00E58375 /* PagesViewController.m */,
+				1CC3387E16CBE36700E58375 /* PageViewController.h */,
+				1CC3387F16CBE36700E58375 /* PageViewController.m */,
+				1CC3388116CBE77F00E58375 /* ChannelViewController.h */,
+				1CC3388216CBE77F00E58375 /* ChannelViewController.m */,
 				8E1FAB9516652E6E00A565BF /* MeViewController.h */,
 				8E1FAB9616652E6E00A565BF /* MeViewController.m */,
 			);
@@ -675,6 +699,8 @@
 			children = (
 				8E209720162F3A61000A2DFD /* AppDelegate.h */,
 				8E209721162F3A61000A2DFD /* AppDelegate.m */,
+				1CC3387B16CBE2C400E58375 /* PagesModel.h */,
+				1CC3387C16CBE2C400E58375 /* PagesModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -810,6 +836,8 @@
 				8E454CD016CA9DC100B2F528 /* streamCard.png in Resources */,
 				8E454CD116CA9DC100B2F528 /* streamCard@2x.png in Resources */,
 				8E454CD316CAAD3F00B2F528 /* personalRollCard@2x.png in Resources */,
+				1CC3387A16CBE20800E58375 /* PagesView.xib in Resources */,
+				1CC3388516CC1AA600E58375 /* ChannelView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,6 +906,10 @@
 				8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */,
 				8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */,
 				8E9FBD4B16C7139300731912 /* LoginView.m in Sources */,
+				1CC3387816CBDF2A00E58375 /* PagesViewController.m in Sources */,
+				1CC3387D16CBE2C400E58375 /* PagesModel.m in Sources */,
+				1CC3388016CBE36700E58375 /* PageViewController.m in Sources */,
+				1CC3388316CBE77F00E58375 /* ChannelViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

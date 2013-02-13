@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "MeViewController.h"
+#import "PagesViewController.h"
 
 @interface AppDelegate ()
 
@@ -31,8 +31,8 @@
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MeViewController *meViewController = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
-    self.window.rootViewController = meViewController;
+    PagesViewController *pageViewController = [[PagesViewController alloc] initWithNibName:@"PageView" bundle:nil];
+    self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
 
     // Add analytics
