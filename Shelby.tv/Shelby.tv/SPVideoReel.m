@@ -54,18 +54,6 @@
 @end
 
 @implementation SPVideoReel 
-@synthesize appDelegate = _appDelegate;
-@synthesize model = _model;
-@synthesize categoryTitle = _categoryTitle;
-@synthesize toggleOverlayGesuture = _toggleOverlayGesuture;
-@synthesize categoryType = _categoryType;
-@synthesize videoFrames = _videoFrames;
-@synthesize videoPlayers = _videoPlayers;
-@synthesize itemViews = _itemViews;
-@synthesize videoScrollView = _videoScrollView;
-@synthesize fetchingOlderVideos = _fetchingOlderVideos;
-@synthesize loadingOlderVideos = _loadingOlderVideos;
-@synthesize airPlayButton = _airPlayButton;
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -346,8 +334,6 @@
     NSUInteger maxVideosAllowed = ( [[UIScreen mainScreen] isRetinaDisplay] ) ? 4 : 2;
     
     if ( [self.playableVideoPlayers count] > maxVideosAllowed ) { // If more than X number of videos are loaded, unload the older videos in the list
-        
-        DLog(@"Count: %d", [self.playableVideoPlayers count] );
         
         SPVideoPlayer *oldestPlayer = (SPVideoPlayer *)(self.playableVideoPlayers)[0];
         
