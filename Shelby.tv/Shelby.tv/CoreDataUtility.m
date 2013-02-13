@@ -607,7 +607,7 @@
     return messageText.length ? messageText : @"No information available";
 }
 
-#pragma mark - Public Sync Methods
+#pragma mark - Sync Methods (Public)
 - (void)syncLikes:(NSDictionary *)webResultsDictionary
 {
     // Create fetch request
@@ -644,7 +644,52 @@
         // Delete object if it doesn't exist on web any more
         if ( ![webFrameIdentifiersInLikes containsObject:frameID] ) {
         
-            DLog(@"FrameID doesn't exist on web: %@", frameID);
+            DLog(@"Likes FrameID no longer exist on web, so it is being removed: %@", frameID);
+            
+            [self.context deleteObject:frame];
+        }
+    }
+    
+    [self saveContext:_context];
+}
+
+- (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    // Extract frameIDs from results from Shelby's Web Database
+    NSArray *webResultsArray = [webResultsDictionary[@"result"] valueForKey:@"frames"];
+    NSMutableArray *webFrameIdentifiersInLikes = [@[] mutableCopy];
+    for (NSUInteger i = 0; i < [webResultsArray count]; ++i) {
+        
+        NSString *frameID = [webResultsArray[i] valueForKey:@"id"];
+        [webFrameIdentifiersInLikes addObject:frameID];
+    }
+    
+    // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
+    for ( NSUInteger i = 0; i < [frameResults count]; ++i ) {
+        
+        Frame *frame = (Frame *)frameResults[i];
+        NSString *frameID = frame.frameID;
+        
+        // Delete object if it doesn't exist on web any more
+        if ( ![webFrameIdentifiersInLikes containsObject:frameID] ) {
+            
+            DLog(@"Personal Roll FrameID no longer exist on web, so it is being removed: %@", frameID);
             
             [self.context deleteObject:frame];
         }

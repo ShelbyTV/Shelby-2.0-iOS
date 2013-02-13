@@ -39,5 +39,7 @@
 
 // Sync Methods
 - (void)syncLikes:(NSDictionary *)webResultsDictionary;
+- (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
+
 
 @end
