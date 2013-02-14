@@ -12,5 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 
 + (CGFloat)width;
++ (CGFloat)height;
+
 
 @end

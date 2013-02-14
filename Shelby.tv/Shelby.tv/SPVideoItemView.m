@@ -28,4 +28,9 @@
     return 234.0f;
 }
 
++ (CGFloat)height
+{
+    return 197.0f;
+}
+
 @end

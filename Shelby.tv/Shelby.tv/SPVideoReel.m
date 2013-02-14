@@ -242,7 +242,8 @@
 {
 
     CGFloat itemViewWidth = [SPVideoItemView width];
-    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_model.numberOfVideos, 217.0f);
+    CGFloat itemViewHeight = [SPVideoItemView height];
+    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_model.numberOfVideos, itemViewHeight+20.0f);
     self.overlayView.videoListScrollView.delegate = self;
     
     dispatch_group_t group = dispatch_group_create();
@@ -813,6 +814,7 @@
             SPVideoItemView *itemView = nib[0];
             
             CGFloat itemViewWidth = [SPVideoItemView width];
+            CGFloat itemViewHeight = [SPVideoItemView height];
             CGRect itemFrame = itemView.frame;
             itemFrame.origin.x = itemViewWidth * i;
             [itemView setFrame:itemFrame];
@@ -834,7 +836,7 @@
                 itemView.backgroundColor = [UIColor clearColor];
                 itemView.videoTitleLabel.textColor = kShelbyColorBlack;
                 [itemView.videoTitleLabel setText:videoFrame.video.title];
-                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
+                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), itemViewHeight+20.0f);
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
                 [self.overlayView.videoListScrollView setNeedsDisplay];
