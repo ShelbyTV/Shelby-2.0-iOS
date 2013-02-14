@@ -46,7 +46,7 @@
 - (void)dealloc
 {
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     
     [self.player pause];
@@ -183,7 +183,7 @@
 {
     [self storeVideoForLater];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     
     [self.player pause];
@@ -207,7 +207,7 @@
         
         if ( _videoFrame.video.extractedURL.length ) {
             
-            NSDictionary *dictionary = @{ kSPVideoPlayerStoredDate : storedDate, kSPVideoPlayerElapsedTime : elapsedTime, kSPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
+            NSDictionary *dictionary = @{ kShelbySPVideoPlayerStoredDate : storedDate, kShelbySPVideoPlayerElapsedTime : elapsedTime, kShelbySPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
             self.videoInformation = [dictionary mutableCopy];
         }
     });
@@ -230,16 +230,16 @@
 - (void)queueVideo
 {
     
-    if ( [self.videoInformation valueForKey:kSPVideoPlayerExtractedURL] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
+    if ( [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
         
         // Instantiate AVPlayer object with extractedURL
-        NSURL *extractedURL = [NSURL URLWithString:[self.videoInformation valueForKey:kSPVideoPlayerExtractedURL]];
+        NSURL *extractedURL = [NSURL URLWithString:[self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL]];
         
         // Reload player
         [self setupPlayerForURL:extractedURL];
         
         // Set Time
-        CMTime elapsedTime = [[self.videoInformation valueForKey:kSPVideoPlayerElapsedTime] CMTimeValue];
+        CMTime elapsedTime = [[self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] CMTimeValue];
         if ( CMTIME_IS_VALID(elapsedTime) ) {
             [self.player seekToTime:elapsedTime];
         }
@@ -250,7 +250,7 @@
             
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(loadVideo:)
-                                                         name:kSPVideoExtracted
+                                                         name:kShelbySPVideoExtracted
                                                        object:nil];
             
             NSManagedObjectContext *context = [self.appDelegate context];
@@ -323,7 +323,7 @@
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
-    NSString *shareLink = [NSString stringWithFormat:kSPVideoShareLink, _videoFrame.video.providerName, _videoFrame.video.providerID, _videoFrame.frameID];
+    NSString *shareLink = [NSString stringWithFormat:kShelbySPVideoShareLink, _videoFrame.video.providerName, _videoFrame.video.providerID, _videoFrame.frameID];
     NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
     UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
@@ -340,12 +340,12 @@
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
-    Video *video = [notification.userInfo valueForKey:kSPCurrentVideo];
+    Video *video = [notification.userInfo valueForKey:kShelbySPCurrentVideo];
     
     if ( [self.videoFrame.video.providerID isEqualToString:video.providerID] ) {
         
         // Clear notification
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPVideoExtracted object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
         
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];

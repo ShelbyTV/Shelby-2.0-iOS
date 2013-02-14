@@ -99,7 +99,7 @@
     [super viewWillAppear:animated];
     
     // Toggle card UI depending on if user is logged-in or logged-out
-    ( [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultUserAuthorized] ) ? [self toggleCardsEnabled:YES] : [self toggleCardsEnabled:NO];
+    ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) ? [self toggleCardsEnabled:YES] : [self toggleCardsEnabled:NO];
     
     // If viewWillAppear is called when SPVideoReel modalVC is removed...
     if ( [[UIApplication sharedApplication] isStatusBarHidden] ) {
@@ -120,31 +120,31 @@
     
     // Labels
     [self.likesTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_likesTitleLabel.font.pointSize]];
-    [self.likesTitleLabel setTextColor:kColorBlack];
+    [self.likesTitleLabel setTextColor:kShelbyColorBlack];
     [self.likesDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_likesDescriptionLabel.font.pointSize]];
-    [self.likesDescriptionLabel setTextColor:kColorBlack];
+    [self.likesDescriptionLabel setTextColor:kShelbyColorBlack];
     
     [self.personalRollTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollTitleLabel.font.pointSize]];
-    [self.personalRollTitleLabel setTextColor:kColorBlack];
+    [self.personalRollTitleLabel setTextColor:kShelbyColorBlack];
     [self.personalRollDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_personalRollDescriptionLabel.font.pointSize]];
-    [self.personalRollDescriptionLabel setTextColor:kColorBlack];
+    [self.personalRollDescriptionLabel setTextColor:kShelbyColorBlack];
     
     [self.personalRollUsernameLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollUsernameLabel.font.pointSize]];
     [self.personalRollUsernameLabel setTextColor:[UIColor colorWithHex:@"ffffff" andAlpha:1.0f]];
     
     [self.streamTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_streamTitleLabel.font.pointSize]];
-    [self.streamTitleLabel setTextColor:kColorBlack];
+    [self.streamTitleLabel setTextColor:kShelbyColorBlack];
     [self.streamDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_streamDescriptionLabel.font.pointSize]];
-    [self.streamDescriptionLabel setTextColor:kColorBlack];
+    [self.streamDescriptionLabel setTextColor:kShelbyColorBlack];
     
     [self.authenticationTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_authenticationTitleLabel.font.pointSize]];
-    [self.authenticationTitleLabel setTextColor:kColorBlack];
+    [self.authenticationTitleLabel setTextColor:kShelbyColorBlack];
     [self.authenticationDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_authenticationDescriptionLabel.font.pointSize]];
-    [self.authenticationDescriptionLabel setTextColor:kColorBlack];
+    [self.authenticationDescriptionLabel setTextColor:kShelbyColorBlack];
     
     [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
-    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kCurrentVersion]];
-    [self.versionLabel setTextColor:kColorBlack];
+    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
+    [self.versionLabel setTextColor:kShelbyColorBlack];
     
     // Actions
     [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
@@ -313,7 +313,7 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(userAuthenticationDidSucceed:)
-                                                     name:kNotificationUserAuthenticationDidSucceed object:nil];
+                                                     name:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
         
         [self.loginView.cancelButton setEnabled:NO];
         [self.loginView.goButton setEnabled:NO];

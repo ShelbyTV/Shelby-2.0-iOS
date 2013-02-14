@@ -28,10 +28,10 @@
 {
     
     [self.emailField setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_emailField.font.pointSize]];
-    [self.emailField setTextColor:kColorBlack];
+    [self.emailField setTextColor:kShelbyColorBlack];
 
     [self.passwordField setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_passwordField.font.pointSize]];
-    [self.passwordField setTextColor:kColorBlack];
+    [self.passwordField setTextColor:kShelbyColorBlack];
     
     [self.indicator setHidden:YES];
     [self.indicator setHidesWhenStopped:YES];
