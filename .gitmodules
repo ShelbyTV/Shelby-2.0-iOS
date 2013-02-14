@@ -1,0 +1,12 @@
+[submodule "Shelby.tv/Library/AFNetworking"]
+	path = Shelby.tv/Library/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking
+[submodule "Shelby.tv/Library/Harpy"]
+	path = Shelby.tv/Library/Harpy
+	url = https://github.com/ArtSabintsev/Harpy
+[submodule "Shelby.tv/Library/Panhandler"]
+	path = Shelby.tv/Library/Panhandler
+	url = https://github.com/ArtSabintsev/Panhandler
+[submodule "Shelby.tv/Library/Asynchronous-Freeloader"]
+	path = Shelby.tv/Library/Asynchronous-Freeloader
+	url = https://github.com/ArtSabintsev/Asynchronous-Freeloader
