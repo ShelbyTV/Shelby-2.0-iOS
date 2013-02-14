@@ -725,7 +725,7 @@
     // Execute request that returns array of Stream entries}
     NSArray *results = [self.context executeFetchRequest:request error:nil];
     
-    NSUInteger maxLimit = 3;
+    NSUInteger maxLimit = 60;
     
     // Remove older videos from data store
     if ( [results count] > maxLimit ) {
