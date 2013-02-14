@@ -49,11 +49,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     
-    [self.player pause];
-    [self.playerLayer removeFromSuperlayer];
-    [self setPlayerLayer:nil];
-    [self setPlayer:nil];
-    
     DLog(@"SPVideoPlayer Deallocated");
     
 }

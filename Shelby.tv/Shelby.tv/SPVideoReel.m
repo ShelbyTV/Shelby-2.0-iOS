@@ -61,6 +61,7 @@
 {
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPUserDidScrollToUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPLoadVideoAfterUnplayableVideo object:nil];
     
     DLog(@"SPVideoReel Deallocated");
     
