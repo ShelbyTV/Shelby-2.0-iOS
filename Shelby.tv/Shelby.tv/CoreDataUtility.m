@@ -15,12 +15,16 @@
 @property (nonatomic) AppDelegate *appDelegate;
 @property (assign, nonatomic) DataRequestType requestType;
 
-// Private Persistance Methods
+/// Persistance Methods
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
 
-// Private Storage Methods
+- (void)removeOlderVideoFramesFromStream;
+- (void)removeOlderVideoFramesFromLikes;
+- (void)removeOlderVideoFramesFromPersonalRoll;
+
+/// Storage Methods
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
 - (void)storeCreator:(Creator *)creator fromFrameArray:(NSArray *)frameArray;
@@ -28,7 +32,7 @@
 - (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray;
 - (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
-// Private Fetching Methods
+/// Fetching Methods
 - (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames;
 - (NSMutableArray *)filterPlayableFrames:(NSArray *)frames;
 - (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames;
@@ -58,30 +62,7 @@
     return self;
 }
 
-#pragma mark - Public Persistance Methods
-- (void)removeAllVideoExtractionURLReferences
-{
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Execute request that returns array of stream entries
-    NSMutableArray *entries = [[self.context executeFetchRequest:request error:nil] mutableCopy];
-    
-    for (NSUInteger i = 0; i < [entries count]; ++i ) {
-        
-        Video *video = (Video *)[entries objectAtIndex:i];
-        [video setExtractedURL:[NSString coreDataNullTest:nil]];
-        
-    }
-    
-    DLog(@"All video extractedURLs removed");
-
-}
+#pragma mark - Persistance Methods (Public)
 
 - (void)saveContext:(NSManagedObjectContext *)context
 {
@@ -142,7 +123,7 @@
                     DLog(@"User Action Update Successful");
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kSPUserDidScrollToUpdate object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidScrollToUpdate object:nil];
                     });
                     
                 } break;
@@ -167,35 +148,82 @@
     }
 }
 
-#pragma mark - Public Storage Methods
+- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType
+{
+
+    switch ( categoryType ) {
+            
+        case CategoryType_Stream:{
+            [self removeOlderVideoFramesFromStream];
+        } break;
+            
+        case CategoryType_Likes:{
+            [self removeOlderVideoFramesFromLikes];
+        } break;
+            
+        case CategoryType_PersonalRoll:{
+            [self removeOlderVideoFramesFromPersonalRoll];
+        } break;
+            
+        default:
+            break;
+    }
+    
+}
+
+- (void)removeAllVideoExtractionURLReferences
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityVideo inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Execute request that returns array of stream entries
+    NSMutableArray *entries = [[self.context executeFetchRequest:request error:nil] mutableCopy];
+    
+    for (NSUInteger i = 0; i < [entries count]; ++i ) {
+        
+        Video *video = (Video *)[entries objectAtIndex:i];
+        [video setExtractedURL:[NSString coreDataNullTest:nil]];
+        
+    }
+    
+    DLog(@"All video extractedURLs removed");
+
+}
+
+#pragma mark - Storage Methods (Public)
 - (void)storeUser:(NSDictionary *)resultsDictionary
 {
     NSArray *resultsArray = resultsDictionary[@"result"];
     
-    User *user = [self checkIfEntity:kCoreDataEntityUser
+    User *user = [self checkIfEntity:kShelbyCoreDataEntityUser
                          withIDValue:[resultsArray valueForKey:@"id"]
-                            forIDKey:kCoreDataUserID];
+                            forIDKey:kShelbyCoreDataUserID];
     
     NSString *userID = [NSString coreDataNullTest:[resultsArray valueForKey:@"id"]];
-    [user setValue:userID forKey:kCoreDataUserID];
+    [user setValue:userID forKey:kShelbyCoreDataUserID];
     
     NSString *userImage = [NSString coreDataNullTest:[resultsArray valueForKey:@"user_image"]];
-    [user setValue:userImage forKey:kCoreDataUserImage];
+    [user setValue:userImage forKey:kShelbyCoreDataUserImage];
     
     NSString *token = [NSString coreDataNullTest:[resultsArray valueForKey:@"authentication_token"]];
-    [user setValue:token forKey:kCoreDataUserToken];
+    [user setValue:token forKey:kShelbyCoreDataUserToken];
     
     NSString *nickname = [NSString coreDataNullTest:[resultsArray valueForKey:@"nickname"]];
-    [user setValue:nickname forKey:kCoreDataUserNickname];
+    [user setValue:nickname forKey:kShelbyCoreDataUserNickname];
     
     NSString *personalRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"personal_roll_id"]];
-    [user setValue:personalRollID forKey:kCoreDataUserPersonalRollID];
+    [user setValue:personalRollID forKey:kShelbyCoreDataUserPersonalRollID];
     
     NSString *likesRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
-    [user setValue:likesRollID forKey:kCoreDataUserLikesRollID];
+    [user setValue:likesRollID forKey:kShelbyCoreDataUserLikesRollID];
     
     BOOL admin = [[resultsArray valueForKey:@"admin"] boolValue];
-    [user setValue:@(admin) forKey:kCoreDataUserAdmin];
+    [user setValue:@(admin) forKey:kShelbyCoreDataUserAdmin];
     
     [self saveContext:_context];
 
@@ -219,19 +247,19 @@
                 
             } else {
                 
-                Stream *stream = [self checkIfEntity:kCoreDataEntityStream
+                Stream *stream = [self checkIfEntity:kShelbyCoreDataEntityStream
                                          withIDValue:[resultsArray[i] valueForKey:@"id"]
-                                            forIDKey:kCoreDataStreamID];
+                                            forIDKey:kShelbyCoreDataStreamID];
                 
                 NSString *streamID = [NSString coreDataNullTest:[resultsArray[i] valueForKey:@"id"]];
-                [stream setValue:streamID forKey:kCoreDataStreamID];
+                [stream setValue:streamID forKey:kShelbyCoreDataStreamID];
                 
                 NSDate *timestamp = [NSDate dataFromBSONObjectID:streamID];
-                [stream setValue:timestamp forKey:kCoreDataStreamTimestamp];
+                [stream setValue:timestamp forKey:kShelbyCoreDataStreamTimestamp];
                 
-                Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
+                Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
                                        withIDValue:[frameArray valueForKey:@"id"]
-                                          forIDKey:kCoreDataFrameID];
+                                          forIDKey:kShelbyCoreDataFrameID];
                 stream.frame = frame;
                 
                 [self storeFrame:frame forFrameArray:frameArray withSyncStatus:YES];
@@ -252,9 +280,9 @@
         
         @autoreleasepool {
                             
-            Frame *frame = [self checkIfEntity:kCoreDataEntityFrame
+            Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
                                    withIDValue:[resultsArray[i] valueForKey:@"id"]
-                                      forIDKey:kCoreDataFrameID];
+                                      forIDKey:kShelbyCoreDataFrameID];
             
             [self storeFrame:frame forFrameArray:resultsArray[i] withSyncStatus:YES];
 
@@ -265,7 +293,7 @@
     
 }
 
-#pragma mark - Public Fetch Methods
+#pragma mark - Fetch Methods (Public)
 - (User *)fetchUser
 {
     // Create fetch request
@@ -273,7 +301,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search User table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityUser inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityUser inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Execute request that returns array of Users
@@ -289,7 +317,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStream inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Execute request that returns array of Stream entries
@@ -305,7 +333,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Likes table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by rollID
@@ -326,7 +354,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by rollID
@@ -348,7 +376,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStream inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -375,7 +403,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStream inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -406,7 +434,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -438,7 +466,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -471,7 +499,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -503,7 +531,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -537,7 +565,7 @@
     
     // Fetch messages data
     NSManagedObjectContext *context = conversation.managedObjectContext;
-    NSEntityDescription *messagesDescription = [NSEntityDescription entityForName:kCoreDataEntityMessages inManagedObjectContext:context];
+    NSEntityDescription *messagesDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityMessages inManagedObjectContext:context];
     [messagesRequest setEntity:messagesDescription];
     
     // Only include messages that belond to this specific conversation
@@ -571,7 +599,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Queue table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by rollID
@@ -616,7 +644,7 @@
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Queue table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by rollID
@@ -654,7 +682,7 @@
     [self saveContext:_context];
 }
 
-#pragma mark - Private Persistance Methods
+#pragma mark - Persistance Methods (Private)
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey
@@ -681,61 +709,181 @@
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:_context];
 }
 
-#pragma mark - Private Storage mMthods
+- (void)removeOlderVideoFramesFromStream
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStream inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    // Execute request that returns array of Stream entries}
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 60;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Stream *streamEntry = (Stream*)[olderResults lastObject];
+            [self.context deleteObject:streamEntry];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+        
+        [self saveContext:_context];
+        
+    }
+
+}
+
+- (void)removeOlderVideoFramesFromLikes
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 60;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Frame *frame = (Frame*)[olderResults lastObject];
+            [self.context deleteObject:frame];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+
+        [self saveContext:_context];
+        
+    }
+}
+
+- (void)removeOlderVideoFramesFromPersonalRoll
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 60;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Frame *frame = (Frame*)[olderResults lastObject];
+            [self.context deleteObject:frame];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+        
+        [self saveContext:_context];
+        
+    }
+}
+
+#pragma mark - Storage Methods (Private) 
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
 {
         
         NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
-        [frame setValue:frameID forKey:kCoreDataFrameID];
+        [frame setValue:frameID forKey:kShelbyCoreDataFrameID];
         
         NSString *conversationID = [NSString coreDataNullTest:[frameArray valueForKey:@"conversation_id"]];
-        [frame setValue:conversationID forKey:kCoreDataFrameConversationID];
+        [frame setValue:conversationID forKey:kShelbyCoreDataFrameConversationID];
         
         NSString *createdAt = [NSString coreDataNullTest:[frameArray valueForKey:@"created_at"]];
-        [frame setValue:createdAt forKey:kCoreDataFrameCreatedAt];
+        [frame setValue:createdAt forKey:kShelbyCoreDataFrameCreatedAt];
         
         NSString *creatorID = [NSString coreDataNullTest:[frameArray valueForKey:@"creator_id"]];
-        [frame setValue:creatorID forKey:kCoreDataFrameCreatorID];
+        [frame setValue:creatorID forKey:kShelbyCoreDataFrameCreatorID];
         
         NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
-        [frame setValue:rollID forKey:kCoreDataFrameRollID];
+        [frame setValue:rollID forKey:kShelbyCoreDataFrameRollID];
         
         NSDate *timestamp = [NSDate dataFromBSONObjectID:frameID];
-        [frame setValue:timestamp forKey:kCoreDataFrameTimestamp];
+        [frame setValue:timestamp forKey:kShelbyCoreDataFrameTimestamp];
         
         NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
-        [frame setValue:videoID forKey:kCoreDataFrameVideoID];
+        [frame setValue:videoID forKey:kShelbyCoreDataFrameVideoID];
         
-        [frame setValue:@(syncStatus) forKey:kCoreDataFrameIsSynced];
+        [frame setValue:@(syncStatus) forKey:kShelbyCoreDataFrameIsSynced];
         
         // Store Conversation (and Messages)
-        Conversation *conversation = [self checkIfEntity:kCoreDataEntityConversation
+        Conversation *conversation = [self checkIfEntity:kShelbyCoreDataEntityConversation
                                              withIDValue:conversationID
-                                                forIDKey:kCoreDataFrameConversationID];
+                                                forIDKey:kShelbyCoreDataFrameConversationID];
         frame.conversation = conversation;
         conversation.frame = frame;
         [self storeConversation:conversation fromFrameArray:frameArray];
         
         // Store Creator
-        Creator *creator = [self checkIfEntity:kCoreDataEntityCreator
+        Creator *creator = [self checkIfEntity:kShelbyCoreDataEntityCreator
                                    withIDValue:creatorID
-                                      forIDKey:kCoreDataFrameCreatorID];
+                                      forIDKey:kShelbyCoreDataFrameCreatorID];
         frame.creator = creator;
         [creator addFrameObject:frame];
         [self storeCreator:creator fromFrameArray:frameArray];
         
         // Store Roll
-        Roll *roll = [self checkIfEntity:kCoreDataEntityRoll
+        Roll *roll = [self checkIfEntity:kShelbyCoreDataEntityRoll
                              withIDValue:rollID
-                                forIDKey:kCoreDataRollID];
+                                forIDKey:kShelbyCoreDataRollID];
         frame.roll = roll;
         roll.frame = frame;
         [self storeRoll:roll fromFrameArray:frameArray];
         
         // Store Video
-        Video *video = [self checkIfEntity:kCoreDataEntityVideo
+        Video *video = [self checkIfEntity:kShelbyCoreDataEntityVideo
                                withIDValue:videoID
-                                  forIDKey:kCoreDataFrameVideoID];
+                                  forIDKey:kShelbyCoreDataFrameVideoID];
         frame.video = video;
         [video addFrameObject:frame];
         [self storeVideo:video fromFrameArray:frameArray];
@@ -749,7 +897,7 @@
     NSArray *conversationArray = [frameArray valueForKey:@"conversation"];
     
     NSString *conversationID = [NSString coreDataNullTest:[conversationArray valueForKey:@"id"]];
-    [conversation setValue:conversationID forKey:kCoreDataConversationID];
+    [conversation setValue:conversationID forKey:kShelbyCoreDataConversationID];
     
     // Store Messages
     [self storeMessagesFromConversation:conversation withConversationsArray:conversationArray];
@@ -761,39 +909,39 @@
     
     NSArray *messagesArray = [conversationsArray valueForKey:@"messages"];
     
-    [conversation setValue:[NSNumber numberWithInt:[messagesArray count]] forKey:kCoreDataConversationMessageCount];
+    [conversation setValue:[NSNumber numberWithInt:[messagesArray count]] forKey:kShelbyCoreDataConversationMessageCount];
     
     for ( NSUInteger i = 0; i < [messagesArray count]; ++i ) {
         
-        Messages *messages = [self checkIfEntity:kCoreDataEntityMessages
+        Messages *messages = [self checkIfEntity:kShelbyCoreDataEntityMessages
                                      withIDValue:[messagesArray[i] valueForKey:@"id"]
-                                        forIDKey:kCoreDataMessagesID];
+                                        forIDKey:kShelbyCoreDataMessagesID];
         
         [conversation addMessagesObject:messages];
         
         // Hold reference to parent conversationID
-        [messages setValue:conversation.conversationID forKey:kCoreDataConversationID];
+        [messages setValue:conversation.conversationID forKey:kShelbyCoreDataConversationID];
         
         NSString *messageID = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"id"]];
-        [messages setValue:messageID forKey:kCoreDataMessagesID];
+        [messages setValue:messageID forKey:kShelbyCoreDataMessagesID];
         
         NSString *createdAt = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"created_at"]];
-        [messages setValue:createdAt forKey:kCoreDataMessagesCreatedAt];
+        [messages setValue:createdAt forKey:kShelbyCoreDataMessagesCreatedAt];
         
         NSString *nickname = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"nickname"]];
-        [messages setValue:nickname forKey:kCoreDataMessagesNickname];
+        [messages setValue:nickname forKey:kShelbyCoreDataMessagesNickname];
         
         NSString *originNetwork = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"origin_network"]];
-        [messages setValue:originNetwork forKey:kCoreDataMessagesOriginNetwork];
+        [messages setValue:originNetwork forKey:kShelbyCoreDataMessagesOriginNetwork];
         
         NSDate *timestamp = [NSDate dataFromBSONObjectID:messageID];
-        [messages setValue:timestamp forKey:kCoreDataMessagesTimestamp];
+        [messages setValue:timestamp forKey:kShelbyCoreDataMessagesTimestamp];
         
         NSString *text = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"text"]];
-        [messages setValue:text forKey:kCoreDataMessagesText];
+        [messages setValue:text forKey:kShelbyCoreDataMessagesText];
         
         NSString *userImage = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"user_image_url"]];
-        [messages setValue:userImage forKey:kCoreDataMessagesUserImage];
+        [messages setValue:userImage forKey:kShelbyCoreDataMessagesUserImage];
         
     }
     
@@ -804,13 +952,13 @@
     NSArray *creatorArray = [frameArray valueForKey:@"creator"];
     
     NSString *creatorID = [NSString coreDataNullTest:[creatorArray valueForKey:@"id"]];
-    [creator setValue:creatorID forKey:kCoreDataCreatorID];
+    [creator setValue:creatorID forKey:kShelbyCoreDataCreatorID];
     
     NSString *nickname = [NSString coreDataNullTest:[creatorArray valueForKey:@"nickname"]];
-    [creator setValue:nickname forKey:kCoreDataCreatorNickname];
+    [creator setValue:nickname forKey:kShelbyCoreDataCreatorNickname];
     
     NSString *userImage = [NSString coreDataNullTest:[creatorArray valueForKey:@"user_image"]];
-    [creator setValue:userImage forKey:kCoreDataCreatorUserImage];
+    [creator setValue:userImage forKey:kShelbyCoreDataCreatorUserImage];
 }
 
 - (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray
@@ -818,19 +966,19 @@
     NSArray *rollArray = [frameArray valueForKey:@"roll"];
     
     NSString *rollID = [NSString coreDataNullTest:[rollArray valueForKey:@"id"]];
-    [roll setValue:rollID forKey:kCoreDataRollID];
+    [roll setValue:rollID forKey:kShelbyCoreDataRollID];
     
     NSString *creatorID = [NSString coreDataNullTest:[rollArray valueForKey:@"creator_id"]];
-    [roll setValue:creatorID forKey:kCoreDataRollCreatorID];
+    [roll setValue:creatorID forKey:kShelbyCoreDataRollCreatorID];
     
     NSString *frameCount = [NSString coreDataNullTest:[rollArray valueForKey:@"frame_count"]];
-    [roll setValue:@([frameCount integerValue]) forKey:kCoreDataRollFrameCount];
+    [roll setValue:@([frameCount integerValue]) forKey:kShelbyCoreDataRollFrameCount];
     
     NSString *thumbnailURL = [NSString coreDataNullTest:[rollArray valueForKey:@"thumbnail_url"]];
-    [roll setValue:thumbnailURL forKey:kCoreDataRollThumbnailURL];
+    [roll setValue:thumbnailURL forKey:kShelbyCoreDataRollThumbnailURL];
 
     NSString *title = [NSString coreDataNullTest:[rollArray valueForKey:@"title"]];
-    [roll setValue:title forKey:kCoreDataRollTitle];
+    [roll setValue:title forKey:kShelbyCoreDataRollTitle];
     
 }
 
@@ -839,26 +987,26 @@
     NSArray *videoArray = [frameArray valueForKey:@"video"];
     
     NSString *videoID = [NSString coreDataNullTest:[videoArray valueForKey:@"id"]];
-    [video setValue:videoID forKey:kCoreDataVideoID];
+    [video setValue:videoID forKey:kShelbyCoreDataVideoID];
     
     NSString *caption = [NSString coreDataNullTest:[videoArray valueForKey:@"description"]];
-    [video setValue:caption forKey:kCoreDataVideoCaption];
+    [video setValue:caption forKey:kShelbyCoreDataVideoCaption];
     
     NSString *providerName = [NSString coreDataNullTest:[videoArray valueForKey:@"provider_name"] ];
-    [video setValue:providerName forKey:kCoreDataVideoProviderName];
+    [video setValue:providerName forKey:kShelbyCoreDataVideoProviderName];
     
     NSString *thumbnailURL = [NSString coreDataNullTest:[videoArray valueForKey:@"thumbnail_url"]];
-    [video setValue:thumbnailURL forKey:kCoreDataVideoThumbnailURL];
+    [video setValue:thumbnailURL forKey:kShelbyCoreDataVideoThumbnailURL];
     
     NSString *title = [NSString coreDataNullTest:[videoArray valueForKey:@"title"]];
-    [video setValue:title forKey:kCoreDataVideoTitle];
+    [video setValue:title forKey:kShelbyCoreDataVideoTitle];
     
     NSString *providerID = [NSString coreDataNullTest:[videoArray valueForKey:@"provider_id"]];
-    [video setValue:providerID forKey:kCoreDataVideoProviderID];
+    [video setValue:providerID forKey:kShelbyCoreDataVideoProviderID];
     
 }
 
-#pragma mark - Private Fetching Methods
+#pragma mark - Fetching Methods (Private)
 - (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames
 {
     NSMutableArray *playableFrames = [@[] mutableCopy];
@@ -935,7 +1083,7 @@
         [request setReturnsObjectsAsFaults:NO];
         
         // Search video data
-        NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:context];
+        NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityVideo inManagedObjectContext:context];
         [request setEntity:description];
         
         // Filter by videoID
@@ -949,8 +1097,8 @@
         Video *video = (Video *)videoArray[0];
         
         // Post notification if SPVideoReel object is available
-        NSDictionary *videoDictionary = @{kSPCurrentVideo: video};
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSPVideoExtracted
+        NSDictionary *videoDictionary = @{kShelbySPCurrentVideo: video};
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoExtracted
                                                             object:nil
                                                           userInfo:videoDictionary];
     }

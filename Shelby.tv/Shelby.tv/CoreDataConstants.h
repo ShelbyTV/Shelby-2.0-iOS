@@ -1,5 +1,5 @@
 //
-//  kCoreDataConstants.h
+//  kShelbyCoreDataConstants.h
 //  Shelby.tv
 //
 //  Created by Arthur Ariel Sabintsev on 10/25/12.
@@ -16,69 +16,69 @@
 #import "Video.h"
 
 // Entity Constants
-#define kCoreDataEntityConversation                 @"Conversation"
-#define kCoreDataEntityCreator                      @"Creator"
-#define kCoreDataEntityFrame                        @"Frame"
-#define kCoreDataEntityMessages                     @"Messages"
-#define kCoreDataEntityRoll                         @"Roll"
-#define kCoreDataEntityStream                       @"Stream"
-#define kCoreDataEntityUser                         @"User"
-#define kCoreDataEntityVideo                        @"Video"
+#define kShelbyCoreDataEntityConversation                 @"Conversation"
+#define kShelbyCoreDataEntityCreator                      @"Creator"
+#define kShelbyCoreDataEntityFrame                        @"Frame"
+#define kShelbyCoreDataEntityMessages                     @"Messages"
+#define kShelbyCoreDataEntityRoll                         @"Roll"
+#define kShelbyCoreDataEntityStream                       @"Stream"
+#define kShelbyCoreDataEntityUser                         @"User"
+#define kShelbyCoreDataEntityVideo                        @"Video"
 
 // Conversation Attribute Constants
-#define kCoreDataConversationID                     @"conversationID"
-#define kCoreDataConversationMessageCount           @"messageCount"
+#define kShelbyCoreDataConversationID                     @"conversationID"
+#define kShelbyCoreDataConversationMessageCount           @"messageCount"
 
 // Creator Attribute Constants
-#define kCoreDataCreatorID                          @"creatorID"
-#define kCoreDataCreatorNickname                    @"nickname"
-#define kCoreDataCreatorUserImage                   @"userImage"
+#define kShelbyCoreDataCreatorID                          @"creatorID"
+#define kShelbyCoreDataCreatorNickname                    @"nickname"
+#define kShelbyCoreDataCreatorUserImage                   @"userImage"
 
 // Frame Attribute Constants
-#define kCoreDataFrameID                            @"frameID"
-#define kCoreDataFrameConversationID                @"conversationID"
-#define kCoreDataFrameCreatedAt                     @"createdAt"
-#define kCoreDataFrameCreatorID                     @"creatorID"
-#define kCoreDataFrameIsSynced                      @"isSynced"
-#define kCoreDataFrameRollID                        @"rollID"
-#define kCoreDataFrameTimestamp                     @"timestamp"
-#define kCoreDataFrameVideoID                       @"videoID"
+#define kShelbyCoreDataFrameID                            @"frameID"
+#define kShelbyCoreDataFrameConversationID                @"conversationID"
+#define kShelbyCoreDataFrameCreatedAt                     @"createdAt"
+#define kShelbyCoreDataFrameCreatorID                     @"creatorID"
+#define kShelbyCoreDataFrameIsSynced                      @"isSynced"
+#define kShelbyCoreDataFrameRollID                        @"rollID"
+#define kShelbyCoreDataFrameTimestamp                     @"timestamp"
+#define kShelbyCoreDataFrameVideoID                       @"videoID"
 
 // Messages Attribute Constants
-#define kCoreDataMessagesConversationID             @"conversationID"
-#define kCoreDataMessagesCreatedAt                  @"createdAt"
-#define kCoreDataMessagesID                         @"messageID"
-#define kCoreDataMessagesNickname                   @"nickname"
-#define kCoreDataMessagesOriginNetwork              @"originNetwork"
-#define kCoreDataMessagesText                       @"text"
-#define kCoreDataMessagesTimestamp                  @"timestamp"
-#define kCoreDataMessagesUserImage                  @"userImage"
+#define kShelbyCoreDataMessagesConversationID             @"conversationID"
+#define kShelbyCoreDataMessagesCreatedAt                  @"createdAt"
+#define kShelbyCoreDataMessagesID                         @"messageID"
+#define kShelbyCoreDataMessagesNickname                   @"nickname"
+#define kShelbyCoreDataMessagesOriginNetwork              @"originNetwork"
+#define kShelbyCoreDataMessagesText                       @"text"
+#define kShelbyCoreDataMessagesTimestamp                  @"timestamp"
+#define kShelbyCoreDataMessagesUserImage                  @"userImage"
 
 // Roll Attribute Constants
-#define kCoreDataRollID                             @"rollID"
-#define kCoreDataRollCreatorID                      @"creatorID"
-#define kCoreDataRollFrameCount                     @"frameCount"
-#define kCoreDataRollThumbnailURL                   @"thumbnailURL"
-#define kCoreDataRollTitle                          @"title"
+#define kShelbyCoreDataRollID                             @"rollID"
+#define kShelbyCoreDataRollCreatorID                      @"creatorID"
+#define kShelbyCoreDataRollFrameCount                     @"frameCount"
+#define kShelbyCoreDataRollThumbnailURL                   @"thumbnailURL"
+#define kShelbyCoreDataRollTitle                          @"title"
 
 // Stream Attribute Constants
-#define kCoreDataStreamID                           @"streamID"
-#define kCoreDataStreamTimestamp                    @"timestamp"
+#define kShelbyCoreDataStreamID                           @"streamID"
+#define kShelbyCoreDataStreamTimestamp                    @"timestamp"
 
 // User Attribute Constants
-#define kCoreDataUserID                             @"userID"
-#define kCoreDataUserAdmin                          @"admin"
-#define kCoreDataUserNickname                       @"nickname"
-#define kCoreDataUserPersonalRollID                 @"personalRollID"
-#define kCoreDataUserLikesRollID                    @"likesRollID"
-#define kCoreDataUserToken                          @"token"
-#define kCoreDataUserImage                          @"userImage"
+#define kShelbyCoreDataUserID                             @"userID"
+#define kShelbyCoreDataUserAdmin                          @"admin"
+#define kShelbyCoreDataUserNickname                       @"nickname"
+#define kShelbyCoreDataUserPersonalRollID                 @"personalRollID"
+#define kShelbyCoreDataUserLikesRollID                    @"likesRollID"
+#define kShelbyCoreDataUserToken                          @"token"
+#define kShelbyCoreDataUserImage                          @"userImage"
 
 // Video Attribute Constants
-#define kCoreDataVideoID                            @"videoID"
-#define kCoreDataVideoCaption                       @"caption"
-#define kCoreDataVideoExtractedURL                  @"extractedURL"
-#define kCoreDataVideoProviderName                  @"providerName"
-#define kCoreDataVideoProviderID                    @"providerID"
-#define kCoreDataVideoTitle                         @"title"
-#define kCoreDataVideoThumbnailURL                  @"thumbnailURL"
+#define kShelbyCoreDataVideoID                            @"videoID"
+#define kShelbyCoreDataVideoCaption                       @"caption"
+#define kShelbyCoreDataVideoExtractedURL                  @"extractedURL"
+#define kShelbyCoreDataVideoProviderName                  @"providerName"
+#define kShelbyCoreDataVideoProviderID                    @"providerID"
+#define kShelbyCoreDataVideoTitle                         @"title"
+#define kShelbyCoreDataVideoThumbnailURL                  @"thumbnailURL"

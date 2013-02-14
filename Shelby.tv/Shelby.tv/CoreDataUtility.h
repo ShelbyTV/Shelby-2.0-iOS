@@ -10,20 +10,20 @@
 
 @property (copy, nonatomic) NSString *videoID;
 
-/// Public Methods
-// Initialization Methods
+/// Initialization Methods
 - (id)initWithRequestType:(DataRequestType)requestType;
 
-// Public Persistance Methods
-- (void)removeAllVideoExtractionURLReferences;
+/// Persistance Methods
 - (void)saveContext:(NSManagedObjectContext *)context;
+- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType;
+- (void)removeAllVideoExtractionURLReferences;
 
-// Public Storage Methods
+/// Storage Methods
 - (void)storeUser:(NSDictionary *)resultsDictionary;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary;
 
-// Public Fetching Methods
+/// Fetching Methods
 - (User *)fetchUser;
 - (NSUInteger)fetchStreamCount;
 - (NSUInteger)fetchLikesCount;
@@ -36,7 +36,7 @@
 - (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date;
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
 
-// Sync Methods
+/// Sync Methods
 - (void)syncLikes:(NSDictionary *)webResultsDictionary;
 - (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
 

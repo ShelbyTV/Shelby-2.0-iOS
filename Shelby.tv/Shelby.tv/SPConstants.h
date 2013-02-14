@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#define kSPVideoExtracted               @"Video Extracted"
-#define kSPCurrentVideo                 @"Current Video"
-#define kSPCurrentVideoStreamID         @"Current Video in Stream"
-#define kSPUserDidScrollToUpdate        @"User Did Scroll To Update"
-#define kSPVideoShareLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
+#define kShelbySPVideoExtracted               @"Video Extracted"
+#define kShelbySPCurrentVideo                 @"Current Video"
+#define kShelbySPCurrentVideoStreamID         @"Current Video in Stream"
+#define kShelbySPUserDidScrollToUpdate        @"User Did Scroll To Update"
+#define kShelbySPVideoShareLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
 
 
-#define kSPVideoPlayerStoredDate        @"Video Player Stored Date"
-#define kSPVideoPlayerElapsedTime       @"Video Player Elapsed Time"
-#define kSPVideoPlayerExtractedURL      @"Video Player Extracted URL"
+#define kShelbySPVideoPlayerStoredDate        @"Video Player Stored Date"
+#define kShelbySPVideoPlayerElapsedTime       @"Video Player Elapsed Time"
+#define kShelbySPVideoPlayerExtractedURL      @"Video Player Extracted URL"

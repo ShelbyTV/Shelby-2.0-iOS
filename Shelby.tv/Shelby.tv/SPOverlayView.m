@@ -50,13 +50,13 @@
         self.model = [SPModel sharedInstance];
         
         // Customize Colors
-        [self.categoryTitleLabel setTextColor:kColorWhite];
-        [self.scrubber setMinimumTrackTintColor:kColorGreen];
-        [self.scrubberTimeLabel setTextColor:kColorWhite];
-        [self.nicknameLabel setTextColor:kColorBlack];
+        [self.categoryTitleLabel setTextColor:kShelbyColorWhite];
+        [self.scrubber setMinimumTrackTintColor:kShelbyColorGreen];
+        [self.scrubberTimeLabel setTextColor:kShelbyColorWhite];
+        [self.nicknameLabel setTextColor:kShelbyColorBlack];
         [self.videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
-        [self.videoCaptionLabel setTextColor:kColorBlack];
-        [self.userImageView.layer setBorderColor:[kColorGray CGColor]];
+        [self.videoCaptionLabel setTextColor:kShelbyColorBlack];
+        [self.userImageView.layer setBorderColor:[kShelbyColorGray CGColor]];
         
     }
     

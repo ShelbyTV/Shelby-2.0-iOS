@@ -54,29 +54,13 @@
 @end
 
 @implementation SPVideoReel 
-@synthesize appDelegate = _appDelegate;
-@synthesize model = _model;
-@synthesize categoryTitle = _categoryTitle;
-@synthesize toggleOverlayGesuture = _toggleOverlayGesuture;
-@synthesize categoryType = _categoryType;
-@synthesize videoFrames = _videoFrames;
-@synthesize videoPlayers = _videoPlayers;
-@synthesize itemViews = _itemViews;
-@synthesize videoScrollView = _videoScrollView;
-@synthesize fetchingOlderVideos = _fetchingOlderVideos;
-@synthesize loadingOlderVideos = _loadingOlderVideos;
-@synthesize airPlayButton = _airPlayButton;
 
 #pragma mark - Memory Management
 - (void)dealloc
 {
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPUserDidScrollToUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPUserDidScrollToUpdate object:nil];
     
-    // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [dataUtility removeAllVideoExtractionURLReferences];
-
     DLog(@"SPVideoReel Deallocated");
     
 }
@@ -165,7 +149,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dataSourceShouldUpdateFromWeb:)
-                                                 name:kSPUserDidScrollToUpdate
+                                                 name:kShelbySPUserDidScrollToUpdate
                                                object:nil];
 }
 
@@ -227,12 +211,12 @@
         [self currentVideoDidChangeToVideo:_model.currentVideo];
         
         
-    } else { // If  stream, play video stored for kSPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
+    } else { // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
 
         for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
             
             Frame *videoFrame = (self.videoFrames)[i];
-            NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kSPCurrentVideoStreamID];
+            NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbySPCurrentVideoStreamID];
             
             if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
              
@@ -285,8 +269,8 @@
                 [self.overlayView.videoListScrollView addSubview:itemView];
             
                 if ( i == _model.currentVideo ) {
-                    itemView.backgroundColor = kColorGreen;
-                    itemView.videoTitleLabel.textColor = kColorBlack;
+                    itemView.backgroundColor = kShelbyColorGreen;
+                    itemView.videoTitleLabel.textColor = kShelbyColorBlack;
                 }
                 
             });
@@ -346,8 +330,6 @@
     NSUInteger maxVideosAllowed = ( [[UIScreen mainScreen] isRetinaDisplay] ) ? 4 : 2;
     
     if ( [self.playableVideoPlayers count] > maxVideosAllowed ) { // If more than X number of videos are loaded, unload the older videos in the list
-        
-        DLog(@"Count: %d", [self.playableVideoPlayers count] );
         
         SPVideoPlayer *oldestPlayer = (SPVideoPlayer *)(self.playableVideoPlayers)[0];
         
@@ -438,6 +420,15 @@
         [self.moreVideoFrames removeAllObjects];
         self.moreVideoFrames = nil;
         
+        // Instantiate dataUtility for cleanup
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        
+        // Remove older videos
+        [dataUtility removeOlderVideoFramesForCategoryType:_categoryType];
+        
+        // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
+        [dataUtility removeAllVideoExtractionURLReferences];
+        
         [self dismissViewControllerAnimated:YES completion:nil];
     
     }
@@ -506,7 +497,7 @@
     NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
-    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kSPCurrentVideoStreamID];
+    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kShelbySPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -570,13 +561,13 @@
         // Remove selected state color from all SPVideoItemView objects
         for (SPVideoItemView *itemView in self.itemViews) {
             itemView.backgroundColor = [UIColor clearColor];
-            itemView.videoTitleLabel.textColor = kColorBlack;
+            itemView.videoTitleLabel.textColor = kShelbyColorBlack;
         }
         
         // Update currentVideo's SPVideoItemView object UI and position in videoListScrollView object
         SPVideoItemView *itemView = (self.itemViews)[position];
-        itemView.backgroundColor = kColorGreen;
-        itemView.videoTitleLabel.textColor = kColorBlack;
+        itemView.backgroundColor = kShelbyColorGreen;
+        itemView.videoTitleLabel.textColor = kShelbyColorBlack;
         if ( position < self.model.numberOfVideos ) {
             CGFloat itemX = itemView.frame.size.width * position;
             CGFloat itemY = 0.0f;
@@ -833,7 +824,7 @@
                 [self.videoScrollView setNeedsDisplay];
                 
                 itemView.backgroundColor = [UIColor clearColor];
-                itemView.videoTitleLabel.textColor = kColorBlack;
+                itemView.videoTitleLabel.textColor = kShelbyColorBlack;
                 [itemView.videoTitleLabel setText:videoFrame.video.title];
                 self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*i, 217.0f);
                 [self.itemViews addObject:itemView];

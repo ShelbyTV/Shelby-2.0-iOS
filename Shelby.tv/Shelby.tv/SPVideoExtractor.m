@@ -221,7 +221,7 @@
                         NSManagedObjectContext *context = [self context];
                         NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
                         Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
-                        [video setValue:extractedURL forKey:kCoreDataVideoExtractedURL];
+                        [video setValue:extractedURL forKey:kShelbyCoreDataVideoExtractedURL];
                        
                         // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
                         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];

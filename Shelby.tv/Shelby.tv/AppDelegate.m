@@ -51,7 +51,7 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     // Sync Queue if suer is logged in (this may cause app to crash if user launches app on queue and videos were removed)
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultUserAuthorized] ) {
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
         
         // Perform Sync on Likes
         [ShelbyAPIClient getLikesForSync];
@@ -77,7 +77,7 @@
 - (void)userIsAuthorized
 {
     // Set NSUserDefault
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultUserAuthorized];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // On login, perform API requests
@@ -102,8 +102,8 @@
     [self.pollAPITimer invalidate];
     
     // Set NSUserDefaults
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDefaultUserAuthorized];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSPCurrentVideoStreamID];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kShelbySPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
@@ -163,19 +163,22 @@
 - (void)postAuthorizationNotification
 {
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationUserAuthenticationDidSucceed object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
 }
 
 - (void)analytics
 {
+   
+    // Harpy
     
     // Crashlytics - Crash Logging
     [Crashlytics startWithAPIKey:@"84a79b7ee6f2eca13877cd17b9b9a290790f99aa"];
     
-    // Add Harpy
+    // Hockey
     
-    // Add Panhandler
+    // Google Analytics
     
+    // Panhandler
     
 }
 
