@@ -40,6 +40,12 @@
 - (void)enableCards;
 - (void)disableCards;
 
+/// Gesture Methods
+- (void)setupGestures;
+- (void)likesGestureScale:(UIPinchGestureRecognizer *)gesture;
+- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture;
+- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture;
+
 /// Navigation Action Methods
 - (IBAction)cancelButtonAction:(id)sender;
 - (IBAction)goButtonAction:(id)sender;
@@ -52,9 +58,8 @@
 
 /// Video Player Launch Methods
 - (void)launchPlayerWithStreamEntries;
-- (void)launchPlayerWithLikesRollEntries;
+- (void)launchPlayerWithLikesEntries;
 - (void)launchPlayerWithPersonalRollEntries;
-
 
 @end
 
@@ -90,6 +95,7 @@
     [super viewDidLoad];
     
     [self setupCards];
+    [self setupGestures];
     
 }
 
@@ -147,7 +153,7 @@
     [self.versionLabel setTextColor:kShelbyColorBlack];
     
     // Actions
-    [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesRollEntries) forControlEvents:UIControlEventTouchUpInside];
+    [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
     [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -215,7 +221,55 @@
     
 }
 
-#pragma mark - Navigation Action Buttons (Public)
+#pragma mark - Gesutre Methods (Private)
+- (void)setupGestures
+{
+    
+    UIPinchGestureRecognizer *likesGestureRecgonizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(likesGestureScale:)];
+    [self.likesButton addGestureRecognizer:likesGestureRecgonizer];
+    
+    UIPinchGestureRecognizer *personalRollGestureScale = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(personalRollGestureScale:)];
+    [self.personalRollButton addGestureRecognizer:personalRollGestureScale];
+    
+    UIPinchGestureRecognizer *streamGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(streamGestureScale:)];
+    [self.streamButton addGestureRecognizer:streamGestureRecognizer];
+    
+}
+
+- (void)likesGestureScale:(UIPinchGestureRecognizer *)gesture
+{
+    
+    if ( gesture.scale > 2.0f ) {
+        
+        [self launchPlayerWithLikesEntries];
+        
+    }
+    
+}
+
+- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture
+{
+    
+    if ( gesture.scale > 2.0f ) {
+        
+        [self launchPlayerWithPersonalRollEntries];
+        
+    }
+    
+}
+
+- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture
+{
+    
+    if ( gesture.scale > 2.0f ) {
+        
+        [self launchPlayerWithStreamEntries];
+        
+    }
+    
+}
+
+#pragma mark - Navigation Action Methods (Public)
 - (void)cancelButtonAction:(id)sender
 {
     
@@ -386,7 +440,7 @@
     
 }
 
-- (void)launchPlayerWithLikesRollEntries
+- (void)launchPlayerWithLikesEntries
 {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
