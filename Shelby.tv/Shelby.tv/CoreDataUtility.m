@@ -833,61 +833,81 @@
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
 {
         
-        NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
-        [frame setValue:frameID forKey:kShelbyCoreDataFrameID];
+    NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
+    [frame setValue:frameID forKey:kShelbyCoreDataFrameID];
+    
+    NSString *conversationID = [NSString coreDataNullTest:[frameArray valueForKey:@"conversation_id"]];
+    [frame setValue:conversationID forKey:kShelbyCoreDataFrameConversationID];
+    
+    NSString *createdAt = [NSString coreDataNullTest:[frameArray valueForKey:@"created_at"]];
+    [frame setValue:createdAt forKey:kShelbyCoreDataFrameCreatedAt];
+    
+    NSString *creatorID = [NSString coreDataNullTest:[frameArray valueForKey:@"creator_id"]];
+    [frame setValue:creatorID forKey:kShelbyCoreDataFrameCreatorID];
+    
+    NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
+    [frame setValue:rollID forKey:kShelbyCoreDataFrameRollID];
+    
+    NSDate *timestamp = [NSDate dataFromBSONObjectID:frameID];
+    [frame setValue:timestamp forKey:kShelbyCoreDataFrameTimestamp];
+    
+    NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
+    [frame setValue:videoID forKey:kShelbyCoreDataFrameVideoID];
+    
+    [frame setValue:@(syncStatus) forKey:kShelbyCoreDataFrameIsSynced];
+    
+    // Store Conversation (and Messages)
+    Conversation *conversation = [self checkIfEntity:kShelbyCoreDataEntityConversation
+                                         withIDValue:conversationID
+                                            forIDKey:kShelbyCoreDataFrameConversationID];
+    
+    if ( conversation ) {
         
-        NSString *conversationID = [NSString coreDataNullTest:[frameArray valueForKey:@"conversation_id"]];
-        [frame setValue:conversationID forKey:kShelbyCoreDataFrameConversationID];
-        
-        NSString *createdAt = [NSString coreDataNullTest:[frameArray valueForKey:@"created_at"]];
-        [frame setValue:createdAt forKey:kShelbyCoreDataFrameCreatedAt];
-        
-        NSString *creatorID = [NSString coreDataNullTest:[frameArray valueForKey:@"creator_id"]];
-        [frame setValue:creatorID forKey:kShelbyCoreDataFrameCreatorID];
-        
-        NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
-        [frame setValue:rollID forKey:kShelbyCoreDataFrameRollID];
-        
-        NSDate *timestamp = [NSDate dataFromBSONObjectID:frameID];
-        [frame setValue:timestamp forKey:kShelbyCoreDataFrameTimestamp];
-        
-        NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
-        [frame setValue:videoID forKey:kShelbyCoreDataFrameVideoID];
-        
-        [frame setValue:@(syncStatus) forKey:kShelbyCoreDataFrameIsSynced];
-        
-        // Store Conversation (and Messages)
-        Conversation *conversation = [self checkIfEntity:kShelbyCoreDataEntityConversation
-                                             withIDValue:conversationID
-                                                forIDKey:kShelbyCoreDataFrameConversationID];
         frame.conversation = conversation;
         conversation.frame = frame;
         [self storeConversation:conversation fromFrameArray:frameArray];
         
-        // Store Creator
-        Creator *creator = [self checkIfEntity:kShelbyCoreDataEntityCreator
-                                   withIDValue:creatorID
-                                      forIDKey:kShelbyCoreDataFrameCreatorID];
+    }
+    
+    // Store Creator
+    Creator *creator = [self checkIfEntity:kShelbyCoreDataEntityCreator
+                               withIDValue:creatorID
+                                  forIDKey:kShelbyCoreDataFrameCreatorID];
+    
+    if ( creator ) {
+    
         frame.creator = creator;
         [creator addFrameObject:frame];
         [self storeCreator:creator fromFrameArray:frameArray];
         
-        // Store Roll
-        Roll *roll = [self checkIfEntity:kShelbyCoreDataEntityRoll
-                             withIDValue:rollID
-                                forIDKey:kShelbyCoreDataRollID];
+    }
+    
+    // Store Roll
+    Roll *roll = [self checkIfEntity:kShelbyCoreDataEntityRoll
+                         withIDValue:rollID
+                            forIDKey:kShelbyCoreDataRollID];
+    
+    if ( roll ) {
+    
         frame.roll = roll;
         roll.frame = frame;
         [self storeRoll:roll fromFrameArray:frameArray];
         
-        // Store Video
-        Video *video = [self checkIfEntity:kShelbyCoreDataEntityVideo
-                               withIDValue:videoID
-                                  forIDKey:kShelbyCoreDataFrameVideoID];
+    }
+    
+    // Store Video
+    Video *video = [self checkIfEntity:kShelbyCoreDataEntityVideo
+                           withIDValue:videoID
+                              forIDKey:kShelbyCoreDataFrameVideoID];
+    
+    if ( video ) {
+    
         frame.video = video;
         [video addFrameObject:frame];
         [self storeVideo:video fromFrameArray:frameArray];
- 
+        
+    }
+    
     
 }
 
