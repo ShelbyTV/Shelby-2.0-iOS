@@ -6,10 +6,8 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "PageViewController.h"
-
 @class SPVideoReel;
 
-@interface MeViewController : PageViewController <UITextFieldDelegate>
+@interface MeViewController : UIViewController <UITextFieldDelegate>
 
 @end

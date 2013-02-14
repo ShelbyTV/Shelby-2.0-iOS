@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class PageViewController;
-
 @interface PagesModel : NSObject <UIPageViewControllerDataSource>
 
-- (PageViewController *)viewControllerAtIndex:(NSUInteger)index;
+- (UIViewController *)viewControllerAtIndex:(NSUInteger)index;
 
 @end

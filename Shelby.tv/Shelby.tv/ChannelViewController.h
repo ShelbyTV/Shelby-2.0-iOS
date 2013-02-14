@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "PageViewController.h"
-
-@interface ChannelViewController : PageViewController
+@interface ChannelViewController : UICollectionViewController <UICollectionViewDataSource>
 
 @end

@@ -9,13 +9,12 @@
 #import "PagesModel.h"
 #import "ChannelViewController.h"
 #import "MeViewController.h"
-#import "PageViewController.h"
 
 @interface PagesModel()
 
-@property (strong, nonatomic) NSMutableArray *pageData;
+@property (nonatomic) NSMutableArray *pageData;
 
-- (NSUInteger)indexOfViewController:(PageViewController *)viewController;
+- (NSUInteger)indexOfViewController:(UIViewController *)viewController;
 
 @end
 
@@ -28,8 +27,8 @@
     if (self) {
 
         // Create the data model.
-        _pageData = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 4; i++) {
+        _pageData = [@[] mutableCopy];
+        for (int i = 0; i < 2; i++) {
             [_pageData addObject:[NSNull null]];
         }
     
@@ -38,9 +37,9 @@
 }
 
 #pragma mark - Model Methods (Public)
-- (PageViewController *)viewControllerAtIndex:(NSUInteger)index
+- (UIViewController *)viewControllerAtIndex:(NSUInteger)index
 {
-    PageViewController *pageViewController = nil;
+    UIViewController *pageViewController = nil;
     if (index == 0) {
         pageViewController = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
     } else {
@@ -52,7 +51,7 @@
 }
 
 #pragma mark - Model Methods (Private)
-- (NSUInteger)indexOfViewController:(PageViewController *)viewController
+- (NSUInteger)indexOfViewController:(UIViewController *)viewController
 {
     return [self.pageData indexOfObject:[viewController description]];
 }
@@ -60,7 +59,7 @@
 #pragma mark - UIPageViewControllerDataSource methods
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [self indexOfViewController:(PageViewController *)viewController];
+    NSUInteger index = [self indexOfViewController:(UIViewController *)viewController];
     if ((index == 0) || (index == NSNotFound)) {
         return nil;
     }
@@ -71,7 +70,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [self indexOfViewController:(PageViewController *)viewController];
+    NSUInteger index = [self indexOfViewController:(UIViewController *)viewController];
     if (index == NSNotFound) {
         return nil;
     }

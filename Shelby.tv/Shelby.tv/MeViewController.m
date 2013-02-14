@@ -32,8 +32,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *authenticationTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authenticationDescriptionLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
-
 /// UI Methods
 - (void)setupCards;
 - (void)toggleCardsEnabled:(BOOL)enabled;
@@ -84,8 +82,6 @@
     self.authenticationButton = nil;
     self.authenticationTitleLabel = nil;
     self.authenticationDescriptionLabel = nil;
-    
-    self.versionLabel = nil;
 }
 
 #pragma mark - View Lifecycle Methods
@@ -147,10 +143,6 @@
     [self.authenticationTitleLabel setTextColor:kShelbyColorBlack];
     [self.authenticationDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_authenticationDescriptionLabel.font.pointSize]];
     [self.authenticationDescriptionLabel setTextColor:kShelbyColorBlack];
-    
-    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
-    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
-    [self.versionLabel setTextColor:kShelbyColorBlack];
     
     // Actions
     [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesEntries) forControlEvents:UIControlEventTouchUpInside];

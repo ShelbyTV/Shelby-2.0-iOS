@@ -10,9 +10,10 @@
 		1CC3387816CBDF2A00E58375 /* PagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* PagesViewController.m */; };
 		1CC3387A16CBE20800E58375 /* PagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* PagesView.xib */; };
 		1CC3387D16CBE2C400E58375 /* PagesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387C16CBE2C400E58375 /* PagesModel.m */; };
-		1CC3388016CBE36700E58375 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387F16CBE36700E58375 /* PageViewController.m */; };
 		1CC3388316CBE77F00E58375 /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3388216CBE77F00E58375 /* ChannelViewController.m */; };
 		1CC3388516CC1AA600E58375 /* ChannelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3388416CC1AA600E58375 /* ChannelView.xib */; };
+		1CD72E9E16CD36630045B36F /* ChannelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */; };
+		1CD72EA116CD36CB0045B36F /* ChannelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
@@ -131,11 +132,12 @@
 		1CC3387916CBE20800E58375 /* PagesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PagesView.xib; sourceTree = "<group>"; };
 		1CC3387B16CBE2C400E58375 /* PagesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagesModel.h; sourceTree = "<group>"; };
 		1CC3387C16CBE2C400E58375 /* PagesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagesModel.m; sourceTree = "<group>"; };
-		1CC3387E16CBE36700E58375 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
-		1CC3387F16CBE36700E58375 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
 		1CC3388116CBE77F00E58375 /* ChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
 		1CC3388216CBE77F00E58375 /* ChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
 		1CC3388416CC1AA600E58375 /* ChannelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelView.xib; sourceTree = "<group>"; };
+		1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelViewCell.xib; sourceTree = "<group>"; };
+		1CD72E9F16CD36CB0045B36F /* ChannelViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewCell.h; sourceTree = "<group>"; };
+		1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewCell.m; sourceTree = "<group>"; };
 		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
 		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
@@ -653,8 +655,9 @@
 		8EF5C350162F41B00075C35F /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				8E9FBD4C16C713BB00731912 /* LoginView.xib */,
 				1CC3388416CC1AA600E58375 /* ChannelView.xib */,
+				1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */,
+				8E9FBD4C16C713BB00731912 /* LoginView.xib */,
 				8E1FAB9716652E6E00A565BF /* MeViewController.xib */,
 				1CC3387916CBE20800E58375 /* PagesView.xib */,
 			);
@@ -667,6 +670,8 @@
 				8EF5C350162F41B00075C35F /* Xibs */,
 				8E41EF2C16B0742400C831A4 /* BigButton.h */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
+				1CD72E9F16CD36CB0045B36F /* ChannelViewCell.h */,
+				1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */,
 				8E9FBD4916C7139300731912 /* LoginView.h */,
 				8E9FBD4A16C7139300731912 /* LoginView.m */,
 				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
@@ -678,14 +683,12 @@
 		8EF5C352162F41BF0075C35F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				1CC3387616CBDF2A00E58375 /* PagesViewController.h */,
-				1CC3387716CBDF2A00E58375 /* PagesViewController.m */,
-				1CC3387E16CBE36700E58375 /* PageViewController.h */,
-				1CC3387F16CBE36700E58375 /* PageViewController.m */,
 				1CC3388116CBE77F00E58375 /* ChannelViewController.h */,
 				1CC3388216CBE77F00E58375 /* ChannelViewController.m */,
 				8E1FAB9516652E6E00A565BF /* MeViewController.h */,
 				8E1FAB9616652E6E00A565BF /* MeViewController.m */,
+				1CC3387616CBDF2A00E58375 /* PagesViewController.h */,
+				1CC3387716CBDF2A00E58375 /* PagesViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -836,6 +839,7 @@
 				1CC3388516CC1AA600E58375 /* ChannelView.xib in Resources */,
 				8E77B3AF16CBF7FE0015D100 /* channelCard.png in Resources */,
 				8E77B3B016CBF7FE0015D100 /* channelCard@2x.png in Resources */,
+				1CD72E9E16CD36630045B36F /* ChannelViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -896,7 +900,6 @@
 				8E9FBD4B16C7139300731912 /* LoginView.m in Sources */,
 				1CC3387816CBDF2A00E58375 /* PagesViewController.m in Sources */,
 				1CC3387D16CBE2C400E58375 /* PagesModel.m in Sources */,
-				1CC3388016CBE36700E58375 /* PageViewController.m in Sources */,
 				1CC3388316CBE77F00E58375 /* ChannelViewController.m in Sources */,
 				8E77B3EC16CC45D50015D100 /* Roll.m in Sources */,
 				8E77B3EF16CC45D50015D100 /* Creator.m in Sources */,
@@ -906,6 +909,7 @@
 				8E77B3FB16CC45D60015D100 /* Video.m in Sources */,
 				8E77B3FE16CC45D60015D100 /* Frame.m in Sources */,
 				8E77B40116CC45D60015D100 /* Messages.m in Sources */,
+				1CD72EA116CD36CB0045B36F /* ChannelViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,11 +12,19 @@
 
 @interface PagesViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+
 @property (strong, nonatomic) PagesModel *model;
 
 @end
 
 @implementation PagesViewController
+
+#pragma mark - Memory Management Methods
+- (void)dealloc
+{
+    self.versionLabel = nil;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,12 +40,20 @@
 {
     [super viewDidLoad];
 
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
+    
+    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
+    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
+    [self.versionLabel setTextColor:kShelbyColorBlack];
+    
+    
     UIPageViewController *pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     pageViewController.delegate = self;
     _model = [[PagesModel alloc] init];
     pageViewController.dataSource = self.model;
     
-    PageViewController *startingViewController = [self.model viewControllerAtIndex:0];
+    [pageViewController.view setFrame:CGRectMake(0, 0, 1024, 714)];
+    UIViewController *startingViewController = [self.model viewControllerAtIndex:0];
 
     NSArray *viewControllers = @[startingViewController];
     [pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
@@ -45,10 +61,6 @@
     
     [self addChildViewController:pageViewController];
     [self.view addSubview:pageViewController.view];
-    
-    // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
-    CGRect pageViewRect = self.view.bounds;
-    pageViewController.view.frame = pageViewRect;
     
     [pageViewController didMoveToParentViewController:self];
     
