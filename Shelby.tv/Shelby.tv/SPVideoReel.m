@@ -50,6 +50,7 @@
 - (void)dataSourceShouldUpdateFromLocalArray;
 - (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
 - (void)dataSourceDidUpdate;
+- (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification*)notification;
 
 @end
 
@@ -151,6 +152,12 @@
                                              selector:@selector(dataSourceShouldUpdateFromWeb:)
                                                  name:kShelbySPUserDidScrollToUpdate
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollToNextVideoAfterUnplayableVideo:)
+                                                 name:kShelbySPLoadVideoAfterUnplayableVideo
+                                               object:nil];
+    
 }
 
 - (void)setupVideoScrollView
@@ -836,6 +843,17 @@
             });
         }
     });
+}
+
+- (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification *)notification
+{
+    NSUInteger position = _model.currentVideo + 1;
+    
+    if ( position <= [self.videoFrames count] ) {
+    
+        [self currentVideoDidChangeToVideo:position];
+        
+    }
 }
 
 #pragma mark - UIScrollViewDelegate Methods

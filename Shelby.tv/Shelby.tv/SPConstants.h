@@ -6,13 +6,19 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#define kShelbySPVideoExtracted               @"Video Extracted"
-#define kShelbySPCurrentVideo                 @"Current Video"
-#define kShelbySPCurrentVideoStreamID         @"Current Video in Stream"
-#define kShelbySPUserDidScrollToUpdate        @"User Did Scroll To Update"
-#define kShelbySPVideoShareLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
+/// SPVideoReel
+#define kShelbySPCurrentVideo                   @"SP Current Video"
+#define kShelbySPCurrentVideoStreamID           @"SP Current Video in Stream"
 
+/// Video Cache
+#define kShelbySPVideoPlayerStoredDate          @"SP Video Player Stored Date"
+#define kShelbySPVideoPlayerElapsedTime         @"SP Video Player Elapsed Time"
+#define kShelbySPVideoPlayerExtractedURL        @"SP Video Player Extracted URL"
 
-#define kShelbySPVideoPlayerStoredDate        @"Video Player Stored Date"
-#define kShelbySPVideoPlayerElapsedTime       @"Video Player Elapsed Time"
-#define kShelbySPVideoPlayerExtractedURL      @"Video Player Extracted URL"
+/// Notification
+#define kShelbySPVideoExtracted                 @"SP Video Extracted"
+#define kShelbySPUserDidScrollToUpdate          @"SP User Did Scroll To Update"
+#define kShelbySPLoadVideoAfterUnplayableVideo  @"SP Load Video After Unplayable Video"
+
+/// Temporary
+#define kShelbySPVideoShareLink                 @"http://shelby.tv/video/%@/%@/?frame_id=%@"
