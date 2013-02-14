@@ -227,7 +227,7 @@
                         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
                         [dataUtility setVideoID:video.videoID];
                         [dataUtility saveContext:context];
-                        
+
                         // Reset variables for next search
                         [self.videoQueue removeObjectAtIndex:0];
                         [self setIsExtracting:NO];
@@ -246,6 +246,7 @@
     
     if ( [self.videoQueue count] ) {
         
+        // 'if' conditional shouldn't be necessary, since _videoQueue should have at least one item, the one that failed to be extracted
         [self.videoQueue removeObjectAtIndex:0];
         
     }
@@ -254,7 +255,11 @@
     [self.nextExtractionTimer invalidate];
     [self.currentExtractionTimer invalidate];
     [self destroyWebView];
-    [self extractNextVideoFromQueue];
+
+    // Scroll to next video, which subsequently queues the next video for extraction
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPLoadVideoAfterUnplayableVideo object:nil];
+    
+    
 }
 
 #pragma mark - UIWebViewDelegate Methods
