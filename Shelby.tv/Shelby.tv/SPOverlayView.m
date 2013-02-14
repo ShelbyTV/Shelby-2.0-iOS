@@ -19,28 +19,7 @@
 
 @implementation SPOverlayView
 
-#pragma mark - Memory Management
-- (void)dealloc
-{
-    
-    self.homeButton = nil;
-    self.categoryTitleLabel = nil;
-    self.videoListScrollView = nil;
-    self.shareButton = nil;
-    self.playButton = nil;
-    self.airPlayView = nil;
-    self.scrubber = nil;
-    self.scrubberTimeLabel = nil;
-    self.videoTitleLabel = nil;
-    self.videoCaptionLabel = nil;
-    self.userImageView = nil;
-    self.nicknameLabel = nil;
-    self.restartPlaybackButton = nil;
-
-    DLog(@"SPOverlay Deallocated");
-    
-}
-
+#pragma mark - Initialization Methods
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     
