@@ -61,10 +61,6 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSPUserDidScrollToUpdate object:nil];
     
-    // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [dataUtility removeAllVideoExtractionURLReferences];
-
     DLog(@"SPVideoReel Deallocated");
     
 }
@@ -423,6 +419,15 @@
         
         [self.moreVideoFrames removeAllObjects];
         self.moreVideoFrames = nil;
+        
+        // Instantiate dataUtility for cleanup
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        
+        // Remove older videos
+        [dataUtility removeOlderVideoFramesForCategoryType:_categoryType];
+        
+        // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
+        [dataUtility removeAllVideoExtractionURLReferences];
         
         [self dismissViewControllerAnimated:YES completion:nil];
     

@@ -15,12 +15,16 @@
 @property (nonatomic) AppDelegate *appDelegate;
 @property (assign, nonatomic) DataRequestType requestType;
 
-// Private Persistance Methods
+/// Persistance Methods
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
 
-// Private Storage Methods
+- (void)removeOlderVideoFramesFromStream;
+- (void)removeOlderVideoFramesFromLikes;
+- (void)removeOlderVideoFramesFromPersonalRoll;
+
+/// Storage Methods
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
 - (void)storeCreator:(Creator *)creator fromFrameArray:(NSArray *)frameArray;
@@ -28,7 +32,7 @@
 - (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray;
 - (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
 
-// Private Fetching Methods
+/// Fetching Methods
 - (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames;
 - (NSMutableArray *)filterPlayableFrames:(NSArray *)frames;
 - (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames;
@@ -58,30 +62,7 @@
     return self;
 }
 
-#pragma mark - Public Persistance Methods
-- (void)removeAllVideoExtractionURLReferences
-{
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Execute request that returns array of stream entries
-    NSMutableArray *entries = [[self.context executeFetchRequest:request error:nil] mutableCopy];
-    
-    for (NSUInteger i = 0; i < [entries count]; ++i ) {
-        
-        Video *video = (Video *)[entries objectAtIndex:i];
-        [video setExtractedURL:[NSString coreDataNullTest:nil]];
-        
-    }
-    
-    DLog(@"All video extractedURLs removed");
-
-}
+#pragma mark - Persistance Methods (Public)
 
 - (void)saveContext:(NSManagedObjectContext *)context
 {
@@ -167,7 +148,54 @@
     }
 }
 
-#pragma mark - Public Storage Methods
+- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType
+{
+
+    switch ( categoryType ) {
+            
+        case CategoryType_Stream:{
+            [self removeOlderVideoFramesFromStream];
+        } break;
+            
+        case CategoryType_Likes:{
+            [self removeOlderVideoFramesFromLikes];
+        } break;
+            
+        case CategoryType_PersonalRoll:{
+            [self removeOlderVideoFramesFromPersonalRoll];
+        } break;
+            
+        default:
+            break;
+    }
+    
+}
+
+- (void)removeAllVideoExtractionURLReferences
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityVideo inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Execute request that returns array of stream entries
+    NSMutableArray *entries = [[self.context executeFetchRequest:request error:nil] mutableCopy];
+    
+    for (NSUInteger i = 0; i < [entries count]; ++i ) {
+        
+        Video *video = (Video *)[entries objectAtIndex:i];
+        [video setExtractedURL:[NSString coreDataNullTest:nil]];
+        
+    }
+    
+    DLog(@"All video extractedURLs removed");
+
+}
+
+#pragma mark - Storage Methods (Public)
 - (void)storeUser:(NSDictionary *)resultsDictionary
 {
     NSArray *resultsArray = resultsDictionary[@"result"];
@@ -265,7 +293,7 @@
     
 }
 
-#pragma mark - Public Fetch Methods
+#pragma mark - Fetch Methods (Public)
 - (User *)fetchUser
 {
     // Create fetch request
@@ -654,7 +682,7 @@
     [self saveContext:_context];
 }
 
-#pragma mark - Private Persistance Methods
+#pragma mark - Persistance Methods (Private)
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey
@@ -681,7 +709,127 @@
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:_context];
 }
 
-#pragma mark - Private Storage mMthods
+- (void)removeOlderVideoFramesFromStream
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityStream inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    // Execute request that returns array of Stream entries}
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 3;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Stream *streamEntry = (Stream*)[olderResults lastObject];
+            [self.context deleteObject:streamEntry];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+        
+        [self saveContext:_context];
+        
+    }
+
+}
+
+- (void)removeOlderVideoFramesFromLikes
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 60;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Frame *frame = (Frame*)[olderResults lastObject];
+            [self.context deleteObject:frame];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+
+        [self saveContext:_context];
+        
+    }
+}
+
+- (void)removeOlderVideoFramesFromPersonalRoll
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    User *user = [self fetchUser];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 60;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Frame *frame = (Frame*)[olderResults lastObject];
+            [self.context deleteObject:frame];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+        
+        [self saveContext:_context];
+        
+    }
+}
+
+#pragma mark - Storage Methods (Private) 
 - (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
 {
         
@@ -858,7 +1006,7 @@
     
 }
 
-#pragma mark - Private Fetching Methods
+#pragma mark - Fetching Methods (Private)
 - (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames
 {
     NSMutableArray *playableFrames = [@[] mutableCopy];
