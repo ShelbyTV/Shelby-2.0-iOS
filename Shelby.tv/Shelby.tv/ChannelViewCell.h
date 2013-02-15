@@ -11,7 +11,9 @@
 @interface ChannelViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *channelDescription;
-@property (weak, nonatomic) IBOutlet UIButton *channelButton;
+@property (weak, nonatomic) IBOutlet UIImageView *channelImage;
 @property (weak, nonatomic) IBOutlet UILabel *channelName;
+
+- (void)enableCard:(BOOL)enabled;
 
 @end
