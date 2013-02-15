@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "PagesViewController.h"
+#import "BrowseViewController.h"
 
 @interface AppDelegate ()
 
@@ -31,7 +31,7 @@
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    PagesViewController *pageViewController = [[PagesViewController alloc] initWithNibName:@"PagesView" bundle:nil];
+    BrowseViewController *pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
     self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
 

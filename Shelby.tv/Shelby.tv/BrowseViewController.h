@@ -1,5 +1,5 @@
 //
-//  PageViewController.h
+//  BrowseViewController.h
 //  Shelby.tv
 //
 //  Created by Keren on 2/13/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PagesViewController : UIViewController <UIPageViewControllerDelegate>
+@interface BrowseViewController : UIViewController <UICollectionViewDataSource, UITextFieldDelegate>
 
 @end

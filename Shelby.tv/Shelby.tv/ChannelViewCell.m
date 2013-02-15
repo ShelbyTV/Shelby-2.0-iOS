@@ -13,9 +13,9 @@
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
 {
-    [self.channelName setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:_channelName.font.pointSize]];
+    [self.channelName setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:25]];
 
-    [self.channelDescription    setFont:[UIFont fontWithName:@"Ubuntu" size:_channelDescription.font.pointSize]];
+    [self.channelDescription setFont:[UIFont fontWithName:@"Ubuntu" size:11]];
 }
 
 @end
