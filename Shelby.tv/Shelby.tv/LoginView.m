@@ -14,16 +14,6 @@
 
 @implementation LoginView
 
-- (void)dealloc
-{
-    self.cancelButton = nil;
-    self.goButton = nil;
-    self.emailField = nil;
-    self.passwordField = nil;
-    self.indicator = nil;
-}
-
-
 - (void)awakeFromNib
 {
     

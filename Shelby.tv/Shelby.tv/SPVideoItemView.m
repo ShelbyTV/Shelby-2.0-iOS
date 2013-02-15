@@ -16,14 +16,6 @@
 
 @implementation SPVideoItemView
 
-#pragma mark - Memory Mangement Methods
-- (void)dealloc
-{
-    self.videoTitleLabel = nil;
-    self.thumbnailImageView = nil;
-    self.invisibleButton = nil;
-}
-
 #pragma mark - View Loading Methods
 - (void)awakeFromNib
 {
@@ -34,6 +26,11 @@
 + (CGFloat)width
 {
     return 234.0f;
+}
+
++ (CGFloat)height
+{
+    return 197.0f;
 }
 
 @end

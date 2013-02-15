@@ -63,27 +63,6 @@
 
 @implementation MeViewController
 
-#pragma mark - Memory Management Methods
-- (void)dealloc
-{
-    self.likesButton = nil;
-    self.likesTitleLabel = nil;
-    self.likesDescriptionLabel = nil;
-    
-    self.personalRollButton = nil;
-    self.personalRollDescriptionLabel = nil;
-    self.personalRollTitleLabel = nil;
-    self.personalRollUsernameLabel = nil;
-    
-    self.streamButton = nil;
-    self.streamTitleLabel = nil;
-    self.streamDescriptionLabel = nil;
-    
-    self.authenticationButton = nil;
-    self.authenticationTitleLabel = nil;
-    self.authenticationDescriptionLabel = nil;
-}
-
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
