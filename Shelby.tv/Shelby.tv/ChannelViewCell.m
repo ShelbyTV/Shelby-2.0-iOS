@@ -10,13 +10,12 @@
 
 @implementation ChannelViewCell
 
-- (id)initWithFrame:(CGRect)frame
+#pragma mark - Customization on Instantiation
+- (void)awakeFromNib
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    [self.channelName setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:_channelName.font.pointSize]];
+
+    [self.channelDescription    setFont:[UIFont fontWithName:@"Ubuntu" size:_channelDescription.font.pointSize]];
 }
 
 @end

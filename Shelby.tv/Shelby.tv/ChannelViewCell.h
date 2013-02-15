@@ -10,4 +10,7 @@
 
 @interface ChannelViewCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *channelName;
+@property (weak, nonatomic) IBOutlet UILabel *channelDescription;
+
 @end

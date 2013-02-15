@@ -7,6 +7,7 @@
 //
 
 #import "ChannelViewController.h"
+#import "ChannelViewCell.h"
 
 @interface ChannelViewController ()
 
@@ -42,7 +43,11 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ChannelViewCell" forIndexPath:indexPath];
+    ChannelViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ChannelViewCell" forIndexPath:indexPath];
+    
+    [cell.channelName setText:[NSString stringWithFormat:@"Channel %d", indexPath.row]];
+    [cell.channelDescription setText:[NSString stringWithFormat:@"Channel %d description", indexPath.row]];
+
     return cell;
 }
 
