@@ -25,7 +25,7 @@
 - (void)removeOlderVideoFramesFromPersonalRoll;
 
 /// Storage Methods
-- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus;
+- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray;
 - (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
 - (void)storeCreator:(Creator *)creator fromFrameArray:(NSArray *)frameArray;
 - (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
@@ -262,11 +262,46 @@
                                           forIDKey:kShelbyCoreDataFrameID];
                 stream.frame = frame;
                 
-                [self storeFrame:frame forFrameArray:frameArray withSyncStatus:YES];
+                [self storeFrame:frame forFrameArray:frameArray];
             }
         }
     }
     
+    
+    [self saveContext:_context];
+    
+}
+
+- (void)storeChannel:(NSDictionary *)resultsDictionary
+{
+    NSArray *channelArray = resultsDictionary[@"result"];
+    
+    for ( NSUInteger i = 0; i < [channelArray count]; ++i ) {
+        
+        NSDictionary *channelDictionary = [[channelArray objectAtIndex:i] valueForKey:@"user_channels"];
+        
+        if ( channelDictionary ) { // As of February 15, not all dictionaries in results have a user_channels dictionary
+         
+            Channel *channel = [self checkIfEntity:kShelbyCoreDataEntityChannel
+                                       withIDValue:[[channelDictionary valueForKey:@"user_id"] objectAtIndex:0]
+                                          forIDKey:kShelbyCoreDataChannelID];
+            
+            NSString *channelID = [NSString coreDataNullTest:[[channelDictionary valueForKey:@"user_id"] objectAtIndex:0]];
+            [channel setValue:channelID forKey:kShelbyCoreDataChannelID];
+            
+            NSString *displayTitle = [NSString coreDataNullTest:[[channelDictionary valueForKey:@"display_title"] objectAtIndex:0]];
+            [channel setValue:displayTitle forKey:kShelbyCoreDataChannelDisplayTitle];
+            
+            NSString *displayDescription = [NSString coreDataNullTest:[[channelDictionary valueForKey:@"display_description"] objectAtIndex:0]];
+            [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
+            
+            DLog(@"%@ | %@ | %@", channelID, displayTitle, displayDescription);
+            
+            [ShelbyAPIClient getChannel:channelID];
+            
+        }
+                
+    }
     
     [self saveContext:_context];
     
@@ -284,13 +319,37 @@
                                    withIDValue:[resultsArray[i] valueForKey:@"id"]
                                       forIDKey:kShelbyCoreDataFrameID];
             
-            [self storeFrame:frame forFrameArray:resultsArray[i] withSyncStatus:YES];
+            [self storeFrame:frame forFrameArray:resultsArray[i]];
 
         }
     }
     
     [self saveContext:_context];
     
+}
+
+- (void)storeRollFrames:(NSDictionary *)resultsDictionary forChannel:(NSString *)channelID
+{
+    NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
+    
+    for ( NSUInteger i = 0; i < [resultsArray count]; ++i ) {
+        
+        @autoreleasepool {
+            
+            Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
+                                   withIDValue:[resultsArray[i] valueForKey:@"id"]
+                                      forIDKey:kShelbyCoreDataFrameID];
+            
+            frame.channelID = channelID;
+            
+            DLog(@"Frame Channel: %@", frame.channelID);
+            
+            [self storeFrame:frame forFrameArray:resultsArray[i]];
+            
+        }
+    }
+    
+    [self saveContext:_context];
 }
 
 #pragma mark - Fetch Methods (Public)
@@ -830,7 +889,7 @@
 }
 
 #pragma mark - Storage Methods (Private) 
-- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray withSyncStatus:(BOOL)syncStatus
+- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray
 {
         
     NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
@@ -853,8 +912,6 @@
     
     NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
     [frame setValue:videoID forKey:kShelbyCoreDataFrameVideoID];
-    
-    [frame setValue:@(syncStatus) forKey:kShelbyCoreDataFrameIsSynced];
     
     // Store Conversation (and Messages)
     Conversation *conversation = [self checkIfEntity:kShelbyCoreDataEntityConversation
@@ -929,42 +986,44 @@
     
     NSArray *messagesArray = [conversationsArray valueForKey:@"messages"];
     
-    [conversation setValue:[NSNumber numberWithInt:[messagesArray count]] forKey:kShelbyCoreDataConversationMessageCount];
-    
-    for ( NSUInteger i = 0; i < [messagesArray count]; ++i ) {
+    if ( messagesArray ) {
         
-        Messages *messages = [self checkIfEntity:kShelbyCoreDataEntityMessages
-                                     withIDValue:[messagesArray[i] valueForKey:@"id"]
-                                        forIDKey:kShelbyCoreDataMessagesID];
+        [conversation setValue:[NSNumber numberWithInt:[messagesArray count]] forKey:kShelbyCoreDataConversationMessageCount];
         
-        [conversation addMessagesObject:messages];
-        
-        // Hold reference to parent conversationID
-        [messages setValue:conversation.conversationID forKey:kShelbyCoreDataConversationID];
-        
-        NSString *messageID = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"id"]];
-        [messages setValue:messageID forKey:kShelbyCoreDataMessagesID];
-        
-        NSString *createdAt = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"created_at"]];
-        [messages setValue:createdAt forKey:kShelbyCoreDataMessagesCreatedAt];
-        
-        NSString *nickname = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"nickname"]];
-        [messages setValue:nickname forKey:kShelbyCoreDataMessagesNickname];
-        
-        NSString *originNetwork = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"origin_network"]];
-        [messages setValue:originNetwork forKey:kShelbyCoreDataMessagesOriginNetwork];
-        
-        NSDate *timestamp = [NSDate dataFromBSONObjectID:messageID];
-        [messages setValue:timestamp forKey:kShelbyCoreDataMessagesTimestamp];
-        
-        NSString *text = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"text"]];
-        [messages setValue:text forKey:kShelbyCoreDataMessagesText];
-        
-        NSString *userImage = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"user_image_url"]];
-        [messages setValue:userImage forKey:kShelbyCoreDataMessagesUserImage];
-        
+        for ( NSUInteger i = 0; i < [messagesArray count]; ++i ) {
+            
+            Messages *messages = [self checkIfEntity:kShelbyCoreDataEntityMessages
+                                         withIDValue:[messagesArray[i] valueForKey:@"id"]
+                                            forIDKey:kShelbyCoreDataMessagesID];
+            
+            [conversation addMessagesObject:messages];
+            
+            // Hold reference to parent conversationID
+            [messages setValue:conversation.conversationID forKey:kShelbyCoreDataConversationID];
+            
+            NSString *messageID = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"id"]];
+            [messages setValue:messageID forKey:kShelbyCoreDataMessagesID];
+            
+            NSString *createdAt = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"created_at"]];
+            [messages setValue:createdAt forKey:kShelbyCoreDataMessagesCreatedAt];
+            
+            NSString *nickname = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"nickname"]];
+            [messages setValue:nickname forKey:kShelbyCoreDataMessagesNickname];
+            
+            NSString *originNetwork = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"origin_network"]];
+            [messages setValue:originNetwork forKey:kShelbyCoreDataMessagesOriginNetwork];
+            
+            NSDate *timestamp = [NSDate dataFromBSONObjectID:messageID];
+            [messages setValue:timestamp forKey:kShelbyCoreDataMessagesTimestamp];
+            
+            NSString *text = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"text"]];
+            [messages setValue:text forKey:kShelbyCoreDataMessagesText];
+            
+            NSString *userImage = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"user_image_url"]];
+            [messages setValue:userImage forKey:kShelbyCoreDataMessagesUserImage];
+            
+        }
     }
-    
 }
 
 - (void)storeCreator:(Creator *)creator fromFrameArray:(NSArray *)frameArray

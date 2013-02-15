@@ -123,6 +123,7 @@
     [ShelbyAPIClient getStream];
     [ShelbyAPIClient getLikesRoll];
     [ShelbyAPIClient getPersonalRoll];
+    [ShelbyAPIClient getAllChannels];
 }
 
 - (void)pollAPI

@@ -22,6 +22,8 @@
 - (void)storeUser:(NSDictionary *)resultsDictionary;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary;
+- (void)storeChannel:(NSDictionary *)resultsDictionary;
+- (void)storeRollFrames:(NSDictionary *)resultsDictionary forChannel:(NSString*)channelID;
 
 /// Fetching Methods
 - (User *)fetchUser;
@@ -37,7 +39,7 @@
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
 
 /// Sync Methods
-- (void)syncLikes:(NSDictionary *)webResultsDictionary;
+- (void)syncLikes:(NSDictionary *)webResuhanneltsDictionary;
 - (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
 
 

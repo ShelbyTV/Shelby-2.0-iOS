@@ -19,5 +19,7 @@
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
 + (void)getLikesForSync;
 + (void)getPersonalRollForSync;
++ (void)getAllChannels;
++ (void)getChannel:(NSString*)channelID;
 
 @end

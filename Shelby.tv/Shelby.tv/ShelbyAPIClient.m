@@ -13,7 +13,7 @@
 
 + (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView
 {
-    NSString *requestString = [NSString stringWithFormat:kAPIShelbyPostAuthorizeEmail, email, password];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostAuthorizeEmail, email, password];
     [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
@@ -58,7 +58,7 @@
     User *user = [dataUtility fetchUser];
     
     NSString *authToken = [user token];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetStream, authToken]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetStream, authToken]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -87,7 +87,7 @@
     User *user = [dataUtility fetchUser];
     
     NSString *authToken = [user token];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetMoreStream, authToken, skipParam]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreStream, authToken, skipParam]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -117,7 +117,7 @@
     
     NSString *authToken = [user token];
     NSString *likesRollID = [user likesRollID];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, likesRollID, authToken]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, likesRollID, authToken]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -149,7 +149,7 @@
     NSString *authToken = [user token];
     NSString *likesRollID = [user likesRollID];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetMoreRollFrames, likesRollID, authToken, skipParam]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, likesRollID, authToken, skipParam]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -180,7 +180,7 @@
     
     NSString *authToken = [user token];
     NSString *personalRollID = [user personalRollID];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFrames, personalRollID, authToken]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, personalRollID, authToken]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -209,7 +209,7 @@
     
     NSString *authToken = [user token];
     NSString *personalRollID = [user personalRollID];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetMoreRollFrames, personalRollID, authToken, skipParam]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, personalRollID, authToken, skipParam]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -242,7 +242,7 @@
     
     if ( frameCount ) {
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFramesForSync, likesRollID, authToken, frameCount]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFramesForSync, likesRollID, authToken, frameCount]];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [request setHTTPMethod:@"GET"];
         
@@ -276,7 +276,7 @@
     
     if ( frameCount ) {
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kAPIShelbyGetRollFramesForSync, personallRollID, authToken, frameCount]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFramesForSync, personallRollID, authToken, frameCount]];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [request setHTTPMethod:@"GET"];
         
@@ -299,5 +299,54 @@
     }
 }
 
++ (void)getAllChannels
+{
+    
+    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+            [dataUtility storeChannel:JSON];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Personal Roll for sync.");
+        
+    }];
+    
+    [operation start];
+    
+}
+
++ (void)getChannel:(NSString *)channelID
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetChannelDashbaord, channelID]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+            [dataUtility storeRollFrames:JSON forChannel:channelID];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Personal Roll for sync.");
+        
+    }];
+    
+    [operation start];
+}
 
 @end
