@@ -11,6 +11,7 @@
 		1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
 		1CCCB54616CEA61B00C8C216 /* MyRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* MyRollViewCell.m */; };
 		1CCCB54816CEBAB100C8C216 /* MyRollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCCB54716CEBAB100C8C216 /* MyRollViewCell.xib */; };
+		1CCCB54C16CEECD400C8C216 /* CollectionViewChannelsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54B16CEECD400C8C216 /* CollectionViewChannelsLayout.m */; };
 		1CD72E9E16CD36630045B36F /* ChannelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */; };
 		1CD72EA116CD36CB0045B36F /* ChannelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
@@ -133,6 +134,8 @@
 		1CCCB54416CEA61B00C8C216 /* MyRollViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRollViewCell.h; sourceTree = "<group>"; };
 		1CCCB54516CEA61B00C8C216 /* MyRollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRollViewCell.m; sourceTree = "<group>"; };
 		1CCCB54716CEBAB100C8C216 /* MyRollViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRollViewCell.xib; sourceTree = "<group>"; };
+		1CCCB54A16CEECD400C8C216 /* CollectionViewChannelsLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewChannelsLayout.h; sourceTree = "<group>"; };
+		1CCCB54B16CEECD400C8C216 /* CollectionViewChannelsLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewChannelsLayout.m; sourceTree = "<group>"; };
 		1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelViewCell.xib; sourceTree = "<group>"; };
 		1CD72E9F16CD36CB0045B36F /* ChannelViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewCell.h; sourceTree = "<group>"; };
 		1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewCell.m; sourceTree = "<group>"; };
@@ -319,6 +322,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1CCCB54916CEEC9800C8C216 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				1CCCB54A16CEECD400C8C216 /* CollectionViewChannelsLayout.h */,
+				1CCCB54B16CEECD400C8C216 /* CollectionViewChannelsLayout.m */,
+			);
+			name = Layouts;
+			sourceTree = "<group>";
+		};
 		8E091750168536F900503EF9 /* Icons and Launch Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -682,6 +694,7 @@
 		8EF5C351162F41BA0075C35F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1CCCB54916CEEC9800C8C216 /* Layouts */,
 				8EF5C350162F41B00075C35F /* Xibs */,
 				8E41EF2C16B0742400C831A4 /* BigButton.h */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
@@ -923,6 +936,7 @@
 				8EA069A916CD6B7100B6EB69 /* Harpy.m in Sources */,
 				8EA069AD16CD6B7100B6EB69 /* Panhandler.m in Sources */,
 				1CCCB54616CEA61B00C8C216 /* MyRollViewCell.m in Sources */,
+				1CCCB54C16CEECD400C8C216 /* CollectionViewChannelsLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
