@@ -67,26 +67,34 @@
 
     NSString *name = nil;
     NSString *description = nil;
+    NSString *buttonImageName = nil;
     int row = indexPath.row;
     if (indexPath.section == 0) {
         if (row == 0) {
             name = @"Likes";
             description = @"Add videos to your likes so you can come back to them and watch them in Shelby at a later time.";
+            buttonImageName = @"likesCard.png";
         } else if (row == 2) {
             name = @"My Roll";
             description = @"Ever want to curate your own channel? Now you can with Shelby. Roll Videos to your .TV today.";
+            buttonImageName = @"personalRollCard.png";
         } else if (row == 1) {
             name = @"Stream";
             description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
+            buttonImageName = @"streamCard.png";
         } else if (row == 3) {
             name = @"Login";
             description = @"Ain't nothin' but a gangsta party!";
+            buttonImageName = @"loginCard.png";
         }
     } else {
         name = [NSString stringWithFormat:@"Channel %d", row];
         description = [NSString stringWithFormat:@"Channel %d description", row];
+        buttonImageName = @"channelCard.png";
     }
     
+    UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
+    [cell.channelButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [cell.channelName setText:name];
     [cell.channelDescription setText:description];
     
