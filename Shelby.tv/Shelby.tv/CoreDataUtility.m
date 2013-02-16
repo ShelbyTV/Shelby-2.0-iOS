@@ -294,9 +294,7 @@
             
             NSString *displayDescription = [NSString coreDataNullTest:[[channelDictionary valueForKey:@"display_description"] objectAtIndex:0]];
             [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
-            
-            DLog(@"%@ | %@ | %@", channelID, displayTitle, displayDescription);
-            
+
             [ShelbyAPIClient getChannel:channelID];
             
         }
@@ -646,6 +644,33 @@
 
     
     return messageText.length ? messageText : @"No information available";
+}
+
+- (NSMutableArray *)fetchAllChannels
+{
+    
+    // Create fetch request
+    NSFetchRequest *channelsRequest = [[NSFetchRequest alloc] init];
+    [channelsRequest setReturnsObjectsAsFaults:NO];
+    
+    // Fetch channels data
+    NSEntityDescription *channelsDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityChannel inManagedObjectContext:_context];
+    [channelsRequest setEntity:channelsDescription];
+    
+    // Sort by channelID
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"channelID" ascending:NO];
+    [channelsRequest setSortDescriptors:@[sortDescriptor]];
+    
+    // Execute request that returns array of channels
+    NSArray *channelsArray = [self.context executeFetchRequest:channelsRequest error:nil];
+    
+    return [NSMutableArray arrayWithArray:channelsArray];
+    
+}
+
+- (NSMutableArray *)fetchChannel:(NSString *)channelID
+{
+    
 }
 
 #pragma mark - Sync Methods (Public)

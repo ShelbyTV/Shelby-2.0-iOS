@@ -35,6 +35,13 @@
     self.window.rootViewController = meViewController;
     [self.window makeKeyAndVisible];
 
+    // Ping Routes on Launch
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+        
+        [self userIsAuthorized];
+    
+    }
+    
     // Add analytics
     [self analytics];
 
