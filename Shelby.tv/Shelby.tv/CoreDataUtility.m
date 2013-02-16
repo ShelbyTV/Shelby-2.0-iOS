@@ -342,8 +342,6 @@
             
             frame.channelID = channelID;
             
-            DLog(@"Frame Channel: %@", frame.channelID);
-            
             [self storeFrame:frame forFrameArray:resultsArray[i]];
             
         }
@@ -918,7 +916,7 @@
                                          withIDValue:conversationID
                                             forIDKey:kShelbyCoreDataFrameConversationID];
     
-    if ( conversation ) {
+    if ( ![conversation isEqual:[NSNull null]] ) {
         
         frame.conversation = conversation;
         conversation.frame = frame;
@@ -931,7 +929,7 @@
                                withIDValue:creatorID
                                   forIDKey:kShelbyCoreDataFrameCreatorID];
     
-    if ( creator ) {
+    if ( ![creator isEqual:[NSNull null]] ) {
     
         frame.creator = creator;
         [creator addFrameObject:frame];
@@ -944,7 +942,7 @@
                          withIDValue:rollID
                             forIDKey:kShelbyCoreDataRollID];
     
-    if ( roll ) {
+    if ( ![roll isEqual:[NSNull null]] ) {
     
         frame.roll = roll;
         roll.frame = frame;
@@ -957,7 +955,7 @@
                            withIDValue:videoID
                               forIDKey:kShelbyCoreDataFrameVideoID];
     
-    if ( video ) {
+    if ( ![video isEqual:[NSNull null]] ) {
     
         frame.video = video;
         [video addFrameObject:frame];
@@ -985,9 +983,9 @@
 {
     
     NSArray *messagesArray = [conversationsArray valueForKey:@"messages"];
-    
-    if ( messagesArray ) {
-        
+
+    if ( ![messagesArray isEqual:[NSNull null]] ) {
+       
         [conversation setValue:[NSNumber numberWithInt:[messagesArray count]] forKey:kShelbyCoreDataConversationMessageCount];
         
         for ( NSUInteger i = 0; i < [messagesArray count]; ++i ) {
