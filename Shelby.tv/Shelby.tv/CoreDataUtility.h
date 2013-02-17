@@ -38,7 +38,7 @@
 - (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date;
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
 - (NSMutableArray *)fetchAllChannels;
-- (NSMutableArray *)fetchChannel:(NSString *)channelID;
+- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID;
 
 
 /// Sync Methods

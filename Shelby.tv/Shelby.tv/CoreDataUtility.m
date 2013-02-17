@@ -668,9 +668,34 @@
     
 }
 
-- (NSMutableArray *)fetchChannel:(NSString *)channelID
+- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID
 {
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
     
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Queue Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
+    
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
+    
+    return deduplicatedFrames;
 }
 
 #pragma mark - Sync Methods (Public)

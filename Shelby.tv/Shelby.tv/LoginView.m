@@ -26,7 +26,6 @@
     [self.indicator setHidden:YES];
     [self.indicator setHidesWhenStopped:YES];
 
-    
 }
 
 - (void)userAuthenticationDidFail
