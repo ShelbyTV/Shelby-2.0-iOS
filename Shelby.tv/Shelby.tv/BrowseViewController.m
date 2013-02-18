@@ -13,6 +13,9 @@
 #import "MyRollViewCell.h"
 #import "SPVideoReel.h"
 
+#define kShelbyNumberOfCardsInMeSectionPage 4
+#define kShelbyNumberOfCardsInChannelSectionPage 4
+
 @interface BrowseViewController ()
 
 @property (strong, nonatomic) NSString *userNickname;
@@ -24,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 // Fetch nickname of logged in user from CoreData
 - (void)fetchUserNickname;
 
@@ -34,6 +38,9 @@
 //- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture;
 //- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture;
 
+
+/// Page Control
+- (IBAction)goToPage:(id)sender;
 
 /// Navigation Action Methods
 - (IBAction)cancelButtonAction:(id)sender;
@@ -85,6 +92,10 @@
     [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
     [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
     [self.versionLabel setTextColor:kShelbyColorBlack];
+    
+    [self.pageControl setNumberOfPages:3]; // TODO: this is hardcoded
+    [self.pageControl setPageIndicatorTintColor:[UIColor grayColor]];
+    [self.pageControl setCurrentPageIndicatorTintColor:[UIColor lightGrayColor]];
 }
 
 #pragma mark - Private Methods
@@ -97,12 +108,25 @@
     }
 }
 
+#pragma mark - PageControl Methods
+- (IBAction)goToPage:(id)sender
+{
+    NSInteger page = self.pageControl.currentPage;
+    
+    int y = 100;
+    int x = (1024 * page) + 100;
+    
+    NSIndexPath *cellAtIndex = [self.collectionView indexPathForItemAtPoint:CGPointMake(x, y)];
+    
+    [self.collectionView scrollToItemAtIndexPath:cellAtIndex atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+}
+
 // TODO: factor the data source delegete methods to a model class.
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        return kShelbyNumberOfCardsInMeSectionPage;
     } else {
         return 8;
     }
@@ -465,6 +489,18 @@
     } else {
         [self performAuthentication];
         return YES;
+    }
+}
+
+#pragma mark UIScrollViewDelegate Methods
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSArray *visibleCells = [self.collectionView visibleCells];
+    if ([visibleCells count] > 0) {
+        NSIndexPath *firstCell = [self.collectionView indexPathForCell:visibleCells[0]];
+        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyNumberOfCardsInMeSectionPage : kShelbyNumberOfCardsInChannelSectionPage);
+        int page = (firstCell.row / numberOfCardsInSectionPage) + firstCell.section;
+        [self.pageControl setCurrentPage:page];
     }
 }
 
