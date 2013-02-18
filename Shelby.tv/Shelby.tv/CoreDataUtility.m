@@ -272,7 +272,7 @@
     
 }
 
-- (void)storeChannel:(NSDictionary *)resultsDictionary
+- (void)storeChannels:(NSDictionary *)resultsDictionary
 {
     NSArray *channelArray = resultsDictionary[@"result"];
     

@@ -22,7 +22,7 @@
 - (void)storeUser:(NSDictionary *)resultsDictionary;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary;
-- (void)storeChannel:(NSDictionary *)resultsDictionary;
+- (void)storeChannels:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary forChannel:(NSString*)channelID;
 
 /// Fetching Methods
