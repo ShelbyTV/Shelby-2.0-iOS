@@ -39,6 +39,7 @@
 //- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture;
 //- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture;
 
+- (void)scrollCollectionViewToPage:(int)page;
 
 /// Page Control
 - (IBAction)goToPage:(id)sender;
@@ -96,9 +97,10 @@
     
     [self.pageControl setNumberOfPages:3]; // TODO: this is hardcoded
     
-    // TODO: add a check: if there are NO channels, skip the next 2 lines.
+    // TODO: add a check: if there are NO channels, skip the next 3 lines.
     [self.pageControl setCurrentPage:1];
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
+    [self scrollCollectionViewToPage:1];
 }
 
 #pragma mark - Private Methods
@@ -111,6 +113,17 @@
     }
 }
 
+- (void)scrollCollectionViewToPage:(int)page
+{
+    int width = self.collectionView.frame.size.width;
+    int height = self.collectionView.frame.size.height;
+    
+    int y = 0;
+    int x = (width * page);
+    
+    [self.collectionView scrollRectToVisible:CGRectMake(x, y, width, height) animated:YES];
+}
+
 #pragma mark - PageControl Methods
 - (IBAction)goToPage:(id)sender
 {
@@ -119,12 +132,7 @@
     // Next line is necessary, otherwise, the custom page control images won't update
     [self.pageControl setCurrentPage:page];
     
-    int y = 100;
-    int x = (1024 * page) + 100;
-    
-    NSIndexPath *cellAtIndex = [self.collectionView indexPathForItemAtPoint:CGPointMake(x, y)];
-    
-    [self.collectionView scrollToItemAtIndexPath:cellAtIndex atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+    [self scrollCollectionViewToPage:page];
 }
 
 // TODO: factor the data source delegete methods to a model class.

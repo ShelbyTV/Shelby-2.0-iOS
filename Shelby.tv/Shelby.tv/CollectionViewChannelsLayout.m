@@ -38,7 +38,7 @@
     
     int screen = 0;
     
-    int xOffset = 20;
+    int xOffset = 0;
     int yOffset = 34;
 
     for (int i = 0; i < count; i++) {
@@ -64,7 +64,7 @@
             yOffset = 34;
         }
         
-        if (i != 0 && (i % 4 == 0)) {
+        if (i % 4 == 0) {
             xOffset += 20;
         }
         
