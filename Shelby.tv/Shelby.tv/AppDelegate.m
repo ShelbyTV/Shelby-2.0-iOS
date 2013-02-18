@@ -128,7 +128,7 @@
 - (void)pingAllRoutes
 {
     [ShelbyAPIClient getStream];
-    [ShelbyAPIClient getLikesRoll];
+    [ShelbyAPIClient getLikes];
     [ShelbyAPIClient getPersonalRoll];
     [ShelbyAPIClient getAllChannels];
 }
@@ -150,7 +150,7 @@
             
             self.pollAPICounter = 2;
             
-            [ShelbyAPIClient getLikesRoll];
+            [ShelbyAPIClient getLikes];
             
         } break;
             

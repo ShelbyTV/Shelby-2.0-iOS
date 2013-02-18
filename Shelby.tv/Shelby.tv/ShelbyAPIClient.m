@@ -109,7 +109,7 @@
     [operation start];
 }
 
-+ (void)getLikesRoll
++ (void)getLikes
 {
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];

@@ -13,7 +13,7 @@
 + (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView;
 + (void)getStream;
 + (void)getMoreFramesInStream:(NSString *)skipParam;
-+ (void)getLikesRoll;
++ (void)getLikes;
 + (void)getMoreFramesInLikes:(NSString *)skipParam;
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
