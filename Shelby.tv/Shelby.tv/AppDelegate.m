@@ -66,7 +66,6 @@
         // Perform Sync on Likes
         [ShelbyAPIClient getPersonalRollForSync];
         
-        
         // Update All Routs
         [self pingAllRoutes];
         
@@ -132,6 +131,7 @@
     [ShelbyAPIClient getLikes];
     [ShelbyAPIClient getPersonalRoll];
     [ShelbyAPIClient getAllChannels];
+    
 }
 
 - (void)pollAPI

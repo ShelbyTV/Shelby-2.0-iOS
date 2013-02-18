@@ -617,24 +617,23 @@
 {
 
     // Create fetch request
-    NSFetchRequest *messagesRequest = [[NSFetchRequest alloc] init];
-    [messagesRequest setReturnsObjectsAsFaults:NO];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
     
     // Fetch messages data
-    NSManagedObjectContext *context = conversation.managedObjectContext;
-    NSEntityDescription *messagesDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityMessages inManagedObjectContext:context];
-    [messagesRequest setEntity:messagesDescription];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityMessages inManagedObjectContext:_context];
+    [request setEntity:description];
     
     // Only include messages that belond to this specific conversation
-    NSPredicate *messagesPredicate = [NSPredicate predicateWithFormat:@"conversationID == %@", conversation.conversationID];
-    [messagesRequest setPredicate:messagesPredicate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversationID == %@", conversation.conversationID];
+    [request setPredicate:predicate];
     
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [messagesRequest setSortDescriptors:@[sortDescriptor]];
+    [request setSortDescriptors:@[sortDescriptor]];
     
     // Execute request that returns array of dashboardEntrys
-    NSArray *messagesArray = [context executeFetchRequest:messagesRequest error:nil];
+    NSArray *messagesArray = [self.context executeFetchRequest:request error:nil];
     
     NSString *messageText;
     

@@ -285,22 +285,26 @@
             });
         }
         
-        // Add visual selected state (e.g., green background) to currentVideo's itemView object
-        SPVideoItemView *itemView = (self.itemViews)[_model.currentVideo];
-        
-        // Scroll To currentVideo if self.currentVideo != 0
-        if ( 0 != self.model.currentVideo) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            // Add visual selected state (e.g., green background) to currentVideo's itemView object
+            SPVideoItemView *itemView = (self.itemViews)[_model.currentVideo];
             
-            CGFloat x = _videoScrollView.frame.size.width * _model.currentVideo;
-            CGFloat y = _videoScrollView.contentOffset.y;
-            [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+            // Scroll To currentVideo if self.currentVideo != 0
+            if ( 0 != self.model.currentVideo) {
+                
+                CGFloat x = _videoScrollView.frame.size.width * _model.currentVideo;
+                CGFloat y = _videoScrollView.contentOffset.y;
+                [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+                
+                CGFloat itemViewX = itemView.frame.size.width * (_model.currentVideo-1);
+                CGFloat itemViewY = _overlayView.videoListScrollView.contentOffset.y;
+                [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
+                
+            }
+       
+        });
             
-            CGFloat itemViewX = itemView.frame.size.width * (_model.currentVideo-1);
-            CGFloat itemViewY = _overlayView.videoListScrollView.contentOffset.y;
-            [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
-            
-        }
-        
     });
     
 }
