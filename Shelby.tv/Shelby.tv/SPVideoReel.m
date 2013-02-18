@@ -370,13 +370,13 @@
 {
     SPVideoPlayer *player = (self.videoPlayers)[position];
     
-    if ( (position >= _model.numberOfVideos) ) {
+    if ( position < _model.numberOfVideos ) {
         
-        return;
+        [player queueVideo];
     
     } else {
     
-        [player queueVideo];
+        // Do nothing
     
     }
 }
@@ -854,12 +854,21 @@
 
 - (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification *)notification
 {
+    
+    // Position after unloadable video (e.g., next video's position)
     NSUInteger position = _model.currentVideo + 1;
     
-    if ( position <= [self.videoFrames count] ) {
-    
-        [self currentVideoDidChangeToVideo:position];
+    if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
         
+        if ( self.model.currentVideoPlayer.videoFrame == [self.videoFrames objectAtIndex:_model.currentVideo]) { // Load AND scroll to nextvideo
+            
+            [self currentVideoDidChangeToVideo:position];
+            
+        } else { // Load next video, (but do not scroll)
+            
+            [self extractVideoForVideoPlayer:position];
+            
+        }
     }
 }
 
