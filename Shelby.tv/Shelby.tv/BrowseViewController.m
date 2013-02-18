@@ -1,56 +1,56 @@
 //
-//  MeViewController.m
+//  BrowseViewController.m
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 10/17/12.
-//  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
+//  Created by Keren on 2/13/13.
+//  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "MeViewController.h"
+#import "BrowseViewController.h"
+#import "ChannelViewCell.h"
 #import "LoginView.h"
+#import "MeViewController.h"
+#import "MyRollViewCell.h"
+#import "PageControl.h"
 #import "SPVideoReel.h"
 
-@interface MeViewController ()
+#define kShelbyNumberOfCardsInMeSectionPage 4
+#define kShelbyNumberOfCardsInChannelSectionPage 4
+
+@interface BrowseViewController ()
+
+@property (strong, nonatomic) NSString *userNickname;
+@property (assign, nonatomic) BOOL isLoggedIn;
 
 @property (nonatomic) LoginView *loginView;
 @property (nonatomic) UIView *backgroundLoginView;
 
-@property (weak, nonatomic) IBOutlet UIButton *likesButton;
-@property (weak, nonatomic) IBOutlet UILabel *likesTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *likesDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (weak, nonatomic) IBOutlet UIButton *personalRollButton;
-@property (weak, nonatomic) IBOutlet UILabel *personalRollTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *personalRollDescriptionLabel;
-@property (nonatomic) IBOutlet UILabel *personalRollUsernameLabel;
+@property (weak, nonatomic) IBOutlet PageControl *pageControl;
+// Fetch nickname of logged in user from CoreData
+- (void)fetchUserNickname;
 
-@property (weak, nonatomic) IBOutlet UIButton *streamButton;
-@property (weak, nonatomic) IBOutlet UILabel *streamTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *streamDescriptionLabel;
-
-@property (weak, nonatomic) IBOutlet UIButton *authenticationButton;
-@property (weak, nonatomic) IBOutlet UILabel *authenticationTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *authenticationDescriptionLabel;
-
-/// UI Methods
-- (void)setupCards;
-- (void)toggleCardsEnabled:(BOOL)enabled;
-- (void)enableCards;
-- (void)disableCards;
-
+// TODO: need to port from MeVC
 /// Gesture Methods
-- (void)setupGestures;
-- (void)likesGestureScale:(UIPinchGestureRecognizer *)gesture;
-- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture;
-- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture;
+//- (void)setupGestures;
+//- (void)likesGestureScale:(UIPinchGestureRecognizer *)gesture;
+//- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture;
+//- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture;
+
+- (void)scrollCollectionViewToPage:(int)page;
+
+/// Page Control
+- (IBAction)goToPage:(id)sender;
 
 /// Navigation Action Methods
 - (IBAction)cancelButtonAction:(id)sender;
 - (IBAction)goButtonAction:(id)sender;
 
 /// Authentication Methods
-- (void)loginButtonAction;
-- (void)logoutButtonAction;
+- (void)loginAction;
+- (void)logoutAction;
 - (void)performAuthentication;
 - (void)userAuthenticationDidSucceed:(NSNotification *)notification;
 
@@ -61,190 +61,191 @@
 
 @end
 
-@implementation MeViewController
+@implementation BrowseViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
-    
     [super viewDidLoad];
     
-    [self setupCards];
-    [self setupGestures];
+    [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
     
+    [self fetchUserNickname];
+    
+    // Register Cell Nibs
+    UINib *cellNib = [UINib nibWithNibName:@"ChannelViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"ChannelViewCell"];
+    cellNib = [UINib nibWithNibName:@"MyRollViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"MyRollViewCell"];
+
+    // Customize look
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
+    
+    // Version label for beta builds
+    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
+    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
+    [self.versionLabel setTextColor:kShelbyColorBlack];
+    
+    [self.pageControl setNumberOfPages:3]; // TODO: this is hardcoded
+    
+    // TODO: add a check: if there are NO channels, skip the next 3 lines.
+    [self.pageControl setCurrentPage:1];
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
+    [self scrollCollectionViewToPage:1];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+#pragma mark - Private Methods
+- (void)fetchUserNickname
 {
-    
-    [super viewWillAppear:animated];
-    
-    // Toggle card UI depending on if user is logged-in or logged-out
-    ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) ? [self toggleCardsEnabled:YES] : [self toggleCardsEnabled:NO];
-    
-    // If viewWillAppear is called when SPVideoReel modalVC is removed...
-    if ( [[UIApplication sharedApplication] isStatusBarHidden] ) {
-        
-        // ... re-display status bar
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-        
-        // ... and reset the view's frame
-        [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
-    
+    if ([self isLoggedIn]) {
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        [self setUserNickname:[user nickname]];
     }
-
 }
 
-#pragma mark - UI Methods (Private)
-- (void)setupCards
+- (void)scrollCollectionViewToPage:(int)page
 {
+    int width = self.collectionView.frame.size.width;
+    int height = self.collectionView.frame.size.height;
     
-    // Labels
-    [self.likesTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_likesTitleLabel.font.pointSize]];
-    [self.likesTitleLabel setTextColor:kShelbyColorBlack];
-    [self.likesDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_likesDescriptionLabel.font.pointSize]];
-    [self.likesDescriptionLabel setTextColor:kShelbyColorBlack];
+    int y = 0;
+    int x = (width * page);
     
-    [self.personalRollTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollTitleLabel.font.pointSize]];
-    [self.personalRollTitleLabel setTextColor:kShelbyColorBlack];
-    [self.personalRollDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_personalRollDescriptionLabel.font.pointSize]];
-    [self.personalRollDescriptionLabel setTextColor:kShelbyColorBlack];
-    
-    [self.personalRollUsernameLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollUsernameLabel.font.pointSize]];
-    [self.personalRollUsernameLabel setTextColor:[UIColor colorWithHex:@"ffffff" andAlpha:1.0f]];
-    
-    [self.streamTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_streamTitleLabel.font.pointSize]];
-    [self.streamTitleLabel setTextColor:kShelbyColorBlack];
-    [self.streamDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_streamDescriptionLabel.font.pointSize]];
-    [self.streamDescriptionLabel setTextColor:kShelbyColorBlack];
-    
-    [self.authenticationTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_authenticationTitleLabel.font.pointSize]];
-    [self.authenticationTitleLabel setTextColor:kShelbyColorBlack];
-    [self.authenticationDescriptionLabel setFont:[UIFont fontWithName:@"Ubuntu" size:_authenticationDescriptionLabel.font.pointSize]];
-    [self.authenticationDescriptionLabel setTextColor:kShelbyColorBlack];
-    
-    // Actions
-    [self.likesButton addTarget:self action:@selector(launchPlayerWithLikesEntries) forControlEvents:UIControlEventTouchUpInside];
-    [self.personalRollButton addTarget:self action:@selector(launchPlayerWithPersonalRollEntries) forControlEvents:UIControlEventTouchUpInside];
-    [self.streamButton addTarget:self action:@selector(launchPlayerWithStreamEntries) forControlEvents:UIControlEventTouchUpInside];
+    [self.collectionView scrollRectToVisible:CGRectMake(x, y, width, height) animated:YES];
 }
 
-- (void)toggleCardsEnabled:(BOOL)enable
+#pragma mark - PageControl Methods
+- (IBAction)goToPage:(id)sender
 {
-
-    [self.authenticationButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    NSInteger page = self.pageControl.currentPage;
     
-    if ( enable ) {
-        
-        [self enableCards];
-        [self.authenticationButton addTarget:self action:@selector(logoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        
+    // Next line is necessary, otherwise, the custom page control images won't update
+    [self.pageControl setCurrentPage:page];
+    
+    [self scrollCollectionViewToPage:page];
+}
+
+// TODO: factor the data source delegete methods to a model class.
+#pragma mark - UICollectionView Datasource
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return kShelbyNumberOfCardsInMeSectionPage;
     } else {
+        return 8;
+    }
+}
+
+- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
+{
+    return 2;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // My Roll Card
+    if (indexPath.section == 0 && indexPath.row == 2) {
+        MyRollViewCell *cell = (MyRollViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"MyRollViewCell" forIndexPath:indexPath];
+        NSString *myTv = nil;
+        if ([self isLoggedIn]) {
+            myTv = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
+        } else {
+            myTv = @"Your personalized .TV";
+        }
         
-        [self disableCards];
-        [self.authenticationButton addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [cell.personalRollUsernameLabel setText:myTv];
+        [cell enableCard:[self isLoggedIn]];
+        return cell;
+    }
+    
+    ChannelViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ChannelViewCell" forIndexPath:indexPath];
+    NSString *name = nil;
+    NSString *description = nil;
+    NSString *buttonImageName = nil;
+    int row = indexPath.row;
+    
+    if (indexPath.section == 0) { // Me Cards
+        [cell enableCard:[self isLoggedIn]];
+
+        if (row == 0) {
+            name = @"Likes";
+            description = @"Add videos to your likes so you can come back to them and watch them in Shelby at a later time.";
+            buttonImageName = @"likesCard.png";
+        } else if (row == 2) {
+        } else if (row == 1) {
+            name = @"Stream";
+            description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
+            buttonImageName = @"streamCard.png";
+        } else if (row == 3) {
+            [cell enableCard:YES];
+            if ([self isLoggedIn]) {
+                name = @"Logout";
+            } else {
+                name = @"Login";
+            }
+            description = @"Ain't nothin' but a gangsta party!";
+            buttonImageName = @"loginCard.png";
+        }
+    } else {  // Channel Cards
+        [cell enableCard:YES];
+        buttonImageName = @"channelCard.png";
+        name = [NSString stringWithFormat:@"Channel %d", indexPath.row];
+        description = [NSString stringWithFormat:@"Channel %d description", indexPath.row];
         
     }
     
+    UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
+    [cell.channelImage setImage:buttonImage];
+    [cell.channelName setText:name];
+    [cell.channelDescription setText:description];
+    
+    return cell;
 }
 
-- (void)enableCards
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    User *user = [dataUtility fetchUser];
+    int row = indexPath.row;
     
-    [self.likesButton setEnabled:YES];
-    [self.likesTitleLabel setEnabled:YES];
-    [self.likesDescriptionLabel setEnabled:YES];
-
-    [self.personalRollButton setEnabled:YES];
-    [self.personalRollTitleLabel setEnabled:YES];
-    [self.personalRollDescriptionLabel setEnabled:YES];
-    [self.personalRollUsernameLabel setAlpha:1.0f]; // Change alpha when enabling card (instead of setting isEnabled)
-    [self.personalRollUsernameLabel setText:[NSString stringWithFormat:@"%@.shelby.tv", user.nickname]];
-    
-    [self.streamButton setEnabled:YES];
-    [self.streamTitleLabel setEnabled:YES];
-    [self.streamDescriptionLabel setEnabled:YES];
-    
-    [self.authenticationTitleLabel setText:@"Logout"];
-    
-}
-
-- (void)disableCards
-{
-    
-    [self.likesButton setEnabled:NO];
-    [self.likesTitleLabel setEnabled:NO];
-    [self.likesDescriptionLabel setEnabled:NO];
-    
-    [self.personalRollButton setEnabled:NO];
-    [self.personalRollTitleLabel setEnabled:NO];
-    [self.personalRollDescriptionLabel setEnabled:NO];
-    [self.personalRollUsernameLabel setAlpha:0.75f]; // Change alpha when disabling card (instead of setting isEnabled)
-    [self.personalRollUsernameLabel setText:@"Your personalized .TV"];
-    
-    [self.streamButton setEnabled:NO];
-    [self.streamTitleLabel setEnabled:NO];
-    [self.streamDescriptionLabel setEnabled:NO];
-    
-    [self.authenticationTitleLabel setText:@"Login"];
-    
-}
-
-#pragma mark - Gesutre Methods (Private)
-- (void)setupGestures
-{
-    
-    UIPinchGestureRecognizer *likesGestureRecgonizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(likesGestureScale:)];
-    [self.likesButton addGestureRecognizer:likesGestureRecgonizer];
-    
-    UIPinchGestureRecognizer *personalRollGestureScale = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(personalRollGestureScale:)];
-    [self.personalRollButton addGestureRecognizer:personalRollGestureScale];
-    
-    UIPinchGestureRecognizer *streamGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(streamGestureScale:)];
-    [self.streamButton addGestureRecognizer:streamGestureRecognizer];
-    
-}
-
-- (void)likesGestureScale:(UIPinchGestureRecognizer *)gesture
-{
-    
-    if ( gesture.scale > 2.0f ) {
-        
-        [self launchPlayerWithLikesEntries];
-        
+    if (indexPath.section == 0) {
+        if ([self isLoggedIn]) {
+            if (row == 0) {
+                [self launchPlayerWithLikesEntries];
+            } else if (row == 2) {
+                [self launchPlayerWithPersonalRollEntries];
+            } else if (row == 1) {
+                [self launchPlayerWithStreamEntries];
+            } else if (row == 3) {
+                [self logoutAction];
+            }
+        } else if (row == 3) {
+            [self loginAction];
+        }
+    } else {
+        // open channel
     }
-    
 }
 
-- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if ( gesture.scale > 2.0f ) {
-        
-        [self launchPlayerWithPersonalRollEntries];
-        
-    }
-    
+    // TODO: Deselect item
 }
 
-- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture
-{
-    
-    if ( gesture.scale > 2.0f ) {
-        
-        [self launchPlayerWithStreamEntries];
-        
-    }
-    
-}
 
 #pragma mark - Navigation Action Methods (Public)
 - (void)cancelButtonAction:(id)sender
 {
-    
-    
+ 
     for ( UITextField *textField in [_loginView subviews] ) {
         
         if ( [textField isFirstResponder] ) {
@@ -270,9 +271,9 @@
                          
                          [self.loginView removeFromSuperview];
                          [self.backgroundLoginView removeFromSuperview];
-
+                         
                      }];
-
+    
 }
 
 - (void)goButtonAction:(id)sender
@@ -281,7 +282,7 @@
 }
 
 #pragma mark - User Authentication Methods (Private)
-- (void)loginButtonAction
+- (void)loginAction
 {
     
     self.backgroundLoginView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
@@ -318,11 +319,14 @@
     
 }
 
-- (void)logoutButtonAction
+- (void)logoutAction
 {
-    [self toggleCardsEnabled:NO];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate logout];
+
+    [self setIsLoggedIn:NO];
+    [self setUserNickname:nil];
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
 - (void)performAuthentication
 {
@@ -371,11 +375,13 @@
                          
                          [self.loginView removeFromSuperview];
                          [self.backgroundLoginView removeFromSuperview];
-                         
-                         [self toggleCardsEnabled:YES];
-                         
+                         [self setIsLoggedIn:YES];
+                         [self fetchUserNickname];
+                         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+
                      }];
 }
+
 
 #pragma mark - Video Player Launch Methods (Private)
 - (void)launchPlayerWithStreamEntries
@@ -384,7 +390,7 @@
         
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if ( [videoFrames count] ) {
@@ -415,7 +421,7 @@
 {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
+        
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *videoFrames = [dataUtility fetchLikesEntries];
         
@@ -438,7 +444,7 @@
                 [alertView show];
                 
             }
-
+            
         });
         
     });
@@ -446,15 +452,15 @@
 
 - (void)launchPlayerWithPersonalRollEntries
 {
-
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
+        
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *videoFrames = [dataUtility fetchPersonalRollEntries];
         
         
         dispatch_async(dispatch_get_main_queue(), ^{
-        
+            
             if ( [videoFrames count] ) {
                 
                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
@@ -472,11 +478,10 @@
                 [alertView show];
                 
             }
-
+            
         });
     });
 }
-
 
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -498,6 +503,18 @@
     } else {
         [self performAuthentication];
         return YES;
+    }
+}
+
+#pragma mark UIScrollViewDelegate Methods
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSArray *visibleCells = [self.collectionView visibleCells];
+    if ([visibleCells count] > 0) {
+        NSIndexPath *firstCell = [self.collectionView indexPathForCell:visibleCells[0]];
+        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyNumberOfCardsInMeSectionPage : kShelbyNumberOfCardsInChannelSectionPage);
+        int page = (firstCell.row / numberOfCardsInSectionPage) + firstCell.section;
+        [self.pageControl setCurrentPage:page];
     }
 }
 
