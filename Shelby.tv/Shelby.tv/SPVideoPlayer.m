@@ -305,7 +305,9 @@
     [self.player pause];
         
     // Invalide Timer
-    [self.model.overlayTimer invalidate];
+    if ( self == _model.currentVideoPlayer ) {
+        [self.model.overlayTimer invalidate];
+    }
     
     // Set Flag
     [self setIsPlaying:NO];
