@@ -31,6 +31,8 @@
 #define kShelbyCoreDataChannelID                        @"channelID"
 #define kShelbyCoreDataChannelDisplayTitle              @"displayTitle"
 #define kShelbyCoreDataChannelDisplayDescription        @"displayDescription"
+#define kShelbyCoreDataChannelDisplayThumbnailURL       @"displayThumbnailURL"
+
 
 // Conversation Attribute Constants
 #define kShelbyCoreDataConversationID                   @"conversationID"

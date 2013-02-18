@@ -294,6 +294,10 @@
             
             NSString *displayDescription = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_description"]];
             [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
+            
+            NSString *displayThumbnail = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_thumbnail_ipad_src"]];
+            displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
+            [channel setValue:displayThumbnail forKey:kShelbyCoreDataChannelDisplayThumbnailURL];
 
             [ShelbyAPIClient getChannel:channelID];
             

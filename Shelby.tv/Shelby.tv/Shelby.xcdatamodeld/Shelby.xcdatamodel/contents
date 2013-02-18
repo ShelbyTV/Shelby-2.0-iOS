@@ -3,6 +3,7 @@
     <entity name="Channel" representedClassName="Channel" syncable="YES">
         <attribute name="channelID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
@@ -77,6 +78,7 @@
         <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="video" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Channel" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Creator" positionX="178" positionY="201" width="128" height="105"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="255"/>
@@ -85,6 +87,5 @@
         <element name="Stream" positionX="682" positionY="216" width="128" height="90"/>
         <element name="User" positionX="-153" positionY="-9" width="128" height="150"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="165"/>
-        <element name="Channel" positionX="160" positionY="192" width="128" height="90"/>
     </elements>
 </model>
