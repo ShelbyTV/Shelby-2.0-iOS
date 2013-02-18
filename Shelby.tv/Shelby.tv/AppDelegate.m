@@ -127,6 +127,7 @@
 #pragma mark - Private Methods
 - (void)pingAllRoutes
 {
+
     [ShelbyAPIClient getStream];
     [ShelbyAPIClient getLikes];
     [ShelbyAPIClient getPersonalRoll];

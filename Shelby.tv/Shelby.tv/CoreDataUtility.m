@@ -278,21 +278,21 @@
     
     for ( NSUInteger i = 0; i < [channelArray count]; ++i ) {
         
-        NSDictionary *channelDictionary = [[channelArray objectAtIndex:i] valueForKey:@"user_channels"];
+        NSDictionary *channelDictionary = [[[channelArray objectAtIndex:i] valueForKey:@"user_channels"] objectAtIndex:0];
         
         if ( channelDictionary ) { // As of February 15, not all dictionaries in results have a user_channels dictionary
          
             Channel *channel = [self checkIfEntity:kShelbyCoreDataEntityChannel
-                                       withIDValue:[[channelDictionary valueForKey:@"user_id"] objectAtIndex:0]
+                                       withIDValue:[channelDictionary valueForKey:@"user_id"]
                                           forIDKey:kShelbyCoreDataChannelID];
             
-            NSString *channelID = [NSString coreDataNullTest:[[channelDictionary valueForKey:@"user_id"] objectAtIndex:0]];
+            NSString *channelID = [NSString coreDataNullTest:[channelDictionary valueForKey:@"user_id"]];
             [channel setValue:channelID forKey:kShelbyCoreDataChannelID];
             
-            NSString *displayTitle = [NSString coreDataNullTest:[[channelDictionary valueForKey:@"display_title"] objectAtIndex:0]];
+            NSString *displayTitle = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_title"]];
             [channel setValue:displayTitle forKey:kShelbyCoreDataChannelDisplayTitle];
             
-            NSString *displayDescription = [NSString coreDataNullTest:[[channelDictionary valueForKey:@"display_description"] objectAtIndex:0]];
+            NSString *displayDescription = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_description"]];
             [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
 
             [ShelbyAPIClient getChannel:channelID];
