@@ -860,7 +860,7 @@
     
     if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
         
-        if ( self.model.currentVideoPlayer.videoFrame == [self.videoFrames objectAtIndex:_model.currentVideo]) { // Load AND scroll to nextvideo.
+        if ( self.model.currentVideoPlayer.videoFrame == [self.videoFrames objectAtIndex:_model.currentVideo]) { // Load AND scroll to nextvideo
             
             [self currentVideoDidChangeToVideo:position];
             
