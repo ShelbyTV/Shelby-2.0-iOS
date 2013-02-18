@@ -25,12 +25,12 @@
 - (void)removeOlderVideoFramesFromPersonalRoll;
 
 /// Storage Methods
-- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray;
-- (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray;
-- (void)storeCreator:(Creator *)creator fromFrameArray:(NSArray *)frameArray;
-- (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray;
-- (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray;
-- (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray;
+- (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary;
+- (void)storeConversation:(Conversation *)conversation fromDictionary:(NSDictionary *)conversationDictionary;
+- (void)storeCreator:(Creator *)creator fromDictionary:(NSDictionary *)creatorDictionary;
+- (void)storeMessagesFromConversation:(Conversation *)conversation withDictionary:(NSDictionary *)conversationDictionary;
+- (void)storeRoll:(Roll *)roll fromDictionary:(NSDictionary *)rollDictionary;
+- (void)storeVideo:(Video *)video fromDictionary:(NSDictionary *)videoDictionary;
 
 /// Fetching Methods
 - (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames;
@@ -238,8 +238,8 @@
         @autoreleasepool {
             
             // Conditions for saving entires into database
-            NSArray *frameArray = [resultsArray[i] valueForKey:@"frame"];
-            BOOL frameExists = [frameArray isKindOfClass:([NSNull class])] ? NO : YES;
+            NSDictionary *frameDictionary = [resultsArray[i] valueForKey:@"frame"];
+            BOOL frameExists = [frameDictionary isKindOfClass:([NSNull class])] ? NO : YES;
             
             if ( !frameExists ) {
                 
@@ -258,11 +258,11 @@
                 [stream setValue:timestamp forKey:kShelbyCoreDataStreamTimestamp];
                 
                 Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
-                                       withIDValue:[frameArray valueForKey:@"id"]
+                                       withIDValue:[frameDictionary valueForKey:@"id"]
                                           forIDKey:kShelbyCoreDataFrameID];
                 stream.frame = frame;
                 
-                [self storeFrame:frame forFrameArray:frameArray];
+                [self storeFrame:frame forDictionary:frameDictionary];
             }
         }
     }
@@ -317,7 +317,7 @@
                                    withIDValue:[resultsArray[i] valueForKey:@"id"]
                                       forIDKey:kShelbyCoreDataFrameID];
             
-            [self storeFrame:frame forFrameArray:resultsArray[i]];
+            [self storeFrame:frame forDictionary:resultsArray[i]];
 
         }
     }
@@ -328,19 +328,21 @@
 
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary forChannel:(NSString *)channelID
 {
-    NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
+    NSArray *resultsArray = resultsDictionary[@"result"];
     
     for ( NSUInteger i = 0; i < [resultsArray count]; ++i ) {
         
         @autoreleasepool {
             
+            NSDictionary *frameDictionary = [resultsArray[i] valueForKey:@"frame"];
+            
             Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
-                                   withIDValue:[resultsArray[i] valueForKey:@"id"]
+                                   withIDValue:[frameDictionary valueForKey:@"id"]
                                       forIDKey:kShelbyCoreDataFrameID];
             
             frame.channelID = channelID;
             
-            [self storeFrame:frame forFrameArray:resultsArray[i]];
+            [self storeFrame:frame forDictionary:frameDictionary];
             
         }
     }
@@ -937,28 +939,28 @@
 }
 
 #pragma mark - Storage Methods (Private) 
-- (void)storeFrame:(Frame *)frame forFrameArray:(NSArray *)frameArray
+- (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary
 {
         
-    NSString *frameID = [NSString coreDataNullTest:[frameArray valueForKey:@"id"]];
+    NSString *frameID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"id"]];
     [frame setValue:frameID forKey:kShelbyCoreDataFrameID];
     
-    NSString *conversationID = [NSString coreDataNullTest:[frameArray valueForKey:@"conversation_id"]];
+    NSString *conversationID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"conversation_id"]];
     [frame setValue:conversationID forKey:kShelbyCoreDataFrameConversationID];
     
-    NSString *createdAt = [NSString coreDataNullTest:[frameArray valueForKey:@"created_at"]];
+    NSString *createdAt = [NSString coreDataNullTest:[frameDictionary valueForKey:@"created_at"]];
     [frame setValue:createdAt forKey:kShelbyCoreDataFrameCreatedAt];
     
-    NSString *creatorID = [NSString coreDataNullTest:[frameArray valueForKey:@"creator_id"]];
+    NSString *creatorID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"creator_id"]];
     [frame setValue:creatorID forKey:kShelbyCoreDataFrameCreatorID];
     
-    NSString *rollID = [NSString coreDataNullTest:[frameArray valueForKey:@"roll_id"]];
+    NSString *rollID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"roll_id"]];
     [frame setValue:rollID forKey:kShelbyCoreDataFrameRollID];
     
     NSDate *timestamp = [NSDate dataFromBSONObjectID:frameID];
     [frame setValue:timestamp forKey:kShelbyCoreDataFrameTimestamp];
     
-    NSString *videoID = [NSString coreDataNullTest:[frameArray valueForKey:@"video_id"]];
+    NSString *videoID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"video_id"]];
     [frame setValue:videoID forKey:kShelbyCoreDataFrameVideoID];
     
     // Store Conversation (and Messages)
@@ -970,7 +972,7 @@
         
         frame.conversation = conversation;
         conversation.frame = frame;
-        [self storeConversation:conversation fromFrameArray:frameArray];
+        [self storeConversation:conversation fromDictionary:[frameDictionary valueForKey:@"conversation"]];
         
     }
     
@@ -983,7 +985,7 @@
     
         frame.creator = creator;
         [creator addFrameObject:frame];
-        [self storeCreator:creator fromFrameArray:frameArray];
+        [self storeCreator:creator fromDictionary:[frameDictionary valueForKey:@"creator"]];
         
     }
     
@@ -996,7 +998,7 @@
     
         frame.roll = roll;
         roll.frame = frame;
-        [self storeRoll:roll fromFrameArray:frameArray];
+        [self storeRoll:roll fromDictionary:[frameDictionary valueForKey:@"roll"]];
         
     }
     
@@ -1009,30 +1011,28 @@
     
         frame.video = video;
         [video addFrameObject:frame];
-        [self storeVideo:video fromFrameArray:frameArray];
+        [self storeVideo:video fromDictionary:[frameDictionary valueForKey:@"video"]];
         
     }
     
     
 }
 
-- (void)storeConversation:(Conversation *)conversation fromFrameArray:(NSArray *)frameArray
+- (void)storeConversation:(Conversation *)conversation fromDictionary:(NSDictionary *)conversationDictionary
 {
     
-    NSArray *conversationArray = [frameArray valueForKey:@"conversation"];
-    
-    NSString *conversationID = [NSString coreDataNullTest:[conversationArray valueForKey:@"id"]];
+    NSString *conversationID = [NSString coreDataNullTest:[conversationDictionary valueForKey:@"id"]];
     [conversation setValue:conversationID forKey:kShelbyCoreDataConversationID];
     
     // Store Messages
-    [self storeMessagesFromConversation:conversation withConversationsArray:conversationArray];
+    [self storeMessagesFromConversation:conversation withDictionary:conversationDictionary];
     
 }
 
-- (void)storeMessagesFromConversation:(Conversation *)conversation withConversationsArray:(NSArray *)conversationsArray
+- (void)storeMessagesFromConversation:(Conversation *)conversation withDictionary:(NSDictionary *)conversationDictionary
 {
     
-    NSArray *messagesArray = [conversationsArray valueForKey:@"messages"];
+    NSArray *messagesArray = [conversationDictionary valueForKey:@"messages"];
 
     if ( ![messagesArray isEqual:[NSNull null]] ) {
        
@@ -1074,61 +1074,57 @@
     }
 }
 
-- (void)storeCreator:(Creator *)creator fromFrameArray:(NSArray *)frameArray
+- (void)storeCreator:(Creator *)creator fromDictionary:(NSDictionary *)creatorDictionary
 {
-    NSArray *creatorArray = [frameArray valueForKey:@"creator"];
     
-    NSString *creatorID = [NSString coreDataNullTest:[creatorArray valueForKey:@"id"]];
+    NSString *creatorID = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"id"]];
     [creator setValue:creatorID forKey:kShelbyCoreDataCreatorID];
     
-    NSString *nickname = [NSString coreDataNullTest:[creatorArray valueForKey:@"nickname"]];
+    NSString *nickname = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"nickname"]];
     [creator setValue:nickname forKey:kShelbyCoreDataCreatorNickname];
     
-    NSString *userImage = [NSString coreDataNullTest:[creatorArray valueForKey:@"user_image"]];
+    NSString *userImage = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"user_image"]];
     [creator setValue:userImage forKey:kShelbyCoreDataCreatorUserImage];
 }
 
-- (void)storeRoll:(Roll *)roll fromFrameArray:(NSArray *)frameArray
+- (void)storeRoll:(Roll *)roll fromDictionary:(NSArray *)rollDictionary
 {
-    NSArray *rollArray = [frameArray valueForKey:@"roll"];
     
-    NSString *rollID = [NSString coreDataNullTest:[rollArray valueForKey:@"id"]];
+    NSString *rollID = [NSString coreDataNullTest:[rollDictionary valueForKey:@"id"]];
     [roll setValue:rollID forKey:kShelbyCoreDataRollID];
     
-    NSString *creatorID = [NSString coreDataNullTest:[rollArray valueForKey:@"creator_id"]];
+    NSString *creatorID = [NSString coreDataNullTest:[rollDictionary valueForKey:@"creator_id"]];
     [roll setValue:creatorID forKey:kShelbyCoreDataRollCreatorID];
     
-    NSString *frameCount = [NSString coreDataNullTest:[rollArray valueForKey:@"frame_count"]];
+    NSString *frameCount = [NSString coreDataNullTest:[rollDictionary valueForKey:@"frame_count"]];
     [roll setValue:@([frameCount integerValue]) forKey:kShelbyCoreDataRollFrameCount];
     
-    NSString *thumbnailURL = [NSString coreDataNullTest:[rollArray valueForKey:@"thumbnail_url"]];
+    NSString *thumbnailURL = [NSString coreDataNullTest:[rollDictionary valueForKey:@"thumbnail_url"]];
     [roll setValue:thumbnailURL forKey:kShelbyCoreDataRollThumbnailURL];
 
-    NSString *title = [NSString coreDataNullTest:[rollArray valueForKey:@"title"]];
+    NSString *title = [NSString coreDataNullTest:[rollDictionary valueForKey:@"title"]];
     [roll setValue:title forKey:kShelbyCoreDataRollTitle];
     
 }
 
-- (void)storeVideo:(Video *)video fromFrameArray:(NSArray *)frameArray
+- (void)storeVideo:(Video *)video fromDictionary:(NSDictionary *)videoDictionary
 {
-    NSArray *videoArray = [frameArray valueForKey:@"video"];
-    
-    NSString *videoID = [NSString coreDataNullTest:[videoArray valueForKey:@"id"]];
+    NSString *videoID = [NSString coreDataNullTest:[videoDictionary valueForKey:@"id"]];
     [video setValue:videoID forKey:kShelbyCoreDataVideoID];
     
-    NSString *caption = [NSString coreDataNullTest:[videoArray valueForKey:@"description"]];
+    NSString *caption = [NSString coreDataNullTest:[videoDictionary valueForKey:@"description"]];
     [video setValue:caption forKey:kShelbyCoreDataVideoCaption];
     
-    NSString *providerName = [NSString coreDataNullTest:[videoArray valueForKey:@"provider_name"] ];
+    NSString *providerName = [NSString coreDataNullTest:[videoDictionary valueForKey:@"provider_name"] ];
     [video setValue:providerName forKey:kShelbyCoreDataVideoProviderName];
     
-    NSString *thumbnailURL = [NSString coreDataNullTest:[videoArray valueForKey:@"thumbnail_url"]];
+    NSString *thumbnailURL = [NSString coreDataNullTest:[videoDictionary valueForKey:@"thumbnail_url"]];
     [video setValue:thumbnailURL forKey:kShelbyCoreDataVideoThumbnailURL];
     
-    NSString *title = [NSString coreDataNullTest:[videoArray valueForKey:@"title"]];
+    NSString *title = [NSString coreDataNullTest:[videoDictionary valueForKey:@"title"]];
     [video setValue:title forKey:kShelbyCoreDataVideoTitle];
     
-    NSString *providerID = [NSString coreDataNullTest:[videoArray valueForKey:@"provider_id"]];
+    NSString *providerID = [NSString coreDataNullTest:[videoDictionary valueForKey:@"provider_id"]];
     [video setValue:providerID forKey:kShelbyCoreDataVideoProviderID];
     
 }
