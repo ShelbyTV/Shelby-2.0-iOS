@@ -11,6 +11,7 @@
 #import "LoginView.h"
 #import "MeViewController.h"
 #import "MyRollViewCell.h"
+#import "PageControl.h"
 #import "SPVideoReel.h"
 
 #define kShelbyNumberOfCardsInMeSectionPage 4
@@ -27,7 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet PageControl *pageControl;
 // Fetch nickname of logged in user from CoreData
 - (void)fetchUserNickname;
 
@@ -94,8 +95,10 @@
     [self.versionLabel setTextColor:kShelbyColorBlack];
     
     [self.pageControl setNumberOfPages:3]; // TODO: this is hardcoded
-    [self.pageControl setPageIndicatorTintColor:[UIColor grayColor]];
-    [self.pageControl setCurrentPageIndicatorTintColor:[UIColor lightGrayColor]];
+    
+    // TODO: add a check: if there are NO channels, skip the next 2 lines.
+    [self.pageControl setCurrentPage:1];
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
 #pragma mark - Private Methods
@@ -112,6 +115,9 @@
 - (IBAction)goToPage:(id)sender
 {
     NSInteger page = self.pageControl.currentPage;
+    
+    // Next line is necessary, otherwise, the custom page control images won't update
+    [self.pageControl setCurrentPage:page];
     
     int y = 100;
     int x = (1024 * page) + 100;
