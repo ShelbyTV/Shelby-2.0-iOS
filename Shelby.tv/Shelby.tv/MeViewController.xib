@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">12C3103</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
@@ -13,7 +13,6 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
-			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUIView</string>
 		</array>
@@ -37,7 +36,7 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUIImageView" id="880124558">
+					<object class="IBUIImageView">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrameSize">{1024, 748}</string>
@@ -46,12 +45,36 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">Default-Landscape.png</string>
+						<object class="NSImage" key="IBUIImage">
+							<int key="NSImageFlags">549453824</int>
+							<string key="NSSize">{16, 16}</string>
+							<array class="NSMutableArray" key="NSReps">
+								<array>
+									<integer value="0"/>
+									<object class="NSBitmapImageRep">
+										<object class="NSData" key="NSTIFFRepresentation">
+											<bytes key="NS.bytes">TU0AKgAAAdqAGdLMkAQWDQeEQmFQuGGVJslNGwbQyKRWGGZKMoxJJkJ02jcAmtgRaSQt/pUgGOHl5IMd
+Qm8cAE0r+FPx+Qd/P6FAIBAABz0Az2Cv9LkEvpFkFpGsRSnIdgEzryDvubv1+lUkCaDD0QA9rOt6JhgO
+EAO17AAEAeDP9MkQto5ildFMNUHUeAEyrmDzYqEQRn4iB4XHVegAJgp/o8htN0vYXHTCggDWtNkcsIti
+FNDsJWHgegEwreD1YABsHFUVhVVrZtAAFgR/pslul6vsMGZagADWqhp8klREMMnoRfrA9kAAl5aQd/v8
+AP2dQYAv80lIWD0SBAtKVpgBwvAAAcC2tREwoIVgEtAr5aH4ggEtLGKc0AB0HlUVBfVtiDz8AACAK1lM
+J4mEEX4jj+XpcEAIQAiuV6KJsAAFMmgx7H0AACAIhh/lSKIkEAXwhj2XReEIIoAioVcIn4XRFCQgwjDs
+XEMw2kxWCqIg+F2H48lyYBDCMAIolRCJ+l0RglRiOhbQyAcOFeLAgD0XQeDqXBhkUI4AieU6KH6m6GAH
+GyFH+WIsh6OxchwOZamPJIAiaUqSzo5hZi2HMmBqOJaGURwlzrQKEhsORahmN5Z0FRSFoCAAAA0BAAAD
+AAAAAQAQAAABAQADAAAAAQAQAAABAgADAAAAAwAAAnwBAwADAAAAAQAFAAABBgADAAAAAQACAAABEQAE
+AAAAAQAAAAgBEgADAAAAAQABAAABFQADAAAAAQADAAABFgADAAAAAQAQAAABFwAEAAAAAQAAAdEBHAAD
+AAAAAQABAAABPQADAAAAAQACAAABUwADAAAAAwAAAoIAAAAAAAgACAAIAAEAAQABA</bytes>
+										</object>
+									</object>
+								</array>
+							</array>
+							<object class="NSColor" key="NSColor" id="301267906">
+								<int key="NSColorSpace">3</int>
+								<bytes key="NSWhite">MCAwAA</bytes>
+							</object>
 						</object>
 					</object>
-					<object class="IBUILabel" id="396976415">
+					<object class="IBUILabel">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{651, 722}, {353, 19}}</string>
@@ -405,7 +428,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{673, 617}, {308, 74}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSNextKeyView" ref="396976415"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -426,15 +448,19 @@
 						<double key="preferredMaxLayoutWidth">308</double>
 					</object>
 				</array>
-				<string key="NSFrame">{{0, 20}, {1024, 748}}</string>
+				<string key="NSFrame">{{0, 20}, {1024, 714}}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSNextKeyView" ref="880124558"/>
+				<reference key="IBUIBackgroundColor" ref="301267906"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 					<int key="IBUIStatusBarStyle">2</int>
 				</object>
 				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
 					<int key="IBUIInterfaceOrientation">3</int>
 					<int key="interfaceOrientation">3</int>
+				</object>
+				<object class="IBUISimulatedSizeMetrics" key="IBUISimulatedDestinationMetrics">
+					<string key="IBUISimulatedSizeMetricsClass">IBUISimulatedFreeformSizeMetricsSentinel</string>
+					<string key="IBUIDisplayName">Freeform</string>
 				</object>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 			</object>
@@ -448,14 +474,6 @@
 						<reference key="destination" ref="191373211"/>
 					</object>
 					<int key="connectionID">6</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">versionLabel</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="396976415"/>
-					</object>
-					<int key="connectionID">70</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -574,10 +592,8 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="396976415"/>
 							<reference ref="762487377"/>
 							<reference ref="549364921"/>
-							<reference ref="880124558"/>
 							<reference ref="575150070"/>
 							<reference ref="906592900"/>
 							<reference ref="378443635"/>
@@ -602,17 +618,6 @@
 						<int key="objectID">-2</int>
 						<reference key="object" ref="975951072"/>
 						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">69</int>
-						<reference key="object" ref="396976415"/>
-						<reference key="parent" ref="191373211"/>
-						<string key="objectName">App Version Label</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">75</int>
-						<reference key="object" ref="880124558"/>
-						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">79</int>
@@ -709,8 +714,6 @@
 				</object>
 				<string key="104.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="110.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="69.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="75.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="79.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="80.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="81.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -733,7 +736,6 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="Default-Landscape.png">{1024, 768}</string>
 			<string key="likesCard.png">{482, 318}</string>
 			<string key="loginCard.png">{485, 321}</string>
 			<string key="personalRollCard.png">{482, 318}</string>
