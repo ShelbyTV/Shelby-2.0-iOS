@@ -33,13 +33,6 @@
     BrowseViewController *pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
     self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
-
-    // Ping Routes on Launch
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-        
-        [self userIsAuthorized];
-    
-    }
     
     // Add analytics
     [self analytics];
