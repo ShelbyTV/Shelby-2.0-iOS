@@ -25,7 +25,6 @@
     return [UIImage imageNamed:@"rollActivityButton"];
 }
 
-
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
 
 {

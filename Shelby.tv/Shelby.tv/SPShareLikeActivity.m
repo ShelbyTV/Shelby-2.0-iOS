@@ -25,7 +25,6 @@
     return [UIImage imageNamed:@"likeActivityButton"];
 }
 
-
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
 
 {
