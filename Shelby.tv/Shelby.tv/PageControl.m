@@ -18,9 +18,7 @@
 
 - (void) awakeFromNib {
     // Removing regular dots
-    for (UIView *view in self.subviews) {
-        [view removeFromSuperview];
-    }
+    [self removeOldSubbiews];
     
     // Make sure the view is redrawn not scaled when the device is rotated
     self.contentMode = UIViewContentModeRedraw;
@@ -71,6 +69,13 @@
 }
 
 
+- (void)removeOldSubbiews
+{
+    for (UIView *view in self.subviews) {
+        [view removeFromSuperview];
+    }
+}
+
 #pragma mark UIPageControl Methods
 - (void)setCurrentPage:(NSInteger)page {
     [super setCurrentPage:page];
@@ -80,6 +85,10 @@
 
 - (void)setNumberOfPages:(NSInteger)pages {
     [super setNumberOfPages:pages];
+ 
+    // Removing regular dots
+    [self removeOldSubbiews];
+    
     [self setNeedsDisplay];
 }
 
