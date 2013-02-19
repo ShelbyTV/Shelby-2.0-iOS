@@ -347,6 +347,7 @@
         
         SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
         SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+        likeActivity.frameID = frame.frameID;
         
         UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
                                                                                       applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];

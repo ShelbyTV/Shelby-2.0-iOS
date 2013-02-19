@@ -29,4 +29,4 @@
 #define kShelbyAPIGetLongLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
           
 /// POST Liked Frame
-#define kShelbyAPIPostFrameToLikes          @"https://api.shelby.tv/v1/frame/%@/add_to_watch_later"
+#define kShelbyAPIPostFrameToLikes          @"https://api.shelby.tv/v1/frame/%@/add_to_watch_later?auth_token=%@"

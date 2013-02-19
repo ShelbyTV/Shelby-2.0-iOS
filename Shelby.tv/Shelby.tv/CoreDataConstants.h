@@ -33,7 +33,6 @@
 #define kShelbyCoreDataChannelDisplayDescription        @"displayDescription"
 #define kShelbyCoreDataChannelDisplayThumbnailURL       @"displayThumbnailURL"
 
-
 // Conversation Attribute Constants
 #define kShelbyCoreDataConversationID                   @"conversationID"
 #define kShelbyCoreDataConversationMessageCount         @"messageCount"

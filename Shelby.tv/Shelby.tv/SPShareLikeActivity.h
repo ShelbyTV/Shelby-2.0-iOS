@@ -10,4 +10,6 @@
 
 @interface SPShareLikeActivity : UIActivity
 
+@property (copy, nonatomic) NSString *frameID;
+
 @end

@@ -20,6 +20,7 @@
 + (void)getLikesForSync;
 + (void)getPersonalRollForSync;
 + (void)getAllChannels;
-+ (void)getChannel:(NSString*)channelID;
++ (void)getChannel:(NSString *)channelID;
++ (void)postFrameToLikes:(NSString *)frameID;
 
 @end

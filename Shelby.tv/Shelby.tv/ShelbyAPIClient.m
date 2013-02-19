@@ -349,4 +349,28 @@
     [operation start];
 }
 
++ (void)postFrameToLikes:(NSString *)frameID
+{
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    NSString *authToken = [user token];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIPostFrameToLikes, frameID, authToken]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        // Fetch likes to update CoreData store
+        [self getLikes];
+    
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem posting frame to likes: %@", frameID);
+        
+    }];
+    
+    [operation start];
+}
+
 @end

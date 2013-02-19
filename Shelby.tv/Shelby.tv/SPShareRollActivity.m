@@ -32,7 +32,7 @@
 
 - (void)performActivity
 {
-    DLog(@"HERE!");
+    
 }
 
 @end

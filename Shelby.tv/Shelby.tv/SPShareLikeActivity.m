@@ -32,7 +32,7 @@
 
 - (void)performActivity
 {
-    DLog(@"HERE!");
+    [ShelbyAPIClient postFrameToLikes:_frameID];
 }
 
 @end
