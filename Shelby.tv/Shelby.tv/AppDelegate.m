@@ -83,7 +83,7 @@
     // Perform API requests
     [self pingAllRoutes];
 
-    [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(postAuthorizationNotification) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(postAuthorizationNotification) userInfo:nil repeats:NO];
 }
 
 - (void)logout
@@ -111,79 +111,23 @@
 - (void)pingAllRoutes
 {
 
-    [ShelbyAPIClient getStream];
-    [ShelbyAPIClient getLikes];
-    [ShelbyAPIClient getPersonalRoll];
-    [ShelbyAPIClient getAllChannels];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
+        [ShelbyAPIClient getLikesForSync];
+        [ShelbyAPIClient getPersonalRollForSync];
+        [ShelbyAPIClient getStream];
+        [ShelbyAPIClient getLikes];
+        [ShelbyAPIClient getPersonalRoll];
+        [ShelbyAPIClient getAllChannels];
+    });
     
     if ( ![_pollAPITimer isValid] ) {
         
         // Begin or restart Polling API
         self.pollAPICounter = 0;
-        self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(pollAPI) userInfo:nil repeats:YES];
+        self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(pingAllRoutes) userInfo:nil repeats:YES];
 
     }
 
-}
-
-- (void)pollAPI
-{
-    
-    switch ( _pollAPICounter ) {
-        
-        case 0: { // Stream
-            
-            self.pollAPICounter = 1;
-            
-            [ShelbyAPIClient getStream];
-            
-        } break;
-            
-        case 1: { // Queue Roll
-            
-            self.pollAPICounter = 2;
-            
-            [ShelbyAPIClient getLikes];
-            
-        } break;
-            
-            
-        case 2: { // Personal Roll
-            
-            self.pollAPICounter = 3;
-            
-            [ShelbyAPIClient getPersonalRoll];
-            
-        } break;
-            
-        case 3: { // Channels
-            
-            self.pollAPICounter = 4;
-            
-            [ShelbyAPIClient getAllChannels];
-            
-        } break;
-            
-        case 4: { // Sync Likes
-            
-            self.pollAPICounter = 6;
-            
-            [ShelbyAPIClient getLikesForSync];
-            
-        } break;
-            
-            
-        case 5: { // Sync Personal Roll
-            
-            self.pollAPICounter = 0;
-            
-            [ShelbyAPIClient getPersonalRollForSync];
-            
-        } break;
-            
-        default:
-            break;
-    }
 }
 
 - (void)postAuthorizationNotification
