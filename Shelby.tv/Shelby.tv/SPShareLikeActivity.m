@@ -30,4 +30,9 @@
     return YES;
 }
 
+- (void)performActivity
+{
+    DLog(@"HERE!");
+}
+
 @end

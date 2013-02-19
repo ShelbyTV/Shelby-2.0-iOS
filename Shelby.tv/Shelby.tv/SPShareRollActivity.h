@@ -10,4 +10,6 @@
 
 @interface SPShareRollActivity : UIActivity
 
+@property (copy, nonatomic) NSString *frameID;
+
 @end

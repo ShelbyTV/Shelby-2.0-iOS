@@ -336,6 +336,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
+    // Perform shortLink fetch and present sharePopOver (on success and fail) 
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
         Frame *frame = (Frame *)[context existingObjectWithID:[_videoFrame objectID] error:nil];
