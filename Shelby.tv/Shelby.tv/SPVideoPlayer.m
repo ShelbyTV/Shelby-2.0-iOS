@@ -7,10 +7,20 @@
 //
 
 #import "SPVideoPlayer.h"
+
+// Models
 #import "SPModel.h"
+
+// Views
 #import "SPOverlayView.h"
+
+// Controllers
 #import "SPVideoExtractor.h"
 #import "SPVideoScrubber.h"
+#import "SPShareLikeActivity.h"
+#import "SPShareRollActivity.h"
+
+// View Controllers
 #import "SPVideoReel.h"
 
 @interface SPVideoPlayer ()
@@ -322,7 +332,13 @@
     
     NSString *shareLink = [NSString stringWithFormat:kShelbySPVideoShareLink, _videoFrame.video.providerName, _videoFrame.video.providerID, _videoFrame.frameID];
     NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
-    UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:nil];
+    
+    SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
+    SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+    
+    UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
+    shareController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+    
     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
     [self.sharePopOverController presentPopoverFromRect:_overlayView.shareButton.frame
                                                  inView:_overlayView

@@ -44,6 +44,12 @@
 		8E285DE31680F82C002A7935 /* infoPanelIconPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E285DE11680F82C002A7935 /* infoPanelIconPlaceholder.png */; };
 		8E285DE41680F82C002A7935 /* infoPanelIconPlaceholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E285DE21680F82C002A7935 /* infoPanelIconPlaceholder@2x.png */; };
 		8E285DE7168124FC002A7935 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E285DE6168124FC002A7935 /* QuartzCore.framework */; };
+		8E2BA99116D3FF130070613F /* SPShareRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA99016D3FF130070613F /* SPShareRollActivity.m */; };
+		8E2BA99616D4053C0070613F /* likeActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99216D4053C0070613F /* likeActivityButton.png */; };
+		8E2BA99716D4053C0070613F /* likeActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */; };
+		8E2BA99816D4053C0070613F /* rollActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99416D4053C0070613F /* rollActivityButton.png */; };
+		8E2BA99916D4053C0070613F /* rollActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99516D4053C0070613F /* rollActivityButton@2x.png */; };
+		8E2BA99A16D40A440070613F /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		8E3D6D0616D2BF5C00915CFE /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3D6D0516D2BF5C00915CFE /* Channel.m */; };
 		8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
 		8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
@@ -191,6 +197,14 @@
 		8E285DE11680F82C002A7935 /* infoPanelIconPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoPanelIconPlaceholder.png; sourceTree = "<group>"; };
 		8E285DE21680F82C002A7935 /* infoPanelIconPlaceholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoPanelIconPlaceholder@2x.png"; sourceTree = "<group>"; };
 		8E285DE6168124FC002A7935 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8E2BA98C16D3FF090070613F /* SPShareLikeActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPShareLikeActivity.h; sourceTree = "<group>"; };
+		8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPShareLikeActivity.m; sourceTree = "<group>"; };
+		8E2BA98F16D3FF130070613F /* SPShareRollActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPShareRollActivity.h; sourceTree = "<group>"; };
+		8E2BA99016D3FF130070613F /* SPShareRollActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPShareRollActivity.m; sourceTree = "<group>"; };
+		8E2BA99216D4053C0070613F /* likeActivityButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeActivityButton.png; sourceTree = "<group>"; };
+		8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "likeActivityButton@2x.png"; sourceTree = "<group>"; };
+		8E2BA99416D4053C0070613F /* rollActivityButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rollActivityButton.png; sourceTree = "<group>"; };
+		8E2BA99516D4053C0070613F /* rollActivityButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rollActivityButton@2x.png"; sourceTree = "<group>"; };
 		8E3D6D0416D2BF5C00915CFE /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
 		8E3D6D0516D2BF5C00915CFE /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
 		8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = SOURCE_ROOT; };
@@ -522,6 +536,10 @@
 		8E5980291680104A00027181 /* Shelby Player Images */ = {
 			isa = PBXGroup;
 			children = (
+				8E2BA99216D4053C0070613F /* likeActivityButton.png */,
+				8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */,
+				8E2BA99416D4053C0070613F /* rollActivityButton.png */,
+				8E2BA99516D4053C0070613F /* rollActivityButton@2x.png */,
 				8E40AF6B16A4B6A7007A66CA /* infoPanel.png */,
 				8E40AF6C16A4B6A7007A66CA /* infoPanel@2x.png */,
 				8E40AF6716A4B339007A66CA /* restartButton.png */,
@@ -600,6 +618,10 @@
 				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
 				8E0CFE1116C4A87F009620F9 /* SPVideoScrubber.h */,
 				8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */,
+				8E2BA98C16D3FF090070613F /* SPShareLikeActivity.h */,
+				8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */,
+				8E2BA98F16D3FF130070613F /* SPShareRollActivity.h */,
+				8E2BA99016D3FF130070613F /* SPShareRollActivity.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -916,6 +938,10 @@
 				1CCCB56116D2A9AF00C8C216 /* meNotSelected@2x.png in Resources */,
 				1CCCB56216D2A9AF00C8C216 /* meSelected.png in Resources */,
 				1CCCB56316D2A9AF00C8C216 /* meSelected@2x.png in Resources */,
+				8E2BA99616D4053C0070613F /* likeActivityButton.png in Resources */,
+				8E2BA99716D4053C0070613F /* likeActivityButton@2x.png in Resources */,
+				8E2BA99816D4053C0070613F /* rollActivityButton.png in Resources */,
+				8E2BA99916D4053C0070613F /* rollActivityButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -942,6 +968,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E2BA99A16D40A440070613F /* SPShareLikeActivity.m in Sources */,
 				8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */,
 				8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */,
 				8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */,
@@ -989,7 +1016,7 @@
 				1CCCB54616CEA61B00C8C216 /* MyRollViewCell.m in Sources */,
 				1CCCB54C16CEECD400C8C216 /* CollectionViewChannelsLayout.m in Sources */,
 				1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */,
-
+				8E2BA99116D3FF130070613F /* SPShareRollActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
