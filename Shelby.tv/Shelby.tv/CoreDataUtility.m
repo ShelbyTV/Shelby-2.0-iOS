@@ -971,7 +971,7 @@
                                          withIDValue:conversationID
                                             forIDKey:kShelbyCoreDataFrameConversationID];
     
-    if ( ![conversation isEqual:[NSNull null]] ) {
+    if ( ![(id)conversation isEqual:[NSNull null]] ) {
         
         frame.conversation = conversation;
         conversation.frame = frame;
@@ -984,7 +984,7 @@
                                withIDValue:creatorID
                                   forIDKey:kShelbyCoreDataFrameCreatorID];
     
-    if ( ![creator isEqual:[NSNull null]] ) {
+    if ( ![(id)creator isEqual:[NSNull null]] ) {
     
         frame.creator = creator;
         [creator addFrameObject:frame];
@@ -997,7 +997,7 @@
                          withIDValue:rollID
                             forIDKey:kShelbyCoreDataRollID];
     
-    if ( ![roll isEqual:[NSNull null]] ) {
+    if ( ![(id)roll isEqual:[NSNull null]] ) {
     
         frame.roll = roll;
         roll.frame = frame;
@@ -1010,7 +1010,7 @@
                            withIDValue:videoID
                               forIDKey:kShelbyCoreDataFrameVideoID];
     
-    if ( ![video isEqual:[NSNull null]] ) {
+    if ( ![(id)video isEqual:[NSNull null]] ) {
     
         frame.video = video;
         [video addFrameObject:frame];
