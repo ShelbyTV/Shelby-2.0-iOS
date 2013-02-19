@@ -67,91 +67,86 @@
 - (void)saveContext:(NSManagedObjectContext *)context
 {
     
-    @synchronized(self) {
-
-        if ( context ) {
+    if ( context ) {
+        
+        NSError *error = nil;
+        
+        if( ![context save:&error] ) { // Error
             
-            NSError *error = nil;
+            DLog(@"Failed to save to data store: %@", [error localizedDescription]);
+            DLog(@"Error for Data_Request: %d", _requestType);
             
-            if( ![context save:&error] ) { // Error
+            NSArray *detailedErrors = [error userInfo][NSDetailedErrorsKey];
+            
+            if( detailedErrors != nil && [detailedErrors count] > 0 ) {
                 
-                DLog(@"Failed to save to data store: %@", [error localizedDescription]);
-                DLog(@"Error for Data_Request: %d", _requestType);
-                
-                NSArray *detailedErrors = [error userInfo][NSDetailedErrorsKey];
-                
-                if( detailedErrors != nil && [detailedErrors count] > 0 ) {
-                    
-                    for(NSError* detailedError in detailedErrors) {
-                        DLog(@"Detailed Error: %@", [detailedError userInfo]);
-                    }
-                    
-                } else {
-                    
-                    DLog(@"%@", [error userInfo]);
-                    
+                for(NSError* detailedError in detailedErrors) {
+                    DLog(@"Detailed Error: %@", [detailedError userInfo]);
                 }
                 
-            } else { // Success
+            } else {
                 
-                switch ( _requestType ) {
-                        
-                    case DataRequestType_Fetch:{
-                        
-                        NSAssert((_requestType == DataRequestType_Fetch), @"DataRequestType_Fetch should not be used when storing data!");
-                        
-                    } break;
-                        
-                    case DataRequestType_StoreUser:{
-                        
-                        DLog(@"User Data Saved Successfully!");
-                        [self.appDelegate userIsAuthorized];
-                        
-                    } break;
-                        
-                    case DataRequestType_BackgroundUpdate:{
-                        
-                        DLog(@"Background Update Successful");
-                        
-                    } break;
-                        
-                    case DataRequestType_Sync:{
-                        
-                        DLog(@"Core Data Sync Successful");
-                        
-                    } break;
-                        
-                    case DataRequestType_ActionUpdate:{
-                        
-                        DLog(@"User Action Update Successful");
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidScrollToUpdate object:nil];
-                        });
-                        
-                    } break;
-                        
-                    case DataRequestType_VideoExtracted:{
-                        
-                        DLog(@"Video Extracted and Data Stored Successfully!");
-                        [self postNotificationVideoInContext:context];
-                        
-                    } break;
-                        
-                    case DataRequestType_StoreVideoInCache:{
-                        
-                        DLog(@"Video Stored in Cache");
-                        
-                    } break;
-                        
-                    default:
-                        break;
-                }
+                DLog(@"%@", [error userInfo]);
+                
+            }
+            
+        } else { // Success
+            
+            switch ( _requestType ) {
+                    
+                case DataRequestType_Fetch:{
+                    
+                    NSAssert((_requestType == DataRequestType_Fetch), @"DataRequestType_Fetch should not be used when storing data!");
+                    
+                } break;
+                    
+                case DataRequestType_StoreUser:{
+                    
+                    DLog(@"User Data Saved Successfully!");
+                    [self.appDelegate userIsAuthorized];
+                    
+                } break;
+                    
+                case DataRequestType_BackgroundUpdate:{
+                    
+                    DLog(@"Background Update Successful");
+                    
+                } break;
+                    
+                case DataRequestType_Sync:{
+                    
+                    DLog(@"Core Data Sync Successful");
+                    
+                } break;
+                    
+                case DataRequestType_ActionUpdate:{
+                    
+                    DLog(@"User Action Update Successful");
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidScrollToUpdate object:nil];
+                    });
+                    
+                } break;
+                    
+                case DataRequestType_VideoExtracted:{
+                    
+                    DLog(@"Video Extracted and Data Stored Successfully!");
+                    [self postNotificationVideoInContext:context];
+                    
+                } break;
+                    
+                case DataRequestType_StoreVideoInCache:{
+                    
+                    DLog(@"Video Stored in Cache");
+                    
+                } break;
+                    
+                default:
+                    break;
             }
         }
-        
     }
-    
 }
 
 - (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType
@@ -775,11 +770,11 @@
     
     // Extract frameIDs from results from Shelby's Web Database
     NSArray *webResultsArray = [webResultsDictionary[@"result"] valueForKey:@"frames"];
-    NSMutableArray *webFrameIdentifiersInLikes = [@[] mutableCopy];
+    NSMutableArray *webFrameIdentifiersInPersonalRoll = [@[] mutableCopy];
     for (NSUInteger i = 0; i < [webResultsArray count]; ++i) {
         
         NSString *frameID = [webResultsArray[i] valueForKey:@"id"];
-        [webFrameIdentifiersInLikes addObject:frameID];
+        [webFrameIdentifiersInPersonalRoll addObject:frameID];
     }
     
     // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
@@ -789,7 +784,7 @@
         NSString *frameID = frame.frameID;
         
         // Delete object if it doesn't exist on web any more
-        if ( ![webFrameIdentifiersInLikes containsObject:frameID] ) {
+        if ( ![webFrameIdentifiersInPersonalRoll containsObject:frameID] ) {
             
             DLog(@"Personal Roll FrameID no longer exist on web, so it is being removed: %@", frameID);
             

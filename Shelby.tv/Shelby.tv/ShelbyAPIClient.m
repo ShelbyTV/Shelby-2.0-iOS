@@ -272,7 +272,7 @@
     User *user = [dataUtility fetchUser];
     NSString *authToken = [user token];
     NSString *personallRollID = [user personalRollID];
-    NSUInteger frameCount = [dataUtility fetchLikesCount];
+    NSUInteger frameCount = [dataUtility fetchPersonalRollCount];
     
     if ( frameCount ) {
         
