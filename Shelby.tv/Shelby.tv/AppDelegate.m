@@ -17,7 +17,6 @@
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 
 - (void)pingAllRoutes;
-- (void)pollAPI;
 - (void)postAuthorizationNotification;
 - (void)analytics;
 
