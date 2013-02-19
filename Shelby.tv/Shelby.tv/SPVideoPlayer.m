@@ -326,24 +326,65 @@
 - (void)share
 {
 
+    // Reference videoFrame 
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
-    NSString *shareLink = [NSString stringWithFormat:kShelbySPVideoShareLink, _videoFrame.video.providerName, _videoFrame.video.providerID, _videoFrame.frameID];
-    NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
+    // Create request for short link
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetShortLink, _videoFrame.frameID]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
     
-    SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
-    SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        Frame *frame = (Frame *)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+        NSString *shareLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
+        NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\": %@via via @Shelby", frame.video.title, shareLink];
+        
+        DLog(@"Succeeded fetching link for frame: %@", shareLink);
+        
+        SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
+        SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+        
+        UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                                      applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
+        shareController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+        
+        
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
+        [self.sharePopOverController presentPopoverFromRect:_overlayView.shareButton.frame
+                                                     inView:_overlayView
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                   animated:YES];
+
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        // If short link fetch failed, use full_path
+        Frame *frame = (Frame *)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+        NSString *shareLink = [NSString stringWithFormat:kShelbyAPIGetLongLink, frame.video.providerName, frame.video.providerID, frame.frameID];
+        NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", _videoFrame.video.title, shareLink];
+        
+        DLog(@"Problem fetching link for frame: %@", _videoFrame.frameID);
+        DLog(@"Using full pathawesom%@", shareLink);
+        
+        SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
+        SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+        
+        UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                                      applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
+        shareController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+            
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
+        [self.sharePopOverController presentPopoverFromRect:_overlayView.shareButton.frame
+                                                     inView:_overlayView
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                   animated:YES];
+    }];
     
-    UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage] applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
-    shareController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-    
-    self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
-    [self.sharePopOverController presentPopoverFromRect:_overlayView.shareButton.frame
-                                                 inView:_overlayView
-                               permittedArrowDirections:UIPopoverArrowDirectionDown
-                                               animated:YES];
+    [operation start];
+                       
 }
 
 - (void)loadVideo:(NSNotification *)notification

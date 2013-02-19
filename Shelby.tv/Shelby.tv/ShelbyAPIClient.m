@@ -317,7 +317,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Personal Roll for sync.");
+        DLog(@"Problem fetching All Channels.");
         
     }];
     
@@ -342,7 +342,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Personal Roll for sync.");
+        DLog(@"Problem fetching Channel: %@", channelID);
         
     }];
     

@@ -25,7 +25,8 @@
 #define kShelbyAPIGetChannelDashbaord       @"https://api.shelby.tv/v1/user/%@/dashboard"
 
 /// GET Shortlink
-#define kShelbyAPIGetShortlink              @"http://api.shelby.tv/v1/frame/%@/short_link"
-
+#define kShelbyAPIGetShortLink              @"http://api.shelby.tv/v1/frame/%@/short_link"
+#define kShelbyAPIGetLongLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
+          
 /// POST Liked Frame
 #define kShelbyAPIPostFrameToLikes          @"https://api.shelby.tv/v1/frame/%@/add_to_watch_later"

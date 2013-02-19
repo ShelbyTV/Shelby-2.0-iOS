@@ -19,6 +19,3 @@
 #define kShelbySPVideoExtracted                 @"SP Video Extracted"
 #define kShelbySPUserDidScrollToUpdate          @"SP User Did Scroll To Update"
 #define kShelbySPLoadVideoAfterUnplayableVideo  @"SP Load Video After Unplayable Video"
-
-/// Temporary
-#define kShelbySPVideoShareLink                 @"http://shelby.tv/video/%@/%@/?frame_id=%@"

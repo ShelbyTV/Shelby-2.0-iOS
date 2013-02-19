@@ -26,7 +26,6 @@
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
-
 {
     return YES;
 }
