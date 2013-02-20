@@ -12,7 +12,7 @@
 
 - (NSString *)activityType
 {
-    return @"tv.shelby.roll";
+    return @"tv.Shelby.Shelby-tv.roll";
 }
 
 - (NSString *)activityTitle

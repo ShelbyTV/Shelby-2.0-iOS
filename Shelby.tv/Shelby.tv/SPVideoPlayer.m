@@ -326,6 +326,10 @@
 - (void)share
 {
 
+    // Disable overlayTimer
+    [self.model.overlayView showOverlayView];
+    [self.model.overlayTimer invalidate];
+    
     // Reference videoFrame 
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];

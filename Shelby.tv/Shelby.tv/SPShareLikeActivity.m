@@ -38,8 +38,6 @@
     
     SPModel *model = (SPModel *)[SPModel sharedInstance];
     
-    [model.overlayTimer invalidate];
-    
     [model.overlayView showOverlayView];
     
     [model.overlayView showLikeNotificationView];
