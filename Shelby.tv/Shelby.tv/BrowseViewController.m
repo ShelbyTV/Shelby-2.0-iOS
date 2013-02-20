@@ -105,6 +105,24 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+    [super viewWillAppear:animated];
+    
+    // If viewWillAppear is called when SPVideoReel modalVC is removed...
+    if ( [[UIApplication sharedApplication] isStatusBarHidden] ) {
+        
+        // ... re-display status bar
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+        
+        // ... and reset the view's frame
+        [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
+        
+    }
+    
+}
+
 #pragma mark - Private Methods
 - (NSManagedObjectContext *)context
 {
