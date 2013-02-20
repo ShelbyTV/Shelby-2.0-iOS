@@ -60,10 +60,12 @@
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="admin" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="facebookConnected" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="likesRollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="personalRollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twitterConnected" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -85,7 +87,7 @@
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
         <element name="Roll" positionX="-155" positionY="342" width="128" height="135"/>
         <element name="Stream" positionX="682" positionY="216" width="128" height="90"/>
-        <element name="User" positionX="-153" positionY="-9" width="128" height="150"/>
+        <element name="User" positionX="-153" positionY="-9" width="128" height="180"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="165"/>
     </elements>
 </model>

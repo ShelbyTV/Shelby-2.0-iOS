@@ -51,7 +51,6 @@
 		1CD5B7DA16D53C1400043754 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		1CD5B7DB16D53C1400043754 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		1CD5B7DC16D53C1400043754 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
-		1CD5B7DD16D53C1400043754 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F716CC45D60015D100 /* User.m */; };
 		1CD5B7DE16D53C1400043754 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3FA16CC45D60015D100 /* Video.m */; };
 		1CD5B7DF16D53C1400043754 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B40016CC45D60015D100 /* Messages.m */; };
 		1CD5B7E016D53C1400043754 /* ChannelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */; };
@@ -228,7 +227,6 @@
 		8E77B3EF16CC45D50015D100 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		8E77B3F216CC45D50015D100 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		8E77B3F516CC45D60015D100 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
-		8E77B3F816CC45D60015D100 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F716CC45D60015D100 /* User.m */; };
 		8E77B3FB16CC45D60015D100 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3FA16CC45D60015D100 /* Video.m */; };
 		8E77B40116CC45D60015D100 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B40016CC45D60015D100 /* Messages.m */; };
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
@@ -276,6 +274,7 @@
 		8EEED7AA16800DAC00D9F4CD /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */; };
 		8EF03BE216D548C90019669F /* likeNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE016D548C90019669F /* likeNotification.png */; };
 		8EF03BE316D548C90019669F /* likeNotification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE116D548C90019669F /* likeNotification@2x.png */; };
+		8EF03BEB16D56D5A0019669F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03BEA16D56D5A0019669F /* User.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -399,8 +398,6 @@
 		8E77B3F116CC45D50015D100 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		8E77B3F316CC45D50015D100 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
 		8E77B3F416CC45D60015D100 /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
-		8E77B3F616CC45D60015D100 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		8E77B3F716CC45D60015D100 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E77B3F916CC45D60015D100 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		8E77B3FA16CC45D60015D100 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		8E77B3FF16CC45D60015D100 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
@@ -475,6 +472,8 @@
 		8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
 		8EF03BE016D548C90019669F /* likeNotification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeNotification.png; sourceTree = "<group>"; };
 		8EF03BE116D548C90019669F /* likeNotification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "likeNotification@2x.png"; sourceTree = "<group>"; };
+		8EF03BE916D56D5A0019669F /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		8EF03BEA16D56D5A0019669F /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -563,6 +562,8 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				8EF03BE916D56D5A0019669F /* User.h */,
+				8EF03BEA16D56D5A0019669F /* User.m */,
 				8E3D6D0416D2BF5C00915CFE /* Channel.h */,
 				8E3D6D0516D2BF5C00915CFE /* Channel.m */,
 				8EBEEFA816CF014600CBF653 /* Frame.h */,
@@ -571,8 +572,6 @@
 				8E77B40016CC45D60015D100 /* Messages.m */,
 				8E77B3F916CC45D60015D100 /* Video.h */,
 				8E77B3FA16CC45D60015D100 /* Video.m */,
-				8E77B3F616CC45D60015D100 /* User.h */,
-				8E77B3F716CC45D60015D100 /* User.m */,
 				8E77B3F316CC45D50015D100 /* Stream.h */,
 				8E77B3F416CC45D60015D100 /* Stream.m */,
 				8E77B3F016CC45D50015D100 /* Conversation.h */,
@@ -1281,7 +1280,6 @@
 				1CD5B7DA16D53C1400043754 /* Creator.m in Sources */,
 				1CD5B7DB16D53C1400043754 /* Conversation.m in Sources */,
 				1CD5B7DC16D53C1400043754 /* Stream.m in Sources */,
-				1CD5B7DD16D53C1400043754 /* User.m in Sources */,
 				1CD5B7DE16D53C1400043754 /* Video.m in Sources */,
 				1CD5B7DF16D53C1400043754 /* Messages.m in Sources */,
 				1CD5B7E016D53C1400043754 /* ChannelViewCell.m in Sources */,
@@ -1336,7 +1334,6 @@
 				8E77B3EF16CC45D50015D100 /* Creator.m in Sources */,
 				8E77B3F216CC45D50015D100 /* Conversation.m in Sources */,
 				8E77B3F516CC45D60015D100 /* Stream.m in Sources */,
-				8E77B3F816CC45D60015D100 /* User.m in Sources */,
 				8E77B3FB16CC45D60015D100 /* Video.m in Sources */,
 				8E77B40116CC45D60015D100 /* Messages.m in Sources */,
 				1CD72EA116CD36CB0045B36F /* ChannelViewCell.m in Sources */,
@@ -1358,6 +1355,7 @@
 				1CCCB54C16CEECD400C8C216 /* CollectionViewChannelsLayout.m in Sources */,
 				1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */,
 				8E2BA99116D3FF130070613F /* SPShareRollActivity.m in Sources */,
+				8EF03BEB16D56D5A0019669F /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

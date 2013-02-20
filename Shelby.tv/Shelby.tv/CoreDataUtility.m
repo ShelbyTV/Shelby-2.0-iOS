@@ -199,31 +199,31 @@
 #pragma mark - Storage Methods (Public)
 - (void)storeUser:(NSDictionary *)resultsDictionary
 {
-    NSArray *resultsArray = resultsDictionary[@"result"];
+    NSArray *userDictionary = resultsDictionary[@"result"];
     
     User *user = [self checkIfEntity:kShelbyCoreDataEntityUser
-                         withIDValue:[resultsArray valueForKey:@"id"]
+                         withIDValue:[userDictionary valueForKey:@"id"]
                             forIDKey:kShelbyCoreDataUserID];
     
-    NSString *userID = [NSString coreDataNullTest:[resultsArray valueForKey:@"id"]];
+    NSString *userID = [NSString coreDataNullTest:[userDictionary valueForKey:@"id"]];
     [user setValue:userID forKey:kShelbyCoreDataUserID];
     
-    NSString *userImage = [NSString coreDataNullTest:[resultsArray valueForKey:@"user_image"]];
+    NSString *userImage = [NSString coreDataNullTest:[userDictionary valueForKey:@"user_image"]];
     [user setValue:userImage forKey:kShelbyCoreDataUserImage];
     
-    NSString *token = [NSString coreDataNullTest:[resultsArray valueForKey:@"authentication_token"]];
+    NSString *token = [NSString coreDataNullTest:[userDictionary valueForKey:@"authentication_token"]];
     [user setValue:token forKey:kShelbyCoreDataUserToken];
     
-    NSString *nickname = [NSString coreDataNullTest:[resultsArray valueForKey:@"nickname"]];
+    NSString *nickname = [NSString coreDataNullTest:[userDictionary valueForKey:@"nickname"]];
     [user setValue:nickname forKey:kShelbyCoreDataUserNickname];
     
-    NSString *personalRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"personal_roll_id"]];
+    NSString *personalRollID = [NSString coreDataNullTest:[userDictionary valueForKey:@"personal_roll_id"]];
     [user setValue:personalRollID forKey:kShelbyCoreDataUserPersonalRollID];
     
-    NSString *likesRollID = [NSString coreDataNullTest:[resultsArray valueForKey:@"watch_later_roll_id"]];
+    NSString *likesRollID = [NSString coreDataNullTest:[userDictionary valueForKey:@"watch_later_roll_id"]];
     [user setValue:likesRollID forKey:kShelbyCoreDataUserLikesRollID];
-    
-    BOOL admin = [[resultsArray valueForKey:@"admin"] boolValue];
+
+    BOOL admin = [[userDictionary valueForKey:@"admin"] boolValue];
     [user setValue:@(admin) forKey:kShelbyCoreDataUserAdmin];
     
     [self saveContext:_context];

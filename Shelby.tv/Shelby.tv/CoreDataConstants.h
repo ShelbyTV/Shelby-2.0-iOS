@@ -27,7 +27,7 @@
 #define kShelbyCoreDataEntityUser                       @"User"
 #define kShelbyCoreDataEntityVideo                      @"Video"
 
-// Channe; Attribute Constants
+// Channel Attribute Constants
 #define kShelbyCoreDataChannelID                        @"channelID"
 #define kShelbyCoreDataChannelDisplayTitle              @"displayTitle"
 #define kShelbyCoreDataChannelDisplayDescription        @"displayDescription"
@@ -77,11 +77,13 @@
 // User Attribute Constants
 #define kShelbyCoreDataUserID                           @"userID"
 #define kShelbyCoreDataUserAdmin                        @"admin"
+#define kShelbyCoreDataUserFacebookConnected            @"facebookConnected"
+#define kShelbyCoreDataUserImage                        @"userImage"
 #define kShelbyCoreDataUserNickname                     @"nickname"
 #define kShelbyCoreDataUserPersonalRollID               @"personalRollID"
 #define kShelbyCoreDataUserLikesRollID                  @"likesRollID"
 #define kShelbyCoreDataUserToken                        @"token"
-#define kShelbyCoreDataUserImage                        @"userImage"
+#define kShelbyCoreDataUserTwitterConnected             @"twitterConnected"
 
 // Video Attribute Constants
 #define kShelbyCoreDataVideoID                          @"videoID"
