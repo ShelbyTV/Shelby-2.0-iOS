@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C26CC9A16D56D5900CDF0A1 /* SPShareLikeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5DEDC716D43C9E00EB0804 /* SPShareLikeView.xib */; };
+		1C26CC9B16D56D5E00CDF0A1 /* SPShareRollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5DEDC916D43CB300EB0804 /* SPShareRollView.xib */; };
+		1C26CC9C16D56D6500CDF0A1 /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
+		1C26CC9D16D56D6800CDF0A1 /* SPShareRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA99016D3FF130070613F /* SPShareRollActivity.m */; };
+		1C26CC9E16D56E1200CDF0A1 /* likeNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE016D548C90019669F /* likeNotification.png */; };
+		1C26CC9F16D56E1400CDF0A1 /* likeNotification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE116D548C90019669F /* likeNotification@2x.png */; };
+		1C26CCA016D56E1800CDF0A1 /* likeActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99216D4053C0070613F /* likeActivityButton.png */; };
+		1C26CCA116D56E1A00CDF0A1 /* likeActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */; };
+		1C26CCA216D56E1D00CDF0A1 /* rollActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99416D4053C0070613F /* rollActivityButton.png */; };
+		1C26CCA316D56E1F00CDF0A1 /* rollActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99516D4053C0070613F /* rollActivityButton@2x.png */; };
 		1CC3387816CBDF2A00E58375 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
 		1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
 		1CCCB54616CEA61B00C8C216 /* MyRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* MyRollViewCell.m */; };
@@ -1128,6 +1138,14 @@
 				1CD5B84416D53C1400043754 /* cardTemplate.png in Resources */,
 				1CD5B84516D53C1400043754 /* missing@2x.png in Resources */,
 				1CD5B84616D53C1400043754 /* missingCard.png in Resources */,
+				1C26CC9A16D56D5900CDF0A1 /* SPShareLikeView.xib in Resources */,
+				1C26CC9B16D56D5E00CDF0A1 /* SPShareRollView.xib in Resources */,
+				1C26CC9E16D56E1200CDF0A1 /* likeNotification.png in Resources */,
+				1C26CC9F16D56E1400CDF0A1 /* likeNotification@2x.png in Resources */,
+				1C26CCA016D56E1800CDF0A1 /* likeActivityButton.png in Resources */,
+				1C26CCA116D56E1A00CDF0A1 /* likeActivityButton@2x.png in Resources */,
+				1C26CCA216D56E1D00CDF0A1 /* rollActivityButton.png in Resources */,
+				1C26CCA316D56E1F00CDF0A1 /* rollActivityButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1300,6 +1318,8 @@
 				1CD5B7EF16D53C1400043754 /* MyRollViewCell.m in Sources */,
 				1CD5B7F016D53C1400043754 /* CollectionViewChannelsLayout.m in Sources */,
 				1CD5B7F116D53C1400043754 /* PageControl.m in Sources */,
+				1C26CC9C16D56D6500CDF0A1 /* SPShareLikeActivity.m in Sources */,
+				1C26CC9D16D56D6800CDF0A1 /* SPShareRollActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
