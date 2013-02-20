@@ -223,6 +223,41 @@
     NSString *likesRollID = [NSString coreDataNullTest:[userDictionary valueForKey:@"watch_later_roll_id"]];
     [user setValue:likesRollID forKey:kShelbyCoreDataUserLikesRollID];
 
+    /*
+     Check if Facebook and Twitter are connected
+     By default, set twitterConnected to NO 
+     By default, set facebookConnected to NO
+     */
+    
+    [user setValue:@NO forKey:kShelbyCoreDataUserTwitterConnected];
+    [user setValue:@NO forKey:kShelbyCoreDataUserTwitterConnected];
+    
+    if ( [[userDictionary valueForKey:@"authentications"] count] ) {
+        
+        NSArray *authentications = [userDictionary valueForKey:@"authentications"];
+        NSUInteger i = 0;
+        
+        while ( i < [authentications count] ) {
+            
+            if ( [[authentications objectAtIndex:i] containsObject:@"twitter"] ) {
+                
+                DLog(@"Shelby User has a Twitter account that's connected.");
+                [user setValue:@YES forKey:kShelbyCoreDataUserTwitterConnected];
+                
+            }
+            
+            if ( [[authentications objectAtIndex:i] containsObject:@"facebook"] ) {
+                
+                DLog(@"Shelby User has a Facebook account that's connected.");
+                [user setValue:@YES forKey:kShelbyCoreDataUserFacebookConnected];
+            }
+            
+            i++;
+            
+        }
+
+    }
+    
     BOOL admin = [[userDictionary valueForKey:@"admin"] boolValue];
     [user setValue:@(admin) forKey:kShelbyCoreDataUserAdmin];
     
