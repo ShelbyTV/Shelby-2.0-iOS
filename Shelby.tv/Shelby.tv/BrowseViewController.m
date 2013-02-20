@@ -449,8 +449,8 @@
                          [self.backgroundLoginView removeFromSuperview];
                          [self setIsLoggedIn:YES];
                          [self fetchUserNickname];
-                         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-
+                         [self fetchChannels];
+                         [self.collectionView reloadData];
                      }];
 }
 
