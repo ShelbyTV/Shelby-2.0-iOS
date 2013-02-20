@@ -285,6 +285,19 @@
 }
 
 #pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ChannelViewCell  *cell = (ChannelViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell.selectionView setHidden:NO];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ChannelViewCell  *cell = (ChannelViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell.selectionView setHidden:YES];
+    
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = indexPath.row;
@@ -449,8 +462,8 @@
                          [self.backgroundLoginView removeFromSuperview];
                          [self setIsLoggedIn:YES];
                          [self fetchUserNickname];
-                         [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-
+                         [self fetchChannels];
+                         [self.collectionView reloadData];
                      }];
 }
 
