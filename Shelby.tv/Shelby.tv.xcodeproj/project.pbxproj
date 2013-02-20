@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C26CC9A16D56D5900CDF0A1 /* SPShareLikeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5DEDC716D43C9E00EB0804 /* SPShareLikeView.xib */; };
-		1C26CC9B16D56D5E00CDF0A1 /* SPShareRollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5DEDC916D43CB300EB0804 /* SPShareRollView.xib */; };
 		1C26CC9C16D56D6500CDF0A1 /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		1C26CC9D16D56D6800CDF0A1 /* SPShareRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA99016D3FF130070613F /* SPShareRollActivity.m */; };
 		1C26CC9E16D56E1200CDF0A1 /* likeNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE016D548C90019669F /* likeNotification.png */; };
@@ -231,8 +229,6 @@
 		8E59805B1680104A00027181 /* videoListPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980411680104A00027181 /* videoListPanel@2x.png */; };
 		8E59805C1680104A00027181 /* videoPlayerBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980421680104A00027181 /* videoPlayerBar.png */; };
 		8E59805D1680104A00027181 /* videoPlayerBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980431680104A00027181 /* videoPlayerBar@2x.png */; };
-		8E5DEDC816D43C9E00EB0804 /* SPShareLikeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5DEDC716D43C9E00EB0804 /* SPShareLikeView.xib */; };
-		8E5DEDCA16D43CB300EB0804 /* SPShareRollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5DEDC916D43CB300EB0804 /* SPShareRollView.xib */; };
 		8E77B3EC16CC45D50015D100 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EB16CC45D50015D100 /* Roll.m */; };
 		8E77B3EF16CC45D50015D100 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		8E77B3F216CC45D50015D100 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
@@ -396,8 +392,6 @@
 		8E5980411680104A00027181 /* videoListPanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoListPanel@2x.png"; sourceTree = "<group>"; };
 		8E5980421680104A00027181 /* videoPlayerBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoPlayerBar.png; sourceTree = "<group>"; };
 		8E5980431680104A00027181 /* videoPlayerBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoPlayerBar@2x.png"; sourceTree = "<group>"; };
-		8E5DEDC716D43C9E00EB0804 /* SPShareLikeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPShareLikeView.xib; sourceTree = "<group>"; };
-		8E5DEDC916D43CB300EB0804 /* SPShareRollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPShareRollView.xib; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
 		8E77B3EA16CC45D50015D100 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
@@ -761,8 +755,6 @@
 			children = (
 				8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */,
 				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
-				8E5DEDC716D43C9E00EB0804 /* SPShareLikeView.xib */,
-				8E5DEDC916D43CB300EB0804 /* SPShareRollView.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -1138,8 +1130,6 @@
 				1CD5B84416D53C1400043754 /* cardTemplate.png in Resources */,
 				1CD5B84516D53C1400043754 /* missing@2x.png in Resources */,
 				1CD5B84616D53C1400043754 /* missingCard.png in Resources */,
-				1C26CC9A16D56D5900CDF0A1 /* SPShareLikeView.xib in Resources */,
-				1C26CC9B16D56D5E00CDF0A1 /* SPShareRollView.xib in Resources */,
 				1C26CC9E16D56E1200CDF0A1 /* likeNotification.png in Resources */,
 				1C26CC9F16D56E1400CDF0A1 /* likeNotification@2x.png in Resources */,
 				1C26CCA016D56E1800CDF0A1 /* likeActivityButton.png in Resources */,
@@ -1225,8 +1215,6 @@
 				8E2BA99716D4053C0070613F /* likeActivityButton@2x.png in Resources */,
 				8E2BA99816D4053C0070613F /* rollActivityButton.png in Resources */,
 				8E2BA99916D4053C0070613F /* rollActivityButton@2x.png in Resources */,
-				8E5DEDC816D43C9E00EB0804 /* SPShareLikeView.xib in Resources */,
-				8E5DEDCA16D43CB300EB0804 /* SPShareRollView.xib in Resources */,
 				1CD5B7BA16D41C4C00043754 /* cardTemplate@2x.png in Resources */,
 				1CD5B7BC16D41EDB00043754 /* cardTemplate.png in Resources */,
 				1CD5B7BF16D421DF00043754 /* missing@2x.png in Resources */,

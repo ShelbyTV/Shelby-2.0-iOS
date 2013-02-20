@@ -225,10 +225,10 @@
 
     /*
      Check if Facebook and Twitter are connected
+     
      By default, set twitterConnected to NO 
      By default, set facebookConnected to NO
      */
-    
     [user setValue:@NO forKey:kShelbyCoreDataUserTwitterConnected];
     [user setValue:@NO forKey:kShelbyCoreDataUserTwitterConnected];
     
@@ -250,6 +250,7 @@
                 
                 DLog(@"Shelby User has a Facebook account that's connected.");
                 [user setValue:@YES forKey:kShelbyCoreDataUserFacebookConnected];
+                
             }
             
             i++;
