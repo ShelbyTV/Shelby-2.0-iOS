@@ -21,6 +21,10 @@
 		1CCCB56116D2A9AF00C8C216 /* meNotSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CCCB55916D2A9AF00C8C216 /* meNotSelected@2x.png */; };
 		1CCCB56216D2A9AF00C8C216 /* meSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CCCB55A16D2A9AF00C8C216 /* meSelected.png */; };
 		1CCCB56316D2A9AF00C8C216 /* meSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CCCB55B16D2A9AF00C8C216 /* meSelected@2x.png */; };
+		1CD5B7BA16D41C4C00043754 /* cardTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7B916D41C4C00043754 /* cardTemplate@2x.png */; };
+		1CD5B7BC16D41EDB00043754 /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7BB16D41EDB00043754 /* cardTemplate.png */; };
+		1CD5B7BF16D421DF00043754 /* missing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7BD16D421DF00043754 /* missing@2x.png */; };
+		1CD5B7C016D421DF00043754 /* missingCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7BE16D421DF00043754 /* missingCard.png */; };
 		1CD72E9E16CD36630045B36F /* ChannelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */; };
 		1CD72EA116CD36CB0045B36F /* ChannelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
@@ -164,6 +168,10 @@
 		1CCCB55916D2A9AF00C8C216 /* meNotSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "meNotSelected@2x.png"; sourceTree = "<group>"; };
 		1CCCB55A16D2A9AF00C8C216 /* meSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = meSelected.png; sourceTree = "<group>"; };
 		1CCCB55B16D2A9AF00C8C216 /* meSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "meSelected@2x.png"; sourceTree = "<group>"; };
+		1CD5B7B916D41C4C00043754 /* cardTemplate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardTemplate@2x.png"; sourceTree = "<group>"; };
+		1CD5B7BB16D41EDB00043754 /* cardTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardTemplate.png; sourceTree = "<group>"; };
+		1CD5B7BD16D421DF00043754 /* missing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "missing@2x.png"; sourceTree = "<group>"; };
+		1CD5B7BE16D421DF00043754 /* missingCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missingCard.png; sourceTree = "<group>"; };
 		1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelViewCell.xib; sourceTree = "<group>"; };
 		1CD72E9F16CD36CB0045B36F /* ChannelViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewCell.h; sourceTree = "<group>"; };
 		1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewCell.m; sourceTree = "<group>"; };
@@ -251,8 +259,6 @@
 		8E5DEDC916D43CB300EB0804 /* SPShareRollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPShareRollView.xib; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
-		8E77B3AD16CBF7FE0015D100 /* channelCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = channelCard.png; sourceTree = "<group>"; };
-		8E77B3AE16CBF7FE0015D100 /* channelCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channelCard@2x.png"; sourceTree = "<group>"; };
 		8E77B3EA16CC45D50015D100 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		8E77B3EB16CC45D50015D100 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		8E77B3ED16CC45D50015D100 /* Creator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creator.h; sourceTree = "<group>"; };
@@ -510,12 +516,14 @@
 		8E2FC87B16C6F19D0022B58C /* Me & Browse Images */ = {
 			isa = PBXGroup;
 			children = (
-				8E77B3AD16CBF7FE0015D100 /* channelCard.png */,
-				8E77B3AE16CBF7FE0015D100 /* channelCard@2x.png */,
+				1CD5B7BB16D41EDB00043754 /* cardTemplate.png */,
+				1CD5B7B916D41C4C00043754 /* cardTemplate@2x.png */,
 				8E454CB816CA9DC100B2F528 /* likesCard.png */,
 				8E454CB916CA9DC100B2F528 /* likesCard@2x.png */,
 				8E454CBA16CA9DC100B2F528 /* loginCard.png */,
 				8E454CBB16CA9DC100B2F528 /* loginCard@2x.png */,
+				1CD5B7BD16D421DF00043754 /* missing@2x.png */,
+				1CD5B7BE16D421DF00043754 /* missingCard.png */,
 				8E454CD216CAAD3E00B2F528 /* personalRollCard@2x.png */,
 				8E454CBE16CA9DC100B2F528 /* personalRollCard.png */,
 				8E454CC216CA9DC100B2F528 /* streamCard.png */,
@@ -932,8 +940,6 @@
 				8E454CD116CA9DC100B2F528 /* streamCard@2x.png in Resources */,
 				8E454CD316CAAD3F00B2F528 /* personalRollCard@2x.png in Resources */,
 				1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */,
-				8E77B3AF16CBF7FE0015D100 /* channelCard.png in Resources */,
-				8E77B3B016CBF7FE0015D100 /* channelCard@2x.png in Resources */,
 				1CD72E9E16CD36630045B36F /* ChannelViewCell.xib in Resources */,
 				1CCCB54816CEBAB100C8C216 /* MyRollViewCell.xib in Resources */,
 				1CCCB55C16D2A9AF00C8C216 /* dotNotSelected.png in Resources */,
@@ -950,6 +956,10 @@
 				8E2BA99916D4053C0070613F /* rollActivityButton@2x.png in Resources */,
 				8E5DEDC816D43C9E00EB0804 /* SPShareLikeView.xib in Resources */,
 				8E5DEDCA16D43CB300EB0804 /* SPShareRollView.xib in Resources */,
+				1CD5B7BA16D41C4C00043754 /* cardTemplate@2x.png in Resources */,
+				1CD5B7BC16D41EDB00043754 /* cardTemplate.png in Resources */,
+				1CD5B7BF16D421DF00043754 /* missing@2x.png in Resources */,
+				1CD5B7C016D421DF00043754 /* missingCard.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

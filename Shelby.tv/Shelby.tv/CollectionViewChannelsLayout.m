@@ -13,15 +13,60 @@
 //  1 3 5 7 9 11 ...
 
 #import "CollectionViewChannelsLayout.h"
+
+#define kShelbyCollectionViewPageWidth 1024
+#define kShelbyCollectionViewPageHeight 714
+
+#define kShelbyCollectionViewCellWidth 482
+#define kShelbyCollectionViewCellHeight 318
+#define kShelbyCollectionViewCellSpacing 20
+
+#define kShelbyCollectionViewFirstRowYOffset 34
+#define kShelbyCollectionViewSecondRowYOffset 372
+
 @interface CollectionViewChannelsLayout()
 
 @property(nonatomic,strong) NSMutableArray* layoutAttributes;  // array of UICollectionViewLayoutAttributes
+
+- (int)numberOfCells;
 
 @end
 
 
 @implementation CollectionViewChannelsLayout
 
+
+#pragma mark - Public Methods
+// Assuming 2 sections - Me and Channels
+- (int)numberOfPages
+{
+    int pages = 0;
+    int meSectionCount = [self.collectionView numberOfItemsInSection:0];
+    if (meSectionCount % kShelbyCollectionViewNumberOfCardsInMeSectionPage != 0) {
+        pages++;
+    }
+    pages += meSectionCount / kShelbyCollectionViewNumberOfCardsInMeSectionPage;
+    
+    int channelSectionCount = [self.collectionView numberOfItemsInSection:1];
+    if (channelSectionCount % kShelbyCollectionViewNumberOfCardsInChannelSectionPage != 0) {
+        pages++;
+    }
+    pages += channelSectionCount / kShelbyCollectionViewNumberOfCardsInChannelSectionPage;
+    
+    return pages;
+}
+
+#pragma mark - Private Methods
+- (int)numberOfCells
+{
+    int count = 0;
+    int numberOfSections = [self.collectionView numberOfSections];
+    for (int i = 0; i < numberOfSections; i++) {
+        count += [self.collectionView numberOfItemsInSection:i];
+    }
+    
+    return count;
+}
 
 #pragma mark - Memory Management Methods
 - (void)dealloc
@@ -33,24 +78,25 @@
 #pragma mark - UICollectionViewLayout Methods
 - (void)prepareLayout
 {
-    int count = 12; // TODO: should not hardcode
+    int count = [self numberOfCells];
+
     _layoutAttributes = [NSMutableArray arrayWithCapacity:count];
     
     int screen = 0;
     
     int xOffset = 0;
-    int yOffset = 34;
+    int yOffset = kShelbyCollectionViewFirstRowYOffset;
 
     for (int i = 0; i < count; i++) {
-        if (i != 0 && (i % 4 == 0)) {
-            screen += 1024;
+        if (i != 0 && (i - kShelbyCollectionViewNumberOfCardsInMeSectionPage) % kShelbyCollectionViewNumberOfCardsInChannelSectionPage == 0) {
+            screen += kShelbyCollectionViewPageWidth;
         }
         int row = 0;
         int section = 0;
-        if (i < 4) {
+        if (i < kShelbyCollectionViewNumberOfCardsInMeSectionPage) {
             row = i;
         } else {
-            row = i - 4;
+            row = i - kShelbyCollectionViewNumberOfCardsInMeSectionPage;
             section = 1;
         }
  
@@ -58,17 +104,17 @@
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         
         if (i % 2 == 1) {
-            yOffset = 372;
+            yOffset = kShelbyCollectionViewSecondRowYOffset;
         } else if (i != 0) {
-            xOffset += 502;
-            yOffset = 34;
+            xOffset += kShelbyCollectionViewCellWidth + kShelbyCollectionViewCellSpacing;
+            yOffset = kShelbyCollectionViewFirstRowYOffset;
         }
         
-        if (i % 4 == 0) {
-            xOffset += 20;
+        if ((i - kShelbyCollectionViewNumberOfCardsInMeSectionPage) % kShelbyCollectionViewNumberOfCardsInChannelSectionPage  == 0) {
+            xOffset += kShelbyCollectionViewCellSpacing;
         }
         
-        attributes.frame = CGRectMake(xOffset, yOffset, 482, 318);
+        attributes.frame = CGRectMake(xOffset, yOffset, kShelbyCollectionViewCellWidth, kShelbyCollectionViewCellHeight);
         
         [self.layoutAttributes addObject:attributes];
     }
@@ -76,7 +122,7 @@
 
 - (CGSize)collectionViewContentSize
 {
-    return CGSizeMake(1024 * 3, 714);
+    return CGSizeMake(kShelbyCollectionViewPageWidth * [self numberOfPages], kShelbyCollectionViewPageHeight);
 }
 
 
@@ -84,7 +130,7 @@
 {
     int index = indexPath.row;
     if (indexPath.section == 1) {
-        index += 4;
+        index += kShelbyCollectionViewNumberOfCardsInMeSectionPage;
     }
     
     return self.layoutAttributes[index];

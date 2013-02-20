@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#define kShelbyCollectionViewNumberOfCardsInMeSectionPage 4
+#define kShelbyCollectionViewNumberOfCardsInChannelSectionPage 4
+
 @interface CollectionViewChannelsLayout : UICollectionViewLayout
+
+// Assuming 2 sections - Me and Channels
+- (int)numberOfPages;
 
 @end

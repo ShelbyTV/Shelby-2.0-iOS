@@ -8,14 +8,13 @@
 
 #import "BrowseViewController.h"
 #import "ChannelViewCell.h"
+#import "CollectionViewChannelsLayout.h"
 #import "LoginView.h"
 #import "MeViewController.h"
 #import "MyRollViewCell.h"
 #import "PageControl.h"
 #import "SPVideoReel.h"
-
-#define kShelbyNumberOfCardsInMeSectionPage 4
-#define kShelbyNumberOfCardsInChannelSectionPage 4
+#import "UIImageView+AFNetworking.h"
 
 @interface BrowseViewController ()
 
@@ -28,9 +27,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+// TODO: to move to a collection view data file
+@property NSMutableArray *channels;
+
 @property (weak, nonatomic) IBOutlet PageControl *pageControl;
 // Fetch nickname of logged in user from CoreData
 - (void)fetchUserNickname;
+- (void)fetchChannels;
 
 // TODO: need to port from MeVC
 /// Gesture Methods
@@ -39,7 +42,7 @@
 //- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture;
 //- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture;
 
-- (void)scrollCollectionViewToPage:(int)page;
+- (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated;
 
 /// Page Control
 - (IBAction)goToPage:(id)sender;
@@ -58,6 +61,7 @@
 - (void)launchPlayerWithStreamEntries;
 - (void)launchPlayerWithLikesEntries;
 - (void)launchPlayerWithPersonalRollEntries;
+- (void)launchPlayerWithChannelEntries:(NSInteger)channelIndex;
 
 @end
 
@@ -80,6 +84,7 @@
     [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
     
     [self fetchUserNickname];
+    _channels = [[NSMutableArray alloc] init];
     
     // Register Cell Nibs
     UINib *cellNib = [UINib nibWithNibName:@"ChannelViewCell" bundle:nil];
@@ -87,6 +92,9 @@
     cellNib = [UINib nibWithNibName:@"MyRollViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"MyRollViewCell"];
 
+    [self.pageControl setNumberOfPages:1];
+    [self fetchChannels];
+  
     // Customize look
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
     
@@ -95,15 +103,16 @@
     [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
     [self.versionLabel setTextColor:kShelbyColorBlack];
     
-    [self.pageControl setNumberOfPages:3]; // TODO: this is hardcoded
-    
-    // TODO: add a check: if there are NO channels, skip the next 3 lines.
-    [self.pageControl setCurrentPage:1];
-    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
-    [self scrollCollectionViewToPage:1];
 }
 
 #pragma mark - Private Methods
+- (NSManagedObjectContext *)context
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    return [appDelegate context];
+}
+
 - (void)fetchUserNickname
 {
     if ([self isLoggedIn]) {
@@ -113,7 +122,30 @@
     }
 }
 
-- (void)scrollCollectionViewToPage:(int)page
+- (void)fetchChannels
+{
+    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    [self.channels removeAllObjects];
+    [self.channels addObjectsFromArray:[datautility fetchAllChannels]];
+    
+    if ([self.channels count] > 0) {
+        int pages = [(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages];
+        if (pages > 1) {
+            [self.pageControl setNumberOfPages:pages];
+            int displayPage = ([self isLoggedIn] ? 0 : 1);
+            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:displayPage]];
+            [self.pageControl setCurrentPage:displayPage];
+            [self scrollCollectionViewToPage:displayPage animated:NO];
+        }
+    }
+}
+
+- (void)fetchFramesForChannel
+{
+    
+}
+
+- (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
 {
     int width = self.collectionView.frame.size.width;
     int height = self.collectionView.frame.size.height;
@@ -121,7 +153,7 @@
     int y = 0;
     int x = (width * page);
     
-    [self.collectionView scrollRectToVisible:CGRectMake(x, y, width, height) animated:YES];
+    [self.collectionView scrollRectToVisible:CGRectMake(x, y, width, height) animated:animated];
 }
 
 #pragma mark - PageControl Methods
@@ -132,7 +164,7 @@
     // Next line is necessary, otherwise, the custom page control images won't update
     [self.pageControl setCurrentPage:page];
     
-    [self scrollCollectionViewToPage:page];
+    [self scrollCollectionViewToPage:page animated:YES];
 }
 
 // TODO: factor the data source delegete methods to a model class.
@@ -140,9 +172,9 @@
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return kShelbyNumberOfCardsInMeSectionPage;
+        return kShelbyCollectionViewNumberOfCardsInMeSectionPage;
     } else {
-        return 8;
+        return [self.channels count];
     }
 }
 
@@ -196,16 +228,38 @@
             description = @"Ain't nothin' but a gangsta party!";
             buttonImageName = @"loginCard.png";
         }
+        UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
+        [cell.channelImage setImage:buttonImage];
     } else {  // Channel Cards
         [cell enableCard:YES];
-        buttonImageName = @"channelCard.png";
-        name = [NSString stringWithFormat:@"Channel %d", indexPath.row];
-        description = [NSString stringWithFormat:@"Channel %d description", indexPath.row];
-        
+        if (indexPath.row < [self.channels count]) {
+            buttonImageName = @"missingCard.png";
+            
+            NSManagedObjectContext *context = [self context];
+            NSManagedObjectID *objectID = [(self.channels)[indexPath.row] objectID];
+            Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+            // TODO: Channel should NOT be nil!
+            if (channel) {
+                name = [channel displayTitle];
+                description = [channel displayDescription];
+                NSString *thumbnailUrl = [channel displayThumbnailURL];
+                NSURL *imageUrl = [[NSURL alloc] initWithString:thumbnailUrl];
+                [cell.channelImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:buttonImageName]];
+            } else {
+                UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
+                [cell.channelImage setImage:buttonImage];
+            }
+        }
     }
     
-    UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
-    [cell.channelImage setImage:buttonImage];
+    if (!name) {
+        name = @"";
+    }
+    
+    if (!description) {
+        description = @"";
+    }
+ 
     [cell.channelName setText:name];
     [cell.channelDescription setText:description];
     
@@ -232,7 +286,7 @@
             [self loginAction];
         }
     } else {
-        // open channel
+        [self launchPlayerWithChannelEntries:row];
     }
 }
 
@@ -483,6 +537,40 @@
     });
 }
 
+
+- (void)launchPlayerWithChannelEntries:(NSInteger)channelIndex
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSManagedObjectContext *context = [self context];
+        NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
+        Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+        CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        NSMutableArray *videoFrames = [datautility fetchFramesInChannel:channel.channelID];
+            
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if ( [videoFrames count] ) {
+                
+                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_PersonalRoll categoryTitle:[channel displayTitle] andVideoFrames:videoFrames];
+                [self presentViewController:reel animated:YES completion:nil];
+                
+            } else {
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                    message:@"No videos in Channel."
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"Dismiss"
+                                                          otherButtonTitles:nil];
+                
+                [alertView show];
+                
+            }
+            
+        });
+    });
+}
+
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -512,7 +600,7 @@
     NSArray *visibleCells = [self.collectionView visibleCells];
     if ([visibleCells count] > 0) {
         NSIndexPath *firstCell = [self.collectionView indexPathForCell:visibleCells[0]];
-        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyNumberOfCardsInMeSectionPage : kShelbyNumberOfCardsInChannelSectionPage);
+        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyCollectionViewNumberOfCardsInMeSectionPage : kShelbyCollectionViewNumberOfCardsInChannelSectionPage);
         int page = (firstCell.row / numberOfCardsInSectionPage) + firstCell.section;
         [self.pageControl setCurrentPage:page];
     }
