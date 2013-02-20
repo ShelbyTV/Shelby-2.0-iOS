@@ -227,6 +227,7 @@
 		8E7C341516D58174007494DF /* meNotSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7C340D16D58174007494DF /* meNotSelected@2x.png */; };
 		8E7C341616D58174007494DF /* meSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7C340E16D58174007494DF /* meSelected.png */; };
 		8E7C341716D58174007494DF /* meSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7C340F16D58174007494DF /* meSelected@2x.png */; };
+		8E7C341A16D58252007494DF /* SPShareController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7C341916D58252007494DF /* SPShareController.m */; };
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
@@ -437,6 +438,8 @@
 		8E7C340D16D58174007494DF /* meNotSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "meNotSelected@2x.png"; sourceTree = "<group>"; };
 		8E7C340E16D58174007494DF /* meSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = meSelected.png; sourceTree = "<group>"; };
 		8E7C340F16D58174007494DF /* meSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "meSelected@2x.png"; sourceTree = "<group>"; };
+		8E7C341816D58252007494DF /* SPShareController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPShareController.h; sourceTree = "<group>"; };
+		8E7C341916D58252007494DF /* SPShareController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPShareController.m; sourceTree = "<group>"; };
 		8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
@@ -815,6 +818,8 @@
 		8E68A1CC16C0C51D0031C3D2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8E7C341816D58252007494DF /* SPShareController.h */,
+				8E7C341916D58252007494DF /* SPShareController.m */,
 				8EB950511665BCF100E965E0 /* SPVideoPlayer.h */,
 				8EB950521665BCF100E965E0 /* SPVideoPlayer.m */,
 				8EB950551665BD4000E965E0 /* SPVideoReel.h */,
@@ -1476,6 +1481,7 @@
 				8E2BA99116D3FF130070613F /* SPShareRollActivity.m in Sources */,
 				8EF03BEB16D56D5A0019669F /* User.m in Sources */,
 				8EF03C6016D57C170019669F /* SPShareRollView.m in Sources */,
+				8E7C341A16D58252007494DF /* SPShareController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
