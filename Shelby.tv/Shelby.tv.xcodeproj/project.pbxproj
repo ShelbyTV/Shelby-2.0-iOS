@@ -224,8 +224,6 @@
 		8E59805D1680104A00027181 /* videoPlayerBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980431680104A00027181 /* videoPlayerBar@2x.png */; };
 		8E5DEDC816D43C9E00EB0804 /* SPShareLikeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5DEDC716D43C9E00EB0804 /* SPShareLikeView.xib */; };
 		8E5DEDCA16D43CB300EB0804 /* SPShareRollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5DEDC916D43CB300EB0804 /* SPShareRollView.xib */; };
-		8E77B3AF16CBF7FE0015D100 /* channelCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E77B3AD16CBF7FE0015D100 /* channelCard.png */; };
-		8E77B3B016CBF7FE0015D100 /* channelCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E77B3AE16CBF7FE0015D100 /* channelCard@2x.png */; };
 		8E77B3EC16CC45D50015D100 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EB16CC45D50015D100 /* Roll.m */; };
 		8E77B3EF16CC45D50015D100 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		8E77B3F216CC45D50015D100 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
@@ -276,6 +274,8 @@
 		8EEED7A816800DAC00D9F4CD /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */; };
 		8EEED7A916800DAC00D9F4CD /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */; };
 		8EEED7AA16800DAC00D9F4CD /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */; };
+		8EF03BE216D548C90019669F /* likeNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE016D548C90019669F /* likeNotification.png */; };
+		8EF03BE316D548C90019669F /* likeNotification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE116D548C90019669F /* likeNotification@2x.png */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -473,6 +473,8 @@
 		8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
 		8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
 		8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
+		8EF03BE016D548C90019669F /* likeNotification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeNotification.png; sourceTree = "<group>"; };
+		8EF03BE116D548C90019669F /* likeNotification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "likeNotification@2x.png"; sourceTree = "<group>"; };
 		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -560,9 +562,9 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
 				8E3D6D0416D2BF5C00915CFE /* Channel.h */,
 				8E3D6D0516D2BF5C00915CFE /* Channel.m */,
-				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
 				8EBEEFA816CF014600CBF653 /* Frame.h */,
 				8EBEEFA916CF014600CBF653 /* Frame.m */,
 				8E77B3FF16CC45D60015D100 /* Messages.h */,
@@ -700,6 +702,8 @@
 		8E5980291680104A00027181 /* Shelby Player Images */ = {
 			isa = PBXGroup;
 			children = (
+				8EF03BE016D548C90019669F /* likeNotification.png */,
+				8EF03BE116D548C90019669F /* likeNotification@2x.png */,
 				8E2BA99216D4053C0070613F /* likeActivityButton.png */,
 				8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */,
 				8E2BA99416D4053C0070613F /* rollActivityButton.png */,
@@ -1210,6 +1214,8 @@
 				1CD5B7BC16D41EDB00043754 /* cardTemplate.png in Resources */,
 				1CD5B7BF16D421DF00043754 /* missing@2x.png in Resources */,
 				1CD5B7C016D421DF00043754 /* missingCard.png in Resources */,
+				8EF03BE216D548C90019669F /* likeNotification.png in Resources */,
+				8EF03BE316D548C90019669F /* likeNotification@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
