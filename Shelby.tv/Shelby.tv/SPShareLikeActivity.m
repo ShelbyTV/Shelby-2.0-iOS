@@ -7,6 +7,7 @@
 //
 
 #import "SPShareLikeActivity.h"
+#import "SPModel.h"
 
 @implementation SPShareLikeActivity
 
@@ -33,6 +34,12 @@
 - (void)performActivity
 {
     [ShelbyAPIClient postFrameToLikes:_frameID];
+    [[SPModel sharedInstance].overlayView showLikeNotificationView];
+    [NSTimer scheduledTimerWithTimeInterval:3.0f
+                                     target:[SPModel sharedInstance].overlayView
+                                   selector:@selector(hideLikeNotificationView)
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 @end

@@ -76,33 +76,48 @@
     return NO;
 }
 
-#pragma mark - Overlay Display Methods
+#pragma mark - Toggle UI Methods
 - (void)toggleOverlay
 {
     
     if ( self.alpha < 1.0f ) {
         
-        [self showOverlay];
+        [self showOverlayView];
         
     } else {
         
-        [self hideOverlay];
+        [self hideOverlayView];
     }
 }
 
-- (void)showOverlay
+- (void)showOverlayView
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:1.0f];
     }];
 }
 
-- (void)hideOverlay
+- (void)hideOverlayView
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:0.0f];
     }];
 }
+
+- (void)showLikeNotificationView
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.likeNotificationView setAlpha:1.0f];
+    }];
+}
+
+- (void)hideLikeNotificationView
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.likeNotificationView setAlpha:0.0f];
+    }];
+}
+
 
 #pragma mark - UIResponder Methods
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

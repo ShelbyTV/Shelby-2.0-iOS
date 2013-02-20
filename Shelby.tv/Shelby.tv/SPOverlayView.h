@@ -20,9 +20,13 @@
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;
+@property (weak, nonatomic) IBOutlet UIImageView *likeNotificationView;
 
+/// Toggle UI
 - (void)toggleOverlay;
-- (void)showOverlay;
-- (void)hideOverlay;
+- (void)showOverlayView;
+- (void)hideOverlayView;
+- (void)showLikeNotificationView;
+- (void)hideLikeNotificationView;
 
 @end

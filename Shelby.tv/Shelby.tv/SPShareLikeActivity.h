@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class SPOverlayView;
+
 @interface SPShareLikeActivity : UIActivity
 
 @property (copy, nonatomic) NSString *frameID;
+@property (nonatomic) SPOverlayView *overlayView;
 
 @end

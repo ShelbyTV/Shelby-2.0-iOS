@@ -523,7 +523,7 @@
     [self.model.overlayTimer invalidate];
     
     // Show Overlay
-    [self.overlayView showOverlay];
+    [self.overlayView showOverlayView];
     
     // Pause current videoPlayer
     [self.model.currentVideoPlayer pause];

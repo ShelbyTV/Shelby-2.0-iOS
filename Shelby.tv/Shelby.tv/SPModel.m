@@ -62,7 +62,7 @@
     
         self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
                                                              target:self.overlayView
-                                                           selector:@selector(hideOverlay)
+                                                           selector:@selector(hideOverlayView)
                                                            userInfo:nil
                                                             repeats:NO];
     }

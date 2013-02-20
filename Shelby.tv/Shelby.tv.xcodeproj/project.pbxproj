@@ -914,11 +914,11 @@
 		8EF5C350162F41B00075C35F /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				1CC3387916CBE20800E58375 /* BrowseView.xib */,
 				1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */,
 				1CCCB54716CEBAB100C8C216 /* MyRollViewCell.xib */,
 				8E9FBD4C16C713BB00731912 /* LoginView.xib */,
 				8E1FAB9716652E6E00A565BF /* MeViewController.xib */,
-				1CC3387916CBE20800E58375 /* BrowseView.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";

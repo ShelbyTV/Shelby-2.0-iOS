@@ -40,7 +40,6 @@
 - (NSMutableArray *)fetchAllChannels;
 - (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID;
 
-
 /// Sync Methods
 - (void)syncLikes:(NSDictionary *)webResuhanneltsDictionary;
 - (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
