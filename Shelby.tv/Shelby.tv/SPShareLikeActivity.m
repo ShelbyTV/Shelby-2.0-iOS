@@ -13,7 +13,7 @@
 
 - (NSString *)activityType
 {
-    return @"tv.shelby.likes";
+    return @"tv.Shelby.Shelby-tv.likes";
 }
 
 - (NSString *)activityTitle
@@ -33,13 +33,27 @@
 
 - (void)performActivity
 {
+    
     [ShelbyAPIClient postFrameToLikes:_frameID];
-    [[SPModel sharedInstance].overlayView showLikeNotificationView];
-    [NSTimer scheduledTimerWithTimeInterval:3.0f
-                                     target:[SPModel sharedInstance].overlayView
+    
+    SPModel *model = (SPModel *)[SPModel sharedInstance];
+    
+    [model.overlayTimer invalidate];
+    
+    [model.overlayView showOverlayView];
+    
+    [model.overlayView showLikeNotificationView];
+    
+    [NSTimer scheduledTimerWithTimeInterval:2.5f
+                                     target:model.overlayView
                                    selector:@selector(hideLikeNotificationView)
                                    userInfo:nil
                                     repeats:NO];
+    
+    [model rescheduleOverlayTimer];
+    
+    [self activityDidFinish:YES];
+    
 }
 
 @end
