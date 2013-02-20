@@ -7,6 +7,9 @@
 //
 
 #import "SPShareRollActivity.h"
+#import "SPModel.h"
+#import "SPShareController.h"
+
 
 @implementation SPShareRollActivity
 
@@ -33,6 +36,12 @@
 - (void)performActivity
 {
     
+    SPModel *model = (SPModel *)[SPModel sharedInstance];
+    [model.overlayView showOverlayView];
+    
+    [self.shareController showRollView];
+    
+    [self activityDidFinish:YES];
 }
 
 @end

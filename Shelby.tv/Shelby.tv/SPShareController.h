@@ -6,12 +6,14 @@
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-@class SPVideoPlayer;
+#import "SPVideoPlayer.h"
 
-@interface SPShareController : NSObject
+@interface SPShareController : NSObject <UITextViewDelegate>
 
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer;
 
 - (void)share;
+- (void)showRollView;
+- (void)hideRollView;
 
 @end

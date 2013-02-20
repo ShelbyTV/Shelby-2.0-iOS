@@ -8,7 +8,7 @@
 
 #import "SPShareController.h"
 #import "SPModel.h"
-#import "SPVideoPlayer.h"
+#import "SPShareRollView.h"
 #import "SPShareLikeActivity.h"
 #import "SPShareRollActivity.h"
 
@@ -16,10 +16,12 @@
 
 @property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
+@property (nonatomic) SPShareRollView *rollView;
 @property (nonatomic) UIPopoverController *sharePopOverController;
 
 @end
 
+#pragma mark - Initialization
 @implementation SPShareController
 
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer
@@ -34,6 +36,7 @@
     return self;
 }
 
+#pragma mark - Public Methods
 - (void)share
 {
     
@@ -59,16 +62,18 @@
         DLog(@"Succeeded fetching link for frame: %@", shareLink);
         
         SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
+        rollActivity.shareController = self;
+        
         SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
         likeActivity.frameID = frame.frameID;
         likeActivity.overlayView = [self.model overlayView];
         
-        UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
                                                                                       applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
-        shareController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
         
         
-        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
         [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
                                                      inView:[self.model overlayView]
                                    permittedArrowDirections:UIPopoverArrowDirectionDown
@@ -88,11 +93,11 @@
         SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
         SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
         
-        UIActivityViewController *shareController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
                                                                                       applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
-        shareController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
         
-        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:shareController];
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
         [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
                                                      inView:[self.model overlayView]
                                    permittedArrowDirections:UIPopoverArrowDirectionDown
@@ -101,5 +106,42 @@
     
     [operation start];
 }
+
+- (void)showRollView
+{
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:nil options:nil];
+    self.rollView = nib[0];
+    
+    CGFloat xOrigin = self.videoPlayer.view.frame.size.width/4.0f - _rollView.frame.size.width/4.0f;
+    CGFloat yOrigin = self.videoPlayer.view.frame.size.height/5.0f - _rollView.frame.size.height/4.0f;
+    
+    [self.rollView setFrame:CGRectMake(xOrigin,
+                                       _videoPlayer.view.frame.size.height,
+                                       _rollView.frame.size.width,
+                                       _rollView.frame.size.height)];
+    [self.videoPlayer.view addSubview:_rollView];
+    
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         
+                         [self.rollView setFrame:CGRectMake(xOrigin,
+                                                            yOrigin,
+                                                            _rollView.frame.size.width,
+                                                            _rollView.frame.size.height)];
+                         
+                     } completion:^(BOOL finished) {
+                         
+                         [self.rollView.rollTextView becomeFirstResponder];
+                         
+                     }];
+}
+
+- (void)hideRollView
+{
+    
+}
+
+#pragma mark - UITextViewDelegate Methods
+
 
 @end

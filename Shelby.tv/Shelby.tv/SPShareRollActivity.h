@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class SPShareController;
+
 @interface SPShareRollActivity : UIActivity
 
-@property (copy, nonatomic) NSString *frameID;
+@property (nonatomic) SPShareController *shareController;
 
 @end

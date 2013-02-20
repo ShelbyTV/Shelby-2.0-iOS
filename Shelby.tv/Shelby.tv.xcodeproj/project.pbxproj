@@ -818,8 +818,6 @@
 		8E68A1CC16C0C51D0031C3D2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8E7C341816D58252007494DF /* SPShareController.h */,
-				8E7C341916D58252007494DF /* SPShareController.m */,
 				8EB950511665BCF100E965E0 /* SPVideoPlayer.h */,
 				8EB950521665BCF100E965E0 /* SPVideoPlayer.m */,
 				8EB950551665BD4000E965E0 /* SPVideoReel.h */,
@@ -835,6 +833,8 @@
 				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
 				8E0CFE1116C4A87F009620F9 /* SPVideoScrubber.h */,
 				8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */,
+				8E7C341816D58252007494DF /* SPShareController.h */,
+				8E7C341916D58252007494DF /* SPShareController.m */,
 				8E2BA98C16D3FF090070613F /* SPShareLikeActivity.h */,
 				8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */,
 				8E2BA98F16D3FF130070613F /* SPShareRollActivity.h */,
