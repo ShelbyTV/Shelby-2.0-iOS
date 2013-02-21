@@ -394,12 +394,12 @@
     [operation start];
 }
 
-+ (void)getShareFrameToSocialNetworks:(NSString *)requestString
++ (void)postShareFrameToSocialNetworks:(NSString *)requestString
 {
     
     NSURL *url = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
+    [request setHTTPMethod:@"POST"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         

@@ -23,6 +23,6 @@
 + (void)getChannel:(NSString *)channelID;
 + (void)postFrameToLikes:(NSString *)frameID;
 + (void)postFrameToRoll:(NSString*)requestString;
-+ (void)getShareFrameToSocialNetworks:(NSString*)requestString;
++ (void)postShareFrameToSocialNetworks:(NSString*)requestString;
 
 @end

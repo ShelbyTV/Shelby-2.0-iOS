@@ -10,4 +10,9 @@
 
 @implementation SPShareRollView
 
+- (void)awakeFromNib
+{
+    [self.videoTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_videoTitleLabel.font.pointSize]];
+}
+
 @end

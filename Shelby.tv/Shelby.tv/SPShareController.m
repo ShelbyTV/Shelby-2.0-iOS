@@ -15,6 +15,7 @@
 @interface SPShareController ()
 
 @property (weak, nonatomic) SPModel *model;
+@property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
 @property (nonatomic) SPShareRollView *rollView;
 @property (nonatomic) UIPopoverController *sharePopOverController;
@@ -39,6 +40,8 @@
 {
     
     if ( self = [super init] ) {
+        
+        self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         
         self.videoPlayer = videoPlayer;
         
@@ -69,8 +72,7 @@
         
         // Reference videoFrame
         self.model = (SPModel *)[SPModel sharedInstance];
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        NSManagedObjectContext *context = [appDelegate context];
+        NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
         Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
         
@@ -140,15 +142,30 @@
 
 - (void)showRollView
 {
+    
+    // Instantiate rollView
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
     self.rollView = nib[0];
     
+    // Reference videoFrame in current thread
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
+    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    
+    // Set Video Title
+    [self.rollView.videoTitleLabel setText:[videoFrame.video title]];
+    
+    // Load Thumbnail
+    [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                 forImageView:_rollView.videoThumbnailView
+                          withPlaceholderView:nil
+                               andContentMode:UIViewContentModeScaleAspectFill];
+    
+    // Set proper states for buttons
     [self toggleSocialButtonStatesOnRollViewLaunch];
     
     CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
     CGFloat yOrigin = self.videoPlayer.view.frame.size.height/5.0f - _rollView.frame.size.height/4.0f;
-    
-    DLog(@"%@", NSStringFromCGRect(self.videoPlayer.view.frame));
     
     [self.rollView setFrame:CGRectMake(xOrigin,
                                        _videoPlayer.view.frame.size.height,
@@ -252,33 +269,31 @@
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *context = [appDelegate context];
         NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
-        Frame *videoFrame = (Frame *) [context existingObjectWithID:objectID error:nil];
+        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
         NSString *frameID = [videoFrame frameID];
-        
         
         // Create web safe string
         NSString *message = [self.rollView.rollTextView.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
         
         // Roll videoFrame
-        NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToRoll,rollID, frameID, authToken, message];
-        [ShelbyAPIClient postFrameToRoll:requestString];
+        NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToRoll, rollID, frameID, authToken, message];
+        [ShelbyAPIClient postFrameToRoll:rollString];
         
         // Share videoFrame
-        
         if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Share to Facebook and Twitter
             
-            NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetFrameToAllSocial, frameID, authToken, message];
-            [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
+            NSString *socialString = [NSString stringWithFormat:kShelbyAPIPostFrameToAllSocial, frameID, authToken, message];
+            [ShelbyAPIClient postShareFrameToSocialNetworks:socialString];
             
         } else if ( ![_rollView.twitterButton isSelected] && [_rollView.twitterButton isSelected] ) { // Share to Facebook
             
-            NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetFrameToFacebook, frameID, authToken, message];
-            [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
+            NSString *facebookString = [NSString stringWithFormat:kShelbyAPIPostFrameToFacebook, frameID, authToken, message];
+            [ShelbyAPIClient postShareFrameToSocialNetworks:facebookString];
             
         } else if ( [_rollView.twitterButton isSelected] && ![_rollView.facebookButton isSelected] ) { // Share to Twitter
             
-            NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetFrameToTwitter, frameID, authToken, message];
-            [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
+            NSString *twitterString = [NSString stringWithFormat:kShelbyAPIPostFrameToTwitter, frameID, authToken, message];
+            [ShelbyAPIClient postShareFrameToSocialNetworks:twitterString];
             
         } else { // Don't share to any network
             
