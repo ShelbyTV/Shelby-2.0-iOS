@@ -464,8 +464,8 @@
         // Instantiate dataUtility for cleanup
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         
-        // Remove older videos
-        [dataUtility removeOlderVideoFramesForCategoryType:_categoryType];
+        // Remove older videos (channelID will be nil for stream, likes, and personal roll)
+        [dataUtility removeOlderVideoFramesForCategoryType:_categoryType andChannelID:_channelID];
         
         // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
         [dataUtility removeAllVideoExtractionURLReferences];
