@@ -615,7 +615,7 @@
         SPVideoItemView *itemView = (self.itemViews)[position];
         itemView.backgroundColor = kShelbyColorGreen;
         itemView.videoTitleLabel.textColor = kShelbyColorBlack;
-        if ( position < self.model.numberOfVideos ) {
+        if ( position < _model.numberOfVideos-1 ) {
             CGFloat itemX = itemView.frame.size.width * position;
             CGFloat itemY = 0.0f;
             [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
