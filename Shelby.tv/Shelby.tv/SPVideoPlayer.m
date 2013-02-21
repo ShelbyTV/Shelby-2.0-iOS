@@ -212,6 +212,8 @@
         NSManagedObjectID *objectID = [self.videoFrame objectID];
         self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
         
+        DLog(@"ET: %@", elapsedTime);
+        
         if ( _videoFrame.video.extractedURL.length ) {
             
             NSDictionary *dictionary = @{ kShelbySPVideoPlayerStoredDate : storedDate, kShelbySPVideoPlayerElapsedTime : elapsedTime, kShelbySPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };

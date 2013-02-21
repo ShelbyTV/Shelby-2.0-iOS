@@ -95,8 +95,7 @@
         self.categoryType = categoryType;
         self.categoryTitle = title;
         self.channelID = channelID;
-        
-        DLog(@"VF Count In: %d", [videoFrames count]);
+
         [self setupVideoFrames:videoFrames];
 
     }
@@ -159,7 +158,6 @@
         
     }
 
-    DLog(@"VF Count Setup: %d ", [_videoFrames count] | _model.numberOfVideos);
 }
 
 - (void)setupVariables
@@ -219,7 +217,6 @@
 - (void)setupVideoPlayers
 {
 
-    DLog(@"NUM VIDS %d", _model.numberOfVideos);
     for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
         
         Frame *videoFrame = (self.videoFrames)[i];
@@ -234,7 +231,6 @@
         
         if ( 0 == i ) {
         
-            DLog(@"VF Count Loop: %d", [_videoFrames count]);
             self.model.currentVideo = 0;
             self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
             
@@ -244,7 +240,6 @@
 
     if ( self.categoryType != CategoryType_Stream ) { // If not stream, play video in zeroeth position
 
-        DLog(@"VF Count NOT Stream: %d", [_videoFrames count]);
         [self currentVideoDidChangeToVideo:_model.currentVideo];
         
     } else { // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position

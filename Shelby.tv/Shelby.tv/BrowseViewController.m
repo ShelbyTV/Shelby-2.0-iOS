@@ -598,9 +598,6 @@
             
             if ( [videoFrames count] ) {
                 
-                
-                DLog(@"VF Count Out: %d", [videoFrames count]);
-                
                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
                 
                 SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Channel
