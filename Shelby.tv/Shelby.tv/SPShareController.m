@@ -246,36 +246,38 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         User *user = [dataUtility fetchUser];
         NSString *authToken = [user token];
+        NSString *rollID = [user personalRollID];
         
         // Fetch videoFrame
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *context = [appDelegate context];
         NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
         Frame *videoFrame = (Frame *) [context existingObjectWithID:objectID error:nil];
-        NSString *frameID = videoFrame.frameID;
+        NSString *frameID = [videoFrame frameID];
+        
         
         // Create web safe string
         NSString *message = [self.rollView.rollTextView.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
         
         // Roll videoFrame
-        NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToRoll, frameID, authToken, message];
+        NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToRoll,rollID, frameID, authToken, message];
         [ShelbyAPIClient postFrameToRoll:requestString];
         
         // Share videoFrame
         
         if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Share to Facebook and Twitter
             
-            NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToAllSocial, frameID, authToken, message];
+            NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetFrameToAllSocial, frameID, authToken, message];
             [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
             
         } else if ( ![_rollView.twitterButton isSelected] && [_rollView.twitterButton isSelected] ) { // Share to Facebook
             
-            NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToFacebook, frameID, authToken, message];
+            NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetFrameToFacebook, frameID, authToken, message];
             [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
             
         } else if ( [_rollView.twitterButton isSelected] && ![_rollView.facebookButton isSelected] ) { // Share to Twitter
             
-            NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToTwitter, frameID, authToken, message];
+            NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetFrameToTwitter, frameID, authToken, message];
             [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
             
         } else { // Don't share to any network
