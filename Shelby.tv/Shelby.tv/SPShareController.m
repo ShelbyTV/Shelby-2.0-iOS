@@ -23,29 +23,35 @@
 @property (assign, nonatomic) BOOL twitterConnected;
 
 /// Setup Methods
-- (void)setupSocialConnectionStatuses;
+- (void)setup;
 
 /// UI Methods
 - (void)toggleSocialButtonStatesOnRollViewLaunch;
+- (void)removeKeyboard:(NSNotification *)notification;
 
 /// Action Methods
 - (void)roll;
 
 @end
 
-#pragma mark - Initialization
 @implementation SPShareController
 
+
+#pragma mark - Memory Management
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPUserDidSwipeToNextVideo object:nil];
+}
+
+#pragma mark - Initialization
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer
 {
     
     if ( self = [super init] ) {
         
-        self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        
         self.videoPlayer = videoPlayer;
         
-        [self setupSocialConnectionStatuses];
+        [self setup];
         
     }
     
@@ -53,14 +59,24 @@
 }
 
 #pragma mark - Setup Methods
-- (void)setupSocialConnectionStatuses
+- (void)setup
 {
     
+    // Reference AppDelegate
+    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    // Add Observer
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(removeKeyboard:)
+                                                 name:kShelbySPUserDidSwipeToNextVideo
+                                               object:nil];
+    
+    // Reference social connection status
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    
     self.facebookConnected = [[user facebookConnected] boolValue];
     self.twitterConnected = [[user twitterConnected] boolValue];
+
     
 }
 
@@ -221,6 +237,18 @@
     // Twitter Button State
     ( _twitterConnected ) ? [self.rollView.twitterButton setSelected:YES] : [self.rollView.twitterButton setHidden:YES];
     
+}
+
+- (void)removeKeyboard:(NSNotification *)notification
+{
+    if ( _rollView ) {
+        
+        if ( [_rollView.rollTextView isFirstResponder] ) {
+            
+            [self.rollView.rollTextView resignFirstResponder];
+            
+        }
+    }
 }
 
 #pragma mark - Action Methods (Public)

@@ -518,7 +518,10 @@
 #pragma mark -  Update Methods (Private)
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
-     
+    
+    // Post notification (to rollViews that may have a keyboard loaded in view)
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidSwipeToNextVideo object:nil];
+    
     // Disable timer
     [self.model.overlayTimer invalidate];
     
