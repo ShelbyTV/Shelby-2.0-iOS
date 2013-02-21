@@ -71,7 +71,7 @@
 #pragma mark - Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType
              categoryTitle:(NSString *)title
-            andVideoFrames:(NSArray *)videoFrames
+            andVideoFrames:(NSMutableArray *)videoFrames
 {
     
     if ( (self = [super init]) ) {
@@ -87,7 +87,7 @@
 
 - (id)initWithCategoryType:(CategoryType)categoryType
              categoryTitle:(NSString *)title
-               videoFrames:(NSArray *)videoFrames
+               videoFrames:(NSMutableArray *)videoFrames
               andChannelID:(NSString *)channelID
 {
     if ( (self = [super init]) ) {
@@ -95,10 +95,10 @@
         self.categoryType = categoryType;
         self.categoryTitle = title;
         self.channelID = channelID;
+        
+        DLog(@"VF Count In: %d", [videoFrames count]);
         [self setupVideoFrames:videoFrames];
-        
-        
-        
+
     }
     
     return self;
@@ -131,7 +131,7 @@
 }
 
 #pragma mark - Setup Methods
-- (void)setupVideoFrames:(NSArray *)videoFrames
+- (void)setupVideoFrames:(NSMutableArray *)videoFrames
 {
     
     self.videoFrames = [@[] mutableCopy];
@@ -142,20 +142,22 @@
             
             if ( [videoFrames count] < 20) { // Load the first 20 videoFrames into _videoFrames
              
-                [self.videoFrames addObject:videoFrames];
+                [self.videoFrames addObject:[videoFrames objectAtIndex:i]];
                 
             } else { // Load the rest of the videoFrames into _moreVideoFrames
                 
-                [self.moreVideoFrames addObject:videoFrames];
+                [self.moreVideoFrames addObject:[videoFrames objectAtIndex:i]];
                 
             }
         }
         
     } else { // If there are <= 20 frames in videoFrames
         
-        self.videoFrames = [videoFrames mutableCopy];
+        self.videoFrames = [NSMutableArray arrayWithArray:videoFrames];
         
     }
+
+    DLog(@"VF Count Setup: %d ", [_videoFrames count] | _model.numberOfVideos);
 }
 
 - (void)setupVariables
@@ -215,7 +217,8 @@
 - (void)setupVideoPlayers
 {
 
-    for ( NSUInteger i = 0; i < self.model.numberOfVideos; ++i ) {
+    DLog(@"NUM VIDS %d", _model.numberOfVideos);
+    for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
         
         Frame *videoFrame = (self.videoFrames)[i];
 
@@ -229,6 +232,7 @@
         
         if ( 0 == i ) {
         
+            DLog(@"VF Count Loop: %d", [_videoFrames count]);
             self.model.currentVideo = 0;
             self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
             
@@ -238,9 +242,8 @@
 
     if ( self.categoryType != CategoryType_Stream ) { // If not stream, play video in zeroeth position
 
-        
+        DLog(@"VF Count NOT Stream: %d", [_videoFrames count]);
         [self currentVideoDidChangeToVideo:_model.currentVideo];
-        
         
     } else { // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
 

@@ -19,11 +19,11 @@
 /// Initialization
 - (id)initWithCategoryType:(CategoryType)categoryType
              categoryTitle:(NSString *)title
-            andVideoFrames:(NSArray *)videoFrames;
+            andVideoFrames:(NSMutableArray *)videoFrames;
 
 - (id)initWithCategoryType:(CategoryType)categoryType
              categoryTitle:(NSString *)title
-               videoFrames:(NSArray *)videoFrames
+               videoFrames:(NSMutableArray *)videoFrames
               andChannelID:(NSString *)channelID;
 
 /// Update Methods
