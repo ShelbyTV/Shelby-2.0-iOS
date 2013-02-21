@@ -419,13 +419,15 @@
 
 - (void)logoutAction
 {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate logout];
-
-    [self setIsLoggedIn:NO];
-    [self setUserNickname:nil];
-    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
+                                                        message:@"Are you sure you want to logout?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"NO"
+                                              otherButtonTitles:@"YES", nil];
+ 	
+    [alertView show];
 }
+
 - (void)performAuthentication
 {
     
@@ -596,7 +598,7 @@
             if ( [videoFrames count] ) {
                 
                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_PersonalRoll categoryTitle:[channel displayTitle] andVideoFrames:videoFrames];
+                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Channel categoryTitle:[channel displayTitle] andVideoFrames:videoFrames];
                 [self presentViewController:reel animated:YES completion:nil];
                 
             } else {
@@ -647,6 +649,31 @@
         int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyCollectionViewNumberOfCardsInMeSectionPage : kShelbyCollectionViewNumberOfCardsInChannelSectionPage);
         int page = (firstCell.row / numberOfCardsInSectionPage) + firstCell.section;
         [self.pageControl setCurrentPage:page];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+
+    switch ( buttonIndex ) {
+            
+      case 0: {
+
+         // Do nothing
+         
+      } break;
+     
+        case 1: {
+       
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appDelegate logout];
+            [self setIsLoggedIn:NO];
+            [self setUserNickname:nil];
+            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+        
+        } default:
+            break;
     }
 }
 

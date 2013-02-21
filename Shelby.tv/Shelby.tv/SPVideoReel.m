@@ -704,7 +704,9 @@
                     
                 } break;
                     
-                case CategoryType_Unknown:{
+                case CategoryType_Channel:{
+                    
+                    
                     
                 } break;
                     
@@ -769,7 +771,7 @@
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
             } break;
                 
-            case CategoryType_Unknown:{
+            case CategoryType_Channel:{
                 
             }
         }
