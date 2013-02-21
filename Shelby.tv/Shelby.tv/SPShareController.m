@@ -200,7 +200,6 @@
                      } completion:^(BOOL finished) {
                          
                          [self.rollView.rollTextView becomeFirstResponder];
-                         
                          [self.videoPlayer pause];
                          
                      }];
@@ -232,10 +231,10 @@
 {
     
     // Facebook Button State
-    ( _facebookConnected ) ? [self.rollView.facebookButton setSelected:YES] : [self.rollView.facebookButton setHidden:YES];
+    ( _facebookConnected ) ? [self.rollView.facebookButton setSelected:YES] : [self.rollView.facebookButton setEnabled:NO];
     
     // Twitter Button State
-    ( _twitterConnected ) ? [self.rollView.twitterButton setSelected:YES] : [self.rollView.twitterButton setHidden:YES];
+    ( _twitterConnected ) ? [self.rollView.twitterButton setSelected:YES] : [self.rollView.twitterButton setEnabled:NO];
     
 }
 
@@ -294,8 +293,7 @@
         NSString *rollID = [user personalRollID];
         
         // Fetch videoFrame
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        NSManagedObjectContext *context = [appDelegate context];
+        NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
         Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
         NSString *frameID = [videoFrame frameID];
@@ -336,6 +334,20 @@
 }
 
 #pragma mark - UITextViewDelegate Methods
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    
+    
+    if ( [text isEqualToString:@"\n"] && [textView.text length] > 0 ) {
+        
+        [self.rollView.rollTextView resignFirstResponder];
+        
+        return NO;
+        
+    }
+    
+    return YES;
+}
 
 
 @end
