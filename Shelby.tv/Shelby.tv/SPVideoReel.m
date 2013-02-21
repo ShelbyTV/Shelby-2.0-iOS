@@ -75,7 +75,7 @@
         
         self.categoryType = categoryType;
         self.categoryTitle = title;
-        self.videoFrames = [videoFrames mutableCopy];
+        [self setupVideoFrames:videoFrames];
         
     }
     
@@ -703,6 +703,8 @@
                 } break;
                     
                 case CategoryType_Channel:{
+                    
+                    
                     
                 } break;
                     
