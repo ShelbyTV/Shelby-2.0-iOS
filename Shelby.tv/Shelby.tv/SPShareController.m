@@ -106,23 +106,41 @@
             
             DLog(@"Succeeded fetching link for frame: %@", shareLink);
             
-            SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
-            rollActivity.shareController = self;
+            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+             
+                SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
+                rollActivity.shareController = self;
+                
+                SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+                likeActivity.frameID = frame.frameID;
+                likeActivity.overlayView = [self.model overlayView];
+                
+                
+                UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                                                 applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
+                activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                
+                
+                self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+                [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                             inView:[self.model overlayView]
+                                           permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                           animated:YES];
+                
+            } else {
+                
+                UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                                                 applicationActivities:nil];
+                activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                
+                
+                self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+                [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                             inView:[self.model overlayView]
+                                           permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                           animated:YES];
             
-            SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
-            likeActivity.frameID = frame.frameID;
-            likeActivity.overlayView = [self.model overlayView];
-            
-            UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                                             applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
-            activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-            
-            
-            self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-            [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                         inView:[self.model overlayView]
-                                       permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                       animated:YES];
+            }
             
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
