@@ -27,6 +27,9 @@
 /// UI Methods
 - (void)toggleSocialButtonStatesOnRollViewLaunch;
 
+/// Action Methods
+- (void)roll;
+
 @end
 
 #pragma mark - Initialization
@@ -65,8 +68,8 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         // Reference videoFrame
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         self.model = (SPModel *)[SPModel sharedInstance];
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *context = [appDelegate context];
         NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
         Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
@@ -172,7 +175,6 @@
 
 - (void)hideRollView
 {
-    
     [UIView animateWithDuration:0.5
                      animations:^{
                          
@@ -213,16 +215,7 @@
 - (IBAction)rollButtonAction:(id)sender
 {
     
-    if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Roll and share to Facebook and Twitter
-        
-    } else if ( ![_rollView.twitterButton isSelected] && [_rollView.twitterButton isSelected] ) { // Roll and share to Facebook
-        
-    } else if ( [_rollView.twitterButton isSelected] && ![_rollView.facebookButton isSelected] ) { // Roll and share to Twitter
-
-    } else { // Roll and don't share to any network
-        
-    }
-    
+    [self roll];
 }
 
 - (IBAction)toggleSocialButtonStates:(id)sender
@@ -244,7 +237,58 @@
     
 }
 
-
+#pragma mark - Action Methods (Private)
+- (void)roll
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // Fetch User
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        NSString *authToken = [user token];
+        
+        // Fetch videoFrame
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        NSManagedObjectContext *context = [appDelegate context];
+        NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
+        Frame *videoFrame = (Frame *) [context existingObjectWithID:objectID error:nil];
+        NSString *frameID = videoFrame.frameID;
+        
+        // Create web safe string
+        NSString *message = [self.rollView.rollTextView.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+        
+        // Roll videoFrame
+        NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToRoll, frameID, authToken, message];
+        [ShelbyAPIClient postFrameToRoll:requestString];
+        
+        // Share videoFrame
+        
+        if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Share to Facebook and Twitter
+            
+            NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToAllSocial, frameID, authToken, message];
+            [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
+            
+        } else if ( ![_rollView.twitterButton isSelected] && [_rollView.twitterButton isSelected] ) { // Share to Facebook
+            
+            NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToFacebook, frameID, authToken, message];
+            [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
+            
+        } else if ( [_rollView.twitterButton isSelected] && ![_rollView.facebookButton isSelected] ) { // Share to Twitter
+            
+            NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToTwitter, frameID, authToken, message];
+            [ShelbyAPIClient getShareFrameToSocialNetworks:requestString];
+            
+        } else { // Don't share to any network
+            
+            // Do nothing
+        }
+       
+        // Dismiss rollView
+        [self performSelectorOnMainThread:@selector(hideRollView) withObject:nil waitUntilDone:NO];
+        
+    });
+    
+}
 
 #pragma mark - UITextViewDelegate Methods
 

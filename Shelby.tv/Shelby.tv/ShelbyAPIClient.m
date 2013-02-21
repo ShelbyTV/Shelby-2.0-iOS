@@ -373,4 +373,46 @@
     [operation start];
 }
 
++ (void)postFrameToRoll:(NSString *)requestString
+{
+    
+    NSURL *url = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        // Post to Roll and Social Networks
+        DLog(@"Successfully posted frame to roll and networks");
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem rolling frame to roll and networks: %@", requestString);
+        
+    }];
+    
+    [operation start];
+}
+
++ (void)getShareFrameToSocialNetworks:(NSString *)requestString
+{
+    
+    NSURL *url = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        // Post to Roll and Social Networks
+        DLog(@"Successfully shared frame to social networks");
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem sharing frame to social networks: %@", requestString);
+        
+    }];
+    
+    [operation start];
+}
+
 @end
