@@ -33,7 +33,6 @@
 @property (weak, nonatomic) IBOutlet PageControl *pageControl;
 // Fetch nickname of logged in user from CoreData
 - (void)fetchUserNickname;
-- (void)fetchChannels;
 - (void)reloadCollectionView;
 
 // TODO: need to port from MeVC
@@ -124,14 +123,6 @@
     
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    
-    [super viewDidAppear:animated];
-    [self.pageControl setNumberOfPages:1];
-    [self fetchChannels];
-}
-
 #pragma mark - Private Methods
 - (NSManagedObjectContext *)context
 {
@@ -167,15 +158,15 @@
     }
     
     [self reloadCollectionView];
+    NSUInteger displayPage = ( [self isLoggedIn] ? 0 : 1);
+    [self.pageControl setCurrentPage:displayPage];
+    [self scrollCollectionViewToPage:displayPage animated:NO];
 }
 
 - (void)reloadCollectionView
 {
     [self.collectionView reloadData];
     [self.pageControl setNumberOfPages:[(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages]];
-    NSUInteger displayPage = ( [self isLoggedIn] ? 0 : 1);
-    [self.pageControl setCurrentPage:displayPage];
-    [self scrollCollectionViewToPage:displayPage animated:NO];
 }
 
 - (void)fetchFramesForChannel

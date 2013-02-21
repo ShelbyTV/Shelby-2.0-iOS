@@ -173,6 +173,7 @@
 - (void)didLoadChannels:(NSNotification *)notification
 {
     [self.channelloadingViewController dismissViewControllerAnimated:NO completion:nil];
+    [(BrowseViewController *)self.window.rootViewController fetchChannels];
 }
 
 #pragma mark - Core Data Methods

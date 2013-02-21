@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowseViewController : UIViewController <UICollectionViewDataSource, UITextFieldDelegate, UIAlertViewDelegate>
+@interface BrowseViewController : UIViewController <UICollectionViewDataSource, UITextFieldDelegate>
+
+- (void)fetchChannels;
 
 @end
