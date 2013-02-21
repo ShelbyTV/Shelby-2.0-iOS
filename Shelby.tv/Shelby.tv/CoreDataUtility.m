@@ -485,6 +485,26 @@
     return [frameResults count];
 }
 
+- (NSUInteger)fetchCountForChannel:(NSString *)channelID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    return [frameResults count];
+}
+
 - (NSMutableArray *)fetchStreamEntries
 {
     

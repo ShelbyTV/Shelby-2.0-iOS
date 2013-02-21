@@ -26,6 +26,7 @@
 @property (nonatomic) NSMutableArray *playableVideoPlayers;
 @property (nonatomic) NSMutableArray *itemViews;
 @property (copy, nonatomic) NSString *categoryTitle;
+@property (copy, nonatomic) NSString *channelID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
@@ -68,13 +69,32 @@
 }
 
 #pragma mark - Initialization
-- (id)initWithCategoryType:(CategoryType)categoryType categoryTitle:(NSString *)title andVideoFrames:(NSArray *)videoFrames
+- (id)initWithCategoryType:(CategoryType)categoryType
+             categoryTitle:(NSString *)title
+            andVideoFrames:(NSArray *)videoFrames
 {
     
     if ( (self = [super init]) ) {
         
         self.categoryType = categoryType;
         self.categoryTitle = title;
+        [self setupVideoFrames:videoFrames];
+        
+    }
+    
+    return self;
+}
+
+- (id)initWithCategoryType:(CategoryType)categoryType
+             categoryTitle:(NSString *)title
+               videoFrames:(NSArray *)videoFrames
+              andChannelID:(NSString *)channelID
+{
+    if ( (self = [super init]) ) {
+        
+        self.categoryType = categoryType;
+        self.categoryTitle = title;
+        self.channelID = channelID;
         [self setupVideoFrames:videoFrames];
         
     }
@@ -704,7 +724,10 @@
                     
                 case CategoryType_Channel:{
                     
-                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannel:_channelID];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFrames:numberToString forChannel:_channelID];
+
                     
                 } break;
                     

@@ -21,6 +21,11 @@
              categoryTitle:(NSString *)title
             andVideoFrames:(NSArray *)videoFrames;
 
+- (id)initWithCategoryType:(CategoryType)categoryType
+             categoryTitle:(NSString *)title
+               videoFrames:(NSArray *)videoFrames
+              andChannelID:(NSString *)channelID;
+
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;

@@ -10,19 +10,37 @@
 
 @interface ShelbyAPIClient : NSObject
 
+/// Authentication
 + (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView;
+
+/// Stream
 + (void)getStream;
 + (void)getMoreFramesInStream:(NSString *)skipParam;
+
+/// Likes
 + (void)getLikes;
 + (void)getMoreFramesInLikes:(NSString *)skipParam;
+
+/// Personal Roll
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
-+ (void)getLikesForSync;
-+ (void)getPersonalRollForSync;
+
+/// Channels
 + (void)getAllChannels;
 + (void)getChannel:(NSString *)channelID;
++ (void)getMoreFrames:(NSString *)skipParam forChannel:(NSString *)channelID;
+
+/// Syncing
++ (void)getLikesForSync;
++ (void)getPersonalRollForSync;
+
+/// Liking
 + (void)postFrameToLikes:(NSString *)frameID;
+
+/// Rolling
 + (void)postFrameToRoll:(NSString*)requestString;
+
+/// Sharing
 + (void)postShareFrameToSocialNetworks:(NSString*)requestString;
 
 @end

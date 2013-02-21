@@ -11,6 +11,7 @@
 
 @implementation ShelbyAPIClient
 
+#pragma mark - Authentication (POST)
 + (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView
 {
     NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostAuthorizeEmail, email, password];
@@ -51,6 +52,7 @@
     [operation start];
 }
 
+#pragma mark - Stream (GET)
 + (void)getStream
 {
 
@@ -109,6 +111,7 @@
     [operation start];
 }
 
+#pragma mark - Likes (GET)
 + (void)getLikes
 {
     
@@ -172,6 +175,7 @@
     
 }
 
+#pragma mark - Personal Roll (GET)
 + (void)getPersonalRoll
 {
 
@@ -231,9 +235,85 @@
     [operation start];
 }
 
+#pragma mark - Channels (GET)
++ (void)getAllChannels
+{
+    
+    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+            [dataUtility storeChannels:JSON];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching All Channels.");
+        
+    }];
+    
+    [operation start];
+    
+}
+
++ (void)getChannel:(NSString *)channelID
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetChannelDashbaord, channelID]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+            [dataUtility storeRollFrames:JSON forChannel:channelID];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Channel: %@", channelID);
+        
+    }];
+    
+    [operation start];
+}
+
++ (void)getMoreFrames:(NSString *)skipParam forChannel:(NSString *)channelID
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreChannelDashbaord, channelID, skipParam]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+            [dataUtility storeRollFrames:JSON forChannel:channelID];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Channel: %@", channelID);
+        
+    }];
+    
+    [operation start];
+}
+
+#pragma mark - Syncing (GET)
 + (void)getLikesForSync
 {
-        
+    
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
     NSString *authToken = [user token];
@@ -299,56 +379,7 @@
     }
 }
 
-+ (void)getAllChannels
-{
-    
-    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-            [dataUtility storeChannels:JSON];
-            
-        });
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        DLog(@"Problem fetching All Channels.");
-        
-    }];
-    
-    [operation start];
-    
-}
-
-+ (void)getChannel:(NSString *)channelID
-{
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetChannelDashbaord, channelID]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-            [dataUtility storeRollFrames:JSON forChannel:channelID];
-            
-        });
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        DLog(@"Problem fetching Channel: %@", channelID);
-        
-    }];
-    
-    [operation start];
-}
-
+#pragma mark - Liking (POST)
 + (void)postFrameToLikes:(NSString *)frameID
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -373,6 +404,7 @@
     [operation start];
 }
 
+#pragma mark - Rolling (POST)
 + (void)postFrameToRoll:(NSString *)requestString
 {
     
@@ -394,6 +426,7 @@
     [operation start];
 }
 
+#pragma mark - Sharing (POST)
 + (void)postShareFrameToSocialNetworks:(NSString *)requestString
 {
     

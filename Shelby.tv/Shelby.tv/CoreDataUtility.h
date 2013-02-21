@@ -30,6 +30,7 @@
 - (NSUInteger)fetchStreamCount;
 - (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
+- (NSUInteger)fetchCountForChannel:(NSString *)channelID;
 - (NSMutableArray *)fetchStreamEntries;
 - (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date;
 - (NSMutableArray *)fetchLikesEntries;
