@@ -12,8 +12,13 @@
 
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer;
 
+/// UI Methods
 - (void)share;
 - (void)showRollView;
 - (void)hideRollView;
+
+/// Action Methods
+- (IBAction)toggleSocialButtonStates:(id)sender;
+
 
 @end
