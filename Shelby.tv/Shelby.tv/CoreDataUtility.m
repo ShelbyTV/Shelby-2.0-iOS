@@ -693,6 +693,38 @@
     return deduplicatedFrames;
 }
 
+- (NSMutableArray *)fetchMoreFramesInChannel:(NSString *)channelID afterDate:(NSDate *)date
+{
+    
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    // Set Predicate
+    
+    // Filter by rollID and timestamp
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((channelID == %@) AND (timestamp < %@))", channelID, date];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Personal Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
+    
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
+    
+    return deduplicatedFrames;
+}
+
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation
 {
 

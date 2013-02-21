@@ -97,6 +97,8 @@
         self.channelID = channelID;
         [self setupVideoFrames:videoFrames];
         
+        
+        
     }
     
     return self;
@@ -224,7 +226,7 @@
         
         [self.videoPlayers addObject:player];
         [self.videoScrollView addSubview:player.view];
-    
+        
         if ( 0 == i ) {
         
             self.model.currentVideo = 0;
@@ -236,6 +238,7 @@
 
     if ( self.categoryType != CategoryType_Stream ) { // If not stream, play video in zeroeth position
 
+        
         [self currentVideoDidChangeToVideo:_model.currentVideo];
         
         
@@ -730,12 +733,9 @@
 
                     
                 } break;
-                    
             }
         }
-        
     }
-    
 }
 
 - (void)dataSourceShouldUpdateFromLocalArray
@@ -793,8 +793,9 @@
             } break;
                 
             case CategoryType_Channel:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannel:_channelID afterDate:date]];
+            } break;
                 
-            }
         }
         
         // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary

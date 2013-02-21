@@ -27,19 +27,26 @@
 
 /// Fetching Methods
 - (User *)fetchUser;
+
 - (NSUInteger)fetchStreamCount;
 - (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
 - (NSUInteger)fetchCountForChannel:(NSString *)channelID;
+
 - (NSMutableArray *)fetchStreamEntries;
 - (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date;
+
 - (NSMutableArray *)fetchLikesEntries;
 - (NSMutableArray *)fetchMoreLikesEntriesAfterDate:(NSDate *)date;
+
 - (NSMutableArray *)fetchPersonalRollEntries;
 - (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date;
+
+- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID;
+- (NSMutableArray *)fetchMoreFramesInChannel:(NSString *)channelID afterDate:(NSDate *)date;
+
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
 - (NSMutableArray *)fetchAllChannels;
-- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID;
 
 /// Sync Methods
 - (void)syncLikes:(NSDictionary *)webResuhanneltsDictionary;

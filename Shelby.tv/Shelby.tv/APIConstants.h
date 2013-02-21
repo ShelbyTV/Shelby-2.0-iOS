@@ -23,7 +23,7 @@
 /// GET Channels
 #define kShelbyAPIGetAllChannels            @"http://api.shelby.tv/v1/roll/featured?segment=ipad_standard"
 #define kShelbyAPIGetChannelDashbaord       @"https://api.shelby.tv/v1/user/%@/dashboard"
-#define kShelbyAPIGetMoreChannelDashbaord   @"https://api.shelby.tv/v1/user/%@/dashboard&skip=%@&limit=20"
+#define kShelbyAPIGetMoreChannelDashbaord   @"https://api.shelby.tv/v1/user/%@/dashboard?skip=%@&limit=20"
 
 /// GET Shortlink
 #define kShelbyAPIGetShortLink              @"http://api.shelby.tv/v1/frame/%@/short_link"

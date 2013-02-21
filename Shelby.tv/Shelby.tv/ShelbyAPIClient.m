@@ -264,8 +264,9 @@
 
 + (void)getChannel:(NSString *)channelID
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetChannelDashbaord, channelID]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashbaord, channelID];
+    NSURL *requestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -279,7 +280,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Channel: %@", channelID);
+        DLog(@"Problem fetching channel: %@", requestString);
         
     }];
     
@@ -288,22 +289,23 @@
 
 + (void)getMoreFrames:(NSString *)skipParam forChannel:(NSString *)channelID
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreChannelDashbaord, channelID, skipParam]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreChannelDashbaord, channelID, skipParam];
+    NSURL *requestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
             [dataUtility storeRollFrames:JSON forChannel:channelID];
             
         });
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Channel: %@", channelID);
+        DLog(@"Problem fetching more frames for channel: %@", requestString);
         
     }];
     

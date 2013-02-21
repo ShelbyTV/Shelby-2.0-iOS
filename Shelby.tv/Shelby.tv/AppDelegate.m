@@ -18,9 +18,10 @@
 @property (nonatomic) UIViewController *channelloadingViewController;
 
 - (void)pingAllRoutes;
+- (void)setupChannelLoadingScreen;
+- (void)didLoadChannels:(NSNotification *)notification;
 - (void)postAuthorizationNotification;
 - (void)analytics;
-- (void)didLoadChannels:(NSNotification *)notification;
 
 @end
 
@@ -35,24 +36,17 @@
     self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
     
+    // Setup buffer screen to allow channels to be fetched from web and stored locally
+    [self setupChannelLoadingScreen];
+    
+    // Add notification observe when channels have finished loading
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didLoadChannels:)
                                                  name:kShelbyNotificationChannelsFetched
                                                object:nil];
     
-    self.channelloadingViewController = [[UIViewController alloc] init];
-    _channelloadingViewController.view.frame = self.window.frame;
-    [_channelloadingViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
-    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:_channelloadingViewController.view.frame];
-    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [indicator setColor:kShelbyColorBlack];
-    [indicator setCenter:CGPointMake(_channelloadingViewController.view.frame.size.width, _channelloadingViewController.view.frame.size.height)];
-    [indicator setHidesWhenStopped:YES];
-    [indicator startAnimating];
-    [_channelloadingViewController.view addSubview:indicator];
-    [self.window.rootViewController presentViewController:_channelloadingViewController animated:NO completion:nil];
     
-    // Add analytics
+    // Crash reporting and user monitoring analytics
     [self analytics];
 
     return YES;
@@ -151,15 +145,38 @@
 
 }
 
+- (void)setupChannelLoadingScreen
+{
+    self.channelloadingViewController = [[UIViewController alloc] init];
+    _channelloadingViewController.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
+    [_channelloadingViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:_channelloadingViewController.view.frame];
+    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [indicator setColor:kShelbyColorBlack];
+    [indicator setCenter:CGPointMake(_channelloadingViewController.view.frame.size.width/2.0f, _channelloadingViewController.view.frame.size.height/2.0f)];
+    [indicator setHidesWhenStopped:YES];
+    [indicator startAnimating];
+    [_channelloadingViewController.view addSubview:indicator];
+    [self.window.rootViewController presentViewController:_channelloadingViewController animated:NO completion:nil];
+}
+
+- (void)didLoadChannels:(NSNotification *)notification
+{
+    [self.channelloadingViewController dismissViewControllerAnimated:NO completion:nil];
+    [(BrowseViewController *)self.window.rootViewController fetchChannels];
+}
+
+
 - (void)postAuthorizationNotification
 {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
 }
 
+
 - (void)analytics
 {
-   
+    
     // Harpy
     [Harpy checkVersion];
     
@@ -172,14 +189,8 @@
     // Hockey
     
     // Google Analytics
-
     
-}
-
-- (void)didLoadChannels:(NSNotification *)notification
-{
-    [self.channelloadingViewController dismissViewControllerAnimated:NO completion:nil];
-    [(BrowseViewController *)self.window.rootViewController fetchChannels];
+    
 }
 
 #pragma mark - Core Data Methods

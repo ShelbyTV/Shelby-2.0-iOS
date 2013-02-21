@@ -587,6 +587,7 @@
 - (void)launchPlayerWithChannelEntries:(NSInteger)channelIndex
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
         NSManagedObjectContext *context = [self context];
         NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
         Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
@@ -596,6 +597,9 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if ( [videoFrames count] ) {
+                
+                
+                DLog(@"VF Count Out: %d", [videoFrames count]);
                 
                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
                 SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Channel
