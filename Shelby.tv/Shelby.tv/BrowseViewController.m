@@ -32,7 +32,6 @@
 @property (weak, nonatomic) IBOutlet PageControl *pageControl;
 // Fetch nickname of logged in user from CoreData
 - (void)fetchUserNickname;
-- (void)reloadCollectionView;
 
 // TODO: need to port from MeVC
 /// Gesture Methods
@@ -94,10 +93,6 @@
     [self.pageControl setNumberOfPages:1];
     [self fetchChannels];
   
-    NSUInteger displayPage = ( [self isLoggedIn] ? 0 : 1);
-    [self.pageControl setCurrentPage:displayPage];
-    [self scrollCollectionViewToPage:displayPage animated:NO];
-
     // Customize look
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
     
@@ -126,6 +121,13 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSUInteger displayPage = ([self isLoggedIn] ? 0 : 1);
+    [self.pageControl setCurrentPage:displayPage];
+    [self scrollCollectionViewToPage:displayPage animated:NO];
+}
+
 #pragma mark - Private Methods
 - (NSManagedObjectContext *)context
 {
@@ -149,18 +151,10 @@
     [self.channels removeAllObjects];
     [self.channels addObjectsFromArray:[datautility fetchAllChannels]];
     
-    if ([self.channels count] > 0) {
-        NSUInteger pages = [(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages];
-        [self.pageControl setNumberOfPages:pages];
-    }
-    
-    [self reloadCollectionView];
-}
-
-- (void)reloadCollectionView
-{
     [self.collectionView reloadData];
-    [self.pageControl setNumberOfPages:[(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages]];
+
+    NSUInteger pages = [(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages];
+    [self.pageControl setNumberOfPages:pages];
 }
 
 - (void)fetchFramesForChannel
