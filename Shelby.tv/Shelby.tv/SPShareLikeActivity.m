@@ -42,7 +42,7 @@
     
     [model.overlayView showLikeNotificationView];
     
-    [NSTimer scheduledTimerWithTimeInterval:2.5f
+    [NSTimer scheduledTimerWithTimeInterval:5.0f
                                      target:model.overlayView
                                    selector:@selector(hideLikeNotificationView)
                                    userInfo:nil
