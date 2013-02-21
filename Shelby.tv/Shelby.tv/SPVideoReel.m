@@ -13,6 +13,7 @@
 #import "SPVideoItemView.h"
 #import "SPVideoPlayer.h"
 #import "SPVideoScrubber.h"
+#import "DeviceUtilities.h"
 
 @interface SPVideoReel ()
 
@@ -368,7 +369,14 @@
     [self.playableVideoPlayers addObject:player];
     
     // If screen is retina (e.g., iPad 3 or greater), allow 56 videos. Otherwise, allow only 3 videos to be stored
-    NSUInteger maxVideosAllowed = ( [[UIScreen mainScreen] isRetinaDisplay] ) ? 4 : 2;
+    NSUInteger maxVideosAllowed;
+    if ([[UIScreen mainScreen] isRetinaDisplay]) {
+        maxVideosAllowed = 4;
+    } else if (![DeviceUtilities isIpadMini1]) {
+        maxVideosAllowed = 2;
+    } else {
+        maxVideosAllowed = 1;
+    }
     
     if ( [self.playableVideoPlayers count] > maxVideosAllowed ) { // If more than X number of videos are loaded, unload the older videos in the list
         
