@@ -872,7 +872,7 @@
             
             // Update UI on Main Thread
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.videoScrollView.contentSize = CGSizeMake(1024.0f*i, 768.0f);
+                self.videoScrollView.contentSize = CGSizeMake(1024.0f*(i+1), 768.0f);
                 [self.videoPlayers addObject:player];
                 [self.videoScrollView addSubview:player.view];
                 [self.videoScrollView setNeedsDisplay];
