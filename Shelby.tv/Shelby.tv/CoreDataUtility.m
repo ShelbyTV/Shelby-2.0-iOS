@@ -23,6 +23,7 @@
 - (void)removeOlderVideoFramesFromStream;
 - (void)removeOlderVideoFramesFromLikes;
 - (void)removeOlderVideoFramesFromPersonalRoll;
+- (void)removeOlderVideoFramesFromChannel:(NSString *)channelID;
 
 /// Storage Methods
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary;
@@ -149,13 +150,19 @@
     }
 }
 
-- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType
+- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType andChannelID:(NSString *)channelID
 {
 
     switch ( categoryType ) {
             
         case CategoryType_Stream:{
-            [self removeOlderVideoFramesFromStream];
+            
+            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+        
+                 [self removeOlderVideoFramesFromStream];
+        
+            }
+        
         } break;
             
         case CategoryType_Likes:{
@@ -174,12 +181,15 @@
                 [self removeOlderVideoFramesFromPersonalRoll];
                 
             }
+            
         } break;
             
-        default:
-            break;
+        case CategoryType_Channel: {
+     
+            [self removeOlderVideoFramesFromChannel:channelID];
+            
+        }
     }
-    
 }
 
 - (void)removeAllVideoExtractionURLReferences
@@ -1048,6 +1058,46 @@
         
     }
 }
+
+- (void)removeOlderVideoFramesFromChannel:(NSString *)channelID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by channelID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 60;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Frame *frame = (Frame*)[olderResults lastObject];
+            [self.context deleteObject:frame];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+        
+        [self saveContext:_context];
+        
+    }
+}
+
 
 #pragma mark - Storage Methods (Private) 
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary
