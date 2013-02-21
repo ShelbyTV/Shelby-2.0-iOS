@@ -25,7 +25,7 @@
 - (void)setupSocialConnectionStatuses;
 
 /// UI Methods
-- (void)toggleSocialButtonStatesOnLaunch;
+- (void)toggleSocialButtonStatesOnRollViewLaunch;
 
 @end
 
@@ -140,10 +140,12 @@
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
     self.rollView = nib[0];
     
-    [self toggleSocialButtonStatesOnLaunch];
+    [self toggleSocialButtonStatesOnRollViewLaunch];
     
-    CGFloat xOrigin = self.videoPlayer.view.frame.size.width/4.0f - _rollView.frame.size.width/4.0f;
+    CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
     CGFloat yOrigin = self.videoPlayer.view.frame.size.height/5.0f - _rollView.frame.size.height/4.0f;
+    
+    DLog(@"%@", NSStringFromCGRect(self.videoPlayer.view.frame));
     
     [self.rollView setFrame:CGRectMake(xOrigin,
                                        _videoPlayer.view.frame.size.height,
@@ -163,24 +165,66 @@
                          
                          [self.rollView.rollTextView becomeFirstResponder];
                          
+                         [self.videoPlayer pause];
+                         
                      }];
 }
 
 - (void)hideRollView
 {
     
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         
+                         CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
+                         
+                         [self.rollView setFrame:CGRectMake(xOrigin,
+                                                            self.videoPlayer.view.frame.size.height,
+                                                            _rollView.frame.size.width,
+                                                            _rollView.frame.size.height)];
+                         
+                     } completion:^(BOOL finished) {
+                         
+                         [self.rollView.rollTextView resignFirstResponder];
+                         [self.rollView removeFromSuperview];
+                         [self.videoPlayer play];
+                         
+                     }];
 }
 
 #pragma mark - UI Methods (Private)
-- (void)toggleSocialButtonStatesOnLaunch
+- (void)toggleSocialButtonStatesOnRollViewLaunch
 {
     
+    // Facebook Button State
     ( _facebookConnected ) ? [self.rollView.facebookButton setSelected:YES] : [self.rollView.facebookButton setHidden:YES];
+    
+    // Twitter Button State
     ( _twitterConnected ) ? [self.rollView.twitterButton setSelected:YES] : [self.rollView.twitterButton setHidden:YES];
     
 }
 
 #pragma mark - Action Methods (Public)
+- (IBAction)cancelButtonAction:(id)sender
+{
+    [self hideRollView];
+}
+
+- (IBAction)rollButtonAction:(id)sender
+{
+    
+    if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Roll and share to Facebook and Twitter
+        
+    } else if ( ![_rollView.twitterButton isSelected] && [_rollView.twitterButton isSelected] ) { // Roll and share to Facebook
+        
+    } else if ( [_rollView.twitterButton isSelected] && ![_rollView.facebookButton isSelected] ) { // Roll and share to Twitter
+
+    } else { // Roll and don't share to any network
+        
+    }
+    
+}
+
 - (IBAction)toggleSocialButtonStates:(id)sender
 {
     
@@ -199,6 +243,7 @@
     }
     
 }
+
 
 
 #pragma mark - UITextViewDelegate Methods

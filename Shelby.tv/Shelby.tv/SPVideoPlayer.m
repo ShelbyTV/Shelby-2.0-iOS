@@ -141,6 +141,7 @@
         [self.overlayView.restartPlaybackButton setHidden:YES];
         [self.overlayView.playButton setEnabled:YES];
         [self.overlayView.scrubber setEnabled:YES];
+        [self.overlayView.shareButton setEnabled:YES];
         
     }
     

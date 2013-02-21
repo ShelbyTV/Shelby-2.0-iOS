@@ -18,7 +18,8 @@
 - (void)hideRollView;
 
 /// Action Methods
+- (IBAction)cancelButtonAction:(id)sender;
+- (IBAction)rollButtonAction:(id)sender;
 - (IBAction)toggleSocialButtonStates:(id)sender;
-
 
 @end
