@@ -75,7 +75,7 @@
         
         self.categoryType = categoryType;
         self.categoryTitle = title;
-        self.videoFrames = [videoFrames mutableCopy];
+        [self setupVideoFrames:videoFrames];
         
     }
     
@@ -116,15 +116,17 @@
     
     if ( [videoFrames count] > 20 ) { // If there are more than 20 frames in videoFrames
         
-        for ( NSUInteger i = 0; i<[videoFrames count]; i++ ) {
+        for (Frame *videoFrame in videoFrames) {
             
-            if ( [videoFrames count] < 20) { // Load the first 20 videoFrames into _videoFrames
+            if ([self.videoFrames count] < 20) { // Load the first 20 videoFrames into _videoFrames
              
-                [self.videoFrames addObject:videoFrames];
+                [self.videoFrames addObject:videoFrame];
                 
             } else { // Load the rest of the videoFrames into _moreVideoFrames
-                
-                [self.moreVideoFrames addObject:videoFrames];
+                if (!self.moreVideoFrames) {
+                    self.moreVideoFrames = [@[] mutableCopy];
+                }
+                [self.moreVideoFrames addObject:videoFrame];
                 
             }
         }
