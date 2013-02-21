@@ -188,51 +188,49 @@
 #pragma mark - Video Storage Methods
 - (void)resetPlayer
 {
-    [self storeVideoForLater];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-    
-    [self.player pause];
-    
-    [self.playerLayer removeFromSuperlayer];
-    [self setPlayerLayer:nil];
-    [self setPlayer:nil];
-    
-    [self setupInitialConditions];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [self storeVideoForLater];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+            
+            [self.player pause];
+            
+            [self.playerLayer removeFromSuperlayer];
+            [self setPlayerLayer:nil];
+            [self setPlayer:nil];
+            
+            [self setupInitialConditions];
+        
+        });
+    });
 }
 
 - (void)storeVideoForLater
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
        
-        NSDate *storedDate = [NSDate date];
-        NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [self.videoFrame objectID];
-        self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    NSDate *storedDate = [NSDate date];
+    NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    
+    DLog(@"%@ : %@", _videoFrame.video.title, elapsedTime);
+    
+    if ( _videoFrame.video.extractedURL.length ) {
         
-        DLog(@"ET: %@", elapsedTime);
-        
-        if ( _videoFrame.video.extractedURL.length ) {
-            
-            NSDictionary *dictionary = @{ kShelbySPVideoPlayerStoredDate : storedDate, kShelbySPVideoPlayerElapsedTime : elapsedTime, kShelbySPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
-            self.videoInformation = [dictionary mutableCopy];
-        }
-    });
+        NSDictionary *dictionary = @{ kShelbySPVideoPlayerStoredDate : storedDate, kShelbySPVideoPlayerElapsedTime : elapsedTime, kShelbySPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
+        self.videoInformation = [dictionary mutableCopy];
+    }
+    
 }
 
 - (CMTime)elapsedTime
 {
-    
-    AVPlayerItem *playerItem = [self.player currentItem];
-    
-    if ( playerItem.status == AVPlayerItemStatusReadyToPlay ) {
-    
-		return [playerItem currentTime] ;
-	}
-	
-	return kCMTimeInvalid;
+    return [self.player.currentItem currentTime];
 }
 
 #pragma mark - Video Fetching Methods
