@@ -598,7 +598,7 @@
             if ( [videoFrames count] ) {
                 
                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_PersonalRoll categoryTitle:[channel displayTitle] andVideoFrames:videoFrames];
+                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Channel categoryTitle:[channel displayTitle] andVideoFrames:videoFrames];
                 [self presentViewController:reel animated:YES completion:nil];
                 
             } else {

@@ -31,10 +31,10 @@ typedef NS_ENUM(NSUInteger, DataRequestType)
 typedef NS_ENUM(NSUInteger, CategoryType)
 {
     
-    CategoryType_Unknown,
     CategoryType_Stream,
     CategoryType_Likes,
     CategoryType_PersonalRoll,
+    CategoryType_Channel
     
 };
 
