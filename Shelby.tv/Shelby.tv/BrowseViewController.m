@@ -14,7 +14,6 @@
 #import "MyRollViewCell.h"
 #import "PageControl.h"
 #import "SPVideoReel.h"
-#import "UIImageView+AFNetworking.h"
 
 @interface BrowseViewController ()
 
@@ -270,8 +269,6 @@
                 name = [channel displayTitle];
                 description = [channel displayDescription];
                 NSString *thumbnailUrl = [channel displayThumbnailURL];
-                NSURL *imageUrl = [[NSURL alloc] initWithString:thumbnailUrl];
-//                [cell.channelImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:buttonImageName]];
               
                 [AsynchronousFreeloader loadImageFromLink:thumbnailUrl
                                              forImageView:cell.channelImage
