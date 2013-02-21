@@ -94,6 +94,10 @@
     [self.pageControl setNumberOfPages:1];
     [self fetchChannels];
   
+    NSUInteger displayPage = ( [self isLoggedIn] ? 0 : 1);
+    [self.pageControl setCurrentPage:displayPage];
+    [self scrollCollectionViewToPage:displayPage animated:NO];
+
     // Customize look
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
     
@@ -147,19 +151,10 @@
     
     if ([self.channels count] > 0) {
         NSUInteger pages = [(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages];
-        if (pages > 1) {
-            [self.pageControl setNumberOfPages:pages];
-            NSUInteger displayPage = ([self isLoggedIn] ? 0 : 1);
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:displayPage]];
-            [self.pageControl setCurrentPage:displayPage];
-            [self scrollCollectionViewToPage:displayPage animated:NO];
-        }
+        [self.pageControl setNumberOfPages:pages];
     }
     
     [self reloadCollectionView];
-    NSUInteger displayPage = ( [self isLoggedIn] ? 0 : 1);
-    [self.pageControl setCurrentPage:displayPage];
-    [self scrollCollectionViewToPage:displayPage animated:NO];
 }
 
 - (void)reloadCollectionView
