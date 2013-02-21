@@ -19,6 +19,7 @@
 
 // Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"
+#define kShelbyNotificationChannelsFetched                  @"Shelby Channels Fetched"
 
 // Colors
 #define kShelbyColorBlack                                   [UIColor colorWithHex:@"333" andAlpha:1.0f]

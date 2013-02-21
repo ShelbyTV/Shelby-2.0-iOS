@@ -159,11 +159,21 @@
         } break;
             
         case CategoryType_Likes:{
-            [self removeOlderVideoFramesFromLikes];
+        
+            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+                
+                [self removeOlderVideoFramesFromLikes];
+            }
+        
         } break;
             
         case CategoryType_PersonalRoll:{
-            [self removeOlderVideoFramesFromPersonalRoll];
+            
+            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+                
+                [self removeOlderVideoFramesFromPersonalRoll];
+                
+            }
         } break;
             
         default:
@@ -304,7 +314,6 @@
         }
     }
     
-    
     [self saveContext:_context];
     
 }
@@ -340,6 +349,12 @@
             
         }
                 
+    }
+    
+    if ( ![channelArray count] ) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFetched object:nil];
+        });
     }
     
     [self saveContext:_context];
@@ -387,6 +402,10 @@
             
         }
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFetched object:nil];
+    });
     
     [self saveContext:_context];
 }

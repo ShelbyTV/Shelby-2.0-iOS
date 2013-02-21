@@ -15,10 +15,12 @@
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
+@property (nonatomic) UIViewController *channelloadingViewController;
 
 - (void)pingAllRoutes;
 - (void)postAuthorizationNotification;
 - (void)analytics;
+- (void)didLoadChannels:(NSNotification *)notification;
 
 @end
 
@@ -28,11 +30,32 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
+        [ShelbyAPIClient getAllChannels];
+    });
+    
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     BrowseViewController *pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
     self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLoadChannels:)
+                                                 name:kShelbyNotificationChannelsFetched
+                                               object:nil];
+    
+    self.channelloadingViewController = [[UIViewController alloc] init];
+    _channelloadingViewController.view.frame = self.window.frame;
+    [_channelloadingViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:_channelloadingViewController.view.frame];
+    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [indicator setColor:kShelbyColorBlack];
+    [indicator setCenter:CGPointMake(_channelloadingViewController.view.frame.size.width, _channelloadingViewController.view.frame.size.height)];
+    [indicator setHidesWhenStopped:YES];
+    [indicator startAnimating];
+    [_channelloadingViewController.view addSubview:indicator];
+    [self.window.rootViewController presentViewController:_channelloadingViewController animated:NO completion:nil];
     
     // Add analytics
     [self analytics];
@@ -145,6 +168,11 @@
     // Google Analytics
 
     
+}
+
+- (void)didLoadChannels:(NSNotification *)notification
+{
+    [self.channelloadingViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 #pragma mark - Core Data Methods

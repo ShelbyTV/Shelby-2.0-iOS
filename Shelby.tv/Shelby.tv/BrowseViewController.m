@@ -34,6 +34,7 @@
 // Fetch nickname of logged in user from CoreData
 - (void)fetchUserNickname;
 - (void)fetchChannels;
+- (void)reloadCollectionView;
 
 // TODO: need to port from MeVC
 /// Gesture Methods
@@ -123,6 +124,14 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+    [super viewDidAppear:animated];
+    [self.pageControl setNumberOfPages:1];
+    [self fetchChannels];
+}
+
 #pragma mark - Private Methods
 - (NSManagedObjectContext *)context
 {
@@ -147,15 +156,26 @@
     [self.channels addObjectsFromArray:[datautility fetchAllChannels]];
     
     if ([self.channels count] > 0) {
-        int pages = [(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages];
+        NSUInteger pages = [(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages];
         if (pages > 1) {
             [self.pageControl setNumberOfPages:pages];
-            int displayPage = ([self isLoggedIn] ? 0 : 1);
+            NSUInteger displayPage = ([self isLoggedIn] ? 0 : 1);
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:displayPage]];
             [self.pageControl setCurrentPage:displayPage];
             [self scrollCollectionViewToPage:displayPage animated:NO];
         }
     }
+    
+    [self reloadCollectionView];
+}
+
+- (void)reloadCollectionView
+{
+    [self.collectionView reloadData];
+    [self.pageControl setNumberOfPages:[(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages]];
+    NSUInteger displayPage = ( [self isLoggedIn] ? 0 : 1);
+    [self.pageControl setCurrentPage:displayPage];
+    [self scrollCollectionViewToPage:displayPage animated:NO];
 }
 
 - (void)fetchFramesForChannel
@@ -165,13 +185,11 @@
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
 {
-    int width = self.collectionView.frame.size.width;
-    int height = self.collectionView.frame.size.height;
+    NSUInteger width = self.collectionView.frame.size.width;
+    NSUInteger x = (width * page);
+    NSUInteger y = 0;
     
-    int y = 0;
-    int x = (width * page);
-    
-    [self.collectionView scrollRectToVisible:CGRectMake(x, y, width, height) animated:animated];
+    [self.collectionView setContentOffset:CGPointMake(x, y) animated:animated];
 }
 
 #pragma mark - PageControl Methods
@@ -406,14 +424,12 @@
 
 - (void)logoutAction
 {
- 
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
-                                                        message:@"Are you sure you want to logout?"
-                                                       delegate:self
-                                              cancelButtonTitle:@"NO"
-                                              otherButtonTitles:@"YES", nil];
-    
-    [alertView show];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate logout];
+
+    [self setIsLoggedIn:NO];
+    [self setUserNickname:nil];
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
 - (void)performAuthentication
 {
@@ -636,30 +652,6 @@
         int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyCollectionViewNumberOfCardsInMeSectionPage : kShelbyCollectionViewNumberOfCardsInChannelSectionPage);
         int page = (firstCell.row / numberOfCardsInSectionPage) + firstCell.section;
         [self.pageControl setCurrentPage:page];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch ( buttonIndex ) {
-        
-        case 0:{
-            
-            // Do nothing
-            
-        } break;
-        case 1: {
-            
-            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate logout];
-            
-            [self setIsLoggedIn:NO];
-            [self setUserNickname:nil];
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-            
-        } default:
-            break;
     }
 }
 
