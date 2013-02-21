@@ -29,11 +29,6 @@
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
-        [ShelbyAPIClient getAllChannels];
-    });
-    
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     BrowseViewController *pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
@@ -65,6 +60,10 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
+        [ShelbyAPIClient getAllChannels];
+    });
+    
     // Enable Audio Play in Vibrate and Background Modes
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
@@ -79,6 +78,13 @@
         [self pingAllRoutes];
         
     }
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    // Invalidate timer as user goes to background mode.
+    [self.pollAPITimer invalidate];
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
