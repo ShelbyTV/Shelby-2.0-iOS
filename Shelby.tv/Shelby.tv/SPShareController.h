@@ -8,7 +8,7 @@
 
 #import "SPVideoPlayer.h"
 
-@interface SPShareController : NSObject <UITextViewDelegate>
+@interface SPShareController : NSObject <UITextViewDelegate, UIPopoverControllerDelegate>
 
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer;
 
