@@ -76,6 +76,15 @@
     return NO;
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if ([self.model.overlayTimer isValid]) {
+        [self.model.overlayTimer invalidate];
+    }
+    
+    return [super hitTest:point withEvent:event];
+}
+
 #pragma mark - Toggle UI Methods
 - (void)toggleOverlay
 {
@@ -122,17 +131,4 @@
 {
     [self.model rescheduleOverlayTimer];
 }
-
-
-#pragma mark - UIView method
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-    if ([self.model.overlayTimer isValid]) {
-        [self.model.overlayTimer invalidate];
-    }
-    
-    return [super hitTest:point withEvent:event];
-}
-
-
 @end
