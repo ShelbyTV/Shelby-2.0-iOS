@@ -12,4 +12,6 @@
 
 - (void)fetchChannels;
 
+// To be called when PageControl and CollectioView need to be reset according to user login status
+- (void)resetView;
 @end

@@ -164,6 +164,9 @@
 {
     [self.channelloadingViewController dismissViewControllerAnimated:NO completion:nil];
     [(BrowseViewController *)self.window.rootViewController fetchChannels];
+    [(BrowseViewController *)self.window.rootViewController resetView];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationChannelsFetched object:nil];
 }
 
 

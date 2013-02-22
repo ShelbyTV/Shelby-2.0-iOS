@@ -121,7 +121,8 @@
     
 }
 
-- (void)viewDidAppear:(BOOL)animated
+#pragma mark - Public Methods
+- (void)resetView
 {
     NSUInteger displayPage = ([self isLoggedIn] ? 0 : 1);
     [self.pageControl setCurrentPage:displayPage];
