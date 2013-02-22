@@ -118,21 +118,21 @@
     }];
 }
 
-
-#pragma mark - UIResponder Methods
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.model.overlayTimer invalidate];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.model.overlayTimer invalidate];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)rescheduleOverlayTimer
 {
     [self.model rescheduleOverlayTimer];
 }
+
+
+#pragma mark - UIView method
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if ([self.model.overlayTimer isValid]) {
+        [self.model.overlayTimer invalidate];
+    }
+    
+    return [super hitTest:point withEvent:event];
+}
+
 
 @end

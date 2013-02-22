@@ -941,6 +941,7 @@
         NSUInteger page = floor(scrollAmount) + 1;
         [self fetchOlderVideos:page];
         
+        [self.overlayView rescheduleOverlayTimer];
     }
 }
 

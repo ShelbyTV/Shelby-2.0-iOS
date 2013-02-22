@@ -29,4 +29,6 @@
 - (void)showLikeNotificationView;
 - (void)hideLikeNotificationView;
 
+- (void)rescheduleOverlayTimer;
+
 @end
