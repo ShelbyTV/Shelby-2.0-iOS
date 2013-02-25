@@ -53,7 +53,6 @@
 		1CD5B7DA16D53C1400043754 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		1CD5B7DB16D53C1400043754 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		1CD5B7DC16D53C1400043754 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
-		1CD5B7DE16D53C1400043754 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3FA16CC45D60015D100 /* Video.m */; };
 		1CD5B7DF16D53C1400043754 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B40016CC45D60015D100 /* Messages.m */; };
 		1CD5B7E016D53C1400043754 /* ChannelViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */; };
 		1CD5B7E116D53C1400043754 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA0692116CD6B7000B6EB69 /* AFHTTPClient.m */; };
@@ -219,7 +218,6 @@
 		8E77B3EF16CC45D50015D100 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		8E77B3F216CC45D50015D100 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		8E77B3F516CC45D60015D100 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
-		8E77B3FB16CC45D60015D100 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3FA16CC45D60015D100 /* Video.m */; };
 		8E77B40116CC45D60015D100 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B40016CC45D60015D100 /* Messages.m */; };
 		8E7C341016D58174007494DF /* dotNotSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7C340816D58174007494DF /* dotNotSelected.png */; };
 		8E7C341116D58174007494DF /* dotNotSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E7C340916D58174007494DF /* dotNotSelected@2x.png */; };
@@ -233,6 +231,8 @@
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
+		8E91172F16DC26F300719F9B /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91172E16DC26F300719F9B /* Video.m */; };
+		8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
 		8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F326F1683F4040049EECD /* scrubberBarOff.png */; };
 		8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */; };
@@ -430,8 +430,6 @@
 		8E77B3F116CC45D50015D100 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		8E77B3F316CC45D50015D100 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
 		8E77B3F416CC45D60015D100 /* Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stream.m; sourceTree = "<group>"; };
-		8E77B3F916CC45D60015D100 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
-		8E77B3FA16CC45D60015D100 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		8E77B3FF16CC45D60015D100 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
 		8E77B40016CC45D60015D100 /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
 		8E7C340816D58174007494DF /* dotNotSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotNotSelected.png; sourceTree = "<group>"; };
@@ -448,6 +446,10 @@
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
+		8E91172D16DC26F300719F9B /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		8E91172E16DC26F300719F9B /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		8E91173016DC288600719F9B /* SPVideoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoDownloader.h; sourceTree = "<group>"; };
+		8E91173116DC288600719F9B /* SPVideoDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoDownloader.m; sourceTree = "<group>"; };
 		8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
 		8E9F326F1683F4040049EECD /* scrubberBarOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scrubberBarOff.png; sourceTree = "<group>"; };
 		8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrubberBarOff@2x.png"; sourceTree = "<group>"; };
@@ -619,6 +621,8 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				8E91172D16DC26F300719F9B /* Video.h */,
+				8E91172E16DC26F300719F9B /* Video.m */,
 				8EF03BE916D56D5A0019669F /* User.h */,
 				8EF03BEA16D56D5A0019669F /* User.m */,
 				8E3D6D0416D2BF5C00915CFE /* Channel.h */,
@@ -627,8 +631,6 @@
 				8EBEEFA916CF014600CBF653 /* Frame.m */,
 				8E77B3FF16CC45D60015D100 /* Messages.h */,
 				8E77B40016CC45D60015D100 /* Messages.m */,
-				8E77B3F916CC45D60015D100 /* Video.h */,
-				8E77B3FA16CC45D60015D100 /* Video.m */,
 				8E77B3F316CC45D50015D100 /* Stream.h */,
 				8E77B3F416CC45D60015D100 /* Stream.m */,
 				8E77B3F016CC45D50015D100 /* Conversation.h */,
@@ -853,6 +855,8 @@
 				8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */,
 				8E2BA98F16D3FF130070613F /* SPShareRollActivity.h */,
 				8E2BA99016D3FF130070613F /* SPShareRollActivity.m */,
+				8E91173016DC288600719F9B /* SPVideoDownloader.h */,
+				8E91173116DC288600719F9B /* SPVideoDownloader.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1415,7 +1419,6 @@
 				1CD5B7DA16D53C1400043754 /* Creator.m in Sources */,
 				1CD5B7DB16D53C1400043754 /* Conversation.m in Sources */,
 				1CD5B7DC16D53C1400043754 /* Stream.m in Sources */,
-				1CD5B7DE16D53C1400043754 /* Video.m in Sources */,
 				1CD5B7DF16D53C1400043754 /* Messages.m in Sources */,
 				1CD5B7E016D53C1400043754 /* ChannelViewCell.m in Sources */,
 				1CD5B7E116D53C1400043754 /* AFHTTPClient.m in Sources */,
@@ -1473,7 +1476,6 @@
 				8E77B3EF16CC45D50015D100 /* Creator.m in Sources */,
 				8E77B3F216CC45D50015D100 /* Conversation.m in Sources */,
 				8E77B3F516CC45D60015D100 /* Stream.m in Sources */,
-				8E77B3FB16CC45D60015D100 /* Video.m in Sources */,
 				8E77B40116CC45D60015D100 /* Messages.m in Sources */,
 				1CD72EA116CD36CB0045B36F /* ChannelViewCell.m in Sources */,
 				8EA0698416CD6B7100B6EB69 /* AFHTTPClient.m in Sources */,
@@ -1498,6 +1500,8 @@
 				8EF03C6016D57C170019669F /* SPShareRollView.m in Sources */,
 				8E7C341A16D58252007494DF /* SPShareController.m in Sources */,
 				1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */,
+				8E91172F16DC26F300719F9B /* Video.m in Sources */,
+				8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

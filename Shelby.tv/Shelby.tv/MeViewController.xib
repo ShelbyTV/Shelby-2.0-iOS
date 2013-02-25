@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12C3103</string>
+		<string key="IBDocument.SystemVersion">12C60</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
@@ -736,10 +736,10 @@ AAAAAQABAAABPQADAAAAAQACAAABUwADAAAAAwAAAoIAAAAAAAgACAAIAAEAAQABA</bytes>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="likesCard.png">{482, 318}</string>
-			<string key="loginCard.png">{485, 321}</string>
-			<string key="personalRollCard.png">{482, 318}</string>
-			<string key="streamCard.png">{482, 318}</string>
+			<string key="likesCard.png">{480, 220}</string>
+			<string key="loginCard.png">{480, 220}</string>
+			<string key="personalRollCard.png">{480, 220}</string>
+			<string key="streamCard.png">{480, 220}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

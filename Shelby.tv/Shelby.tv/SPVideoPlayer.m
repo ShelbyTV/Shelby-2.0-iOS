@@ -355,6 +355,8 @@
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
        
+        // SXSW: Store video for offline use
+        
         // Load Player
         [self setupPlayerForURL:extractedURL];
         
