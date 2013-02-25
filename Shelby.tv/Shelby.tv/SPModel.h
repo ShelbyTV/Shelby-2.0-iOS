@@ -20,6 +20,7 @@
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (weak, nonatomic) SPVideoReel *videoReel;
 @property (weak, nonatomic) SPVideoPlayer *currentVideoPlayer;
+@property (assign, nonatomic) CategoryType categoryType;
 
 /// Singleton Methods
 + (SPModel *)sharedInstance;
