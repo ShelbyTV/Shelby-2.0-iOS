@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "BrowseViewController.h"
+#import "SPVideoDownloader.h"
 
 @interface AppDelegate ()
 
@@ -115,10 +116,13 @@
 
 - (void)performCleanIfUserDidAuthenticate
 {
-    // Empty Existing Core Data Store (if one exists)
+    // Empty existing CoreData Store (if one exists)
     [self dumpAllData];
     
-    // Empty Existing Video Cache
+    // Empty existing disk-stored data (if it exists)
+    [SPVideoDownloader deleteAllDownloadedVideos];
+    
+    // Empty existing Video Cache
     [AsynchronousFreeloader removeAllImages];
 }
 

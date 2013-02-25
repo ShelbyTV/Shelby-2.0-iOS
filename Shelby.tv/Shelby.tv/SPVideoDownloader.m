@@ -116,7 +116,7 @@
 
 
 #pragma mark - Class Methods (Public)
-+ (void)emptyCache
++ (void)deleteAllDownloadedVideos
 {
     
     // Call this method AFTER emptying Core Data store

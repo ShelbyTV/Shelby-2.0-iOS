@@ -16,6 +16,6 @@
 - (void)deleteDownloadedVideo;
 
 /// Class Methods
-+ (void)emptyCache;
++ (void)deleteAllDownloadedVideos;
 
 @end
