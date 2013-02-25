@@ -10,9 +10,12 @@
 
 @interface SPVideoDownloader : NSObject
 
+/// Instance Methods
 - (id)initWithVideoFrame:(Frame *)videoFrame;
 - (void)downloadVideo;
 - (void)deleteDownloadedVideo;
+
+/// Class Methods
 + (void)emptyCache;
 
 @end

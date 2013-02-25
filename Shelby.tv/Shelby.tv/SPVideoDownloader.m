@@ -39,7 +39,9 @@
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-        
+    
+    if ( ![self.videoFrame.video offlineURL] ) { // Download video if not already stored.
+
         // Create videoFilename string
         NSString *videoFilename = [NSString stringWithFormat:@"%@-%@.mp4", _videoFrame.frameID, _videoFrame.videoID];
         
@@ -64,8 +66,8 @@
                 NSString *documentsDirectory = [paths objectAtIndex:0];
                 NSString *path = [documentsDirectory stringByAppendingPathComponent:videoFilename];
                 [data writeToFile:path atomically:YES];
-
-                // Store offlineURL path 
+                
+                // Store offlineURL path
                 NSManagedObjectContext *syncContext = [self.appDelegate context];
                 Frame *videoFrame = (Frame*)[syncContext existingObjectWithID:[self.videoFrame objectID] error:nil];
                 videoFrame.video.offlineURL = path;
@@ -74,10 +76,16 @@
                 CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
                 [dataUtility saveContext:syncContext];
                 
-                DLog(@"Video Cached at Location: %@", path);
-  
+                DLog(@"Video stored at Location: %@", path);
+                
             }
         }];
+        
+    } else { // Do nothing if video previously downloaded
+        
+        DLog(@"Video was previously cached.");
+    }
+    
 }
 
 - (void)deleteDownloadedVideo
@@ -110,6 +118,8 @@
 #pragma mark - Class Methods (Public)
 + (void)emptyCache
 {
+    
+    // Call this method AFTER emptying Core Data store
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         // Reference Cache Path
