@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@class SPVideoPlayer;
 
 @interface SPVideoDownloader : NSObject
 
 /// Instance Methods
-- (id)initWithVideo:(Video *)video;
+- (id)initWithVideo:(Video *)video inPlayer:(SPVideoPlayer *)player;
 - (void)downloadVideo;
 - (void)deleteDownloadedVideo;
 

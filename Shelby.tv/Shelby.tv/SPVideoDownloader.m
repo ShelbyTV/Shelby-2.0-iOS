@@ -7,11 +7,13 @@
 //
 
 #import "SPVideoDownloader.h"
+#import "SPVideoPlayer.h"
 
 @interface SPVideoDownloader ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (nonatomic) Video *video;
+@property (nonatomic) SPVideoPlayer *player;
 
 @end
 
@@ -19,13 +21,19 @@
 
 #pragma mark - Initialization
 
-- (id)initWithVideo:(Video *)video
+- (id)initWithVideo:(Video *)video inPlayer:(SPVideoPlayer *)player
 {
     
     if ( self = [super init] ) {
         
+        
         self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.video = video;
+        self.player = player;
+        
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [video objectID];
+        self.video = (Video *)[context existingObjectWithID:objectID error:nil];
+        
         
     }
     
@@ -35,13 +43,13 @@
 #pragma mark - Instance Methods (Public)
 - (void)downloadVideo
 {
-    
+
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.video objectID];
     self.video = (Video *)[context existingObjectWithID:objectID error:nil];
     
     if ( ![self.video offlineURL] ) { // Download video if not already stored.
-        
+
         // Create videoFilename string
         NSString *videoFilename = [NSString stringWithFormat:@"%@.mp4", _video.videoID];
         
@@ -76,6 +84,20 @@
                 // Save modified video object to CoreData store
                 CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
                 [dataUtility saveContext:asyncContext];
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+
+                    // Present local notification
+                    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+                    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+                    localNotification.fireDate = [[datePicker date] dateByAddingTimeInterval:60];
+                    localNotification.soundName = UILocalNotificationDefaultSoundName;
+                    localNotification.alertAction = @"Finished Downloading Video!";
+                    localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", video.title];
+                    localNotification.hasAction = YES;
+                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+
+                });
                 
                 DLog(@"Video stored at Location: %@", path);
                 
@@ -152,7 +174,7 @@
         NSString *documentsDirectory = [paths objectAtIndex:0];
         NSFileManager *fileManager = [[NSFileManager alloc] init];
         NSArray *contents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:NULL];
-        
+        DLog(@"Directory: %@", documentsDirectory);
         DLog(@"Contents: %@", contents);
         
     });
