@@ -808,6 +808,9 @@
         
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
+        if (!lastFramedObjectID) {
+            return;
+        }
         Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
         NSDate *date = lastFrame.timestamp;
     
