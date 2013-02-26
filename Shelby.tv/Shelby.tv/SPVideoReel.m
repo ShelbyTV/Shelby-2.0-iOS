@@ -34,6 +34,8 @@
 // Transition Properties
 @property (strong, nonatomic) UIImageView *screenshot;
 @property (strong, nonatomic) UIImageView *zoomInScreenshot;
+@property (assign, nonatomic) CGRect zoomInScreenshotFrame;
+
 
 /// Setup Methods
 - (void)setupVideoFrames:(NSArray *)videoFrames;
@@ -58,6 +60,11 @@
 - (void)dataSourceDidUpdate;
 - (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification*)notification;
 
+/// Transition Methods
+- (void)transformInAnimation;
+- (void)fadeOutAnimationForTransformIn;
+- (void)transformOutAnimation;
+- (void)fadeOutAnimationForTransformOut;
 @end
 
 @implementation SPVideoReel 
@@ -112,6 +119,7 @@
 {
     [self setScreenshot:screenshot];
     [self setZoomInScreenshot:zoomInScreenshot];
+    [self setZoomInScreenshotFrame:zoomInScreenshot.frame];
 }
 
 #pragma mark - View Lifecycle Methods
@@ -134,20 +142,7 @@
     [self setupAirPlay];
 
     if (self.screenshot) {
-        [self.overlayView setAlpha:0];
-        [self.view bringSubviewToFront:self.screenshot];
-        [self.view bringSubviewToFront:self.zoomInScreenshot];
-        
-        [UIView animateWithDuration:3 animations:^{
-            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-            [self.zoomInScreenshot setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-            [self.screenshot setAlpha:0];
-            [self.zoomInScreenshot setAlpha:10];
-            [self.overlayView setAlpha:1];
-        } completion:^(BOOL finished) {
-            [self.screenshot removeFromSuperview];
-            [self.zoomInScreenshot removeFromSuperview];
-        }];
+        [self transformInAnimation];
     }
 }
 
@@ -506,7 +501,7 @@
         // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
         [dataUtility removeAllVideoExtractionURLReferences];
         
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self transformOutAnimation];
     
     }
 }
@@ -943,6 +938,62 @@
             
         }
     }
+}
+
+#pragma mark - Transition Methods (Private)
+- (void)transformInAnimation
+{
+    [self.overlayView setAlpha:0];
+    [self.view bringSubviewToFront:self.screenshot];
+    [self.view bringSubviewToFront:self.zoomInScreenshot];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+    [UIView animateWithDuration:0.6 animations:^{
+        [self.zoomInScreenshot setFrame:CGRectMake(-self.view.frame.size.width / 2, -self.view.frame.size.height / 2, self.view.frame.size.width * 2, self.view.frame.size.height * 2)];
+    }];
+
+    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.3];
+}
+
+- (void)fadeOutAnimationForTransformIn
+{
+    [self.screenshot setAlpha:0];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.zoomInScreenshot setAlpha:0];
+        [self.overlayView setAlpha:1];
+    } completion:^(BOOL finished) {
+        [self.screenshot removeFromSuperview];
+        [self.zoomInScreenshot removeFromSuperview];
+    }];
+}
+
+- (void)transformOutAnimation
+{
+    [self.view addSubview:self.screenshot];
+    [self.view addSubview:self.zoomInScreenshot];
+    [self.view bringSubviewToFront:self.screenshot];
+    [self.view bringSubviewToFront:self.zoomInScreenshot];
+    [self.screenshot setAlpha:1];
+    [self.zoomInScreenshot setAlpha:1];
+    
+    [UIView animateWithDuration:0.6 animations:^{
+        [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    [self performSelector:@selector(fadeOutAnimationForTransformOut) withObject:nil afterDelay:0.3];
+    
+}
+
+- (void)fadeOutAnimationForTransformOut
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.zoomInScreenshot setAlpha:0];
+        [self.screenshot setAlpha:0];
+    } completion:^(BOOL finished) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];    
 }
 
 #pragma mark - UIScrollViewDelegate Methods

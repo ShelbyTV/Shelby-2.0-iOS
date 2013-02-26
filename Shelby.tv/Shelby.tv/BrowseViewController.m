@@ -636,8 +636,8 @@ typedef enum {
     UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];
     UIImage *cellScreenShot = [ImageUtilities screenshot:cell];
     UIImageView *cellSrcImage = [[UIImageView alloc] initWithImage:cellScreenShot];
-    [cellSrcImage setFrame:CGRectMake((int)cell.frame.origin.x % 1024, 20 + (int)cell.frame.origin.y % 714, cell.frame.size.width, cell.frame.size.height)];
-    [srcImage setFrame:CGRectMake(0, 20, viewControllerToPresent.view.frame.size.width, viewControllerToPresent.view.frame.size.height)];
+    [cellSrcImage setFrame:CGRectMake((int)cell.frame.origin.x % (int)self.collectionView.frame.size.width, 20 + (int)cell.frame.origin.y % (int)self.collectionView.frame.size.height, cell.frame.size.width, cell.frame.size.height)];
+    [srcImage setFrame:CGRectMake(0, 20, viewControllerToPresent.view.frame.size.width, viewControllerToPresent.view.frame.size.height - 20)];
     [cellSrcImage.layer setCornerRadius:20];
     [cellSrcImage.layer setMasksToBounds:YES];
     [viewControllerToPresent.view addSubview:srcImage];
