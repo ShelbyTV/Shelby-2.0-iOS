@@ -1024,6 +1024,10 @@
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+    
+    [self.overlayView.homeButton setHidden:YES];
+    
     [UIView animateWithDuration:0.3 animations:^{
         [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
         [currentScreenshotImage setFrame:CGRectMake(0, 0, self.zoomInScreenshotFrame.size.width, self.zoomInScreenshotFrame.size.height)];
