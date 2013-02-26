@@ -115,12 +115,28 @@
                 likeActivity.frameID = frame.frameID;
                 likeActivity.overlayView = [self.model overlayView];
                 
+                UIActivityViewController *activityController;
                 
-                UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                                                 applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
-                activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-                
-                
+                if ( CategoryType_Likes == _model.categoryType ) {
+                    
+                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                           applicationActivities:[NSArray arrayWithObjects:rollActivity, nil]];
+                    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                    
+                } else if ( CategoryType_PersonalRoll == _model.categoryType ) {
+                    
+                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                           applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
+                    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                    
+                } else {
+                    
+                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                           applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
+                    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+            
+                }
+  
                 self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
                 [self.sharePopOverController setDelegate:self];
                 [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]

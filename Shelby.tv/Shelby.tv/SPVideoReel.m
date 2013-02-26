@@ -190,10 +190,16 @@
 
 - (void)setupVariables
 {
+    /// AppDelegate
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    /// Model
     self.model = [SPModel sharedInstance];
     self.model.videoReel = self;
+    self.model.categoryType = _categoryType;
     self.model.numberOfVideos = [self.videoFrames count];
+    
+    /// NSMutableArrays
     self.videoPlayers = [@[] mutableCopy];
     self.itemViews = [@[] mutableCopy];
 }
