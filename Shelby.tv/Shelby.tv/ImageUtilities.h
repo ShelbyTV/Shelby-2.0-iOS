@@ -10,4 +10,5 @@
 
 @interface ImageUtilities : NSObject
 + (UIImage *)screenshot:(UIView *)view;
++ (UIImage *)captureVideo:(AVPlayer *)player toSize:(CGSize)size;
 @end
