@@ -123,69 +123,67 @@
 - (void)setupPlayerForURL:(NSURL *)extractedURL
 {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
-        AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
-        self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+    AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
+    AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
+    self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+    
+    // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
+    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+    self.playerLayer.frame = modifiedFrame;
+    self.playerLayer.bounds = modifiedFrame;
+    [self.view.layer addSublayer:_playerLayer];
+    
+    // Set isPlayable Flag
+    [self setIsPlayable:YES];
+    
+    if ( self == _model.currentVideoPlayer ) {
         
-        // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-        self.playerLayer.frame = modifiedFrame;
-        self.playerLayer.bounds = modifiedFrame;
-        [self.view.layer addSublayer:_playerLayer];
+        [self.overlayView.restartPlaybackButton setHidden:YES];
+        [self.overlayView.playButton setEnabled:YES];
+        [self.overlayView.scrubber setEnabled:YES];
+        [self.overlayView.shareButton setEnabled:YES];
         
-        // Set isPlayable Flag
-        [self setIsPlayable:YES];
+    }
+    
+    // Add Gesture Recognizer
+    UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback)];
+    [togglePlaybackGesuture setNumberOfTapsRequired:2];
+    [self.view addGestureRecognizer:togglePlaybackGesuture];
+    
+    [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
+    
+    // Add Observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemDidFinishPlaying:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:playerItem];
+    
+    /*
+     
+     This line stores a video in an array that's used for lazy memory management queue.
+     The array purges an older video instance when a limit is reached.
+     
+     */
+    [self.videoReel storeLoadedVideoPlayer:self];
+    
+    // Toggle video playback
+    if ( self == _model.currentVideoPlayer ) {
         
-        if ( self == _model.currentVideoPlayer ) {
-            
-            [self.overlayView.restartPlaybackButton setHidden:YES];
-            [self.overlayView.playButton setEnabled:YES];
-            [self.overlayView.scrubber setEnabled:YES];
-            [self.overlayView.shareButton setEnabled:YES];
-            
-        }
+        [self play];
+        [self.model rescheduleOverlayTimer];
         
-        // Add Gesture Recognizer
-        UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback)];
-        [togglePlaybackGesuture setNumberOfTapsRequired:2];
-        [self.view addGestureRecognizer:togglePlaybackGesuture];
+    } else {
         
-        [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
+        [self pause];
         
-        // Add Observers
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(itemDidFinishPlaying:)
-                                                     name:AVPlayerItemDidPlayToEndTimeNotification
-                                                   object:playerItem];
-        
-        /*
-         
-         This line stores a video in an array that's used for lazy memory management queue.
-         The array purges an older video instance when a limit is reached.
-         
-         */
-        [self.videoReel storeLoadedVideoPlayer:self];
-        
-        // Toggle video playback
-        if ( self == _model.currentVideoPlayer ) {
-            
-            [self play];
-            [self.model rescheduleOverlayTimer];
-            
-        } else {
-            
-            [self pause];
-            
-        }
-        
-        // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
-        if ( [_indicator isAnimating] ) {
-            [self.indicator stopAnimating];
-        }
+    }
+    
+    // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
+    if ( [_indicator isAnimating] ) {
+        [self.indicator stopAnimating];
+    }
 
-    });
     
 }
 
@@ -364,6 +362,8 @@
             [videoDownloader downloadVideo];
       
         }
+        
+        DLog(@"Loaded Video from Downloaded File");
         
         // Load Player
         [self setupPlayerForURL:extractedURL];
