@@ -14,6 +14,7 @@
 #import "SPVideoPlayer.h"
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
+#import "ImageUtilities.h"
 
 @interface SPVideoReel ()
 
@@ -35,6 +36,8 @@
 @property (strong, nonatomic) UIImageView *screenshot;
 @property (strong, nonatomic) UIImageView *zoomInScreenshot;
 @property (assign, nonatomic) CGRect zoomInScreenshotFrame;
+@property (assign, nonatomic) BOOL inTransition;
+@property (strong, nonatomic) UIImage *playerScreenshot;
 
 
 /// Setup Methods
@@ -64,7 +67,7 @@
 - (void)transformInAnimation;
 - (void)fadeOutAnimationForTransformIn;
 - (void)transformOutAnimation;
-- (void)fadeOutAnimationForTransformOut;
+- (void)fadeOutAnimationForTransformOut:(UIImageView *)currentScreenshotImage;
 @end
 
 @implementation SPVideoReel 
@@ -141,6 +144,7 @@
     [self setupObservers];
     [self setupAirPlay];
 
+    [self setInTransition:NO];
     if (self.screenshot) {
         [self transformInAnimation];
     }
@@ -458,7 +462,15 @@
 - (IBAction)homeButtonAction:(id)sender
 {
     
-    if ( ![self isBeingDismissed] ) {
+    if (!self.inTransition) {
+        [self setInTransition:YES];
+        
+        if ([self.model.currentVideoPlayer isPlaying]) {
+            UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:self.screenshot.frame.size];
+            if (videoCapture) {
+                [self setPlayerScreenshot:videoCapture];
+            }
+        }
         
         // Cancel remaining MP4 extractions
         [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
@@ -946,16 +958,22 @@
 #pragma mark - Transition Methods (Private)
 - (void)transformInAnimation
 {
+    if (self.inTransition) {
+        return;
+    }
+    
+    [self setInTransition:YES];
+    
     [self.overlayView setAlpha:0];
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-    [UIView animateWithDuration:0.6 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
         [self.zoomInScreenshot setFrame:CGRectMake(-self.view.frame.size.width / 2, -self.view.frame.size.height / 2, self.view.frame.size.width * 2, self.view.frame.size.height * 2)];
     }];
 
-    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.2];
 }
 
 - (void)fadeOutAnimationForTransformIn
@@ -967,34 +985,54 @@
     } completion:^(BOOL finished) {
         [self.screenshot removeFromSuperview];
         [self.zoomInScreenshot removeFromSuperview];
+        [self setInTransition:NO];
+
     }];
 }
 
 - (void)transformOutAnimation
 {
+    [self setInTransition:YES];
+    
+    UIImage *currentScreenshot = nil;
+    if (self.playerScreenshot) {
+        currentScreenshot = self.playerScreenshot;
+    } else {
+        currentScreenshot = [ImageUtilities screenshot:self.overlayView];
+    }
+    
+    UIImageView *currentScreenshotImage = [[UIImageView alloc] initWithImage:currentScreenshot];
+    [self setPlayerScreenshot:nil];
+  
+    [self.zoomInScreenshot setAlpha:1];
+    [self.zoomInScreenshot setFrame:currentScreenshotImage.frame];
+ 
+    [self.zoomInScreenshot addSubview:currentScreenshotImage];
+    
+    [self.screenshot setAlpha:1];
     [self.view addSubview:self.screenshot];
     [self.view addSubview:self.zoomInScreenshot];
+    
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
-    [self.screenshot setAlpha:1];
-    [self.zoomInScreenshot setAlpha:1];
     
-    [UIView animateWithDuration:0.6 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
         [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
     } completion:^(BOOL finished) {
         
     }];
     
-    [self performSelector:@selector(fadeOutAnimationForTransformOut) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(fadeOutAnimationForTransformOut:) withObject:currentScreenshotImage afterDelay:0.2];
     
 }
 
-- (void)fadeOutAnimationForTransformOut
+- (void)fadeOutAnimationForTransformOut:(UIImageView *)currentScreenshot
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.zoomInScreenshot setAlpha:0];
-        [self.screenshot setAlpha:0];
+        [currentScreenshot setAlpha:0];
     } completion:^(BOOL finished) {
+        [self setInTransition:NO];
+        
         [self dismissViewControllerAnimated:NO completion:nil];
     }];    
 }
