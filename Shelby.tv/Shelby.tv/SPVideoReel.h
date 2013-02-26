@@ -26,6 +26,8 @@
                videoFrames:(NSMutableArray *)videoFrames
               andChannelID:(NSString *)channelID;
 
+- (void)setupTransition:(UIImageView *)screenshot andZoomInScreenshot:(UIImageView *)zoomInScreenshot;
+
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;

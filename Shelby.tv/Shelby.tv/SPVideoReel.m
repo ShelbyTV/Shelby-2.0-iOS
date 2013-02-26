@@ -31,6 +31,10 @@
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
+// Transition Properties
+@property (strong, nonatomic) UIImageView *screenshot;
+@property (strong, nonatomic) UIImageView *zoomInScreenshot;
+
 /// Setup Methods
 - (void)setupVideoFrames:(NSArray *)videoFrames;
 - (void)setupVariables;
@@ -104,6 +108,12 @@
     return self;
 }
 
+- (void)setupTransition:(UIImageView *)screenshot andZoomInScreenshot:(UIImageView *)zoomInScreenshot
+{
+    [self setScreenshot:screenshot];
+    [self setZoomInScreenshot:zoomInScreenshot];
+}
+
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
@@ -122,6 +132,23 @@
     [self setupVideoPlayers];
     [self setupObservers];
     [self setupAirPlay];
+
+    if (self.screenshot) {
+        [self.overlayView setAlpha:0];
+        [self.view bringSubviewToFront:self.screenshot];
+        [self.view bringSubviewToFront:self.zoomInScreenshot];
+        
+        [UIView animateWithDuration:3 animations:^{
+            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+            [self.zoomInScreenshot setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            [self.screenshot setAlpha:0];
+            [self.zoomInScreenshot setAlpha:10];
+            [self.overlayView setAlpha:1];
+        } completion:^(BOOL finished) {
+            [self.screenshot removeFromSuperview];
+            [self.zoomInScreenshot removeFromSuperview];
+        }];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
