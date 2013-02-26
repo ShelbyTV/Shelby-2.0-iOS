@@ -122,7 +122,7 @@
 - (void)setupPlayerForURL:(NSURL *)extractedURL
 {
     
-    AVAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
+    AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
     
