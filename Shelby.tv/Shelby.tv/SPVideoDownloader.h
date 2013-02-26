@@ -17,5 +17,6 @@
 
 /// Class Methods
 + (void)deleteAllDownloadedVideos;
++ (void)listAllVideos;
 
 @end

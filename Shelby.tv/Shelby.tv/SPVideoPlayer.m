@@ -372,6 +372,7 @@
 - (void)loadVideoFromDisk
 {
 
+    
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
@@ -381,6 +382,9 @@
     
     // Load Player
     NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
+    DLog(@"EXT %@", extractedURL);
+    [SPVideoDownloader listAllVideos];
+    
     [self setupPlayerForURL:extractedURL];
 
 }

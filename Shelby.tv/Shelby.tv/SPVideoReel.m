@@ -407,9 +407,22 @@
 {
     SPVideoPlayer *player = (self.videoPlayers)[position];
     
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [player.videoFrame objectID];
+    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    
     if ( position < _model.numberOfVideos ) {
-        
-        [player queueVideo];
+    
+        if ( [videoFrame.video.offlineURL length] > 0 ) { // Load player from disk if video was previously downloaded
+            
+            [player loadVideoFromDisk];
+            
+        } else { // Queue video for mp4 extraction
+            
+            [player queueVideo];
+            
+        }
+
     
     } else {
     

@@ -19,7 +19,7 @@
 
 #pragma mark - Initialization
 
-- (id)initWithVideoFrame:(Video *)video
+- (id)initWithVideo:(Video *)video
 {
     
     if ( self = [super init] ) {
@@ -41,7 +41,7 @@
     self.video = (Video *)[context existingObjectWithID:objectID error:nil];
     
     if ( ![self.video offlineURL] ) { // Download video if not already stored.
-
+        
         // Create videoFilename string
         NSString *videoFilename = [NSString stringWithFormat:@"%@.mp4", _video.videoID];
         
@@ -142,5 +142,20 @@
     });
 }
 
++ (void)listAllVideos
+{
+ 
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // Reference Cache Path
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSFileManager *fileManager = [[NSFileManager alloc] init];
+        NSArray *contents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:NULL];
+        
+        DLog(@"Contents: %@", contents);
+        
+    });
+}
 
 @end
