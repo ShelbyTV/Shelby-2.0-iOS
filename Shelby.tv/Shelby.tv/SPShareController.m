@@ -100,64 +100,71 @@
         // Perform shortLink fetch and present sharePopOver (on success and fail)
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
             
-            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
-            NSString *shareLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
-            NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\": %@via via @Shelby", frame.video.title, shareLink];
+            if ( 200 == response.statusCode ) {
             
-            DLog(@"Succeeded fetching link for frame: %@", shareLink);
-            
-            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-             
-                SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
-                rollActivity.shareController = self;
+                DLog(@"%@", JSON);
                 
-                SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
-                likeActivity.frameID = frame.frameID;
-                likeActivity.overlayView = [self.model overlayView];
+                Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
+                NSString *shareLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
+                NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\": %@ via @Shelby", frame.video.title, shareLink];
                 
-                UIActivityViewController *activityController;
+                DLog(@"Succeeded fetching link for frame: %@", shareLink);
                 
-                if ( CategoryType_Likes == _model.categoryType ) {
+                if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
                     
-                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                           applicationActivities:[NSArray arrayWithObjects:rollActivity, nil]];
-                    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                    SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
+                    rollActivity.shareController = self;
                     
-                } else if ( CategoryType_PersonalRoll == _model.categoryType ) {
+                    SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+                    likeActivity.frameID = frame.frameID;
+                    likeActivity.overlayView = [self.model overlayView];
                     
-                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                           applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
-                    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                    UIActivityViewController *activityController;
+                    
+                    if ( CategoryType_Likes == _model.categoryType ) {
+                        
+                        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                               applicationActivities:[NSArray arrayWithObjects:rollActivity, nil]];
+                        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                        
+                    } else if ( CategoryType_PersonalRoll == _model.categoryType ) {
+                        
+                        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                               applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
+                        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                        
+                    } else {
+                        
+                        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                               applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
+                        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+                        
+                    }
+                    
+                    self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+                    [self.sharePopOverController setDelegate:self];
+                    [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                                 inView:[self.model overlayView]
+                                               permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                               animated:YES];
                     
                 } else {
                     
-                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                           applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
+                    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
+                                                                                                     applicationActivities:nil];
                     activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-            
+                    
+                    
+                    self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+                    [self.sharePopOverController setDelegate:self];
+                    [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                                 inView:[self.model overlayView]
+                                               permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                               animated:YES];
+                    
                 }
-  
-                self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-                [self.sharePopOverController setDelegate:self];
-                [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                             inView:[self.model overlayView]
-                                           permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                           animated:YES];
+
                 
-            } else {
-                
-                UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                                                 applicationActivities:nil];
-                activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-                
-                
-                self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-                [self.sharePopOverController setDelegate:self];
-                [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                             inView:[self.model overlayView]
-                                           permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                           animated:YES];
-            
             }
             
             

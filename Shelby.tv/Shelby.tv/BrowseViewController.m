@@ -14,6 +14,15 @@
 #import "MyRollViewCell.h"
 #import "PageControl.h"
 #import "SPVideoReel.h"
+#import "ImageUtilities.h"
+#import <QuartzCore/QuartzCore.h>
+
+typedef enum {
+    PlayerTypeStream,
+    PlayerTypeLikes,
+    PlayerTypePersonalRoll,
+    PlayerTypeChannel
+} PlayerType;
 
 @interface BrowseViewController ()
 
@@ -56,10 +65,8 @@
 - (void)userAuthenticationDidSucceed:(NSNotification *)notification;
 
 /// Video Player Launch Methods
-- (void)launchPlayerWithStreamEntries;
-- (void)launchPlayerWithLikesEntries;
-- (void)launchPlayerWithPersonalRollEntries;
-- (void)launchPlayerWithChannelEntries:(NSInteger)channelIndex;
+- (void)launchPlayer:(PlayerType)playerType fromCell:(UICollectionViewCell *)cell;
+- (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
 
 @end
 
@@ -304,15 +311,15 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = indexPath.row;
-    
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     if (indexPath.section == 0) {
         if ([self isLoggedIn]) {
             if (row == 0) {
-                [self launchPlayerWithLikesEntries];
+                [self launchPlayer:PlayerTypeLikes fromCell:cell];
             } else if (row == 2) {
-                [self launchPlayerWithPersonalRollEntries];
+                [self launchPlayer:PlayerTypePersonalRoll fromCell:cell];
             } else if (row == 1) {
-                [self launchPlayerWithStreamEntries];
+                [self launchPlayer:PlayerTypeStream fromCell:cell];
             } else if (row == 3) {
                 [self logoutAction];
             }
@@ -320,7 +327,7 @@
             [self loginAction];
         }
     } else {
-        [self launchPlayerWithChannelEntries:row];
+        [self launchPlayer:PlayerTypeChannel fromCell:cell];
     }
 }
 
@@ -474,132 +481,82 @@
 
 
 #pragma mark - Video Player Launch Methods (Private)
-- (void)launchPlayerWithStreamEntries
+- (void)launchPlayer:(PlayerType)playerType fromCell:(UICollectionViewCell *)cell
 {
+    DataRequestType requestType = DataRequestType_Fetch;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if ( [videoFrames count] ) {
+        NSMutableArray *videoFrames = nil;
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:requestType];
+        NSString *errorMessage = nil;
+        NSString *title = nil;
+        CategoryType categoryType;
+        Channel *channel = nil;
+        switch (playerType) {
+            case PlayerTypeChannel:
+            {
                 
-                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Stream categoryTitle:@"Stream" andVideoFrames:videoFrames];
-                [self presentViewController:reel animated:YES completion:nil];
-                
-            } else {
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                    message:@"No videos in Stream."
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"Dismiss"
-                                                          otherButtonTitles:nil];
-                
-                [alertView show];
-                
+                NSManagedObjectContext *context = [self context];
+                NSInteger channelIndex = [self.collectionView indexPathForCell:cell].row;
+                NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
+                channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+                videoFrames = [dataUtility fetchFramesInChannel:channel.channelID];
+                errorMessage = @"No videos in Channel.";
+                title = [channel displayTitle];
+                categoryType = CategoryType_Channel;
+                break;
             }
-            
-        });
-        
-    });
-    
-}
-
-- (void)launchPlayerWithLikesEntries
-{
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSMutableArray *videoFrames = [dataUtility fetchLikesEntries];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if ( [videoFrames count] ) {
-                
-                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Likes categoryTitle:@"Likes" andVideoFrames:videoFrames];
-                [self presentViewController:reel animated:YES completion:nil];
-                
-            } else {
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                    message:@"No videos in Likes."
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"Dismiss"
-                                                          otherButtonTitles:nil];
-                
-                [alertView show];
-                
+            case PlayerTypePersonalRoll:
+            {
+                videoFrames = [dataUtility fetchPersonalRollEntries];
+                errorMessage = @"No videos in Personal Roll.";
+                title = @"Personal Roll";
+                categoryType = CategoryType_PersonalRoll;
+                break;
             }
-            
-        });
-        
-    });
-}
-
-- (void)launchPlayerWithPersonalRollEntries
-{
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSMutableArray *videoFrames = [dataUtility fetchPersonalRollEntries];
-        
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if ( [videoFrames count] ) {
-                
-                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_PersonalRoll categoryTitle:@"Personal Roll" andVideoFrames:videoFrames];
-                [self presentViewController:reel animated:YES completion:nil];
-                
-            } else {
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                    message:@"No videos in Personal Roll."
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"Dismiss"
-                                                          otherButtonTitles:nil];
-                
-                [alertView show];
-                
+            case PlayerTypeLikes:
+            {
+                videoFrames = [dataUtility fetchLikesEntries];
+                errorMessage = @"No videos in Likes.";
+                title = @"Likes";
+                categoryType = CategoryType_Likes;
+                break;
             }
-            
-        });
-    });
-}
-
-
-- (void)launchPlayerWithChannelEntries:(NSInteger)channelIndex
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            case PlayerTypeStream:
+            {
+                videoFrames = [dataUtility fetchStreamEntries];
+                errorMessage = @"No videos in Stream.";
+                title = @"Stream";
+                categoryType = CategoryType_Stream;
+                break;
+            }
+            default: // Should never get here
+            {
+                videoFrames = [dataUtility fetchStreamEntries];
+                errorMessage = @"No videos in Stream.";
+                title = @"Stream";
+                categoryType = CategoryType_Stream;
+                break;
+                break;
+            }
+        }
         
-        NSManagedObjectContext *context = [self context];
-        NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
-        Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
-        CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSMutableArray *videoFrames = [datautility fetchFramesInChannel:channel.channelID];
-            
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if ( [videoFrames count] ) {
-                
-                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Channel
-                                                                categoryTitle:[channel displayTitle]
-                                                                  videoFrames:videoFrames
-                                                                 andChannelID:[channel channelID]];
-                [self presentViewController:reel animated:YES completion:nil];
+                SPVideoReel *reel = nil;
+                if (categoryType == PlayerTypeChannel) {
+                    reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title videoFrames:videoFrames andChannelID:[channel channelID]];
+                    
+                } else {
+                    reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title andVideoFrames:videoFrames];
+                }
+
+                [self presentViewController:reel fromCell:cell];
                 
             } else {
                 
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                    message:@"No videos in Channel."
+                                                                    message:errorMessage
                                                                    delegate:self
                                                           cancelButtonTitle:@"Dismiss"
                                                           otherButtonTitles:nil];
@@ -670,6 +627,25 @@
         } default:
             break;
     }
+}
+
+/// KP KP
+- (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell
+{
+    UIImage *screenShot = [ImageUtilities screenshot:self.view];
+    UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];
+    UIImage *cellScreenShot = [ImageUtilities screenshot:cell];
+    UIImageView *cellSrcImage = [[UIImageView alloc] initWithImage:cellScreenShot];
+    [cellSrcImage setFrame:CGRectMake((int)cell.frame.origin.x % (int)self.collectionView.frame.size.width, 20 + (int)cell.frame.origin.y % (int)self.collectionView.frame.size.height, cell.frame.size.width, cell.frame.size.height)];
+    [srcImage setFrame:CGRectMake(0, 20, viewControllerToPresent.view.frame.size.width, viewControllerToPresent.view.frame.size.height - 20)];
+    [cellSrcImage.layer setCornerRadius:20];
+    [cellSrcImage.layer setMasksToBounds:YES];
+    [viewControllerToPresent.view addSubview:srcImage];
+    [viewControllerToPresent.view addSubview:cellSrcImage];
+    [(SPVideoReel *)viewControllerToPresent setupTransition:srcImage andZoomInScreenshot:cellSrcImage];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+
+    [self presentViewController:viewControllerToPresent animated:NO completion:nil];
 }
 
 @end
