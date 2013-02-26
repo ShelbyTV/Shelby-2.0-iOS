@@ -101,8 +101,6 @@
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
             
             if ( 200 == response.statusCode ) {
-            
-                DLog(@"%@", JSON);
                 
                 Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
                 NSString *shareLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
