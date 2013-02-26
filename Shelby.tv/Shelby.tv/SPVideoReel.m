@@ -579,6 +579,10 @@
 {
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
+    if (!objectID) {
+        return;
+    }
+
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kShelbySPCurrentVideoStreamID];
@@ -628,6 +632,10 @@
     // Reference NSManageObjectContext
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
+    if (!objectID) {
+        return;
+    }
+
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     // Set new values on infoPanel
