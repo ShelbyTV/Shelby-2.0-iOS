@@ -10,7 +10,7 @@
 #define kShelbySPCurrentVideo                   @"SP Current Video"
 #define kShelbySPCurrentVideoStreamID           @"SP Current Video in Stream"
 
-/// Video Cache
+/// Video Temporary Cache
 #define kShelbySPVideoPlayerStoredDate          @"SP Video Player Stored Date"
 #define kShelbySPVideoPlayerElapsedTime         @"SP Video Player Elapsed Time"
 #define kShelbySPVideoPlayerExtractedURL        @"SP Video Player Extracted URL"
@@ -20,4 +20,3 @@
 #define kShelbySPUserDidScrollToUpdate          @"SP User Did Scroll To Update"
 #define kShelbySPLoadVideoAfterUnplayableVideo  @"SP Load Video After Unplayable Video"
 #define kShelbySPUserDidSwipeToNextVideo        @"SP User Did Swipe To Next Video"
-

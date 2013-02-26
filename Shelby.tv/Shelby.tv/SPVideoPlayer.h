@@ -22,6 +22,7 @@
 - (void)queueVideo;
 
 /// Video Playback Methods
+- (void)loadVideoFromDisk;
 - (void)togglePlayback;
 - (void)restartPlayback;
 - (void)play;

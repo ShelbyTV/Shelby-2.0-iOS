@@ -16,6 +16,7 @@
 
 // NSUserDefault Constants
 #define kShelbyDefaultUserAuthorized                        @"Shelby User Authorization Stored in NSUserDefaults"
+#define kShelbyDefaultUserIsAdmin                           @"Shelby User Is Administrator"
 
 // Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"

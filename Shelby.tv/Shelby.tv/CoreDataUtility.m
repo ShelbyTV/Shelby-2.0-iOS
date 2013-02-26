@@ -281,6 +281,7 @@
     
     BOOL admin = [[userDictionary valueForKey:@"admin"] boolValue];
     [user setValue:@(admin) forKey:kShelbyCoreDataUserAdmin];
+    [[NSUserDefaults standardUserDefaults] setBool:admin forKey:kShelbyDefaultUserIsAdmin];
     
     [self saveContext:_context];
 

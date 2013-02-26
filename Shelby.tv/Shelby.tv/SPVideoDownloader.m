@@ -11,7 +11,7 @@
 @interface SPVideoDownloader ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
-@property (nonatomic) Frame *videoFrame;
+@property (nonatomic) Video *video;
 
 @end
 
@@ -19,13 +19,13 @@
 
 #pragma mark - Initialization
 
-- (id)initWithVideoFrame:(Frame *)videoFrame
+- (id)initWithVideoFrame:(Video *)video
 {
     
     if ( self = [super init] ) {
         
         self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.videoFrame = videoFrame;
+        self.video = video;
         
     }
     
@@ -37,16 +37,16 @@
 {
     
     NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.videoFrame objectID];
-    self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
+    NSManagedObjectID *objectID = [self.video objectID];
+    self.video = (Video *)[context existingObjectWithID:objectID error:nil];
     
-    if ( ![self.videoFrame.video offlineURL] ) { // Download video if not already stored.
+    if ( ![self.video offlineURL] ) { // Download video if not already stored.
 
         // Create videoFilename string
-        NSString *videoFilename = [NSString stringWithFormat:@"%@-%@.mp4", _videoFrame.frameID, _videoFrame.videoID];
+        NSString *videoFilename = [NSString stringWithFormat:@"%@.mp4", _video.videoID];
         
         // Perform request
-        NSURL *requestURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
+        NSURL *requestURL = [NSURL URLWithString:_video.extractedURL];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:requestURL];
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         
@@ -68,13 +68,14 @@
                 [data writeToFile:path atomically:YES];
                 
                 // Store offlineURL path
-                NSManagedObjectContext *syncContext = [self.appDelegate context];
-                Frame *videoFrame = (Frame*)[syncContext existingObjectWithID:[self.videoFrame objectID] error:nil];
-                videoFrame.video.offlineURL = path;
+                NSManagedObjectContext *asyncContext = [self.appDelegate context];
+                NSManagedObjectID *asyncObjectID = [self.video objectID];
+                Video *video = (Video *)[asyncContext existingObjectWithID:asyncObjectID error:nil];
+                video.offlineURL = path;
                 
                 // Save modified video object to CoreData store
                 CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
-                [dataUtility saveContext:syncContext];
+                [dataUtility saveContext:asyncContext];
                 
                 DLog(@"Video stored at Location: %@", path);
                 
@@ -95,9 +96,9 @@
         
         // Reference Filename
         NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [self.videoFrame objectID];
-        self.videoFrame = (Frame*)[context existingObjectWithID:objectID error:nil];
-        NSString *storedFilename = [NSString stringWithFormat:@"%@-%@.mp4", _videoFrame.frameID, _videoFrame.videoID];
+        NSManagedObjectID *objectID = [self.video objectID];
+        self.video = (Video *)[context existingObjectWithID:objectID error:nil];
+        NSString *storedFilename = [NSString stringWithFormat:@"%@.mp4", _video.videoID];
         
         // Reference Cache Path
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

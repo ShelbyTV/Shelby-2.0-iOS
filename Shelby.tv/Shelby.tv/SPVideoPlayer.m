@@ -15,11 +15,12 @@
 #import "SPOverlayView.h"
 
 // Controllers
-#import "SPVideoExtractor.h"
-#import "SPVideoScrubber.h"
 #import "SPShareLikeActivity.h"
 #import "SPShareRollActivity.h"
 #import "SPShareController.h"
+#import "SPVideoExtractor.h"
+#import "SPVideoDownloader.h"
+#import "SPVideoScrubber.h"
 
 // View Controllers
 #import "SPVideoReel.h"
@@ -355,13 +356,35 @@
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
        
-        // SXSW: Store video for offline use
+        // Download video for offline use if suer is administrator
+        if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] ) {
+            
+            SPVideoDownloader *videoDownloader = [[SPVideoDownloader alloc] initWithVideo:video];
+            [videoDownloader downloadVideo];
+        }
         
         // Load Player
         [self setupPlayerForURL:extractedURL];
         
     }
 }
+
+- (void)loadVideoFromDisk
+{
+
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    
+    // Set extractedURL = offlineURL for quick video player relaoding during caching
+    self.videoFrame.video.extractedURL = [self.videoFrame.video offlineURL];
+    
+    // Load Player
+    NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
+    [self setupPlayerForURL:extractedURL];
+
+}
+
 
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
