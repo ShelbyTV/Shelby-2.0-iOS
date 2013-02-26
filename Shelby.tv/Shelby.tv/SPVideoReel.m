@@ -1039,6 +1039,7 @@
     
     [UIView animateWithDuration:0.5 animations:^{
         [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
+        [currentScreenshotImage setFrame:CGRectMake(0, 0, self.zoomInScreenshotFrame.size.width, self.zoomInScreenshotFrame.size.height)];
     } completion:^(BOOL finished) {
         
     }];

@@ -978,16 +978,16 @@
 		8EAAEE58163A286B00AEF100 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */,
+				8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */,
+				1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */,
+				1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */,
+				8E0CFE1416C4C54E009620F9 /* UIScreen+Resolution.h */,
+				8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */,
 				8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */,
 				8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */,
 				8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */,
 				8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */,
-				8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */,
-				8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */,
-				8E0CFE1416C4C54E009620F9 /* UIScreen+Resolution.h */,
-				8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */,
-				1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */,
-				1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
