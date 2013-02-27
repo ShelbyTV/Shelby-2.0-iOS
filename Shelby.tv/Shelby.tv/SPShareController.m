@@ -72,11 +72,14 @@
                                                object:nil];
     
     // Reference social connection status
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    User *user = [dataUtility fetchUser];
-    self.facebookConnected = [[user facebookConnected] boolValue];
-    self.twitterConnected = [[user twitterConnected] boolValue];
-
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+     
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        self.facebookConnected = [[user facebookConnected] boolValue];
+        self.twitterConnected = [[user twitterConnected] boolValue];
+        
+    }
     
 }
 
