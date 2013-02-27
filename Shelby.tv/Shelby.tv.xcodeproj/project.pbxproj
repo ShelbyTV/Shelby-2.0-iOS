@@ -273,6 +273,8 @@
 		8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		8EE5FAB81685622900DBEA13 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EE5FAB71685622900DBEA13 /* Crashlytics.framework */; };
+		8EE9DB3616DDB8F00059504D /* Shelby.tv enterprise-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EE9DB3516DDB8F00059504D /* Shelby.tv enterprise-Info.plist */; };
+		8EE9DB3716DDB8F00059504D /* Shelby.tv enterprise-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EE9DB3516DDB8F00059504D /* Shelby.tv enterprise-Info.plist */; };
 		8EEED7A816800DAC00D9F4CD /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */; };
 		8EEED7A916800DAC00D9F4CD /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */; };
 		8EEED7AA16800DAC00D9F4CD /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */; };
@@ -343,7 +345,6 @@
 		1CD5B7BD16D421DF00043754 /* missing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "missing@2x.png"; sourceTree = "<group>"; };
 		1CD5B7BE16D421DF00043754 /* missingCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missingCard.png; sourceTree = "<group>"; };
 		1CD5B84B16D53C1400043754 /* Shelby.tv Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1CD5B84C16D53C1500043754 /* Shelby.tv enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Shelby.tv enterprise-Info.plist"; path = "/Users/keren/Documents/Work/Shelby-2.0-iOS/Shelby.tv/Shelby.tv enterprise-Info.plist"; sourceTree = "<absolute>"; };
 		1CD72E9D16CD36630045B36F /* ChannelViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelViewCell.xib; sourceTree = "<group>"; };
 		1CD72E9F16CD36CB0045B36F /* ChannelViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewCell.h; sourceTree = "<group>"; };
 		1CD72EA016CD36CB0045B36F /* ChannelViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewCell.m; sourceTree = "<group>"; };
@@ -516,6 +517,7 @@
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
 		8EE5FAB71685622900DBEA13 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Shelby.tv/Crashlytics.framework; sourceTree = "<group>"; };
+		8EE9DB3516DDB8F00059504D /* Shelby.tv enterprise-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv enterprise-Info.plist"; sourceTree = "<group>"; };
 		8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
 		8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
 		8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
@@ -710,7 +712,7 @@
 			children = (
 				8E091750168536F900503EF9 /* Icons and Launch Images */,
 				8E209719162F3A61000A2DFD /* Shelby.tv-Info.plist */,
-				1CD5B84C16D53C1500043754 /* Shelby.tv enterprise-Info.plist */,
+				8EE9DB3516DDB8F00059504D /* Shelby.tv enterprise-Info.plist */,
 				8E20971A162F3A61000A2DFD /* InfoPlist.strings */,
 				8E20971D162F3A61000A2DFD /* main.m */,
 				8E20971F162F3A61000A2DFD /* Shelby.tv-Prefix.pch */,
@@ -1257,6 +1259,7 @@
 				8EF03C5716D5799F0019669F /* rollingTwitterButtonOff@2x.png in Resources */,
 				8EF03C5B16D57AF20019669F /* rollingTwitterButtonOn.png in Resources */,
 				8EF03C5D16D57AF20019669F /* rollingTwitterButtonOn@2x.png in Resources */,
+				8EE9DB3716DDB8F00059504D /* Shelby.tv enterprise-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1361,6 +1364,7 @@
 				8E7C341516D58174007494DF /* meNotSelected@2x.png in Resources */,
 				8E7C341616D58174007494DF /* meSelected.png in Resources */,
 				8E7C341716D58174007494DF /* meSelected@2x.png in Resources */,
+				8EE9DB3616DDB8F00059504D /* Shelby.tv enterprise-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
