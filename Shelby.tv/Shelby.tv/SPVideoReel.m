@@ -994,13 +994,13 @@
         [self.zoomInScreenshot setFrame:CGRectMake(-self.view.frame.size.width / 2, -self.view.frame.size.height / 2, self.view.frame.size.width * 2, self.view.frame.size.height * 2)];
     }];
 
-    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.2];
+    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.3];
 }
 
 - (void)fadeOutAnimationForTransformIn
 {
     [self.screenshot setAlpha:0];
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         [self.zoomInScreenshot setAlpha:0];
         [self.overlayView setAlpha:1];
     } completion:^(BOOL finished) {
@@ -1037,20 +1037,24 @@
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
     
-    [UIView animateWithDuration:0.5 animations:^{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+    
+    [self.overlayView.homeButton setHidden:YES];
+    
+    [UIView animateWithDuration:0.3 animations:^{
         [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
         [currentScreenshotImage setFrame:CGRectMake(0, 0, self.zoomInScreenshotFrame.size.width, self.zoomInScreenshotFrame.size.height)];
     } completion:^(BOOL finished) {
         
     }];
     
-    [self performSelector:@selector(fadeOutAnimationForTransformOut:) withObject:currentScreenshotImage afterDelay:0.2];
+    [self performSelector:@selector(fadeOutAnimationForTransformOut:) withObject:currentScreenshotImage afterDelay:0.15];
     
 }
 
 - (void)fadeOutAnimationForTransformOut:(UIImageView *)currentScreenshot
 {
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.15 animations:^{
         [currentScreenshot setAlpha:0];
     } completion:^(BOOL finished) {
         [self setInTransition:NO];

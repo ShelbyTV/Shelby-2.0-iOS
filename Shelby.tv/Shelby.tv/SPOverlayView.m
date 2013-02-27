@@ -13,8 +13,6 @@
 
 @property (weak, nonatomic) SPModel *model;
 
-@property (weak, nonatomic) IBOutlet UIButton *homeButton;
-
 @end
 
 @implementation SPOverlayView
@@ -57,6 +55,8 @@
     
     // Customize Borders
     [self.userImageView.layer setBorderWidth:0.5];
+    
+    [self.homeButton setHidden:NO];
     
 }
 
