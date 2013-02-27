@@ -78,8 +78,8 @@
                 // Store offlineURL path
                 NSManagedObjectContext *asyncContext = [self.appDelegate context];
                 NSManagedObjectID *asyncObjectID = [self.video objectID];
-                Video *video = (Video *)[asyncContext existingObjectWithID:asyncObjectID error:nil];
-                video.offlineURL = path;
+                Video *asyncVideo = (Video *)[asyncContext existingObjectWithID:asyncObjectID error:nil];
+                asyncVideo.offlineURL = path;
                 
                 // Save modified video object to CoreData store
                 CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
@@ -88,18 +88,22 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
 
                     // Present local notification
+                    NSManagedObjectContext *notificationContext = [self.appDelegate context];
+                    NSManagedObjectID *objectID = [self.video objectID];
+                    Video *notificationVideo = (Video *)[notificationContext existingObjectWithID:objectID error:nil];
+
                     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
                     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
                     localNotification.fireDate = [[datePicker date] dateByAddingTimeInterval:60];
                     localNotification.soundName = UILocalNotificationDefaultSoundName;
                     localNotification.alertAction = @"Finished Downloading Video!";
-                    localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", video.title];
+                    localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", notificationVideo.title];
                     localNotification.hasAction = YES;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 
                 });
                 
-                DLog(@"Video stored at Location: %@", path);
+                DLog(@"Video downloaded to location: %@", path);
                 
             }
         }];
@@ -127,12 +131,9 @@
         NSString *documentsDirectory = [paths objectAtIndex:0];
         NSString *path = [documentsDirectory stringByAppendingPathComponent:storedFilename];
         NSFileManager *fileManager = [[NSFileManager alloc] init];
-        NSArray *contents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:NULL];
         
         // Remove video
         [fileManager removeItemAtPath:path error:nil];
-        
-        DLog(@"Cached Objects: %@", contents);
         
     });
 }
@@ -164,20 +165,17 @@
     });
 }
 
-+ (void)listAllVideos
++ (BOOL)canVideoBeLoadedFromDisk:(NSString *)offlineURL
 {
- 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // Reference Cache Path
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSFileManager *fileManager = [[NSFileManager alloc] init];
-        NSArray *contents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:NULL];
-        DLog(@"Directory: %@", documentsDirectory);
-        DLog(@"Contents: %@", contents);
-        
-    });
+
+    // Reference Cache Path
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:NULL];
+
+    return  ( [contents containsObject:offlineURL] ? YES : NO );
+
 }
 
 @end

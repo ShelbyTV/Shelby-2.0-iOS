@@ -175,9 +175,8 @@
             Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
             NSString *shareLink = [NSString stringWithFormat:kShelbyAPIGetLongLink, frame.video.providerName, frame.video.providerID, frame.frameID];
             NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", videoFrame.video.title, shareLink];
-            
-            DLog(@"Problem fetching link for frame: %@", videoFrame.frameID);
-            DLog(@"Using full pathawesom%@", shareLink);
+
+            DLog(@"Failed getting awe.sm short_url. Using full path %@", shareLink);
             
             SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
             SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];

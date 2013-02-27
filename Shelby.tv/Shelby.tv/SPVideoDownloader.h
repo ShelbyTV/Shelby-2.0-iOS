@@ -17,6 +17,6 @@
 
 /// Class Methods
 + (void)deleteAllDownloadedVideos;
-+ (void)listAllVideos;
++ (BOOL)canVideoBeLoadedFromDisk:(NSString *)offlineURL;
 
 @end

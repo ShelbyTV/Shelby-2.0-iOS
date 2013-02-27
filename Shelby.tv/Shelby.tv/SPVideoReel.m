@@ -398,7 +398,7 @@
     // If screen is retina (e.g., iPad 3 or greater), allow 56 videos. Otherwise, allow only 3 videos to be stored
     NSUInteger maxVideosAllowed;
     if ([[UIScreen mainScreen] isRetinaDisplay]) {
-        maxVideosAllowed = 4;
+        maxVideosAllowed = 3;
     } else if (![DeviceUtilities isIpadMini1]) {
         maxVideosAllowed = 2;
     } else {

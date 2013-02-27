@@ -127,6 +127,8 @@
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
     
+    DLog(@"Loaded URL: %@", [[playerAsset URL] absoluteString]);
+    
     // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
     CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
@@ -355,15 +357,13 @@
         // Instantiate AVPlayer object with extractedURL
         NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
        
-        // Download video for offline use if suer is administrator
+        // Download video for offline use if user is administrator
         if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] ) {
             
             SPVideoDownloader *videoDownloader = [[SPVideoDownloader alloc] initWithVideo:video inPlayer:self];
             [videoDownloader downloadVideo];
       
         }
-        
-        DLog(@"Loaded Video from Downloaded File");
         
         // Load Player
         [self setupPlayerForURL:extractedURL];
@@ -378,13 +378,17 @@
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
-    // Set extractedURL = offlineURL for quick video player relaoding during caching
+    // Set extractedURL equal to offlineURL for quick video player reloading during used in caching
     self.videoFrame.video.extractedURL = [self.videoFrame.video offlineURL];
     
-    // Load Player
-    NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.offlineURL];
-    [SPVideoDownloader listAllVideos];
+    // Save change in Core Data store
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+    [dataUtility saveContext:context];
     
+    NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
+    DLog(@"Can downloaded video be loaded? %d", [SPVideoDownloader canVideoBeLoadedFromDisk:extractedURL.absoluteString]);
+    
+    // Load Player
     [self setupPlayerForURL:extractedURL];
 
 }
