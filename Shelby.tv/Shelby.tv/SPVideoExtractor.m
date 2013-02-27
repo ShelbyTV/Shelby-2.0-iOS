@@ -8,6 +8,7 @@
 
 #import "SPVideoExtractor.h"
 #import "Video.h"
+#import "ShelbyAPIClient.h"
 
 @interface SPVideoExtractor () <UIWebViewDelegate>
 
@@ -246,6 +247,15 @@
     
     if ( [self.videoQueue count] ) {
         
+        NSManagedObjectContext *context = [self context];
+        
+        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
+        if (objectID) {
+            Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
+            [ShelbyAPIClient markUnplayableVideo:[video videoID]];
+            
+        }
+
         // 'if' conditional shouldn't be necessary, since _videoQueue should have at least one item, the one that failed to be extracted
         [self.videoQueue removeObjectAtIndex:0];
         

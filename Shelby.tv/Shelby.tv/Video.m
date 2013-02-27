@@ -20,5 +20,7 @@
 @dynamic title;
 @dynamic videoID;
 @dynamic frame;
+@dynamic firstUnplayable;
+@dynamic lastUnplayable;
 
 @end
