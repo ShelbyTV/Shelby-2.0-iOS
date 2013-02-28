@@ -268,7 +268,6 @@
             [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
             
         }
-        
     }
 }
 
@@ -311,6 +310,10 @@
     
     // Set Flag
     [self setIsPlaying:YES];
+    
+    NSManagedObjectContext *context = [_appDelegate context];
+    Frame *videoFrame = (Frame *)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+    DLog(@"%@", videoFrame.video.title);
 }
 
 - (void)pause
@@ -373,24 +376,49 @@
 
 - (void)loadVideoFromDisk
 {
+    
+    if ( [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL] && ![self isPlayable] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
+        
+        // Instantiate AVPlayer object with extractedURL
+        NSURL *extractedURL = [NSURL URLWithString:[self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL]];
+        
+        DLog(@"CHECK 1: %@", extractedURL);
+        
+        // Reload player
+        [self setupPlayerForURL:extractedURL];
+        
+        // Set Time
+        CMTime elapsedTime = [[self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] CMTimeValue];
+        if ( CMTIME_IS_VALID(elapsedTime) ) {
+            [self.player seekToTime:elapsedTime];
+        }
+        
+    } else if ( ![self isPlayable] ) { // If video hasn't been loaded from disk, load it
+        
+        
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [self.videoFrame objectID];
+        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+        
+        // Set extractedURL equal to offlineURL for quick video player reloading during used in caching
+        videoFrame.video.extractedURL = [videoFrame.video offlineURL];
+        
+        // Save change in Core Data store
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+        [dataUtility saveContext:context];
+        
+        NSURL *extractedURL = [NSURL URLWithString:videoFrame.video.extractedURL];
+        
+        DLog(@"CHECK 2: %@", extractedURL);
+        
+        // Load Player
+        [self setupPlayerForURL:extractedURL];
 
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.videoFrame objectID];
-    self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    
-    // Set extractedURL equal to offlineURL for quick video player reloading during used in caching
-    self.videoFrame.video.extractedURL = [self.videoFrame.video offlineURL];
-    
-    // Save change in Core Data store
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
-    [dataUtility saveContext:context];
-    
-    NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
-    DLog(@"Can downloaded video be loaded? %d", [SPVideoDownloader canVideoBeLoadedFromDisk:extractedURL.absoluteString]);
-    
-    // Load Player
-    [self setupPlayerForURL:extractedURL];
-
+    } else { // Video previosuly loaded from disk and still in memory
+        
+        // Do nothing
+        
+    }
 }
 
 
