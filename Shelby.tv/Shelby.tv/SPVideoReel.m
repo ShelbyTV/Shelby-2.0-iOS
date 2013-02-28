@@ -478,56 +478,59 @@
     if (!self.inTransition) {
         [self setInTransition:YES];
         
-        if ([self.model.currentVideoPlayer isPlaying]) {
-            UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:self.screenshot.frame.size];
-            if (videoCapture) {
-                [self setPlayerScreenshot:videoCapture];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            if ([self.model.currentVideoPlayer isPlaying]) {
+                UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:self.screenshot.frame.size];
+                if (videoCapture) {
+                    [self setPlayerScreenshot:videoCapture];
+                }
             }
-        }
-        
-        // Cancel remaining MP4 extractions
-        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-        
-        // Remove Scrubber Timer and Observer
-        [[SPVideoScrubber sharedInstance] stopObserving];
-        
-        // Remove references on model
-        [self.model destroyModel];
-        
-        // Stop residual audio playback (this shouldn't be happening to begin with)
-        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-        
-        // Releas everything
-        [self.videoPlayers removeAllObjects];
-        self.videoPlayers = nil;
-        
-        [self.playableVideoPlayers removeAllObjects];
-        self.videoPlayers = nil;
     
-        [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [self.videoScrollView removeFromSuperview];
-        self.videoScrollView = nil;
-        
-        [self.itemViews removeAllObjects];
-        self.itemViews = nil;
-        
-        [self.videoFrames removeAllObjects];
-        self.videoFrames = nil;
-        
-        [self.moreVideoFrames removeAllObjects];
-        self.moreVideoFrames = nil;
-        
-        // Instantiate dataUtility for cleanup
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        
-        // Remove older videos (channelID will be nil for stream, likes, and personal roll)
-        [dataUtility removeOlderVideoFramesForCategoryType:_categoryType andChannelID:_channelID];
-        
-        // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
-        [dataUtility removeAllVideoExtractionURLReferences];
-        
-        [self transformOutAnimation];
-    
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Cancel remaining MP4 extractions
+                [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+                
+                // Remove Scrubber Timer and Observer
+                [[SPVideoScrubber sharedInstance] stopObserving];
+                
+                // Remove references on model
+                [self.model destroyModel];
+                
+                // Stop residual audio playback (this shouldn't be happening to begin with)
+                [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+                
+                // Releas everything
+                [self.videoPlayers removeAllObjects];
+                self.videoPlayers = nil;
+                
+                [self.playableVideoPlayers removeAllObjects];
+                self.videoPlayers = nil;
+                
+                [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+                [self.videoScrollView removeFromSuperview];
+                self.videoScrollView = nil;
+                
+                [self.itemViews removeAllObjects];
+                self.itemViews = nil;
+                
+                [self.videoFrames removeAllObjects];
+                self.videoFrames = nil;
+                
+                [self.moreVideoFrames removeAllObjects];
+                self.moreVideoFrames = nil;
+                
+                // Instantiate dataUtility for cleanup
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+                
+                // Remove older videos (channelID will be nil for stream, likes, and personal roll)
+                [dataUtility removeOlderVideoFramesForCategoryType:_categoryType andChannelID:_channelID];
+                
+                // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
+                [dataUtility removeAllVideoExtractionURLReferences];
+                
+                [self transformOutAnimation];
+            });
+        });
     }
 }
 
@@ -989,17 +992,17 @@
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
     
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         [self.zoomInScreenshot setFrame:CGRectMake(-self.view.frame.size.width / 2, -self.view.frame.size.height / 2, self.view.frame.size.width * 2, self.view.frame.size.height * 2)];
     }];
 
-    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.25];
 }
 
 - (void)fadeOutAnimationForTransformIn
 {
-    [self.screenshot setAlpha:0];
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.15 animations:^{
+        [self.screenshot setAlpha:0];
         [self.zoomInScreenshot setAlpha:0];
         [self.overlayView setAlpha:1];
     } completion:^(BOOL finished) {
@@ -1023,10 +1026,10 @@
     
     UIImageView *currentScreenshotImage = [[UIImageView alloc] initWithImage:currentScreenshot];
     [self setPlayerScreenshot:nil];
-  
+    
     [self.zoomInScreenshot setAlpha:1];
     [self.zoomInScreenshot setFrame:currentScreenshotImage.frame];
- 
+    
     [self.zoomInScreenshot addSubview:currentScreenshotImage];
     
     [self.screenshot setAlpha:1];
