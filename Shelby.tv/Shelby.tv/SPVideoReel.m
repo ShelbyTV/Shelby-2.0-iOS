@@ -465,56 +465,59 @@
     if (!self.inTransition) {
         [self setInTransition:YES];
         
-        if ([self.model.currentVideoPlayer isPlaying]) {
-            UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:self.screenshot.frame.size];
-            if (videoCapture) {
-                [self setPlayerScreenshot:videoCapture];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            if ([self.model.currentVideoPlayer isPlaying]) {
+                UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:self.screenshot.frame.size];
+                if (videoCapture) {
+                    [self setPlayerScreenshot:videoCapture];
+                }
             }
-        }
-        
-        // Cancel remaining MP4 extractions
-        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-        
-        // Remove Scrubber Timer and Observer
-        [[SPVideoScrubber sharedInstance] stopObserving];
-        
-        // Remove references on model
-        [self.model destroyModel];
-        
-        // Stop residual audio playback (this shouldn't be happening to begin with)
-        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-        
-        // Releas everything
-        [self.videoPlayers removeAllObjects];
-        self.videoPlayers = nil;
-        
-        [self.playableVideoPlayers removeAllObjects];
-        self.videoPlayers = nil;
     
-        [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [self.videoScrollView removeFromSuperview];
-        self.videoScrollView = nil;
-        
-        [self.itemViews removeAllObjects];
-        self.itemViews = nil;
-        
-        [self.videoFrames removeAllObjects];
-        self.videoFrames = nil;
-        
-        [self.moreVideoFrames removeAllObjects];
-        self.moreVideoFrames = nil;
-        
-        // Instantiate dataUtility for cleanup
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        
-        // Remove older videos (channelID will be nil for stream, likes, and personal roll)
-        [dataUtility removeOlderVideoFramesForCategoryType:_categoryType andChannelID:_channelID];
-        
-        // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
-        [dataUtility removeAllVideoExtractionURLReferences];
-        
-        [self transformOutAnimation];
-    
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Cancel remaining MP4 extractions
+                [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+                
+                // Remove Scrubber Timer and Observer
+                [[SPVideoScrubber sharedInstance] stopObserving];
+                
+                // Remove references on model
+                [self.model destroyModel];
+                
+                // Stop residual audio playback (this shouldn't be happening to begin with)
+                [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+                
+                // Releas everything
+                [self.videoPlayers removeAllObjects];
+                self.videoPlayers = nil;
+                
+                [self.playableVideoPlayers removeAllObjects];
+                self.videoPlayers = nil;
+                
+                [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+                [self.videoScrollView removeFromSuperview];
+                self.videoScrollView = nil;
+                
+                [self.itemViews removeAllObjects];
+                self.itemViews = nil;
+                
+                [self.videoFrames removeAllObjects];
+                self.videoFrames = nil;
+                
+                [self.moreVideoFrames removeAllObjects];
+                self.moreVideoFrames = nil;
+                
+                // Instantiate dataUtility for cleanup
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+                
+                // Remove older videos (channelID will be nil for stream, likes, and personal roll)
+                [dataUtility removeOlderVideoFramesForCategoryType:_categoryType andChannelID:_channelID];
+                
+                // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
+                [dataUtility removeAllVideoExtractionURLReferences];
+                
+                [self transformOutAnimation];
+            });
+        });
     }
 }
 
@@ -1010,10 +1013,10 @@
     
     UIImageView *currentScreenshotImage = [[UIImageView alloc] initWithImage:currentScreenshot];
     [self setPlayerScreenshot:nil];
-  
+    
     [self.zoomInScreenshot setAlpha:1];
     [self.zoomInScreenshot setFrame:currentScreenshotImage.frame];
- 
+    
     [self.zoomInScreenshot addSubview:currentScreenshotImage];
     
     [self.screenshot setAlpha:1];
