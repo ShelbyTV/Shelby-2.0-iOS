@@ -60,15 +60,6 @@
     }
 }
 
-- (void)emptyQueue
-{
-    if ( [self.videoQueue count] ) {
-        
-        [self.videoQueue removeAllObjects];
-        
-    }
-}
-
 - (void)cancelRemainingExtractions
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

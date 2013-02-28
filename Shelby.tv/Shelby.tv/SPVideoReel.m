@@ -724,21 +724,19 @@
 - (void)queueMoreVideos:(NSUInteger)position
 {
     if ( [self.videoPlayers count] ) {
-    
-        if ( [[UIScreen mainScreen] isRetinaDisplay] ) { // iPad 3 or better (e.g., device with more RAM and better processor)
-        
-            [[SPVideoExtractor sharedInstance] emptyQueue];
-            [self extractVideoForVideoPlayer:position]; // Load video for current visible view
-            if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
-            if ( position + 2 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+2];
-            
-        } else { // iPad 2 or iPad Mini 1
-            
-            [[SPVideoExtractor sharedInstance] emptyQueue];
-            [self extractVideoForVideoPlayer:position]; // Load video for current visible view
-            if ( position + 1 < self.model.numberOfVideos ) [self extractVideoForVideoPlayer:position+1];
-            
+        // For all iPads
+        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+        [self extractVideoForVideoPlayer:position]; // Load video for current visible view
+        if (position + 1 < self.model.numberOfVideos) {
+            [self extractVideoForVideoPlayer:position+1];
         }
+        
+        // iPad 3 or better (e.g., device with more RAM and better processor)
+        if ([[UIScreen mainScreen] isRetinaDisplay]) {
+            if (position + 2 < self.model.numberOfVideos) {
+                [self extractVideoForVideoPlayer:position+2];
+            }
+        } 
     }
 }
 
