@@ -91,7 +91,13 @@
 {
     [super viewDidAppear:animated];
     
-    [self setupIndicator];
+    // Initialize UIActivityIndicatorView if video has previously been downloaded
+    NSManagedObjectContext *context = [self.appDelegate context];
+    Frame *frame = (Frame *)[context existingObjectWithID:[_videoFrame objectID] error:nil];
+    if ( [frame.video.offlineURL length] > 0 ) {
+        [self setupIndicator];
+    }
+
 }
 
 #pragma mark - Setup Methods
@@ -118,6 +124,7 @@
     self.indicator.hidesWhenStopped = YES;
     [self.indicator startAnimating];
     [self.view addSubview:_indicator];
+    
 }
 
 - (void)setupPlayerForURL:(NSURL *)playerURL
@@ -178,12 +185,12 @@
         [self pause];
         
     }
-    
-    // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
-    if ( [_indicator isAnimating] ) {
-        [self.indicator stopAnimating];
-    }
 
+    // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
+    if ( [self.indicator isAnimating] ) {
+        [self.indicator stopAnimating];
+        [self.indicator removeFromSuperview];
+    }
     
 }
 
@@ -308,10 +315,6 @@
     
     // Set Flag
     [self setIsPlaying:YES];
-    
-    NSManagedObjectContext *context = [_appDelegate context];
-    Frame *videoFrame = (Frame *)[context existingObjectWithID:[_videoFrame objectID] error:nil];
-    DLog(@"%@", videoFrame.video.title);
 }
 
 - (void)pause
@@ -402,9 +405,8 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
         [dataUtility saveContext:context];
         
-        NSString *extractedURL = [videoFrame.video extractedURL];
-        
         // Load Player
+        NSString *extractedURL = [videoFrame.video extractedURL];
         [self setupPlayerForURL:[NSURL fileURLWithPath:extractedURL]];
 
     } else { // Video previosuly loaded from disk and still in memory

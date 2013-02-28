@@ -42,6 +42,7 @@
 /// Helper methods
 - (BOOL)isSupportedProvider:(Frame *)frame;
 - (BOOL)isUnplayableVideo:(Video *)video;
+
 @end
 
 @implementation CoreDataUtility
