@@ -979,17 +979,17 @@
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
     
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         [self.zoomInScreenshot setFrame:CGRectMake(-self.view.frame.size.width / 2, -self.view.frame.size.height / 2, self.view.frame.size.width * 2, self.view.frame.size.height * 2)];
     }];
 
-    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.25];
 }
 
 - (void)fadeOutAnimationForTransformIn
 {
-    [self.screenshot setAlpha:0];
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.15 animations:^{
+        [self.screenshot setAlpha:0];
         [self.zoomInScreenshot setAlpha:0];
         [self.overlayView setAlpha:1];
     } completion:^(BOOL finished) {
