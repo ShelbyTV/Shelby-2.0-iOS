@@ -989,7 +989,6 @@
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     [UIView animateWithDuration:0.5 animations:^{
         [self.zoomInScreenshot setFrame:CGRectMake(-self.view.frame.size.width / 2, -self.view.frame.size.height / 2, self.view.frame.size.width * 2, self.view.frame.size.height * 2)];
     }];
@@ -1036,8 +1035,6 @@
     
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
     [self.overlayView.homeButton setHidden:YES];
     

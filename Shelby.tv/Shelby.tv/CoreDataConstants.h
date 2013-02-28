@@ -93,3 +93,5 @@
 #define kShelbyCoreDataVideoProviderID                  @"providerID"
 #define kShelbyCoreDataVideoTitle                       @"title"
 #define kShelbyCoreDataVideoThumbnailURL                @"thumbnailURL"
+#define kShelbyCoreDataVideoFirstUnplayable             @"firstUnplayable"
+#define kShelbyCoreDataVideoLastUnplayable              @"lastUnplayable"

@@ -22,6 +22,8 @@
 @property (nonatomic, retain) NSString * videoID;
 @property (nonatomic, retain) NSString * offlineURL;
 @property (nonatomic, retain) NSSet *frame;
+@property (nonatomic, retain) NSNumber *firstUnplayable;
+@property (nonatomic, retain) NSNumber *lastUnplayable;
 @end
 
 @interface Video (CoreDataGeneratedAccessors)

@@ -111,6 +111,34 @@
     [operation start];
 }
 
+#pragma mark - Video (PUT)
++ (void)markUnplayableVideo:(NSString *)videoID
+{
+    if (!videoID || [videoID isEqualToString:@""]) {
+        return;
+    }
+    
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    
+    NSString *authToken = [user token];
+
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPutUnplayableVideo, videoID, authToken];
+    NSURL *requestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setHTTPMethod:@"PUT"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+
+        // Do nothing?
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        DLog(@"Problem marking video unplayable");
+    }];
+    
+    [operation start];
+
+}
+
 #pragma mark - Likes (GET)
 + (void)getLikes
 {

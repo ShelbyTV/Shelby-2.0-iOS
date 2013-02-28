@@ -15,6 +15,9 @@
 #define kShelbyAPIGetStream                 @"https://api.shelby.tv/v1/dashboard?auth_token=%@"
 #define kShelbyAPIGetMoreStream             @"https://api.shelby.tv/v1/dashboard?auth_token=%@&skip=%@&limit=20"
 
+/// PUT Video
+#define kShelbyAPIPutUnplayableVideo        @"https://api.shelby.tv/v1/video/%@/unplayable?auth_token=%@"
+
 /// GET Rolls
 #define kShelbyAPIGetRollFrames             @"https://api.shelby.tv/v1/roll/%@/frames?auth_token=%@"
 #define kShelbyAPIGetMoreRollFrames         @"https://api.shelby.tv/v1/roll/%@/frames?auth_token=%@&skip=%@&limit=20"

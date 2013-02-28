@@ -21,5 +21,7 @@
 @dynamic videoID;
 @dynamic offlineURL;
 @dynamic frame;
+@dynamic firstUnplayable;
+@dynamic lastUnplayable;
 
 @end

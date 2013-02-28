@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C3103" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Channel" representedClassName="Channel" syncable="YES">
         <attribute name="channelID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayDescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -73,6 +73,8 @@
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="extractedURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="offlineURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstUnplayable" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastUnplayable" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="providerID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="providerName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>

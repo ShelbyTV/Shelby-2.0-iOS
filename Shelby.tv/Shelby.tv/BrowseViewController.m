@@ -114,6 +114,18 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    // If viewWillAppear is called when SPVideoReel modalVC is removed...
+    if ( [[UIApplication sharedApplication] isStatusBarHidden] ) {
+        
+        // ... re-display status bar
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+        
+        // ... and reset the view's frame
+        [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
+        
+    }
+
 }
 
 #pragma mark - Public Methods
@@ -557,6 +569,25 @@ typedef enum {
     });
 }
 
+- (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell
+{
+    UIImage *screenShot = [ImageUtilities screenshot:self.view];
+    UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];
+    UIImage *cellScreenShot = [ImageUtilities screenshot:cell];
+    UIImageView *cellSrcImage = [[UIImageView alloc] initWithImage:cellScreenShot];
+    [cellSrcImage setFrame:CGRectMake((int)cell.frame.origin.x % (int)self.collectionView.frame.size.width, 20 + (int)cell.frame.origin.y % (int)self.collectionView.frame.size.height, cell.frame.size.width, cell.frame.size.height)];
+    [srcImage setFrame:CGRectMake(0, 20, viewControllerToPresent.view.frame.size.width, viewControllerToPresent.view.frame.size.height - 20)];
+    [cellSrcImage.layer setCornerRadius:20];
+    [cellSrcImage.layer setMasksToBounds:YES];
+    [viewControllerToPresent.view addSubview:srcImage];
+    [viewControllerToPresent.view addSubview:cellSrcImage];
+    [(SPVideoReel *)viewControllerToPresent setupTransition:srcImage andZoomInScreenshot:cellSrcImage];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+    
+    [self presentViewController:viewControllerToPresent animated:NO completion:nil];
+}
+
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -615,24 +646,6 @@ typedef enum {
         } default:
             break;
     }
-}
-
-/// KP KP
-- (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell
-{
-    UIImage *screenShot = [ImageUtilities screenshot:self.view];
-    UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];
-    UIImage *cellScreenShot = [ImageUtilities screenshot:cell];
-    UIImageView *cellSrcImage = [[UIImageView alloc] initWithImage:cellScreenShot];
-    [cellSrcImage setFrame:CGRectMake((int)cell.frame.origin.x % (int)self.collectionView.frame.size.width, 20 + (int)cell.frame.origin.y % (int)self.collectionView.frame.size.height, cell.frame.size.width, cell.frame.size.height)];
-    [srcImage setFrame:CGRectMake(0, 20, viewControllerToPresent.view.frame.size.width, viewControllerToPresent.view.frame.size.height - 20)];
-    [cellSrcImage.layer setCornerRadius:20];
-    [cellSrcImage.layer setMasksToBounds:YES];
-    [viewControllerToPresent.view addSubview:srcImage];
-    [viewControllerToPresent.view addSubview:cellSrcImage];
-    [(SPVideoReel *)viewControllerToPresent setupTransition:srcImage andZoomInScreenshot:cellSrcImage];
-
-    [self presentViewController:viewControllerToPresent animated:NO completion:nil];
 }
 
 @end

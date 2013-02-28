@@ -17,6 +17,9 @@
 + (void)getStream;
 + (void)getMoreFramesInStream:(NSString *)skipParam;
 
+/// Video
++ (void)markUnplayableVideo:(NSString *)videoID;
+
 /// Likes
 + (void)getLikes;
 + (void)getMoreFramesInLikes:(NSString *)skipParam;

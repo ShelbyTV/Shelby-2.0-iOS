@@ -39,6 +39,9 @@
 - (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames;
 - (void)postNotificationVideoInContext:(NSManagedObjectContext *)context;
 
+/// Helper methods
+- (BOOL)isSupportedProvider:(Frame *)frame;
+- (BOOL)isUnplayableVideo:(Video *)video;
 @end
 
 @implementation CoreDataUtility
@@ -1289,6 +1292,51 @@
     NSString *providerID = [NSString coreDataNullTest:[videoDictionary valueForKey:@"provider_id"]];
     [video setValue:providerID forKey:kShelbyCoreDataVideoProviderID];
     
+    NSString *firstUnplayable = [NSString coreDataNullTest:[videoDictionary valueForKey:@"first_unplayable_at"]];
+    [video setValue:@([firstUnplayable longLongValue])forKey:kShelbyCoreDataVideoFirstUnplayable];
+
+    NSString *lastUnplayable = [NSString coreDataNullTest:[videoDictionary valueForKey:@"last_unplayable_at"]];
+    [video setValue:@([lastUnplayable longLongValue])forKey:kShelbyCoreDataVideoLastUnplayable];
+    
+}
+
+#pragma mark - Helper Methods (Private)
+- (BOOL)isSupportedProvider:(Frame *)frame
+{
+    NSString *providerName = frame.video.providerName;
+    NSString *providerID = frame.video.providerID;
+    
+    if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)isUnplayableVideo:(Video *)video
+{
+    NSNumber *firstUnplayable = [video firstUnplayable];
+    if (firstUnplayable && [firstUnplayable longLongValue] != 0) {
+        NSNumber *lastUnplayable = [video lastUnplayable];
+        
+        // Check if a video is marked unplayable for over 2 days
+        if (lastUnplayable && [lastUnplayable longLongValue] != 0) {
+            float unplayableTime = (float)([lastUnplayable longLongValue] - [firstUnplayable longLongValue]) / (1000 * 60 * 60);
+            if (unplayableTime > 48) {
+                return YES;
+            }
+        }
+        
+        // Check if a video was marked unplayable in the last 1 hour
+        double currentSeconds = [[NSDate date] timeIntervalSince1970];
+        float unplayableTimeSinceFirst = (currentSeconds - [lastUnplayable longLongValue] / 1000.0) / (60 * 60);
+        if (unplayableTimeSinceFirst < 1) {
+            return YES;
+        }
+    }
+
+    return NO;
 }
 
 #pragma mark - Fetching Methods (Private)
@@ -1296,19 +1344,10 @@
 {
     NSMutableArray *playableFrames = [@[] mutableCopy];
     
-    for (NSUInteger i = 0; i < [frames count]; ++i ) {
-        
-        Stream *stream = (Stream *)frames[i];
-        
-        NSString *providerName = stream.frame.video.providerName;
-        NSString *providerID = stream.frame.video.providerID;
-        
-        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-            
+    for (Stream *stream in frames) {
+        if ([self isSupportedProvider:stream.frame] && ![self isUnplayableVideo:[stream.frame video]]) {
             [playableFrames addObject:stream.frame];
-            
         }
-        
     }
     
     return playableFrames;
@@ -1318,17 +1357,9 @@
 {
     NSMutableArray *playableFrames = [@[] mutableCopy];
     
-    for (NSUInteger i = 0; i < [frames count]; ++i ) {
-        
-        Frame *frame = (Frame *)frames[i];
-        
-        NSString *providerName = frame.video.providerName;
-        NSString *providerID = frame.video.providerID;
-        
-        if ( [providerName isEqualToString:@"youtube"] || [providerName isEqualToString:@"dailymotion"] || ([providerName isEqualToString:@"vimeo"] && [providerID length] >= 6) ) {
-            
+    for (Frame *frame in frames) {
+        if ([self isSupportedProvider:frame] && ![self isUnplayableVideo:[frame video]]) {
             [playableFrames addObject:frame];
-            
         }
     }
     
