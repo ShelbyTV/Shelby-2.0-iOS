@@ -40,7 +40,7 @@
 - (void)setupReferences;
 - (void)setupInitialConditions;
 - (void)setupIndicator;
-- (void)setupPlayerForURL:(NSString *)extractedURL;
+- (void)setupPlayerForURL:(NSURL *)playerURL;
 
 /// Storage Methods
 - (void)storeVideoForLater;
@@ -120,13 +120,10 @@
     [self.view addSubview:_indicator];
 }
 
-- (void)setupPlayerForURL:(NSString *)extractedURL
+- (void)setupPlayerForURL:(NSURL *)playerURL
 {
     
-    DLog(@"Loaded URL: %@", [extractedURL lastPathComponent]);
-    
-    NSURL *assetURL = [NSURL URLWithString:extractedURL];
-    AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:assetURL options:nil];
+    AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
     
@@ -246,7 +243,7 @@
         NSString *extractedURL = [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL];
         
         // Reload player
-        [self setupPlayerForURL:extractedURL];
+        [self setupPlayerForURL:[NSURL URLWithString:extractedURL]];
         
         // Set Time
         CMTime elapsedTime = [[self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] CMTimeValue];
@@ -370,7 +367,7 @@
         }
         
         // Load Player
-        [self setupPlayerForURL:extractedURL];
+        [self setupPlayerForURL:[NSURL URLWithString:extractedURL]];
         
     }
 }
@@ -384,7 +381,7 @@
         NSString *extractedURL = [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL];
         
         // Reload player
-        [self setupPlayerForURL:extractedURL];
+        [self setupPlayerForURL:[NSURL fileURLWithPath:extractedURL]];
         
         // Set Time
         CMTime elapsedTime = [[self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] CMTimeValue];
@@ -407,10 +404,8 @@
         
         NSString *extractedURL = [videoFrame.video extractedURL];
         
-        DLog(@"isExtracted? %@", extractedURL);
-        
         // Load Player
-        [self setupPlayerForURL:extractedURL];
+        [self setupPlayerForURL:[NSURL fileURLWithPath:extractedURL]];
 
     } else { // Video previosuly loaded from disk and still in memory
         
