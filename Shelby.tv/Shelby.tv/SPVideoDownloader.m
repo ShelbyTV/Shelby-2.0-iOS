@@ -51,7 +51,7 @@
     if ( ![self.video offlineURL] ) { // Download video if not already stored.
 
         // Create videoFilename string
-        NSString *videoFilename = [NSString stringWithFormat:@"%@-%@.mp4", _video.videoID, _video.title];
+        NSString *videoFilename = [NSString stringWithFormat:@"%@.mp4", _video.videoID];
         
         // Perform request
         NSURL *requestURL = [NSURL URLWithString:_video.extractedURL];
@@ -124,7 +124,7 @@
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [self.video objectID];
         self.video = (Video *)[context existingObjectWithID:objectID error:nil];
-        NSString *storedFilename = [NSString stringWithFormat:@"%@-%@.mp4", _video.videoID, _video.title];
+        NSString *storedFilename = [NSString stringWithFormat:@"%@.mp4", _video.videoID];
         
         // Reference Cache Path
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -160,7 +160,7 @@
             
         }
         
-        DLog(@"Emptyed Cached Videos");
+        DLog(@"Emptyed Downloaded Videos");
     
     });
 }

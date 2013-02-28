@@ -2,7 +2,7 @@
 //  Video.m
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 2/25/13.
+//  Created by Arthur Ariel Sabintsev on 2/28/13.
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
@@ -14,14 +14,14 @@
 
 @dynamic caption;
 @dynamic extractedURL;
+@dynamic offlineURL;
+@dynamic firstUnplayable;
+@dynamic lastUnplayable;
 @dynamic providerID;
 @dynamic providerName;
 @dynamic thumbnailURL;
 @dynamic title;
 @dynamic videoID;
-@dynamic offlineURL;
 @dynamic frame;
-@dynamic firstUnplayable;
-@dynamic lastUnplayable;
 
 @end

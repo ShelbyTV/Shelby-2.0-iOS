@@ -40,7 +40,7 @@
 - (void)setupReferences;
 - (void)setupInitialConditions;
 - (void)setupIndicator;
-- (void)setupPlayerForURL:(NSURL *)extractedURL;
+- (void)setupPlayerForURL:(NSString *)extractedURL;
 
 /// Storage Methods
 - (void)storeVideoForLater;
@@ -120,14 +120,15 @@
     [self.view addSubview:_indicator];
 }
 
-- (void)setupPlayerForURL:(NSURL *)extractedURL
+- (void)setupPlayerForURL:(NSString *)extractedURL
 {
     
-    AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:extractedURL options:nil];
+    DLog(@"Loaded URL: %@", [extractedURL lastPathComponent]);
+    
+    NSURL *assetURL = [NSURL URLWithString:extractedURL];
+    AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:assetURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-    
-    DLog(@"Loaded URL: %@", [[playerAsset URL] absoluteString]);
     
     // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
@@ -242,7 +243,7 @@
     if ( [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
         
         // Instantiate AVPlayer object with extractedURL
-        NSURL *extractedURL = [NSURL URLWithString:[self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL]];
+        NSString *extractedURL = [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL];
         
         // Reload player
         [self setupPlayerForURL:extractedURL];
@@ -358,7 +359,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
         
         // Instantiate AVPlayer object with extractedURL
-        NSURL *extractedURL = [NSURL URLWithString:_videoFrame.video.extractedURL];
+        NSString *extractedURL = [self.videoFrame.video extractedURL];
        
         // Download video for offline use if user is administrator
         if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] ) {
@@ -380,9 +381,7 @@
     if ( [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL] && ![self isPlayable] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
         
         // Instantiate AVPlayer object with extractedURL
-        NSURL *extractedURL = [NSURL URLWithString:[self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL]];
-        
-        DLog(@"CHECK 1: %@", extractedURL);
+        NSString *extractedURL = [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL];
         
         // Reload player
         [self setupPlayerForURL:extractedURL];
@@ -395,7 +394,6 @@
         
     } else if ( ![self isPlayable] ) { // If video hasn't been loaded from disk, load it
         
-        
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [self.videoFrame objectID];
         Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
@@ -407,9 +405,9 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
         [dataUtility saveContext:context];
         
-        NSURL *extractedURL = [NSURL URLWithString:videoFrame.video.extractedURL];
+        NSString *extractedURL = [videoFrame.video extractedURL];
         
-        DLog(@"CHECK 2: %@", extractedURL);
+        DLog(@"isExtracted? %@", extractedURL);
         
         // Load Player
         [self setupPlayerForURL:extractedURL];
