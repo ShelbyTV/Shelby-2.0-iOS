@@ -282,9 +282,12 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
+<<<<<<< HEAD
         // Post notificaiton to dismiss channelLoadingScreen if there's no connectivity
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationNoConnectivity object:nil];
         
+=======
+>>>>>>> master
         DLog(@"Problem fetching All Channels");
         
     }];
