@@ -27,6 +27,12 @@
     [self.channelImage setImage:[UIImage imageNamed:@"personalRollCard.png"]];
 }
 
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    [self.channelImage setImage:[UIImage imageNamed:@"personalRollCard.png"]];
+}
+
 #pragma mark - Public Methods
 - (void)enableCard:(BOOL)enabled
 {
