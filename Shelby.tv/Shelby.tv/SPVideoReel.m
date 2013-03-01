@@ -329,7 +329,11 @@
         
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-               [itemView.videoTitleLabel setText:videoFrame.video.title];
+                NSManagedObjectContext *context = [self.appDelegate context];
+                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+                Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+                
+               [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
             
@@ -937,19 +941,28 @@
             
             // Update UI on Main Thread
             dispatch_async(dispatch_get_main_queue(), ^{
+                
+                // Reference _videoFrames[i] on main thread
+                NSManagedObjectContext *context = [self.appDelegate context];
+                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+                Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+                
+                // Update scrollViews
                 self.videoScrollView.contentSize = CGSizeMake(1024.0f*(i+1), 768.0f);
                 [self.videoPlayers addObject:player];
                 [self.videoScrollView addSubview:player.view];
                 [self.videoScrollView setNeedsDisplay];
                 
+                // Update itemViews
                 itemView.backgroundColor = [UIColor clearColor];
                 itemView.videoTitleLabel.textColor = kShelbyColorBlack;
-                [itemView.videoTitleLabel setText:videoFrame.video.title];
+                [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
                 self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), itemViewHeight+20.0f);
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
                 [self.overlayView.videoListScrollView setNeedsDisplay];
                 
+                // Set flags
                 [self setFetchingOlderVideos:NO];
                 [self setLoadingOlderVideos:NO];
             });
