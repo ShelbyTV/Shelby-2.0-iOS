@@ -163,7 +163,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Queue Roll");
+        DLog(@"Problem fetching Likes Roll");
         
     }];
     
@@ -195,7 +195,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Queue Roll");
+        DLog(@"Problem fetching Likes Roll");
         
     }];
     
@@ -282,7 +282,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching All Channels.");
+        DLog(@"Problem fetching All Channels");
         
     }];
     
@@ -367,7 +367,7 @@
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             
-            DLog(@"Problem fetching Likes for sync.");
+            DLog(@"Problem fetching Likes for sync");
             
         }];
         
@@ -401,7 +401,7 @@
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             
-            DLog(@"Problem fetching Personal Roll for sync.");
+            DLog(@"Problem fetching Personal Roll for sync");
             
         }];
         
