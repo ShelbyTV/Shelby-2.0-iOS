@@ -18,6 +18,11 @@
     [self.channelDescription setFont:[UIFont fontWithName:@"Ubuntu" size:14]];
 }
 
+- (void)prepareForReuse
+{
+    [self.channelImage setImage:[UIImage imageNamed:@"cardTemplate.png"]];
+}
+
 #pragma mark - Public Methods
 - (void)enableCard:(BOOL)enabled
 {
