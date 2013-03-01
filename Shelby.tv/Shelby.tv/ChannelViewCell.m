@@ -20,7 +20,7 @@
 
 - (void)prepareForReuse
 {
-    [self.channelImage setImage:[UIImage imageNamed:@"cardTemplate.png"]];
+    [self.channelImage setImage:[UIImage imageNamed:@"missingCard.png"]];
 }
 
 #pragma mark - Public Methods
