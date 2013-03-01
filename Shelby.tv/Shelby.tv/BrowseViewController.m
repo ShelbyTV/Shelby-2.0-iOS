@@ -101,7 +101,7 @@ typedef enum {
     [self fetchChannels];
   
     // Customize look
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
     
     // Version label for beta builds
     [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
@@ -117,13 +117,8 @@ typedef enum {
     
     // If viewWillAppear is called when SPVideoReel modalVC is removed...
     if ( [[UIApplication sharedApplication] isStatusBarHidden] ) {
-        
         // ... re-display status bar
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-        
-        // ... and reset the view's frame
-        [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
-        
     }
 
 }

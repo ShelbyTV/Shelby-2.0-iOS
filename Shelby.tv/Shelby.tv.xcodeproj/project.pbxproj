@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C16A95116E14FCF004ABA41 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A94F16E14FCF004ABA41 /* background.png */; };
+		1C16A95216E14FCF004ABA41 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A94F16E14FCF004ABA41 /* background.png */; };
+		1C16A95316E14FCF004ABA41 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A95016E14FCF004ABA41 /* background@2x.png */; };
+		1C16A95416E14FCF004ABA41 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A95016E14FCF004ABA41 /* background@2x.png */; };
 		1C26CC9C16D56D6500CDF0A1 /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		1C26CC9D16D56D6800CDF0A1 /* SPShareRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA99016D3FF130070613F /* SPShareRollActivity.m */; };
 		1C26CC9E16D56E1200CDF0A1 /* likeNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE016D548C90019669F /* likeNotification.png */; };
@@ -324,6 +328,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C16A94F16E14FCF004ABA41 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		1C16A95016E14FCF004ABA41 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtilities.h; sourceTree = "<group>"; };
 		1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtilities.m; sourceTree = "<group>"; };
 		1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
@@ -740,6 +746,8 @@
 		8E2FC87B16C6F19D0022B58C /* Me & Browse Images */ = {
 			isa = PBXGroup;
 			children = (
+				1C16A94F16E14FCF004ABA41 /* background.png */,
+				1C16A95016E14FCF004ABA41 /* background@2x.png */,
 				1CD5B7BB16D41EDB00043754 /* cardTemplate.png */,
 				1CD5B7B916D41C4C00043754 /* cardTemplate@2x.png */,
 				8E454CB816CA9DC100B2F528 /* likesCard.png */,
@@ -1264,6 +1272,8 @@
 				8EF03C5B16D57AF20019669F /* rollingTwitterButtonOn.png in Resources */,
 				8EF03C5D16D57AF20019669F /* rollingTwitterButtonOn@2x.png in Resources */,
 				8EE9DB3716DDB8F00059504D /* Shelby.tv enterprise-Info.plist in Resources */,
+				1C16A95216E14FCF004ABA41 /* background.png in Resources */,
+				1C16A95416E14FCF004ABA41 /* background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1369,6 +1379,8 @@
 				8E7C341616D58174007494DF /* meSelected.png in Resources */,
 				8E7C341716D58174007494DF /* meSelected@2x.png in Resources */,
 				8EE9DB3616DDB8F00059504D /* Shelby.tv enterprise-Info.plist in Resources */,
+				1C16A95116E14FCF004ABA41 /* background.png in Resources */,
+				1C16A95316E14FCF004ABA41 /* background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
