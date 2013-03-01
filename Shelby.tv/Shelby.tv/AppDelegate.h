@@ -13,10 +13,13 @@
 @property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, readonly) NSManagedObjectContext *context;
 
+/// Authentication Methods
+- (void)performCleanIfUserDidAuthenticate;
 - (void)userIsAuthorized;
+- (void)logout;
+
+/// Core Data Methods
 - (void)mergeChanges:(NSNotification *)notification;
 - (void)dumpAllData;
-- (void)logout;
-- (void)performCleanIfUserDidAuthenticate;
 
 @end

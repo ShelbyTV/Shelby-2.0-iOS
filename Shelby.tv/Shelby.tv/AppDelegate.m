@@ -18,11 +18,18 @@
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) UIViewController *channelloadingViewController;
 
-- (void)pingAllRoutes;
+/// Setup Methods
+- (void)setupAnalytics;
+- (void)setupObservers;
 - (void)setupChannelLoadingScreen;
+
+/// Notification Methods
 - (void)didLoadChannels:(NSNotification *)notification;
 - (void)postAuthorizationNotification;
-- (void)analytics;
+
+/// API Methods
+- (void)pingAllRoutes;
+
 
 @end
 
@@ -37,18 +44,14 @@
     self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
     
+    // Crash reporting and user monitoring analytics
+    [self setupAnalytics];
+    
+    // Observers
+    [self setupObservers];
+    
     // Setup buffer screen to allow channels to be fetched from web and stored locally
     [self setupChannelLoadingScreen];
-    
-    // Add notification observe when channels have finished loading
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLoadChannels:)
-                                                 name:kShelbyNotificationChannelsFetched
-                                               object:nil];
-    
-    
-    // Crash reporting and user monitoring analytics
-    [self analytics];
 
     return YES;
 }
@@ -89,7 +92,19 @@
     [dataUtility removeAllVideoExtractionURLReferences];
 }
 
-#pragma mark - Public Methods
+#pragma mark - Authentication Methods (Public)
+- (void)performCleanIfUserDidAuthenticate
+{
+    // Empty existing CoreData Store (if one exists)
+    [self dumpAllData];
+    
+    // Empty existing disk-stored data (if it exists)
+    [SPVideoDownloader deleteAllDownloadedVideos];
+    
+    // Empty existing Video Cache
+    [AsynchronousFreeloader removeAllImages];
+}
+
 - (void)userIsAuthorized
 {
     // Set NSUserDefault
@@ -114,74 +129,9 @@
     
 }
 
-- (void)performCleanIfUserDidAuthenticate
-{
-    // Empty existing CoreData Store (if one exists)
-    [self dumpAllData];
-    
-    // Empty existing disk-stored data (if it exists)
-    [SPVideoDownloader deleteAllDownloadedVideos];
-    
-    // Empty existing Video Cache
-    [AsynchronousFreeloader removeAllImages];
-}
 
-#pragma mark - Private Methods
-- (void)pingAllRoutes
-{
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
-        [ShelbyAPIClient getLikesForSync];
-        [ShelbyAPIClient getPersonalRollForSync];
-        [ShelbyAPIClient getStream];
-        [ShelbyAPIClient getLikes];
-        [ShelbyAPIClient getPersonalRoll];
-        [ShelbyAPIClient getAllChannels];
-    });
-    
-    if ( ![_pollAPITimer isValid] ) {
-        
-        // Begin or restart Polling API
-        self.pollAPICounter = 0;
-        self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(pingAllRoutes) userInfo:nil repeats:YES];
-
-    }
-
-}
-
-- (void)setupChannelLoadingScreen
-{
-    self.channelloadingViewController = [[UIViewController alloc] init];
-    _channelloadingViewController.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
-    [_channelloadingViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
-    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:_channelloadingViewController.view.frame];
-    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [indicator setColor:kShelbyColorBlack];
-    [indicator setCenter:CGPointMake(_channelloadingViewController.view.frame.size.width/2.0f, _channelloadingViewController.view.frame.size.height/2.0f)];
-    [indicator setHidesWhenStopped:YES];
-    [indicator startAnimating];
-    [_channelloadingViewController.view addSubview:indicator];
-    [self.window.rootViewController presentViewController:_channelloadingViewController animated:NO completion:nil];
-}
-
-- (void)didLoadChannels:(NSNotification *)notification
-{
-    [self.channelloadingViewController dismissViewControllerAnimated:NO completion:nil];
-    [(BrowseViewController *)self.window.rootViewController fetchChannels];
-    [(BrowseViewController *)self.window.rootViewController resetView];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationChannelsFetched object:nil];
-}
-
-
-- (void)postAuthorizationNotification
-{
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
-}
-
-
-- (void)analytics
+#pragma mark - Setup Methods (Private)
+- (void)setupAnalytics
 {
     
     // Harpy
@@ -200,7 +150,77 @@
     
 }
 
-#pragma mark - Core Data Methods
+- (void)setupObservers
+{
+    // Add notification to observe when channels have finished loading
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLoadChannels:)
+                                                 name:kShelbyNotificationChannelsFetched
+                                               object:nil];
+    
+    // Add notification to observe to dismiss channelLoadingScreen if there's no connectivity (should only be used in offline mode)
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLoadChannels:)
+                                                 name:kShelbyNotificationNoConnectivity
+                                               object:nil];
+}
+
+- (void)setupChannelLoadingScreen
+{
+    self.channelloadingViewController = [[UIViewController alloc] init];
+    _channelloadingViewController.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
+    [_channelloadingViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:_channelloadingViewController.view.frame];
+    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [indicator setColor:kShelbyColorBlack];
+    [indicator setCenter:CGPointMake(_channelloadingViewController.view.frame.size.width/2.0f, _channelloadingViewController.view.frame.size.height/2.0f)];
+    [indicator setHidesWhenStopped:YES];
+    [indicator startAnimating];
+    [_channelloadingViewController.view addSubview:indicator];
+    [self.window.rootViewController presentViewController:_channelloadingViewController animated:NO completion:nil];
+}
+
+#pragma mark - Notification Methods (Private)
+- (void)didLoadChannels:(NSNotification *)notification
+{
+    [self.channelloadingViewController dismissViewControllerAnimated:NO completion:nil];
+    [(BrowseViewController *)self.window.rootViewController fetchChannels];
+    [(BrowseViewController *)self.window.rootViewController resetView];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationChannelsFetched object:nil];
+}
+
+
+- (void)postAuthorizationNotification
+{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
+}
+
+#pragma mark - API Methods (Private)
+- (void)pingAllRoutes
+{
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
+        [ShelbyAPIClient getLikesForSync];
+        [ShelbyAPIClient getPersonalRollForSync];
+        [ShelbyAPIClient getStream];
+        [ShelbyAPIClient getLikes];
+        [ShelbyAPIClient getPersonalRoll];
+        [ShelbyAPIClient getAllChannels];
+    });
+    
+    if ( ![_pollAPITimer isValid] ) {
+        
+        // Begin or restart Polling API
+        self.pollAPICounter = 0;
+        self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(pingAllRoutes) userInfo:nil repeats:YES];
+        
+    }
+    
+}
+
+#pragma mark - Core Data Methods (Public)
 - (void)mergeChanges:(NSNotification *)notification
 {
     
@@ -210,17 +230,28 @@
         NSManagedObjectContext *mainThreadContext = [self context];
         
         @synchronized(mainThreadContext) {
-
+            
             [mainThreadContext performBlock:^{
-        
-                    [mainThreadContext mergeChangesFromContextDidSaveNotification:notification];
+                
+                [mainThreadContext mergeChangesFromContextDidSaveNotification:notification];
             }];
             
         }
- 
+        
     });
 }
 
+- (void)dumpAllData
+{
+    NSPersistentStoreCoordinator *coordinator =  [self persistentStoreCoordinator];
+    NSPersistentStore *store = [coordinator persistentStores][0];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    [fileManager removeItemAtURL:store.URL error:nil];
+    [coordinator removePersistentStore:store error:nil];
+    [self setPersistentStoreCoordinator:nil];
+}
+
+#pragma mark - Core Data Methods (Private Accessors)
 - (NSManagedObjectModel *)managedObjectModel
 {
     
@@ -289,16 +320,6 @@
     
     return context;
     
-}
-
-- (void)dumpAllData
-{
-    NSPersistentStoreCoordinator *coordinator =  [self persistentStoreCoordinator];
-    NSPersistentStore *store = [coordinator persistentStores][0];
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    [fileManager removeItemAtURL:store.URL error:nil];
-    [coordinator removePersistentStore:store error:nil];
-    [self setPersistentStoreCoordinator:nil];
 }
 
 @end
