@@ -94,7 +94,7 @@
     // Initialize UIActivityIndicatorView if video has previously been downloaded
     NSManagedObjectContext *context = [self.appDelegate context];
     Frame *frame = (Frame *)[context existingObjectWithID:[_videoFrame objectID] error:nil];
-    if ( [frame.video.offlineURL length] > 0 ) {
+    if ( ![frame.video.offlineURL length] ) {
         [self setupIndicator];
     }
 
