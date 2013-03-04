@@ -7,16 +7,19 @@
 //
 
 #import "AppDelegate.h"
+
 #import "BrowseViewController.h"
 #import "SPVideoDownloader.h"
+#import "Video.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic) UIViewController *channelLoadingViewController;
 @property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
-@property (nonatomic) UIViewController *channelloadingViewController;
+@property (nonatomic) NSMutableArray *videoDownloaders;
 
 /// Setup Methods
 - (void)setupAnalytics;
@@ -30,7 +33,6 @@
 
 /// API Methods
 - (void)pingAllRoutes;
-
 
 @end
 
@@ -134,6 +136,39 @@
     
 }
 
+#pragma mark - Offline Methods (Public)
+- (void)downloadVideo:(Video *)video
+{
+    
+    SPVideoDownloader *videoDownloader = [[SPVideoDownloader alloc] initWithVideo:video];
+    [videoDownloader startDownloading];
+    
+}
+
+- (void)addVideoDownloader:(SPVideoDownloader *)videoDownloader
+{
+    if ( ![self videoDownloaders] ) {
+        self.videoDownloaders = [@[] mutableCopy];
+    }
+
+    [self.videoDownloaders addObject:videoDownloader];
+
+    DLog(@"Retain SPVideoDownloader instance");
+
+}
+
+- (void)removeVideoDownloader:(SPVideoDownloader *)videoDownloader
+{
+    
+    if ( [self.videoDownloaders containsObject:videoDownloader] ) {
+        
+        [self.videoDownloaders removeObject:videoDownloader];
+        
+        DLog(@"Released SPVideoDownloader instance");
+
+    }
+    
+}
 
 #pragma mark - Setup Methods (Private)
 - (void)setupAnalytics
@@ -152,7 +187,6 @@
     
     // Google Analytics
     
-    
 }
 
 - (void)setupObservers
@@ -163,26 +197,27 @@
                                                  name:kShelbyNotificationChannelsFetched
                                                object:nil];
     
-    // Add notification to observe to dismiss channelLoadingScreen if there's no connectivity (should only be used in offline mode)
+    // Add notification to dismiss channelLoadingScreen if there's no connectivity
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didLoadChannels:)
                                                  name:kShelbyNotificationNoConnectivity
                                                object:nil];
+    
 }
 
 - (void)setupChannelLoadingScreen
 {
-    self.channelloadingViewController = [[UIViewController alloc] init];
-    _channelloadingViewController.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
-    [_channelloadingViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
-    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:_channelloadingViewController.view.frame];
+    self.channelLoadingViewController = [[UIViewController alloc] init];
+    _channelLoadingViewController.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
+    [_channelLoadingViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:_channelLoadingViewController.view.frame];
     [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [indicator setColor:kShelbyColorBlack];
-    [indicator setCenter:CGPointMake(_channelloadingViewController.view.frame.size.width/2.0f, _channelloadingViewController.view.frame.size.height/2.0f)];
+    [indicator setCenter:CGPointMake(_channelLoadingViewController.view.frame.size.width/2.0f, _channelLoadingViewController.view.frame.size.height/2.0f)];
     [indicator setHidesWhenStopped:YES];
     [indicator startAnimating];
-    [_channelloadingViewController.view addSubview:indicator];
-    [self.window.rootViewController presentViewController:_channelloadingViewController animated:NO completion:nil];
+    [_channelLoadingViewController.view addSubview:indicator];
+    [self.window.rootViewController presentViewController:_channelLoadingViewController animated:NO completion:nil];
 }
 
 - (void)setupOfflineMode
@@ -200,7 +235,7 @@
 #pragma mark - Notification Methods (Private)
 - (void)didLoadChannels:(NSNotification *)notification
 {
-    [self.channelloadingViewController dismissViewControllerAnimated:NO completion:nil];
+    [self.channelLoadingViewController dismissViewControllerAnimated:NO completion:nil];
     [(BrowseViewController *)self.window.rootViewController fetchChannels];
     [(BrowseViewController *)self.window.rootViewController resetView];
     

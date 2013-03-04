@@ -20,3 +20,4 @@
 #define kShelbySPUserDidScrollToUpdate          @"SP User Did Scroll To Update"
 #define kShelbySPLoadVideoAfterUnplayableVideo  @"SP Load Video After Unplayable Video"
 #define kShelbySPUserDidSwipeToNextVideo        @"SP User Did Swipe To Next Video"
+#define kShelbySPUserDidFinishDownloadingVideo  @"SP User Did Finish Downloading Video"

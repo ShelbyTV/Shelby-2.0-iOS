@@ -391,7 +391,9 @@ typedef enum {
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             // Version label
-            [self resetVersionLabel];
+            [self resetVersionLabel]; 
+            
+            DLog(@"Offline Mode DISABLED!")
             
         } else { // If offlineMode disabled, ENABLE it
             
@@ -408,10 +410,10 @@ typedef enum {
             [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@ (%@)", kShelbyCurrentVersion, user.nickname]];
             [self.versionLabel setTextColor:kShelbyColorBlack];
             
+            DLog(@"Offline Mode ENABLED!");
+            
         }
-        
     }
-    
 }
 
 #pragma mark - User Authentication Methods (Private)

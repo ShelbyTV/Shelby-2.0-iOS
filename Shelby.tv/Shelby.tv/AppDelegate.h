@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
+@class SPVideoDownloader;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic) UIWindow *window;
@@ -21,5 +23,10 @@
 /// Core Data Methods
 - (void)mergeChanges:(NSNotification *)notification;
 - (void)dumpAllData;
+
+/// Offline Methods
+- (void)downloadVideo:(Video *)video;
+- (void)addVideoDownloader:(SPVideoDownloader *)videoDownloader;
+- (void)removeVideoDownloader:(SPVideoDownloader *)videoDownloader;
 
 @end

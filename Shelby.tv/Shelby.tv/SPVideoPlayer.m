@@ -361,12 +361,11 @@
         // Instantiate AVPlayer object with extractedURL
         NSString *extractedURL = [self.videoFrame.video extractedURL];
        
-        // Download video for offline use if user is administrator
+        // Download video for offline viewing
         if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] && [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineModeEnabled]  ) {
             
-            SPVideoDownloader *videoDownloader = [[SPVideoDownloader alloc] initWithVideo:video inPlayer:self];
-            [videoDownloader downloadVideo];
-      
+            [self.appDelegate downloadVideo:video];
+            
         }
         
         // Load Player

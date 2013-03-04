@@ -7,13 +7,11 @@
 //
 
 #import "SPVideoDownloader.h"
-#import "SPVideoPlayer.h"
 
 @interface SPVideoDownloader ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (nonatomic) Video *video;
-@property (nonatomic) SPVideoPlayer *player;
 
 @end
 
@@ -21,19 +19,16 @@
 
 #pragma mark - Initialization
 
-- (id)initWithVideo:(Video *)video inPlayer:(SPVideoPlayer *)player
+- (id)initWithVideo:(Video *)video;
 {
     
     if ( self = [super init] ) {
         
-        
         self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.player = player;
         
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [video objectID];
         self.video = (Video *)[context existingObjectWithID:objectID error:nil];
-        
         
     }
     
@@ -41,9 +36,12 @@
 }
 
 #pragma mark - Instance Methods (Public)
-- (void)downloadVideo
+- (void)startDownloading
 {
 
+    // Retain this SPVideoDownloader instance 
+    [self.appDelegate addVideoDownloader:self];
+    
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.video objectID];
     self.video = (Video *)[context existingObjectWithID:objectID error:nil];
@@ -103,7 +101,10 @@
 
                 });
                 
-                DLog(@"Video downloaded to location: %@", path);
+                DLog(@"Video (%@) downloaded to location: %@", asyncVideo.title, path);
+                
+                // Release this SPVideoDownloader instance 
+                [self.appDelegate removeVideoDownloader:self];
                 
             }
         }];
@@ -111,6 +112,9 @@
     } else { // Do nothing if video previously downloaded
         
         DLog(@"Video was previously downloaded.");
+        
+        // Release this SPVideoDownloader instance
+        [self.appDelegate removeVideoDownloader:self];
     }
     
 }
