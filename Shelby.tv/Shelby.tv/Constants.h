@@ -17,12 +17,12 @@
 // NSUserDefault Constants
 #define kShelbyDefaultUserAuthorized                        @"Shelby User Authorization Stored in NSUserDefaults"
 #define kShelbyDefaultUserIsAdmin                           @"Shelby User Is Administrator"
+#define kShelbyDefaultOfflineModeEnabled                    @"Shelby Offline Mode Enabled"
 
 // Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"
 #define kShelbyNotificationChannelsFetched                  @"Shelby Channels Fetched"
 #define kShelbyNotificationNoConnectivity                   @"No Connectivity"
-
 
 // Colors
 #define kShelbyColorBlack                                   [UIColor colorWithHex:@"333" andAlpha:1.0f]

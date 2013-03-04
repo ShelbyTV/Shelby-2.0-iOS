@@ -10,8 +10,10 @@
 
 @interface BrowseViewController : UIViewController <UICollectionViewDataSource, UITextFieldDelegate, UIAlertViewDelegate>
 
-- (void)fetchChannels;
+@property (weak, nonatomic) IBOutlet UIButton *toggleOfflineButton;
 
-// To be called when PageControl and CollectioView need to be reset according to user login status
-- (void)resetView;
+- (IBAction)toggleOfflineMode:(id)sender;
+- (void)fetchChannels;
+- (void)resetView; // To be called when PageControl and CollectioView need to be reset according to user login status
+
 @end

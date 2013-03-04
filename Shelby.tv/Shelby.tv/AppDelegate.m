@@ -22,6 +22,7 @@
 - (void)setupAnalytics;
 - (void)setupObservers;
 - (void)setupChannelLoadingScreen;
+- (void)setupOfflineMode;
 
 /// Notification Methods
 - (void)didLoadChannels:(NSNotification *)notification;
@@ -52,6 +53,9 @@
     
     // Setup buffer screen to allow channels to be fetched from web and stored locally
     [self setupChannelLoadingScreen];
+    
+    // Setup Offline Mode
+    [self setupOfflineMode];
 
     return YES;
 }
@@ -124,6 +128,7 @@
     
     // Set NSUserDefaults
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kShelbySPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -178,6 +183,18 @@
     [indicator startAnimating];
     [_channelloadingViewController.view addSubview:indicator];
     [self.window.rootViewController presentViewController:_channelloadingViewController animated:NO completion:nil];
+}
+
+- (void)setupOfflineMode
+{
+    
+    // Set offlineMode to OFF by Default
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
+        
+    }
+    
 }
 
 #pragma mark - Notification Methods (Private)

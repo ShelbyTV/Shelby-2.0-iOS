@@ -68,6 +68,9 @@ typedef enum {
 - (void)launchPlayer:(PlayerType)playerType fromCell:(UICollectionViewCell *)cell;
 - (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
 
+/// Version Label
+- (void)resetVersionLabel;
+
 @end
 
 @implementation BrowseViewController
@@ -103,10 +106,8 @@ typedef enum {
     // Customize look
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
     
-    // Version label for beta builds
-    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
-    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
-    [self.versionLabel setTextColor:kShelbyColorBlack];
+    // Version label
+    [self resetVersionLabel];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
 }
@@ -172,6 +173,13 @@ typedef enum {
     NSUInteger y = 0;
     
     [self.collectionView setContentOffset:CGPointMake(x, y) animated:animated];
+}
+
+- (void)resetVersionLabel
+{
+    [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
+    [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
+    [self.versionLabel setTextColor:kShelbyColorBlack];
 }
 
 #pragma mark - PageControl Methods
@@ -332,7 +340,7 @@ typedef enum {
 }
 
 
-#pragma mark - Navigation Action Methods (Public)
+#pragma mark - Action Methods (Public)
 - (void)cancelButtonAction:(id)sender
 {
  
@@ -369,6 +377,41 @@ typedef enum {
 - (void)goButtonAction:(id)sender
 {
     [self performAuthentication];
+}
+
+- (void)toggleOfflineMode:(id)sender
+{
+    
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+     
+        if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineModeEnabled] ) { // If offlineMode enabled, DISABLE it
+            
+            // Set Defaults
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            // Version label
+            [self resetVersionLabel];
+            
+        } else { // If offlineMode disabled, ENABLE it
+            
+            // Set Defaults
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultOfflineModeEnabled];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            // Fetch User
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            User *user = [dataUtility fetchUser];
+            
+            // Version label
+            [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
+            [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@ (%@)", kShelbyCurrentVersion, user.nickname]];
+            [self.versionLabel setTextColor:kShelbyColorBlack];
+            
+        }
+        
+    }
+    
 }
 
 #pragma mark - User Authentication Methods (Private)
@@ -636,6 +679,7 @@ typedef enum {
             [appDelegate logout];
             [self setIsLoggedIn:NO];
             [self setUserNickname:nil];
+            [self resetVersionLabel];
             [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
         
         } default:

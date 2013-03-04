@@ -362,7 +362,7 @@
         NSString *extractedURL = [self.videoFrame.video extractedURL];
        
         // Download video for offline use if user is administrator
-        if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] ) {
+        if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] && [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineModeEnabled]  ) {
             
             SPVideoDownloader *videoDownloader = [[SPVideoDownloader alloc] initWithVideo:video inPlayer:self];
             [videoDownloader downloadVideo];
