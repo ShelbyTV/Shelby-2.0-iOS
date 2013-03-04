@@ -18,6 +18,7 @@
     [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setTimeoutInterval:30.0];
     [request setHTTPMethod:@"POST"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -37,11 +38,20 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         [loginView userAuthenticationDidFail];
-        
+ 
         DLog(@"%@", error);
         
+        NSString *errorMessage = nil;
+        // Error code -1009 - no connection
+        // Error code -1001 - timeout
+        if ([error code] == -1009 || [error code] == -1001) {
+            errorMessage = @"Please make sure you are connected to the Internet";
+        } else {
+            errorMessage = @"Please make sure you've entered your login credientials correctly.";
+        }
+
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
-                                                            message:@"Please make sure you've entered your login credientials correctly."
+                                                            message:errorMessage
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil, nil];
