@@ -28,6 +28,10 @@
 		1CAC4AD516E5561C0028E1DC /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD216E5561C0028E1DC /* tv.png */; };
 		1CAC4AD616E5561C0028E1DC /* tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD316E5561C0028E1DC /* tv@2x.png */; };
 		1CAC4AD716E5561C0028E1DC /* tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD316E5561C0028E1DC /* tv@2x.png */; };
+		1CAC4ADA16E55AA90028E1DC /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD816E55AA90028E1DC /* homeButton.png */; };
+		1CAC4ADB16E55AA90028E1DC /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD816E55AA90028E1DC /* homeButton.png */; };
+		1CAC4ADC16E55AA90028E1DC /* homeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */; };
+		1CAC4ADD16E55AA90028E1DC /* homeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */; };
 		1CC3387816CBDF2A00E58375 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
 		1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
 		1CCCB54616CEA61B00C8C216 /* MyRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* MyRollViewCell.m */; };
@@ -97,8 +101,6 @@
 		1CD5B80216D53C1400043754 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */; };
 		1CD5B80316D53C1400043754 /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */; };
 		1CD5B80416D53C1400043754 /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */; };
-		1CD5B80516D53C1400043754 /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E59802E1680104A00027181 /* homeButton.png */; };
-		1CD5B80616D53C1400043754 /* homeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E59802F1680104A00027181 /* homeButton@2x.png */; };
 		1CD5B80716D53C1400043754 /* pauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980321680104A00027181 /* pauseButton.png */; };
 		1CD5B80816D53C1400043754 /* pauseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980331680104A00027181 /* pauseButton@2x.png */; };
 		1CD5B80916D53C1400043754 /* playButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980341680104A00027181 /* playButton.png */; };
@@ -210,8 +212,6 @@
 		8E50CDF016A9B9FC006B1ABE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEA16A9B9FC006B1ABE /* Icon@2x.png */; };
 		8E50CDF116A9B9FC006B1ABE /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEB16A9B9FC006B1ABE /* iTunesArtwork */; };
 		8E50CDF216A9B9FC006B1ABE /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEC16A9B9FC006B1ABE /* iTunesArtwork@2x */; };
-		8E5980481680104A00027181 /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E59802E1680104A00027181 /* homeButton.png */; };
-		8E5980491680104A00027181 /* homeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E59802F1680104A00027181 /* homeButton@2x.png */; };
 		8E59804C1680104A00027181 /* pauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980321680104A00027181 /* pauseButton.png */; };
 		8E59804D1680104A00027181 /* pauseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980331680104A00027181 /* pauseButton@2x.png */; };
 		8E59804E1680104A00027181 /* playButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980341680104A00027181 /* playButton.png */; };
@@ -342,6 +342,8 @@
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1CAC4AD216E5561C0028E1DC /* tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv.png; sourceTree = "<group>"; };
 		1CAC4AD316E5561C0028E1DC /* tv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tv@2x.png"; sourceTree = "<group>"; };
+		1CAC4AD816E55AA90028E1DC /* homeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeButton.png; sourceTree = "<group>"; };
+		1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeButton@2x.png"; sourceTree = "<group>"; };
 		1CC3387616CBDF2A00E58375 /* BrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseViewController.h; sourceTree = "<group>"; };
 		1CC3387716CBDF2A00E58375 /* BrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseViewController.m; sourceTree = "<group>"; };
 		1CC3387916CBE20800E58375 /* BrowseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseView.xib; sourceTree = "<group>"; };
@@ -428,8 +430,6 @@
 		8E50CDEB16A9B9FC006B1ABE /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = SOURCE_ROOT; };
 		8E50CDEC16A9B9FC006B1ABE /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = SOURCE_ROOT; };
 		8E58294216657A500098FA3A /* SPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPConstants.h; sourceTree = "<group>"; };
-		8E59802E1680104A00027181 /* homeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeButton.png; sourceTree = "<group>"; };
-		8E59802F1680104A00027181 /* homeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeButton@2x.png"; sourceTree = "<group>"; };
 		8E5980321680104A00027181 /* pauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseButton.png; sourceTree = "<group>"; };
 		8E5980331680104A00027181 /* pauseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pauseButton@2x.png"; sourceTree = "<group>"; };
 		8E5980341680104A00027181 /* playButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playButton.png; sourceTree = "<group>"; };
@@ -789,6 +789,8 @@
 		8E5980291680104A00027181 /* Shelby Player Images */ = {
 			isa = PBXGroup;
 			children = (
+				1CAC4AD816E55AA90028E1DC /* homeButton.png */,
+				1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */,
 				8EF03BE016D548C90019669F /* likeNotification.png */,
 				8EF03BE116D548C90019669F /* likeNotification@2x.png */,
 				8E2BA99216D4053C0070613F /* likeActivityButton.png */,
@@ -807,8 +809,6 @@
 				8E12B18116825B4100657D32 /* videoListThumbnail@2x.png */,
 				8E12B18216825B4100657D32 /* videoListThumbnailOverlay.png */,
 				8E12B18316825B4100657D32 /* videoListThumbnailOverlay@2x.png */,
-				8E59802E1680104A00027181 /* homeButton.png */,
-				8E59802F1680104A00027181 /* homeButton@2x.png */,
 				8E285DE11680F82C002A7935 /* infoPanelIconPlaceholder.png */,
 				8E285DE21680F82C002A7935 /* infoPanelIconPlaceholder@2x.png */,
 				8E5980321680104A00027181 /* pauseButton.png */,
@@ -1197,8 +1197,6 @@
 				1CD5B80216D53C1400043754 /* Ubuntu-B.ttf in Resources */,
 				1CD5B80316D53C1400043754 /* Ubuntu-M.ttf in Resources */,
 				1CD5B80416D53C1400043754 /* Ubuntu-R.ttf in Resources */,
-				1CD5B80516D53C1400043754 /* homeButton.png in Resources */,
-				1CD5B80616D53C1400043754 /* homeButton@2x.png in Resources */,
 				1CD5B80716D53C1400043754 /* pauseButton.png in Resources */,
 				1CD5B80816D53C1400043754 /* pauseButton@2x.png in Resources */,
 				1CD5B80916D53C1400043754 /* playButton.png in Resources */,
@@ -1284,6 +1282,8 @@
 				1C16A95416E14FCF004ABA41 /* background@2x.png in Resources */,
 				1CAC4AD516E5561C0028E1DC /* tv.png in Resources */,
 				1CAC4AD716E5561C0028E1DC /* tv@2x.png in Resources */,
+				1CAC4ADB16E55AA90028E1DC /* homeButton.png in Resources */,
+				1CAC4ADD16E55AA90028E1DC /* homeButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1297,8 +1297,6 @@
 				8EEED7A816800DAC00D9F4CD /* Ubuntu-B.ttf in Resources */,
 				8EEED7A916800DAC00D9F4CD /* Ubuntu-M.ttf in Resources */,
 				8EEED7AA16800DAC00D9F4CD /* Ubuntu-R.ttf in Resources */,
-				8E5980481680104A00027181 /* homeButton.png in Resources */,
-				8E5980491680104A00027181 /* homeButton@2x.png in Resources */,
 				8E59804C1680104A00027181 /* pauseButton.png in Resources */,
 				8E59804D1680104A00027181 /* pauseButton@2x.png in Resources */,
 				8E59804E1680104A00027181 /* playButton.png in Resources */,
@@ -1393,6 +1391,8 @@
 				1C16A95316E14FCF004ABA41 /* background@2x.png in Resources */,
 				1CAC4AD416E5561C0028E1DC /* tv.png in Resources */,
 				1CAC4AD616E5561C0028E1DC /* tv@2x.png in Resources */,
+				1CAC4ADA16E55AA90028E1DC /* homeButton.png in Resources */,
+				1CAC4ADC16E55AA90028E1DC /* homeButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
