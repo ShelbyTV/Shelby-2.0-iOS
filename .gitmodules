@@ -1,6 +1,3 @@
 [submodule "Shelby.tv/Library/AFNetworking"]
 	path = Shelby.tv/Library/AFNetworking
 	url = https://github.com/AFNetworking/AFNetworking
-[submodule "Shelby.tv/Library/Panhandler"]
-	path = Shelby.tv/Library/Panhandler
-	url = https://github.com/ArtSabintsev/Panhandler
