@@ -7,6 +7,6 @@
 [submodule "Shelby.tv/Library/Panhandler"]
 	path = Shelby.tv/Library/Panhandler
 	url = https://github.com/ArtSabintsev/Panhandler
-[submodule "Shelby.tv/Library/Asynchronous-Freeloader"]
-	path = Shelby.tv/Library/Asynchronous-Freeloader
-	url = https://github.com/ArtSabintsev/Asynchronous-Freeloader
+[submodule "Shelby.tv/Library/AsynchrnousFreeloader"]
+	path = Shelby.tv/Library/AsynchrnousFreeloader
+	url = git@github.com:ArtSabintsev/Asynchronous-Freeloader.git
