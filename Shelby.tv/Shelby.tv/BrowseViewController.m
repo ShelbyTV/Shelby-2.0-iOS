@@ -375,7 +375,7 @@ typedef enum {
 - (void)loginAction
 {
     
-    self.backgroundLoginView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
+    self.backgroundLoginView = [[UIView alloc] initWithFrame:self.view.bounds];
     [self.backgroundLoginView setBackgroundColor:[UIColor colorWithHex:@"adadad" andAlpha:1.0f]];
     [self.backgroundLoginView setAlpha:0.0f];
     [self.view addSubview:_backgroundLoginView];
