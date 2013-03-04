@@ -1528,11 +1528,8 @@
 				8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */,
 				1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */,
 				1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */,
-<<<<<<< HEAD
 				8EA68CE416DFDD9900B1A509 /* Video.m in Sources */,
-=======
 				8E976FE816E45C8300D518A1 /* AsynchronousFreeloader.m in Sources */,
->>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
