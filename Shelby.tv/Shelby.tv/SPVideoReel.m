@@ -65,9 +65,7 @@
 
 /// Transition Methods
 - (void)transformInAnimation;
-- (void)fadeOutAnimationForTransformIn;
 - (void)transformOutAnimation;
-- (void)fadeOutAnimationForTransformOut:(UIImageView *)currentScreenshotImage;
 @end
 
 @implementation SPVideoReel 
@@ -1005,16 +1003,8 @@
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
     
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
         [self.zoomInScreenshot setFrame:CGRectMake(-self.view.frame.size.width / 2, -self.view.frame.size.height / 2, self.view.frame.size.width * 2, self.view.frame.size.height * 2)];
-    }];
-
-    [self performSelector:@selector(fadeOutAnimationForTransformIn) withObject:nil afterDelay:0.25];
-}
-
-- (void)fadeOutAnimationForTransformIn
-{
-    [UIView animateWithDuration:0.15 animations:^{
         [self.screenshot setAlpha:0];
         [self.zoomInScreenshot setAlpha:0];
         [self.overlayView setAlpha:1];
@@ -1022,7 +1012,6 @@
         [self.screenshot removeFromSuperview];
         [self.zoomInScreenshot removeFromSuperview];
         [self setInTransition:NO];
-
     }];
 }
 
@@ -1054,26 +1043,15 @@
     
     [self.overlayView.homeButton setHidden:YES];
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationCurveEaseIn animations:^{
         [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
         [currentScreenshotImage setFrame:CGRectMake(0, 0, self.zoomInScreenshotFrame.size.width, self.zoomInScreenshotFrame.size.height)];
-    } completion:^(BOOL finished) {
-        
+        [currentScreenshotImage setAlpha:0];
+   } completion:^(BOOL finished) {
+        [self setInTransition:NO];
+        [self dismissViewControllerAnimated:NO completion:nil];
     }];
     
-    [self performSelector:@selector(fadeOutAnimationForTransformOut:) withObject:currentScreenshotImage afterDelay:0.15];
-    
-}
-
-- (void)fadeOutAnimationForTransformOut:(UIImageView *)currentScreenshot
-{
-    [UIView animateWithDuration:0.15 animations:^{
-        [currentScreenshot setAlpha:0];
-    } completion:^(BOOL finished) {
-        [self setInTransition:NO];
-        
-        [self dismissViewControllerAnimated:NO completion:nil];
-    }];    
 }
 
 #pragma mark - UIScrollViewDelegate Methods
