@@ -16,7 +16,7 @@
 
 @property (nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic) UIViewController *channelLoadingViewController;
+@property (nonatomic) UIView *channelLoadingView;
 @property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) NSMutableArray *videoDownloaders;
@@ -207,17 +207,17 @@
 
 - (void)setupChannelLoadingScreen
 {
-    self.channelLoadingViewController = [[UIViewController alloc] init];
-    _channelLoadingViewController.view.frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
-    [_channelLoadingViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-Landscape.png"]]];
-    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:_channelLoadingViewController.view.frame];
+    self.channelLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
+    [self.channelLoadingView setBackgroundColor:[UIColor clearColor]];
+    [self.channelLoadingView setUserInteractionEnabled:YES];    [self.window.rootViewController.view addSubview:self.channelLoadingView];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
     [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [indicator setColor:kShelbyColorBlack];
-    [indicator setCenter:CGPointMake(_channelLoadingViewController.view.frame.size.width/2.0f, _channelLoadingViewController.view.frame.size.height/2.0f)];
+    [indicator setCenter:CGPointMake(self.channelLoadingView.frame.size.width/2.0f, self.channelLoadingView.frame.size.height/2.0f - 25)];
     [indicator setHidesWhenStopped:YES];
     [indicator startAnimating];
-    [_channelLoadingViewController.view addSubview:indicator];
-    [self.window.rootViewController presentViewController:_channelLoadingViewController animated:NO completion:nil];
+    [self.channelLoadingView addSubview:indicator];
+
 }
 
 - (void)setupOfflineMode
@@ -235,7 +235,7 @@
 #pragma mark - Notification Methods (Private)
 - (void)didLoadChannels:(NSNotification *)notification
 {
-    [self.channelLoadingViewController dismissViewControllerAnimated:NO completion:nil];
+    [self.channelLoadingView removeFromSuperview];
     [(BrowseViewController *)self.window.rootViewController fetchChannels];
     [(BrowseViewController *)self.window.rootViewController resetView];
     
