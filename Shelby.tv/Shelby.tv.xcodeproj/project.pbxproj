@@ -11,6 +11,15 @@
 		1C16A95216E14FCF004ABA41 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A94F16E14FCF004ABA41 /* background.png */; };
 		1C16A95316E14FCF004ABA41 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A95016E14FCF004ABA41 /* background@2x.png */; };
 		1C16A95416E14FCF004ABA41 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A95016E14FCF004ABA41 /* background@2x.png */; };
+		1C25DE9F16E67ED300168C10 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
+		1C25DEA016E67ED500168C10 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
+		1C25DEA116E67EDF00168C10 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAD16E67365000567D4 /* AFImageRequestOperation.m */; };
+		1C25DEA216E67EDF00168C10 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAF16E67365000567D4 /* AFJSONRequestOperation.m */; };
+		1C25DEA316E67EDF00168C10 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB116E67365000567D4 /* AFNetworkActivityIndicatorManager.m */; };
+		1C25DEA416E67EDF00168C10 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB416E67365000567D4 /* AFPropertyListRequestOperation.m */; };
+		1C25DEA516E67EDF00168C10 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB616E67365000567D4 /* AFURLConnectionOperation.m */; };
+		1C25DEA616E67EDF00168C10 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB816E67365000567D4 /* AFXMLRequestOperation.m */; };
+		1C25DEA716E67EDF00168C10 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */; };
 		1C26CC9C16D56D6500CDF0A1 /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		1C26CC9D16D56D6800CDF0A1 /* SPShareRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA99016D3FF130070613F /* SPShareRollActivity.m */; };
 		1C26CC9E16D56E1200CDF0A1 /* likeNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BE016D548C90019669F /* likeNotification.png */; };
@@ -1464,6 +1473,15 @@
 				8EC65F7D16E4FD42009EC83D /* AsynchronousFreeloader.m in Sources */,
 				8EC65F7F16E4FD42009EC83D /* Harpy.m in Sources */,
 				8EC65F8116E4FD42009EC83D /* Panhandler.m in Sources */,
+				1C25DE9F16E67ED300168C10 /* AFHTTPClient.m in Sources */,
+				1C25DEA016E67ED500168C10 /* AFHTTPRequestOperation.m in Sources */,
+				1C25DEA116E67EDF00168C10 /* AFImageRequestOperation.m in Sources */,
+				1C25DEA216E67EDF00168C10 /* AFJSONRequestOperation.m in Sources */,
+				1C25DEA316E67EDF00168C10 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				1C25DEA416E67EDF00168C10 /* AFPropertyListRequestOperation.m in Sources */,
+				1C25DEA516E67EDF00168C10 /* AFURLConnectionOperation.m in Sources */,
+				1C25DEA616E67EDF00168C10 /* AFXMLRequestOperation.m in Sources */,
+				1C25DEA716E67EDF00168C10 /* UIImageView+AFNetworking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
