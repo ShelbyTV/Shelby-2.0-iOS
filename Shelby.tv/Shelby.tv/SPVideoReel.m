@@ -225,6 +225,7 @@
     self.videoScrollView.showsHorizontalScrollIndicator = NO;
     self.videoScrollView.showsVerticalScrollIndicator = NO;
     self.videoScrollView.scrollsToTop = NO;
+    [self.videoScrollView setDelaysContentTouches:YES];
     [self.view addSubview:_videoScrollView];
 }
 
