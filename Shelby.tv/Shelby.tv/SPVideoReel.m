@@ -101,7 +101,7 @@
 - (id)initWithCategoryType:(CategoryType)categoryType
              categoryTitle:(NSString *)title
                videoFrames:(NSMutableArray *)videoFrames
-              andChannelID:(NSString *)categoryID
+              andCategoryID:(NSString *)categoryID
 {
     if ( (self = [super init]) ) {
         

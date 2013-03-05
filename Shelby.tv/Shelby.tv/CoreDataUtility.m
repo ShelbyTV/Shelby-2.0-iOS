@@ -739,7 +739,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID
+- (NSMutableArray *)fetchFramesInCategoryChannel:(NSString *)channelID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -769,7 +769,7 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray *)fetchMoreFramesInChannel:(NSString *)channelID afterDate:(NSDate *)date
+- (NSMutableArray *)fetchMoreFramesInCategoryChannel:(NSString *)channelID afterDate:(NSDate *)date
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
