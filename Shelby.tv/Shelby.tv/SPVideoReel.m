@@ -37,7 +37,7 @@
 @property (strong, nonatomic) UIImageView *zoomInScreenshot;
 @property (assign, nonatomic) CGRect zoomInScreenshotFrame;
 @property (assign, nonatomic) BOOL inTransition;
-@property (strong, nonatomic) UIImage *playerScreenshot;
+@property (strong, nonatomic) UIImageView *playerScreenshot;
 
 
 /// Setup Methods
@@ -484,10 +484,34 @@
         [self setInTransition:YES];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if ([self.model.currentVideoPlayer isPlaying]) {
-                UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:self.screenshot.frame.size];
+            if ([self.model.currentVideoPlayer isPlaying]) { // TODO: KP KP cleanup
+                NSArray *tracks = [self.model.currentVideoPlayer.player.currentItem.asset tracksWithMediaType:AVMediaTypeVideo];
+                CGSize videoSize = CGSizeMake(1024, 768);
+                for (AVAssetTrack *assetTrack in tracks) {
+                    CGSize size = [assetTrack naturalSize];
+                    CGAffineTransform transform = self.model.currentVideoPlayer.player.currentItem.asset.preferredTransform;
+                    double xScale = sqrt(transform.a * transform.a + transform.c * transform.c);
+                    double yScale = sqrt(transform.b * transform.b + transform.d * transform.d);
+                    
+                    videoSize = CGSizeMake(size.width * xScale, size.height * yScale);
+                    double ratio = 1;
+                    if (videoSize.width > 1024) {
+                        ratio = 1024 / videoSize.width;
+                        videoSize.height *= ratio;
+                        videoSize.width = 1024;
+                    }
+                    if (videoSize.height > 768) {
+                        ratio = 768 / videoSize.height;
+                        videoSize.width *= ratio;
+                        videoSize.height = 768;
+                    }
+                }
+                 UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:videoSize];
                 if (videoCapture) {
-                    [self setPlayerScreenshot:videoCapture];
+                    self.playerScreenshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+                    self.playerScreenshot.backgroundColor = [UIColor blackColor];
+                    [self.playerScreenshot setContentMode:UIViewContentModeScaleAspectFit];
+                    [self.playerScreenshot setImage:videoCapture];
                 }
             }
     
@@ -1020,20 +1044,17 @@
 {
     [self setInTransition:YES];
     
-    UIImage *currentScreenshot = nil;
+    UIImageView *currentScreenshot = nil;
     if (self.playerScreenshot) {
         currentScreenshot = self.playerScreenshot;
     } else {
-        currentScreenshot = [ImageUtilities screenshot:self.overlayView];
+        currentScreenshot = [[UIImageView alloc] initWithImage:[ImageUtilities screenshot:self.overlayView]];
     }
     
-    UIImageView *currentScreenshotImage = [[UIImageView alloc] initWithImage:currentScreenshot];
-    [self setPlayerScreenshot:nil];
-    
     [self.zoomInScreenshot setAlpha:1];
-    [self.zoomInScreenshot setFrame:currentScreenshotImage.frame];
+    [self.zoomInScreenshot setFrame:currentScreenshot.frame];
     
-    [self.zoomInScreenshot addSubview:currentScreenshotImage];
+    [self.zoomInScreenshot addSubview:currentScreenshot];
     
     [self.screenshot setAlpha:1];
     [self.view addSubview:self.screenshot];
@@ -1046,11 +1067,12 @@
     
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationCurveEaseIn animations:^{
         [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
-        [currentScreenshotImage setFrame:CGRectMake(0, 0, self.zoomInScreenshotFrame.size.width, self.zoomInScreenshotFrame.size.height)];
-        [currentScreenshotImage setAlpha:0];
+        [currentScreenshot setFrame:CGRectMake(0, 0, self.zoomInScreenshotFrame.size.width, self.zoomInScreenshotFrame.size.height)];
+        [currentScreenshot setAlpha:0];
    } completion:^(BOOL finished) {
         [self setInTransition:NO];
         [self dismissViewControllerAnimated:NO completion:nil];
+        [self setPlayerScreenshot:nil];
     }];
     
 }
