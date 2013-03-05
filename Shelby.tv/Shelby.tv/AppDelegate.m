@@ -65,7 +65,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
-        [ShelbyAPIClient getAllChannels];
+        [ShelbyAPIClient getAllCategories];
     });
     
     // Enable Audio Play in Vibrate and Background Modes
@@ -259,7 +259,7 @@
         [ShelbyAPIClient getStream];
         [ShelbyAPIClient getLikes];
         [ShelbyAPIClient getPersonalRoll];
-        [ShelbyAPIClient getAllChannels];
+        [ShelbyAPIClient getAllCategories];
     });
     
     if ( ![_pollAPITimer isValid] ) {

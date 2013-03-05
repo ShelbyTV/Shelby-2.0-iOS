@@ -23,7 +23,8 @@
 - (void)removeOlderVideoFramesFromStream;
 - (void)removeOlderVideoFramesFromLikes;
 - (void)removeOlderVideoFramesFromPersonalRoll;
-- (void)removeOlderVideoFramesFromChannel:(NSString *)channelID;
+- (void)removeOlderVideoFramesFromCategoryChannel:(NSString *)channelID;
+- (void)removeOlderVideoFramesFromCategoryRoll:(NSString *)rollID;
 
 /// Storage Methods
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary;
@@ -153,7 +154,7 @@
     }
 }
 
-- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType andChannelID:(NSString *)channelID
+- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType andCategoryID:(NSString *)categoryID
 {
 
     switch ( categoryType ) {
@@ -187,9 +188,15 @@
             
         } break;
             
-        case CategoryType_Channel: {
+        case CategoryType_CategoryChannel: {
      
-            [self removeOlderVideoFramesFromChannel:channelID];
+            [self removeOlderVideoFramesFromCategoryChannel:categoryID];
+            
+        }
+            
+        case CategoryType_CategoryRoll: {
+            
+            [self removeOlderVideoFramesFromCategoryRoll:categoryID];
             
         }
     }
@@ -332,7 +339,7 @@
     
 }
 
-- (void)storeChannels:(NSDictionary *)resultsDictionary
+- (void)storeCategories:(NSDictionary *)resultsDictionary
 {
     NSArray *channelArray = resultsDictionary[@"result"];
     
@@ -359,7 +366,7 @@
             displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
             [channel setValue:displayThumbnail forKey:kShelbyCoreDataChannelDisplayThumbnailURL];
 
-            [ShelbyAPIClient getChannel:channelID];
+//            [ShelbyAPIClient getChannel:channelID];
             
         }
                 
@@ -396,7 +403,7 @@
     
 }
 
-- (void)storeRollFrames:(NSDictionary *)resultsDictionary forChannel:(NSString *)channelID
+- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID
 {
     NSArray *resultsArray = resultsDictionary[@"result"];
     
@@ -422,6 +429,11 @@
     });
     
     [self saveContext:_context];
+}
+
+- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID
+{
+    
 }
 
 #pragma mark - Fetch Methods (Public)
@@ -499,7 +511,7 @@
     return [frameResults count];
 }
 
-- (NSUInteger)fetchCountForChannel:(NSString *)channelID
+- (NSUInteger)fetchCountForCategoryChannel:(NSString *)channelID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -511,6 +523,26 @@
     
     // Filter by rollID
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    return [frameResults count];
+}
+
+- (NSUInteger)fetchCountForCategoryRoll:(NSString *)rollID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames
@@ -707,9 +739,38 @@
     return deduplicatedFrames;
 }
 
+- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Queue Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
+    
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
+    
+    return deduplicatedFrames;
+}
+
 - (NSMutableArray *)fetchMoreFramesInChannel:(NSString *)channelID afterDate:(NSDate *)date
 {
-    
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
@@ -725,6 +786,67 @@
     
     // Filter by rollID and timestamp
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((channelID == %@) AND (timestamp < %@))", channelID, date];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Personal Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
+    
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
+    
+    return deduplicatedFrames;
+}
+
+- (NSMutableArray *)fetchFramesInCategoryRoll:(NSString *)rollID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Queue Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
+    
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
+    
+    return deduplicatedFrames;
+}
+
+- (NSMutableArray *)fetchMoreFramesInCategoryRoll:(NSString *)rollID afterDate:(NSDate *)date
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    // Set Predicate
+    
+    // Filter by rollID and timestamp
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", rollID, date];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
@@ -793,36 +915,6 @@
     
     return [NSMutableArray arrayWithArray:channelsArray];
     
-}
-
-- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID
-{
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Sort by timestamp
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:@[sortDescriptor]];
-    
-    // Filter by rollID
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
-    [request setPredicate:predicate];
-    
-    // Execute request that returns array of frames in Queue Roll
-    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
-    
-    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
-    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
-    
-    // Remove Frames that link to the same Video object
-    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
-    
-    return deduplicatedFrames;
 }
 
 #pragma mark - Sync Methods (Public)
@@ -1063,7 +1155,7 @@
     }
 }
 
-- (void)removeOlderVideoFramesFromChannel:(NSString *)channelID
+- (void)removeOlderVideoFramesFromCategoryChannel:(NSString *)channelID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1102,6 +1194,44 @@
     }
 }
 
+- (void)removeOlderVideoFramesFromCategoryRoll:(NSString *)rollID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by channelID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 60;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Frame *frame = (Frame*)[olderResults lastObject];
+            [self.context deleteObject:frame];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+        
+        [self saveContext:_context];
+        
+    }
+}
 
 #pragma mark - Storage Methods (Private) 
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary

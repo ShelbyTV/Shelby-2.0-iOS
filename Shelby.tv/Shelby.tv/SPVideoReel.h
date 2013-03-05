@@ -24,7 +24,7 @@
 - (id)initWithCategoryType:(CategoryType)categoryType
              categoryTitle:(NSString *)title
                videoFrames:(NSMutableArray *)videoFrames
-              andChannelID:(NSString *)channelID;
+            andCategoryID:(NSString *)categoryID;
 
 - (void)setupTransition:(UIImageView *)screenshot andZoomInScreenshot:(UIImageView *)zoomInScreenshot;
 

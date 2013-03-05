@@ -15,15 +15,16 @@
 
 /// Persistance Methods
 - (void)saveContext:(NSManagedObjectContext *)context;
-- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType andChannelID:(NSString *)channelID;
+- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType andCategoryID:(NSString *)categoryID;
 - (void)removeAllVideoExtractionURLReferences;
 
 /// Storage Methods
 - (void)storeUser:(NSDictionary *)resultsDictionary;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary;
-- (void)storeChannels:(NSDictionary *)resultsDictionary;
-- (void)storeRollFrames:(NSDictionary *)resultsDictionary forChannel:(NSString*)channelID;
+- (void)storeCategories:(NSDictionary *)resultsDictionary;
+- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID;
+- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID;
 
 /// Fetching Methods
 - (User *)fetchUser;
@@ -31,7 +32,8 @@
 - (NSUInteger)fetchStreamCount;
 - (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
-- (NSUInteger)fetchCountForChannel:(NSString *)channelID;
+- (NSUInteger)fetchCountForCategoryChannel:(NSString *)channelID;
+- (NSUInteger)fetchCountForCategoryRoll:(NSString *)rollID;
 
 - (NSMutableArray *)fetchStreamEntries;
 - (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date;
@@ -42,8 +44,10 @@
 - (NSMutableArray *)fetchPersonalRollEntries;
 - (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date;
 
-- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID;
-- (NSMutableArray *)fetchMoreFramesInChannel:(NSString *)channelID afterDate:(NSDate *)date;
+- (NSMutableArray *)fetchFramesInCategoryChannel:(NSString *)channelID;
+- (NSMutableArray *)fetchMoreFramesInCategoryChannel:(NSString *)channelID afterDate:(NSDate *)date;
+- (NSMutableArray *)fetchFramesInCategoryRoll:(NSString *)rollID;
+- (NSMutableArray *)fetchMoreFramesInCategoryRoll:(NSString *)rollID afterDate:(NSDate *)date;
 
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
 - (NSMutableArray *)fetchAllChannels;
@@ -51,6 +55,5 @@
 /// Sync Methods
 - (void)syncLikes:(NSDictionary *)webResuhanneltsDictionary;
 - (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
-
 
 @end

@@ -273,11 +273,11 @@
     [operation start];
 }
 
-#pragma mark - Channels (GET)
-+ (void)getAllChannels
+#pragma mark - Categories (GET)
++ (void)getAllCategories
 {
     
-    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
+    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllCategories];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -286,7 +286,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-            [dataUtility storeChannels:JSON];
+            [dataUtility storeCategories:JSON];
             
         });
         
@@ -303,9 +303,9 @@
     
 }
 
-+ (void)getChannel:(NSString *)channelID
++ (void)getCategoryChannel:(NSString *)channelID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashbaord, channelID];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetCategoryChannel, channelID];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
@@ -315,7 +315,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-            [dataUtility storeRollFrames:JSON forChannel:channelID];
+            [dataUtility storeFrames:JSON forCategoryChannel:channelID];
             
         });
         
@@ -328,9 +328,9 @@
     [operation start];
 }
 
-+ (void)getMoreFrames:(NSString *)skipParam forChannel:(NSString *)channelID
++ (void)getMoreFrames:(NSString *)skipParam forCategoryChannel:(NSString *)channelID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreChannelDashbaord, channelID, skipParam];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreCategoryChannel, channelID, skipParam];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
@@ -340,7 +340,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
-            [dataUtility storeRollFrames:JSON forChannel:channelID];
+            [dataUtility storeFrames:JSON forCategoryChannel:channelID];
             
         });
         
@@ -351,6 +351,21 @@
     }];
     
     [operation start];
+}
+
++ (void)getCategoryRoll:(NSString *)rollID
+{
+    
+    
+    
+}
+
+
++ (void)getMoreFrames:(NSString *)skipParam forCategoryRoll:(NSString *)rollID
+{
+ 
+    
+    
 }
 
 #pragma mark - Syncing (GET)

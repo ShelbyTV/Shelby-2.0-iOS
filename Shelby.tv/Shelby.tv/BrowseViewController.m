@@ -532,19 +532,19 @@ typedef enum {
         CategoryType categoryType;
         Channel *channel = nil;
         switch (playerType) {
-            case PlayerTypeChannel:
-            {
-                
-                NSManagedObjectContext *context = [self context];
-                NSInteger channelIndex = [self.collectionView indexPathForCell:cell].row;
-                NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
-                channel = (Channel *)[context existingObjectWithID:objectID error:nil];
-                videoFrames = [dataUtility fetchFramesInChannel:channel.channelID];
-                errorMessage = @"No videos in Channel.";
-                title = [channel displayTitle];
-                categoryType = CategoryType_Channel;
-                break;
-            }
+//            case PlayerTypeChannel:
+//            {
+//                
+//                NSManagedObjectContext *context = [self context];
+//                NSInteger channelIndex = [self.collectionView indexPathForCell:cell].row;
+//                NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
+//                channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+//                videoFrames = [dataUtility fetchFramesInChannel:channel.channelID];
+//                errorMessage = @"No videos in Channel.";
+//                title = [channel displayTitle];
+//                categoryType = CategoryType_Channel;
+//                break;
+//            }
             case PlayerTypePersonalRoll:
             {
                 videoFrames = [dataUtility fetchPersonalRollEntries];
@@ -585,7 +585,9 @@ typedef enum {
             if ( [videoFrames count] ) {
                 SPVideoReel *reel = nil;
                 if (categoryType == PlayerTypeChannel) {
-                    reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title videoFrames:videoFrames andChannelID:[channel channelID]];
+                    
+                    // TODO
+                    reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title videoFrames:videoFrames andCategoryID:[channel channelID]];
                     
                 } else {
                     reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title andVideoFrames:videoFrames];

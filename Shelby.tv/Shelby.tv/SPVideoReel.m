@@ -28,7 +28,7 @@
 @property (nonatomic) NSMutableArray *playableVideoPlayers;
 @property (nonatomic) NSMutableArray *itemViews;
 @property (copy, nonatomic) NSString *categoryTitle;
-@property (copy, nonatomic) NSString *channelID;
+@property (copy, nonatomic) NSString *categoryID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
@@ -101,13 +101,13 @@
 - (id)initWithCategoryType:(CategoryType)categoryType
              categoryTitle:(NSString *)title
                videoFrames:(NSMutableArray *)videoFrames
-              andChannelID:(NSString *)channelID
+              andChannelID:(NSString *)categoryID
 {
     if ( (self = [super init]) ) {
         
         self.categoryType = categoryType;
         self.categoryTitle = title;
-        self.channelID = channelID;
+        self.categoryID = categoryID;
 
         [self setupVideoFrames:videoFrames];
 
@@ -527,8 +527,8 @@
                 // Instantiate dataUtility for cleanup
                 CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                 
-                // Remove older videos (channelID will be nil for stream, likes, and personal roll)
-                [dataUtility removeOlderVideoFramesForCategoryType:_categoryType andChannelID:_channelID];
+                // Remove older videos (categoryID will be nil for stream, likes, and personal roll)
+                [dataUtility removeOlderVideoFramesForCategoryType:_categoryType andCategoryID:_categoryID];
                 
                 // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
                 [dataUtility removeAllVideoExtractionURLReferences];
@@ -800,12 +800,21 @@
                     
                 } break;
                     
-                case CategoryType_Channel:{
+                case CategoryType_CategoryChannel:{
                     
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannel:_channelID];
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:_categoryID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFrames:numberToString forChannel:_channelID];
+                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryChannel:_categoryID];
 
+                    
+                } break;
+                    
+                case CategoryType_CategoryRoll:{
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:_categoryID];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:_categoryID];
+                    
                     
                 } break;
             }
@@ -870,8 +879,12 @@
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
             } break;
                 
-            case CategoryType_Channel:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannel:_channelID afterDate:date]];
+            case CategoryType_CategoryChannel:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:_categoryID afterDate:date]];
+            } break;
+                
+            case CategoryType_CategoryRoll:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:_categoryID afterDate:date]];
             } break;
                 
         }

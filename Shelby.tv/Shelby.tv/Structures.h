@@ -34,7 +34,8 @@ typedef NS_ENUM(NSUInteger, CategoryType)
     CategoryType_Stream,
     CategoryType_Likes,
     CategoryType_PersonalRoll,
-    CategoryType_Channel
+    CategoryType_CategoryChannel,
+    CategoryType_CategoryRoll
     
 };
 
