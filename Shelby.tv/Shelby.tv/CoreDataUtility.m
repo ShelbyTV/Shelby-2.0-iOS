@@ -991,9 +991,7 @@
     NSMutableArray *categoriesArray = [[NSMutableArray alloc] init];
     [categoriesArray addObjectsFromArray:channelsArray];
     [categoriesArray addObjectsFromArray:rollsArray];
-    
-    DLog(@"%@", categoriesArray);
-    
+
     return categoriesArray;
     
 }

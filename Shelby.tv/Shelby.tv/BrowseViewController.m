@@ -7,22 +7,20 @@
 //
 
 #import "BrowseViewController.h"
+
+// Views
 #import "CategoryViewCell.h"
 #import "CollectionViewCategoriesLayout.h"
 #import "LoginView.h"
-#import "MeViewController.h"
 #import "MyRollViewCell.h"
 #import "PageControl.h"
-#import "SPVideoReel.h"
-#import "ImageUtilities.h"
-#import <QuartzCore/QuartzCore.h>
 
-typedef enum {
-    PlayerTypeStream,
-    PlayerTypeLikes,
-    PlayerTypePersonalRoll,
-    PlayerTypeChannel
-} PlayerType;
+// View Controllers
+#import "MeViewController.h"
+#import "SPVideoReel.h"
+
+// Utilities
+#import "ImageUtilities.h"
 
 @interface BrowseViewController ()
 
@@ -35,12 +33,10 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-// TODO: to move to a collection view data file
-// TODO: Is this supposed to be atomic?
-@property NSMutableArray *categories;
+@property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
 
 @property (weak, nonatomic) IBOutlet PageControl *pageControl;
-// Fetch nickname of logged in user from CoreData
+
 - (void)fetchUserNickname;
 
 // TODO: need to port from MeVC
@@ -66,7 +62,7 @@ typedef enum {
 - (void)userAuthenticationDidSucceed:(NSNotification *)notification;
 
 /// Video Player Launch Methods
-- (void)launchPlayer:(PlayerType)playerType fromCell:(UICollectionViewCell *)cell;
+- (void)launchPlayer:(CategoryType)categoryType fromCell:(UICollectionViewCell *)cell;
 - (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
 
 /// Version Label
@@ -160,11 +156,6 @@ typedef enum {
 
     NSUInteger pages = [(CollectionViewCategoriesLayout *)self.collectionView.collectionViewLayout numberOfPages];
     [self.pageControl setNumberOfPages:pages];
-}
-
-- (void)fetchFramesForChannel
-{
-    
 }
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
@@ -310,24 +301,51 @@ typedef enum {
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    int row = indexPath.row;
+    NSUInteger row = [indexPath row];
+    
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-    if (indexPath.section == 0) {
-        if ([self isLoggedIn]) {
-            if (row == 0) {
-                [self launchPlayer:PlayerTypeLikes fromCell:cell];
-            } else if (row == 2) {
-                [self launchPlayer:PlayerTypePersonalRoll fromCell:cell];
-            } else if (row == 1) {
-                [self launchPlayer:PlayerTypeStream fromCell:cell];
-            } else if (row == 3) {
+    
+    if ( indexPath.section == 0 ) { // If on ME screen
+        
+        if ( [self isLoggedIn] ) { // and if loggedIn,
+            
+            if ( 0 == row ) { // Launch Likes
+                
+                [self launchPlayer:CategoryType_Likes fromCell:cell];
+            
+            } else if (2 == row) { // Launch Personal Roll
+            
+                [self launchPlayer:CategoryType_PersonalRoll fromCell:cell];
+            
+            } else if (1 == row) { // Launch Stream
+                
+                [self launchPlayer:CategoryType_Stream fromCell:cell];
+            
+            } else if (3 == row) { // Logout
+            
                 [self logoutAction];
+            
             }
-        } else if (row == 3) {
+        
+        } else if (row == 3) { // or if loggedOut
+        
             [self loginAction];
+        
         }
-    } else {
-        [self launchPlayer:PlayerTypeChannel fromCell:cell];
+    
+    } else { // If NOT on ME screen
+    
+        id category = (id)[self.categories objectAtIndex:[indexPath row]];
+        
+        if ( [category isMemberOfClass:[Channel class]] ) { // Category is a Channel
+            
+            [self launchPlayer:CategoryType_CategoryChannel fromCell:cell];
+            
+        } else if ( [category isMemberOfClass:[Roll class]] ) { // Cateogory is a Roll
+            
+            [self launchPlayer:CategoryType_CategoryRoll fromCell:cell];
+            
+        }
     }
 }
 
@@ -518,77 +536,87 @@ typedef enum {
 
 
 #pragma mark - Video Player Launch Methods (Private)
-- (void)launchPlayer:(PlayerType)playerType fromCell:(UICollectionViewCell *)cell
+- (void)launchPlayer:(CategoryType)categoryType fromCell:(UICollectionViewCell *)cell
 {
-    DataRequestType requestType = DataRequestType_Fetch;
+   
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *videoFrames = nil;
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:requestType];
         NSString *errorMessage = nil;
         NSString *title = nil;
-        CategoryType categoryType;
         Channel *channel = nil;
-        switch (playerType) {
-                // TODO
-//            case PlayerTypeChannel:
-//            {
-//                
-//                NSManagedObjectContext *context = [self context];
-//                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
-//                NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
-//                channel = (Channel *)[context existingObjectWithID:objectID error:nil];
-//                videoFrames = [dataUtility fetchFramesInChannel:channel.channelID];
-//                errorMessage = @"No videos in Channel.";
-//                title = [channel displayTitle];
-//                categoryType = CategoryType_Channel;
-//                break;
-//            }
-            case PlayerTypePersonalRoll:
-            {
-                videoFrames = [dataUtility fetchPersonalRollEntries];
-                errorMessage = @"No videos in Personal Roll.";
-                title = @"Personal Roll";
-                categoryType = CategoryType_PersonalRoll;
-                break;
-            }
-            case PlayerTypeLikes:
-            {
+        Roll *roll = nil;
+        
+        switch ( categoryType ) {
+                
+            case CategoryType_Likes: {
+                
                 videoFrames = [dataUtility fetchLikesEntries];
                 errorMessage = @"No videos in Likes.";
                 title = @"Likes";
-                categoryType = CategoryType_Likes;
-                break;
-            }
-            case PlayerTypeStream:
-            {
+                
+            } break;
+                
+            case CategoryType_PersonalRoll: {
+               
+                videoFrames = [dataUtility fetchPersonalRollEntries];
+                errorMessage = @"No videos in Personal Roll.";
+                title = @"Personal Roll";
+               
+            } break;
+                
+            case CategoryType_Stream: {
+                
                 videoFrames = [dataUtility fetchStreamEntries];
                 errorMessage = @"No videos in Stream.";
                 title = @"Stream";
-                categoryType = CategoryType_Stream;
-                break;
-            }
-            default: // Should never get here
-            {
-                videoFrames = [dataUtility fetchStreamEntries];
-                errorMessage = @"No videos in Stream.";
-                title = @"Stream";
-                categoryType = CategoryType_Stream;
-                break;
-                break;
-            }
+                
+            } break;
+                
+            case CategoryType_CategoryChannel:{
+                
+                NSManagedObjectContext *context = [self context];
+                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
+                NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
+                Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+                videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
+                errorMessage = @"No videos in Channel.";
+                title = [channel displayTitle];
+                
+            } break;
+                
+            case CategoryType_CategoryRoll:{
+                
+                NSManagedObjectContext *context = [self context];
+                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
+                NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
+                Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
+                videoFrames = [dataUtility fetchFramesInCategoryRoll:[roll rollID]];
+                errorMessage = @"No videos in Channel.";
+                title = [roll displayTitle];
+                
+            } break;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if ( [videoFrames count] ) {
+                
                 SPVideoReel *reel = nil;
-                if (categoryType == PlayerTypeChannel) {
+                
+                if ( categoryType == CategoryType_CategoryChannel ) { // Category Channel
                     
-                    // TODO
                     reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title videoFrames:videoFrames andCategoryID:[channel channelID]];
                     
+                } else if ( categoryType == CategoryType_CategoryRoll ) { // Category Roll
+                    
+                    reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title videoFrames:videoFrames andCategoryID:[roll rollID]];
+                    
                 } else {
+                
                     reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title andVideoFrames:videoFrames];
+               
                 }
 
                 [self presentViewController:reel fromCell:cell];
