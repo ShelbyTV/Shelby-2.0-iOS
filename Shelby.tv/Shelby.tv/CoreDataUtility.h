@@ -55,5 +55,6 @@
 /// Sync Methods
 - (void)syncLikes:(NSDictionary *)webResuhanneltsDictionary;
 - (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
+- (void)syncCategories:(NSDictionary *)categoriesArray;
 
 @end

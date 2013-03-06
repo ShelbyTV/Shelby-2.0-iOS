@@ -40,6 +40,10 @@
 - (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames;
 - (void)postNotificationVideoInContext:(NSManagedObjectContext *)context;
 
+/// Syncing Methods
+- (void)syncCategoryChannels:(NSMutableArray *)webChannelIDsArray;
+- (void)syncCategoryRolls:(NSMutableArray *)webRollIDsArray;
+
 /// Helper methods
 - (BOOL)isSupportedProvider:(Frame *)frame;
 - (BOOL)isUnplayableVideo:(Video *)video;
@@ -411,6 +415,8 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFetched object:nil];
         });
     
+    
+    [self syncCategories:resultsDictionary];
     [self saveContext:_context];
     
 }
@@ -1084,6 +1090,55 @@
     [self saveContext:_context];
 }
 
+- (void)syncCategories:(NSDictionary *)webResultsDictionary
+{
+    
+    /// Reference Web Categories 
+    NSArray *categoriesArray = webResultsDictionary[@"result"];
+
+    /// Channels
+    NSMutableArray *webChannelIDsArray = [@[] mutableCopy];
+    
+    // Reference all channels and rolls found on web as categories
+    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
+    
+        // Channels
+        NSArray *webChannelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
+
+        for ( NSUInteger j = 0; j < [webChannelsArray count]; ++j ) {
+            
+            NSDictionary *channelDictionary = [webChannelsArray objectAtIndex:j];
+            NSString *channelID = [channelDictionary valueForKey:@"user_id"];
+            [webChannelIDsArray addObject:channelID];
+            
+            }
+    }
+    
+    [self syncCategoryChannels:webChannelIDsArray];
+    
+    /// Rolls
+    NSMutableArray *webRollIDsArray = [@[] mutableCopy];;
+    
+    // Reference all channels and rolls found on web as categories
+    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
+       
+        // Rolls
+        NSArray *webRollsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"rolls"];
+        
+        for ( NSUInteger j = 0; j < [webRollsArray count]; ++j ) {
+            
+            NSDictionary *rollDictionary = [webRollsArray objectAtIndex:j];
+            NSString *rollID = [rollDictionary valueForKey:@"id"];
+            [webRollIDsArray addObject:rollID];
+            
+        }
+    }
+    
+
+    [self syncCategoryRolls:webRollIDsArray];
+    
+}
+
 #pragma mark - Persistance Methods (Private)
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
@@ -1624,6 +1679,73 @@
                                                             object:nil
                                                           userInfo:videoDictionary];
     }
+}
+
+#pragma mark - Syncing Methods (Private)
+- (void)syncCategoryChannels:(NSMutableArray *)webChannelIDsArray
+{
+    /// Compare channels
+    
+    // Create channel fetch request
+    NSFetchRequest *channelRequest = [[NSFetchRequest alloc] init];
+    [channelRequest setReturnsObjectsAsFaults:NO];
+    
+    // Search channel table
+    NSEntityDescription *rollDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityChannel inManagedObjectContext:_context];
+    [channelRequest setEntity:rollDescription];
+    
+    // Execute request that returns array of rolls
+    NSArray *channelResults = [self.context executeFetchRequest:channelRequest error:nil];
+    
+    // Perform Core Data vs. Shelby Web Database comparison
+    for ( NSUInteger i = 0; i < [channelResults count]; ++i ) {
+        
+        Channel *channel = (Channel *)channelResults[i];
+        NSString *channelID = channel.channelID;
+        
+        // If channel doesn't exist as web category any more, delete it
+        if ( ![webChannelIDsArray containsObject:channelID] ) {
+            
+            [self.context deleteObject:channel];
+            
+        }
+    }
+    
+    [self saveContext:_context];
+}
+
+- (void)syncCategoryRolls:(NSMutableArray *)webRollIDsArray
+{
+    // Create roll fetch request
+    NSFetchRequest *rollRequest = [[NSFetchRequest alloc] init];
+    [rollRequest setReturnsObjectsAsFaults:NO];
+    
+    // Search roll table
+    NSEntityDescription *rollDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityRoll inManagedObjectContext:_context];
+    [rollRequest setEntity:rollDescription];
+    
+    // Filter by rollID
+    NSPredicate *rollPredicate = [NSPredicate predicateWithFormat:@"isCategory == %d", YES];
+    [rollRequest setPredicate:rollPredicate];
+    
+    // Execute request that returns array of rolls
+    NSArray *rollResults = [self.context executeFetchRequest:rollRequest error:nil];
+    
+    // Perform Core Data vs. Shelby Web Database comparison
+    for ( NSUInteger i = 0; i < [rollResults count]; ++i ) {
+        
+        Roll *roll = (Roll *)rollResults[i];
+        NSString *rollID = roll.rollID;
+        
+        // If roll doesn't exist as web category any more, retain the roll, but disallow it from showing up in the fetchAllCategories results
+        if ( ![webRollIDsArray containsObject:rollID] ) {
+            
+            roll.isCategory = @NO;
+            
+        }
+    }
+    
+    [self saveContext:_context];
 }
 
 @end
