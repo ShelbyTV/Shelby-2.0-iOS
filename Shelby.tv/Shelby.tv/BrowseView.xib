@@ -312,7 +312,7 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="30.CustomClassName">CollectionViewCategoriesLayout</string>
+				<string key="30.CustomClassName">CollectionViewGroupsLayout</string>
 				<string key="30.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="31.CustomClassName">PageControl</string>
 				<string key="31.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -384,11 +384,11 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">CollectionViewCategoriesLayout</string>
+					<string key="className">CollectionViewGroupsLayout</string>
 					<string key="superclassName">UICollectionViewLayout</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/CollectionViewCategoriesLayout.h</string>
+						<string key="minorKey">./Classes/CollectionViewGroupsLayout.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

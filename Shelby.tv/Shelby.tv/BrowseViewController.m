@@ -9,8 +9,8 @@
 #import "BrowseViewController.h"
 
 // Views
-#import "CategoryViewCell.h"
-#import "CollectionViewCategoriesLayout.h"
+#import "GroupViewCell.h"
+#import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
 #import "MyRollViewCell.h"
 #import "PageControl.h"
@@ -92,8 +92,8 @@
     self.categories = [[NSMutableArray alloc] init];
     
     // Register Cell Nibs
-    UINib *cellNib = [UINib nibWithNibName:@"CategoryViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"CategoryViewCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
     cellNib = [UINib nibWithNibName:@"MyRollViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"MyRollViewCell"];
 
@@ -154,7 +154,7 @@
     
     [self.collectionView reloadData];
 
-    NSUInteger pages = [(CollectionViewCategoriesLayout *)self.collectionView.collectionViewLayout numberOfPages];
+    NSUInteger pages = [(CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout numberOfPages];
     [self.pageControl setNumberOfPages:pages];
 }
 
@@ -189,7 +189,7 @@
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return ( 0 == section ) ? kShelbyCollectionViewNumberOfCardsInCategorySectionPage : [self.categories count];
+    return ( 0 == section ) ? kShelbyCollectionViewNumberOfCardsInGroupSectionPage : [self.categories count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
@@ -214,7 +214,7 @@
         return cell;
     }
     
-    CategoryViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"CategoryViewCell" forIndexPath:indexPath];
+    GroupViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"GroupViewCell" forIndexPath:indexPath];
     NSString *title = nil;
     NSString *description = nil;
     NSString *buttonImageName = nil;
@@ -243,7 +243,7 @@
             buttonImageName = @"loginCard";
         }
         UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
-        [cell.categoryThumbnailImage setImage:buttonImage];
+        [cell.groupThumbnailImage setImage:buttonImage];
     } else {  // Channel Cards
         [cell enableCard:YES];
         if (indexPath.row < [self.categories count]) {
@@ -259,14 +259,14 @@
                 NSString *thumbnailUrl = [channel displayThumbnailURL];
               
                 [AsynchronousFreeloader loadImageFromLink:thumbnailUrl
-                                             forImageView:cell.categoryThumbnailImage
+                                             forImageView:[cell groupThumbnailImage]
                                       withPlaceholderView:nil
                                            andContentMode:UIViewContentModeScaleAspectFill];
                 
             
             } else {
                 UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
-                [cell.categoryThumbnailImage setImage:buttonImage];
+                [cell.groupThumbnailImage setImage:buttonImage];
             }
         }
     }
@@ -279,8 +279,8 @@
         description = @"";
     }
  
-    [cell.categoryTitle setText:title];
-    [cell.categoryDescription setText:description];
+    [cell.groupTitle setText:title];
+    [cell.groupDescription setText:description];
     
     return cell;
 }
@@ -288,13 +288,13 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CategoryViewCell  *cell = (CategoryViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    GroupViewCell  *cell = (GroupViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell.selectionView setHidden:NO];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CategoryViewCell  *cell = (CategoryViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    GroupViewCell  *cell = (GroupViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell.selectionView setHidden:YES];
     
 }
@@ -685,7 +685,7 @@
     NSArray *visibleCells = [self.collectionView visibleCells];
     if ([visibleCells count] > 0) {
         NSIndexPath *firstCell = [self.collectionView indexPathForCell:visibleCells[0]];
-        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyCollectionViewNumberOfCardsInMeSectionPage : kShelbyCollectionViewNumberOfCardsInCategorySectionPage);
+        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyCollectionViewNumberOfCardsInMeSectionPage : kShelbyCollectionViewNumberOfCardsInGroupSectionPage);
         int page = (firstCell.row / numberOfCardsInSectionPage) + firstCell.section;
         [self.pageControl setCurrentPage:page];
     }

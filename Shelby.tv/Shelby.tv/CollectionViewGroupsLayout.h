@@ -1,5 +1,5 @@
 //
-//  CollectionViewCategoriesLayout.h
+//  CollectionViewGroupsLayout.h
 //  Shelby.tv
 //
 //  Created by Keren on 2/15/13.
@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #define kShelbyCollectionViewNumberOfCardsInMeSectionPage 4
-#define kShelbyCollectionViewNumberOfCardsInCategorySectionPage 4
+#define kShelbyCollectionViewNumberOfCardsInGroupSectionPage 4
 
-@interface CollectionViewCategoriesLayout : UICollectionViewLayout
+@interface CollectionViewGroupsLayout : UICollectionViewLayout
 
 // Assuming 2 sections - Me and Channels
 - (int)numberOfPages;

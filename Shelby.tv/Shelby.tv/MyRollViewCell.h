@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "CategoryViewCell.h"
+#import "GroupViewCell.h"
 
-@interface MyRollViewCell : CategoryViewCell
+@interface MyRollViewCell : GroupViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *personalRollUsernameLabel;
 
