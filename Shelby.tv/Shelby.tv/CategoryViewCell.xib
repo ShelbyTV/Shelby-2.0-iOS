@@ -86,7 +86,7 @@
 							<object class="IBUILabel" id="552915386">
 								<reference key="NSNextResponder" ref="745635547"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 254}, {140, 30}}</string>
+								<string key="NSFrame">{{20, 253}, {140, 33}}</string>
 								<reference key="NSSuperview" ref="745635547"/>
 								<reference key="NSNextKeyView" ref="837944114"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -95,7 +95,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<string key="IBUIText">Channel</string>
+								<string key="IBUIText">Category</string>
 								<nil key="IBUITextColor"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -115,14 +115,13 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{160, 232}, {300, 74}}</string>
 								<reference key="NSSuperview" ref="745635547"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<string key="IBUIText">Channel Description</string>
+								<string key="IBUIText">Category Description</string>
 								<nil key="IBUITextColor"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -161,7 +160,7 @@
 				<int key="IBUIContentMode">4</int>
 				<bool key="IBUIMultipleTouchEnabled">YES</bool>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-				<string key="IBUIReuseIdentifier">ChannelViewCell</string>
+				<string key="IBUIReuseIdentifier">CategoryViewCell</string>
 				<object class="NSValue" key="IBUICustomSize">
 					<int key="NS.special">2</int>
 					<string key="NS.sizeval">{50, 236}</string>
@@ -173,35 +172,35 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">channelName</string>
-						<reference key="source" ref="785427639"/>
-						<reference key="destination" ref="552915386"/>
-					</object>
-					<int key="connectionID">139</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">channelDescription</string>
+						<string key="label">categoryDescription</string>
 						<reference key="source" ref="785427639"/>
 						<reference key="destination" ref="837944114"/>
 					</object>
-					<int key="connectionID">140</int>
+					<int key="connectionID">240</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">channelImage</string>
+						<string key="label">categoryTitle</string>
 						<reference key="source" ref="785427639"/>
-						<reference key="destination" ref="129845976"/>
+						<reference key="destination" ref="552915386"/>
 					</object>
-					<int key="connectionID">180</int>
+					<int key="connectionID">242</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">selectionView</string>
 						<reference key="source" ref="785427639"/>
-						<reference key="destination" ref="537579381"/>
+						<reference key="destination" ref="608266387"/>
 					</object>
-					<int key="connectionID">235</int>
+					<int key="connectionID">243</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">categoryThumbnailImage</string>
+						<reference key="source" ref="785427639"/>
+						<reference key="destination" ref="129845976"/>
+					</object>
+					<int key="connectionID">244</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -271,7 +270,6 @@
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
-				<string key="-1.CustomClassName">ChannelViewCell</string>
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -279,7 +277,7 @@
 				<string key="169.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="182.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="215.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="3.CustomClassName">ChannelViewCell</string>
+				<string key="3.CustomClassName">CategoryViewCell</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -287,7 +285,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">235</int>
+			<int key="maxID">244</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

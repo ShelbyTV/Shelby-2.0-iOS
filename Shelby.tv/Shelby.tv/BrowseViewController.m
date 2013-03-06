@@ -7,7 +7,7 @@
 //
 
 #import "BrowseViewController.h"
-#import "ChannelViewCell.h"
+#import "CategoryViewCell.h"
 #import "CollectionViewCategoriesLayout.h"
 #import "LoginView.h"
 #import "MeViewController.h"
@@ -96,8 +96,8 @@ typedef enum {
     self.categories = [[NSMutableArray alloc] init];
     
     // Register Cell Nibs
-    UINib *cellNib = [UINib nibWithNibName:@"ChannelViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"ChannelViewCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"CategoryViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"CategoryViewCell"];
     cellNib = [UINib nibWithNibName:@"MyRollViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"MyRollViewCell"];
 
@@ -105,7 +105,7 @@ typedef enum {
     [self fetchAllCategories];
   
     // Customize look
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]]];
     
     // Version label
     [self resetVersionLabel];
@@ -223,8 +223,8 @@ typedef enum {
         return cell;
     }
     
-    ChannelViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ChannelViewCell" forIndexPath:indexPath];
-    NSString *name = nil;
+    CategoryViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"CategoryViewCell" forIndexPath:indexPath];
+    NSString *title = nil;
     NSString *description = nil;
     NSString *buttonImageName = nil;
     int row = indexPath.row;
@@ -233,63 +233,63 @@ typedef enum {
         [cell enableCard:[self isLoggedIn]];
 
         if (row == 0) {
-            name = @"Likes";
+            title = @"Likes";
             description = @"Add videos to your likes so you can come back to them and watch them in Shelby at a later time.";
-            buttonImageName = @"likesCard.png";
+            buttonImageName = @"likesCard";
         } else if (row == 2) {
         } else if (row == 1) {
-            name = @"Stream";
+            title = @"Stream";
             description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
-            buttonImageName = @"streamCard.png";
+            buttonImageName = @"streamCard";
         } else if (row == 3) {
             [cell enableCard:YES];
             if ([self isLoggedIn]) {
-                name = @"Logout";
+                title = @"Logout";
             } else {
-                name = @"Login";
+                title = @"Login";
             }
             description = @"Ain't nothin' but a gangsta party!";
-            buttonImageName = @"loginCard.png";
+            buttonImageName = @"loginCard";
         }
         UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
-        [cell.channelImage setImage:buttonImage];
+        [cell.categoryThumbnailImage setImage:buttonImage];
     } else {  // Channel Cards
         [cell enableCard:YES];
         if (indexPath.row < [self.categories count]) {
-            buttonImageName = @"missingCard.png";
+            buttonImageName = @"missingCard";
             
             NSManagedObjectContext *context = [self context];
             NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
             Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
             // TODO: Channel should NOT be nil!
             if (channel) {
-                name = [channel displayTitle];
+                title = [channel displayTitle];
                 description = [channel displayDescription];
                 NSString *thumbnailUrl = [channel displayThumbnailURL];
               
                 [AsynchronousFreeloader loadImageFromLink:thumbnailUrl
-                                             forImageView:cell.channelImage
+                                             forImageView:cell.categoryThumbnailImage
                                       withPlaceholderView:nil
                                            andContentMode:UIViewContentModeScaleAspectFill];
                 
             
             } else {
                 UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
-                [cell.channelImage setImage:buttonImage];
+                [cell.categoryThumbnailImage setImage:buttonImage];
             }
         }
     }
     
-    if (!name) {
-        name = @"";
+    if (!title) {
+        title = @"";
     }
     
     if (!description) {
         description = @"";
     }
  
-    [cell.channelName setText:name];
-    [cell.channelDescription setText:description];
+    [cell.categoryTitle setText:title];
+    [cell.categoryDescription setText:description];
     
     return cell;
 }
@@ -297,13 +297,13 @@ typedef enum {
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ChannelViewCell  *cell = (ChannelViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    CategoryViewCell  *cell = (CategoryViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell.selectionView setHidden:NO];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ChannelViewCell  *cell = (ChannelViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    CategoryViewCell  *cell = (CategoryViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell.selectionView setHidden:YES];
     
 }

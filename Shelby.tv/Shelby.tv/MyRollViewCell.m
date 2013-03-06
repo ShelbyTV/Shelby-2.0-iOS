@@ -22,15 +22,15 @@
     [self.personalRollUsernameLabel setFrame:CGRectMake(703, 130, 278, 52)];
     [self.personalRollUsernameLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollUsernameLabel.font.pointSize]];
     [self.personalRollUsernameLabel setTextColor:[UIColor colorWithHex:@"ffffff" andAlpha:1.0f]];
-    [self.channelName setText:@"My Roll"];
-    [self.channelDescription setText:@"Ever want to curate your own channel? Now you can with Shelby. Roll Videos to your .TV today."];
-    [self.channelImage setImage:[UIImage imageNamed:@"personalRollCard.png"]];
+    [self.categoryTitle setText:@"My Roll"];
+    [self.categoryDescription setText:@"Ever want to curate your own channel? Now you can with Shelby. Roll Videos to your .TV today."];
+    [self.categoryThumbnailImage setImage:[UIImage imageNamed:@"personalRollCard.png"]];
 }
 
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    [self.channelImage setImage:[UIImage imageNamed:@"personalRollCard.png"]];
+    [self.categoryThumbnailImage setImage:[UIImage imageNamed:@"personalRollCard.png"]];
 }
 
 #pragma mark - Public Methods

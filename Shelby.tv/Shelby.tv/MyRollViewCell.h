@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "ChannelViewCell.h"
+#import "CategoryViewCell.h"
 
-@interface MyRollViewCell : ChannelViewCell
+@interface MyRollViewCell : CategoryViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *personalRollUsernameLabel;
 
