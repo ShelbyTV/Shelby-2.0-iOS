@@ -50,7 +50,7 @@
 - (NSMutableArray *)fetchMoreFramesInCategoryRoll:(NSString *)rollID afterDate:(NSDate *)date;
 
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
-- (NSMutableArray *)fetchAllChannels;
+- (NSMutableArray *)fetchAllCategories;
 
 /// Sync Methods
 - (void)syncLikes:(NSDictionary *)webResuhanneltsDictionary;

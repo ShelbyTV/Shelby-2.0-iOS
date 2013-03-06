@@ -24,11 +24,11 @@
 /// Setup Methods
 - (void)setupAnalytics;
 - (void)setupObservers;
-- (void)setupChannelLoadingScreen;
+- (void)setupChannelLoadingView;
 - (void)setupOfflineMode;
 
 /// Notification Methods
-- (void)didLoadChannels:(NSNotification *)notification;
+- (void)didLoadCategories:(NSNotification *)notification;
 - (void)postAuthorizationNotification;
 
 /// API Methods
@@ -54,7 +54,7 @@
     [self setupObservers];
     
     // Setup buffer screen to allow channels to be fetched from web and stored locally
-    [self setupChannelLoadingScreen];
+    [self setupChannelLoadingView];
     
     // Setup Offline Mode
     [self setupOfflineMode];
@@ -193,19 +193,19 @@
 {
     // Add notification to observe when channels have finished loading
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLoadChannels:)
-                                                 name:kShelbyNotificationChannelsFetched
+                                             selector:@selector(didLoadCategories:)
+                                                 name:kShelbyNotificationCategoriesFetched
                                                object:nil];
     
     // Add notification to dismiss channelLoadingScreen if there's no connectivity
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLoadChannels:)
+                                             selector:@selector(didLoadCategories:)
                                                  name:kShelbyNotificationNoConnectivity
                                                object:nil];
     
 }
 
-- (void)setupChannelLoadingScreen
+- (void)setupChannelLoadingView
 {
     self.channelLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
     [self.channelLoadingView setBackgroundColor:[UIColor clearColor]];
@@ -233,13 +233,14 @@
 }
 
 #pragma mark - Notification Methods (Private)
-- (void)didLoadChannels:(NSNotification *)notification
+- (void)didLoadCategories:(NSNotification *)notification
 {
     [self.channelLoadingView removeFromSuperview];
-    [(BrowseViewController *)self.window.rootViewController fetchChannels];
+    [(BrowseViewController *)self.window.rootViewController fetchAllCategories];
     [(BrowseViewController *)self.window.rootViewController resetView];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationChannelsFetched object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationCategoriesFetched object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationNoConnectivity object:nil];
 }
 
 

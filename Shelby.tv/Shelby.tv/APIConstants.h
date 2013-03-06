@@ -19,9 +19,9 @@
 #define kShelbyAPIPutUnplayableVideo        @"https://api.shelby.tv/v1/video/%@/unplayable?auth_token=%@"
 
 /// GET Rolls
-#define kShelbyAPIGetRollFrames             @"https://api.shelby.tv/v1/roll/%@/frames?auth_token=%@"
-#define kShelbyAPIGetMoreRollFrames         @"https://api.shelby.tv/v1/roll/%@/frames?auth_token=%@&skip=%@&limit=20"
-#define kShelbyAPIGetRollFramesForSync      @"https://api.shelby.tv/v1/roll/%@/frames?auth_token=%@&limit=%d"
+#define kShelbyAPIGetRollFrames             @"https://api.shelby.tv/v1/roll/%@/frames"
+#define kShelbyAPIGetMoreRollFrames         @"https://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
+#define kShelbyAPIGetRollFramesForSync      @"https://api.shelby.tv/v1/roll/%@/frames?limit=%d"
 
 /// GET Categories
 #define kShelbyAPIGetAllCategories          @"http://api.shelby.tv/v1/roll/featured?segment=ipad_standard"

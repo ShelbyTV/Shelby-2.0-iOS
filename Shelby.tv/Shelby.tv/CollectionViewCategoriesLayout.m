@@ -1,5 +1,5 @@
 //
-//  ChannelsCollectionViewLayout.m
+//  CollectionViewCategoriesLayout.m
 //  Shelby.tv
 //
 //  Created by Keren on 2/15/13.
@@ -12,7 +12,7 @@
 //  0 2 4 6 8 10
 //  1 3 5 7 9 11 ...
 
-#import "CollectionViewChannelsLayout.h"
+#import "CollectionViewCategoriesLayout.h"
 
 #define kShelbyCollectionViewPageWidth 1024
 #define kShelbyCollectionViewPageHeight 714
@@ -24,7 +24,7 @@
 #define kShelbyCollectionViewFirstRowYOffset 34
 #define kShelbyCollectionViewSecondRowYOffset 372
 
-@interface CollectionViewChannelsLayout()
+@interface CollectionViewCategoriesLayout ()
 
 @property(nonatomic,strong) NSMutableArray* layoutAttributes;  // array of UICollectionViewLayoutAttributes
 
@@ -33,7 +33,7 @@
 @end
 
 
-@implementation CollectionViewChannelsLayout
+@implementation CollectionViewCategoriesLayout
 
 
 #pragma mark - Public Methods
@@ -48,10 +48,10 @@
     pages += meSectionCount / kShelbyCollectionViewNumberOfCardsInMeSectionPage;
     
     int channelSectionCount = [self.collectionView numberOfItemsInSection:1];
-    if (channelSectionCount % kShelbyCollectionViewNumberOfCardsInChannelSectionPage != 0) {
+    if (channelSectionCount % kShelbyCollectionViewNumberOfCardsInCategorySectionPage != 0) {
         pages++;
     }
-    pages += channelSectionCount / kShelbyCollectionViewNumberOfCardsInChannelSectionPage;
+    pages += channelSectionCount / kShelbyCollectionViewNumberOfCardsInCategorySectionPage;
     
     return pages;
 }
@@ -88,7 +88,7 @@
     int yOffset = kShelbyCollectionViewFirstRowYOffset;
 
     for (int i = 0; i < count; i++) {
-        if (i != 0 && (i - kShelbyCollectionViewNumberOfCardsInMeSectionPage) % kShelbyCollectionViewNumberOfCardsInChannelSectionPage == 0) {
+        if (i != 0 && (i - kShelbyCollectionViewNumberOfCardsInMeSectionPage) % kShelbyCollectionViewNumberOfCardsInCategorySectionPage == 0) {
             screen += kShelbyCollectionViewPageWidth;
         }
         int row = 0;
@@ -110,7 +110,7 @@
             yOffset = kShelbyCollectionViewFirstRowYOffset;
         }
         
-        if ((i - kShelbyCollectionViewNumberOfCardsInMeSectionPage) % kShelbyCollectionViewNumberOfCardsInChannelSectionPage  == 0) {
+        if ((i - kShelbyCollectionViewNumberOfCardsInMeSectionPage) % kShelbyCollectionViewNumberOfCardsInCategorySectionPage  == 0) {
             xOffset += kShelbyCollectionViewCellSpacing;
         }
         

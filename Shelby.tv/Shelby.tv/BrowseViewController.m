@@ -8,7 +8,7 @@
 
 #import "BrowseViewController.h"
 #import "ChannelViewCell.h"
-#import "CollectionViewChannelsLayout.h"
+#import "CollectionViewCategoriesLayout.h"
 #import "LoginView.h"
 #import "MeViewController.h"
 #import "MyRollViewCell.h"
@@ -36,7 +36,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 // TODO: to move to a collection view data file
-@property NSMutableArray *channels;
+// TODO: Is this supposed to be atomic?
+@property NSMutableArray *categories;
 
 @property (weak, nonatomic) IBOutlet PageControl *pageControl;
 // Fetch nickname of logged in user from CoreData
@@ -92,7 +93,7 @@ typedef enum {
     [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
     
     [self fetchUserNickname];
-    _channels = [[NSMutableArray alloc] init];
+    self.categories = [[NSMutableArray alloc] init];
     
     // Register Cell Nibs
     UINib *cellNib = [UINib nibWithNibName:@"ChannelViewCell" bundle:nil];
@@ -101,7 +102,7 @@ typedef enum {
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"MyRollViewCell"];
 
     [self.pageControl setNumberOfPages:1];
-    [self fetchChannels];
+    [self fetchAllCategories];
   
     // Customize look
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
@@ -149,15 +150,15 @@ typedef enum {
     }
 }
 
-- (void)fetchChannels
+- (void)fetchAllCategories
 {
     CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [self.channels removeAllObjects];
-    [self.channels addObjectsFromArray:[datautility fetchAllChannels]];
+    [self.categories removeAllObjects];
+    [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
     [self.collectionView reloadData];
 
-    NSUInteger pages = [(CollectionViewChannelsLayout *)self.collectionView.collectionViewLayout numberOfPages];
+    NSUInteger pages = [(CollectionViewCategoriesLayout *)self.collectionView.collectionViewLayout numberOfPages];
     [self.pageControl setNumberOfPages:pages];
 }
 
@@ -197,11 +198,7 @@ typedef enum {
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return kShelbyCollectionViewNumberOfCardsInMeSectionPage;
-    } else {
-        return [self.channels count];
-    }
+    return ( 0 == section ) ? kShelbyCollectionViewNumberOfCardsInCategorySectionPage : [self.categories count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
@@ -258,11 +255,11 @@ typedef enum {
         [cell.channelImage setImage:buttonImage];
     } else {  // Channel Cards
         [cell enableCard:YES];
-        if (indexPath.row < [self.channels count]) {
+        if (indexPath.row < [self.categories count]) {
             buttonImageName = @"missingCard.png";
             
             NSManagedObjectContext *context = [self context];
-            NSManagedObjectID *objectID = [(self.channels)[indexPath.row] objectID];
+            NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
             Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
             // TODO: Channel should NOT be nil!
             if (channel) {
@@ -514,7 +511,7 @@ typedef enum {
                          [self.backgroundLoginView removeFromSuperview];
                          [self setIsLoggedIn:YES];
                          [self fetchUserNickname];
-                         [self fetchChannels];
+                         [self fetchAllCategories];
                          [self.collectionView reloadData];
                      }];
 }
@@ -532,12 +529,13 @@ typedef enum {
         CategoryType categoryType;
         Channel *channel = nil;
         switch (playerType) {
+                // TODO
 //            case PlayerTypeChannel:
 //            {
 //                
 //                NSManagedObjectContext *context = [self context];
-//                NSInteger channelIndex = [self.collectionView indexPathForCell:cell].row;
-//                NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
+//                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
+//                NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
 //                channel = (Channel *)[context existingObjectWithID:objectID error:nil];
 //                videoFrames = [dataUtility fetchFramesInChannel:channel.channelID];
 //                errorMessage = @"No videos in Channel.";
@@ -659,7 +657,7 @@ typedef enum {
     NSArray *visibleCells = [self.collectionView visibleCells];
     if ([visibleCells count] > 0) {
         NSIndexPath *firstCell = [self.collectionView indexPathForCell:visibleCells[0]];
-        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyCollectionViewNumberOfCardsInMeSectionPage : kShelbyCollectionViewNumberOfCardsInChannelSectionPage);
+        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyCollectionViewNumberOfCardsInMeSectionPage : kShelbyCollectionViewNumberOfCardsInCategorySectionPage);
         int page = (firstCell.row / numberOfCardsInSectionPage) + firstCell.section;
         [self.pageControl setCurrentPage:page];
     }

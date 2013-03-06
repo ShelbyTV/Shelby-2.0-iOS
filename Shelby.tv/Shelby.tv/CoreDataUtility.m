@@ -341,13 +341,13 @@
 
 - (void)storeCategories:(NSDictionary *)resultsDictionary
 {
-    NSArray *channelArray = resultsDictionary[@"result"];
+    NSArray *categoryArray = resultsDictionary[@"result"];
     
-    for ( NSUInteger i = 0; i < [channelArray count]; ++i ) {
+    for ( NSUInteger i = 0; i < [categoryArray count]; ++i ) {
         
         
         // Parse and Store Category Channels
-        NSDictionary *channelDictionary = [[[channelArray objectAtIndex:i] valueForKey:@"user_channels"] objectAtIndex:0];
+        NSDictionary *channelDictionary = [[[categoryArray objectAtIndex:i] valueForKey:@"user_channels"] objectAtIndex:0];
         
         if ( channelDictionary ) { // As of February 15, not all dictionaries in results have a user_channels dictionary
          
@@ -373,7 +373,7 @@
         }
         
         // Parse and Store Category Rolls
-        NSDictionary *rollDictionary = [[[channelArray objectAtIndex:i] valueForKey:@"rolls"] objectAtIndex:0];
+        NSDictionary *rollDictionary = [[[categoryArray objectAtIndex:i] valueForKey:@"rolls"] objectAtIndex:0];
         
         if ( rollDictionary ) { // As of February 15, not all dictionaries in results have a user_channels dictionary
             
@@ -383,6 +383,8 @@
             
             NSString *rollID = [NSString coreDataNullTest:[rollDictionary valueForKey:@"id"]];
             [roll setValue:rollID forKey:kShelbyCoreDataRollID];
+            
+            [roll setValue:@YES forKey:kShelbyCoreDataRollIsCategory];
             
             NSString *displayTitle = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_title"]];
             [roll setValue:displayTitle forKey:kShelbyCoreDataRollDisplayTitle];
@@ -402,9 +404,9 @@
                 
     }
     
-    if ( ![channelArray count] ) {
+    if ( ![categoryArray count] ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFetched object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFetched object:nil];
         });
     }
     
@@ -454,8 +456,9 @@
         }
     }
     
+    // TO DO
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFetched object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFetched object:nil];
     });
     
     [self saveContext:_context];
@@ -463,7 +466,24 @@
 
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID
 {
+    NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
     
+    for ( NSUInteger i = 0; i < [resultsArray count]; ++i ) {
+        
+        @autoreleasepool {
+            
+            Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
+                                   withIDValue:[resultsArray[i] valueForKey:@"id"]
+                                      forIDKey:kShelbyCoreDataFrameID];
+            
+            frame.rollID = rollID;
+            
+            [self storeFrame:frame forDictionary:resultsArray[i]];
+            
+        }
+    }
+    
+    [self saveContext:_context];
 }
 
 #pragma mark - Fetch Methods (Public)
@@ -925,7 +945,7 @@
     return messageText.length ? messageText : @"No information available";
 }
 
-- (NSMutableArray *)fetchAllChannels
+- (NSMutableArray *)fetchAllCategories
 {
     
     // Create fetch request

@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *toggleOfflineButton;
 
 - (IBAction)toggleOfflineMode:(id)sender;
-- (void)fetchChannels;
+- (void)fetchAllCategories;
 - (void)resetView; // To be called when PageControl and CollectioView need to be reset according to user login status
 
 @end
