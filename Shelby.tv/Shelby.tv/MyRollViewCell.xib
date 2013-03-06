@@ -250,14 +250,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">personalRollUsernameLabel</string>
-						<reference key="source" ref="954119393"/>
-						<reference key="destination" ref="379497598"/>
-					</object>
-					<int key="connectionID">34</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">categoryTitle</string>
 						<reference key="source" ref="954119393"/>
 						<reference key="destination" ref="937976986"/>
@@ -279,6 +271,14 @@
 						<reference key="destination" ref="854207865"/>
 					</object>
 					<int key="connectionID">201</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">personalRollUsernameLabel</string>
+						<reference key="source" ref="954119393"/>
+						<reference key="destination" ref="379497598"/>
+					</object>
+					<int key="connectionID">202</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -390,7 +390,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">201</int>
+			<int key="maxID">202</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -922,7 +922,7 @@
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityMessages inManagedObjectContext:_context];
     [request setEntity:description];
     
-    // Only include messages that belond to this specific conversation
+    // Only include messages that belong to this specific conversation
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversationID == %@", conversation.conversationID];
     [request setPredicate:predicate];
     
@@ -948,7 +948,9 @@
 - (NSMutableArray *)fetchAllCategories
 {
     
-    // Create fetch request
+    /// First, fetch all Channel objects ///
+    
+    // Create channel fetch request
     NSFetchRequest *channelsRequest = [[NSFetchRequest alloc] init];
     [channelsRequest setReturnsObjectsAsFaults:NO];
     
@@ -957,13 +959,42 @@
     [channelsRequest setEntity:channelsDescription];
     
     // Sort by channelID
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"channelID" ascending:NO];
-    [channelsRequest setSortDescriptors:@[sortDescriptor]];
+    NSSortDescriptor *channelSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"channelID" ascending:NO];
+    [channelsRequest setSortDescriptors:@[channelSortDescriptor]];
     
     // Execute request that returns array of channels
     NSArray *channelsArray = [self.context executeFetchRequest:channelsRequest error:nil];
     
-    return [NSMutableArray arrayWithArray:channelsArray];
+    /// Second, fetch all Rolls objects with isCategory == YES ///
+    
+    // Create roll fetch request
+    NSFetchRequest *rollRequest = [[NSFetchRequest alloc] init];
+    [rollRequest setReturnsObjectsAsFaults:NO];
+    
+    // Fetch roll data
+    NSEntityDescription *rollsDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityRoll inManagedObjectContext:_context];
+    [rollRequest setEntity:rollsDescription];
+    
+    // Only include rolls that have isCategory == YES
+    NSPredicate *rollPredicate = [NSPredicate predicateWithFormat:@"isCategory == %d", YES];
+    [rollRequest setPredicate:rollPredicate];
+    
+    // Sort by channelID
+    NSSortDescriptor *rollSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"rollID" ascending:NO];
+    [rollRequest setSortDescriptors:@[rollSortDescriptor]];
+    
+    // Execute request that returns array of channels
+    NSArray *rollsArray = [self.context executeFetchRequest:rollRequest error:nil];
+    
+    /// Finally, add channelsArray and rollsArray to NSMutableArray object, and return said object
+    
+    NSMutableArray *categoriesArray = [[NSMutableArray alloc] init];
+    [categoriesArray addObjectsFromArray:channelsArray];
+    [categoriesArray addObjectsFromArray:rollsArray];
+    
+    DLog(@"%@", categoriesArray);
+    
+    return categoriesArray;
     
 }
 
