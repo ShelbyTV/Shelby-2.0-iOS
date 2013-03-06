@@ -467,12 +467,6 @@
     }
 }
 
-// TODO (ARTHUR)
-+ (void)getCategoriesForSync
-{
-    
-}
-
 #pragma mark - Liking (POST)
 + (void)postFrameToLikes:(NSString *)frameID
 {
