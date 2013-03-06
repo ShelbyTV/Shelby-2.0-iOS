@@ -19,7 +19,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    [self.personalRollUsernameLabel setFrame:CGRectMake(703, 130, 278, 52)];
+    [self.personalRollUsernameLabel setFrame:CGRectMake(100, 0, 270, 52)];
     [self.personalRollUsernameLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollUsernameLabel.font.pointSize]];
     [self.personalRollUsernameLabel setTextColor:[UIColor colorWithHex:@"ffffff" andAlpha:1.0f]];
     [self.groupTitle setText:@"My Roll"];
