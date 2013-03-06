@@ -1,5 +1,5 @@
 //
-//  MyRollViewCell.h
+//  PersonalRollViewCell.h
 //  Shelby.tv
 //
 //  Created by Keren on 2/15/13.
@@ -8,7 +8,7 @@
 
 #import "GroupViewCell.h"
 
-@interface MyRollViewCell : GroupViewCell
+@interface PersonalRollViewCell : GroupViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *personalRollUsernameLabel;
 

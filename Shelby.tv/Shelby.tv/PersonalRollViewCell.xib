@@ -231,7 +231,7 @@
 				<int key="IBUIContentMode">4</int>
 				<bool key="IBUIMultipleTouchEnabled">YES</bool>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-				<string key="IBUIReuseIdentifier">MyRollViewCell</string>
+				<string key="IBUIReuseIdentifier">PersonalRollViewCell</string>
 				<object class="NSValue" key="IBUICustomSize">
 					<int key="NS.special">2</int>
 					<string key="NS.sizeval">{50, 236}</string>
@@ -241,14 +241,6 @@
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">selectionView</string>
-						<reference key="source" ref="954119393"/>
-						<reference key="destination" ref="399565920"/>
-					</object>
-					<int key="connectionID">70</int>
-				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">personalRollUsernameLabel</string>
@@ -280,6 +272,14 @@
 						<reference key="destination" ref="854207865"/>
 					</object>
 					<int key="connectionID">207</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">selectionView</string>
+						<reference key="source" ref="954119393"/>
+						<reference key="destination" ref="399565920"/>
+					</object>
+					<int key="connectionID">209</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -378,7 +378,7 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="120.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="4.CustomClassName">MyRollViewCell</string>
+				<string key="4.CustomClassName">PersonalRollViewCell</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="52.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -391,7 +391,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">207</int>
+			<int key="maxID">209</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -428,7 +428,7 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">MyRollViewCell</string>
+					<string key="className">PersonalRollViewCell</string>
 					<string key="superclassName">GroupViewCell</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">personalRollUsernameLabel</string>
@@ -443,7 +443,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MyRollViewCell.h</string>
+						<string key="minorKey">./Classes/PersonalRollViewCell.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

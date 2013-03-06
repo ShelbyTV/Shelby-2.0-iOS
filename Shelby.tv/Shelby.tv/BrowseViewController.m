@@ -12,7 +12,7 @@
 #import "GroupViewCell.h"
 #import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
-#import "MyRollViewCell.h"
+#import "PersonalRollViewCell.h"
 #import "PageControl.h"
 
 // View Controllers
@@ -94,8 +94,8 @@
     // Register Cell Nibs
     UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
-    cellNib = [UINib nibWithNibName:@"MyRollViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"MyRollViewCell"];
+    cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
 
     [self.pageControl setNumberOfPages:1];
     [self fetchAllCategories];
@@ -201,7 +201,7 @@
 {
     // My Roll Card
     if (indexPath.section == 0 && indexPath.row == 2) {
-        MyRollViewCell *cell = (MyRollViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"MyRollViewCell" forIndexPath:indexPath];
+        PersonalRollViewCell *cell = (PersonalRollViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"PersonalRollViewCell" forIndexPath:indexPath];
         NSString *myTv = nil;
         if ([self isLoggedIn]) {
             myTv = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];

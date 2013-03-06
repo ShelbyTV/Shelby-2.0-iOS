@@ -210,11 +210,11 @@
     self.categoryLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
     [self.categoryLoadingView setBackgroundColor:[UIColor clearColor]];
     [self.categoryLoadingView setUserInteractionEnabled:YES];
-    [self.window.rootViewController.view addSubview:self.categoryLoadingView];
+    [self.window.rootViewController.view addSubview:_categoryLoadingView];
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
     [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [indicator setColor:kShelbyColorBlack];
-    [indicator setCenter:CGPointMake(_categoryLoadingView.frame.size.width/2.0f, _categoryLoadingView.frame.size.height/2.0f - 25)];
+    [indicator setCenter:CGPointMake(_categoryLoadingView.frame.size.width/2.0f, _categoryLoadingView.frame.size.height/2.0f - 21)];
     [indicator setHidesWhenStopped:YES];
     [indicator startAnimating];
     [self.categoryLoadingView addSubview:indicator];
