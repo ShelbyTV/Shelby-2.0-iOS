@@ -320,10 +320,9 @@
             itemFrame.origin.y = 0.0f;
             [itemView setFrame:itemFrame];
             
-            UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
             [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
                                          forImageView:itemView.thumbnailImageView
-                                  withPlaceholderView:videoListThumbnailPlaceholderView
+                                      withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
                                        andContentMode:UIViewContentModeCenter];
         
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -671,10 +670,9 @@
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     self.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
-    UIImageView *infoPanelIconPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"infoPanelIconPlaceholder"]];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
                                  forImageView:_overlayView.userImageView
-                          withPlaceholderView:infoPanelIconPlaceholderView
+                          withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
                                andContentMode:UIViewContentModeScaleAspectFit];
     
     // Update videoListScrollView (if _itemViews is initialized)
@@ -954,10 +952,9 @@
             [itemView setFrame:itemFrame];
             [itemView setTag:i];
             
-            UIImageView *videoListThumbnailPlaceholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videoListThumbnail"]];
             [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
                                          forImageView:itemView.thumbnailImageView
-                                  withPlaceholderView:videoListThumbnailPlaceholderView
+                                      withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
                                        andContentMode:UIViewContentModeCenter];
             
             // Update UI on Main Thread

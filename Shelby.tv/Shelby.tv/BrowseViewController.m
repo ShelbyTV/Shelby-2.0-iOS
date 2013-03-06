@@ -258,17 +258,9 @@
                 description = [channel displayDescription];
                 NSString *thumbnailUrl = [channel displayThumbnailURL];
  
-                // TODO: This is not optimal. Need to change the AsynchronousFreeloader lib.
-                UIImageView *placeholderImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:buttonImageName]];
-                UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-                [activityIndicator setFrame:placeholderImage.frame];
-                [activityIndicator setCenter:CGPointMake(placeholderImage.frame.size.width/2.0f, placeholderImage.frame.size.height/2.0f)];
-                [placeholderImage addSubview:activityIndicator];
-                [activityIndicator startAnimating];
-                
                 [AsynchronousFreeloader loadImageFromLink:thumbnailUrl
                                              forImageView:[cell groupThumbnailImage]
-                                      withPlaceholderView:placeholderImage
+                                      withPlaceholder:[UIImage imageNamed:buttonImageName]
                                            andContentMode:UIViewContentModeScaleAspectFill];
                 
             

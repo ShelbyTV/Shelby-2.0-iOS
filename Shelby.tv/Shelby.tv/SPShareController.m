@@ -212,7 +212,7 @@
     // Load Thumbnail
     [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
                                  forImageView:_rollView.videoThumbnailView
-                          withPlaceholderView:nil
+                              withPlaceholder:nil
                                andContentMode:UIViewContentModeScaleAspectFill];
     
     // Set proper states for buttons
