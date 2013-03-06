@@ -14,17 +14,17 @@
 
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
-@property (assign, nonatomic) CategoryType categoryType;
+@property (assign, nonatomic) GroupType groupType;
 
 /// Initialization
-- (id)initWithCategoryType:(CategoryType)categoryType
-             categoryTitle:(NSString *)title
-            andVideoFrames:(NSMutableArray *)videoFrames;
+- (id)initWithGroupType:(GroupType)groupType
+             groupTitle:(NSString *)title
+         andVideoFrames:(NSMutableArray *)videoFrames;
 
-- (id)initWithCategoryType:(CategoryType)categoryType
-             categoryTitle:(NSString *)title
-               videoFrames:(NSMutableArray *)videoFrames
-              andChannelID:(NSString *)channelID;
+- (id)initWithGroupType:(GroupType)groupType
+             groupTitle:(NSString *)title
+            videoFrames:(NSMutableArray *)videoFrames
+          andCategoryID:(NSString *)categoryID;
 
 - (void)setupTransition:(UIImageView *)screenshot andZoomInScreenshot:(UIImageView *)zoomInScreenshot;
 

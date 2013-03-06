@@ -28,14 +28,17 @@
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
 
-/// Channels
-+ (void)getAllChannels;
-+ (void)getChannel:(NSString *)channelID;
-+ (void)getMoreFrames:(NSString *)skipParam forChannel:(NSString *)channelID;
+/// Categories
++ (void)getAllCategories;
++ (void)getCategoryChannel:(NSString *)channelID;
++ (void)getMoreFrames:(NSString *)skipParam forCategoryChannel:(NSString *)channelID;
++ (void)getCategoryRoll:(NSString *)rollID;
++ (void)getMoreFrames:(NSString *)skipParam forCategoryRoll:(NSString *)rollID;
 
 /// Syncing
 + (void)getLikesForSync;
 + (void)getPersonalRollForSync;
++ (void)getCategoriesForSync;
 
 /// Liking
 + (void)postFrameToLikes:(NSString *)frameID;

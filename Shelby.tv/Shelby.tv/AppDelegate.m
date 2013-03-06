@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-
 #import "BrowseViewController.h"
 #import "SPVideoDownloader.h"
 #import "Video.h"
@@ -16,19 +15,21 @@
 
 @property (nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic) UIView *channelLoadingView;
+@property (nonatomic) UIView *categoryLoadingView;
+@property (nonatomic) NSMutableArray *videoDownloaders;
 @property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
-@property (nonatomic) NSMutableArray *videoDownloaders;
 
 /// Setup Methods
 - (void)setupAnalytics;
 - (void)setupObservers;
-- (void)setupChannelLoadingScreen;
+- (void)setupCategoryLoadingView;
 - (void)setupOfflineMode;
 
 /// Notification Methods
-- (void)didLoadChannels:(NSNotification *)notification;
+- (void)removeChannelLoadinView;
+- (void)didLoadCategories:(NSNotification *)notification;
+- (void)didNotConnect:(NSNotification *)notification;
 - (void)postAuthorizationNotification;
 
 /// API Methods
@@ -53,8 +54,8 @@
     // Observers
     [self setupObservers];
     
-    // Setup buffer screen to allow channels to be fetched from web and stored locally
-    [self setupChannelLoadingScreen];
+    // Setup buffer screen to allow categories to be fetched from web and stored locally
+    [self setupCategoryLoadingView];
     
     // Setup Offline Mode
     [self setupOfflineMode];
@@ -65,7 +66,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
-        [ShelbyAPIClient getAllChannels];
+        [ShelbyAPIClient getAllCategories];
     });
     
     // Enable Audio Play in Vibrate and Background Modes
@@ -191,32 +192,33 @@
 
 - (void)setupObservers
 {
-    // Add notification to observe when channels have finished loading
+    // Add notification to observe when categories have finished loading
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLoadChannels:)
-                                                 name:kShelbyNotificationChannelsFetched
+                                             selector:@selector(didLoadCategories:)
+                                                 name:kShelbyNotificationCategoriesFetched
                                                object:nil];
     
-    // Add notification to dismiss channelLoadingScreen if there's no connectivity
+    // Add notification to dismiss categoryLoadingView if there's no connectivity
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLoadChannels:)
+                                             selector:@selector(didNotConnect:)
                                                  name:kShelbyNotificationNoConnectivity
                                                object:nil];
     
 }
 
-- (void)setupChannelLoadingScreen
+- (void)setupCategoryLoadingView
 {
-    self.channelLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
-    [self.channelLoadingView setBackgroundColor:[UIColor clearColor]];
-    [self.channelLoadingView setUserInteractionEnabled:YES];    [self.window.rootViewController.view addSubview:self.channelLoadingView];
+    self.categoryLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
+    [self.categoryLoadingView setBackgroundColor:[UIColor clearColor]];
+    [self.categoryLoadingView setUserInteractionEnabled:YES];
+    [self.window.rootViewController.view addSubview:_categoryLoadingView];
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
     [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [indicator setColor:kShelbyColorBlack];
-    [indicator setCenter:CGPointMake(self.channelLoadingView.frame.size.width/2.0f, self.channelLoadingView.frame.size.height/2.0f - 25)];
+    [indicator setCenter:CGPointMake(_categoryLoadingView.frame.size.width/2.0f, _categoryLoadingView.frame.size.height/2.0f - 21)];
     [indicator setHidesWhenStopped:YES];
     [indicator startAnimating];
-    [self.channelLoadingView addSubview:indicator];
+    [self.categoryLoadingView addSubview:indicator];
 
 }
 
@@ -233,15 +235,29 @@
 }
 
 #pragma mark - Notification Methods (Private)
-- (void)didLoadChannels:(NSNotification *)notification
+- (void)removeChannelLoadinView
 {
-    [self.channelLoadingView removeFromSuperview];
-    [(BrowseViewController *)self.window.rootViewController fetchChannels];
+    
+    [self.categoryLoadingView removeFromSuperview];
+    [(BrowseViewController *)self.window.rootViewController fetchAllCategories];
     [(BrowseViewController *)self.window.rootViewController resetView];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationChannelsFetched object:nil];
 }
 
+- (void)didLoadCategories:(NSNotification *)notification
+{
+    
+    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(removeChannelLoadinView) userInfo:nil repeats:NO];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationCategoriesFetched object:nil];
+
+}
+
+- (void)didNotConnect:(NSNotification *)notification
+{
+    [self removeChannelLoadinView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationNoConnectivity object:nil];
+}
 
 - (void)postAuthorizationNotification
 {
@@ -259,7 +275,7 @@
         [ShelbyAPIClient getStream];
         [ShelbyAPIClient getLikes];
         [ShelbyAPIClient getPersonalRoll];
-        [ShelbyAPIClient getAllChannels];
+        [ShelbyAPIClient getAllCategories];
     });
     
     if ( ![_pollAPITimer isValid] ) {

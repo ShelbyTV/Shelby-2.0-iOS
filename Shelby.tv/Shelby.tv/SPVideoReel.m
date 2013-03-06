@@ -27,8 +27,8 @@
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (nonatomic) NSMutableArray *playableVideoPlayers;
 @property (nonatomic) NSMutableArray *itemViews;
-@property (copy, nonatomic) NSString *categoryTitle;
-@property (copy, nonatomic) NSString *channelID;
+@property (copy, nonatomic) NSString *groupTitle;
+@property (copy, nonatomic) NSString *categoryID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
@@ -82,15 +82,15 @@
 }
 
 #pragma mark - Initialization
-- (id)initWithCategoryType:(CategoryType)categoryType
-             categoryTitle:(NSString *)title
+- (id)initWithGroupType:(GroupType)groupType
+             groupTitle:(NSString *)title
             andVideoFrames:(NSMutableArray *)videoFrames
 {
     
     if ( (self = [super init]) ) {
         
-        self.categoryType = categoryType;
-        self.categoryTitle = title;
+        self.groupType = groupType;
+        self.groupTitle = title;
         [self setupVideoFrames:videoFrames];
         
     }
@@ -98,16 +98,16 @@
     return self;
 }
 
-- (id)initWithCategoryType:(CategoryType)categoryType
-             categoryTitle:(NSString *)title
-               videoFrames:(NSMutableArray *)videoFrames
-              andChannelID:(NSString *)channelID
+- (id)initWithGroupType:(GroupType)groupType
+             groupTitle:(NSString *)title
+            videoFrames:(NSMutableArray *)videoFrames
+            andCategoryID:(NSString *)categoryID
 {
     if ( (self = [super init]) ) {
         
-        self.categoryType = categoryType;
-        self.categoryTitle = title;
-        self.channelID = channelID;
+        self.groupType = groupType;
+        self.groupTitle = title;
+        self.categoryID = categoryID;
 
         [self setupVideoFrames:videoFrames];
 
@@ -193,7 +193,7 @@
     /// Model
     self.model = [SPModel sharedInstance];
     self.model.videoReel = self;
-    self.model.categoryType = _categoryType;
+    self.model.groupType = _groupType;
     self.model.numberOfVideos = [self.videoFrames count];
     
     /// NSMutableArrays
@@ -234,7 +234,7 @@
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
     self.model.overlayView = nib[0];
     self.overlayView = _model.overlayView;
-    [self.overlayView.categoryTitleLabel setText:_categoryTitle];
+    [self.overlayView.categoryTitleLabel setText:_groupTitle];
     [self.view addSubview:_overlayView];
     
     self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
@@ -270,13 +270,13 @@
         
     }
 
-    if ( self.categoryType != CategoryType_Stream ) { // If not stream, play video in zeroeth position
+    if ( _groupType != GroupType_Stream ) { // If not stream, play video in zeroeth position
 
         [self currentVideoDidChangeToVideo:_model.currentVideo];
         
     } else { // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
 
-        for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
+        for ( NSUInteger i = 0; i < [self.model numberOfVideos]; ++i ) {
             
             Frame *videoFrame = (self.videoFrames)[i];
             NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbySPCurrentVideoStreamID];
@@ -551,8 +551,8 @@
                 // Instantiate dataUtility for cleanup
                 CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                 
-                // Remove older videos (channelID will be nil for stream, likes, and personal roll)
-                [dataUtility removeOlderVideoFramesForCategoryType:_categoryType andChannelID:_channelID];
+                // Remove older videos (categoryID will be nil for stream, likes, and personal roll)
+                [dataUtility removeOlderVideoFramesForGroupType:_groupType andCategoryID:_categoryID];
                 
                 // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
                 [dataUtility removeAllVideoExtractionURLReferences];
@@ -659,7 +659,7 @@
     self.model.currentVideoPlayer = (self.videoPlayers)[position];
     
     // If videoReel is instance of Stream, store currentVideoID
-    if ( self.categoryType == CategoryType_Stream ) {
+    if ( _groupType == GroupType_Stream ) {
         
         [self storeIdentifierOfCurrentVideoInStream];
         
@@ -797,10 +797,9 @@
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             
-            switch ( self.categoryType ) {
+            switch ( _groupType ) {
                     
-                    
-                case CategoryType_Stream:{
+                case GroupType_Stream: {
                     
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
@@ -808,7 +807,7 @@
                     
                 } break;
                     
-                case CategoryType_Likes:{
+                case GroupType_Likes: {
                     
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
@@ -816,7 +815,7 @@
                     
                 } break;
                     
-                case CategoryType_PersonalRoll:{
+                case GroupType_PersonalRoll: {
                     
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
@@ -824,12 +823,20 @@
                     
                 } break;
                     
-                case CategoryType_Channel:{
+                case GroupType_CategoryChannel: {
                     
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannel:_channelID];
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:_categoryID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFrames:numberToString forChannel:_channelID];
+                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryChannel:_categoryID];
 
+                } break;
+                    
+                case GroupType_CategoryRoll: {
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:_categoryID];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:_categoryID];
+                    
                     
                 } break;
             }
@@ -880,22 +887,26 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *olderFramesArray = [@[] mutableCopy];
         
-        switch ( self.categoryType ) {
+        switch ( _groupType ) {
                 
-            case CategoryType_Stream:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
-            } break;
-                
-            case CategoryType_Likes:{
+            case GroupType_Likes:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreLikesEntriesAfterDate:date]];
             } break;
                 
-            case CategoryType_PersonalRoll:{
+            case GroupType_PersonalRoll:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
             } break;
+        
+            case GroupType_Stream:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+            } break;
                 
-            case CategoryType_Channel:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannel:_channelID afterDate:date]];
+            case GroupType_CategoryChannel:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:_categoryID afterDate:date]];
+            } break;
+                
+            case GroupType_CategoryRoll:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:_categoryID afterDate:date]];
             } break;
                 
         }

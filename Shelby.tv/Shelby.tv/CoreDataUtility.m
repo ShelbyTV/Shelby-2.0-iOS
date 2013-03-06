@@ -23,7 +23,8 @@
 - (void)removeOlderVideoFramesFromStream;
 - (void)removeOlderVideoFramesFromLikes;
 - (void)removeOlderVideoFramesFromPersonalRoll;
-- (void)removeOlderVideoFramesFromChannel:(NSString *)channelID;
+- (void)removeOlderVideoFramesFromCategoryChannel:(NSString *)channelID;
+- (void)removeOlderVideoFramesFromCategoryRoll:(NSString *)rollID;
 
 /// Storage Methods
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary;
@@ -111,12 +112,6 @@
                     
                 } break;
                     
-                case DataRequestType_BackgroundUpdate:{
-                    
-                    DLog(@"Background Update Successful");
-                    
-                } break;
-                    
                 case DataRequestType_Sync:{
                     
                     DLog(@"Core Data Sync Successful");
@@ -153,22 +148,12 @@
     }
 }
 
-- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType andChannelID:(NSString *)channelID
+- (void)removeOlderVideoFramesForGroupType:(GroupType)groupType andCategoryID:(NSString *)categoryID
 {
 
-    switch ( categoryType ) {
+    switch ( groupType ) {
             
-        case CategoryType_Stream:{
-            
-            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-        
-                 [self removeOlderVideoFramesFromStream];
-        
-            }
-        
-        } break;
-            
-        case CategoryType_Likes:{
+        case GroupType_Likes:{
         
             if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
                 
@@ -177,7 +162,7 @@
         
         } break;
             
-        case CategoryType_PersonalRoll:{
+        case GroupType_PersonalRoll:{
             
             if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
                 
@@ -186,10 +171,26 @@
             }
             
         } break;
+        
+        case GroupType_Stream:{
             
-        case CategoryType_Channel: {
+            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+                
+                [self removeOlderVideoFramesFromStream];
+                
+            }
+            
+        } break;
+            
+        case GroupType_CategoryChannel: {
      
-            [self removeOlderVideoFramesFromChannel:channelID];
+            [self removeOlderVideoFramesFromCategoryChannel:categoryID];
+            
+        }
+            
+        case GroupType_CategoryRoll: {
+            
+            [self removeOlderVideoFramesFromCategoryRoll:categoryID];
             
         }
     }
@@ -332,44 +333,83 @@
     
 }
 
-- (void)storeChannels:(NSDictionary *)resultsDictionary
+- (void)storeCategories:(NSDictionary *)resultsDictionary
 {
-    NSArray *channelArray = resultsDictionary[@"result"];
+    NSArray *categoriesArray = resultsDictionary[@"result"];
     
-    for ( NSUInteger i = 0; i < [channelArray count]; ++i ) {
+    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
         
-        NSDictionary *channelDictionary = [[[channelArray objectAtIndex:i] valueForKey:@"user_channels"] objectAtIndex:0];
+        // Parse and store user_channels as CategoryChannels
+        NSArray *channelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
         
-        if ( channelDictionary ) { // As of February 15, not all dictionaries in results have a user_channels dictionary
+        for ( NSUInteger j = 0; j < [channelsArray count]; ++j ) {
          
-            Channel *channel = [self checkIfEntity:kShelbyCoreDataEntityChannel
-                                       withIDValue:[channelDictionary valueForKey:@"user_id"]
-                                          forIDKey:kShelbyCoreDataChannelID];
+            NSDictionary *channelDictionary = [channelsArray objectAtIndex:j];
             
-            NSString *channelID = [NSString coreDataNullTest:[channelDictionary valueForKey:@"user_id"]];
-            [channel setValue:channelID forKey:kShelbyCoreDataChannelID];
+            if ( channelDictionary ) {
+    
+                Channel *channel = [self checkIfEntity:kShelbyCoreDataEntityChannel
+                                           withIDValue:[channelDictionary valueForKey:@"user_id"]
+                                              forIDKey:kShelbyCoreDataChannelID];
+                
+                NSString *channelID = [NSString coreDataNullTest:[channelDictionary valueForKey:@"user_id"]];
+                [channel setValue:channelID forKey:kShelbyCoreDataChannelID];
+                
+                NSString *displayTitle = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_title"]];
+                [channel setValue:displayTitle forKey:kShelbyCoreDataChannelDisplayTitle];
+                
+                NSString *displayDescription = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_description"]];
+                [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
+                
+                NSString *displayThumbnail = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_thumbnail_ipad_src"]];
+                displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
+                [channel setValue:displayThumbnail forKey:kShelbyCoreDataChannelDisplayThumbnailURL];
+                
+                [ShelbyAPIClient getCategoryChannel:channelID];
+                
+            }
+    
+        }
+        
+        // Parse and store rolls as CategoryRolls
+        NSArray *rollsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"rolls"];
+        
+        for ( NSUInteger k = 0; k < [rollsArray count]; ++k ) {
+        
+            NSDictionary *rollDictionary = [rollsArray objectAtIndex:k];
             
-            NSString *displayTitle = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_title"]];
-            [channel setValue:displayTitle forKey:kShelbyCoreDataChannelDisplayTitle];
-            
-            NSString *displayDescription = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_description"]];
-            [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
-            
-            NSString *displayThumbnail = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_thumbnail_ipad_src"]];
-            displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
-            [channel setValue:displayThumbnail forKey:kShelbyCoreDataChannelDisplayThumbnailURL];
+            if ( rollDictionary ) {
+                
+                Roll *roll = [self checkIfEntity:kShelbyCoreDataEntityRoll
+                                     withIDValue:[rollDictionary valueForKey:@"id"]
+                                        forIDKey:kShelbyCoreDataRollID];
+                
+                NSString *rollID = [NSString coreDataNullTest:[rollDictionary valueForKey:@"id"]];
+                [roll setValue:rollID forKey:kShelbyCoreDataRollID];
+                
+                [roll setValue:@YES forKey:kShelbyCoreDataRollIsCategory];
+                
+                NSString *displayTitle = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_title"]];
+                [roll setValue:displayTitle forKey:kShelbyCoreDataRollDisplayTitle];
+                
+                NSString *displayDescription = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_description"]];
+                [roll setValue:displayDescription forKey:kShelbyCoreDataRollDisplayDescription];
+                
+                NSString *displayThumbnail = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_thumbnail_ipad_src"]];
+                displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
+                [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
+                
+                [ShelbyAPIClient getCategoryRoll:rollID];
+                
+            }
 
-            [ShelbyAPIClient getChannel:channelID];
             
         }
-                
+        
     }
-    
-    if ( ![channelArray count] ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFetched object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFetched object:nil];
         });
-    }
     
     [self saveContext:_context];
     
@@ -396,7 +436,7 @@
     
 }
 
-- (void)storeRollFrames:(NSDictionary *)resultsDictionary forChannel:(NSString *)channelID
+- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID
 {
     NSArray *resultsArray = resultsDictionary[@"result"];
     
@@ -417,9 +457,28 @@
         }
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFetched object:nil];
-    });
+    [self saveContext:_context];
+    
+}
+
+- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID
+{
+    NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
+    
+    for ( NSUInteger i = 0; i < [resultsArray count]; ++i ) {
+        
+        @autoreleasepool {
+            
+            Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
+                                   withIDValue:[resultsArray[i] valueForKey:@"id"]
+                                      forIDKey:kShelbyCoreDataFrameID];
+            
+            frame.rollID = rollID;
+            
+            [self storeFrame:frame forDictionary:resultsArray[i]];
+            
+        }
+    }
     
     [self saveContext:_context];
 }
@@ -499,7 +558,7 @@
     return [frameResults count];
 }
 
-- (NSUInteger)fetchCountForChannel:(NSString *)channelID
+- (NSUInteger)fetchCountForCategoryChannel:(NSString *)channelID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -511,6 +570,26 @@
     
     // Filter by rollID
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames
+    NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    return [frameResults count];
+}
+
+- (NSUInteger)fetchCountForCategoryRoll:(NSString *)rollID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Stream table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames
@@ -707,9 +786,38 @@
     return deduplicatedFrames;
 }
 
-- (NSMutableArray *)fetchMoreFramesInChannel:(NSString *)channelID afterDate:(NSDate *)date
+- (NSMutableArray *)fetchFramesInCategoryChannel:(NSString *)channelID
 {
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
     
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Queue Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
+    
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
+    
+    return deduplicatedFrames;
+}
+
+- (NSMutableArray *)fetchMoreFramesInCategoryChannel:(NSString *)channelID afterDate:(NSDate *)date
+{
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
@@ -739,6 +847,67 @@
     return deduplicatedFrames;
 }
 
+- (NSMutableArray *)fetchFramesInCategoryRoll:(NSString *)rollID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    // Filter by rollID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Queue Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
+    
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
+    
+    return deduplicatedFrames;
+}
+
+- (NSMutableArray *)fetchMoreFramesInCategoryRoll:(NSString *)rollID afterDate:(NSDate *)date
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    // Set Predicate
+    
+    // Filter by rollID and timestamp
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", rollID, date];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Personal Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+    
+    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
+    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
+    
+    // Remove Frames that link to the same Video object
+    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
+    
+    return deduplicatedFrames;
+}
+
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation
 {
 
@@ -750,7 +919,7 @@
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityMessages inManagedObjectContext:_context];
     [request setEntity:description];
     
-    // Only include messages that belond to this specific conversation
+    // Only include messages that belong to this specific conversation
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversationID == %@", conversation.conversationID];
     [request setPredicate:predicate];
     
@@ -773,10 +942,12 @@
     return messageText.length ? messageText : @"No information available";
 }
 
-- (NSMutableArray *)fetchAllChannels
+- (NSMutableArray *)fetchAllCategories
 {
     
-    // Create fetch request
+    /// First, fetch all Channel objects ///
+    
+    // Create channel fetch request
     NSFetchRequest *channelsRequest = [[NSFetchRequest alloc] init];
     [channelsRequest setReturnsObjectsAsFaults:NO];
     
@@ -785,44 +956,41 @@
     [channelsRequest setEntity:channelsDescription];
     
     // Sort by channelID
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"channelID" ascending:NO];
-    [channelsRequest setSortDescriptors:@[sortDescriptor]];
+    NSSortDescriptor *channelSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"channelID" ascending:NO];
+    [channelsRequest setSortDescriptors:@[channelSortDescriptor]];
     
     // Execute request that returns array of channels
     NSArray *channelsArray = [self.context executeFetchRequest:channelsRequest error:nil];
     
-    return [NSMutableArray arrayWithArray:channelsArray];
+    /// Second, fetch all Rolls objects with isCategory == YES ///
     
-}
+    // Create roll fetch request
+    NSFetchRequest *rollRequest = [[NSFetchRequest alloc] init];
+    [rollRequest setReturnsObjectsAsFaults:NO];
+    
+    // Fetch roll data
+    NSEntityDescription *rollsDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityRoll inManagedObjectContext:_context];
+    [rollRequest setEntity:rollsDescription];
+    
+    // Only include rolls that have isCategory == YES
+    NSPredicate *rollPredicate = [NSPredicate predicateWithFormat:@"isCategory == %d", YES];
+    [rollRequest setPredicate:rollPredicate];
+    
+    // Sort by channelID
+    NSSortDescriptor *rollSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"rollID" ascending:NO];
+    [rollRequest setSortDescriptors:@[rollSortDescriptor]];
+    
+    // Execute request that returns array of channels
+    NSArray *rollsArray = [self.context executeFetchRequest:rollRequest error:nil];
+    
+    /// Finally, add channelsArray and rollsArray to NSMutableArray object, and return said object
+    
+    NSMutableArray *categoriesArray = [[NSMutableArray alloc] init];
+    [categoriesArray addObjectsFromArray:channelsArray];
+    [categoriesArray addObjectsFromArray:rollsArray];
 
-- (NSMutableArray *)fetchFramesInChannel:(NSString *)channelID
-{
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
+    return categoriesArray;
     
-    // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Sort by timestamp
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:@[sortDescriptor]];
-    
-    // Filter by rollID
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
-    [request setPredicate:predicate];
-    
-    // Execute request that returns array of frames in Queue Roll
-    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
-    
-    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
-    NSMutableArray *playableFrames = [self filterPlayableFrames:requestResults];
-    
-    // Remove Frames that link to the same Video object
-    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
-    
-    return deduplicatedFrames;
 }
 
 #pragma mark - Sync Methods (Public)
@@ -1063,7 +1231,7 @@
     }
 }
 
-- (void)removeOlderVideoFramesFromChannel:(NSString *)channelID
+- (void)removeOlderVideoFramesFromCategoryChannel:(NSString *)channelID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1102,6 +1270,44 @@
     }
 }
 
+- (void)removeOlderVideoFramesFromCategoryRoll:(NSString *)rollID
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Queue table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Filter by channelID
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of streamEntries
+    NSArray *results = [self.context executeFetchRequest:request error:nil];
+    
+    NSUInteger maxLimit = 60;
+    
+    // Remove older videos from data store
+    if ( [results count] > maxLimit ) {
+        
+        NSMutableArray *olderResults = [results mutableCopy];
+        NSUInteger i = [results count];
+        
+        while ( i > maxLimit ) {
+            
+            Frame *frame = (Frame*)[olderResults lastObject];
+            [self.context deleteObject:frame];
+            [olderResults removeLastObject];
+            
+            i--;
+        }
+        
+        [self saveContext:_context];
+        
+    }
+}
 
 #pragma mark - Storage Methods (Private) 
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary

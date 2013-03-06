@@ -1,14 +1,14 @@
 //
-//  MyRollViewCell.h
+//  PersonalRollViewCell.h
 //  Shelby.tv
 //
 //  Created by Keren on 2/15/13.
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "ChannelViewCell.h"
+#import "GroupViewCell.h"
 
-@interface MyRollViewCell : ChannelViewCell
+@interface PersonalRollViewCell : GroupViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *personalRollUsernameLabel;
 

@@ -1,19 +1,19 @@
 //
-//  MyRollViewCell.m
+//  PersonalRollViewCell.,
 //  Shelby.tv
 //
 //  Created by Keren on 2/15/13.
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "MyRollViewCell.h"
+#import "PersonalRollViewCell.h"
 
-@interface MyRollViewCell()
+@interface PersonalRollViewCell ()
 
 @end
 
 
-@implementation MyRollViewCell
+@implementation PersonalRollViewCell
 
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
@@ -22,15 +22,15 @@
     [self.personalRollUsernameLabel setFrame:CGRectMake(703, 130, 278, 52)];
     [self.personalRollUsernameLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_personalRollUsernameLabel.font.pointSize]];
     [self.personalRollUsernameLabel setTextColor:[UIColor colorWithHex:@"ffffff" andAlpha:1.0f]];
-    [self.channelName setText:@"My Roll"];
-    [self.channelDescription setText:@"Ever want to curate your own channel? Now you can with Shelby. Roll Videos to your .TV today."];
-    [self.channelImage setImage:[UIImage imageNamed:@"personalRollCard.png"]];
+    [self.groupTitle setText:@"My Roll"];
+    [self.groupDescription setText:@"Ever want to curate your own channel? Now you can with Shelby. Roll Videos to your .TV today."];
+    [self.groupThumbnailImage setImage:[UIImage imageNamed:@"personalRollCard"]];
 }
 
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    [self.channelImage setImage:[UIImage imageNamed:@"personalRollCard.png"]];
+    [self.groupThumbnailImage setImage:[UIImage imageNamed:@"personalRollCard"]];
 }
 
 #pragma mark - Public Methods

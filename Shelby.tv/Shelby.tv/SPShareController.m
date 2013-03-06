@@ -120,13 +120,13 @@
                 
                 UIActivityViewController *activityController;
                 
-                if ( CategoryType_Likes == _model.categoryType ) {
+                if ( GroupType_Likes == [self.model groupType] ) {
                     
                     activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
                                                                            applicationActivities:[NSArray arrayWithObjects:rollActivity, nil]];
                     activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
                     
-                } else if ( CategoryType_PersonalRoll == _model.categoryType ) {
+                } else if ( GroupType_PersonalRoll == [self.model groupType] ) {
                     
                     activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
                                                                            applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];

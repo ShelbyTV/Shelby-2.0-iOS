@@ -78,7 +78,7 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_BackgroundUpdate];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
             [dataUtility storeStream:JSON];
             
         });
@@ -155,10 +155,9 @@
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    
-    NSString *authToken = [user token];
     NSString *likesRollID = [user likesRollID];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, likesRollID, authToken]];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, likesRollID]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -166,7 +165,7 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_BackgroundUpdate];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
             [dataUtility storeRollFrames:JSON];
             
         });
@@ -186,11 +185,9 @@
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    
-    NSString *authToken = [user token];
     NSString *likesRollID = [user likesRollID];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, likesRollID, authToken, skipParam]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, likesRollID, skipParam]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -219,10 +216,9 @@
 
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    
-    NSString *authToken = [user token];
     NSString *personalRollID = [user personalRollID];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, personalRollID, authToken]];
+
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, personalRollID]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -230,7 +226,7 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_BackgroundUpdate];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
             [dataUtility storeRollFrames:JSON];
             
         });
@@ -248,10 +244,9 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    
-    NSString *authToken = [user token];
     NSString *personalRollID = [user personalRollID];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, personalRollID, authToken, skipParam]];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, personalRollID, skipParam]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -273,11 +268,11 @@
     [operation start];
 }
 
-#pragma mark - Channels (GET)
-+ (void)getAllChannels
+#pragma mark - Categories (GET)
++ (void)getAllCategories
 {
     
-    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
+    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllCategories];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -285,8 +280,8 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-            [dataUtility storeChannels:JSON];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            [dataUtility storeCategories:JSON];
             
         });
         
@@ -295,7 +290,7 @@
         // Post notificaiton to dismiss channelLoadingScreen if there's no connectivity
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationNoConnectivity object:nil];
 
-        DLog(@"Problem fetching All Channels");
+        DLog(@"Problem fetching all Categories");
         
     }];
     
@@ -303,9 +298,9 @@
     
 }
 
-+ (void)getChannel:(NSString *)channelID
++ (void)getCategoryChannel:(NSString *)channelID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashbaord, channelID];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetCategoryChannel, channelID];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
@@ -314,8 +309,8 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-            [dataUtility storeRollFrames:JSON forChannel:channelID];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            [dataUtility storeFrames:JSON forCategoryChannel:channelID];
             
         });
         
@@ -328,9 +323,9 @@
     [operation start];
 }
 
-+ (void)getMoreFrames:(NSString *)skipParam forChannel:(NSString *)channelID
++ (void)getMoreFrames:(NSString *)skipParam forCategoryChannel:(NSString *)channelID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreChannelDashbaord, channelID, skipParam];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreCategoryChannel, channelID, skipParam];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
@@ -340,7 +335,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
-            [dataUtility storeRollFrames:JSON forChannel:channelID];
+            [dataUtility storeFrames:JSON forCategoryChannel:channelID];
             
         });
         
@@ -353,19 +348,70 @@
     [operation start];
 }
 
++ (void)getCategoryRoll:(NSString *)rollID
+{
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
+            [dataUtility storeFrames:JSON forCategoryRoll:rollID];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Category Roll");
+        
+    }];
+    
+    [operation start];
+    
+}
+
+
++ (void)getMoreFrames:(NSString *)skipParam forCategoryRoll:(NSString *)rollID
+{
+
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, rollID, skipParam]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+            [dataUtility storeRollFrames:JSON];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Category Roll");
+        
+    }];
+    
+    [operation start];
+}
+
 #pragma mark - Syncing (GET)
 + (void)getLikesForSync
 {
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    NSString *authToken = [user token];
     NSString *likesRollID = [user likesRollID];
     NSUInteger frameCount = [dataUtility fetchLikesCount];
     
     if ( frameCount ) {
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFramesForSync, likesRollID, authToken, frameCount]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFramesForSync, likesRollID, frameCount]];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [request setHTTPMethod:@"GET"];
         
@@ -393,13 +439,12 @@
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    NSString *authToken = [user token];
     NSString *personallRollID = [user personalRollID];
     NSUInteger frameCount = [dataUtility fetchPersonalRollCount];
     
     if ( frameCount ) {
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFramesForSync, personallRollID, authToken, frameCount]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFramesForSync, personallRollID, frameCount]];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [request setHTTPMethod:@"GET"];
         
@@ -420,6 +465,12 @@
         
         [operation start];
     }
+}
+
+// TODO (ARTHUR)
++ (void)getCategoriesForSync
+{
+    
 }
 
 #pragma mark - Liking (POST)
