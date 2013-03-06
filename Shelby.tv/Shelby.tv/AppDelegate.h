@@ -20,13 +20,14 @@
 - (void)userIsAuthorized;
 - (void)logout;
 
-/// Core Data Methods
-- (void)mergeChanges:(NSNotification *)notification;
-- (void)dumpAllData;
-
 /// Offline Methods
 - (void)downloadVideo:(Video *)video;
 - (void)addVideoDownloader:(SPVideoDownloader *)videoDownloader;
 - (void)removeVideoDownloader:(SPVideoDownloader *)videoDownloader;
+
+/// Core Data Methods
+- (void)mergeChanges:(NSNotification *)notification;
+- (void)didLoadCategories;
+- (void)dumpAllData;
 
 @end

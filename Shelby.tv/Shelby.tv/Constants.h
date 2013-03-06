@@ -21,7 +21,6 @@
 
 // Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"
-#define kShelbyNotificationCategoriesFetched                @"Shelby Categories Fetched"
 #define kShelbyNotificationNoConnectivity                   @"No Connectivity"
 
 // Colors

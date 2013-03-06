@@ -104,16 +104,23 @@
             
             switch ( _requestType ) {
                     
-                case DataRequestType_Fetch:{
+                case DataRequestType_Fetch: {
                     
-                    NSAssert((_requestType == DataRequestType_Fetch), @"DataRequestType_Fetch should not be used when storing data!");
+                    // Should not get here
                     
                 } break;
                     
-                case DataRequestType_StoreUser:{
+                case DataRequestType_StoreUser: {
                     
                     DLog(@"User Data Saved Successfully!");
                     [self.appDelegate userIsAuthorized];
+                    
+                } break;
+                    
+                case DataRequestType_StoreCategories: {
+                    
+                    DLog(@"Categories Synced and Saved Successfully");
+                    [self.appDelegate didLoadCategories];
                     
                 } break;
                     
@@ -123,7 +130,7 @@
                     
                 } break;
                     
-                case DataRequestType_ActionUpdate:{
+                case DataRequestType_ActionUpdate: {
                     
                     DLog(@"User Action Update Successful");
                     
@@ -133,14 +140,14 @@
                     
                 } break;
                     
-                case DataRequestType_VideoExtracted:{
+                case DataRequestType_VideoExtracted: {
                     
                     DLog(@"Video Extracted and Data Stored Successfully!");
                     [self postNotificationVideoInContext:context];
                     
                 } break;
                     
-                case DataRequestType_StoreVideoInCache:{
+                case DataRequestType_StoreVideoInCache: {
                     
                     DLog(@"Video Stored in Cache");
                     
@@ -401,7 +408,7 @@
                 [roll setValue:displayDescription forKey:kShelbyCoreDataRollDisplayDescription];
                 
                 NSString *displayThumbnail = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_thumbnail_ipad_src"]];
-                displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
+                displayThumbnail = [NSString stringWithFormat: @"http://shelby.tv%@", displayThumbnail];
                 [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
                 
                 [ShelbyAPIClient getCategoryRoll:rollID];
@@ -412,10 +419,6 @@
         }
         
     }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFetched object:nil];
-        });
-    
     
     [self syncCategories:resultsDictionary];
     [self saveContext:_context];
