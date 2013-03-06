@@ -421,7 +421,6 @@
     }
     
     [self syncCategories:resultsDictionary];
-    [self saveContext:_context];
     
 }
 
