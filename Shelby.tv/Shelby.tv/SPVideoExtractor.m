@@ -238,6 +238,8 @@
     
     if ( [self.videoQueue count] ) {
 
+        // TODO (comment via Arthur to Keren): I think this should only work for logged-in users, since the markUnplayableVideo: method involves the use of an auth_token. Double check to see if auth_token is necessary.
+        
         // TODO: not marking unplayable as it might be playable on the web. Need to have seperate properties for web and mobile
 
 //        NSManagedObjectContext *context = [self context];

@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-
 #import "BrowseViewController.h"
 #import "SPVideoDownloader.h"
 #import "Video.h"
@@ -17,9 +16,9 @@
 @property (nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic) UIView *categoryLoadingView;
+@property (nonatomic) NSMutableArray *videoDownloaders;
 @property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
-@property (nonatomic) NSMutableArray *videoDownloaders;
 
 /// Setup Methods
 - (void)setupAnalytics;

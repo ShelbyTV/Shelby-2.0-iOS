@@ -38,6 +38,7 @@
 /// Syncing
 + (void)getLikesForSync;
 + (void)getPersonalRollForSync;
++ (void)getCategoriesForSync;
 
 /// Liking
 + (void)postFrameToLikes:(NSString *)frameID;

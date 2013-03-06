@@ -20,8 +20,7 @@ typedef NS_ENUM(NSUInteger, DataRequestType)
     
     DataRequestType_Fetch,              // Fetch NSManagedObjects or NSManagedObjectContext
     DataRequestType_StoreUser,          // Store User
-    DataRequestType_BackgroundUpdate,   // Store data from background API poller
-    DataRequestType_Sync,               // Sync Core Data Objects with Web
+    DataRequestType_Sync,               // Sync with web
     DataRequestType_ActionUpdate,       // Store data from user action (e.g., when user scrolls far in video list)
     DataRequestType_VideoExtracted,     // Store video data from results of SPVideoExtractor
     DataRequestType_StoreVideoInCache   // Store video data in local cache

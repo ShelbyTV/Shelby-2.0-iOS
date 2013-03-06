@@ -112,12 +112,6 @@
                     
                 } break;
                     
-                case DataRequestType_BackgroundUpdate:{
-                    
-                    DLog(@"Background Update Successful");
-                    
-                } break;
-                    
                 case DataRequestType_Sync:{
                     
                     DLog(@"Core Data Sync Successful");
@@ -399,16 +393,11 @@
             [ShelbyAPIClient getCategoryRoll:rollID];
             
         }
-        
-        
-                
+
     }
-    
-    if ( ![categoryArray count] ) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFetched object:nil];
         });
-    }
     
     [self saveContext:_context];
     
@@ -455,13 +444,6 @@
             
         }
     }
-    
-    // TO DO
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFetched object:nil];
-    });
-    
-    [self saveContext:_context];
 }
 
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID
