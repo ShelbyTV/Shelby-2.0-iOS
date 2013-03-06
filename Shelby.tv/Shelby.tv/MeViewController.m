@@ -390,7 +390,7 @@
             if ( [videoFrames count] ) {
                 
                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Stream categoryTitle:@"Stream" andVideoFrames:videoFrames];
+                SPVideoReel *reel = [[SPVideoReel alloc] initWithGroupType:GroupType_Stream groupTitle:@"Stream" andVideoFrames:videoFrames];
                 [self presentViewController:reel animated:YES completion:nil];
                 
             } else {
@@ -424,7 +424,7 @@
             if ( [videoFrames count] ) {
                 
                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_Likes categoryTitle:@"Likes" andVideoFrames:videoFrames];
+                SPVideoReel *reel = [[SPVideoReel alloc] initWithGroupType:GroupType_Likes groupTitle:@"Likes" andVideoFrames:videoFrames];
                 [self presentViewController:reel animated:YES completion:nil];
                 
             } else {
@@ -458,7 +458,7 @@
             if ( [videoFrames count] ) {
                 
                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-                SPVideoReel *reel = [[SPVideoReel alloc] initWithCategoryType:CategoryType_PersonalRoll categoryTitle:@"Personal Roll" andVideoFrames:videoFrames];
+                SPVideoReel *reel = [[SPVideoReel alloc] initWithGroupType:GroupType_PersonalRoll groupTitle:@"Personal Roll" andVideoFrames:videoFrames];
                 [self presentViewController:reel animated:YES completion:nil];
                 
             } else {

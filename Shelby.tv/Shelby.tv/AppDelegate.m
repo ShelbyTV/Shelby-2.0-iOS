@@ -24,7 +24,7 @@
 /// Setup Methods
 - (void)setupAnalytics;
 - (void)setupObservers;
-- (void)setupcategoryLoadingView;
+- (void)setupCategoryLoadingView;
 - (void)setupOfflineMode;
 
 /// Notification Methods
@@ -54,7 +54,7 @@
     [self setupObservers];
     
     // Setup buffer screen to allow categories to be fetched from web and stored locally
-    [self setupcategoryLoadingView];
+    [self setupCategoryLoadingView];
     
     // Setup Offline Mode
     [self setupOfflineMode];
@@ -197,7 +197,7 @@
                                                  name:kShelbyNotificationCategoriesFetched
                                                object:nil];
     
-    // Add notification to dismiss channelLoadingView if there's no connectivity
+    // Add notification to dismiss categoryLoadingView if there's no connectivity
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didLoadCategories:)
                                                  name:kShelbyNotificationNoConnectivity
@@ -205,15 +205,16 @@
     
 }
 
-- (void)setupcategoryLoadingView
+- (void)setupCategoryLoadingView
 {
     self.categoryLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
     [self.categoryLoadingView setBackgroundColor:[UIColor clearColor]];
-    [self.categoryLoadingView setUserInteractionEnabled:YES];    [self.window.rootViewController.view addSubview:self.categoryLoadingView];
+    [self.categoryLoadingView setUserInteractionEnabled:YES];
+    [self.window.rootViewController.view addSubview:self.categoryLoadingView];
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
     [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [indicator setColor:kShelbyColorBlack];
-    [indicator setCenter:CGPointMake(self.categoryLoadingView.frame.size.width/2.0f, self.categoryLoadingView.frame.size.height/2.0f - 25)];
+    [indicator setCenter:CGPointMake(_categoryLoadingView.frame.size.width/2.0f, _categoryLoadingView.frame.size.height/2.0f - 25)];
     [indicator setHidesWhenStopped:YES];
     [indicator startAnimating];
     [self.categoryLoadingView addSubview:indicator];

@@ -15,7 +15,7 @@
 
 /// Persistance Methods
 - (void)saveContext:(NSManagedObjectContext *)context;
-- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType andCategoryID:(NSString *)categoryID;
+- (void)removeOlderVideoFramesForGroupType:(GroupType)groupType andCategoryID:(NSString *)categoryID;
 - (void)removeAllVideoExtractionURLReferences;
 
 /// Storage Methods

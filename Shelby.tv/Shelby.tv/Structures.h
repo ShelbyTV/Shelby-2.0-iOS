@@ -28,14 +28,14 @@ typedef NS_ENUM(NSUInteger, DataRequestType)
     
 };
 
-typedef NS_ENUM(NSUInteger, CategoryType)
+typedef NS_ENUM(NSUInteger, GroupType)
 {
     
-    CategoryType_Stream,
-    CategoryType_Likes,
-    CategoryType_PersonalRoll,
-    CategoryType_CategoryChannel,
-    CategoryType_CategoryRoll
+    GroupType_Stream,
+    GroupType_Likes,
+    GroupType_PersonalRoll,
+    GroupType_CategoryChannel,
+    GroupType_CategoryRoll
     
 };
 

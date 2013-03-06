@@ -62,7 +62,7 @@
 - (void)userAuthenticationDidSucceed:(NSNotification *)notification;
 
 /// Video Player Launch Methods
-- (void)launchPlayer:(CategoryType)categoryType fromCell:(UICollectionViewCell *)cell;
+- (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell;
 - (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
 
 /// Version Label
@@ -311,15 +311,15 @@
             
             if ( 0 == row ) { // Launch Likes
                 
-                [self launchPlayer:CategoryType_Likes fromCell:cell];
+                [self launchPlayer:GroupType_Likes fromCell:cell];
             
             } else if (2 == row) { // Launch Personal Roll
             
-                [self launchPlayer:CategoryType_PersonalRoll fromCell:cell];
+                [self launchPlayer:GroupType_PersonalRoll fromCell:cell];
             
             } else if (1 == row) { // Launch Stream
                 
-                [self launchPlayer:CategoryType_Stream fromCell:cell];
+                [self launchPlayer:GroupType_Stream fromCell:cell];
             
             } else if (3 == row) { // Logout
             
@@ -339,11 +339,11 @@
         
         if ( [category isMemberOfClass:[Channel class]] ) { // Category is a Channel
             
-            [self launchPlayer:CategoryType_CategoryChannel fromCell:cell];
+            [self launchPlayer:GroupType_CategoryChannel fromCell:cell];
             
         } else if ( [category isMemberOfClass:[Roll class]] ) { // Cateogory is a Roll
             
-            [self launchPlayer:CategoryType_CategoryRoll fromCell:cell];
+            [self launchPlayer:GroupType_CategoryRoll fromCell:cell];
             
         }
     }
@@ -536,7 +536,7 @@
 
 
 #pragma mark - Video Player Launch Methods (Private)
-- (void)launchPlayer:(CategoryType)categoryType fromCell:(UICollectionViewCell *)cell
+- (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell
 {
    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -548,9 +548,9 @@
         Channel *channel = nil;
         Roll *roll = nil;
         
-        switch ( categoryType ) {
+        switch ( groupType ) {
                 
-            case CategoryType_Likes: {
+            case GroupType_Likes: {
                 
                 videoFrames = [dataUtility fetchLikesEntries];
                 errorMessage = @"No videos in Likes.";
@@ -558,7 +558,7 @@
                 
             } break;
                 
-            case CategoryType_PersonalRoll: {
+            case GroupType_PersonalRoll: {
                
                 videoFrames = [dataUtility fetchPersonalRollEntries];
                 errorMessage = @"No videos in Personal Roll.";
@@ -566,7 +566,7 @@
                
             } break;
                 
-            case CategoryType_Stream: {
+            case GroupType_Stream: {
                 
                 videoFrames = [dataUtility fetchStreamEntries];
                 errorMessage = @"No videos in Stream.";
@@ -574,26 +574,26 @@
                 
             } break;
                 
-            case CategoryType_CategoryChannel:{
+            case GroupType_CategoryChannel: {
                 
                 NSManagedObjectContext *context = [self context];
                 NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                 NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                 Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
-                errorMessage = @"No videos in Channel.";
+                errorMessage = @"No videos in Category Channel.";
                 title = [channel displayTitle];
                 
             } break;
                 
-            case CategoryType_CategoryRoll:{
+            case GroupType_CategoryRoll: {
                 
                 NSManagedObjectContext *context = [self context];
                 NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                 NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryRoll:[roll rollID]];
-                errorMessage = @"No videos in Channel.";
+                errorMessage = @"No videos in Category Roll.";
                 title = [roll displayTitle];
                 
             } break;
@@ -605,17 +605,17 @@
                 
                 SPVideoReel *reel = nil;
                 
-                if ( categoryType == CategoryType_CategoryChannel ) { // Category Channel
+                if ( groupType == GroupType_CategoryChannel ) { // Category Channel
                     
-                    reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title videoFrames:videoFrames andCategoryID:[channel channelID]];
+                    reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[channel channelID]];
                     
-                } else if ( categoryType == CategoryType_CategoryRoll ) { // Category Roll
+                } else if ( groupType == GroupType_CategoryRoll ) { // Category Roll
                     
-                    reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title videoFrames:videoFrames andCategoryID:[roll rollID]];
+                    reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[roll rollID]];
                     
-                } else {
+                } else { // Stream, Likes, Personal Roll
                 
-                    reel = [[SPVideoReel alloc] initWithCategoryType:categoryType categoryTitle:title andVideoFrames:videoFrames];
+                    reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title andVideoFrames:videoFrames];
                
                 }
 

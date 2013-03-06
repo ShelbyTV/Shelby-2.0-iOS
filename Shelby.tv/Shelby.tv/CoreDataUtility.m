@@ -154,22 +154,12 @@
     }
 }
 
-- (void)removeOlderVideoFramesForCategoryType:(CategoryType)categoryType andCategoryID:(NSString *)categoryID
+- (void)removeOlderVideoFramesForGroupType:(GroupType)groupType andCategoryID:(NSString *)categoryID
 {
 
-    switch ( categoryType ) {
+    switch ( groupType ) {
             
-        case CategoryType_Stream:{
-            
-            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-        
-                 [self removeOlderVideoFramesFromStream];
-        
-            }
-        
-        } break;
-            
-        case CategoryType_Likes:{
+        case GroupType_Likes:{
         
             if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
                 
@@ -178,7 +168,7 @@
         
         } break;
             
-        case CategoryType_PersonalRoll:{
+        case GroupType_PersonalRoll:{
             
             if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
                 
@@ -187,14 +177,24 @@
             }
             
         } break;
+        
+        case GroupType_Stream:{
             
-        case CategoryType_CategoryChannel: {
+            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+                
+                [self removeOlderVideoFramesFromStream];
+                
+            }
+            
+        } break;
+            
+        case GroupType_CategoryChannel: {
      
             [self removeOlderVideoFramesFromCategoryChannel:categoryID];
             
         }
             
-        case CategoryType_CategoryRoll: {
+        case GroupType_CategoryRoll: {
             
             [self removeOlderVideoFramesFromCategoryRoll:categoryID];
             
