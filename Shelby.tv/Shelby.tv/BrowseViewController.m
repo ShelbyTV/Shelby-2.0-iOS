@@ -602,15 +602,22 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             
             if ( [videoFrames count] ) {
-                
+            
+                NSManagedObjectContext *mainThreadContext = [self context];
                 SPVideoReel *reel = nil;
                 
                 if ( groupType == GroupType_CategoryChannel ) { // Category Channel
                     
+                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
+                    NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
+                    Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[channel channelID]];
                     
                 } else if ( groupType == GroupType_CategoryRoll ) { // Category Roll
                     
+                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
+                    NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
+                    Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[roll rollID]];
                     
                 } else { // Stream, Likes, Personal Roll
