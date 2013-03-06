@@ -484,18 +484,20 @@
         [self setInTransition:YES];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            UIImage *videoCapture = nil;
             if ([self.model.currentVideoPlayer isPlaying]) {
-                CGSize videoSize = CGSizeMake(1024, 768);
-                UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player];
+                videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player];
+            }
+    
+            dispatch_async(dispatch_get_main_queue(), ^{
                 if (videoCapture) {
+                    CGSize videoSize = CGSizeMake(1024, 768);
                     self.playerScreenshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, videoSize.width, videoSize.height)];
                     self.playerScreenshot.backgroundColor = [UIColor blackColor];
                     [self.playerScreenshot setContentMode:UIViewContentModeScaleAspectFit];
                     [self.playerScreenshot setImage:videoCapture];
                 }
-            }
-    
-            dispatch_async(dispatch_get_main_queue(), ^{
+
                 // Cancel remaining MP4 extractions
                 [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
                 
