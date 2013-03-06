@@ -952,6 +952,9 @@
             // videoScrollView
             NSManagedObjectContext *context = [self.appDelegate context];
             NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+            if (!objectID) {
+                continue;
+            }
             Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             
             CGRect viewframe = [self.videoScrollView frame];
