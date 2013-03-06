@@ -484,31 +484,11 @@
         [self setInTransition:YES];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if ([self.model.currentVideoPlayer isPlaying]) { // TODO: KP KP cleanup
-                NSArray *tracks = [self.model.currentVideoPlayer.player.currentItem.asset tracksWithMediaType:AVMediaTypeVideo];
+            if ([self.model.currentVideoPlayer isPlaying]) {
                 CGSize videoSize = CGSizeMake(1024, 768);
-                for (AVAssetTrack *assetTrack in tracks) {
-                    CGSize size = [assetTrack naturalSize];
-                    CGAffineTransform transform = self.model.currentVideoPlayer.player.currentItem.asset.preferredTransform;
-                    double xScale = sqrt(transform.a * transform.a + transform.c * transform.c);
-                    double yScale = sqrt(transform.b * transform.b + transform.d * transform.d);
-                    
-                    videoSize = CGSizeMake(size.width * xScale, size.height * yScale);
-                    double ratio = 1;
-                    if (videoSize.width > 1024) {
-                        ratio = 1024 / videoSize.width;
-                        videoSize.height *= ratio;
-                        videoSize.width = 1024;
-                    }
-                    if (videoSize.height > 768) {
-                        ratio = 768 / videoSize.height;
-                        videoSize.width *= ratio;
-                        videoSize.height = 768;
-                    }
-                }
-                 UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:videoSize];
+                UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:videoSize];
                 if (videoCapture) {
-                    self.playerScreenshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+                    self.playerScreenshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, videoSize.width, videoSize.height)];
                     self.playerScreenshot.backgroundColor = [UIColor blackColor];
                     [self.playerScreenshot setContentMode:UIViewContentModeScaleAspectFit];
                     [self.playerScreenshot setImage:videoCapture];

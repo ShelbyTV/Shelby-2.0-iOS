@@ -10,5 +10,7 @@
 
 @interface ImageUtilities : NSObject
 + (UIImage *)screenshot:(UIView *)view;
+
+/// Capturing a video will take into account the actual size of the video played (i.e. will maintain ratio)
 + (UIImage *)captureVideo:(AVPlayer *)player toSize:(CGSize)size;
 @end

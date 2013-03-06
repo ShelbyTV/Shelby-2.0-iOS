@@ -24,6 +24,29 @@
 
 + (UIImage *)captureVideo:(AVPlayer *)player toSize:(CGSize)size
 {
+    CGSize videoSize = size;
+    
+    NSArray *tracks = [player.currentItem.asset tracksWithMediaType:AVMediaTypeVideo];
+    for (AVAssetTrack *assetTrack in tracks) {
+        CGSize size = [assetTrack naturalSize];
+        CGAffineTransform transform = player.currentItem.asset.preferredTransform;
+        double xScale = sqrt(transform.a * transform.a + transform.c * transform.c);
+        double yScale = sqrt(transform.b * transform.b + transform.d * transform.d);
+        
+        videoSize = CGSizeMake(size.width * xScale, size.height * yScale);
+        double ratio = 1;
+        if (videoSize.width > size.width) {
+            ratio = size.width / videoSize.width;
+            videoSize.height *= ratio;
+            videoSize.width = size.width;
+        }
+        if (videoSize.height > size.height) {
+            ratio = size.height / videoSize.height;
+            videoSize.width *= ratio;
+            videoSize.height = size.height;
+        }
+    }
+    
     AVAssetImageGenerator *imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:[player.currentItem asset]];
     [imageGenerator setRequestedTimeToleranceAfter:kCMTimeZero];
     [imageGenerator setRequestedTimeToleranceBefore:kCMTimeZero];
@@ -32,6 +55,6 @@
     UIImage *image = [UIImage imageWithCGImage:ref];
     CGImageRelease(ref);
     
-    return [image scaleToSize:size];
+    return [image scaleToSize:videoSize];
 }
 @end
