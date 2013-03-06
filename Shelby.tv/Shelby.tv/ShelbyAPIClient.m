@@ -393,7 +393,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Channel Roll");
+        DLog(@"Problem fetching Category Roll");
         
     }];
     
