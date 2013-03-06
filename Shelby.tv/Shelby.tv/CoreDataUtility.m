@@ -41,6 +41,7 @@
 - (void)postNotificationVideoInContext:(NSManagedObjectContext *)context;
 
 /// Syncing Methods
+- (void)syncCategories:(NSDictionary *)categoriesArray;
 - (void)syncCategoryChannels:(NSMutableArray *)webChannelIDsArray;
 - (void)syncCategoryRolls:(NSMutableArray *)webRollIDsArray;
 
@@ -1090,55 +1091,6 @@
     [self saveContext:_context];
 }
 
-- (void)syncCategories:(NSDictionary *)webResultsDictionary
-{
-    
-    /// Reference Web Categories 
-    NSArray *categoriesArray = webResultsDictionary[@"result"];
-
-    /// Channels
-    NSMutableArray *webChannelIDsArray = [@[] mutableCopy];
-    
-    // Reference all channels and rolls found on web as categories
-    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
-    
-        // Channels
-        NSArray *webChannelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
-
-        for ( NSUInteger j = 0; j < [webChannelsArray count]; ++j ) {
-            
-            NSDictionary *channelDictionary = [webChannelsArray objectAtIndex:j];
-            NSString *channelID = [channelDictionary valueForKey:@"user_id"];
-            [webChannelIDsArray addObject:channelID];
-            
-            }
-    }
-    
-    [self syncCategoryChannels:webChannelIDsArray];
-    
-    /// Rolls
-    NSMutableArray *webRollIDsArray = [@[] mutableCopy];;
-    
-    // Reference all channels and rolls found on web as categories
-    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
-       
-        // Rolls
-        NSArray *webRollsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"rolls"];
-        
-        for ( NSUInteger j = 0; j < [webRollsArray count]; ++j ) {
-            
-            NSDictionary *rollDictionary = [webRollsArray objectAtIndex:j];
-            NSString *rollID = [rollDictionary valueForKey:@"id"];
-            [webRollIDsArray addObject:rollID];
-            
-        }
-    }
-    
-
-    [self syncCategoryRolls:webRollIDsArray];
-    
-}
-
 #pragma mark - Persistance Methods (Private)
 - (id)checkIfEntity:(NSString *)entityName
         withIDValue:(NSString *)entityIDValue
@@ -1682,6 +1634,55 @@
 }
 
 #pragma mark - Syncing Methods (Private)
+- (void)syncCategories:(NSDictionary *)webResultsDictionary
+{
+    
+    /// Reference Web Categories
+    NSArray *categoriesArray = webResultsDictionary[@"result"];
+    
+    /// Channels
+    NSMutableArray *webChannelIDsArray = [@[] mutableCopy];
+    
+    // Reference all channels and rolls found on web as categories
+    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
+        
+        // Channels
+        NSArray *webChannelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
+        
+        for ( NSUInteger j = 0; j < [webChannelsArray count]; ++j ) {
+            
+            NSDictionary *channelDictionary = [webChannelsArray objectAtIndex:j];
+            NSString *channelID = [channelDictionary valueForKey:@"user_id"];
+            [webChannelIDsArray addObject:channelID];
+            
+        }
+    }
+    
+    [self syncCategoryChannels:webChannelIDsArray];
+    
+    /// Rolls
+    NSMutableArray *webRollIDsArray = [@[] mutableCopy];;
+    
+    // Reference all channels and rolls found on web as categories
+    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
+        
+        // Rolls
+        NSArray *webRollsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"rolls"];
+        
+        for ( NSUInteger j = 0; j < [webRollsArray count]; ++j ) {
+            
+            NSDictionary *rollDictionary = [webRollsArray objectAtIndex:j];
+            NSString *rollID = [rollDictionary valueForKey:@"id"];
+            [webRollIDsArray addObject:rollID];
+            
+        }
+    }
+    
+    
+    [self syncCategoryRolls:webRollIDsArray];
+    
+}
+
 - (void)syncCategoryChannels:(NSMutableArray *)webChannelIDsArray
 {
     /// Compare channels
