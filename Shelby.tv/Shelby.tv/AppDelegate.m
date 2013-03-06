@@ -27,7 +27,9 @@
 - (void)setupOfflineMode;
 
 /// Notification Methods
+- (void)removeChannelLoadinView;
 - (void)didLoadCategories:(NSNotification *)notification;
+- (void)didNotConnect:(NSNotification *)notification;
 - (void)postAuthorizationNotification;
 
 /// API Methods
@@ -198,7 +200,7 @@
     
     // Add notification to dismiss categoryLoadingView if there's no connectivity
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didLoadCategories:)
+                                             selector:@selector(didNotConnect:)
                                                  name:kShelbyNotificationNoConnectivity
                                                object:nil];
     
@@ -233,16 +235,29 @@
 }
 
 #pragma mark - Notification Methods (Private)
-- (void)didLoadCategories:(NSNotification *)notification
+- (void)removeChannelLoadinView
 {
+    
     [self.categoryLoadingView removeFromSuperview];
     [(BrowseViewController *)self.window.rootViewController fetchAllCategories];
     [(BrowseViewController *)self.window.rootViewController resetView];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationCategoriesFetched object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationNoConnectivity object:nil];
 }
 
+- (void)didLoadCategories:(NSNotification *)notification
+{
+    
+    [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(removeChannelLoadinView) userInfo:nil repeats:NO];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationCategoriesFetched object:nil];
+
+}
+
+- (void)didNotConnect:(NSNotification *)notification
+{
+    [self removeChannelLoadinView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationNoConnectivity object:nil];
+}
 
 - (void)postAuthorizationNotification
 {
