@@ -486,7 +486,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             if ([self.model.currentVideoPlayer isPlaying]) {
                 CGSize videoSize = CGSizeMake(1024, 768);
-                UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player toSize:videoSize];
+                UIImage *videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player];
                 if (videoCapture) {
                     self.playerScreenshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, videoSize.width, videoSize.height)];
                     self.playerScreenshot.backgroundColor = [UIColor blackColor];

@@ -22,6 +22,20 @@
 }
 
 
++ (UIImage *)captureVideo:(AVPlayer *)player
+{
+    AVAssetImageGenerator *imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:[player.currentItem asset]];
+    [imageGenerator setRequestedTimeToleranceAfter:kCMTimeZero];
+    [imageGenerator setRequestedTimeToleranceBefore:kCMTimeZero];
+    
+    CGImageRef ref = [imageGenerator copyCGImageAtTime:player.currentItem.currentTime actualTime:nil error:nil];
+    UIImage *image = [UIImage imageWithCGImage:ref];
+    CGImageRelease(ref);
+
+    return image;
+}
+
+
 + (UIImage *)captureVideo:(AVPlayer *)player toSize:(CGSize)size
 {
     CGSize videoSize = size;
@@ -47,13 +61,7 @@
         }
     }
     
-    AVAssetImageGenerator *imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:[player.currentItem asset]];
-    [imageGenerator setRequestedTimeToleranceAfter:kCMTimeZero];
-    [imageGenerator setRequestedTimeToleranceBefore:kCMTimeZero];
-    
-    CGImageRef ref = [imageGenerator copyCGImageAtTime:player.currentItem.currentTime actualTime:nil error:nil];
-    UIImage *image = [UIImage imageWithCGImage:ref];
-    CGImageRelease(ref);
+    UIImage *image = [ImageUtilities captureVideo:player];
     
     return [image scaleToSize:videoSize];
 }
