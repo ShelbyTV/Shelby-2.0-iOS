@@ -345,6 +345,8 @@
     
     for ( NSUInteger i = 0; i < [channelArray count]; ++i ) {
         
+        
+        // Parse and Store Category Channels
         NSDictionary *channelDictionary = [[[channelArray objectAtIndex:i] valueForKey:@"user_channels"] objectAtIndex:0];
         
         if ( channelDictionary ) { // As of February 15, not all dictionaries in results have a user_channels dictionary
@@ -366,9 +368,37 @@
             displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
             [channel setValue:displayThumbnail forKey:kShelbyCoreDataChannelDisplayThumbnailURL];
 
-//            [ShelbyAPIClient getChannel:channelID];
+            [ShelbyAPIClient getCategoryChannel:channelID];
             
         }
+        
+        // Parse and Store Category Rolls
+        NSDictionary *rollDictionary = [[[channelArray objectAtIndex:i] valueForKey:@"rolls"] objectAtIndex:0];
+        
+        if ( rollDictionary ) { // As of February 15, not all dictionaries in results have a user_channels dictionary
+            
+            Roll *roll = [self checkIfEntity:kShelbyCoreDataEntityRoll
+                                       withIDValue:[rollDictionary valueForKey:@"id"]
+                                          forIDKey:kShelbyCoreDataRollID];
+            
+            NSString *rollID = [NSString coreDataNullTest:[rollDictionary valueForKey:@"id"]];
+            [roll setValue:rollID forKey:kShelbyCoreDataRollID];
+            
+            NSString *displayTitle = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_title"]];
+            [roll setValue:displayTitle forKey:kShelbyCoreDataRollDisplayTitle];
+            
+            NSString *displayDescription = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_description"]];
+            [roll setValue:displayDescription forKey:kShelbyCoreDataRollDisplayDescription];
+            
+            NSString *displayThumbnail = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_thumbnail_ipad_src"]];
+            displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
+            [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
+            
+            [ShelbyAPIClient getCategoryRoll:rollID];
+            
+        }
+        
+        
                 
     }
     

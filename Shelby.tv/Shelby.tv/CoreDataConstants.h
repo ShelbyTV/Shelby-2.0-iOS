@@ -69,6 +69,9 @@
 #define kShelbyCoreDataRollFrameCount                   @"frameCount"
 #define kShelbyCoreDataRollThumbnailURL                 @"thumbnailURL"
 #define kShelbyCoreDataRollTitle                        @"title"
+#define kShelbyCoreDataRollDisplayTitle              @"displayTitle"
+#define kShelbyCoreDataRollDisplayDescription        @"displayDescription"
+#define kShelbyCoreDataRollDisplayThumbnailURL       @"displayThumbnailURL"
 
 // Stream Attribute Constants
 #define kShelbyCoreDataStreamID                         @"streamID"

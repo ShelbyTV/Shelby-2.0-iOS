@@ -356,16 +356,59 @@
 + (void)getCategoryRoll:(NSString *)rollID
 {
     
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    NSString *authToken = [user token];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID, authToken]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
     
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_BackgroundUpdate];
+            [dataUtility storeFrames:JSON forCategoryRoll:rollID];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Category Roll");
+        
+    }];
+    
+    [operation start];
     
 }
 
 
 + (void)getMoreFrames:(NSString *)skipParam forCategoryRoll:(NSString *)rollID
 {
- 
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    NSString *authToken = [user token];
+
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, rollID, authToken, skipParam]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"GET"];
     
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+            [dataUtility storeRollFrames:JSON];
+            
+        });
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"Problem fetching Channel Roll");
+        
+    }];
     
+    [operation start];
 }
 
 #pragma mark - Syncing (GET)

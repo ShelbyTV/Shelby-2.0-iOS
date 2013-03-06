@@ -73,7 +73,6 @@
 		1CD5B7D616D53C1400043754 /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		1CD5B7D716D53C1400043754 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4A16C7139300731912 /* LoginView.m */; };
 		1CD5B7D816D53C1400043754 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
-		1CD5B7D916D53C1400043754 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EB16CC45D50015D100 /* Roll.m */; };
 		1CD5B7DA16D53C1400043754 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		1CD5B7DB16D53C1400043754 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		1CD5B7DC16D53C1400043754 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
@@ -231,7 +230,6 @@
 		8E59805B1680104A00027181 /* videoListPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980411680104A00027181 /* videoListPanel@2x.png */; };
 		8E59805C1680104A00027181 /* videoPlayerBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980421680104A00027181 /* videoPlayerBar.png */; };
 		8E59805D1680104A00027181 /* videoPlayerBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980431680104A00027181 /* videoPlayerBar@2x.png */; };
-		8E77B3EC16CC45D50015D100 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EB16CC45D50015D100 /* Roll.m */; };
 		8E77B3EF16CC45D50015D100 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		8E77B3F216CC45D50015D100 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		8E77B3F516CC45D60015D100 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
@@ -248,6 +246,8 @@
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
+		8E8C3F2016E6D1D10060320A /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C3F1F16E6D1D10060320A /* Roll.m */; };
+		8E8C3F2116E6D1D10060320A /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C3F1F16E6D1D10060320A /* Roll.m */; };
 		8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
 		8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F326F1683F4040049EECD /* scrubberBarOff.png */; };
@@ -461,8 +461,6 @@
 		8E5980431680104A00027181 /* videoPlayerBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoPlayerBar@2x.png"; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
-		8E77B3EA16CC45D50015D100 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
-		8E77B3EB16CC45D50015D100 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		8E77B3ED16CC45D50015D100 /* Creator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creator.h; sourceTree = "<group>"; };
 		8E77B3EE16CC45D50015D100 /* Creator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Creator.m; sourceTree = "<group>"; };
 		8E77B3F016CC45D50015D100 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
@@ -485,6 +483,8 @@
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
+		8E8C3F1E16E6D1D10060320A /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
+		8E8C3F1F16E6D1D10060320A /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		8E91173016DC288600719F9B /* SPVideoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoDownloader.h; sourceTree = "<group>"; };
 		8E91173116DC288600719F9B /* SPVideoDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoDownloader.m; sourceTree = "<group>"; };
 		8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
@@ -671,6 +671,8 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				8E8C3F1E16E6D1D10060320A /* Roll.h */,
+				8E8C3F1F16E6D1D10060320A /* Roll.m */,
 				8EA68CE216DFDD9900B1A509 /* Video.h */,
 				8EA68CE316DFDD9900B1A509 /* Video.m */,
 				8EF03BE916D56D5A0019669F /* User.h */,
@@ -687,8 +689,6 @@
 				8E77B3F116CC45D50015D100 /* Conversation.m */,
 				8E77B3ED16CC45D50015D100 /* Creator.h */,
 				8E77B3EE16CC45D50015D100 /* Creator.m */,
-				8E77B3EA16CC45D50015D100 /* Roll.h */,
-				8E77B3EB16CC45D50015D100 /* Roll.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1454,7 +1454,6 @@
 				1CD5B7D616D53C1400043754 /* UIScreen+Resolution.m in Sources */,
 				1CD5B7D716D53C1400043754 /* LoginView.m in Sources */,
 				1CD5B7D816D53C1400043754 /* BrowseViewController.m in Sources */,
-				1CD5B7D916D53C1400043754 /* Roll.m in Sources */,
 				1CD5B7DA16D53C1400043754 /* Creator.m in Sources */,
 				1CD5B7DB16D53C1400043754 /* Conversation.m in Sources */,
 				1CD5B7DC16D53C1400043754 /* Stream.m in Sources */,
@@ -1482,6 +1481,7 @@
 				1C25DEA516E67EDF00168C10 /* AFURLConnectionOperation.m in Sources */,
 				1C25DEA616E67EDF00168C10 /* AFXMLRequestOperation.m in Sources */,
 				1C25DEA716E67EDF00168C10 /* UIImageView+AFNetworking.m in Sources */,
+				8E8C3F2116E6D1D10060320A /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1512,7 +1512,6 @@
 				8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */,
 				8E9FBD4B16C7139300731912 /* LoginView.m in Sources */,
 				1CC3387816CBDF2A00E58375 /* BrowseViewController.m in Sources */,
-				8E77B3EC16CC45D50015D100 /* Roll.m in Sources */,
 				8E77B3EF16CC45D50015D100 /* Creator.m in Sources */,
 				8E77B3F216CC45D50015D100 /* Conversation.m in Sources */,
 				8E77B3F516CC45D60015D100 /* Stream.m in Sources */,
@@ -1544,6 +1543,7 @@
 				8E01AFC116E67365000567D4 /* AFURLConnectionOperation.m in Sources */,
 				8E01AFC216E67365000567D4 /* AFXMLRequestOperation.m in Sources */,
 				8E01AFC316E67365000567D4 /* UIImageView+AFNetworking.m in Sources */,
+				8E8C3F2016E6D1D10060320A /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
