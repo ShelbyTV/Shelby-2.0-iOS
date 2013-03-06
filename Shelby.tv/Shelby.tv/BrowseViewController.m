@@ -545,9 +545,7 @@
         NSMutableArray *videoFrames = nil;
         NSString *errorMessage = nil;
         NSString *title = nil;
-        Channel *channel = nil;
-        Roll *roll = nil;
-        
+
         switch ( groupType ) {
                 
             case GroupType_Likes: {

@@ -19,14 +19,14 @@
 #define kShelbyAPIPutUnplayableVideo        @"https://api.shelby.tv/v1/video/%@/unplayable?auth_token=%@"
 
 /// GET Rolls
-#define kShelbyAPIGetRollFrames             @"https://api.shelby.tv/v1/roll/%@/frames"
-#define kShelbyAPIGetMoreRollFrames         @"https://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
-#define kShelbyAPIGetRollFramesForSync      @"https://api.shelby.tv/v1/roll/%@/frames?limit=%d"
+#define kShelbyAPIGetRollFrames             @"http://api.shelby.tv/v1/roll/%@/frames"
+#define kShelbyAPIGetMoreRollFrames         @"http://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
+#define kShelbyAPIGetRollFramesForSync      @"http://api.shelby.tv/v1/roll/%@/frames?limit=%d"
 
 /// GET Categories
 #define kShelbyAPIGetAllCategories          @"http://api.shelby.tv/v1/roll/featured?segment=ipad_standard"
-#define kShelbyAPIGetCategoryChannel        @"https://api.shelby.tv/v1/user/%@/dashboard"
-#define kShelbyAPIGetMoreCategoryChannel    @"https://api.shelby.tv/v1/user/%@/dashboard?skip=%@&limit=20"
+#define kShelbyAPIGetCategoryChannel        @"http://api.shelby.tv/v1/user/%@/dashboard"
+#define kShelbyAPIGetMoreCategoryChannel    @"http://api.shelby.tv/v1/user/%@/dashboard?skip=%@&limit=20"
 
 /// GET Shortlink
 #define kShelbyAPIGetShortLink              @"http://api.shelby.tv/v1/frame/%@/short_link"

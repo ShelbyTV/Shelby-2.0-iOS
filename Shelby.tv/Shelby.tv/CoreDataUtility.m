@@ -339,7 +339,7 @@
     
     for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
         
-        // Parse and sore user_channels
+        // Parse and store user_channels as CategoryChannels
         NSArray *channelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
         
         for ( NSUInteger j = 0; j < [channelsArray count]; ++j ) {
@@ -371,7 +371,7 @@
     
         }
         
-        // Parse and sore user_channels
+        // Parse and store rolls as CategoryRolls
         NSArray *rollsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"rolls"];
         
         for ( NSUInteger k = 0; k < [rollsArray count]; ++k ) {
@@ -456,6 +456,9 @@
             
         }
     }
+    
+    [self saveContext:_context];
+    
 }
 
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID
