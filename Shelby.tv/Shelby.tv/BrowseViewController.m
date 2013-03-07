@@ -130,7 +130,6 @@
 - (void)resetView
 {
     NSUInteger displayPage = ([self isLoggedIn] ? 0 : 1);
-    DLog(@"Page: %d",displayPage);
     [self.pageControl setCurrentPage:displayPage];
     [self scrollCollectionViewToPage:displayPage animated:YES];
 }
