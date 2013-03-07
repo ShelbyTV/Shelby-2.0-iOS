@@ -15,20 +15,20 @@
 {
     
     NSString *dataString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-    NSString *key;
-    
     const char *cData = [dataString cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    NSString *key;
     const char *cKey  = [key cStringUsingEncoding:NSASCIIStringEncoding];
-   
     
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
     
     CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
     
-    NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC
-                                          length:sizeof(cHMAC)];
+    NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
     
-    NSString *hash = [HMAC base64Encoding];
+    NSString *hash = [[NSString alloc] initWithData:HMAC encoding:NSASCIIStringEncoding];;
+
+    return hash;
 }
 
 @end
