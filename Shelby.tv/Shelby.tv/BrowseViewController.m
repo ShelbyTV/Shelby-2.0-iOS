@@ -100,10 +100,6 @@
     
     [self setCategories:[@[] mutableCopy]];
     
-    [self fetchAllCategories];
-
-    [self.pageControl setNumberOfPages:1];
-  
     [self setSecretMode:SecretMode_None];
     
     // Register Cell Nibs
@@ -112,6 +108,9 @@
     cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
     
+    [self.pageControl setNumberOfPages:1];
+
+    [self fetchAllCategories];
 }
 
 - (void)viewWillAppear:(BOOL)animated

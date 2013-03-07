@@ -228,7 +228,6 @@
     
     [self.categoryLoadingView removeFromSuperview];
     [self setCategoryLoadingView:nil];
-    [(BrowseViewController *)self.window.rootViewController resetView];
     
 }
 
@@ -310,6 +309,8 @@
 
         if (self.categoryLoadingView) {
             [self removeCategoryLoadingView];
+
+            [(BrowseViewController *)self.window.rootViewController resetView];
         }
     });
 }
