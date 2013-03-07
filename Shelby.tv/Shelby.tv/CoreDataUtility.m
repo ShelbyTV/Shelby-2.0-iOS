@@ -631,7 +631,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date
@@ -662,7 +665,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchLikesEntries
@@ -694,7 +700,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchMoreLikesEntriesAfterDate:(NSDate *)date
@@ -727,7 +736,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchPersonalRollEntries
@@ -759,7 +771,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date
@@ -792,7 +807,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchFramesInCategoryChannel:(NSString *)channelID
@@ -822,7 +840,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchMoreFramesInCategoryChannel:(NSString *)channelID afterDate:(NSDate *)date
@@ -853,7 +874,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchFramesInCategoryRoll:(NSString *)rollID
@@ -883,7 +907,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchMoreFramesInCategoryRoll:(NSString *)rollID afterDate:(NSDate *)date
@@ -914,7 +941,10 @@
     // Remove Frames that link to the same Video object
     NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
     
-    return deduplicatedFrames;
+    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
+    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation
@@ -1603,6 +1633,19 @@
     }
 
     return frames;
+}
+
+- (NSMutableArray *)filterDownloadedFrames:(NSMutableArray *)frames
+{
+    NSMutableArray *downloadedFrames = [@[] mutableCopy];
+    
+    for (Frame *frame in frames) {
+        if ( [frame.video.offlineURL length] > 0 ) {
+            [downloadedFrames addObject:frame];
+        }
+    }
+    
+    return downloadedFrames;
 }
 
 - (void)postNotificationVideoInContext:(NSManagedObjectContext *)context
