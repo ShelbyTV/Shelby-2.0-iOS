@@ -193,6 +193,7 @@
 		8E2BA99916D4053C0070613F /* rollActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99516D4053C0070613F /* rollActivityButton@2x.png */; };
 		8E2BA99A16D40A440070613F /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		8E3D6D0616D2BF5C00915CFE /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3D6D0516D2BF5C00915CFE /* Channel.m */; };
+		8E3DCC8216E8F6F5000AF8A2 /* NSString+HMAC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */; };
 		8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
 		8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
 		8E40AF6916A4B339007A66CA /* restartButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6716A4B339007A66CA /* restartButton.png */; };
@@ -422,6 +423,8 @@
 		8E2BA99516D4053C0070613F /* rollActivityButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rollActivityButton@2x.png"; sourceTree = "<group>"; };
 		8E3D6D0416D2BF5C00915CFE /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
 		8E3D6D0516D2BF5C00915CFE /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
+		8E3DCC8016E8F6F5000AF8A2 /* NSString+HMAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HMAC.h"; sourceTree = "<group>"; };
+		8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HMAC.m"; sourceTree = "<group>"; };
 		8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = SOURCE_ROOT; };
 		8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = SOURCE_ROOT; };
 		8E40AF6716A4B339007A66CA /* restartButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restartButton.png; sourceTree = "<group>"; };
@@ -975,6 +978,8 @@
 				8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */,
 				8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */,
 				8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */,
+				8E3DCC8016E8F6F5000AF8A2 /* NSString+HMAC.h */,
+				8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1544,6 +1549,7 @@
 				8E01AFC216E67365000567D4 /* AFXMLRequestOperation.m in Sources */,
 				8E01AFC316E67365000567D4 /* UIImageView+AFNetworking.m in Sources */,
 				8E8C3F2016E6D1D10060320A /* Roll.m in Sources */,
+				8E3DCC8216E8F6F5000AF8A2 /* NSString+HMAC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
