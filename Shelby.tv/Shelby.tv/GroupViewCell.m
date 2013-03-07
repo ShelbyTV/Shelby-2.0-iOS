@@ -7,6 +7,7 @@
 //
 
 #import "GroupViewCell.h"
+#import "UIColor+ColorWithHexAndAlpha.h"
 
 @implementation GroupViewCell
 
@@ -15,6 +16,10 @@
 {
     [self.groupTitle setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:20]];
     [self.groupDescription setFont:[UIFont fontWithName:@"Ubuntu" size:14]];
+    
+    UIColor *textColor = [UIColor colorWithHex:@"333333" andAlpha:1];
+    [self.groupDescription setTextColor:textColor];
+    [self.groupTitle setTextColor:textColor];
 }
 
 - (void)prepareForReuse
