@@ -24,18 +24,20 @@
 
 @interface BrowseViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet PageControl *pageControl;
+
 @property (strong, nonatomic) NSString *userNickname;
 @property (assign, nonatomic) BOOL isLoggedIn;
 
 @property (nonatomic) LoginView *loginView;
 @property (nonatomic) UIView *backgroundLoginView;
 
-@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
 @property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
 
-@property (weak, nonatomic) IBOutlet PageControl *pageControl;
+@property (assign, nonatomic) SecretMode secretMode;
+
 
 - (void)fetchUserNickname;
 
@@ -85,28 +87,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]]];
+    
+    [self resetVersionLabel];
     
     [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
     
     [self fetchUserNickname];
-    self.categories = [[NSMutableArray alloc] init];
+    
+    [self setCategories:[@[] mutableCopy]];
+    
+    [self fetchAllCategories];
+
+    [self.pageControl setNumberOfPages:1];
+  
+    [self setSecretMode:SecretMode_None];
+    [self toggleSecretModes:nil];
     
     // Register Cell Nibs
     UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
     cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
-
-    [self.pageControl setNumberOfPages:1];
-    [self fetchAllCategories];
-  
-    // Customize look
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]]];
     
-    // Version label
-    [self resetVersionLabel];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -394,38 +400,55 @@
     [self performAuthentication];
 }
 
-- (void)toggleOfflineMode:(id)sender
+- (void)toggleSecretModes:(id)sender
 {
     
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+    /* 
+     Each switch statement sets the conditions for the next SecretMode.
      
-        if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineModeEnabled] ) { // If offlineMode enabled, DISABLE it
+     Example: 
+     Entering SecretMode_None sets the condition for SecretMode_Offline.
+     Entering SecretMode_Offline sets the condition for SecretMode_OfflineView.
+     Entering SecretMode_OfflineView sets the condition for SecretMode_None.
+     
+     */
+    
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] && [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] ) {
+    
+        switch ( _secretMode ) {
             
-            // Set Defaults
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            case SecretMode_None: {
+                
+                [self setSecretMode:SecretMode_Offline];
+                [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@-O", kShelbyCurrentVersion]];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultOfflineModeEnabled];
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                DLog(@"Offline Mode ENABLED!")
+                
+            } break;
             
-            // Version label
-            [self resetVersionLabel]; 
-            
-            DLog(@"Offline Mode DISABLED!")
-            
-        } else { // If offlineMode disabled, ENABLE it
-            
-            // Set Defaults
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultOfflineModeEnabled];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            // Fetch User
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-            User *user = [dataUtility fetchUser];
-            
-            // Version label
-            [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
-            [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@ (%@)", kShelbyCurrentVersion, user.nickname]];
-            [self.versionLabel setTextColor:kShelbyColorBlack];
-            
-            DLog(@"Offline Mode ENABLED!");
+            case SecretMode_Offline: {
+
+                [self setSecretMode:SecretMode_OfflineView];
+                [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@-OV", kShelbyCurrentVersion]];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultOfflineModeEnabled];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultOfflineViewModeEnabled];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                DLog(@"Offline+View Mode ENABLED!")
+                
+            } break;
+                
+            case SecretMode_OfflineView: {
+                
+                [self setSecretMode:SecretMode_None];
+                [self resetVersionLabel];
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                DLog(@"Offline+View Mode DISABLED!")
+                
+            } break;
             
         }
     }

@@ -18,6 +18,8 @@
 #define kShelbyDefaultUserAuthorized                        @"Shelby User Authorization Stored in NSUserDefaults"
 #define kShelbyDefaultUserIsAdmin                           @"Shelby User Is Administrator"
 #define kShelbyDefaultOfflineModeEnabled                    @"Shelby Offline Mode Enabled"
+#define kShelbyDefaultOfflineViewModeEnabled                @"Shelby View Mode Enabled"
+
 
 // Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"

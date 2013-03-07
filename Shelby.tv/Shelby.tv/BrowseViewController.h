@@ -10,9 +10,12 @@
 
 @interface BrowseViewController : UIViewController <UICollectionViewDataSource, UITextFieldDelegate, UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *toggleOfflineButton;
+@property (weak, nonatomic) IBOutlet UIButton *toggleSecretButton;
 
-- (IBAction)toggleOfflineMode:(id)sender;
+/// Action Methods
+- (IBAction)toggleSecretModes:(id)sender;
+
+/// DataSource Methods
 - (void)fetchAllCategories;
 - (void)resetView; // To be called when PageControl and CollectioView need to be reset according to user login status
 

@@ -39,6 +39,16 @@ typedef NS_ENUM(NSUInteger, GroupType)
     
 };
 
+typedef NS_ENUM(NSUInteger, SecretMode)
+{
+    
+    SecretMode_None,
+    SecretMode_Offline,
+    SecretMode_OfflineView
+
+};
+
+
 typedef NS_ENUM(NSUInteger, VideoProviderType)
 {
     
