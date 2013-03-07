@@ -227,8 +227,7 @@
 {
     
     [self.categoryLoadingView removeFromSuperview];
-    [(BrowseViewController *)self.window.rootViewController fetchAllCategories];
-    [(BrowseViewController *)self.window.rootViewController resetView];
+    [self setCategoryLoadingView:nil];
     
 }
 
@@ -305,7 +304,15 @@
 
 - (void)didLoadCategories
 {
-    [self removeCategoryLoadingView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [(BrowseViewController *)self.window.rootViewController fetchAllCategories];
+
+        if (self.categoryLoadingView) {
+            [self removeCategoryLoadingView];
+
+            [(BrowseViewController *)self.window.rootViewController resetView];
+        }
+    });
 }
 
 - (void)dumpAllData

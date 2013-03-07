@@ -13,7 +13,7 @@
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
 {
-    [self.groupTitle setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:25]];
+    [self.groupTitle setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:20]];
     [self.groupDescription setFont:[UIFont fontWithName:@"Ubuntu" size:14]];
 }
 
