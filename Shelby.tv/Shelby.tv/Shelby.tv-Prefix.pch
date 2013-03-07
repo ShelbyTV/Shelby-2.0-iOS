@@ -32,6 +32,7 @@
     // Cateogories
     #import "NSDate+DateFromBSONObjectID.h"
     #import "NSString+CoreDataNullTest.h"
+    #import "NSString+HMAC.h"
     #import "UIColor+ColorWithHexAndAlpha.h"
     #import "UIScreen+Resolution.h"
     

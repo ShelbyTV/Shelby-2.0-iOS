@@ -8,6 +8,6 @@
 
 @interface NSString (HMAC)
 
-+ (NSString *)generateHMACFromData:(NSData *)data;
++ (NSString *)stringWithHMACFromDictionary:(NSDictionary *)dictionary;
 
 @end

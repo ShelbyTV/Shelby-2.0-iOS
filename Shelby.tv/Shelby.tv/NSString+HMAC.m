@@ -6,18 +6,20 @@
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
+#define kHMACKey    @"HMACKey"
+
 #include <CommonCrypto/CommonDigest.h>
 #include <CommonCrypto/CommonHMAC.h>
 
 @implementation NSString (HMAC)
 
-+ (NSString *)generateHMACFromData:(NSData *)data
++ (NSString *)stringWithHMACFromDictionary:(NSDictionary *)dictionary
 {
     
-    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    NSString *dataString = [NSString stringWithFormat:@"%@", dictionary];
     const char *cData = [dataString cStringUsingEncoding:NSASCIIStringEncoding];
     
-    NSString *key;
+    NSString *key = kHMACKey;
     const char *cKey  = [key cStringUsingEncoding:NSASCIIStringEncoding];
     
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
@@ -26,7 +28,11 @@
     
     NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
     
-    NSString *hash = [[NSString alloc] initWithData:HMAC encoding:NSASCIIStringEncoding];;
+    // description converts to hex but puts <> around it and spaces every 4 bytes
+    NSString *hash = [HMAC description];
+    hash = [hash stringByReplacingOccurrencesOfString:@" " withString:@""];
+    hash = [hash stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    hash = [hash stringByReplacingOccurrencesOfString:@">" withString:@""];
 
     return hash;
 }
