@@ -105,7 +105,6 @@
     [self.pageControl setNumberOfPages:1];
   
     [self setSecretMode:SecretMode_None];
-    [self toggleSecretModes:nil];
     
     // Register Cell Nibs
     UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];

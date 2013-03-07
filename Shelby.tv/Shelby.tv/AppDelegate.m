@@ -51,14 +51,14 @@
     // Crash reporting and user monitoring analytics
     [self setupAnalytics];
     
+    // Setup Offline Mode
+    [self setupOfflineMode];
+    
     // Observers
     [self setupObservers];
     
     // Setup buffer screen to allow categories to be fetched from web and stored locally
     [self setupCategoryLoadingView];
-    
-    // Setup Offline Mode
-    [self setupOfflineMode];
 
     return YES;
 }
