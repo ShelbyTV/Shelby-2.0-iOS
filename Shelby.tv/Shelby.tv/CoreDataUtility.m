@@ -350,7 +350,7 @@
 - (void)storeCategories:(NSDictionary *)resultsDictionary
 {
     NSArray *categoriesArray = resultsDictionary[@"result"];
-    NSUInteger tag = 0;
+    NSUInteger displayTag = 0;
     
     for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
         
@@ -364,26 +364,23 @@
                 // Parse and store rolls as CategoryRolls
                 NSArray *rollsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"rolls"];
                 
-                [self storeCategoryRolls:rollsArray withInitialTag:tag];
+                [self storeCategoryRolls:rollsArray withInitialTag:displayTag];
                 
                 // Set minimum tag for next itertation
                 NSUInteger total = [rollsArray count];
-                tag = tag + (total ? (total - 1) : 0);
-                
-                DLog(@"Next minimum tag: %d", tag);
+                displayTag = displayTag + (total ? (total - 1) : 0);
                 
             } else if ( [key isEqualToString:@"user_channels"] ) {
                 
                 // Parse and store user_channels as CategoryChannels
                 NSArray *channelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
                 
-                [self storeCategoryChannels:channelsArray withInitialTag:tag];
+                [self storeCategoryChannels:channelsArray withInitialTag:displayTag];
                 
                 // Set minimum tag for next itertation
                 NSUInteger total = [channelsArray count];
-                tag = tag + (total ? (total - 1) : 0);
-                
-                DLog(@"Next minimum tag: %d", tag);
+                displayTag = displayTag + (total ? (total - 1) : 0);
+
                 
             } else {
                 
@@ -408,76 +405,6 @@
     }
     
 
-}
-
-- (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)tag
-{
-    
-    for ( NSUInteger k = 0; k < [rollsArray count]; ++k ) {
-        
-        NSDictionary *rollDictionary = [rollsArray objectAtIndex:k];
-        
-        if ( rollDictionary ) {
-            
-            Roll *roll = [self checkIfEntity:kShelbyCoreDataEntityRoll
-                                 withIDValue:[rollDictionary valueForKey:@"id"]
-                                    forIDKey:kShelbyCoreDataRollID];
-            
-            NSString *rollID = [NSString coreDataNullTest:[rollDictionary valueForKey:@"id"]];
-            [roll setValue:rollID forKey:kShelbyCoreDataRollID];
-            
-            [roll setValue:@YES forKey:kShelbyCoreDataRollIsCategory];
-            
-            NSString *displayTitle = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_title"]];
-            [roll setValue:displayTitle forKey:kShelbyCoreDataRollDisplayTitle];
-            
-            NSString *displayDescription = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_description"]];
-            [roll setValue:displayDescription forKey:kShelbyCoreDataRollDisplayDescription];
-            
-            NSString *displayThumbnail = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_thumbnail_ipad_src"]];
-            displayThumbnail = [NSString stringWithFormat: @"http://shelby.tv%@", displayThumbnail];
-            [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
-            
-            [ShelbyAPIClient getCategoryRoll:rollID];
-            
-        }
-        
-        
-    }
-    
-}
-
-- (void)storeCategoryChannels:(NSArray *)channelsArray withInitialTag:(NSUInteger)tag
-{
-    for ( NSUInteger j = 0; j < [channelsArray count]; ++j ) {
-        
-        NSDictionary *channelDictionary = [channelsArray objectAtIndex:j];
-        
-        if ( channelDictionary ) {
-            
-            Channel *channel = [self checkIfEntity:kShelbyCoreDataEntityChannel
-                                       withIDValue:[channelDictionary valueForKey:@"user_id"]
-                                          forIDKey:kShelbyCoreDataChannelID];
-            
-            NSString *channelID = [NSString coreDataNullTest:[channelDictionary valueForKey:@"user_id"]];
-            [channel setValue:channelID forKey:kShelbyCoreDataChannelID];
-            
-            NSString *displayTitle = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_title"]];
-            [channel setValue:displayTitle forKey:kShelbyCoreDataChannelDisplayTitle];
-            
-            NSString *displayDescription = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_description"]];
-            [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
-            
-            NSString *displayThumbnail = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_thumbnail_ipad_src"]];
-            displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
-            [channel setValue:displayThumbnail forKey:kShelbyCoreDataChannelDisplayThumbnailURL];
-            
-            [ShelbyAPIClient getCategoryChannel:channelID];
-            
-        }
-        
-    }
-    
 }
 
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary
@@ -1083,6 +1010,9 @@
     NSMutableArray *categoriesArray = [[NSMutableArray alloc] init];
     [categoriesArray addObjectsFromArray:channelsArray];
     [categoriesArray addObjectsFromArray:rollsArray];
+    
+    NSSortDescriptor *displayTagSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayTag" ascending:YES];
+    [categoriesArray sortUsingDescriptors:[NSArray arrayWithObject:displayTagSortDescriptor]];
 
     return categoriesArray;
     
@@ -1405,6 +1335,77 @@
 }
 
 #pragma mark - Storage Methods (Private) 
+- (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag
+{
+    
+    for ( NSUInteger i = 0; i < [rollsArray count]; ++i ) {
+        
+        NSDictionary *rollDictionary = [rollsArray objectAtIndex:i];
+        
+        if ( rollDictionary ) {
+            
+            Roll *roll = [self checkIfEntity:kShelbyCoreDataEntityRoll
+                                 withIDValue:[rollDictionary valueForKey:@"id"]
+                                    forIDKey:kShelbyCoreDataRollID];
+            
+            NSString *rollID = [NSString coreDataNullTest:[rollDictionary valueForKey:@"id"]];
+            [roll setValue:rollID forKey:kShelbyCoreDataRollID];
+            
+            [roll setValue:@YES forKey:kShelbyCoreDataRollIsCategory];
+            
+            [roll setValue:[NSNumber numberWithInt:(displayTag+i)] forKey:kShelbyCoreDataRollDisplayTag];
+            
+            NSString *displayTitle = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_title"]];
+            [roll setValue:displayTitle forKey:kShelbyCoreDataRollDisplayTitle];
+            
+            NSString *displayDescription = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_description"]];
+            [roll setValue:displayDescription forKey:kShelbyCoreDataRollDisplayDescription];
+            
+            NSString *displayThumbnail = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_thumbnail_ipad_src"]];
+            displayThumbnail = [NSString stringWithFormat: @"http://shelby.tv%@", displayThumbnail];
+            [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
+            
+            [ShelbyAPIClient getCategoryRoll:rollID];
+            
+        }
+    }
+}
+
+- (void)storeCategoryChannels:(NSArray *)channelsArray withInitialTag:(NSUInteger)displayTag
+{
+    for ( NSUInteger i = 0; i < [channelsArray count]; ++i ) {
+        
+        NSDictionary *channelDictionary = [channelsArray objectAtIndex:i];
+        
+        if ( channelDictionary ) {
+            
+            Channel *channel = [self checkIfEntity:kShelbyCoreDataEntityChannel
+                                       withIDValue:[channelDictionary valueForKey:@"user_id"]
+                                          forIDKey:kShelbyCoreDataChannelID];
+            
+            NSString *channelID = [NSString coreDataNullTest:[channelDictionary valueForKey:@"user_id"]];
+            [channel setValue:channelID forKey:kShelbyCoreDataChannelID];
+            
+            [channel setValue:[NSNumber numberWithInt:(displayTag+i)] forKey:kShelbyCoreDataRollDisplayTag];
+            
+            NSString *displayTitle = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_title"]];
+            [channel setValue:displayTitle forKey:kShelbyCoreDataChannelDisplayTitle];
+            
+            NSString *displayDescription = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_description"]];
+            [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
+            
+            NSString *displayThumbnail = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_thumbnail_ipad_src"]];
+            displayThumbnail = [NSString stringWithFormat:@"http://shelby.tv%@", displayThumbnail];
+            [channel setValue:displayThumbnail forKey:kShelbyCoreDataChannelDisplayThumbnailURL];
+            
+            [ShelbyAPIClient getCategoryChannel:channelID];
+            
+        }
+        
+    }
+    
+}
+
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary
 {
         

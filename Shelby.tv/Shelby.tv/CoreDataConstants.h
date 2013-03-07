@@ -32,6 +32,7 @@
 #define kShelbyCoreDataChannelDisplayTitle              @"displayTitle"
 #define kShelbyCoreDataChannelDisplayDescription        @"displayDescription"
 #define kShelbyCoreDataChannelDisplayThumbnailURL       @"displayThumbnailURL"
+#define kShelbyCoreDataChannelDisplayTag                @"displayTag"
 
 // Conversation Attribute Constants
 #define kShelbyCoreDataConversationID                   @"conversationID"
@@ -73,6 +74,7 @@
 #define kShelbyCoreDataRollDisplayTitle                 @"displayTitle"
 #define kShelbyCoreDataRollDisplayDescription           @"displayDescription"
 #define kShelbyCoreDataRollDisplayThumbnailURL          @"displayThumbnailURL"
+#define kShelbyCoreDataRollDisplayTag                   @"displayTag"
 
 // Stream Attribute Constants
 #define kShelbyCoreDataStreamID                         @"streamID"
