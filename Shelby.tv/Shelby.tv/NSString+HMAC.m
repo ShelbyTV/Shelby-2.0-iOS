@@ -28,8 +28,7 @@
     
     NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
     
-    // description converts to hex but puts <> around it and spaces every 4 bytes
-    NSString *hash = [HMAC description];
+    NSString *hash = [HMAC description];  // Description converts to hex but puts <> around it and spaces every 4 bytes
     hash = [hash stringByReplacingOccurrencesOfString:@" " withString:@""];
     hash = [hash stringByReplacingOccurrencesOfString:@"<" withString:@""];
     hash = [hash stringByReplacingOccurrencesOfString:@">" withString:@""];
