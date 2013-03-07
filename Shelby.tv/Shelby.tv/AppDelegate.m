@@ -129,11 +129,17 @@
     // Invalidate pollAPITimer
     [self.pollAPITimer invalidate];
     
-    // Set NSUserDefaults
+    // Set user state (NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserIsAdmin];
+    
+    // Set app mode state (NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    // Set stream dependent variables (NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kShelbySPCurrentVideoStreamID];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
