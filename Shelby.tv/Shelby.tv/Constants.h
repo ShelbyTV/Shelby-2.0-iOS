@@ -19,7 +19,7 @@
 #define kShelbyDefaultUserIsAdmin                           @"Shelby User Is Administrator"
 #define kShelbyDefaultOfflineModeEnabled                    @"Shelby Offline Mode Enabled"
 #define kShelbyDefaultOfflineViewModeEnabled                @"Shelby View Mode Enabled"
-
+#define kShelbyDefaultHMACStoredValue                       @"Shelby HMAC Stored Value"
 
 // Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"

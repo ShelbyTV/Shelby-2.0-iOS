@@ -395,8 +395,19 @@
         
     }
     
-    [self syncCategories:resultsDictionary];
+    NSString *HMAC = [NSString stringWithHMACFromDictionary:resultsDictionary];
     
+    if ( ![[[NSUserDefaults standardUserDefaults] objectForKey:kShelbyDefaultHMACStoredValue] isEqualToString:HMAC] ) { // Sync if dictionary value changed
+        
+        [self syncCategories:resultsDictionary];
+    
+    } else { // Do not sync if dictionary value changed
+
+        [[NSUserDefaults standardUserDefaults] setValue:HMAC forKey:kShelbyDefaultHMACStoredValue];
+        
+    }
+    
+
 }
 
 - (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)tag
