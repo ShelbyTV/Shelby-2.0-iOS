@@ -222,40 +222,54 @@
     NSString *title = nil;
     NSString *description = nil;
     NSString *buttonImageName = nil;
-    int row = indexPath.row;
+    NSUInteger row = indexPath.row;
     
     if (indexPath.section == 0) { // Me Cards
+       
         [cell enableCard:[self isLoggedIn]];
 
         if (row == 0) {
+        
+            [cell enableCard:YES];
+            
             title = @"Likes";
             description = @"Add videos to your likes so you can come back to them and watch them in Shelby at a later time.";
             buttonImageName = @"likesCard";
+            
+        
         } else if (row == 2) {
+            
+            // Do nothing
+        
         } else if (row == 1) {
+    
             title = @"Stream";
             description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
             buttonImageName = @"streamCard";
+        
         } else if (row == 3) {
+            
             [cell enableCard:YES];
-            if ([self isLoggedIn]) {
-                title = @"Logout";
-            } else {
-                title = @"Login";
-            }
+        
+            title = ([self isLoggedIn]) ? @"Logout" : @"Login";
             description = @"Ain't nothin' but a gangsta party!";
             buttonImageName = @"loginCard";
         }
+        
         UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
         [cell.groupThumbnailImage setImage:buttonImage];
+        
     } else {  // Channel Cards
+        
         [cell enableCard:YES];
+        
         if (indexPath.row < [self.categories count]) {
-            buttonImageName = @"missingCard";
             
+            buttonImageName = @"missingCard";
             NSManagedObjectContext *context = [self context];
             NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
             Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+            
             // TODO: Channel should NOT be nil!
             if (channel) {
                 title = [channel displayTitle];
@@ -300,7 +314,6 @@
 {
     GroupViewCell  *cell = (GroupViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell.selectionView setHidden:YES];
-    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -309,36 +322,48 @@
     
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     
-    if ( indexPath.section == 0 ) { // If on ME screen
+    if ( 0 == indexPath.section ) { // ME Section
         
-        if ( [self isLoggedIn] ) { // and if loggedIn,
-            
-            if ( 0 == row ) { // Launch Likes
+        switch ( row ) { // Likes
+                
+            case 0: {
                 
                 [self launchPlayer:GroupType_Likes fromCell:cell];
-            
-            } else if (2 == row) { // Launch Personal Roll
-            
-                [self launchPlayer:GroupType_PersonalRoll fromCell:cell];
-            
-            } else if (1 == row) { // Launch Stream
                 
-                [self launchPlayer:GroupType_Stream fromCell:cell];
-            
-            } else if (3 == row) { // Logout
-            
-                [self logoutAction];
-            
-            }
-        
-        } else if (row == 3) { // or if loggedOut
-        
-            [self loginAction];
-        
+            } break;
+                
+            case 1: { // Stream
+                
+                if ( [self isLoggedIn] ) {
+                    
+                    [self launchPlayer:GroupType_Stream fromCell:cell];
+                    
+                }
+                
+            } break;
+                
+            case 2: { // Personal Roll
+                
+                if ( [self isLoggedIn] ) {
+                    
+                    [self launchPlayer:GroupType_PersonalRoll fromCell:cell];
+                    
+                }
+                
+            } break;
+                
+            case 3: { // Authentication State
+                
+                ( [self isLoggedIn] ) ? [self logoutAction] : [self loginAction];
+                
+            } break;
+                
+            default:
+                break;
         }
-    
-    } else { // If NOT on ME screen
-    
+        
+    } else { // Channels Section
+        
         id category = (id)[self.categories objectAtIndex:[indexPath row]];
         
         if ( [category isMemberOfClass:[Channel class]] ) { // Category is a Channel
@@ -357,7 +382,6 @@
 {
     // TODO: Deselect item
 }
-
 
 #pragma mark - Action Methods (Public)
 - (void)cancelButtonAction:(id)sender

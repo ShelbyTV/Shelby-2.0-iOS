@@ -670,9 +670,18 @@
     [request setSortDescriptors:@[sortDescriptor]];
     
     // Filter by rollID
-    User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
-    [request setPredicate:predicate];
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+        
+        User *user = [self fetchUser];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
+        [request setPredicate:predicate];
+        
+    } else {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", kShelbySPOfflineLikesRollID];
+        [request setPredicate:predicate];
+        
+    }
     
     // Execute request that returns array of frames in Queue Roll
     NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
@@ -706,9 +715,18 @@
     // Set Predicate
     
     // Filter by rollID and timestamp
-    User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", [user likesRollID], date];
-    [request setPredicate:predicate];
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+        
+        User *user = [self fetchUser];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@ AND (timestamp < %@))", [user likesRollID], date];
+        [request setPredicate:predicate];
+        
+    } else {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@ AND (timestamp < %@))", kShelbySPOfflineLikesRollID, date];
+        [request setPredicate:predicate];
+        
+    }
     
     // Execute request that returns array of frames in Queue Roll
     NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
