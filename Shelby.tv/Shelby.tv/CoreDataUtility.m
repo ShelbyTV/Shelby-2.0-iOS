@@ -675,7 +675,7 @@
         
     } else {
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", kShelbySPOfflineLikesRollID];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isStoredForLoggedOutUser == %@", YES];
         [request setPredicate:predicate];
         
     }
@@ -715,12 +715,12 @@
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
         
         User *user = [self fetchUser];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@ AND (timestamp < %@))", [user likesRollID], date];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@ AND (timestamp < %@)", [user likesRollID], date];
         [request setPredicate:predicate];
         
     } else {
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@ AND (timestamp < %@))", kShelbySPOfflineLikesRollID, date];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isStoredForLoggedOutUser == %@ AND (timestamp < %@)", YES, date];
         [request setPredicate:predicate];
         
     }

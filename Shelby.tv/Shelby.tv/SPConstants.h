@@ -11,9 +11,6 @@
 #define kShelbySPVideoPlayerElapsedTime         @"SP Video Player Elapsed Time"
 #define kShelbySPVideoPlayerExtractedURL        @"SP Video Player Extracted URL"
 
-/// Logged-Out User
-#define kShelbySPOfflineLikesRollID             @"Offline Likes Roll ID"
-
 /// Notification
 #define kShelbySPVideoExtracted                 @"SP Video Extracted"
 #define kShelbySPUserDidScrollToUpdate          @"SP User Did Scroll To Update"
