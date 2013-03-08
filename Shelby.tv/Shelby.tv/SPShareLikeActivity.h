@@ -12,7 +12,7 @@
 
 @interface SPShareLikeActivity : UIActivity
 
-@property (copy, nonatomic) NSString *frameID;
+@property (nonatomic) Frame *videoFrame;
 @property (nonatomic) SPOverlayView *overlayView;
 
 @end

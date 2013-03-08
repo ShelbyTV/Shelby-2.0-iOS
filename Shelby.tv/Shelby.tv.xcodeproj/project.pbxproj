@@ -77,7 +77,6 @@
 		1CD5B7DC16D53C1400043754 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
 		1CD5B7DF16D53C1400043754 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B40016CC45D60015D100 /* Messages.m */; };
 		1CD5B7E016D53C1400043754 /* GroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* GroupViewCell.m */; };
-		1CD5B7ED16D53C1400043754 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEEFA916CF014600CBF653 /* Frame.m */; };
 		1CD5B7EF16D53C1400043754 /* PersonalRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* PersonalRollViewCell.m */; };
 		1CD5B7F016D53C1400043754 /* CollectionViewGroupsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */; };
 		1CD5B7F116D53C1400043754 /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB55116D2A33600C8C216 /* PageControl.m */; };
@@ -212,6 +211,8 @@
 		8E4A92D9166532DA00FF742D /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9616652E6E00A565BF /* MeViewController.m */; };
 		8E4A92DC1665383F00FF742D /* MeViewController.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8E1FAB9716652E6E00A565BF /* MeViewController.xib */; };
 		8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
+		8E4D9EFF16EA880000D45E1E /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D9EFE16EA880000D45E1E /* Frame.m */; };
+		8E4D9F0016EA880000D45E1E /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4D9EFE16EA880000D45E1E /* Frame.m */; };
 		8E4F580B1635E05F0048585C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4F580A1635E05F0048585C /* CoreData.framework */; };
 		8E50CDED16A9B9FC006B1ABE /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE716A9B9FC006B1ABE /* Icon-Small-50.png */; };
 		8E50CDEE16A9B9FC006B1ABE /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE816A9B9FC006B1ABE /* Icon-Small-50@2x.png */; };
@@ -270,7 +271,6 @@
 		8EB3B19C16AFA7FA008587FD /* SPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19B16AFA7F9008587FD /* SPModel.m */; };
 		8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
 		8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
-		8EBEEFAA16CF014600CBF653 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBEEFA916CF014600CBF653 /* Frame.m */; };
 		8EC65F7C16E4FD42009EC83D /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
 		8EC65F7D16E4FD42009EC83D /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
 		8EC65F7E16E4FD42009EC83D /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7716E4FD42009EC83D /* Harpy.m */; };
@@ -443,6 +443,8 @@
 		8E454CD216CAAD3E00B2F528 /* personalRollCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "personalRollCard@2x.png"; sourceTree = "<group>"; };
 		8E4C55751666A9F90019DD15 /* SPOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPOverlayView.h; sourceTree = "<group>"; };
 		8E4C55761666A9F90019DD15 /* SPOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPOverlayView.m; sourceTree = "<group>"; };
+		8E4D9EFD16EA880000D45E1E /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		8E4D9EFE16EA880000D45E1E /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8E4F580A1635E05F0048585C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		8E50CDE716A9B9FC006B1ABE /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = SOURCE_ROOT; };
 		8E50CDE816A9B9FC006B1ABE /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -520,8 +522,6 @@
 		8EB950521665BCF100E965E0 /* SPVideoPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoPlayer.m; sourceTree = "<group>"; };
 		8EB950551665BD4000E965E0 /* SPVideoReel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoReel.h; sourceTree = "<group>"; };
 		8EB950561665BD4000E965E0 /* SPVideoReel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoReel.m; sourceTree = "<group>"; };
-		8EBEEFA816CF014600CBF653 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		8EBEEFA916CF014600CBF653 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		8EC65F7316E4FD42009EC83D /* AsynchronousFreeloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousFreeloader.h; sourceTree = "<group>"; };
 		8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
 		8EC65F7616E4FD42009EC83D /* Harpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harpy.h; sourceTree = "<group>"; };
@@ -672,6 +672,8 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				8E4D9EFD16EA880000D45E1E /* Frame.h */,
+				8E4D9EFE16EA880000D45E1E /* Frame.m */,
 				8E3DCC8316E9388D000AF8A2 /* Roll.h */,
 				8E3DCC8416E9388D000AF8A2 /* Roll.m */,
 				8E3DCC8616E9388D000AF8A2 /* Channel.h */,
@@ -680,8 +682,6 @@
 				8EA68CE316DFDD9900B1A509 /* Video.m */,
 				8EF03BE916D56D5A0019669F /* User.h */,
 				8EF03BEA16D56D5A0019669F /* User.m */,
-				8EBEEFA816CF014600CBF653 /* Frame.h */,
-				8EBEEFA916CF014600CBF653 /* Frame.m */,
 				8E77B3FF16CC45D60015D100 /* Messages.h */,
 				8E77B40016CC45D60015D100 /* Messages.m */,
 				8E77B3F316CC45D50015D100 /* Stream.h */,
@@ -1462,7 +1462,6 @@
 				1CD5B7DC16D53C1400043754 /* Stream.m in Sources */,
 				1CD5B7DF16D53C1400043754 /* Messages.m in Sources */,
 				1CD5B7E016D53C1400043754 /* GroupViewCell.m in Sources */,
-				1CD5B7ED16D53C1400043754 /* Frame.m in Sources */,
 				1CD5B7EF16D53C1400043754 /* PersonalRollViewCell.m in Sources */,
 				1CD5B7F016D53C1400043754 /* CollectionViewGroupsLayout.m in Sources */,
 				1CD5B7F116D53C1400043754 /* PageControl.m in Sources */,
@@ -1483,6 +1482,7 @@
 				1C25DEA516E67EDF00168C10 /* AFURLConnectionOperation.m in Sources */,
 				1C25DEA616E67EDF00168C10 /* AFXMLRequestOperation.m in Sources */,
 				1C25DEA716E67EDF00168C10 /* UIImageView+AFNetworking.m in Sources */,
+				8E4D9F0016EA880000D45E1E /* Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1518,7 +1518,6 @@
 				8E77B3F516CC45D60015D100 /* Stream.m in Sources */,
 				8E77B40116CC45D60015D100 /* Messages.m in Sources */,
 				1CD72EA116CD36CB0045B36F /* GroupViewCell.m in Sources */,
-				8EBEEFAA16CF014600CBF653 /* Frame.m in Sources */,
 				1CCCB54616CEA61B00C8C216 /* PersonalRollViewCell.m in Sources */,
 				1CCCB54C16CEECD400C8C216 /* CollectionViewGroupsLayout.m in Sources */,
 				1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */,
@@ -1546,6 +1545,7 @@
 				8E3DCC8216E8F6F5000AF8A2 /* NSString+HMAC.m in Sources */,
 				8E3DCC8516E9388D000AF8A2 /* Roll.m in Sources */,
 				8E3DCC8816E9388D000AF8A2 /* Channel.m in Sources */,
+				8E4D9EFF16EA880000D45E1E /* Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

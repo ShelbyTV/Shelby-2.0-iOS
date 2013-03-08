@@ -34,7 +34,16 @@
 - (void)performActivity
 {
     
-    [ShelbyAPIClient postFrameToLikes:_frameID];
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Logged In
+        
+        [ShelbyAPIClient postFrameToLikes:_videoFrame.frameID];
+        
+    } else { // Logged Out
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreLoggedOutLike];
+        [dataUtility storeFrameInOfflineLikes:_videoFrame];
+        
+    }
     
     SPModel *model = (SPModel *)[SPModel sharedInstance];
     

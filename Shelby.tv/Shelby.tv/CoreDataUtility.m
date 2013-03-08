@@ -20,6 +20,7 @@
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey;
 
+- (void)deleteFrame:(Frame *)frame;
 - (void)removeOlderVideoFramesFromStream;
 - (void)removeOlderVideoFramesFromLikes;
 - (void)removeOlderVideoFramesFromPersonalRoll;
@@ -472,6 +473,14 @@
         }
     }
     
+    [self saveContext:_context];
+}
+
+- (void)storeFrameInOfflineLikes:(Frame *)frame
+{
+    NSError *error = nil;
+    frame = (Frame *)[self.context existingObjectWithID:[frame objectID] error:&error];
+    frame.isStoredForLoggedOutUser = @YES;
     [self saveContext:_context];
 }
 
@@ -1075,7 +1084,7 @@
         
             DLog(@"Likes FrameID no longer exist on web, so it is being removed: %@", frameID);
             
-            [self.context deleteObject:frame];
+            [self deleteFrame:frame];
         }
     }
     
@@ -1120,7 +1129,7 @@
             
             DLog(@"Personal Roll FrameID no longer exist on web, so it is being removed: %@", frameID);
             
-            [self.context deleteObject:frame];
+            [self deleteFrame:frame];
         }
     }
     
@@ -1154,6 +1163,17 @@
     }
     
     return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:_context];
+}
+
+- (void)deleteFrame:(Frame *)frame
+{
+    frame = (Frame* )[self.context existingObjectWithID:[frame objectID] error:nil];
+    
+    if ( ![frame isStoredForLoggedOutUser] ) {
+     
+        [self.context deleteObject:frame];
+        [self saveContext:_context];
+    }
 }
 
 - (void)removeOlderVideoFramesFromStream
@@ -1225,7 +1245,8 @@
         while ( i > maxLimit ) {
             
             Frame *frame = (Frame*)[olderResults lastObject];
-            [self.context deleteObject:frame];
+            [self deleteFrame:frame];
+            
             [olderResults removeLastObject];
             
             i--;
@@ -1265,7 +1286,7 @@
         while ( i > maxLimit ) {
             
             Frame *frame = (Frame*)[olderResults lastObject];
-            [self.context deleteObject:frame];
+            [self deleteFrame:frame];
             [olderResults removeLastObject];
             
             i--;
@@ -1304,7 +1325,7 @@
         while ( i > maxLimit ) {
             
             Frame *frame = (Frame*)[olderResults lastObject];
-            [self.context deleteObject:frame];
+            [self deleteFrame:frame];
             [olderResults removeLastObject];
             
             i--;
@@ -1343,7 +1364,7 @@
         while ( i > maxLimit ) {
             
             Frame *frame = (Frame*)[olderResults lastObject];
-            [self.context deleteObject:frame];
+            [self deleteFrame:frame];
             [olderResults removeLastObject];
             
             i--;
@@ -1440,6 +1461,8 @@
     
     NSString *creatorID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"creator_id"]];
     [frame setValue:creatorID forKey:kShelbyCoreDataFrameCreatorID];
+    
+    [frame setValue:@NO forKey:kShelbyCoreDataFrameIsStoredForLoggedOutUser];
     
     NSString *rollID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"roll_id"]];
     [frame setValue:rollID forKey:kShelbyCoreDataFrameRollID];

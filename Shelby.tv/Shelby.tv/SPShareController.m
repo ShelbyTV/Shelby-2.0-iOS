@@ -30,6 +30,7 @@
 - (void)removeKeyboard:(NSNotification *)notification;
 
 /// Action Methods
+- (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link;
 - (void)roll;
 
 @end
@@ -108,62 +109,8 @@
             NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\": %@ via @Shelby", frame.video.title, shareLink];
             
             DLog(@"Succeeded fetching link for frame: %@", shareLink);
+            [self shareWithFrame:frame message:shareMessage andLink:shareLink];
             
-            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-                
-                SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
-                rollActivity.shareController = self;
-                
-                SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
-                likeActivity.frameID = frame.frameID;
-                likeActivity.overlayView = [self.model overlayView];
-                
-                UIActivityViewController *activityController;
-                
-                if ( GroupType_Likes == [self.model groupType] ) {
-                    
-                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                           applicationActivities:[NSArray arrayWithObjects:rollActivity, nil]];
-                    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-                    
-                } else if ( GroupType_PersonalRoll == [self.model groupType] ) {
-                    
-                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                           applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
-                    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-                    
-                } else {
-                    
-                    activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                           applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
-                    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-                    
-                }
-                
-                self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-                [self.sharePopOverController setDelegate:self];
-                [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                             inView:[self.model overlayView]
-                                           permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                           animated:YES];
-                
-            } else {
-                
-                UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                                                 applicationActivities:nil];
-                activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-                
-                
-                self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-                [self.sharePopOverController setDelegate:self];
-                [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                             inView:[self.model overlayView]
-                                           permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                           animated:YES];
-                
-            }
-
-
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             
             // If short link fetch failed, use full_path
@@ -171,20 +118,9 @@
             NSString *shareLink = [NSString stringWithFormat:kShelbyAPIGetLongLink, frame.video.providerName, frame.video.providerID, frame.frameID];
             NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", videoFrame.video.title, shareLink];
     
-              DLog(@"Failed getting awe.sm short_url. Using full path %@", shareLink);
+            DLog(@"Failed getting awe.sm short_url. Using full path %@", shareLink);
+            [self shareWithFrame:frame message:shareMessage andLink:shareLink];
             
-            SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
-            SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
-            
-            UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[shareMessage]
-                                                                                             applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
-            activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-            
-            self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-            [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                         inView:[self.model overlayView]
-                                       permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                       animated:YES];
         }];
         
         [operation start];
@@ -320,6 +256,73 @@
 }
 
 #pragma mark - Action Methods (Private)
+- (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link
+{
+
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [frame objectID];
+    frame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Logged In
+        
+        SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
+        rollActivity.shareController = self;
+        
+        SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+        likeActivity.videoFrame = frame;
+        likeActivity.overlayView = [self.model overlayView];
+        
+        UIActivityViewController *activityController;
+        
+        if ( GroupType_Likes == [self.model groupType] ) {
+            
+            activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                                   applicationActivities:[NSArray arrayWithObjects:rollActivity, nil]];
+            activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+            
+        } else if ( GroupType_PersonalRoll == [self.model groupType] ) {
+            
+            activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                                   applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
+            activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+            
+        } else {
+            
+            activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                                   applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
+            activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+            
+        }
+        
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [self.sharePopOverController setDelegate:self];
+        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                     inView:[self.model overlayView]
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                   animated:YES];
+        
+    } else { // Logged Out
+        
+        SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
+        likeActivity.videoFrame = frame;
+        likeActivity.overlayView = [self.model overlayView];
+        
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                                                         applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
+        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+        
+        
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [self.sharePopOverController setDelegate:self];
+        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                     inView:[self.model overlayView]
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                   animated:YES];
+        
+    }
+
+}
+
 - (void)roll
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

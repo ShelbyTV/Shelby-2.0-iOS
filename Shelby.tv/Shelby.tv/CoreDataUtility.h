@@ -25,6 +25,7 @@
 - (void)storeCategories:(NSDictionary *)resultsDictionary;
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID;
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID;
+- (void)storeFrameInOfflineLikes:(Frame *)frame;
 
 /// Fetching Methods
 - (User *)fetchUser;

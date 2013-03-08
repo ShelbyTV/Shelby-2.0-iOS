@@ -50,6 +50,7 @@
 #define kShelbyCoreDataFrameCreatedAt                   @"createdAt"
 #define kShelbyCoreDataFrameCreatorID                   @"creatorID"
 #define kShelbyCoreDataFrameIsSynced                    @"isSynced"
+#define kShelbyCoreDataFrameIsStoredForLoggedOutUser    @"isStoredForLoggedOutUser"
 #define kShelbyCoreDataFrameRollID                      @"rollID"
 #define kShelbyCoreDataFrameTimestamp                   @"timestamp"
 #define kShelbyCoreDataFrameVideoID                     @"videoID"
