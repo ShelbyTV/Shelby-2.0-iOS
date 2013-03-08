@@ -675,7 +675,7 @@
         
     } else {
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isStoredForLoggedOutUser == %@", YES];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isStoredForLoggedOutUser == %d", YES];
         [request setPredicate:predicate];
         
     }
@@ -709,7 +709,6 @@
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [request setSortDescriptors:@[sortDescriptor]];
-    // Set Predicate
     
     // Filter by rollID and timestamp
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
@@ -720,7 +719,7 @@
         
     } else {
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isStoredForLoggedOutUser == %@ AND (timestamp < %@)", YES, date];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isStoredForLoggedOutUser == %d AND (timestamp < %@)", YES, date];
         [request setPredicate:predicate];
         
     }
