@@ -535,7 +535,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Stream table
+    // Search Personal Roll table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
@@ -556,7 +556,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Stream table
+    // Search Frame table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
@@ -576,7 +576,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Stream table
+    // Search Frame table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
@@ -1034,7 +1034,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of streamEntries
+    // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
 
     // Extract frameIDs from results from Shelby's Web Database
@@ -1070,7 +1070,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Queue table
+    // Search Personal Roll table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
@@ -1079,7 +1079,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of streamEntries
+    // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
     
     // Extract frameIDs from results from Shelby's Web Database
@@ -1114,6 +1114,8 @@
         withIDValue:(NSString *)entityIDValue
            forIDKey:(NSString *)entityIDKey
 {
+    
+    ///* This is the Find-or-Create method for all Core Data objects in the application *///
     
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1182,7 +1184,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Queue table
+    // Search Likes table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
@@ -1191,7 +1193,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of streamEntries
+    // Execute request that returns array of frames
     NSArray *results = [self.context executeFetchRequest:request error:nil];
     
     NSUInteger maxLimit = 60;
@@ -1222,7 +1224,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Queue table
+    // Search Personal Roll table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
@@ -1231,7 +1233,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of streamEntries
+    // Execute request that returns array of frames
     NSArray *results = [self.context executeFetchRequest:request error:nil];
     
     NSUInteger maxLimit = 60;
@@ -1262,7 +1264,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Queue table
+    // Search CategoryChannels table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
@@ -1270,7 +1272,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of streamEntries
+    // Execute request that returns array of frames
     NSArray *results = [self.context executeFetchRequest:request error:nil];
     
     NSUInteger maxLimit = 60;
@@ -1301,7 +1303,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Queue table
+    // Search CategoryRolls table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
@@ -1309,7 +1311,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
     [request setPredicate:predicate];
     
-    // Execute request that returns array of streamEntries
+    // Execute request that returns array of frames
     NSArray *results = [self.context executeFetchRequest:request error:nil];
     
     NSUInteger maxLimit = 60;
@@ -1785,8 +1787,8 @@
     [channelRequest setReturnsObjectsAsFaults:NO];
     
     // Search channel table
-    NSEntityDescription *rollDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityChannel inManagedObjectContext:_context];
-    [channelRequest setEntity:rollDescription];
+    NSEntityDescription *channelDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityChannel inManagedObjectContext:_context];
+    [channelRequest setEntity:channelDescription];
     
     // Execute request that returns array of rolls
     NSArray *channelResults = [self.context executeFetchRequest:channelRequest error:nil];
@@ -1818,7 +1820,7 @@
     NSEntityDescription *rollDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityRoll inManagedObjectContext:_context];
     [rollRequest setEntity:rollDescription];
     
-    // Filter by rollID
+    // Filter by isCategory
     NSPredicate *rollPredicate = [NSPredicate predicateWithFormat:@"isCategory == %d", YES];
     [rollRequest setPredicate:rollPredicate];
     
@@ -1831,7 +1833,11 @@
         Roll *roll = (Roll *)rollResults[i];
         NSString *rollID = roll.rollID;
         
-        // If roll doesn't exist as web category any more, retain the roll, but disallow it from showing up in the fetchAllCategories results
+        /*
+         If roll doesn't exist as web category any more, retain the roll, but disallow it from showing up in the fetchAllCategories results
+         This is done in case a specific roll is a logged-in user's personal roll (e.g., Reece's roll being a featured CategoryRoll and his personal roll)
+         */
+        
         if ( ![webRollIDsArray containsObject:rollID] ) {
             
             roll.isCategory = @NO;
