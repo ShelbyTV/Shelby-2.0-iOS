@@ -17,7 +17,6 @@
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic) UIView *categoryLoadingView;
 @property (nonatomic) NSMutableArray *videoDownloaders;
-@property (nonatomic) NSTimer *pollAPITimer;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 
 /// Setup Methods
@@ -85,12 +84,6 @@
     }
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Invalidate timer as user goes to background mode.
-    [self.pollAPITimer invalidate];
-    
-}
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
@@ -126,9 +119,6 @@
 
 - (void)logout
 {
-    // Invalidate pollAPITimer
-    [self.pollAPITimer invalidate];
-    
     // Set user state (NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserIsAdmin];
@@ -270,15 +260,6 @@
         [ShelbyAPIClient getPersonalRoll];
         [ShelbyAPIClient getAllCategories];
     });
-    
-    if ( ![_pollAPITimer isValid] ) {
-        
-        // Begin or restart Polling API
-        self.pollAPICounter = 0;
-        self.pollAPITimer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(pingAllRoutes) userInfo:nil repeats:YES];
-        
-    }
-    
 }
 
 #pragma mark - Core Data Methods (Public)
