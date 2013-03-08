@@ -1071,7 +1071,7 @@
         
             DLog(@"Likes FrameID no longer exist on web, so it is being removed: %@", frameID);
             
-            [self deleteFrame:frame];
+            [self.context deleteObject:frame];
         }
     }
     
@@ -1116,7 +1116,7 @@
             
             DLog(@"Personal Roll FrameID no longer exist on web, so it is being removed: %@", frameID);
             
-            [self deleteFrame:frame];
+            [self.context deleteObject:frame];
         }
     }
     
@@ -1232,8 +1232,7 @@
         while ( i > maxLimit ) {
             
             Frame *frame = (Frame*)[olderResults lastObject];
-            [self deleteFrame:frame];
-            
+            [self.context deleteObject:frame];
             [olderResults removeLastObject];
             
             i--;
@@ -1273,7 +1272,7 @@
         while ( i > maxLimit ) {
             
             Frame *frame = (Frame*)[olderResults lastObject];
-            [self deleteFrame:frame];
+            [self.context deleteObject:frame];
             [olderResults removeLastObject];
             
             i--;
