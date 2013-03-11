@@ -37,6 +37,8 @@
 		1C81096616EE21230030077C /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096116EE21230030077C /* HockeySDK.xcconfig */; };
 		1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C81096816EE21230030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
+		1C81096B16EE22B70030077C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81096916EE22AD0030077C /* CoreText.framework */; };
+		1C81096C16EE22BD0030077C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81096916EE22AD0030077C /* CoreText.framework */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1C85A22D16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1CAC4AD416E5561C0028E1DC /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD216E5561C0028E1DC /* tv.png */; };
@@ -346,6 +348,7 @@
 		1C81095F16EE21230030077C /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		1C81096116EE21230030077C /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
 		1C81096216EE21230030077C /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		1C81096916EE22AD0030077C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1CAC4AD216E5561C0028E1DC /* tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv.png; sourceTree = "<group>"; };
@@ -580,6 +583,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C81096C16EE22BD0030077C /* CoreText.framework in Frameworks */,
 				1CD5B7F316D53C1400043754 /* MediaPlayer.framework in Frameworks */,
 				1CD5B7F416D53C1400043754 /* QuartzCore.framework in Frameworks */,
 				1CD5B7F516D53C1400043754 /* CoreMedia.framework in Frameworks */,
@@ -599,6 +603,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C81096B16EE22B70030077C /* CoreText.framework in Frameworks */,
 				8EB3B18C16AF68A5008587FD /* MediaPlayer.framework in Frameworks */,
 				8E285DE7168124FC002A7935 /* QuartzCore.framework in Frameworks */,
 				8E1B2E9B16700B1F00D2C0DC /* CoreMedia.framework in Frameworks */,
@@ -747,6 +752,7 @@
 		8E209710162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1C81096916EE22AD0030077C /* CoreText.framework */,
 				8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */,
 				8EE5FAB71685622900DBEA13 /* Crashlytics.framework */,
 				8E285DE6168124FC002A7935 /* QuartzCore.framework */,
