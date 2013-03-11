@@ -10,6 +10,23 @@
 #import "BrowseViewController.h"
 #import "SPVideoDownloader.h"
 #import "Video.h"
+#import <HockeySDK/HockeySDK.h>
+
+// HOCKEY_APPSTORE                 @"20b1ed57ca55501749fb61c3b9039187"
+// HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
+// HOCKEY_ENTERPRISE               @"73f0add2df47cdb17bedfbfe35f9e279"
+#ifdef SHELBY_ENTERPRISE
+    #define HOCKEY_BETA                     @"73f0add2df47cdb17bedfbfe35f9e279"
+    #define HOCKEY_LIVE                     @"73f0add2df47cdb17bedfbfe35f9e279"
+#else
+    #define HOCKEY_BETA                     @"13fd8e2379e7cfff28cf8b069c8b93d3"
+    #define HOCKEY_LIVE                     @"20b1ed57ca55501749fb61c3b9039187"
+#endif
+
+
+
+@interface AppDelegate(HockeyProtocols) <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
+@end
 
 @interface AppDelegate ()
 
@@ -185,7 +202,11 @@
     [Crashlytics startWithAPIKey:@"84a79b7ee6f2eca13877cd17b9b9a290790f99aa"];
     
     // Hockey
-    
+    [[BITHockeyManager sharedHockeyManager] configureWithBetaIdentifier:HOCKEY_BETA
+                                                         liveIdentifier:HOCKEY_LIVE
+                                                               delegate:self];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+
     // Google Analytics
     
 }
@@ -236,6 +257,16 @@
     }
     
 }
+
+// TODO: KP KP - not sure if we want to do this.
+//#pragma mark - BITUpdateManagerDelegate
+//- (NSString *)customDeviceIdentifierForUpdateManager:(BITUpdateManager *)updateManager {
+//#ifndef CONFIGURATION_AppStore
+//    if ([[UIDevice currentDevice] respondsToSelector:@selector(uniqueIdentifier)])
+//        return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
+//#endif
+//    return nil;
+//}
 
 #pragma mark - Notification Methods (Private)
 
