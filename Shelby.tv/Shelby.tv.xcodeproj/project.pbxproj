@@ -31,6 +31,12 @@
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B116DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
+		1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
+		1C81096416EE21230030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
+		1C81096516EE21230030077C /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096116EE21230030077C /* HockeySDK.xcconfig */; };
+		1C81096616EE21230030077C /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096116EE21230030077C /* HockeySDK.xcconfig */; };
+		1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
+		1C81096816EE21230030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1C85A22D16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1CAC4AD416E5561C0028E1DC /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD216E5561C0028E1DC /* tv.png */; };
@@ -337,6 +343,9 @@
 		1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtilities.m; sourceTree = "<group>"; };
 		1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
 		1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
+		1C81095F16EE21230030077C /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		1C81096116EE21230030077C /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		1C81096216EE21230030077C /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1CAC4AD216E5561C0028E1DC /* tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv.png; sourceTree = "<group>"; };
@@ -582,6 +591,7 @@
 				1CD5B7FB16D53C1400043754 /* Foundation.framework in Frameworks */,
 				1CD5B7FC16D53C1400043754 /* CoreGraphics.framework in Frameworks */,
 				1CD5B7FD16D53C1400043754 /* Crashlytics.framework in Frameworks */,
+				1C81096416EE21230030077C /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,12 +610,32 @@
 				8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */,
 				8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */,
 				8EE5FAB81685622900DBEA13 /* Crashlytics.framework in Frameworks */,
+				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				1C81095F16EE21230030077C /* HockeySDK.framework */,
+				1C81096016EE21230030077C /* Resources */,
+			);
+			name = HockeySDK.embeddedframework;
+			path = "Library/HockeySDK-iOS/HockeySDK.embeddedframework";
+			sourceTree = SOURCE_ROOT;
+		};
+		1C81096016EE21230030077C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1C81096116EE21230030077C /* HockeySDK.xcconfig */,
+				1C81096216EE21230030077C /* HockeySDKResources.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		1C85A22916D6CEB300B6EE49 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -942,6 +972,7 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
 				8EC65F7216E4FD42009EC83D /* Asynchronous-Freeloader */,
 				8EC65F7516E4FD42009EC83D /* Harpy */,
@@ -1287,6 +1318,8 @@
 				1CAC4ADB16E55AA90028E1DC /* homeButton.png in Resources */,
 				1CAC4ADD16E55AA90028E1DC /* homeButton@2x.png in Resources */,
 				8EB19AA216E6FC4A00B22228 /* cardTemplate.png in Resources */,
+				1C81096616EE21230030077C /* HockeySDK.xcconfig in Resources */,
+				1C81096816EE21230030077C /* HockeySDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1396,6 +1429,8 @@
 				1CAC4ADA16E55AA90028E1DC /* homeButton.png in Resources */,
 				1CAC4ADC16E55AA90028E1DC /* homeButton@2x.png in Resources */,
 				8EB19AA116E6FC4A00B22228 /* cardTemplate.png in Resources */,
+				1C81096516EE21230030077C /* HockeySDK.xcconfig in Resources */,
+				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1571,6 +1606,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
+					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -1592,6 +1628,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
+					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -1607,6 +1644,7 @@
 		};
 		8E20973D162F3A61000A2DFD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C81096116EE21230030077C /* HockeySDK.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1638,6 +1676,7 @@
 		};
 		8E20973E162F3A61000A2DFD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C81096116EE21230030077C /* HockeySDK.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1670,6 +1709,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
+					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -1691,6 +1731,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
+					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
