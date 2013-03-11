@@ -1629,8 +1629,8 @@
 		1CD5B84A16D53C1400043754 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shelby TV, Inc.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shelby TV, Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shelby TV Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shelby TV Inc.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
@@ -1642,8 +1642,8 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv enterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "Shelby.tv Beta";
-				PROVISIONING_PROFILE = "28197B5D-C152-49A2-B495-9E14F2C9346A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "28197B5D-C152-49A2-B495-9E14F2C9346A";
+				PROVISIONING_PROFILE = "7BDBFE6B-AABE-44F3-8F9B-4D371998FABE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7BDBFE6B-AABE-44F3-8F9B-4D371998FABE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
