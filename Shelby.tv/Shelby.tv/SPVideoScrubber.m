@@ -14,6 +14,7 @@
 @property (weak, nonatomic) SPModel *model;
 
 - (NSString *)convertElapsedTime:(CGFloat)currentTime andDuration:(CGFloat)duration;
+- (void)updateWatchedRoll;
 
 @end
 
@@ -75,6 +76,9 @@
     
 	if ( isfinite(duration) && self.model.currentVideoPlayer.player ) {
         
+        // Update watched later roll
+        [self updateWatchedRoll];
+        
         // Update value of scrubber (slider and label)
 		CGFloat minValue = [self.model.overlayView.scrubber minimumValue];
 		CGFloat maxValue = [self.model.overlayView.scrubber maximumValue];
@@ -107,10 +111,13 @@
 - (void)beginScrubbing
 {
 	[self setScrubberTimeObserver:nil];
+    [self.model.currentVideoPlayer setPlaybackStartTime:kCMTimeZero];
 }
 
 - (void)scrub
 {
+    
+    [self.model.currentVideoPlayer setPlaybackStartTime:kCMTimeZero];
     
     CMTime playerDuration = [self elapsedDuration];
     
@@ -154,6 +161,9 @@
         
         // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
         ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
+     
+        // Reset playbackStartTime
+        [self.model.currentVideoPlayer setPlaybackStartTime:[self.model.currentVideoPlayer elapsedTime]];
         
     }
 
@@ -207,6 +217,25 @@
     }
     
     return convertedTime;
+}
+
+- (void)updateWatchedRoll
+{
+    CMTime elapsedTime = [self.model.currentVideoPlayer elapsedTime];
+    CGFloat elapsedSeconds = elapsedTime.value / elapsedTime.timescale;
+    CGFloat startSeconds = self.model.currentVideoPlayer.playbackStartTime.value / self.model.currentVideoPlayer.playbackStartTime.timescale;
+
+    if ( ((int)fabs(elapsedSeconds - startSeconds)%5 == 0) ) {
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        NSManagedObjectContext *context = [appDelegate context];
+        NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
+        Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
+        [ShelbyAPIClient postFrameToWatchedRoll:frame.frameID];
+        
+        DLog(@"Posting videoFrame %@ to watched roll", frame.frameID);
+        
+    }
 }
 
 #pragma mark - Accessor Methods

@@ -13,10 +13,14 @@
 @property (assign, nonatomic) BOOL isPlayable;
 @property (assign, nonatomic) BOOL isPlaying;
 @property (assign, nonatomic) BOOL playbackFinished;
+@property (assign, nonatomic) CMTime playbackStartTime;
 
 /// Initialization Methods
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame;
 - (void)resetPlayer;
+
+/// Video Storage Methods
+- (CMTime)elapsedTime;
 
 /// Video Fetching Methods
 - (void)queueVideo;

@@ -44,7 +44,6 @@
 
 /// Storage Methods
 - (void)storeVideoForLater;
-- (CMTime)elapsedTime;
 
 /// Observer Methods
 - (void)loadVideo:(NSNotification *)notification;
@@ -194,53 +193,13 @@
     
 }
 
-#pragma mark - Video Storage Methods
-- (void)resetPlayer
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        [self storeVideoForLater];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-            
-            [self.player pause];
-            
-            [self.playerLayer removeFromSuperlayer];
-            [self setPlayerLayer:nil];
-            [self setPlayer:nil];
-            
-            [self setupInitialConditions];
-        
-        });
-    });
-}
-
-- (void)storeVideoForLater
-{
-       
-    NSDate *storedDate = [NSDate date];
-    NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.videoFrame objectID];
-    self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-
-    if ( _videoFrame.video.extractedURL.length ) {
-        
-        NSDictionary *dictionary = @{ kShelbySPVideoPlayerStoredDate : storedDate, kShelbySPVideoPlayerElapsedTime : elapsedTime, kShelbySPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
-        self.videoInformation = [dictionary mutableCopy];
-    }
-    
-}
-
+#pragma mark - Video Storage Methods (Public)
 - (CMTime)elapsedTime
 {
     return [self.player.currentItem currentTime];
 }
 
-#pragma mark - Video Fetching Methods
+#pragma mark - Video Fetching Methods (Public)
 - (void)queueVideo
 {
     
@@ -276,7 +235,7 @@
     }
 }
 
-#pragma mark - Video Playback Methods
+#pragma mark - Video Playback Methods (Public)
 - (void)togglePlayback
 {
     if ( 0.0 == _player.rate && _isPlayable ) { // Play
@@ -312,6 +271,9 @@
     
     // Reschedule Timer
     [self.model rescheduleOverlayTimer];
+    
+    // Set Playback Start
+    [self setPlaybackStartTime:[self elapsedTime]];
     
     // Set Flag
     [self setIsPlaying:YES];
@@ -374,6 +336,48 @@
     }
 }
 
+#pragma mark - Video Storage Methods (Private)
+- (void)resetPlayer
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [self storeVideoForLater];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+            
+            [self.player pause];
+            
+            [self.playerLayer removeFromSuperlayer];
+            [self setPlayerLayer:nil];
+            [self setPlayer:nil];
+            
+            [self setupInitialConditions];
+            
+        });
+    });
+}
+
+- (void)storeVideoForLater
+{
+    
+    NSDate *storedDate = [NSDate date];
+    NSValue *elapsedTime = [NSValue valueWithCMTime:[self elapsedTime]];
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    
+    if ( _videoFrame.video.extractedURL.length ) {
+        
+        NSDictionary *dictionary = @{ kShelbySPVideoPlayerStoredDate : storedDate, kShelbySPVideoPlayerElapsedTime : elapsedTime, kShelbySPVideoPlayerExtractedURL : _videoFrame.video.extractedURL };
+        self.videoInformation = [dictionary mutableCopy];
+    }
+    
+}
+
+#pragma mark - Observer Methods (Private)
 - (void)loadVideoFromDisk
 {
     
