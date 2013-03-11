@@ -344,7 +344,7 @@
         
         // Roll videoFrame
         NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToPersonalRoll, rollID, frameID, authToken, message];
-        [ShelbyAPIClient postFrameToRoll:rollString];
+        [ShelbyAPIClient postFrameToPersonalRoll:rollString];
         
         // Share videoFrame
         if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Share to Facebook and Twitter
