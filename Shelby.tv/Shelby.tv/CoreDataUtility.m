@@ -415,11 +415,14 @@
     
     if ( groupType == GroupType_Likes ) {
      
+        [NSTimer scheduledTimerWithTimeInterval:2.0f target:[ShelbyAPIClient class] selector:@selector(getLikesForSync) userInfo:nil repeats:NO];
+        
         [ShelbyAPIClient getLikesForSync];
         
     } else if ( groupType == GroupType_PersonalRoll) {
         
-        [ShelbyAPIClient getPersonalRollForSync];
+        [NSTimer scheduledTimerWithTimeInterval:2.0f target:[ShelbyAPIClient class] selector:@selector(getPersonalRollForSync) userInfo:nil repeats:NO];
+        
         
     } else { // The remaining type, CategoryRolls, is synced at the end of the storeCategories: method
         
@@ -1067,6 +1070,7 @@
     // Execute request that returns array of frames in Likes Roll
     NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
 
+    // Sync/Send logged-out likes to web
     for ( Frame *frame in requestResults ) {
         
         [ShelbyAPIClient postFrameToLikes:frame.frameID];
@@ -1098,10 +1102,12 @@
     // Extract frameIDs from results from Shelby's Web Database
     NSArray *webResultsArray = [webResultsDictionary[@"result"] valueForKey:@"frames"];
     NSMutableArray *webFrameIdentifiersInLikes = [@[] mutableCopy];
+    
     for (NSUInteger i = 0; i < [webResultsArray count]; ++i) {
         
         NSString *frameID = [webResultsArray[i] valueForKey:@"id"];
         [webFrameIdentifiersInLikes addObject:frameID];
+    
     }
 
     // Perform Core Data vs. Shelby Database comparison and remove objects that don't exist
@@ -1109,7 +1115,7 @@
         
         Frame *frame = (Frame *)frameResults[i];
         NSString *frameID = frame.frameID;
-        
+
         // Delete object if it doesn't exist on web any more
         if ( ![webFrameIdentifiersInLikes containsObject:frameID] ) {
         
@@ -1119,6 +1125,7 @@
         }
     }
     
+    [self.context processPendingChanges];
     [self saveContext:_context];
 }
 
@@ -1164,6 +1171,7 @@
         }
     }
     
+    [self.context processPendingChanges];
     [self saveContext:_context];
 }
 
@@ -1203,8 +1211,11 @@
     if ( ![frame isStoredForLoggedOutUser] ) {
      
         [self.context deleteObject:frame];
-        [self saveContext:_context];
+        
     }
+    
+    [self.context processPendingChanges];
+    [self saveContext:_context];
 }
 
 - (void)removeOlderVideoFramesFromStream
@@ -1240,8 +1251,9 @@
             i--;
         }
         
+        [self.context processPendingChanges];
         [self saveContext:_context];
-        
+
     }
 
 }
@@ -1282,6 +1294,7 @@
             i--;
         }
 
+        [self.context processPendingChanges];
         [self saveContext:_context];
         
     }
@@ -1322,6 +1335,7 @@
             i--;
         }
         
+        [self.context processPendingChanges];
         [self saveContext:_context];
         
     }
@@ -1492,8 +1506,6 @@
     NSString *creatorID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"creator_id"]];
     [frame setValue:creatorID forKey:kShelbyCoreDataFrameCreatorID];
     
-    [frame setValue:@NO forKey:kShelbyCoreDataFrameIsStoredForLoggedOutUser];
-    
     NSString *rollID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"roll_id"]];
     [frame setValue:rollID forKey:kShelbyCoreDataFrameRollID];
     
@@ -1535,7 +1547,7 @@
                             forIDKey:kShelbyCoreDataRollID];
     
     if ( ![(id)roll isEqual:[NSNull null]] ) {
-    
+        
         frame.roll = roll;
         roll.frame = frame;
         [self storeRoll:roll fromDictionary:[frameDictionary valueForKey:@"roll"]];
@@ -1878,6 +1890,7 @@
         }
     }
     
+    [self.context processPendingChanges];
     [self saveContext:_context];
 }
 
