@@ -12,7 +12,6 @@
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
 		1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
-		1C81096516EE21230030077C /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096116EE21230030077C /* HockeySDK.xcconfig */; };
 		1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C81096B16EE22B70030077C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81096916EE22AD0030077C /* CoreText.framework */; };
 		1C81097516EE2CBF0030077C /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
@@ -185,7 +184,6 @@
 		1C810A1E16EE2CBF0030077C /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD816E55AA90028E1DC /* homeButton.png */; };
 		1C810A1F16EE2CBF0030077C /* homeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */; };
 		1C810A2016EE2CBF0030077C /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
-		1C810A2116EE2CBF0030077C /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096116EE21230030077C /* HockeySDK.xcconfig */; };
 		1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C810A2B16EE5EED0030077C /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
@@ -357,7 +355,6 @@
 		1C810AD416EE5EED0030077C /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD816E55AA90028E1DC /* homeButton.png */; };
 		1C810AD516EE5EED0030077C /* homeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */; };
 		1C810AD616EE5EED0030077C /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
-		1C810AD716EE5EED0030077C /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096116EE21230030077C /* HockeySDK.xcconfig */; };
 		1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1CAC4AD416E5561C0028E1DC /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD216E5561C0028E1DC /* tv.png */; };
@@ -1434,7 +1431,7 @@
 		8E209704162F3A60000A2DFD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Arthur Ariel Sabintsev";
 			};
 			buildConfigurationList = 8E209707162F3A60000A2DFD /* Build configuration list for PBXProject "Shelby.tv" */;
@@ -1562,7 +1559,6 @@
 				1C810A1E16EE2CBF0030077C /* homeButton.png in Resources */,
 				1C810A1F16EE2CBF0030077C /* homeButton@2x.png in Resources */,
 				1C810A2016EE2CBF0030077C /* cardTemplate.png in Resources */,
-				1C810A2116EE2CBF0030077C /* HockeySDK.xcconfig in Resources */,
 				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1672,7 +1668,6 @@
 				1C810AD416EE5EED0030077C /* homeButton.png in Resources */,
 				1C810AD516EE5EED0030077C /* homeButton@2x.png in Resources */,
 				1C810AD616EE5EED0030077C /* cardTemplate.png in Resources */,
-				1C810AD716EE5EED0030077C /* HockeySDK.xcconfig in Resources */,
 				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1782,7 +1777,6 @@
 				1CAC4ADA16E55AA90028E1DC /* homeButton.png in Resources */,
 				1CAC4ADC16E55AA90028E1DC /* homeButton@2x.png in Resources */,
 				8EB19AA116E6FC4A00B22228 /* cardTemplate.png in Resources */,
-				1C81096516EE21230030077C /* HockeySDK.xcconfig in Resources */,
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
