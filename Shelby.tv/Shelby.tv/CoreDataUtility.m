@@ -1071,12 +1071,18 @@
     NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
 
     // Sync/Send logged-out likes to web
-    for ( Frame *frame in requestResults ) {
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_async(group, queue, ^{
+    
+        for ( Frame *frame in requestResults ) {
         
-        [ShelbyAPIClient postFrameToLikes:frame.frameID];
-        [frame setIsStoredForLoggedOutUser:NO];
+            [ShelbyAPIClient postFrameToLikes:frame.frameID];
+            [frame setIsStoredForLoggedOutUser:NO];
         
-    }
+        }
+    
+    });
     
     [self saveContext:_context];
 }

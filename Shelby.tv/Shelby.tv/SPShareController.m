@@ -343,7 +343,7 @@
         NSString *message = [self.rollView.rollTextView.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
         
         // Roll videoFrame
-        NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToRoll, rollID, frameID, authToken, message];
+        NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToPersonalRoll, rollID, frameID, authToken, message];
         [ShelbyAPIClient postFrameToRoll:rollString];
         
         // Share videoFrame
