@@ -111,10 +111,14 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    // Sync Logged-Out Likes to Web
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    [dataUtility syncLoggedOutLikes];
+    
     // Perform API requests
     [self pingAllRoutes];
 
-    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(postAuthorizationNotification) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(postAuthorizationNotification) userInfo:nil repeats:NO];
 }
 
 - (void)logout

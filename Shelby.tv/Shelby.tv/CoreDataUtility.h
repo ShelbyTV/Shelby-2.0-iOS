@@ -54,6 +54,7 @@
 - (NSMutableArray *)fetchAllCategories;
 
 /// Sync Methods
+- (void)syncLoggedOutLikes;
 - (void)syncLikes:(NSDictionary *)webResuhanneltsDictionary;
 - (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
 

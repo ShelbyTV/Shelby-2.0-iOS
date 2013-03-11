@@ -1033,6 +1033,37 @@
 }
 
 #pragma mark - Sync Methods (Public)
+- (void)syncLoggedOutLikes
+{
+    // Create fetch request
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setReturnsObjectsAsFaults:NO];
+    
+    // Search Frame table
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    [request setEntity:description];
+    
+    // Sort by timestamp
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+    
+    // Filter by offline frames
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isStoredForLoggedOutUser == %d", YES];
+    [request setPredicate:predicate];
+    
+    // Execute request that returns array of frames in Likes Roll
+    NSArray *requestResults = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:request error:nil]];
+
+    for ( Frame *frame in requestResults ) {
+        
+        [ShelbyAPIClient postFrameToLikes:frame.frameID];
+        [frame setIsStoredForLoggedOutUser:NO];
+        
+    }
+    
+    [self saveContext:_context];
+}
+
 - (void)syncLikes:(NSDictionary *)webResultsDictionary
 {
     // Create fetch request
