@@ -963,6 +963,9 @@
                 // Reference _videoFrames[i] on main thread
                 NSManagedObjectContext *context = [self.appDelegate context];
                 NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+                if (!objectID) {
+                    return ;
+                }
                 Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
                 
                 // Update scrollViews
