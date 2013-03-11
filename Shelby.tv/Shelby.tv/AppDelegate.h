@@ -16,7 +16,6 @@
 @property (nonatomic, readonly) NSManagedObjectContext *context;
 
 /// Authentication Methods
-- (void)performCleanIfUserDidAuthenticate;
 - (void)userIsAuthorized;
 - (void)logout;
 

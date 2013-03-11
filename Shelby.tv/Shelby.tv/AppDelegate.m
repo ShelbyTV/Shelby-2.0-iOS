@@ -93,18 +93,6 @@
 }
 
 #pragma mark - Authentication Methods (Public)
-- (void)performCleanIfUserDidAuthenticate
-{
-    // Empty existing CoreData Store (if one exists)
-    [self dumpAllData];
-    
-    // Empty existing disk-stored data (if it exists)
-    [SPVideoDownloader deleteAllDownloadedVideos];
-    
-    // Empty existing Video Cache
-    [AsynchronousFreeloader removeAllImages];
-}
-
 - (void)userIsAuthorized
 {
     // Set NSUserDefault
@@ -123,19 +111,30 @@
 
 - (void)logout
 {
-    // Set user state (NSUserDefaults)
+    // Reset user state (Authorization NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserIsAdmin];
     
-    // Set app mode state (NSUserDefaults)
+    // Reset app mode state (Secred Mode NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
     
-    // Set stream dependent variables (NSUserDefaults)
+    // Reset stream dependent variables (Playback UX NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kShelbySPCurrentVideoStreamID];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    // Empty existing Video Cache
+    [AsynchronousFreeloader removeAllImages];
+    
+    // Empty existing disk-stored data (if there exists any data)
+    [SPVideoDownloader deleteAllDownloadedVideos];
+    
+    // Empty existing CoreData Store (if one exists)
+    [self dumpAllData];
+    
+    // Refetch Categories, since core-data store was dumped
+    [ShelbyAPIClient getAllCategories];
 }
 
 #pragma mark - Offline Methods (Public)
