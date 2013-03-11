@@ -396,7 +396,7 @@
     [self syncCategories:resultsDictionary];
 }
 
-- (void)storeRollFrames:(NSDictionary *)resultsDictionary
+- (void)storeRollFrames:(NSDictionary *)resultsDictionary forGroupType:(GroupType)groupType
 {
     NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
     
@@ -411,6 +411,19 @@
             [self storeFrame:frame forDictionary:resultsArray[i]];
 
         }
+    }
+    
+    if ( groupType == GroupType_Likes ) {
+     
+        [ShelbyAPIClient getLikesForSync];
+        
+    } else if ( groupType == GroupType_PersonalRoll) {
+        
+        [ShelbyAPIClient getPersonalRollForSync];
+        
+    } else { // The remaining type, CategoryRolls, is synced at the end of the storeCategories: method
+        
+        // Do nothing
     }
     
     [self saveContext:_context];
@@ -464,7 +477,7 @@
     [self saveContext:_context];
 }
 
-- (void)storeFrameInOfflineLikes:(Frame *)frame
+- (void)storeFrameInLoggedOutLikes:(Frame *)frame
 {
     NSError *error = nil;
     frame = (Frame *)[self.context existingObjectWithID:[frame objectID] error:&error];

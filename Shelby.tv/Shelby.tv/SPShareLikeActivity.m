@@ -41,7 +41,7 @@
     } else { // Logged Out
         
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreLoggedOutLike];
-        [dataUtility storeFrameInOfflineLikes:_videoFrame];
+        [dataUtility storeFrameInLoggedOutLikes:_videoFrame];
         
     }
     

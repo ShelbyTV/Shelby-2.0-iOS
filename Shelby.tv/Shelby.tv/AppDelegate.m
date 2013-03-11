@@ -99,14 +99,14 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    // Sync Logged-Out Likes to Web
+    // Sync/Send Logged-Out Likes to Web
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility syncLoggedOutLikes];
     
     // Perform API requests
     [self pingAllRoutes];
 
-    [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(postAuthorizationNotification) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(postAuthorizationNotification) userInfo:nil repeats:NO];
 }
 
 - (void)logout
@@ -254,14 +254,10 @@
 #pragma mark - API Methods (Private)
 - (void)pingAllRoutes
 {
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
-        [ShelbyAPIClient getLikesForSync];
-        [ShelbyAPIClient getPersonalRollForSync];
         [ShelbyAPIClient getStream];
-        [ShelbyAPIClient getLikes];
         [ShelbyAPIClient getPersonalRoll];
-        [ShelbyAPIClient getAllCategories];
+        [ShelbyAPIClient getLikes];
     });
 }
 

@@ -21,11 +21,11 @@
 /// Storage Methods
 - (void)storeUser:(NSDictionary *)resultsDictionary;
 - (void)storeStream:(NSDictionary *)resultsDictionary;
-- (void)storeRollFrames:(NSDictionary *)resultsDictionary;
+- (void)storeRollFrames:(NSDictionary *)resultsDictionary forGroupType:(GroupType)groupType;
 - (void)storeCategories:(NSDictionary *)resultsDictionary;
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID;
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID;
-- (void)storeFrameInOfflineLikes:(Frame *)frame;
+- (void)storeFrameInLoggedOutLikes:(Frame *)frame;
 
 /// Fetching Methods
 - (User *)fetchUser;
