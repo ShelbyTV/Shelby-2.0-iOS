@@ -207,6 +207,10 @@
                                                                delegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
 
+#ifdef SHELBY_APPSTORE
+    // Making sure there are no updates in the target we use for dev & app store release
+    [[BITHockeyManager sharedHockeyManager] setDisableUpdateManager: YES];
+#endif
     // Google Analytics
     
 }
