@@ -238,7 +238,7 @@
 #pragma mark - Storage Methods (Public)
 - (void)storeUser:(NSDictionary *)resultsDictionary
 {
-    NSArray *userDictionary = resultsDictionary[@"result"];
+    NSDictionary *userDictionary = resultsDictionary[@"result"];
     
     User *user = [self checkIfEntity:kShelbyCoreDataEntityUser
                          withIDValue:[userDictionary valueForKey:@"id"]
@@ -261,7 +261,7 @@
     
     NSString *likesRollID = [NSString coreDataNullTest:[userDictionary valueForKey:@"watch_later_roll_id"]];
     [user setValue:likesRollID forKey:kShelbyCoreDataUserLikesRollID];
-
+    
     /*
      Check if Facebook and Twitter are connected
      

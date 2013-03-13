@@ -14,7 +14,7 @@
 #pragma mark - Authentication (POST)
 + (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostAuthorizeEmail, email, password];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostLogin, email, password];
     [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
@@ -22,15 +22,11 @@
     [request setHTTPMethod:@"POST"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-
-        if ( response.statusCode == 200 ) {
             
-            // Store User Data
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
-            [dataUtility storeUser:JSON];
-            
-        }
-        
+        // Store User Data
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
+        [dataUtility storeUser:JSON];
+    
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         [loginView userAuthenticationDidFail];
@@ -57,6 +53,32 @@
     
     [operation start];
 }
+
++ (void)postSignupWithName:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password andEmail:(NSString *)email
+{
+
+    // Params
+    NSDictionary *userDictionary = @{@"name":name,@"nickname":nickname,@"password":password,@"primary_email":email};
+    NSDictionary *params = [NSDictionary dictionaryWithObject:userDictionary forKey:@"user"];
+    
+    NSURL *basURL = [NSURL URLWithString:kShelbyAPIBaseURL];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:basURL];
+
+    [httpClient postPath:@"/v1/user" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           
+        // Store User Data
+        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
+        [dataUtility storeUser:JSON];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+        NSLog(@"Error: %@", error.localizedDescription);
+    
+    }];
+    
+}
+
 
 #pragma mark - Stream (GET)
 + (void)getStream
