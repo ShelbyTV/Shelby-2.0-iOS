@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C0025FB16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */; };
+		1C0025FC16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */; };
+		1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */; };
+		1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */; };
+		1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */; };
+		1C00260016F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */; };
 		1C16A95116E14FCF004ABA41 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A94F16E14FCF004ABA41 /* background.png */; };
 		1C16A95316E14FCF004ABA41 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A95016E14FCF004ABA41 /* background@2x.png */; };
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
@@ -523,6 +529,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Enterprise-Info.plist"; sourceTree = SOURCE_ROOT; };
+		1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Nightly-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1C16A94F16E14FCF004ABA41 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		1C16A95016E14FCF004ABA41 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtilities.h; sourceTree = "<group>"; };
@@ -534,9 +542,7 @@
 		1C81096216EE21230030077C /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		1C81096916EE22AD0030077C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1C810A2716EE2CBF0030077C /* Shelby.tv copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1C810A2816EE2CBF0030077C /* Shelby.tv Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Shelby.tv Enterprise-Info.plist"; path = "/Users/keren/Documents/Shelby-2.0-iOS/Shelby.tv/Shelby.tv Enterprise-Info.plist"; sourceTree = "<absolute>"; };
 		1C810ADD16EE5EED0030077C /* Shelby.tv copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1C810ADE16EE5EED0030077C /* Shelby.tv Nightly-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Shelby.tv Nightly-Info.plist"; path = "/Users/keren/Documents/Shelby-2.0-iOS/Shelby.tv/Shelby.tv Nightly-Info.plist"; sourceTree = "<absolute>"; };
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1CAC4AD216E5561C0028E1DC /* tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv.png; sourceTree = "<group>"; };
@@ -998,8 +1004,8 @@
 				8E091750168536F900503EF9 /* Icons and Launch Images */,
 				8E20971A162F3A61000A2DFD /* InfoPlist.strings */,
 				8E209719162F3A61000A2DFD /* Shelby.tv-Info.plist */,
-				1C810ADE16EE5EED0030077C /* Shelby.tv Nightly-Info.plist */,
-				1C810A2816EE2CBF0030077C /* Shelby.tv Enterprise-Info.plist */,
+				1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */,
+				1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */,
 				8E20971D162F3A61000A2DFD /* main.m */,
 				8E20971F162F3A61000A2DFD /* Shelby.tv-Prefix.pch */,
 			);
@@ -1560,6 +1566,8 @@
 				1C810A1F16EE2CBF0030077C /* homeButton@2x.png in Resources */,
 				1C810A2016EE2CBF0030077C /* cardTemplate.png in Resources */,
 				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
+				1C0025FC16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
+				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1669,6 +1677,8 @@
 				1C810AD516EE5EED0030077C /* homeButton@2x.png in Resources */,
 				1C810AD616EE5EED0030077C /* cardTemplate.png in Resources */,
 				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
+				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
+				1C00260016F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1778,6 +1788,8 @@
 				1CAC4ADC16E55AA90028E1DC /* homeButton@2x.png in Resources */,
 				8EB19AA116E6FC4A00B22228 /* cardTemplate.png in Resources */,
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
+				1C0025FB16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
+				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
