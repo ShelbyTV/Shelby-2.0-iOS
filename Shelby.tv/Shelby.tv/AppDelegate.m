@@ -63,7 +63,7 @@
     BrowseViewController *pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
     self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
-    
+
     // Crash reporting and user monitoring analytics
     [self setupAnalytics];
     

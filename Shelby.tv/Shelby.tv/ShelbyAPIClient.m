@@ -56,36 +56,28 @@
 
 + (void)postSignupWithName:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password andEmail:(NSString *)email
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostSignUp, name, nickname, password, email];
-    [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *requestURL = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    [request setTimeoutInterval:30.0];
-    [request setHTTPMethod:@"POST"];
+
+    // Params
+    NSDictionary *userDictionary = @{@"name":name,@"nickname":nickname,@"password":password,@"primary_email":email};
+    NSDictionary *params = [NSDictionary dictionaryWithObject:userDictionary forKey:@"user"];
     
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
+    
+    NSURL *basURL = [NSURL URLWithString:kShelbyAPIBaseURL];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:basURL];
+
+    [httpClient postPath:@"/v1/user" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+           
         // Store User Data
+        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
+        [dataUtility storeUser:JSON];
         
-        DLog(@"%@", JSON);
-        
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
-//        [dataUtility storeUser:JSON];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        DLog(@"%@", error);
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"SignUp Error"
-                                                            message:@"Error"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
-        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+        NSLog(@"Error: %@", error.localizedDescription);
+    
     }];
     
-    [operation start];
 }
 
 

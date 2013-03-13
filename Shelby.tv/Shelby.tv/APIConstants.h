@@ -8,9 +8,12 @@
 
 // API Calls
 
+/// Shelby Base URL
+#define kShelbyAPIBaseURL                   @"https://api.shelby.tv/"
+
 /// POST Authorization
 #define kShelbyAPIPostLogin                 @"https://api.shelby.tv/v1/token?email=%@&password=%@"
-#define kShelbyAPIPostSignUp                @"https://api.shelby.tv/v1/user?name=%@&nickname=%@&password=%@&email=%@"
+//#define kShelbyAPIPostSignUp                @"https://api.shelby.tv/v1/user?name=%@&nickname=%@&password=%@&email=%@"
 
 /// GET Stream
 #define kShelbyAPIGetStream                 @"https://api.shelby.tv/v1/dashboard?auth_token=%@"
