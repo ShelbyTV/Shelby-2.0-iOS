@@ -343,8 +343,8 @@
         NSString *message = [self.rollView.rollTextView.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
         
         // Roll videoFrame
-        NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToRoll, rollID, frameID, authToken, message];
-        [ShelbyAPIClient postFrameToRoll:rollString];
+        NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToPersonalRoll, rollID, frameID, authToken, message];
+        [ShelbyAPIClient postFrameToPersonalRoll:rollString];
         
         // Share videoFrame
         if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Share to Facebook and Twitter

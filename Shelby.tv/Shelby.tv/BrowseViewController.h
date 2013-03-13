@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowseViewController : UIViewController <UICollectionViewDataSource, UITextFieldDelegate, UIAlertViewDelegate>
+@interface BrowseViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *toggleSecretButton;
 

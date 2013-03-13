@@ -39,11 +39,14 @@
 + (void)getLikesForSync;
 + (void)getPersonalRollForSync;
 
+/// Watching
++ (void)postFrameToWatchedRoll:(NSString *)frameID;
+
 /// Liking
 + (void)postFrameToLikes:(NSString *)frameID;
 
 /// Rolling
-+ (void)postFrameToRoll:(NSString*)requestString;
++ (void)postFrameToPersonalRoll:(NSString*)requestString;
 
 /// Sharing
 + (void)postShareFrameToSocialNetworks:(NSString*)requestString;

@@ -14,6 +14,7 @@
 @property (weak, nonatomic) SPModel *model;
 
 - (NSString *)convertElapsedTime:(CGFloat)currentTime andDuration:(CGFloat)duration;
+- (void)updateWatchedRoll;
 
 @end
 
@@ -85,6 +86,9 @@
         [self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
         [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
         
+        // Update watched later roll
+        [self updateWatchedRoll];
+        
         // Update button state
         if ( 0.0 == self.model.currentVideoPlayer.player.rate && self.model.currentVideoPlayer.player && self.model.currentVideoPlayer.isPlayable ) {
             
@@ -107,10 +111,13 @@
 - (void)beginScrubbing
 {
 	[self setScrubberTimeObserver:nil];
+    [self.model.currentVideoPlayer setPlaybackStartTime:kCMTimeZero];
 }
 
 - (void)scrub
 {
+    
+    [self.model.currentVideoPlayer setPlaybackStartTime:kCMTimeZero];
     
     CMTime playerDuration = [self elapsedDuration];
     
@@ -154,6 +161,10 @@
         
         // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
         ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
+     
+        // Reset playbackStartTime
+        [self.model.currentVideoPlayer setPlaybackStartTime:[self.model.currentVideoPlayer elapsedTime]];
+        DLog(@"Current Time: %lld", (self.model.currentVideoPlayer.playbackStartTime.value / self.model.currentVideoPlayer.playbackStartTime.timescale));
         
     }
 
@@ -207,6 +218,37 @@
     }
     
     return convertedTime;
+}
+
+- (void)updateWatchedRoll
+{
+    
+    // Only update watched roll if user exists (watched roll doesn't exist for logged-out users)
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+    
+        CMTime elapsedTime = [self.model.currentVideoPlayer elapsedTime];
+        CGFloat elapsedSeconds = elapsedTime.value / elapsedTime.timescale;
+        CGFloat startSeconds = self.model.currentVideoPlayer.playbackStartTime.value / self.model.currentVideoPlayer.playbackStartTime.timescale;
+        
+        BOOL elapsedCondition = elapsedSeconds > 0.0f;
+        BOOL differenceCondition = (NSUInteger)fabs(elapsedSeconds - startSeconds) % 5 == 0;
+        BOOL equalityCondition = !(elapsedSeconds == startSeconds);
+        
+        if ( elapsedCondition && differenceCondition && equalityCondition ) {
+            
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            NSManagedObjectContext *context = [appDelegate context];
+            NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
+            Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
+            [ShelbyAPIClient postFrameToWatchedRoll:frame.frameID];
+            
+            // Reset startSeconds
+            [self.model.currentVideoPlayer setPlaybackStartTime:[self.model.currentVideoPlayer elapsedTime]];
+            
+            DLog(@"Posting videoFrame %@ to watched roll", frame.frameID);
+            
+        }
+    }
 }
 
 #pragma mark - Accessor Methods

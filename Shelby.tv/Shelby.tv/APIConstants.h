@@ -31,12 +31,15 @@
 /// GET Shortlink
 #define kShelbyAPIGetShortLink              @"http://api.shelby.tv/v1/frame/%@/short_link"
 #define kShelbyAPIGetLongLink               @"http://shelby.tv/video/%@/%@/?frame_id=%@"
-          
+
+/// POST Watched Frame
+#define kShelbyAPIPostFrameToWatchedRoll    @"https://api.shelby.tv/v1/frame/%@/watched?auth_token=%@"
+
 /// POST Liked Frame
 #define kShelbyAPIPostFrameToLikes          @"https://api.shelby.tv/v1/frame/%@/add_to_watch_later?auth_token=%@"
 
 /// POST Roll Frame
-#define kShelbyAPIPostFrameToRoll           @"https://api.shelby.tv/v1/roll/%@/frames?frame_id=%@&auth_token=%@&text=%@"
+#define kShelbyAPIPostFrameToPersonalRoll   @"https://api.shelby.tv/v1/roll/%@/frames?frame_id=%@&auth_token=%@&text=%@"
 
 /// POST Shared Frame
 #define kShelbyAPIPostFrameToAllSocial      @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=twitter&destination[]=facebook&text=%@"
