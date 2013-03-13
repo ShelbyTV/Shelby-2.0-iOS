@@ -203,20 +203,44 @@
 - (void)queueVideo
 {
     
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+
+    
     if ( [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
         
-        // Instantiate AVPlayer object with extractedURL
-        NSString *extractedURL = [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL];
-        
-        // Reload player
-        [self setupPlayerForURL:[NSURL URLWithString:extractedURL]];
-        
-        // Set Time
-        CMTime elapsedTime = [[self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] CMTimeValue];
-        if ( CMTIME_IS_VALID(elapsedTime) ) {
-            [self.player seekToTime:elapsedTime];
+        NSDate *storedDate = [self.videoInformation valueForKey:kShelbySPVideoPlayerStoredDate];
+        NSTimeInterval interval = fabs([storedDate timeIntervalSinceNow]);
+
+        if ( interval < 300 ||  0 == [self.videoFrame.video.offlineURL length] ) { // Re-instantiate video, if stream was last accessed within 5 minutes, or video is stored offline
+            
+            // Instantiate AVPlayer object with extractedURL
+            NSString *extractedURL = [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL];
+            
+            // Reload player
+            [self setupPlayerForURL:[NSURL URLWithString:extractedURL]];
+            
+            // Set Time
+            CMTime elapsedTime = [[self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] CMTimeValue];
+            if ( CMTIME_IS_VALID(elapsedTime) ) {
+                [self.player seekToTime:elapsedTime];
+            }
+            
+        } else { // If video is not
+            
+            [self resetPlayer];
+            [self setupIndicator];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(loadVideo:)
+                                                         name:kShelbySPVideoExtracted
+                                                       object:nil];
+            
+            [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
+            
         }
         
+               
     } else { // If video hasn't been extracted, send it to the extractor
      
         if ( ![self isPlayable] ) {
@@ -226,9 +250,6 @@
                                                          name:kShelbySPVideoExtracted
                                                        object:nil];
             
-            NSManagedObjectContext *context = [self.appDelegate context];
-            NSManagedObjectID *objectID = [self.videoFrame objectID];
-            self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
             
         }
