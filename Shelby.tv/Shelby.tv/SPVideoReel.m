@@ -1,4 +1,3 @@
-     
 //
 //  SPVideoReel.m
 //  Shelby.tv
@@ -38,7 +37,6 @@
 @property (assign, nonatomic) CGRect zoomInScreenshotFrame;
 @property (assign, nonatomic) BOOL inTransition;
 @property (strong, nonatomic) UIImageView *playerScreenshot;
-
 
 /// Setup Methods
 - (void)setupVideoFrames:(NSArray *)videoFrames;
