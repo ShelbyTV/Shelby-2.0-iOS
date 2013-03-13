@@ -12,7 +12,7 @@
 #import "Video.h"
 #import <HockeySDK/HockeySDK.h>
 
-// HOCKEY_APPSTORE                 @"20b1ed57ca55501749fb61c3b9039187"
+// HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
 // HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
 // HOCKEY_ENTERPRISE               @"73f0add2df47cdb17bedfbfe35f9e279"
 #ifdef SHELBY_ENTERPRISE
