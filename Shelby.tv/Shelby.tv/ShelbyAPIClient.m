@@ -14,7 +14,7 @@
 #pragma mark - Authentication (POST)
 + (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostAuthorizeEmail, email, password];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostLogin, email, password];
     [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
@@ -22,15 +22,11 @@
     [request setHTTPMethod:@"POST"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-
-        if ( response.statusCode == 200 ) {
             
-            // Store User Data
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
-            [dataUtility storeUser:JSON];
-            
-        }
-        
+        // Store User Data
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
+        [dataUtility storeUser:JSON];
+    
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         [loginView userAuthenticationDidFail];
@@ -57,6 +53,41 @@
     
     [operation start];
 }
+
++ (void)postSignupWithName:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password andEmail:(NSString *)email
+{
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostSignUp, name, nickname, password, email];
+    [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *requestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setTimeoutInterval:30.0];
+    [request setHTTPMethod:@"POST"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        // Store User Data
+        
+        DLog(@"%@", JSON);
+        
+//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
+//        [dataUtility storeUser:JSON];
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        DLog(@"%@", error);
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"SignUp Error"
+                                                            message:@"Error"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+        
+    }];
+    
+    [operation start];
+}
+
 
 #pragma mark - Stream (GET)
 + (void)getStream
