@@ -61,7 +61,6 @@
     NSDictionary *userDictionary = @{@"name":name,@"nickname":nickname,@"password":password,@"primary_email":email};
     NSDictionary *params = [NSDictionary dictionaryWithObject:userDictionary forKey:@"user"];
     
-    
     NSURL *basURL = [NSURL URLWithString:kShelbyAPIBaseURL];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:basURL];
 
