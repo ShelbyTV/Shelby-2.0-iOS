@@ -12,6 +12,7 @@
 #import "GroupViewCell.h"
 #import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
+#import "SignupView.h"
 #import "PersonalRollViewCell.h"
 #import "PageControl.h"
 
@@ -32,6 +33,7 @@
 @property (assign, nonatomic) BOOL isLoggedIn;
 
 @property (nonatomic) LoginView *loginView;
+@property (nonatomic) SignupView *signupView;
 @property (nonatomic) UIView *backgroundLoginView;
 
 @property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
@@ -56,6 +58,9 @@
 /// Navigation Action Methods
 - (IBAction)cancelButtonAction:(id)sender;
 - (IBAction)goButtonAction:(id)sender;
+- (IBAction)openSignupDialog:(id)sender;
+- (IBAction)cancelSignup:(id)sender;
+- (IBAction)signup:(id)sender;
 
 /// Authentication Methods
 - (void)loginAction;
@@ -384,18 +389,21 @@
 }
 
 #pragma mark - Action Methods (Public)
+
+- (void)dismissTextField
+{
+    for (id view in [_loginView subviews]) {
+        if ([view isKindOfClass:[UITextField class]] && [view isFirstResponder]) {
+            [view resignFirstResponder];
+            break;
+        }
+    }
+}
+
 - (void)cancelButtonAction:(id)sender
 {
  
-    for ( UITextField *textField in [_loginView subviews] ) {
-        
-        if ( [textField isFirstResponder] ) {
-            
-            [textField resignFirstResponder];
-            
-        }
-        
-    }
+    [self dismissTextField];
     
     [UIView animateWithDuration:0.5
                      animations:^{
@@ -417,6 +425,60 @@
     
 }
 
+
+- (void)openSignupDialog:(id)sender
+{
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SignupView" owner:self options:nil];
+    if ([nib count] == 0) {
+        return;
+    }
+
+    self.signupView = nib[0];
+    
+    [self.view addSubview:self.signupView];
+    [self.signupView setAlpha:0];
+    [self.view bringSubviewToFront:self.signupView];
+    
+    float yDiff = (self.signupView.frame.size.height - self.loginView.frame.size.height);
+    CGRect targetFrame = self.signupView.frame;
+    [self.signupView setFrame:self.loginView.frame];
+    
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [self.signupView setFrame:CGRectMake(self.loginView.frame.origin.x,
+                                                             self.loginView.frame.origin.y - yDiff,
+                                                             targetFrame.size.width,
+                                                             targetFrame.size.height)];
+                         [self.signupView setAlpha:1];
+                         [self.loginView setAlpha:0];
+                     } completion:^(BOOL finished) {
+                         [self.loginView.emailField becomeFirstResponder];
+                     }];
+}
+
+- (IBAction)signup:(id)sender
+{
+    
+}
+
+- (IBAction)cancelSignup:(id)sender
+{
+    [self dismissTextField];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
+        [self.signupView setFrame:CGRectMake(xOrigin,
+                                             self.view.frame.size.height,
+                                             self.signupView.frame.size.width,
+                                             self.signupView.frame.size.height)];
+        
+        [self.backgroundLoginView setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [self.signupView removeFromSuperview];
+        [self.backgroundLoginView removeFromSuperview];
+    }];
+}
+
 - (void)goButtonAction:(id)sender
 {
     [self performAuthentication];
@@ -425,7 +487,7 @@
 - (void)toggleSecretModes:(id)sender
 {
     
-    /* 
+    /*
      Each switch statement sets the conditions for the next SecretMode.
      
      Example: 
