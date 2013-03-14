@@ -129,6 +129,8 @@
 - (void)setupPlayerForURL:(NSURL *)playerURL
 {
     
+    [[Panhandler sharedInstance] recordEvent];
+    
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
@@ -338,6 +340,8 @@
 - (void)share
 {
 
+    [[Panhandler sharedInstance] recordEvent];
+    
     // Disable overlayTimer
     [self.model.overlayView showOverlayView];
     [self.model.overlayTimer invalidate];
