@@ -53,40 +53,28 @@
     
     NSURL *basURL = [NSURL URLWithString:kShelbyAPIBaseURL];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:basURL];
+    NSURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"/v1/user" parameters:params];
 
-    [httpClient postPath:@"/v1/user" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-           
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         // Store User Data
-        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
         [dataUtility storeUser:JSON];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil
          ];
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-        id response = [operation response];
-        DLog(@"Error: %@", [response class]);
-        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        DLog(@"%@", error);
         NSString *errorMessage = nil;
-        NSDictionary *userInfo = [error userInfo];
-        if ([userInfo isKindOfClass:[NSDictionary class]] && userInfo[@"NSLocalizedRecoverySuggestion"]) {
-            // TODO: KP KP format the NSDictionary or find out why it is not formatted
-            NSDictionary *shelbyError = userInfo[@"NSLocalizedRecoverySuggestion"];
-            if ([shelbyError isKindOfClass:[NSDictionary class]]) {
-                errorMessage = shelbyError[@"message"];
-            } else {
-//                DLog(@"class is %@", [shelbyError class]);
-            }
-        }
-        if (!errorMessage) {
+        if ([JSON isKindOfClass:[NSDictionary class]]) {
+            errorMessage = JSON[@"message"];
+        } else {
             errorMessage = @"There was a problem. Please try again later.";
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
     }];
-    
+
+    [operation start];
 }
 
 
