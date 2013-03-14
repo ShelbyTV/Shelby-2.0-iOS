@@ -12,7 +12,7 @@
 @implementation ShelbyAPIClient
 
 #pragma mark - Authentication (POST)
-+ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView
++ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password
 {
     NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostLogin, email, password];
     [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -28,9 +28,6 @@
         [dataUtility storeUser:JSON];
     
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        [loginView userAuthenticationDidFail];
- 
         DLog(@"%@", error);
         
         NSString *errorMessage = nil;
@@ -41,14 +38,7 @@
         } else {
             errorMessage = @"Please make sure you've entered your login credientials correctly.";
         }
-
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
-                                                            message:errorMessage
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidFail object:errorMessage];
     }];
     
     [operation start];
@@ -71,10 +61,30 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
         [dataUtility storeUser:JSON];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil
+         ];
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-        NSLog(@"Error: %@", error.localizedDescription);
-    
+        id response = [operation response];
+        DLog(@"Error: %@", [response class]);
+        
+        NSString *errorMessage = nil;
+        NSDictionary *userInfo = [error userInfo];
+        if ([userInfo isKindOfClass:[NSDictionary class]] && userInfo[@"NSLocalizedRecoverySuggestion"]) {
+            // TODO: KP KP format the NSDictionary or find out why it is not formatted
+            NSDictionary *shelbyError = userInfo[@"NSLocalizedRecoverySuggestion"];
+            if ([shelbyError isKindOfClass:[NSDictionary class]]) {
+                errorMessage = shelbyError[@"message"];
+            } else {
+//                DLog(@"class is %@", [shelbyError class]);
+            }
+        }
+        if (!errorMessage) {
+            errorMessage = @"There was a problem. Please try again later.";
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
     }];
     
 }

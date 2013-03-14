@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FormView.h"
 
-@interface SignupView : UIView
+@interface SignupView : FormView
+
+@property (weak, nonatomic) IBOutlet UITextField *fullname;
+@property (weak, nonatomic) IBOutlet UITextField *username;
+@property (weak, nonatomic) IBOutlet UITextField *emailField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
 @end

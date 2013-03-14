@@ -284,37 +284,37 @@
 - (void)loginButtonAction
 {
     
-    self.backgroundLoginView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
-    [self.backgroundLoginView setBackgroundColor:[UIColor colorWithHex:@"adadad" andAlpha:1.0f]];
-    [self.backgroundLoginView setAlpha:0.0f];
-    [self.view addSubview:_backgroundLoginView];
-    
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LoginView" owner:self options:nil];
-    self.loginView = nib[0];
-    
-    CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
-    CGFloat yOrigin = self.view.frame.size.height/5.0f - _loginView.frame.size.height/4.0f;
-    
-    [self.loginView setFrame:CGRectMake(xOrigin,
-                                        self.view.frame.size.height,
-                                        _loginView.frame.size.width,
-                                        _loginView.frame.size.height)];
-    [self.view addSubview:_loginView];
-    
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         
-                         [self.backgroundLoginView setAlpha:0.75f];
-                         [self.loginView setFrame:CGRectMake(xOrigin,
-                                                             yOrigin,
-                                                             _loginView.frame.size.width,
-                                                             _loginView.frame.size.height)];
-                         
-                     } completion:^(BOOL finished) {
-                         
-                         [self.loginView.emailField becomeFirstResponder];
-                         
-                     }];
+//    self.backgroundLoginView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 748.0f)];
+//    [self.backgroundLoginView setBackgroundColor:[UIColor colorWithHex:@"adadad" andAlpha:1.0f]];
+//    [self.backgroundLoginView setAlpha:0.0f];
+//    [self.view addSubview:_backgroundLoginView];
+//    
+//    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LoginView" owner:self options:nil];
+//    self.loginView = nib[0];
+//    
+//    CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
+//    CGFloat yOrigin = self.view.frame.size.height/5.0f - _loginView.frame.size.height/4.0f;
+//    
+//    [self.loginView setFrame:CGRectMake(xOrigin,
+//                                        self.view.frame.size.height,
+//                                        _loginView.frame.size.width,
+//                                        _loginView.frame.size.height)];
+//    [self.view addSubview:_loginView];
+//    
+//    [UIView animateWithDuration:0.5f
+//                     animations:^{
+//                         
+//                         [self.backgroundLoginView setAlpha:0.75f];
+//                         [self.loginView setFrame:CGRectMake(xOrigin,
+//                                                             yOrigin,
+//                                                             _loginView.frame.size.width,
+//                                                             _loginView.frame.size.height)];
+//                         
+//                     } completion:^(BOOL finished) {
+//                         
+//                         [self.loginView.emailField becomeFirstResponder];
+//                         
+//                     }];
     
 }
 
@@ -327,30 +327,30 @@
 - (void)performAuthentication
 {
     
-    // Hide Keyboard
-    [self.view endEditing:YES];
-    
-    if ( ![_loginView.emailField.text length] || ![_loginView.passwordField.text length] ) {
-        
-        // Do nothing if at least one text field is empty
-        
-    } else {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(userAuthenticationDidSucceed:)
-                                                     name:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
-        
-        [self.loginView.cancelButton setEnabled:NO];
-        [self.loginView.goButton setEnabled:NO];
-        [self.loginView.emailField setEnabled:NO];
-        [self.loginView.passwordField setEnabled:NO];
-        
-        [self.loginView.indicator setHidden:NO];
-        [self.loginView.indicator startAnimating];
-        
-        [ShelbyAPIClient postAuthenticationWithEmail:[_loginView.emailField.text lowercaseString] andPassword:_loginView.passwordField.text withLoginView:_loginView];
-        
-    }
+//    // Hide Keyboard
+//    [self.view endEditing:YES];
+//    
+//    if ( ![_loginView.emailField.text length] || ![_loginView.passwordField.text length] ) {
+//        
+//        // Do nothing if at least one text field is empty
+//        
+//    } else {
+//        
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(userAuthenticationDidSucceed:)
+//                                                     name:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
+//        
+//        [self.loginView.cancelButton setEnabled:NO];
+//        [self.loginView.goButton setEnabled:NO];
+//        [self.loginView.emailField setEnabled:NO];
+//        [self.loginView.passwordField setEnabled:NO];
+//        
+//        [self.loginView.indicator setHidden:NO];
+//        [self.loginView.indicator startAnimating];
+//        
+//        [ShelbyAPIClient postAuthenticationWithEmail:[_loginView.emailField.text lowercaseString] andPassword:_loginView.passwordField.text];
+//        
+//    }
 }
 
 - (void)userAuthenticationDidSucceed:(NSNotification *)notification
@@ -492,13 +492,14 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ( textField == _loginView.emailField ) {
-        [self.loginView.passwordField becomeFirstResponder];
-        return NO;
-    } else {
-        [self performAuthentication];
-        return YES;
-    }
+//    if ( textField == _loginView.emailField ) {
+//        [self.loginView.passwordField becomeFirstResponder];
+//        return NO;
+//    } else {
+//        [self performAuthentication];
+//        return YES;
+//    }
+    return YES;
 }
 
 @end

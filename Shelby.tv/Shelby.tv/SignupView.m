@@ -9,10 +9,7 @@
 #import "SignupView.h"
 
 @interface SignupView()
-@property (weak, nonatomic) IBOutlet UITextField *fullname;
-@property (weak, nonatomic) IBOutlet UITextField *username;
-@property (weak, nonatomic) IBOutlet UITextField *emailField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+
 @end
 
 @implementation SignupView
@@ -20,7 +17,7 @@
 - (void)awakeFromNib
 {
 
-    [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"authenticationSignupView"]]];
+    [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"authenticationSignupView.png"]]];
     
     [self.fullname setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_emailField.font.pointSize]];
     [self.fullname setTextColor:kShelbyColorBlack];
@@ -32,5 +29,41 @@
     [self.passwordField setTextColor:kShelbyColorBlack];
  
 }
+
+
+- (void)processingForm
+{
+    [super processingForm];
+}
+
+- (void)resetForm
+{
+    [super resetForm];
+    
+    [self.fullname becomeFirstResponder];
+}
+
+- (void)selectNextField:(UITextField *)textField
+{
+    [super selectNextField:textField];
+    
+    if (textField == self.fullname) {
+        [self.emailField becomeFirstResponder];
+    } else if (textField == self.emailField) {
+        [self.username becomeFirstResponder];
+    } else if (textField == self.username) {
+        [self.passwordField becomeFirstResponder];
+    }
+}
+
+- (BOOL)validateFields
+{
+    if ([[self.fullname text] length] && [[self.emailField text] length] && [[self.username text] length]  && [[self.passwordField text] length]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 
 @end

@@ -6,12 +6,10 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-@class LoginView;
-
 @interface ShelbyAPIClient : NSObject
 
 /// Authentication
-+ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView;
++ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password;
 + (void)postSignupWithName:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password andEmail:(NSString *)email;
 
 /// Stream

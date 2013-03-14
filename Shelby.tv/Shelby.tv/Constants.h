@@ -23,6 +23,9 @@
 
 // Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"
+#define kShelbyNotificationUserAuthenticationDidFail        @"User Authentication Failed"
+#define kShelbyNotificationUserSignupDidSucceed             @"User Signup Succeed"
+#define kShelbyNotificationUserSignupDidFail                @"User Signup Failed"
 #define kShelbyNotificationNoConnectivity                   @"No Connectivity"
 
 // Colors

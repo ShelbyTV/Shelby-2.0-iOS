@@ -9,6 +9,8 @@
 #import "LoginView.h"
 
 @interface LoginView ()
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *goButton;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
 @end
 
@@ -16,7 +18,8 @@
 
 - (void)awakeFromNib
 {
-    
+    [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"authenticationLoginView.png"]]];
+
     [self.emailField setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_emailField.font.pointSize]];
     [self.emailField setTextColor:kShelbyColorBlack];
 
@@ -24,21 +27,39 @@
     [self.passwordField setTextColor:kShelbyColorBlack];
     
     [[self.signupButton titleLabel] setFont:[UIFont fontWithName:@"Ubuntu" size:_signupButton.titleLabel.font.pointSize]];
+}
 
-    [self.indicator setHidden:YES];
-    [self.indicator setHidesWhenStopped:YES];
+
+- (void)processingForm
+{
+    [super processingForm];
+}
+
+- (void)resetForm
+{
+    [super resetForm];
+    
+    [self.emailField becomeFirstResponder];
 
 }
 
-- (void)userAuthenticationDidFail
-{
 
-    [self.indicator stopAnimating];
-    [self.cancelButton setEnabled:YES];
-    [self.goButton setEnabled:YES];
-    [self.emailField setEnabled:YES];
-    [self.passwordField setEnabled:YES];
+- (void)selectNextField:(UITextField *)textField
+{
+    [super selectNextField:textField];
     
+    if (textField == self.emailField) {
+        [self.passwordField becomeFirstResponder];
+    }
+}
+
+- (BOOL)validateFields
+{
+    if ([[self.emailField text] length] && [[self.passwordField text] length]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end
