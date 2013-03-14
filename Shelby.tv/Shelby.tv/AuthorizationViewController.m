@@ -122,7 +122,7 @@
     if ([notification isKindOfClass:[NSNotification class]]) {
         NSString *errorMessage = [notification object];
         if ([errorMessage isKindOfClass:[NSString class]]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                 message:errorMessage
                                                                delegate:self
                                                       cancelButtonTitle:@"OK"
