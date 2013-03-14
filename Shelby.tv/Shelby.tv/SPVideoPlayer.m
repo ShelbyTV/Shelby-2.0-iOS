@@ -140,6 +140,26 @@
     self.playerLayer.bounds = modifiedFrame;
     [self.view.layer addSublayer:_playerLayer];
     
+    /*
+     
+     If video was previously extracted, 
+     BUT dropped from memory,
+     AND the stream token expired (e.g., 300 seconds elapsed),
+     then videoInformation dictionary should exist from previous video storage,
+     so reference previous video elapsedTime and reinstantiate player at last played position.
+     
+     */
+     if ( [self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] ) {
+    
+        CMTime elapsedTime = [[self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] CMTimeValue];
+        if ( CMTIME_IS_VALID(elapsedTime) ) {
+            [self.player seekToTime:elapsedTime];
+        }
+        
+         // Remove dictionary playback start position is set
+        [self.videoInformation removeAllObjects];
+    }
+    
     // Set isPlayable Flag
     [self setIsPlayable:YES];
     
@@ -202,47 +222,48 @@
 #pragma mark - Video Fetching Methods (Public)
 - (void)queueVideo
 {
+    ///* This method is only entered if the video isn't stored offline. *///
     
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-
     
     if ( [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
         
         NSDate *storedDate = [self.videoInformation valueForKey:kShelbySPVideoPlayerStoredDate];
         NSTimeInterval interval = fabs([storedDate timeIntervalSinceNow]);
-
-        if ( interval < 300 ||  0 == [self.videoFrame.video.offlineURL length] ) { // Re-instantiate video, if stream was last accessed within 5 minutes, or video is stored offline
+        
+        if ( interval < 300 ) { // If video stream was last accessed within 300 seconds of being stored, re-instantiate SPVideoPlayer with existing mp4 URL
             
-            // Instantiate AVPlayer object with extractedURL
+            // Referenced stored extracted MP4 url
             NSString *extractedURL = [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL];
             
-            // Reload player
+            // Instantiate AVPlayer object with extractedURL
             [self setupPlayerForURL:[NSURL URLWithString:extractedURL]];
             
-            // Set Time
+            // Set time of AVPlayer
             CMTime elapsedTime = [[self.videoInformation valueForKey:kShelbySPVideoPlayerElapsedTime] CMTimeValue];
             if ( CMTIME_IS_VALID(elapsedTime) ) {
                 [self.player seekToTime:elapsedTime];
             }
             
-        } else { // If video is not
+            // Empty videoInformation dictionary
+            [self.videoInformation removeAllObjects];
             
-            [self resetPlayer];
-            [self setupIndicator];
+        } else { // If video has been stored for longer than 300 seconds, re-extract it.
+            
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(loadVideo:)
                                                          name:kShelbySPVideoExtracted
                                                        object:nil];
             
-            [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
+            [[SPVideoExtractor sharedInstance] queueVideo:[_videoFrame video]];
             
         }
         
-               
+        
     } else { // If video hasn't been extracted, send it to the extractor
-     
+        
         if ( ![self isPlayable] ) {
             
             [[NSNotificationCenter defaultCenter] addObserver:self
@@ -250,7 +271,7 @@
                                                          name:kShelbySPVideoExtracted
                                                        object:nil];
             
-            [[SPVideoExtractor sharedInstance] queueVideo:_videoFrame.video];
+            [[SPVideoExtractor sharedInstance] queueVideo:[_videoFrame video]];
             
         }
     }
