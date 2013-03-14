@@ -30,7 +30,7 @@
 @property (assign, nonatomic)    BOOL        didChooseRemindMeLater;    // Flag used to remind user to rate app at a later time (when users selects 'Remind Me Later' in alertView)
 @property (assign, nonatomic)    BOOL        trackingDisabled;          // Flag used to enable/disable tracking and alertView display (when user selects 'NO' in alertView)
 @property (assign, nonatomic)    NSUInteger  counter;                   // Keeps track of number of events triggered
-@property (copy, nonatomic)       NSString    *version;                 // Version of your app
+@property (copy, nonatomic)      NSString    *version;                 // Version of your app
 
 - (void)defaultValues;                                                  // Set and/or reset default values
 - (void)checkVersion;                                                   // Version Comparison method

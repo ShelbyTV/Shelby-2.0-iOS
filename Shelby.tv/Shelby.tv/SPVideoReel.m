@@ -438,10 +438,8 @@
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     if ( position < _model.numberOfVideos ) {
-        // TODO: make sure if necessary (the fetch)
-        NSManagedObjectID *videoObjectID = [videoFrame.video objectID];
-        Video *video = (Video *)[context existingObjectWithID:videoObjectID error:nil];
-        if ([video offlineURL] && [[video offlineURL] length] > 0 ) { // Load player from disk if video was previously downloaded
+        
+        if ([videoFrame.video offlineURL] && [[videoFrame.video offlineURL] length] > 0 ) { // Load player from disk if video was previously downloaded
             
             [player loadVideoFromDisk];
             
