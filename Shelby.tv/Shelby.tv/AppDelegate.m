@@ -7,10 +7,13 @@
 //
 
 #import "AppDelegate.h"
-#import "BrowseViewController.h"
-#import "SPVideoDownloader.h"
-#import "Video.h"
+
 #import <HockeySDK/HockeySDK.h>
+#import "BrowseViewController.h"
+#import "SPModel.h"
+#import "SPVideoDownloader.h"
+#import "SPVideoPlayer.h"
+#import "Video.h"
 
 // HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
 // HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
@@ -23,8 +26,6 @@
     #define HOCKEY_LIVE                     @"67c862299d06ff9d891434abb89da906"
 #endif
 
-
-
 @interface AppDelegate(HockeyProtocols) <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
 @end
 
@@ -35,6 +36,8 @@
 @property (nonatomic) UIView *categoryLoadingView;
 @property (nonatomic) NSMutableArray *videoDownloaders;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
+@property (nonatomic) SPVideoReel *videoReel;
+@property (nonatomic) NSDate *backgroundedDate;
 
 /// Setup Methods
 - (void)setupAnalytics;
@@ -101,6 +104,15 @@
     }
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    if ( [[SPModel sharedInstance] videoReel] ) {
+        
+        self.videoReel = [[SPModel sharedInstance] videoReel];
+        self.backgroundedDate = [NSDate date];
+        
+    }
+}
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
@@ -154,13 +166,17 @@
     [ShelbyAPIClient getAllCategories];
 }
 
+#pragma mark - Persistance Methods (Public)
+- (void)storeVideoReel:(SPVideoReel *)videoReel
+{
+    
+}
+
 #pragma mark - Offline Methods (Public)
 - (void)downloadVideo:(Video *)video
 {
-    
     SPVideoDownloader *videoDownloader = [[SPVideoDownloader alloc] initWithVideo:video];
     [videoDownloader startDownloading];
-    
 }
 
 - (void)addVideoDownloader:(SPVideoDownloader *)videoDownloader
