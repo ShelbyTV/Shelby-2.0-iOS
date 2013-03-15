@@ -496,7 +496,7 @@
             case GroupType_Stream: {
                 
                 videoFrames = [dataUtility fetchStreamEntries];
-                errorMessage = @"No videos in Stream.";
+                errorMessage = @"Thanks for testing! Please go to http://shelby.tv on a desktop web browser to set up your stream.";
                 title = @"Stream";
                 
             } break;
