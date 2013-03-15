@@ -262,15 +262,15 @@
     
 }
 
-// TODO: KP KP - not sure if we want to do this.
-//#pragma mark - BITUpdateManagerDelegate
-//- (NSString *)customDeviceIdentifierForUpdateManager:(BITUpdateManager *)updateManager {
-//#ifndef CONFIGURATION_AppStore
-//    if ([[UIDevice currentDevice] respondsToSelector:@selector(uniqueIdentifier)])
-//        return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
-//#endif
-//    return nil;
-//}
+#pragma mark - BITUpdateManagerDelegate
+- (NSString *)customDeviceIdentifierForUpdateManager:(BITUpdateManager *)updateManager {
+#ifndef SHELBY_APPSTORE
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(uniqueIdentifier)]) {
+        return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
+    }
+#endif
+    return nil;
+}
 
 #pragma mark - Notification Methods (Private)
 
