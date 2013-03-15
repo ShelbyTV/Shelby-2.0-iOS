@@ -14,7 +14,7 @@
 // Misc.
 #define kShelbyCurrentVersion                               [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 
-// NSUserDefault Constants
+// NSUserDefault
 #define kShelbyDefaultUserAuthorized                        @"Shelby User Authorization Stored in NSUserDefaults"
 #define kShelbyDefaultUserIsAdmin                           @"Shelby User Is Administrator"
 #define kShelbyDefaultOfflineModeEnabled                    @"Shelby Offline Mode Enabled"
