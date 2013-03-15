@@ -84,13 +84,11 @@
              groupTitle:(NSString *)title
             andVideoFrames:(NSMutableArray *)videoFrames
 {
-    
-    if ( (self = [super init]) ) {
-        
-        self.groupType = groupType;
-        self.groupTitle = title;
-        [self setupVideoFrames:videoFrames];
-        
+    self = [super init];
+    if (self) {
+        _groupType = groupType;
+        _groupTitle = title;
+        _videoFrames = videoFrames;
     }
     
     return self;
@@ -101,14 +99,9 @@
             videoFrames:(NSMutableArray *)videoFrames
             andCategoryID:(NSString *)categoryID
 {
-    if ( (self = [super init]) ) {
-        
-        self.groupType = groupType;
-        self.groupTitle = title;
-        self.categoryID = categoryID;
-
-        [self setupVideoFrames:videoFrames];
-
+    self = [self initWithGroupType:groupType groupTitle:title andVideoFrames:videoFrames];
+    if (self) {
+        _categoryID = categoryID;
     }
     
     return self;
