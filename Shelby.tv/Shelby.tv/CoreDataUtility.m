@@ -59,11 +59,11 @@
 #pragma mark - Initialization Methods
 - (id)initWithRequestType:(DataRequestType)requestType
 {
-    if ( self = [super init] ) {
-   
-        self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.context = [self.appDelegate context];
-        self.requestType = requestType;
+    self = [super init];
+    if (self) {
+        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        _context = [_appDelegate context];
+        _requestType = requestType;
         
         // Add observer for mergining contexts
         [[NSNotificationCenter defaultCenter] addObserver:_appDelegate

@@ -31,6 +31,7 @@
 @property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (weak, nonatomic) SPVideoReel *videoReel;
+@property (assign, nonatomic) CGRect viewBounds;
 @property (nonatomic) SPShareController *shareController;
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *indicator;
@@ -73,19 +74,25 @@
 #pragma mark - Initialization Methods
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame
 {
-    if ( (self = [super init]) ) {
-        
-        [self.view setFrame:bounds];
-        [self setVideoFrame:videoFrame];
-        [self setupReferences];
-        [self setupInitialConditions];
-        
+    self = [super init];
+    if (self) {
+        _viewBounds = bounds;
+        _videoFrame = videoFrame;
     }
     
     return self;
 }
 
 #pragma mark - View Lifecycle Methods
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self.view setFrame:self.viewBounds];
+    [self setupReferences];
+    [self setupInitialConditions];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
