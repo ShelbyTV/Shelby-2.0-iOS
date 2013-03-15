@@ -21,15 +21,13 @@
 
 - (id)initWithVideo:(Video *)video;
 {
-    
-    if ( self = [super init] ) {
-        
-        self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self = [super init];
+    if (self) {
+        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [video objectID];
-        self.video = (Video *)[context existingObjectWithID:objectID error:nil];
-        
+        _video = (Video *)[context existingObjectWithID:objectID error:nil];
     }
     
     return self;

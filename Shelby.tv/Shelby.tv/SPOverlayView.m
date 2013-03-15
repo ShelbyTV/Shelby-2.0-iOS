@@ -20,21 +20,19 @@
 #pragma mark - Initialization Methods
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    
-    if ( (self = [super initWithCoder:aDecoder]) ) {
-        
+    self = [super initWithCoder:aDecoder];
+    if (self) {
         // Reference Model
-        self.model = [SPModel sharedInstance];
+        _model = [SPModel sharedInstance];
         
         // Customize Colors
-        [self.categoryTitleLabel setTextColor:kShelbyColorWhite];
-        [self.scrubber setMinimumTrackTintColor:kShelbyColorGreen];
-        [self.scrubberTimeLabel setTextColor:kShelbyColorWhite];
-        [self.nicknameLabel setTextColor:kShelbyColorBlack];
-        [self.videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
-        [self.videoCaptionLabel setTextColor:kShelbyColorBlack];
-        [self.userImageView.layer setBorderColor:[kShelbyColorGray CGColor]];
-        
+        [_categoryTitleLabel setTextColor:kShelbyColorWhite];
+        [_scrubber setMinimumTrackTintColor:kShelbyColorGreen];
+        [_scrubberTimeLabel setTextColor:kShelbyColorWhite];
+        [_nicknameLabel setTextColor:kShelbyColorBlack];
+        [_videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
+        [_videoCaptionLabel setTextColor:kShelbyColorBlack];
+        [_userImageView.layer setBorderColor:[kShelbyColorGray CGColor]];
     }
     
     return self;

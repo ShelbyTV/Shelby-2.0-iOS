@@ -59,11 +59,11 @@
 #pragma mark - Initialization Methods
 - (id)initWithRequestType:(DataRequestType)requestType
 {
-    if ( self = [super init] ) {
-   
-        self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.context = [self.appDelegate context];
-        self.requestType = requestType;
+    self = [super init];
+    if (self) {
+        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        _context = [_appDelegate context];
+        _requestType = requestType;
         
         // Add observer for mergining contexts
         [[NSNotificationCenter defaultCenter] addObserver:_appDelegate
@@ -1513,7 +1513,7 @@
                                          withIDValue:conversationID
                                             forIDKey:kShelbyCoreDataFrameConversationID];
     
-    if ( ![(id)conversation isEqual:[NSNull null]] ) {
+    if ((id)conversation != [NSNull null]) {
         
         frame.conversation = conversation;
         conversation.frame = frame;
@@ -1526,7 +1526,7 @@
                                withIDValue:creatorID
                                   forIDKey:kShelbyCoreDataFrameCreatorID];
     
-    if ( ![(id)creator isEqual:[NSNull null]] ) {
+    if ((id)creator != [NSNull null]) {
     
         frame.creator = creator;
         [creator addFrameObject:frame];
@@ -1539,7 +1539,7 @@
                          withIDValue:rollID
                             forIDKey:kShelbyCoreDataRollID];
     
-    if ( ![(id)roll isEqual:[NSNull null]] ) {
+    if ((id)roll != [NSNull null]) {
         
         frame.roll = roll;
         roll.frame = frame;
@@ -1552,7 +1552,7 @@
                            withIDValue:videoID
                               forIDKey:kShelbyCoreDataFrameVideoID];
     
-    if ( ![(id)video isEqual:[NSNull null]] ) {
+    if ((id)video != [NSNull null]) {
     
         frame.video = video;
         [video addFrameObject:frame];
@@ -1577,7 +1577,7 @@
     
     NSArray *messagesArray = [conversationDictionary valueForKey:@"messages"];
 
-    if ( ![messagesArray isEqual:[NSNull null]] ) {
+    if ((id)messagesArray != [NSNull null]) {
        
         [conversation setValue:[NSNumber numberWithInt:[messagesArray count]] forKey:kShelbyCoreDataConversationMessageCount];
         

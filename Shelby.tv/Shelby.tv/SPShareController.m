@@ -47,13 +47,9 @@
 #pragma mark - Initialization
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer
 {
-    
-    if ( self = [super init] ) {
-        
-        self.videoPlayer = videoPlayer;
-        
-        [self setup];
-        
+    self = [super init];
+    if (self) {
+        _videoPlayer = videoPlayer;
     }
     
     return self;
@@ -87,6 +83,7 @@
 #pragma mark - UI Methods (Public)
 - (void)share
 {
+    [self setup];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         

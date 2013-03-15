@@ -12,7 +12,7 @@
 
 + (NSString *)coreDataNullTest:(NSString *)string
 {
-    return [string isEqual:[NSNull null]] ? nil : string;
+    return ((id)string == [NSNull null] ? nil : string);
 }
 
 @end
