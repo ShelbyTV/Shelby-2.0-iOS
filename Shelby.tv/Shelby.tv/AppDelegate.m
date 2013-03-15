@@ -37,7 +37,6 @@
 @property (nonatomic) UIView *categoryLoadingView;
 @property (nonatomic) NSMutableArray *videoDownloaders;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
-@property (nonatomic) SPVideoReel *videoReel;
 @property (nonatomic) NSDate *backgroundedDate;
 
 /// Setup Methods
