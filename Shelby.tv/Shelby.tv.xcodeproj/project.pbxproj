@@ -15,8 +15,23 @@
 		1C00260016F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */; };
 		1C16A95116E14FCF004ABA41 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A94F16E14FCF004ABA41 /* background.png */; };
 		1C16A95316E14FCF004ABA41 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C16A95016E14FCF004ABA41 /* background@2x.png */; };
+		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
+		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
+		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
+		1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
+		1C7B8D4716F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
+		1C7B8D4816F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
+		1C7B8D4B16F0FDAF0069F570 /* authenticationSignupView.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */; };
+		1C7B8D4C16F0FDAF0069F570 /* authenticationSignupView.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */; };
+		1C7B8D4D16F0FDAF0069F570 /* authenticationSignupView.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */; };
+		1C7B8D4E16F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4A16F0FDAF0069F570 /* authenticationSignupView@2x.png */; };
+		1C7B8D4F16F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4A16F0FDAF0069F570 /* authenticationSignupView@2x.png */; };
+		1C7B8D5016F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4A16F0FDAF0069F570 /* authenticationSignupView@2x.png */; };
+		1C7B8D5816F113AB0069F570 /* AuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D5716F113AB0069F570 /* AuthorizationViewController.m */; };
+		1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D5716F113AB0069F570 /* AuthorizationViewController.m */; };
+		1C7B8D5A16F113AB0069F570 /* AuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D5716F113AB0069F570 /* AuthorizationViewController.m */; };
 		1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C81096B16EE22B70030077C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81096916EE22AD0030077C /* CoreText.framework */; };
@@ -125,7 +140,7 @@
 		1C8109DD16EE2CBF0030077C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEA16A9B9FC006B1ABE /* Icon@2x.png */; };
 		1C8109DE16EE2CBF0030077C /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEB16A9B9FC006B1ABE /* iTunesArtwork */; };
 		1C8109DF16EE2CBF0030077C /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEC16A9B9FC006B1ABE /* iTunesArtwork@2x */; };
-		1C8109E016EE2CBF0030077C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* LoginView.xib */; };
+		1C8109E016EE2CBF0030077C /* AuthorizationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */; };
 		1C8109E116EE2CBF0030077C /* authenticationCancelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5016C7145F00731912 /* authenticationCancelButton.png */; };
 		1C8109E216EE2CBF0030077C /* authenticationCancelButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5116C7145F00731912 /* authenticationCancelButton@2x.png */; };
 		1C8109E316EE2CBF0030077C /* authenticationGoButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5216C7145F00731912 /* authenticationGoButton.png */; };
@@ -296,7 +311,7 @@
 		1C810A9316EE5EED0030077C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEA16A9B9FC006B1ABE /* Icon@2x.png */; };
 		1C810A9416EE5EED0030077C /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEB16A9B9FC006B1ABE /* iTunesArtwork */; };
 		1C810A9516EE5EED0030077C /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEC16A9B9FC006B1ABE /* iTunesArtwork@2x */; };
-		1C810A9616EE5EED0030077C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* LoginView.xib */; };
+		1C810A9616EE5EED0030077C /* AuthorizationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */; };
 		1C810A9716EE5EED0030077C /* authenticationCancelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5016C7145F00731912 /* authenticationCancelButton.png */; };
 		1C810A9816EE5EED0030077C /* authenticationCancelButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5116C7145F00731912 /* authenticationCancelButton@2x.png */; };
 		1C810A9916EE5EED0030077C /* authenticationGoButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5216C7145F00731912 /* authenticationGoButton.png */; };
@@ -474,7 +489,7 @@
 		8E9F32711683F4040049EECD /* scrubberBarOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F326F1683F4040049EECD /* scrubberBarOff.png */; };
 		8E9F32721683F4040049EECD /* scrubberBarOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */; };
 		8E9FBD4B16C7139300731912 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4A16C7139300731912 /* LoginView.m */; };
-		8E9FBD4D16C713BB00731912 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* LoginView.xib */; };
+		8E9FBD4D16C713BB00731912 /* AuthorizationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */; };
 		8E9FBD5816C7145F00731912 /* authenticationCancelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5016C7145F00731912 /* authenticationCancelButton.png */; };
 		8E9FBD5916C7145F00731912 /* authenticationCancelButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5116C7145F00731912 /* authenticationCancelButton@2x.png */; };
 		8E9FBD5A16C7145F00731912 /* authenticationGoButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5216C7145F00731912 /* authenticationGoButton.png */; };
@@ -533,10 +548,18 @@
 		1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Nightly-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1C16A94F16E14FCF004ABA41 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		1C16A95016E14FCF004ABA41 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
+		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
 		1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtilities.h; sourceTree = "<group>"; };
 		1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtilities.m; sourceTree = "<group>"; };
 		1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
 		1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
+		1C7B8D4416F0F8590069F570 /* SignupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupView.h; sourceTree = "<group>"; };
+		1C7B8D4516F0F8590069F570 /* SignupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupView.m; sourceTree = "<group>"; };
+		1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationSignupView.png; sourceTree = "<group>"; };
+		1C7B8D4A16F0FDAF0069F570 /* authenticationSignupView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationSignupView@2x.png"; sourceTree = "<group>"; };
+		1C7B8D5616F113AB0069F570 /* AuthorizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizationViewController.h; sourceTree = "<group>"; };
+		1C7B8D5716F113AB0069F570 /* AuthorizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizationViewController.m; sourceTree = "<group>"; };
 		1C81095F16EE21230030077C /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		1C81096116EE21230030077C /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
 		1C81096216EE21230030077C /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -699,7 +722,7 @@
 		8E9F32701683F4040049EECD /* scrubberBarOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrubberBarOff@2x.png"; sourceTree = "<group>"; };
 		8E9FBD4916C7139300731912 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		8E9FBD4A16C7139300731912 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
-		8E9FBD4C16C713BB00731912 /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
+		8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizationView.xib; sourceTree = "<group>"; };
 		8E9FBD5016C7145F00731912 /* authenticationCancelButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationCancelButton.png; sourceTree = "<group>"; };
 		8E9FBD5116C7145F00731912 /* authenticationCancelButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationCancelButton@2x.png"; sourceTree = "<group>"; };
 		8E9FBD5216C7145F00731912 /* authenticationGoButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationGoButton.png; sourceTree = "<group>"; };
@@ -834,6 +857,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C1D51ED16F22A8B00225B4E /* FormViews */ = {
+			isa = PBXGroup;
+			children = (
+				1C1D51E816F21E4200225B4E /* FormView.h */,
+				1C1D51E916F21E4200225B4E /* FormView.m */,
+				8E9FBD4916C7139300731912 /* LoginView.h */,
+				8E9FBD4A16C7139300731912 /* LoginView.m */,
+				1C7B8D4416F0F8590069F570 /* SignupView.h */,
+				1C7B8D4516F0F8590069F570 /* SignupView.m */,
+			);
+			name = FormViews;
+			sourceTree = "<group>";
+		};
 		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1015,6 +1051,8 @@
 		8E2FC87216C6F19D0022B58C /* Login & Signup Images */ = {
 			isa = PBXGroup;
 			children = (
+				1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */,
+				1C7B8D4A16F0FDAF0069F570 /* authenticationSignupView@2x.png */,
 				8E9FBD5016C7145F00731912 /* authenticationCancelButton.png */,
 				8E9FBD5116C7145F00731912 /* authenticationCancelButton@2x.png */,
 				8E9FBD5216C7145F00731912 /* authenticationGoButton.png */,
@@ -1305,7 +1343,7 @@
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
 				1CD72E9D16CD36630045B36F /* GroupViewCell.xib */,
 				1CCCB54716CEBAB100C8C216 /* PersonalRollViewCell.xib */,
-				8E9FBD4C16C713BB00731912 /* LoginView.xib */,
+				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
 				8E1FAB9716652E6E00A565BF /* MeViewController.xib */,
 			);
 			name = Xibs;
@@ -1320,8 +1358,7 @@
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
 				1CD72E9F16CD36CB0045B36F /* GroupViewCell.h */,
 				1CD72EA016CD36CB0045B36F /* GroupViewCell.m */,
-				8E9FBD4916C7139300731912 /* LoginView.h */,
-				8E9FBD4A16C7139300731912 /* LoginView.m */,
+				1C1D51ED16F22A8B00225B4E /* FormViews */,
 				1CCCB55016D2A33500C8C216 /* PageControl.h */,
 				1CCCB55116D2A33600C8C216 /* PageControl.m */,
 				1CCCB54416CEA61B00C8C216 /* PersonalRollViewCell.h */,
@@ -1337,6 +1374,8 @@
 			children = (
 				8E1FAB9516652E6E00A565BF /* MeViewController.h */,
 				8E1FAB9616652E6E00A565BF /* MeViewController.m */,
+				1C7B8D5616F113AB0069F570 /* AuthorizationViewController.h */,
+				1C7B8D5716F113AB0069F570 /* AuthorizationViewController.m */,
 				1CC3387616CBDF2A00E58375 /* BrowseViewController.h */,
 				1CC3387716CBDF2A00E58375 /* BrowseViewController.m */,
 			);
@@ -1500,7 +1539,7 @@
 				1C8109DD16EE2CBF0030077C /* Icon@2x.png in Resources */,
 				1C8109DE16EE2CBF0030077C /* iTunesArtwork in Resources */,
 				1C8109DF16EE2CBF0030077C /* iTunesArtwork@2x in Resources */,
-				1C8109E016EE2CBF0030077C /* LoginView.xib in Resources */,
+				1C8109E016EE2CBF0030077C /* AuthorizationView.xib in Resources */,
 				1C8109E116EE2CBF0030077C /* authenticationCancelButton.png in Resources */,
 				1C8109E216EE2CBF0030077C /* authenticationCancelButton@2x.png in Resources */,
 				1C8109E316EE2CBF0030077C /* authenticationGoButton.png in Resources */,
@@ -1568,6 +1607,8 @@
 				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FC16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
+				1C7B8D4C16F0FDAF0069F570 /* authenticationSignupView.png in Resources */,
+				1C7B8D4F16F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1611,7 +1652,7 @@
 				1C810A9316EE5EED0030077C /* Icon@2x.png in Resources */,
 				1C810A9416EE5EED0030077C /* iTunesArtwork in Resources */,
 				1C810A9516EE5EED0030077C /* iTunesArtwork@2x in Resources */,
-				1C810A9616EE5EED0030077C /* LoginView.xib in Resources */,
+				1C810A9616EE5EED0030077C /* AuthorizationView.xib in Resources */,
 				1C810A9716EE5EED0030077C /* authenticationCancelButton.png in Resources */,
 				1C810A9816EE5EED0030077C /* authenticationCancelButton@2x.png in Resources */,
 				1C810A9916EE5EED0030077C /* authenticationGoButton.png in Resources */,
@@ -1679,6 +1720,8 @@
 				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C00260016F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
+				1C7B8D4D16F0FDAF0069F570 /* authenticationSignupView.png in Resources */,
+				1C7B8D5016F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1722,7 +1765,7 @@
 				8E50CDF016A9B9FC006B1ABE /* Icon@2x.png in Resources */,
 				8E50CDF116A9B9FC006B1ABE /* iTunesArtwork in Resources */,
 				8E50CDF216A9B9FC006B1ABE /* iTunesArtwork@2x in Resources */,
-				8E9FBD4D16C713BB00731912 /* LoginView.xib in Resources */,
+				8E9FBD4D16C713BB00731912 /* AuthorizationView.xib in Resources */,
 				8E9FBD5816C7145F00731912 /* authenticationCancelButton.png in Resources */,
 				8E9FBD5916C7145F00731912 /* authenticationCancelButton@2x.png in Resources */,
 				8E9FBD5A16C7145F00731912 /* authenticationGoButton.png in Resources */,
@@ -1790,6 +1833,8 @@
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FB16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
+				1C7B8D4B16F0FDAF0069F570 /* authenticationSignupView.png in Resources */,
+				1C7B8D4E16F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1898,6 +1943,9 @@
 				1C8109AA16EE2CBF0030077C /* Roll.m in Sources */,
 				1C8109AB16EE2CBF0030077C /* Channel.m in Sources */,
 				1C8109AC16EE2CBF0030077C /* Frame.m in Sources */,
+				1C7B8D4716F0F8590069F570 /* SignupView.m in Sources */,
+				1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */,
+				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1961,6 +2009,9 @@
 				1C810A6016EE5EED0030077C /* Roll.m in Sources */,
 				1C810A6116EE5EED0030077C /* Channel.m in Sources */,
 				1C810A6216EE5EED0030077C /* Frame.m in Sources */,
+				1C7B8D4816F0F8590069F570 /* SignupView.m in Sources */,
+				1C7B8D5A16F113AB0069F570 /* AuthorizationViewController.m in Sources */,
+				1C1D51EC16F21E4200225B4E /* FormView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2024,6 +2075,9 @@
 				8E3DCC8516E9388D000AF8A2 /* Roll.m in Sources */,
 				8E3DCC8816E9388D000AF8A2 /* Channel.m in Sources */,
 				8E4D9EFF16EA880000D45E1E /* Frame.m in Sources */,
+				1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */,
+				1C7B8D5816F113AB0069F570 /* AuthorizationViewController.m in Sources */,
+				1C1D51EA16F21E4200225B4E /* FormView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

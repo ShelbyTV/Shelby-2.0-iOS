@@ -12,7 +12,7 @@
 @implementation ShelbyAPIClient
 
 #pragma mark - Authentication (POST)
-+ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password withLoginView:(LoginView *)loginView
++ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password
 {
     NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostLogin, email, password];
     [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -28,9 +28,6 @@
         [dataUtility storeUser:JSON];
     
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        [loginView userAuthenticationDidFail];
- 
         DLog(@"%@", error);
         
         NSString *errorMessage = nil;
@@ -41,14 +38,7 @@
         } else {
             errorMessage = @"Please make sure you've entered your login credientials correctly.";
         }
-
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
-                                                            message:errorMessage
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-        [alertView show];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidFail object:errorMessage];
     }];
     
     [operation start];
@@ -63,20 +53,30 @@
     
     NSURL *basURL = [NSURL URLWithString:kShelbyAPIBaseURL];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:basURL];
+    NSURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"/v1/user" parameters:params];
 
-    [httpClient postPath:@"/v1/user" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-           
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         // Store User Data
-        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUser];
         [dataUtility storeUser:JSON];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-        NSLog(@"Error: %@", error.localizedDescription);
-    
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil
+         ];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        DLog(@"%@", error);
+        NSString *errorMessage = nil;
+        if ([JSON isKindOfClass:[NSDictionary class]]) {
+            errorMessage = JSON[@"message"];
+        }
+        
+        if (!errorMessage || ![errorMessage isKindOfClass:[NSString class]] || [errorMessage isEqualToString:@""]) {
+            errorMessage = @"There was a problem. Please try again later.";
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
     }];
-    
+
+    [operation start];
 }
 
 

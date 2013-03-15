@@ -12,6 +12,7 @@
 #import "GroupViewCell.h"
 #import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
+#import "SignupView.h"
 #import "PersonalRollViewCell.h"
 #import "PageControl.h"
 
@@ -32,6 +33,7 @@
 @property (assign, nonatomic) BOOL isLoggedIn;
 
 @property (nonatomic) LoginView *loginView;
+@property (nonatomic) SignupView *signupView;
 @property (nonatomic) UIView *backgroundLoginView;
 
 @property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
@@ -53,15 +55,9 @@
 /// Page Control
 - (IBAction)goToPage:(id)sender;
 
-/// Navigation Action Methods
-- (IBAction)cancelButtonAction:(id)sender;
-- (IBAction)goButtonAction:(id)sender;
-
 /// Authentication Methods
 - (void)loginAction;
 - (void)logoutAction;
-- (void)performAuthentication;
-- (void)userAuthenticationDidSucceed:(NSNotification *)notification;
 
 /// Video Player Launch Methods
 - (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell;
@@ -384,48 +380,10 @@
 }
 
 #pragma mark - Action Methods (Public)
-- (void)cancelButtonAction:(id)sender
-{
- 
-    for ( UITextField *textField in [_loginView subviews] ) {
-        
-        if ( [textField isFirstResponder] ) {
-            
-            [textField resignFirstResponder];
-            
-        }
-        
-    }
-    
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         
-                         CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
-                         [self.loginView setFrame:CGRectMake(xOrigin,
-                                                             self.view.frame.size.height,
-                                                             _loginView.frame.size.width,
-                                                             _loginView.frame.size.height)];
-                         
-                         [self.backgroundLoginView setAlpha:0.0f];
-                         
-                     } completion:^(BOOL finished) {
-                         
-                         [self.loginView removeFromSuperview];
-                         [self.backgroundLoginView removeFromSuperview];
-                         
-                     }];
-    
-}
-
-- (void)goButtonAction:(id)sender
-{
-    [self performAuthentication];
-}
-
 - (void)toggleSecretModes:(id)sender
 {
     
-    /* 
+    /*
      Each switch statement sets the conditions for the next SecretMode.
      
      Example: 
@@ -476,42 +434,22 @@
     }
 }
 
-#pragma mark - User Authentication Methods (Private)
+#pragma mark - Authorization Methods (Private)
 - (void)loginAction
 {
+    AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
     
-    self.backgroundLoginView = [[UIView alloc] initWithFrame:self.view.bounds];
-    [self.backgroundLoginView setBackgroundColor:[UIColor colorWithHex:@"adadad" andAlpha:1.0f]];
-    [self.backgroundLoginView setAlpha:0.0f];
-    [self.view addSubview:_backgroundLoginView];
+    CGFloat xOrigin = self.view.frame.size.width / 2.0f - authorizationViewController.view.frame.size.width / 4.0f;
+    CGFloat yOrigin = self.view.frame.size.height / 5.0f - authorizationViewController.view.frame.size.height / 4.0f;
+    CGSize loginDialogSize = authorizationViewController.view.frame.size;
     
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LoginView" owner:self options:nil];
-    self.loginView = nib[0];
+    [authorizationViewController setModalInPopover:YES];
+    [authorizationViewController setModalPresentationStyle:UIModalPresentationFormSheet];
+    [authorizationViewController setDelegate:self];
     
-    CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
-    CGFloat yOrigin = self.view.frame.size.height/5.0f - _loginView.frame.size.height/4.0f;
+    [self presentViewController:authorizationViewController animated:YES completion:nil];
     
-    [self.loginView setFrame:CGRectMake(xOrigin,
-                                        self.view.frame.size.height,
-                                        _loginView.frame.size.width,
-                                        _loginView.frame.size.height)];
-    [self.view addSubview:_loginView];
-    
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         
-                         [self.backgroundLoginView setAlpha:0.75f];
-                         [self.loginView setFrame:CGRectMake(xOrigin,
-                                                             yOrigin,
-                                                             _loginView.frame.size.width,
-                                                             _loginView.frame.size.height)];
-                         
-                     } completion:^(BOOL finished) {
-                         
-                         [self.loginView.emailField becomeFirstResponder];
-                         
-                     }];
-    
+    authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
 }
 
 - (void)logoutAction
@@ -523,60 +461,6 @@
                                               otherButtonTitles:@"Logout", nil];
  	
     [alertView show];
-}
-
-- (void)performAuthentication
-{
-    
-    // Hide Keyboard
-    [self.view endEditing:YES];
-    
-    if ( ![_loginView.emailField.text length] || ![_loginView.passwordField.text length] ) {
-        
-        // Do nothing if at least one text field is empty
-        
-    } else {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(userAuthenticationDidSucceed:)
-                                                     name:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
-        
-        [self.loginView.cancelButton setEnabled:NO];
-        [self.loginView.goButton setEnabled:NO];
-        [self.loginView.emailField setEnabled:NO];
-        [self.loginView.passwordField setEnabled:NO];
-        
-        [self.loginView.indicator setHidden:NO];
-        [self.loginView.indicator startAnimating];
-        
-        [ShelbyAPIClient postAuthenticationWithEmail:[_loginView.emailField.text lowercaseString] andPassword:_loginView.passwordField.text withLoginView:_loginView];
-        
-    }
-}
-
-- (void)userAuthenticationDidSucceed:(NSNotification *)notification
-{
-    
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         
-                         CGFloat xOrigin = self.view.frame.size.width/2.0f - _loginView.frame.size.width/4.0f;
-                         [self.loginView setFrame:CGRectMake(xOrigin,
-                                                             self.view.frame.size.height,
-                                                             _loginView.frame.size.width,
-                                                             _loginView.frame.size.height)];
-                         
-                         [self.backgroundLoginView setAlpha:0.0f];
-                         
-                     } completion:^(BOOL finished) {
-                         
-                         [self.loginView removeFromSuperview];
-                         [self.backgroundLoginView removeFromSuperview];
-                         [self setIsLoggedIn:YES];
-                         [self fetchUserNickname];
-                         [self fetchAllCategories];
-                         [self.collectionView reloadData];
-                     }];
 }
 
 
@@ -706,29 +590,6 @@
     [self presentViewController:viewControllerToPresent animated:NO completion:nil];
 }
 
-#pragma mark - UITextFieldDelegate Methods
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if ( [string isEqualToString:@"\n"] ) {
-        
-        [textField resignFirstResponder];
-        return NO;
-        
-    }
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    if ( textField == _loginView.emailField ) {
-        [self.loginView.passwordField becomeFirstResponder];
-        return NO;
-    } else {
-        [self performAuthentication];
-        return YES;
-    }
-}
-
 #pragma mark UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -744,27 +605,24 @@
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-
-    switch ( buttonIndex ) {
-            
-      case 0: {
-
-         // Do nothing
-         
-      } break;
-     
-        case 1: {
-       
-            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate logout];
-            [self setIsLoggedIn:NO];
-            [self setUserNickname:nil];
-            [self resetVersionLabel];
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-        
-        } default:
-            break;
+    if (buttonIndex == 1) {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate logout];
+        [self setIsLoggedIn:NO];
+        [self setUserNickname:nil];
+        [self resetVersionLabel];
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     }
 }
+
+#pragma mark - AuthorizationDelegate Methods
+- (void)authorizationDidComplete
+{
+    [self setIsLoggedIn:YES];
+    [self fetchUserNickname];
+    [self fetchAllCategories];
+    [self.collectionView reloadData];
+}
+
 
 @end
