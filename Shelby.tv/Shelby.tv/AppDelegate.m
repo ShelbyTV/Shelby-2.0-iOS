@@ -13,6 +13,7 @@
 #import "SPModel.h"
 #import "SPVideoDownloader.h"
 #import "SPVideoPlayer.h"
+#import "SPVideoReel.h"
 #import "Video.h"
 
 // HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
@@ -102,13 +103,26 @@
         [self pingAllRoutes];
         
     }
+    
+    // Remove SPVideoReel if more than 5 minutes (300 seconds) have elapsed since app's shutdown
+    if ( _backgroundedDate ) {
+        
+        NSTimeInterval interval = fabs([self.backgroundedDate timeIntervalSinceNow]);
+        
+        if ( interval >= 5 ) {
+            
+            [[[SPModel sharedInstance] videoReel] homeButtonAction:self];
+            
+        }
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    
+    // Store timestamp for when app was backgrounded
     if ( [[SPModel sharedInstance] videoReel] ) {
         
-        self.videoReel = [[SPModel sharedInstance] videoReel];
         self.backgroundedDate = [NSDate date];
         
     }
