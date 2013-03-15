@@ -1131,7 +1131,6 @@
         }
     }
     
-    [self.context processPendingChanges];
     [self saveContext:_context];
 }
 
@@ -1177,7 +1176,6 @@
         }
     }
     
-    [self.context processPendingChanges];
     [self saveContext:_context];
 }
 
@@ -1220,7 +1218,6 @@
         
     }
     
-    [self.context processPendingChanges];
     [self saveContext:_context];
 }
 
@@ -1257,11 +1254,8 @@
             i--;
         }
         
-        [self.context processPendingChanges];
         [self saveContext:_context];
-
     }
-
 }
 
 - (void)removeOlderVideoFramesFromLikes
@@ -1300,9 +1294,7 @@
             i--;
         }
 
-        [self.context processPendingChanges];
         [self saveContext:_context];
-        
     }
 }
 
@@ -1341,9 +1333,7 @@
             i--;
         }
         
-        [self.context processPendingChanges];
         [self saveContext:_context];
-        
     }
 }
 
@@ -1457,7 +1447,6 @@
             [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
             
             [ShelbyAPIClient getCategoryRoll:rollID];
-            
         }
     }
 }
@@ -1490,11 +1479,9 @@
             [channel setValue:displayThumbnail forKey:kShelbyCoreDataChannelDisplayThumbnailURL];
             
             [ShelbyAPIClient getCategoryChannel:channelID];
-            
+
         }
-        
     }
-    
 }
 
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary
@@ -1572,8 +1559,6 @@
         [self storeVideo:video fromDictionary:[frameDictionary valueForKey:@"video"]];
         
     }
-    
-    
 }
 
 - (void)storeConversation:(Conversation *)conversation fromDictionary:(NSDictionary *)conversationDictionary
@@ -1630,6 +1615,7 @@
             
         }
     }
+    
 }
 
 - (void)storeCreator:(Creator *)creator fromDictionary:(NSDictionary *)creatorDictionary
@@ -1643,6 +1629,7 @@
     
     NSString *userImage = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"user_image"]];
     [creator setValue:userImage forKey:kShelbyCoreDataCreatorUserImage];
+    
 }
 
 - (void)storeRoll:(Roll *)roll fromDictionary:(NSArray *)rollDictionary
@@ -1690,7 +1677,7 @@
 
     NSString *lastUnplayable = [NSString coreDataNullTest:[videoDictionary valueForKey:@"last_unplayable_at"]];
     [video setValue:@([lastUnplayable longLongValue])forKey:kShelbyCoreDataVideoLastUnplayable];
-    
+ 
 }
 
 #pragma mark - Helper Methods (Private)
@@ -1896,7 +1883,6 @@
         }
     }
     
-    [self.context processPendingChanges];
     [self saveContext:_context];
 }
 

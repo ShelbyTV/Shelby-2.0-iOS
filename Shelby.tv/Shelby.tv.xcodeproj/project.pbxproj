@@ -74,7 +74,6 @@
 		1C81099916EE2CBF0030077C /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C81099B16EE2CBF0030077C /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
-		1C81099C16EE2CBF0030077C /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA68CE316DFDD9900B1A509 /* Video.m */; };
 		1C81099D16EE2CBF0030077C /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
 		1C81099E16EE2CBF0030077C /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7716E4FD42009EC83D /* Harpy.m */; };
 		1C81099F16EE2CBF0030077C /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7B16E4FD42009EC83D /* Panhandler.m */; };
@@ -245,7 +244,6 @@
 		1C810A4F16EE5EED0030077C /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C810A5116EE5EED0030077C /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
-		1C810A5216EE5EED0030077C /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA68CE316DFDD9900B1A509 /* Video.m */; };
 		1C810A5316EE5EED0030077C /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
 		1C810A5416EE5EED0030077C /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7716E4FD42009EC83D /* Harpy.m */; };
 		1C810A5516EE5EED0030077C /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7B16E4FD42009EC83D /* Panhandler.m */; };
@@ -468,6 +466,9 @@
 		8E59805B1680104A00027181 /* videoListPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980411680104A00027181 /* videoListPanel@2x.png */; };
 		8E59805C1680104A00027181 /* videoPlayerBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980421680104A00027181 /* videoPlayerBar.png */; };
 		8E59805D1680104A00027181 /* videoPlayerBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E5980431680104A00027181 /* videoPlayerBar@2x.png */; };
+		8E73C58C16F2D9CE0001EF5D /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E73C58B16F2D9CE0001EF5D /* Video.m */; };
+		8E73C58D16F2D9CE0001EF5D /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E73C58B16F2D9CE0001EF5D /* Video.m */; };
+		8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E73C58B16F2D9CE0001EF5D /* Video.m */; };
 		8E77B3EF16CC45D50015D100 /* Creator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3EE16CC45D50015D100 /* Creator.m */; };
 		8E77B3F216CC45D50015D100 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		8E77B3F516CC45D60015D100 /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
@@ -500,7 +501,6 @@
 		8E9FBD5F16C7145F00731912 /* authenticationTextField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */; };
 		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
-		8EA68CE416DFDD9900B1A509 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA68CE316DFDD9900B1A509 /* Video.m */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EB19AA116E6FC4A00B22228 /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
@@ -693,6 +693,8 @@
 		8E5980431680104A00027181 /* videoPlayerBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoPlayerBar@2x.png"; sourceTree = "<group>"; };
 		8E7247A71665B4560008F439 /* SPVideoExtractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoExtractor.h; sourceTree = "<group>"; };
 		8E7247A81665B4560008F439 /* SPVideoExtractor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoExtractor.m; sourceTree = "<group>"; };
+		8E73C58A16F2D9CE0001EF5D /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		8E73C58B16F2D9CE0001EF5D /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		8E77B3ED16CC45D50015D100 /* Creator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creator.h; sourceTree = "<group>"; };
 		8E77B3EE16CC45D50015D100 /* Creator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Creator.m; sourceTree = "<group>"; };
 		8E77B3F016CC45D50015D100 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
@@ -734,8 +736,6 @@
 		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
 		8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemView.m; sourceTree = "<group>"; };
 		8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemView.xib; sourceTree = "<group>"; };
-		8EA68CE216DFDD9900B1A509 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
-		8EA68CE316DFDD9900B1A509 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
 		8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataConstants.h; sourceTree = "<group>"; };
 		8EAAEE59163A29A900AEF100 /* CoreDataUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataUtility.h; sourceTree = "<group>"; };
@@ -955,14 +955,14 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				8E73C58A16F2D9CE0001EF5D /* Video.h */,
+				8E73C58B16F2D9CE0001EF5D /* Video.m */,
 				8E4D9EFD16EA880000D45E1E /* Frame.h */,
 				8E4D9EFE16EA880000D45E1E /* Frame.m */,
 				8E3DCC8316E9388D000AF8A2 /* Roll.h */,
 				8E3DCC8416E9388D000AF8A2 /* Roll.m */,
 				8E3DCC8616E9388D000AF8A2 /* Channel.h */,
 				8E3DCC8716E9388D000AF8A2 /* Channel.m */,
-				8EA68CE216DFDD9900B1A509 /* Video.h */,
-				8EA68CE316DFDD9900B1A509 /* Video.m */,
 				8EF03BE916D56D5A0019669F /* User.h */,
 				8EF03BEA16D56D5A0019669F /* User.m */,
 				8E77B3FF16CC45D60015D100 /* Messages.h */,
@@ -1926,7 +1926,6 @@
 				1C81099916EE2CBF0030077C /* SPVideoDownloader.m in Sources */,
 				1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */,
 				1C81099B16EE2CBF0030077C /* UIImage+Scale.m in Sources */,
-				1C81099C16EE2CBF0030077C /* Video.m in Sources */,
 				1C81099D16EE2CBF0030077C /* AsynchronousFreeloader.m in Sources */,
 				1C81099E16EE2CBF0030077C /* Harpy.m in Sources */,
 				1C81099F16EE2CBF0030077C /* Panhandler.m in Sources */,
@@ -1946,6 +1945,7 @@
 				1C7B8D4716F0F8590069F570 /* SignupView.m in Sources */,
 				1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
+				8E73C58D16F2D9CE0001EF5D /* Video.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1992,7 +1992,6 @@
 				1C810A4F16EE5EED0030077C /* SPVideoDownloader.m in Sources */,
 				1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */,
 				1C810A5116EE5EED0030077C /* UIImage+Scale.m in Sources */,
-				1C810A5216EE5EED0030077C /* Video.m in Sources */,
 				1C810A5316EE5EED0030077C /* AsynchronousFreeloader.m in Sources */,
 				1C810A5416EE5EED0030077C /* Harpy.m in Sources */,
 				1C810A5516EE5EED0030077C /* Panhandler.m in Sources */,
@@ -2012,6 +2011,7 @@
 				1C7B8D4816F0F8590069F570 /* SignupView.m in Sources */,
 				1C7B8D5A16F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EC16F21E4200225B4E /* FormView.m in Sources */,
+				8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2058,7 +2058,6 @@
 				8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */,
 				1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */,
 				1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */,
-				8EA68CE416DFDD9900B1A509 /* Video.m in Sources */,
 				8EC65F7C16E4FD42009EC83D /* AsynchronousFreeloader.m in Sources */,
 				8EC65F7E16E4FD42009EC83D /* Harpy.m in Sources */,
 				8EC65F8016E4FD42009EC83D /* Panhandler.m in Sources */,
@@ -2078,6 +2077,7 @@
 				1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */,
 				1C7B8D5816F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EA16F21E4200225B4E /* FormView.m in Sources */,
+				8E73C58C16F2D9CE0001EF5D /* Video.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

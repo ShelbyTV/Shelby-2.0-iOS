@@ -7,10 +7,14 @@
 //
 
 #import "AppDelegate.h"
-#import "BrowseViewController.h"
-#import "SPVideoDownloader.h"
-#import "Video.h"
+
 #import <HockeySDK/HockeySDK.h>
+#import "BrowseViewController.h"
+#import "SPModel.h"
+#import "SPVideoDownloader.h"
+#import "SPVideoPlayer.h"
+#import "SPVideoReel.h"
+#import "Video.h"
 
 // HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
 // HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
@@ -23,8 +27,6 @@
     #define HOCKEY_LIVE                     @"67c862299d06ff9d891434abb89da906"
 #endif
 
-
-
 @interface AppDelegate(HockeyProtocols) <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
 @end
 
@@ -35,6 +37,7 @@
 @property (nonatomic) UIView *categoryLoadingView;
 @property (nonatomic) NSMutableArray *videoDownloaders;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
+@property (nonatomic) NSDate *backgroundedDate;
 
 /// Setup Methods
 - (void)setupAnalytics;
@@ -99,8 +102,30 @@
         [self pingAllRoutes];
         
     }
+    
+    // Remove SPVideoReel if more than 5 minutes (300 seconds) have elapsed since app's shutdown
+    if ( _backgroundedDate ) {
+        
+        NSTimeInterval interval = fabs([self.backgroundedDate timeIntervalSinceNow]);
+        
+        if ( interval >= 5 ) {
+            
+            [[[SPModel sharedInstance] videoReel] homeButtonAction:self];
+            self.backgroundedDate = nil;
+        }
+    }
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    
+    // Store timestamp for when app was backgrounded
+    if ( [[SPModel sharedInstance] videoReel] ) {
+        
+        self.backgroundedDate = [NSDate date];
+        
+    }
+}
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
@@ -154,13 +179,17 @@
     [ShelbyAPIClient getAllCategories];
 }
 
+#pragma mark - Persistance Methods (Public)
+- (void)storeVideoReel:(SPVideoReel *)videoReel
+{
+    
+}
+
 #pragma mark - Offline Methods (Public)
 - (void)downloadVideo:(Video *)video
 {
-    
     SPVideoDownloader *videoDownloader = [[SPVideoDownloader alloc] initWithVideo:video];
     [videoDownloader startDownloading];
-    
 }
 
 - (void)addVideoDownloader:(SPVideoDownloader *)videoDownloader
@@ -195,8 +224,9 @@
     // Harpy
     [Harpy checkVersion];
     
+    // TODO - Uncomment for AppStore
     // Panhandler
-    [Panhandler sharedInstance];
+//    [Panhandler sharedInstance];
     
     // Crashlytics - Crash Logging
     [Crashlytics startWithAPIKey:@"84a79b7ee6f2eca13877cd17b9b9a290790f99aa"];

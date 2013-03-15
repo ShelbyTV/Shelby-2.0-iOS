@@ -129,7 +129,8 @@
 - (void)setupPlayerForURL:(NSURL *)playerURL
 {
     
-    [[Panhandler sharedInstance] recordEvent];
+    // TODO - Uncomment for AppStore
+//    [[Panhandler sharedInstance] recordEvent];
     
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
@@ -321,6 +322,7 @@
     
     // Set Flag
     [self setIsPlaying:YES];
+    
 }
 
 - (void)pause
@@ -333,14 +335,29 @@
         [self.model.overlayTimer invalidate];
     }
     
+    // Store CMTime
+    if ( [self isPlaying] ) {
+        
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [self.videoFrame objectID];
+        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+        NSDictionary *elapsedTimeDictionary = (__bridge NSDictionary *)(CMTimeCopyAsDictionary([self elapsedTime], kCFAllocatorDefault));
+        [videoFrame.video setElapsedTime:elapsedTimeDictionary];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+        [dataUtility saveContext:context];
+        
+    }
+    
     // Set Flag
     [self setIsPlaying:NO];
+    
 }
 
 - (void)share
 {
 
-    [[Panhandler sharedInstance] recordEvent];
+    // TODO - Uncomment for AppStore
+//    [[Panhandler sharedInstance] recordEvent];
     
     // Disable overlayTimer
     [self.model.overlayView showOverlayView];

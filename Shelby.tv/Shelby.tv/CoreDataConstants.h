@@ -95,6 +95,7 @@
 // Video Attribute Constants
 #define kShelbyCoreDataVideoID                          @"videoID"
 #define kShelbyCoreDataVideoCaption                     @"caption"
+#define kShelbyCoreDataVideoElapsedTime                 @"elapsedTime"
 #define kShelbyCoreDataVideoExtractedURL                @"extractedURL"
 #define kShelbyCoreDataVideoProviderName                @"providerName"
 #define kShelbyCoreDataVideoProviderID                  @"providerID"
