@@ -321,6 +321,7 @@
     
     // Set Flag
     [self setIsPlaying:YES];
+    
 }
 
 - (void)pause
@@ -333,8 +334,22 @@
         [self.model.overlayTimer invalidate];
     }
     
+    // Store CMTime
+    if ( [self isPlaying] ) {
+        
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [self.videoFrame objectID];
+        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+        NSDictionary *elapsedTimeDictionary = (__bridge NSDictionary *)(CMTimeCopyAsDictionary([self elapsedTime], kCFAllocatorDefault));
+        [videoFrame.video setElapsedTime:elapsedTimeDictionary];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+        [dataUtility saveContext:context];
+        
+    }
+    
     // Set Flag
     [self setIsPlaying:NO];
+    
 }
 
 - (void)share
