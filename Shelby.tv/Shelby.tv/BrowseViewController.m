@@ -17,7 +17,6 @@
 #import "PageControl.h"
 
 // View Controllers
-#import "MeViewController.h"
 #import "SPVideoReel.h"
 
 // Utilities
