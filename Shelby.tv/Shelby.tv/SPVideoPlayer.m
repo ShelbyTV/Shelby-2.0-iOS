@@ -86,6 +86,12 @@
 }
 
 #pragma mark - View Lifecycle Methods
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self setTrackedViewName:@"SPVideoPlayer"];
+}
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];

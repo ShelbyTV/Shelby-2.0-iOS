@@ -10,7 +10,7 @@
 
 @class SPVideoPlayer, SPOverlayView;
 
-@interface SPVideoReel : UIViewController <UIScrollViewDelegate>
+@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate>
 
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;

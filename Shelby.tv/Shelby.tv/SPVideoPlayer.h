@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-@interface SPVideoPlayer : UIViewController
+@interface SPVideoPlayer : GAITrackedViewController
 
 @property (nonatomic) Frame *videoFrame;
 @property (nonatomic) AVPlayer *player;

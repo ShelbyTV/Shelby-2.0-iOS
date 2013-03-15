@@ -60,7 +60,7 @@
 
 /// Video Player Launch Methods
 - (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell;
-- (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
+- (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -86,6 +86,8 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]]];
+    
+    [self setTrackedViewName:@"Browse View Controller"];
     
     [self resetVersionLabel];
     
@@ -571,7 +573,7 @@
     });
 }
 
-- (void)presentViewController:(UIViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell
+- (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell
 {
     UIImage *screenShot = [ImageUtilities screenshot:self.view];
     UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];

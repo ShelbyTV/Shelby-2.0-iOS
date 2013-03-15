@@ -237,11 +237,16 @@
                                                                delegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
 
+    // Google Analytics
+    [GAI sharedInstance].trackUncaughtExceptions = YES;     // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].dispatchInterval = 20;             // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].debug = YES;                       // Optional: set debug to YES for extra debugging information.
+    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-21191360-12"];
+    
 #ifdef SHELBY_APPSTORE
     // Making sure there are no updates in the target we use for dev & app store release
-    [[BITHockeyManager sharedHockeyManager] setDisableUpdateManager: YES];
+    [[BITHockeyManager sharedHockeyManager] setDisableUpdateManager:YES];
 #endif
-    // Google Analytics
     
 }
 

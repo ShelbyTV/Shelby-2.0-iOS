@@ -15,7 +15,7 @@
 @end
 
 
-@interface AuthorizationViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
+@interface AuthorizationViewController : GAITrackedViewController <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) id<AuthorizationDelegate> delegate;
 
