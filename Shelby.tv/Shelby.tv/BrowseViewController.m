@@ -495,6 +495,7 @@
             case GroupType_Stream: {
                 
                 videoFrames = [dataUtility fetchStreamEntries];
+                // TODO: change this error message before App Store release
                 errorMessage = @"Thanks for testing! Please go to http://shelby.tv on a desktop web browser to set up your stream.";
                 title = @"Stream";
                 
