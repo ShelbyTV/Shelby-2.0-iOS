@@ -478,6 +478,12 @@
 		8E7C341A16D58252007494DF /* SPShareController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7C341916D58252007494DF /* SPShareController.m */; };
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
+		8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
+		8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
+		8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
+		8E87C5B316F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
+		8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
+		8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
@@ -706,6 +712,13 @@
 		8E7C341916D58252007494DF /* SPShareController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPShareController.m; sourceTree = "<group>"; };
 		8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E82EE111631C7B90044D97E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		8E87C5A916F38C2D00AC93C0 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		8E87C5AA16F38C2D00AC93C0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		8E87C5AB16F38C2D00AC93C0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		8E87C5AC16F38C2D00AC93C0 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
+		8E87C5AD16F38C2D00AC93C0 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
+		8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
+		8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
 		8E91173016DC288600719F9B /* SPVideoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoDownloader.h; sourceTree = "<group>"; };
@@ -802,6 +815,8 @@
 				1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */,
 				1C8109B916EE2CBF0030077C /* Crashlytics.framework in Frameworks */,
 				1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */,
+				8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
+				8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,6 +837,8 @@
 				1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */,
 				1C810A6F16EE5EED0030077C /* Crashlytics.framework in Frameworks */,
 				1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */,
+				8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
+				8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,6 +859,8 @@
 				8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */,
 				8EE5FAB81685622900DBEA13 /* Crashlytics.framework in Frameworks */,
 				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
+				8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
+				8E87C5B316F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1221,6 +1240,7 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
 				8EC65F7216E4FD42009EC83D /* Asynchronous-Freeloader */,
@@ -1230,6 +1250,21 @@
 			name = Library;
 			path = Shelby.tv;
 			sourceTree = "<group>";
+		};
+		8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */ = {
+			isa = PBXGroup;
+			children = (
+				8E87C5A916F38C2D00AC93C0 /* GAI.h */,
+				8E87C5AA16F38C2D00AC93C0 /* GAITrackedViewController.h */,
+				8E87C5AB16F38C2D00AC93C0 /* GAITracker.h */,
+				8E87C5AC16F38C2D00AC93C0 /* GAITransaction.h */,
+				8E87C5AD16F38C2D00AC93C0 /* GAITransactionItem.h */,
+				8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */,
+				8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */,
+			);
+			name = "Google Analytics SDK";
+			path = "Library/Google Analytics SDK";
+			sourceTree = SOURCE_ROOT;
 		};
 		8E98F7B3165C2F750095E985 /* ShelbyPlayer */ = {
 			isa = PBXGroup;
@@ -2097,6 +2132,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Enterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
 				PRODUCT_NAME = "Shelby.tv copy";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2124,6 +2163,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Enterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
 				PRODUCT_NAME = "Shelby.tv copy";
 				PROVISIONING_PROFILE = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7BDBFE6B-AABE-44F3-8F9B-4D371998FABE";
@@ -2146,6 +2189,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Nightly-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
 				PRODUCT_NAME = "Shelby.tv copy";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2168,6 +2215,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Nightly-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
 				PRODUCT_NAME = "Shelby.tv copy";
 				PROVISIONING_PROFILE = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
@@ -2254,6 +2305,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2281,6 +2336,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
