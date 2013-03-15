@@ -111,7 +111,7 @@
         if ( interval >= 5 ) {
             
             [[[SPModel sharedInstance] videoReel] homeButtonAction:self];
-            
+            self.backgroundedDate = nil;
         }
     }
 }
