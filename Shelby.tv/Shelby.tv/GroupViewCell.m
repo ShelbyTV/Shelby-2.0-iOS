@@ -30,7 +30,7 @@
 #pragma mark - Public Methods
 - (void)enableCard:(BOOL)enabled
 {
-    [self.groupThumbnailImage setAlpha:(enabled ? 1.0f : 0.75f)];
+    [self.groupThumbnailImage setAlpha:(enabled ? 1.0f : 0.5f)];
     [self.groupDescription setEnabled:enabled];
     [self.groupTitle setEnabled:enabled];
     [self setUserInteractionEnabled:enabled];
