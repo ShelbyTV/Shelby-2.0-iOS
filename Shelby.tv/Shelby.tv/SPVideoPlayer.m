@@ -129,7 +129,8 @@
 - (void)setupPlayerForURL:(NSURL *)playerURL
 {
     
-    [[Panhandler sharedInstance] recordEvent];
+    // TODO - Uncomment for AppStore
+//    [[Panhandler sharedInstance] recordEvent];
     
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
@@ -355,7 +356,8 @@
 - (void)share
 {
 
-    [[Panhandler sharedInstance] recordEvent];
+    // TODO - Uncomment for AppStore
+//    [[Panhandler sharedInstance] recordEvent];
     
     // Disable overlayTimer
     [self.model.overlayView showOverlayView];
