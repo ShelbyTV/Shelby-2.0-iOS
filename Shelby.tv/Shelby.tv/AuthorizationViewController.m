@@ -76,6 +76,10 @@
 
 - (IBAction)signup:(id)sender
 {
+    if (![self.currentForm validateFields]) {
+        return;
+    }
+
     [self.currentForm processingForm];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
