@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#define GAICategoryBrowse           @"Browse Category"
-#define GAICategoryVideoPlayer      @"Video Player Category"
-#define GAICategoryVideoList        @"Video List Category"
+#define GAICategoryBrowse           @"Browse Metrics"
+#define GAICategoryShare            @"Share Metrics"
+#define GAICategoryVideoPlayer      @"Video Player Metrics"
+#define GAICategoryVideoList        @"Video List Metrics"

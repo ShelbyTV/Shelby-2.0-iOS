@@ -304,11 +304,23 @@
     }
     
 
-    // TODO: 1) Track that the Share button was clicking in Google Analytics
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:GAICategoryShare
+                               withAction:@"User did tap share button to %@"
+                                withLabel:nil
+                                withValue:nil];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
-            // TODO: 2) Track in Google Analytics the success activity: activityType
+            
+            // Send event to Google Analytics
+            id defaultTracker = [GAI sharedInstance].defaultTracker;
+            [defaultTracker sendEventWithCategory:GAICategoryShare
+                                       withAction:[NSString stringWithFormat:@"User did successfully share to %@", activityType]
+                                        withLabel:nil
+                                        withValue:nil];
+            
         }
     }];
 
@@ -365,7 +377,12 @@
             // Do nothing
         }
        
-        // TODO: 3) track the success of rolling to Google Analytics
+        // Send event to Google Analytics
+        id defaultTracker = [GAI sharedInstance].defaultTracker;
+        [defaultTracker sendEventWithCategory:GAICategoryShare
+                                   withAction:@"User did successfully roll video"
+                                    withLabel:nil
+                                    withValue:nil];
         
         // Dismiss rollView
         [self performSelectorOnMainThread:@selector(hideRollView) withObject:nil waitUntilDone:NO];
