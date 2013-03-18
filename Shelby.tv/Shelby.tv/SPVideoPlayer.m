@@ -298,7 +298,7 @@
         
         [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                    withAction:@"Playback toggled via double tap gesture"
-                                    withLabel:nil
+                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                     withValue:nil];
         
     } else if ( [sender isMemberOfClass:[SPVideoReel class]] ) {
@@ -308,14 +308,14 @@
 
             [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                        withAction:@"Playback toggled via pause button"
-                                        withLabel:nil
+                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                         withValue:nil];
             
         } else {
             
             [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                        withAction:@"Playback toggled via play button"
-                                        withLabel:nil
+                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                         withValue:nil];
             
         }

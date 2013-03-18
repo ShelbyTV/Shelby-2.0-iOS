@@ -8,6 +8,7 @@
 
 #import "SPVideoScrubber.h"
 #import "SPModel.h"
+#import "SPVideoReel.h"
 
 @interface SPVideoScrubber ()
 
@@ -172,7 +173,7 @@
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                withAction:@"User Did Scrub Video"
-                                withLabel:nil
+                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                 withValue:nil];
 
 }

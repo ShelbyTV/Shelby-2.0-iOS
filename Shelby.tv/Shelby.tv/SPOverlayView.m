@@ -8,6 +8,7 @@
 
 #import "SPOverlayView.h"
 #import "SPModel.h"
+#import "SPVideoReel.h"
 
 @interface SPOverlayView ()
 
@@ -86,11 +87,12 @@
 #pragma mark - Toggle UI Methods
 - (void)toggleOverlay
 {
+    
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                withAction:@"Overlay toggled via single tap gesture"
-                                withLabel:nil
+                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                 withValue:nil];
     
     if ( self.alpha < 1.0f ) {

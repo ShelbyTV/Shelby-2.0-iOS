@@ -15,6 +15,7 @@
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
+@property (copy, nonatomic) NSString *groupTitle;
 
 /// Initialization
 - (id)initWithGroupType:(GroupType)groupType

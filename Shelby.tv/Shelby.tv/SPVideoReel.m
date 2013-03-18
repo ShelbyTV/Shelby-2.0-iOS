@@ -26,7 +26,6 @@
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (nonatomic) NSMutableArray *playableVideoPlayers;
 @property (nonatomic) NSMutableArray *itemViews;
-@property (copy, nonatomic) NSString *groupTitle;
 @property (copy, nonatomic) NSString *categoryID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
@@ -93,7 +92,7 @@
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:GAICategoryBrowse
                                    withAction:[NSString stringWithFormat:@"User Did Open %@ Playlist", _groupTitle]
-                                    withLabel:nil
+                                    withLabel:_groupTitle
                                     withValue:nil];
         
     }
@@ -481,21 +480,21 @@
         
         [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                    withAction:@"Video players dismissed via pinch gesture"
-                                    withLabel:nil
+                                    withLabel:_groupTitle
                                     withValue:nil];
         
     } else if ( [sender isMemberOfClass:[UIButton class]] ) {
         
         [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                    withAction:@"Video players dismissed via close button"
-                                    withLabel:nil
+                                    withLabel:_groupTitle
                                     withValue:nil];
         
     } else if ( [sender isMemberOfClass:[AppDelegate class]] ) {
         
         [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                    withAction:@"Video players dismissed via timeout"
-                                    withLabel:nil
+                                    withLabel:_groupTitle
                                     withValue:nil];
         
     } else {
@@ -583,7 +582,7 @@
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:GAICategoryVideoList
                                withAction:@"Video selected via video-list item press"
-                                withLabel:nil
+                                withLabel:_groupTitle
                                 withValue:nil];
     
     // Pause currentVideo Player
@@ -612,7 +611,7 @@
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                withAction:@"Playback toggled via restart button"
-                                withLabel:nil
+                                withLabel:_groupTitle
                                 withValue:nil];
     
     [self.model.currentVideoPlayer restartPlayback];
@@ -1133,7 +1132,7 @@
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
                                    withAction:@"Swiped Video Player"
-                                    withLabel:nil
+                                    withLabel:_groupTitle
                                     withValue:nil];
     
     } else if ( scrollView == _overlayView.videoListScrollView ) {
@@ -1148,7 +1147,7 @@
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:GAICategoryVideoList
                                    withAction:@"Swiped Video List"
-                                    withLabel:nil
+                                    withLabel:_groupTitle
                                     withValue:nil];
         
         [self.overlayView rescheduleOverlayTimer];

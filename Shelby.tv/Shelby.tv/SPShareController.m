@@ -11,8 +11,7 @@
 #import "SPShareRollView.h"
 #import "SPShareLikeActivity.h"
 #import "SPShareRollActivity.h"
-#import "SPConstants.h"
-
+#import "SPVideoReel.h"
 
 @interface SPShareController ()
 
@@ -308,7 +307,7 @@
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:GAICategoryShare
                                withAction:@"User did tap share button to %@"
-                                withLabel:nil
+                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                 withValue:nil];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
@@ -318,7 +317,7 @@
             id defaultTracker = [GAI sharedInstance].defaultTracker;
             [defaultTracker sendEventWithCategory:GAICategoryShare
                                        withAction:[NSString stringWithFormat:@"User did successfully share to %@", activityType]
-                                        withLabel:nil
+                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                         withValue:nil];
             
         }
@@ -381,7 +380,7 @@
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:GAICategoryShare
                                    withAction:@"User did successfully roll video"
-                                    withLabel:nil
+                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                     withValue:nil];
         
         // Dismiss rollView
