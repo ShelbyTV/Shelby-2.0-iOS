@@ -145,6 +145,12 @@
     // Sync/Send Logged-Out Likes to Web
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility syncLoggedOutLikes];
+    User *user = [dataUtility fetchUser];
+    
+    [self.googleTracker sendEventWithCategory:kGAICategorySession
+                                   withAction:@"Session start - User is authorized"
+                                    withLabel:user.userID
+                                    withValue:nil];
     
     // Perform API requests
     [self pingAllRoutes];
@@ -243,6 +249,27 @@
     [GAI sharedInstance].dispatchInterval = 20;             // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].debug = NO;                       // Optional: set debug to YES for extra debugging information.
     self.googleTracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-21191360-12"];
+    self.googleTracker.sessionStart = YES;
+    
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+     
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        
+        [self.googleTracker sendEventWithCategory:kGAICategorySession
+                                       withAction:@"Session start - User is authorized"
+                                        withLabel:user.userID
+                                        withValue:nil];
+        
+    } else {
+        
+        [self.googleTracker sendEventWithCategory:kGAICategorySession
+                                       withAction:@"Session start - User is not authorized"
+                                        withLabel:nil
+                                        withValue:nil];
+        
+    }
+    
     
 #ifdef SHELBY_APPSTORE
     // Making sure there are no updates in the target we use for dev & app store release

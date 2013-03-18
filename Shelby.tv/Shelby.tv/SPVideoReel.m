@@ -90,7 +90,7 @@
         _videoFrames = videoFrames;
         
         id defaultTracker = [GAI sharedInstance].defaultTracker;
-        [defaultTracker sendEventWithCategory:GAICategoryBrowse
+        [defaultTracker sendEventWithCategory:kGAICategoryBrowse
                                    withAction:[NSString stringWithFormat:@"User Did Open %@ Playlist", _groupTitle]
                                     withLabel:_groupTitle
                                     withValue:nil];
@@ -478,21 +478,21 @@
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     if ( [sender isMemberOfClass:[UIPinchGestureRecognizer class]] ) {
         
-        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                    withAction:@"Video players dismissed via pinch gesture"
                                     withLabel:_groupTitle
                                     withValue:nil];
         
     } else if ( [sender isMemberOfClass:[UIButton class]] ) {
         
-        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                    withAction:@"Video players dismissed via close button"
                                     withLabel:_groupTitle
                                     withValue:nil];
         
     } else if ( [sender isMemberOfClass:[AppDelegate class]] ) {
         
-        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                    withAction:@"Video players dismissed via timeout"
                                     withLabel:_groupTitle
                                     withValue:nil];
@@ -580,7 +580,7 @@
 {
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:GAICategoryVideoList
+    [defaultTracker sendEventWithCategory:kGAICategoryVideoList
                                withAction:@"Video selected via video-list item press"
                                 withLabel:_groupTitle
                                 withValue:nil];
@@ -609,7 +609,7 @@
 {
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                withAction:@"Playback toggled via restart button"
                                 withLabel:_groupTitle
                                 withValue:nil];
@@ -1130,7 +1130,7 @@
         
         // Send event to Google Analytics
         id defaultTracker = [GAI sharedInstance].defaultTracker;
-        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                    withAction:@"Swiped Video Player"
                                     withLabel:_groupTitle
                                     withValue:nil];
@@ -1145,7 +1145,7 @@
         
         // Send event to Google Analytics
         id defaultTracker = [GAI sharedInstance].defaultTracker;
-        [defaultTracker sendEventWithCategory:GAICategoryVideoList
+        [defaultTracker sendEventWithCategory:kGAICategoryVideoList
                                    withAction:@"Swiped Video List"
                                     withLabel:_groupTitle
                                     withValue:nil];

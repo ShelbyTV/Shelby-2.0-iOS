@@ -296,7 +296,7 @@
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     if ( [sender isMemberOfClass:[UITapGestureRecognizer class]] ) {
         
-        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                    withAction:@"Playback toggled via double tap gesture"
                                     withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                     withValue:nil];
@@ -306,14 +306,14 @@
         
         if ( [self isPlaying] ) {
 
-            [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                        withAction:@"Playback toggled via pause button"
                                         withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                         withValue:nil];
             
         } else {
             
-            [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                        withAction:@"Playback toggled via play button"
                                         withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                         withValue:nil];

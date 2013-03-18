@@ -171,7 +171,7 @@
     
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                withAction:@"User Did Scrub Video"
                                 withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                 withValue:nil];

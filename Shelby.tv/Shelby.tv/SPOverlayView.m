@@ -90,7 +90,7 @@
     
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
                                withAction:@"Overlay toggled via single tap gesture"
                                 withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                 withValue:nil];
