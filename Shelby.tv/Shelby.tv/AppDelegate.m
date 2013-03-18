@@ -109,7 +109,7 @@
         
         NSTimeInterval interval = fabs([self.backgroundedDate timeIntervalSinceNow]);
         
-        if ( interval >= 5 ) {
+        if ( interval >= 300 ) {
             
             [[[SPModel sharedInstance] videoReel] homeButtonAction:self];
             self.backgroundedDate = nil;
