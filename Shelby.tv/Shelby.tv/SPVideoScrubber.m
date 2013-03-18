@@ -167,6 +167,13 @@
         DLog(@"Current Time: %lld", (self.model.currentVideoPlayer.playbackStartTime.value / self.model.currentVideoPlayer.playbackStartTime.timescale));
         
     }
+    
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                               withAction:@"User Did Scrub Video"
+                                withLabel:nil
+                                withValue:nil];
 
 }
 

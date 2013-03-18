@@ -89,6 +89,13 @@
         _groupType = groupType;
         _groupTitle = title;
         _videoFrames = videoFrames;
+        
+        id defaultTracker = [GAI sharedInstance].defaultTracker;
+        [defaultTracker sendEventWithCategory:GAICategoryBrowse
+                                   withAction:[NSString stringWithFormat:@"User Did Open %@ Playlist", _groupTitle]
+                                    withLabel:nil
+                                    withValue:nil];
+        
     }
     
     return self;
@@ -467,6 +474,33 @@
 #pragma mark - Action Methods (Public)
 - (IBAction)homeButtonAction:(id)sender
 {
+ 
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    if ( [sender isMemberOfClass:[UIPinchGestureRecognizer class]] ) {
+        
+        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                                   withAction:@"Video players dismissed via pinch gesture"
+                                    withLabel:nil
+                                    withValue:nil];
+        
+    } else if ( [sender isMemberOfClass:[UIButton class]] ) {
+        
+        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                                   withAction:@"Video players dismissed via close button"
+                                    withLabel:nil
+                                    withValue:nil];
+        
+    } else if ( [sender isMemberOfClass:[AppDelegate class]] ) {
+        
+        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                                   withAction:@"Video players dismissed via timeout"
+                                    withLabel:nil
+                                    withValue:nil];
+        
+    } else {
+        // Do Nothing
+    }
     
     if (!self.inTransition) {
         [self setInTransition:YES];
@@ -535,7 +569,7 @@
 
 - (IBAction)playButtonAction:(id)sender
 {
-    [self.model.currentVideoPlayer togglePlayback];
+    [self.model.currentVideoPlayer togglePlayback:self];
 }
 
 - (IBAction)shareButtonAction:(id)sender
@@ -545,6 +579,12 @@
 
 - (IBAction)itemButtonAction:(id)sender
 {
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:GAICategoryVideoList
+                               withAction:@"Video selected via video-list item press"
+                                withLabel:nil
+                                withValue:nil];
     
     // Pause currentVideo Player
     [self.model.currentVideoPlayer pause];
@@ -568,6 +608,13 @@
 
 - (void)restartPlaybackButtonAction:(id)sender
 {
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                               withAction:@"Playback toggled via restart button"
+                                withLabel:nil
+                                withValue:nil];
+    
     [self.model.currentVideoPlayer restartPlayback];
 }
 
@@ -583,9 +630,7 @@
 
 - (IBAction)endScrubbing:(id)sender
 {
-    
     [[SPVideoScrubber sharedInstance] endScrubbing];
-    
 }
 
 
@@ -1082,6 +1127,14 @@
         
         [self currentVideoDidChangeToVideo:page];
         [self fetchOlderVideos:page];
+        
+        
+        // Send event to Google Analytics
+        id defaultTracker = [GAI sharedInstance].defaultTracker;
+        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                                   withAction:@"Swiped Video Player"
+                                    withLabel:nil
+                                    withValue:nil];
     
     } else if ( scrollView == _overlayView.videoListScrollView ) {
         
@@ -1091,7 +1144,15 @@
         NSUInteger page = floor(scrollAmount) + 1;
         [self fetchOlderVideos:page];
         
+        // Send event to Google Analytics
+        id defaultTracker = [GAI sharedInstance].defaultTracker;
+        [defaultTracker sendEventWithCategory:GAICategoryVideoList
+                                   withAction:@"Swiped Video List"
+                                    withLabel:nil
+                                    withValue:nil];
+        
         [self.overlayView rescheduleOverlayTimer];
+        
     }
 }
 

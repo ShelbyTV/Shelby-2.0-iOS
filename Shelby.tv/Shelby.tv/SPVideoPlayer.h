@@ -27,7 +27,7 @@
 
 /// Video Playback Methods
 - (void)loadVideoFromDisk;
-- (void)togglePlayback;
+- (void)togglePlayback:(id)sender;
 - (void)restartPlayback;
 - (void)play;
 - (void)pause;

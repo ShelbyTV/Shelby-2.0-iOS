@@ -663,6 +663,7 @@
 		8E454CC216CA9DC100B2F528 /* streamCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streamCard.png; sourceTree = "<group>"; };
 		8E454CC316CA9DC100B2F528 /* streamCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "streamCard@2x.png"; sourceTree = "<group>"; };
 		8E454CD216CAAD3E00B2F528 /* personalRollCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "personalRollCard@2x.png"; sourceTree = "<group>"; };
+		8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAIConstants.h; sourceTree = "<group>"; };
 		8E4C55751666A9F90019DD15 /* SPOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPOverlayView.h; sourceTree = "<group>"; };
 		8E4C55761666A9F90019DD15 /* SPOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPOverlayView.m; sourceTree = "<group>"; };
 		8E4D9EFD16EA880000D45E1E /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
@@ -1428,6 +1429,7 @@
 				8EF092361662A325008EE1DD /* Structures.h */,
 				8EAAEE52163A275400AEF100 /* APIConstants.h */,
 				8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */,
+				8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */,
 			);
 			name = Constants;
 			sourceTree = "<group>";

@@ -114,11 +114,6 @@
     [self setModel:[SPModel sharedInstance]];
     [self setOverlayView:_model.overlayView];
     [self setVideoReel:_model.videoReel];
-    
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.videoFrame objectID];
-    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    [self setTrackedViewName:[NSString stringWithFormat:@"SPVideoPlayer - %@", videoFrame.video.title]];
 }
 
 - (void)setupInitialConditions
@@ -189,7 +184,7 @@
     }
     
     // Add Gesture Recognizer
-    UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback)];
+    UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
     [togglePlaybackGesuture setNumberOfTapsRequired:2];
     [self.view addGestureRecognizer:togglePlaybackGesuture];
     
@@ -294,14 +289,45 @@
 }
 
 #pragma mark - Video Playback Methods (Public)
-- (void)togglePlayback
+- (void)togglePlayback:(id)sender
 {
-    if ( 0.0 == _player.rate && _isPlayable ) { // Play
+    
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    if ( [sender isMemberOfClass:[UITapGestureRecognizer class]] ) {
         
-        [self play];
+        [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                                   withAction:@"Playback toggled via double tap gesture"
+                                    withLabel:nil
+                                    withValue:nil];
         
-    } else { // Pause
+    } else if ( [sender isMemberOfClass:[SPVideoReel class]] ) {
+        
+        
+        if ( [self isPlaying] ) {
+
+            [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                                       withAction:@"Playback toggled via pause button"
+                                        withLabel:nil
+                                        withValue:nil];
             
+        } else {
+            
+            [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                                       withAction:@"Playback toggled via play button"
+                                        withLabel:nil
+                                        withValue:nil];
+            
+        }
+        
+    } else {
+        // Do nothing
+    }
+    
+    // Toggle Playback
+    if ( 0.0 == _player.rate && _isPlayable ) { // Play
+        [self play];
+    } else { // Pause
         [self pause];
     }
 }

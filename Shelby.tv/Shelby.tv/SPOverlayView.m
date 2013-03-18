@@ -86,6 +86,12 @@
 #pragma mark - Toggle UI Methods
 - (void)toggleOverlay
 {
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:GAICategoryVideoPlayer
+                               withAction:@"Overlay toggled via single tap gesture"
+                                withLabel:nil
+                                withValue:nil];
     
     if ( self.alpha < 1.0f ) {
         
@@ -94,6 +100,7 @@
     } else {
         
         [self hideOverlayView];
+   
     }
 }
 
