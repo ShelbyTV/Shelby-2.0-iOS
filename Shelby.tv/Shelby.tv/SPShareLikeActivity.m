@@ -8,12 +8,13 @@
 
 #import "SPShareLikeActivity.h"
 #import "SPModel.h"
+#import "SPConstants.h"
 
 @implementation SPShareLikeActivity
 
 - (NSString *)activityType
 {
-    return @"tv.Shelby.Shelby-tv.likes";
+    return kShelbySPActivityTypeLike;
 }
 
 - (NSString *)activityTitle
