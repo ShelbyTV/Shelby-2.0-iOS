@@ -11,6 +11,8 @@
 #import "SPShareRollView.h"
 #import "SPShareLikeActivity.h"
 #import "SPShareRollActivity.h"
+#import "SPConstants.h"
+
 
 @interface SPShareController ()
 
@@ -260,6 +262,7 @@
     NSManagedObjectID *objectID = [frame objectID];
     frame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
+    UIActivityViewController *activityController = nil;
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Logged In
         
         SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
@@ -268,8 +271,6 @@
         SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
         likeActivity.videoFrame = frame;
         likeActivity.overlayView = [self.model overlayView];
-        
-        UIActivityViewController *activityController;
         
         if ( GroupType_Likes == [self.model groupType] ) {
             
@@ -291,33 +292,33 @@
             
         }
         
-        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-        [self.sharePopOverController setDelegate:self];
-        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                     inView:[self.model overlayView]
-                                   permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                   animated:YES];
-        
     } else { // Logged Out
         
         SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
         likeActivity.videoFrame = frame;
         likeActivity.overlayView = [self.model overlayView];
         
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
-                                                                                         applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
+        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                               applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
         activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-        
-        
-        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-        [self.sharePopOverController setDelegate:self];
-        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                     inView:[self.model overlayView]
-                                   permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                   animated:YES];
-        
     }
+    
 
+    // TODO: 1) Track that the Share button was clicking in Google Analytics
+    
+    [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
+            // TODO: 2) Track in Google Analytics the success activity: activityType
+        }
+    }];
+
+     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+    [self.sharePopOverController setDelegate:self];
+    [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                 inView:[self.model overlayView]
+                               permittedArrowDirections:UIPopoverArrowDirectionDown
+                                               animated:YES];
+    
 }
 
 - (void)roll
@@ -364,6 +365,8 @@
             // Do nothing
         }
        
+        // TODO: 3) track the success of rolling to Google Analytics
+        
         // Dismiss rollView
         [self performSelectorOnMainThread:@selector(hideRollView) withObject:nil waitUntilDone:NO];
         

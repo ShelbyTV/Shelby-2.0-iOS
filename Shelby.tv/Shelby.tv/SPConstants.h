@@ -20,3 +20,8 @@
 /// SPVideoReel
 #define kShelbySPCurrentVideo                   @"SP Current Video"
 #define kShelbySPCurrentVideoStreamID           @"SP Current Video in Stream"
+
+/// Custom Shelby Activities
+#define kShelbySPActivityTypeRoll               @"tv.Shelby.Shelby-tv.roll"
+#define kShelbySPActivityTypeLike               @"tv.Shelby.Shelby-tv.likes"
+

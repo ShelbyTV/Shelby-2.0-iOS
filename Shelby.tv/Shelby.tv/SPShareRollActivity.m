@@ -15,7 +15,7 @@
 
 - (NSString *)activityType
 {
-    return @"tv.Shelby.Shelby-tv.roll";
+    return kShelbySPActivityTypeRoll;
 }
 
 - (NSString *)activityTitle
