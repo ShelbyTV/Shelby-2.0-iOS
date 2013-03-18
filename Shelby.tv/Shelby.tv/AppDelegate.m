@@ -38,6 +38,7 @@
 @property (nonatomic) NSMutableArray *videoDownloaders;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) NSDate *backgroundedDate;
+@property (nonatomic) id <GAITracker> googleTracker;
 
 /// Setup Methods
 - (void)setupAnalytics;
@@ -240,8 +241,8 @@
     // Google Analytics
     [GAI sharedInstance].trackUncaughtExceptions = YES;     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].dispatchInterval = 20;             // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-    [GAI sharedInstance].debug = YES;                       // Optional: set debug to YES for extra debugging information.
-    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-21191360-12"];
+    [GAI sharedInstance].debug = NO;                       // Optional: set debug to YES for extra debugging information.
+    self.googleTracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-21191360-12"];
     
 #ifdef SHELBY_APPSTORE
     // Making sure there are no updates in the target we use for dev & app store release
