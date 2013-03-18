@@ -26,6 +26,6 @@
 - (void)endScrubbing;
 
 /// Player Methods
-- (CMTime)elapsedDuration;
+- (CMTime)duration;
 
 @end

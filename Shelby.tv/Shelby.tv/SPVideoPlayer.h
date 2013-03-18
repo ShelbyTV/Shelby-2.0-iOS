@@ -21,6 +21,7 @@
 
 /// Video Storage Methods
 - (CMTime)elapsedTime;
+- (CMTime)duration;
 
 /// Video Fetching Methods
 - (void)queueVideo;

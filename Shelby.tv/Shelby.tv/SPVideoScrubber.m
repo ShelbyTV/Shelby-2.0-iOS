@@ -39,7 +39,7 @@
 {
     
     CGFloat interval = .1f;
-	CMTime playerDuration = [self elapsedDuration];
+	CMTime playerDuration = [self duration];
     
 	if ( CMTIME_IS_INVALID(playerDuration) ) {
         
@@ -66,7 +66,7 @@
 - (void)syncScrubber
 {
     
-	CMTime playerDuration = [self elapsedDuration];
+	CMTime playerDuration = [self duration];
 	if ( CMTIME_IS_INVALID(playerDuration) ) {
         [self.model.overlayView.scrubber setValue:0.0f];
         [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
@@ -120,7 +120,7 @@
     
     [self.model.currentVideoPlayer setPlaybackStartTime:kCMTimeZero];
     
-    CMTime playerDuration = [self elapsedDuration];
+    CMTime playerDuration = [self duration];
     
     if (CMTIME_IS_INVALID(playerDuration)) {
         return;
@@ -141,7 +141,7 @@
 - (void)endScrubbing
 {
     
-    CMTime playerDuration = [self elapsedDuration];
+    CMTime playerDuration = [self duration];
     if (CMTIME_IS_INVALID(playerDuration)) {
         return;
     }
@@ -179,15 +179,9 @@
 }
 
 #pragma mark - Playback Methods (Public)
-- (CMTime)elapsedDuration
+- (CMTime)duration
 {
-    
-    if ( [self.model.currentVideoPlayer.player currentItem].status == AVPlayerItemStatusReadyToPlay ) {
-        
-		return [self.model.currentVideoPlayer.player.currentItem duration];
-	}
-	
-	return kCMTimeInvalid;
+    return [self.model.currentVideoPlayer duration];
 }
 
 #pragma mark - Playback Methods (Private)
