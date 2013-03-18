@@ -152,6 +152,8 @@
                                     withLabel:user.userID
                                     withValue:nil];
     
+    
+    
     // Perform API requests
     [self pingAllRoutes];
 

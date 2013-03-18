@@ -25,6 +25,7 @@
 /// Singleton Methods
 + (SPModel *)sharedInstance;
 
+/// Persistence Methods
 - (void)destroyModel;
 
 /// UI Methods

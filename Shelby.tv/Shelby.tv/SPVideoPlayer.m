@@ -484,20 +484,19 @@
 - (void)storeVideoForLater
 {
     
+    // Get value for kShelbySPVideoPlayerStoredDate key
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     NSDate *storedDate = [NSDate date];
 
+    // Get value for kShelbySPVideoPlayerElapsedTime key
     CMTime elapsedTime = [self elapsedTime];
     CMTime duration = [self duration];
     CGFloat elapsedSeconds = elapsedTime.value / elapsedTime.timescale;
     CGFloat durationSeconds = duration.value / duration.timescale;
     CGFloat timeDifference = fabs(durationSeconds-elapsedSeconds);
-    DLog(@"TIME DIFF: %f", timeDifference);
     NSValue *storedElapsedTimeValue = ( timeDifference > 5.0f ) ? [NSValue valueWithCMTime:elapsedTime] : [NSValue valueWithCMTime:kCMTimeZero];
-    
-    DLog(@"STORED: %@ for %@", storedElapsedTimeValue, _videoFrame.video.title);
     
     if ( _videoFrame.video.extractedURL.length ) {
         

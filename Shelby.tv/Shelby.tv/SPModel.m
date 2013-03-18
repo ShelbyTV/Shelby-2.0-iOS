@@ -58,7 +58,7 @@
         
     }
     
-    if ( [self.videoReel.airPlayButton state] != 4 ) { // Keep SPVideoOverlay visible if airPlay is connected ( state == 4)
+    if ( [self.videoReel.airPlayButton state] != 4 ) { // Keep SPVideoOverlay visible if airPlay is connected (state == 4)
     
         self.overlayTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f
                                                              target:self.overlayView
