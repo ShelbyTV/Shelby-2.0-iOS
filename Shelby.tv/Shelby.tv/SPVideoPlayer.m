@@ -91,10 +91,9 @@
     [self.view setFrame:self.viewBounds];
     [self setupReferences];
     [self setupInitialConditions];
-    [self setTrackedViewName:@"SPVideoPlayer"];
+
 }
 
->>>>>>> master
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -115,6 +114,11 @@
     [self setModel:[SPModel sharedInstance]];
     [self setOverlayView:_model.overlayView];
     [self setVideoReel:_model.videoReel];
+    
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.videoFrame objectID];
+    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    [self setTrackedViewName:[NSString stringWithFormat:@"SPVideoPlayer - %@", videoFrame.video.title]];
 }
 
 - (void)setupInitialConditions

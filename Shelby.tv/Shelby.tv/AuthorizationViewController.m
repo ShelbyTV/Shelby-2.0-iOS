@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setTrackedViewName:@"AuthorizationViewController"];
+    [self setTrackedViewName:@"Authorization ViewController"];
     [self setCurrentForm:self.loginView];
 }
 

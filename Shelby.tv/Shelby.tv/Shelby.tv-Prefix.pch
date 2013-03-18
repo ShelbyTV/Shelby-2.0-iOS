@@ -20,10 +20,6 @@
     // Analytics
     #import <Crashlytics/Crashlytics.h>
     #import "GAI.h"
-    #import "GAITracker.h"
-    #import "GAITrackedViewController.h"
-    #import "GAITransaction.h"
-    #import "GAITransactionItem.h"
 
     // Third Party Libraries
     #import "AFNetworking.h"

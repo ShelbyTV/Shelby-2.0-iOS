@@ -479,7 +479,6 @@
 		8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
 		8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
 		8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
-		8E87C5B316F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
 		8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
 		8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
@@ -858,7 +857,6 @@
 				8EE5FAB81685622900DBEA13 /* Crashlytics.framework in Frameworks */,
 				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
-				8E87C5B316F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
