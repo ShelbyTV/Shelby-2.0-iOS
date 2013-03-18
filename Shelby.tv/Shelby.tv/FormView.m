@@ -11,10 +11,23 @@
 @interface FormView()
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+@property (weak, nonatomic) IBOutlet UIButton *goButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @end
 
 @implementation FormView
+
+- (void)awakeFromNib
+{
+    [[self.goButton titleLabel] setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.goButton.titleLabel.font.pointSize]];
+    [[self.goButton titleLabel] setTextColor:kShelbyColorWhite];
+
+    [[self.cancelButton titleLabel] setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.cancelButton.titleLabel.font.pointSize]];
+    [[self.cancelButton titleLabel] setTextColor:kShelbyColorWhite];
+
+}
+
 - (void)processingForm
 {
     [self setUserInteractionEnabled:NO];

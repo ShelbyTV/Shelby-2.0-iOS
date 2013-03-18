@@ -16,6 +16,18 @@
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
+		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
+		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
+		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
+		1C52849916F7AE6C00B43A94 /* greenButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849316F7AE6C00B43A94 /* greenButton@2x.png */; };
+		1C52849A16F7AE6C00B43A94 /* greenButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849316F7AE6C00B43A94 /* greenButton@2x.png */; };
+		1C52849B16F7AE6C00B43A94 /* greenButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849316F7AE6C00B43A94 /* greenButton@2x.png */; };
+		1C52849C16F7AE6C00B43A94 /* greyButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849416F7AE6C00B43A94 /* greyButton.png */; };
+		1C52849D16F7AE6C00B43A94 /* greyButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849416F7AE6C00B43A94 /* greyButton.png */; };
+		1C52849E16F7AE6C00B43A94 /* greyButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849416F7AE6C00B43A94 /* greyButton.png */; };
+		1C52849F16F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
+		1C5284A016F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
+		1C5284A116F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
 		1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
@@ -547,6 +559,10 @@
 		1C16A95016E14FCF004ABA41 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
+		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
+		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
+		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
+		1C52849516F7AE6C00B43A94 /* greyButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyButton@2x.png"; sourceTree = "<group>"; };
 		1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtilities.h; sourceTree = "<group>"; };
 		1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtilities.m; sourceTree = "<group>"; };
 		1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
@@ -1068,6 +1084,10 @@
 				8E9FBD5516C7145F00731912 /* authenticationLoginView@2x.png */,
 				8E9FBD5616C7145F00731912 /* authenticationTextField.png */,
 				8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */,
+				1C52849216F7AE6C00B43A94 /* greenButton.png */,
+				1C52849316F7AE6C00B43A94 /* greenButton@2x.png */,
+				1C52849416F7AE6C00B43A94 /* greyButton.png */,
+				1C52849516F7AE6C00B43A94 /* greyButton@2x.png */,
 			);
 			path = "Login & Signup Images";
 			sourceTree = "<group>";
@@ -1629,6 +1649,10 @@
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				1C7B8D4C16F0FDAF0069F570 /* authenticationSignupView.png in Resources */,
 				1C7B8D4F16F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */,
+				1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */,
+				1C52849A16F7AE6C00B43A94 /* greenButton@2x.png in Resources */,
+				1C52849D16F7AE6C00B43A94 /* greyButton.png in Resources */,
+				1C5284A016F7AE6C00B43A94 /* greyButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1741,6 +1765,10 @@
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C7B8D4D16F0FDAF0069F570 /* authenticationSignupView.png in Resources */,
 				1C7B8D5016F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */,
+				1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */,
+				1C52849B16F7AE6C00B43A94 /* greenButton@2x.png in Resources */,
+				1C52849E16F7AE6C00B43A94 /* greyButton.png in Resources */,
+				1C5284A116F7AE6C00B43A94 /* greyButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1854,6 +1882,10 @@
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				1C7B8D4B16F0FDAF0069F570 /* authenticationSignupView.png in Resources */,
 				1C7B8D4E16F0FDAF0069F570 /* authenticationSignupView@2x.png in Resources */,
+				1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */,
+				1C52849916F7AE6C00B43A94 /* greenButton@2x.png in Resources */,
+				1C52849C16F7AE6C00B43A94 /* greyButton.png in Resources */,
+				1C52849F16F7AE6C00B43A94 /* greyButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
