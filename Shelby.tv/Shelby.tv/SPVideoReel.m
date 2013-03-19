@@ -473,36 +473,36 @@
 #pragma mark - Action Methods (Public)
 - (IBAction)homeButtonAction:(id)sender
 {
- 
-    // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    if ( [sender isMemberOfClass:[UIPinchGestureRecognizer class]] ) {
-        
-        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                   withAction:@"Video players dismissed via pinch gesture"
-                                    withLabel:_groupTitle
-                                    withValue:nil];
-        
-    } else if ( [sender isMemberOfClass:[UIButton class]] ) {
-        
-        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                   withAction:@"Video players dismissed via close button"
-                                    withLabel:_groupTitle
-                                    withValue:nil];
-        
-    } else if ( [sender isMemberOfClass:[AppDelegate class]] ) {
-        
-        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                   withAction:@"Video players dismissed via timeout"
-                                    withLabel:_groupTitle
-                                    withValue:nil];
-        
-    } else {
-        // Do Nothing
-    }
-    
     if (!self.inTransition) {
         [self setInTransition:YES];
+        
+        // Send event to Google Analytics
+        id defaultTracker = [GAI sharedInstance].defaultTracker;
+        if ( [sender isMemberOfClass:[UIPinchGestureRecognizer class]] ) {
+            
+            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+                                       withAction:@"Video players dismissed via pinch gesture"
+                                        withLabel:_groupTitle
+                                        withValue:nil];
+            
+        } else if ( [sender isMemberOfClass:[UIButton class]] ) {
+            
+            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+                                       withAction:@"Video players dismissed via close button"
+                                        withLabel:_groupTitle
+                                        withValue:nil];
+            
+        } else if ( [sender isMemberOfClass:[AppDelegate class]] ) {
+            
+            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+                                       withAction:@"Video players dismissed via timeout"
+                                        withLabel:_groupTitle
+                                        withValue:nil];
+            
+        } else {
+            // Do Nothing
+        }
+
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             UIImage *videoCapture = nil;
