@@ -1122,9 +1122,9 @@
         
         // Toggle playback on old and new SPVideoPlayer objects
         if ( page != _model.currentVideo ) {
-            
             [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-            
+        } else {
+            return;
         }
         
         [self currentVideoDidChangeToVideo:page];
