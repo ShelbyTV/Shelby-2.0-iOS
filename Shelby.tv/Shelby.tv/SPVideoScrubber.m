@@ -87,8 +87,11 @@
         
         NSTimeInterval availableDuration = [self.model.currentVideoPlayer availableDuration];
         NSTimeInterval buffered = availableDuration/duration;
-        [self.model.overlayView.bufferView setProgress:buffered animated:YES];
-
+    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.model.overlayView.bufferView setProgress:buffered animated:YES];
+        });
+        
         // Update watched later roll
         [self updateWatchedRoll];
         

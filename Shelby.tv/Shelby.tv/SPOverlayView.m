@@ -28,7 +28,6 @@
         
         // Customize Colors
         [_categoryTitleLabel setTextColor:kShelbyColorWhite];
-        [_bufferView setProgressTintColor:kShelbyColorGreen];
         [_scrubberTimeLabel setTextColor:kShelbyColorWhite];
         [_nicknameLabel setTextColor:kShelbyColorBlack];
         [_videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];

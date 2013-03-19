@@ -55,7 +55,7 @@
 							<string key="NSResourceName">videoPlayerBar.png</string>
 						</object>
 					</object>
-					<object class="IBUIProgressView" id="1056747777">
+					<object class="IBUIProgressView" id="46732809">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{51, 542}, {810, 9}}</string>
@@ -81,7 +81,7 @@
 						<string key="NSFrame">{{49, 535}, {814, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1056747777"/>
+						<reference key="NSNextKeyView" ref="46732809"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="290922202"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -90,7 +90,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<object class="NSColor" key="IBUIMinimumTrackTintColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAxIDAAA</bytes>
+							<bytes key="NSRGB">MC4wNDMxMzcyNTQ5IDAuNzQ1MDk4MDM5MiAwLjI3ODQzMTM3MjUAA</bytes>
 						</object>
 						<reference key="IBUIMaximumTrackTintColor" ref="290922202"/>
 					</object>
@@ -181,6 +181,7 @@
 						<string key="NSFrame">{{519, 571}, {505, 217}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="290922202"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -563,7 +564,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">bufferView</string>
 						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="1056747777"/>
+						<reference key="destination" ref="46732809"/>
 					</object>
 					<int key="connectionID">86</int>
 				</object>
@@ -677,7 +678,7 @@
 							<reference ref="626961961"/>
 							<reference ref="973182751"/>
 							<reference ref="792619973"/>
-							<reference ref="1056747777"/>
+							<reference ref="46732809"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -793,7 +794,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">84</int>
-						<reference key="object" ref="1056747777"/>
+						<reference key="object" ref="46732809"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
