@@ -16,7 +16,6 @@
 
 - (NSString *)convertElapsedTime:(CGFloat)currentTime andDuration:(CGFloat)duration;
 - (void)updateWatchedRoll;
-- (void)updateBufferView:(NSNumber *)buffered;
 
 @end
 
@@ -93,7 +92,7 @@
         // Update value of bufferView
         NSTimeInterval availableDuration = [self.model.currentVideoPlayer availableDuration];
         NSTimeInterval buffered = availableDuration/duration;
-        [self performSelectorOnMainThread:@selector(updateBufferView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
+        [self.model.overlayView.bufferView setProgress:[[NSNumber numberWithDouble:buffered] doubleValue] animated:YES];
         
         // Update watched later roll
         [self updateWatchedRoll];
@@ -261,11 +260,6 @@
     }
 }
 
-- (void)updateBufferView:(NSNumber *)buffered
-{
-    DLog(@"BUFFERED: %f", buffered.doubleValue);
-    [self.model.overlayView.bufferView setProgress:buffered.doubleValue animated:YES];
-}
 
 #pragma mark - Accessor Methods
 - (SPModel *)model
