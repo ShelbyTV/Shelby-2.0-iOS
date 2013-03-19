@@ -10,9 +10,30 @@
 
 @interface FormView : UIView
 
+/** Should be called when processing is done - disable all form fiels and show a spinner
+ */
 - (void)processingForm;
+
+/** Resets the form and makes the first text field first responder
+ */
 - (void)resetForm;
-- (void)selectNextField:(UITextField *)textField;
+
+/** Selects the next text field in the form
+ *  Returns YES - if next text field selected
+ *  Returns NO  - if there is no more text fields in the form
+ */
+- (BOOL)selectNextField:(UITextField *)textField;
+
+/** Validates that form fields are not empty
+ *  Returns YES all fields are not empty
+*/
 - (BOOL)validateFields;
 
+/** Marks text field with red borders
+ */
+- (void)markTextField:(UITextField *)textField;
+
+/** Resets text field - removes red border
+ */
+- (void)resetTextField:(UITextField *)textField;
 @end

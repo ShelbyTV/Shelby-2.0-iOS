@@ -44,9 +44,9 @@
     [self.fullname becomeFirstResponder];
 }
 
-- (void)selectNextField:(UITextField *)textField
+- (BOOL)selectNextField:(UITextField *)textField
 {
-    [super selectNextField:textField];
+    BOOL lastTextField = [super selectNextField:textField];
     
     if (textField == self.fullname) {
         [self.emailField becomeFirstResponder];
@@ -54,16 +54,38 @@
         [self.username becomeFirstResponder];
     } else if (textField == self.username) {
         [self.passwordField becomeFirstResponder];
+    } else {
+        lastTextField = YES;
     }
+    
+    return lastTextField;
 }
 
 - (BOOL)validateFields
 {
-    if ([[self.fullname text] length] && [[self.emailField text] length] && [[self.username text] length]  && [[self.passwordField text] length]) {
-        return YES;
+    BOOL valid = YES;
+    
+    if (![[self.emailField text] length]) {
+        valid = NO;
+        [self markTextField:self.emailField];
     }
     
-    return NO;
+    if (![[self.passwordField text] length]) {
+        valid = NO;
+        [self markTextField:self.passwordField];
+    }
+
+    if (![[self.fullname text] length]) {
+        valid = NO;
+        [self markTextField:self.fullname];
+    }
+    
+    if (![[self.username text] length]) {
+        valid = NO;
+        [self markTextField:self.username];
+    }
+    
+    return valid;
 }
 
 
