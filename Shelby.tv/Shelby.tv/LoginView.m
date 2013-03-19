@@ -7,6 +7,7 @@
 //
 
 #import "LoginView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface LoginView ()
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
@@ -45,22 +46,34 @@
 }
 
 
-- (void)selectNextField:(UITextField *)textField
+- (BOOL)selectNextField:(UITextField *)textField
 {
-    [super selectNextField:textField];
+    BOOL lastTextField = [super selectNextField:textField];
     
     if (textField == self.emailField) {
         [self.passwordField becomeFirstResponder];
+    } else {
+        lastTextField = YES;
     }
+    
+    return lastTextField;
 }
 
 - (BOOL)validateFields
 {
-    if ([[self.emailField text] length] && [[self.passwordField text] length]) {
-        return YES;
+    BOOL valid = YES;
+    
+    if (![[self.emailField text] length]) {
+        valid = NO;
+        [self markTextField:self.emailField];
     }
     
-    return NO;
+    if (![[self.passwordField text] length]) {
+        valid = NO;
+        [self markTextField:self.passwordField];
+    }
+    
+    return valid;
 }
 
 @end

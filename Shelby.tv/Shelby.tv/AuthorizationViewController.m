@@ -161,10 +161,14 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (![self.currentForm validateFields]) {
-        [self.currentForm selectNextField:textField];
+    if ([self.currentForm selectNextField:textField]) {
+        if (![self.currentForm validateFields]) {
+            return NO;
+        }
+    } else {
         return NO;
     }
+    
     
     if (self.currentForm == self.loginView) {
         [self performAuthentication];

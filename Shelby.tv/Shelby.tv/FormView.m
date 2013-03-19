@@ -40,9 +40,13 @@
     [self.indicator stopAnimating];
 }
 
-- (void)selectNextField:(UITextField *)textField
+- (BOOL)selectNextField:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    
+    [self resetTextField:textField];
+    
+    return NO;
 }
 
 - (BOOL)validateFields
@@ -50,4 +54,16 @@
     return NO;
 }
 
+- (void)markTextField:(UITextField *)textField
+{
+    textField.layer.cornerRadius = 8.0f;
+    textField.layer.masksToBounds = YES;
+    textField.layer.borderColor = [[UIColor redColor] CGColor];
+    textField.layer.borderWidth = 2.0f;
+}
+
+- (void)resetTextField:(UITextField *)textField
+{
+    textField.layer.borderColor = [[UIColor clearColor ]CGColor];
+}
 @end
