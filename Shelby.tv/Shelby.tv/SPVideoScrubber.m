@@ -16,7 +16,6 @@
 
 - (NSString *)convertElapsedTime:(CGFloat)currentTime andDuration:(CGFloat)duration;
 - (void)updateWatchedRoll;
-- (void)updateBufferView:(NSNumber *)buffered;
 
 @end
 
@@ -65,7 +64,7 @@
                                                                                               usingBlock:^(CMTime time) {
                                                                                                         
                                                                                                         [self syncScrubber];
-                                                                                                        
+                                                                                                  
                                                                                                     }];
 }
 
@@ -89,11 +88,6 @@
         CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
         [self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
         [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
-        
-        // Update value of bufferView
-        NSTimeInterval availableDuration = [self.model.currentVideoPlayer availableDuration];
-        NSTimeInterval buffered = availableDuration/duration;
-        [self performSelectorOnMainThread:@selector(updateBufferView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
         
         // Update watched later roll
         [self updateWatchedRoll];
@@ -259,12 +253,6 @@
             
         }
     }
-}
-
-- (void)updateBufferView:(NSNumber *)buffered
-{
-    DLog(@"BUFFERED: %f", buffered.doubleValue);
-    [self.model.overlayView.bufferView setProgress:buffered.doubleValue animated:YES];
 }
 
 #pragma mark - Accessor Methods
