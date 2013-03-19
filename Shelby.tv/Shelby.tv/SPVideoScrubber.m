@@ -64,7 +64,7 @@
                                                                                               usingBlock:^(CMTime time) {
                                                                                                         
                                                                                                         [self syncScrubber];
-                                                                                                        
+                                                                                                  
                                                                                                     }];
 }
 
@@ -88,11 +88,6 @@
         CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
         [self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
         [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
-        
-        // Update value of bufferView
-        NSTimeInterval availableDuration = [self.model.currentVideoPlayer availableDuration];
-        NSTimeInterval buffered = availableDuration/duration;
-        [self.model.overlayView.bufferView setProgress:[[NSNumber numberWithDouble:buffered] doubleValue] animated:YES];
         
         // Update watched later roll
         [self updateWatchedRoll];
@@ -260,7 +255,10 @@
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 530ee1e31937f0a7524bb6d0e00da17c6f922f57
 #pragma mark - Accessor Methods
 - (SPModel *)model
 {

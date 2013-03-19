@@ -49,6 +49,7 @@
 /// Observer Methods
 - (void)loadVideo:(NSNotification *)notification;
 - (void)itemDidFinishPlaying:(NSNotification *)notification;
+- (void)updateBufferView:(NSNumber *)buffered;
 
 @end
 
@@ -57,6 +58,10 @@
 #pragma mark - Memory Management Methods
 - (void)dealloc
 {
+    
+    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
+    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
+    [self.player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
@@ -147,6 +152,8 @@
     // Observer keypaths for buffer states on AVPlayerItem
     [playerItem addObserver:self forKeyPath:kShelbySPVideoBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
     [playerItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
+    [playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
+    
     
     // Instantiate AVPlayer
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
@@ -425,7 +432,7 @@
         [dataUtility saveContext:context];
         
     }
-    
+    [[SPVideoScrubber sharedInstance] syncScrubber];
     // Set Flag
     [self setIsPlaying:NO];
     
@@ -584,6 +591,13 @@
     }    
 }
 
+- (void)updateBufferView:(NSNumber *)buffered
+{
+    if ( buffered.doubleValue > [self.model.overlayView.bufferView progress] ) {
+        [self.model.overlayView.bufferView setProgress:buffered.doubleValue animated:YES];
+    }
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ( ![self player] ) {
@@ -594,7 +608,6 @@
    
         if ( [self.player currentItem].playbackBufferEmpty) { // Buffer is Empty
         
-            [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
             [self setupIndicator];
     
         }
@@ -602,14 +615,21 @@
     } else if (object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferLikelyToKeepUp]) {
         
         if ( [self.player currentItem].playbackLikelyToKeepUp ) { // Playback will resume
-        
-            [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
+
             // Stop animating indicator
             if ( [self.indicator isAnimating] ) {
                 [self.indicator stopAnimating];
                 [self.indicator removeFromSuperview];
             }
         }
+        
+    } else if ( object == _player.currentItem && [keyPath isEqualToString:@"loadedTimeRanges"] ) {
+     
+        NSTimeInterval availableDuration = [self availableDuration];
+        NSTimeInterval duration = CMTimeGetSeconds([self duration]);
+        NSTimeInterval buffered = availableDuration/duration;
+        [self performSelectorOnMainThread:@selector(updateBufferView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
+        
     }
 }
 
