@@ -20,6 +20,7 @@
 - (void)resetPlayer;
 
 /// Video Storage Methods
+- (NSTimeInterval)availableDuration;
 - (CMTime)elapsedTime;
 - (CMTime)duration;
 

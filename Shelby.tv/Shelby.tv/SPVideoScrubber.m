@@ -80,13 +80,15 @@
         // Update value of scrubber (slider and label)
 		CGFloat minValue = [self.model.overlayView.scrubber minimumValue];
 		CGFloat maxValue = [self.model.overlayView.scrubber maximumValue];
-        
         CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
         CGFloat duration = CMTimeGetSeconds([self.model.currentVideoPlayer.player.currentItem duration]);
-        
         [self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
         [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
         
+        NSTimeInterval availableDuration = [self.model.currentVideoPlayer availableDuration];
+        NSTimeInterval buffered = availableDuration/duration;
+        [self.model.overlayView.bufferView setProgress:buffered animated:YES];
+
         // Update watched later roll
         [self updateWatchedRoll];
         

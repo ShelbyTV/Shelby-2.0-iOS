@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;
 @property (weak, nonatomic) IBOutlet UIImageView *likeNotificationView;
 @property (weak, nonatomic) IBOutlet UIButton *homeButton;
+@property (weak, nonatomic) IBOutlet UIProgressView *bufferView;
 
 /// Toggle UI
 - (void)toggleOverlay;

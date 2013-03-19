@@ -748,6 +748,7 @@
                 [self.overlayView.restartPlaybackButton setHidden:NO];
                 [self.overlayView.playButton setEnabled:NO];
                 [self.overlayView.scrubber setEnabled:NO];
+                [self.overlayView.bufferView setHidden:YES];
                 [self.overlayView.shareButton setEnabled:YES]; //
                 
             } else { // Playable video DID NOT finish playing
@@ -755,6 +756,7 @@
                 [self.overlayView.restartPlaybackButton setHidden:YES];
                 [self.overlayView.playButton setEnabled:YES];
                 [self.overlayView.scrubber setEnabled:YES];
+                [self.overlayView.bufferView setHidden:NO];
                 [self.overlayView.shareButton setEnabled:YES];
                 
             }
@@ -764,6 +766,7 @@
             [self.overlayView.restartPlaybackButton setHidden:YES];
             [self.overlayView.playButton setEnabled:NO];
             [self.overlayView.scrubber setEnabled:NO];
+            [self.overlayView.bufferView setHidden:YES];
             [self.overlayView.shareButton setEnabled:NO];
             
             [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];

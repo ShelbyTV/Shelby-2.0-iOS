@@ -187,6 +187,7 @@
         [self.overlayView.restartPlaybackButton setHidden:YES];
         [self.overlayView.playButton setEnabled:YES];
         [self.overlayView.scrubber setEnabled:YES];
+        [self.overlayView.scrubber setHidden:NO];
         [self.overlayView.shareButton setEnabled:YES];
         
     }
@@ -223,16 +224,27 @@
         [self pause];
         
     }
-
-    // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
-//    if ( [self.indicator isAnimating] ) {
-//        [self.indicator stopAnimating];
-//        [self.indicator removeFromSuperview];
-//    }
-//    
+    
 }
 
 #pragma mark - Video Storage Methods (Public)
+- (NSTimeInterval)availableDuration
+{
+    if ( [self.player currentItem] ) {
+     
+        NSArray *loadedTimeRanges = [self.player.currentItem loadedTimeRanges];
+        CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
+        CGFloat startSeconds = CMTimeGetSeconds(timeRange.start);
+        CGFloat durationSeconds = CMTimeGetSeconds(timeRange.duration);
+        NSTimeInterval result = startSeconds + durationSeconds;
+        
+        return result;
+        
+    }
+    
+    return 0.0f;
+}
+
 - (CMTime)elapsedTime
 {
     if ( [self.player currentItem].status == AVPlayerItemStatusReadyToPlay ) {
@@ -364,6 +376,7 @@
     
     [self.overlayView.playButton setEnabled:YES];
     [self.overlayView.scrubber setEnabled:YES];
+    [self.overlayView.scrubber setHidden:NO];
     
     [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC)];
     [[SPVideoScrubber sharedInstance] syncScrubber];

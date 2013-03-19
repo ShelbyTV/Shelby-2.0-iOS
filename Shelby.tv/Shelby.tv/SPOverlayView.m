@@ -28,7 +28,7 @@
         
         // Customize Colors
         [_categoryTitleLabel setTextColor:kShelbyColorWhite];
-        [_scrubber setMinimumTrackTintColor:kShelbyColorGreen];
+        [_bufferView setProgressTintColor:kShelbyColorGreen];
         [_scrubberTimeLabel setTextColor:kShelbyColorWhite];
         [_nicknameLabel setTextColor:kShelbyColorBlack];
         [_videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
@@ -45,7 +45,6 @@
     
     // Customize Images
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
-    [self.scrubber setMaximumTrackImage:[UIImage imageNamed:@"scrubberBarOff"] forState:UIControlStateNormal];
     
     // Customize Fonts
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
