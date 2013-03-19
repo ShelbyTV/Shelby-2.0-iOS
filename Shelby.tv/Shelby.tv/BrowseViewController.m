@@ -87,7 +87,7 @@
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]]];
     
-    [self setTrackedViewName:@"Browse ViewController"];
+    [self setTrackedViewName:@"Browse"];
     
     [self resetVersionLabel];
     

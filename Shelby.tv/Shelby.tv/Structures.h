@@ -19,7 +19,8 @@ typedef NS_ENUM(NSUInteger, DataRequestType)
 {
     
     DataRequestType_Fetch,              // Fetch NSManagedObjects or NSManagedObjectContext
-    DataRequestType_StoreUser,          // Store User
+    DataRequestType_StoreUserForLogin,  // Store User if user did login with existing account
+    DataRequestType_StoreUserForSignUp, // Store User if user did sign up for new account
     DataRequestType_StoreCategories,    // Store Categories
     DataRequestType_StoreLoggedOutLike, // Sync 'Like' to logged-out likes roll
     DataRequestType_Sync,               // Sync with web

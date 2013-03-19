@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
+/// Custom Shelby Activities
+#define kShelbySPActivityTypeRoll               @"tv.Shelby.Shelby-tv.roll"
+#define kShelbySPActivityTypeLike               @"tv.Shelby.Shelby-tv.likes"
+
 /// Temporary Video Cache
 #define kShelbySPVideoPlayerStoredDate          @"SP Video Player Stored Date"
 #define kShelbySPVideoPlayerElapsedTime         @"SP Video Player Elapsed Time"
@@ -17,11 +21,11 @@
 #define kShelbySPLoadVideoAfterUnplayableVideo  @"SP Load Video After Unplayable Video"
 #define kShelbySPUserDidSwipeToNextVideo        @"SP User Did Swipe To Next Video"
 
+/// SPVideoPlayer
+#define kShelbySPVideoBufferLikelyToKeepUp      @"playbackLikelyToKeepUp"
+#define kShelbySPVideoBufferEmpty               @"playbackBufferEmpty"
+
 /// SPVideoReel
 #define kShelbySPCurrentVideo                   @"SP Current Video"
 #define kShelbySPCurrentVideoStreamID           @"SP Current Video in Stream"
-
-/// Custom Shelby Activities
-#define kShelbySPActivityTypeRoll               @"tv.Shelby.Shelby-tv.roll"
-#define kShelbySPActivityTypeLike               @"tv.Shelby.Shelby-tv.likes"
 

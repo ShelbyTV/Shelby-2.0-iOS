@@ -114,10 +114,33 @@
                     
                 } break;
                     
-                case DataRequestType_StoreUser: {
+                case DataRequestType_StoreUserForLogin: {
                     
-                    DLog(@"User Data Saved Successfully!");
+                    DLog(@"User Data Saved Successfully for Logged-In user!");
                     [self.appDelegate userIsAuthorized];
+                    
+                    User *user = [self fetchUser];
+                    // Send event to Google Analytics
+                    id defaultTracker = [GAI sharedInstance].defaultTracker;
+                    [defaultTracker sendEventWithCategory:kGAICategorySession
+                                               withAction:@"User did login"
+                                                withLabel:user.userID
+                                                withValue:nil];
+                    
+                } break;
+                    
+                case DataRequestType_StoreUserForSignUp: {
+                    
+                    DLog(@"User Data Saved Successfully for newly Signed Up User!");
+                    [self.appDelegate userIsAuthorized];
+                    
+                    User *user = [self fetchUser];
+                    // Send event to Google Analytics
+                    id defaultTracker = [GAI sharedInstance].defaultTracker;
+                    [defaultTracker sendEventWithCategory:kGAICategorySession
+                                               withAction:@"User did sign up"
+                                                withLabel:user.userID
+                                                withValue:nil];
                     
                 } break;
                     

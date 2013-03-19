@@ -91,7 +91,7 @@
         
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:kGAICategoryBrowse
-                                   withAction:[NSString stringWithFormat:@"User Did Open %@ Playlist", _groupTitle]
+                                   withAction:[NSString stringWithFormat:@"User did launch playlist - %@", _groupTitle]
                                     withLabel:_groupTitle
                                     withValue:nil];
         
@@ -126,7 +126,7 @@
     [super viewDidLoad];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
     [self.view setBackgroundColor:[UIColor blackColor]];
-    [self setTrackedViewName:[NSString stringWithFormat:@"SPVideoReel - %@", _groupTitle]];
+    [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -581,7 +581,7 @@
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:kGAICategoryVideoList
-                               withAction:@"Video selected via video-list item press"
+                               withAction:@"Video selected via video list item press"
                                 withLabel:_groupTitle
                                 withValue:nil];
     
@@ -1131,7 +1131,7 @@
         // Send event to Google Analytics
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                   withAction:@"Swiped Video Player"
+                                   withAction:@"Swiped video player"
                                     withLabel:_groupTitle
                                     withValue:nil];
     
@@ -1146,7 +1146,7 @@
         // Send event to Google Analytics
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:kGAICategoryVideoList
-                                   withAction:@"Swiped Video List"
+                                   withAction:@"Swiped video list"
                                     withLabel:_groupTitle
                                     withValue:nil];
         
