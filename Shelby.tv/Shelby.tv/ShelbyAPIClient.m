@@ -64,16 +64,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         DLog(@"%@", error);
-        NSString *errorMessage = nil;
-        if ([JSON isKindOfClass:[NSDictionary class]]) {
-            errorMessage = JSON[@"message"];
-        }
-        
-        if (!errorMessage || ![errorMessage isKindOfClass:[NSString class]] || [errorMessage isEqualToString:@""]) {
-            errorMessage = @"There was a problem. Please try again later.";
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:JSON];
     }];
 
     [operation start];

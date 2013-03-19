@@ -35,6 +35,10 @@
 - (void)processingForm
 {
     [super processingForm];
+    [self resetTextField:self.emailField];
+    [self resetTextField:self.passwordField];
+    [self resetTextField:self.username];
+    [self resetTextField:self.fullname];
 }
 
 - (void)resetForm
@@ -88,5 +92,17 @@
     return valid;
 }
 
+- (void)showErrors:(NSDictionary *)errors
+{
+    if (errors && [errors isKindOfClass:[NSDictionary class]]) {
+        if (errors[@"nickname"]) {
+            [self markTextField:self.username];
+        }
+        
+        if (errors[@"primary_email"]) {
+            [self markTextField:self.emailField];
+        }
+    }
+}
 
 @end

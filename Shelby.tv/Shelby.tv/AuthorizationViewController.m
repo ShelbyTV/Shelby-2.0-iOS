@@ -124,7 +124,30 @@
     [[NSNotificationCenter defaultCenter] removeObserver: self];
     
     if ([notification isKindOfClass:[NSNotification class]]) {
-        NSString *errorMessage = [notification object];
+        id JSONError = [notification object];
+        NSString *errorMessage = nil;
+        NSDictionary *userErrorDictionary = nil;
+        if ([JSONError isKindOfClass:[NSDictionary class]]) {
+            errorMessage = JSONError[@"message"];
+        
+            NSDictionary *errors = JSONError[@"errors"];
+            if (errors && [errors isKindOfClass:[NSDictionary class]]) {
+                userErrorDictionary = errors[@"user"];
+                if (![userErrorDictionary isKindOfClass:[NSDictionary class]]) {
+                    userErrorDictionary = nil;
+                }
+            }
+        } else if ([JSONError isKindOfClass:[NSString class]]) {
+            errorMessage = JSONError;
+            
+        }
+
+        [self.currentForm showErrors:userErrorDictionary];
+        
+        if (!errorMessage || ![errorMessage isKindOfClass:[NSString class]] || [errorMessage isEqualToString:@""]) {
+            errorMessage = @"There was a problem. Please try again later.";
+        }
+
         if ([errorMessage isKindOfClass:[NSString class]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                 message:errorMessage

@@ -35,6 +35,8 @@
 - (void)processingForm
 {
     [super processingForm];
+    [self resetTextField:self.emailField];
+    [self resetTextField:self.passwordField];
 }
 
 - (void)resetForm
@@ -74,6 +76,12 @@
     }
     
     return valid;
+}
+
+- (void)showErrors:(NSDictionary *)errors
+{
+    [self markTextField:self.emailField];
+    [self markTextField:self.passwordField];
 }
 
 @end

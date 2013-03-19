@@ -66,4 +66,9 @@
 {
     textField.layer.borderColor = [[UIColor clearColor ]CGColor];
 }
+
+- (void)showErrors:(NSDictionary *)errors
+{
+    // Do nothing
+}
 @end

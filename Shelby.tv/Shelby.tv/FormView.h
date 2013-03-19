@@ -36,4 +36,8 @@
 /** Resets text field - removes red border
  */
 - (void)resetTextField:(UITextField *)textField;
+
+/** Mark textfields with errors 
+ */
+- (void)showErrors:(NSDictionary *)errors;
 @end
