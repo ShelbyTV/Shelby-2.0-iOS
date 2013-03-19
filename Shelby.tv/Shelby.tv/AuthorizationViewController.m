@@ -13,6 +13,7 @@
 #import "SignupView.h"
 #import "ImageUtilities.h"
 #import "ShelbyAPIClient.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface AuthorizationViewController ()
 
@@ -37,6 +38,11 @@
     [super viewDidLoad];
     [self setTrackedViewName:@"Login / Sign Up"];
     [self setCurrentForm:self.loginView];
+    
+    self.view.layer.cornerRadius = 5;
+    self.view.layer.borderColor = [UIColor blackColor].CGColor;
+    self.view.layer.borderWidth = 1;
+    self.view.clipsToBounds = YES;
 }
 
 
