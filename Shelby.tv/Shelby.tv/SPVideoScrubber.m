@@ -72,14 +72,14 @@
 - (void)syncScrubber
 {
     
-	CMTime playerDuration = [self duration];
-	if ( CMTIME_IS_INVALID(playerDuration) ) {
+	CMTime durationTime = [self duration];
+	if ( CMTIME_IS_INVALID(durationTime) ) {
         [self.model.overlayView.scrubber setValue:0.0f];
         [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
 		return;
 	}
     
-	double duration = CMTimeGetSeconds(playerDuration);
+	CGFloat duration = CMTimeGetSeconds(durationTime);
     
 	if ( isfinite(duration) && self.model.currentVideoPlayer.player ) {
         
@@ -87,7 +87,6 @@
 		CGFloat minValue = [self.model.overlayView.scrubber minimumValue];
 		CGFloat maxValue = [self.model.overlayView.scrubber maximumValue];
         CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
-        CGFloat duration = CMTimeGetSeconds([self.model.currentVideoPlayer.player.currentItem duration]);
         [self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
         [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
         
