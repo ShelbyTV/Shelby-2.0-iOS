@@ -581,6 +581,7 @@
    
         if ( [self.player currentItem].playbackBufferEmpty) { // Buffer is Empty
         
+            [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
             [self setupIndicator];
     
         }
@@ -589,6 +590,7 @@
         
         if ( [self.player currentItem].playbackLikelyToKeepUp ) { // Playback will resume
         
+            [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
             // Stop animating indicator
             if ( [self.indicator isAnimating] ) {
                 [self.indicator stopAnimating];
