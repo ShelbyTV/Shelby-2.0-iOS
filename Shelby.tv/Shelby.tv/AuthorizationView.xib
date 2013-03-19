@@ -44,7 +44,7 @@
 							<object class="IBUIButton" id="293674635">
 								<reference key="NSNextResponder" ref="348727573"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{473, 5}, {65, 30}}</string>
+								<string key="NSFrame">{{473, 5}, {65, 31}}</string>
 								<reference key="NSSuperview" ref="348727573"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="512443037"/>
@@ -293,7 +293,7 @@
 							<object class="IBUIButton" id="1043180259">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{473, 5}, {65, 30}}</string>
+								<string key="NSFrame">{{473, 5}, {65, 31}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="500606098"/>
@@ -344,7 +344,7 @@
 							<object class="IBUIButton" id="1034738299">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{5, 5}, {65, 30}}</string>
+								<string key="NSFrame">{{5, 5}, {65, 31}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1043180259"/>
@@ -467,12 +467,12 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{542, 219}</string>
+				<string key="NSFrameSize">{543, 219}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="348727573"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<reference key="IBUIBackgroundColor" ref="883335641"/>
+				<reference key="IBUIBackgroundColor" ref="389360977"/>
 				<bool key="IBUIAutoresizesSubviews">NO</bool>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 			</object>
@@ -1023,8 +1023,8 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="authenticationTextField.png">{500, 46}</string>
-			<string key="greenButton.png">{65, 30}</string>
-			<string key="greyButton.png">{65, 30}</string>
+			<string key="greenButton.png">{65, 31}</string>
+			<string key="greyButton.png">{65, 31}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
