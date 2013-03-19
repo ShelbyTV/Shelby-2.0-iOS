@@ -140,8 +140,15 @@
     // TODO - Uncomment for AppStore
 //    [[Panhandler sharedInstance] recordEvent];
     
+    // Load AVPlayerAsset and AVPlayerItem with mp4 URL
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
+    
+    // Observer keypaths for buffer states on AVPlayerItem
+    [playerItem addObserver:self forKeyPath:kShelbySPVideoBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
+    [playerItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
+    
+    // Instantiate AVPlayer
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
     
     // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
@@ -151,6 +158,7 @@
     self.playerLayer.bounds = modifiedFrame;
     [self.view.layer addSublayer:_playerLayer];
     
+
     /*
      
      If video was previously extracted, 
@@ -217,11 +225,11 @@
     }
 
     // Stop animating indicator here (placing it here compensates for the extra ~ 1 second it takes to load the video into AVPlayer)
-    if ( [self.indicator isAnimating] ) {
-        [self.indicator stopAnimating];
-        [self.indicator removeFromSuperview];
-    }
-    
+//    if ( [self.indicator isAnimating] ) {
+//        [self.indicator stopAnimating];
+//        [self.indicator removeFromSuperview];
+//    }
+//    
 }
 
 #pragma mark - Video Storage Methods (Public)
@@ -563,6 +571,32 @@
     }    
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ( ![self player] ) {
+    
+        return;
+    
+    } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferEmpty] ) {
+   
+        if ( [self.player currentItem].playbackBufferEmpty) { // Buffer is Empty
+        
+            [self setupIndicator];
+    
+        }
+   
+    } else if (object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferLikelyToKeepUp]) {
+        
+        if ( [self.player currentItem].playbackLikelyToKeepUp ) { // Playback will resume
+        
+            // Stop animating indicator
+            if ( [self.indicator isAnimating] ) {
+                [self.indicator stopAnimating];
+                [self.indicator removeFromSuperview];
+            }
+        }
+    }
+}
 
 #pragma mark - UIResponder Methods
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
