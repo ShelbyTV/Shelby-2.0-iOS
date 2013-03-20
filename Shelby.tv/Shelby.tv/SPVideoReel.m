@@ -51,7 +51,7 @@
 - (void)storeIdentifierOfCurrentVideoInStream;
 
 /// Update Methods
-- (void)E:(NSUInteger)position;
+- (void)currentVideoDidChangeToVideo:(NSUInteger)position;
 - (void)updatePlaybackUI;
 - (void)queueMoreVideos:(NSUInteger)position;
 - (void)fetchOlderVideos:(NSUInteger)position;
