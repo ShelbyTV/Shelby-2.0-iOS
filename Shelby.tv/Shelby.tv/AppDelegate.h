@@ -14,6 +14,7 @@
 @property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, readonly) NSManagedObjectContext *context;
+@property (strong) NSMutableArray *dataUtilities;
 
 /// Authentication Methods
 - (void)userIsAuthorized;

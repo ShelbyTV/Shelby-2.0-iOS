@@ -72,9 +72,18 @@
                                                      name:NSManagedObjectContextDidSaveNotification
                                                    object:_context];
         
+        NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
+        [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] addObject:hash];
+        
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
+    [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] removeObject:hash];
 }
 
 #pragma mark - Persistance Methods (Public)

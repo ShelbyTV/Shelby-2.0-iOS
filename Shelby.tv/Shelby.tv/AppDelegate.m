@@ -62,12 +62,15 @@
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    self.dataUtilities = [@[] mutableCopy];
+    
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     BrowseViewController *pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
     self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
-
+    
     // Crash reporting and user monitoring analytics
     [self setupAnalytics];
     
@@ -257,12 +260,13 @@
 
 - (void)setupObservers
 {
-    
     // Add notification to dismiss categoryLoadingView if there's no connectivity
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didNotConnect:)
                                                  name:kShelbyNotificationNoConnectivity
                                                object:nil];
+
+    [self addObserver:self forKeyPath:@"dataUtilities" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)setupCategoryLoadingView
@@ -278,7 +282,6 @@
     [indicator setHidesWhenStopped:YES];
     [indicator startAnimating];
     [self.categoryLoadingView addSubview:indicator];
-
 }
 
 - (void)removeCategoryLoadingView
@@ -324,6 +327,15 @@
 {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ( object == self && [keyPath isEqualToString:@"dataUtilities"] ) {
+        
+        DLog(@"DataUtlities Count: %d", [self.dataUtilities count]);
+        
+    }
 }
 
 #pragma mark - API Methods (Private)
