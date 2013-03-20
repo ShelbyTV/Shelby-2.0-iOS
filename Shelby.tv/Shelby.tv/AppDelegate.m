@@ -39,7 +39,7 @@
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) NSDate *backgroundedDate;
 @property (nonatomic) id <GAITracker> googleTracker;
-@property (nonatomic) NSMutableArray *invocationMethods;
+@property (nonatomic) NSInvocation *invocationMethod;
 
 /// Setup Methods
 - (void)setupAnalytics;
@@ -65,7 +65,6 @@
 {
     
     self.dataUtilities = [@[] mutableCopy];
-    self.invocationMethods = [@[] mutableCopy];
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -90,6 +89,10 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    if (!self.dataUtilities) {
+        self.dataUtilities = [@[] mutableCopy];
+    }
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
         [ShelbyAPIClient getAllCategories];
     });
@@ -124,6 +127,8 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    [self setDataUtilities:nil];
+    [self setInvocationMethod:nil];
     
     // Store timestamp for when app was backgrounded
     if ( [[SPModel sharedInstance] videoReel] ) {
@@ -172,7 +177,7 @@
         [logoutInvocation setTarget:self];
         [logoutInvocation setSelector:@selector(logout)];
         
-        [self.invocationMethods addObject:logoutInvocation];
+        [self setInvocationMethod:logoutInvocation];
         return;
     }
     
@@ -351,10 +356,9 @@
         
         DLog(@"DataUtlities Count: %d", [self.dataUtilities count]);
         
-        if ([self.dataUtilities count] == 0  && [self.invocationMethods count] != 0) {
-            NSInvocation *invocationMethod = self.invocationMethods[0];
-            [invocationMethod invoke];
-            [self.invocationMethods removeObject:invocationMethod];
+        if ([self.dataUtilities count] == 0  && self.invocationMethod) {
+            [self.invocationMethod invoke];
+            [self setInvocationMethod:nil];
         }
     }
 }
