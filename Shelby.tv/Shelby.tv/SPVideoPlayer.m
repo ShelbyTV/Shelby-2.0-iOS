@@ -154,7 +154,6 @@
     [playerItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
     [playerItem addObserver:self forKeyPath:kShelbySPLoadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
     
-    
     // Instantiate AVPlayer
     self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
     
@@ -600,7 +599,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ( ![self player] ) {
+    if ( ![self.player currentItem] ) {
     
         return;
     
@@ -612,7 +611,7 @@
     
         }
    
-    } else if (object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferLikelyToKeepUp]) {
+    } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferLikelyToKeepUp]) {
         
         if ( [self.player currentItem].playbackLikelyToKeepUp ) { // Playback will resume
 
