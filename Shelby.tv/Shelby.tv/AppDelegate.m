@@ -362,7 +362,8 @@
         if (self.categoryLoadingView) {
             [self removeCategoryLoadingView];
 
-            [(BrowseViewController *)self.window.rootViewController resetView];
+            BrowseViewController *browseViewController = (BrowseViewController *)self.window.rootViewController;
+            [browseViewController performSelector:@selector(resetView) withObject:nil afterDelay:1];
         }
     });
 }
