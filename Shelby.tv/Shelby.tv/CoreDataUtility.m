@@ -83,7 +83,15 @@
 - (void)dealloc
 {
     NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
-    [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] removeObject:hash];
+    
+    if ( [self.appDelegate dataUtilities] && [self.appDelegate.dataUtilities count] ) {
+    
+        if ( [self.appDelegate.dataUtilities containsObject:hash] ) {
+         
+            [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] removeObject:hash];
+            
+        }
+    }
 }
 
 #pragma mark - Persistance Methods (Public)
