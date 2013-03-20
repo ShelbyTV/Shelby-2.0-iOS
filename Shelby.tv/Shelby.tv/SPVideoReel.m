@@ -229,6 +229,9 @@
 - (void)setupOverlayView
 {
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+    if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
+        return;
+    }
     self.model.overlayView = nib[0];
     self.overlayView = _model.overlayView;
     [self.overlayView.categoryTitleLabel setText:_groupTitle];
@@ -309,6 +312,10 @@
             Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+            if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
+                return;
+            }
+
             SPVideoItemView *itemView = nib[0];
             [itemView setTag:i];
         
@@ -978,7 +985,14 @@
             
             // videoListScrollView
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+            if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
+                return;
+            }
+
             SPVideoItemView *itemView = nib[0];
+            if (![itemView isKindOfClass:[UIView class]]) {
+                return;
+            }
             
             CGFloat itemViewWidth = [SPVideoItemView width];
             CGFloat itemViewHeight = [SPVideoItemView height];

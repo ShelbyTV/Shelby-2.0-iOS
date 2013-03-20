@@ -133,6 +133,10 @@
     
     // Instantiate rollView
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
+    if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
+        return;
+    }
+
     self.rollView = nib[0];
     
     // Reference videoFrame in current thread
