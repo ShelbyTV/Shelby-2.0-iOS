@@ -39,6 +39,7 @@
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) NSDate *backgroundedDate;
 @property (nonatomic) id <GAITracker> googleTracker;
+@property (nonatomic) NSMutableArray *invocationMethods;
 
 /// Setup Methods
 - (void)setupAnalytics;
@@ -64,6 +65,7 @@
 {
     
     self.dataUtilities = [@[] mutableCopy];
+    self.invocationMethods = [@[] mutableCopy];
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -162,6 +164,18 @@
 
 - (void)logout
 {
+    
+    if ([self.dataUtilities count] != 0) {
+        NSMethodSignature *logoutSignature = [AppDelegate instanceMethodSignatureForSelector:@selector(logout)];
+        NSInvocation *logoutInvocation = [NSInvocation invocationWithMethodSignature:logoutSignature];
+        
+        [logoutInvocation setTarget:self];
+        [logoutInvocation setSelector:@selector(logout)];
+        
+        [self.invocationMethods addObject:logoutInvocation];
+        return;
+    }
+    
     // Reset user state (Authorization NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserIsAdmin];
@@ -337,15 +351,11 @@
         
         DLog(@"DataUtlities Count: %d", [self.dataUtilities count]);
         
-        if ( [self.dataUtilities count] == 0 ) {
-            
-            
-            
-        } else {
-            
-            
+        if ([self.dataUtilities count] == 0  && [self.invocationMethods count] != 0) {
+            NSInvocation *invocationMethod = self.invocationMethods[0];
+            [invocationMethod invoke];
+            [self.invocationMethods removeObject:invocationMethod];
         }
-        
     }
 }
 
