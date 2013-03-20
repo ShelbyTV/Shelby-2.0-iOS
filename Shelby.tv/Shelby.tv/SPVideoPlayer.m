@@ -61,7 +61,7 @@
     
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
-    [self.player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
@@ -152,7 +152,7 @@
     // Observer keypaths for buffer states on AVPlayerItem
     [playerItem addObserver:self forKeyPath:kShelbySPVideoBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
     [playerItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
-    [playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
+    [playerItem addObserver:self forKeyPath:kShelbySPLoadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
     
     
     // Instantiate AVPlayer
@@ -623,7 +623,7 @@
             }
         }
         
-    } else if ( object == _player.currentItem && [keyPath isEqualToString:@"loadedTimeRanges"] ) {
+    } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPLoadedTimeRanges] ) {
      
         if ( self == [self.model currentVideoPlayer] ) {
          

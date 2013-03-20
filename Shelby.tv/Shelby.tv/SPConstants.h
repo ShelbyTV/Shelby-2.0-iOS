@@ -24,6 +24,7 @@
 /// SPVideoPlayer
 #define kShelbySPVideoBufferLikelyToKeepUp      @"playbackLikelyToKeepUp"
 #define kShelbySPVideoBufferEmpty               @"playbackBufferEmpty"
+#define kShelbySPLoadedTimeRanges               @"loadedTimeRanges"
 
 /// SPVideoReel
 #define kShelbySPCurrentVideo                   @"SP Current Video"
