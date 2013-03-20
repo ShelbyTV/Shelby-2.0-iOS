@@ -71,6 +71,36 @@
 }
 
 
+#pragma mark - Google Analytics (PUT)
++ (void)putGoogleAnalyticsClientID:(NSString *)clientID
+{
+    if (!clientID || [clientID isEqualToString:@""]) {
+        return;
+    }
+
+    NSDictionary *params = @{@"google_analytics_client_id" : clientID};
+    
+    NSURL *basURL = [NSURL URLWithString:kShelbyAPIBaseURL];
+
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    User *user = [dataUtility fetchUser];
+    NSString *userID = [user userID];
+    NSString *authToken = [user token];
+    
+    NSString *pathURL =[NSString stringWithFormat:kShelbyAPIPutGAClientId, userID, authToken];
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:basURL];
+    NSURLRequest *request = [httpClient requestWithMethod:@"PUT" path:pathURL parameters:params];
+ 
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        // Do nothing
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        DLog(@"%@", error);
+    }];
+    
+    [operation start];
+}
+
 #pragma mark - Stream (GET)
 + (void)getStream
 {

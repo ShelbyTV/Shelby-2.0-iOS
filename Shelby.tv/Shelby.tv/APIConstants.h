@@ -14,6 +14,9 @@
 /// POST Authorization
 #define kShelbyAPIPostLogin                 @"https://api.shelby.tv/v1/token?email=%@&password=%@"
 
+/// PUT Google Analytics Client ID
+#define kShelbyAPIPutGAClientId             @"v1/user/%@?auth_token=%@"
+
 /// GET Stream
 #define kShelbyAPIGetStream                 @"https://api.shelby.tv/v1/dashboard?auth_token=%@"
 #define kShelbyAPIGetMoreStream             @"https://api.shelby.tv/v1/dashboard?auth_token=%@&skip=%@&limit=20"

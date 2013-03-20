@@ -12,6 +12,9 @@
 + (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password;
 + (void)postSignupWithName:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password andEmail:(NSString *)email;
 
+/// Google Analytics
++ (void)putGoogleAnalyticsClientID:(NSString *)clientID;
+
 /// Stream
 + (void)getStream;
 + (void)getMoreFramesInStream:(NSString *)skipParam;

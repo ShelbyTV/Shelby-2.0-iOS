@@ -142,6 +142,9 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    // Send GA Identifier: clientId
+    [ShelbyAPIClient putGoogleAnalyticsClientID:[self.googleTracker clientId]];
+    
     // Sync/Send Logged-Out Likes to Web
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility syncLoggedOutLikes];
