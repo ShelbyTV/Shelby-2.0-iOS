@@ -625,11 +625,14 @@
         
     } else if ( object == _player.currentItem && [keyPath isEqualToString:@"loadedTimeRanges"] ) {
      
-        NSTimeInterval availableDuration = [self availableDuration];
-        NSTimeInterval duration = CMTimeGetSeconds([self duration]);
-        NSTimeInterval buffered = availableDuration/duration;
-        [self performSelectorOnMainThread:@selector(updateBufferView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
-        
+        if ( self == [self.model currentVideoPlayer] ) {
+         
+            NSTimeInterval availableDuration = [self availableDuration];
+            NSTimeInterval duration = CMTimeGetSeconds([self duration]);
+            NSTimeInterval buffered = availableDuration/duration;
+            [self performSelectorOnMainThread:@selector(updateBufferView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
+            
+        }
     }
 }
 

@@ -51,7 +51,7 @@
 - (void)storeIdentifierOfCurrentVideoInStream;
 
 /// Update Methods
-- (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+- (void)E:(NSUInteger)position;
 - (void)updatePlaybackUI;
 - (void)queueMoreVideos:(NSUInteger)position;
 - (void)fetchOlderVideos:(NSUInteger)position;
@@ -739,6 +739,8 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
 
+        [self.overlayView.bufferView setProgress:0.0f];
+        
         if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
             
             [self.model.currentVideoPlayer play];
@@ -748,15 +750,13 @@
                 [self.overlayView.restartPlaybackButton setHidden:NO];
                 [self.overlayView.playButton setEnabled:NO];
                 [self.overlayView.scrubber setEnabled:NO];
-                [self.overlayView.bufferView setHidden:YES];
-                [self.overlayView.shareButton setEnabled:YES]; //
+                [self.overlayView.shareButton setEnabled:YES]; 
                 
             } else { // Playable video DID NOT finish playing
                 
                 [self.overlayView.restartPlaybackButton setHidden:YES];
                 [self.overlayView.playButton setEnabled:YES];
                 [self.overlayView.scrubber setEnabled:YES];
-                [self.overlayView.bufferView setHidden:NO];
                 [self.overlayView.shareButton setEnabled:YES];
                 
             }
@@ -766,7 +766,6 @@
             [self.overlayView.restartPlaybackButton setHidden:YES];
             [self.overlayView.playButton setEnabled:NO];
             [self.overlayView.scrubber setEnabled:NO];
-            [self.overlayView.bufferView setHidden:YES];
             [self.overlayView.shareButton setEnabled:NO];
             
             [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
