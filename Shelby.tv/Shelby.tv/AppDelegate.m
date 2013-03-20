@@ -136,6 +136,8 @@
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility removeAllVideoExtractionURLReferences];
+    
+    [self removeObserver:self forKeyPath:@"dataUtilities"];
 }
 
 #pragma mark - Authentication Methods (Public)
@@ -334,6 +336,15 @@
     if ( object == self && [keyPath isEqualToString:@"dataUtilities"] ) {
         
         DLog(@"DataUtlities Count: %d", [self.dataUtilities count]);
+        
+        if ( [self.dataUtilities count] == 0 ) {
+            
+            
+            
+        } else {
+            
+            
+        }
         
     }
 }
