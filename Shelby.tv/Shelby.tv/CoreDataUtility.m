@@ -52,6 +52,7 @@
 /// Helper methods
 - (BOOL)isSupportedProvider:(Frame *)frame;
 - (BOOL)isUnplayableVideo:(Video *)video;
+- (void)removeStoredHash;
 
 @end
 
@@ -78,20 +79,6 @@
     }
     
     return self;
-}
-
-- (void)dealloc
-{
-    NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
-    
-    if ( [self.appDelegate dataUtilities] && [self.appDelegate.dataUtilities count] ) {
-    
-        if ( [self.appDelegate.dataUtilities containsObject:hash] ) {
-         
-            [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] removeObject:hash];
-            
-        }
-    }
 }
 
 #pragma mark - Persistance Methods (Public)
@@ -201,6 +188,8 @@
                     break;
             }
         }
+        
+        [self removeStoredHash];
     }
 }
 
@@ -250,6 +239,8 @@
             
         }
     }
+    
+    [self removeStoredHash];
 }
 
 - (void)removeAllVideoExtractionURLReferences
@@ -273,7 +264,8 @@
     }
     
     DLog(@"All video extractedURLs removed");
-
+    
+    [self removeStoredHash];
 }
 
 #pragma mark - Storage Methods (Public)
@@ -559,6 +551,8 @@
     // Execute request that returns array of Stream entries
     NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
     
+    [self removeStoredHash];
+    
     return [streamEntries count];
 }
 
@@ -579,6 +573,8 @@
     
     // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    [self removeStoredHash];
     
     return [frameResults count];
 }
@@ -601,6 +597,8 @@
     // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
     
+    [self removeStoredHash];
+    
     return [frameResults count];
 }
 
@@ -621,6 +619,8 @@
     // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
     
+    [self removeStoredHash];
+    
     return [frameResults count];
 }
 
@@ -640,6 +640,8 @@
     
     // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
+    
+    [self removeStoredHash];
     
     return [frameResults count];
 }
@@ -670,6 +672,8 @@
     
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    [self removeStoredHash];
     
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
@@ -704,6 +708,8 @@
     
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    [self removeStoredHash];
     
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
@@ -749,6 +755,8 @@
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
     
+    [self removeStoredHash];
+    
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
@@ -793,6 +801,8 @@
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
     
+    [self removeStoredHash];
+    
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
@@ -827,6 +837,8 @@
     
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    [self removeStoredHash];
     
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
@@ -864,6 +876,8 @@
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
     
+    [self removeStoredHash];
+    
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
@@ -896,6 +910,8 @@
     
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    [self removeStoredHash];
     
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
@@ -931,6 +947,8 @@
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
     
+    [self removeStoredHash];
+    
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
@@ -963,6 +981,8 @@
     
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    [self removeStoredHash];
     
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
@@ -998,6 +1018,8 @@
     // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
     BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
     
+    [self removeStoredHash];
+    
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
@@ -1031,6 +1053,7 @@
         messageText = message.text;
     }
 
+    [self removeStoredHash];
     
     return messageText.length ? messageText : @"No information available";
 }
@@ -1085,8 +1108,9 @@
     NSSortDescriptor *displayTagSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayTag" ascending:YES];
     [categoriesArray sortUsingDescriptors:[NSArray arrayWithObject:displayTagSortDescriptor]];
 
-    return categoriesArray;
+    [self removeStoredHash];
     
+    return categoriesArray;
 }
 
 #pragma mark - Sync Methods (Public)
@@ -1490,6 +1514,8 @@
             [ShelbyAPIClient getCategoryRoll:rollID];
         }
     }
+    
+    [self removeStoredHash];
 }
 
 - (void)storeCategoryChannels:(NSArray *)channelsArray withInitialTag:(NSUInteger)displayTag
@@ -1523,6 +1549,8 @@
 
         }
     }
+    
+    [self removeStoredHash];
 }
 
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary
@@ -1758,6 +1786,20 @@
     }
 
     return NO;
+}
+
+- (void)removeStoredHash
+{
+    NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
+    
+    if ( [self.appDelegate dataUtilities] && [self.appDelegate.dataUtilities count] ) {
+        
+        if ( [self.appDelegate.dataUtilities containsObject:hash] ) {
+            
+            [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] removeObject:hash];
+            
+        }
+    }
 }
 
 #pragma mark - Fetching Methods (Private)
