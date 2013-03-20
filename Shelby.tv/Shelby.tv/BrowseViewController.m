@@ -227,12 +227,9 @@
 
         if (row == 0) {
         
-            [cell enableCard:YES];
-            
-            title = @"Likes";
-            description = @"Add videos to your likes so you can come back to them and watch them in Shelby at a later time.";
-            buttonImageName = @"likesCard";
-            
+            title = @"Stream";
+            description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
+            buttonImageName = @"streamCard";
         
         } else if (row == 2) {
             
@@ -240,9 +237,11 @@
         
         } else if (row == 1) {
     
-            title = @"Stream";
-            description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
-            buttonImageName = @"streamCard";
+            [cell enableCard:YES];
+            
+            title = @"Likes";
+            description = @"Add videos to your likes so you can come back to them and watch them in Shelby at a later time.";
+            buttonImageName = @"likesCard";
         
         } else if (row == 3) {
             
@@ -325,17 +324,17 @@
                 
             case 0: {
                 
-                [self launchPlayer:GroupType_Likes fromCell:cell];
-                
-            } break;
-                
-            case 1: { // Stream
-                
                 if ( [self isLoggedIn] ) {
                     
                     [self launchPlayer:GroupType_Stream fromCell:cell];
                     
                 }
+                
+            } break;
+                
+            case 1: { // Stream
+                
+                [self launchPlayer:GroupType_Likes fromCell:cell];
                 
             } break;
                 
