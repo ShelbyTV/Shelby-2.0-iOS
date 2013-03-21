@@ -91,7 +91,7 @@
         
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:kGAICategoryBrowse
-                                   withAction:[NSString stringWithFormat:@"User did launch playlist - %@", _groupTitle]
+                                   withAction:@"User did launch playlist"
                                     withLabel:_groupTitle
                                     withValue:nil];
         
