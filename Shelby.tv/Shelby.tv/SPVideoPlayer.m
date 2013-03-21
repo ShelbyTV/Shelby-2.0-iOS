@@ -424,9 +424,8 @@
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *objectID = [self.videoFrame objectID];
         Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-        NSDictionary *elapsedTimeDictionary = (__bridge NSDictionary *)(CMTimeCopyAsDictionary([self elapsedTime], kCFAllocatorDefault));
+        NSDictionary *elapsedTimeDictionary = (__bridge_transfer NSDictionary *)(CMTimeCopyAsDictionary([self elapsedTime], kCFAllocatorDefault));
         [videoFrame.video setElapsedTime:elapsedTimeDictionary];
-        CFRelease((__bridge CFDictionaryRef)elapsedTimeDictionary);
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
         [dataUtility saveContext:context];
         
