@@ -27,6 +27,8 @@
     #define HOCKEY_LIVE                     @"67c862299d06ff9d891434abb89da906"
 #endif
 
+NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
+
 @interface AppDelegate(HockeyProtocols) <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
 @end
 
@@ -37,7 +39,6 @@
 @property (nonatomic) UIView *categoryLoadingView;
 @property (nonatomic) NSMutableArray *videoDownloaders;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
-@property (nonatomic) NSDate *backgroundedDate;
 @property (nonatomic) id <GAITracker> googleTracker;
 @property (nonatomic) NSInvocation *invocationMethod;
 
@@ -89,6 +90,25 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    NSDate *lastActiveDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastActiveDate];
+    if (lastActiveDate && [lastActiveDate isKindOfClass:[NSDate class]]) {
+        
+        NSTimeInterval interval = fabs([lastActiveDate timeIntervalSinceNow]);
+        
+        // Remove SPVideoReel if more than 5 minutes (300 seconds) have elapsed since app went to background
+        if (interval >= 300) {
+            if ([[SPModel sharedInstance] videoReel]) {
+                [[[SPModel sharedInstance] videoReel] homeButtonAction:self];
+            }
+        }
+        
+        // Remove invocationMethod and any pending dataUtilities if app was in background for more than a minute
+        if (interval > 60) {
+            [self setDataUtilities:nil];
+            [self setInvocationMethod:nil];
+        }
+    }
+    
     if (!self.dataUtilities) {
         self.dataUtilities = [@[] mutableCopy];
     }
@@ -111,32 +131,15 @@
         [self pingAllRoutes];
         
     }
-    
-    // Remove SPVideoReel if more than 5 minutes (300 seconds) have elapsed since app's shutdown
-    if ( _backgroundedDate ) {
-        
-        NSTimeInterval interval = fabs([self.backgroundedDate timeIntervalSinceNow]);
-        
-        if ( interval >= 300 ) {
-            
-            [[[SPModel sharedInstance] videoReel] homeButtonAction:self];
-            self.backgroundedDate = nil;
-        }
-    }
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
+- (void)applicationWillResignActive:(UIApplication *)application
 {
-    [self setDataUtilities:nil];
-    [self setInvocationMethod:nil];
-    
-    // Store timestamp for when app was backgrounded
-    if ( [[SPModel sharedInstance] videoReel] ) {
-        
-        self.backgroundedDate = [NSDate date];
-        
-    }
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyLastActiveDate];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+  
 }
+
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
