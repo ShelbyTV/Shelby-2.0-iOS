@@ -87,8 +87,6 @@
 
     if ( context ) {
         
-        [self removeStoredHash];
-        
         NSError *error = nil;
         
         if( ![context save:&error] ) { // Error
@@ -191,6 +189,8 @@
             }
         }
     }
+    
+    [self removeStoredHash];
 }
 
 - (void)removeOlderVideoFramesForGroupType:(GroupType)groupType andCategoryID:(NSString *)categoryID
@@ -532,6 +532,8 @@
     
     // Execute request that returns array of Users
     NSArray *resultsArray = [self.context executeFetchRequest:request error:nil];
+    
+    [self removeStoredHash];
     
     return resultsArray[0];
 }
