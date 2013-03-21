@@ -87,6 +87,8 @@
 
     if ( context ) {
         
+        [self removeStoredHash];
+        
         NSError *error = nil;
         
         if( ![context save:&error] ) { // Error
@@ -188,8 +190,6 @@
                     break;
             }
         }
-        
-        [self removeStoredHash];
     }
 }
 
@@ -239,8 +239,6 @@
             
         }
     }
-    
-    [self removeStoredHash];
 }
 
 - (void)removeAllVideoExtractionURLReferences
@@ -259,13 +257,13 @@
     for (NSUInteger i = 0; i < [entries count]; ++i ) {
         
         Video *video = (Video *)[entries objectAtIndex:i];
-        [video setExtractedURL:[NSString coreDataNullTest:nil]];
+        [video setExtractedURL:nil];
         
     }
     
     DLog(@"All video extractedURLs removed");
     
-    [self removeStoredHash];
+    [self saveContext:_context];
 }
 
 #pragma mark - Storage Methods (Public)
