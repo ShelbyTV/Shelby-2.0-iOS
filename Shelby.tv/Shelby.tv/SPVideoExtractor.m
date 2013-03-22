@@ -26,7 +26,7 @@
 - (void)loadVimeoVideo:(Video *)video;
 - (void)loadDailyMotionVideo:(Video *)video;
 - (void)processNotification:(NSNotification *)notification;
-- (void)timerExpired;
+- (void)timerExpired:(NSTimer *)timer;
 
 @end
 
@@ -103,7 +103,7 @@
             
         }
 
-        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:15.0f target:self selector:@selector(timerExpired) userInfo:nil repeats:NO];
+        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:15.0f target:self selector:@selector(timerExpired:) userInfo:[video videoID] repeats:NO];
         
     }
 }
@@ -233,7 +233,7 @@
     }
 }
 
-- (void)timerExpired
+- (void)timerExpired:(NSTimer *)timer
 {
     
     if ( [self.videoQueue count] ) {
@@ -261,7 +261,7 @@
     [self destroyWebView];
 
     // Scroll to next video, which subsequently queues the next video for extraction
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPLoadVideoAfterUnplayableVideo object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPLoadVideoAfterUnplayableVideo object:[timer userInfo]];
     
     
 }

@@ -1047,24 +1047,19 @@
     NSUInteger position = _model.currentVideo + 1;
 
     if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
+        NSString *skippedVideoID = [notification object];
         
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
-        NSManagedObjectID *storedVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
         Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
-        Frame *storedVideoFrame = (Frame *)[context existingObjectWithID:storedVideoFrameObjectID error:nil];
-        
-        if ( [currentVideoFrame.frameID isEqualToString:storedVideoFrame.frameID] ) { // Load AND scroll to next video if current video is in focus
-            
+        NSString *currentVideoID = [currentVideoFrame videoID];
+        if ([skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
             CGFloat videoX = 1024 * position;
             CGFloat videoY = _videoScrollView.contentOffset.y;
             [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
             [self currentVideoDidChangeToVideo:position];
-            
         } else { // Load next video, (but do not scroll)
-            
             [self extractVideoForVideoPlayer:position];
-            
         }
     }
 }
