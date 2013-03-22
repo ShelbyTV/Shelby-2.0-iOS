@@ -1056,7 +1056,7 @@
         NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
         Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
         NSString *currentVideoID = [currentVideoFrame videoID];
-        if ([skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
+        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
             CGFloat videoX = 1024 * position;
             CGFloat videoY = _videoScrollView.contentOffset.y;
             [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];

@@ -256,13 +256,13 @@
     }
 
     [self setIsExtracting:NO];
-    [self.nextExtractionTimer invalidate];
-    [self.currentExtractionTimer invalidate];
-    [self destroyWebView];
 
     // Scroll to next video, which subsequently queues the next video for extraction
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPLoadVideoAfterUnplayableVideo object:[timer userInfo]];
-    
+
+    [self.nextExtractionTimer invalidate];
+    [self.currentExtractionTimer invalidate];
+    [self destroyWebView];
     
 }
 
