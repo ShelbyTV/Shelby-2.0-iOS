@@ -202,7 +202,7 @@
                     NSString *extractedURL = [value performSelector:pathSelector];
                     
                     [self.currentExtractionTimer invalidate];
-                    
+                    [self setCurrentExtractionTimer:nil];
                     if ( 0 == [self.videoQueue count] ) {
                         
                         // Do nothing if the HOME button is pushed in SPVideoReel while a video was being processed.

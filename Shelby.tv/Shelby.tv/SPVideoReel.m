@@ -1048,6 +1048,9 @@
 
     if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
         NSString *skippedVideoID = [notification object];
+        if (![skippedVideoID isKindOfClass:[NSString class]]) {
+            skippedVideoID = nil;
+        }
         
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
