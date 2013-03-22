@@ -1056,6 +1056,9 @@
         
         if ( [currentVideoFrame.frameID isEqualToString:storedVideoFrame.frameID] ) { // Load AND scroll to next video if current video is in focus
             
+            CGFloat videoX = 1024 * position;
+            CGFloat videoY = _videoScrollView.contentOffset.y;
+            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
             [self currentVideoDidChangeToVideo:position];
             
         } else { // Load next video, (but do not scroll)
