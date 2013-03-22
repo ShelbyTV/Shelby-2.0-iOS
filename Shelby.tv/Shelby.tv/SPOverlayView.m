@@ -44,6 +44,7 @@
     
     // Customize Images
     [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
+    [self.scrubber setMinimumTrackImage:[[UIImage imageNamed:@"scrubberBarGreen"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
     
     // Customize Fonts
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
