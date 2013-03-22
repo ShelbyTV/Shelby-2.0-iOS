@@ -207,7 +207,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(currentVideoDidFinishPlayback)
+                                             selector:@selector(scrollToNextVideoAfterUnplayableVideo:)
                                                  name:kShelbySPLoadVideoAfterUnplayableVideo
                                                object:nil];
     
