@@ -1045,10 +1045,16 @@
     
     // Position after unloadable video (e.g., next video's position)
     NSUInteger position = _model.currentVideo + 1;
-    
+
     if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
         
-        if ( self.model.currentVideoPlayer.videoFrame == [self.videoFrames objectAtIndex:_model.currentVideo]) { // Load AND scroll to nextvideo
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
+        NSManagedObjectID *storedVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
+        Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
+        Frame *storedVideoFrame = (Frame *)[context existingObjectWithID:storedVideoFrameObjectID error:nil];
+        
+        if ( [currentVideoFrame.frameID isEqualToString:storedVideoFrame.frameID] ) { // Load AND scroll to next video if current video is in focus
             
             [self currentVideoDidChangeToVideo:position];
             
