@@ -41,6 +41,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) id <GAITracker> googleTracker;
 @property (nonatomic) NSInvocation *invocationMethod;
+@property (assign, nonatomic) BOOL persistentStoreSavedOnInitialReference;
 
 /// Setup Methods
 - (void)setupAnalytics;
@@ -461,12 +462,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
             DLog(@"Could not save changes to Core Data. Error: %@, %@", error, [error userInfo]);
         }
     }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_InitialSave];
-        [dataUtility saveContext:[self context]];
-    });
-    
+
     return _persistentStoreCoordinator;
 }
 - (NSManagedObjectContext *)context;
@@ -474,6 +470,17 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     // Initialize persistantStoreCoordinator
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    
+    if ( ![self persistentStoreSavedOnInitialReference] ) {
+
+        self.persistentStoreSavedOnInitialReference = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_InitialSave];
+            [dataUtility saveContext:[self context]];
+        });
+        
+    }
+
     
     NSManagedObjectContext *context;
     if ( [NSThread isMainThread] ) {
