@@ -54,7 +54,10 @@
             self.videoQueue = [@[] mutableCopy];
         }
         
-        [self.videoQueue addObject:video];
+        if (video) {
+            [self.videoQueue addObject:video];
+        }
+        
         [self extractNextVideoFromQueue];
         
     }

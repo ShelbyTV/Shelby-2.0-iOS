@@ -282,6 +282,10 @@
     NSManagedObjectID *objectID = [self.videoFrame objectID];
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
+    if (!self.videoFrame || ![self.videoFrame isKindOfClass:[Frame class]]) {
+        return;
+    }
+    
     if ( [self.videoInformation valueForKey:kShelbySPVideoPlayerExtractedURL] ) { // If video has already been extracted, but dropped due to memory contraints, load it again.
         
         NSDate *storedDate = [self.videoInformation valueForKey:kShelbySPVideoPlayerStoredDate];
