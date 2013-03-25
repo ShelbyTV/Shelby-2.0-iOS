@@ -111,6 +111,12 @@
         } else { // Success
             
             switch ( _requestType ) {
+                  
+                case DataRequestType_InitialSave: {
+                    
+                    DLog(@"Persistent Store Saved!");
+                    
+                }
                     
                 case DataRequestType_Fetch: {
                     

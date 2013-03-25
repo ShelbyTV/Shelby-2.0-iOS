@@ -462,6 +462,11 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
         }
     }
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_InitialSave];
+        [dataUtility saveContext:[self context]];
+    });
+    
     return _persistentStoreCoordinator;
 }
 - (NSManagedObjectContext *)context;

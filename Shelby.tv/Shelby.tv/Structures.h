@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, APIRequestType)
 typedef NS_ENUM(NSUInteger, DataRequestType)
 {
     
+    DataRequestType_InitialSave,        // Use only when creating initial reference to NSPersistentStore instance
     DataRequestType_Fetch,              // Fetch NSManagedObjects or NSManagedObjectContext
     DataRequestType_StoreUserForLogin,  // Store User if user did login with existing account
     DataRequestType_StoreUserForSignUp, // Store User if user did sign up for new account
