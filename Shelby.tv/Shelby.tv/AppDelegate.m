@@ -211,7 +211,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     // Refetch Categories, since core-data store was dumped
     [ShelbyAPIClient getAllCategories];
 }
-XX
+
 #pragma mark - Offline Methods (Public)
 - (void)downloadVideo:(Video *)video
 {
