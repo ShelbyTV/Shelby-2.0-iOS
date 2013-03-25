@@ -41,9 +41,9 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) id <GAITracker> googleTracker;
 @property (nonatomic) NSInvocation *invocationMethod;
-@property (assign, nonatomic) BOOL persistentStoreSavedOnInitialReference;
 
 /// Setup Methods
+- (void)setupInitialSettings;
 - (void)setupAnalytics;
 - (void)setupObservers;
 - (void)setupCategoryLoadingView;
@@ -66,7 +66,8 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    self.dataUtilities = [@[] mutableCopy];
+    // Initial Conditions
+    [self setupInitialSettings];
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -250,6 +251,17 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 }
 
 #pragma mark - Setup Methods (Private)
+- (void)setupInitialSettings
+{
+    self.dataUtilities = [@[] mutableCopy];
+    
+    static dispatch_once_t coordinatorToken = 0;
+    dispatch_once(&coordinatorToken, ^{
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_InitialSave];
+        [dataUtility saveContext:[self context]];
+    });
+}
+
 - (void)setupAnalytics
 {
     
@@ -470,17 +482,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     // Initialize persistantStoreCoordinator
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    
-    if ( ![self persistentStoreSavedOnInitialReference] ) {
-
-        self.persistentStoreSavedOnInitialReference = YES;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_InitialSave];
-            [dataUtility saveContext:[self context]];
-        });
-        
-    }
-
     
     NSManagedObjectContext *context;
     if ( [NSThread isMainThread] ) {
