@@ -616,12 +616,13 @@
    
     } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferLikelyToKeepUp]) {
         
-        if ( [self.player currentItem].playbackLikelyToKeepUp ) { // Playback will resume
+        if ( [self.player currentItem].playbackLikelyToKeepUp && self == [self.model currentVideoPlayer] ) { // Playback will resume
 
             // Stop animating indicator
             if ( [self.indicator isAnimating] ) {
                 [self.indicator stopAnimating];
                 [self.indicator removeFromSuperview];
+                [self play];
             }
         }
         
