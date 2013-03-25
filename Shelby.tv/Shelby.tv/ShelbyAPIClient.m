@@ -567,6 +567,8 @@
         // Post to Roll and Social Networks
         DLog(@"Successfully posted frame to roll and networks");
         
+        [ShelbyAPIClient getPersonalRoll];
+        
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem rolling frame to roll and networks: %@", requestString);
