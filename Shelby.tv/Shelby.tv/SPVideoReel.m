@@ -298,7 +298,7 @@
 
     CGFloat itemViewWidth = [SPVideoItemView width];
     CGFloat itemViewHeight = [SPVideoItemView height];
-    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_model.numberOfVideos, itemViewHeight+20.0f);
+    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_model.numberOfVideos, itemViewHeight);
     self.overlayView.videoListScrollView.delegate = self;
     
     dispatch_group_t group = dispatch_group_create();
@@ -364,11 +364,11 @@
                 [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
                 
             }
-       
+           
+            [self.model.overlayView.videoListScrollView flashScrollIndicators];
+        
         });
-            
     });
-    
 }
 
 - (void)setupAirPlay
@@ -745,7 +745,7 @@
 {
     
     dispatch_async(dispatch_get_main_queue(), ^{
-
+        
         [self.overlayView.bufferView setProgress:0.0f];
         
         if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
@@ -1130,6 +1130,15 @@
 }
 
 #pragma mark - UIScrollViewDelegate Methods
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if ( scrollView == _model.overlayView.videoListScrollView ) {
+        
+        [scrollView flashScrollIndicators];
+        
+    }
+}
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     
