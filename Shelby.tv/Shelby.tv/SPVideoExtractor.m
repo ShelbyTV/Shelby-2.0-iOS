@@ -113,7 +113,7 @@
 
 - (void)createWebView
 {
-    CGRect frame = CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f);
+    CGRect frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight);
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(frame.size.width/2.0f, frame.size.height/2.0f, 2.0f, 2.0f)];
     self.webView.allowsInlineMediaPlayback = YES;
     self.webView.mediaPlaybackRequiresUserAction = NO;

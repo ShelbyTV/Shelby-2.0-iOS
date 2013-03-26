@@ -30,3 +30,6 @@
 #define kShelbySPCurrentVideo                   @"SP Current Video"
 #define kShelbySPCurrentVideoStreamID           @"SP Current Video in Stream"
 
+/// Video Player Size
+#define kShelbySPVideoWidth                     [[UIScreen mainScreen] bounds].size.height
+#define kShelbySPVideoHeight                    [[UIScreen mainScreen] bounds].size.width

@@ -124,7 +124,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view setFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
+    [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
 }
@@ -216,7 +216,7 @@
 - (void)setupVideoScrollView
 {
     self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.videoScrollView.contentSize = CGSizeMake(1024.0f*_model.numberOfVideos, 748.0f);
+    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * _model.numberOfVideos, kShelbySPVideoHeight - 20);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;
     self.videoScrollView.showsHorizontalScrollIndicator = NO;
@@ -466,7 +466,7 @@
 - (void)currentVideoDidFinishPlayback
 {
     NSUInteger position = _model.currentVideo + 1;
-    CGFloat x = position * 1024.0f;
+    CGFloat x = position * kShelbySPVideoWidth;
     CGFloat y = _videoScrollView.contentOffset.y;
     
     if ( position <= (_model.numberOfVideos-1) ) {
@@ -519,7 +519,7 @@
     
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (videoCapture) {
-                    CGSize videoSize = CGSizeMake(1024, 768);
+                    CGSize videoSize = CGSizeMake(kShelbySPVideoWidth, kShelbySPVideoHeight);
                     self.playerScreenshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, videoSize.width, videoSize.height)];
                     self.playerScreenshot.backgroundColor = [UIColor blackColor];
                     [self.playerScreenshot setContentMode:UIViewContentModeScaleAspectFit];
@@ -600,7 +600,7 @@
     NSUInteger position = itemView.tag;
     
     // Force scroll videoScrollView
-    CGFloat videoX = 1024 * position;
+    CGFloat videoX = kShelbySPVideoWidth * position;
     CGFloat videoY = _videoScrollView.contentOffset.y;
     
     if ( position < _model.numberOfVideos ) {
@@ -1018,7 +1018,7 @@
                 Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
                 
                 // Update scrollViews
-                self.videoScrollView.contentSize = CGSizeMake(1024.0f*(i+1), 768.0f);
+                self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
                 [self.videoPlayers addObject:player];
                 [self.videoScrollView addSubview:player.view];
                 [self.videoScrollView setNeedsDisplay];
@@ -1057,7 +1057,7 @@
         Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
         NSString *currentVideoID = [currentVideoFrame videoID];
         if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
-            CGFloat videoX = 1024 * position;
+            CGFloat videoX = kShelbySPVideoWidth * position;
             CGFloat videoY = _videoScrollView.contentOffset.y;
             [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
             [self currentVideoDidChangeToVideo:position];

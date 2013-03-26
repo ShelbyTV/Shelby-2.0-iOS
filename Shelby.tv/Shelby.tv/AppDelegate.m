@@ -302,7 +302,15 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 
 - (void)setupCategoryLoadingView
 {
-    self.categoryLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 1024.0f, 768.0f)];
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    float height = kShelbyFullscreenHeight;
+    float width = kShelbyFullscreenWidth;
+    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+        height = kShelbyFullscreenWidth;
+        width = kShelbyFullscreenHeight;
+    }
+
+    self.categoryLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width, height)];
     [self.categoryLoadingView setBackgroundColor:[UIColor clearColor]];
     [self.categoryLoadingView setUserInteractionEnabled:YES];
     [self.window.rootViewController.view addSubview:_categoryLoadingView];

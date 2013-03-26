@@ -34,3 +34,7 @@
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
 #define kShelbyColorGreen                                   [UIColor colorWithHex:@"6fbe47" andAlpha:1.0f]
 #define kShelbyColorWhite                                   [UIColor colorWithHex:@"eee" andAlpha:1.0f]
+
+/// Size
+#define  kShelbyFullscreenWidth                             [[UIScreen mainScreen] bounds].size.width
+#define  kShelbyFullscreenHeight                            [[UIScreen mainScreen] bounds].size.height
