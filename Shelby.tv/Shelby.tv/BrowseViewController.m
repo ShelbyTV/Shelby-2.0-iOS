@@ -160,12 +160,8 @@
 }
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
-{
-    NSUInteger width = self.collectionView.frame.size.width;
-    NSUInteger x = (width * page);
-    NSUInteger y = 0;
-    
-    [self.collectionView setContentOffset:CGPointMake(x, y) animated:animated];
+{    
+    [self.collectionView setContentOffset:[((CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout) pointAtPage:page] animated:animated];
 }
 
 - (void)resetVersionLabel

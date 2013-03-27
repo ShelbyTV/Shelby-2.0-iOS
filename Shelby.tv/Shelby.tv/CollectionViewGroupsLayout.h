@@ -15,5 +15,6 @@
 
 // Assuming 2 sections - Me and Channels
 - (int)numberOfPages;
+- (CGPoint)pointAtPage:(int)page;
 
 @end

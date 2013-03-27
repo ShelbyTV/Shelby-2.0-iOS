@@ -56,6 +56,12 @@
     return pages;
 }
 
+
+- (CGPoint)pointAtPage:(int)page
+{
+    return CGPointMake((kShelbyCollectionViewPageWidth * page), 0);
+}
+
 #pragma mark - Private Methods
 - (int)numberOfCells
 {
