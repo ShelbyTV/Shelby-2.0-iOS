@@ -151,6 +151,15 @@
     [self setupVideoListScrollView];
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape;
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
+}
+
 #pragma mark - Setup Methods
 - (void)setupVideoFrames:(NSMutableArray *)videoFrames
 {
@@ -228,7 +237,12 @@
 
 - (void)setupOverlayView
 {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+    NSArray *nib = nil;
+    if (DEVICE_IPAD) {
+        nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+    } else {
+        nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView-iPhone" owner:self options:nil];
+    }
     if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
         return;
     }

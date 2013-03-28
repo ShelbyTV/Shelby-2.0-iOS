@@ -126,6 +126,19 @@
 
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (DEVICE_IPAD) {
+        return UIInterfaceOrientationMaskLandscape;
+    } else {
+        return UIInterfaceOrientationPortrait;
+    }
+}
+
+-(BOOL) shouldAutorotate {
+    return NO;
+}
+
 #pragma mark - Public Methods
 - (void)resetView
 {
