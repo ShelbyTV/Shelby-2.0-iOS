@@ -39,10 +39,10 @@
 
 @property (assign, nonatomic) SecretMode secretMode;
 
-
 /// iPhone
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *userBarButton;
 - (IBAction)openCategory:(id)sender;
-- (IBAction)login:(id)sender;
+- (IBAction)userAction:(id)sender;
 
 - (void)fetchUserNickname;
 
@@ -61,6 +61,7 @@
 /// Authentication Methods
 - (void)loginAction;
 - (void)logoutAction;
+- (void)logout;
 
 /// Video Player Launch Methods
 - (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell;
@@ -161,6 +162,10 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         User *user = [dataUtility fetchUser];
         [self setUserNickname:[user nickname]];
+        
+        if (!DEVICE_IPAD) {
+            [self.userBarButton setTitle:self.userNickname];
+        }
     }
 }
 
@@ -489,15 +494,34 @@
 }
 
 
+- (void)logout
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate logout];
+    [self setIsLoggedIn:NO];
+    [self setUserNickname:nil];
+    [self resetVersionLabel];
+    if (!DEVICE_IPAD) {
+        [self.userBarButton setTitle:@"Login"];
+    }
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+}
+
 #pragma mark - iPhone
 - (IBAction)openCategory:(id)sender
 {
     [self launchPlayer:GroupType_CategoryChannel fromCell:nil withCategory:6];
 }
 
-- (IBAction)login:(id)sender
+- (IBAction)userAction:(id)sender
 {
-    [self loginAction];
+    if ([self isLoggedIn]) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"My Roll", @"My Likes", @"Logout", nil];
+        [actionSheet setDestructiveButtonIndex:2];
+        [actionSheet  showInView:self.view] ;//] showFromBarButtonItem:self.userBarButton animated:YES];
+    } else {
+        [self loginAction];
+    }
 }
 
 #pragma mark - Video Player Launch Methods (Private)
@@ -665,12 +689,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate logout];
-        [self setIsLoggedIn:NO];
-        [self setUserNickname:nil];
-        [self resetVersionLabel];
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+        [self logout];
     }
 }
 
@@ -683,5 +702,17 @@
     [self.collectionView reloadData];
 }
 
+
+#pragma mark - UIActionSheetDelegate methods
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self launchPlayer:GroupType_PersonalRoll fromCell:nil];
+    } else if (buttonIndex == 1) {
+        [self launchPlayer:GroupType_Likes fromCell:nil];
+    } else if (buttonIndex == 2) {
+        [self logout];
+    }
+}
 
 @end
