@@ -326,14 +326,17 @@
             
         }
     }];
-
-     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-    [self.sharePopOverController setDelegate:self];
-    [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                 inView:[self.model overlayView]
-                               permittedArrowDirections:UIPopoverArrowDirectionDown
-                                               animated:YES];
     
+    if (DEVICE_IPAD) {
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [self.sharePopOverController setDelegate:self];
+        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                     inView:[self.model overlayView]
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                   animated:YES];
+    } else {
+        [self.videoPlayer presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
 - (void)roll
