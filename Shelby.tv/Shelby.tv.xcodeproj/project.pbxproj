@@ -48,6 +48,9 @@
 		1C78E31E170472DE007CD93C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C78E31A170472DD007CD93C /* Icon@2x.png */; };
 		1C78E31F170472DE007CD93C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C78E31A170472DD007CD93C /* Icon@2x.png */; };
 		1C78E320170472DE007CD93C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C78E31A170472DD007CD93C /* Icon@2x.png */; };
+		1C78E32717047483007CD93C /* HomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C78E32617047483007CD93C /* HomeView.xib */; };
+		1C78E32817047483007CD93C /* HomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C78E32617047483007CD93C /* HomeView.xib */; };
+		1C78E32917047483007CD93C /* HomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C78E32617047483007CD93C /* HomeView.xib */; };
 		1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
 		1C7B8D4716F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
 		1C7B8D4816F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
@@ -591,6 +594,7 @@
 		1C78E31217047250007CD93C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		1C78E319170472DD007CD93C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		1C78E31A170472DD007CD93C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		1C78E32617047483007CD93C /* HomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeView.xib; sourceTree = "<group>"; };
 		1C7B8D4416F0F8590069F570 /* SignupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupView.h; sourceTree = "<group>"; };
 		1C7B8D4516F0F8590069F570 /* SignupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupView.m; sourceTree = "<group>"; };
 		1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationSignupView.png; sourceTree = "<group>"; };
@@ -923,6 +927,14 @@
 			);
 			name = "Assets-iPhone";
 			path = "../Assets-iPhone";
+			sourceTree = "<group>";
+		};
+		1C78E32117047405007CD93C /* Xibs-iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				1C78E32617047483007CD93C /* HomeView.xib */,
+			);
+			name = "Xibs-iPhone";
 			sourceTree = "<group>";
 		};
 		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
@@ -1435,6 +1447,7 @@
 			children = (
 				1CCCB54916CEEC9800C8C216 /* Layouts */,
 				8EF5C350162F41B00075C35F /* Xibs */,
+				1C78E32117047405007CD93C /* Xibs-iPhone */,
 				8E41EF2C16B0742400C831A4 /* BigButton.h */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
 				1CD72E9F16CD36CB0045B36F /* GroupViewCell.h */,
@@ -1698,6 +1711,7 @@
 				1C78E31717047250007CD93C /* Default-568h@2x.png in Resources */,
 				1C78E31C170472DE007CD93C /* Icon.png in Resources */,
 				1C78E31F170472DE007CD93C /* Icon@2x.png in Resources */,
+				1C78E32817047483007CD93C /* HomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1820,6 +1834,7 @@
 				1C78E31817047250007CD93C /* Default-568h@2x.png in Resources */,
 				1C78E31D170472DE007CD93C /* Icon.png in Resources */,
 				1C78E320170472DE007CD93C /* Icon@2x.png in Resources */,
+				1C78E32917047483007CD93C /* HomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1943,6 +1958,7 @@
 				1C78E31617047250007CD93C /* Default-568h@2x.png in Resources */,
 				1C78E31B170472DE007CD93C /* Icon.png in Resources */,
 				1C78E31E170472DE007CD93C /* Icon@2x.png in Resources */,
+				1C78E32717047483007CD93C /* HomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

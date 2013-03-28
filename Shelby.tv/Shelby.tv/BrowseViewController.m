@@ -40,6 +40,10 @@
 @property (assign, nonatomic) SecretMode secretMode;
 
 
+/// iPhone
+- (IBAction)openCategory:(id)sender;
+
+
 - (void)fetchUserNickname;
 
 // TODO: need to port from MeVC
@@ -461,7 +465,29 @@
 
 
 #pragma mark - Video Player Launch Methods (Private)
+#pragma mark - Video Player Launch Methods (Private)
 - (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell
+{
+    NSInteger categoryIndex = -1;
+    switch (groupType) {
+        case GroupType_CategoryChannel:
+        case GroupType_CategoryRoll:
+        {
+            categoryIndex = [self.collectionView indexPathForCell:cell].row;
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    
+    
+    [self launchPlayer:groupType fromCell:cell withCategory:categoryIndex];
+}
+
+
+- (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell withCategory:(NSInteger)categoryIndex
 {
    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -501,7 +527,6 @@
             case GroupType_CategoryChannel: {
                 
                 NSManagedObjectContext *context = [self context];
-                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                 NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                 Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
@@ -513,7 +538,6 @@
             case GroupType_CategoryRoll: {
                 
                 NSManagedObjectContext *context = [self context];
-                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                 NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryRoll:[roll rollID]];
@@ -532,14 +556,12 @@
                 
                 if ( groupType == GroupType_CategoryChannel ) { // Category Channel
                     
-                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[channel channelID]];
                     
                 } else if ( groupType == GroupType_CategoryRoll ) { // Category Roll
                     
-                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[roll rollID]];
@@ -550,8 +572,11 @@
                
                 }
 
-                [self presentViewController:reel fromCell:cell];
-                
+                if (DEVICE_IPAD) {
+                    [self presentViewController:reel fromCell:cell];
+                } else {
+                    
+                }
             } else {
                 
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"

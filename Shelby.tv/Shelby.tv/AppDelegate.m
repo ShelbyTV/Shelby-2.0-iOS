@@ -71,9 +71,17 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    BrowseViewController *pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
+
+    id pageViewController = nil;
+    if (DEVICE_IPAD) {
+        pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
+    } else {
+        pageViewController = [[BrowseViewController alloc] initWithNibName:@"HomeView" bundle:nil];
+    }
+
     self.window.rootViewController = pageViewController;
     [self.window makeKeyAndVisible];
+        
     
     // Crash reporting and user monitoring analytics
     [self setupAnalytics];
@@ -416,10 +424,10 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [(BrowseViewController *)self.window.rootViewController fetchAllCategories];
-
+        
         if (self.categoryLoadingView) {
             [self removeCategoryLoadingView];
-
+            
             BrowseViewController *browseViewController = (BrowseViewController *)self.window.rootViewController;
             [browseViewController performSelector:@selector(resetView) withObject:nil afterDelay:1];
         }
