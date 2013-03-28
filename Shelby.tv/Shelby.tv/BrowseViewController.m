@@ -464,6 +464,13 @@
 }
 
 
+#pragma mark - iPhone
+- (IBAction)openCategory:(id)sender
+{
+    [self launchPlayer:GroupType_CategoryChannel fromCell:nil withCategory:6];
+}
+
+
 #pragma mark - Video Player Launch Methods (Private)
 #pragma mark - Video Player Launch Methods (Private)
 - (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell
@@ -575,7 +582,8 @@
                 if (DEVICE_IPAD) {
                     [self presentViewController:reel fromCell:cell];
                 } else {
-                    
+                    [self presentViewController:reel animated:YES completion:nil];
+
                 }
             } else {
                 
