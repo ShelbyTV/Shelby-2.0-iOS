@@ -10,6 +10,7 @@
 
 // Views
 #import "GroupViewCell.h"
+#import "GroupTableViewCell.h"
 #import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
 #import "SignupView.h"
@@ -22,10 +23,17 @@
 // Utilities
 #import "ImageUtilities.h"
 
+typedef NS_ENUM(NSUInteger, AlertViewMode)
+{
+    AlertViewModeLogout,
+    AlertViewModeLogin
+};
+
 @interface BrowseViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet PageControl *pageControl;
 
 @property (strong, nonatomic) NSString *userNickname;
@@ -105,10 +113,16 @@
     [self setSecretMode:SecretMode_None];
     
     // Register Cell Nibs
-    UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
-    cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
+    if (DEVICE_IPAD) {
+        UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
+        [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
+        cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
+        [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
+    } else {
+        UINib *cellNib = [UINib nibWithNibName:@"GroupTableViewCell" bundle:nil];
+        [self.tableView registerNib:cellNib forCellReuseIdentifier:@"GroupTableViewCell"];
+        
+    }
     
     [self.pageControl setNumberOfPages:1];
 
@@ -489,7 +503,7 @@
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Logout", nil];
- 	
+ 	[alertView setTag:AlertViewModeLogout];
     [alertView show];
 }
 
@@ -689,7 +703,11 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        [self logout];
+        if ([alertView tag] == AlertViewModeLogout) {
+            [self logout];
+        } else if ([alertView tag] == AlertViewModeLogin) {
+            [self loginAction];
+        }
     }
 }
 
@@ -715,4 +733,81 @@
     }
 }
 
+
+#pragma mark UITableViewDelegate methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        if ([self isLoggedIn]) {
+            [self launchPlayer:GroupType_Stream fromCell:nil];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please log in to view your stream" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
+            [alertView setTag:AlertViewModeLogin];
+            [alertView show];
+        }
+    } else {
+        id category = (id)[self.categories objectAtIndex:[indexPath row]];
+        if ([category isMemberOfClass:[Channel class]]) { // Category is a Channel
+            [self launchPlayer:GroupType_CategoryChannel fromCell:nil withCategory:indexPath.row];
+        } else if ([category isMemberOfClass:[Roll class]]) { // Cateogory is a Roll
+            [self launchPlayer:GroupType_CategoryRoll fromCell:nil withCategory:indexPath.row];
+        }
+    }
+}
+
+#pragma mark UITableViewDataDelegate methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 1) {
+        return 1;
+    }
+    
+    return [self.categories count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    GroupTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GroupTableViewCell" forIndexPath:indexPath];
+    NSString *title = nil;
+    NSString *description = nil;
+    NSUInteger row = indexPath.row;
+    
+    if (indexPath.section == 0 && row == 0) { // Me Cards
+        title = @"Stream";
+        description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
+    } else {  // Channel Cards
+        [cell enableCard:YES];
+        if (indexPath.row < [self.categories count]) {
+            NSManagedObjectContext *context = [self context];
+            NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
+            Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+            
+            if (channel) {
+                title = [channel displayTitle];
+                description = [channel displayDescription];
+            }
+        }
+    }
+    
+    if (!title) {
+        title = @"";
+    }
+    
+    if (!description) {
+        description = @"";
+    }
+    
+    [cell.groupTitle setText:title];
+    [cell.groupDescription setText:description];
+    
+    return cell;
+
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
 @end

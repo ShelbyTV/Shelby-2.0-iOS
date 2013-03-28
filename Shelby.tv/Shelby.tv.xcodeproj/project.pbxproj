@@ -22,6 +22,12 @@
 		1C24982D1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */; };
 		1C24982E1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */; };
 		1C24982F1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */; };
+		1C2498311704EBF000DFC0C4 /* GroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C2498301704EBF000DFC0C4 /* GroupTableViewCell.xib */; };
+		1C2498321704EBF000DFC0C4 /* GroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C2498301704EBF000DFC0C4 /* GroupTableViewCell.xib */; };
+		1C2498331704EBF000DFC0C4 /* GroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C2498301704EBF000DFC0C4 /* GroupTableViewCell.xib */; };
+		1C2498361704EDC900DFC0C4 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2498351704EDC900DFC0C4 /* GroupTableViewCell.m */; };
+		1C2498371704EDC900DFC0C4 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2498351704EDC900DFC0C4 /* GroupTableViewCell.m */; };
+		1C2498381704EDC900DFC0C4 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2498351704EDC900DFC0C4 /* GroupTableViewCell.m */; };
 		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
@@ -591,6 +597,9 @@
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
 		1C2498281704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
 		1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SPShareRollView-iPhone.xib"; sourceTree = "<group>"; };
+		1C2498301704EBF000DFC0C4 /* GroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupTableViewCell.xib; sourceTree = "<group>"; };
+		1C2498341704EDC800DFC0C4 /* GroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupTableViewCell.h; sourceTree = "<group>"; };
+		1C2498351704EDC900DFC0C4 /* GroupTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupTableViewCell.m; sourceTree = "<group>"; };
 		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
@@ -946,6 +955,7 @@
 			children = (
 				1C78E32617047483007CD93C /* HomeView.xib */,
 				1C2498281704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib */,
+				1C2498301704EBF000DFC0C4 /* GroupTableViewCell.xib */,
 			);
 			name = "Xibs-iPhone";
 			sourceTree = "<group>";
@@ -1475,6 +1485,8 @@
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
 				1CD72E9F16CD36CB0045B36F /* GroupViewCell.h */,
 				1CD72EA016CD36CB0045B36F /* GroupViewCell.m */,
+				1C2498341704EDC800DFC0C4 /* GroupTableViewCell.h */,
+				1C2498351704EDC900DFC0C4 /* GroupTableViewCell.m */,
 				1C1D51ED16F22A8B00225B4E /* FormViews */,
 				1CCCB55016D2A33500C8C216 /* PageControl.h */,
 				1CCCB55116D2A33600C8C216 /* PageControl.m */,
@@ -1738,6 +1750,7 @@
 				1C78E33317047CD2007CD93C /* SPOverlayView-iPhone.xib in Resources */,
 				1C24982A1704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */,
 				1C24982E1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */,
+				1C2498321704EBF000DFC0C4 /* GroupTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1864,6 +1877,7 @@
 				1C78E33417047CD2007CD93C /* SPOverlayView-iPhone.xib in Resources */,
 				1C24982B1704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */,
 				1C24982F1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */,
+				1C2498331704EBF000DFC0C4 /* GroupTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1991,6 +2005,7 @@
 				1C78E33217047CD2007CD93C /* SPOverlayView-iPhone.xib in Resources */,
 				1C2498291704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */,
 				1C24982D1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */,
+				1C2498311704EBF000DFC0C4 /* GroupTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2100,6 +2115,7 @@
 				1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58D16F2D9CE0001EF5D /* Video.m in Sources */,
+				1C2498371704EDC900DFC0C4 /* GroupTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2164,6 +2180,7 @@
 				1C7B8D5A16F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EC16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */,
+				1C2498381704EDC900DFC0C4 /* GroupTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2228,6 +2245,7 @@
 				1C7B8D5816F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EA16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58C16F2D9CE0001EF5D /* Video.m in Sources */,
+				1C2498361704EDC900DFC0C4 /* GroupTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
