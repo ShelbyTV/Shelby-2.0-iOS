@@ -42,7 +42,7 @@
 
 /// iPhone
 - (IBAction)openCategory:(id)sender;
-
+- (IBAction)login:(id)sender;
 
 - (void)fetchUserNickname;
 
@@ -450,19 +450,31 @@
 #pragma mark - Authorization Methods (Private)
 - (void)loginAction
 {
-    AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
+    AuthorizationViewController *authorizationViewController = nil;
+  
+    CGFloat xOrigin = 0;
+    CGFloat yOrigin = 0;
+    CGSize loginDialogSize;
+    if (DEVICE_IPAD) {
+        authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
+        xOrigin = self.view.frame.size.width / 2.0f - authorizationViewController.view.frame.size.width / 4.0f;
+        yOrigin = self.view.frame.size.height / 5.0f - authorizationViewController.view.frame.size.height / 4.0f;
+        loginDialogSize = authorizationViewController.view.frame.size;
     
-    CGFloat xOrigin = self.view.frame.size.width / 2.0f - authorizationViewController.view.frame.size.width / 4.0f;
-    CGFloat yOrigin = self.view.frame.size.height / 5.0f - authorizationViewController.view.frame.size.height / 4.0f;
-    CGSize loginDialogSize = authorizationViewController.view.frame.size;
+        [authorizationViewController setModalInPopover:YES];
+        [authorizationViewController setModalPresentationStyle:UIModalPresentationFormSheet];
     
-    [authorizationViewController setModalInPopover:YES];
-    [authorizationViewController setModalPresentationStyle:UIModalPresentationFormSheet];
+    } else {
+        authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView-iPhone" bundle:nil];
+    }
+    
     [authorizationViewController setDelegate:self];
     
     [self presentViewController:authorizationViewController animated:YES completion:nil];
     
-    authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+    if (DEVICE_IPAD) {
+        authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+    }
 }
 
 - (void)logoutAction
@@ -483,6 +495,10 @@
     [self launchPlayer:GroupType_CategoryChannel fromCell:nil withCategory:6];
 }
 
+- (IBAction)login:(id)sender
+{
+    [self loginAction];
+}
 
 #pragma mark - Video Player Launch Methods (Private)
 #pragma mark - Video Player Launch Methods (Private)

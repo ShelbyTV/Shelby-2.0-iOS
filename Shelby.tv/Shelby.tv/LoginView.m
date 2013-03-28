@@ -20,8 +20,10 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"authenticationLoginView.png"]]];
-
+    if (DEVICE_IPAD) {
+        [self setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"authenticationLoginView.png"]]];
+    }
+    
     [self.emailField setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_emailField.font.pointSize]];
     [self.emailField setTextColor:kShelbyColorBlack];
 
