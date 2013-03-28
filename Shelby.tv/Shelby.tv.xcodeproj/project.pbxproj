@@ -19,6 +19,9 @@
 		1C2498291704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C2498281704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib */; };
 		1C24982A1704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C2498281704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib */; };
 		1C24982B1704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C2498281704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib */; };
+		1C24982D1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */; };
+		1C24982E1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */; };
+		1C24982F1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */; };
 		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
@@ -587,6 +590,7 @@
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
 		1C2498281704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
+		1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SPShareRollView-iPhone.xib"; sourceTree = "<group>"; };
 		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
@@ -950,6 +954,7 @@
 			isa = PBXGroup;
 			children = (
 				1C78E33117047CD2007CD93C /* SPOverlayView-iPhone.xib */,
+				1C24982C1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib */,
 			);
 			name = "Xibs-iPhone";
 			sourceTree = "<group>";
@@ -1732,6 +1737,7 @@
 				1C78E32817047483007CD93C /* HomeView.xib in Resources */,
 				1C78E33317047CD2007CD93C /* SPOverlayView-iPhone.xib in Resources */,
 				1C24982A1704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */,
+				1C24982E1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1857,6 +1863,7 @@
 				1C78E32917047483007CD93C /* HomeView.xib in Resources */,
 				1C78E33417047CD2007CD93C /* SPOverlayView-iPhone.xib in Resources */,
 				1C24982B1704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */,
+				1C24982F1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1983,6 +1990,7 @@
 				1C78E32717047483007CD93C /* HomeView.xib in Resources */,
 				1C78E33217047CD2007CD93C /* SPOverlayView-iPhone.xib in Resources */,
 				1C2498291704C5DD00DFC0C4 /* AuthorizationView-iPhone.xib in Resources */,
+				1C24982D1704DB6900DFC0C4 /* SPShareRollView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -447,7 +447,11 @@
 //    [[Panhandler sharedInstance] recordEvent];
     
     // Disable overlayTimer
-    [self.model.overlayView showOverlayView];
+    if (DEVICE_IPAD) {
+        [self.model.overlayView showOverlayView];
+    } else {
+        [self.model.overlayView hideOverlayView];
+    }
     [self.model.overlayTimer invalidate];
  
     // shareController is an iVar because it contains an iVar reference of UIPopOverViewController which must be retianed

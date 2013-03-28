@@ -132,7 +132,13 @@
 {
     
     // Instantiate rollView
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
+    NSArray *nib = nil;
+    if (DEVICE_IPAD) {
+        nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
+    } else {
+        nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView-iPhone" owner:self options:nil];
+    }
+    
     if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
         return;
     }
