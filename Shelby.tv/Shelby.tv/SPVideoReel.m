@@ -30,6 +30,8 @@
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
+@property (assign) CGRect frameRect;
+
 // Transition Properties
 @property (strong, nonatomic) UIImageView *screenshot;
 @property (strong, nonatomic) UIImageView *zoomInScreenshot;
@@ -124,7 +126,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+    [self setFrameRect:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+    
+    [self.view setFrame:self.frameRect];
+    
+    
     [self.view setBackgroundColor:[UIColor blackColor]];
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
 }
@@ -132,6 +139,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.view setFrame:self.frameRect];
     [self setupVariables];
     [self setupVideoScrollView];
     [self setupOverlayView];
@@ -156,7 +164,8 @@
     return UIInterfaceOrientationMaskLandscape;
 }
 
--(BOOL) shouldAutorotate {
+-(BOOL) shouldAutorotate
+{
     return YES;
 }
 
@@ -224,7 +233,7 @@
 
 - (void)setupVideoScrollView
 {
-    self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.frameRect];
     self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * _model.numberOfVideos, kShelbySPVideoHeight - 20);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;

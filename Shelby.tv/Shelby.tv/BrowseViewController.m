@@ -131,12 +131,12 @@
     if (DEVICE_IPAD) {
         return UIInterfaceOrientationMaskLandscape;
     } else {
-        return UIInterfaceOrientationPortrait;
+        return UIInterfaceOrientationMaskPortrait;
     }
 }
 
 -(BOOL) shouldAutorotate {
-    return NO;
+    return YES;
 }
 
 #pragma mark - Public Methods
