@@ -753,6 +753,8 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
             [self launchPlayer:GroupType_CategoryRoll fromCell:nil withCategory:indexPath.row];
         }
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark UITableViewDataDelegate methods
@@ -776,6 +778,9 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
     if (indexPath.section == 0 && row == 0) { // Me Cards
         title = @"Stream";
         description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
+        UIImage *buttonImage = [UIImage imageNamed:@"streamCard"];
+        [cell.groupThumbnailImage setImage:buttonImage];
+        
     } else {  // Channel Cards
         [cell enableCard:YES];
         if (indexPath.row < [self.categories count]) {
@@ -783,9 +788,18 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
             NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
             Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
             
+            NSString *buttonImageName = @"missingCard";
             if (channel) {
                 title = [channel displayTitle];
                 description = [channel displayDescription];
+                NSString *thumbnailUrl = [channel displayThumbnailURL];
+                
+                [AsynchronousFreeloader loadImageFromLink:thumbnailUrl
+                                             forImageView:[cell groupThumbnailImage]
+                                          withPlaceholder:[UIImage imageNamed:buttonImageName]
+                                           andContentMode:UIViewContentModeScaleAspectFill];
+                
+                
             }
         }
     }

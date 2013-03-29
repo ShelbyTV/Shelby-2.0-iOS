@@ -13,10 +13,10 @@
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
 {
-    [self.groupTitle setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:16]];
+    [self.groupTitle setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:20]];
     [self.groupDescription setFont:[UIFont fontWithName:@"Ubuntu" size:14]];
     
-    UIColor *textColor = [UIColor colorWithHex:@"333333" andAlpha:1];
+    UIColor *textColor = [UIColor colorWithHex:@"f7f7f7" andAlpha:1];
     [self.groupDescription setTextColor:textColor];
     [self.groupTitle setTextColor:textColor];
 }
@@ -29,7 +29,6 @@
 #pragma mark - Public Methods
 - (void)enableCard:(BOOL)enabled
 {
-//    [self.groupThumbnailImage setAlpha:(enabled ? 1.0f : 0.5f)];
     [self.groupDescription setEnabled:enabled];
     [self.groupTitle setEnabled:enabled];
     [self setUserInteractionEnabled:enabled];

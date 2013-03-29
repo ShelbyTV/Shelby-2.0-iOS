@@ -11,6 +11,7 @@
 @interface GroupTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *groupDescription;
 @property (weak, nonatomic) IBOutlet UILabel *groupTitle;
+@property (weak, nonatomic) IBOutlet UIImageView *groupThumbnailImage;
 
 - (void)enableCard:(BOOL)enabled;
 
