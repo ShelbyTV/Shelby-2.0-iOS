@@ -59,7 +59,13 @@
     [self.userImageView.layer setBorderWidth:0.5];
     
     [self.homeButton setHidden:NO];
-    
+   
+    /// iPhone
+    if (!DEVICE_IPAD) {
+        [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
+        [self.videoTitleLabel setBackgroundColor:[UIColor clearColor]];
+        [self.videoListScrollView setBackgroundColor:[UIColor colorWithHex:@"f7f7f7" andAlpha:1]];
+    }
 }
 
 #pragma mark - UIView Overridden Methods
@@ -113,8 +119,6 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:1.0f];
-    } completion:^(BOOL finished) {
-        [self hideVideoList:NO];
     }];
 }
 

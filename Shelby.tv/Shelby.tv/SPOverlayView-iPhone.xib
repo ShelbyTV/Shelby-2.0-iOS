@@ -52,6 +52,10 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="119557098"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor" id="556331669">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MCAwAA</bytes>
+								</object>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
@@ -79,6 +83,7 @@
 									<string key="IBUIColorCocoaTouchKeyPath">tableCellGroupedBackgroundColor</string>
 								</object>
 								<nil key="IBUIHighlightedColor"/>
+								<reference key="IBUIShadowColor" ref="556331669"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUINumberOfLines">2</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
@@ -156,7 +161,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrameSize">{568, 140}</string>
+						<string key="NSFrameSize">{568, 110}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1029530522"/>
@@ -278,10 +283,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1031495208"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor" id="556331669">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MCAwAA</bytes>
-								</object>
+								<reference key="IBUIBackgroundColor" ref="556331669"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIProgressTintColor" ref="899872168"/>
@@ -312,7 +314,7 @@
 								<string key="NSFrame">{{478, 10}, {41, 41}}</string>
 								<reference key="NSSuperview" ref="412997652"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="633631560"/>
+								<reference key="NSNextKeyView" ref="158685352"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -342,13 +344,13 @@
 								<reference key="IBUIBackgroundColor" ref="556331669"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIButton" id="633631560">
+							<object class="IBUIButton" id="158685352">
 								<reference key="NSNextResponder" ref="412997652"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{530, 14}, {29, 31}}</string>
 								<reference key="NSSuperview" ref="412997652"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="384659415"/>
+								<reference key="NSNextKeyView" ref="874120246"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -397,7 +399,7 @@
 							<string key="NSResourceName">likeNotification.png</string>
 						</object>
 					</object>
-					<object class="IBUIScrollView" id="384659415">
+					<object class="IBUIScrollView" id="874120246">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{0, 320}, {525, 100}}</string>
@@ -543,7 +545,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">videoListScrollView</string>
 						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="384659415"/>
+						<reference key="destination" ref="874120246"/>
 					</object>
 					<int key="connectionID">628</int>
 				</object>
@@ -551,7 +553,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">toggleVideoList</string>
 						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="633631560"/>
+						<reference key="destination" ref="158685352"/>
 					</object>
 					<int key="connectionID">645</int>
 				</object>
@@ -594,7 +596,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
-						<reference key="source" ref="384659415"/>
+						<reference key="source" ref="874120246"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">629</int>
@@ -602,7 +604,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">videoListToggle:</string>
-						<reference key="source" ref="633631560"/>
+						<reference key="source" ref="158685352"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -625,7 +627,7 @@
 							<reference ref="412997652"/>
 							<reference ref="771313350"/>
 							<reference ref="272076209"/>
-							<reference ref="384659415"/>
+							<reference ref="874120246"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -688,7 +690,7 @@
 							<reference ref="734239130"/>
 							<reference ref="376463859"/>
 							<reference ref="778992173"/>
-							<reference ref="633631560"/>
+							<reference ref="158685352"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -741,12 +743,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">618</int>
-						<reference key="object" ref="384659415"/>
+						<reference key="object" ref="874120246"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">643</int>
-						<reference key="object" ref="633631560"/>
+						<reference key="object" ref="158685352"/>
 						<reference key="parent" ref="412997652"/>
 					</object>
 				</array>
