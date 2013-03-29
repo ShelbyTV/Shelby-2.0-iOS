@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
 @property (weak, nonatomic) IBOutlet PageControl *pageControl;
 
 @property (strong, nonatomic) NSString *userNickname;
+@property (strong, nonatomic) NSString *userImage;
 @property (assign, nonatomic) BOOL isLoggedIn;
 
 @property (nonatomic) LoginView *loginView;
@@ -50,7 +51,8 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
 /// iPhone
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *userBarButton;
 - (IBAction)openCategory:(id)sender;
-- (IBAction)userAction:(id)sender;
+- (void)userAction;
+- (void)setupUserView;
 
 - (void)fetchUserNickname;
 
@@ -176,10 +178,11 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         User *user = [dataUtility fetchUser];
         [self setUserNickname:[user nickname]];
-        
-        if (!DEVICE_IPAD) {
-            [self.userBarButton setTitle:self.userNickname];
-        }
+        [self setUserImage:[user userImage]];
+    }
+
+    if (!DEVICE_IPAD) {
+        [self setupUserView];
     }
 }
 
@@ -516,7 +519,7 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
     [self setUserNickname:nil];
     [self resetVersionLabel];
     if (!DEVICE_IPAD) {
-        [self.userBarButton setTitle:@"Login"];
+        [self setupUserView];
     }
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
@@ -527,7 +530,7 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
     [self launchPlayer:GroupType_CategoryChannel fromCell:nil withCategory:6];
 }
 
-- (IBAction)userAction:(id)sender
+- (void)userAction
 {
     if ([self isLoggedIn]) {
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"My Roll", @"My Likes", @"Logout", nil];
@@ -537,6 +540,38 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
         [self loginAction];
     }
 }
+
+- (void)setupUserView
+{
+    UIView *userView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 2, 40, 40)];
+    
+    UIImage *tv = [UIImage imageNamed:@"tv.png"];
+    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(60, 12, 280, 20)];
+    [name setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:13]];
+    [name setBackgroundColor:[UIColor clearColor]];
+    NSString *tvName;
+    if ([self isLoggedIn]) {
+        [AsynchronousFreeloader loadImageFromLink:self.userImage
+                                     forImageView:userAvatar
+                                  withPlaceholder:tv
+                                   andContentMode:UIViewContentModeScaleAspectFill];
+        tvName = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
+    } else {
+        [userAvatar setImage:tv];
+        tvName = @"Login to your .TV";
+    }
+
+    [userView addSubview:userAvatar];
+    [name setText:tvName];
+    [userView addSubview:name];
+    UIButton *login = [[UIButton alloc] initWithFrame:CGRectMake(60, 0, 280, 44)];
+    [login addTarget:self action:@selector(userAction) forControlEvents:UIControlEventTouchUpInside];
+    [userView addSubview:login];
+    [self.userBarButton setCustomView:userView];
+
+}
+
 
 #pragma mark - Video Player Launch Methods (Private)
 #pragma mark - Video Player Launch Methods (Private)
