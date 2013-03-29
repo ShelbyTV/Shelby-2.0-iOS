@@ -14,6 +14,10 @@
 
 @property (weak, nonatomic) SPModel *model;
 
+@property (weak, nonatomic) IBOutlet UIButton *toggleVideoList;
+
+- (void)hideVideoList:(BOOL)animate;
+- (void)showVideoList:(BOOL)animate;
 @end
 
 @implementation SPOverlayView
@@ -109,6 +113,8 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:1.0f];
+    } completion:^(BOOL finished) {
+        [self hideVideoList:NO];
     }];
 }
 
@@ -116,6 +122,8 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [self hideVideoList:NO];
     }];
 }
 
@@ -137,4 +145,47 @@
 {
     [self.model rescheduleOverlayTimer];
 }
+
+
+- (void)toggleVideoListView
+{
+    if (self.videoListScrollView.frame.origin.y == 320) {
+        [self showVideoList:YES];
+    } else if (self.videoListScrollView.frame.origin.y == 220) {
+        [self hideVideoList:YES];
+    }
+}
+
+#pragma mark - toggle video list (Private)
+- (void)hideVideoList:(BOOL)animate
+{
+    if (DEVICE_IPAD) {
+        return;
+    }
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.videoListScrollView setFrame:CGRectMake(0, 320, 525, 100)];
+    } completion:^(BOOL finished) {
+        [self.toggleVideoList setSelected:NO];
+    }];
+
+}
+
+- (void)showVideoList:(BOOL)animate
+{
+    if (DEVICE_IPAD) {
+        return;
+    }
+
+    float animationTime = (animate ? 0.5 : 0);
+    
+    [UIView animateWithDuration:animationTime animations:^{
+        [self.videoListScrollView setFrame:CGRectMake(0, 220, 525, 100)];
+    } completion:^(BOOL finished) {
+        [self.toggleVideoList setSelected:YES];
+
+    }];
+}
+
+
 @end

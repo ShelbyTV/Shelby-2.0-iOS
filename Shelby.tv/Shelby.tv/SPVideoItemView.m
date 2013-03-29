@@ -25,12 +25,20 @@
 #pragma mark - Class Methods
 + (CGFloat)width
 {
-    return 234.0f;
+    if (DEVICE_IPAD) {
+        return 234.0f;
+    } else {
+        return 100.0f;
+    }
 }
 
 + (CGFloat)height
 {
-    return 197.0f;
+    if (DEVICE_IPAD) {
+        return 197.0f;
+    } else {
+        return 100;
+    }
 }
 
 @end

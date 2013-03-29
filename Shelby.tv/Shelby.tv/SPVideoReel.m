@@ -65,6 +65,9 @@
 /// Transition Methods
 - (void)transformInAnimation;
 - (void)transformOutAnimation;
+
+/// iPhone toggle
+- (IBAction)videoListToggle:(id)sender;
 @end
 
 @implementation SPVideoReel 
@@ -334,7 +337,13 @@
             NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
             Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+            NSString *nibName = nil;
+            if (DEVICE_IPAD) {
+                nibName = @"SPVideoItemView";
+            } else {
+                nibName = @"SPVideoItemView-iPhone";
+            }
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:nibName owner:self options:nil];
             if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
                 return;
             }
@@ -662,6 +671,12 @@
     [[SPVideoScrubber sharedInstance] endScrubbing];
 }
 
+
+#pragma mark - Overlay Actions (Private)
+- (IBAction)videoListToggle:(id)sender
+{
+    [self.overlayView toggleVideoListView];
+}
 
 #pragma mark - Storage Methods (Private)
 - (void)storeIdentifierOfCurrentVideoInStream

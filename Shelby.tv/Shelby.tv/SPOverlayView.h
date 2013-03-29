@@ -33,4 +33,7 @@
 
 - (void)rescheduleOverlayTimer;
 
+/// iPhone
+- (void)toggleVideoListView;
+
 @end
