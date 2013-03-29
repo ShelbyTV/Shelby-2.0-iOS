@@ -43,6 +43,8 @@
     self.view.layer.borderColor = [UIColor blackColor].CGColor;
     self.view.layer.borderWidth = 1;
     self.view.clipsToBounds = YES;
+    
+    [self.signupView setFrame:CGRectMake(0, -320, 320, 320)];
 }
 
 
@@ -68,15 +70,26 @@
     [self.view bringSubviewToFront:self.signupView];
     [self setCurrentForm:self.signupView];
 
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.view.superview setFrame:CGRectMake(self.view.superview.frame.origin.x - yDiff,
-                                                 self.view.superview.frame.origin.y   ,
-                                                 self.view.superview.frame.size.width + yDiff,
-                                                 self.view.superview.frame.size.height )];
-        [self.signupView setFrame:CGRectMake(0, 0, self.signupView.frame.size.width, self.signupView.frame.size.height)];
-        [self.loginView setAlpha:0];
-        [self.signupView setAlpha:1];
-    }];
+    if (DEVICE_IPAD) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.view.superview setFrame:CGRectMake(self.view.superview.frame.origin.x - yDiff,
+                                                     self.view.superview.frame.origin.y   ,
+                                                     self.view.superview.frame.size.width + yDiff,
+                                                     self.view.superview.frame.size.height )];
+            [self.signupView setFrame:CGRectMake(0, 0, self.signupView.frame.size.width, self.signupView.frame.size.height)];
+            [self.loginView setAlpha:0];
+            [self.signupView setAlpha:1];
+        }];
+    } else {
+        [self.signupView setBackgroundColor:[UIColor whiteColor]];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.loginView setAlpha:0];
+            [self.signupView setAlpha:1];
+            [self.signupView setFrame:CGRectMake(0, 0, 320, 320)];
+        } completion:^(BOOL finished) {
+        }];
+        
+    }
 }
 
 
