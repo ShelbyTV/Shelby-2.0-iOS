@@ -192,10 +192,14 @@ typedef NS_ENUM(NSUInteger, AlertViewMode)
     [self.categories removeAllObjects];
     [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
-    [self.collectionView reloadData];
-
-    NSUInteger pages = [(CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout numberOfPages];
-    [self.pageControl setNumberOfPages:pages];
+    if (DEVICE_IPAD) {
+        [self.collectionView reloadData];
+        
+        NSUInteger pages = [(CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout numberOfPages];
+        [self.pageControl setNumberOfPages:pages];
+    } else {
+        [self.tableView reloadData];
+    }
 }
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
