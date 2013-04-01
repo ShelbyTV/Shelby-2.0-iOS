@@ -1796,14 +1796,17 @@
 
 - (void)removeStoredHash
 {
-    NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
-    
-    if ( [self.appDelegate dataUtilities] && [self.appDelegate.dataUtilities count] ) {
+    @synchronized([self.appDelegate dataUtilities]){
+   
+        NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
         
-        if ( [self.appDelegate.dataUtilities containsObject:hash] ) {
+        if ( [self.appDelegate dataUtilities] && [self.appDelegate.dataUtilities count] ) {
             
-            [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] removeObject:hash];
-            
+            if ( [self.appDelegate.dataUtilities containsObject:hash] ) {
+                
+                [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] removeObject:hash];
+                
+            }
         }
     }
 }
