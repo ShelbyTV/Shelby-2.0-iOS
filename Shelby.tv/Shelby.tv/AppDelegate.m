@@ -41,6 +41,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) id <GAITracker> googleTracker;
 @property (nonatomic) NSInvocation *invocationMethod;
+@property (strong) NSMutableArray *dataUtilities;
 
 /// Setup Methods
 - (void)setupInitialSettings;
@@ -49,6 +50,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 - (void)setupCategoryLoadingView;
 - (void)removeCategoryLoadingView;
 - (void)setupOfflineMode;
+- (void)setupDataUtilities;
 
 /// Notification Methods
 
@@ -65,6 +67,8 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Data Utilities
+    [self setupDataUtilities];
     
     // Initial Conditions
     [self setupInitialSettings];
@@ -112,7 +116,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     }
     
     if (!self.dataUtilities) {
-        self.dataUtilities = [@[] mutableCopy];
+        [self setupDataUtilities];
     }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
@@ -247,8 +251,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 #pragma mark - Setup Methods (Private)
 - (void)setupInitialSettings
 {
-    self.dataUtilities = [@[] mutableCopy];
-    
     static dispatch_once_t coordinatorToken = 0;
     dispatch_once(&coordinatorToken, ^{
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_InitialSave];
@@ -296,7 +298,11 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
                                              selector:@selector(didNotConnect:)
                                                  name:kShelbyNotificationNoConnectivity
                                                object:nil];
+}
 
+- (void)setupDataUtilities
+{
+    _dataUtilities = [@[] mutableCopy];
     [self addObserver:self forKeyPath:@"dataUtilities" options:NSKeyValueObservingOptionNew context:nil];
 }
 
@@ -505,6 +511,26 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     return context;
     
+}
+
+#pragma mark - Add/remove dataUtilities hash (Public)
+- (void)addHash:(NSNumber *)hash
+{
+    NSMutableArray *dataUtilitiesArray = [self mutableArrayValueForKey:@"dataUtilities"];
+    @synchronized(dataUtilitiesArray) {
+        [dataUtilitiesArray addObject:hash];
+    }
+}
+
+
+- (void)removeHash:(NSNumber *)hash
+{
+    NSMutableArray *dataUtilitiesArray = [self mutableArrayValueForKey:@"dataUtilities"];
+    @synchronized(dataUtilitiesArray) {
+        if (dataUtilitiesArray && [dataUtilitiesArray count] && [dataUtilitiesArray containsObject:hash]) {
+            [dataUtilitiesArray removeObject:hash];
+        }
+    }
 }
 
 @end
