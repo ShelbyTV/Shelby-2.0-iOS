@@ -38,3 +38,6 @@
 /// Size
 #define  kShelbyFullscreenWidth                             [[UIScreen mainScreen] bounds].size.width
 #define  kShelbyFullscreenHeight                            [[UIScreen mainScreen] bounds].size.height
+
+/// Device
+#define DEVICE_IPAD                                             UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad

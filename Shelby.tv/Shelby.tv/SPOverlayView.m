@@ -14,7 +14,7 @@
 
 @property (weak, nonatomic) SPModel *model;
 
-// KP KP: TODO: if we keep the word: playlist next to toggleVideoList button, no need to make this as button as we have a big button on top. 
+// KP KP: TODO: if we keep the word: playlist next to toggleVideoList button, no need to make this as button as we have a big button on top.
 @property (weak, nonatomic) IBOutlet UIButton *toggleVideoList;
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
 @property (weak, nonatomic) IBOutlet UIView *playListControlsView;
@@ -69,7 +69,13 @@
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoTitleLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoListScrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"videoListPanel.png"]]];
-    [self hideVideoList:NO];
+   
+    /// iPhone
+    if (!DEVICE_IPAD) {
+        [self.videoListScrollView setBackgroundColor:[UIColor colorWithHex:@"f7f7f7" andAlpha:1]];
+    } else {
+        [self hideVideoList:NO];
+    }
 }
 
 #pragma mark - UIView Overridden Methods
@@ -130,6 +136,8 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [self hideVideoList:NO];
     }];
 }
 
@@ -155,13 +163,20 @@
 
 - (void)toggleVideoListView
 {
-    if (self.videoListView.frame.origin.y == self.frame.size.height - self.playListControlsView.frame.size.height) {
-        [self showVideoList:YES];
-    } else if (self.videoListView.frame.origin.y == self.frame.size.height - self.videoListView.frame.size.height) {
-        [self hideVideoList:YES];
+    if (DEVICE_IPAD) {
+        if (self.videoListView.frame.origin.y == self.frame.size.height - self.playListControlsView.frame.size.height) {
+            [self showVideoList:YES];
+        } else if (self.videoListView.frame.origin.y == self.frame.size.height - self.videoListView.frame.size.height) {
+            [self hideVideoList:YES];
+        }
+    } else {
+        if (self.videoListScrollView.frame.origin.y == 320) {
+            [self showVideoList:YES];
+        } else if (self.videoListScrollView.frame.origin.y == 220) {
+            [self hideVideoList:YES];
+        }
     }
 }
-
 
 - (void)toggleMinimalView:(BOOL)animate
 {
@@ -188,14 +203,23 @@
 - (void)hideVideoList:(BOOL)animate
 {
     CGRect videoListFrame = self.videoListView.frame;
+
+    if (DEVICE_IPAD) {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - self.playListControlsView.frame.size.height, videoListFrame.size.width, videoListFrame.size.height)];
+            [self.playListControlsView setAlpha:0.7];
+        } completion:^(BOOL finished) {
+            [self.toggleVideoList setSelected:NO];
+        }];
     
-    [UIView animateWithDuration:0.5 animations:^{
-        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - self.playListControlsView.frame.size.height, videoListFrame.size.width, videoListFrame.size.height)];
-        [self.playListControlsView setAlpha:0.7];
-    } completion:^(BOOL finished) {
-        [self.toggleVideoList setSelected:NO];
-    }];
-    
+    } else {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.videoListScrollView setFrame:CGRectMake(0, 320, 525, 100)];
+        } completion:^(BOOL finished) {
+            [self.toggleVideoList setSelected:NO];
+        }];
+    }
 }
 
 - (void)showVideoList:(BOOL)animate
@@ -203,13 +227,20 @@
     float animationTime = (animate ? 0.5 : 0);
     
     CGRect videoListFrame = self.videoListView.frame;
-    
-    [UIView animateWithDuration:animationTime animations:^{
-        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
-        [self.playListControlsView setAlpha:0];
-    } completion:^(BOOL finished) {
-        [self.toggleVideoList setSelected:YES];
-    }];
+    if (DEVICE_IPAD) {
+        [UIView animateWithDuration:animationTime animations:^{
+            [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
+            [self.playListControlsView setAlpha:0];
+        } completion:^(BOOL finished) {
+            [self.toggleVideoList setSelected:YES];
+        }];
+    } else {
+        [UIView animateWithDuration:animationTime animations:^{
+            [self.videoListScrollView setFrame:CGRectMake(0, 220, 525, 100)];
+        } completion:^(BOOL finished) {
+            [self.toggleVideoList setSelected:YES];
+            
+        }];
+    }
 }
-
 @end

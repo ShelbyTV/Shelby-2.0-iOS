@@ -10,6 +10,7 @@
 
 // Views
 #import "GroupViewCell.h"
+#import "GroupTableViewCell.h"
 #import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
 #import "SignupView.h"
@@ -22,13 +23,21 @@
 // Utilities
 #import "ImageUtilities.h"
 
+typedef NS_ENUM(NSUInteger, AlertViewMode)
+{
+    AlertViewModeLogout,
+    AlertViewModeLogin
+};
+
 @interface BrowseViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet PageControl *pageControl;
 
 @property (strong, nonatomic) NSString *userNickname;
+@property (strong, nonatomic) NSString *userImage;
 @property (assign, nonatomic) BOOL isLoggedIn;
 
 @property (nonatomic) LoginView *loginView;
@@ -39,6 +48,11 @@
 
 @property (assign, nonatomic) SecretMode secretMode;
 
+/// iPhone
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *userBarButton;
+- (IBAction)openCategory:(id)sender;
+- (void)userAction;
+- (void)setupUserView;
 
 - (void)fetchUserNickname;
 
@@ -57,6 +71,7 @@
 /// Authentication Methods
 - (void)loginAction;
 - (void)logoutAction;
+- (void)logout;
 
 /// Video Player Launch Methods
 - (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell;
@@ -100,10 +115,16 @@
     [self setSecretMode:SecretMode_None];
     
     // Register Cell Nibs
-    UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
-    cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
+    if (DEVICE_IPAD) {
+        UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
+        [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
+        cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
+        [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
+    } else {
+        UINib *cellNib = [UINib nibWithNibName:@"GroupTableViewCell" bundle:nil];
+        [self.tableView registerNib:cellNib forCellReuseIdentifier:@"GroupTableViewCell"];
+        
+    }
     
     [self.pageControl setNumberOfPages:1];
 
@@ -120,6 +141,19 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     }
 
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (DEVICE_IPAD) {
+        return UIInterfaceOrientationMaskLandscape;
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
 }
 
 #pragma mark - Public Methods
@@ -144,6 +178,11 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         User *user = [dataUtility fetchUser];
         [self setUserNickname:[user nickname]];
+        [self setUserImage:[user userImage]];
+    }
+
+    if (!DEVICE_IPAD) {
+        [self setupUserView];
     }
 }
 
@@ -153,10 +192,14 @@
     [self.categories removeAllObjects];
     [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
-    [self.collectionView reloadData];
-
-    NSUInteger pages = [(CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout numberOfPages];
-    [self.pageControl setNumberOfPages:pages];
+    if (DEVICE_IPAD) {
+        [self.collectionView reloadData];
+        
+        NSUInteger pages = [(CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout numberOfPages];
+        [self.pageControl setNumberOfPages:pages];
+    } else {
+        [self.tableView reloadData];
+    }
 }
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
@@ -433,19 +476,31 @@
 #pragma mark - Authorization Methods (Private)
 - (void)loginAction
 {
-    AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
+    AuthorizationViewController *authorizationViewController = nil;
+  
+    CGFloat xOrigin = 0;
+    CGFloat yOrigin = 0;
+    CGSize loginDialogSize;
+    if (DEVICE_IPAD) {
+        authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
+        xOrigin = self.view.frame.size.width / 2.0f - authorizationViewController.view.frame.size.width / 4.0f;
+        yOrigin = self.view.frame.size.height / 5.0f - authorizationViewController.view.frame.size.height / 4.0f;
+        loginDialogSize = authorizationViewController.view.frame.size;
     
-    CGFloat xOrigin = self.view.frame.size.width / 2.0f - authorizationViewController.view.frame.size.width / 4.0f;
-    CGFloat yOrigin = self.view.frame.size.height / 5.0f - authorizationViewController.view.frame.size.height / 4.0f;
-    CGSize loginDialogSize = authorizationViewController.view.frame.size;
+        [authorizationViewController setModalInPopover:YES];
+        [authorizationViewController setModalPresentationStyle:UIModalPresentationFormSheet];
     
-    [authorizationViewController setModalInPopover:YES];
-    [authorizationViewController setModalPresentationStyle:UIModalPresentationFormSheet];
+    } else {
+        authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView-iPhone" bundle:nil];
+    }
+    
     [authorizationViewController setDelegate:self];
     
     [self presentViewController:authorizationViewController animated:YES completion:nil];
     
-    authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+    if (DEVICE_IPAD) {
+        authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+    }
 }
 
 - (void)logoutAction
@@ -455,13 +510,97 @@
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Logout", nil];
- 	
+ 	[alertView setTag:AlertViewModeLogout];
     [alertView show];
 }
 
 
+- (void)logout
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate logout];
+    [self setIsLoggedIn:NO];
+    [self setUserNickname:nil];
+    [self resetVersionLabel];
+    if (!DEVICE_IPAD) {
+        [self setupUserView];
+    }
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+}
+
+#pragma mark - iPhone
+- (IBAction)openCategory:(id)sender
+{
+    [self launchPlayer:GroupType_CategoryChannel fromCell:nil withCategory:6];
+}
+
+- (void)userAction
+{
+    if ([self isLoggedIn]) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"My Roll", @"My Likes", @"Logout", nil];
+        [actionSheet setDestructiveButtonIndex:2];
+        [actionSheet  showInView:self.view] ;//] showFromBarButtonItem:self.userBarButton animated:YES];
+    } else {
+        [self loginAction];
+    }
+}
+
+- (void)setupUserView
+{
+    UIView *userView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 2, 40, 40)];
+    
+    UIImage *tv = [UIImage imageNamed:@"tv.png"];
+    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(60, 12, 280, 20)];
+    [name setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:13]];
+    [name setBackgroundColor:[UIColor clearColor]];
+    NSString *tvName;
+    if ([self isLoggedIn]) {
+        [AsynchronousFreeloader loadImageFromLink:self.userImage
+                                     forImageView:userAvatar
+                                  withPlaceholder:tv
+                                   andContentMode:UIViewContentModeScaleAspectFill];
+        tvName = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
+    } else {
+        [userAvatar setImage:tv];
+        tvName = @"Login to your .TV";
+    }
+
+    [userView addSubview:userAvatar];
+    [name setText:tvName];
+    [userView addSubview:name];
+    UIButton *login = [[UIButton alloc] initWithFrame:CGRectMake(60, 0, 280, 44)];
+    [login addTarget:self action:@selector(userAction) forControlEvents:UIControlEventTouchUpInside];
+    [userView addSubview:login];
+    [self.userBarButton setCustomView:userView];
+
+}
+
+
+#pragma mark - Video Player Launch Methods (Private)
 #pragma mark - Video Player Launch Methods (Private)
 - (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell
+{
+    NSInteger categoryIndex = -1;
+    switch (groupType) {
+        case GroupType_CategoryChannel:
+        case GroupType_CategoryRoll:
+        {
+            categoryIndex = [self.collectionView indexPathForCell:cell].row;
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    
+    
+    [self launchPlayer:groupType fromCell:cell withCategory:categoryIndex];
+}
+
+
+- (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell withCategory:(NSInteger)categoryIndex
 {
    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -501,7 +640,6 @@
             case GroupType_CategoryChannel: {
                 
                 NSManagedObjectContext *context = [self context];
-                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                 NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                 Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
@@ -513,7 +651,6 @@
             case GroupType_CategoryRoll: {
                 
                 NSManagedObjectContext *context = [self context];
-                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                 NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryRoll:[roll rollID]];
@@ -532,14 +669,12 @@
                 
                 if ( groupType == GroupType_CategoryChannel ) { // Category Channel
                     
-                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[channel channelID]];
                     
                 } else if ( groupType == GroupType_CategoryRoll ) { // Category Roll
                     
-                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[roll rollID]];
@@ -550,8 +685,12 @@
                
                 }
 
-                [self presentViewController:reel fromCell:cell];
-                
+                if (DEVICE_IPAD) {
+                    [self presentViewController:reel fromCell:cell];
+                } else {
+                    [self presentViewController:reel animated:YES completion:nil];
+
+                }
             } else {
                 
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -603,12 +742,11 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate logout];
-        [self setIsLoggedIn:NO];
-        [self setUserNickname:nil];
-        [self resetVersionLabel];
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+        if ([alertView tag] == AlertViewModeLogout) {
+            [self logout];
+        } else if ([alertView tag] == AlertViewModeLogin) {
+            [self loginAction];
+        }
     }
 }
 
@@ -622,4 +760,107 @@
 }
 
 
+#pragma mark - UIActionSheetDelegate methods
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self launchPlayer:GroupType_PersonalRoll fromCell:nil];
+    } else if (buttonIndex == 1) {
+        [self launchPlayer:GroupType_Likes fromCell:nil];
+    } else if (buttonIndex == 2) {
+        [self logout];
+    }
+}
+
+
+#pragma mark UITableViewDelegate methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        if ([self isLoggedIn]) {
+            [self launchPlayer:GroupType_Stream fromCell:nil];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please log in to view your stream" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
+            [alertView setTag:AlertViewModeLogin];
+            [alertView show];
+        }
+    } else {
+        id category = (id)[self.categories objectAtIndex:[indexPath row]];
+        if ([category isMemberOfClass:[Channel class]]) { // Category is a Channel
+            [self launchPlayer:GroupType_CategoryChannel fromCell:nil withCategory:indexPath.row];
+        } else if ([category isMemberOfClass:[Roll class]]) { // Cateogory is a Roll
+            [self launchPlayer:GroupType_CategoryRoll fromCell:nil withCategory:indexPath.row];
+        }
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark UITableViewDataDelegate methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 1) {
+        return 1;
+    }
+    
+    return [self.categories count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    GroupTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GroupTableViewCell" forIndexPath:indexPath];
+    NSString *title = nil;
+    NSString *description = nil;
+    NSUInteger row = indexPath.row;
+    
+    if (indexPath.section == 0 && row == 0) { // Me Cards
+        title = @"Stream";
+        description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
+        UIImage *buttonImage = [UIImage imageNamed:@"streamCard"];
+        [cell.groupThumbnailImage setImage:buttonImage];
+        
+    } else {  // Channel Cards
+        [cell enableCard:YES];
+        if (indexPath.row < [self.categories count]) {
+            NSManagedObjectContext *context = [self context];
+            NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
+            Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+            
+            NSString *buttonImageName = @"missingCard";
+            if (channel) {
+                title = [channel displayTitle];
+                description = [channel displayDescription];
+                NSString *thumbnailUrl = [channel displayThumbnailURL];
+                
+                [AsynchronousFreeloader loadImageFromLink:thumbnailUrl
+                                             forImageView:[cell groupThumbnailImage]
+                                          withPlaceholder:[UIImage imageNamed:buttonImageName]
+                                           andContentMode:UIViewContentModeScaleAspectFill];
+                
+                
+            }
+        }
+    }
+    
+    if (!title) {
+        title = @"";
+    }
+    
+    if (!description) {
+        description = @"";
+    }
+    
+    [cell.groupTitle setText:title];
+    [cell.groupDescription setText:description];
+    
+    return cell;
+
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
 @end

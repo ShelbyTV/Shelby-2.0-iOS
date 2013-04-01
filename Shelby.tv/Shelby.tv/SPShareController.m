@@ -119,7 +119,13 @@
 {
     
     // Instantiate rollView
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
+    NSArray *nib = nil;
+    if (DEVICE_IPAD) {
+        nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
+    } else {
+        nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView-iPhone" owner:self options:nil];
+    }
+    
     if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
         return;
     }
@@ -311,17 +317,20 @@
         }
     }];
 
-    if (self.sharePopOverController) {
-        [self.sharePopOverController setDelegate:nil];
-        [self setSharePopOverController:nil];
+    if (DEVICE_IPAD) {
+        if (self.sharePopOverController) {
+            [self.sharePopOverController setDelegate:nil];
+            [self setSharePopOverController:nil];
+        }
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [self.sharePopOverController setDelegate:self];
+        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                     inView:self.model.overlayView.shareButton
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                   animated:YES];
+    } else {
+        [self.videoPlayer presentViewController:activityController animated:YES completion:nil];
     }
-     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-    [self.sharePopOverController setDelegate:self];
-    [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                 inView:self.model.overlayView.shareButton
-                               permittedArrowDirections:UIPopoverArrowDirectionDown
-                                               animated:YES];
-    
 }
 
 - (void)roll

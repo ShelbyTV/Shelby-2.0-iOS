@@ -37,7 +37,9 @@
 {
     
     SPModel *model = (SPModel *)[SPModel sharedInstance];
-    [model.overlayView showOverlayView];
+    if (DEVICE_IPAD) {
+        [model.overlayView showOverlayView];
+    }
     
     [self.shareController showRollView];
     

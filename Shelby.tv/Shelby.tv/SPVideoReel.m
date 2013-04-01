@@ -30,6 +30,8 @@
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
+@property (assign) CGRect frameRect;
+
 // Transition Properties
 @property (strong, nonatomic) UIImageView *screenshot;
 @property (strong, nonatomic) UIImageView *zoomInScreenshot;
@@ -128,7 +130,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+    [self setFrameRect:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+    
+    [self.view setFrame:self.frameRect];
+    
+    
     [self.view setBackgroundColor:[UIColor blackColor]];
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
 }
@@ -136,6 +143,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.view setFrame:self.frameRect];
     [self setupVariables];
     [self setupVideoScrollView];
     [self setupOverlayView];
@@ -155,6 +163,16 @@
 {
     [super viewDidAppear:animated];
     [self setupVideoListScrollView];
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape;
+}
+
+-(BOOL) shouldAutorotate
+{
+    return YES;
 }
 
 #pragma mark - Setup Methods
@@ -221,7 +239,7 @@
 
 - (void)setupVideoScrollView
 {
-    self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.frameRect];
     self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * _model.numberOfVideos, kShelbySPVideoHeight - 20);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;
@@ -234,7 +252,12 @@
 
 - (void)setupOverlayView
 {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+    NSArray *nib = nil;
+    if (DEVICE_IPAD) {
+        nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+    } else {
+        nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView-iPhone" owner:self options:nil];
+    }
     if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
         return;
     }
@@ -317,7 +340,13 @@
             NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
             Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+            NSString *nibName = nil;
+            if (DEVICE_IPAD) {
+                nibName = @"SPVideoItemView";
+            } else {
+                nibName = @"SPVideoItemView-iPhone";
+            }
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:nibName owner:self options:nil];
             if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
                 return;
             }
@@ -654,6 +683,12 @@
 - (IBAction)toggleMinimalView:(id)sender
 {
     [self.overlayView toggleMinimalView:YES];
+}
+
+#pragma mark - Overlay Actions (Private)
+- (IBAction)videoListToggle:(id)sender
+{
+    [self.overlayView toggleVideoListView];
 }
 
 #pragma mark - Storage Methods (Private)
