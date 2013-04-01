@@ -22,13 +22,13 @@
 @property (nonatomic) UIPopoverController *sharePopOverController;
 @property (assign, nonatomic) BOOL facebookConnected;
 @property (assign, nonatomic) BOOL twitterConnected;
+@property (strong, nonatomic) UIView *mask;
 
 /// Setup Methods
 - (void)setup;
 
 /// UI Methods
 - (void)toggleSocialButtonStatesOnRollViewLaunch;
-- (void)removeKeyboard:(NSNotification *)notification;
 
 /// Action Methods
 - (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link;
@@ -37,13 +37,6 @@
 @end
 
 @implementation SPShareController
-
-
-#pragma mark - Memory Management
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPUserDidSwipeToNextVideo object:nil];
-}
 
 #pragma mark - Initialization
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer
@@ -62,12 +55,6 @@
     
     // Reference AppDelegate
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    // Add Observer
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(removeKeyboard:)
-                                                 name:kShelbySPUserDidSwipeToNextVideo
-                                               object:nil];
     
     // Reference social connection status
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
@@ -156,6 +143,14 @@
     // Set proper states for buttons
     [self toggleSocialButtonStatesOnRollViewLaunch];
     
+    CGRect videoPlayerFrame = self.videoPlayer.view.frame;
+    _mask = [[UIView alloc] initWithFrame:CGRectMake(videoPlayerFrame.origin.x, videoPlayerFrame.origin.y, videoPlayerFrame.size.width, videoPlayerFrame.size.height)];
+    [self.mask setBackgroundColor:[UIColor blackColor]];
+    [self.mask setAlpha:0];
+    [self.model.overlayView addSubview:self.mask];
+    [self.mask setUserInteractionEnabled:YES];
+    [self.model.overlayView bringSubviewToFront:self.mask];
+    
     CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
     CGFloat yOrigin = self.videoPlayer.view.frame.size.height/5.0f - _rollView.frame.size.height/4.0f;
     
@@ -163,11 +158,12 @@
                                        _videoPlayer.view.frame.size.height,
                                        _rollView.frame.size.width,
                                        _rollView.frame.size.height)];
-    [self.videoPlayer.view addSubview:_rollView];
+    [self.model.overlayView addSubview:_rollView];
+    [self.model.overlayView bringSubviewToFront:self.self.rollView];
     
     [UIView animateWithDuration:0.5f
                      animations:^{
-                         
+                         [self.mask setAlpha:0.7];
                          [self.rollView setFrame:CGRectMake(xOrigin,
                                                             yOrigin,
                                                             _rollView.frame.size.width,
@@ -187,14 +183,14 @@
                      animations:^{
                          
                          CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
-                         
+                         [self.mask setAlpha:0];
                          [self.rollView setFrame:CGRectMake(xOrigin,
                                                             self.videoPlayer.view.frame.size.height,
                                                             _rollView.frame.size.width,
                                                             _rollView.frame.size.height)];
                          
                      } completion:^(BOOL finished) {
-                         
+                         [self.mask removeFromSuperview];
                          [self.rollView.rollTextView resignFirstResponder];
                          [self.rollView removeFromSuperview];
                          [self.videoPlayer play];
@@ -212,18 +208,6 @@
     // Twitter Button State
     ( _twitterConnected ) ? [self.rollView.twitterButton setSelected:YES] : [self.rollView.twitterButton setEnabled:NO];
     
-}
-
-- (void)removeKeyboard:(NSNotification *)notification
-{
-    if ( _rollView ) {
-        
-        if ( [_rollView.rollTextView isFirstResponder] ) {
-            
-            [self.rollView.rollTextView resignFirstResponder];
-            
-        }
-    }
 }
 
 #pragma mark - Action Methods (Public)
@@ -327,6 +311,10 @@
         }
     }];
 
+    if (self.sharePopOverController) {
+        [self.sharePopOverController setDelegate:nil];
+        [self setSharePopOverController:nil];
+    }
      self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
     [self.sharePopOverController setDelegate:self];
     [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
