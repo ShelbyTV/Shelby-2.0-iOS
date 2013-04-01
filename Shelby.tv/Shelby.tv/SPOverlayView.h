@@ -34,4 +34,5 @@
 - (void)rescheduleOverlayTimer;
 
 - (void)toggleVideoListView;
+- (void)toggleMinimalView:(BOOL)animate;
 @end

@@ -66,6 +66,7 @@
 
 /// iPhone toggle
 - (IBAction)videoListToggle:(id)sender;
+- (IBAction)toggleMinimalView:(id)sender;
 @end
 
 @implementation SPVideoReel 
@@ -138,6 +139,8 @@
     [self setupVariables];
     [self setupVideoScrollView];
     [self setupOverlayView];
+    // Making minimal view as in the nib we keep it full size
+    [self.overlayView toggleMinimalView:NO];
     [self setupVideoPlayers];
     [self setupObservers];
     [self setupAirPlay];
@@ -646,6 +649,11 @@
 - (IBAction)videoListToggle:(id)sender
 {
     [self.overlayView toggleVideoListView];
+}
+
+- (IBAction)toggleMinimalView:(id)sender
+{
+    [self.overlayView toggleMinimalView:YES];
 }
 
 #pragma mark - Storage Methods (Private)

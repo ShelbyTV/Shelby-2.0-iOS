@@ -19,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
 @property (weak, nonatomic) IBOutlet UIView *playListControlsView;
 
+@property (weak, nonatomic) IBOutlet UIButton *grabberOpen;
+@property (weak, nonatomic) IBOutlet UIButton *grabberClose;
+
 - (void)hideVideoList:(BOOL)animate;
 - (void)showVideoList:(BOOL)animate;
 @end
@@ -159,6 +162,27 @@
     }
 }
 
+
+- (void)toggleMinimalView:(BOOL)animate
+{
+    int minimalWidth = self.playButton.frame.origin.x - 10;
+    float animation = (animate ? 0.5 : 0.01);
+    
+    
+    if (self.videoListView.frame.size.width == self.frame.size.width) {
+        [UIView animateWithDuration:animation animations:^{
+            [self.videoListView setFrame:CGRectMake(0, self.videoListView.frame.origin.y, minimalWidth, self.videoListView.frame.size.height)];
+        } completion:^(BOOL finished) {
+            [self.grabberOpen setAlpha:1];
+        }];
+        
+    } else if (self.videoListView.frame.size.width == minimalWidth){
+        [UIView animateWithDuration:animation animations:^{
+            [self.videoListView setFrame:CGRectMake(0, self.videoListView.frame.origin.y, self.frame.size.width, self.videoListView.frame.size.height)];
+            [self.grabberOpen setAlpha:0];
+        }];
+    }
+}
 
 #pragma mark - toggle video list (Private)
 - (void)hideVideoList:(BOOL)animate
