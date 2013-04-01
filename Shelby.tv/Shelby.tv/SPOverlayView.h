@@ -33,4 +33,5 @@
 
 - (void)rescheduleOverlayTimer;
 
+- (void)toggleVideoListView;
 @end

@@ -63,6 +63,9 @@
 /// Transition Methods
 - (void)transformInAnimation;
 - (void)transformOutAnimation;
+
+/// iPhone toggle
+- (IBAction)videoListToggle:(id)sender;
 @end
 
 @implementation SPVideoReel 
@@ -639,6 +642,11 @@
     [[SPVideoScrubber sharedInstance] endScrubbing];
 }
 
+#pragma mark - Overlay Actions (Private)
+- (IBAction)videoListToggle:(id)sender
+{
+    [self.overlayView toggleVideoListView];
+}
 
 #pragma mark - Storage Methods (Private)
 - (void)storeIdentifierOfCurrentVideoInStream
