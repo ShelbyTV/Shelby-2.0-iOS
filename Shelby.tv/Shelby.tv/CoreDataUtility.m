@@ -74,8 +74,7 @@
                                                    object:_context];
         
         NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
-        [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] addObject:hash];
-        
+        [_appDelegate addHash:hash];
     }
     
     return self;
@@ -1797,15 +1796,7 @@
 - (void)removeStoredHash
 {
     NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
-    
-    if ( [self.appDelegate dataUtilities] && [self.appDelegate.dataUtilities count] ) {
-        
-        if ( [self.appDelegate.dataUtilities containsObject:hash] ) {
-            
-            [[_appDelegate mutableArrayValueForKey:@"dataUtilities"] removeObject:hash];
-            
-        }
-    }
+    [_appDelegate removeHash:hash];
 }
 
 #pragma mark - Fetching Methods (Private)
