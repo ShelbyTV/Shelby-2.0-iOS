@@ -685,12 +685,6 @@
     [self.overlayView toggleMinimalView:YES];
 }
 
-#pragma mark - Overlay Actions (Private)
-- (IBAction)videoListToggle:(id)sender
-{
-    [self.overlayView toggleVideoListView];
-}
-
 #pragma mark - Storage Methods (Private)
 - (void)storeIdentifierOfCurrentVideoInStream
 {
