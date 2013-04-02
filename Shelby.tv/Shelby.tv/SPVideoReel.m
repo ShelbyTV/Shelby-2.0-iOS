@@ -1133,12 +1133,13 @@ typedef NS_ENUM(NSUInteger, MenuState)
     _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController" bundle:nil];
     [self.view addSubview:[self.groupsMenuViewController view]];
     
-    self.groupsMenuViewController.view.frame = CGRectMake(0.0f,
+    float xOrigin = (kShelbySPVideoWidth - self.groupsMenuViewController.view.frame.size.width) / 2;
+    self.groupsMenuViewController.view.frame = CGRectMake(xOrigin,
                                                           -self.groupsMenuViewController.view.frame.size.height,
                                                           self.groupsMenuViewController.view.frame.size.width,
                                                           self.groupsMenuViewController.view.frame.size.height);
     [UIView animateWithDuration:0.5 animations:^{
-        self.groupsMenuViewController.view.frame = CGRectMake(0.0f,
+        self.groupsMenuViewController.view.frame = CGRectMake(xOrigin,
                                                               0.0f,
                                                               self.groupsMenuViewController.view.frame.size.width,
                                                               self.groupsMenuViewController.view.frame.size.height);
@@ -1152,7 +1153,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [self setMenuState:MenuStateNone];
     
     [UIView animateWithDuration:0.5 animations:^{
-        self.groupsMenuViewController.view.frame = CGRectMake(0.0f,
+        self.groupsMenuViewController.view.frame = CGRectMake(self.groupsMenuViewController.view.frame.origin.x,
                                                                   -self.groupsMenuViewController.view.frame.size.height,
                                                                   self.groupsMenuViewController.view.frame.size.width,
                                                                   self.groupsMenuViewController.view.frame.size.height);
