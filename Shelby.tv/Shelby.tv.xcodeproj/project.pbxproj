@@ -528,6 +528,12 @@
 		8E9FBD5F16C7145F00731912 /* authenticationTextField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */; };
 		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
+		8EA9B1DC170B6421004C7601 /* CategoriesMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1DA170B6421004C7601 /* CategoriesMenuViewController.m */; };
+		8EA9B1DD170B6421004C7601 /* CategoriesMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1DA170B6421004C7601 /* CategoriesMenuViewController.m */; };
+		8EA9B1DE170B6421004C7601 /* CategoriesMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1DA170B6421004C7601 /* CategoriesMenuViewController.m */; };
+		8EA9B1DF170B6421004C7601 /* CategoriesMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA9B1DB170B6421004C7601 /* CategoriesMenuViewController.xib */; };
+		8EA9B1E0170B6421004C7601 /* CategoriesMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA9B1DB170B6421004C7601 /* CategoriesMenuViewController.xib */; };
+		8EA9B1E1170B6421004C7601 /* CategoriesMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA9B1DB170B6421004C7601 /* CategoriesMenuViewController.xib */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EB19AA116E6FC4A00B22228 /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
@@ -778,6 +784,9 @@
 		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
 		8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemView.m; sourceTree = "<group>"; };
 		8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemView.xib; sourceTree = "<group>"; };
+		8EA9B1D9170B6421004C7601 /* CategoriesMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesMenuViewController.h; sourceTree = "<group>"; };
+		8EA9B1DA170B6421004C7601 /* CategoriesMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesMenuViewController.m; sourceTree = "<group>"; };
+		8EA9B1DB170B6421004C7601 /* CategoriesMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesMenuViewController.xib; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
 		8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataConstants.h; sourceTree = "<group>"; };
 		8EAAEE59163A29A900AEF100 /* CoreDataUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataUtility.h; sourceTree = "<group>"; };
@@ -1448,6 +1457,9 @@
 				1C7B8D5716F113AB0069F570 /* AuthorizationViewController.m */,
 				1CC3387616CBDF2A00E58375 /* BrowseViewController.h */,
 				1CC3387716CBDF2A00E58375 /* BrowseViewController.m */,
+				8EA9B1D9170B6421004C7601 /* CategoriesMenuViewController.h */,
+				8EA9B1DA170B6421004C7601 /* CategoriesMenuViewController.m */,
+				8EA9B1DB170B6421004C7601 /* CategoriesMenuViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1689,6 +1701,7 @@
 				1C671A1D170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A22170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A25170A219500EFD5E3 /* grabber@2x.png in Resources */,
+				8EA9B1E0170B6421004C7601 /* CategoriesMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1811,6 +1824,7 @@
 				1C671A1E170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A23170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A26170A219500EFD5E3 /* grabber@2x.png in Resources */,
+				8EA9B1E1170B6421004C7601 /* CategoriesMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1934,6 +1948,7 @@
 				1C671A1C170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A21170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A24170A219500EFD5E3 /* grabber@2x.png in Resources */,
+				8EA9B1DF170B6421004C7601 /* CategoriesMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2043,6 +2058,7 @@
 				1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58D16F2D9CE0001EF5D /* Video.m in Sources */,
+				8EA9B1DD170B6421004C7601 /* CategoriesMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2107,6 +2123,7 @@
 				1C7B8D5A16F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EC16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */,
+				8EA9B1DE170B6421004C7601 /* CategoriesMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2171,6 +2188,7 @@
 				1C7B8D5816F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EA16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58C16F2D9CE0001EF5D /* Video.m in Sources */,
+				8EA9B1DC170B6421004C7601 /* CategoriesMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
