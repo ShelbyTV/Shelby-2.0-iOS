@@ -126,7 +126,7 @@
  * @param duration how long the button will rotate for
  * @param direction whether to rotate forward or backward
  */
-- (void)shouldRotateButton:(UIButton *)button forDuration:(float)duration forwardDirection:(BOOL)direction;
+- (void)shouldRotateButton:(id)button forDuration:(float)duration forwardDirection:(BOOL)direction;
 
 ///this method is called from the nstimer to fling the next item into view
 - (void)willFlingItem;

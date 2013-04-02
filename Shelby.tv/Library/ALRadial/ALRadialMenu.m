@@ -14,7 +14,7 @@
 
 
 //FIXME: sanity/dedup this
-- (void)itemsWillAppearFromButton:(UIButton *) button inView:(UIView *)view {
+- (void)itemsWillAppearFromButton:(id) sender inView:(UIView *)view {
 	if ([self.items count]) {
 		//the items are already displayed, we shouldn't be here
 		return;
@@ -48,11 +48,19 @@
 	
 	
 	float angle = (arc>=360)?(360/itemCount):((itemCount>1)?(arc/(itemCount-1)):0.0f);
-	int centerX = button.center.x;
-	int centerY = button.center.y;
-	CGPoint origin = CGPointMake(centerX, centerY);
 	
-	float buttonSize = 25.0f;
+    NSInteger centerX;
+    NSInteger centerY;
+    if ( [sender isMemberOfClass:[UIButton class]] ) {
+        centerX = [(UIButton *)sender center].x;
+        centerY = [(UIButton *)sender center].y;
+    } else {
+        centerX = [(UILongPressGestureRecognizer *)sender locationInView:view].x;
+        centerY = [(UILongPressGestureRecognizer *)sender locationInView:view].y;
+    }
+  
+    CGPoint origin = CGPointMake(centerX, centerY);
+	float buttonSize = 60.0f;
 	if ([self.delegate respondsToSelector:@selector(buttonSizeForRadialMenu:)]) {
 		buttonSize = [self.delegate buttonSizeForRadialMenu:self];
 	}
@@ -69,7 +77,7 @@
 		int extraY = round (centerY + (radius*1.07) * sin(radians));
 		
 		//FIXME: make height/width ivars with a delegate to resize
-		CGRect frame = CGRectMake(centerX-buttonSize*0.5f, centerY-buttonSize*0.5f, buttonSize, buttonSize);
+		CGRect frame = CGRectMake(centerX-buttonSize, centerY-buttonSize, buttonSize, buttonSize);
 		
 		CGPoint final = CGPointMake(x, y);
 		CGPoint bounce = CGPointMake(extraX, extraY);
@@ -90,7 +98,7 @@
 		[popupButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
 		
 		
-		[view insertSubview:popupButton belowSubview:button];
+		[view insertSubview:popupButton belowSubview:sender];
 		
 		[mutablePopups addObject:popupButton];
 		
@@ -115,11 +123,14 @@
 	float spinDuration = ([self.items count]+1) * flingInterval;
 	
 	//use CABasicAnimation instead of a view animation so we can keep the spin going for more than 360 degrees
-	[self shouldRotateButton:button forDuration:spinDuration forwardDirection:YES];
+	
+    if ( [sender isMemberOfClass:[UIButton class]]) {
+        [self shouldRotateButton:sender forDuration:spinDuration forwardDirection:YES];
+    }
 }
 
 
-- (void)itemsWillDisapearIntoButton:(UIButton *) button {
+- (void)itemsWillDisapearIntoButton:(id)sender {
 	if ([self.items count] == 0) {
 		//no items are displayed, we shouldn't be here
 		return;
@@ -138,7 +149,7 @@
 	//this should go on for as long as we are flinging objects
 	float spinDuration = ([self.items count]+1) * flingInterval;
 
-	[self shouldRotateButton:button forDuration:spinDuration forwardDirection:NO];
+	[self shouldRotateButton:sender forDuration:spinDuration forwardDirection:NO];
 }
 
 
@@ -202,27 +213,23 @@
 
 
 
-- (void)shouldRotateButton:(UIButton *)button forDuration:(float)duration forwardDirection:(BOOL)direction {
-	//use CABasicAnimation instead of a view animation so we can keep the spin going for more than 360
-	CABasicAnimation *spinAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-	spinAnimation.duration = duration;
-	spinAnimation.timingFunction = [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseInEaseOut];
-	//do a 180 turn for each object being flung
-	float totalDuration = M_PI * [self.items count];
-	if (!direction) {
-		totalDuration = totalDuration * -1;
-	}
-	spinAnimation.toValue = [NSNumber numberWithFloat: totalDuration];
-	[button.layer addAnimation:spinAnimation forKey:@"spinAnimation"];
+- (void)shouldRotateButton:(id)sender forDuration:(float)duration forwardDirection:(BOOL)direction
+{
+        
+    //use CABasicAnimation instead of a view animation so we can keep the spin going for more than 360
+    CABasicAnimation *spinAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    spinAnimation.duration = duration;
+    spinAnimation.timingFunction = [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseInEaseOut];
+    //do a 180 turn for each object being flung
+    float totalDuration = M_PI * [self.items count];
+    if (!direction) {
+        totalDuration = totalDuration * -1;
+    }
+    spinAnimation.toValue = [NSNumber numberWithFloat: totalDuration];
 
 }
-
-
-
-
-
-#pragma mark - button delegate methods
-- (void) buttonDidFinishAnimation:(ALRadialButton *)radialButton {
+- (void) buttonDidFinishAnimation:(ALRadialButton *)radialButton
+{
 	//now that the animation is complete remove the button from view.
 	[radialButton removeFromSuperview];
 	
