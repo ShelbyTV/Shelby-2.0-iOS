@@ -14,12 +14,13 @@
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
 #import "ImageUtilities.h"
+#import "GroupsMenuViewController.h"
 
 typedef NS_ENUM(NSUInteger, MenuState)
 {
     MenuStateNone,
     MenuStatePlaylistOpen,
-    MenuStateCategoriesOpen,
+    MenuStateGroupsOpen,
 };
 
 @interface SPVideoReel ()
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
+@property (strong, nonatomic) GroupsMenuViewController *groupsMenuViewController;
 @property (assign, nonatomic) MenuState menuState;
 
 // Transition Properties
@@ -72,8 +74,8 @@ typedef NS_ENUM(NSUInteger, MenuState)
 
 /// Gesture Methods
 - (void)toggleMenues:(UIGestureRecognizer *)gesture;
-- (void)launchCategoriesMenu;
-- (void)dismissCategoriesMenu;
+- (void)launchGroupsMenu;
+- (void)dismissGroupsMenu;
 - (void)launchPlaylist;
 - (void)dismissPlaylist;
 
@@ -178,7 +180,6 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [self setupVariables];
     [self setupVideoScrollView];
     [self setupOverlayView];
-    // Making minimal view as in the nib we keep it full size
     [self setupVideoPlayers];
     [self setupObservers];
     [self setupSwipeGestures];
@@ -1112,16 +1113,38 @@ typedef NS_ENUM(NSUInteger, MenuState)
 }
 
 #pragma mark - Gesture Methods (Private)
-- (void)launchCategoriesMenu
+- (void)launchGroupsMenu
 {
     DLog(@"Launched Categories Menu");
-    [self setMenuState:MenuStateCategoriesOpen];
+    [self setMenuState:MenuStateGroupsOpen];
+    
+    _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController" bundle:nil];
+    [self.view addSubview:[self.groupsMenuViewController view]];
+    
+    self.groupsMenuViewController.view.frame = CGRectMake(0.0f,
+                                                          -self.groupsMenuViewController.view.frame.size.height,
+                                                          self.groupsMenuViewController.view.frame.size.width,
+                                                          self.groupsMenuViewController.view.frame.size.height);
+    [UIView animateWithDuration:0.5 animations:^{
+        self.groupsMenuViewController.view.frame = CGRectMake(0.0f,
+                                                              0.0f,
+                                                              self.groupsMenuViewController.view.frame.size.width,
+                                                              self.groupsMenuViewController.view.frame.size.height);
+    }];
+    
 }
 
-- (void)dismissCategoriesMenu
+- (void)dismissGroupsMenu
 {
     DLog(@"Dismissed Categories Menu");
     [self setMenuState:MenuStateNone];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.groupsMenuViewController.view.frame = CGRectMake(0.0f,
+                                                                  -self.groupsMenuViewController.view.frame.size.height,
+                                                                  self.groupsMenuViewController.view.frame.size.width,
+                                                                  self.groupsMenuViewController.view.frame.size.height);
+    }];
 
 }
 
@@ -1152,11 +1175,11 @@ typedef NS_ENUM(NSUInteger, MenuState)
         if (direction == UISwipeGestureRecognizerDirectionUp) {
             [self launchPlaylist];
         } else {
-            [self launchCategoriesMenu];
+            [self launchGroupsMenu];
         }
-    } else if (self.menuState == MenuStateCategoriesOpen) {
+    } else if (self.menuState == MenuStateGroupsOpen) {
         if (direction == UISwipeGestureRecognizerDirectionUp) {
-            [self dismissCategoriesMenu];
+            [self dismissGroupsMenu];
         }
     } else if (self.menuState == MenuStatePlaylistOpen) {
         if (direction == UISwipeGestureRecognizerDirectionDown) {
