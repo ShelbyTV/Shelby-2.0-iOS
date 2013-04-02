@@ -166,6 +166,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
@@ -799,46 +800,32 @@ typedef NS_ENUM(NSUInteger, MenuState)
 }
 
 - (void)updatePlaybackUI
-{
-    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        
-//        [self.overlayView.bufferView setProgress:0.0f];
-//        
-//        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
-//            
-//            [self.model.currentVideoPlayer play];
-//            
-//            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
-//                
-//                [self.overlayView.restartPlaybackButton setHidden:NO];
-//                [self.overlayView.playButton setEnabled:NO];
-//                [self.overlayView.scrubber setEnabled:NO];
-//                [self.overlayView.shareButton setEnabled:YES]; 
-//                
-//            } else { // Playable video DID NOT finish playing
-//                
-//                [self.overlayView.restartPlaybackButton setHidden:YES];
-//                [self.overlayView.playButton setEnabled:YES];
-//                [self.overlayView.scrubber setEnabled:YES];
-//                [self.overlayView.shareButton setEnabled:YES];
-//                
-//            }
-//            
-//        } else { // Video IS NOT Playable
-//            
-//            [self.overlayView.restartPlaybackButton setHidden:YES];
-//            [self.overlayView.playButton setEnabled:NO];
-//            [self.overlayView.scrubber setEnabled:NO];
-//            [self.overlayView.shareButton setEnabled:NO];
-//            
-//            [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
-//            [self.overlayView.scrubber setValue:0.0f];
-//            [self.overlayView.scrubberTimeLabel setText:@"00:00:00 / 00:00:00"];
-//            
-//        }
-//        
-//    });
+{    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.overlayView.bufferProgressView setProgress:0.0f];
+        
+        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
+            
+            [self.model.currentVideoPlayer play];
+            
+            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
+                
+                [self.overlayView.restartPlaybackButton setHidden:NO];
+                
+            } else { // Playable video DID NOT finish playing
+                
+                [self.overlayView.restartPlaybackButton setHidden:YES];
+                
+            }
+            
+        } else { // Video IS NOT Playable
+            
+            [self.overlayView.restartPlaybackButton setHidden:YES];
+            
+        }
+        
+    });
 
 }
 
