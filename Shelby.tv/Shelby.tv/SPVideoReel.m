@@ -1156,6 +1156,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
                                                                   -self.groupsMenuViewController.view.frame.size.height,
                                                                   self.groupsMenuViewController.view.frame.size.width,
                                                                   self.groupsMenuViewController.view.frame.size.height);
+
     }];
 
 }

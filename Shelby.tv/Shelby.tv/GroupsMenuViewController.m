@@ -15,7 +15,7 @@
 
 - (void)setupDataSource;
 - (void)setupTableView;
-- (void)setupUserSpecificGroups;
+- (void)setupUserSpecificGroupsForRow:(NSUInteger)row inCell:(UITableViewCell *)cell;
 - (NSString *)extractTitleFromCategory:(id)category;
 
 @end
@@ -35,11 +35,10 @@
     return self;
 }
 
-#pragma mark - Interface Orientation Methods
+#pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupTableView];
 }
 
 #pragma mark - Setup Methods
@@ -49,16 +48,35 @@
     self.categories = [dataUtility fetchAllCategories];
 }
 
-- (void)setupTableView
-{
-    self.playlistTableView.backgroundView.backgroundColor = [UIColor blackColor];
-    self.playlistTableView.backgroundView.alpha = 0.7f;
-    [self.playlistTableView setScrollEnabled:NO];
-}
 
-- (void)setupUserSpecificGroups
+- (void)setupUserSpecificGroupsForRow:(NSUInteger)row inCell:(UITableViewCell *)cell
 {
-    
+    switch ( row ) {
+       
+        case 0: {
+            
+            cell.textLabel.text = @"Likes";
+            cell.textLabel.textColor = [UIColor redColor];
+            
+        } break;
+        
+        case 1: {
+            
+            cell.textLabel.text = @"Stream";
+            cell.textLabel.textColor = [UIColor blueColor];
+            
+        } break;
+            
+        case 2: {
+            
+            cell.textLabel.text = @"My Roll";
+            cell.textLabel.textColor = kShelbyColorGreen;
+            
+        } break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - Private Methods
@@ -124,12 +142,13 @@
     
     if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.textColor = [UIColor orangeColor];
+        cell.backgroundView.backgroundColor = [UIColor clearColor];
     }
     
     if ( 0 == indexPath.section ) { // User-Specific Playlists
     
-        cell.textLabel.text = @"Likes";
+        [self setupUserSpecificGroupsForRow:[indexPath row] inCell:cell];
         
     } else { // Category Playlists
     
@@ -141,6 +160,11 @@
 }
 
 #pragma mark - UITableViewDelegate Methods
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return ( 0 == section ) ? @"My Stuff" : @"#Channels" ;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
