@@ -38,7 +38,7 @@
 - (void)setupScrubber
 {
     
-    CGFloat interval = .1f;
+//    CGFloat interval = .1f;
 	CMTime playerDuration = [self duration];
     
 	if ( CMTIME_IS_INVALID(playerDuration) ) {
@@ -50,8 +50,8 @@
 	
     CGFloat duration = CMTimeGetSeconds(playerDuration);
 	if ( isfinite(duration) ) {
-		CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
-		interval = 0.5f * duration / width;
+//		CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
+//		interval = 0.5f * duration / width;
 	}
     
     if (self.scrubberTimeObserver) {
@@ -59,49 +59,49 @@
         [self setScrubberTimeObserver:nil];
     }
     
-    self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
-                                                                                                   queue:NULL /* If you pass NULL, the main queue is used. */
-                                                                                              usingBlock:^(CMTime time) {
-                                                                                                        
-                                                                                                        [self syncScrubber];
-                                                                                                  
-                                                                                                    }];
+//    self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
+//                                                                                                   queue:NULL /* If you pass NULL, the main queue is used. */
+//                                                                                              usingBlock:^(CMTime time) {
+//                                                                                                        
+//                                                                                                        [self syncScrubber];
+//                                                                                                  
+//                                                                                                    }];
 }
 
 - (void)syncScrubber
 {
-    
-	CMTime durationTime = [self duration];
-	if ( CMTIME_IS_INVALID(durationTime) ) {
-        [self.model.overlayView.scrubber setValue:0.0f];
-        [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
-		return;
-	}
-    
-	CGFloat duration = CMTimeGetSeconds(durationTime);
-    
-	if ( isfinite(duration) && self.model.currentVideoPlayer.player ) {
-        
-        // Update value of scrubber (slider and label)
-		CGFloat minValue = [self.model.overlayView.scrubber minimumValue];
-		CGFloat maxValue = [self.model.overlayView.scrubber maximumValue];
-        CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
-        [self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
-        [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
-        
-        // Update watched later roll
-        [self updateWatchedRoll];
-        
-        // Update button state
-        if ( 0.0 == self.model.currentVideoPlayer.player.rate && self.model.currentVideoPlayer.player && self.model.currentVideoPlayer.isPlayable ) {
-            
-            [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
-            
-        } else {
-            
-            [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
-        }
-	}
+//    
+//	CMTime durationTime = [self duration];
+//	if ( CMTIME_IS_INVALID(durationTime) ) {
+//        [self.model.overlayView.scrubber setValue:0.0f];
+//        [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+//		return;
+//	}
+//    
+//	CGFloat duration = CMTimeGetSeconds(durationTime);
+//    
+//	if ( isfinite(duration) && self.model.currentVideoPlayer.player ) {
+//        
+//        // Update value of scrubber (slider and label)
+//		CGFloat minValue = [self.model.overlayView.scrubber minimumValue];
+//		CGFloat maxValue = [self.model.overlayView.scrubber maximumValue];
+//        CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
+//        [self.model.overlayView.scrubber setValue:(maxValue - minValue) * currentTime / duration + minValue];
+//        [self.model.overlayView.scrubberTimeLabel setText:[self convertElapsedTime:currentTime andDuration:duration]];
+//        
+//        // Update watched later roll
+//        [self updateWatchedRoll];
+//        
+//        // Update button state
+//        if ( 0.0 == self.model.currentVideoPlayer.player.rate && self.model.currentVideoPlayer.player && self.model.currentVideoPlayer.isPlayable ) {
+//            
+//            [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+//            
+//        } else {
+//            
+//            [self.model.overlayView.playButton setImage:[UIImage imageNamed:@"pauseButton"] forState:UIControlStateNormal];
+//        }
+//	}
 }
 
 - (void)stopObserving
@@ -131,53 +131,53 @@
     CGFloat duration = CMTimeGetSeconds(playerDuration);
     if ( isfinite(duration) ) {
         
-        CGFloat minValue = [self.model.overlayView.scrubber minimumValue];
-        CGFloat maxValue = [self.model.overlayView.scrubber maximumValue];
-        CGFloat value = [self.model.overlayView.scrubber value];
-        CGFloat time = duration * (value - minValue) / (maxValue - minValue);
-        [self.model.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
+//        CGFloat minValue = [self.model.overlayView.scrubber minimumValue];
+//        CGFloat maxValue = [self.model.overlayView.scrubber maximumValue];
+//        CGFloat value = [self.model.overlayView.scrubber value];
+//        CGFloat time = duration * (value - minValue) / (maxValue - minValue);
+//        [self.model.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
         
     }
 }
 
 - (void)endScrubbing
 {
-    
-    CMTime playerDuration = [self duration];
-    if (CMTIME_IS_INVALID(playerDuration)) {
-        return;
-    }
-    
-    CGFloat duration = CMTimeGetSeconds(playerDuration);
-    
-    if ( isfinite(duration) ) {
-        CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
-        CGFloat interval = 0.5f * duration / width;
-        self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
-                                                                                                       queue:NULL
-                                                                                                  usingBlock:^(CMTime time) {
-
-                                                                                                [self syncScrubber];
-                                                                                                
-                                                                                            }];
-        
-        
-        // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
-        ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
-     
-        // Reset playbackStartTime
-        [self.model.currentVideoPlayer setPlaybackStartTime:[self.model.currentVideoPlayer elapsedTime]];
-        DLog(@"Current Time: %lld", (self.model.currentVideoPlayer.playbackStartTime.value / self.model.currentVideoPlayer.playbackStartTime.timescale));
-        
-    }
-    
-    // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                               withAction:@"User did scrub video"
-                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                withValue:nil];
-
+//    
+//    CMTime playerDuration = [self duration];
+//    if (CMTIME_IS_INVALID(playerDuration)) {
+//        return;
+//    }
+//    
+//    CGFloat duration = CMTimeGetSeconds(playerDuration);
+//    
+//    if ( isfinite(duration) ) {
+//        CGFloat width = CGRectGetWidth([self.model.overlayView.scrubber bounds]);
+//        CGFloat interval = 0.5f * duration / width;
+//        self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
+//                                                                                                       queue:NULL
+//                                                                                                  usingBlock:^(CMTime time) {
+//
+//                                                                                                [self syncScrubber];
+//                                                                                                
+//                                                                                            }];
+//        
+//        
+//        // If video was playing before scrubbing began, make sure it continues to play, otherwise, pause the video
+//        ( self.model.currentVideoPlayer.isPlaying ) ? [self.model.currentVideoPlayer play] : [self.model.currentVideoPlayer pause];
+//     
+//        // Reset playbackStartTime
+//        [self.model.currentVideoPlayer setPlaybackStartTime:[self.model.currentVideoPlayer elapsedTime]];
+//        DLog(@"Current Time: %lld", (self.model.currentVideoPlayer.playbackStartTime.value / self.model.currentVideoPlayer.playbackStartTime.timescale));
+//        
+//    }
+//    
+//    // Send event to Google Analytics
+//    id defaultTracker = [GAI sharedInstance].defaultTracker;
+//    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+//                               withAction:@"User did scrub video"
+//                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
+//                                withValue:nil];
+//
 }
 
 #pragma mark - Playback Methods (Public)

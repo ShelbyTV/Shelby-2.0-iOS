@@ -191,10 +191,10 @@
     if ( self == _model.currentVideoPlayer ) {
         
         [self.overlayView.restartPlaybackButton setHidden:YES];
-        [self.overlayView.playButton setEnabled:YES];
-        [self.overlayView.scrubber setEnabled:YES];
-        [self.overlayView.scrubber setHidden:NO];
-        [self.overlayView.shareButton setEnabled:YES];
+//        [self.overlayView.playButton setEnabled:YES];
+//        [self.overlayView.scrubber setEnabled:YES];
+//        [self.overlayView.scrubber setHidden:NO];
+//        [self.overlayView.shareButton setEnabled:YES];
         
     }
     
@@ -384,12 +384,12 @@
     [self setPlaybackFinished:NO];
     [self.overlayView.restartPlaybackButton setHidden:YES];
     
-    [self.overlayView.playButton setEnabled:YES];
-    [self.overlayView.scrubber setEnabled:YES];
-    [self.overlayView.scrubber setHidden:NO];
+//    [self.overlayView.playButton setEnabled:YES];
+//    [self.overlayView.scrubber setEnabled:YES];
+//    [self.overlayView.scrubber setHidden:NO];
     
     [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC)];
-    [[SPVideoScrubber sharedInstance] syncScrubber];
+//    [[SPVideoScrubber sharedInstance] syncScrubber];
     [self.player play];
 }
 
@@ -434,7 +434,7 @@
         [dataUtility saveContext:context];
         
     }
-    [[SPVideoScrubber sharedInstance] syncScrubber];
+//    [[SPVideoScrubber sharedInstance] syncScrubber];
     // Set Flag
     [self setIsPlaying:NO];
     
@@ -595,9 +595,9 @@
 
 - (void)updateBufferView:(NSNumber *)buffered
 {
-    if ( buffered.doubleValue > [self.model.overlayView.bufferView progress] ) {
-        [self.model.overlayView.bufferView setProgress:buffered.doubleValue animated:YES];
-    }
+//    if ( buffered.doubleValue > [self.model.overlayView.bufferView progress] ) {
+//        [self.model.overlayView.bufferView setProgress:buffered.doubleValue animated:YES];
+//    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

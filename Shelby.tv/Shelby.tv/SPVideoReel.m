@@ -63,10 +63,6 @@
 /// Transition Methods
 - (void)transformInAnimation;
 - (void)transformOutAnimation;
-
-/// iPhone toggle
-- (IBAction)videoListToggle:(id)sender;
-- (IBAction)toggleMinimalView:(id)sender;
 @end
 
 @implementation SPVideoReel 
@@ -140,7 +136,6 @@
     [self setupVideoScrollView];
     [self setupOverlayView];
     // Making minimal view as in the nib we keep it full size
-    [self.overlayView toggleMinimalView:NO];
     [self setupVideoPlayers];
     [self setupObservers];
     [self setupAirPlay];
@@ -645,17 +640,6 @@
     [[SPVideoScrubber sharedInstance] endScrubbing];
 }
 
-#pragma mark - Overlay Actions (Private)
-- (IBAction)videoListToggle:(id)sender
-{
-    [self.overlayView toggleVideoListView];
-}
-
-- (IBAction)toggleMinimalView:(id)sender
-{
-    [self.overlayView toggleMinimalView:YES];
-}
-
 #pragma mark - Storage Methods (Private)
 - (void)storeIdentifierOfCurrentVideoInStream
 {
@@ -760,44 +744,44 @@
 - (void)updatePlaybackUI
 {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self.overlayView.bufferView setProgress:0.0f];
-        
-        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
-            
-            [self.model.currentVideoPlayer play];
-            
-            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
-                
-                [self.overlayView.restartPlaybackButton setHidden:NO];
-                [self.overlayView.playButton setEnabled:NO];
-                [self.overlayView.scrubber setEnabled:NO];
-                [self.overlayView.shareButton setEnabled:YES]; 
-                
-            } else { // Playable video DID NOT finish playing
-                
-                [self.overlayView.restartPlaybackButton setHidden:YES];
-                [self.overlayView.playButton setEnabled:YES];
-                [self.overlayView.scrubber setEnabled:YES];
-                [self.overlayView.shareButton setEnabled:YES];
-                
-            }
-            
-        } else { // Video IS NOT Playable
-            
-            [self.overlayView.restartPlaybackButton setHidden:YES];
-            [self.overlayView.playButton setEnabled:NO];
-            [self.overlayView.scrubber setEnabled:NO];
-            [self.overlayView.shareButton setEnabled:NO];
-            
-            [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
-            [self.overlayView.scrubber setValue:0.0f];
-            [self.overlayView.scrubberTimeLabel setText:@"00:00:00 / 00:00:00"];
-            
-        }
-        
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        
+//        [self.overlayView.bufferView setProgress:0.0f];
+//        
+//        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
+//            
+//            [self.model.currentVideoPlayer play];
+//            
+//            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
+//                
+//                [self.overlayView.restartPlaybackButton setHidden:NO];
+//                [self.overlayView.playButton setEnabled:NO];
+//                [self.overlayView.scrubber setEnabled:NO];
+//                [self.overlayView.shareButton setEnabled:YES]; 
+//                
+//            } else { // Playable video DID NOT finish playing
+//                
+//                [self.overlayView.restartPlaybackButton setHidden:YES];
+//                [self.overlayView.playButton setEnabled:YES];
+//                [self.overlayView.scrubber setEnabled:YES];
+//                [self.overlayView.shareButton setEnabled:YES];
+//                
+//            }
+//            
+//        } else { // Video IS NOT Playable
+//            
+//            [self.overlayView.restartPlaybackButton setHidden:YES];
+//            [self.overlayView.playButton setEnabled:NO];
+//            [self.overlayView.scrubber setEnabled:NO];
+//            [self.overlayView.shareButton setEnabled:NO];
+//            
+//            [self.overlayView.playButton setImage:[UIImage imageNamed:@"playButton"] forState:UIControlStateNormal];
+//            [self.overlayView.scrubber setValue:0.0f];
+//            [self.overlayView.scrubberTimeLabel setText:@"00:00:00 / 00:00:00"];
+//            
+//        }
+//        
+//    });
 
 }
 
@@ -1130,9 +1114,7 @@
     
     [self.view bringSubviewToFront:self.screenshot];
     [self.view bringSubviewToFront:self.zoomInScreenshot];
-    
-    [self.overlayView.homeButton setHidden:YES];
-    
+        
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationCurveEaseIn animations:^{
         [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
         [currentScreenshot setFrame:CGRectMake(0, 0, self.zoomInScreenshotFrame.size.width, self.zoomInScreenshotFrame.size.height)];

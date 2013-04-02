@@ -14,13 +14,7 @@
 
 @property (weak, nonatomic) SPModel *model;
 
-// KP KP: TODO: if we keep the word: playlist next to toggleVideoList button, no need to make this as button as we have a big button on top. 
-@property (weak, nonatomic) IBOutlet UIButton *toggleVideoList;
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
-@property (weak, nonatomic) IBOutlet UIView *playListControlsView;
-
-@property (weak, nonatomic) IBOutlet UIButton *grabberOpen;
-@property (weak, nonatomic) IBOutlet UIButton *grabberClose;
 
 - (void)hideVideoList:(BOOL)animate;
 - (void)showVideoList:(BOOL)animate;
@@ -38,7 +32,6 @@
         
         // Customize Colors
         [_categoryTitleLabel setTextColor:kShelbyColorWhite];
-        [_scrubberTimeLabel setTextColor:kShelbyColorWhite];
         [_nicknameLabel setTextColor:kShelbyColorBlack];
         [_videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
         [_videoCaptionLabel setTextColor:kShelbyColorBlack];
@@ -52,10 +45,6 @@
 - (void)awakeFromNib
 {
     
-    // Customize Images
-    [self.scrubber setThumbImage:[UIImage imageNamed:@"scrubberIcon"] forState:UIControlStateNormal];
-    [self.scrubber setMinimumTrackImage:[[UIImage imageNamed:@"scrubberBarGreen"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
-    
     // Customize Fonts
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
     [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.nicknameLabel.font.pointSize]];
@@ -63,8 +52,6 @@
     
     // Customize Borders
     [self.userImageView.layer setBorderWidth:0.5];
-    
-    [self.homeButton setHidden:NO];
     
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoTitleLabel setBackgroundColor:[UIColor clearColor]];
@@ -155,32 +142,10 @@
 
 - (void)toggleVideoListView
 {
-    if (self.videoListView.frame.origin.y == self.frame.size.height - self.playListControlsView.frame.size.height) {
+    if (self.videoListView.frame.origin.y == self.frame.size.height) {
         [self showVideoList:YES];
     } else if (self.videoListView.frame.origin.y == self.frame.size.height - self.videoListView.frame.size.height) {
         [self hideVideoList:YES];
-    }
-}
-
-
-- (void)toggleMinimalView:(BOOL)animate
-{
-    int minimalWidth = self.playButton.frame.origin.x - 10;
-    float animation = (animate ? 0.5 : 0.01);
-    
-    
-    if (self.videoListView.frame.size.width == self.frame.size.width) {
-        [UIView animateWithDuration:animation animations:^{
-            [self.videoListView setFrame:CGRectMake(0, self.videoListView.frame.origin.y, minimalWidth, self.videoListView.frame.size.height)];
-        } completion:^(BOOL finished) {
-            [self.grabberOpen setAlpha:1];
-        }];
-        
-    } else if (self.videoListView.frame.size.width == minimalWidth){
-        [UIView animateWithDuration:animation animations:^{
-            [self.videoListView setFrame:CGRectMake(0, self.videoListView.frame.origin.y, self.frame.size.width, self.videoListView.frame.size.height)];
-            [self.grabberOpen setAlpha:0];
-        }];
     }
 }
 
@@ -190,10 +155,8 @@
     CGRect videoListFrame = self.videoListView.frame;
     
     [UIView animateWithDuration:0.5 animations:^{
-        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - self.playListControlsView.frame.size.height, videoListFrame.size.width, videoListFrame.size.height)];
-        [self.playListControlsView setAlpha:0.7];
+        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height, videoListFrame.size.width, videoListFrame.size.height)];
     } completion:^(BOOL finished) {
-        [self.toggleVideoList setSelected:NO];
     }];
     
 }
@@ -206,9 +169,7 @@
     
     [UIView animateWithDuration:animationTime animations:^{
         [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
-        [self.playListControlsView setAlpha:0];
     } completion:^(BOOL finished) {
-        [self.toggleVideoList setSelected:YES];
     }];
 }
 

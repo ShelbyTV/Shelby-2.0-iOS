@@ -10,19 +10,13 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitleLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *videoListScrollView;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
-@property (weak, nonatomic) IBOutlet BigButton *playButton;
-@property (weak, nonatomic) IBOutlet UIView *airPlayView;
-@property (weak, nonatomic) IBOutlet UISlider *scrubber;
-@property (weak, nonatomic) IBOutlet UILabel *scrubberTimeLabel;
+@property (weak, nonatomic) IBOutlet UIView *airPlayView; // KP KP: TODO: add this button to nib!
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *videoCaptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;
 @property (weak, nonatomic) IBOutlet UIImageView *likeNotificationView;
-@property (weak, nonatomic) IBOutlet UIButton *homeButton;
-@property (weak, nonatomic) IBOutlet UIProgressView *bufferView;
 
 /// Toggle UI
 - (void)toggleOverlay;
@@ -34,5 +28,4 @@
 - (void)rescheduleOverlayTimer;
 
 - (void)toggleVideoListView;
-- (void)toggleMinimalView:(BOOL)animate;
 @end
