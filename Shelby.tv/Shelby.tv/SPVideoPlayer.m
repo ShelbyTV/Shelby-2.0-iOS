@@ -49,7 +49,7 @@
 /// Observer Methods
 - (void)loadVideo:(NSNotification *)notification;
 - (void)itemDidFinishPlaying:(NSNotification *)notification;
-- (void)updateBufferView:(NSNumber *)buffered;
+- (void)updateBufferProgressView:(NSNumber *)buffered;
 
 @end
 
@@ -593,11 +593,11 @@
     }    
 }
 
-- (void)updateBufferView:(NSNumber *)buffered
+- (void)updateBufferProgressView:(NSNumber *)buffered
 {
-//    if ( buffered.doubleValue > [self.model.overlayView.bufferView progress] ) {
-//        [self.model.overlayView.bufferView setProgress:buffered.doubleValue animated:YES];
-//    }
+    if ( buffered.doubleValue > [self.model.overlayView.bufferProgressView progress] ) {
+        [self.model.overlayView.bufferProgressView setProgress:buffered.doubleValue animated:YES];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -633,7 +633,7 @@
             NSTimeInterval availableDuration = [self availableDuration];
             NSTimeInterval duration = CMTimeGetSeconds([self duration]);
             NSTimeInterval buffered = availableDuration/duration;
-            [self performSelectorOnMainThread:@selector(updateBufferView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
+            [self performSelectorOnMainThread:@selector(updateBufferProgressView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
             
         }
     }

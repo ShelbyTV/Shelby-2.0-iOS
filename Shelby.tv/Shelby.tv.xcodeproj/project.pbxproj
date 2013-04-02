@@ -2223,7 +2223,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shelby TV Inc.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
@@ -2244,8 +2244,8 @@
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
 				);
 				PRODUCT_NAME = "Shelby.tv copy";
-				PROVISIONING_PROFILE = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7BDBFE6B-AABE-44F3-8F9B-4D371998FABE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2296,8 +2296,8 @@
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
 				);
 				PRODUCT_NAME = "Shelby.tv copy";
-				PROVISIONING_PROFILE = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2417,8 +2417,8 @@
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A730B34D-5A9A-4557-AB0A-118D0D30F60D";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
