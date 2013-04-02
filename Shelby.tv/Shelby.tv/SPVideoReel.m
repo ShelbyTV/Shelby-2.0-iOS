@@ -14,6 +14,7 @@
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
 #import "ImageUtilities.h"
+#import "ALRadialMenu.h"
 
 typedef NS_ENUM(NSUInteger, MenuState)
 {
@@ -22,7 +23,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
     MenuStateCategoriesOpen,
 };
 
-@interface SPVideoReel ()
+@interface SPVideoReel () <ALRadialMenuDelegate>
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPModel *model;
@@ -36,9 +37,9 @@ typedef NS_ENUM(NSUInteger, MenuState)
 @property (copy, nonatomic) NSString *categoryID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
-
+@property (nonatomic) ALRadialMenu *radialMenu;
 @property (assign, nonatomic) MenuState menuState;
-
+@property (assign, nonatomic) BOOL radialMenuVisible;
 // Transition Properties
 @property (strong, nonatomic) UIImageView *screenshot;
 @property (strong, nonatomic) UIImageView *zoomInScreenshot;
@@ -76,6 +77,8 @@ typedef NS_ENUM(NSUInteger, MenuState)
 - (void)dismissCategoriesMenu;
 - (void)launchPlaylist;
 - (void)dismissPlaylist;
+- (void)toggleOverlay:(UIGestureRecognizer *)gesture;
+- (void)toggleRadialMenu:(UIGestureRecognizer *)gesture;
 
 /// Transition Methods
 - (void)transformInAnimation;
@@ -106,6 +109,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
         _groupTitle = title;
         _videoFrames = videoFrames;
         _menuState = MenuStateNone;
+        _radialMenuVisible = NO;
         
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:kGAICategoryBrowse
@@ -170,6 +174,9 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
+    
+    _radialMenu = [[ALRadialMenu alloc] init];
+    self.radialMenu.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -282,9 +289,9 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [self.overlayView.categoryTitleLabel setText:_groupTitle];
     [self.view addSubview:_overlayView];
     
-    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
+    _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOverlay:)];
     [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-    [self.view addGestureRecognizer:_toggleOverlayGesuture];
+    [self.view addGestureRecognizer:self.toggleOverlayGesuture];
     
     UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];
@@ -718,6 +725,10 @@ typedef NS_ENUM(NSUInteger, MenuState)
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position
 {
     
+    if (self.radialMenuVisible) {
+        [self toggleRadialMenu:nil];
+    }
+    
     // Post notification (to rollViews that may have a keyboard loaded in view)
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidSwipeToNextVideo object:nil];
     
@@ -1139,10 +1150,21 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [self.overlayView togglePlaylistView];
 }
 
+- (void)toggleOverlay:(UIGestureRecognizer *)gesture
+{
+    if ([self.overlayView isOverlayHidden] || self.radialMenuVisible) {
+        [self toggleRadialMenu:gesture];
+    }
+    [self.overlayView toggleOverlay];
+}
 
 - (void)toggleMenues:(UISwipeGestureRecognizer *)gesture
 {
     UISwipeGestureRecognizerDirection direction = [gesture direction];
+ 
+    if (self.radialMenuVisible) {
+        [self toggleRadialMenu:gesture];
+    }
     
     if ([self.overlayView isOverlayHidden]) {
         [self.overlayView toggleOverlay];
@@ -1164,6 +1186,13 @@ typedef NS_ENUM(NSUInteger, MenuState)
         }
     }
 }
+
+- (void)toggleRadialMenu:(UIGestureRecognizer *)gesture
+{
+    [self.radialMenu buttonsWillAnimateFromButton:gesture inView:self.overlayView];
+    [self setRadialMenuVisible:!self.radialMenuVisible];
+}
+
 
 #pragma mark - Transition Methods (Private)
 - (void)transformInAnimation
@@ -1283,4 +1312,62 @@ typedef NS_ENUM(NSUInteger, MenuState)
     }
 }
 
+#pragma mark - ALRadial Methods
+- (NSInteger)numberOfItemsInRadialMenu:(ALRadialMenu *)radialMenu {
+	return 3;
+}
+
+
+- (NSInteger)arcSizeForRadialMenu:(ALRadialMenu *)radialMenu
+{
+    return 360;
+}
+
+
+- (NSInteger) arcRadiusForRadialMenu:(ALRadialMenu *)radialMenu
+{
+    return 72;
+}
+
+
+- (UIImage *)radialMenu:(ALRadialMenu *)radialMenu imageForIndex:(NSInteger) index {
+    
+    if (radialMenu == self.radialMenu) {
+        
+        if (index == 1) {
+			return [UIImage imageNamed:@"share"];
+		} else if (index == 2) {
+			return [UIImage imageNamed:@"like"];
+		} else if (index == 3) {
+			return [UIImage imageNamed:@"roll"];
+		}
+	}
+    
+	return nil;
+}
+
+
+- (void) radialMenu:(ALRadialMenu *)radialMenu didSelectItemAtIndex:(NSInteger)index
+{
+    [self.radialMenu itemsWillDisapearIntoButton:nil];
+    
+    
+    switch ( index ) {
+            
+        case 1:
+        {
+            break;
+        }
+        case 2:
+        {
+            break;
+        }
+        case 3:
+        {
+            break;
+        }
+        default:
+            break;
+    }
+}
 @end
