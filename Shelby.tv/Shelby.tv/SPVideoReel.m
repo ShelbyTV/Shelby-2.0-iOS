@@ -1118,7 +1118,7 @@
     self.upGesture.direction = UISwipeGestureRecognizerDirectionUp;
     [self.videoScrollView addGestureRecognizer:_upGesture];
     
-    [self.videoScrollView setScrollEnabled:NO];
+//    [self.videoScrollView setScrollEnabled:NO];
     
 }
 
