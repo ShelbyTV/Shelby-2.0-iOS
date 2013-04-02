@@ -30,6 +30,10 @@
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
+// Gesture Properties
+@property (strong, nonatomic) UISwipeGestureRecognizer *upGesture;
+@property (strong, nonatomic) UISwipeGestureRecognizer *downGesture;
+
 // Transition Properties
 @property (strong, nonatomic) UIImageView *screenshot;
 @property (strong, nonatomic) UIImageView *zoomInScreenshot;
@@ -59,6 +63,14 @@
 - (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
 - (void)dataSourceDidUpdate;
 - (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification*)notification;
+
+/// Gesture Methods
+- (void)resetSwipeGestures;
+- (void)nullifySwipeGestures;
+- (void)launchCategoriesMenu:(id)sender;
+- (void)dismissCategoriesMenu:(id)sender;
+- (void)launchPlaylist:(id)sender;
+- (void)dismissPlaylist:(id)sender;
 
 /// Transition Methods
 - (void)transformInAnimation;
@@ -138,6 +150,7 @@
     // Making minimal view as in the nib we keep it full size
     [self setupVideoPlayers];
     [self setupObservers];
+    [self resetSwipeGestures];
     [self setupAirPlay];
 
     [self setInTransition:NO];
@@ -1065,6 +1078,62 @@
             [self extractVideoForVideoPlayer:position];
         }
     }
+}
+
+#pragma mark - Gesture Methods (Private)
+- (void)resetSwipeGestures
+{
+    
+    // Swipe Down - Categories Menu
+    self.downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(launchCategoriesMenu:)];
+    self.downGesture.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.videoScrollView addGestureRecognizer:_downGesture];
+    
+    // Swipe Up - Playlist Menu
+    self.upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(launchPlaylist:)];
+    self.upGesture.direction = UISwipeGestureRecognizerDirectionUp;
+    [self.videoScrollView addGestureRecognizer:_upGesture];
+    
+    [self.videoScrollView setScrollEnabled:NO];
+    
+}
+
+- (void)nullifySwipeGestures
+{
+    [self.downGesture removeTarget:nil action:NULL];
+    [self.upGesture removeTarget:nil action:NULL];
+}
+
+- (void)launchCategoriesMenu:(id)sender
+{
+    [self nullifySwipeGestures];
+    DLog(@"Launched Categories Menu");
+    self.upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissCategoriesMenu:)];
+    self.upGesture.direction = UISwipeGestureRecognizerDirectionUp;
+    [self.videoScrollView addGestureRecognizer:_upGesture];
+}
+
+- (void)dismissCategoriesMenu:(id)sender
+{
+    [self nullifySwipeGestures];
+    DLog(@"Dismissed Categories Menu");
+    [self resetSwipeGestures];
+}
+
+- (void)launchPlaylist:(id)sender
+{
+    [self nullifySwipeGestures];
+    DLog(@"Launched Playlist");
+    self.downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPlaylist:)];
+    self.downGesture.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.videoScrollView addGestureRecognizer:_downGesture];
+}
+
+- (void)dismissPlaylist:(id)sender
+{
+    [self nullifySwipeGestures];
+    DLog(@"Dismissed Playlist");
+    [self resetSwipeGestures];
 }
 
 #pragma mark - Transition Methods (Private)

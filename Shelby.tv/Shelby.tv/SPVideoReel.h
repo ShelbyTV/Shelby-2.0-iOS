@@ -27,6 +27,16 @@
             videoFrames:(NSMutableArray *)videoFrames
           andCategoryID:(NSString *)categoryID;
 
+- (void)loadWithGroupType:(GroupType)groupType
+               groupTitle:(NSString *)title
+           andVideoFrames:(NSMutableArray *)videoFrames;
+
+- (void)loadWithGroupType:(GroupType)groupType
+               groupTitle:(NSString *)title
+              videoFrames:(NSMutableArray *)videoFrames
+            andCategoryID:(NSString *)categoryID;
+
+
 - (void)setupTransition:(UIImageView *)screenshot andZoomInScreenshot:(UIImageView *)zoomInScreenshot;
 
 /// Update Methods
