@@ -16,6 +16,12 @@
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
+		1C211F02170B748D002AC9B9 /* ALRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211EFF170B748D002AC9B9 /* ALRadialButton.m */; };
+		1C211F03170B748D002AC9B9 /* ALRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211EFF170B748D002AC9B9 /* ALRadialButton.m */; };
+		1C211F04170B748D002AC9B9 /* ALRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211EFF170B748D002AC9B9 /* ALRadialButton.m */; };
+		1C211F05170B748D002AC9B9 /* ALRadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211F01170B748D002AC9B9 /* ALRadialMenu.m */; };
+		1C211F06170B748D002AC9B9 /* ALRadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211F01170B748D002AC9B9 /* ALRadialMenu.m */; };
+		1C211F07170B748D002AC9B9 /* ALRadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211F01170B748D002AC9B9 /* ALRadialMenu.m */; };
 		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
@@ -583,6 +589,10 @@
 		1C16A95016E14FCF004ABA41 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
+		1C211EFE170B748D002AC9B9 /* ALRadialButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALRadialButton.h; sourceTree = "<group>"; };
+		1C211EFF170B748D002AC9B9 /* ALRadialButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALRadialButton.m; sourceTree = "<group>"; };
+		1C211F00170B748D002AC9B9 /* ALRadialMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALRadialMenu.h; sourceTree = "<group>"; };
+		1C211F01170B748D002AC9B9 /* ALRadialMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALRadialMenu.m; sourceTree = "<group>"; };
 		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
@@ -925,6 +935,18 @@
 			);
 			name = FormViews;
 			sourceTree = "<group>";
+		};
+		1C211EFD170B748D002AC9B9 /* ALRadial */ = {
+			isa = PBXGroup;
+			children = (
+				1C211EFE170B748D002AC9B9 /* ALRadialButton.h */,
+				1C211EFF170B748D002AC9B9 /* ALRadialButton.m */,
+				1C211F00170B748D002AC9B9 /* ALRadialMenu.h */,
+				1C211F01170B748D002AC9B9 /* ALRadialMenu.m */,
+			);
+			name = ALRadial;
+			path = Library/ALRadial;
+			sourceTree = SOURCE_ROOT;
 		};
 		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
@@ -1296,6 +1318,7 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1C211EFD170B748D002AC9B9 /* ALRadial */,
 				8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
@@ -2059,6 +2082,8 @@
 				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58D16F2D9CE0001EF5D /* Video.m in Sources */,
 				8EA9B1DD170B6421004C7601 /* CategoriesMenuViewController.m in Sources */,
+				1C211F03170B748D002AC9B9 /* ALRadialButton.m in Sources */,
+				1C211F06170B748D002AC9B9 /* ALRadialMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2124,6 +2149,8 @@
 				1C1D51EC16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */,
 				8EA9B1DE170B6421004C7601 /* CategoriesMenuViewController.m in Sources */,
+				1C211F04170B748D002AC9B9 /* ALRadialButton.m in Sources */,
+				1C211F07170B748D002AC9B9 /* ALRadialMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2189,6 +2216,8 @@
 				1C1D51EA16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58C16F2D9CE0001EF5D /* Video.m in Sources */,
 				8EA9B1DC170B6421004C7601 /* CategoriesMenuViewController.m in Sources */,
+				1C211F02170B748D002AC9B9 /* ALRadialButton.m in Sources */,
+				1C211F05170B748D002AC9B9 /* ALRadialMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
