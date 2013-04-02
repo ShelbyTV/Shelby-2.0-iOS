@@ -125,6 +125,30 @@
     return self;
 }
 
+- (void)loadWithGroupType:(GroupType)groupType
+               groupTitle:(NSString *)title
+              videoFrames:(NSMutableArray *)videoFrames
+            andCategoryID:(NSString *)categoryID
+{
+    [self setCategoryID:categoryID];
+    [self loadWithGroupType:groupType groupTitle:title andVideoFrames:videoFrames];
+}
+
+- (void)loadWithGroupType:(GroupType)groupType
+               groupTitle:(NSString *)title
+           andVideoFrames:(NSMutableArray *)videoFrames
+{
+    [self setGroupType:groupType];
+    [self setGroupTitle:title];
+    [self setVideoFrames:videoFrames];
+    
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:kGAICategoryBrowse
+                               withAction:@"User did launch playlist"
+                                withLabel:_groupTitle
+                                withValue:nil];
+}
+
 - (void)setupTransition:(UIImageView *)screenshot andZoomInScreenshot:(UIImageView *)zoomInScreenshot
 {
     [self setScreenshot:screenshot];
