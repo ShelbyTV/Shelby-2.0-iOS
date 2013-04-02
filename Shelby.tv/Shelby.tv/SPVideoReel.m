@@ -69,8 +69,8 @@
 - (void)nullifySwipeGestures;
 - (void)launchCategoriesMenu:(id)sender;
 - (void)dismissCategoriesMenu:(id)sender;
-- (void)launchPlaylist:(id)sender;
-- (void)dismissPlaylist:(id)sender;
+- (void)launchPlaylist:(UIGestureRecognizer *)gesture;
+- (void)dismissPlaylist:(UIGestureRecognizer *)gesture;
 
 /// Transition Methods
 - (void)transformInAnimation;
@@ -1107,14 +1107,13 @@
 #pragma mark - Gesture Methods (Private)
 - (void)resetSwipeGestures
 {
-    
     // Swipe Down - Categories Menu
-    self.downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(launchCategoriesMenu:)];
+    _downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(launchCategoriesMenu:)];
     self.downGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.videoScrollView addGestureRecognizer:_downGesture];
+    [self.videoScrollView addGestureRecognizer:self.downGesture];
     
     // Swipe Up - Playlist Menu
-    self.upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(launchPlaylist:)];
+    _upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(launchPlaylist:)];
     self.upGesture.direction = UISwipeGestureRecognizerDirectionUp;
     [self.videoScrollView addGestureRecognizer:_upGesture];
     
@@ -1144,20 +1143,24 @@
     [self resetSwipeGestures];
 }
 
-- (void)launchPlaylist:(id)sender
+- (void)launchPlaylist:(UIGestureRecognizer *)gesture
 {
     [self nullifySwipeGestures];
     DLog(@"Launched Playlist");
-    self.downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPlaylist:)];
+    _downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPlaylist:)];
     self.downGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.videoScrollView addGestureRecognizer:_downGesture];
+    [self.videoScrollView addGestureRecognizer:self.downGesture];
+    
+    [self.overlayView toggleVideoListView];
 }
 
-- (void)dismissPlaylist:(id)sender
+- (void)dismissPlaylist:(UIGestureRecognizer *)gesture
 {
     [self nullifySwipeGestures];
     DLog(@"Dismissed Playlist");
     [self resetSwipeGestures];
+
+    [self.overlayView toggleVideoListView];
 }
 
 #pragma mark - Transition Methods (Private)
