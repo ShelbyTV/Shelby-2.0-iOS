@@ -411,6 +411,9 @@
 		1C810AD616EE5EED0030077C /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
 		1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
+		1C8749CB170B889300397144 /* GroupsMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8749CA170B889300397144 /* GroupsMenuViewController.xib */; };
+		1C8749CC170B889300397144 /* GroupsMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8749CA170B889300397144 /* GroupsMenuViewController.xib */; };
+		1C8749CD170B889300397144 /* GroupsMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8749CA170B889300397144 /* GroupsMenuViewController.xib */; };
 		1CAC4AD416E5561C0028E1DC /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD216E5561C0028E1DC /* tv.png */; };
 		1CAC4AD616E5561C0028E1DC /* tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD316E5561C0028E1DC /* tv@2x.png */; };
 		1CAC4ADA16E55AA90028E1DC /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD816E55AA90028E1DC /* homeButton.png */; };
@@ -544,7 +547,6 @@
 		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
 		8EA9B1E5170B8241004C7601 /* GroupsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */; };
-		8EA9B1E6170B8241004C7601 /* GroupsMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA9B1E4170B8241004C7601 /* GroupsMenuViewController.xib */; };
 		8EA9B1E7170B8284004C7601 /* GroupsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
@@ -630,6 +632,7 @@
 		1C810ADD16EE5EED0030077C /* Shelby.tv copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
+		1C8749CA170B889300397144 /* GroupsMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupsMenuViewController.xib; sourceTree = "<group>"; };
 		1CAC4AD216E5561C0028E1DC /* tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv.png; sourceTree = "<group>"; };
 		1CAC4AD316E5561C0028E1DC /* tv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tv@2x.png"; sourceTree = "<group>"; };
 		1CAC4AD816E55AA90028E1DC /* homeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeButton.png; sourceTree = "<group>"; };
@@ -805,7 +808,6 @@
 		8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemView.xib; sourceTree = "<group>"; };
 		8EA9B1E2170B8241004C7601 /* GroupsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsMenuViewController.h; sourceTree = "<group>"; };
 		8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsMenuViewController.m; sourceTree = "<group>"; };
-		8EA9B1E4170B8241004C7601 /* GroupsMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupsMenuViewController.xib; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
 		8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataConstants.h; sourceTree = "<group>"; };
 		8EAAEE59163A29A900AEF100 /* CoreDataUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataUtility.h; sourceTree = "<group>"; };
@@ -1467,8 +1469,8 @@
 			children = (
 				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
-				8EA9B1E4170B8241004C7601 /* GroupsMenuViewController.xib */,
 				1CD72E9D16CD36630045B36F /* GroupViewCell.xib */,
+				1C8749CA170B889300397144 /* GroupsMenuViewController.xib */,
 				1CCCB54716CEBAB100C8C216 /* PersonalRollViewCell.xib */,
 			);
 			name = Xibs;
@@ -1747,6 +1749,7 @@
 				1C211F0F170B7745002AC9B9 /* share.png in Resources */,
 				1C211F15170B7745002AC9B9 /* like.png in Resources */,
 				1C211F18170B7745002AC9B9 /* roll.png in Resources */,
+				1C8749CC170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1872,6 +1875,7 @@
 				1C211F10170B7745002AC9B9 /* share.png in Resources */,
 				1C211F16170B7745002AC9B9 /* like.png in Resources */,
 				1C211F19170B7745002AC9B9 /* roll.png in Resources */,
+				1C8749CD170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1998,7 +2002,7 @@
 				1C211F0E170B7745002AC9B9 /* share.png in Resources */,
 				1C211F14170B7745002AC9B9 /* like.png in Resources */,
 				1C211F17170B7745002AC9B9 /* roll.png in Resources */,
-				8EA9B1E6170B8241004C7601 /* GroupsMenuViewController.xib in Resources */,
+				1C8749CB170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
