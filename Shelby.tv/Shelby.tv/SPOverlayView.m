@@ -16,6 +16,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
 
+@property (assign, nonatomic) BOOL hiddenState;
+
 - (void)hideVideoList:(BOOL)animate;
 - (void)showVideoList:(BOOL)animate;
 @end
@@ -110,6 +112,8 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:1.0f];
+    } completion:^(BOOL finished) {
+        [self setHiddenState:NO];
     }];
 }
 
@@ -117,6 +121,8 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [self setHiddenState:YES];
     }];
 }
 
@@ -140,13 +146,18 @@
 }
 
 
-- (void)toggleVideoListView
+- (void)togglePlaylistView
 {
     if (self.videoListView.frame.origin.y == self.frame.size.height) {
         [self showVideoList:YES];
     } else if (self.videoListView.frame.origin.y == self.frame.size.height - self.videoListView.frame.size.height) {
         [self hideVideoList:YES];
     }
+}
+
+- (BOOL)isOverlayHidden
+{
+    return self.hiddenState;
 }
 
 #pragma mark - toggle video list (Private)

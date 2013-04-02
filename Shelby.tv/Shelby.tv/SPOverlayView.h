@@ -30,5 +30,7 @@
 
 - (void)rescheduleOverlayTimer;
 
-- (void)toggleVideoListView;
+- (void)togglePlaylistView;
+
+- (BOOL)isOverlayHidden;
 @end

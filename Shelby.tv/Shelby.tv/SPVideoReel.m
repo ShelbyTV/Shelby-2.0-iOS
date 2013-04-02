@@ -15,6 +15,13 @@
 #import "DeviceUtilities.h"
 #import "ImageUtilities.h"
 
+typedef NS_ENUM(NSUInteger, MenuState)
+{
+    MenuStateNone,
+    MenuStatePlaylistOpen,
+    MenuStateCategoriesOpen,
+};
+
 @interface SPVideoReel ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
@@ -30,9 +37,7 @@
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
-// Gesture Properties
-@property (strong, nonatomic) UISwipeGestureRecognizer *upGesture;
-@property (strong, nonatomic) UISwipeGestureRecognizer *downGesture;
+@property (assign, nonatomic) MenuState menuState;
 
 // Transition Properties
 @property (strong, nonatomic) UIImageView *screenshot;
@@ -50,6 +55,7 @@
 - (void)setupOverlayView;
 - (void)setupAirPlay;
 - (void)setupVideoPlayers;
+- (void)setupSwipeGestures;
 
 /// Storage Methods
 - (void)storeIdentifierOfCurrentVideoInStream;
@@ -65,12 +71,11 @@
 - (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification*)notification;
 
 /// Gesture Methods
-- (void)resetSwipeGestures;
-- (void)nullifySwipeGestures;
-- (void)launchCategoriesMenu:(id)sender;
-- (void)dismissCategoriesMenu:(id)sender;
-- (void)launchPlaylist:(UIGestureRecognizer *)gesture;
-- (void)dismissPlaylist:(UIGestureRecognizer *)gesture;
+- (void)toggleMenues:(UIGestureRecognizer *)gesture;
+- (void)launchCategoriesMenu;
+- (void)dismissCategoriesMenu;
+- (void)launchPlaylist;
+- (void)dismissPlaylist;
 
 /// Transition Methods
 - (void)transformInAnimation;
@@ -100,6 +105,7 @@
         _groupType = groupType;
         _groupTitle = title;
         _videoFrames = videoFrames;
+        _menuState = MenuStateNone;
         
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:kGAICategoryBrowse
@@ -174,7 +180,7 @@
     // Making minimal view as in the nib we keep it full size
     [self setupVideoPlayers];
     [self setupObservers];
-    [self resetSwipeGestures];
+    [self setupSwipeGestures];
     [self setupAirPlay];
 
     [self setInTransition:NO];
@@ -426,6 +432,20 @@
             
         }
     }
+}
+
+- (void)setupSwipeGestures
+{
+    // Swipe Down - Categories Menu
+    UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(toggleMenues:)];
+    downGesture.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.videoScrollView addGestureRecognizer:downGesture];
+    
+    // Swipe Up - Playlist Menu
+    UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(toggleMenues:)];
+    upGesture.direction = UISwipeGestureRecognizerDirectionUp;
+    [self.videoScrollView addGestureRecognizer:upGesture];
+    
 }
 
 #pragma mark - Storage Methods (Public)
@@ -1105,62 +1125,57 @@
 }
 
 #pragma mark - Gesture Methods (Private)
-- (void)resetSwipeGestures
+- (void)launchCategoriesMenu
 {
-    // Swipe Down - Categories Menu
-    _downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(launchCategoriesMenu:)];
-    self.downGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.videoScrollView addGestureRecognizer:self.downGesture];
-    
-    // Swipe Up - Playlist Menu
-    _upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(launchPlaylist:)];
-    self.upGesture.direction = UISwipeGestureRecognizerDirectionUp;
-    [self.videoScrollView addGestureRecognizer:_upGesture];
-    
-//    [self.videoScrollView setScrollEnabled:NO];
-    
-}
-
-- (void)nullifySwipeGestures
-{
-    [self.downGesture removeTarget:nil action:NULL];
-    [self.upGesture removeTarget:nil action:NULL];
-}
-
-- (void)launchCategoriesMenu:(id)sender
-{
-    [self nullifySwipeGestures];
     DLog(@"Launched Categories Menu");
-    self.upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissCategoriesMenu:)];
-    self.upGesture.direction = UISwipeGestureRecognizerDirectionUp;
-    [self.videoScrollView addGestureRecognizer:_upGesture];
+    [self setMenuState:MenuStateCategoriesOpen];
 }
 
-- (void)dismissCategoriesMenu:(id)sender
+- (void)dismissCategoriesMenu
 {
-    [self nullifySwipeGestures];
     DLog(@"Dismissed Categories Menu");
-    [self resetSwipeGestures];
+    [self setMenuState:MenuStateNone];
+
 }
 
-- (void)launchPlaylist:(UIGestureRecognizer *)gesture
+- (void)launchPlaylist
 {
-    [self nullifySwipeGestures];
     DLog(@"Launched Playlist");
-    _downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPlaylist:)];
-    self.downGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.videoScrollView addGestureRecognizer:self.downGesture];
-    
-    [self.overlayView toggleVideoListView];
+    [self setMenuState:MenuStatePlaylistOpen];
+    [self.overlayView togglePlaylistView];
 }
 
-- (void)dismissPlaylist:(UIGestureRecognizer *)gesture
+- (void)dismissPlaylist
 {
-    [self nullifySwipeGestures];
     DLog(@"Dismissed Playlist");
-    [self resetSwipeGestures];
+    [self setMenuState:MenuStateNone];
+    [self.overlayView togglePlaylistView];
+}
 
-    [self.overlayView toggleVideoListView];
+
+- (void)toggleMenues:(UISwipeGestureRecognizer *)gesture
+{
+    UISwipeGestureRecognizerDirection direction = [gesture direction];
+    
+    if ([self.overlayView isOverlayHidden]) {
+        [self.overlayView toggleOverlay];
+    }
+    
+    if (self.menuState == MenuStateNone) {
+        if (direction == UISwipeGestureRecognizerDirectionUp) {
+            [self launchPlaylist];
+        } else {
+            [self launchCategoriesMenu];
+        }
+    } else if (self.menuState == MenuStateCategoriesOpen) {
+        if (direction == UISwipeGestureRecognizerDirectionUp) {
+            [self dismissCategoriesMenu];
+        }
+    } else if (self.menuState == MenuStatePlaylistOpen) {
+        if (direction == UISwipeGestureRecognizerDirectionDown) {
+            [self dismissPlaylist];
+        }
+    }
 }
 
 #pragma mark - Transition Methods (Private)
