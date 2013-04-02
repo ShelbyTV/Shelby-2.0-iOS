@@ -1422,10 +1422,11 @@
 		8EF5C350162F41B00075C35F /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
+				8EA9B1DB170B6421004C7601 /* CategoriesMenuViewController.xib */,
 				1CD72E9D16CD36630045B36F /* GroupViewCell.xib */,
 				1CCCB54716CEBAB100C8C216 /* PersonalRollViewCell.xib */,
-				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -1459,7 +1460,6 @@
 				1CC3387716CBDF2A00E58375 /* BrowseViewController.m */,
 				8EA9B1D9170B6421004C7601 /* CategoriesMenuViewController.h */,
 				8EA9B1DA170B6421004C7601 /* CategoriesMenuViewController.m */,
-				8EA9B1DB170B6421004C7601 /* CategoriesMenuViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
