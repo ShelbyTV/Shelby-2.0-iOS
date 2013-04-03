@@ -644,6 +644,17 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [self.model.currentVideoPlayer share];
 }
 
+- (IBAction)likeAction:(id)sender
+{
+    // KP KP TODO:
+}
+
+- (IBAction)rollAction:(id)sender
+{
+    // KP KP TODO:
+}
+
+
 - (IBAction)itemButtonAction:(id)sender
 {
     // Send event to Google Analytics

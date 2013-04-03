@@ -50,6 +50,9 @@
 - (IBAction)homeButtonAction:(id)sender;
 - (IBAction)playButtonAction:(id)sender;
 - (IBAction)shareButtonAction:(id)sender;
+- (IBAction)likeAction:(id)sender;
+- (IBAction)rollAction:(id)sender;
+
 - (IBAction)itemButtonAction:(id)sender;
 - (IBAction)restartPlaybackButtonAction:(id)sender;
 - (IBAction)scrub:(id)sender;
