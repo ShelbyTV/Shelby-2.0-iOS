@@ -31,6 +31,7 @@
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 @property (assign, nonatomic) BOOL playlistIsVisible;
+@property (assign, nonatomic) BOOL isLaunchingGroupsMenu;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *rollInvocationMethod;
@@ -132,7 +133,7 @@
                                 withLabel:_groupTitle
                                 withValue:nil];
     
-    if ( _groupsMenuViewController ) {
+    if ( [self.groupsMenuViewController view] ) {
         
         [self.groupsMenuViewController.view removeFromSuperview];
         self.groupsMenuViewController = nil;
@@ -140,7 +141,35 @@
     }
     
     if ( _videoPlayers ) {
+        
         [self purgeVideoPlayerInformationFromPreviousVideoGroup];
+        
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             
+                             if ( _overlayView ) {
+                                 
+                                 self.overlayView.frame = CGRectMake(0.0f,
+                                                                     0.0f,
+                                                                     self.overlayView.frame.size.width,
+                                                                     self.overlayView.frame.size.height);
+                                 
+                             }
+                             
+                             if ( _videoScrollView ) {
+                                 
+                                 self.videoScrollView.frame = CGRectMake(0.0f,
+                                                                         0.0f,
+                                                                         self.videoScrollView.frame.size.width,
+                                                                         self.videoScrollView.frame.size.height);
+                                 
+                             }
+                             
+                         } completion:^(BOOL finished) {
+                          
+                             [self setIsLaunchingGroupsMenu:NO];
+                             
+                         }];
     }
     
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
@@ -156,7 +185,6 @@
 
 - (void)setupVideoFrames:(NSMutableArray *)videoFrames
 {
-    
     self.videoFrames = [@[] mutableCopy];
     
     if ( [videoFrames count] > 20 ) { // If there are more than 20 frames in videoFrames
@@ -168,9 +196,11 @@
                 [self.videoFrames addObject:videoFrame];
                 
             } else { // Load the rest of the videoFrames into _moreVideoFrames
+                
                 if (!self.moreVideoFrames) {
                     self.moreVideoFrames = [@[] mutableCopy];
                 }
+                
                 [self.moreVideoFrames addObject:videoFrame];
                 
             }
@@ -181,7 +211,6 @@
         self.videoFrames = [NSMutableArray arrayWithArray:videoFrames];
         
     }
-    
 }
 
 - (void)setupVariables
@@ -1069,11 +1098,42 @@
 - (void)launchGroupsMenuViewController:(UIPinchGestureRecognizer *)gesture
 {
     
-    _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
-                                                                           bundle:nil
-                                                                     andVideoReel:self];
-    
-    [self.videoScrollView addSubview:_groupsMenuViewController.view];
+    if ( ![self isLaunchingGroupsMenu] ) {
+
+        [self setIsLaunchingGroupsMenu:YES];
+        
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             
+                             if ( _overlayView ) {
+                                 
+                                 self.overlayView.frame = CGRectMake(0.0f,
+                                                                     self.overlayView.frame.size.height,
+                                                                     self.overlayView.frame.size.width,
+                                                                     self.overlayView.frame.size.height);
+                                 
+                             }
+                             
+                             if ( _videoScrollView ) {
+                                 
+                                 self.videoScrollView.frame = CGRectMake(0.0f,
+                                                                         self.videoScrollView.frame.size.height,
+                                                                         self.videoScrollView.frame.size.width,
+                                                                         self.videoScrollView.frame.size.height);
+                                 
+                             }
+                             
+                         } completion:^(BOOL finished) {
+                             
+                             self.groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
+                                                                                                        bundle:nil
+                                                                                                  andVideoReel:self];
+                             
+                             
+                             [self.view addSubview:_groupsMenuViewController.view];
+                        
+                         }];
+    }
 }
 
 - (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture

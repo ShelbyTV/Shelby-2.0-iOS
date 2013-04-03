@@ -10,7 +10,7 @@
 
 @interface GroupsMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *playlistTableView;
+@property (weak, nonatomic) IBOutlet UITableView *grouplistTableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil

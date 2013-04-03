@@ -43,6 +43,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    DLog(@"%@", _grouplistTableView);
+    self.grouplistTableView.delegate = self;
+    self.grouplistTableView.dataSource = self;
 }
 
 #pragma mark - Setup Methods
@@ -113,7 +116,7 @@
     return categoryTitle;
 }
 
-- (void)launchCategoryInRow:(id)category
+- (void)launchCategory:(id)category
 {
     if ( [category isKindOfClass:[NSManagedObject class]] ) {
         
@@ -165,7 +168,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [self.playlistTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [self.grouplistTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -201,10 +204,9 @@
     } else { // Category Playlists
         
         id category = [self.categories objectAtIndex:[indexPath row]];
-        [self launchCategoryInRow:category];
+        [self launchCategory:category];
         
     }
 }
-
 
 @end

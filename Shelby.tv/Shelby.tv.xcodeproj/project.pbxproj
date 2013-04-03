@@ -421,6 +421,7 @@
 		8E01AFC216E67365000567D4 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB816E67365000567D4 /* AFXMLRequestOperation.m */; };
 		8E01AFC316E67365000567D4 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */; };
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
+		8E088710170CD22C00FBBECE /* GroupsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */; };
 		8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
 		8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		8E12B18416825B4100657D32 /* actionButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B17C16825B4100657D32 /* actionButton.png */; };
@@ -2041,6 +2042,7 @@
 				1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58D16F2D9CE0001EF5D /* Video.m in Sources */,
+				8E088710170CD22C00FBBECE /* GroupsMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
