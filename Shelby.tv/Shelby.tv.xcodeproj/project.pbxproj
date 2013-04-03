@@ -16,21 +16,6 @@
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
-		1C211F02170B748D002AC9B9 /* ALRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211EFF170B748D002AC9B9 /* ALRadialButton.m */; };
-		1C211F03170B748D002AC9B9 /* ALRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211EFF170B748D002AC9B9 /* ALRadialButton.m */; };
-		1C211F04170B748D002AC9B9 /* ALRadialButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211EFF170B748D002AC9B9 /* ALRadialButton.m */; };
-		1C211F05170B748D002AC9B9 /* ALRadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211F01170B748D002AC9B9 /* ALRadialMenu.m */; };
-		1C211F06170B748D002AC9B9 /* ALRadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211F01170B748D002AC9B9 /* ALRadialMenu.m */; };
-		1C211F07170B748D002AC9B9 /* ALRadialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C211F01170B748D002AC9B9 /* ALRadialMenu.m */; };
-		1C211F0E170B7745002AC9B9 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F09170B7745002AC9B9 /* share.png */; };
-		1C211F0F170B7745002AC9B9 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F09170B7745002AC9B9 /* share.png */; };
-		1C211F10170B7745002AC9B9 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F09170B7745002AC9B9 /* share.png */; };
-		1C211F14170B7745002AC9B9 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F0B170B7745002AC9B9 /* like.png */; };
-		1C211F15170B7745002AC9B9 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F0B170B7745002AC9B9 /* like.png */; };
-		1C211F16170B7745002AC9B9 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F0B170B7745002AC9B9 /* like.png */; };
-		1C211F17170B7745002AC9B9 /* roll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F0C170B7745002AC9B9 /* roll.png */; };
-		1C211F18170B7745002AC9B9 /* roll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F0C170B7745002AC9B9 /* roll.png */; };
-		1C211F19170B7745002AC9B9 /* roll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C211F0C170B7745002AC9B9 /* roll.png */; };
 		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
@@ -597,13 +582,6 @@
 		1C16A95016E14FCF004ABA41 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
-		1C211EFE170B748D002AC9B9 /* ALRadialButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALRadialButton.h; sourceTree = "<group>"; };
-		1C211EFF170B748D002AC9B9 /* ALRadialButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALRadialButton.m; sourceTree = "<group>"; };
-		1C211F00170B748D002AC9B9 /* ALRadialMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALRadialMenu.h; sourceTree = "<group>"; };
-		1C211F01170B748D002AC9B9 /* ALRadialMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALRadialMenu.m; sourceTree = "<group>"; };
-		1C211F09170B7745002AC9B9 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
-		1C211F0B170B7745002AC9B9 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
-		1C211F0C170B7745002AC9B9 /* roll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = roll.png; sourceTree = "<group>"; };
 		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
@@ -945,29 +923,6 @@
 				1C7B8D4516F0F8590069F570 /* SignupView.m */,
 			);
 			name = FormViews;
-			sourceTree = "<group>";
-		};
-		1C211EFD170B748D002AC9B9 /* ALRadial */ = {
-			isa = PBXGroup;
-			children = (
-				1C211F08170B7745002AC9B9 /* images */,
-				1C211EFE170B748D002AC9B9 /* ALRadialButton.h */,
-				1C211EFF170B748D002AC9B9 /* ALRadialButton.m */,
-				1C211F00170B748D002AC9B9 /* ALRadialMenu.h */,
-				1C211F01170B748D002AC9B9 /* ALRadialMenu.m */,
-			);
-			name = ALRadial;
-			path = Library/ALRadial;
-			sourceTree = SOURCE_ROOT;
-		};
-		1C211F08170B7745002AC9B9 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				1C211F09170B7745002AC9B9 /* share.png */,
-				1C211F0B170B7745002AC9B9 /* like.png */,
-				1C211F0C170B7745002AC9B9 /* roll.png */,
-			);
-			path = images;
 			sourceTree = "<group>";
 		};
 		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
@@ -1340,7 +1295,6 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				1C211EFD170B748D002AC9B9 /* ALRadial */,
 				8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
@@ -1746,9 +1700,6 @@
 				1C671A1D170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A22170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A25170A219500EFD5E3 /* grabber@2x.png in Resources */,
-				1C211F0F170B7745002AC9B9 /* share.png in Resources */,
-				1C211F15170B7745002AC9B9 /* like.png in Resources */,
-				1C211F18170B7745002AC9B9 /* roll.png in Resources */,
 				1C8749CC170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1872,9 +1823,6 @@
 				1C671A1E170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A23170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A26170A219500EFD5E3 /* grabber@2x.png in Resources */,
-				1C211F10170B7745002AC9B9 /* share.png in Resources */,
-				1C211F16170B7745002AC9B9 /* like.png in Resources */,
-				1C211F19170B7745002AC9B9 /* roll.png in Resources */,
 				1C8749CD170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1999,9 +1947,6 @@
 				1C671A1C170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A21170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A24170A219500EFD5E3 /* grabber@2x.png in Resources */,
-				1C211F0E170B7745002AC9B9 /* share.png in Resources */,
-				1C211F14170B7745002AC9B9 /* like.png in Resources */,
-				1C211F17170B7745002AC9B9 /* roll.png in Resources */,
 				1C8749CB170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2112,8 +2057,6 @@
 				1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58D16F2D9CE0001EF5D /* Video.m in Sources */,
-				1C211F03170B748D002AC9B9 /* ALRadialButton.m in Sources */,
-				1C211F06170B748D002AC9B9 /* ALRadialMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2179,8 +2122,6 @@
 				1C7B8D5A16F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EC16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */,
-				1C211F04170B748D002AC9B9 /* ALRadialButton.m in Sources */,
-				1C211F07170B748D002AC9B9 /* ALRadialMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2245,8 +2186,6 @@
 				1C7B8D5816F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EA16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58C16F2D9CE0001EF5D /* Video.m in Sources */,
-				1C211F02170B748D002AC9B9 /* ALRadialButton.m in Sources */,
-				1C211F05170B748D002AC9B9 /* ALRadialMenu.m in Sources */,
 				8EA9B1E5170B8241004C7601 /* GroupsMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
