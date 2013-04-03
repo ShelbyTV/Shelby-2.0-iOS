@@ -318,10 +318,10 @@
      self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
     [self.sharePopOverController setDelegate:self];
     // KP KP: TODO: once we add the share button...
-//    [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-//                                                 inView:self.model.overlayView.shareButton
-//                               permittedArrowDirections:UIPopoverArrowDirectionDown
-//                                               animated:YES];
+    [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                 inView:self.model.overlayView.shareButton
+                               permittedArrowDirections:UIPopoverArrowDirectionUp
+                                               animated:YES];
     
 }
 

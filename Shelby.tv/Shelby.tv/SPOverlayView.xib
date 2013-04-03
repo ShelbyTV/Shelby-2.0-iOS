@@ -535,6 +535,14 @@
 					<int key="connectionID">116</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">shareButton</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="371512165"/>
+					</object>
+					<int key="connectionID">124</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">restartPlaybackButtonAction:</string>
 						<reference key="source" ref="883161448"/>
@@ -745,7 +753,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">123</int>
+			<int key="maxID">124</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -769,6 +777,7 @@
 						<string key="likeNotificationView">UIImageView</string>
 						<string key="nicknameLabel">UILabel</string>
 						<string key="restartPlaybackButton">UIButton</string>
+						<string key="shareButton">UIButton</string>
 						<string key="totalDurationlabel">UILabel</string>
 						<string key="userImageView">UIImageView</string>
 						<string key="videoCaptionLabel">TopAlignedLabel</string>
@@ -807,6 +816,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="restartPlaybackButton">
 							<string key="name">restartPlaybackButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="shareButton">
+							<string key="name">shareButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="totalDurationlabel">

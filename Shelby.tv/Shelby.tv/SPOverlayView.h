@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *videoCaptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;
 @property (weak, nonatomic) IBOutlet UIImageView *likeNotificationView;
 @property (weak, nonatomic) IBOutlet UIProgressView *bufferProgressView;
