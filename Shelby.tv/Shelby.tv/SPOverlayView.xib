@@ -158,7 +158,7 @@
 							<object class="IBUIButton" id="642058558">
 								<reference key="NSNextResponder" ref="169041156"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{820, 23}, {63, 44}}</string>
+								<string key="NSFrame">{{820, 23}, {62, 44}}</string>
 								<reference key="NSSuperview" ref="169041156"/>
 								<reference key="NSNextKeyView" ref="1001013364"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -526,6 +526,22 @@
 					<int key="connectionID">124</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">rollButton</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="642058558"/>
+					</object>
+					<int key="connectionID">126</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">likesButton</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="1001013364"/>
+					</object>
+					<int key="connectionID">127</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">restartPlaybackButtonAction:</string>
 						<reference key="source" ref="883161448"/>
@@ -736,7 +752,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">124</int>
+			<int key="maxID">127</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -758,8 +774,10 @@
 						<string key="elapsedProgressView">UIProgressView</string>
 						<string key="elapsedTimelabel">UILabel</string>
 						<string key="likeNotificationView">UIImageView</string>
+						<string key="likesButton">UIButton</string>
 						<string key="nicknameLabel">UILabel</string>
 						<string key="restartPlaybackButton">UIButton</string>
+						<string key="rollButton">UIButton</string>
 						<string key="shareButton">UIButton</string>
 						<string key="totalDurationlabel">UILabel</string>
 						<string key="userImageView">UIImageView</string>
@@ -793,12 +811,20 @@
 							<string key="name">likeNotificationView</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="likesButton">
+							<string key="name">likesButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="nicknameLabel">
 							<string key="name">nicknameLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="restartPlaybackButton">
 							<string key="name">restartPlaybackButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="rollButton">
+							<string key="name">rollButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="shareButton">

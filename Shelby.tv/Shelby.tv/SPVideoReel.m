@@ -492,14 +492,35 @@
 
 - (IBAction)likeAction:(id)sender
 {
-    // KP KP TODO:
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
+    Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+        [ShelbyAPIClient postFrameToLikes:frame.frameID];
+    } else { // Logged Out
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreLoggedOutLike];
+        [dataUtility storeFrameInLoggedOutLikes:frame];
+    }
+    
+    SPModel *model = (SPModel *)[SPModel sharedInstance];
+    [model.overlayView showOverlayView];
+    [model.overlayView showLikeNotificationView];
+    [NSTimer scheduledTimerWithTimeInterval:5.0f
+                                     target:model.overlayView
+                                   selector:@selector(hideLikeNotificationView)
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 - (IBAction)rollAction:(id)sender
 {
-    // KP KP TODO:
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to roll" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
+        [alertView show];
+    }
+    
 }
-
 
 - (IBAction)itemButtonAction:(id)sender
 {
@@ -1117,6 +1138,13 @@
         [self.overlayView rescheduleOverlayTimer];
         
     }
+}
+
+
+#pragma mark - UIAlertViewDelegate Methods
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    // KP KP: login
 }
 
 @end

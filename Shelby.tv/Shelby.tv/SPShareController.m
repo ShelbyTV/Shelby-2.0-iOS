@@ -9,8 +9,6 @@
 #import "SPShareController.h"
 #import "SPModel.h"
 #import "SPShareRollView.h"
-#import "SPShareLikeActivity.h"
-#import "SPShareRollActivity.h"
 #import "SPVideoReel.h"
 
 @interface SPShareController ()
@@ -244,53 +242,9 @@
 #pragma mark - Action Methods (Private)
 - (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link
 {
-
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [frame objectID];
-    frame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    
-    UIActivityViewController *activityController = nil;
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Logged In
-        
-        SPShareRollActivity *rollActivity = [[SPShareRollActivity alloc] init];
-        rollActivity.shareController = self;
-        
-        SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
-        likeActivity.videoFrame = frame;
-        likeActivity.overlayView = [self.model overlayView];
-        
-        if ( GroupType_Likes == [self.model groupType] ) {
-            
-            activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
-                                                                   applicationActivities:[NSArray arrayWithObjects:rollActivity, nil]];
-            activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-            
-        } else if ( GroupType_PersonalRoll == [self.model groupType] ) {
-            
-            activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
-                                                                   applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
-            activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-            
-        } else {
-            
-            activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
-                                                                   applicationActivities:[NSArray arrayWithObjects:likeActivity, rollActivity, nil]];
-            activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-            
-        }
-        
-    } else { // Logged Out
-        
-        SPShareLikeActivity *likeActivity = [[SPShareLikeActivity alloc] init];
-        likeActivity.videoFrame = frame;
-        likeActivity.overlayView = [self.model overlayView];
-        
-        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
-                                                               applicationActivities:[NSArray arrayWithObjects:likeActivity, nil]];
-        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-    }
-    
-
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                           applicationActivities:nil];
+    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:kGAICategoryShare
@@ -317,7 +271,6 @@
     }
      self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
     [self.sharePopOverController setDelegate:self];
-    // KP KP: TODO: once we add the share button...
     [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
                                                  inView:self.model.overlayView.shareButton
                                permittedArrowDirections:UIPopoverArrowDirectionUp
