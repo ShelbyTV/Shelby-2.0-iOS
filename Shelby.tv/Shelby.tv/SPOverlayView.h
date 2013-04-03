@@ -19,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *likeNotificationView;
 @property (weak, nonatomic) IBOutlet UIProgressView *bufferProgressView;
 @property (weak, nonatomic) IBOutlet UIProgressView *elapsedProgressView;
+@property (weak, nonatomic) IBOutlet UILabel *elapsedTimelabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalDurationlabel;
+
 
 
 /// Toggle UI
