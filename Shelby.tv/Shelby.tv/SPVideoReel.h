@@ -17,16 +17,6 @@
 @property (assign, nonatomic) GroupType groupType;
 @property (copy, nonatomic) NSString *groupTitle;
 
-/// Initialization
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)title
-         andVideoFrames:(NSMutableArray *)videoFrames;
-
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)title
-            videoFrames:(NSMutableArray *)videoFrames
-          andCategoryID:(NSString *)categoryID;
-
 - (void)loadWithGroupType:(GroupType)groupType
                groupTitle:(NSString *)title
            andVideoFrames:(NSMutableArray *)videoFrames;
@@ -36,9 +26,6 @@
               videoFrames:(NSMutableArray *)videoFrames
             andCategoryID:(NSString *)categoryID;
 
-
-- (void)setupTransition:(UIImageView *)screenshot andZoomInScreenshot:(UIImageView *)zoomInScreenshot;
-
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;
@@ -47,8 +34,6 @@
 - (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player;
 
 /// Action Methods
-- (IBAction)homeButtonAction:(id)sender;
-- (IBAction)playButtonAction:(id)sender;
 - (IBAction)shareButtonAction:(id)sender;
 - (IBAction)likeAction:(id)sender;
 - (IBAction)rollAction:(id)sender;

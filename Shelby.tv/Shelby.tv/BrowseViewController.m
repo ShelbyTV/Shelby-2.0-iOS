@@ -39,7 +39,6 @@
 
 @property (assign, nonatomic) SecretMode secretMode;
 
-
 - (void)fetchUserNickname;
 
 // TODO: need to port from MeVC
@@ -535,18 +534,15 @@
                     NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[channel channelID]];
+                    
                     
                 } else if ( groupType == GroupType_CategoryRoll ) { // Category Roll
                     
                     NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:[roll rollID]];
                     
                 } else { // Stream, Likes, Personal Roll
-                
-                    reel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title andVideoFrames:videoFrames];
                
                 }
 
@@ -580,7 +576,6 @@
     [cellSrcImage.layer setMasksToBounds:YES];
     [viewControllerToPresent.view addSubview:srcImage];
     [viewControllerToPresent.view addSubview:cellSrcImage];
-    [(SPVideoReel *)viewControllerToPresent setupTransition:srcImage andZoomInScreenshot:cellSrcImage];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     

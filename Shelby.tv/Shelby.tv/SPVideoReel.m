@@ -13,21 +13,14 @@
 #import "SPVideoPlayer.h"
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
-#import "ImageUtilities.h"
 #import "GroupsMenuViewController.h"
-
-typedef NS_ENUM(NSUInteger, MenuState)
-{
-    MenuStateNone,
-    MenuStatePlaylistOpen,
-    MenuStateGroupsOpen,
-};
 
 @interface SPVideoReel ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) SPOverlayView *overlayView;
+@property (nonatomic) GroupsMenuViewController *groupsMenuViewController;
 @property (nonatomic) UIScrollView *videoScrollView;
 @property (nonatomic) NSMutableArray *videoFrames;
 @property (nonatomic) NSMutableArray *moreVideoFrames;
@@ -37,19 +30,10 @@ typedef NS_ENUM(NSUInteger, MenuState)
 @property (copy, nonatomic) NSString *categoryID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
-
-@property (strong, nonatomic) GroupsMenuViewController *groupsMenuViewController;
-
-@property (assign, nonatomic) MenuState menuState;
-
-// Transition Properties
-@property (strong, nonatomic) UIImageView *screenshot;
-@property (strong, nonatomic) UIImageView *zoomInScreenshot;
-@property (assign, nonatomic) CGRect zoomInScreenshotFrame;
-@property (assign, nonatomic) BOOL inTransition;
-@property (strong, nonatomic) UIImageView *playerScreenshot;
+@property (assign, nonatomic) BOOL playlistIsVisible;
 
 /// Setup Methods
+- (void)setup;
 - (void)setupVideoFrames:(NSArray *)videoFrames;
 - (void)setupVariables;
 - (void)setupObservers;
@@ -72,17 +56,12 @@ typedef NS_ENUM(NSUInteger, MenuState)
 - (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
 - (void)dataSourceDidUpdate;
 - (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification*)notification;
+- (void)purgeVideoPlayerInformationFromPreviousVideoGroup;
 
 /// Gesture Methods
-- (void)toggleMenues:(UIGestureRecognizer *)gesture;
-- (void)launchGroupsMenu;
-- (void)dismissGroupsMenu;
-- (void)launchPlaylist;
-- (void)dismissPlaylist;
+- (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
+- (void)launchGroupsMenuViewController:(UIPinchGestureRecognizer *)gesture;
 
-/// Transition Methods
-- (void)transformInAnimation;
-- (void)transformOutAnimation;
 @end
 
 @implementation SPVideoReel 
@@ -90,50 +69,13 @@ typedef NS_ENUM(NSUInteger, MenuState)
 #pragma mark - Memory Management
 - (void)dealloc
 {
-
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPLoadVideoAfterUnplayableVideo object:nil];
     
     DLog(@"SPVideoReel Deallocated");
-    
 }
 
 #pragma mark - Initialization
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)title
-            andVideoFrames:(NSMutableArray *)videoFrames
-{
-    self = [super init];
-    if (self) {
-        _groupType = groupType;
-        _groupTitle = title;
-        _videoFrames = videoFrames;
-        _menuState = MenuStateNone;
-        
-        id defaultTracker = [GAI sharedInstance].defaultTracker;
-        [defaultTracker sendEventWithCategory:kGAICategoryBrowse
-                                   withAction:@"User did launch playlist"
-                                    withLabel:_groupTitle
-                                    withValue:nil];
-        
-    }
-    
-    return self;
-}
-
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)title
-            videoFrames:(NSMutableArray *)videoFrames
-            andCategoryID:(NSString *)categoryID
-{
-    self = [self initWithGroupType:groupType groupTitle:title andVideoFrames:videoFrames];
-    if (self) {
-        _categoryID = categoryID;
-    }
-    
-    return self;
-}
-
 - (void)loadWithGroupType:(GroupType)groupType
                groupTitle:(NSString *)title
               videoFrames:(NSMutableArray *)videoFrames
@@ -150,19 +92,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [self setGroupType:groupType];
     [self setGroupTitle:title];
     [self setVideoFrames:videoFrames];
-    
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryBrowse
-                               withAction:@"User did launch playlist"
-                                withLabel:_groupTitle
-                                withValue:nil];
-}
-
-- (void)setupTransition:(UIImageView *)screenshot andZoomInScreenshot:(UIImageView *)zoomInScreenshot
-{
-    [self setScreenshot:screenshot];
-    [self setZoomInScreenshot:zoomInScreenshot];
-    [self setZoomInScreenshotFrame:zoomInScreenshot.frame];
+    [self setup];
 }
 
 #pragma mark - View Lifecycle Methods
@@ -172,33 +102,53 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
-    [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self setupVariables];
-    [self setupVideoScrollView];
-    [self setupOverlayView];
-    [self setupVideoPlayers];
-    [self setupObservers];
-    [self setupSwipeGestures];
-    [self setupAirPlay];
-
-    [self setInTransition:NO];
-    if (self.screenshot) {
-        [self transformInAnimation];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self setupVideoListScrollView];
+    
+    _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
+                                                                           bundle:nil
+                                                                     andVideoReel:self];
+    [self.view addSubview:[_groupsMenuViewController view]];
 }
 
 #pragma mark - Setup Methods
+- (void)setup
+{
+    
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:kGAICategoryBrowse
+                               withAction:@"User did launch playlist"
+                                withLabel:_groupTitle
+                                withValue:nil];
+    
+    if ( _groupsMenuViewController ) {
+        
+        [self.groupsMenuViewController.view removeFromSuperview];
+        self.groupsMenuViewController = nil;
+        
+    }
+    
+    if ( _videoPlayers ) {
+        [self purgeVideoPlayerInformationFromPreviousVideoGroup];
+    }
+    
+    [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
+    [self setupVariables];
+    [self setupObservers];
+    [self setupVideoScrollView];
+    [self setupOverlayView];
+    [self setupVideoPlayers];
+    [self setupSwipeGestures];
+    [self setupVideoListScrollView];
+    [self setupAirPlay];
+    
+    [self.overlayView setHidden:NO];
+    
+}
+
 - (void)setupVideoFrames:(NSMutableArray *)videoFrames
 {
     
@@ -209,7 +159,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
         for (Frame *videoFrame in videoFrames) {
             
             if ([self.videoFrames count] < 20) { // Load the first 20 videoFrames into _videoFrames
-             
+                
                 [self.videoFrames addObject:videoFrame];
                 
             } else { // Load the rest of the videoFrames into _moreVideoFrames
@@ -226,7 +176,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
         self.videoFrames = [NSMutableArray arrayWithArray:videoFrames];
         
     }
-
+    
 }
 
 - (void)setupVariables
@@ -245,9 +195,10 @@ typedef NS_ENUM(NSUInteger, MenuState)
     self.itemViews = [@[] mutableCopy];
 }
 
+
 - (void)setupObservers
 {
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dataSourceShouldUpdateFromWeb:)
                                                  name:kShelbySPUserDidScrollToUpdate
@@ -262,7 +213,7 @@ typedef NS_ENUM(NSUInteger, MenuState)
 
 - (void)setupVideoScrollView
 {
-    self.videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    self.videoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * _model.numberOfVideos, kShelbySPVideoHeight - 20);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;
@@ -288,14 +239,12 @@ typedef NS_ENUM(NSUInteger, MenuState)
     [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:_toggleOverlayGesuture];
     
-    UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(homeButtonAction:)];
+    UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(launchGroupsMenuViewController:)];
     [self.view addGestureRecognizer:pinchOverlayGesuture];
-    
 }
 
 - (void)setupVideoPlayers
 {
-
     for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
         
         Frame *videoFrame = (self.videoFrames)[i];
@@ -342,7 +291,6 @@ typedef NS_ENUM(NSUInteger, MenuState)
 
 - (void)setupVideoListScrollView
 {
-
     CGFloat itemViewWidth = [SPVideoItemView width];
     CGFloat itemViewHeight = [SPVideoItemView height];
     self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_model.numberOfVideos, itemViewHeight);
@@ -420,7 +368,6 @@ typedef NS_ENUM(NSUInteger, MenuState)
 
 - (void)setupAirPlay
 {
-    
     // Instantiate AirPlay button for MPVolumeView
     MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:_overlayView.airPlayView.bounds];
     [volumeView setShowsVolumeSlider:NO];
@@ -439,22 +386,18 @@ typedef NS_ENUM(NSUInteger, MenuState)
 
 - (void)setupSwipeGestures
 {
-    // Swipe Down - Categories Menu
-    UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(toggleMenues:)];
-    downGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.videoScrollView addGestureRecognizer:downGesture];
-    
-    // Swipe Up - Playlist Menu
-    UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(toggleMenues:)];
+    UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
     upGesture.direction = UISwipeGestureRecognizerDirectionUp;
     [self.videoScrollView addGestureRecognizer:upGesture];
     
+    UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
+    downGesture.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.videoScrollView addGestureRecognizer:downGesture];
 }
 
 #pragma mark - Storage Methods (Public)
 - (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player
 {
-    
     if ( ![self playableVideoPlayers] ) {
         self.playableVideoPlayers = [@[] mutableCopy];
     }
@@ -515,7 +458,6 @@ typedef NS_ENUM(NSUInteger, MenuState)
             [player queueVideo];
             
         }
-
     
     } else {
     
@@ -535,102 +477,6 @@ typedef NS_ENUM(NSUInteger, MenuState)
         [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
         [self currentVideoDidChangeToVideo:position];
     
-    }
-}
-
-#pragma mark - Action Methods (Public)
-- (IBAction)homeButtonAction:(id)sender
-{
-    if (!self.inTransition) {
-        [self setInTransition:YES];
-        
-        // Send event to Google Analytics
-        id defaultTracker = [GAI sharedInstance].defaultTracker;
-        if ( [sender isMemberOfClass:[UIPinchGestureRecognizer class]] ) {
-            
-            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                       withAction:@"Video players dismissed via pinch gesture"
-                                        withLabel:_groupTitle
-                                        withValue:nil];
-            
-        } else if ( [sender isMemberOfClass:[UIButton class]] ) {
-            
-            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                       withAction:@"Video players dismissed via close button"
-                                        withLabel:_groupTitle
-                                        withValue:nil];
-            
-        } else if ( [sender isMemberOfClass:[AppDelegate class]] ) {
-            
-            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                       withAction:@"Video players dismissed via timeout"
-                                        withLabel:_groupTitle
-                                        withValue:nil];
-            
-        } else {
-            // Do Nothing
-        }
-
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            UIImage *videoCapture = nil;
-            if ([self.model.currentVideoPlayer isPlaying]) {
-                videoCapture = [ImageUtilities captureVideo:self.model.currentVideoPlayer.player];
-            }
-    
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (videoCapture) {
-                    CGSize videoSize = CGSizeMake(kShelbySPVideoWidth, kShelbySPVideoHeight);
-                    self.playerScreenshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, videoSize.width, videoSize.height)];
-                    self.playerScreenshot.backgroundColor = [UIColor blackColor];
-                    [self.playerScreenshot setContentMode:UIViewContentModeScaleAspectFit];
-                    [self.playerScreenshot setImage:videoCapture];
-                }
-
-                // Cancel remaining MP4 extractions
-                [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-                
-                // Remove Scrubber Timer and Observer
-                [[SPVideoScrubber sharedInstance] stopObserving];
-                
-                // Remove references on model
-                [self.model destroyModel];
-                
-                // Stop residual audio playback (this shouldn't be happening to begin with)
-                [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-                
-                // Releas everything
-                [self.videoPlayers removeAllObjects];
-                self.videoPlayers = nil;
-                
-                [self.playableVideoPlayers removeAllObjects];
-                self.videoPlayers = nil;
-                
-                [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-                [self.videoScrollView removeFromSuperview];
-                self.videoScrollView = nil;
-                
-                [self.itemViews removeAllObjects];
-                self.itemViews = nil;
-                
-                [self.videoFrames removeAllObjects];
-                self.videoFrames = nil;
-                
-                [self.moreVideoFrames removeAllObjects];
-                self.moreVideoFrames = nil;
-                
-                // Instantiate dataUtility for cleanup
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                
-                // Remove older videos (categoryID will be nil for stream, likes, and personal roll)
-                [dataUtility removeOlderVideoFramesForGroupType:_groupType andCategoryID:_categoryID];
-                
-                // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
-                [dataUtility removeAllVideoExtractionURLReferences];
-                
-                [self transformOutAnimation];
-            });
-        });
     }
 }
 
@@ -1126,142 +972,93 @@ typedef NS_ENUM(NSUInteger, MenuState)
     }
 }
 
+- (void)purgeVideoPlayerInformationFromPreviousVideoGroup
+{
+    // Cancel remaining MP4 extractions
+    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+    
+    // Remove Scrubber Timer and Observer
+    [[SPVideoScrubber sharedInstance] stopObserving];
+    
+    // Remove references on model
+    [self.model destroyModel];
+    
+    // Stop residual audio playback (this shouldn't be happening to begin with)
+    [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+    
+    // Release everything
+    [self.videoPlayers removeAllObjects];
+    self.videoPlayers = nil;
+    
+    [self.playableVideoPlayers removeAllObjects];
+    self.videoPlayers = nil;
+    
+    [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.videoScrollView removeFromSuperview];
+    self.videoScrollView = nil;
+    
+    [self.itemViews removeAllObjects];
+    self.itemViews = nil;
+    
+    [self.videoFrames removeAllObjects];
+    self.videoFrames = nil;
+    
+    [self.moreVideoFrames removeAllObjects];
+    self.moreVideoFrames = nil;
+    
+    // Instantiate dataUtility for cleanup
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    
+    // Remove older videos (categoryID will be nil for stream, likes, and personal roll)
+    [dataUtility removeOlderVideoFramesForGroupType:_groupType andCategoryID:_categoryID];
+    
+    // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
+    [dataUtility removeAllVideoExtractionURLReferences];
+}
+
 #pragma mark - Gesture Methods (Private)
-- (void)launchGroupsMenu
+- (void)launchGroupsMenuViewController:(UIPinchGestureRecognizer *)gesture
 {
-    DLog(@"Launched Categories Menu");
-    [self setMenuState:MenuStateGroupsOpen];
-    
-    _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController" bundle:nil];
-    [self.view addSubview:[self.groupsMenuViewController view]];
-    
-    float xOrigin = (kShelbySPVideoWidth - self.groupsMenuViewController.view.frame.size.width) / 2;
-    self.groupsMenuViewController.view.frame = CGRectMake(xOrigin,
-                                                          -self.groupsMenuViewController.view.frame.size.height,
-                                                          self.groupsMenuViewController.view.frame.size.width,
-                                                          self.groupsMenuViewController.view.frame.size.height);
-    [UIView animateWithDuration:0.5 animations:^{
-        self.groupsMenuViewController.view.frame = CGRectMake(xOrigin,
-                                                              0.0f,
-                                                              self.groupsMenuViewController.view.frame.size.width,
-                                                              self.groupsMenuViewController.view.frame.size.height);
-    }];
-    
+    [self.overlayView setHidden:YES];
+
+        _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
+                                                                               bundle:nil
+                                                                         andVideoReel:self];
+        
+        [self.videoScrollView addSubview:_groupsMenuViewController.view];
 }
 
-- (void)dismissGroupsMenu
-{
-    DLog(@"Dismissed Categories Menu");
-    [self setMenuState:MenuStateNone];
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        self.groupsMenuViewController.view.frame = CGRectMake(self.groupsMenuViewController.view.frame.origin.x,
-                                                                  -self.groupsMenuViewController.view.frame.size.height,
-                                                                  self.groupsMenuViewController.view.frame.size.width,
-                                                                  self.groupsMenuViewController.view.frame.size.height);
-
-    }];
-
-}
-
-- (void)launchPlaylist
-{
-    DLog(@"Launched Playlist");
-    [self setMenuState:MenuStatePlaylistOpen];
-    [self.overlayView togglePlaylistView];
-}
-
-- (void)dismissPlaylist
-{
-    DLog(@"Dismissed Playlist");
-    [self setMenuState:MenuStateNone];
-    [self.overlayView togglePlaylistView];
-}
-
-
-- (void)toggleMenues:(UISwipeGestureRecognizer *)gesture
+- (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture
 {
     UISwipeGestureRecognizerDirection direction = [gesture direction];
     
     if ([self.overlayView isOverlayHidden]) {
         [self.overlayView toggleOverlay];
-    }
-    
-    if (self.menuState == MenuStateNone) {
-        if (direction == UISwipeGestureRecognizerDirectionUp) {
-            [self launchPlaylist];
-        } else {
-            [self launchGroupsMenu];
-        }
-    } else if (self.menuState == MenuStateGroupsOpen) {
-        if (direction == UISwipeGestureRecognizerDirectionUp) {
-            [self dismissGroupsMenu];
-        }
-    } else if (self.menuState == MenuStatePlaylistOpen) {
-        if (direction == UISwipeGestureRecognizerDirectionDown) {
-            [self dismissPlaylist];
-        }
-    }
-}
-
-#pragma mark - Transition Methods (Private)
-- (void)transformInAnimation
-{
-    if (self.inTransition) {
-        return;
-    }
-    
-    [self setInTransition:YES];
-    
-    [self.overlayView setAlpha:0];
-    [self.view bringSubviewToFront:self.screenshot];
-    [self.view bringSubviewToFront:self.zoomInScreenshot];
-    
-    [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationCurveEaseInOut animations:^{
-        [self.zoomInScreenshot setFrame:CGRectMake(-self.view.frame.size.width / 2, -self.view.frame.size.height / 2, self.view.frame.size.width * 2, self.view.frame.size.height * 2)];
-        [self.screenshot setAlpha:0];
-        [self.zoomInScreenshot setAlpha:0];
-        [self.overlayView setAlpha:1];
-    } completion:^(BOOL finished) {
-        [self.screenshot removeFromSuperview];
-        [self.zoomInScreenshot removeFromSuperview];
-        [self setInTransition:NO];
-    }];
-}
-
-- (void)transformOutAnimation
-{
-    [self setInTransition:YES];
-    
-    UIImageView *currentScreenshot = nil;
-    if (self.playerScreenshot) {
-        currentScreenshot = self.playerScreenshot;
     } else {
-        currentScreenshot = [[UIImageView alloc] initWithImage:[ImageUtilities screenshot:self.overlayView]];
+        // Do nothing
     }
     
-    [self.zoomInScreenshot setAlpha:1];
-    [self.zoomInScreenshot setFrame:currentScreenshot.frame];
-    
-    [self.zoomInScreenshot addSubview:currentScreenshot];
-    
-    [self.screenshot setAlpha:1];
-    [self.view addSubview:self.screenshot];
-    [self.view addSubview:self.zoomInScreenshot];
-    
-    [self.view bringSubviewToFront:self.screenshot];
-    [self.view bringSubviewToFront:self.zoomInScreenshot];
-        
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationCurveEaseIn animations:^{
-        [self.zoomInScreenshot setFrame:self.zoomInScreenshotFrame];
-        [currentScreenshot setFrame:CGRectMake(0, 0, self.zoomInScreenshotFrame.size.width, self.zoomInScreenshotFrame.size.height)];
-        [currentScreenshot setAlpha:0];
-   } completion:^(BOOL finished) {
-        [self setInTransition:NO];
-        [self dismissViewControllerAnimated:NO completion:nil];
-        [self setPlayerScreenshot:nil];
-    }];
-    
+    if (direction == UISwipeGestureRecognizerDirectionUp) {
+        [self launchPlaylist];
+    } else if (direction == UISwipeGestureRecognizerDirectionDown) {
+        [self dismissPlaylist];
+    } else {
+        // Do nothing
+    }
+}
+
+- (void)launchPlaylist
+{
+    DLog(@"Launched Playlist");
+    [self setPlaylistIsVisible:YES];
+    [self.overlayView toggleVideoListView];
+}
+
+- (void)dismissPlaylist
+{
+    DLog(@"Dismissed Playlist");
+    [self setPlaylistIsVisible:NO];
+    [self.overlayView toggleVideoListView];
 }
 
 #pragma mark - UIScrollViewDelegate Methods

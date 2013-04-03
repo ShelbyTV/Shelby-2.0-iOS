@@ -7,28 +7,32 @@
 //
 
 #import "GroupsMenuViewController.h"
+#import "SPVideoReel.h"
 
 @interface GroupsMenuViewController ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
-@property (strong, nonatomic) NSMutableArray *categories;
+@property (nonatomic) NSMutableArray *categories;
+@property (nonatomic) SPVideoReel *videoReel;
 
 - (void)setupDataSource;
-- (void)setupTableView;
 - (void)setupUserSpecificGroupsForRow:(NSUInteger)row inCell:(UITableViewCell *)cell;
 - (NSString *)extractTitleFromCategory:(id)category;
+- (void)launchCategory:(id)category;
 
 @end
 
 @implementation GroupsMenuViewController
 
 #pragma mark - Initialization Methods
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+         andVideoReel:(SPVideoReel *)videoReel
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
+    if ( self ) {
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        _videoReel = videoReel;
         [self setupDataSource];
     }
     
@@ -47,7 +51,6 @@
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     self.categories = [dataUtility fetchAllCategories];
 }
-
 
 - (void)setupUserSpecificGroupsForRow:(NSUInteger)row inCell:(UITableViewCell *)cell
 {
@@ -82,7 +85,6 @@
 #pragma mark - Private Methods
 - (NSString *)extractTitleFromCategory:(id)category
 {
-    
     NSString *categoryTitle = @"";
  
     if ( [category isKindOfClass:[NSManagedObject class]] ) {
@@ -102,14 +104,39 @@
             
         } else {
             
-            DLog(@"Category is newither a Channel or Roll");
+            DLog(@"Category is neither a Channel or Roll");
             
         }
-
         
     }
        
     return categoryTitle;
+}
+
+- (void)launchCategoryInRow:(id)category
+{
+    if ( [category isKindOfClass:[NSManagedObject class]] ) {
+        
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [category objectID];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        
+        if ( [category isMemberOfClass:[Channel class]] ) {
+            
+            Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+            NSMutableArray *videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
+            [self.videoReel loadWithGroupType:GroupType_CategoryChannel groupTitle:[channel displayTitle] videoFrames:videoFrames andCategoryID:[channel channelID]];
+            
+        } else if ( [category isMemberOfClass:[Roll class]] ) {
+            
+            Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
+            NSMutableArray *videoFrames = [dataUtility fetchFramesInCategoryChannel:[roll rollID]];
+            [self.videoReel loadWithGroupType:GroupType_CategoryRoll groupTitle:[roll title] videoFrames:videoFrames andCategoryID:[roll rollID]];
+            
+        } else {
+            DLog(@"Category is neither a Channel or Roll");
+        }
+    }
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -152,7 +179,8 @@
         
     } else { // Category Playlists
     
-        cell.textLabel.text = [self extractTitleFromCategory:[self.categories objectAtIndex:[indexPath row]]];
+        id category = [self.categories objectAtIndex:[indexPath row]];
+        cell.textLabel.text = [self extractTitleFromCategory:category];
         
     }
     
@@ -167,7 +195,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (0 == indexPath.section) { // User-Specific Playlists
+        
+        
+    } else { // Category Playlists
+        
+        id category = [self.categories objectAtIndex:[indexPath row]];
+        [self launchCategoryInRow:category];
+        
+    }
 }
 
 

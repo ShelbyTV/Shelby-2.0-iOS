@@ -13,13 +13,12 @@
 @interface SPOverlayView ()
 
 @property (weak, nonatomic) SPModel *model;
-
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
-
 @property (assign, nonatomic) BOOL hiddenState;
 
-- (void)hideVideoList:(BOOL)animate;
-- (void)showVideoList:(BOOL)animate;
+- (void)hideVideoListView;
+- (void)showVideoListView;
+
 @end
 
 @implementation SPOverlayView
@@ -46,7 +45,6 @@
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
 {
-    
     // Customize Fonts
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
     [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.nicknameLabel.font.pointSize]];
@@ -55,10 +53,13 @@
     // Customize Borders
     [self.userImageView.layer setBorderWidth:0.5];
     
+    // Customize Background Colors
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoTitleLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoListScrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"videoListPanel.png"]]];
-    [self hideVideoList:NO];
+    
+    // Hide Playlist
+    [self hideVideoListView];
 }
 
 #pragma mark - UIView Overridden Methods
@@ -86,7 +87,7 @@
     return [super hitTest:point withEvent:event];
 }
 
-#pragma mark - Toggle UI Methods
+#pragma mark - Overlay Methods
 - (void)toggleOverlay
 {
     
@@ -97,15 +98,13 @@
                                 withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                 withValue:nil];
     
-    if ( self.alpha < 1.0f ) {
-        
-        [self showOverlayView];
-        
-    } else {
-        
-        [self hideOverlayView];
-   
-    }
+    ( self.alpha < 1.0f ) ? [self showOverlayView] : [self hideOverlayView];
+    
+}
+
+- (BOOL)isOverlayHidden
+{
+    return self.hiddenState;
 }
 
 - (void)showOverlayView
@@ -126,6 +125,7 @@
     }];
 }
 
+#pragma mark - Like Notification Methods
 - (void)showLikeNotificationView
 {
     [UIView animateWithDuration:0.5f animations:^{
@@ -140,48 +140,40 @@
     }];
 }
 
-- (void)rescheduleOverlayTimer
-{
-    [self.model rescheduleOverlayTimer];
-}
-
-
-- (void)togglePlaylistView
+#pragma mark - Playlist Methods
+- (void)toggleVideoListView
 {
     if (self.videoListView.frame.origin.y == self.frame.size.height) {
-        [self showVideoList:YES];
-    } else if (self.videoListView.frame.origin.y == self.frame.size.height - self.videoListView.frame.size.height) {
-        [self hideVideoList:YES];
+        [self showVideoListView];
+    } else if (self.videoListView.frame.origin.y == (self.frame.size.height - self.videoListView.frame.size.height)) {
+        [self hideVideoListView];
+    } else {
+        // Do nothing
     }
 }
 
-- (BOOL)isOverlayHidden
-{
-    return self.hiddenState;
-}
-
-#pragma mark - toggle video list (Private)
-- (void)hideVideoList:(BOOL)animate
+- (void)hideVideoListView
 {
     CGRect videoListFrame = self.videoListView.frame;
     
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.5f animations:^{
         [self.videoListView setFrame:CGRectMake(0, self.frame.size.height, videoListFrame.size.width, videoListFrame.size.height)];
-    } completion:^(BOOL finished) {
     }];
-    
 }
 
-- (void)showVideoList:(BOOL)animate
-{
-    float animationTime = (animate ? 0.5 : 0);
-    
+- (void)showVideoListView
+{    
     CGRect videoListFrame = self.videoListView.frame;
     
-    [UIView animateWithDuration:animationTime animations:^{
+    [UIView animateWithDuration:0.5f animations:^{
         [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
-    } completion:^(BOOL finished) {
     }];
+}
+
+#pragma mark - Timer Methods
+- (void)rescheduleOverlayTimer
+{
+    [self.model rescheduleOverlayTimer];
 }
 
 @end

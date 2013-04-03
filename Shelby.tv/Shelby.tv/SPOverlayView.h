@@ -23,18 +23,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *elapsedTimelabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalDurationlabel;
 
-
-
 /// Toggle UI
 - (void)toggleOverlay;
 - (void)showOverlayView;
 - (void)hideOverlayView;
+- (BOOL)isOverlayHidden;
 - (void)showLikeNotificationView;
 - (void)hideLikeNotificationView;
+- (void)toggleVideoListView;
 
 - (void)rescheduleOverlayTimer;
 
-- (void)togglePlaylistView;
-
-- (BOOL)isOverlayHidden;
 @end
