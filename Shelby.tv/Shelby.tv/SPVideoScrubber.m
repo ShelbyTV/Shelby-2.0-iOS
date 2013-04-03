@@ -14,7 +14,9 @@
 
 @property (weak, nonatomic) SPModel *model;
 
-- (NSString *)convertElapsedTime:(CGFloat)currentTime andDuration:(CGFloat)duration;
+- (NSString *)convertElapsedTimeToString:(CGFloat)elapsedTime;
+- (NSString *)convertDurationToString:(CGFloat)duration;
+
 - (void)updateWatchedRoll;
 
 @end
@@ -77,12 +79,15 @@
     
 	if ( isfinite(duration) && self.model.currentVideoPlayer.player ) {
         
-        CGFloat currentTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
-        CGFloat progressValue = currentTime/duration;
+        CGFloat elapsedTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
+        CGFloat progressValue = elapsedTime/duration;
+        
+        self.model.overlayView.elapsedTimelabel.text = [self convertElapsedTimeToString:elapsedTime];
+        self.model.overlayView.totalDurationlabel.text = [self convertElapsedTimeToString:duration];
         
         if ( progressValue > [self.model.overlayView.elapsedProgressView progress] ) {
             
-            [self.model.overlayView.elapsedProgressView setProgress:(currentTime/duration) animated:YES];
+            [self.model.overlayView.elapsedProgressView setProgress:progressValue animated:YES];
             
         }
         
@@ -175,38 +180,56 @@
 }
 
 #pragma mark - Playback Methods (Private)
-- (NSString *)convertElapsedTime:(CGFloat)currentTime andDuration:(CGFloat)duration
+- (NSString *)convertElapsedTimeToString:(CGFloat)elapsedTime
 {
-    
     NSString *convertedTime = nil;
-    NSInteger currentTimeSeconds = 0;
-    NSInteger currentTimeHours = 0;
-    NSInteger currentTimeMinutes = 0;
+    NSInteger elapsedTimeSeconds = 0;
+    NSInteger elapsedTimeHours = 0;
+    NSInteger elapsedTimeMinutes = 0;
+    
+    elapsedTimeSeconds = ((NSInteger)elapsedTime % 60);
+    elapsedTimeMinutes = (((NSInteger)elapsedTime / 60) % 60);
+    elapsedTimeHours = ((NSInteger)elapsedTime / 3600);
+    
+    if ( elapsedTimeHours > 0 ) {
+        
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", elapsedTimeHours, elapsedTimeMinutes, elapsedTimeSeconds];
+        
+    } else if ( elapsedTimeMinutes > 0 ) {
+        
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d", elapsedTimeMinutes, elapsedTimeSeconds];
+        
+    } else {
+        
+        convertedTime = [NSString stringWithFormat:@"0:%.2d", elapsedTimeSeconds];
+    }
+    
+    
+    return convertedTime;
+}
+
+- (NSString *)convertDurationToString:(CGFloat)duration
+{
+    NSString *convertedTime = nil;
     NSInteger durationSeconds = 0;
     NSInteger durationMinutes = 0;
     NSInteger durationHours = 0;
-    
-    // Current Time
-    currentTimeSeconds = ((NSInteger)currentTime % 60);
-    currentTimeMinutes = (((NSInteger)currentTime / 60) % 60);
-    currentTimeHours = ((NSInteger)currentTime / 3600);
-    
-    // Duration
+
     durationSeconds = ((NSInteger)duration % 60);
     durationMinutes = (((NSInteger)duration / 60) % 60);
     durationHours = ((NSInteger)duration / 3600);
     
     if ( durationHours > 0 ) {
         
-        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d / %.2d:%.2d:%.2d", currentTimeHours, currentTimeMinutes, currentTimeSeconds, durationHours, durationMinutes, durationSeconds];
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", durationHours, durationMinutes, durationSeconds];
         
     } else if ( durationMinutes > 0 ) {
         
-        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d / %.2d:%.2d", currentTimeMinutes, currentTimeSeconds, durationMinutes, durationSeconds];
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d", durationMinutes, durationSeconds];
         
     } else {
         
-        convertedTime = [NSString stringWithFormat:@"0:%.2d / 0:%.2d", currentTimeSeconds, durationSeconds];
+        convertedTime = [NSString stringWithFormat:@"0:%.2d", durationSeconds];
     }
     
     return convertedTime;
