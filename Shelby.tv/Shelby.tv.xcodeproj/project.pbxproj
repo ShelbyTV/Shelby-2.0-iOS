@@ -63,7 +63,6 @@
 		1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C81096B16EE22B70030077C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81096916EE22AD0030077C /* CoreText.framework */; };
-		1C81097516EE2CBF0030077C /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		1C81097616EE2CBF0030077C /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
 		1C81097716EE2CBF0030077C /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
 		1C81097816EE2CBF0030077C /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
@@ -92,7 +91,6 @@
 		1C81099116EE2CBF0030077C /* PersonalRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* PersonalRollViewCell.m */; };
 		1C81099216EE2CBF0030077C /* CollectionViewGroupsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */; };
 		1C81099316EE2CBF0030077C /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB55116D2A33600C8C216 /* PageControl.m */; };
-		1C81099416EE2CBF0030077C /* SPShareRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA99016D3FF130070613F /* SPShareRollActivity.m */; };
 		1C81099516EE2CBF0030077C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03BEA16D56D5A0019669F /* User.m */; };
 		1C81099616EE2CBF0030077C /* SPShareRollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03C5F16D57C170019669F /* SPShareRollView.m */; };
 		1C81099716EE2CBF0030077C /* SPShareController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7C341916D58252007494DF /* SPShareController.m */; };
@@ -229,7 +227,6 @@
 		1C810A1F16EE2CBF0030077C /* homeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */; };
 		1C810A2016EE2CBF0030077C /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
 		1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
-		1C810A2B16EE5EED0030077C /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
 		1C810A2D16EE5EED0030077C /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
 		1C810A2E16EE5EED0030077C /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
@@ -258,7 +255,6 @@
 		1C810A4716EE5EED0030077C /* PersonalRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* PersonalRollViewCell.m */; };
 		1C810A4816EE5EED0030077C /* CollectionViewGroupsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */; };
 		1C810A4916EE5EED0030077C /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB55116D2A33600C8C216 /* PageControl.m */; };
-		1C810A4A16EE5EED0030077C /* SPShareRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA99016D3FF130070613F /* SPShareRollActivity.m */; };
 		1C810A4B16EE5EED0030077C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03BEA16D56D5A0019669F /* User.m */; };
 		1C810A4C16EE5EED0030077C /* SPShareRollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03C5F16D57C170019669F /* SPShareRollView.m */; };
 		1C810A4D16EE5EED0030077C /* SPShareController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7C341916D58252007494DF /* SPShareController.m */; };
@@ -444,12 +440,10 @@
 		8E285DE31680F82C002A7935 /* infoPanelIconPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E285DE11680F82C002A7935 /* infoPanelIconPlaceholder.png */; };
 		8E285DE41680F82C002A7935 /* infoPanelIconPlaceholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E285DE21680F82C002A7935 /* infoPanelIconPlaceholder@2x.png */; };
 		8E285DE7168124FC002A7935 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E285DE6168124FC002A7935 /* QuartzCore.framework */; };
-		8E2BA99116D3FF130070613F /* SPShareRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA99016D3FF130070613F /* SPShareRollActivity.m */; };
 		8E2BA99616D4053C0070613F /* likeActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99216D4053C0070613F /* likeActivityButton.png */; };
 		8E2BA99716D4053C0070613F /* likeActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */; };
 		8E2BA99816D4053C0070613F /* rollActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99416D4053C0070613F /* rollActivityButton.png */; };
 		8E2BA99916D4053C0070613F /* rollActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99516D4053C0070613F /* rollActivityButton@2x.png */; };
-		8E2BA99A16D40A440070613F /* SPShareLikeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */; };
 		8E3DCC8216E8F6F5000AF8A2 /* NSString+HMAC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */; };
 		8E3DCC8516E9388D000AF8A2 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8416E9388D000AF8A2 /* Roll.m */; };
 		8E3DCC8816E9388D000AF8A2 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8716E9388D000AF8A2 /* Channel.m */; };
@@ -679,10 +673,6 @@
 		8E285DE11680F82C002A7935 /* infoPanelIconPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoPanelIconPlaceholder.png; sourceTree = "<group>"; };
 		8E285DE21680F82C002A7935 /* infoPanelIconPlaceholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoPanelIconPlaceholder@2x.png"; sourceTree = "<group>"; };
 		8E285DE6168124FC002A7935 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		8E2BA98C16D3FF090070613F /* SPShareLikeActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPShareLikeActivity.h; sourceTree = "<group>"; };
-		8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPShareLikeActivity.m; sourceTree = "<group>"; };
-		8E2BA98F16D3FF130070613F /* SPShareRollActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPShareRollActivity.h; sourceTree = "<group>"; };
-		8E2BA99016D3FF130070613F /* SPShareRollActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPShareRollActivity.m; sourceTree = "<group>"; };
 		8E2BA99216D4053C0070613F /* likeActivityButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeActivityButton.png; sourceTree = "<group>"; };
 		8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "likeActivityButton@2x.png"; sourceTree = "<group>"; };
 		8E2BA99416D4053C0070613F /* rollActivityButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rollActivityButton.png; sourceTree = "<group>"; };
@@ -1255,10 +1245,6 @@
 			children = (
 				8E7C341816D58252007494DF /* SPShareController.h */,
 				8E7C341916D58252007494DF /* SPShareController.m */,
-				8E2BA98C16D3FF090070613F /* SPShareLikeActivity.h */,
-				8E2BA98D16D3FF090070613F /* SPShareLikeActivity.m */,
-				8E2BA98F16D3FF130070613F /* SPShareRollActivity.h */,
-				8E2BA99016D3FF130070613F /* SPShareRollActivity.m */,
 				8E91173016DC288600719F9B /* SPVideoDownloader.h */,
 				8E91173116DC288600719F9B /* SPVideoDownloader.m */,
 				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
@@ -2000,7 +1986,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C81097516EE2CBF0030077C /* SPShareLikeActivity.m in Sources */,
 				1C81097616EE2CBF0030077C /* TopAlignedLabel.m in Sources */,
 				1C81097716EE2CBF0030077C /* SPVideoReel.m in Sources */,
 				1C81097816EE2CBF0030077C /* SPVideoPlayer.m in Sources */,
@@ -2029,7 +2014,6 @@
 				1C81099116EE2CBF0030077C /* PersonalRollViewCell.m in Sources */,
 				1C81099216EE2CBF0030077C /* CollectionViewGroupsLayout.m in Sources */,
 				1C81099316EE2CBF0030077C /* PageControl.m in Sources */,
-				1C81099416EE2CBF0030077C /* SPShareRollActivity.m in Sources */,
 				1C81099516EE2CBF0030077C /* User.m in Sources */,
 				1C81099616EE2CBF0030077C /* SPShareRollView.m in Sources */,
 				1C81099716EE2CBF0030077C /* SPShareController.m in Sources */,
@@ -2065,7 +2049,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EA9B1E7170B8284004C7601 /* GroupsMenuViewController.m in Sources */,
-				1C810A2B16EE5EED0030077C /* SPShareLikeActivity.m in Sources */,
 				1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */,
 				1C810A2D16EE5EED0030077C /* SPVideoReel.m in Sources */,
 				1C810A2E16EE5EED0030077C /* SPVideoPlayer.m in Sources */,
@@ -2094,7 +2077,6 @@
 				1C810A4716EE5EED0030077C /* PersonalRollViewCell.m in Sources */,
 				1C810A4816EE5EED0030077C /* CollectionViewGroupsLayout.m in Sources */,
 				1C810A4916EE5EED0030077C /* PageControl.m in Sources */,
-				1C810A4A16EE5EED0030077C /* SPShareRollActivity.m in Sources */,
 				1C810A4B16EE5EED0030077C /* User.m in Sources */,
 				1C810A4C16EE5EED0030077C /* SPShareRollView.m in Sources */,
 				1C810A4D16EE5EED0030077C /* SPShareController.m in Sources */,
@@ -2129,7 +2111,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E2BA99A16D40A440070613F /* SPShareLikeActivity.m in Sources */,
 				8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */,
 				8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */,
 				8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */,
@@ -2158,7 +2139,6 @@
 				1CCCB54616CEA61B00C8C216 /* PersonalRollViewCell.m in Sources */,
 				1CCCB54C16CEECD400C8C216 /* CollectionViewGroupsLayout.m in Sources */,
 				1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */,
-				8E2BA99116D3FF130070613F /* SPShareRollActivity.m in Sources */,
 				8EF03BEB16D56D5A0019669F /* User.m in Sources */,
 				8EF03C6016D57C170019669F /* SPShareRollView.m in Sources */,
 				8E7C341A16D58252007494DF /* SPShareController.m in Sources */,

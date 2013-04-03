@@ -13,7 +13,8 @@
 @interface SPOverlayView ()
 
 @property (weak, nonatomic) SPModel *model;
-
+@property (weak, nonatomic) IBOutlet UIButton *rollButton;
+@property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
 
 @property (assign, nonatomic) BOOL hiddenState;
@@ -110,6 +111,18 @@
 
 - (void)showOverlayView
 {
+    if ([self.model groupType] == GroupType_PersonalRoll) {
+        [self.rollButton setHidden:YES];
+        [self.likesButton setHidden:NO];
+    } else if ([self.model groupType] == GroupType_Likes) {
+        [self.rollButton setHidden:NO];
+        [self.rollButton setFrame:self.likesButton.frame];
+        [self.likesButton setHidden:YES];
+    } else {
+        [self.likesButton setHidden:NO];
+        [self.rollButton setHidden:NO];
+    }
+
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:1.0f];
     } completion:^(BOOL finished) {

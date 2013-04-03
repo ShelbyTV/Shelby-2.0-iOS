@@ -15,8 +15,6 @@
 #import "SPOverlayView.h"
 
 // Controllers
-#import "SPShareLikeActivity.h"
-#import "SPShareRollActivity.h"
 #import "SPShareController.h"
 #import "SPVideoExtractor.h"
 #import "SPVideoDownloader.h"
