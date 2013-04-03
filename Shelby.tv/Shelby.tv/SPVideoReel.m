@@ -144,9 +144,6 @@
     [self setupSwipeGestures];
     [self setupVideoListScrollView];
     [self setupAirPlay];
-    
-    [self.overlayView setHidden:NO];
-    
 }
 
 - (void)setupVideoFrames:(NSMutableArray *)videoFrames
@@ -1040,13 +1037,12 @@
 #pragma mark - Gesture Methods (Private)
 - (void)launchGroupsMenuViewController:(UIPinchGestureRecognizer *)gesture
 {
-    [self.overlayView setHidden:YES];
-
-        _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
-                                                                               bundle:nil
-                                                                         andVideoReel:self];
-        
-        [self.videoScrollView addSubview:_groupsMenuViewController.view];
+    
+    _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
+                                                                           bundle:nil
+                                                                     andVideoReel:self];
+    
+    [self.videoScrollView addSubview:_groupsMenuViewController.view];
 }
 
 - (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture
@@ -1055,16 +1051,12 @@
     
     if ([self.overlayView isOverlayHidden]) {
         [self.overlayView toggleOverlay];
-    } else {
-        // Do nothing
     }
     
     if (direction == UISwipeGestureRecognizerDirectionUp) {
         [self launchPlaylist];
     } else if (direction == UISwipeGestureRecognizerDirectionDown) {
         [self dismissPlaylist];
-    } else {
-        // Do nothing
     }
 }
 
@@ -1072,14 +1064,14 @@
 {
     DLog(@"Launched Playlist");
     [self setPlaylistIsVisible:YES];
-    [self.overlayView toggleVideoListView];
+    [self.overlayView showVideoList];
 }
 
 - (void)dismissPlaylist
 {
     DLog(@"Dismissed Playlist");
     [self setPlaylistIsVisible:NO];
-    [self.overlayView toggleVideoListView];
+    [self.overlayView hideVideoList];
 }
 
 #pragma mark - UIScrollViewDelegate Methods

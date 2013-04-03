@@ -18,9 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
 @property (assign, nonatomic) BOOL hiddenState;
 
-- (void)hideVideoListView;
-- (void)showVideoListView;
-
 @end
 
 @implementation SPOverlayView
@@ -61,7 +58,7 @@
     [self.videoListScrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"videoListPanel.png"]]];
     
     // Hide Playlist
-    [self hideVideoListView];
+    [self hideVideoList];
 }
 
 #pragma mark - UIView Overridden Methods
@@ -155,19 +152,13 @@
 }
 
 #pragma mark - Playlist Methods
-- (void)toggleVideoListView
+- (void)hideVideoList
 {
-    if (self.videoListView.frame.origin.y == self.frame.size.height) {
-        [self showVideoListView];
-    } else if (self.videoListView.frame.origin.y == (self.frame.size.height - self.videoListView.frame.size.height)) {
-        [self hideVideoListView];
-    } else {
-        // Do nothing
+    
+    if (self.videoListView.frame.origin.y != (self.frame.size.height - self.videoListView.frame.size.height)) {
+        return;
     }
-}
-
-- (void)hideVideoListView
-{
+    
     CGRect videoListFrame = self.videoListView.frame;
     
     [UIView animateWithDuration:0.5f animations:^{
@@ -175,8 +166,12 @@
     }];
 }
 
-- (void)showVideoListView
-{    
+- (void)showVideoList
+{
+    if (self.videoListView.frame.origin.y != self.frame.size.height) {
+        return;
+    }
+    
     CGRect videoListFrame = self.videoListView.frame;
     
     [UIView animateWithDuration:0.5f animations:^{

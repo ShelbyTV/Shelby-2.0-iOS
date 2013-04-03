@@ -30,7 +30,8 @@
 - (BOOL)isOverlayHidden;
 - (void)showLikeNotificationView;
 - (void)hideLikeNotificationView;
-- (void)toggleVideoListView;
+- (void)showVideoList;
+- (void)hideVideoList;
 
 - (void)rescheduleOverlayTimer;
 
