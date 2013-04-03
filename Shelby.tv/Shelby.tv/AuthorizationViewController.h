@@ -12,6 +12,9 @@
 
 - (void)authorizationDidComplete;
 
+@optional
+- (void)authorizationDidNotComplete;
+
 @end
 
 

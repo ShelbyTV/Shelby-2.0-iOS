@@ -103,6 +103,12 @@
 
 - (IBAction)cancel:(id)sender
 {
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationDidNotComplete)]) {
+        [self.delegate authorizationDidNotComplete];
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

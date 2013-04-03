@@ -32,6 +32,9 @@
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 @property (assign, nonatomic) BOOL playlistIsVisible;
 
+// Make sure we let user roll immediately after they log in.
+@property (nonatomic) NSInvocation *rollInvocationMethod;
+
 /// Setup Methods
 - (void)setup;
 - (void)setupVideoFrames:(NSArray *)videoFrames;
@@ -62,6 +65,11 @@
 - (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
 - (void)launchGroupsMenuViewController:(UIPinchGestureRecognizer *)gesture;
 
+/// Action Methods
+- (IBAction)shareButtonAction:(id)sender;
+- (IBAction)likeAction:(id)sender;
+- (IBAction)rollAction:(id)sender;
+- (void)rollVideo;
 @end
 
 @implementation SPVideoReel 
@@ -484,6 +492,10 @@
 
 - (IBAction)shareButtonAction:(id)sender
 {
+    // Disable overlayTimer
+    [self.model.overlayView showOverlayView];
+    [self.model.overlayTimer invalidate];
+    
     [self.model.currentVideoPlayer share];
 }
 
@@ -513,10 +525,29 @@
 - (IBAction)rollAction:(id)sender
 {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+ 
+        // Setting invocation, so we would roll immediately after user logs in.
+        NSMethodSignature *rollSignature = [SPVideoReel instanceMethodSignatureForSelector:@selector(rollVideo)];
+        NSInvocation *rollInvocation = [NSInvocation invocationWithMethodSignature:rollSignature];
+        [rollInvocation setTarget:self];
+        [rollInvocation setSelector:@selector(rollVideo)];
+        [self setRollInvocationMethod:rollInvocation];
+        
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to roll" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
         [alertView show];
+    } else {
+        [self rollVideo];
     }
+}
+
+- (void)rollVideo
+{
+    // Disable overlayTimer
+    [self.model.overlayView showOverlayView];
+    [self.model.overlayTimer invalidate];
     
+    [self.model.currentVideoPlayer roll];    
 }
 
 - (IBAction)itemButtonAction:(id)sender
@@ -1136,7 +1167,44 @@
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    // KP KP: login
+    if (buttonIndex == 1) {
+        [self loginAction];
+    } else {
+        [self setRollInvocationMethod:nil];
+    }
+}
+
+// TODO: this might go to a different VC.
+#pragma mark - Authorization Methods (Private)
+- (void)loginAction
+{
+    [self.model.currentVideoPlayer pause];
+    
+    AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
+    
+    CGFloat xOrigin = self.view.frame.size.width / 2.0f - authorizationViewController.view.frame.size.width / 4.0f;
+    CGFloat yOrigin = self.view.frame.size.height / 5.0f - authorizationViewController.view.frame.size.height / 4.0f;
+    CGSize loginDialogSize = authorizationViewController.view.frame.size;
+    [authorizationViewController setDelegate:self];
+    [authorizationViewController setModalInPopover:YES];
+    [authorizationViewController setModalPresentationStyle:UIModalPresentationFormSheet];
+    
+    [self presentViewController:authorizationViewController animated:YES completion:nil];
+    
+    authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+}
+
+#pragma  mark - AuthorizationDelegate
+- (void)authorizationDidComplete
+{
+    [self.rollInvocationMethod invoke];
+    [self setRollInvocationMethod:nil];
+}
+
+- (void)authorizationDidNotComplete
+{
+    [self setRollInvocationMethod:nil];
+    [self.model.currentVideoPlayer play];
 }
 
 @end

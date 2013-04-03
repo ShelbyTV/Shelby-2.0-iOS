@@ -444,14 +444,15 @@
     // TODO - Uncomment for AppStore
 //    [[Panhandler sharedInstance] recordEvent];
     
-    // Disable overlayTimer
-    [self.model.overlayView showOverlayView];
-    [self.model.overlayTimer invalidate];
- 
     // shareController is an iVar because it contains an iVar reference of UIPopOverViewController which must be retianed
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self];
     [self.shareController share];
-    
+}
+
+- (void)roll
+{
+    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self];
+    [self.shareController showRollView];
 }
 
 - (void)loadVideo:(NSNotification *)notification

@@ -34,5 +34,5 @@
 - (void)play;
 - (void)pause;
 - (void)share;
-
+- (void)roll;
 @end

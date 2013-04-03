@@ -69,8 +69,8 @@
 #pragma mark - UI Methods (Public)
 - (void)share
 {
-    [self setup];
-    
+    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         // Reference videoFrame
@@ -115,6 +115,9 @@
 
 - (void)showRollView
 {
+    [self setup];
+    
+    self.model = (SPModel *)[SPModel sharedInstance];
     
     // Instantiate rollView
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
@@ -272,7 +275,7 @@
      self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
     [self.sharePopOverController setDelegate:self];
     [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                 inView:self.model.overlayView.shareButton
+                                                 inView:self.model.overlayView
                                permittedArrowDirections:UIPopoverArrowDirectionUp
                                                animated:YES];
     

@@ -7,10 +7,11 @@
 //
 
 #import "SPModel.h"
+#import "AuthorizationViewController.h"
 
 @class SPVideoPlayer, SPOverlayView;
 
-@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIAlertViewDelegate>
+@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIAlertViewDelegate, AuthorizationDelegate>
 
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
@@ -32,11 +33,6 @@
 
 /// Storage Methods
 - (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player;
-
-/// Action Methods
-- (IBAction)shareButtonAction:(id)sender;
-- (IBAction)likeAction:(id)sender;
-- (IBAction)rollAction:(id)sender;
 
 - (IBAction)itemButtonAction:(id)sender;
 - (IBAction)restartPlaybackButtonAction:(id)sender;
