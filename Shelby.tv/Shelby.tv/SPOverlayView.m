@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *rollButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
-@property (assign, nonatomic) BOOL hiddenState;
 
 @end
 
@@ -103,7 +102,7 @@
 
 - (BOOL)isOverlayHidden
 {
-    return self.hiddenState;
+    return (self.alpha == 0 || self.isHidden);
 }
 
 - (void)showOverlayView
@@ -122,8 +121,6 @@
 
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:1.0f];
-    } completion:^(BOOL finished) {
-        [self setHiddenState:NO];
     }];
 }
 
@@ -131,8 +128,6 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:0.0f];
-    } completion:^(BOOL finished) {
-        [self setHiddenState:YES];
     }];
 }
 
