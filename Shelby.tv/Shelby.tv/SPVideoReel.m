@@ -1129,7 +1129,6 @@
                                                                                                         bundle:nil
                                                                                                   andVideoReel:self];
                              
-                             
                              [self.view addSubview:_groupsMenuViewController.view];
                         
                          }];

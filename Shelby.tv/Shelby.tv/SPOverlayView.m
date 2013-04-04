@@ -9,6 +9,7 @@
 #import "SPOverlayView.h"
 #import "SPModel.h"
 #import "SPVideoReel.h"
+#import "SPVideoScrubber.h"
 
 @interface SPOverlayView ()
 
@@ -178,6 +179,32 @@
 - (void)rescheduleOverlayTimer
 {
     [self.model rescheduleOverlayTimer];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch *touch in touches) {
+        
+        if (touch.view == [self scrubberContainerView]) {
+            CGPoint position = [touch locationInView:[self scrubberContainerView]];
+            DLog(@"scrubberContainerView %@", NSStringFromCGPoint(position));
+            CGFloat percentage = position.x / self.scrubberContainerView.frame.size.width;
+            [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
+        } else if (touch.view == [self elapsedProgressView]) {
+            CGPoint position = [touch locationInView:[self elapsedProgressView]];
+            DLog(@"elapsedProgressView %@", NSStringFromCGPoint(position));
+            CGFloat percentage = position.x / self.scrubberContainerView.frame.size.width;
+            [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
+        } else if (touch.view == [self bufferProgressView]) {
+            CGPoint position = [touch locationInView:[self bufferProgressView]];
+            DLog(@"bufferProgressView %@", NSStringFromCGPoint(position));
+            CGFloat percentage = position.x / self.scrubberContainerView.frame.size.width;
+            [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
+        } else {
+            // Do nothing
+        }
+        
+    }
 }
 
 @end

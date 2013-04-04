@@ -21,6 +21,7 @@
 - (void)stopObserving;
 
 /// Scrubbing Method
+- (void)seekToTimeWithPercentage:(CGFloat)percentage;
 - (void)scrub;
 - (void)beginScrubbing;
 - (void)endScrubbing;
