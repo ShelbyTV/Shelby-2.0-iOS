@@ -82,8 +82,8 @@
         CGFloat elapsedTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
         CGFloat progressValue = elapsedTime/duration;
         
-        self.model.overlayView.elapsedTimelabel.text = [self convertElapsedTimeToString:elapsedTime];
-        self.model.overlayView.totalDurationlabel.text = [self convertElapsedTimeToString:duration];
+        self.model.overlayView.elapsedTimeLabel.text = [self convertElapsedTimeToString:elapsedTime];
+        self.model.overlayView.totalDurationLabel.text = [self convertElapsedTimeToString:duration];
         
         if ( progressValue > [self.model.overlayView.elapsedProgressView progress] ) {
             

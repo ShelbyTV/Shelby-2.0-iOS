@@ -214,7 +214,7 @@
 - (void)handleScrubberTouchWithPosition:(CGPoint)position
 {
     self.model.videoReel.toggleOverlayGesuture.enabled = NO;
-    CGFloat percentage = position.x / self.scrubberContainerView.frame.size.width;
+    CGFloat percentage = position.x / self.elapsedProgressView.frame.size.width;
     [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
     self.model.videoReel.toggleOverlayGesuture.enabled = YES;
     [self rescheduleOverlayTimer];
