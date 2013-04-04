@@ -740,6 +740,7 @@
 {    
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        [self.overlayView.elapsedProgressView setProgress:0.0f];
         [self.overlayView.bufferProgressView setProgress:0.0f];
         [self.overlayView.elapsedTimelabel setText:@"00:00:00"];
         [self.overlayView.totalDurationlabel setText:@"00:00:00"];
