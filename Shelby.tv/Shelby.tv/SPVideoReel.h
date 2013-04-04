@@ -9,7 +9,7 @@
 #import "SPModel.h"
 #import "AuthorizationViewController.h"
 
-@class SPVideoPlayer, SPOverlayView;
+@class SPVideoPlayer, SPOverlayView, GroupsMenuViewController;
 
 @interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIAlertViewDelegate, AuthorizationDelegate>
 
@@ -17,6 +17,7 @@
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
 @property (copy, nonatomic) NSString *groupTitle;
+@property (nonatomic) GroupsMenuViewController *groupsMenuViewController;
 
 - (void)loadWithGroupType:(GroupType)groupType
                groupTitle:(NSString *)title

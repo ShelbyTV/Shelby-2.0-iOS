@@ -15,6 +15,7 @@
 #import "SPVideoPlayer.h"
 #import "SPVideoReel.h"
 #import "Video.h"
+#import "GroupsMenuViewController.h"
 
 // HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
 // HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
@@ -42,23 +43,25 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 @property (nonatomic) id <GAITracker> googleTracker;
 @property (nonatomic) NSInvocation *invocationMethod;
 @property (strong) NSMutableArray *dataUtilities;
+@property (strong) SPVideoReel *videoReel;
 
 /// Setup Methods
 - (void)setupInitialSettings;
 - (void)setupAnalytics;
 - (void)setupObservers;
-//- (void)setupCategoryLoadingView;
-//- (void)removeCategoryLoadingView;
+- (void)setupCategoryLoadingView;
+- (void)removeCategoryLoadingView;
 - (void)setupOfflineMode;
 - (void)setupDataUtilities;
 
 /// Notification Methods
-
 - (void)didNotConnect:(NSNotification *)notification;
 - (void)postAuthorizationNotification;
 
 /// API Methods
 - (void)pingAllRoutes;
+
+- (void)launchGroupsMenuViewController;
 
 @end
 
@@ -73,13 +76,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     // Initial Conditions
     [self setupInitialSettings];
     
-    // Create UIWindow and rootViewController
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    BrowseViewController *pageViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
-    SPVideoReel *videoReel = [[SPVideoReel alloc] init];
-    self.window.rootViewController = videoReel;
-    [self.window makeKeyAndVisible];
-    
     // Crash reporting and user monitoring analytics
     [self setupAnalytics];
     
@@ -89,8 +85,14 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     // Observers
     [self setupObservers];
     
+    // Create UIWindow and rootViewController
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.videoReel = [[SPVideoReel alloc] init];
+    self.window.rootViewController = self.videoReel;
+    [self.window makeKeyAndVisible];
+    
     // Setup buffer screen to allow categories to be fetched from web and stored locally
-//    [self setupCategoryLoadingView];
+    [self setupCategoryLoadingView];
 
     return YES;
 }
@@ -293,6 +295,16 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
 }
 
+#pragma mark - BITUpdateManagerDelegate
+- (NSString *)customDeviceIdentifierForUpdateManager:(BITUpdateManager *)updateManager {
+#ifndef SHELBY_APPSTORE
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(uniqueIdentifier)]) {
+        return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
+    }
+#endif
+    return nil;
+}
+
 - (void)setupObservers
 {
     // Add notification to dismiss categoryLoadingView if there's no connectivity
@@ -310,31 +322,38 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 
 - (void)setupCategoryLoadingView
 {
-//    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-//    float height = kShelbyFullscreenHeight;
-//    float width = kShelbyFullscreenWidth;
-//    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-//        height = kShelbyFullscreenWidth;
-//        width = kShelbyFullscreenHeight;
-//    }
-//
-//    self.categoryLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width, height)];
-//    [self.categoryLoadingView setBackgroundColor:[UIColor clearColor]];
-//    [self.categoryLoadingView setUserInteractionEnabled:YES];
-//    [self.window.rootViewController.view addSubview:_categoryLoadingView];
-//    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
-//    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    [indicator setColor:kShelbyColorBlack];
-//    [indicator setCenter:CGPointMake(_categoryLoadingView.frame.size.width/2.0f, _categoryLoadingView.frame.size.height/2.0f - 21)];
-//    [indicator setHidesWhenStopped:YES];
-//    [indicator startAnimating];
-//    [self.categoryLoadingView addSubview:indicator];
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    float height = kShelbyFullscreenHeight;
+    float width = kShelbyFullscreenWidth;
+    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+        height = kShelbyFullscreenWidth;
+        width = kShelbyFullscreenHeight;
+    }
+
+    self.categoryLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width, height)];
+    [self.categoryLoadingView setBackgroundColor:[UIColor clearColor]];
+    [self.categoryLoadingView setUserInteractionEnabled:YES];
+    [self.window.rootViewController.view addSubview:_categoryLoadingView];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
+    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [indicator setCenter:CGPointMake(_categoryLoadingView.frame.size.width/2.0f, _categoryLoadingView.frame.size.height/2.0f - 21)];
+    [indicator setHidesWhenStopped:YES];
+    [indicator startAnimating];
+    [self.categoryLoadingView addSubview:indicator];
 }
 
 - (void)removeCategoryLoadingView
 {
-//    [self.categoryLoadingView removeFromSuperview];
-//    [self setCategoryLoadingView:nil];
+    [self.categoryLoadingView removeFromSuperview];
+    [self setCategoryLoadingView:nil];
+}
+
+- (void)launchGroupsMenuViewController
+{
+    self.videoReel.groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
+                                                                                         bundle:nil
+                                                                                   andVideoReel:self.videoReel];
+    [self.videoReel.view addSubview:[self.videoReel.groupsMenuViewController view]];
 }
 
 - (void)setupOfflineMode
@@ -350,22 +369,19 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
 }
 
-#pragma mark - BITUpdateManagerDelegate
-- (NSString *)customDeviceIdentifierForUpdateManager:(BITUpdateManager *)updateManager {
-#ifndef SHELBY_APPSTORE
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(uniqueIdentifier)]) {
-        return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
-    }
-#endif
-    return nil;
-}
-
 #pragma mark - Notification Methods (Private)
-
 - (void)didNotConnect:(NSNotification *)notification
 {
-//    [self removeCategoryLoadingView];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationNoConnectivity object:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (self.categoryLoadingView) {
+            
+            [self removeCategoryLoadingView];
+            
+            [self launchGroupsMenuViewController];
+            
+        }
+    });
 }
 
 - (void)postAuthorizationNotification
@@ -385,6 +401,20 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
             [self setInvocationMethod:nil];
         }
     }
+}
+
+- (void)didLoadCategories
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (self.categoryLoadingView) {
+            
+            [self removeCategoryLoadingView];
+            
+            [self launchGroupsMenuViewController];
+            
+        }
+    });
 }
 
 #pragma mark - API Methods (Private)
@@ -416,20 +446,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
         }
         
     });
-}
-
-- (void)didLoadCategories
-{
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [(BrowseViewController *)self.window.rootViewController fetchAllCategories];
-//
-//        if (self.categoryLoadingView) {
-//            [self removeCategoryLoadingView];
-//
-//            BrowseViewController *browseViewController = (BrowseViewController *)self.window.rootViewController;
-//            [browseViewController performSelector:@selector(resetView) withObject:nil afterDelay:1];
-//        }
-//    });
 }
 
 - (void)dumpAllData
