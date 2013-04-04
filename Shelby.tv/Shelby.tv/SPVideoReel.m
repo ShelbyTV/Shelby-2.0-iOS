@@ -14,7 +14,7 @@
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
 #import "GroupsMenuViewController.h"
-#import "SPVideoCategoryViewCell.h"
+#import "SPCategoryViewCell.h"
 
 @interface SPVideoReel ()
 
@@ -1325,7 +1325,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    SPVideoCategoryViewCell *cell = (SPVideoCategoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"SPVideoCategoryViewCell" forIndexPath:indexPath];
+    SPCategoryViewCell *cell = (SPCategoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"SPCategoryViewCell" forIndexPath:indexPath];
 
     int row = indexPath.row;
     NSString *title = nil;

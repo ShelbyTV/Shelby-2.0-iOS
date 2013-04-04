@@ -46,8 +46,8 @@
 {
     [super awakeFromNib];
     
-    UINib *cellNib = [UINib nibWithNibName:@"SPVideoCategoryViewCell" bundle:nil];
-    [self.categoriesCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPVideoCategoryViewCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"SPCategoryViewCell" bundle:nil];
+    [self.categoriesCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPCategoryViewCell"];
 
     // Customize Fonts
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];

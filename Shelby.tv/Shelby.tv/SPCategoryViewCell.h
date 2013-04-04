@@ -1,5 +1,5 @@
 //
-//  SPVideoCategoryViewCell.h
+//  SPCategoryViewCell.h
 //  Shelby.tv
 //
 //  Created by Keren on 4/4/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SPVideoCategoryViewCell : UICollectionViewCell
+@interface SPCategoryViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (assign, nonatomic) BOOL currentCategory;
 

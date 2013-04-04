@@ -1,17 +1,17 @@
 //
-//  SPVideoCategoryViewCell.m
+//  SPCategoryViewCell.m
 //  Shelby.tv
 //
 //  Created by Keren on 4/4/13.
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "SPVideoCategoryViewCell.h"
+#import "SPCategoryViewCell.h"
 
-@interface SPVideoCategoryViewCell()
+@interface SPCategoryViewCell()
 @end
 
-@implementation SPVideoCategoryViewCell
+@implementation SPCategoryViewCell
 
 
 - (id)initWithFrame:(CGRect)frame
