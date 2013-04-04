@@ -110,6 +110,21 @@
     [self setup];
 }
 
+- (void)buildViewAndFetchDataSource
+{
+    [self fetchAllCategories];
+    [self fetchUserNickname];
+    
+    [self setupVariables];
+    [self setupObservers];
+    [self setupVideoScrollView];
+    [self setupOverlayView];
+    [self setupSwipeGestures];
+    [self setupVideoListScrollView];
+    [self setupAirPlay];
+    
+}
+
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
@@ -121,13 +136,6 @@
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
     
-    [self fetchAllCategories];
-    [self fetchUserNickname];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
 }
 
 #pragma mark - Setup Methods
@@ -254,8 +262,9 @@
 
 - (void)setupVideoScrollView
 {
+    
     self.videoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
-    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * _model.numberOfVideos, kShelbySPVideoHeight - 20);
+    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight - 20);
     self.videoScrollView.delegate = self;
     self.videoScrollView.pagingEnabled = YES;
     self.videoScrollView.showsHorizontalScrollIndicator = NO;
@@ -386,23 +395,27 @@
         dispatch_async(dispatch_get_main_queue(), ^{
 
             // Add visual selected state (e.g., green background) to currentVideo's itemView object
-            SPVideoItemView *itemView = (self.itemViews)[_model.currentVideo];
             
-            // Scroll To currentVideo if self.currentVideo != 0
-            if ( 0 != self.model.currentVideo) {
+            if ( _model.currentVideo ) {
                 
-                CGFloat x = _videoScrollView.frame.size.width * _model.currentVideo;
-                CGFloat y = _videoScrollView.contentOffset.y;
-                [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+                SPVideoItemView *itemView = (self.itemViews)[_model.currentVideo];
                 
-                CGFloat itemViewX = itemView.frame.size.width * (_model.currentVideo-1);
-                CGFloat itemViewY = _overlayView.videoListScrollView.contentOffset.y;
-                [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
+                // Scroll To currentVideo if self.currentVideo != 0
+                if ( 0 != self.model.currentVideo) {
+                    
+                    CGFloat x = _videoScrollView.frame.size.width * _model.currentVideo;
+                    CGFloat y = _videoScrollView.contentOffset.y;
+                    [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+                    
+                    CGFloat itemViewX = itemView.frame.size.width * (_model.currentVideo-1);
+                    CGFloat itemViewY = _overlayView.videoListScrollView.contentOffset.y;
+                    [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
+                    
+                }
                 
+                [self.model.overlayView.videoListScrollView flashScrollIndicators];
             }
-           
-            [self.model.overlayView.videoListScrollView flashScrollIndicators];
-        
+                    
         });
     });
 }
@@ -1325,7 +1338,6 @@
     
 }
 
-
 // TODO: factor the data source delegete methods to a model class.
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
@@ -1394,8 +1406,13 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id category = [self.categories objectAtIndex:[indexPath row]];
-    [self launchCategory:category];
+    if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
+        
+    } else { // Category Channels and Rolls
+        id category = [self.categories objectAtIndex:indexPath.row];
+        [self launchCategory:category];
+    }
+    
     self.model.videoReel.toggleOverlayGesuture.enabled = YES;
 }
 
