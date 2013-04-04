@@ -74,6 +74,9 @@
 - (IBAction)likeAction:(id)sender;
 - (IBAction)rollAction:(id)sender;
 - (void)rollVideo;
+
+//
+- (void)launchCategory:(id)category;
 @end
 
 @implementation SPVideoReel 
@@ -1228,6 +1231,24 @@
 }
 
 
+- (void)launchCategory:(id)category
+{
+    if ([category isKindOfClass:[NSManagedObject class]]) {
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *objectID = [category objectID];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        if ([category isMemberOfClass:[Channel class]]) {
+            Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+            NSMutableArray *videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
+            [self loadWithGroupType:GroupType_CategoryChannel groupTitle:[channel displayTitle] videoFrames:videoFrames andCategoryID:[channel channelID]];
+        } else if ([category isMemberOfClass:[Roll class]]) {
+            Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
+            NSMutableArray *videoFrames = [dataUtility fetchFramesInCategoryChannel:[roll rollID]];
+            [self loadWithGroupType:GroupType_CategoryRoll groupTitle:[roll title] videoFrames:videoFrames andCategoryID:[roll rollID]];
+        }
+    }
+}
+
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -1363,7 +1384,7 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO:
+    self.model.videoReel.toggleOverlayGesuture.enabled = NO;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
@@ -1373,7 +1394,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO:
+    id category = [self.categories objectAtIndex:[indexPath row]];
+    [self launchCategory:category];
+    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
