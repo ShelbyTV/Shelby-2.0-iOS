@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *elapsedProgressView;
 @property (weak, nonatomic) IBOutlet UILabel *elapsedTimelabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalDurationlabel;
+@property (weak, nonatomic) IBOutlet UIView *scrubberContainerView;
 
 /// Toggle UI
 - (void)toggleOverlay;
