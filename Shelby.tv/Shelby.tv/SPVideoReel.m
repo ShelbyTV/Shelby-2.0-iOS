@@ -141,8 +141,6 @@
                                withAction:@"User did launch playlist"
                                 withLabel:_groupTitle
                                 withValue:nil];
-        
-//    [self purgeVideoPlayerInformationFromPreviousVideoGroup];
 
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
     [self setupVariables];
@@ -157,6 +155,17 @@
 
 - (void)setupVideoFrames:(NSMutableArray *)videoFrames
 {
+    
+    if ( _videoFrames ) {
+        [self.videoFrames removeAllObjects];
+        self.videoFrames = nil;
+    }
+    
+    if ( _moreVideoFrames ) {
+        [self.moreVideoFrames removeAllObjects];
+        self.moreVideoFrames = nil;
+    }
+    
     self.videoFrames = [@[] mutableCopy];
     
     if ( [videoFrames count] > 20 ) { // If there are more than 20 frames in videoFrames
@@ -1075,12 +1084,6 @@
     
     [self.itemViews removeAllObjects];
     self.itemViews = nil;
-    
-    [self.videoFrames removeAllObjects];
-    self.videoFrames = nil;
-    
-    [self.moreVideoFrames removeAllObjects];
-    self.moreVideoFrames = nil;
     
     // Instantiate dataUtility for cleanup
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
