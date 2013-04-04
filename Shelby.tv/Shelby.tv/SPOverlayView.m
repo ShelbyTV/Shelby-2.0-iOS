@@ -43,6 +43,11 @@
 #pragma mark - Customization on Instantiation
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+    
+    UINib *cellNib = [UINib nibWithNibName:@"SPVideoCategoryViewCell" bundle:nil];
+    [self.categoriesCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPVideoCategoryViewCell"];
+
     // Customize Fonts
     [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
     [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.nicknameLabel.font.pointSize]];

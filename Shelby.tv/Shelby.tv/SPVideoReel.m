@@ -14,6 +14,7 @@
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
 #import "GroupsMenuViewController.h"
+#import "SPVideoCategoryViewCell.h"
 
 @interface SPVideoReel ()
 
@@ -35,6 +36,9 @@
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *rollInvocationMethod;
+
+@property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
+@property (nonatomic) NSString *userNickname; // TODO: refactor out!!
 
 /// Setup Methods
 - (void)setup;
@@ -108,9 +112,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self setCategories:[@[] mutableCopy]];
+ 
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
+    
+    [self fetchAllCategories];
+    [self fetchUserNickname];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -1259,12 +1269,122 @@
 {
     [self.rollInvocationMethod invoke];
     [self setRollInvocationMethod:nil];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultUserAuthorized];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [self fetchUserNickname];
 }
 
 - (void)authorizationDidNotComplete
 {
     [self setRollInvocationMethod:nil];
     [self.model.currentVideoPlayer play];
+}
+
+
+#pragma mark - Private Methods
+- (NSManagedObjectContext *)context
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    return [appDelegate context];
+}
+
+- (void)fetchUserNickname
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        [self setUserNickname:[user nickname]];
+    }
+}
+
+- (void)fetchAllCategories
+{
+    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    [self.categories removeAllObjects];
+    [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
+    
+    [self.overlayView.categoriesCollectionView reloadData];
+    
+}
+
+
+// TODO: factor the data source delegete methods to a model class.
+#pragma mark - UICollectionView Datasource
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
+{
+    return (0 == section  ? 3 : [self.categories count]);
+}
+
+- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
+{
+    return 2;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    SPVideoCategoryViewCell *cell = (SPVideoCategoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"SPVideoCategoryViewCell" forIndexPath:indexPath];
+
+    int row = indexPath.row;
+    NSString *title = nil;
+    if (indexPath.section == 0) { // Me Cards
+        if (row == 0) {
+            title = @"Stream";
+        } else if (row == 1) {
+            title = @"Likes";
+        } else if (row == 2) {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+                title = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
+            } else {
+                title = @"Your .TV";
+            }
+        }
+    } else if (indexPath.row < [self.categories count]) {
+        NSManagedObjectContext *context = [self context];
+        NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
+        Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+        NSString *channelTitle = [channel displayTitle];
+        if (channel) {
+            title =  [NSString stringWithFormat:@"#%@", channelTitle];
+        }
+        
+        if ([channelTitle isEqualToString:self.groupTitle]) {
+            [cell setCurrentCategory:YES];
+        } else {
+            [cell setCurrentCategory:NO];
+        }
+    }
+
+    if (!title) {
+        title = @"";
+    }
+    
+    [cell.title setText:title];
+    return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TODO:
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TODO:
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TODO:
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TODO
 }
 
 @end
