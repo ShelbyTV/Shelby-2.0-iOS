@@ -104,6 +104,23 @@
 }
 
 #pragma mark - Scrubbing Methods
+- (void)seekToTimeWithPercentage:(CGFloat)percentage
+{
+    CMTime durationTime = [self duration];
+    
+    if (CMTIME_IS_INVALID(durationTime)) {
+        return;
+    }
+
+    CGFloat duration = CMTimeGetSeconds(durationTime);
+    
+    if (isfinite(duration)) {
+        CGFloat time = percentage * duration;
+        [self.model.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
+        [self.model.overlayView.elapsedProgressView setProgress:percentage];
+    }
+}
+
 - (void)beginScrubbing
 {
 //	[self setScrubberTimeObserver:nil];
