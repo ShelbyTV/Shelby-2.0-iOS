@@ -1412,8 +1412,12 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id category = [self.categories objectAtIndex:indexPath.row];
-    [self launchCategory:category];
+    if ( 0 == indexPath.section ) { // User-Specific Groups (Like, Stream, Personal Roll)
+        
+    } else { // Category Channels and Rolls
+        id category = [self.categories objectAtIndex:indexPath.row];
+        [self launchCategory:category];
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
