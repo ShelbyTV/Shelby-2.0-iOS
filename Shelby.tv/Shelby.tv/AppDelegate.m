@@ -15,7 +15,6 @@
 #import "SPVideoPlayer.h"
 #import "SPVideoReel.h"
 #import "Video.h"
-#import "GroupsMenuViewController.h"
 
 // HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
 // HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
@@ -60,8 +59,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 
 /// API Methods
 - (void)pingAllRoutes;
-
-- (void)launchGroupsMenuViewController;
 
 @end
 
@@ -348,14 +345,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     [self setCategoryLoadingView:nil];
 }
 
-- (void)launchGroupsMenuViewController
-{
-    self.videoReel.groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
-                                                                                         bundle:nil
-                                                                                   andVideoReel:self.videoReel];
-    [self.videoReel.view addSubview:[self.videoReel.groupsMenuViewController view]];
-}
-
 - (void)setupOfflineMode
 {
     
@@ -378,7 +367,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
             
             [self removeCategoryLoadingView];
             
-            [self launchGroupsMenuViewController];
+            [self.videoReel buildViewAndFetchDataSource];
             
         }
     });
@@ -411,7 +400,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
             
             [self removeCategoryLoadingView];
             
-            [self launchGroupsMenuViewController];
+            [self.videoReel buildViewAndFetchDataSource];
             
         }
     });

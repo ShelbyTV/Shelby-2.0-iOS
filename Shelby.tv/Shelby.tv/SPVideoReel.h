@@ -28,6 +28,8 @@
               videoFrames:(NSMutableArray *)videoFrames
             andCategoryID:(NSString *)categoryID;
 
+- (void)buildViewAndFetchDataSource;
+
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;
