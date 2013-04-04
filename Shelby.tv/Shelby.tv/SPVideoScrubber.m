@@ -106,7 +106,6 @@
 #pragma mark - Scrubbing Methods
 - (void)seekToTimeWithPercentage:(CGFloat)percentage
 {
-
     CMTime durationTime = [self duration];
     
     if (CMTIME_IS_INVALID(durationTime)) {

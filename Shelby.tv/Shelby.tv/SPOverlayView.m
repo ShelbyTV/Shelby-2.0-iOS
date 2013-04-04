@@ -186,20 +186,29 @@
     for (UITouch *touch in touches) {
         
         if (touch.view == [self scrubberContainerView]) {
+            self.model.videoReel.toggleOverlayGesuture.enabled = NO;
             CGPoint position = [touch locationInView:[self scrubberContainerView]];
             DLog(@"scrubberContainerView %@", NSStringFromCGPoint(position));
             CGFloat percentage = position.x / self.scrubberContainerView.frame.size.width;
             [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
+            self.model.videoReel.toggleOverlayGesuture.enabled = YES;
+            [self rescheduleOverlayTimer];
         } else if (touch.view == [self elapsedProgressView]) {
+            self.model.videoReel.toggleOverlayGesuture.enabled = NO;
             CGPoint position = [touch locationInView:[self elapsedProgressView]];
             DLog(@"elapsedProgressView %@", NSStringFromCGPoint(position));
             CGFloat percentage = position.x / self.scrubberContainerView.frame.size.width;
             [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
+            self.model.videoReel.toggleOverlayGesuture.enabled = YES;
+            [self rescheduleOverlayTimer];
         } else if (touch.view == [self bufferProgressView]) {
+            self.model.videoReel.toggleOverlayGesuture.enabled = NO;
             CGPoint position = [touch locationInView:[self bufferProgressView]];
             DLog(@"bufferProgressView %@", NSStringFromCGPoint(position));
             CGFloat percentage = position.x / self.scrubberContainerView.frame.size.width;
             [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
+            self.model.videoReel.toggleOverlayGesuture.enabled = YES;
+            [self rescheduleOverlayTimer];
         } else {
             // Do nothing
         }
