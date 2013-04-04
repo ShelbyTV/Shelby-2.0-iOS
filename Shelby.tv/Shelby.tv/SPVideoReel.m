@@ -21,7 +21,6 @@
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) SPOverlayView *overlayView;
-@property (nonatomic) GroupsMenuViewController *groupsMenuViewController;
 @property (nonatomic) UIScrollView *videoScrollView;
 @property (nonatomic) NSMutableArray *videoFrames;
 @property (nonatomic) NSMutableArray *moreVideoFrames;
@@ -126,11 +125,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    _groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
-                                                                           bundle:nil
-                                                                     andVideoReel:self];
-    [self.view addSubview:[_groupsMenuViewController view]];
 }
 
 #pragma mark - Setup Methods
@@ -750,6 +744,7 @@
 {    
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        [self.overlayView.elapsedProgressView setProgress:0.0f];
         [self.overlayView.bufferProgressView setProgress:0.0f];
         [self.overlayView.elapsedTimelabel setText:@"00:00:00"];
         [self.overlayView.totalDurationlabel setText:@"00:00:00"];
