@@ -260,7 +260,7 @@
 								<string key="NSFrame">{{20, 12}, {56, 21}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="651669634"/>
+								<reference key="NSNextKeyView" ref="314233088"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -297,7 +297,6 @@
 								<string key="NSFrame">{{948, 12}, {56, 21}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -317,6 +316,20 @@
 								<reference key="IBUIFont" ref="659404174"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
+							<object class="IBUIView" id="314233088">
+								<reference key="NSNextResponder" ref="721212649"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{100, 0}, {824, 44}}</string>
+								<reference key="NSSuperview" ref="721212649"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="232483274"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor" id="290922202">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MCAwAA</bytes>
+								</object>
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+							</object>
 							<object class="IBUIProgressView" id="232483274">
 								<reference key="NSNextResponder" ref="721212649"/>
 								<int key="NSvFlags">292</int>
@@ -325,10 +338,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="359956817"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor" id="290922202">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MCAwAA</bytes>
-								</object>
+								<reference key="IBUIBackgroundColor" ref="290922202"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<object class="NSColor" key="IBUIProgressTintColor">
@@ -344,7 +354,7 @@
 								<string key="NSFrame">{{100, 18}, {824, 9}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1002610958"/>
+								<reference key="NSNextKeyView" ref="651669634"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="290922202"/>
 								<bool key="IBUIOpaque">NO</bool>
@@ -359,7 +369,7 @@
 						<string key="NSFrame">{{0, 724}, {1024, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="232483274"/>
+						<reference key="NSNextKeyView" ref="1002610958"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="290922202"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -618,6 +628,14 @@
 					<int key="connectionID">137</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">scrubberTouchView</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="314233088"/>
+					</object>
+					<int key="connectionID">139</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">restartPlaybackButtonAction:</string>
 						<reference key="source" ref="883161448"/>
@@ -797,6 +815,7 @@
 							<reference ref="232483274"/>
 							<reference ref="1002610958"/>
 							<reference ref="651669634"/>
+							<reference ref="314233088"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Scrubber Container View</string>
@@ -838,6 +857,12 @@
 						<reference key="parent" ref="721212649"/>
 						<string key="objectName">Total Duration label</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">138</int>
+						<reference key="object" ref="314233088"/>
+						<reference key="parent" ref="721212649"/>
+						<string key="objectName">Scrubber Touch View</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -857,6 +882,7 @@
 				<string key="128.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="132.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="138.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="38.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="39.CustomClassName">TopAlignedLabel</string>
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -872,7 +898,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">137</int>
+			<int key="maxID">139</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -900,6 +926,7 @@
 						<string key="restartPlaybackButton">UIButton</string>
 						<string key="rollButton">UIButton</string>
 						<string key="scrubberContainerView">UIView</string>
+						<string key="scrubberTouchView">UIView</string>
 						<string key="shareButton">UIButton</string>
 						<string key="totalDurationLabel">UILabel</string>
 						<string key="userImageView">UIImageView</string>
@@ -955,6 +982,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="scrubberContainerView">
 							<string key="name">scrubberContainerView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scrubberTouchView">
+							<string key="name">scrubberTouchView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="shareButton">

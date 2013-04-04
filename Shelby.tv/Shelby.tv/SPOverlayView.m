@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
 
+- (void)handleScrubberTouchWithPosition:(CGPoint)position inView:(UIView *)touchedView;
+
 @end
 
 @implementation SPOverlayView
@@ -191,19 +193,19 @@
 {
     for (UITouch *touch in touches) {
         
-        if (touch.view == [self scrubberContainerView]) {
-            CGPoint position = [touch locationInView:[self scrubberContainerView]];
+        if (touch.view == [self scrubberTouchView]) {
+            CGPoint position = [touch locationInView:[self scrubberTouchView]];
             DLog(@"scrubberContainerView %@", NSStringFromCGPoint(position));
-            [self handleScrubberTouchWithPosition:position];
+            [self handleScrubberTouchWithPosition:position inView:[self scrubberContainerView]];
         } else if (touch.view == [self elapsedProgressView]) {
             CGPoint position = [touch locationInView:[self elapsedProgressView]];
             DLog(@"elapsedProgressView %@", NSStringFromCGPoint(position));
             [self rescheduleOverlayTimer];
-            [self handleScrubberTouchWithPosition:position];
+            [self handleScrubberTouchWithPosition:position inView:[self elapsedProgressView]];
         } else if (touch.view == [self bufferProgressView]) {
             CGPoint position = [touch locationInView:[self bufferProgressView]];
             DLog(@"bufferProgressView %@", NSStringFromCGPoint(position));
-            [self handleScrubberTouchWithPosition:position];
+            [self handleScrubberTouchWithPosition:position inView:[self bufferProgressView]];
         } else {
             // Do nothing
         }
@@ -211,7 +213,7 @@
     }
 }
 
-- (void)handleScrubberTouchWithPosition:(CGPoint)position
+- (void)handleScrubberTouchWithPosition:(CGPoint)position inView:(UIView *)touchedView
 {
     self.model.videoReel.toggleOverlayGesuture.enabled = NO;
     CGFloat percentage = position.x / self.elapsedProgressView.frame.size.width;

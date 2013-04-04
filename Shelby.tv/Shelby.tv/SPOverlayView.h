@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *elapsedTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalDurationLabel;
 @property (weak, nonatomic) IBOutlet UIView *scrubberContainerView;
+@property (weak, nonatomic) IBOutlet UIView *scrubberTouchView;
 
 /// Toggle UI
 - (void)toggleOverlay;
