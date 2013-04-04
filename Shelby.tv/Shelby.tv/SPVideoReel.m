@@ -106,7 +106,7 @@
 {
     [self setGroupType:groupType];
     [self setGroupTitle:title];
-    [self setVideoFrames:videoFrames];
+    [self setupVideoFrames:videoFrames];
     [self setup];
 }
 
@@ -115,13 +115,7 @@
     [self fetchAllCategories];
     [self fetchUserNickname];
     
-    [self setupVariables];
-    [self setupObservers];
-    [self setupVideoScrollView];
-    [self setupOverlayView];
-    [self setupSwipeGestures];
-    [self setupVideoListScrollView];
-    [self setupAirPlay];
+    [self setup];
     
 }
 
@@ -147,53 +141,16 @@
                                withAction:@"User did launch playlist"
                                 withLabel:_groupTitle
                                 withValue:nil];
-    
-    if ( [self.groupsMenuViewController view] ) {
         
-        [self.groupsMenuViewController.view removeFromSuperview];
-        self.groupsMenuViewController = nil;
-        
-    }
-    
-    if ( _videoPlayers ) {
-        
-        [self purgeVideoPlayerInformationFromPreviousVideoGroup];
-        
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             
-                             if ( _overlayView ) {
-                                 
-                                 self.overlayView.frame = CGRectMake(0.0f,
-                                                                     0.0f,
-                                                                     self.overlayView.frame.size.width,
-                                                                     self.overlayView.frame.size.height);
-                                 
-                             }
-                             
-                             if ( _videoScrollView ) {
-                                 
-                                 self.videoScrollView.frame = CGRectMake(0.0f,
-                                                                         0.0f,
-                                                                         self.videoScrollView.frame.size.width,
-                                                                         self.videoScrollView.frame.size.height);
-                                 
-                             }
-                             
-                         } completion:^(BOOL finished) {
-                          
-                             [self setIsLaunchingGroupsMenu:NO];
-                             
-                         }];
-    }
-    
+//    [self purgeVideoPlayerInformationFromPreviousVideoGroup];
+
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
     [self setupVariables];
     [self setupObservers];
     [self setupVideoScrollView];
     [self setupOverlayView];
-    [self setupVideoPlayers];
     [self setupSwipeGestures];
+    [self setupVideoPlayers];
     [self setupVideoListScrollView];
     [self setupAirPlay];
 }
@@ -240,8 +197,13 @@
     self.model.numberOfVideos = [self.videoFrames count];
     
     /// NSMutableArrays
-    self.videoPlayers = [@[] mutableCopy];
-    self.itemViews = [@[] mutableCopy];
+    if ( !_videoPlayers ) {
+        self.videoPlayers = [@[] mutableCopy];
+    }
+    
+    if ( !_itemViews ) {
+        self.itemViews = [@[] mutableCopy];
+    }
 }
 
 
@@ -263,79 +225,94 @@
 - (void)setupVideoScrollView
 {
     
-    self.videoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+    if ( ![[self.view subviews] containsObject:_videoScrollView] ) {
+        
+        self.videoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+        self.videoScrollView.delegate = self;
+        self.videoScrollView.pagingEnabled = YES;
+        self.videoScrollView.showsHorizontalScrollIndicator = NO;
+        self.videoScrollView.showsVerticalScrollIndicator = NO;
+        self.videoScrollView.scrollsToTop = NO;
+        [self.videoScrollView setDelaysContentTouches:YES];
+        [self.view addSubview:_videoScrollView];
+        
+    }
+    
     self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight - 20);
-    self.videoScrollView.delegate = self;
-    self.videoScrollView.pagingEnabled = YES;
-    self.videoScrollView.showsHorizontalScrollIndicator = NO;
-    self.videoScrollView.showsVerticalScrollIndicator = NO;
-    self.videoScrollView.scrollsToTop = NO;
-    [self.videoScrollView setDelaysContentTouches:YES];
-    [self.view addSubview:_videoScrollView];
+
 }
 
 - (void)setupOverlayView
 {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
-    if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
-        return;
+    
+    if ( ![[self.view subviews] containsObject:_overlayView] ) {
+        
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+        if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
+            return;
+        }
+        self.model.overlayView = nib[0];
+        self.overlayView = _model.overlayView;
+        [self.view addSubview:_overlayView];
+        
     }
-    self.model.overlayView = nib[0];
-    self.overlayView = _model.overlayView;
-    [self.overlayView.categoryTitleLabel setText:_groupTitle];
-    [self.view addSubview:_overlayView];
+
+    if ( ![[self.view gestureRecognizers] containsObject:_toggleOverlayGesuture] ) {
+        
+        self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
+        [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
+        [self.view addGestureRecognizer:_toggleOverlayGesuture];
+    }
     
-    self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
-    [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-    [self.view addGestureRecognizer:_toggleOverlayGesuture];
-    
-    UIPinchGestureRecognizer *pinchOverlayGesuture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(launchGroupsMenuViewController:)];
-    [self.view addGestureRecognizer:pinchOverlayGesuture];
 }
 
 - (void)setupVideoPlayers
 {
-    for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
-        
-        Frame *videoFrame = (self.videoFrames)[i];
+    DLog(@"%@ | %d", _videoFrames, _model.numberOfVideos);
+    if ( [self.model numberOfVideos] ) {
 
-        CGRect viewframe = [self.videoScrollView frame];
-        viewframe.origin.x = viewframe.size.width * i;
-        viewframe.origin.y = 0.0f;
-        SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-        
-        [self.videoPlayers addObject:player];
-        [self.videoScrollView addSubview:player.view];
-        
-        if ( 0 == i ) {
-        
-            self.model.currentVideo = 0;
-            self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
-            
-        }
-        
-    }
-
-    if ( _groupType != GroupType_Stream ) { // If not stream, play video in zeroeth position
-
-        [self currentVideoDidChangeToVideo:_model.currentVideo];
-        
-    } else { // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
-
-        for ( NSUInteger i = 0; i < [self.model numberOfVideos]; ++i ) {
+        for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
             
             Frame *videoFrame = (self.videoFrames)[i];
-            NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbySPCurrentVideoStreamID];
             
-            if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
-             
-                self.model.currentVideo = i;
+            CGRect viewframe = [self.videoScrollView frame];
+            viewframe.origin.x = viewframe.size.width * i;
+            viewframe.origin.y = 0.0f;
+            SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
+            
+            [self.videoPlayers addObject:player];
+            [self.videoScrollView addSubview:player.view];
+            
+            if ( 0 == i ) {
+                
+                self.model.currentVideo = 0;
                 self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
                 
             }
+            
         }
         
-        [self currentVideoDidChangeToVideo:_model.currentVideo];
+        if ( _groupType != GroupType_Stream ) { // If not stream, play video in zeroeth position
+            
+            [self currentVideoDidChangeToVideo:_model.currentVideo];
+            
+        } else { // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
+            
+            for ( NSUInteger i = 0; i < [self.model numberOfVideos]; ++i ) {
+                
+                Frame *videoFrame = (self.videoFrames)[i];
+                NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbySPCurrentVideoStreamID];
+                
+                if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
+                    
+                    self.model.currentVideo = i;
+                    self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
+                    
+                }
+            }
+            
+            [self currentVideoDidChangeToVideo:_model.currentVideo];
+        }
     }
 }
 
