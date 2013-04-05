@@ -1117,6 +1117,8 @@
     
     if ([self.overlayView isOverlayHidden]) {
         [self.overlayView toggleOverlay];
+    } else if (![self.model numberOfVideos]) {
+        return; // don't dismiss channels if there are no videos available
     }
     
     if (direction == UISwipeGestureRecognizerDirectionUp) {
