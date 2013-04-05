@@ -71,6 +71,7 @@
 - (IBAction)likeAction:(id)sender;
 - (IBAction)rollAction:(id)sender;
 - (void)rollVideo;
+- (void)launchUserGroup:(NSUInteger)groupNumber;
 - (void)launchCategory:(id)category;
 @end
 
@@ -1186,6 +1187,51 @@
     }
 }
 
+- (void)launchUserGroup:(NSUInteger)groupNumber
+{
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+
+    if ( 0 == groupNumber || 2 == groupNumber ) {  // For Stream & Personal Roll
+        if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Show alert if user isn't logged in.
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to access these videos." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
+            [alertView show];
+        }
+    } else if ( 1 == groupNumber) { // For likes
+        NSUInteger likesCount = [dataUtility fetchLikesCount];
+        if ( 0 == likesCount ) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You have no likes." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+    }
+        
+    switch (groupNumber) {
+
+        case 0:{
+            NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
+            [self loadWithGroupType:GroupType_Stream groupTitle:@"Stream" andVideoFrames:videoFrames];
+        } break;
+            
+        case 1:{
+            NSMutableArray *videoFrames = [dataUtility fetchLikesEntries];
+            [self loadWithGroupType:GroupType_Likes groupTitle:@"Likes" andVideoFrames:videoFrames];
+        } break;
+            
+        case 2:{
+            NSMutableArray *videoFrames = [dataUtility fetchPersonalRollEntries];
+            NSString *title = nil;
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+                title = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
+            } else {
+                title = @"Your .TV";
+            }
+            
+            [self loadWithGroupType:GroupType_PersonalRoll groupTitle:title andVideoFrames:videoFrames];
+        } break;
+            
+        default:
+            break;
+    }
+}
 
 - (void)launchCategory:(id)category
 {
@@ -1314,6 +1360,13 @@
                 title = @"Your .TV";
             }
         }
+        
+        if ([title isEqualToString:self.groupTitle]) {
+            [cell setCurrentCategory:YES];
+        } else {
+            [cell setCurrentCategory:NO];
+        }
+        
     } else if (indexPath.row < [self.categories count]) {
         NSManagedObjectContext *context = [self context];
         NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
@@ -1351,7 +1404,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    [self.overlayView.categoriesCollectionView reloadData];
     if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
+        
+        [self launchUserGroup:indexPath.row];
         
     } else { // Category Channels and Rolls
         id category = [self.categories objectAtIndex:indexPath.row];

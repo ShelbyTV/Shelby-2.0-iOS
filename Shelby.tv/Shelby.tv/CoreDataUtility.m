@@ -571,10 +571,20 @@
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
     
+    
     // Filter by rollID
-    User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
-    [request setPredicate:predicate];
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+        
+        User *user = [self fetchUser];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user likesRollID]];
+        [request setPredicate:predicate];
+        
+    } else {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isStoredForLoggedOutUser == %d", YES];
+        [request setPredicate:predicate];
+        
+    }
     
     // Execute request that returns array of frames
     NSArray *frameResults = [self.context executeFetchRequest:request error:nil];
