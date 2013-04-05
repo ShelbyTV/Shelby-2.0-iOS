@@ -338,6 +338,9 @@
             
             NSManagedObjectContext *context = [self.appDelegate context];
             NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+            if (!objectID) {
+                return;
+            }
             Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
             
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
@@ -362,6 +365,9 @@
                 
                 NSManagedObjectContext *context = [self.appDelegate context];
                 NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+                if (!objectID) {
+                    return;
+                }
                 Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
                 
                [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
@@ -502,6 +508,10 @@
     
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [player.videoFrame objectID];
+    if (!objectID) {
+        return;
+    }
+    
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     if ( position < _model.numberOfVideos ) {
@@ -555,6 +565,10 @@
 {
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
+    if (!objectID) {
+        return;
+    }
+    
     Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
@@ -945,6 +959,10 @@
 
             Frame *firstFrame = (Frame *)olderFramesArray[0];
             NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
+            if (!firstFrameObjectID) {
+                return;
+            }
+
             firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
             if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
                 [olderFramesArray removeObject:firstFrame];
