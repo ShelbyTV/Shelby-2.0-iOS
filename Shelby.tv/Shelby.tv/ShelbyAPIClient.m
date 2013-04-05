@@ -532,19 +532,35 @@
 
 + (void)postFrameToLikes:(NSString *)frameID
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    User *user = [dataUtility fetchUser];
-    NSString *authToken = [user token];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIPostFrameToLikes, frameID, authToken]];
+    NSURL *url;
+    
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        NSString *authToken = [user token];
+        NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToLikesWithAuthentication, frameID, authToken];
+
+        DLog(@"%@", requestString);
+        
+        url = [NSURL URLWithString:requestString];
+    } else {
+        NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToLikesWithoutAuthentication, frameID];
+        url = [NSURL URLWithString:requestString];
+    }
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
+    [request setHTTPMethod:@"PUT"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
-        // Fetch likes to update CoreData store
-        [self getLikes];
-    
+        DLog(@"Succeassfully posted Frame (%@) to Likes", frameID);
+        
+        // Fetch likes to update CoreData store if user is logged in
+        if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+            [self getLikes];
+        }
+       
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem posting frame to likes: %@", frameID);

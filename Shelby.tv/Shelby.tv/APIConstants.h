@@ -42,7 +42,8 @@
 #define kShelbyAPIPostFrameToWatchedRoll    @"https://api.shelby.tv/v1/frame/%@/watched?auth_token=%@"
 
 /// POST Liked Frame
-#define kShelbyAPIPostFrameToLikes          @"https://api.shelby.tv/v1/frame/%@/add_to_watch_later?auth_token=%@"
+#define kShelbyAPIPostFrameToLikesWithAuthentication            @"https://api.shelby.tv/v1/frame/%@/like?auth_token=%@"
+#define kShelbyAPIPostFrameToLikesWithoutAuthentication         @"https://api.shelby.tv/v1/frame/%@/like"
 
 /// POST Roll Frame
 #define kShelbyAPIPostFrameToPersonalRoll   @"https://api.shelby.tv/v1/roll/%@/frames?frame_id=%@&auth_token=%@&text=%@"
