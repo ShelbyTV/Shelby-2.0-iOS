@@ -797,8 +797,8 @@
         
         [self.overlayView.elapsedProgressView setProgress:0.0f];
         [self.overlayView.bufferProgressView setProgress:0.0f];
-        [self.overlayView.elapsedTimeLabel setText:@"00:00:00"];
-        [self.overlayView.totalDurationLabel setText:@"00:00:00"];
+        [self.overlayView.elapsedTimeLabel setText:@""];
+        [self.overlayView.totalDurationLabel setText:@""];
         
         if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
             
