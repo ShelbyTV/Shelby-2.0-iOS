@@ -1254,6 +1254,7 @@
         if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Show alert if user isn't logged in.
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to access these videos." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
             [alertView show];
+            return;
         }
     } else if ( 1 == groupNumber) { // For likes
         NSUInteger likesCount = [dataUtility fetchLikesCount];
@@ -1261,6 +1262,7 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You have no likes." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
             [alertView show];
         }
+        return;
     }
         
     switch (groupNumber) {
