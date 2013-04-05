@@ -382,6 +382,7 @@
                 if ( i == _model.currentVideo ) {
                     itemView.backgroundColor = kShelbyColorGreen;
                     itemView.videoTitleLabel.textColor = kShelbyColorBlack;
+                    [self.overlayView.videoListScrollView setContentOffset:CGPointMake(i * 1024.0f, 0.0f)];
                 }
                 
             });
