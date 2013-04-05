@@ -49,6 +49,8 @@
 - (void)itemDidFinishPlaying:(NSNotification *)notification;
 - (void)updateBufferProgressView:(NSNumber *)buffered;
 
+//
+- (void)animatePlay;
 @end
 
 @implementation SPVideoPlayer
@@ -337,6 +339,8 @@
 - (void)togglePlayback:(id)sender
 {
     
+    [self animatePlay];
+
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     if ( [sender isMemberOfClass:[UITapGestureRecognizer class]] ) {
@@ -649,6 +653,33 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.model rescheduleOverlayTimer];
+}
+
+- (void)animatePlay
+{
+    NSString *imageName = nil;
+    if ([self isPlaying]) {
+        imageName =  @"pauseButton.png";
+    } else {
+        imageName = @"playButton.png";
+    }
+    
+    UIImageView *playPauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    [playPauseImage setContentMode:UIViewContentModeScaleAspectFill];
+    [self.view addSubview:playPauseImage];
+    [self.view bringSubviewToFront:playPauseImage];
+    
+    CGRect startFrame = CGRectMake((kShelbySPVideoWidth - playPauseImage.frame.size.width) / 2, (kShelbySPVideoHeight - playPauseImage.frame.size.height) / 2, playPauseImage.frame.size.width, playPauseImage.frame.size.height);
+
+    [playPauseImage setFrame:startFrame];
+
+    CGRect endFrame = CGRectMake(startFrame.origin.x - startFrame.size.width, startFrame.origin.y - startFrame.size.height, startFrame.size.width * 4, startFrame.size.height * 4);
+    [UIView animateWithDuration:1 animations:^{
+        [playPauseImage setFrame:endFrame];
+        [playPauseImage setAlpha:0];
+    } completion:^(BOOL finished) {
+        [playPauseImage removeFromSuperview];
+    }];
 }
 
 @end
