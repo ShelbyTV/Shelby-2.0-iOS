@@ -1525,6 +1525,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.model.videoReel.toggleOverlayGesuture.enabled = NO;
+    
     if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
         [self launchUserGroup:indexPath.row];
     } else { // Category Channels and Rolls
@@ -1533,6 +1535,7 @@
     }
     
     self.model.videoReel.toggleOverlayGesuture.enabled = YES;
+    [self.model rescheduleOverlayTimer];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
