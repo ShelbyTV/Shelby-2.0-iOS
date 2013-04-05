@@ -32,7 +32,7 @@
 @property (assign, nonatomic) BOOL playlistIsVisible;
 
 // Make sure we let user roll immediately after they log in.
-@property (nonatomic) NSInvocation *rollInvocationMethod;
+@property (nonatomic) NSInvocation *invocationMethod;
 
 @property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
 @property (nonatomic) NSString *userNickname; // TODO: refactor out!!
@@ -74,6 +74,9 @@
 - (void)rollVideo;
 - (void)launchUserGroup:(NSUInteger)groupNumber;
 - (void)launchCategory:(id)category;
+- (void)launchStream;
+- (void)launchLikes;
+- (void)launchPersonalRoll;
 @end
 
 @implementation SPVideoReel 
@@ -608,7 +611,7 @@
         NSInvocation *rollInvocation = [NSInvocation invocationWithMethodSignature:rollSignature];
         [rollInvocation setTarget:self];
         [rollInvocation setSelector:@selector(rollVideo)];
-        [self setRollInvocationMethod:rollInvocation];
+        [self setInvocationMethod:rollInvocation];
         
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to roll" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
@@ -1251,48 +1254,67 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
 
-    if ( 0 == groupNumber || 2 == groupNumber ) {  // For Stream & Personal Roll
-        if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Show alert if user isn't logged in.
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to access these videos." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
-            [alertView show];
-            return;
-        }
-    } else if ( 1 == groupNumber) { // For likes
-        NSUInteger likesCount = [dataUtility fetchLikesCount];
-        if ( 0 == likesCount ) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You have no likes." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
-            [alertView show];
-        }
-        return;
-    }
-        
     switch (groupNumber) {
-
-        case 0:{
-            NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
-            [self loadWithGroupType:GroupType_Stream groupTitle:@"Stream" andVideoFrames:videoFrames];
-        } break;
             
-        case 1:{
-            NSMutableArray *videoFrames = [dataUtility fetchLikesEntries];
-            [self loadWithGroupType:GroupType_Likes groupTitle:@"Likes" andVideoFrames:videoFrames];
-        } break;
+        case 0: { // Stream
             
-        case 2:{
-            NSMutableArray *videoFrames = [dataUtility fetchPersonalRollEntries];
-            NSString *title = nil;
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
-                title = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
+            if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Show alert if user isn't logged in.
+                
+                // Launch Stream after user logs in (if user logs in via alertView presented after pushing Stream)
+                NSMethodSignature *streamSignature = [SPVideoReel instanceMethodSignatureForSelector:@selector(launchStream)];
+                NSInvocation *streamInvocation = [NSInvocation invocationWithMethodSignature:streamSignature];
+                [streamInvocation setTarget:self];
+                [streamInvocation setSelector:@selector(launchStream)];
+                [self setInvocationMethod:streamInvocation];
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to access these videos." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
+                [alertView show];
+                return;
+                
             } else {
-                title = @"Your .TV";
+                [self launchStream];
             }
             
-            [self loadWithGroupType:GroupType_PersonalRoll groupTitle:title andVideoFrames:videoFrames];
+        } break;
+            
+        case 1: { // Likes
+            
+            NSUInteger likesCount = [dataUtility fetchLikesCount];
+            if ( 0 == likesCount ) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You have no likes." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
+                [alertView show];
+                return;
+            } else {
+                [self launchLikes];
+            }
+            
+        } break;
+            
+        case 2: { // Personal Roll
+            
+            if ( ![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) { // Show alert if user isn't logged in.
+                
+                // Launch Your. TV after user logs in (if user logs in via alertView presented after pushing Your .TV)
+                NSMethodSignature *personalRollSignature = [SPVideoReel instanceMethodSignatureForSelector:@selector(launchPersonalRoll)];
+                NSInvocation *personalRollInvocation = [NSInvocation invocationWithMethodSignature:personalRollSignature];
+                [personalRollInvocation setTarget:self];
+                [personalRollInvocation setSelector:@selector(launchPersonalRoll)];
+                [self setInvocationMethod:personalRollInvocation];
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to access these videos." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
+                [alertView show];
+                return;
+                
+            } else {
+                [self launchPersonalRoll];
+            }
+            
         } break;
             
         default:
             break;
     }
+
 }
 
 - (void)launchCategory:(id)category
@@ -1321,13 +1343,44 @@
     [self.overlayView.categoriesCollectionView reloadData];
 }
 
+- (void)launchStream
+{
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
+    [self loadWithGroupType:GroupType_Stream groupTitle:@"Stream" andVideoFrames:videoFrames];
+    [self.overlayView.categoriesCollectionView reloadData];
+}
+
+- (void)launchLikes
+{
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
+    [self loadWithGroupType:GroupType_Stream groupTitle:@"Likes" andVideoFrames:videoFrames];
+    [self.overlayView.categoriesCollectionView reloadData];
+}
+
+- (void)launchPersonalRoll
+{
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    NSMutableArray *videoFrames = [dataUtility fetchPersonalRollEntries];
+    NSString *title = nil;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+        title = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
+    } else {
+        title = @"Your .TV";
+    }
+    
+    [self loadWithGroupType:GroupType_PersonalRoll groupTitle:title andVideoFrames:videoFrames];
+    [self.overlayView.categoriesCollectionView reloadData];
+}
+
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
         [self loginAction];
     } else {
-        [self setRollInvocationMethod:nil];
+        [self setInvocationMethod:nil];
     }
 }
 
@@ -1354,8 +1407,8 @@
 #pragma  mark - AuthorizationDelegate
 - (void)authorizationDidComplete
 {
-    [self.rollInvocationMethod invoke];
-    [self setRollInvocationMethod:nil];
+    [self.invocationMethod invoke];
+    [self setInvocationMethod:nil];
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -1365,7 +1418,7 @@
 
 - (void)authorizationDidNotComplete
 {
-    [self setRollInvocationMethod:nil];
+    [self setInvocationMethod:nil];
     [self.model.currentVideoPlayer play];
 }
 
