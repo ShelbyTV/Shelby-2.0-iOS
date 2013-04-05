@@ -43,14 +43,18 @@
     CGFloat interval = .1f;
     
 	if ( CMTIME_IS_INVALID([self duration]) ) {
-        [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(setupScrubber) userInfo:nil repeats:NO];
+        [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(setupScrubber) userInfo:nil repeats:NO];
         return;
 	}
 	
     CGFloat duration = CMTimeGetSeconds([self duration]);
 	if ( isfinite(duration) ) {
-		CGFloat width = CGRectGetWidth([self.model.overlayView.elapsedProgressView bounds]);
-		interval = 0.5f * duration / width;
+        if ( self.model.overlayView.elapsedProgressView ) {
+            CGFloat width = CGRectGetWidth([self.model.overlayView.elapsedProgressView bounds]);
+            interval = 0.5f * duration / width;
+        } else {
+            interval = 0.5f;
+        }
 	}
     
     self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
