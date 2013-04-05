@@ -247,7 +247,7 @@
             [self showVideoList:kShelbySPFastSpeed];
         } else if (velocity.y > 200) {
             [self hideVideoList:kShelbySPFastSpeed];
-        } else if (y + translation.y > self.videoListView.frame.size.height/2) {
+        } else if (kShelbySPVideoHeight - (y + translation.y) > self.videoListView.frame.size.height/2) {
             [self showVideoList:kShelbySPSlowSpeed];
         } else {
             [self hideVideoList:kShelbySPSlowSpeed];
