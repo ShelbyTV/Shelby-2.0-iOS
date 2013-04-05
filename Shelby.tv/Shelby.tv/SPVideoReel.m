@@ -1355,7 +1355,7 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
-    [self loadWithGroupType:GroupType_Stream groupTitle:@"Likes" andVideoFrames:videoFrames];
+    [self loadWithGroupType:GroupType_Likes groupTitle:@"Likes" andVideoFrames:videoFrames];
     [self.overlayView.categoriesCollectionView reloadData];
 }
 
