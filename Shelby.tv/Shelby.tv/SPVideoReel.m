@@ -251,7 +251,7 @@
         
     }
     
-    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight - 20);
+    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight);
 
 }
 
@@ -1080,7 +1080,7 @@
                 itemView.backgroundColor = [UIColor clearColor];
                 itemView.videoTitleLabel.textColor = kShelbyColorBlack;
                 [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
-                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), itemViewHeight+20.0f);
+                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), itemViewHeight);
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
                 [self.overlayView.videoListScrollView setNeedsDisplay];
