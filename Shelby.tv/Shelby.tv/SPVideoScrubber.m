@@ -53,11 +53,6 @@
 		interval = 0.5f * duration / width;
 	}
     
-    if (self.scrubberTimeObserver) {
-        [self.model.currentVideoPlayer.player removeTimeObserver:self.scrubberTimeObserver];
-        [self setScrubberTimeObserver:nil];
-    }
-    
     self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
                                                                                                    queue:NULL /* If you pass NULL, the main queue is used. */
                                                                                               usingBlock:^(CMTime time) {
@@ -69,7 +64,6 @@
 
 - (void)syncScrubber
 {
-    
     CGFloat duration = CMTimeGetSeconds([self duration]);
     
 	if ( CMTIME_IS_INVALID([self duration]) ) {
@@ -81,7 +75,7 @@
         
         CGFloat elapsedTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
         CGFloat progressValue = elapsedTime/duration;
-        
+
         self.model.overlayView.elapsedTimeLabel.text = [self convertElapsedTimeToString:elapsedTime];
         self.model.overlayView.totalDurationLabel.text = [self convertElapsedTimeToString:duration];
         

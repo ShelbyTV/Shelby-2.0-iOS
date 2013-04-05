@@ -39,8 +39,8 @@
 
 - (IBAction)itemButtonAction:(id)sender;
 - (IBAction)restartPlaybackButtonAction:(id)sender;
-- (IBAction)scrub:(id)sender;
-- (IBAction)beginScrubbing:(id)sender;
-- (IBAction)endScrubbing:(id)sender;
+//- (IBAction)scrub:(id)sender;
+//- (IBAction)beginScrubbing:(id)sender;
+//- (IBAction)endScrubbing:(id)sender;
 
 @end

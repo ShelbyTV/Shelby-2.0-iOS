@@ -13,7 +13,6 @@
 #import "SPVideoPlayer.h"
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
-#import "GroupsMenuViewController.h"
 #import "SPCategoryViewCell.h"
 
 @interface SPVideoReel ()
@@ -31,7 +30,6 @@
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 @property (assign, nonatomic) BOOL playlistIsVisible;
-@property (assign, nonatomic) BOOL isLaunchingGroupsMenu;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *rollInvocationMethod;
@@ -49,7 +47,7 @@
 - (void)setupOverlayView;
 - (void)setupAirPlay;
 - (void)setupVideoPlayers;
-- (void)setupSwipeGestures;
+- (void)setupGestures;
 
 /// Storage Methods
 - (void)storeIdentifierOfCurrentVideoInStream;
@@ -67,15 +65,12 @@
 
 /// Gesture Methods
 - (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
-- (void)launchGroupsMenuViewController:(UIPinchGestureRecognizer *)gesture;
 
 /// Action Methods
 - (IBAction)shareButtonAction:(id)sender;
 - (IBAction)likeAction:(id)sender;
 - (IBAction)rollAction:(id)sender;
 - (void)rollVideo;
-
-//
 - (void)launchCategory:(id)category;
 @end
 
@@ -142,12 +137,14 @@
                                 withLabel:_groupTitle
                                 withValue:nil];
 
+    [self purgeVideoPlayerInformationFromPreviousVideoGroup];
+    
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
     [self setupVariables];
     [self setupObservers];
     [self setupVideoScrollView];
     [self setupOverlayView];
-    [self setupSwipeGestures];
+    [self setupGestures];
     [self setupVideoPlayers];
     [self setupVideoListScrollView];
     [self setupAirPlay];
@@ -204,7 +201,7 @@
     self.model.videoReel = self;
     self.model.groupType = _groupType;
     self.model.numberOfVideos = [self.videoFrames count];
-    
+
     /// NSMutableArrays
     if ( !_videoPlayers ) {
         self.videoPlayers = [@[] mutableCopy];
@@ -260,24 +257,21 @@
         if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
             return;
         }
-        self.model.overlayView = nib[0];
-        self.overlayView = _model.overlayView;
+        
+        self.overlayView = nib[0];
+        self.model.overlayView = [self overlayView];
         [self.view addSubview:_overlayView];
         
-    }
-
-    if ( ![[self.view gestureRecognizers] containsObject:_toggleOverlayGesuture] ) {
+    } else {
         
-        self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
-        [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-        [self.view addGestureRecognizer:_toggleOverlayGesuture];
+        self.model.overlayView = [self overlayView];
+        
     }
     
 }
 
 - (void)setupVideoPlayers
 {
-    DLog(@"%@ | %d", _videoFrames, _model.numberOfVideos);
     if ( [self.model numberOfVideos] ) {
 
         for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
@@ -424,8 +418,18 @@
     }
 }
 
-- (void)setupSwipeGestures
+- (void)setupGestures
 {
+    
+    // Toggle Overlay Gesture
+    if ( ![[self.view gestureRecognizers] containsObject:_toggleOverlayGesuture] ) {
+        
+        self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
+        [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
+        [self.view addGestureRecognizer:_toggleOverlayGesuture];
+    }
+    
+    // Playlist Gestures
     UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
     upGesture.direction = UISwipeGestureRecognizerDirectionUp;
     [self.videoScrollView addGestureRecognizer:upGesture];
@@ -626,20 +630,20 @@
     [self.model.currentVideoPlayer restartPlayback];
 }
 
-- (IBAction)beginScrubbing:(id)sender
-{
-	[[SPVideoScrubber sharedInstance] beginScrubbing];
-}
-
-- (IBAction)scrub:(id)sender
-{
-    [[SPVideoScrubber sharedInstance] scrub];
-}
-
-- (IBAction)endScrubbing:(id)sender
-{
-    [[SPVideoScrubber sharedInstance] endScrubbing];
-}
+//- (IBAction)beginScrubbing:(id)sender
+//{
+//	[[SPVideoScrubber sharedInstance] beginScrubbing];
+//}
+//
+//- (IBAction)scrub:(id)sender
+//{
+//    [[SPVideoScrubber sharedInstance] scrub];
+//}
+//
+//- (IBAction)endScrubbing:(id)sender
+//{
+//    [[SPVideoScrubber sharedInstance] endScrubbing];
+//}
 
 #pragma mark - Storage Methods (Private)
 - (void)storeIdentifierOfCurrentVideoInStream
@@ -1076,11 +1080,10 @@
     self.videoPlayers = nil;
     
     [self.playableVideoPlayers removeAllObjects];
-    self.videoPlayers = nil;
+    self.playableVideoPlayers = nil;
     
     [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self.videoScrollView removeFromSuperview];
-    self.videoScrollView = nil;
+    [[self.overlayView.videoListScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     [self.itemViews removeAllObjects];
     self.itemViews = nil;
@@ -1096,46 +1099,6 @@
 }
 
 #pragma mark - Gesture Methods (Private)
-- (void)launchGroupsMenuViewController:(UIPinchGestureRecognizer *)gesture
-{
-    
-    if ( ![self isLaunchingGroupsMenu] ) {
-
-        [self setIsLaunchingGroupsMenu:YES];
-        
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             
-                             if ( _overlayView ) {
-                                 
-                                 self.overlayView.frame = CGRectMake(0.0f,
-                                                                     self.overlayView.frame.size.height,
-                                                                     self.overlayView.frame.size.width,
-                                                                     self.overlayView.frame.size.height);
-                                 
-                             }
-                             
-                             if ( _videoScrollView ) {
-                                 
-                                 self.videoScrollView.frame = CGRectMake(0.0f,
-                                                                         self.videoScrollView.frame.size.height,
-                                                                         self.videoScrollView.frame.size.width,
-                                                                         self.videoScrollView.frame.size.height);
-                                 
-                             }
-                             
-                         } completion:^(BOOL finished) {
-                             
-                             self.groupsMenuViewController = [[GroupsMenuViewController alloc] initWithNibName:@"GroupsMenuViewController"
-                                                                                                        bundle:nil
-                                                                                                  andVideoReel:self];
-                             
-                             [self.view addSubview:_groupsMenuViewController.view];
-                        
-                         }];
-    }
-}
-
 - (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture
 {
     UISwipeGestureRecognizerDirection direction = [gesture direction];

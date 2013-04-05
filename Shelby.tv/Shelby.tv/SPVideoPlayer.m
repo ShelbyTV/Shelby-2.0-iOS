@@ -381,13 +381,9 @@
 {
     [self setPlaybackFinished:NO];
     [self.overlayView.restartPlaybackButton setHidden:YES];
-    
-//    [self.overlayView.playButton setEnabled:YES];
-//    [self.overlayView.scrubber setEnabled:YES];
-//    [self.overlayView.scrubber setHidden:NO];
-    
+
     [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC)];
-//    [[SPVideoScrubber sharedInstance] syncScrubber];
+    [[SPVideoScrubber sharedInstance] syncScrubber];
     [self.player play];
 }
 
@@ -407,7 +403,6 @@
     
     // Set Flag
     [self setIsPlaying:YES];
-    
 }
 
 - (void)pause
@@ -432,7 +427,9 @@
         [dataUtility saveContext:context];
         
     }
-//    [[SPVideoScrubber sharedInstance] syncScrubber];
+    
+    [[SPVideoScrubber sharedInstance] syncScrubber];
+    
     // Set Flag
     [self setIsPlaying:NO];
     
