@@ -11,6 +11,9 @@
 #import "SPVideoReel.h"
 #import "SPVideoScrubber.h"
 
+#define kShelbySPSlowSpeed 0.5
+#define kShelbySPFastSpeed 0.2
+
 @interface SPOverlayView ()
 
 @property (weak, nonatomic) SPModel *model;
@@ -21,6 +24,10 @@
 
 - (void)handleScrubberTouchWithPosition:(CGPoint)position inView:(UIView *)touchedView;
 
+// Video List Panning
+- (IBAction)panView:(id)sender;
+- (void)hideVideoList:(float)speed;
+- (void)showVideoList:(float)speed;
 @end
 
 @implementation SPOverlayView
@@ -160,11 +167,7 @@
         return;
     }
     
-    CGRect videoListFrame = self.videoListView.frame;
-    
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height, videoListFrame.size.width, videoListFrame.size.height)];
-    }];
+    [self hideVideoList:kShelbySPSlowSpeed];
 }
 
 - (void)showVideoList
@@ -173,11 +176,7 @@
         return;
     }
     
-    CGRect videoListFrame = self.videoListView.frame;
-    
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
-    }];
+    [self showVideoList:kShelbySPSlowSpeed];
 }
 
 - (void)hideVideoAndChannelInfo
@@ -202,6 +201,58 @@
         [self.videoInfoView setAlpha:1];
         [self.videoListScrollView setAlpha:1];
     }];
+}
+
+
+#pragma mark Video List Panning (Private)
+
+- (void)hideVideoList:(float)speed
+{
+    CGRect videoListFrame = self.videoListView.frame;
+    
+    [UIView animateWithDuration:speed animations:^{
+        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height, videoListFrame.size.width, videoListFrame.size.height)];
+    }];
+}
+
+- (void)showVideoList:(float)speed
+{
+    CGRect videoListFrame = self.videoListView.frame;
+    
+    [UIView animateWithDuration:speed animations:^{
+        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
+    }];
+}
+
+
+- (IBAction)panView:(id)sender
+{
+    UIPanGestureRecognizer *panGesture = sender;
+    if (![panGesture isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return;
+    }
+    
+    int y = self.videoListView.frame.origin.y;
+    CGPoint translation = [panGesture translationInView:self.videoListView.superview];
+    
+    float yOriginOpen = (self.frame.size.height - self.videoListView.frame.size.height);
+    if ([panGesture state] == UIGestureRecognizerStateBegan || [panGesture state] == UIGestureRecognizerStateChanged) {
+        if (y + translation.y >= 0 && y + translation.y > yOriginOpen) {
+            self.videoListView.frame = CGRectMake(0, y + translation.y, self.videoListView.frame.size.width, self.videoListView.frame.size.height);
+        }
+        [panGesture setTranslation:CGPointZero inView:self.videoListView];
+    } else if ([panGesture state] == UIGestureRecognizerStateEnded) {
+        CGPoint velocity = [panGesture velocityInView:self.videoListView.superview];
+        if (velocity.y < -200) {
+            [self showVideoList:kShelbySPFastSpeed];
+        } else if (velocity.y > 200) {
+            [self hideVideoList:kShelbySPFastSpeed];
+        } else if (y + translation.y > self.videoListView.frame.size.height/2) {
+            [self showVideoList:kShelbySPSlowSpeed];
+        } else {
+            [self hideVideoList:kShelbySPSlowSpeed];
+        }
+    }
 }
 
 #pragma mark - Timer Methods

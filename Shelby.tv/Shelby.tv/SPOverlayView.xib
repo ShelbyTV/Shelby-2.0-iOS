@@ -17,6 +17,7 @@
 			<string>IBUICollectionViewFlowLayout</string>
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
+			<string>IBUIPanGestureRecognizer</string>
 			<string>IBUIProgressView</string>
 			<string>IBUIScrollView</string>
 			<string>IBUIView</string>
@@ -297,7 +298,6 @@
 								<string key="NSFrame">{{948, 12}, {56, 21}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -437,8 +437,10 @@
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+								<bool key="IBUIBounces">NO</bool>
 								<bool key="IBUIAlwaysBounceHorizontal">YES</bool>
 								<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
+								<bool key="IBUIBouncesZoom">NO</bool>
 							</object>
 							<object class="IBUICollectionView" id="604551120">
 								<reference key="NSNextResponder" ref="186225105"/>
@@ -476,6 +478,7 @@
 						<reference key="IBUIBackgroundColor" ref="290922202"/>
 						<bool key="IBUIAutoresizesSubviews">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
+						<reference key="IBUIGestureRecognizers" ref="0"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>
 				</array>
@@ -483,12 +486,14 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="169041156"/>
+				<reference key="IBUIGestureRecognizers" ref="0"/>
 				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
 					<int key="IBUIInterfaceOrientation">3</int>
 					<int key="interfaceOrientation">3</int>
 				</object>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 			</object>
+			<object class="IBUIPanGestureRecognizer" id="868082781"/>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -662,6 +667,16 @@
 					<int key="connectionID">53</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
+						<string key="label">gestureRecognizers</string>
+						<reference key="source" ref="186225105"/>
+						<reference key="destination" ref="868082781"/>
+						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
+						<bool key="addsContentToExistingCollection">YES</bool>
+					</object>
+					<int key="connectionID">145</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">rollAction:</string>
 						<reference key="source" ref="642058558"/>
@@ -703,6 +718,14 @@
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">134</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">panView:</string>
+						<reference key="source" ref="868082781"/>
+						<reference key="destination" ref="191373211"/>
+					</object>
+					<int key="connectionID">146</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -873,6 +896,11 @@
 						<reference key="parent" ref="721212649"/>
 						<string key="objectName">Scrubber Touch View</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">144</int>
+						<reference key="object" ref="868082781"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -893,6 +921,7 @@
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="132.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="138.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="144.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="38.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="39.CustomClassName">TopAlignedLabel</string>
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -908,7 +937,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">140</int>
+			<int key="maxID">146</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -923,6 +952,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SPOverlayView</string>
 					<string key="superclassName">UIView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">panView:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">panView:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">panView:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="airPlayView">UIView</string>
 						<string key="bufferProgressView">UIProgressView</string>
