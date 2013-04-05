@@ -342,7 +342,9 @@
                 return;
             }
             Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-            
+            if (!videoFrame) {
+                return;
+            }
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
             if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
                 return;
@@ -369,6 +371,9 @@
                     return;
                 }
                 Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+                if (!mainQueuevideoFrame) {
+                    return;
+                }
                 
                [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
                 [self.itemViews addObject:itemView];
@@ -513,7 +518,9 @@
     }
     
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    
+    if (!videoFrame) {
+        return;
+    }
     if ( position < _model.numberOfVideos ) {
         
         if ([videoFrame.video offlineURL] && [[videoFrame.video offlineURL] length] > 0 ) { // Load player from disk if video was previously downloaded
@@ -570,7 +577,9 @@
     }
     
     Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    
+    if (!frame) {
+        return;
+    }
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
         [ShelbyAPIClient postFrameToLikes:frame.frameID];
     } else { // Logged Out
@@ -683,7 +692,9 @@
     }
 
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    
+    if (!videoFrame) {
+        return;
+    }
     [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kShelbySPCurrentVideoStreamID];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -736,7 +747,9 @@
     }
 
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    
+    if (!videoFrame) {
+        return;
+    }
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
     
@@ -926,6 +939,9 @@
             return;
         }
         Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
+        if (!lastFrame) {
+            return;
+        }
         NSDate *date = lastFrame.timestamp;
     
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -965,6 +981,9 @@
             }
 
             firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
+            if (!firstFrame) {
+                return;
+            }
             if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
                 [olderFramesArray removeObject:firstFrame];
             }
@@ -1004,7 +1023,9 @@
                 continue;
             }
             Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-            
+            if (!videoFrame) {
+                return;
+            }
             CGRect viewframe = [self.videoScrollView frame];
             viewframe.origin.x = viewframe.size.width * i;
             SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
@@ -1042,7 +1063,9 @@
                     return ;
                 }
                 Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-                
+                if (!mainQueuevideoFrame) {
+                    return;
+                }
                 // Update scrollViews
                 self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
                 [self.videoPlayers addObject:player];
@@ -1081,6 +1104,9 @@
         NSManagedObjectContext *context = [self.appDelegate context];
         NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
         Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
+        if (!currentVideoFrame) {
+            return;
+        }
         NSString *currentVideoID = [currentVideoFrame videoID];
         if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
             CGFloat videoX = kShelbySPVideoWidth * position;
@@ -1274,10 +1300,16 @@
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         if ([category isMemberOfClass:[Channel class]]) {
             Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
+            if (!channel) {
+                return;
+            }
             NSMutableArray *videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
             [self loadWithGroupType:GroupType_CategoryChannel groupTitle:[channel displayTitle] videoFrames:videoFrames andCategoryID:[channel channelID]];
         } else if ([category isMemberOfClass:[Roll class]]) {
             Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
+            if (!roll) {
+                return;
+            }
             NSMutableArray *videoFrames = [dataUtility fetchFramesInCategoryChannel:[roll rollID]];
             [self loadWithGroupType:GroupType_CategoryRoll groupTitle:[roll title] videoFrames:videoFrames andCategoryID:[roll rollID]];
         }
