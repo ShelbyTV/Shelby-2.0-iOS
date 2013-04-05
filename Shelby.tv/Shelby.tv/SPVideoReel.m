@@ -1534,13 +1534,12 @@
         [self launchCategory:category];
     }
     
-    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
     [self.model rescheduleOverlayTimer];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO
+    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
 }
 
 @end
