@@ -59,11 +59,6 @@
     UINib *cellNib = [UINib nibWithNibName:@"SPCategoryViewCell" bundle:nil];
     [self.categoriesCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPCategoryViewCell"];
 
-    // Customize Fonts
-    [self.categoryTitleLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:self.categoryTitleLabel.font.pointSize]];
-    [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu" size:self.nicknameLabel.font.pointSize]];
-    [self.nicknameLabel setFont:[UIFont fontWithName:@"Ubuntu-Medium" size:self.nicknameLabel.font.pointSize]];
-    
     // Customize Borders
     [self.userImageView.layer setBorderWidth:0.5];
     
