@@ -1203,6 +1203,8 @@
             [self loadWithGroupType:GroupType_CategoryRoll groupTitle:[roll title] videoFrames:videoFrames andCategoryID:[roll rollID]];
         }
     }
+    
+    [self.overlayView.categoriesCollectionView reloadData];
 }
 
 #pragma mark - UIAlertViewDelegate Methods
