@@ -35,7 +35,8 @@
 - (void)hideLikeNotificationView;
 - (void)showVideoList;
 - (void)hideVideoList;
-
+- (void)showVideoAndChannelInfo;
+- (void)hideVideoAndChannelInfo;
 - (void)rescheduleOverlayTimer;
 
 @end
