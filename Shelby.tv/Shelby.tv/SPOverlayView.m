@@ -120,12 +120,15 @@
         [self.likesButton setHidden:NO];
     } else if ([self.model groupType] == GroupType_Likes) {
         [self.rollButton setHidden:NO];
-        [self.rollButton setFrame:self.likesButton.frame];
+        CGRect rollRect = CGRectMake((self.likesButton.frame.origin.x
+                                      + self.likesButton.frame.size.width - self.rollButton.frame.size.width), self.rollButton.frame.origin.y, self.rollButton.frame.size.width, self.rollButton.frame.size.height);
+        
+        [self.rollButton setFrame:rollRect];
         [self.likesButton setHidden:YES];
     } else {
-        if (self.likesButton.frame.origin.x == self.rollButton.frame.origin.x) {
+        if (self.likesButton.frame.origin.x + self.likesButton.frame.size.width == self.rollButton.frame.origin.x + self.rollButton.frame.size.width) {
             [self.rollButton setFrame:CGRectMake(self.rollButton.frame.origin.x
-                                                 - self.likesButton.frame.size.width - 5, self.rollButton.frame.origin.y, self.rollButton.frame.size.width, self.rollButton.frame.size.height)];
+                                                 - self.likesButton.frame.size.width - 10, self.rollButton.frame.origin.y, self.rollButton.frame.size.width, self.rollButton.frame.size.height)];
         }
         [self.likesButton setHidden:NO];
         [self.rollButton setHidden:NO];

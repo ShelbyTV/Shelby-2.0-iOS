@@ -167,7 +167,7 @@
 							<object class="IBUIButton" id="642058558">
 								<reference key="NSNextResponder" ref="169041156"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{820, 23}, {62, 44}}</string>
+								<string key="NSFrame">{{795, 21}, {107, 44}}</string>
 								<reference key="NSSuperview" ref="169041156"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1001013364"/>
@@ -176,19 +176,25 @@
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUINormalTitle">+Roll</string>
+								<string key="IBUINormalTitle">   Roll...</string>
 								<reference key="IBUIHighlightedTitleColor" ref="505833979"/>
 								<reference key="IBUINormalTitleColor" ref="505833979"/>
 								<object class="NSColor" key="IBUINormalTitleShadowColor" id="774291968">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1005110381">
-									<int key="type">2</int>
+								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">roll.png</string>
+								</object>
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
+									<string key="name">HelveticaNeue-Bold</string>
+									<string key="family">Helvetica Neue</string>
+									<int key="traits">2</int>
 									<double key="pointSize">15</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="61120207">
-									<string key="NSName">Helvetica-Bold</string>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">HelveticaNeue-Bold</string>
 									<double key="NSSize">15</double>
 									<int key="NSfFlags">16</int>
 								</object>
@@ -213,15 +219,22 @@
 								<reference key="IBUINormalTitleShadowColor" ref="774291968"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">actionButton.png</string>
+									<string key="NSResourceName">action.png</string>
 								</object>
-								<reference key="IBUIFontDescription" ref="1005110381"/>
-								<reference key="IBUIFont" ref="61120207"/>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1005110381">
+									<int key="type">2</int>
+									<double key="pointSize">15</double>
+								</object>
+								<object class="NSFont" key="IBUIFont" id="350292774">
+									<string key="NSName">Helvetica-Bold</string>
+									<double key="NSSize">15</double>
+									<int key="NSfFlags">16</int>
+								</object>
 							</object>
 							<object class="IBUIButton" id="1001013364">
 								<reference key="NSNextResponder" ref="169041156"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{897, 21}, {62, 44}}</string>
+								<string key="NSFrame">{{912, 21}, {45, 44}}</string>
 								<reference key="NSSuperview" ref="169041156"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="371512165"/>
@@ -230,12 +243,15 @@
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUINormalTitle">Like</string>
 								<reference key="IBUIHighlightedTitleColor" ref="505833979"/>
 								<reference key="IBUINormalTitleColor" ref="505833979"/>
 								<reference key="IBUINormalTitleShadowColor" ref="774291968"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">like.png</string>
+								</object>
 								<reference key="IBUIFontDescription" ref="1005110381"/>
-								<reference key="IBUIFont" ref="61120207"/>
+								<reference key="IBUIFont" ref="350292774"/>
 							</object>
 						</array>
 						<string key="NSFrameSize">{1024, 95}</string>
@@ -297,6 +313,7 @@
 								<string key="NSFrame">{{948, 12}, {56, 21}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -401,7 +418,7 @@
 							<int key="traits">2</int>
 							<double key="pointSize">15</double>
 						</object>
-						<reference key="IBUIFont" ref="61120207"/>
+						<reference key="IBUIFont" ref="350292774"/>
 					</object>
 					<object class="IBUIImageView" id="792619973">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -793,9 +810,9 @@
 							<reference ref="627050986"/>
 							<reference ref="626961961"/>
 							<reference ref="725982105"/>
-							<reference ref="642058558"/>
 							<reference ref="371512165"/>
 							<reference ref="1001013364"/>
+							<reference ref="642058558"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">VideoInfoView</string>
@@ -849,6 +866,7 @@
 						<int key="objectID">119</int>
 						<reference key="object" ref="371512165"/>
 						<reference key="parent" ref="169041156"/>
+						<string key="objectName">Button - Share</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">120</int>
@@ -1152,10 +1170,12 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="actionButton.png">{41, 41}</string>
+			<string key="action.png">{45, 44}</string>
 			<string key="infoPanelIconPlaceholder.png">{49, 49}</string>
+			<string key="like.png">{45, 44}</string>
 			<string key="likeNotification.png">{261, 157}</string>
 			<string key="restartButton.png">{100, 100}</string>
+			<string key="roll.png">{107, 44}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
