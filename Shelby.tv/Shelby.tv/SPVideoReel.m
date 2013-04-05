@@ -48,6 +48,7 @@
 - (void)setupAirPlay;
 - (void)setupVideoPlayers;
 - (void)setupGestures;
+- (void)setupOverlayVisibileItems;
 
 /// Storage Methods
 - (void)storeIdentifierOfCurrentVideoInStream;
@@ -149,6 +150,8 @@
     [self setupVideoPlayers];
     [self setupVideoListScrollView];
     [self setupAirPlay];
+    [self setupOverlayVisibileItems];
+
 }
 
 - (void)setupVideoFrames:(NSMutableArray *)videoFrames
@@ -438,6 +441,15 @@
     UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
     downGesture.direction = UISwipeGestureRecognizerDirectionDown;
     [self.videoScrollView addGestureRecognizer:downGesture];
+}
+
+- (void)setupOverlayVisibileItems
+{
+    if ([self.model numberOfVideos]) {
+        [self.overlayView showVideoAndChannelInfo];
+    } else {
+        [self.overlayView hideVideoAndChannelInfo];
+    }
 }
 
 #pragma mark - Storage Methods (Public)
@@ -1106,6 +1118,8 @@
     
     if ([self.overlayView isOverlayHidden]) {
         [self.overlayView toggleOverlay];
+    } else if (![self.model numberOfVideos]) {
+        return; // don't dismiss channels if there are no videos available
     }
     
     if (direction == UISwipeGestureRecognizerDirectionUp) {

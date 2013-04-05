@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *rollButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
+@property (weak, nonatomic) IBOutlet UIView *videoInfoView;
 
 - (void)handleScrubberTouchWithPosition:(CGPoint)position inView:(UIView *)touchedView;
 
@@ -63,9 +64,6 @@
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoTitleLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoListScrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"videoListPanel.png"]]];
-    
-    // Hide Playlist
-    [self hideVideoList];
 }
 
 #pragma mark - UIView Overridden Methods
@@ -179,6 +177,30 @@
     
     [UIView animateWithDuration:0.5f animations:^{
         [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
+    }];
+}
+
+- (void)hideVideoAndChannelInfo
+{
+    [self.videoInfoView setHidden:YES];
+    [self.videoListScrollView setHidden:YES];
+}
+
+
+- (void)showVideoAndChannelInfo
+{
+    if (![self.videoListScrollView isHidden]) {
+        return;
+    }
+    
+    [self.videoInfoView setAlpha:0];
+    [self.videoListScrollView setAlpha:0];
+    [self.videoInfoView setHidden:NO];
+    [self.videoListScrollView setHidden:NO];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.videoInfoView setAlpha:1];
+        [self.videoListScrollView setAlpha:1];
     }];
 }
 
