@@ -1525,12 +1525,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    [self.overlayView.categoriesCollectionView reloadData];
     if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
-        
         [self launchUserGroup:indexPath.row];
-        
     } else { // Category Channels and Rolls
         id category = [self.categories objectAtIndex:indexPath.row];
         [self launchCategory:category];
