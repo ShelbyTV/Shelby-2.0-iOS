@@ -1338,7 +1338,7 @@
 - (void)launchLikes
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
+    NSMutableArray *videoFrames = [dataUtility fetchLikesEntries];
     [self loadWithGroupType:GroupType_Likes groupTitle:@"Likes" andVideoFrames:videoFrames];
     [self.overlayView.categoriesCollectionView reloadData];
 }
