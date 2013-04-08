@@ -26,8 +26,6 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-   [self.title setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:16]];
-    
     UIColor *textColor = [UIColor colorWithHex:@"333333" andAlpha:1];
     [self.title setTextColor:textColor];
     [self setCurrentCategory:NO];
@@ -47,10 +45,12 @@
 {
     _currentCategory = currentCategory;
     if (self.currentCategory) {
-        [self.title setTextColor:[UIColor redColor]];
+        [self.title setTextColor:[UIColor whiteColor]];
+        [self setBackgroundColor:kShelbyColorGreen];
     } else {
         UIColor *textColor = [UIColor colorWithHex:@"333333" andAlpha:1];
         [self.title setTextColor:textColor];
+        [self setBackgroundColor:kShelbyColorWhite];
     }
 }
 
