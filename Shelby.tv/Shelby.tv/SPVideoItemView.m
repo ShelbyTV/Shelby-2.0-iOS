@@ -25,7 +25,7 @@
 #pragma mark - Class Methods
 + (CGFloat)width
 {
-    return 234.0f;
+    return 236.0f;
 }
 
 + (CGFloat)height
