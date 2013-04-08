@@ -803,7 +803,7 @@
         
         // Remove selected state color from all SPVideoItemView objects
         for (SPVideoItemView *itemView in self.itemViews) {
-            itemView.backgroundColor = [UIColor clearColor];
+            itemView.backgroundColor = kShelbyColorWhite;
             itemView.videoTitleLabel.textColor = kShelbyColorBlack;
             itemView.videoSharerLabel.textColor = kShelbyColorBlack;
         }
@@ -1112,7 +1112,7 @@
                 [self.videoScrollView setNeedsDisplay];
                 
                 // Update itemViews
-                itemView.backgroundColor = [UIColor clearColor];
+                itemView.backgroundColor = kShelbyColorWhite;
                 itemView.videoTitleLabel.textColor = kShelbyColorBlack;
                 itemView.videoSharerLabel.textColor = kShelbyColorBlack;
                 [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];

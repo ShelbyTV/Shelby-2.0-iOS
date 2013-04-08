@@ -12,9 +12,15 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *invisibleButton;
 
+
 @end
 
 @implementation SPVideoItemView
+
+- (void)awakeFromNib
+{
+    self.backgroundColor = kShelbyColorWhite;
+}
 
 #pragma mark - Class Methods
 + (CGFloat)width
