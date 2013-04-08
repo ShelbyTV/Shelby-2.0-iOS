@@ -134,6 +134,7 @@
         [self.rollButton setHidden:NO];
     }
 
+    [[SPVideoScrubber sharedInstance] setupScrubber];
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:1.0f];
     }];
@@ -143,6 +144,8 @@
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [[SPVideoScrubber sharedInstance] stopObserving];
     }];
 }
 

@@ -472,7 +472,7 @@
     if ( ![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture] ) {
         
         // Toggle Overlay Gesture
-        _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay:)];
+        _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
         [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
         [self.toggleOverlayGesuture setDelegate:self];
         [self.view addGestureRecognizer:self.toggleOverlayGesuture];

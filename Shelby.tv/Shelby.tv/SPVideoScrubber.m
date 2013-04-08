@@ -69,6 +69,7 @@
 
 - (void)syncScrubber
 {
+    
     CGFloat duration = CMTimeGetSeconds([self duration]);
     
 	if ( CMTIME_IS_INVALID([self duration]) ) {
