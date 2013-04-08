@@ -1094,6 +1094,9 @@
                 
                 // Reference _videoFrames[i] on main thread
                 NSManagedObjectContext *context = [self.appDelegate context];
+                if (!self.videoFrames || [self.videoFrames count] <= i) {
+                    return;
+                }
                 NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
                 if (!objectID) {
                     return ;
