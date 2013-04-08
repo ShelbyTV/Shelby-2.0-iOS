@@ -259,7 +259,8 @@
     }
     
     self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight);
-
+    [self.videoScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    
 }
 
 - (void)setupOverlayView
@@ -331,12 +332,7 @@
             
         }
         
-        if ( _groupType != GroupType_Stream ) { // If not stream, play video in zeroeth position
-            
-            [self currentVideoDidChangeToVideo:_model.currentVideo];
-            
-        } else { // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
-            
+        if ( _groupType == GroupType_Stream ) {  // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
             for ( NSUInteger i = 0; i < [self.model numberOfVideos]; ++i ) {
                 
                 Frame *videoFrame = (self.videoFrames)[i];
@@ -349,9 +345,9 @@
                     
                 }
             }
-            
-            [self currentVideoDidChangeToVideo:_model.currentVideo];
         }
+        
+        [self currentVideoDidChangeToVideo:_model.currentVideo];
     }
 }
 
