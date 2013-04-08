@@ -468,22 +468,24 @@
 - (void)setupGestures
 {
     
-    // Toggle Overlay Gesture
-    if ( ![[self.view gestureRecognizers] containsObject:_toggleOverlayGesuture] ) {
+    // Setup gestrues only onces
+    if ( ![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture] ) {
         
-        self.toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
+        // Toggle Overlay Gesture
+        _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
         [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-        [self.view addGestureRecognizer:_toggleOverlayGesuture];
+        [self.view addGestureRecognizer:self.toggleOverlayGesuture];
+
+        // Playlist Gestures
+        UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
+        upGesture.direction = UISwipeGestureRecognizerDirectionUp;
+        [self.videoScrollView addGestureRecognizer:upGesture];
+        
+        UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
+        downGesture.direction = UISwipeGestureRecognizerDirectionDown;
+        [self.videoScrollView addGestureRecognizer:downGesture];
+
     }
-    
-    // Playlist Gestures
-    UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
-    upGesture.direction = UISwipeGestureRecognizerDirectionUp;
-    [self.videoScrollView addGestureRecognizer:upGesture];
-    
-    UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
-    downGesture.direction = UISwipeGestureRecognizerDirectionDown;
-    [self.videoScrollView addGestureRecognizer:downGesture];
 }
 
 - (void)setupOverlayVisibileItems
@@ -1233,10 +1235,12 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     
-    if ( scrollView == _videoScrollView ) {
-        
-        // Switch the indicator when more than 50% of the previous/next page is visible
-        CGFloat pageWidth = scrollView.frame.size.width;
+    // Switch the indicator when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSString *gaAction = nil;
+    NSString *gaEventCategory = nil;
+    
+    if (scrollView == _videoScrollView) {
         CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
         NSUInteger page = floor(scrollAmount) + 1;
         
@@ -1250,32 +1254,26 @@
         [self currentVideoDidChangeToVideo:page];
         [self fetchOlderVideos:page];
         
-        
-        // Send event to Google Analytics
-        id defaultTracker = [GAI sharedInstance].defaultTracker;
-        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                   withAction:@"Swiped video player"
-                                    withLabel:_groupTitle
-                                    withValue:nil];
-    
-    } else if ( scrollView == _overlayView.videoListScrollView ) {
-        
-        // Switch the indicator when more than 50% of the previous/next page is visible
-        CGFloat pageWidth = scrollView.frame.size.width;
-        CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
+        gaAction = @"Swiped video player";
+        gaEventCategory = kGAICategoryVideoPlayer;
+    } else if (scrollView == _overlayView.videoListScrollView) {
+         CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
         NSUInteger page = floor(scrollAmount) + 1;
         [self fetchOlderVideos:page];
         
-        // Send event to Google Analytics
-        id defaultTracker = [GAI sharedInstance].defaultTracker;
-        [defaultTracker sendEventWithCategory:kGAICategoryVideoList
-                                   withAction:@"Swiped video list"
-                                    withLabel:_groupTitle
-                                    withValue:nil];
-        
+        gaAction = @"Swiped video list";
+        gaEventCategory = kGAICategoryVideoList;
+
         [self.overlayView rescheduleOverlayTimer];
-        
     }
+    
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:gaEventCategory
+                               withAction:gaAction
+                                withLabel:_groupTitle
+                                withValue:nil];
+    
 }
 
 - (void)launchUserGroup:(NSUInteger)groupNumber
@@ -1327,6 +1325,8 @@
     }
 
     [self.overlayView.categoriesCollectionView reloadData];
+    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
+
 }
 
 - (void)launchCategory:(id)category
@@ -1353,6 +1353,8 @@
     }
     
     [self.overlayView.categoriesCollectionView reloadData];
+    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
+
 }
 
 - (void)launchStream
@@ -1622,12 +1624,11 @@
     
     [self.model rescheduleOverlayTimer];
     
-    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
 }
 
 @end
