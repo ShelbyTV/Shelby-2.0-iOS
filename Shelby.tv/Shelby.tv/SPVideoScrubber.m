@@ -39,6 +39,7 @@
 #pragma mark - Persistance Methods
 - (void)setupScrubber
 {
+    [self stopObserving];
     
     CGFloat interval = .1f;
     
@@ -68,6 +69,7 @@
 
 - (void)syncScrubber
 {
+    
     CGFloat duration = CMTimeGetSeconds([self duration]);
     
 	if ( CMTIME_IS_INVALID([self duration]) ) {
