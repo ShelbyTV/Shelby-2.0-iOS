@@ -14,6 +14,7 @@
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
 #import "SPCategoryViewCell.h"
+#import "SPLikesCatgoryViewCell.h"
 
 @interface SPVideoReel ()
 
@@ -1560,15 +1561,13 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSString *cellIdentifier = nil;
+    id cell =  nil;
     if (indexPath.section == 0 && indexPath.row == 1) {
-        cellIdentifier = @"SPLikesCatgoryViewCell";
+        cell = (SPLikesCatgoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"SPLikesCatgoryViewCell" forIndexPath:indexPath];
     } else {
-        cellIdentifier = @"SPCategoryViewCell";
+        cell = (SPCategoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"SPCategoryViewCell" forIndexPath:indexPath];
     }
     
-    SPCategoryViewCell *cell = (SPCategoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-
     int row = indexPath.row;
     NSString *title = nil;
     if (indexPath.section == 0) { // Me Cards
@@ -1610,7 +1609,7 @@
         title = @"";
     }
     
-    [cell.title setText:title];
+    [((SPCategoryViewCell *)cell).title setText:title];
     return cell;
 }
 
