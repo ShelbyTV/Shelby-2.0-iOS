@@ -507,7 +507,7 @@
     // Add newly loaded SPVideoPlayer to list of SPVideoPlayers
     [self.playableVideoPlayers addObject:player];
     
-    // If screen is retina (e.g., iPad 3 or greater), allow 56 videos. Otherwise, allow only 3 videos to be stored
+    // If screen is retina (e.g., iPad 3 or greater), allow 3 videos. Otherwise, allow only 3 videos to be stored
     NSUInteger maxVideosAllowed;
     if ([[UIScreen mainScreen] isRetinaDisplay]) {
         maxVideosAllowed = 3;
@@ -1166,16 +1166,20 @@
     
     // Stop residual audio playback (this shouldn't be happening to begin with)
     [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-    
-    // Release everything
     [self.videoPlayers removeAllObjects];
     self.videoPlayers = nil;
     
+    [self.playableVideoPlayers makeObjectsPerformSelector:@selector(pause)];
     [self.playableVideoPlayers removeAllObjects];
     self.playableVideoPlayers = nil;
     
     [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//    [self.videoScrollView removeFromSuperview];
+//    self.videoScrollView = nil;
+    
     [[self.overlayView.videoListScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//    [self.overlayView.videoListScrollView removeFromSuperview];
+//    self.overlayView.videoListScrollView = nil;
     
     [self.itemViews removeAllObjects];
     self.itemViews = nil;

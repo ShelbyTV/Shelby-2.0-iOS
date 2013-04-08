@@ -39,6 +39,7 @@
 #pragma mark - Persistance Methods
 - (void)setupScrubber
 {
+    [self stopObserving];
     
     CGFloat interval = .1f;
     
