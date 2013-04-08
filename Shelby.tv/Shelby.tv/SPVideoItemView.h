@@ -9,10 +9,10 @@
 @interface SPVideoItemView : UIView
 
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *videoTitleLabel;
+@property (weak, nonatomic) IBOutlet TopAlignedLabel *videoSharerLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 
 + (CGFloat)width;
 + (CGFloat)height;
-
 
 @end

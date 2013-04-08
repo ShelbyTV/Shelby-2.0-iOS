@@ -406,13 +406,15 @@
                     return;
                 }
                 
-               [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
+                [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
+                [itemView.videoSharerLabel setText:mainQueuevideoFrame.creator.nickname];
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
             
                 if ( i == _model.currentVideo ) {
                     itemView.backgroundColor = kShelbyColorGreen;
                     itemView.videoTitleLabel.textColor = kShelbyColorBlack;
+                    itemView.videoSharerLabel.textColor = kShelbyColorBlack;
                     [self.overlayView.videoListScrollView setContentOffset:CGPointMake(i * 1024.0f, 0.0f)];
                 }
                 
@@ -803,12 +805,14 @@
         for (SPVideoItemView *itemView in self.itemViews) {
             itemView.backgroundColor = [UIColor clearColor];
             itemView.videoTitleLabel.textColor = kShelbyColorBlack;
+            itemView.videoSharerLabel.textColor = kShelbyColorBlack;
         }
         
         // Update currentVideo's SPVideoItemView object UI and position in videoListScrollView object
         SPVideoItemView *itemView = (self.itemViews)[position];
         itemView.backgroundColor = kShelbyColorGreen;
         itemView.videoTitleLabel.textColor = kShelbyColorBlack;
+        itemView.videoSharerLabel.textColor = kShelbyColorBlack;
         if ( position < _model.numberOfVideos-1 ) {
             CGFloat itemX = itemView.frame.size.width * position;
             CGFloat itemY = 0.0f;
@@ -1110,7 +1114,9 @@
                 // Update itemViews
                 itemView.backgroundColor = [UIColor clearColor];
                 itemView.videoTitleLabel.textColor = kShelbyColorBlack;
+                itemView.videoSharerLabel.textColor = kShelbyColorBlack;
                 [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
+                [itemView.videoSharerLabel setText:mainQueuevideoFrame.creator.nickname];
                 self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), itemViewHeight);
                 [self.itemViews addObject:itemView];
                 [self.overlayView.videoListScrollView addSubview:itemView];
