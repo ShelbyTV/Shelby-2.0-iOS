@@ -1543,7 +1543,7 @@
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return (0 == section  ? 3 : [self.categories count]);
+    return (0 == section  ? 2 : [self.categories count]);
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
@@ -1554,7 +1554,14 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    SPCategoryViewCell *cell = (SPCategoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"SPCategoryViewCell" forIndexPath:indexPath];
+    NSString *cellIdentifier = nil;
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        cellIdentifier = @"SPLikesCatgoryViewCell";
+    } else {
+        cellIdentifier = @"SPCategoryViewCell";
+    }
+    
+    SPCategoryViewCell *cell = (SPCategoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
 
     int row = indexPath.row;
     NSString *title = nil;
@@ -1563,12 +1570,12 @@
             title = @"Stream";
         } else if (row == 1) {
             title = @"Likes";
-        } else if (row == 2) {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
-                title = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
-            } else {
-                title = @"Your .TV";
-            }
+//        } else if (row == 2) {
+//            if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+//                title = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
+//            } else {
+//                title = @"Your .TV";
+//            }
         }
         
         if ([title isEqualToString:self.groupTitle] || ([title hasSuffix:@".shelby.tv"] && self.groupType == GroupType_PersonalRoll)) {

@@ -58,6 +58,8 @@
     
     UINib *cellNib = [UINib nibWithNibName:@"SPCategoryViewCell" bundle:nil];
     [self.categoriesCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPCategoryViewCell"];
+    UINib *likeCellNib = [UINib nibWithNibName:@"SPLikesCatgoryViewCell" bundle:nil];
+    [self.categoriesCollectionView registerNib:likeCellNib forCellWithReuseIdentifier:@"SPLikesCatgoryViewCell"];
 
     // Customize Borders
     [self.userImageView.layer setBorderWidth:0.5];
