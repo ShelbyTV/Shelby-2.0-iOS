@@ -472,8 +472,9 @@
     if ( ![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture] ) {
         
         // Toggle Overlay Gesture
-        _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
+        _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay:)];
         [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
+        [self.toggleOverlayGesuture setDelegate:self];
         [self.view addGestureRecognizer:self.toggleOverlayGesuture];
 
         // Playlist Gestures
@@ -1329,8 +1330,6 @@
     }
 
     [self.overlayView.categoriesCollectionView reloadData];
-    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
-
 }
 
 - (void)launchCategory:(id)category
@@ -1357,8 +1356,6 @@
     }
     
     [self.overlayView.categoriesCollectionView reloadData];
-    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
-
 }
 
 - (void)launchStream
@@ -1605,19 +1602,8 @@
 }
 
 #pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.model.videoReel.toggleOverlayGesuture.enabled = NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    // TODO:
-}
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.model.videoReel.toggleOverlayGesuture.enabled = NO;
     
     if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
         [self launchUserGroup:indexPath.row];
@@ -1630,9 +1616,18 @@
     
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+
+#pragma mark - UIGestureRecognizerDelegate methods
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
+    CGPoint locationInCollectionView = [gestureRecognizer locationInView:self.overlayView.categoriesCollectionView];
+    if (locationInCollectionView.y >= 0) {
+        return NO;
+    }
+    
+    return YES;
+
 }
+
 
 @end
