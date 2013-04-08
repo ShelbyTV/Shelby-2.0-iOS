@@ -67,7 +67,7 @@
     // Customize Background Colors
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoTitleLabel setBackgroundColor:[UIColor clearColor]];
-    [self.videoListScrollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"videoListPanel.png"]]];
+    [self.videoListScrollView setBackgroundColor:kShelbyColorWhite];
 }
 
 #pragma mark - UIView Overridden Methods
