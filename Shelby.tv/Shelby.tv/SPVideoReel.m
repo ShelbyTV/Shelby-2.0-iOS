@@ -1525,12 +1525,21 @@
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
+    // KP KP TODO: remove once we have design for FB/Twitter
+    if (section == 2) {
+        return 2;
+    }
+
     return (0 == section  ? 2 : [self.categories count]);
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
 {
+#ifdef DEBUG    // KP KP TODO: remove once we have design for FB/Twitter
+    return 3;  // Adding the FB/Twitter channels for now, in debug mode only.
+#else
     return 2;
+#endif
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -1545,7 +1554,15 @@
     
     int row = indexPath.row;
     NSString *title = nil;
-    if (indexPath.section == 0) { // Me Cards
+    
+    // KP KP: TODO - remove once we have design for FB/Twitter
+    if (indexPath.section == 2) {
+        if (row == 0) {
+            title = @"Facebook";
+        } else {
+            title = @"Twitter";
+        }
+    } else if (indexPath.section == 0) { // Me Cards
         if (row == 0) {
             title = @"Stream";
         } else if (row == 1) {
@@ -1591,6 +1608,12 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    // KP KP: TODO: remove once we have design for FB/Twitter
+    if (indexPath.section == 2) {
+        // FB & Twitter connect
+        
+        return;
+    }
     
     if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
         [self launchUserGroup:indexPath.row];
