@@ -22,12 +22,17 @@
 @property (weak, nonatomic) IBOutlet UIView *videoListView;
 @property (weak, nonatomic) IBOutlet UIView *videoInfoView;
 
-- (void)handleScrubberTouchWithPosition:(CGPoint)position inView:(UIView *)touchedView;
 
 // Video List Panning
 - (IBAction)panView:(id)sender;
 - (void)hideVideoList:(float)speed;
 - (void)showVideoList:(float)speed;
+- (void)showVideoList;
+- (void)hideVideoList;
+
+// Scrubber
+- (IBAction)scrubberTouched:(id)sender;
+
 @end
 
 @implementation SPOverlayView
@@ -262,6 +267,24 @@
     }
 }
 
+- (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
+{
+    UISwipeGestureRecognizerDirection direction = [gesture direction];
+    
+    if ([self isOverlayHidden]) {
+        [self showOverlayView];
+    } else if (![self.model numberOfVideos]) {
+        return; // don't dismiss channels if there are no videos available
+    }
+    
+    if (direction == UISwipeGestureRecognizerDirectionUp) {
+        [self showVideoList];
+    } else if (direction == UISwipeGestureRecognizerDirectionDown) {
+        [self hideVideoList];
+    }
+}
+
+
 #pragma mark - Timer Methods
 - (void)rescheduleOverlayTimer
 {
@@ -269,37 +292,12 @@
 }
 
 #pragma mark - Scrubber Touch Methods
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (IBAction)scrubberTouched:(id)sender
 {
-    for (UITouch *touch in touches) {
-        
-        if (touch.view == [self scrubberTouchView]) {
-            CGPoint position = [touch locationInView:[self scrubberTouchView]];
-            DLog(@"scrubberContainerView %@", NSStringFromCGPoint(position));
-            [self handleScrubberTouchWithPosition:position inView:[self scrubberContainerView]];
-        } else if (touch.view == [self elapsedProgressView]) {
-            CGPoint position = [touch locationInView:[self elapsedProgressView]];
-            DLog(@"elapsedProgressView %@", NSStringFromCGPoint(position));
-            [self rescheduleOverlayTimer];
-            [self handleScrubberTouchWithPosition:position inView:[self elapsedProgressView]];
-        } else if (touch.view == [self bufferProgressView]) {
-            CGPoint position = [touch locationInView:[self bufferProgressView]];
-            DLog(@"bufferProgressView %@", NSStringFromCGPoint(position));
-            [self handleScrubberTouchWithPosition:position inView:[self bufferProgressView]];
-        } else {
-            // Do nothing
-        }
-        
-    }
-}
-
-- (void)handleScrubberTouchWithPosition:(CGPoint)position inView:(UIView *)touchedView
-{
-    self.model.videoReel.toggleOverlayGesuture.enabled = NO;
+    UITapGestureRecognizer *gesture = (UITapGestureRecognizer *)sender;
+    CGPoint position = [gesture locationInView:self.scrubberTouchView];
     CGFloat percentage = position.x / self.elapsedProgressView.frame.size.width;
     [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
-    self.model.videoReel.toggleOverlayGesuture.enabled = YES;
     [self rescheduleOverlayTimer];
 }
-
 @end

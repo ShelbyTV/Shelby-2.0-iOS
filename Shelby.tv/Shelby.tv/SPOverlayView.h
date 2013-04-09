@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIView *scrubberTouchView;
 @property (weak, nonatomic) IBOutlet UIButton *versionButton;
 
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *scrubberGesture;
+
 /// Toggle UI
 - (void)toggleOverlay;
 - (void)showOverlayView;
@@ -34,10 +36,9 @@
 - (BOOL)isOverlayHidden;
 - (void)showLikeNotificationView;
 - (void)hideLikeNotificationView;
-- (void)showVideoList;
-- (void)hideVideoList;
 - (void)showVideoAndChannelInfo;
 - (void)hideVideoAndChannelInfo;
 - (void)rescheduleOverlayTimer;
+- (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
 
 @end

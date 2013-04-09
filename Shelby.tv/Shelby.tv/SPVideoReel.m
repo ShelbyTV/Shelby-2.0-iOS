@@ -30,7 +30,6 @@
 @property (copy, nonatomic) NSString *categoryID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
-@property (assign, nonatomic) BOOL playlistIsVisible;
 @property (assign, nonatomic) SecretMode secretMode;
 
 // Make sure we let user roll immediately after they log in.
@@ -466,24 +465,22 @@
 
 - (void)setupGestures
 {
-    
-    // Setup gestrues only onces
-    if ( ![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture] ) {
-        
-        // Toggle Overlay Gesture
+    // Setup gestrues only onces - Toggle Overlay Gesture
+    if (![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture]) {
         _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
         [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
         [self.toggleOverlayGesuture setDelegate:self];
+        [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
         [self.view addGestureRecognizer:self.toggleOverlayGesuture];
 
         // Playlist Gestures
         UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
         upGesture.direction = UISwipeGestureRecognizerDirectionUp;
-        [self.videoScrollView addGestureRecognizer:upGesture];
+        [self.view addGestureRecognizer:upGesture];
         
         UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
         downGesture.direction = UISwipeGestureRecognizerDirectionDown;
-        [self.videoScrollView addGestureRecognizer:downGesture];
+        [self.view addGestureRecognizer:downGesture];
 
     }
 }
@@ -1204,33 +1201,7 @@
 #pragma mark - Gesture Methods (Private)
 - (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture
 {
-    UISwipeGestureRecognizerDirection direction = [gesture direction];
-    
-    if ([self.overlayView isOverlayHidden]) {
-        [self.overlayView toggleOverlay];
-    } else if (![self.model numberOfVideos]) {
-        return; // don't dismiss channels if there are no videos available
-    }
-    
-    if (direction == UISwipeGestureRecognizerDirectionUp) {
-        [self launchPlaylist];
-    } else if (direction == UISwipeGestureRecognizerDirectionDown) {
-        [self dismissPlaylist];
-    }
-}
-
-- (void)launchPlaylist
-{
-    DLog(@"Launched Playlist");
-    [self setPlaylistIsVisible:YES];
-    [self.overlayView showVideoList];
-}
-
-- (void)dismissPlaylist
-{
-    DLog(@"Dismissed Playlist");
-    [self setPlaylistIsVisible:NO];
-    [self.overlayView hideVideoList];
+    [self.overlayView togglePlaylist:gesture];
 }
 
 #pragma mark - UIScrollViewDelegate Methods
