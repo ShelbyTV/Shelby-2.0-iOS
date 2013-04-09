@@ -1051,81 +1051,86 @@
         
         // Update videoScrollView and videoListScrollView
         for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _model.numberOfVideos; ++i ) {
-            
-            // videoScrollView
-            NSManagedObjectContext *context = [self.appDelegate context];
-            NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-            if (!objectID) {
-                continue;
-            }
-            Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-            if (!videoFrame) {
-                return;
-            }
-            CGRect viewframe = [self.videoScrollView frame];
-            viewframe.origin.x = viewframe.size.width * i;
-            SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-            
-            // videoListScrollView
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-            if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
-                return;
-            }
 
-            SPVideoItemView *itemView = nib[0];
-            if (![itemView isKindOfClass:[UIView class]]) {
-                return;
-            }
-            
-            CGFloat itemViewWidth = [SPVideoItemView width];
-            CGFloat itemViewHeight = [SPVideoItemView height];
-            CGRect itemFrame = itemView.frame;
-            itemFrame.origin.x = itemViewWidth * i;
-            [itemView setFrame:itemFrame];
-            [itemView setTag:i];
-            
-            [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
-                                         forImageView:itemView.thumbnailImageView
-                                      withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
-                                       andContentMode:UIViewContentModeCenter];
-            
-            // Update UI on Main Thread
-            dispatch_async(dispatch_get_main_queue(), ^{
+            if ( [self.videoFrames count] >= i ) {
                 
-                // Reference _videoFrames[i] on main thread
+                // videoScrollView
                 NSManagedObjectContext *context = [self.appDelegate context];
-                if (!self.videoFrames || [self.videoFrames count] <= i) {
-                    return;
-                }
                 NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
                 if (!objectID) {
-                    return ;
+                    continue;
                 }
-                Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-                if (!mainQueuevideoFrame) {
+                Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+                if (!videoFrame) {
                     return;
                 }
-                // Update scrollViews
-                self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
-                [self.videoPlayers addObject:player];
-                [self.videoScrollView addSubview:player.view];
-                [self.videoScrollView setNeedsDisplay];
+                CGRect viewframe = [self.videoScrollView frame];
+                viewframe.origin.x = viewframe.size.width * i;
+                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
                 
-                // Update itemViews
-                itemView.backgroundColor = kShelbyColorWhite;
-                itemView.videoTitleLabel.textColor = kShelbyColorBlack;
-                itemView.videoSharerLabel.textColor = kShelbyColorBlack;
-                [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
-                [itemView.videoSharerLabel setText:mainQueuevideoFrame.creator.nickname];
-                self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), itemViewHeight);
-                [self.itemViews addObject:itemView];
-                [self.overlayView.videoListScrollView addSubview:itemView];
-                [self.overlayView.videoListScrollView setNeedsDisplay];
+                // videoListScrollView
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
+                if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
+                    return;
+                }
                 
-                // Set flags
-                [self setFetchingOlderVideos:NO];
-                [self setLoadingOlderVideos:NO];
-            });
+                SPVideoItemView *itemView = nib[0];
+                if (![itemView isKindOfClass:[UIView class]]) {
+                    return;
+                }
+                
+                CGFloat itemViewWidth = [SPVideoItemView width];
+                CGFloat itemViewHeight = [SPVideoItemView height];
+                CGRect itemFrame = itemView.frame;
+                itemFrame.origin.x = itemViewWidth * i;
+                [itemView setFrame:itemFrame];
+                [itemView setTag:i];
+                
+                [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                             forImageView:itemView.thumbnailImageView
+                                          withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
+                                           andContentMode:UIViewContentModeCenter];
+                
+                // Update UI on Main Thread
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    // Reference _videoFrames[i] on main thread
+                    NSManagedObjectContext *context = [self.appDelegate context];
+                    if (!self.videoFrames || [self.videoFrames count] <= i) {
+                        return;
+                    }
+                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+                    if (!objectID) {
+                        return ;
+                    }
+                    Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+                    if (!mainQueuevideoFrame) {
+                        return;
+                    }
+                    // Update scrollViews
+                    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
+                    [self.videoPlayers addObject:player];
+                    [self.videoScrollView addSubview:player.view];
+                    [self.videoScrollView setNeedsDisplay];
+                    
+                    // Update itemViews
+                    itemView.backgroundColor = kShelbyColorWhite;
+                    itemView.videoTitleLabel.textColor = kShelbyColorBlack;
+                    itemView.videoSharerLabel.textColor = kShelbyColorBlack;
+                    [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
+                    [itemView.videoSharerLabel setText:mainQueuevideoFrame.creator.nickname];
+                    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), itemViewHeight);
+                    [self.itemViews addObject:itemView];
+                    [self.overlayView.videoListScrollView addSubview:itemView];
+                    [self.overlayView.videoListScrollView setNeedsDisplay];
+                    
+                    // Set flags
+                    [self setFetchingOlderVideos:NO];
+                    [self setLoadingOlderVideos:NO];
+                });
+                
+            }
+            
         }
     });
 }
