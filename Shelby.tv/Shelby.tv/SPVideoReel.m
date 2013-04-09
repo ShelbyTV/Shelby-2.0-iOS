@@ -1268,7 +1268,7 @@
         gaAction = @"Swiped video player";
         gaEventCategory = kGAICategoryVideoPlayer;
     } else if (scrollView == _overlayView.videoListScrollView) {
-         CGFloat scrollAmount = 2.85*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
+        CGFloat scrollAmount = 5*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
         NSUInteger page = floor(scrollAmount) + 1;
         [self fetchOlderVideos:page];
         
