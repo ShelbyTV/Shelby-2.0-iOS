@@ -452,6 +452,9 @@
 		1CD5B7C016D421DF00043754 /* missingCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7BE16D421DF00043754 /* missingCard.png */; };
 		1CD72E9E16CD36630045B36F /* GroupViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CD72E9D16CD36630045B36F /* GroupViewCell.xib */; };
 		1CD72EA116CD36CB0045B36F /* GroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* GroupViewCell.m */; };
+		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
+		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
+		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
@@ -684,6 +687,7 @@
 		1CD72E9D16CD36630045B36F /* GroupViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupViewCell.xib; sourceTree = "<group>"; };
 		1CD72E9F16CD36CB0045B36F /* GroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupViewCell.h; sourceTree = "<group>"; };
 		1CD72EA016CD36CB0045B36F /* GroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewCell.m; sourceTree = "<group>"; };
+		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
 		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
 		8E01AFA816E67365000567D4 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -912,6 +916,7 @@
 				1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
+				1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -934,6 +939,7 @@
 				1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
+				1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,6 +961,7 @@
 				8EE5FAB81685622900DBEA13 /* Crashlytics.framework in Frameworks */,
 				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
+				1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1105,6 +1112,7 @@
 		8E209710162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1CE56C4E1714BEC40049057F /* FacebookSDK.framework */,
 				1C81096916EE22AD0030077C /* CoreText.framework */,
 				8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */,
 				8EE5FAB71685622900DBEA13 /* Crashlytics.framework */,
@@ -2311,6 +2319,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2342,6 +2351,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2373,6 +2383,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2399,6 +2410,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2484,6 +2496,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2515,6 +2528,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
