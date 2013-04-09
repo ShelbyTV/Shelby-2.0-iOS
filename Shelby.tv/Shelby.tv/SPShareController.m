@@ -17,13 +17,14 @@
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
 @property (nonatomic) SPShareRollView *rollView;
-@property (nonatomic) UIPopoverController *sharePopOverController;
+@property (strong, nonatomic) UIPopoverController *sharePopOverController;
 @property (assign, nonatomic) BOOL facebookConnected;
 @property (assign, nonatomic) BOOL twitterConnected;
 @property (strong, nonatomic) UIView *mask;
 
 /// Setup Methods
-- (void)setup;
+- (void)setupMaskView;
+- (void)setupSocialButtons;
 
 /// UI Methods
 - (void)toggleSocialButtonStatesOnRollViewLaunch;
@@ -42,17 +43,16 @@
     self = [super init];
     if (self) {
         _videoPlayer = videoPlayer;
+        _model = (SPModel *)[SPModel sharedInstance];
+        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
     
     return self;
 }
 
 #pragma mark - Setup Methods
-- (void)setup
+- (void)setupMaskView
 {
-    
-    // Reference AppDelegate
-    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     // Reference social connection status
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
@@ -64,12 +64,37 @@
         
     }
     
+    CGRect videoPlayerFrame = self.videoPlayer.view.frame;
+    _mask = [[UIView alloc] initWithFrame:CGRectMake(videoPlayerFrame.origin.x, videoPlayerFrame.origin.y, videoPlayerFrame.size.width, videoPlayerFrame.size.height)];
+    [self.mask setBackgroundColor:[UIColor blackColor]];
+    [self.mask setAlpha:0.0f];
+    [self.model.overlayView addSubview:self.mask];
+    [self.mask setUserInteractionEnabled:YES];
+    [self.model.overlayView bringSubviewToFront:self.mask];
+    
+}
+
+- (void)setupSocialButtons
+{
+    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        self.facebookConnected = [[user facebookConnected] boolValue];
+        self.twitterConnected = [[user twitterConnected] boolValue];
+        
+    }
 }
 
 #pragma mark - UI Methods (Public)
 - (void)share
 {
-    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [self setupMaskView];
+    
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [self.mask setAlpha:0.7];
+                     }];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -115,9 +140,8 @@
 
 - (void)showRollView
 {
-    [self setup];
-    
-    self.model = (SPModel *)[SPModel sharedInstance];
+    [self setupSocialButtons];
+    [self setupMaskView];
     
     // Instantiate rollView
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
@@ -144,13 +168,7 @@
     // Set proper states for buttons
     [self toggleSocialButtonStatesOnRollViewLaunch];
     
-    CGRect videoPlayerFrame = self.videoPlayer.view.frame;
-    _mask = [[UIView alloc] initWithFrame:CGRectMake(videoPlayerFrame.origin.x, videoPlayerFrame.origin.y, videoPlayerFrame.size.width, videoPlayerFrame.size.height)];
-    [self.mask setBackgroundColor:[UIColor blackColor]];
-    [self.mask setAlpha:0];
-    [self.model.overlayView addSubview:self.mask];
-    [self.mask setUserInteractionEnabled:YES];
-    [self.model.overlayView bringSubviewToFront:self.mask];
+
     
     CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
     CGFloat yOrigin = self.videoPlayer.view.frame.size.height/5.0f - _rollView.frame.size.height/4.0f;
@@ -268,17 +286,15 @@
         }
     }];
 
-    if (self.sharePopOverController) {
-        [self.sharePopOverController setDelegate:nil];
-        [self setSharePopOverController:nil];
+    if ( ![self sharePopOverController] ) {
+        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [self.sharePopOverController setDelegate:self];
+        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+                                                     inView:self.model.overlayView
+                                   permittedArrowDirections:UIPopoverArrowDirectionUp
+                                                   animated:YES];
     }
-     self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-    [self.sharePopOverController setDelegate:self];
-    [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                 inView:self.model.overlayView
-                               permittedArrowDirections:UIPopoverArrowDirectionUp
-                                               animated:YES];
-    
+
 }
 
 - (void)roll
@@ -342,22 +358,24 @@
 #pragma mark - UITextViewDelegate Methods
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    
-    
     if ( [text isEqualToString:@"\n"] && [textView.text length] > 0 ) {
-        
         [self.rollView.rollTextView resignFirstResponder];
-        
         return NO;
-        
     }
     
     return YES;
 }
 
-#pragma mark - UIPopoverControllerDelegate
+#pragma mark - UIPopoverControllerDelegate Methods
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         [self.mask setAlpha:0.0f];
+                     } completion:^(BOOL finished) {
+                         [self.mask removeFromSuperview];
+                     }];
+    
     [self.model rescheduleOverlayTimer];
 }
 

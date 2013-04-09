@@ -441,17 +441,18 @@
 
 - (void)share
 {
-
     // TODO - Uncomment for AppStore
 //    [[Panhandler sharedInstance] recordEvent];
     
-    // shareController is an iVar because it contains an iVar reference of UIPopOverViewController which must be retianed
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self];
     [self.shareController share];
 }
 
 - (void)roll
 {
+    // TODO - Uncomment for AppStore
+//    [[Panhandler sharedInstance] recordEvent];
+    
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self];
     [self.shareController showRollView];
 }
