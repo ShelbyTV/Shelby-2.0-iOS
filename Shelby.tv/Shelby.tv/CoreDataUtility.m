@@ -1570,7 +1570,10 @@
 
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary
 {
-        
+    if (!frame || ![frame isKindOfClass:[Frame class]] || !frameDictionary || ![frameDictionary isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    
     NSString *frameID = [NSString coreDataNullTest:[frameDictionary valueForKey:@"id"]];
     [frame setValue:frameID forKey:kShelbyCoreDataFrameID];
     
@@ -1597,6 +1600,9 @@
                                          withIDValue:conversationID
                                             forIDKey:kShelbyCoreDataFrameConversationID];
     
+    if (!conversation) {
+        return;
+    }
     if ((id)conversation != [NSNull null]) {
         
         frame.conversation = conversation;
