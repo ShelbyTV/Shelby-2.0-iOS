@@ -15,6 +15,7 @@
 #import "DeviceUtilities.h"
 #import "SPCategoryViewCell.h"
 #import "SPLikesCatgoryViewCell.h"
+#import "TwitterHandler.h"
 
 @interface SPVideoReel ()
 
@@ -1617,9 +1618,16 @@
     
     if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
         [self launchUserGroup:indexPath.row];
-    } else { // Category Channels and Rolls
+    } else if ( 1 == indexPath.section) { // Category Channels and Rolls
         id category = [self.categories objectAtIndex:indexPath.row];
         [self launchCategory:category];
+    } else if ( 2 == indexPath.section ) {
+        if ( 1 == indexPath.row ) {
+            DLog(@"TWITTER");
+            TwitterHandler *handler = [[TwitterHandler alloc] init];
+            [handler twitterLogin];
+        }
+        
     }
     
     [self.model rescheduleOverlayTimer];

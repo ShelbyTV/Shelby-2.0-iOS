@@ -16,6 +16,8 @@
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <QuartzCore/QuartzCore.h>
     #import <SystemConfiguration/SystemConfiguration.h>
+    #import <Accounts/Accounts.h>
+    #import <Social/Social.h>
 
     // Analytics
     #import <Crashlytics/Crashlytics.h>
@@ -26,6 +28,7 @@
     #import "AsynchronousFreeloader.h"
     #import "Harpy.h"
     #import "Panhandler.h"
+    #import "OAuthConsumer.h"
 
     // Constants
     #import "Constants.h"

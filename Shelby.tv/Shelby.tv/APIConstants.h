@@ -25,7 +25,7 @@
 #define kShelbyAPIPutUnplayableVideo        @"https://api.shelby.tv/v1/video/%@/unplayable?auth_token=%@"
 
 /// GET Rolls
-#define kShelbyAPIGetRollFrames             @"http://api.shelby.tv/v1/roll/%@/frames"
+#define kShelbyAPIGetRollFrames             @"http:x//api.shelby.tv/v1/roll/%@/frames"
 #define kShelbyAPIGetMoreRollFrames         @"http://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
 #define kShelbyAPIGetRollFramesForSync      @"http://api.shelby.tv/v1/roll/%@/frames?limit=%d"
 
@@ -52,3 +52,6 @@
 #define kShelbyAPIPostFrameToAllSocial      @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=twitter&destination[]=facebook&text=%@"
 #define kShelbyAPIPostFrameToTwitter        @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=twitter&text=%@"
 #define kShelbyAPIPostFrameToFacebook       @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=facebook&text=%@"
+
+/// POST Twitter
+#define kShelbyAPIPostTokenTwitter          @"http://apishelby.tv/v1/token?provider_name=twitter&uid=%@&token=%@&secret=%@"
