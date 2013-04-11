@@ -38,3 +38,6 @@
 /// Size
 #define  kShelbyFullscreenWidth                             [[UIScreen mainScreen] bounds].size.width
 #define  kShelbyFullscreenHeight                            [[UIScreen mainScreen] bounds].size.height
+
+/// Facebook
+#define kShelbyFacebookToken                                @"facebookToken"

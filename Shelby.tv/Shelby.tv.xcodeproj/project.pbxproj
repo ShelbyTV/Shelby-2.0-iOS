@@ -22,6 +22,9 @@
 		1C3D913A1714C6E100105839 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91341714C6CC00105839 /* AdSupport.framework */; };
 		1C3D913B1714C6E700105839 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91331714C6CC00105839 /* Accounts.framework */; };
 		1C3D913C1714C6E700105839 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91341714C6CC00105839 /* AdSupport.framework */; };
+		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
+		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
+		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
@@ -630,6 +633,8 @@
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		1C3D91341714C6CC00105839 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
+		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
@@ -1019,6 +1024,8 @@
 			children = (
 				1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */,
 				1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */,
+				1C3D91241714C00100105839 /* FacebookHandler.h */,
+				1C3D91251714C00100105839 /* FacebookHandler.m */,
 				1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */,
 				1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */,
 			);
@@ -2179,6 +2186,7 @@
 				8E088710170CD22C00FBBECE /* GroupsMenuViewController.m in Sources */,
 				1C8749D5170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF517136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
+				1C3D91271714C00100105839 /* FacebookHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2244,6 +2252,7 @@
 				8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */,
 				1C8749D6170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF617136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
+				1C3D91281714C00100105839 /* FacebookHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2309,6 +2318,7 @@
 				8EA9B1E5170B8241004C7601 /* GroupsMenuViewController.m in Sources */,
 				1C8749D4170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF417136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
+				1C3D91261714C00100105839 /* FacebookHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

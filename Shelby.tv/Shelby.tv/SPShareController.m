@@ -10,6 +10,7 @@
 #import "SPModel.h"
 #import "SPShareRollView.h"
 #import "SPVideoReel.h"
+#import "FacebookHandler.h"
 
 @interface SPShareController ()
 
@@ -24,7 +25,7 @@
 
 /// Setup Methods
 - (void)setupMaskView;
-- (void)setupSocialButtons;
+- (void)updateFacebookToggle;
 
 /// UI Methods
 - (void)toggleSocialButtonStatesOnRollViewLaunch;
@@ -51,6 +52,13 @@
 }
 
 #pragma mark - Setup Methods
+- (void)updateFacebookToggle
+{
+    if (self.rollView && self.rollView.facebookButton && [self.rollView.facebookButton isKindOfClass:[UIButton class]]) {
+        [self.rollView.facebookButton setSelected:([[FacebookHandler sharedInstance] allowPublishActions] && self.facebookConnected)];
+    }
+}
+
 - (void)setupMaskView
 {
     
@@ -71,19 +79,6 @@
     [self.model.overlayView addSubview:self.mask];
     [self.mask setUserInteractionEnabled:YES];
     [self.model.overlayView bringSubviewToFront:self.mask];
-    
-}
-
-- (void)setupSocialButtons
-{
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        User *user = [dataUtility fetchUser];
-        self.facebookConnected = [[user facebookConnected] boolValue];
-        self.twitterConnected = [[user twitterConnected] boolValue];
-        
-    }
 }
 
 #pragma mark - UI Methods (Public)
@@ -140,7 +135,6 @@
 
 - (void)showRollView
 {
-    [self setupSocialButtons];
     [self setupMaskView];
     
     // Instantiate rollView
@@ -194,6 +188,11 @@
                          [self.videoPlayer pause];
                          
                      }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                selector:@selector(updateFacebookToggle)
+                                                    name:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
+
 }
 
 - (void)hideRollView
@@ -220,13 +219,11 @@
 #pragma mark - UI Methods (Private)
 - (void)toggleSocialButtonStatesOnRollViewLaunch
 {
-    
     // Facebook Button State
-    ( _facebookConnected ) ? [self.rollView.facebookButton setSelected:YES] : [self.rollView.facebookButton setEnabled:NO];
+    [self.rollView.facebookButton setSelected:(self.facebookConnected && [[FacebookHandler sharedInstance] allowPublishActions])];
     
     // Twitter Button State
-    ( _twitterConnected ) ? [self.rollView.twitterButton setSelected:YES] : [self.rollView.twitterButton setEnabled:NO];
-    
+    [self.rollView.twitterButton setSelected:self.twitterConnected];
 }
 
 #pragma mark - Action Methods (Public)
@@ -243,21 +240,13 @@
 
 - (IBAction)toggleSocialButtonStates:(id)sender
 {
-    
-    if ( sender == _rollView.facebookButton ) {
-        
-        ( [self.rollView.facebookButton isSelected] ) ? [self.rollView.facebookButton setSelected:NO] : [self.rollView.facebookButton setSelected:YES];
-        
-    } else if ( sender == _rollView.twitterButton ) {
-        
-        ( [self.rollView.twitterButton isSelected] ) ? [self.rollView.twitterButton setSelected:NO] : [self.rollView.twitterButton setSelected:YES];
-        
-    } else {
-        
-        // Do nothing (condition should not be entered)
-
+    if (sender == self.rollView.facebookButton || sender == self.rollView.twitterButton) {
+        [sender setSelected:![sender isSelected]];
     }
     
+    if (sender == _rollView.facebookButton && [sender isSelected] && ![[FacebookHandler sharedInstance] allowPublishActions]) {
+        [[FacebookHandler sharedInstance] askForPublishPermissions];
+    }
 }
 
 #pragma mark - Action Methods (Private)

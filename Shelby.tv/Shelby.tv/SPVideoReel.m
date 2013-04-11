@@ -15,6 +15,7 @@
 #import "DeviceUtilities.h"
 #import "SPCategoryViewCell.h"
 #import "SPLikesCatgoryViewCell.h"
+#import "FacebookHandler.h"
 
 @interface SPVideoReel ()
 
@@ -1611,7 +1612,9 @@
     // KP KP: TODO: remove once we have design for FB/Twitter
     if (indexPath.section == 2) {
         // FB & Twitter connect
-        
+        if (indexPath.row == 0) {
+            [[FacebookHandler sharedInstance] openSession:YES];
+        }
         return;
     }
     
