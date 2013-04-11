@@ -1612,6 +1612,13 @@
     // KP KP: TODO: remove once we have design for FB/Twitter
     if (indexPath.section == 2) {
         // FB & Twitter connect
+
+        if ( 1 ==  indexPath.row ) {
+            
+            TwitterHandler *handler = [[TwitterHandler alloc] initWithViewController:self];
+            [handler authenticate];
+            
+        }
         
         return;
     }
@@ -1621,13 +1628,6 @@
     } else if ( 1 == indexPath.section) { // Category Channels and Rolls
         id category = [self.categories objectAtIndex:indexPath.row];
         [self launchCategory:category];
-    } else if ( 2 == indexPath.section ) {
-        if ( 1 == indexPath.row ) {
-            DLog(@"TWITTER");
-            TwitterHandler *handler = [[TwitterHandler alloc] init];
-            [handler twitterLogin];
-        }
-        
     }
     
     [self.model rescheduleOverlayTimer];

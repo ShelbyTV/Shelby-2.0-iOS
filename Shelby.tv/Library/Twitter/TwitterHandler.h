@@ -11,7 +11,7 @@
 
 @interface TwitterHandler : NSObject
 
-/// Twitter Methods ///
-- (void)twitterLogin;
+- (id)initWithViewController:(UIViewController *)viewController;
+- (void)authenticate;
 
 @end

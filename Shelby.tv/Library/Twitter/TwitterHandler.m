@@ -13,6 +13,7 @@
 <AuthenticateTwitterDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic) AppDelegate *appDelegate;
+@property (nonatomic) UIViewController *viewController;
 @property (nonatomic) ACAccountStore *twitterAccountStore;
 @property (nonatomic) ACAccount *twitterAccount;                   
 @property (nonatomic) OAToken *twitterRequestToken;
@@ -33,20 +34,20 @@
 
 /// Twitter/OAuth - Request Token Methods ///
 - (void)getRequestToken;
-- (void)requestTokenTicket:(OAServiceTicket*)ticket didFinishWithData:(NSData *)data; 
-- (void)requestTokenTicket:(OAServiceTicket*)ticket didFailWithError:(NSData *)data;
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data; 
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSData *)data;
 - (void)authenticateTwitterAccount;
 
 /// Twitter/OAuth - Access Token Methods ///
 - (void)getAccessTokenWithPin:(NSString *)pin;
-- (void)accessTokenTicket:(OAServiceTicket*)ticket didFinishWithData:(NSData *)data;
-- (void)accessTokenTicket:(OAServiceTicket*)ticket didFailWithError:(NSData *)data;
-- (void)saveTwitterAccountWithAccessToken:(OAToken*)accessToken;
+- (void)accessTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data;
+- (void)accessTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSData *)data;
+- (void)saveTwitterAccountWithAccessToken:(OAToken *)accessToken;
 
 /// Twitter/OAuth - Reverse Auth Request Token Methods ///
 - (void)getReverseAuthRequestToken;
-- (void)reverseAuthRequestTokenTicket:(OAServiceTicket*)ticket didFinishWithData:(NSData *)data;
-- (void)reverseAuthRequestTokenTicket:(OAServiceTicket*)ticket didFailWithError:(NSData *)data;
+- (void)reverseAuthRequestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data;
+- (void)reverseAuthRequestTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSData *)data;
 
 /// Twitter/OAuth - Reverse Auth Access Token Methods ///
 - (void)getReverseAuthAccessToken:(NSString *)reverseAuthRequestResults;
@@ -56,40 +57,30 @@
 
 @implementation TwitterHandler
 
-#pragma mark - Singleton Methods
-+ (TwitterHandler*)sharedInstance
-{
-    static TwitterHandler *sharedInstance = nil;
-    static dispatch_once_t modelToken = 0;
-    dispatch_once(&modelToken, ^{
-        sharedInstance = [[super allocWithZone:NULL] init];
-    });
-    
-    return sharedInstance;
-}
-
-- (id)init
+#pragma mark - Initialization Methods
+- (id)initWithViewController:(UIViewController *)viewController
 {    
     self = [super init];
     if ( self ) {
+        
+        _viewController = viewController;
         
     }
     
     return self;
 }
 
-#pragma mark - Private Methods
-- (void)tokenSwapWasSuccessful
-{
-    // Remove Observer
-}
-
 #pragma mark - Twitter Authorization Methods
-- (void)twitterLogin
+- (void)authenticate
 {
     [self checkForExistingTwitterAccounts];
 }
 
+#pragma mark - Private Methods
+- (void)tokenSwapWasSuccessful
+{
+    DLog(@"Token Swap was Successful");
+}
 
 - (void)checkForExistingTwitterAccounts
 {
@@ -152,6 +143,7 @@
     }
     
     // TODO Arthur: Present Multiple Accounts Screen
+    [self.viewController presentViewController:[self twitterAccountsTableViewController] animated:YES completion:nil];
     
 }
 

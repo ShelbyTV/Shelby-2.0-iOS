@@ -1685,7 +1685,7 @@
             NSString *messageID = [NSString coreDataNullTest:[messagesArray[i] valueForKey:@"id"]];
             [messages setValue:messageID forKey:kShelbyCoreDataMessagesID];
             
-            NSString *createdAt = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"created_at"]];
+            NSString *createdAt = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"created_at"]];    
             [messages setValue:createdAt forKey:kShelbyCoreDataMessagesCreatedAt];
             
             NSString *nickname = [NSString coreDataNullTest:[messagesArray[i]  valueForKey:@"nickname"]];
