@@ -305,7 +305,7 @@
      By default, set facebookConnected to NO
      */
     [user setValue:@NO forKey:kShelbyCoreDataUserTwitterConnected];
-    [user setValue:@NO forKey:kShelbyCoreDataUserTwitterConnected];
+    [user setValue:@NO forKey:kShelbyCoreDataUserFacebookConnected];
     
     if ( [[userDictionary valueForKey:@"authentications"] count] ) {
         
