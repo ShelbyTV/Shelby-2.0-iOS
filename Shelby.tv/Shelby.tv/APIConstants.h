@@ -52,3 +52,7 @@
 #define kShelbyAPIPostFrameToAllSocial      @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=twitter&destination[]=facebook&text=%@"
 #define kShelbyAPIPostFrameToTwitter        @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=twitter&text=%@"
 #define kShelbyAPIPostFrameToFacebook       @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=facebook&text=%@"
+
+/// POST 3rd Party Token
+#define kShelbyAPIPostThirdPartyToken       @"http://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@&secret=%@"
+#define kShelbyAPIPostThirdPartyTokenNoSecret @"http://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@"

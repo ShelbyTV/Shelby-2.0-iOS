@@ -307,31 +307,28 @@
     [user setValue:@NO forKey:kShelbyCoreDataUserTwitterConnected];
     [user setValue:@NO forKey:kShelbyCoreDataUserFacebookConnected];
     
-    if ( [[userDictionary valueForKey:@"authentications"] count] ) {
-        
-        NSArray *authentications = [userDictionary valueForKey:@"authentications"];
-        NSUInteger i = 0;
-        
-        while ( i < [authentications count] ) {
-            
-            if ( [[authentications objectAtIndex:i] containsObject:@"twitter"] ) {
-                
+    NSArray *authentications = [userDictionary valueForKey:@"authentications"];
+    if (authentications && [authentications isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *authentication in authentications) {
+            if (![authentication isKindOfClass:[NSDictionary class]]) {
+                continue;
+            }
+            NSString *provider = authentication[@"provider"];
+            if (!provider) {
+                continue;
+            }
+            if ([provider isEqualToString:@"twitter"] ) {
                 DLog(@"Shelby User has a Twitter account that's connected.");
                 [user setValue:@YES forKey:kShelbyCoreDataUserTwitterConnected];
-                
-            }
-            
-            if ( [[authentications objectAtIndex:i] containsObject:@"facebook"] ) {
-                
+            } else if ([provider isEqualToString:@"facebook"]) {
+                if (authentication[@"uid"]) {
+                    [[NSUserDefaults standardUserDefaults] setObject:authentication[@"uid"] forKey:kShelbyFacebookUserID];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
                 DLog(@"Shelby User has a Facebook account that's connected.");
                 [user setValue:@YES forKey:kShelbyCoreDataUserFacebookConnected];
-                
             }
-            
-            i++;
-            
         }
-
     }
     
     BOOL admin = [[userDictionary valueForKey:@"admin"] boolValue];

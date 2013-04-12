@@ -53,4 +53,7 @@
 /// Sharing
 + (void)postShareFrameToSocialNetworks:(NSString*)requestString;
 
+/// Send Third Party Token
++ (void)postThirdPartyToken:(NSString *)provider accountID:(NSString *)accountID token:(NSString *)token andSecret:(NSString *)secret;
+
 @end

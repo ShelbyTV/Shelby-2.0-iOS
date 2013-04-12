@@ -8,6 +8,9 @@
 
 #import "FacebookHandler.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "ShelbyAPIClient.h"
+#import "CoreDataUtility.h"
+#import "User.h"
 
 NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNotificationFacebookAuthorizationCompleted";
 
@@ -17,7 +20,8 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 
 // Helper methods
 - (NSArray *)facebookPermissions;
-- (void)saveAccessToken;
+- (void)saveFacebookInfo;
+- (void)sendToken;
 @end
 
 
@@ -41,10 +45,38 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
     return [[FBSession activeSession] permissions];
 }
 
-- (void)saveAccessToken
+- (void)saveFacebookInfo
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[[[FBSession activeSession] accessTokenData] accessToken] forKey:kShelbyFacebookToken];
+    
+    NSString *oldToken = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookToken];
+    NSString *facebookToken = [self facebookToken];
+    [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kShelbyFacebookToken];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *oldFacebookID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID];
+    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+        if (!error && [user isKindOfClass:[NSDictionary class]]) {
+            NSString *facebookUserID = user[@"id"];
+            if (facebookUserID && (!oldFacebookID || ![facebookUserID isEqualToString:oldFacebookID])) {
+                [[NSUserDefaults standardUserDefaults] setObject:facebookUserID forKey:kShelbyFacebookUserID];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+
+                if (facebookToken && (!oldToken || ![facebookToken isEqualToString:oldToken])) {
+                    [self sendToken];
+                }
+            }
+        }
+    }];
+}
+
+- (void)sendToken
+{
+    [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:[self facebookUserID] token:[self facebookToken] andSecret:nil];
+}
+
+- (NSString *)facebookUserID
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID];
 }
 
 #pragma mark - Facebook state (Public)
@@ -67,26 +99,25 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
     
     [FBSession openActiveSessionWithReadPermissions:@[@"email", @"read_stream"] allowLoginUI:allowLoginUI completionHandler:^(FBSession *session,
                                                                                                                               FBSessionState status,
-                                                                                                                              NSError *error)
-     {
-         if (status == FBSessionStateClosedLoginFailed || status == FBSessionStateCreatedOpening) {
-             [[FBSession activeSession] closeAndClearTokenInformation];
-             [FBSession setActiveSession:nil];
-             
-             if (status == FBSessionStateClosedLoginFailed) {
-                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Go to Settings -> Facebook and turn ON Shelby" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                 [alertView show];
-             }
-         } else {
-             [self saveAccessToken];
-             
-             if (self.invocationMethod) {
-                 [self.invocationMethod invoke];
-                 [self setInvocationMethod:nil];
-             }
-         }
-         
-         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
+                                                                                                                              NSError *error) {
+        if (status == FBSessionStateClosedLoginFailed || status == FBSessionStateCreatedOpening) {
+            [[FBSession activeSession] closeAndClearTokenInformation];
+            [FBSession setActiveSession:nil];
+            
+            if (status == FBSessionStateClosedLoginFailed) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Go to Settings -> Facebook and turn ON Shelby" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alertView show];
+            }
+        } else {
+            [self saveFacebookInfo];
+            
+            if (self.invocationMethod) {
+                [self.invocationMethod invoke];
+                [self setInvocationMethod:nil];
+            }
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
      }];
 }
 
@@ -120,8 +151,9 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
     
     [[FBSession activeSession]
      requestNewPublishPermissions:@[@"publish_stream", @"publish_actions"] defaultAudience:FBSessionDefaultAudienceFriends completionHandler:^(FBSession *session, NSError *error) {
-         if (error) {
-             // KP KP: TODO: show an alert dialog asking user to approver FB?
+         if (!error) {
+             [self saveFacebookInfo];
+             // KP KP: TODO: show an alert dialog if there are errors asking user to approver FB?
          }
          
          [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
@@ -132,11 +164,7 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 #pragma mark - Methods to support App Delegate
 - (BOOL)handleOpenURL:(NSURL *)url
 {
-    BOOL returnVal =  [FBSession.activeSession handleOpenURL:url];
-    
-    [self saveAccessToken];
-        
-    return returnVal;
+    return [FBSession.activeSession handleOpenURL:url];
 }
 
 - (void)handleDidBecomeActive

@@ -41,3 +41,4 @@
 
 /// Facebook
 #define kShelbyFacebookToken                                @"facebookToken"
+#define kShelbyFacebookUserID                               @"facebookUserID"
