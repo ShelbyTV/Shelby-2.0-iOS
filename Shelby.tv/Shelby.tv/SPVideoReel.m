@@ -15,11 +15,8 @@
 #import "DeviceUtilities.h"
 #import "SPCategoryViewCell.h"
 #import "SPLikesCatgoryViewCell.h"
-<<<<<<< HEAD
 #import "TwitterHandler.h"
-=======
 #import "FacebookHandler.h"
->>>>>>> master
 
 @interface SPVideoReel ()
 
