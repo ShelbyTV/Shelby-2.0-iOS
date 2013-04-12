@@ -14,7 +14,7 @@
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
 			<string>IBUICollectionView</string>
-			<string>IBUICollectionViewLayout</string>
+			<string>IBUICollectionViewFlowLayout</string>
 			<string>IBUILabel</string>
 			<string>IBUIView</string>
 		</array>
@@ -45,7 +45,6 @@
 						<string key="NSFrameSize">{1024, 714}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="439516707">
 							<int key="NSColorSpace">3</int>
@@ -64,8 +63,12 @@
 						<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 						<float key="IBUIMinimumZoomScale">0.0</float>
 						<float key="IBUIMaximumZoomScale">0.0</float>
-						<object class="IBUICollectionViewLayout" key="IBUICollectionViewLayout" id="133743354">
+						<object class="IBUICollectionViewFlowLayout" key="IBUICollectionViewLayout" id="1009800626">
 							<reference key="IBUICollectionView" ref="13685869"/>
+							<string key="IBUIItemSize">{50, 50}</string>
+							<string key="IBUIHeaderReferenceSize">{50, 50}</string>
+							<float key="IBUIMinimumLineSpacing">10</float>
+							<float key="IBUIMinimumInteritemSpacing">10</float>
 						</object>
 						<array key="IBUICells" id="0"/>
 					</object>
@@ -247,20 +250,20 @@
 						<int key="objectID">18</int>
 						<reference key="object" ref="13685869"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="133743354"/>
+							<reference ref="1009800626"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">30</int>
-						<reference key="object" ref="133743354"/>
-						<reference key="parent" ref="13685869"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">69</int>
 						<reference key="object" ref="39739715"/>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">83</int>
+						<reference key="object" ref="1009800626"/>
+						<reference key="parent" ref="13685869"/>
 					</object>
 				</array>
 			</object>
@@ -271,39 +274,34 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="30.CustomClassName">CollectionViewGroupsLayout</string>
-				<string key="30.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="69.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="83.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">82</int>
+			<int key="maxID">83</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">BrowseViewController</string>
 					<string key="superclassName">GAITrackedViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="goToPage:">id</string>
-						<string key="toggleSecretModes:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="goToPage:">
-							<string key="name">goToPage:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleSecretModes:">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">toggleSecretModes:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">toggleSecretModes:</string>
+						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">toggleSecretModes:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</dictionary>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="collectionView">UICollectionView</string>
-						<string key="pageControl">PageControl</string>
 						<string key="toggleSecretButton">UIButton</string>
 						<string key="versionLabel">UILabel</string>
 					</dictionary>
@@ -311,10 +309,6 @@
 						<object class="IBToOneOutletInfo" key="collectionView">
 							<string key="name">collectionView</string>
 							<string key="candidateClassName">UICollectionView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pageControl">
-							<string key="name">pageControl</string>
-							<string key="candidateClassName">PageControl</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="toggleSecretButton">
 							<string key="name">toggleSecretButton</string>
@@ -331,14 +325,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">CollectionViewGroupsLayout</string>
-					<string key="superclassName">UICollectionViewLayout</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/CollectionViewGroupsLayout.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">GAITrackedViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -347,11 +333,11 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">PageControl</string>
-					<string key="superclassName">UIPageControl</string>
+					<string key="className">UICollectionViewFlowLayout</string>
+					<string key="superclassName">UICollectionViewLayout</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PageControl.h</string>
+						<string key="minorKey">./Classes/UICollectionViewFlowLayout.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
