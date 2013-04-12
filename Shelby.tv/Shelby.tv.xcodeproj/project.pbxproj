@@ -1058,13 +1058,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-				8E6690651716113C0090C934 /* Accounts.framework in Frameworks */,
 				8E669063171611370090C934 /* Social.framework in Frameworks */,
-=======
 				1C3D91371714C6DB00105839 /* Accounts.framework in Frameworks */,
 				1C3D91381714C6DB00105839 /* AdSupport.framework in Frameworks */,
->>>>>>> master
 				1C810A6416EE5EED0030077C /* CoreText.framework in Frameworks */,
 				1C810A6516EE5EED0030077C /* MediaPlayer.framework in Frameworks */,
 				1C810A6616EE5EED0030077C /* QuartzCore.framework in Frameworks */,
@@ -1088,13 +1084,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-				8E669069171611590090C934 /* Accounts.framework in Frameworks */,
 				8E669068171611550090C934 /* Social.framework in Frameworks */,
-=======
 				1C3D913B1714C6E700105839 /* Accounts.framework in Frameworks */,
 				1C3D913C1714C6E700105839 /* AdSupport.framework in Frameworks */,
->>>>>>> master
 				1C81096B16EE22B70030077C /* CoreText.framework in Frameworks */,
 				8EB3B18C16AF68A5008587FD /* MediaPlayer.framework in Frameworks */,
 				8E285DE7168124FC002A7935 /* QuartzCore.framework in Frameworks */,
@@ -1262,14 +1254,10 @@
 		8E209710162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				8E6690641716113C0090C934 /* Accounts.framework */,
 				8E669062171611370090C934 /* Social.framework */,
-=======
 				1C3D91331714C6CC00105839 /* Accounts.framework */,
 				1C3D91341714C6CC00105839 /* AdSupport.framework */,
 				1CE56C4E1714BEC40049057F /* FacebookSDK.framework */,
->>>>>>> master
 				1C81096916EE22AD0030077C /* CoreText.framework */,
 				8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */,
 				8EE5FAB71685622900DBEA13 /* Crashlytics.framework */,
@@ -2403,7 +2391,6 @@
 				8E088710170CD22C00FBBECE /* GroupsMenuViewController.m in Sources */,
 				1C8749D5170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF517136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
-<<<<<<< HEAD
 				8E7024BA1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BD1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C01715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
@@ -2424,9 +2411,7 @@
 				8E7024F01715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F31715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024F91715E71500E8DE46 /* TwitterHandler.m in Sources */,
-=======
 				1C3D91271714C00100105839 /* FacebookHandler.m in Sources */,
->>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2492,7 +2477,6 @@
 				8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */,
 				1C8749D6170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF617136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
-<<<<<<< HEAD
 				8E7024BB1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BE1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C11715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
@@ -2513,9 +2497,7 @@
 				8E7024F11715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F41715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024FA1715E71500E8DE46 /* TwitterHandler.m in Sources */,
-=======
 				1C3D91281714C00100105839 /* FacebookHandler.m in Sources */,
->>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2581,7 +2563,6 @@
 				8EA9B1E5170B8241004C7601 /* GroupsMenuViewController.m in Sources */,
 				1C8749D4170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF417136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
-<<<<<<< HEAD
 				8E7024B91715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BC1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024BF1715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
@@ -2602,9 +2583,7 @@
 				8E7024EF1715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F21715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024F81715E71500E8DE46 /* TwitterHandler.m in Sources */,
-=======
 				1C3D91261714C00100105839 /* FacebookHandler.m in Sources */,
->>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
