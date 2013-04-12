@@ -54,4 +54,4 @@
 #define kShelbyAPIPostFrameToFacebook       @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=facebook&text=%@"
 
 /// POST Twitter
-#define kShelbyAPIPostTokenTwitter          @"http://apishelby.tv/v1/token?provider_name=twitter&uid=%@&token=%@&secret=%@"
+#define kShelbyAPIPostTokenTwitter          @"http://api.shelby.tv/v1/token?provider_name=twitter&uid=%@&token=%@&secret=%@"

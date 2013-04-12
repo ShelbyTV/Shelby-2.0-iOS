@@ -9,7 +9,7 @@
 #define kShelbyTwitterConsumerKey       @"5DNrVZpdIwhQthCJJXCfnQ"
 #define kShelbyTwitterConsumerSecret    @"Tlb35nblFFTZRidpu36Uo3z9mfcvSVv1MuZZ19SHaU"
 
-@interface TwitterHandler : NSObject
+@interface TwitterHandler : NSObject <UITableViewDataSource, UITableViewDelegate>
 
 - (id)initWithViewController:(UIViewController *)viewController;
 - (void)authenticate;

@@ -9,8 +9,7 @@
 #import "TwitterHandler.h"
 #import "AuthenticateTwitterViewController.h"
 
-@interface TwitterHandler () 
-<AuthenticateTwitterDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface TwitterHandler () <AuthenticateTwitterDelegate>
 
 @property (nonatomic) AppDelegate *appDelegate;
 @property (nonatomic) UIViewController *viewController;
@@ -21,11 +20,8 @@
 @property (copy, nonatomic) NSString *twitterID;
 @property (copy, nonatomic) NSString *twitterReverseAuthToken;              
 @property (copy, nonatomic) NSString *twitterReverseAuthSecret;
-@property (nonatomic) UITableViewController *twitterAccountsTableViewController;
+@property (strong, nonatomic) UITableViewController *twitterAccountsTableViewController;
 @property (nonatomic) NSMutableArray *storedTwitterAccounts;
-
-/// Shelby Methods ///
-- (void)tokenSwapWasSuccessful;
 
 /// Twitter Authorization Methods ///
 - (void)checkForExistingTwitterAccounts;
@@ -52,6 +48,7 @@
 /// Twitter/OAuth - Reverse Auth Access Token Methods ///
 - (void)getReverseAuthAccessToken:(NSString *)reverseAuthRequestResults;
 - (void)sendReverseAuthAccessResultsToServer;
+- (void)tokenSwapWasSuccessfulForUser:(NSDictionary *)userDictionary;
 
 @end
 
@@ -77,16 +74,13 @@
 }
 
 #pragma mark - Private Methods
-- (void)tokenSwapWasSuccessful
-{
-    DLog(@"Token Swap was Successful");
-}
-
 - (void)checkForExistingTwitterAccounts
 {
     
     // Clear stored twitterAccount
-    if ( [self.twitterAccount.username length] )  self.twitterAccount = nil;
+    if ( [self.twitterAccount.username length] ) {
+        self.twitterAccount = nil;
+    }
     
     // Get all stored twitterAccounts
     self.twitterAccountStore = [[ACAccountStore alloc] init];
@@ -137,14 +131,15 @@
 {
     
     if ( ![self twitterAccountsTableViewController] ) {
+        
         self.twitterAccountsTableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
         self.twitterAccountsTableViewController.tableView.dataSource = self;
         self.twitterAccountsTableViewController.tableView.delegate = self;
+    
+        // TODO Arthur: Present Multiple Accounts Screen
+        [self.viewController presentViewController:[self twitterAccountsTableViewController] animated:YES completion:nil];
+        
     }
-    
-    // TODO Arthur: Present Multiple Accounts Screen
-    [self.viewController presentViewController:[self twitterAccountsTableViewController] animated:YES completion:nil];
-    
 }
 
 #pragma mark - Twitter/OAuth- Request Token Methods
@@ -328,7 +323,6 @@
     DLog(@"Reverse Auth Request Token - Fetch Failure");
 }
 
-
 #pragma mark - OAuthConsumer - Reverse Auth Access Token Methods
 - (void)getReverseAuthAccessToken:(NSString *)reverseAuthRequestResults
 {
@@ -339,12 +333,11 @@
                                                                    requestMethod:SLRequestMethodPOST
                                                                              URL:accessTokenURL
                                                                       parameters:parameters];
-    
     DLog(@"Request Results: %@",reverseAuthRequestResults);
     
     ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     [self.twitterAccountStore requestAccessToAccountsWithType:twitterType options:nil completion:^(BOOL granted, NSError *error) {
-        if ( granted ) {
+        if ( granted && !error ) {
             
             [reverseAuthAccessTokenRequest setAccount:self.twitterAccount];
             [reverseAuthAccessTokenRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
@@ -410,7 +403,7 @@
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
         DLog(@"Twitter <--> Shelby Token Swap Succeeded");
-        [self tokenSwapWasSuccessful];
+        [self tokenSwapWasSuccessfulForUser:JSON];
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
@@ -422,6 +415,13 @@
     
 }
 
+- (void)tokenSwapWasSuccessfulForUser:(NSDictionary *)userDictionary
+{
+    // Store user Dictionary in Core Data
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    [dataUtility storeUser:userDictionary];
+}
+
 #pragma mark - AuthenticateTwitterDelegate Methods
 - (void)authenticationRequestDidReturnPin:(NSString *)pin
 {
@@ -430,11 +430,6 @@
 }
 
 #pragma mark - UITableViewDataSource Methods
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
@@ -447,21 +442,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewStyleGrouped reuseIdentifier:CellIdentifier];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
-    if (indexPath.row < [self.storedTwitterAccounts count]-2) {
-    
+    if (indexPath.row < [self.storedTwitterAccounts count]-1) {
         // List of Twitter Accounts
         ACAccount *account = [self.storedTwitterAccounts objectAtIndex:indexPath.row];
         cell.textLabel.text = account.username;
-
-        
     } else {
-        
         // New Account & Cancel Option
         cell.textLabel.text = [self.storedTwitterAccounts objectAtIndex:indexPath.row];
-        
     }
     
     return cell;
@@ -470,18 +461,12 @@
 #pragma mark - UITableViewDelegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ( indexPath.row < [self.storedTwitterAccounts count]-2 ) {               // User selected existing account
+    if ( indexPath.row < [self.storedTwitterAccounts count]-1 ) {               // User selected existing account
         
         self.twitterAccount = [self.storedTwitterAccounts objectAtIndex:indexPath.row];;
         [self getReverseAuthRequestToken];
         
-    } else if ( indexPath.row == [self.storedTwitterAccounts count]-2 ) {       // User selected 'New Account'
-        
-        [self getRequestToken];
-        
-    } else {                                                                    // User selected 'Cancel'
-        
-    }
+    }  
     
     [self.twitterAccountsTableViewController dismissViewControllerAnimated:YES completion:nil];
 }
