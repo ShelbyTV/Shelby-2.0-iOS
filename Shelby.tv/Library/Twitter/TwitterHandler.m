@@ -346,7 +346,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                                                                    requestMethod:SLRequestMethodPOST
                                                                              URL:accessTokenURL
                                                                       parameters:parameters];
-    DLog(@"Request Results: %@",reverseAuthRequestResults);
+    DLog(@"Request Results: %@",parameters);
     
     ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     [self.twitterAccountStore requestAccessToAccountsWithType:twitterType options:nil completion:^(BOOL granted, NSError *error) {
@@ -394,6 +394,8 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     
                 } else {
                     
+                    DLog(@"%@", error);
+                    
                 }
 
             }];
@@ -433,6 +435,10 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
     // Store user Dictionary in Core Data
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [dataUtility storeUser:userDictionary];
+    
+    // Post token-swap notification to listeners
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
+    
 }
 
 #pragma mark - AuthenticateTwitterDelegate Methods

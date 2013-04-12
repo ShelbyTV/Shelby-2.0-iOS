@@ -11,6 +11,7 @@
 #import "SPShareRollView.h"
 #import "SPVideoReel.h"
 #import "FacebookHandler.h"
+#import "TwitterHandler.h"
 
 @interface SPShareController ()
 
@@ -26,6 +27,7 @@
 /// Setup Methods
 - (void)setupMaskView;
 - (void)updateFacebookToggle;
+- (void)updateTwitterToggle;
 
 /// UI Methods
 - (void)toggleSocialButtonStatesOnRollViewLaunch;
@@ -56,6 +58,13 @@
 {
     if (self.rollView && self.rollView.facebookButton && [self.rollView.facebookButton isKindOfClass:[UIButton class]]) {
         [self.rollView.facebookButton setSelected:([[FacebookHandler sharedInstance] allowPublishActions] && self.facebookConnected)];
+    }
+}
+
+- (void)updateTwitterToggle
+{
+    if (self.rollView && self.rollView.twitterButton && [self.rollView.twitterButton isKindOfClass:[UIButton class]]) {
+//        [self.rollView.twitterButton setSelected:([])];
     }
 }
 
@@ -192,6 +201,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                                 selector:@selector(updateFacebookToggle)
                                                     name:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateTwitterToggle)
+                                                 name:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
 
 }
 
