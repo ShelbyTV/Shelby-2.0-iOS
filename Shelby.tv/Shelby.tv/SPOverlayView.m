@@ -19,16 +19,7 @@
 @property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) IBOutlet UIButton *rollButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
-@property (weak, nonatomic) IBOutlet UIView *videoListView;
 @property (weak, nonatomic) IBOutlet UIView *videoInfoView;
-
-
-// Video List Panning
-- (IBAction)panView:(id)sender;
-- (void)hideVideoList:(float)speed;
-- (void)showVideoList:(float)speed;
-- (void)showVideoList;
-- (void)hideVideoList;
 
 // Scrubber
 - (IBAction)scrubberTouched:(id)sender;
@@ -67,7 +58,6 @@
     // Customize Background Colors
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
     [self.videoTitleLabel setBackgroundColor:[UIColor clearColor]];
-    [self.videoListScrollView setBackgroundColor:kShelbyColorWhite];
 }
 
 #pragma mark - UIView Overridden Methods
@@ -167,85 +157,20 @@
 }
 
 #pragma mark - Playlist Methods
-- (void)hideVideoList
-{
-    
-    if (self.videoListView.frame.origin.y != (self.frame.size.height - self.videoListView.frame.size.height)) {
-        return;
-    }
-    
-    [self hideVideoList:kShelbySPSlowSpeed];
-}
-
-- (void)showVideoList
-{
-    if (self.videoListView.frame.origin.y != self.frame.size.height) {
-        return;
-    }
-    
-    [self showVideoList:kShelbySPSlowSpeed];
-}
-
-- (void)hideVideoAndChannelInfo
+- (void)hideVideoInfo
 {
     [self.videoInfoView setHidden:YES];
-    [self.videoListScrollView setHidden:YES];
 }
 
 
-- (void)showVideoAndChannelInfo
+- (void)showVideoInfo
 {
-    if (![self.videoListScrollView isHidden]) {
-        return;
-    }
-    
     [self.videoInfoView setAlpha:0];
-    [self.videoListScrollView setAlpha:0];
     [self.videoInfoView setHidden:NO];
-    [self.videoListScrollView setHidden:NO];
 
     [UIView animateWithDuration:0.3 animations:^{
         [self.videoInfoView setAlpha:1];
-        [self.videoListScrollView setAlpha:1];
     }];
-}
-
-
-#pragma mark Video List Panning (Private)
-
-- (void)hideVideoList:(float)speed
-{
-    CGRect videoListFrame = self.videoListView.frame;
-    
-    [UIView animateWithDuration:speed animations:^{
-        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height, videoListFrame.size.width, videoListFrame.size.height)];
-    }];
-}
-
-- (void)showVideoList:(float)speed
-{
-    CGRect videoListFrame = self.videoListView.frame;
-    
-    [UIView animateWithDuration:speed animations:^{
-        [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
-    }];
-}
-
-- (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
-{
-    UISwipeGestureRecognizerDirection direction = [gesture direction];
-    
-    if ([self isOverlayHidden]) {
-        [self showOverlayView];
-    } else if (![self.model numberOfVideos]) {
-        return; // don't dismiss channels if there are no videos available
-    }
-    
-    if (direction == UISwipeGestureRecognizerDirectionUp) {
-        [self showVideoList];
-    } else if (direction == UISwipeGestureRecognizerDirectionDown) {
-        [self hideVideoList];
-    }
 }
 
 

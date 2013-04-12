@@ -11,7 +11,7 @@
 
 @class SPVideoPlayer, SPOverlayView, GroupsMenuViewController;
 
-@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIAlertViewDelegate>
+@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
@@ -35,7 +35,6 @@
 /// Storage Methods
 - (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player;
 
-- (IBAction)itemButtonAction:(id)sender;
 - (IBAction)restartPlaybackButtonAction:(id)sender;
 
 @end

@@ -9,7 +9,6 @@
 @interface SPOverlayView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitleLabel;
-@property (weak, nonatomic) IBOutlet UIScrollView *videoListScrollView;
 @property (weak, nonatomic) IBOutlet UIView *airPlayView; // KP KP: TODO: add this button to nib!
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *videoCaptionLabel;
@@ -25,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIView *scrubberContainerView;
 @property (weak, nonatomic) IBOutlet UIView *scrubberTouchView;
 @property (weak, nonatomic) IBOutlet UIButton *versionButton;
-
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *scrubberGesture;
 
 /// Toggle UI
@@ -35,9 +33,8 @@
 - (BOOL)isOverlayHidden;
 - (void)showLikeNotificationView;
 - (void)hideLikeNotificationView;
-- (void)showVideoAndChannelInfo;
-- (void)hideVideoAndChannelInfo;
+- (void)showVideoInfo;
+- (void)hideVideoInfo;
 - (void)rescheduleOverlayTimer;
-- (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
 
 @end

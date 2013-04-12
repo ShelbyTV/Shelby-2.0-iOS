@@ -26,7 +26,6 @@
 @property (nonatomic) NSMutableArray *moreVideoFrames;
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (nonatomic) NSMutableArray *playableVideoPlayers;
-@property (nonatomic) NSMutableArray *itemViews;
 @property (copy, nonatomic) NSString *categoryID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
@@ -40,7 +39,6 @@
 - (void)setupVariables;
 - (void)setupObservers;
 - (void)setupVideoScrollView;
-- (void)setupVideoListScrollView;
 - (void)setupOverlayView;
 - (void)setupAirPlay;
 - (void)setupVideoPlayers;
@@ -60,9 +58,6 @@
 - (void)dataSourceDidUpdate;
 - (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification*)notification;
 - (void)purgeVideoPlayerInformationFromPreviousVideoGroup;
-
-/// Gesture Methods
-- (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
 
 /// Action Methods
 - (IBAction)shareButtonAction:(id)sender;
@@ -133,7 +128,6 @@
     [self setupOverlayView];
     [self setupGestures];
     [self setupVideoPlayers];
-    [self setupVideoListScrollView];
     [self setupAirPlay];
     [self setupOverlayVisibileItems];
 
@@ -194,10 +188,6 @@
     /// NSMutableArrays
     if ( !_videoPlayers ) {
         self.videoPlayers = [@[] mutableCopy];
-    }
-    
-    if ( !_itemViews ) {
-        self.itemViews = [@[] mutableCopy];
     }
 }
 
@@ -304,101 +294,6 @@
     }
 }
 
-- (void)setupVideoListScrollView
-{
-    CGFloat itemViewWidth = [SPVideoItemView width];
-    CGFloat itemViewHeight = [SPVideoItemView height];
-    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*_model.numberOfVideos, itemViewHeight);
-    self.overlayView.videoListScrollView.delegate = self;
-    
-    dispatch_group_t group = dispatch_group_create();
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_group_async(group, queue, ^{
-        
-        for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
-            
-            NSManagedObjectContext *context = [self.appDelegate context];
-            NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-            if (!objectID) {
-                return;
-            }
-            Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-            if (!videoFrame) {
-                return;
-            }
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-            if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
-                return;
-            }
-
-            SPVideoItemView *itemView = nib[0];
-            [itemView setTag:i];
-        
-            CGRect itemFrame = itemView.frame;
-            itemFrame.origin.x = itemViewWidth * i;
-            itemFrame.origin.y = 0.0f;
-            [itemView setFrame:itemFrame];
-            
-            [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
-                                         forImageView:itemView.thumbnailImageView
-                                      withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
-                                       andContentMode:UIViewContentModeCenter];
-        
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                NSManagedObjectContext *context = [self.appDelegate context];
-                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-                if (!objectID) {
-                    return;
-                }
-                Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-                if (!mainQueuevideoFrame) {
-                    return;
-                }
-                
-                [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
-                [itemView.videoSharerLabel setText:mainQueuevideoFrame.creator.nickname];
-                [self.itemViews addObject:itemView];
-                [self.overlayView.videoListScrollView addSubview:itemView];
-            
-                if ( i == _model.currentVideo ) {
-                    itemView.backgroundColor = kShelbyColorGreen;
-                    itemView.videoTitleLabel.textColor = kShelbyColorBlack;
-                    itemView.videoSharerLabel.textColor = kShelbyColorBlack;
-                    [self.overlayView.videoListScrollView setContentOffset:CGPointMake(i * 1024.0f, 0.0f)];
-                }
-                
-            });
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-
-            // Add visual selected state (e.g., green background) to currentVideo's itemView object
-            
-            if ( _model.currentVideo ) {
-                
-                SPVideoItemView *itemView = (self.itemViews)[_model.currentVideo];
-                
-                // Scroll To currentVideo if self.currentVideo != 0
-                if ( 0 != self.model.currentVideo) {
-                    
-                    CGFloat x = _videoScrollView.frame.size.width * _model.currentVideo;
-                    CGFloat y = _videoScrollView.contentOffset.y;
-                    [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-                    
-                    CGFloat itemViewX = itemView.frame.size.width * (_model.currentVideo-1);
-                    CGFloat itemViewY = _overlayView.videoListScrollView.contentOffset.y;
-                    [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemViewX, itemViewY) animated:YES];
-                    
-                }
-                
-                [self.model.overlayView.videoListScrollView flashScrollIndicators];
-            }
-                    
-        });
-    });
-}
-
 - (void)setupAirPlay
 {
     // Instantiate AirPlay button for MPVolumeView
@@ -442,9 +337,9 @@
 - (void)setupOverlayVisibileItems
 {
     if ([self.model numberOfVideos]) {
-        [self.overlayView showVideoAndChannelInfo];
+        [self.overlayView showVideoInfo];
     } else {
-        [self.overlayView hideVideoAndChannelInfo];
+        [self.overlayView hideVideoInfo];
     }
 }
 
@@ -611,35 +506,6 @@
     [self.model.currentVideoPlayer roll];    
 }
 
-- (IBAction)itemButtonAction:(id)sender
-{
-    // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryVideoList
-                               withAction:@"Video selected via video list item press"
-                                withLabel:_groupTitle
-                                withValue:nil];
-    
-    // Pause currentVideo Player
-    [self.model.currentVideoPlayer pause];
-    
-    // Reference SPVideoItemView from position in videoListScrollView object
-    SPVideoItemView *itemView = (SPVideoItemView *)[sender superview];
-    NSUInteger position = itemView.tag;
-    
-    // Force scroll videoScrollView
-    CGFloat videoX = kShelbySPVideoWidth * position;
-    CGFloat videoY = _videoScrollView.contentOffset.y;
-    
-    if ( position < _model.numberOfVideos ) {
-        [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-    }
-    
-    // Perform actions on videoChange
-    [self currentVideoDidChangeToVideo:position];
-    
-}
-
 - (void)restartPlaybackButtonAction:(id)sender
 {
     // Send event to Google Analytics
@@ -731,28 +597,6 @@
                           withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
                                andContentMode:UIViewContentModeScaleAspectFit];
     
-    // Update videoListScrollView (if _itemViews is initialized)
-    if ( 0 < [self.itemViews count] ) {
-        
-        // Remove selected state color from all SPVideoItemView objects
-        for (SPVideoItemView *itemView in self.itemViews) {
-            itemView.backgroundColor = kShelbyColorWhite;
-            itemView.videoTitleLabel.textColor = kShelbyColorBlack;
-            itemView.videoSharerLabel.textColor = kShelbyColorBlack;
-        }
-        
-        // Update currentVideo's SPVideoItemView object UI and position in videoListScrollView object
-        SPVideoItemView *itemView = (self.itemViews)[position];
-        itemView.backgroundColor = kShelbyColorGreen;
-        itemView.videoTitleLabel.textColor = kShelbyColorBlack;
-        itemView.videoSharerLabel.textColor = kShelbyColorBlack;
-        if ( position < _model.numberOfVideos-1 ) {
-            CGFloat itemX = itemView.frame.size.width * position;
-            CGFloat itemY = 0.0f;
-            [self.overlayView.videoListScrollView setContentOffset:CGPointMake(itemX, itemY) animated:YES];
-        }
-        
-    }
     
     // Queue current and next 3 videos
     [self queueMoreVideos:position];
@@ -1003,30 +847,7 @@
                 CGRect viewframe = [self.videoScrollView frame];
                 viewframe.origin.x = viewframe.size.width * i;
                 SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-                
-                // videoListScrollView
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPVideoItemView" owner:self options:nil];
-                if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
-                    return;
-                }
-                
-                SPVideoItemView *itemView = nib[0];
-                if (![itemView isKindOfClass:[UIView class]]) {
-                    return;
-                }
-                
-                CGFloat itemViewWidth = [SPVideoItemView width];
-                CGFloat itemViewHeight = [SPVideoItemView height];
-                CGRect itemFrame = itemView.frame;
-                itemFrame.origin.x = itemViewWidth * i;
-                [itemView setFrame:itemFrame];
-                [itemView setTag:i];
-                
-                [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
-                                             forImageView:itemView.thumbnailImageView
-                                          withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
-                                           andContentMode:UIViewContentModeCenter];
-                
+
                 // Update UI on Main Thread
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
@@ -1048,17 +869,6 @@
                     [self.videoPlayers addObject:player];
                     [self.videoScrollView addSubview:player.view];
                     [self.videoScrollView setNeedsDisplay];
-                    
-                    // Update itemViews
-                    itemView.backgroundColor = kShelbyColorWhite;
-                    itemView.videoTitleLabel.textColor = kShelbyColorBlack;
-                    itemView.videoSharerLabel.textColor = kShelbyColorBlack;
-                    [itemView.videoTitleLabel setText:mainQueuevideoFrame.video.title];
-                    [itemView.videoSharerLabel setText:mainQueuevideoFrame.creator.nickname];
-                    self.overlayView.videoListScrollView.contentSize = CGSizeMake(itemViewWidth*(i+1), itemViewHeight);
-                    [self.itemViews addObject:itemView];
-                    [self.overlayView.videoListScrollView addSubview:itemView];
-                    [self.overlayView.videoListScrollView setNeedsDisplay];
                     
                     // Set flags
                     [self setFetchingOlderVideos:NO];
@@ -1124,14 +934,7 @@
     [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 //    [self.videoScrollView removeFromSuperview];
 //    self.videoScrollView = nil;
-    
-    [[self.overlayView.videoListScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-//    [self.overlayView.videoListScrollView removeFromSuperview];
-//    self.overlayView.videoListScrollView = nil;
-    
-    [self.itemViews removeAllObjects];
-    self.itemViews = nil;
-    
+
     // Instantiate dataUtility for cleanup
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     
@@ -1142,113 +945,43 @@
     [dataUtility removeAllVideoExtractionURLReferences];
 }
 
-#pragma mark - Gesture Methods (Private)
-- (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture
-{
-    [self.overlayView togglePlaylist:gesture];
-}
-
 #pragma mark - UIScrollViewDelegate Methods
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    if ( scrollView == _model.overlayView.videoListScrollView ) {
-        
-        [scrollView flashScrollIndicators];
-        
-    }
-}
-
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     
     // Switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = scrollView.frame.size.width;
-    NSString *gaAction = nil;
-    NSString *gaEventCategory = nil;
+    CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
+    NSUInteger page = floor(scrollAmount) + 1;
     
-    if (scrollView == _videoScrollView) {
-        CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
-        NSUInteger page = floor(scrollAmount) + 1;
-        
-        // Toggle playback on old and new SPVideoPlayer objects
-        if ( page != _model.currentVideo ) {
-            [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-        } else {
-            return;
-        }
-        
-        [self currentVideoDidChangeToVideo:page];
-        [self fetchOlderVideos:page];
-        
-        gaAction = @"Swiped video player";
-        gaEventCategory = kGAICategoryVideoPlayer;
-    } else if (scrollView == _overlayView.videoListScrollView) {
-        CGFloat scrollAmount = 5*(scrollView.contentOffset.x - pageWidth / 2) / pageWidth; // Multiply by ~3 since each visible section has ~3 videos.
-        NSUInteger page = floor(scrollAmount) + 1;
-        [self fetchOlderVideos:page];
-        
-        gaAction = @"Swiped video list";
-        gaEventCategory = kGAICategoryVideoList;
-
-        [self.overlayView rescheduleOverlayTimer];
+    // Toggle playback on old and new SPVideoPlayer objects
+    if ( page != _model.currentVideo ) {
+        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+    } else {
+        return;
     }
     
+    [self currentVideoDidChangeToVideo:page];
+    [self fetchOlderVideos:page];
+
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:gaEventCategory
-                               withAction:gaAction
+    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+                               withAction:@"Swiped video player"
                                 withLabel:_groupTitle
                                 withValue:nil];
-    
+
 }
 
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        [self loginAction];
+
     } else {
         [self setInvocationMethod:nil];
     }
 }
-
-// TODO: this might go to a different VC.
-#pragma mark - Authorization Methods (Private)
-- (void)loginAction
-{
-    [self.model.currentVideoPlayer pause];
-    
-    AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
-    
-    CGFloat xOrigin = self.view.frame.size.width / 2.0f - authorizationViewController.view.frame.size.width / 4.0f;
-    CGFloat yOrigin = self.view.frame.size.height / 5.0f - authorizationViewController.view.frame.size.height / 4.0f;
-    CGSize loginDialogSize = authorizationViewController.view.frame.size;
-    [authorizationViewController setDelegate:self];
-    [authorizationViewController setModalInPopover:YES];
-    [authorizationViewController setModalPresentationStyle:UIModalPresentationFormSheet];
-    
-    [self presentViewController:authorizationViewController animated:YES completion:nil];
-    
-    authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
-}
-
-#pragma  mark - AuthorizationDelegate
-- (void)authorizationDidComplete
-{
-    [self.invocationMethod invoke];
-    [self setInvocationMethod:nil];
-    
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultUserAuthorized];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-}
-
-- (void)authorizationDidNotComplete
-{
-    [self setInvocationMethod:nil];
-    [self.model.currentVideoPlayer play];
-}
-
 
 #pragma mark - Private Methods
 - (NSManagedObjectContext *)context
