@@ -9,12 +9,11 @@
 #import "BrowseViewController.h"
 
 // Views
-#import "GroupViewCell.h"
 #import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
 #import "SignupView.h"
-#import "PersonalRollViewCell.h"
 #import "PageControl.h"
+#import "SPVideoItemViewCell.h"
 
 // View Controllers
 #import "SPVideoReel.h"
@@ -35,6 +34,7 @@
 @property (nonatomic) UIView *backgroundLoginView;
 
 @property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
+@property (nonatomic) NSMutableArray *categoriesData;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -95,14 +95,13 @@
     [self fetchUserNickname];
     
     [self setCategories:[@[] mutableCopy]];
+    [self setCategoriesData:[@[] mutableCopy]];
     
     [self setSecretMode:SecretMode_None];
     
     // Register Cell Nibs
-    UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
-    cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
     
     [self fetchAllCategories];
 }
@@ -142,6 +141,19 @@
     [self.categories removeAllObjects];
     [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
+    for (id category in self.categories) {
+        NSMutableArray *frames = nil;
+        if ([category isKindOfClass:[Channel class]]) {
+            frames = [datautility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
+        } else if ([category isKindOfClass:[Roll class]]) {
+            frames = [datautility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
+        } else {
+            frames = [@[] mutableCopy];
+        }
+        
+        [self.categoriesData addObject:frames];
+    }
+
     [self.collectionView reloadData];
 }
 
@@ -161,187 +173,60 @@
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return ( 0 == section ) ? kShelbyCollectionViewNumberOfCardsInGroupSectionPage : [self.categories count];
+    NSMutableArray *frames = self.categoriesData[section];
+    if (frames) {
+        return [frames count];
+    }
+    
+    return 0;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
 {
-    return 2;
+    if (self.categories) {
+        return [self.categories count];
+    }
+    return 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // My Roll Card
-    if (indexPath.section == 0 && indexPath.row == 2) {
-        PersonalRollViewCell *cell = (PersonalRollViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"PersonalRollViewCell" forIndexPath:indexPath];
-        NSString *myTv = nil;
-        if ([self isLoggedIn]) {
-            myTv = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
-        } else {
-            myTv = @"Your personalized .TV";
-        }
-        
-        [cell.personalRollUsernameLabel setText:myTv];
-        [cell enableCard:[self isLoggedIn]];
-        return cell;
-    }
+    SPVideoItemViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"SPVideoItemViewCell" forIndexPath:indexPath];
     
-    GroupViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"GroupViewCell" forIndexPath:indexPath];
-    NSString *title = nil;
-    NSString *description = nil;
-    NSString *buttonImageName = nil;
-    NSUInteger row = indexPath.row;
+    NSMutableArray *frames = self.categoriesData[indexPath.section];
+    Frame *frame = frames[indexPath.row];
     
-    if (indexPath.section == 0) { // Me Cards
-       
-        [cell enableCard:[self isLoggedIn]];
-
-        if (row == 0) {
-        
-            title = @"Stream";
-            description = @"Watch videos from the people in your Shelby, Facebook, and Twitter networks";
-            buttonImageName = @"streamCard";
-        
-        } else if (row == 2) {
-            
-            // Do nothing
-        
-        } else if (row == 1) {
-    
-            [cell enableCard:YES];
-            
-            title = @"Likes";
-            description = @"Add videos to your likes so you can come back to them and watch them in Shelby at a later time.";
-            buttonImageName = @"likesCard";
-        
-        } else if (row == 3) {
-            
-            [cell enableCard:YES];
-        
-            title = ([self isLoggedIn]) ? @"Logout" : @"Login";
-            description = @"Ain't nothin' but a gangsta party!";
-            buttonImageName = @"loginCard";
-        }
-        
-        UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
-        [cell.groupThumbnailImage setImage:buttonImage];
-        
-    } else {  // Channel Cards
-        
-        [cell enableCard:YES];
-        
-        if (indexPath.row < [self.categories count]) {
-            
-            buttonImageName = @"missingCard";
-            NSManagedObjectContext *context = [self context];
-            NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
-            Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
-            
-            // TODO: Channel should NOT be nil!
-            if (channel) {
-                title = [channel displayTitle];
-                description = [channel displayDescription];
-                NSString *thumbnailUrl = [channel displayThumbnailURL];
- 
-                [AsynchronousFreeloader loadImageFromLink:thumbnailUrl
-                                             forImageView:[cell groupThumbnailImage]
-                                      withPlaceholder:[UIImage imageNamed:buttonImageName]
-                                           andContentMode:UIViewContentModeScaleAspectFill];
-                
-            
-            } else {
-                UIImage *buttonImage = [UIImage imageNamed:buttonImageName];
-                [cell.groupThumbnailImage setImage:buttonImage];
-            }
+    NSManagedObjectContext *context = [self context];
+    NSManagedObjectID *objectID = [frame objectID];
+    if (objectID) {
+        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+        if (videoFrame) {
+            Video *video = [frame video]; // KP KP: TODO: need to fetch video if fault.
+            [[cell caption] setText:[video caption]];
         }
     }
-    
-    if (!title) {
-        title = @"";
-    }
-    
-    if (!description) {
-        description = @"";
-    }
- 
-    [cell.groupTitle setText:title];
-    [cell.groupDescription setText:description];
-    
+//    DLog(@"%@", frame.video.caption);
     return cell;
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    GroupViewCell  *cell = (GroupViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell.selectionView setHidden:NO];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    GroupViewCell  *cell = (GroupViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell.selectionView setHidden:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger row = [indexPath row];
-    
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     
-    if ( 0 == indexPath.section ) { // ME Section
-        
-        switch ( row ) { // Likes
-                
-            case 0: {
-                
-                if ( [self isLoggedIn] ) {
-                    
-                    [self launchPlayer:GroupType_Stream fromCell:cell];
-                    
-                }
-                
-            } break;
-                
-            case 1: { // Stream
-                
-                [self launchPlayer:GroupType_Likes fromCell:cell];
-                
-            } break;
-                
-            case 2: { // Personal Roll
-                
-                if ( [self isLoggedIn] ) {
-                    
-                    [self launchPlayer:GroupType_PersonalRoll fromCell:cell];
-                    
-                }
-                
-            } break;
-                
-            case 3: { // Authentication State
-                
-                ( [self isLoggedIn] ) ? [self logoutAction] : [self loginAction];
-                
-            } break;
-                
-            default:
-                break;
-        }
-        
-    } else { // Channels Section
-        
-        id category = (id)[self.categories objectAtIndex:[indexPath row]];
-        
-        if ( [category isMemberOfClass:[Channel class]] ) { // Category is a Channel
-            
-            [self launchPlayer:GroupType_CategoryChannel fromCell:cell];
-            
-        } else if ( [category isMemberOfClass:[Roll class]] ) { // Cateogory is a Roll
-            
-            [self launchPlayer:GroupType_CategoryRoll fromCell:cell];
-            
-        }
+    id category = (id)[self.categories objectAtIndex:indexPath.section];
+    if ([category isMemberOfClass:[Channel class]]) { // Category is a Channel
+        [self launchPlayer:GroupType_CategoryChannel fromCell:cell];
+    } else if ( [category isMemberOfClass:[Roll class]] ) { // Cateogory is a Roll
+        [self launchPlayer:GroupType_CategoryRoll fromCell:cell];
     }
 }
 
@@ -449,86 +334,48 @@
         NSString *errorMessage = nil;
         NSString *title = nil;
 
-        switch ( groupType ) {
-                
-            case GroupType_Likes: {
-                
-                videoFrames = [dataUtility fetchLikesEntries];
-                errorMessage = @"No videos in Likes.";
-                title = @"Likes";
-                
-            } break;
-                
-            case GroupType_PersonalRoll: {
-               
-                videoFrames = [dataUtility fetchPersonalRollEntries];
-                errorMessage = @"No videos in Personal Roll.";
-                title = @"Personal Roll";
-               
-            } break;
-                
-            case GroupType_Stream: {
-                
-                videoFrames = [dataUtility fetchStreamEntries];
-                // TODO: change this error message before App Store release
-                errorMessage = @"Thanks for testing! Please go to http://shelby.tv on a desktop web browser to set up your stream.";
-                title = @"Stream";
-                
-            } break;
-                
-            case GroupType_CategoryChannel: {
-                
-                NSManagedObjectContext *context = [self context];
-                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
-                NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
+        NSManagedObjectContext *context = [self context];
+        NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].section;
+        NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
+
+        switch (groupType) {
+            case GroupType_CategoryChannel:
+            {
                 Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
                 errorMessage = @"No videos in Category Channel.";
                 title = [channel displayTitle];
-                
-            } break;
-                
-            case GroupType_CategoryRoll: {
-                
-                NSManagedObjectContext *context = [self context];
-                NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
-                NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
+                break;
+            }
+            case GroupType_CategoryRoll:
+            {
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryRoll:[roll rollID]];
                 errorMessage = @"No videos in Category Roll.";
                 title = [roll displayTitle];
-                
-            } break;
+                break;
+            }
+            default:
+            {
+                return;
+            }
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if ( [videoFrames count] ) {
-            
+            if ([videoFrames count]) {
                 [self presentViewController:[self videoReel] fromCell:cell];
-                
                 NSManagedObjectContext *mainThreadContext = [self context];
-                
-                if ( groupType == GroupType_CategoryChannel ) { // Category Channel
-                    
-                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
+                if (groupType == GroupType_CategoryChannel) { // Category Channel
+                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].section;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:channel.channelID];
-                    
-                } else if ( groupType == GroupType_CategoryRoll ) { // Category Roll
-                    
-                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
+                } else if (groupType == GroupType_CategoryRoll) { // Category Roll
+                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].section;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:roll.rollID];
-                    
-                } else { // Stream, Likes, Personal Roll
-
-                    [self.videoReel loadWithGroupType:groupType groupTitle:title andVideoFrames:videoFrames];
-                    
                 }
-                
             } else {
                 
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
