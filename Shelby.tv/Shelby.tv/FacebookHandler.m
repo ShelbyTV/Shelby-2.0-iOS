@@ -128,7 +128,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
         if ([permission isEqualToString:@"publish_stream"]) {
             return YES;
         }
-        DLog(@"%@", permissions);
     }
 
     return NO;
