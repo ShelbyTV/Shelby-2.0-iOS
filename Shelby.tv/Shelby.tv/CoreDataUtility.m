@@ -331,6 +331,11 @@
         }
     }
     
+    // Remove from UserDefaults old user ID. This will not work now because Backend is not getting updated when a user removes FB.
+    if (![user facebookConnected] && [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserID];
+    }
+    
     BOOL admin = [[userDictionary valueForKey:@"admin"] boolValue];
     [user setValue:@(admin) forKey:kShelbyCoreDataUserAdmin];
     [[NSUserDefaults standardUserDefaults] setBool:admin forKey:kShelbyDefaultUserIsAdmin];

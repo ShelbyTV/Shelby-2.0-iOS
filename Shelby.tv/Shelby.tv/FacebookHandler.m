@@ -22,6 +22,7 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 - (NSArray *)facebookPermissions;
 - (void)saveFacebookInfo;
 - (void)sendToken;
+- (void)facebookCleanup;
 @end
 
 
@@ -74,6 +75,21 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
     [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:[self facebookUserID] token:[self facebookToken] andSecret:nil];
 }
 
+- (void)facebookCleanup
+{
+    [[FBSession activeSession] closeAndClearTokenInformation];
+    [FBSession setActiveSession:nil];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserID];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookToken]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookToken];
+    }
+
+}
+
 - (NSString *)facebookUserID
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID];
@@ -101,8 +117,7 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
                                                                                                                               FBSessionState status,
                                                                                                                               NSError *error) {
         if (status == FBSessionStateClosedLoginFailed || status == FBSessionStateCreatedOpening) {
-            [[FBSession activeSession] closeAndClearTokenInformation];
-            [FBSession setActiveSession:nil];
+            [self facebookCleanup];
             
             if (status == FBSessionStateClosedLoginFailed) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Go to Settings -> Facebook and turn ON Shelby" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
