@@ -6,12 +6,11 @@
 //  Copyright (c) 2012 ArtSabintsev. All rights reserved.
 //
 
-#define kShelbyTwitterConsumerKey       @"5DNrVZpdIwhQthCJJXCfnQ"
-#define kShelbyTwitterConsumerSecret    @"Tlb35nblFFTZRidpu36Uo3z9mfcvSVv1MuZZ19SHaU"
+FOUNDATION_EXPORT NSString * const kShelbyNotificationTwitterAuthorizationCompleted;
 
-@interface TwitterHandler : NSObject <UITableViewDataSource, UITableViewDelegate>
+@interface TwitterHandler : NSObject <UIActionSheetDelegate>
 
-- (id)initWithViewController:(UIViewController *)viewController;
-- (void)authenticate;
++ (TwitterHandler *)sharedInstance;
+- (void)authenticateWithViewController:(UIViewController *)viewController;;
 
 @end

@@ -9,6 +9,8 @@
 #import "TwitterHandler.h"
 #import "AuthenticateTwitterViewController.h"
 
+NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNotificationTwitterAuthorizationCompleted";
+
 @interface TwitterHandler () <AuthenticateTwitterDelegate>
 
 @property (nonatomic) AppDelegate *appDelegate;
@@ -20,7 +22,6 @@
 @property (copy, nonatomic) NSString *twitterID;
 @property (copy, nonatomic) NSString *twitterReverseAuthToken;              
 @property (copy, nonatomic) NSString *twitterReverseAuthSecret;
-@property (strong, nonatomic) UITableViewController *twitterAccountsTableViewController;
 @property (nonatomic) NSMutableArray *storedTwitterAccounts;
 
 /// Twitter Authorization Methods ///
@@ -55,21 +56,22 @@
 @implementation TwitterHandler
 
 #pragma mark - Initialization Methods
-- (id)initWithViewController:(UIViewController *)viewController
-{    
-    self = [super init];
-    if ( self ) {
-        
-        _viewController = viewController;
-        
-    }
++ (TwitterHandler *)sharedInstance
+{
+    static TwitterHandler *sharedInstance = nil;
+    static dispatch_once_t twitterToken = 0;
+    dispatch_once(&twitterToken, ^{
+        sharedInstance = [[super allocWithZone:NULL] init];
+    });
     
-    return self;
+    return sharedInstance;
 }
 
+
 #pragma mark - Twitter Authorization Methods
-- (void)authenticate
+- (void)authenticateWithViewController:(UIViewController *)viewController
 {
+    [self setViewController:viewController];
     [self checkForExistingTwitterAccounts];
 }
 
@@ -86,40 +88,40 @@
     self.twitterAccountStore = [[ACAccountStore alloc] init];
     ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     self.twitterAccount = [[ACAccount alloc] initWithAccountType:twitterType];
-    [self.twitterAccountStore requestAccessToAccountsWithType:twitterType options:nil completion:^(BOOL granted, NSError *error) {
-        if ( granted && !error ) {
+    
+    NSArray *accounts = [NSArray arrayWithArray:[self.twitterAccountStore accountsWithAccountType:twitterType]];
+    
+    if (0 == [accounts count]) {
+        
+       [self getRequestToken];
+    
+    } else {
+        
+        [self.twitterAccountStore requestAccessToAccountsWithType:twitterType options:nil completion:^(BOOL granted, NSError *error) {
             
-            NSArray *accounts = [NSArray arrayWithArray:[self.twitterAccountStore accountsWithAccountType:twitterType]];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
+            if ( granted && !error ) {
                 
-                switch ( [accounts count] ) {
-                        
-                    case 0:{ // No stored Twitter accounts
-                        DLog(@"User has zero stored accounts");
-                        [self getRequestToken];
-                    } break;
-                        
-                    case 1:{ // One stored Twitter account
+                NSArray *accounts = [NSArray arrayWithArray:[self.twitterAccountStore accountsWithAccountType:twitterType]];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    if ( 1 == [accounts count] ) { // One stored Twitter account
                         DLog(@"User has one stored account");
                         self.twitterAccount = [accounts objectAtIndex:0];
                         [self userHasOneStoredTwitterAccount];
-                    } break;
-                        
-                    default:{ // Multiple stored Twitter accounts
+                    } else { // Multiple stored Twitter accounts
                         DLog(@"User has multiple stored accounts");
                         [self userHasMultipleStoredTwitterAccounts];
-                    } break;
-                        
-                }
+                    }
+                    
+                });
                 
-            });
+            } else {
+                NSLog(@"Access granted? %@. %@", (granted) ? @"YES" : @"NO", error);
+            }
             
-        } else {
-            
-            NSLog(@"Access granted? %@. %@", (granted) ? @"YES" : @"NO", error);
-        }
-    }];
+        }];
+    }
 }
 
 - (void)userHasOneStoredTwitterAccount
@@ -130,16 +132,26 @@
 - (void)userHasMultipleStoredTwitterAccounts
 {
     
-    if ( ![self twitterAccountsTableViewController] ) {
-        
-        self.twitterAccountsTableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-        self.twitterAccountsTableViewController.tableView.dataSource = self;
-        self.twitterAccountsTableViewController.tableView.delegate = self;
+    // Create empty UIActionSheet
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose a stored Twitter account"
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                         destructiveButtonTitle:nil
+                                              otherButtonTitles:nil];
     
-        // TODO Arthur: Present Multiple Accounts Screen
-        [self.viewController presentViewController:[self twitterAccountsTableViewController] animated:YES completion:nil];
-        
+    
+    // Add each account as new item on actionSheet
+    ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    NSArray *accounts = [self.twitterAccountStore accountsWithAccountType:twitterType];
+    for( ACAccount *account in accounts)  {
+        [actionSheet addButtonWithTitle:account.username];
     }
+    
+    // Add cancel button
+    [actionSheet addButtonWithTitle:@"Cancel"];
+    
+    // Present actionSheet
+    [actionSheet showInView:self.viewController.view];
 }
 
 #pragma mark - Twitter/OAuth- Request Token Methods
@@ -147,7 +159,9 @@
 {
     
     // Remove reqeustToken value if value exists and/or user decides to re-authenticate
-    if (self.twitterRequestToken) self.twitterRequestToken = nil;
+    if (self.twitterRequestToken) {
+        self.twitterRequestToken = nil;
+    }
     
     NSURL *requestTokenURL = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
     OAConsumer *consumer= [[OAConsumer alloc] initWithKey:kShelbyTwitterConsumerKey secret:kShelbyTwitterConsumerSecret];
@@ -204,13 +218,12 @@
     OARequestParameter *loginParam = [[OARequestParameter alloc] initWithName:@"force_login" value:@"false"];
     [authorizeRequest setParameters:[NSArray arrayWithObjects:tokenParam, loginParam, nil]];
     
-    
     // Load ViewController (that has webView)
     AuthenticateTwitterViewController *authenticateTwitterViewController = [[AuthenticateTwitterViewController alloc] initWithDelegate:self];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:authenticateTwitterViewController];
-//
-//    [self.loginViewController presentViewController:navigationController animated:YES completion:nil];
-//    [authenticateTwitterViewController.webView loadRequest:authorizeRequest];
+
+    [self.viewController presentViewController:navigationController animated:YES completion:nil];
+    [authenticateTwitterViewController.webView loadRequest:authorizeRequest];
     
 }
 
@@ -269,7 +282,7 @@
         // This completionHandler block is NOT performed on the main thread
         if ( success ) {
 
-            DLog(@"New Account Saved to Store: %@", newAccount.username);
+            DLog(@"New Account Saved to Store");
             
             // Reverse Auth must be performed on Main Thread.
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -394,7 +407,7 @@
 
     // Create request for short link
     DLog(@"Perform Twitter Token Swap with Shelby");
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostTokenTwitter, self.twitterID, self.twitterReverseAuthToken, self.twitterReverseAuthSecret];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyToken, @"twitter", self.twitterID, self.twitterReverseAuthToken, self.twitterReverseAuthSecret];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"POST"];
@@ -426,49 +439,25 @@
 - (void)authenticationRequestDidReturnPin:(NSString *)pin
 {
     [self getAccessTokenWithPin:pin];
-    
 }
 
-#pragma mark - UITableViewDataSource Methods
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+
+#pragma mark - UIActionSheetDelegate Methods 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray *accounts = [self.twitterAccountStore accountsWithAccountType:twitterType];
-    self.storedTwitterAccounts = [NSMutableArray arrayWithArray:accounts];
-    [self.storedTwitterAccounts addObject:@"Cancel"];
-    
-    return [self.storedTwitterAccounts count];
-}
+    NSInteger accountsCount = [accounts count];
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
     
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    
-    if (indexPath.row < [self.storedTwitterAccounts count]-1) {
-        // List of Twitter Accounts
-        ACAccount *account = [self.storedTwitterAccounts objectAtIndex:indexPath.row];
-        cell.textLabel.text = account.username;
-    } else {
-        // New Account & Cancel Option
-        cell.textLabel.text = [self.storedTwitterAccounts objectAtIndex:indexPath.row];
-    }
-    
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate Methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ( indexPath.row < [self.storedTwitterAccounts count]-1 ) {               // User selected existing account
+    if ( buttonIndex < accountsCount ) {
         
-        self.twitterAccount = [self.storedTwitterAccounts objectAtIndex:indexPath.row];;
         [self getReverseAuthRequestToken];
         
-    }  
+    } else {
+        
+    }
     
-    [self.twitterAccountsTableViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

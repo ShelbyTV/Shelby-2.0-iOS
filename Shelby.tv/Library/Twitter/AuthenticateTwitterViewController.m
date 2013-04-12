@@ -10,25 +10,21 @@
 
 @interface AuthenticateTwitterViewController ()
 
-@property (strong, nonatomic) id <AuthenticateTwitterDelegate> delegate;  
-@property(assign, nonatomic) BOOL pinPageLoaded;
+@property (nonatomic) id <AuthenticateTwitterDelegate> delegate;  
+@property (assign, nonatomic) BOOL pinPageLoaded;
 
 - (void)initializationOnLoad;
 
 @end
 
 @implementation AuthenticateTwitterViewController
-@synthesize webView = _webView;
-@synthesize delegate = _delegate;
-@synthesize pinPageLoaded = _pinPageLoaded;
 
 #pragma mark - Initialization Method
 - (id)initWithDelegate:(id<AuthenticateTwitterDelegate>)delegate
 {
-    if ( self = [super init] ) {
-        
+    self = [super init];
+    if ( self ) {
         self.delegate = delegate;
-        
     }
     
     return self;
@@ -38,7 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self initializationOnLoad];
 }
 
@@ -54,11 +49,10 @@
     self.navigationItem.leftBarButtonItem = cancelBarButtonItem;
     
     // Add webView to view hierarchy
-    CGRect frame = CGRectMake(self.view.frame.origin.x, 
-                              -20.0f + self.view.frame.origin.y, 
-                              self.view.frame.size.width, 
-                              self.view.frame.size.height);
-    self.webView = [[UIWebView alloc] initWithFrame:frame];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f,
+                                                               0.0f,
+                                                               [UIScreen mainScreen].bounds.size.height,
+                                                               [UIScreen mainScreen].bounds.size.width)];
     self.webView.delegate = self;
     
     [self.view addSubview:self.webView];

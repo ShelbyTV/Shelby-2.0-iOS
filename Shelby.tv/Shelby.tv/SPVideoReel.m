@@ -1616,8 +1616,7 @@
 
         if ( 1 ==  indexPath.row ) {
             
-            TwitterHandler *handler = [[TwitterHandler alloc] initWithViewController:self];
-            [handler authenticate];
+            [[TwitterHandler sharedInstance] authenticateWithViewController:self];
             
         }
 
