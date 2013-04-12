@@ -992,7 +992,9 @@
     [dataUtility removeAllVideoExtractionURLReferences];
     
     // Dismiss
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (![self isBeingDismissed]) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate Methods

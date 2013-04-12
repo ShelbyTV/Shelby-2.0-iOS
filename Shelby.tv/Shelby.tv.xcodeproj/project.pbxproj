@@ -102,8 +102,6 @@
 		1C81098D16EE2CBF0030077C /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		1C81098E16EE2CBF0030077C /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
 		1C81098F16EE2CBF0030077C /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B40016CC45D60015D100 /* Messages.m */; };
-		1C81099016EE2CBF0030077C /* GroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* GroupViewCell.m */; };
-		1C81099116EE2CBF0030077C /* PersonalRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* PersonalRollViewCell.m */; };
 		1C81099216EE2CBF0030077C /* CollectionViewGroupsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */; };
 		1C81099316EE2CBF0030077C /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB55116D2A33600C8C216 /* PageControl.m */; };
 		1C81099516EE2CBF0030077C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03BEA16D56D5A0019669F /* User.m */; };
@@ -196,8 +194,6 @@
 		1C8109F116EE2CBF0030077C /* streamCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E454CC316CA9DC100B2F528 /* streamCard@2x.png */; };
 		1C8109F216EE2CBF0030077C /* personalRollCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E454CD216CAAD3E00B2F528 /* personalRollCard@2x.png */; };
 		1C8109F316EE2CBF0030077C /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
-		1C8109F416EE2CBF0030077C /* GroupViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CD72E9D16CD36630045B36F /* GroupViewCell.xib */; };
-		1C8109F516EE2CBF0030077C /* PersonalRollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCCB54716CEBAB100C8C216 /* PersonalRollViewCell.xib */; };
 		1C8109F616EE2CBF0030077C /* likeActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99216D4053C0070613F /* likeActivityButton.png */; };
 		1C8109F716EE2CBF0030077C /* likeActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */; };
 		1C8109F816EE2CBF0030077C /* rollActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99416D4053C0070613F /* rollActivityButton.png */; };
@@ -266,8 +262,6 @@
 		1C810A4316EE5EED0030077C /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F116CC45D50015D100 /* Conversation.m */; };
 		1C810A4416EE5EED0030077C /* Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B3F416CC45D60015D100 /* Stream.m */; };
 		1C810A4516EE5EED0030077C /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E77B40016CC45D60015D100 /* Messages.m */; };
-		1C810A4616EE5EED0030077C /* GroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* GroupViewCell.m */; };
-		1C810A4716EE5EED0030077C /* PersonalRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* PersonalRollViewCell.m */; };
 		1C810A4816EE5EED0030077C /* CollectionViewGroupsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */; };
 		1C810A4916EE5EED0030077C /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB55116D2A33600C8C216 /* PageControl.m */; };
 		1C810A4B16EE5EED0030077C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03BEA16D56D5A0019669F /* User.m */; };
@@ -360,8 +354,6 @@
 		1C810AA716EE5EED0030077C /* streamCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E454CC316CA9DC100B2F528 /* streamCard@2x.png */; };
 		1C810AA816EE5EED0030077C /* personalRollCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E454CD216CAAD3E00B2F528 /* personalRollCard@2x.png */; };
 		1C810AA916EE5EED0030077C /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
-		1C810AAA16EE5EED0030077C /* GroupViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CD72E9D16CD36630045B36F /* GroupViewCell.xib */; };
-		1C810AAB16EE5EED0030077C /* PersonalRollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCCB54716CEBAB100C8C216 /* PersonalRollViewCell.xib */; };
 		1C810AAC16EE5EED0030077C /* likeActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99216D4053C0070613F /* likeActivityButton.png */; };
 		1C810AAD16EE5EED0030077C /* likeActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99316D4053C0070613F /* likeActivityButton@2x.png */; };
 		1C810AAE16EE5EED0030077C /* rollActivityButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99416D4053C0070613F /* rollActivityButton.png */; };
@@ -407,9 +399,6 @@
 		1C810AD616EE5EED0030077C /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
 		1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
-		1C8749CB170B889300397144 /* GroupsMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8749CA170B889300397144 /* GroupsMenuViewController.xib */; };
-		1C8749CC170B889300397144 /* GroupsMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8749CA170B889300397144 /* GroupsMenuViewController.xib */; };
-		1C8749CD170B889300397144 /* GroupsMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8749CA170B889300397144 /* GroupsMenuViewController.xib */; };
 		1CAC4AD416E5561C0028E1DC /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD216E5561C0028E1DC /* tv.png */; };
 		1CAC4AD616E5561C0028E1DC /* tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD316E5561C0028E1DC /* tv@2x.png */; };
 		1CAC4ADA16E55AA90028E1DC /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD816E55AA90028E1DC /* homeButton.png */; };
@@ -428,8 +417,6 @@
 		1CB6ABFE17136B8B0061914D /* heartwhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CB6ABF817136B8B0061914D /* heartwhite@2x.png */; };
 		1CC3387816CBDF2A00E58375 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
 		1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
-		1CCCB54616CEA61B00C8C216 /* PersonalRollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54516CEA61B00C8C216 /* PersonalRollViewCell.m */; };
-		1CCCB54816CEBAB100C8C216 /* PersonalRollViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCCB54716CEBAB100C8C216 /* PersonalRollViewCell.xib */; };
 		1CCCB54C16CEECD400C8C216 /* CollectionViewGroupsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */; };
 		1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB55116D2A33600C8C216 /* PageControl.m */; };
 		1CD361ED170F6A0F00A8AF98 /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD361E7170F6A0F00A8AF98 /* action.png */; };
@@ -453,8 +440,6 @@
 		1CD5B7BA16D41C4C00043754 /* cardTemplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7B916D41C4C00043754 /* cardTemplate@2x.png */; };
 		1CD5B7BF16D421DF00043754 /* missing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7BD16D421DF00043754 /* missing@2x.png */; };
 		1CD5B7C016D421DF00043754 /* missingCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7BE16D421DF00043754 /* missingCard.png */; };
-		1CD72E9E16CD36630045B36F /* GroupViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CD72E9D16CD36630045B36F /* GroupViewCell.xib */; };
-		1CD72EA116CD36CB0045B36F /* GroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* GroupViewCell.m */; };
 		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
@@ -469,7 +454,6 @@
 		8E01AFC216E67365000567D4 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB816E67365000567D4 /* AFXMLRequestOperation.m */; };
 		8E01AFC316E67365000567D4 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */; };
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
-		8E088710170CD22C00FBBECE /* GroupsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */; };
 		8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
 		8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		8E12B18416825B4100657D32 /* actionButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B17C16825B4100657D32 /* actionButton.png */; };
@@ -643,8 +627,6 @@
 		8E9FBD5F16C7145F00731912 /* authenticationTextField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */; };
 		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
-		8EA9B1E5170B8241004C7601 /* GroupsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */; };
-		8EA9B1E7170B8284004C7601 /* GroupsMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EB19AA116E6FC4A00B22228 /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
@@ -729,7 +711,6 @@
 		1C810ADD16EE5EED0030077C /* Shelby.tv copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
-		1C8749CA170B889300397144 /* GroupsMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupsMenuViewController.xib; sourceTree = "<group>"; };
 		1CAC4AD216E5561C0028E1DC /* tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv.png; sourceTree = "<group>"; };
 		1CAC4AD316E5561C0028E1DC /* tv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tv@2x.png"; sourceTree = "<group>"; };
 		1CAC4AD816E55AA90028E1DC /* homeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeButton.png; sourceTree = "<group>"; };
@@ -741,9 +722,6 @@
 		1CC3387616CBDF2A00E58375 /* BrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseViewController.h; sourceTree = "<group>"; };
 		1CC3387716CBDF2A00E58375 /* BrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowseViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1CC3387916CBE20800E58375 /* BrowseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseView.xib; sourceTree = "<group>"; };
-		1CCCB54416CEA61B00C8C216 /* PersonalRollViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalRollViewCell.h; sourceTree = "<group>"; };
-		1CCCB54516CEA61B00C8C216 /* PersonalRollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalRollViewCell.m; sourceTree = "<group>"; };
-		1CCCB54716CEBAB100C8C216 /* PersonalRollViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalRollViewCell.xib; sourceTree = "<group>"; };
 		1CCCB54A16CEECD400C8C216 /* CollectionViewGroupsLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CollectionViewGroupsLayout.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CollectionViewGroupsLayout.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1CCCB55016D2A33500C8C216 /* PageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageControl.h; sourceTree = "<group>"; };
@@ -757,9 +735,6 @@
 		1CD5B7B916D41C4C00043754 /* cardTemplate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardTemplate@2x.png"; sourceTree = "<group>"; };
 		1CD5B7BD16D421DF00043754 /* missing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "missing@2x.png"; sourceTree = "<group>"; };
 		1CD5B7BE16D421DF00043754 /* missingCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missingCard.png; sourceTree = "<group>"; };
-		1CD72E9D16CD36630045B36F /* GroupViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupViewCell.xib; sourceTree = "<group>"; };
-		1CD72E9F16CD36CB0045B36F /* GroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupViewCell.h; sourceTree = "<group>"; };
-		1CD72EA016CD36CB0045B36F /* GroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewCell.m; sourceTree = "<group>"; };
 		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
 		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
@@ -955,8 +930,6 @@
 		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
 		8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemView.m; sourceTree = "<group>"; };
 		8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemView.xib; sourceTree = "<group>"; };
-		8EA9B1E2170B8241004C7601 /* GroupsMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsMenuViewController.h; sourceTree = "<group>"; };
-		8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsMenuViewController.m; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
 		8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataConstants.h; sourceTree = "<group>"; };
 		8EAAEE59163A29A900AEF100 /* CoreDataUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataUtility.h; sourceTree = "<group>"; };
@@ -1688,9 +1661,6 @@
 			children = (
 				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
-				1CD72E9D16CD36630045B36F /* GroupViewCell.xib */,
-				1C8749CA170B889300397144 /* GroupsMenuViewController.xib */,
-				1CCCB54716CEBAB100C8C216 /* PersonalRollViewCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -1700,15 +1670,11 @@
 			children = (
 				1CCCB54916CEEC9800C8C216 /* Layouts */,
 				8EF5C350162F41B00075C35F /* Xibs */,
+				1C1D51ED16F22A8B00225B4E /* FormViews */,
 				8E41EF2C16B0742400C831A4 /* BigButton.h */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
-				1CD72E9F16CD36CB0045B36F /* GroupViewCell.h */,
-				1CD72EA016CD36CB0045B36F /* GroupViewCell.m */,
-				1C1D51ED16F22A8B00225B4E /* FormViews */,
 				1CCCB55016D2A33500C8C216 /* PageControl.h */,
 				1CCCB55116D2A33600C8C216 /* PageControl.m */,
-				1CCCB54416CEA61B00C8C216 /* PersonalRollViewCell.h */,
-				1CCCB54516CEA61B00C8C216 /* PersonalRollViewCell.m */,
 				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
 				8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */,
 			);
@@ -1724,8 +1690,6 @@
 				8E70248B1715E71500E8DE46 /* AuthenticateTwitterViewController.m */,
 				1CC3387616CBDF2A00E58375 /* BrowseViewController.h */,
 				1CC3387716CBDF2A00E58375 /* BrowseViewController.m */,
-				8EA9B1E2170B8241004C7601 /* GroupsMenuViewController.h */,
-				8EA9B1E3170B8241004C7601 /* GroupsMenuViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1906,8 +1870,6 @@
 				1C8109F116EE2CBF0030077C /* streamCard@2x.png in Resources */,
 				1C8109F216EE2CBF0030077C /* personalRollCard@2x.png in Resources */,
 				1C8109F316EE2CBF0030077C /* BrowseView.xib in Resources */,
-				1C8109F416EE2CBF0030077C /* GroupViewCell.xib in Resources */,
-				1C8109F516EE2CBF0030077C /* PersonalRollViewCell.xib in Resources */,
 				1C8109F616EE2CBF0030077C /* likeActivityButton.png in Resources */,
 				1C8109F716EE2CBF0030077C /* likeActivityButton@2x.png in Resources */,
 				1C8109F816EE2CBF0030077C /* rollActivityButton.png in Resources */,
@@ -1967,7 +1929,6 @@
 				1C671A1D170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A22170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A25170A219500EFD5E3 /* grabber@2x.png in Resources */,
-				1C8749CC170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 				1CD361EE170F6A0F00A8AF98 /* action.png in Resources */,
 				1CD361F1170F6A0F00A8AF98 /* action@2x.png in Resources */,
 				1CD361F4170F6A0F00A8AF98 /* like.png in Resources */,
@@ -2042,8 +2003,6 @@
 				1C810AA716EE5EED0030077C /* streamCard@2x.png in Resources */,
 				1C810AA816EE5EED0030077C /* personalRollCard@2x.png in Resources */,
 				1C810AA916EE5EED0030077C /* BrowseView.xib in Resources */,
-				1C810AAA16EE5EED0030077C /* GroupViewCell.xib in Resources */,
-				1C810AAB16EE5EED0030077C /* PersonalRollViewCell.xib in Resources */,
 				1C810AAC16EE5EED0030077C /* likeActivityButton.png in Resources */,
 				1C810AAD16EE5EED0030077C /* likeActivityButton@2x.png in Resources */,
 				1C810AAE16EE5EED0030077C /* rollActivityButton.png in Resources */,
@@ -2103,7 +2062,6 @@
 				1C671A1E170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A23170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A26170A219500EFD5E3 /* grabber@2x.png in Resources */,
-				1C8749CD170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 				1CD361EF170F6A0F00A8AF98 /* action.png in Resources */,
 				1CD361F2170F6A0F00A8AF98 /* action@2x.png in Resources */,
 				1CD361F5170F6A0F00A8AF98 /* like.png in Resources */,
@@ -2178,8 +2136,6 @@
 				8E454CD116CA9DC100B2F528 /* streamCard@2x.png in Resources */,
 				8E454CD316CAAD3F00B2F528 /* personalRollCard@2x.png in Resources */,
 				1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */,
-				1CD72E9E16CD36630045B36F /* GroupViewCell.xib in Resources */,
-				1CCCB54816CEBAB100C8C216 /* PersonalRollViewCell.xib in Resources */,
 				8E2BA99616D4053C0070613F /* likeActivityButton.png in Resources */,
 				8E2BA99716D4053C0070613F /* likeActivityButton@2x.png in Resources */,
 				8E2BA99816D4053C0070613F /* rollActivityButton.png in Resources */,
@@ -2240,7 +2196,6 @@
 				1C671A1C170A089A00EFD5E3 /* open@2x.png in Resources */,
 				1C671A21170A219500EFD5E3 /* grabber.png in Resources */,
 				1C671A24170A219500EFD5E3 /* grabber@2x.png in Resources */,
-				1C8749CB170B889300397144 /* GroupsMenuViewController.xib in Resources */,
 				1CD361ED170F6A0F00A8AF98 /* action.png in Resources */,
 				1CD361F0170F6A0F00A8AF98 /* action@2x.png in Resources */,
 				1CD361F3170F6A0F00A8AF98 /* like.png in Resources */,
@@ -2330,8 +2285,6 @@
 				1C81098D16EE2CBF0030077C /* Conversation.m in Sources */,
 				1C81098E16EE2CBF0030077C /* Stream.m in Sources */,
 				1C81098F16EE2CBF0030077C /* Messages.m in Sources */,
-				1C81099016EE2CBF0030077C /* GroupViewCell.m in Sources */,
-				1C81099116EE2CBF0030077C /* PersonalRollViewCell.m in Sources */,
 				1C81099216EE2CBF0030077C /* CollectionViewGroupsLayout.m in Sources */,
 				1C81099316EE2CBF0030077C /* PageControl.m in Sources */,
 				1C81099516EE2CBF0030077C /* User.m in Sources */,
@@ -2361,7 +2314,6 @@
 				1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58D16F2D9CE0001EF5D /* Video.m in Sources */,
-				8E088710170CD22C00FBBECE /* GroupsMenuViewController.m in Sources */,
 				8E7024BA1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BD1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C01715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
@@ -2391,7 +2343,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EA9B1E7170B8284004C7601 /* GroupsMenuViewController.m in Sources */,
 				1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */,
 				1C810A2D16EE5EED0030077C /* SPVideoReel.m in Sources */,
 				1C810A2E16EE5EED0030077C /* SPVideoPlayer.m in Sources */,
@@ -2416,8 +2367,6 @@
 				1C810A4316EE5EED0030077C /* Conversation.m in Sources */,
 				1C810A4416EE5EED0030077C /* Stream.m in Sources */,
 				1C810A4516EE5EED0030077C /* Messages.m in Sources */,
-				1C810A4616EE5EED0030077C /* GroupViewCell.m in Sources */,
-				1C810A4716EE5EED0030077C /* PersonalRollViewCell.m in Sources */,
 				1C810A4816EE5EED0030077C /* CollectionViewGroupsLayout.m in Sources */,
 				1C810A4916EE5EED0030077C /* PageControl.m in Sources */,
 				1C810A4B16EE5EED0030077C /* User.m in Sources */,
@@ -2500,8 +2449,6 @@
 				8E77B3F216CC45D50015D100 /* Conversation.m in Sources */,
 				8E77B3F516CC45D60015D100 /* Stream.m in Sources */,
 				8E77B40116CC45D60015D100 /* Messages.m in Sources */,
-				1CD72EA116CD36CB0045B36F /* GroupViewCell.m in Sources */,
-				1CCCB54616CEA61B00C8C216 /* PersonalRollViewCell.m in Sources */,
 				1CCCB54C16CEECD400C8C216 /* CollectionViewGroupsLayout.m in Sources */,
 				1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */,
 				8EF03BEB16D56D5A0019669F /* User.m in Sources */,
@@ -2531,7 +2478,6 @@
 				1C7B8D5816F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EA16F21E4200225B4E /* FormView.m in Sources */,
 				8E73C58C16F2D9CE0001EF5D /* Video.m in Sources */,
-				8EA9B1E5170B8241004C7601 /* GroupsMenuViewController.m in Sources */,
 				8E7024B91715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BC1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024BF1715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
