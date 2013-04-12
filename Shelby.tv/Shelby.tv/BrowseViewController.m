@@ -587,7 +587,10 @@
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     
-    [self presentViewController:viewControllerToPresent animated:NO completion:nil];
+    [self presentViewController:viewControllerToPresent animated:NO completion:^{
+        [srcImage removeFromSuperview];
+        [cellSrcImage removeFromSuperview];
+    }];
 }
 
 #pragma mark UIScrollViewDelegate Methods
