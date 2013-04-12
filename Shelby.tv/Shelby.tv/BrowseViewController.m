@@ -39,6 +39,8 @@
 
 @property (assign, nonatomic) SecretMode secretMode;
 
+@property (nonatomic) SPVideoReel *videoReel;
+
 - (void)fetchUserNickname;
 
 // TODO: need to port from MeVC
@@ -73,6 +75,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -462,8 +465,11 @@
 #pragma mark - Video Player Launch Methods (Private)
 - (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell
 {
-   
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        if ( ![self videoReel] ) {
+            self.videoReel = [[SPVideoReel alloc] init];
+        }
         
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *videoFrames = nil;
@@ -526,27 +532,29 @@
             
             if ( [videoFrames count] ) {
             
+                [self presentViewController:[self videoReel] fromCell:cell];
+                
                 NSManagedObjectContext *mainThreadContext = [self context];
-                SPVideoReel *reel = nil;
                 
                 if ( groupType == GroupType_CategoryChannel ) { // Category Channel
                     
                     NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    
+                    [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:channel.channelID];
                     
                 } else if ( groupType == GroupType_CategoryRoll ) { // Category Roll
                     
                     NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].row;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
+                    [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:roll.rollID];
                     
                 } else { // Stream, Likes, Personal Roll
-               
-                }
 
-                [self presentViewController:reel fromCell:cell];
+                    [self.videoReel loadWithGroupType:groupType groupTitle:title andVideoFrames:videoFrames];
+                    
+                }
                 
             } else {
                 
