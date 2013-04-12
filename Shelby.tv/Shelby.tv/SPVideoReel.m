@@ -13,8 +13,6 @@
 #import "SPVideoPlayer.h"
 #import "SPVideoScrubber.h"
 #import "DeviceUtilities.h"
-#import "SPCategoryViewCell.h"
-#import "SPLikesCatgoryViewCell.h"
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
 
@@ -36,9 +34,6 @@
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
-
-@property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
-@property (nonatomic) NSString *userNickname; // TODO: refactor out!!
 
 /// Setup Methods
 - (void)setup;
@@ -118,21 +113,10 @@
     [self setup];
 }
 
-- (void)buildViewAndFetchDataSource
-{
-    [self fetchAllCategories];
-    [self fetchUserNickname];
-    
-    [self setup];
-    
-}
-
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [self setCategories:[@[] mutableCopy]];
  
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
@@ -1265,114 +1249,6 @@
     
 }
 
-- (void)launchUserGroup:(NSUInteger)groupNumber
-{
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-
-    if (groupNumber == 0 || groupNumber == 2) {
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) { 
-            NSMethodSignature *streamSignature = [SPVideoReel instanceMethodSignatureForSelector:@selector(launchUserGroup:)];
-            NSInvocation *streamInvocation = [NSInvocation invocationWithMethodSignature:streamSignature];
-            [streamInvocation setTarget:self];
-            [streamInvocation setArgument:&groupNumber atIndex:2];
-            [streamInvocation setSelector:@selector(launchUserGroup:)];
-            [self setInvocationMethod:streamInvocation];
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to access these videos." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
-            [alertView show];
-            return;
-        }
-    }
-    
-    switch (groupNumber) {
-        case 0:
-        { // Stream
-            [self launchStream];
-            
-            break;
-        }
-        case 1:
-        { // Likes
-            NSUInteger likesCount = [dataUtility fetchLikesCount];
-            if ( 0 == likesCount ) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You have no likes." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil, nil];
-                [alertView show];
-                return;
-            } else {
-                [self launchLikes];
-            }
-
-            break;
-        }
-        case 2:
-        { // Personal Roll
-            [self launchPersonalRoll];
-            break;
-        }
-        default:
-            break;
-    }
-
-    [self.overlayView.categoriesCollectionView reloadData];
-}
-
-- (void)launchCategory:(id)category
-{
-    if ([category isKindOfClass:[NSManagedObject class]]) {
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [category objectID];
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        if ([category isMemberOfClass:[Channel class]]) {
-            Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
-            if (!channel) {
-                return;
-            }
-            NSMutableArray *videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
-            [self loadWithGroupType:GroupType_CategoryChannel groupTitle:[channel displayTitle] videoFrames:videoFrames andCategoryID:[channel channelID]];
-        } else if ([category isMemberOfClass:[Roll class]]) {
-            Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
-            if (!roll) {
-                return;
-            }
-            NSMutableArray *videoFrames = [dataUtility fetchFramesInCategoryChannel:[roll rollID]];
-            [self loadWithGroupType:GroupType_CategoryRoll groupTitle:[roll title] videoFrames:videoFrames andCategoryID:[roll rollID]];
-        }
-    }
-    
-    [self.overlayView.categoriesCollectionView reloadData];
-}
-
-- (void)launchStream
-{
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSMutableArray *videoFrames = [dataUtility fetchStreamEntries];
-    [self loadWithGroupType:GroupType_Stream groupTitle:@"Stream" andVideoFrames:videoFrames];
-    [self.overlayView.categoriesCollectionView reloadData];
-}
-
-- (void)launchLikes
-{
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSMutableArray *videoFrames = [dataUtility fetchLikesEntries];
-    [self loadWithGroupType:GroupType_Likes groupTitle:@"Likes" andVideoFrames:videoFrames];
-    [self.overlayView.categoriesCollectionView reloadData];
-}
-
-- (void)launchPersonalRoll
-{
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSMutableArray *videoFrames = [dataUtility fetchPersonalRollEntries];
-    NSString *title = nil;
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
-        title = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
-    } else {
-        title = @"Your .TV";
-    }
-    
-    [self loadWithGroupType:GroupType_PersonalRoll groupTitle:title andVideoFrames:videoFrames];
-    [self.overlayView.categoriesCollectionView reloadData];
-}
-
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -1419,8 +1295,6 @@
     if ( isAdmin ) {
         [self resetSecretVersionButton];
     }
-
-    [self fetchUserNickname];
 }
 
 - (void)authorizationDidNotComplete
@@ -1436,25 +1310,6 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     return [appDelegate context];
-}
-
-- (void)fetchUserNickname
-{
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        User *user = [dataUtility fetchUser];
-        [self setUserNickname:[user nickname]];
-    }
-}
-
-- (void)fetchAllCategories
-{
-    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [self.categories removeAllObjects];
-    [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
-    
-    [self.overlayView.categoriesCollectionView reloadData];
-    
 }
 
 #pragma mark - Secret Methods (Private)
@@ -1522,133 +1377,5 @@
         }
     }
 }
-
-// TODO: factor the data source delegete methods to a model class.
-#pragma mark - UICollectionView Datasource
-- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
-{
-    // KP KP TODO: remove once we have design for FB/Twitter
-    if (section == 2) {
-        return 2;
-    }
-
-    return (0 == section  ? 2 : [self.categories count]);
-}
-
-- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
-{
-#ifdef DEBUG    // KP KP TODO: remove once we have design for FB/Twitter
-    return 3;  // Adding the FB/Twitter channels for now, in debug mode only.
-#else
-    return 2;
-#endif
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    id cell =  nil;
-    if (indexPath.section == 0 && indexPath.row == 1) {
-        cell = (SPLikesCatgoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"SPLikesCatgoryViewCell" forIndexPath:indexPath];
-    } else {
-        cell = (SPCategoryViewCell *)[cv dequeueReusableCellWithReuseIdentifier:@"SPCategoryViewCell" forIndexPath:indexPath];
-    }
-    
-    int row = indexPath.row;
-    NSString *title = nil;
-    
-    // KP KP: TODO - remove once we have design for FB/Twitter
-    if (indexPath.section == 2) {
-        if (row == 0) {
-            title = @"Facebook";
-        } else {
-            title = @"Twitter";
-        }
-    } else if (indexPath.section == 0) { // Me Cards
-        if (row == 0) {
-            title = @"Stream";
-        } else if (row == 1) {
-            title = @"Likes";
-//        } else if (row == 2) {
-//            if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
-//                title = [NSString stringWithFormat:@"%@.shelby.tv", self.userNickname];
-//            } else {
-//                title = @"Your .TV";
-//            }
-        }
-        
-        if ([title isEqualToString:self.groupTitle] || ([title hasSuffix:@".shelby.tv"] && self.groupType == GroupType_PersonalRoll)) {
-            [cell setCurrentCategory:YES];
-        } else {
-            [cell setCurrentCategory:NO];
-        }
-        
-    } else if (indexPath.row < [self.categories count]) {
-        NSManagedObjectContext *context = [self context];
-        NSManagedObjectID *objectID = [(self.categories)[indexPath.row] objectID];
-        Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
-        NSString *channelTitle = [channel displayTitle];
-        if (channel) {
-            title =  [NSString stringWithFormat:@"#%@", channelTitle];
-        }
-        
-        if ([channelTitle isEqualToString:self.groupTitle]) {
-            [cell setCurrentCategory:YES];
-        } else {
-            [cell setCurrentCategory:NO];
-        }
-    }
-
-    if (!title) {
-        title = @"";
-    }
-    
-    [((SPCategoryViewCell *)cell).title setText:title];
-    return cell;
-}
-
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    // KP KP: TODO: remove once we have design for FB/Twitter
-    if (indexPath.section == 2) {
-        // FB & Twitter connect
-
-        if ( 1 ==  indexPath.row ) {
-            
-            [[TwitterHandler sharedInstance] authenticateWithViewController:self];
-            
-        }
-
-        if (indexPath.row == 0) {
-            [[FacebookHandler sharedInstance] openSession:YES];
-        }
-        return;
-    }
-    
-    if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
-        [self launchUserGroup:indexPath.row];
-    } else if ( 1 == indexPath.section) { // Category Channels and Rolls
-        id category = [self.categories objectAtIndex:indexPath.row];
-        [self launchCategory:category];
-    }
-    
-    [self.model rescheduleOverlayTimer];
-    
-}
-
-
-#pragma mark - UIGestureRecognizerDelegate methods
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    CGPoint locationInCollectionView = [gestureRecognizer locationInView:self.overlayView.categoriesCollectionView];
-    if (locationInCollectionView.y >= 0) {
-        return NO;
-    }
-    
-    return YES;
-
-}
-
 
 @end

@@ -60,11 +60,6 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    
-    UINib *cellNib = [UINib nibWithNibName:@"SPCategoryViewCell" bundle:nil];
-    [self.categoriesCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPCategoryViewCell"];
-    UINib *likeCellNib = [UINib nibWithNibName:@"SPLikesCatgoryViewCell" bundle:nil];
-    [self.categoriesCollectionView registerNib:likeCellNib forCellWithReuseIdentifier:@"SPLikesCatgoryViewCell"];
 
     // Customize Borders
     [self.userImageView.layer setBorderWidth:0.5];
@@ -234,37 +229,6 @@
     [UIView animateWithDuration:speed animations:^{
         [self.videoListView setFrame:CGRectMake(0, self.frame.size.height - videoListFrame.size.height , videoListFrame.size.width, videoListFrame.size.height)];
     }];
-}
-
-
-- (IBAction)panView:(id)sender
-{
-    UIPanGestureRecognizer *panGesture = sender;
-    if (![panGesture isKindOfClass:[UIPanGestureRecognizer class]]) {
-        return;
-    }
-    
-    int y = self.videoListView.frame.origin.y;
-    CGPoint translation = [panGesture translationInView:self.videoListView.superview];
-    
-    float yOriginOpen = (self.frame.size.height - self.videoListView.frame.size.height);
-    if ([panGesture state] == UIGestureRecognizerStateBegan || [panGesture state] == UIGestureRecognizerStateChanged) {
-        if (y + translation.y >= 0 && y + translation.y > yOriginOpen) {
-            self.videoListView.frame = CGRectMake(0, y + translation.y, self.videoListView.frame.size.width, self.videoListView.frame.size.height);
-        }
-        [panGesture setTranslation:CGPointZero inView:self.videoListView];
-    } else if ([panGesture state] == UIGestureRecognizerStateEnded) {
-        CGPoint velocity = [panGesture velocityInView:self.videoListView.superview];
-        if (velocity.y < -200) {
-            [self showVideoList:kShelbySPFastSpeed];
-        } else if (velocity.y > 200) {
-            [self hideVideoList:kShelbySPFastSpeed];
-        } else if (kShelbySPVideoHeight - (y + translation.y) > self.videoListView.frame.size.height/2) {
-            [self showVideoList:kShelbySPSlowSpeed];
-        } else {
-            [self hideVideoList:kShelbySPSlowSpeed];
-        }
-    }
 }
 
 - (void)togglePlaylist:(UISwipeGestureRecognizer *)gesture;
