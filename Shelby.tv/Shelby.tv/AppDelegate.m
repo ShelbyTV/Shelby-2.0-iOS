@@ -43,7 +43,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 @property (nonatomic) id <GAITracker> googleTracker;
 @property (nonatomic) NSInvocation *invocationMethod;
 @property (strong) NSMutableArray *dataUtilities;
-@property (strong) SPVideoReel *videoReel;
+@property (strong) BrowseViewController *browseViewController;
 
 /// Setup Methods
 - (void)setupInitialSettings;
@@ -85,8 +85,8 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.videoReel = [[SPVideoReel alloc] init];
-    self.window.rootViewController = self.videoReel;
+    self.browseViewController = [[BrowseViewController alloc] init];
+    self.window.rootViewController = self.browseViewController;
     [self.window makeKeyAndVisible];
     
     // Setup buffer screen to allow categories to be fetched from web and stored locally
@@ -381,7 +381,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
             
             [self removeCategoryLoadingView];
             
-            [self.videoReel buildViewAndFetchDataSource];
+//            [self.videoReel buildViewAndFetchDataSource];
             
         }
     });
@@ -414,7 +414,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
             
             [self removeCategoryLoadingView];
             
-            [self.videoReel buildViewAndFetchDataSource];
+//            [self.videoReel buildViewAndFetchDataSource];
             
         }
     });
