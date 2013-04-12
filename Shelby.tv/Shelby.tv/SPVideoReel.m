@@ -30,7 +30,6 @@
 @property (copy, nonatomic) NSString *categoryID;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
-@property (assign, nonatomic) SecretMode secretMode;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
@@ -70,15 +69,6 @@
 - (IBAction)likeAction:(id)sender;
 - (IBAction)rollAction:(id)sender;
 - (void)rollVideo;
-- (void)launchUserGroup:(NSUInteger)groupNumber;
-- (void)launchCategory:(id)category;
-- (void)launchStream;
-- (void)launchLikes;
-- (void)launchPersonalRoll;
-
-/// Secret Modes
-- (void)resetSecretVersionButton;
-- (void)toggleSecretModes:(id)sender;
 
 @end
 
@@ -268,28 +258,6 @@
         
     }
 
-
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] && ![self.overlayView.versionButton isEnabled] ) {
-
-        /* 
-         Show version button if user
-         - is logged in
-         - is administrator
-         - button was not previously enabled
-         */
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        User *user = [dataUtility fetchUser];
-        BOOL isAdmin = [user admin];
-        
-        if ( isAdmin ) {
-        
-            [self resetSecretVersionButton];
-            
-        }
-        
-    }
-    
 }
 
 - (void)setupVideoPlayers
@@ -683,21 +651,6 @@
     
     [self.model.currentVideoPlayer restartPlayback];
 }
-
-//- (IBAction)beginScrubbing:(id)sender
-//{
-//	[[SPVideoScrubber sharedInstance] beginScrubbing];
-//}
-//
-//- (IBAction)scrub:(id)sender
-//{
-//    [[SPVideoScrubber sharedInstance] scrub];
-//}
-//
-//- (IBAction)endScrubbing:(id)sender
-//{
-//    [[SPVideoScrubber sharedInstance] endScrubbing];
-//}
 
 #pragma mark - Storage Methods (Private)
 - (void)storeIdentifierOfCurrentVideoInStream
@@ -1287,14 +1240,7 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultUserAuthorized];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    User *user = [dataUtility fetchUser];
-    BOOL isAdmin = [user admin];
-    
-    if ( isAdmin ) {
-        [self resetSecretVersionButton];
-    }
+
 }
 
 - (void)authorizationDidNotComplete
@@ -1310,72 +1256,6 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     return [appDelegate context];
-}
-
-#pragma mark - Secret Methods (Private)
-- (void)resetSecretVersionButton
-{
-    [self.overlayView.versionButton setEnabled:YES];
-    [self.overlayView.versionButton addTarget:self action:@selector(toggleSecretModes:) forControlEvents:UIControlEventTouchUpInside];
-    [self setSecretMode:SecretMode_None];
-    [self.overlayView.versionButton setTitle:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion] forState:UIControlStateNormal];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    DLog(@"Offline+View Mode DISABLED!")
-}
-
-- (void)toggleSecretModes:(id)sender
-{
-    
-    /*
-     Each switch statement sets the conditions for the next SecretMode.
-     
-     Example:
-     Entering SecretMode_None sets the condition for SecretMode_Offline.
-     Entering SecretMode_Offline sets the condition for SecretMode_OfflineView.
-     Entering SecretMode_OfflineView sets the condition for SecretMode_None.
-     
-     */
-    
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] && [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] ) {
-        
-        switch ( _secretMode ) {
-                
-            case SecretMode_None: {
-                
-                [self setSecretMode:SecretMode_Offline];
-                [self.overlayView.versionButton setTitle:[NSString stringWithFormat:@"Shelby.tv for iPad v%@-O", kShelbyCurrentVersion] forState:UIControlStateNormal];
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultOfflineModeEnabled];
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                DLog(@"Offline Mode ENABLED!")
-                
-            } break;
-                
-            case SecretMode_Offline: {
-                
-                [self setSecretMode:SecretMode_OfflineView];
-                [self.overlayView.versionButton setTitle:[NSString stringWithFormat:@"Shelby.tv for iPad v%@-OV", kShelbyCurrentVersion] forState:UIControlStateNormal];
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultOfflineModeEnabled];
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyDefaultOfflineViewModeEnabled];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                DLog(@"Offline+View Mode ENABLED!")
-                
-            } break;
-                
-            case SecretMode_OfflineView: {
-                
-                [self setSecretMode:SecretMode_None];
-                [self.overlayView.versionButton setTitle:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion] forState:UIControlStateNormal];
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                DLog(@"Offline+View Mode DISABLED!")
-                
-            } break;
-        }
-    }
 }
 
 @end
