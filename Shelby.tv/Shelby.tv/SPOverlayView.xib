@@ -13,11 +13,8 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
-			<string>IBUICollectionView</string>
-			<string>IBUICollectionViewFlowLayout</string>
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
-			<string>IBUIPanGestureRecognizer</string>
 			<string>IBUIProgressView</string>
 			<string>IBUIScrollView</string>
 			<string>IBUISwipeGestureRecognizer</string>
@@ -343,7 +340,6 @@
 								<string key="NSFrame">{{948, 12}, {56, 21}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -478,7 +474,7 @@
 								<string key="NSFrameSize">{1024, 199}</string>
 								<reference key="NSSuperview" ref="186225105"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="604551120"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="290922202"/>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -487,37 +483,6 @@
 								<bool key="IBUIAlwaysBounceHorizontal">YES</bool>
 								<bool key="IBUIShowsVerticalScrollIndicator">NO</bool>
 								<bool key="IBUIBouncesZoom">NO</bool>
-							</object>
-							<object class="IBUICollectionView" id="604551120">
-								<reference key="NSNextResponder" ref="186225105"/>
-								<int key="NSvFlags">274</int>
-								<array class="NSMutableArray" key="NSSubviews"/>
-								<string key="NSFrame">{{0, 199}, {1024, 50}}</string>
-								<reference key="NSSuperview" ref="186225105"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="721212649"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC42Nzg0MzEzNzI1IDAuNjc4NDMxMzcyNSAwLjY3ODQzMTM3MjUAA</bytes>
-								</object>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<bool key="IBUIMultipleTouchEnabled">YES</bool>
-								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<float key="IBUIMinimumZoomScale">0.0</float>
-								<float key="IBUIMaximumZoomScale">0.0</float>
-								<object class="IBUICollectionViewFlowLayout" key="IBUICollectionViewLayout" id="221204611">
-									<reference key="IBUICollectionView" ref="604551120"/>
-									<int key="IBUIScrollDirection">1</int>
-									<string key="IBUIItemSize">{140, 48}</string>
-									<float key="IBUIMinimumLineSpacing">2</float>
-									<float key="IBUIMinimumInteritemSpacing">2</float>
-									<double key="IBUISectionInset.top">2</double>
-									<double key="IBUISectionInset.bottom">0.0</double>
-									<double key="IBUISectionInset.left">2</double>
-									<double key="IBUISectionInset.right">0.0</double>
-								</object>
-								<reference key="IBUICells" ref="0"/>
 							</object>
 						</array>
 						<string key="NSFrame">{{0, 519}, {1024, 249}}</string>
@@ -560,7 +525,6 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 			</object>
-			<object class="IBUIPanGestureRecognizer" id="868082781"/>
 			<object class="IBUITapGestureRecognizer" id="883596084"/>
 			<object class="IBUISwipeGestureRecognizer" id="635410402">
 				<int key="IBUIDirection">4</int>
@@ -685,14 +649,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">categoriesCollectionView</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="604551120"/>
-					</object>
-					<int key="connectionID">135</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">elapsedTimeLabel</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="1002610958"/>
@@ -777,16 +733,6 @@
 					<int key="connectionID">53</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
-						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="186225105"/>
-						<reference key="destination" ref="868082781"/>
-						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
-						<bool key="addsContentToExistingCollection">YES</bool>
-					</object>
-					<int key="connectionID">145</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">rollAction:</string>
 						<reference key="source" ref="642058558"/>
@@ -822,30 +768,6 @@
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
 					<int key="connectionID">152</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">dataSource</string>
-						<reference key="source" ref="604551120"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">133</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="604551120"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">134</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">panView:</string>
-						<reference key="source" ref="868082781"/>
-						<reference key="destination" ref="191373211"/>
-					</object>
-					<int key="connectionID">146</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -969,7 +891,6 @@
 						<reference key="object" ref="186225105"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="903081563"/>
-							<reference ref="604551120"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">VideolistView</string>
@@ -1028,19 +949,6 @@
 						<string key="objectName">Elapsed Progress View</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">131</int>
-						<reference key="object" ref="604551120"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="221204611"/>
-						</array>
-						<reference key="parent" ref="186225105"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">132</int>
-						<reference key="object" ref="221204611"/>
-						<reference key="parent" ref="604551120"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">113</int>
 						<reference key="object" ref="1002610958"/>
 						<reference key="parent" ref="721212649"/>
@@ -1057,11 +965,6 @@
 						<reference key="object" ref="314233088"/>
 						<reference key="parent" ref="721212649"/>
 						<string key="objectName">Scrubber Touch View</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">144</int>
-						<reference key="object" ref="868082781"/>
-						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">148</int>
@@ -1103,10 +1006,7 @@
 				<string key="119.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="120.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="128.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="132.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="138.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="144.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="148.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="151.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="156.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1158,7 +1058,6 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="airPlayView">UIView</string>
 						<string key="bufferProgressView">UIProgressView</string>
-						<string key="categoriesCollectionView">UICollectionView</string>
 						<string key="categoryTitleLabel">UILabel</string>
 						<string key="elapsedProgressView">UIProgressView</string>
 						<string key="elapsedTimeLabel">UILabel</string>
@@ -1188,10 +1087,6 @@
 						<object class="IBToOneOutletInfo" key="bufferProgressView">
 							<string key="name">bufferProgressView</string>
 							<string key="candidateClassName">UIProgressView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="categoriesCollectionView">
-							<string key="name">categoriesCollectionView</string>
-							<string key="candidateClassName">UICollectionView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="categoryTitleLabel">
 							<string key="name">categoryTitleLabel</string>
@@ -1322,22 +1217,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TopAlignedLabel.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">UICollectionViewFlowLayout</string>
-					<string key="superclassName">UICollectionViewLayout</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/UICollectionViewFlowLayout.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">UICollectionViewLayout</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/UICollectionViewLayout.h</string>
 					</object>
 				</object>
 			</array>

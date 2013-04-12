@@ -11,7 +11,7 @@
 
 @class SPVideoPlayer, SPOverlayView, GroupsMenuViewController;
 
-@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIAlertViewDelegate, AuthorizationDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
+@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIAlertViewDelegate, AuthorizationDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
@@ -27,8 +27,6 @@
                groupTitle:(NSString *)title
               videoFrames:(NSMutableArray *)videoFrames
             andCategoryID:(NSString *)categoryID;
-
-- (void)buildViewAndFetchDataSource;
 
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;

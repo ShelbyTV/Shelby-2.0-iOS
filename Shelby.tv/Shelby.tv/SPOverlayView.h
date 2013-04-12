@@ -10,7 +10,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitleLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *videoListScrollView;
-@property (weak, nonatomic) IBOutlet UICollectionView *categoriesCollectionView;
 @property (weak, nonatomic) IBOutlet UIView *airPlayView; // KP KP: TODO: add this button to nib!
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *videoCaptionLabel;
