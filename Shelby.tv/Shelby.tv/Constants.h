@@ -12,24 +12,24 @@
 #import "Structures.h"
 #import "SPConstants.h"
 
-// Misc.
+/// Misc.
 #define kShelbyCurrentVersion                               [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 
-// NSUserDefaults
+/// NSUserDefaults
 #define kShelbyDefaultUserAuthorized                        @"Shelby User Authorization Stored in NSUserDefaults"
 #define kShelbyDefaultUserIsAdmin                           @"Shelby User Is Administrator"
 #define kShelbyDefaultOfflineModeEnabled                    @"Shelby Offline Mode Enabled"
 #define kShelbyDefaultOfflineViewModeEnabled                @"Shelby View Mode Enabled"
 #define kShelbyDefaultHMACStoredValue                       @"Shelby HMAC Stored Value"
 
-// Notifications
+/// Notifications
 #define kShelbyNotificationUserAuthenticationDidSucceed     @"User Did Successfully Authenticate with Shelby Notification"
 #define kShelbyNotificationUserAuthenticationDidFail        @"User Authentication Failed"
 #define kShelbyNotificationUserSignupDidSucceed             @"User Signup Succeed"
 #define kShelbyNotificationUserSignupDidFail                @"User Signup Failed"
 #define kShelbyNotificationNoConnectivity                   @"No Connectivity"
 
-// Colors
+/// Colors
 #define kShelbyColorBlack                                   [UIColor colorWithHex:@"333" andAlpha:1.0f]
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
 #define kShelbyColorGreen                                   [UIColor colorWithHex:@"6ab843" andAlpha:1.0f]
@@ -42,3 +42,7 @@
 /// Facebook
 #define kShelbyFacebookToken                                @"facebookToken"
 #define kShelbyFacebookUserID                               @"facebookUserID"
+
+/// Twitter
+#define kShelbyTwitterConsumerKey                           @"5DNrVZpdIwhQthCJJXCfnQ"
+#define kShelbyTwitterConsumerSecret                        @"Tlb35nblFFTZRidpu36Uo3z9mfcvSVv1MuZZ19SHaU"

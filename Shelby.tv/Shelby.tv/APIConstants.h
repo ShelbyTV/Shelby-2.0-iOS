@@ -25,7 +25,7 @@
 #define kShelbyAPIPutUnplayableVideo        @"https://api.shelby.tv/v1/video/%@/unplayable?auth_token=%@"
 
 /// GET Rolls
-#define kShelbyAPIGetRollFrames             @"http://api.shelby.tv/v1/roll/%@/frames"
+#define kShelbyAPIGetRollFrames             @"http:x//api.shelby.tv/v1/roll/%@/frames"
 #define kShelbyAPIGetMoreRollFrames         @"http://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
 #define kShelbyAPIGetRollFramesForSync      @"http://api.shelby.tv/v1/roll/%@/frames?limit=%d"
 
@@ -54,5 +54,5 @@
 #define kShelbyAPIPostFrameToFacebook       @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=facebook&text=%@"
 
 /// POST 3rd Party Token
-#define kShelbyAPIPostThirdPartyToken       @"http://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@&secret=%@"
-#define kShelbyAPIPostThirdPartyTokenNoSecret @"http://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@"
+#define kShelbyAPIPostThirdPartyToken           @"http://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@&secret=%@"
+#define kShelbyAPIPostThirdPartyTokenNoSecret   @"http://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@"

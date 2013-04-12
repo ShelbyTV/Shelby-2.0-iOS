@@ -15,6 +15,7 @@
 #import "DeviceUtilities.h"
 #import "SPCategoryViewCell.h"
 #import "SPLikesCatgoryViewCell.h"
+#import "TwitterHandler.h"
 #import "FacebookHandler.h"
 
 @interface SPVideoReel ()
@@ -1612,6 +1613,13 @@
     // KP KP: TODO: remove once we have design for FB/Twitter
     if (indexPath.section == 2) {
         // FB & Twitter connect
+
+        if ( 1 ==  indexPath.row ) {
+            
+            [[TwitterHandler sharedInstance] authenticateWithViewController:self];
+            
+        }
+
         if (indexPath.row == 0) {
             [[FacebookHandler sharedInstance] openSession:YES];
         }
@@ -1620,7 +1628,7 @@
     
     if (0 == indexPath.section) { // User-Specific Groups (Like, Stream, Personal Roll)
         [self launchUserGroup:indexPath.row];
-    } else { // Category Channels and Rolls
+    } else if ( 1 == indexPath.section) { // Category Channels and Rolls
         id category = [self.categories objectAtIndex:indexPath.row];
         [self launchCategory:category];
     }
