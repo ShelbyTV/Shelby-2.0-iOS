@@ -36,5 +36,9 @@
 #define kShelbyColorWhite                                   [UIColor colorWithHex:@"f4f4f4" andAlpha:1.0f]
 
 /// Size
-#define kShelbyFullscreenWidth                             [[UIScreen mainScreen] bounds].size.width
-#define kShelbyFullscreenHeight                            [[UIScreen mainScreen] bounds].size.height
+#define  kShelbyFullscreenWidth                             [[UIScreen mainScreen] bounds].size.width
+#define  kShelbyFullscreenHeight                            [[UIScreen mainScreen] bounds].size.height
+
+/// Facebook
+#define kShelbyFacebookToken                                @"facebookToken"
+#define kShelbyFacebookUserID                               @"facebookUserID"

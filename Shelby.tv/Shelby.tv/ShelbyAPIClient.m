@@ -616,4 +616,32 @@
     [operation start];
 }
 
+#pragma mark - Third Party Token (POST)
+// KP KP: TODO: might want to add more checks: If twitter and there is no secret - error.
++ (void)postThirdPartyToken:(NSString *)provider accountID:(NSString *)accountID token:(NSString *)token andSecret:(NSString *)secret
+{
+    if (!provider || !accountID || !token) {
+        return;
+    }
+    
+    NSString *requestString = nil;
+    if (secret) {
+        requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyToken, provider, accountID, token, secret];
+    } else {
+        requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyTokenNoSecret, provider, accountID, token];
+    }
+    NSURL *requestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setHTTPMethod:@"POST"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        DLog(@"%@ - Shelby Token Swap Succeeded", provider);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        DLog(@"%@ - Shelby Token Swap Failed", provider);
+    }];
+    
+    [operation start];
+}
+
+
 @end

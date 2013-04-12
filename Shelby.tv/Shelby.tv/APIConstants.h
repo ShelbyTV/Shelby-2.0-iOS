@@ -55,3 +55,7 @@
 
 /// POST Twitter
 #define kShelbyAPIPostTokenTwitter          @"http://api.shelby.tv/v1/token?provider_name=twitter&uid=%@&token=%@&secret=%@"
+
+/// POST 3rd Party Token
+#define kShelbyAPIPostThirdPartyToken       @"http://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@&secret=%@"
+#define kShelbyAPIPostThirdPartyTokenNoSecret @"http://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@"

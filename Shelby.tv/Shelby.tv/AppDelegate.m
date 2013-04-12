@@ -15,6 +15,7 @@
 #import "SPVideoPlayer.h"
 #import "SPVideoReel.h"
 #import "Video.h"
+#import "FacebookHandler.h"
 
 // HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
 // HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
@@ -138,6 +139,8 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
         [self pingAllRoutes];
         
     }
+    
+    [[FacebookHandler sharedInstance] handleDidBecomeActive];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -157,6 +160,17 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     [self removeObserver:self forKeyPath:@"dataUtilities"];
 }
 
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    NSString *fbAppID = [NSString stringWithFormat:@"fb%@", [[FacebookHandler sharedInstance] facebookAppID]];
+    
+    if ([[url absoluteString] hasPrefix:fbAppID]) {
+        return [[FacebookHandler sharedInstance] handleOpenURL:url];
+    }
+    
+    return YES;
+}
 #pragma mark - Authentication Methods (Public)
 - (void)userIsAuthorized
 {

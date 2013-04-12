@@ -16,6 +16,15 @@
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
+		1C3D91371714C6DB00105839 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91331714C6CC00105839 /* Accounts.framework */; };
+		1C3D91381714C6DB00105839 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91341714C6CC00105839 /* AdSupport.framework */; };
+		1C3D91391714C6E100105839 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91331714C6CC00105839 /* Accounts.framework */; };
+		1C3D913A1714C6E100105839 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91341714C6CC00105839 /* AdSupport.framework */; };
+		1C3D913B1714C6E700105839 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91331714C6CC00105839 /* Accounts.framework */; };
+		1C3D913C1714C6E700105839 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91341714C6CC00105839 /* AdSupport.framework */; };
+		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
+		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
+		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
@@ -452,6 +461,9 @@
 		1CD5B7C016D421DF00043754 /* missingCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD5B7BE16D421DF00043754 /* missingCard.png */; };
 		1CD72E9E16CD36630045B36F /* GroupViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CD72E9D16CD36630045B36F /* GroupViewCell.xib */; };
 		1CD72EA116CD36CB0045B36F /* GroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD72EA016CD36CB0045B36F /* GroupViewCell.m */; };
+		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
+		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
+		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
@@ -691,6 +703,10 @@
 		1C16A95016E14FCF004ABA41 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
+		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		1C3D91341714C6CC00105839 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
+		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
@@ -756,6 +772,7 @@
 		1CD72E9D16CD36630045B36F /* GroupViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupViewCell.xib; sourceTree = "<group>"; };
 		1CD72E9F16CD36CB0045B36F /* GroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupViewCell.h; sourceTree = "<group>"; };
 		1CD72EA016CD36CB0045B36F /* GroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewCell.m; sourceTree = "<group>"; };
+		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
 		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
 		8E01AFA816E67365000567D4 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -1015,8 +1032,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E6690671716114E0090C934 /* Accounts.framework in Frameworks */,
 				8E669066171611490090C934 /* Social.framework in Frameworks */,
+				1C3D91391714C6E100105839 /* Accounts.framework in Frameworks */,
+				1C3D913A1714C6E100105839 /* AdSupport.framework in Frameworks */,
 				1C8109AE16EE2CBF0030077C /* CoreText.framework in Frameworks */,
 				1C8109AF16EE2CBF0030077C /* MediaPlayer.framework in Frameworks */,
 				1C8109B016EE2CBF0030077C /* QuartzCore.framework in Frameworks */,
@@ -1032,6 +1050,7 @@
 				1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
+				1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1039,8 +1058,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				8E6690651716113C0090C934 /* Accounts.framework in Frameworks */,
 				8E669063171611370090C934 /* Social.framework in Frameworks */,
+=======
+				1C3D91371714C6DB00105839 /* Accounts.framework in Frameworks */,
+				1C3D91381714C6DB00105839 /* AdSupport.framework in Frameworks */,
+>>>>>>> master
 				1C810A6416EE5EED0030077C /* CoreText.framework in Frameworks */,
 				1C810A6516EE5EED0030077C /* MediaPlayer.framework in Frameworks */,
 				1C810A6616EE5EED0030077C /* QuartzCore.framework in Frameworks */,
@@ -1056,6 +1080,7 @@
 				1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
+				1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1063,8 +1088,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				8E669069171611590090C934 /* Accounts.framework in Frameworks */,
 				8E669068171611550090C934 /* Social.framework in Frameworks */,
+=======
+				1C3D913B1714C6E700105839 /* Accounts.framework in Frameworks */,
+				1C3D913C1714C6E700105839 /* AdSupport.framework in Frameworks */,
+>>>>>>> master
 				1C81096B16EE22B70030077C /* CoreText.framework in Frameworks */,
 				8EB3B18C16AF68A5008587FD /* MediaPlayer.framework in Frameworks */,
 				8E285DE7168124FC002A7935 /* QuartzCore.framework in Frameworks */,
@@ -1079,6 +1109,7 @@
 				8EE5FAB81685622900DBEA13 /* Crashlytics.framework in Frameworks */,
 				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
+				1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1122,6 +1153,8 @@
 			children = (
 				1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */,
 				1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */,
+				1C3D91241714C00100105839 /* FacebookHandler.h */,
+				1C3D91251714C00100105839 /* FacebookHandler.m */,
 				1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */,
 				1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */,
 			);
@@ -1229,8 +1262,14 @@
 		8E209710162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				8E6690641716113C0090C934 /* Accounts.framework */,
 				8E669062171611370090C934 /* Social.framework */,
+=======
+				1C3D91331714C6CC00105839 /* Accounts.framework */,
+				1C3D91341714C6CC00105839 /* AdSupport.framework */,
+				1CE56C4E1714BEC40049057F /* FacebookSDK.framework */,
+>>>>>>> master
 				1C81096916EE22AD0030077C /* CoreText.framework */,
 				8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */,
 				8EE5FAB71685622900DBEA13 /* Crashlytics.framework */,
@@ -2364,6 +2403,7 @@
 				8E088710170CD22C00FBBECE /* GroupsMenuViewController.m in Sources */,
 				1C8749D5170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF517136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
+<<<<<<< HEAD
 				8E7024BA1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BD1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C01715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
@@ -2384,6 +2424,9 @@
 				8E7024F01715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F31715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024F91715E71500E8DE46 /* TwitterHandler.m in Sources */,
+=======
+				1C3D91271714C00100105839 /* FacebookHandler.m in Sources */,
+>>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2449,6 +2492,7 @@
 				8E73C58E16F2D9CE0001EF5D /* Video.m in Sources */,
 				1C8749D6170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF617136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
+<<<<<<< HEAD
 				8E7024BB1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BE1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C11715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
@@ -2469,6 +2513,9 @@
 				8E7024F11715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F41715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024FA1715E71500E8DE46 /* TwitterHandler.m in Sources */,
+=======
+				1C3D91281714C00100105839 /* FacebookHandler.m in Sources */,
+>>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2534,6 +2581,7 @@
 				8EA9B1E5170B8241004C7601 /* GroupsMenuViewController.m in Sources */,
 				1C8749D4170DECA200397144 /* SPCategoryViewCell.m in Sources */,
 				1CB6ABF417136AC30061914D /* SPLikesCatgoryViewCell.m in Sources */,
+<<<<<<< HEAD
 				8E7024B91715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BC1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024BF1715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
@@ -2554,6 +2602,9 @@
 				8E7024EF1715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F21715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024F81715E71500E8DE46 /* TwitterHandler.m in Sources */,
+=======
+				1C3D91261714C00100105839 /* FacebookHandler.m in Sources */,
+>>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2580,6 +2631,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2594,6 +2646,22 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					CoreText,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					Foundation,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "Shelby.tv copy";
 				PROVISIONING_PROFILE = "";
@@ -2611,6 +2679,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2625,6 +2694,22 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					CoreText,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					Foundation,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "Shelby.tv copy";
 				PROVISIONING_PROFILE = "";
@@ -2643,6 +2728,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2652,6 +2738,22 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					CoreText,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					Foundation,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "Shelby.tv copy";
 				PROVISIONING_PROFILE = "";
@@ -2671,6 +2773,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2680,6 +2783,22 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					CoreText,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					Foundation,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "Shelby.tv copy";
 				PROVISIONING_PROFILE = "";
@@ -2757,6 +2876,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2771,6 +2891,22 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					CoreText,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					Foundation,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2788,6 +2924,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Shelby.tv\"",
 					"\"$(SRCROOT)/Library/HockeySDK-iOS/HockeySDK.embeddedframework\"",
+					"\"$(SRCROOT)/Library\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
@@ -2802,6 +2939,22 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					CoreText,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					Foundation,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
