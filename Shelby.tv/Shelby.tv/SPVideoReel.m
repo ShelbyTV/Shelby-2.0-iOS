@@ -27,6 +27,7 @@
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (nonatomic) NSMutableArray *playableVideoPlayers;
 @property (copy, nonatomic) NSString *categoryID;
+@property (assign, nonatomic) NSUInteger *videoStartIndex;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 
@@ -65,6 +66,11 @@
 - (IBAction)rollAction:(id)sender;
 - (void)rollVideo;
 
+/// Gesture Methods
+- (void)upAction:(UISwipeGestureRecognizer *)gestureRecognizer;
+- (void)downAction:(UISwipeGestureRecognizer *)gestureRecognizer;
+- (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer;
+
 @end
 
 @implementation SPVideoReel 
@@ -79,21 +85,56 @@
 }
 
 #pragma mark - Initialization
+- (id)initWithGroupType:(GroupType)groupType
+             groupTitle:(NSString *)groupTitle
+            videoFrames:(NSMutableArray *)videoFrames
+        videoStartIndex:(NSUInteger)videoStartIndex
+          andCategoryID:(NSString *)categoryID
+{
+    self = [self initWithGroupType:groupType
+                        groupTitle:groupTitle
+                       videoFrames:videoFrames
+                andVideoStartIndex:videoStartIndex];
+    
+    if (self) {
+        _categoryID = categoryID;
+    }
+    
+    return self;
+}
+
+- (id)initWithGroupType:(GroupType)groupType
+             groupTitle:(NSString *)groupTitle
+            videoFrames:(NSMutableArray *)videoFrames
+     andVideoStartIndex:(NSUInteger)videoStartIndex
+{
+    self = [super init];
+    if (self) {
+        _groupType = groupType;
+        _groupTitle = groupTitle;
+        _videoFrames = videoFrames;
+        _videoStartIndex = videoStartIndex;
+        [self setup];
+    }
+    
+    return self;
+}
+
 - (void)loadWithGroupType:(GroupType)groupType
-               groupTitle:(NSString *)title
+               groupTitle:(NSString *)groupTitle
               videoFrames:(NSMutableArray *)videoFrames
             andCategoryID:(NSString *)categoryID
 {
     [self setCategoryID:categoryID];
-    [self loadWithGroupType:groupType groupTitle:title andVideoFrames:videoFrames];
+    [self loadWithGroupType:groupType groupTitle:groupTitle andVideoFrames:videoFrames];
 }
 
 - (void)loadWithGroupType:(GroupType)groupType
-               groupTitle:(NSString *)title
+               groupTitle:(NSString *)groupTitle
            andVideoFrames:(NSMutableArray *)videoFrames
 {
     [self setGroupType:groupType];
-    [self setGroupTitle:title];
+    [self setGroupTitle:groupTitle];
     [self setupVideoFrames:videoFrames];
     [self setup];
 }
@@ -118,8 +159,6 @@
                                withAction:@"User did launch playlist"
                                 withLabel:_groupTitle
                                 withValue:nil];
-
-    [self purgeVideoPlayerInformationFromPreviousVideoGroup];
     
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
     [self setupVariables];
@@ -323,14 +362,17 @@
         [self.view addGestureRecognizer:self.toggleOverlayGesuture];
 
         // Playlist Gestures
-        UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
+        UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(upAction:)];
         upGesture.direction = UISwipeGestureRecognizerDirectionUp;
         [self.view addGestureRecognizer:upGesture];
         
-        UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlaylist:)];
+        UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(downAction:)];
         downGesture.direction = UISwipeGestureRecognizerDirectionDown;
         [self.view addGestureRecognizer:downGesture];
 
+        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
+        [self.view addGestureRecognizer:pinchGesture];
+        
     }
 }
 
@@ -385,6 +427,22 @@
     }
 }
 
+#pragma mark - Storage Methods (Private)
+- (void)storeIdentifierOfCurrentVideoInStream
+{
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
+    if (!objectID) {
+        return;
+    }
+    
+    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    if (!videoFrame) {
+        return;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kShelbySPCurrentVideoStreamID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 #pragma mark - Update Methods (Public)
 - (void)extractVideoForVideoPlayer:(NSUInteger)position
@@ -401,24 +459,391 @@
     if (!videoFrame) {
         return;
     }
+    
     if ( position < _model.numberOfVideos ) {
-        
         if ([videoFrame.video offlineURL] && [[videoFrame.video offlineURL] length] > 0 ) { // Load player from disk if video was previously downloaded
-            
             [player loadVideoFromDisk];
-            
         } else { // Queue video for mp4 extraction
-            
             [player queueVideo];
+        }
+    } 
+}
+
+#pragma mark -  Update Methods (Private)
+- (void)currentVideoDidChangeToVideo:(NSUInteger)position
+{
+    
+    // Post notification (to rollViews that may have a keyboard loaded in view)
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidSwipeToNextVideo object:nil];
+    
+    // Disable timer
+    [self.model.overlayTimer invalidate];
+    
+    // Show Overlay
+    [self.overlayView showOverlayView];
+    
+    // Pause current videoPlayer
+    [self.model.currentVideoPlayer pause];
+    
+    // Stop observing video for videoScrubber
+    [[SPVideoScrubber sharedInstance] stopObserving];
+    
+    // Reset currentVideoPlayer reference after scrolling has finished
+    self.model.currentVideo = position;
+    self.model.currentVideoPlayer = (self.videoPlayers)[position];
+    
+    // If videoReel is instance of Stream, store currentVideoID
+    if ( _groupType == GroupType_Stream ) {
+        
+        [self storeIdentifierOfCurrentVideoInStream];
+        
+    }
+    
+    // Deal with playback methods & UI of current and previous video
+    [self updatePlaybackUI];
+    
+    // Clear old values on infoCard
+    [self.overlayView.videoTitleLabel setText:nil];
+    [self.overlayView.videoCaptionLabel setText:nil];
+    [self.overlayView.nicknameLabel setText:nil];
+    [self.overlayView.userImageView setImage:nil];
+    
+    // Reference NSManageObjectContext
+    NSManagedObjectContext *context = [self.appDelegate context];
+    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
+    if (!objectID) {
+        return;
+    }
+    
+    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+    if (!videoFrame) {
+        return;
+    }
+    // Set new values on infoPanel
+    self.overlayView.videoTitleLabel.text = videoFrame.video.title;
+    
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    self.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
+    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
+    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
+                                 forImageView:_overlayView.userImageView
+                              withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
+                               andContentMode:UIViewContentModeScaleAspectFit];
+    
+    
+    // Queue current and next 3 videos
+    [self queueMoreVideos:position];
+    
+}
+
+- (void)updatePlaybackUI
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.overlayView.elapsedProgressView setProgress:0.0f];
+        [self.overlayView.bufferProgressView setProgress:0.0f];
+        [self.overlayView.elapsedTimeLabel setText:@""];
+        [self.overlayView.totalDurationLabel setText:@""];
+        
+        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
+            
+            [self.model.currentVideoPlayer play];
+            
+            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
+
+                [self.overlayView.restartPlaybackButton setHidden:NO];
+                
+            } else { // Playable video DID NOT finish playing
+                
+                [self.overlayView.restartPlaybackButton setHidden:YES];
+                
+            }
+            
+        } else { // Video IS NOT Playable
+            
+            [self.overlayView.restartPlaybackButton setHidden:YES];
             
         }
+        
+    });
     
-    } else {
-    
-        // Do nothing
-    
+}
+
+- (void)queueMoreVideos:(NSUInteger)position
+{
+    if ( [self.videoPlayers count] ) {
+        // For all iPads
+        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+        [self extractVideoForVideoPlayer:position]; // Load video for current visible view
+        if (position + 1 < self.model.numberOfVideos) {
+            [self extractVideoForVideoPlayer:position+1];
+        }
+        
+        // iPad 3 or better (e.g., device with more RAM and better processor)
+        if ([[UIScreen mainScreen] isRetinaDisplay]) {
+            if (position + 2 < self.model.numberOfVideos) {
+                [self extractVideoForVideoPlayer:position+2];
+            }
+        }
     }
 }
+
+- (void)fetchOlderVideos:(NSUInteger)position
+{
+    
+    if ( [self.moreVideoFrames count] ) { // Load older videos from Database
+        
+        [self dataSourceShouldUpdateFromLocalArray];
+        
+    } else { // Get older videos from Web
+        
+        if ( position >= _model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+            
+            self.fetchingOlderVideos = YES;
+            
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            
+            switch ( _groupType ) {
+                    
+                case GroupType_Stream: {
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
+                    
+                } break;
+                    
+                case GroupType_Likes: {
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFramesInLikes:numberToString];
+                    
+                } break;
+                    
+                case GroupType_PersonalRoll: {
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
+                    
+                } break;
+                    
+                case GroupType_CategoryChannel: {
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:_categoryID];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryChannel:_categoryID];
+                    
+                } break;
+                    
+                case GroupType_CategoryRoll: {
+                    
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:_categoryID];
+                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:_categoryID];
+                    
+                    
+                } break;
+            }
+        }
+    }
+}
+
+- (void)dataSourceShouldUpdateFromLocalArray
+{
+    
+    if ( [self.moreVideoFrames count] > 20 ) { // If there are more than 20 frames in videoFrames
+        
+        NSArray *tempMoreVideoFrames = [NSArray arrayWithArray:_moreVideoFrames];
+        
+        for ( NSUInteger i = 0; i<20; i++ ) {
+            
+            [self.videoFrames addObject:[tempMoreVideoFrames objectAtIndex:i]];
+            [self.moreVideoFrames removeObjectAtIndex:0];
+            
+        }
+        
+    } else { // If there are <= 20 frames in videoFrames
+        
+        [self.videoFrames addObjectsFromArray:_moreVideoFrames];
+        [self.moreVideoFrames removeAllObjects];
+        
+    }
+    
+    [self dataSourceDidUpdate];
+    
+}
+
+- (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification
+{
+    
+    if ( [self fetchingOlderVideos] && ![self loadingOlderVideos] ) {
+        
+        [self setLoadingOlderVideos:YES];
+        
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
+        if (!lastFramedObjectID) {
+            return;
+        }
+        Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
+        if (!lastFrame) {
+            return;
+        }
+        NSDate *date = lastFrame.timestamp;
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        NSMutableArray *olderFramesArray = [@[] mutableCopy];
+        
+        switch ( _groupType ) {
+                
+            case GroupType_Likes:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreLikesEntriesAfterDate:date]];
+            } break;
+                
+            case GroupType_PersonalRoll:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
+            } break;
+                
+            case GroupType_Stream:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+            } break;
+                
+            case GroupType_CategoryChannel:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:_categoryID afterDate:date]];
+            } break;
+                
+            case GroupType_CategoryRoll:{
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:_categoryID afterDate:date]];
+            } break;
+                
+        }
+        
+        // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
+        if ( [olderFramesArray count] ) {
+            
+            Frame *firstFrame = (Frame *)olderFramesArray[0];
+            NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
+            if (!firstFrameObjectID) {
+                return;
+            }
+            
+            firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
+            if (!firstFrame) {
+                return;
+            }
+            if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
+                [olderFramesArray removeObject:firstFrame];
+            }
+            
+            // Add deduplicated frames from olderFramesArray to videoFrames
+            [self.videoFrames addObjectsFromArray:olderFramesArray];
+            
+            [self dataSourceDidUpdate];
+            
+        } else {
+            
+            /*
+             
+             No older videos fetched.
+             Don't rest flags to avoid unncessary API calls, since they'll return no older frames.
+             
+             */
+        }
+    }
+}
+
+- (void)dataSourceDidUpdate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // Update variables
+        NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
+        self.model.numberOfVideos = [self.videoFrames count];
+        
+        // Update videoScrollView and videoListScrollView
+        for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _model.numberOfVideos; ++i ) {
+            
+            if ( [self.videoFrames count] >= i ) {
+                
+                // videoScrollView
+                NSManagedObjectContext *context = [self.appDelegate context];
+                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+                if (!objectID) {
+                    continue;
+                }
+                Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+                if (!videoFrame) {
+                    return;
+                }
+                CGRect viewframe = [self.videoScrollView frame];
+                viewframe.origin.x = viewframe.size.width * i;
+                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
+                
+                // Update UI on Main Thread
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    // Reference _videoFrames[i] on main thread
+                    NSManagedObjectContext *context = [self.appDelegate context];
+                    if (!self.videoFrames || [self.videoFrames count] <= i) {
+                        return;
+                    }
+                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+                    if (!objectID) {
+                        return ;
+                    }
+                    Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+                    if (!mainQueuevideoFrame) {
+                        return;
+                    }
+                    // Update scrollViews
+                    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
+                    [self.videoPlayers addObject:player];
+                    [self.videoScrollView addSubview:player.view];
+                    [self.videoScrollView setNeedsDisplay];
+                    
+                    // Set flags
+                    [self setFetchingOlderVideos:NO];
+                    [self setLoadingOlderVideos:NO];
+                });
+                
+            }
+            
+        }
+    });
+}
+
+- (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification *)notification
+{
+    
+    // Position after unloadable video (e.g., next video's position)
+    NSUInteger position = _model.currentVideo + 1;
+    
+    if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
+        NSString *skippedVideoID = [notification object];
+        if (![skippedVideoID isKindOfClass:[NSString class]]) {
+            skippedVideoID = nil;
+        }
+        
+        NSManagedObjectContext *context = [self.appDelegate context];
+        NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
+        Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
+        if (!currentVideoFrame) {
+            return;
+        }
+        NSString *currentVideoID = [currentVideoFrame videoID];
+        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
+            CGFloat videoX = kShelbySPVideoWidth * position;
+            CGFloat videoY = _videoScrollView.contentOffset.y;
+            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
+            [self currentVideoDidChangeToVideo:position];
+        } else { // Load next video, (but do not scroll)
+            [self extractVideoForVideoPlayer:position];
+        }
+    }
+}
+
 
 - (void)currentVideoDidFinishPlayback
 {
@@ -434,11 +859,20 @@
     }
 }
 
-- (IBAction)playButtonAction:(id)sender
+#pragma mark - Action Methods (Public)
+- (void)restartPlaybackButtonAction:(id)sender
 {
-    [self.model.currentVideoPlayer togglePlayback:self];
+    // Send event to Google Analytics
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+                               withAction:@"Playback toggled via restart button"
+                                withLabel:_groupTitle
+                                withValue:nil];
+    
+    [self.model.currentVideoPlayer restartPlayback];
 }
 
+#pragma mark - Action Methods (Private)
 - (IBAction)shareButtonAction:(id)sender
 {
     // Disable overlayTimer
@@ -506,410 +940,22 @@
     [self.model.currentVideoPlayer roll];    
 }
 
-- (void)restartPlaybackButtonAction:(id)sender
-{
-    // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                               withAction:@"Playback toggled via restart button"
-                                withLabel:_groupTitle
-                                withValue:nil];
-    
-    [self.model.currentVideoPlayer restartPlayback];
-}
-
-#pragma mark - Storage Methods (Private)
-- (void)storeIdentifierOfCurrentVideoInStream
-{
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
-    if (!objectID) {
-        return;
-    }
-
-    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    if (!videoFrame) {
-        return;
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kShelbySPCurrentVideoStreamID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
-#pragma mark -  Update Methods (Private)
-- (void)currentVideoDidChangeToVideo:(NSUInteger)position
+#pragma mark - Gesutre Methods (Private)
+- (void)upAction:(UISwipeGestureRecognizer *)gestureRecognizer
 {
     
-    // Post notification (to rollViews that may have a keyboard loaded in view)
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidSwipeToNextVideo object:nil];
-    
-    // Disable timer
-    [self.model.overlayTimer invalidate];
-    
-    // Show Overlay
-    [self.overlayView showOverlayView];
-    
-    // Pause current videoPlayer
-    [self.model.currentVideoPlayer pause];
-    
-    // Stop observing video for videoScrubber
-    [[SPVideoScrubber sharedInstance] stopObserving];
-
-    // Reset currentVideoPlayer reference after scrolling has finished
-    self.model.currentVideo = position;
-    self.model.currentVideoPlayer = (self.videoPlayers)[position];
-    
-    // If videoReel is instance of Stream, store currentVideoID
-    if ( _groupType == GroupType_Stream ) {
-        
-        [self storeIdentifierOfCurrentVideoInStream];
-        
-    }
-    
-    // Deal with playback methods & UI of current and previous video
-    [self updatePlaybackUI];
-    
-    // Clear old values on infoCard
-    [self.overlayView.videoTitleLabel setText:nil];
-    [self.overlayView.videoCaptionLabel setText:nil];
-    [self.overlayView.nicknameLabel setText:nil];
-    [self.overlayView.userImageView setImage:nil];
-    
-    // Reference NSManageObjectContext
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
-    if (!objectID) {
-        return;
-    }
-
-    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    if (!videoFrame) {
-        return;
-    }
-    // Set new values on infoPanel
-    self.overlayView.videoTitleLabel.text = videoFrame.video.title;
-    
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    self.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
-    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
-    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
-                                 forImageView:_overlayView.userImageView
-                          withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
-                               andContentMode:UIViewContentModeScaleAspectFit];
-    
-    
-    // Queue current and next 3 videos
-    [self queueMoreVideos:position];
-    
 }
 
-- (void)updatePlaybackUI
-{    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self.overlayView.elapsedProgressView setProgress:0.0f];
-        [self.overlayView.bufferProgressView setProgress:0.0f];
-        [self.overlayView.elapsedTimeLabel setText:@""];
-        [self.overlayView.totalDurationLabel setText:@""];
-        
-        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
-            
-            [self.model.currentVideoPlayer play];
-            
-            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
-                
-                [self.overlayView.restartPlaybackButton setHidden:NO];
-                
-            } else { // Playable video DID NOT finish playing
-                
-                [self.overlayView.restartPlaybackButton setHidden:YES];
-                
-            }
-            
-        } else { // Video IS NOT Playable
-            
-            [self.overlayView.restartPlaybackButton setHidden:YES];
-            
-        }
-        
-    });
-
-}
-
-- (void)queueMoreVideos:(NSUInteger)position
-{
-    if ( [self.videoPlayers count] ) {
-        // For all iPads
-        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-        [self extractVideoForVideoPlayer:position]; // Load video for current visible view
-        if (position + 1 < self.model.numberOfVideos) {
-            [self extractVideoForVideoPlayer:position+1];
-        }
-        
-        // iPad 3 or better (e.g., device with more RAM and better processor)
-        if ([[UIScreen mainScreen] isRetinaDisplay]) {
-            if (position + 2 < self.model.numberOfVideos) {
-                [self extractVideoForVideoPlayer:position+2];
-            }
-        } 
-    }
-}
-
-- (void)fetchOlderVideos:(NSUInteger)position
+- (void)downAction:(UISwipeGestureRecognizer *)gestureRecognizer
 {
     
-    if ( [self.moreVideoFrames count] ) { // Load older videos from Database
-        
-        [self dataSourceShouldUpdateFromLocalArray];
-        
-    } else { // Get older videos from Web
-    
-        if ( position >= _model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
-            
-            self.fetchingOlderVideos = YES;
-            
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-            
-            switch ( _groupType ) {
-                    
-                case GroupType_Stream: {
-                    
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
-                    
-                } break;
-                    
-                case GroupType_Likes: {
-                    
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFramesInLikes:numberToString];
-                    
-                } break;
-                    
-                case GroupType_PersonalRoll: {
-                    
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
-                    
-                } break;
-                    
-                case GroupType_CategoryChannel: {
-                    
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:_categoryID];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryChannel:_categoryID];
-
-                } break;
-                    
-                case GroupType_CategoryRoll: {
-                    
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:_categoryID];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:_categoryID];
-                    
-                    
-                } break;
-            }
-        }
-    }
 }
 
-- (void)dataSourceShouldUpdateFromLocalArray
+- (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
 {
-    
-    if ( [self.moreVideoFrames count] > 20 ) { // If there are more than 20 frames in videoFrames
-        
-        NSArray *tempMoreVideoFrames = [NSArray arrayWithArray:_moreVideoFrames];
-        
-        for ( NSUInteger i = 0; i<20; i++ ) {
-            
-            [self.videoFrames addObject:[tempMoreVideoFrames objectAtIndex:i]];
-            [self.moreVideoFrames removeObjectAtIndex:0];
-            
-        }
-        
-    } else { // If there are <= 20 frames in videoFrames
-        
-        [self.videoFrames addObjectsFromArray:_moreVideoFrames];
-        [self.moreVideoFrames removeAllObjects];
-        
-    }
-
-    [self dataSourceDidUpdate];
-    
+    [self purgeVideoPlayerInformationFromPreviousVideoGroup];
 }
 
-- (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification
-{
-    
-    if ( [self fetchingOlderVideos] && ![self loadingOlderVideos] ) {
-    
-        [self setLoadingOlderVideos:YES];
-        
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
-        if (!lastFramedObjectID) {
-            return;
-        }
-        Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
-        if (!lastFrame) {
-            return;
-        }
-        NSDate *date = lastFrame.timestamp;
-    
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSMutableArray *olderFramesArray = [@[] mutableCopy];
-        
-        switch ( _groupType ) {
-                
-            case GroupType_Likes:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreLikesEntriesAfterDate:date]];
-            } break;
-                
-            case GroupType_PersonalRoll:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
-            } break;
-        
-            case GroupType_Stream:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
-            } break;
-                
-            case GroupType_CategoryChannel:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:_categoryID afterDate:date]];
-            } break;
-                
-            case GroupType_CategoryRoll:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:_categoryID afterDate:date]];
-            } break;
-                
-        }
-        
-        // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
-        if ( [olderFramesArray count] ) {
-
-            Frame *firstFrame = (Frame *)olderFramesArray[0];
-            NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
-            if (!firstFrameObjectID) {
-                return;
-            }
-
-            firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
-            if (!firstFrame) {
-                return;
-            }
-            if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
-                [olderFramesArray removeObject:firstFrame];
-            }
-            
-            // Add deduplicated frames from olderFramesArray to videoFrames
-            [self.videoFrames addObjectsFromArray:olderFramesArray];
-            
-            [self dataSourceDidUpdate];
-            
-        } else {
-            
-            /*
-             
-             No older videos fetched.
-             Don't rest flags to avoid unncessary API calls, since they'll return no older frames.
-             
-             */
-        }
-    }
-}
-
-- (void)dataSourceDidUpdate
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // Update variables
-        NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
-        self.model.numberOfVideos = [self.videoFrames count];
-        
-        // Update videoScrollView and videoListScrollView
-        for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _model.numberOfVideos; ++i ) {
-
-            if ( [self.videoFrames count] >= i ) {
-                
-                // videoScrollView
-                NSManagedObjectContext *context = [self.appDelegate context];
-                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-                if (!objectID) {
-                    continue;
-                }
-                Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-                if (!videoFrame) {
-                    return;
-                }
-                CGRect viewframe = [self.videoScrollView frame];
-                viewframe.origin.x = viewframe.size.width * i;
-                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-
-                // Update UI on Main Thread
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    // Reference _videoFrames[i] on main thread
-                    NSManagedObjectContext *context = [self.appDelegate context];
-                    if (!self.videoFrames || [self.videoFrames count] <= i) {
-                        return;
-                    }
-                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-                    if (!objectID) {
-                        return ;
-                    }
-                    Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-                    if (!mainQueuevideoFrame) {
-                        return;
-                    }
-                    // Update scrollViews
-                    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
-                    [self.videoPlayers addObject:player];
-                    [self.videoScrollView addSubview:player.view];
-                    [self.videoScrollView setNeedsDisplay];
-                    
-                    // Set flags
-                    [self setFetchingOlderVideos:NO];
-                    [self setLoadingOlderVideos:NO];
-                });
-                
-            }
-            
-        }
-    });
-}
-
-- (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification *)notification
-{
-    
-    // Position after unloadable video (e.g., next video's position)
-    NSUInteger position = _model.currentVideo + 1;
-
-    if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
-        NSString *skippedVideoID = [notification object];
-        if (![skippedVideoID isKindOfClass:[NSString class]]) {
-            skippedVideoID = nil;
-        }
-        
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
-        Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
-        if (!currentVideoFrame) {
-            return;
-        }
-        NSString *currentVideoID = [currentVideoFrame videoID];
-        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
-            CGFloat videoX = kShelbySPVideoWidth * position;
-            CGFloat videoY = _videoScrollView.contentOffset.y;
-            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-            [self currentVideoDidChangeToVideo:position];
-        } else { // Load next video, (but do not scroll)
-            [self extractVideoForVideoPlayer:position];
-        }
-    }
-}
 
 - (void)purgeVideoPlayerInformationFromPreviousVideoGroup
 {
@@ -922,18 +968,19 @@
     // Remove references on model
     [self.model destroyModel];
     
-    // Stop residual audio playback (this shouldn't be happening to begin with)
+    // Remove videoPlayers
     [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
     [self.videoPlayers removeAllObjects];
     self.videoPlayers = nil;
     
+    // Remove playableVideoPlayers (e.g., videoPlayers that are stored in local cache)
     [self.playableVideoPlayers makeObjectsPerformSelector:@selector(pause)];
     [self.playableVideoPlayers removeAllObjects];
     self.playableVideoPlayers = nil;
     
     [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-//    [self.videoScrollView removeFromSuperview];
-//    self.videoScrollView = nil;
+    [self.videoScrollView removeFromSuperview];
+    self.videoScrollView = nil;
 
     // Instantiate dataUtility for cleanup
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -943,6 +990,9 @@
     
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
     [dataUtility removeAllVideoExtractionURLReferences];
+    
+    // Dismiss
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UIScrollViewDelegate Methods
@@ -971,24 +1021,6 @@
                                 withLabel:_groupTitle
                                 withValue:nil];
 
-}
-
-#pragma mark - UIAlertViewDelegate Methods
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-
-    } else {
-        [self setInvocationMethod:nil];
-    }
-}
-
-#pragma mark - Private Methods
-- (NSManagedObjectContext *)context
-{
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    return [appDelegate context];
 }
 
 @end

@@ -11,7 +11,7 @@
 
 @class SPVideoPlayer, SPOverlayView, GroupsMenuViewController;
 
-@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
+@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
@@ -19,12 +19,23 @@
 @property (copy, nonatomic) NSString *groupTitle;
 @property (nonatomic) GroupsMenuViewController *groupsMenuViewController;
 
+- (id)initWithGroupType:(GroupType)groupType
+             groupTitle:(NSString *)groupTitle
+            videoFrames:(NSMutableArray *)videoFrames
+     andVideoStartIndex:(NSUInteger)videoStartIndex;
+
+- (id)initWithGroupType:(GroupType)groupType
+             groupTitle:(NSString *)groupTitle
+            videoFrames:(NSMutableArray *)videoFrames
+        videoStartIndex:(NSUInteger)videoStartIndex
+          andCategoryID:(NSString *)categoryID;
+
 - (void)loadWithGroupType:(GroupType)groupType
-               groupTitle:(NSString *)title
+               groupTitle:(NSString *)groupTitle
            andVideoFrames:(NSMutableArray *)videoFrames;
 
 - (void)loadWithGroupType:(GroupType)groupType
-               groupTitle:(NSString *)title
+               groupTitle:(NSString *)groupTitle
               videoFrames:(NSMutableArray *)videoFrames
             andCategoryID:(NSString *)categoryID;
 
@@ -35,6 +46,7 @@
 /// Storage Methods
 - (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player;
 
+/// Action Methods
 - (IBAction)restartPlaybackButtonAction:(id)sender;
 
 @end
