@@ -64,7 +64,11 @@
 - (void)updateTwitterToggle
 {
     if (self.rollView && self.rollView.twitterButton && [self.rollView.twitterButton isKindOfClass:[UIButton class]]) {
-//        [self.rollView.twitterButton setSelected:([])];
+        
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        BOOL connected = user.twitterConnected;
+        [self.rollView.twitterButton setSelected:(connected)];
     }
 }
 
