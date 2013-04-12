@@ -26,7 +26,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet PageControl *pageControl;
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (assign, nonatomic) BOOL isLoggedIn;
@@ -52,8 +51,6 @@
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated;
 
-/// Page Control
-- (IBAction)goToPage:(id)sender;
 
 /// Authentication Methods
 - (void)loginAction;
@@ -107,8 +104,6 @@
     cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
     
-    [self.pageControl setNumberOfPages:1];
-
     [self fetchAllCategories];
 }
 
@@ -122,14 +117,6 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     }
 
-}
-
-#pragma mark - Public Methods
-- (void)resetView
-{
-    NSUInteger displayPage = ([self isLoggedIn] ? 0 : 1);
-    [self.pageControl setCurrentPage:displayPage];
-    [self scrollCollectionViewToPage:displayPage animated:YES];
 }
 
 #pragma mark - Private Methods
@@ -156,9 +143,6 @@
     [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
     [self.collectionView reloadData];
-
-    NSUInteger pages = [(CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout numberOfPages];
-    [self.pageControl setNumberOfPages:pages];
 }
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
@@ -171,17 +155,6 @@
     [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
     [self.versionLabel setText:[NSString stringWithFormat:@"Shelby.tv for iPad v%@", kShelbyCurrentVersion]];
     [self.versionLabel setTextColor:kShelbyColorBlack];
-}
-
-#pragma mark - PageControl Methods
-- (IBAction)goToPage:(id)sender
-{
-    NSInteger page = self.pageControl.currentPage;
-    
-    // Next line is necessary, otherwise, the custom page control images won't update
-    [self.pageControl setCurrentPage:page];
-    
-    [self scrollCollectionViewToPage:page animated:YES];
 }
 
 // TODO: factor the data source delegete methods to a model class.
@@ -591,18 +564,6 @@
         [srcImage removeFromSuperview];
         [cellSrcImage removeFromSuperview];
     }];
-}
-
-#pragma mark UIScrollViewDelegate Methods
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    NSArray *visibleCells = [self.collectionView visibleCells];
-    if ([visibleCells count] > 0) {
-        NSIndexPath *firstCell = [self.collectionView indexPathForCell:visibleCells[0]];
-        int numberOfCardsInSectionPage = (firstCell.section == 0 ? kShelbyCollectionViewNumberOfCardsInMeSectionPage : kShelbyCollectionViewNumberOfCardsInGroupSectionPage);
-        int page = (firstCell.row / numberOfCardsInSectionPage) + firstCell.section;
-        [self.pageControl setCurrentPage:page];
-    }
 }
 
 #pragma mark - UIAlertViewDelegate Methods

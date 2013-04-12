@@ -18,6 +18,5 @@
 
 /// DataSource Methods
 - (void)fetchAllCategories;
-- (void)resetView; // To be called when PageControl and CollectioView need to be reset according to user login status
 
 @end
