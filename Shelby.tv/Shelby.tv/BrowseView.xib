@@ -45,6 +45,7 @@
 						<string key="NSFrameSize">{1024, 714}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="56253786"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="439516707">
 							<int key="NSColorSpace">3</int>
@@ -65,7 +66,7 @@
 						<float key="IBUIMaximumZoomScale">0.0</float>
 						<object class="IBUICollectionViewFlowLayout" key="IBUICollectionViewLayout" id="1009800626">
 							<reference key="IBUICollectionView" ref="13685869"/>
-							<string key="IBUIItemSize">{50, 50}</string>
+							<string key="IBUIItemSize">{200, 100}</string>
 							<string key="IBUIHeaderReferenceSize">{50, 50}</string>
 							<float key="IBUIMinimumLineSpacing">10</float>
 							<float key="IBUIMinimumInteritemSpacing">10</float>

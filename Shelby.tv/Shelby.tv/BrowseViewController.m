@@ -9,12 +9,11 @@
 #import "BrowseViewController.h"
 
 // Views
-#import "GroupViewCell.h"
 #import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
 #import "SignupView.h"
-#import "PersonalRollViewCell.h"
 #import "PageControl.h"
+#import "SPVideoItemViewCell.h"
 
 // View Controllers
 #import "SPVideoReel.h"
@@ -35,6 +34,7 @@
 @property (nonatomic) UIView *backgroundLoginView;
 
 @property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
+@property (nonatomic) NSMutableArray *categoriesData;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -95,14 +95,13 @@
     [self fetchUserNickname];
     
     [self setCategories:[@[] mutableCopy]];
+    [self setCategoriesData:[@[] mutableCopy]];
     
     [self setSecretMode:SecretMode_None];
     
     // Register Cell Nibs
-    UINib *cellNib = [UINib nibWithNibName:@"GroupViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"GroupViewCell"];
-    cellNib = [UINib nibWithNibName:@"PersonalRollViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"PersonalRollViewCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
     
     [self fetchAllCategories];
 }
@@ -142,6 +141,19 @@
     [self.categories removeAllObjects];
     [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
+    for (id category in self.categories) {
+        NSMutableArray *frames = nil;
+        if ([category isKindOfClass:[Channel class]]) {
+            frames = [datautility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
+        } else if ([category isKindOfClass:[Roll class]]) {
+            frames = [datautility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
+        } else {
+            frames = [@[] mutableCopy];
+        }
+        
+        [self.categoriesData addObject:frames];
+    }
+
     [self.collectionView reloadData];
 }
 
@@ -161,14 +173,9 @@
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    
-    NSManagedObjectContext *context = [self context];
-    NSManagedObjectID *objectID = [(self.categories)[section] objectID];
-    Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
-    
-    if (channel) {
-        return [dataUtility fetchCountForCategoryChannel:[channel channelID]];
+    NSMutableArray *frames = self.categoriesData[section];
+    if (frames) {
+        return [frames count];
     }
     
     return 0;
@@ -184,22 +191,31 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"GroupViewCell" forIndexPath:indexPath];
+    SPVideoItemViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"SPVideoItemViewCell" forIndexPath:indexPath];
     
+    NSMutableArray *frames = self.categoriesData[indexPath.section];
+    Frame *frame = frames[indexPath.row];
+    
+    NSManagedObjectContext *context = [self context];
+    NSManagedObjectID *objectID = [frame objectID];
+    if (objectID) {
+        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+        if (videoFrame) {
+            Video *video = [frame video]; // KP KP: TODO: need to fetch video if fault.
+            [[cell caption] setText:[video caption]];
+        }
+    }
+//    DLog(@"%@", frame.video.caption);
     return cell;
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    GroupViewCell  *cell = (GroupViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell.selectionView setHidden:NO];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    GroupViewCell  *cell = (GroupViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell.selectionView setHidden:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
