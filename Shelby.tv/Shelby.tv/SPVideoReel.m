@@ -46,9 +46,6 @@
 - (void)setupGestures;
 - (void)setupOverlayVisibileItems;
 
-/// Storage Methods
-- (void)storeIdentifierOfCurrentVideoInStream;
-
 /// Update Methods
 - (void)currentVideoDidChangeToVideo:(NSUInteger)position;
 - (void)updatePlaybackUI;
@@ -120,25 +117,6 @@
     return self;
 }
 
-- (void)loadWithGroupType:(GroupType)groupType
-               groupTitle:(NSString *)groupTitle
-              videoFrames:(NSMutableArray *)videoFrames
-            andCategoryID:(NSString *)categoryID
-{
-    [self setCategoryID:categoryID];
-    [self loadWithGroupType:groupType groupTitle:groupTitle andVideoFrames:videoFrames];
-}
-
-- (void)loadWithGroupType:(GroupType)groupType
-               groupTitle:(NSString *)groupTitle
-           andVideoFrames:(NSMutableArray *)videoFrames
-{
-    [self setGroupType:groupType];
-    [self setGroupTitle:groupTitle];
-    [self setupVideoFrames:videoFrames];
-    [self setup];
-}
-
 #pragma mark - View Lifecycle Methods
 - (void)viewDidLoad
 {
@@ -147,13 +125,11 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
-    
 }
 
 #pragma mark - Setup Methods
 - (void)setup
 {
-    
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:kGAICategoryBrowse
                                withAction:@"User did launch playlist"
@@ -305,31 +281,11 @@
             [self.videoPlayers addObject:player];
             [self.videoScrollView addSubview:player.view];
             
-            if ( 0 == i ) {
-                
-                self.model.currentVideo = 0;
-                self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
-                
-            }
-            
         }
         
-        if ( _groupType == GroupType_Stream ) {  // If  stream, play video stored for kShelbySPCurrentVideoStreamID if it exists. Otherwise, default to video at zeroeth position
-            for ( NSUInteger i = 0; i < [self.model numberOfVideos]; ++i ) {
-                
-                Frame *videoFrame = (self.videoFrames)[i];
-                NSString *storedStreamID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbySPCurrentVideoStreamID];
-                
-                if ( [videoFrame.frameID isEqualToString:storedStreamID] ) {
-                    
-                    self.model.currentVideo = i;
-                    self.model.currentVideoPlayer = (self.videoPlayers)[_model.currentVideo];
-                    
-                }
-            }
-        }
-        
-        [self currentVideoDidChangeToVideo:_model.currentVideo];
+        [self.model setCurrentVideo:[self videoStartIndex]];
+        [self.model setCurrentVideoPlayer:(self.videoPlayers)[[self.model currentVideo]]];
+        [self currentVideoDidChangeToVideo:[self.model currentVideo]];
     }
 }
 
@@ -427,23 +383,6 @@
     }
 }
 
-#pragma mark - Storage Methods (Private)
-- (void)storeIdentifierOfCurrentVideoInStream
-{
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
-    if (!objectID) {
-        return;
-    }
-    
-    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    if (!videoFrame) {
-        return;
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:videoFrame.frameID forKey:kShelbySPCurrentVideoStreamID];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 #pragma mark - Update Methods (Public)
 - (void)extractVideoForVideoPlayer:(NSUInteger)position
 {
@@ -491,13 +430,6 @@
     // Reset currentVideoPlayer reference after scrolling has finished
     self.model.currentVideo = position;
     self.model.currentVideoPlayer = (self.videoPlayers)[position];
-    
-    // If videoReel is instance of Stream, store currentVideoID
-    if ( _groupType == GroupType_Stream ) {
-        
-        [self storeIdentifierOfCurrentVideoInStream];
-        
-    }
     
     // Deal with playback methods & UI of current and previous video
     [self updatePlaybackUI];
@@ -923,9 +855,9 @@
         [rollInvocation setSelector:@selector(rollVideo)];
         [self setInvocationMethod:rollInvocation];
         
-        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to roll" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
         [alertView show];
+        
     } else {
         [self rollVideo];
     }
@@ -956,7 +888,6 @@
     [self purgeVideoPlayerInformationFromPreviousVideoGroup];
 }
 
-
 - (void)purgeVideoPlayerInformationFromPreviousVideoGroup
 {
     // Cancel remaining MP4 extractions
@@ -976,16 +907,16 @@
     // Remove playableVideoPlayers (e.g., videoPlayers that are stored in local cache)
     [self.playableVideoPlayers makeObjectsPerformSelector:@selector(pause)];
     [self.playableVideoPlayers removeAllObjects];
-    self.playableVideoPlayers = nil;
+    [self setPlayableVideoPlayers:nil];
     
     [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.videoScrollView removeFromSuperview];
-    self.videoScrollView = nil;
+    [self setVideoScrollView:nil];
 
     // Instantiate dataUtility for cleanup
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     
-    // Remove older videos (categoryID will be nil for stream, likes, and personal roll)
+    // Remove older videos (categoryID will be nil for stream, likes, and personal-roll)
     [dataUtility removeOlderVideoFramesForGroupType:_groupType andCategoryID:_categoryID];
     
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
@@ -1000,7 +931,6 @@
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    
     // Switch the indicator when more than 50% of the previous/next page is visible
     CGFloat pageWidth = scrollView.frame.size.width;
     CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
@@ -1022,7 +952,6 @@
                                withAction:@"Swiped video player"
                                 withLabel:_groupTitle
                                 withValue:nil];
-
 }
 
 @end

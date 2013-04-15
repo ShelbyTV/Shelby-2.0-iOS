@@ -29,15 +29,6 @@
         videoStartIndex:(NSUInteger)videoStartIndex
           andCategoryID:(NSString *)categoryID;
 
-- (void)loadWithGroupType:(GroupType)groupType
-               groupTitle:(NSString *)groupTitle
-           andVideoFrames:(NSMutableArray *)videoFrames;
-
-- (void)loadWithGroupType:(GroupType)groupType
-               groupTitle:(NSString *)groupTitle
-              videoFrames:(NSMutableArray *)videoFrames
-            andCategoryID:(NSString *)categoryID;
-
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;
