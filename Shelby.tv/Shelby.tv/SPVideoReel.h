@@ -29,7 +29,7 @@
 - (id)initWithGroupType:(GroupType)groupType
              groupTitle:(NSString *)groupTitle
             videoFrames:(NSMutableArray *)videoFrames
-        videoStartIndex:(NSUInteger)videoStartIndex;
+     andVideoStartIndex:(NSUInteger)videoStartIndex;
 
 - (id)initWithGroupType:(GroupType)groupType
              groupTitle:(NSString *)groupTitle
