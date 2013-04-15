@@ -40,8 +40,6 @@
 
 @property (assign, nonatomic) SecretMode secretMode;
 
-@property (nonatomic) SPVideoReel *videoReel;
-
 - (void)fetchUserNickname;
 
 // TODO: need to port from MeVC
@@ -362,10 +360,6 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        if ( ![self videoReel] ) {
-            self.videoReel = [[SPVideoReel alloc] init];
-        }
-        
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *videoFrames = nil;
         NSString *errorMessage = nil;
@@ -399,19 +393,22 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([videoFrames count]) {
-                [self presentViewController:[self videoReel] fromCell:nil];
                 NSManagedObjectContext *mainThreadContext = [self context];
+                NSString *categoryID = nil;
                 if (groupType == GroupType_CategoryChannel) { // Category Channel
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    [self.videoReel initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:video andCategoryID:channel.channelID];
-//                    [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:channel.channelID];
+                    categoryID = channel.channelID;
                 } else if (groupType == GroupType_CategoryRoll) { // Category Roll
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
-//                    [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:roll.rollID];
-                    [self.videoReel initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:video andCategoryID:roll.rollID];
+                    categoryID = roll.rollID;
                 }
+
+                SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:video andCategoryID:categoryID];
+
+                [self presentViewController:videoReel fromCell:nil];
+
             } else {
                 
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
