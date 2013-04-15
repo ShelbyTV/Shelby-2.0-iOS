@@ -213,9 +213,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
     
-    // Reset stream dependent variables (Playback UX NSUserDefaults)
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kShelbySPCurrentVideoStreamID];
-    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // Empty existing Video Cache
