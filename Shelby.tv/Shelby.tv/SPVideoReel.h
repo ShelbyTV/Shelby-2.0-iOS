@@ -9,10 +9,18 @@
 #import "SPModel.h"
 #import "AuthorizationViewController.h"
 
+@protocol SPVideoReelDelegate <NSObject>
+
+- (void)userDidSwipeUpOnVideoReel:(UIGestureRecognizer *)gestureRecognizer;
+- (void)userDidSwipeDownOnVideoReel:(UIGestureRecognizer *)gestureRecognizer;
+
+@end
+
 @class SPVideoPlayer, SPOverlayView;
 
 @interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
+@property (weak, nonatomic) id <NSObject, SPVideoReelDelegate> delegate;
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
@@ -21,7 +29,7 @@
 - (id)initWithGroupType:(GroupType)groupType
              groupTitle:(NSString *)groupTitle
             videoFrames:(NSMutableArray *)videoFrames
-     andVideoStartIndex:(NSUInteger)videoStartIndex;
+        videoStartIndex:(NSUInteger)videoStartIndex;
 
 - (id)initWithGroupType:(GroupType)groupType
              groupTitle:(NSString *)groupTitle

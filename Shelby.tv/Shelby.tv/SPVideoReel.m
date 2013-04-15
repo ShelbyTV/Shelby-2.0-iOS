@@ -875,12 +875,16 @@
 #pragma mark - Gesutre Methods (Private)
 - (void)upAction:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    
+    if ( [self delegate] ) {
+        [self.delegate userDidSwipeUpOnVideoReel:gestureRecognizer];
+    }
 }
 
 - (void)downAction:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    
+    if ( [self delegate] ) {
+        [self.delegate userDidSwipeDownOnVideoReel:gestureRecognizer];
+    }
 }
 
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
