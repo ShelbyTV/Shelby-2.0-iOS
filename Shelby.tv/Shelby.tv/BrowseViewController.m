@@ -404,11 +404,13 @@
                 if (groupType == GroupType_CategoryChannel) { // Category Channel
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:channel.channelID];
+                    [self.videoReel initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:video andCategoryID:channel.channelID];
+//                    [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:channel.channelID];
                 } else if (groupType == GroupType_CategoryRoll) { // Category Roll
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:roll.rollID];
+//                    [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:roll.rollID];
+                    [self.videoReel initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:video andCategoryID:roll.rollID];
                 }
             } else {
                 
