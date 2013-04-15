@@ -64,8 +64,7 @@
 - (void)rollVideo;
 
 /// Gesture Methods
-- (void)upAction:(UISwipeGestureRecognizer *)gestureRecognizer;
-- (void)downAction:(UISwipeGestureRecognizer *)gestureRecognizer;
+- (void)switchChannel:(UISwipeGestureRecognizer *)gestureRecognizer;
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer;
 
 @end
@@ -319,11 +318,11 @@
         [self.view addGestureRecognizer:self.toggleOverlayGesuture];
 
         // Playlist Gestures
-        UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(upAction:)];
+        UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(switchChannel:)];
         upGesture.direction = UISwipeGestureRecognizerDirectionUp;
         [self.view addGestureRecognizer:upGesture];
         
-        UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(downAction:)];
+        UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(switchChannel:)];
         downGesture.direction = UISwipeGestureRecognizerDirectionDown;
         [self.view addGestureRecognizer:downGesture];
 
@@ -874,19 +873,15 @@
 }
 
 #pragma mark - Gesutre Methods (Private)
-- (void)upAction:(UISwipeGestureRecognizer *)gestureRecognizer
+- (void)switchChannel:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    DLog(@"Swipe UP gesture recognized!");
-    if ( [self delegate] ) {
-        [self.delegate userDidSwipeUpOnVideoReel:gestureRecognizer];
+    if ([gestureRecognizer direction] == UISwipeGestureRecognizerDirectionUp) {
+        DLog(@"Swipe UP gesture recognized!");
+    } else {
+        DLog(@"Swipe DOWN gesture recognized!");
     }
-}
-
-- (void)downAction:(UISwipeGestureRecognizer *)gestureRecognizer
-{
-    DLog(@"Swipe DOWN gesture recognized!");
-    if ( [self delegate] ) {
-        [self.delegate userDidSwipeDownOnVideoReel:gestureRecognizer];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(userDidSwitchChannel:)]) {
+        [self.delegate userDidSwitchChannel:gestureRecognizer];
     }
 }
 

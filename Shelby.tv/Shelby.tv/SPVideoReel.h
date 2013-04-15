@@ -11,8 +11,7 @@
 
 @protocol SPVideoReelDelegate <NSObject>
 
-- (void)userDidSwipeUpOnVideoReel:(UIGestureRecognizer *)gestureRecognizer;
-- (void)userDidSwipeDownOnVideoReel:(UIGestureRecognizer *)gestureRecognizer;
+- (void)userDidSwitchChannel:(UIGestureRecognizer *)gestureRecognizer;
 
 @end
 
