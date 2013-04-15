@@ -876,7 +876,6 @@
 #pragma mark - Gesutre Methods (Private)
 - (void)upAction:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    DLog(@"Swipe UP gesture recognized!");
     if ( [self delegate] ) {
         [self.delegate userDidSwipeUpOnVideoReel:gestureRecognizer];
     }
@@ -884,7 +883,6 @@
 
 - (void)downAction:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    DLog(@"Swipe DOWN gesture recognized!");
     if ( [self delegate] ) {
         [self.delegate userDidSwipeDownOnVideoReel:gestureRecognizer];
     }
@@ -892,7 +890,6 @@
 
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
 {
-    DLog(@"PINCH gesture recognized!");
     [self purgeVideoPlayerInformationFromPreviousVideoGroup];
 }
 
