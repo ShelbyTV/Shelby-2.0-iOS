@@ -111,7 +111,6 @@
         _groupTitle = groupTitle;
         _videoFrames = videoFrames;
         _videoStartIndex = videoStartIndex;
-        [self setup];
     }
     
     return self;
@@ -125,6 +124,8 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
+    
+    [self setup];
 }
 
 #pragma mark - Setup Methods
