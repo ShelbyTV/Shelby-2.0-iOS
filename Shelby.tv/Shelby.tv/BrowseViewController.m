@@ -14,6 +14,7 @@
 #import "SignupView.h"
 #import "PageControl.h"
 #import "SPVideoItemViewCell.h"
+#import "SPCategoryViewCell.h"
 
 // View Controllers
 #import "SPVideoReel.h"
@@ -24,7 +25,7 @@
 @interface BrowseViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UITableView *categoriesTable;
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (assign, nonatomic) BOOL isLoggedIn;
@@ -33,8 +34,9 @@
 @property (nonatomic) SignupView *signupView;
 @property (nonatomic) UIView *backgroundLoginView;
 
-@property (nonatomic) NSMutableArray *categories; // TODO: to move to a collection view data file
-@property (nonatomic) NSMutableArray *categoriesData;
+@property (nonatomic) NSMutableArray *categories;
+@property (nonatomic) NSMutableDictionary *categoriesData;
+@property (nonatomic) NSMutableDictionary *changableDataMapper;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -57,7 +59,7 @@
 - (void)logoutAction;
 
 /// Video Player Launch Methods
-- (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell;
+- (void)launchPlayer:(GroupType)groupType forCategory:(NSUInteger)categoryIndex withVideo:(NSUInteger)video;
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
 
 /// Version Label
@@ -95,14 +97,13 @@
     [self fetchUserNickname];
     
     [self setCategories:[@[] mutableCopy]];
-    [self setCategoriesData:[@[] mutableCopy]];
+    [self setCategoriesData:[@{} mutableCopy]];
+    [self setChangableDataMapper:[@{} mutableCopy]];
     
     [self setSecretMode:SecretMode_None];
     
     // Register Cell Nibs
-    UINib *cellNib = [UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
-    
+    [self.categoriesTable registerNib:[UINib nibWithNibName:@"SPCategoryViewCell" bundle:nil] forCellReuseIdentifier:@"SPCategoryViewCell"];
     [self fetchAllCategories];
 }
 
@@ -141,6 +142,7 @@
     [self.categories removeAllObjects];
     [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
+    int i = 0;
     for (id category in self.categories) {
         NSMutableArray *frames = nil;
         if ([category isKindOfClass:[Channel class]]) {
@@ -150,16 +152,16 @@
         } else {
             frames = [@[] mutableCopy];
         }
-        
-        [self.categoriesData addObject:frames];
+        [self.categoriesData setObject:frames forKey:[NSNumber numberWithInt:i]];
+        i++;
     }
 
-    [self.collectionView reloadData];
+    [self.categoriesTable reloadData];
 }
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
 {    
-    [self.collectionView setContentOffset:[((CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout) pointAtPage:page] animated:animated];
+//    [self.collectionView setContentOffset:[((CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout) pointAtPage:page] animated:animated];
 }
 
 - (void)resetVersionLabel
@@ -169,11 +171,44 @@
     [self.versionLabel setTextColor:kShelbyColorBlack];
 }
 
+
+#pragma mark - UITableViewDataSource Methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.categories count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    SPCategoryViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SPCategoryViewCell" forIndexPath:indexPath];
+    
+    
+    UICollectionView *categoryFrames = [cell categoryFrames];
+    [categoryFrames registerNib:[UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil] forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
+    [categoryFrames setDelegate:self];
+    [categoryFrames setDataSource:self];
+    [categoryFrames reloadData];
+    NSUInteger hash = [categoryFrames hash];
+    [self.changableDataMapper setObject:[NSNumber numberWithInt:indexPath.row] forKey:[NSNumber numberWithUnsignedInt:hash]];
+
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate Methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 // TODO: factor the data source delegete methods to a model class.
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    NSMutableArray *frames = self.categoriesData[section];
+    NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[view hash]];
+    NSNumber *key = self.changableDataMapper[changableMapperKey];
+    NSMutableArray *frames = self.categoriesData[key];
     if (frames) {
         return [frames count];
     }
@@ -183,29 +218,29 @@
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
 {
-    if (self.categories) {
-        return [self.categories count];
-    }
-    return 0;
+    return 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SPVideoItemViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"SPVideoItemViewCell" forIndexPath:indexPath];
     
-    NSMutableArray *frames = self.categoriesData[indexPath.section];
-    Frame *frame = frames[indexPath.row];
-    
-    NSManagedObjectContext *context = [self context];
-    NSManagedObjectID *objectID = [frame objectID];
-    if (objectID) {
-        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-        if (videoFrame) {
-            Video *video = [frame video]; // KP KP: TODO: need to fetch video if fault.
-            [[cell caption] setText:[video caption]];
+    NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[cv hash]];
+    NSNumber *key = self.changableDataMapper[changableMapperKey];
+    NSMutableArray *frames = self.categoriesData[key];
+    if (frames) {
+        Frame *frame = frames[indexPath.row];
+        
+        NSManagedObjectContext *context = [self context];
+        NSManagedObjectID *objectID = [frame objectID];
+        if (objectID) {
+            Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+            if (videoFrame) {
+                Video *video = [frame video]; // KP KP: TODO: need to fetch video if fault.
+                [[cell caption] setText:[video caption]];
+            }
         }
     }
-//    DLog(@"%@", frame.video.caption);
     return cell;
 }
 
@@ -220,13 +255,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[collectionView hash]];
+    NSNumber *key = self.changableDataMapper[changableMapperKey];
+//    NSMutableArray *frames = self.categoriesData[key];
     
-    id category = (id)[self.categories objectAtIndex:indexPath.section];
+    id category = (id)[self.categories objectAtIndex:[key intValue]];
     if ([category isMemberOfClass:[Channel class]]) { // Category is a Channel
-        [self launchPlayer:GroupType_CategoryChannel fromCell:cell];
+        [self launchPlayer:GroupType_CategoryChannel forCategory:[key intValue] withVideo:indexPath.row];
     } else if ( [category isMemberOfClass:[Roll class]] ) { // Cateogory is a Roll
-        [self launchPlayer:GroupType_CategoryRoll fromCell:cell];
+        [self launchPlayer:GroupType_CategoryRoll forCategory:[key intValue] withVideo:indexPath.row];
     }
 }
 
@@ -321,7 +358,7 @@
 
 
 #pragma mark - Video Player Launch Methods (Private)
-- (void)launchPlayer:(GroupType)groupType fromCell:(UICollectionViewCell *)cell
+- (void)launchPlayer:(GroupType)groupType forCategory:(NSUInteger)categoryIndex withVideo:(NSUInteger)video;
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -335,7 +372,6 @@
         NSString *title = nil;
 
         NSManagedObjectContext *context = [self context];
-        NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].section;
         NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
 
         switch (groupType) {
@@ -363,15 +399,13 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([videoFrames count]) {
-                [self presentViewController:[self videoReel] fromCell:cell];
+                [self presentViewController:[self videoReel] fromCell:nil];
                 NSManagedObjectContext *mainThreadContext = [self context];
                 if (groupType == GroupType_CategoryChannel) { // Category Channel
-                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].section;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:channel.channelID];
                 } else if (groupType == GroupType_CategoryRoll) { // Category Roll
-                    NSInteger categoryIndex = [self.collectionView indexPathForCell:cell].section;
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     [self.videoReel loadWithGroupType:groupType groupTitle:title videoFrames:videoFrames andCategoryID:roll.rollID];
@@ -394,22 +428,22 @@
 
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell
 {
-    UIImage *screenShot = [ImageUtilities screenshot:self.view];
-    UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];
-    UIImage *cellScreenShot = [ImageUtilities screenshot:cell];
-    UIImageView *cellSrcImage = [[UIImageView alloc] initWithImage:cellScreenShot];
-    [cellSrcImage setFrame:CGRectMake((int)cell.frame.origin.x % (int)self.collectionView.frame.size.width, 20 + (int)cell.frame.origin.y % (int)self.collectionView.frame.size.height, cell.frame.size.width, cell.frame.size.height)];
-    [srcImage setFrame:CGRectMake(0, 20, viewControllerToPresent.view.frame.size.width, viewControllerToPresent.view.frame.size.height - 20)];
-    [cellSrcImage.layer setCornerRadius:20];
-    [cellSrcImage.layer setMasksToBounds:YES];
-    [viewControllerToPresent.view addSubview:srcImage];
-    [viewControllerToPresent.view addSubview:cellSrcImage];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+//    UIImage *screenShot = [ImageUtilities screenshot:self.view];
+//    UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];
+//    UIImage *cellScreenShot = [ImageUtilities screenshot:cell];
+//    UIImageView *cellSrcImage = [[UIImageView alloc] initWithImage:cellScreenShot];
+//    [cellSrcImage setFrame:CGRectMake((int)cell.frame.origin.x % (int)self.collectionView.frame.size.width, 20 + (int)cell.frame.origin.y % (int)self.collectionView.frame.size.height, cell.frame.size.width, cell.frame.size.height)];
+//    [srcImage setFrame:CGRectMake(0, 20, viewControllerToPresent.view.frame.size.width, viewControllerToPresent.view.frame.size.height - 20)];
+//    [cellSrcImage.layer setCornerRadius:20];
+//    [cellSrcImage.layer setMasksToBounds:YES];
+//    [viewControllerToPresent.view addSubview:srcImage];
+//    [viewControllerToPresent.view addSubview:cellSrcImage];
+//    
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     
     [self presentViewController:viewControllerToPresent animated:NO completion:^{
-        [srcImage removeFromSuperview];
-        [cellSrcImage removeFromSuperview];
+//        [srcImage removeFromSuperview];
+//        [cellSrcImage removeFromSuperview];
     }];
 }
 
@@ -422,7 +456,7 @@
         [self setIsLoggedIn:NO];
         [self setUserNickname:nil];
         [self resetVersionLabel];
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+//        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     }
 }
 
@@ -432,7 +466,7 @@
     [self setIsLoggedIn:YES];
     [self fetchUserNickname];
     [self fetchAllCategories];
-    [self.collectionView reloadData];
+//    [self.collectionView reloadData];
 }
 
 

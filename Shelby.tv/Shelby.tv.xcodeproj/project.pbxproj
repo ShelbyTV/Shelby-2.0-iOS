@@ -22,6 +22,12 @@
 		1C22E3A81718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */; };
 		1C22E3A91718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */; };
 		1C22E3AA1718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */; };
+		1C22E3BE171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E3BD171C79AA00A1CAEC /* SPCategoryViewCell.xib */; };
+		1C22E3BF171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E3BD171C79AA00A1CAEC /* SPCategoryViewCell.xib */; };
+		1C22E3C0171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E3BD171C79AA00A1CAEC /* SPCategoryViewCell.xib */; };
+		1C22E3C3171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */; };
+		1C22E3C4171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */; };
+		1C22E3C5171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -679,6 +685,9 @@
 		1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemViewCell.xib; sourceTree = "<group>"; };
 		1C22E3A61718976A00A1CAEC /* SPVideoItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemViewCell.h; sourceTree = "<group>"; };
 		1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemViewCell.m; sourceTree = "<group>"; };
+		1C22E3BD171C79AA00A1CAEC /* SPCategoryViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPCategoryViewCell.xib; sourceTree = "<group>"; };
+		1C22E3C1171C79D700A1CAEC /* SPCategoryViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCategoryViewCell.h; sourceTree = "<group>"; };
+		1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPCategoryViewCell.m; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1396,6 +1405,7 @@
 				1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */,
 				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
 				8EF03BEC16D576EC0019669F /* SPShareRollView.xib */,
+				1C22E3BD171C79AA00A1CAEC /* SPCategoryViewCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -1412,6 +1422,8 @@
 				8EF03C5F16D57C170019669F /* SPShareRollView.m */,
 				8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */,
 				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
+				1C22E3C1171C79D700A1CAEC /* SPCategoryViewCell.h */,
+				1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1942,6 +1954,7 @@
 				8E7024ED1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F61715E71500E8DE46 /* README in Resources */,
 				1C22E39F1718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */,
+				1C22E3BF171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2075,6 +2088,7 @@
 				8E7024EE1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F71715E71500E8DE46 /* README in Resources */,
 				1C22E3A01718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */,
+				1C22E3C0171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2209,6 +2223,7 @@
 				8E7024EC1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F51715E71500E8DE46 /* README in Resources */,
 				1C22E39E1718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */,
+				1C22E3BE171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2336,6 +2351,7 @@
 				8E7024F91715E71500E8DE46 /* TwitterHandler.m in Sources */,
 				1C3D91271714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3A91718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
+				1C22E3C4171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2418,6 +2434,7 @@
 				8E7024FA1715E71500E8DE46 /* TwitterHandler.m in Sources */,
 				1C3D91281714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3AA1718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
+				1C22E3C5171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2500,6 +2517,7 @@
 				8E7024F81715E71500E8DE46 /* TwitterHandler.m in Sources */,
 				1C3D91261714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3A81718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
+				1C22E3C3171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
