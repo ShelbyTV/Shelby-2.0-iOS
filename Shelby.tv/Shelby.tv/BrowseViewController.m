@@ -16,9 +16,6 @@
 #import "SPVideoItemViewCell.h"
 #import "SPCategoryViewCell.h"
 
-// View Controllers
-#import "SPVideoReel.h"
-
 // Utilities
 #import "ImageUtilities.h"
 
@@ -40,6 +37,8 @@
 
 @property (assign, nonatomic) SecretMode secretMode;
 
+@property (assign, nonatomic) NSUInteger activeCategoryIndex;
+
 - (void)fetchUserNickname;
 
 // TODO: need to port from MeVC
@@ -57,7 +56,9 @@
 - (void)logoutAction;
 
 /// Video Player Launch Methods
-- (void)launchPlayer:(GroupType)groupType forCategory:(NSUInteger)categoryIndex withVideo:(NSUInteger)video;
+- (void)launchPlayer:(NSUInteger)categoryIndex;
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex;
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType;
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
 
 /// Version Label
@@ -257,14 +258,7 @@
 {
     NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[collectionView hash]];
     NSNumber *key = self.changableDataMapper[changableMapperKey];
-//    NSMutableArray *frames = self.categoriesData[key];
-    
-    id category = (id)[self.categories objectAtIndex:[key intValue]];
-    if ([category isMemberOfClass:[Channel class]]) { // Category is a Channel
-        [self launchPlayer:GroupType_CategoryChannel forCategory:[key intValue] withVideo:indexPath.row];
-    } else if ( [category isMemberOfClass:[Roll class]] ) { // Cateogory is a Roll
-        [self launchPlayer:GroupType_CategoryRoll forCategory:[key intValue] withVideo:indexPath.row];
-    }
+    [self launchPlayer:[key intValue] andVideo:indexPath.row];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -358,7 +352,23 @@
 
 
 #pragma mark - Video Player Launch Methods (Private)
-- (void)launchPlayer:(GroupType)groupType forCategory:(NSUInteger)categoryIndex withVideo:(NSUInteger)video;
+- (void)launchPlayer:(NSUInteger)categoryIndex
+{
+    [self launchPlayer:categoryIndex andVideo:0];
+}
+
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex
+{
+    id category = (id)self.categories[categoryIndex];
+    GroupType groupType = GroupType_CategoryRoll;
+    if ([category isMemberOfClass:[Channel class]]) {
+        groupType = GroupType_CategoryChannel;
+    }
+    
+    [self launchPlayer:categoryIndex andVideo:videoIndex withGroupType:groupType];
+}
+
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -407,8 +417,9 @@
                     categoryID = roll.rollID;
                 }
 
-                SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:video andCategoryID:categoryID];
-
+                SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:videoIndex andCategoryID:categoryID];
+                [videoReel setDelegate:self];
+                [self setActiveCategoryIndex:categoryIndex];
                 [self presentViewController:videoReel fromCell:nil];
 
             } else {
@@ -470,5 +481,15 @@
 //    [self.collectionView reloadData];
 }
 
+#pragma mark - SPVideoReel Delegate
+- (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
+{
+    NSInteger next = up ? -1 : 1;
+
+    [videoReel dismissViewControllerAnimated:YES completion:^{
+        NSUInteger nextCategory = (self.activeCategoryIndex + next) % [self.categories count];
+        [self launchPlayer:nextCategory];
+    }];
+}
 
 @end

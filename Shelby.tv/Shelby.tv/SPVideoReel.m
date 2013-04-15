@@ -454,6 +454,9 @@
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
     
+    // Set index of video playing
+    [self setVideoStartIndex:position];
+    
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     self.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
@@ -875,19 +878,26 @@
 #pragma mark - Gesutre Methods (Private)
 - (void)switchChannel:(UISwipeGestureRecognizer *)gestureRecognizer
 {
+    BOOL up = NO;
     if ([gestureRecognizer direction] == UISwipeGestureRecognizerDirectionUp) {
+        up = YES;
         DLog(@"Swipe UP gesture recognized!");
     } else {
         DLog(@"Swipe DOWN gesture recognized!");
     }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(userDidSwitchChannel:)]) {
-        [self.delegate userDidSwitchChannel:gestureRecognizer];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(userDidSwitchChannel:direction:)]) {
+        [self.delegate userDidSwitchChannel:self direction:up];
     }
 }
 
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
 {
     DLog(@"PINCH gesture recognized!");
+    [self purgeVideoPlayerInformationFromPreviousVideoGroup];
+}
+
+- (void)dismisseVideoReel
+{
     [self purgeVideoPlayerInformationFromPreviousVideoGroup];
 }
 

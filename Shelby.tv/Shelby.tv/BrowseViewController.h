@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "AuthorizationViewController.h"
+#import "SPVideoReel.h"
 
-@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, AuthorizationDelegate>
+@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, SPVideoReelDelegate, UITableViewDelegate, UIAlertViewDelegate, AuthorizationDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *toggleSecretButton;
 

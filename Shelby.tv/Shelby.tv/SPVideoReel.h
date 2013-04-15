@@ -11,7 +11,7 @@
 
 @protocol SPVideoReelDelegate <NSObject>
 
-- (void)userDidSwitchChannel:(UIGestureRecognizer *)gestureRecognizer;
+- (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
 
 @end
 
@@ -19,7 +19,7 @@
 
 @interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
-@property (weak, nonatomic) id <NSObject, SPVideoReelDelegate> delegate;
+@property (weak, nonatomic) id <SPVideoReelDelegate> delegate;
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
@@ -46,4 +46,5 @@
 /// Action Methods
 - (IBAction)restartPlaybackButtonAction:(id)sender;
 
+- (void)dismisseVideoReel;
 @end
