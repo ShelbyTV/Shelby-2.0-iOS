@@ -16,6 +16,10 @@
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
 
+
+#define kShelbySPSlowSpeed 0.5
+#define kShelbySPFastSpeed 0.2
+
 @interface SPVideoReel ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
@@ -64,8 +68,14 @@
 - (void)rollVideo;
 
 /// Gesture Methods
-- (void)switchChannel:(UISwipeGestureRecognizer *)gestureRecognizer;
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer;
+
+/// Panning Gestures and Animations
+// Video List Panning
+- (void)panView:(id)sender;
+- (void)animateDown:(float)speed andSwitchCategory:(BOOL)switchCategory;
+- (void)animateUp:(float)speed andSwitchCategory:(BOOL)switchCategory;
+- (void)switchChannelWithDirectionUp:(BOOL)up;
 
 @end
 
@@ -316,16 +326,10 @@
         [self.toggleOverlayGesuture setDelegate:self];
         [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
         [self.view addGestureRecognizer:self.toggleOverlayGesuture];
-
-        // Playlist Gestures
-        UISwipeGestureRecognizer *upGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(switchChannel:)];
-        upGesture.direction = UISwipeGestureRecognizerDirectionUp;
-        [self.view addGestureRecognizer:upGesture];
+       
+        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+        [self.view addGestureRecognizer:panGesture];
         
-        UISwipeGestureRecognizer *downGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(switchChannel:)];
-        downGesture.direction = UISwipeGestureRecognizerDirectionDown;
-        [self.view addGestureRecognizer:downGesture];
-
         UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
         [self.view addGestureRecognizer:pinchGesture];
         
@@ -876,18 +880,69 @@
 }
 
 #pragma mark - Gesutre Methods (Private)
-- (void)switchChannel:(UISwipeGestureRecognizer *)gestureRecognizer
+- (void)switchChannelWithDirectionUp:(BOOL)up
 {
-    BOOL up = NO;
-    if ([gestureRecognizer direction] == UISwipeGestureRecognizerDirectionUp) {
-        up = YES;
-        DLog(@"Swipe UP gesture recognized!");
-    } else {
-        DLog(@"Swipe DOWN gesture recognized!");
-    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(userDidSwitchChannel:direction:)]) {
         [self.delegate userDidSwitchChannel:self direction:up];
     }
+}
+
+- (void)panView:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    if (![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return;
+    }
+    
+    int y = self.model.currentVideoPlayer.view.frame.origin.y;
+    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+            self.model.currentVideoPlayer.view.frame = CGRectMake(0, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
+            self.overlayView.frame = CGRectMake(0, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
+        
+        [gestureRecognizer setTranslation:CGPointZero inView:self.model.currentVideoPlayer.view];
+    } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
+        CGPoint velocity = [gestureRecognizer velocityInView:self.view];
+        if (velocity.y < -200) {
+            [self animateUp:kShelbySPFastSpeed andSwitchCategory:YES];
+        } else if (velocity.y > 200) {
+            [self animateDown:kShelbySPFastSpeed andSwitchCategory:YES];
+        } else if (kShelbySPVideoHeight - (y + translation.y) > self.model.currentVideoPlayer.view.frame.size.height/3) {
+            [self animateUp:kShelbySPSlowSpeed andSwitchCategory:NO];
+        } else {
+            [self animateDown:kShelbySPSlowSpeed andSwitchCategory:NO];
+        }
+    }
+
+}
+
+- (void)animateDown:(float)speed andSwitchCategory:(BOOL)switchCategory
+{
+    CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
+    
+    [UIView animateWithDuration:speed animations:^{
+        [self.model.currentVideoPlayer.view setFrame:CGRectMake(0, self.view.frame.size.height, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.overlayView setFrame:CGRectMake(0, self.view.frame.size.height, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+    } completion:^(BOOL finished) {
+        if (switchCategory) {
+            [self switchChannelWithDirectionUp:YES];
+        }
+    }];
+
+}
+
+- (void)animateUp:(float)speed andSwitchCategory:(BOOL)switchCategory
+{
+    CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
+    
+    [UIView animateWithDuration:speed animations:^{
+        [self.model.currentVideoPlayer.view setFrame:CGRectMake(0, 0, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.overlayView setFrame:CGRectMake(0, 0 , currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+    } completion:^(BOOL finished) {
+        if (switchCategory) {
+            [self switchChannelWithDirectionUp:NO];
+        }
+    }];
 }
 
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
