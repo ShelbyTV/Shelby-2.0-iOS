@@ -905,10 +905,8 @@
     } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
         CGPoint velocity = [gestureRecognizer velocityInView:self.view];
         if (velocity.y < -200) {
-            [self.view setUserInteractionEnabled:NO];
             [self animateUp:kShelbySPFastSpeed andSwitchCategory:YES];
         } else if (velocity.y > 200) {
-            [self.view setUserInteractionEnabled:NO];
             [self animateDown:kShelbySPFastSpeed andSwitchCategory:YES];
         } else if (kShelbySPVideoHeight - (y + translation.y) > self.model.currentVideoPlayer.view.frame.size.height/3) {
             [self animateUp:kShelbySPSlowSpeed andSwitchCategory:NO];
@@ -954,9 +952,14 @@
 
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
 {
-    [self.view setUserInteractionEnabled:NO];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(userDidCloseChannel:)]) {
-        [self.delegate userDidCloseChannel:self];
+    if (![gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]]) {
+        return;
+    }
+    
+    if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(userDidCloseChannel:)]) {
+            [self.delegate userDidCloseChannel:self];
+        }
     }
 }
 

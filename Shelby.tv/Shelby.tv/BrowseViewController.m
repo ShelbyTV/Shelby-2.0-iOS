@@ -594,10 +594,13 @@
 {
     NSInteger next = up ? -1 : 1;
     [self setActiveVideoReel:videoReel];
-    NSUInteger nextCategory = (self.activeCategoryIndex + next) % [self.categories count];
+    NSInteger nextCategory = self.activeCategoryIndex + next;
+    if (nextCategory < 0) {
+        nextCategory = [self.categories count] + nextCategory;
+    }
+
     [self launchPlayer:nextCategory];
     
-//    DLog(@"active category %d next: %d category count %d and next index %d", self.activeCategoryIndex, next, [self.categories count], nextCategory);
     SPCategoryViewCell *categoryCell = (SPCategoryViewCell *)[self.categoriesTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:nextCategory inSection:0]];
     if (!categoryCell) {
         UITableViewScrollPosition position = up ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
