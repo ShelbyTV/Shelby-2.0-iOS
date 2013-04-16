@@ -597,6 +597,8 @@
     NSInteger nextCategory = self.activeCategoryIndex + next;
     if (nextCategory < 0) {
         nextCategory = [self.categories count] + nextCategory;
+    } else if (nextCategory == [self.categories count]) {
+        nextCategory = 0;
     }
 
     [self launchPlayer:nextCategory];
