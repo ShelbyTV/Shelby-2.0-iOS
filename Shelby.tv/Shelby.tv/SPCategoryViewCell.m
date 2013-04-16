@@ -7,7 +7,20 @@
 //
 
 #import "SPCategoryViewCell.h"
+#import "UIColor+ColorWithHexAndAlpha.h"
+
+@interface SPCategoryViewCell()
+@property (weak, nonatomic) IBOutlet UILabel *categoryTitle;
+@property (weak, nonatomic) IBOutlet UIView *categoryColorView;
+@end
 
 @implementation SPCategoryViewCell
+
+
+- (void)setcategoryColor:(NSString *)hex andTitle:(NSString *)title
+{
+    [self.categoryTitle setText:title];
+    [self.categoryColorView setBackgroundColor:[UIColor colorWithHex:hex andAlpha:1]];    
+}
 
 @end

@@ -183,7 +183,6 @@
 
     SPCategoryViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SPCategoryViewCell" forIndexPath:indexPath];
     
-    
     UICollectionView *categoryFrames = [cell categoryFrames];
     [categoryFrames registerNib:[UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil] forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
     [categoryFrames setDelegate:self];
@@ -191,6 +190,16 @@
     [categoryFrames reloadData];
     NSUInteger hash = [categoryFrames hash];
     [self.changableDataMapper setObject:[NSNumber numberWithInt:indexPath.row] forKey:[NSNumber numberWithUnsignedInt:hash]];
+    
+    id category = (id)self.categories[indexPath.row];
+    NSString *title = nil;
+    if ([category isMemberOfClass:[Channel class]]) {
+        title = [((Channel *)category) displayTitle];
+    } else if ([category isMemberOfClass:[Roll class]]) {
+        title = [((Roll *)category) displayTitle];
+    }
+
+    [cell setcategoryColor:@"333" andTitle:title];
 
     return cell;
 }
@@ -233,11 +242,19 @@
         NSManagedObjectContext *context = [self context];
         NSManagedObjectID *frameObjectID = [frame objectID];
         Frame *videoFrame = (Frame *)[context existingObjectWithID:frameObjectID error:nil];
-        NSManagedObjectID *videoObjectID = [videoFrame.video objectID];
-        if (videoObjectID) {
-            Video *video = (Video *)[context existingObjectWithID:videoObjectID error:nil];
-            if (video) {
-                [[cell caption] setText:[video caption]];
+        
+        if (videoFrame && [videoFrame video]) {
+            [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+                                         forImageView:cell.thumbnailImageView
+                                      withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
+                                       andContentMode:UIViewContentModeCenter];
+            
+            NSManagedObjectID *videoObjectID = [videoFrame.video objectID];
+            if (videoObjectID) {
+                Video *video = (Video *)[context existingObjectWithID:videoObjectID error:nil];
+                if (video) {
+                    [[cell caption] setText:[video caption]];
+                }
             }
         }
     }

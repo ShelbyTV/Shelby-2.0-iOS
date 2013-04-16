@@ -10,4 +10,5 @@
 
 @interface SPVideoItemViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *caption;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @end
