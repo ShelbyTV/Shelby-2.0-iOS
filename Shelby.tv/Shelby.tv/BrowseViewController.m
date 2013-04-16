@@ -503,7 +503,7 @@
 {
     NSInteger next = up ? -1 : 1;
 
-    [videoReel dismissViewControllerAnimated:YES completion:^{
+    [videoReel dismissViewControllerAnimated:NO completion:^{
         NSUInteger nextCategory = (self.activeCategoryIndex + next) % [self.categories count];
         [self launchPlayer:nextCategory];
     }];

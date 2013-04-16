@@ -936,7 +936,7 @@
     CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
     
     [UIView animateWithDuration:speed animations:^{
-        [self.model.currentVideoPlayer.view setFrame:CGRectMake(0, 0, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.model.currentVideoPlayer.view setFrame:CGRectMake(0, -currentPlayerFrame.size.height, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.overlayView setFrame:CGRectMake(0, 0 , currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
     } completion:^(BOOL finished) {
         if (switchCategory) {
