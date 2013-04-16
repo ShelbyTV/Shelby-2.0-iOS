@@ -21,6 +21,18 @@
     return image;
 }
 
++ (UIImage *)crop:(UIImage *)image inRect:(CGRect)frame
+{
+    NSInteger y = frame.origin.y == 0 ? 0 : -frame.origin.y;
+    
+    UIGraphicsBeginImageContextWithOptions(frame.size, NO, [UIScreen mainScreen].scale);
+    [image drawAtPoint:CGPointMake(0, y)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 
 + (UIImage *)captureVideo:(AVPlayer *)player
 {

@@ -470,7 +470,43 @@
 
 - (void)animateOpenCategories:(SPVideoReel *)viewControllerToPresent
 {
+    SPCategoryViewCell *categoryCell = (SPCategoryViewCell *)[self.categoriesTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:self.activeCategoryIndex inSection:0]];
+    
+    UIImage *categoryImage = [ImageUtilities screenshot:categoryCell];
+    UIImageView *categoryImageView = [[UIImageView alloc] initWithImage:categoryImage];
+    
+    CGPoint categoryCellOriginInWindow = [self.view convertPoint:categoryCell.frame.origin fromView:self.categoriesTable];
+    
+    CGRect topRect = CGRectMake(0, 0, 1024, categoryCellOriginInWindow.y);
+    CGRect bottomRect = CGRectMake(0, categoryCellOriginInWindow.y + categoryCell.frame.size.height, 1024, 1024 - categoryCellOriginInWindow.y);
+  
+    UIImage *categoriesImage = [ImageUtilities screenshot:self.view];
+    UIImage *topImage = [ImageUtilities crop:categoriesImage inRect:topRect];
+    UIImage *bottomImage = [ImageUtilities crop:categoriesImage inRect:bottomRect];
+    
+    UIImageView *topImageView = [[UIImageView alloc] initWithImage:topImage];
+    UIImageView *bottomImageView = [[UIImageView alloc] initWithImage:bottomImage];
+    
+    [viewControllerToPresent.view addSubview:categoryImageView];
+    [viewControllerToPresent.view addSubview:bottomImageView];
+    [viewControllerToPresent.view addSubview:topImageView];
+    [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y, 1024, categoryCell.frame.size.height)];
+    [topImageView setFrame:topRect];
+    [bottomImageView setFrame:bottomRect];
+
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+    
     [self presentViewController:viewControllerToPresent animated:NO completion:^{
+        [UIView animateWithDuration:1.5 animations:^{
+            [topImageView setFrame:CGRectMake(0, -topImageView.frame.size.height, topImageView.frame.size.width, topImageView.frame.size.height)];
+            [bottomImageView setFrame:CGRectMake(0, 900, bottomImageView.frame.size.width, bottomImageView.frame.size.height)];
+            [categoryImageView setFrame:CGRectMake(0, 1024, categoryImageView.frame.size.width, categoryImageView.frame.size.height)];
+            
+        } completion:^(BOOL finished) {
+            [categoryImageView removeFromSuperview];
+            [bottomImageView removeFromSuperview];
+            [topImageView removeFromSuperview];
+        }];
     }];
 }
 
@@ -484,25 +520,6 @@
         [self animateOpenCategories:(SPVideoReel *)viewControllerToPresent];
     }
 }
-
-//    UIImage *screenShot = [ImageUtilities screenshot:self.view];
-//    UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];
-//    UIImage *cellScreenShot = [ImageUtilities screenshot:cell];
-//    UIImageView *cellSrcImage = [[UIImageView alloc] initWithImage:cellScreenShot];
-//    [cellSrcImage setFrame:CGRectMake((int)cell.frame.origin.x % (int)self.collectionView.frame.size.width, 20 + (int)cell.frame.origin.y % (int)self.collectionView.frame.size.height, cell.frame.size.width, cell.frame.size.height)];
-//    [srcImage setFrame:CGRectMake(0, 20, viewControllerToPresent.view.frame.size.width, viewControllerToPresent.view.frame.size.height - 20)];
-//    [cellSrcImage.layer setCornerRadius:20];
-//    [cellSrcImage.layer setMasksToBounds:YES];
-//    [viewControllerToPresent.view addSubview:srcImage];
-//    [viewControllerToPresent.view addSubview:cellSrcImage];
-//    
-//    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-
-//    [self presentViewController:viewControllerToPresent animated:NO completion:^{
-//        [srcImage removeFromSuperview];
-//        [cellSrcImage removeFromSuperview];
-//    }];
-//}
 
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

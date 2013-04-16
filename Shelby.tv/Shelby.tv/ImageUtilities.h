@@ -10,6 +10,7 @@
 
 @interface ImageUtilities : NSObject
 + (UIImage *)screenshot:(UIView *)view;
++ (UIImage *)crop:(UIImage *)image inRect:(CGRect)frame;
 
 + (UIImage *)captureVideo:(AVPlayer *)player;
 
