@@ -249,7 +249,7 @@
     }
     
     self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight);
-    [self.videoScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
     
 }
 
@@ -894,13 +894,14 @@
     }
     
     int y = self.model.currentVideoPlayer.view.frame.origin.y;
+    int x = self.model.currentVideoPlayer.view.frame.origin.x;
     CGPoint translation = [gestureRecognizer translationInView:self.view];
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-            self.model.currentVideoPlayer.view.frame = CGRectMake(0, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
-            self.overlayView.frame = CGRectMake(0, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
-        
-        [gestureRecognizer setTranslation:CGPointZero inView:self.model.currentVideoPlayer.view];
+            self.model.currentVideoPlayer.view.frame = CGRectMake(x, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
+            self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
+        DLog(@"frame = %@\n", NSStringFromCGRect(self.model.currentVideoPlayer.view.frame));
+        [gestureRecognizer setTranslation:CGPointZero inView:self.view];
     } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
         CGPoint velocity = [gestureRecognizer velocityInView:self.view];
         if (velocity.y < -200) {
@@ -919,10 +920,12 @@
 - (void)animateDown:(float)speed andSwitchCategory:(BOOL)switchCategory
 {
     CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
-    
+ 
+    NSInteger finalyYPosition = switchCategory ? self.view.frame.size.height : 0;
+
     [UIView animateWithDuration:speed animations:^{
-        [self.model.currentVideoPlayer.view setFrame:CGRectMake(0, self.view.frame.size.height, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.overlayView setFrame:CGRectMake(0, self.view.frame.size.height, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
     } completion:^(BOOL finished) {
         if (switchCategory) {
             [self switchChannelWithDirectionUp:YES];
@@ -935,9 +938,11 @@
 {
     CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
     
+    NSInteger finalyYPosition = switchCategory ? -self.view.frame.size.height : 0;
+    
     [UIView animateWithDuration:speed animations:^{
-        [self.model.currentVideoPlayer.view setFrame:CGRectMake(0, -currentPlayerFrame.size.height, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.overlayView setFrame:CGRectMake(0, 0 , currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
     } completion:^(BOOL finished) {
         if (switchCategory) {
             [self switchChannelWithDirectionUp:NO];
