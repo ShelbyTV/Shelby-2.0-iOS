@@ -17,6 +17,11 @@
 @implementation SPCategoryViewCell
 
 
+- (void)awakeFromNib
+{
+    [[self selectedBackgroundView] setBackgroundColor:[UIColor clearColor]];
+}
+
 - (void)setcategoryColor:(NSString *)hex andTitle:(NSString *)title
 {
     [self.categoryTitle setText:title];
