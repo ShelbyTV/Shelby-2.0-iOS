@@ -12,6 +12,7 @@
 @protocol SPVideoReelDelegate <NSObject>
 
 - (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
+- (void)userDidCloseChannel:(SPVideoReel *)videoReel;
 
 @end
 
@@ -46,5 +47,5 @@
 /// Action Methods
 - (IBAction)restartPlaybackButtonAction:(id)sender;
 
-- (void)dismisseVideoReel;
+- (void)cleanup;
 @end

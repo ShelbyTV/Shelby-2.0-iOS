@@ -905,8 +905,10 @@
     } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
         CGPoint velocity = [gestureRecognizer velocityInView:self.view];
         if (velocity.y < -200) {
+            [self.view setUserInteractionEnabled:NO];
             [self animateUp:kShelbySPFastSpeed andSwitchCategory:YES];
         } else if (velocity.y > 200) {
+            [self.view setUserInteractionEnabled:NO];
             [self animateDown:kShelbySPFastSpeed andSwitchCategory:YES];
         } else if (kShelbySPVideoHeight - (y + translation.y) > self.model.currentVideoPlayer.view.frame.size.height/3) {
             [self animateUp:kShelbySPSlowSpeed andSwitchCategory:NO];
@@ -952,11 +954,13 @@
 
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
 {
-    DLog(@"PINCH gesture recognized!");
-    [self purgeVideoPlayerInformationFromPreviousVideoGroup];
+    [self.view setUserInteractionEnabled:NO];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(userDidCloseChannel:)]) {
+        [self.delegate userDidCloseChannel:self];
+    }
 }
 
-- (void)dismisseVideoReel
+- (void)cleanup
 {
     [self purgeVideoPlayerInformationFromPreviousVideoGroup];
 }
@@ -994,11 +998,6 @@
     
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
     [dataUtility removeAllVideoExtractionURLReferences];
-    
-    // Dismiss
-    if (![self isBeingDismissed]) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 #pragma mark - UIScrollViewDelegate Methods

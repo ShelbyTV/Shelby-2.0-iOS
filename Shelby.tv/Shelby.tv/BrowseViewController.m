@@ -63,6 +63,7 @@
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent;
 - (void)animateSwitchCategories:(SPVideoReel *)viewControllerToPresent;
 - (void)animateOpenCategories:(SPVideoReel *)viewControllerToPresent;
+- (void)animateCloseCategories:(SPVideoReel *)viewController;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -437,6 +438,9 @@
                     categoryID = roll.rollID;
                 }
 
+                if (self.activeVideoReel) {
+                    [self.activeVideoReel cleanup];
+                }
                 SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:videoIndex andCategoryID:categoryID];
                 [videoReel setDelegate:self];
                 [self setActiveCategoryIndex:categoryIndex];
@@ -510,6 +514,48 @@
     }];
 }
 
+- (void)animateCloseCategories:(SPVideoReel *)viewController
+{
+    SPCategoryViewCell *categoryCell = (SPCategoryViewCell *)[self.categoriesTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:self.activeCategoryIndex inSection:0]];
+    
+    UIImage *categoryImage = [ImageUtilities screenshot:categoryCell];
+    UIImageView *categoryImageView = [[UIImageView alloc] initWithImage:categoryImage];
+    
+    CGPoint categoryCellOriginInWindow = [self.view convertPoint:categoryCell.frame.origin fromView:self.categoriesTable];
+    
+    CGRect topRect = CGRectMake(0, 0, 1024, categoryCellOriginInWindow.y);
+    CGRect bottomRect = CGRectMake(0, categoryCellOriginInWindow.y + categoryCell.frame.size.height, 1024, 1024 - categoryCellOriginInWindow.y);
+    
+    UIImage *categoriesImage = [ImageUtilities screenshot:self.view];
+    UIImage *topImage = [ImageUtilities crop:categoriesImage inRect:topRect];
+    UIImage *bottomImage = [ImageUtilities crop:categoriesImage inRect:bottomRect];
+    
+    UIImageView *topImageView = [[UIImageView alloc] initWithImage:topImage];
+    UIImageView *bottomImageView = [[UIImageView alloc] initWithImage:bottomImage];
+    
+    [viewController.view addSubview:categoryImageView];
+    [viewController.view addSubview:bottomImageView];
+    [viewController.view addSubview:topImageView];
+    
+    [topImageView setFrame:CGRectMake(0, -topImageView.frame.size.height, topImageView.frame.size.width, topImageView.frame.size.height)];
+    [bottomImageView setFrame:CGRectMake(0, 900, bottomImageView.frame.size.width, bottomImageView.frame.size.height)];
+    [categoryImageView setFrame:CGRectMake(0, 1024, categoryImageView.frame.size.width, categoryImageView.frame.size.height)];
+
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+    
+    [UIView animateWithDuration:1.5 animations:^{
+        [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y, 1024, categoryCell.frame.size.height)];
+        [topImageView setFrame:topRect];
+        [bottomImageView setFrame:bottomRect];
+        
+    } completion:^(BOOL finished) {
+        [categoryImageView removeFromSuperview];
+        [bottomImageView removeFromSuperview];
+        [topImageView removeFromSuperview];
+        [viewController cleanup];
+        [viewController dismissViewControllerAnimated:NO completion:nil];
+    }];
+}
 
 
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent
@@ -550,6 +596,20 @@
     [self setActiveVideoReel:videoReel];
     NSUInteger nextCategory = (self.activeCategoryIndex + next) % [self.categories count];
     [self launchPlayer:nextCategory];
+    
+//    DLog(@"active category %d next: %d category count %d and next index %d", self.activeCategoryIndex, next, [self.categories count], nextCategory);
+    SPCategoryViewCell *categoryCell = (SPCategoryViewCell *)[self.categoriesTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:nextCategory inSection:0]];
+    if (!categoryCell) {
+        UITableViewScrollPosition position = up ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextCategory inSection:0];
+        [self.categoriesTable scrollToRowAtIndexPath:nextIndexPath atScrollPosition:position animated:NO];
+        [self.categoriesTable reloadRowsAtIndexPaths:@[nextIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
 }
 
+- (void)userDidCloseChannel:(SPVideoReel *)videoReel
+{
+    [self animateCloseCategories:videoReel];
+}
 @end
