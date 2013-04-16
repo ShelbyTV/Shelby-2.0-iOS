@@ -38,6 +38,7 @@
 @property (assign, nonatomic) SecretMode secretMode;
 
 @property (assign, nonatomic) NSUInteger activeCategoryIndex;
+@property (assign, nonatomic) SPVideoReel *activeVideoReel;
 
 - (void)fetchUserNickname;
 
@@ -59,7 +60,9 @@
 - (void)launchPlayer:(NSUInteger)categoryIndex;
 - (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex;
 - (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType;
-- (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell;
+- (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent;
+- (void)animateSwitchCategories:(SPVideoReel *)viewControllerToPresent;
+- (void)animateOpenCategories:(SPVideoReel *)viewControllerToPresent;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -437,7 +440,7 @@
                 SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:videoIndex andCategoryID:categoryID];
                 [videoReel setDelegate:self];
                 [self setActiveCategoryIndex:categoryIndex];
-                [self presentViewController:videoReel fromCell:nil];
+                [self presentViewController:videoReel];
 
             } else {
                 
@@ -455,8 +458,33 @@
     });
 }
 
-- (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent fromCell:(UICollectionViewCell *)cell
+- (void)animateSwitchCategories:(SPVideoReel *)viewControllerToPresent
 {
+    [self.activeVideoReel dismissViewControllerAnimated:NO completion:^{
+        [self presentViewController:viewControllerToPresent animated:NO completion:^{
+            [self setActiveVideoReel:nil];
+        }];
+        
+    }];
+}
+
+- (void)animateOpenCategories:(SPVideoReel *)viewControllerToPresent
+{
+    [self presentViewController:viewControllerToPresent animated:NO completion:^{
+    }];
+}
+
+
+
+- (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent
+{
+    if (self.activeVideoReel) {
+        [self animateSwitchCategories:(SPVideoReel *)viewControllerToPresent];
+    } else {
+        [self animateOpenCategories:(SPVideoReel *)viewControllerToPresent];
+    }
+}
+
 //    UIImage *screenShot = [ImageUtilities screenshot:self.view];
 //    UIImageView *srcImage = [[UIImageView alloc] initWithImage:screenShot];
 //    UIImage *cellScreenShot = [ImageUtilities screenshot:cell];
@@ -469,12 +497,12 @@
 //    [viewControllerToPresent.view addSubview:cellSrcImage];
 //    
 //    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-    
-    [self presentViewController:viewControllerToPresent animated:NO completion:^{
+
+//    [self presentViewController:viewControllerToPresent animated:NO completion:^{
 //        [srcImage removeFromSuperview];
 //        [cellSrcImage removeFromSuperview];
-    }];
-}
+//    }];
+//}
 
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -502,11 +530,9 @@
 - (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
 {
     NSInteger next = up ? -1 : 1;
-
-    [videoReel dismissViewControllerAnimated:NO completion:^{
-        NSUInteger nextCategory = (self.activeCategoryIndex + next) % [self.categories count];
-        [self launchPlayer:nextCategory];
-    }];
+    [self setActiveVideoReel:videoReel];
+    NSUInteger nextCategory = (self.activeCategoryIndex + next) % [self.categories count];
+    [self launchPlayer:nextCategory];
 }
 
 @end
