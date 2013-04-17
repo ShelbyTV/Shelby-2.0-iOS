@@ -40,6 +40,8 @@
 @property (assign, nonatomic) NSUInteger activeCategoryIndex;
 @property (assign, nonatomic) SPVideoReel *activeVideoReel;
 
+@property (assign, nonatomic) BOOL animationInProgress;
+
 - (void)fetchUserNickname;
 
 // TODO: need to port from MeVC
@@ -88,6 +90,8 @@
     [super viewDidLoad];
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+    
+    [self setAnimationInProgress:NO];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]]];
     
@@ -481,6 +485,12 @@
 
 - (void)animateOpenCategories:(SPVideoReel *)viewControllerToPresent
 {
+    if (self.animationInProgress) {
+        return;
+    } else {
+        [self setAnimationInProgress:YES];
+    }
+    
     SPCategoryViewCell *categoryCell = (SPCategoryViewCell *)[self.categoriesTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:self.activeCategoryIndex inSection:0]];
     
     UIImage *categoryImage = [ImageUtilities screenshot:categoryCell];
@@ -517,12 +527,19 @@
             [categoryImageView removeFromSuperview];
             [bottomImageView removeFromSuperview];
             [topImageView removeFromSuperview];
+            [self setAnimationInProgress:NO];
         }];
     }];
 }
 
 - (void)animateCloseCategories:(SPVideoReel *)viewController
 {
+    if (self.animationInProgress) {
+        return;
+    } else {
+        [self setAnimationInProgress:YES];
+    }
+
     SPCategoryViewCell *categoryCell = (SPCategoryViewCell *)[self.categoriesTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:self.activeCategoryIndex inSection:0]];
     
     UIImage *categoryImage = [ImageUtilities screenshot:categoryCell];
@@ -561,6 +578,7 @@
         [topImageView removeFromSuperview];
         [viewController cleanup];
         [viewController dismissViewControllerAnimated:NO completion:nil];
+        [self setAnimationInProgress:NO];
     }];
 }
 
