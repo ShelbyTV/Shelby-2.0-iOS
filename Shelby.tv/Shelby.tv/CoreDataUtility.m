@@ -1521,6 +1521,9 @@
             NSString *displayTitle = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_title"]];
             [roll setValue:displayTitle forKey:kShelbyCoreDataRollDisplayTitle];
             
+            NSString *displayColor = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_channel_color"]];
+            [roll setValue:displayColor forKey:kShelbyCoreDataChannelDisplayColor];
+
             NSString *displayDescription = [NSString coreDataNullTest:[rollDictionary valueForKey:@"display_description"]];
             [roll setValue:displayDescription forKey:kShelbyCoreDataRollDisplayDescription];
             
@@ -1555,6 +1558,9 @@
             NSString *displayTitle = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_title"]];
             [channel setValue:displayTitle forKey:kShelbyCoreDataChannelDisplayTitle];
             
+            NSString *displayColor = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_channel_color"]];
+            [channel setValue:displayColor forKey:kShelbyCoreDataChannelDisplayColor];
+
             NSString *displayDescription = [NSString coreDataNullTest:[channelDictionary valueForKey:@"display_description"]];
             [channel setValue:displayDescription forKey:kShelbyCoreDataChannelDisplayDescription];
             

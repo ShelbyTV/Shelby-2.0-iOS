@@ -14,6 +14,7 @@
 @interface Roll : NSManagedObject
 
 @property (nonatomic, retain) NSString * creatorID;
+@property (nonatomic, retain) NSString * displayColor;
 @property (nonatomic, retain) NSString * displayDescription;
 @property (nonatomic, retain) NSString * displayThumbnailURL;
 @property (nonatomic, retain) NSString * displayTitle;

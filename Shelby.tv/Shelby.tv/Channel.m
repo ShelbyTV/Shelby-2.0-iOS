@@ -12,6 +12,7 @@
 @implementation Channel
 
 @dynamic channelID;
+@dynamic displayColor;
 @dynamic displayDescription;
 @dynamic displayThumbnailURL;
 @dynamic displayTitle;

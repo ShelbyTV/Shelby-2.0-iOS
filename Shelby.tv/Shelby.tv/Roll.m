@@ -13,6 +13,7 @@
 @implementation Roll
 
 @dynamic creatorID;
+@dynamic displayColor;
 @dynamic displayDescription;
 @dynamic displayThumbnailURL;
 @dynamic displayTitle;

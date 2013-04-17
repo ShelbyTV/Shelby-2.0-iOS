@@ -204,16 +204,18 @@
         NSManagedObjectID *categoryObjectID = [category objectID];
         NSManagedObjectContext *context = [self context];
         NSString *title = nil;
-       
+        NSString *color = nil;
         if ([category isMemberOfClass:[Channel class]]) {
             Channel *channel = (Channel *)[context existingObjectWithID:categoryObjectID error:nil];
             title = [channel displayTitle];
+            color = [channel displayColor];
         } else if ([category isMemberOfClass:[Roll class]]) {
             Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
             title = [roll displayTitle];
+            color = [roll displayColor];
         }
 
-        [cell setcategoryColor:@"333" andTitle:title];
+        [cell setcategoryColor:color andTitle:title];
     }
 
     return cell;

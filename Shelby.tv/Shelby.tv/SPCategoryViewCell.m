@@ -27,7 +27,15 @@
 - (void)setcategoryColor:(NSString *)hex andTitle:(NSString *)title
 {
     [self.categoryTitle setText:title];
-    [self.categoryColorView setBackgroundColor:[UIColor colorWithHex:hex andAlpha:1]];    
+    
+    UIColor *categoryColor = nil;
+    if (hex) {
+        categoryColor = [UIColor colorWithHex:hex andAlpha:1];
+    } else {
+        categoryColor = kShelbyColorGreen;
+    }
+
+    [self.categoryColorView setBackgroundColor:categoryColor];
 }
 
 @end

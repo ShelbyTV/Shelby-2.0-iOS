@@ -30,6 +30,7 @@
 // Channel Attribute Constants
 #define kShelbyCoreDataChannelID                        @"channelID"
 #define kShelbyCoreDataChannelDisplayTitle              @"displayTitle"
+#define kShelbyCoreDataChannelDisplayColor              @"displayColor"
 #define kShelbyCoreDataChannelDisplayDescription        @"displayDescription"
 #define kShelbyCoreDataChannelDisplayThumbnailURL       @"displayThumbnailURL"
 #define kShelbyCoreDataChannelDisplayTag                @"displayTag"
