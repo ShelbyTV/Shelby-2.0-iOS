@@ -494,9 +494,9 @@
     [viewControllerToPresent.view addSubview:categoryImageView];
     [viewControllerToPresent.view addSubview:bottomImageView];
     [viewControllerToPresent.view addSubview:topImageView];
-    [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y, 1024, categoryCell.frame.size.height)];
-    [topImageView setFrame:topRect];
-    [bottomImageView setFrame:bottomRect];
+    [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y + 20, 1024, categoryCell.frame.size.height)];
+    [topImageView setFrame:CGRectMake(topRect.origin.x, topRect.origin.y + 20, topRect.size.width, topRect.size.height)];
+    [bottomImageView setFrame:CGRectMake(bottomRect.origin.x, bottomRect.origin.y + 20, bottomRect.size.width, bottomRect.size.height)];
 
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     
@@ -544,9 +544,9 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
     [UIView animateWithDuration:1.5 animations:^{
-        [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y, 1024, categoryCell.frame.size.height)];
-        [topImageView setFrame:topRect];
-        [bottomImageView setFrame:bottomRect];
+        [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y + 20, 1024, categoryCell.frame.size.height)];
+        [topImageView setFrame:CGRectMake(topRect.origin.x, topRect.origin.y + 20, topRect.size.width, topRect.size.height)];
+        [bottomImageView setFrame:CGRectMake(bottomRect.origin.x, bottomRect.origin.y + 20, bottomRect.size.width, bottomRect.size.height)];
         
     } completion:^(BOOL finished) {
         [categoryImageView removeFromSuperview];
