@@ -149,21 +149,21 @@
     [self.categories removeAllObjects];
     [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
-    int i = 0;
-    for (id category in self.categories) {
-        NSMutableArray *frames = nil;
-        if ([category isKindOfClass:[Channel class]]) {
-            frames = [datautility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
-        } else if ([category isKindOfClass:[Roll class]]) {
-            frames = [datautility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
-        } else {
-            frames = [@[] mutableCopy];
+        int i = 0;
+        for (id category in self.categories) {
+            NSMutableArray *frames = nil;
+            if ([category isKindOfClass:[Channel class]]) {
+                frames = [datautility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
+            } else if ([category isKindOfClass:[Roll class]]) {
+                frames = [datautility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
+            } else {
+                frames = [@[] mutableCopy];
+            }
+            [self.categoriesData setObject:frames forKey:[NSNumber numberWithInt:i]];
+            i++;
         }
-        [self.categoriesData setObject:frames forKey:[NSNumber numberWithInt:i]];
-        i++;
-    }
-
-    [self.categoriesTable reloadData];
+        
+        [self.categoriesTable reloadData];
 }
 
 - (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated

@@ -30,7 +30,6 @@
 
 /// Core Data Methods
 - (void)mergeChanges:(NSNotification *)notification;
-- (void)didLoadCategories;
 - (void)dumpAllData;
 
 @end

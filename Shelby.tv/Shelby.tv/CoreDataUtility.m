@@ -156,7 +156,6 @@
                 case DataRequestType_StoreCategories: {
                     
                     DLog(@"Categories Synced and Saved Successfully");
-                    [self.appDelegate didLoadCategories];
                     
                 } break;
                     

@@ -325,9 +325,6 @@
         });
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        // Post notificaiton to dismiss channelLoadingScreen if there's no connectivity
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationNoConnectivity object:nil];
 
         DLog(@"Problem fetching all Categories");
         

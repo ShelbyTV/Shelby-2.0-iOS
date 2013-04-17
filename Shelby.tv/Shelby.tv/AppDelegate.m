@@ -37,7 +37,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 
 @property (nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic) UIView *categoryLoadingView;
 @property (nonatomic) NSMutableArray *videoDownloaders;
 @property (assign, nonatomic) NSUInteger pollAPICounter;
 @property (nonatomic) id <GAITracker> googleTracker;
@@ -48,14 +47,10 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 /// Setup Methods
 - (void)setupInitialSettings;
 - (void)setupAnalytics;
-- (void)setupObservers;
-- (void)setupCategoryLoadingView;
-- (void)removeCategoryLoadingView;
 - (void)setupOfflineMode;
 - (void)setupDataUtilities;
 
 /// Notification Methods
-- (void)didNotConnect:(NSNotification *)notification;
 - (void)postAuthorizationNotification;
 
 /// API Methods
@@ -80,17 +75,11 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     // Setup Offline Mode
     [self setupOfflineMode];
     
-    // Observers
-    [self setupObservers];
-    
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.browseViewController = [[BrowseViewController alloc] init];
     self.window.rootViewController = self.browseViewController;
     [self.window makeKeyAndVisible];
-    
-    // Setup buffer screen to allow categories to be fetched from web and stored locally
-    [self setupCategoryLoadingView];
 
     return YES;
 }
@@ -313,47 +302,10 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     return nil;
 }
 
-- (void)setupObservers
-{
-    // Add notification to dismiss categoryLoadingView if there's no connectivity
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didNotConnect:)
-                                                 name:kShelbyNotificationNoConnectivity
-                                               object:nil];
-}
-
 - (void)setupDataUtilities
 {
     _dataUtilities = [@[] mutableCopy];
     [self addObserver:self forKeyPath:@"dataUtilities" options:NSKeyValueObservingOptionNew context:nil];
-}
-
-- (void)setupCategoryLoadingView
-{
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    float height = kShelbyFullscreenHeight;
-    float width = kShelbyFullscreenWidth;
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-        height = kShelbyFullscreenWidth;
-        width = kShelbyFullscreenHeight;
-    }
-
-    self.categoryLoadingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width, height)];
-    [self.categoryLoadingView setBackgroundColor:[UIColor clearColor]];
-    [self.categoryLoadingView setUserInteractionEnabled:YES];
-    [self.window.rootViewController.view addSubview:_categoryLoadingView];
-    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
-    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [indicator setCenter:CGPointMake(_categoryLoadingView.frame.size.width/2.0f, _categoryLoadingView.frame.size.height/2.0f - 21)];
-    [indicator setHidesWhenStopped:YES];
-    [indicator startAnimating];
-    [self.categoryLoadingView addSubview:indicator];
-}
-
-- (void)removeCategoryLoadingView
-{
-    [self.categoryLoadingView removeFromSuperview];
-    [self setCategoryLoadingView:nil];
 }
 
 - (void)setupOfflineMode
@@ -370,23 +322,8 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 }
 
 #pragma mark - Notification Methods (Private)
-- (void)didNotConnect:(NSNotification *)notification
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (self.categoryLoadingView) {
-            
-            [self removeCategoryLoadingView];
-            
-//            [self.videoReel buildViewAndFetchDataSource];
-            
-        }
-    });
-}
-
 - (void)postAuthorizationNotification
 {
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
 }
 
@@ -401,20 +338,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
             [self setInvocationMethod:nil];
         }
     }
-}
-
-- (void)didLoadCategories
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (self.categoryLoadingView) {
-            
-            [self removeCategoryLoadingView];
-            
-//            [self.videoReel buildViewAndFetchDataSource];
-            
-        }
-    });
 }
 
 #pragma mark - API Methods (Private)
