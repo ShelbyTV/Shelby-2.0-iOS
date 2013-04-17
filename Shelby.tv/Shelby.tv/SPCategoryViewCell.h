@@ -11,6 +11,7 @@
 @interface SPCategoryViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UICollectionView *categoryFrames;
 
-
+- (UIColor *)categoryDisplayColor;
+- (NSString *)categoryDisplayTitle;
 - (void)setcategoryColor:(NSString *)hex andTitle:(NSString *)title;
 @end

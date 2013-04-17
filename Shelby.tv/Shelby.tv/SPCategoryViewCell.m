@@ -38,4 +38,14 @@
     [self.categoryColorView setBackgroundColor:categoryColor];
 }
 
+- (UIColor *)categoryDisplayColor
+{
+    return [self.categoryColorView backgroundColor];
+}
+
+- (NSString *)categoryDisplayTitle
+{
+    return [self.categoryTitle text];
+}
+
 @end

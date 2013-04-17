@@ -34,6 +34,12 @@
 		1C304BEF171EE99900476277 /* channelbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C304BEB171EE99900476277 /* channelbg@2x.png */; };
 		1C304BF0171EE99900476277 /* channelbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C304BEB171EE99900476277 /* channelbg@2x.png */; };
 		1C304BF1171EE99900476277 /* channelbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C304BEB171EE99900476277 /* channelbg@2x.png */; };
+		1C304BF4171EF0B000476277 /* SPCategoryDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF3171EF0B000476277 /* SPCategoryDisplay.m */; };
+		1C304BF5171EF0B000476277 /* SPCategoryDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF3171EF0B000476277 /* SPCategoryDisplay.m */; };
+		1C304BF6171EF0B000476277 /* SPCategoryDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF3171EF0B000476277 /* SPCategoryDisplay.m */; };
+		1C304BF9171EFE4F00476277 /* SPCategoryPeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF8171EFE4F00476277 /* SPCategoryPeekView.m */; };
+		1C304BFA171EFE4F00476277 /* SPCategoryPeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF8171EFE4F00476277 /* SPCategoryPeekView.m */; };
+		1C304BFB171EFE4F00476277 /* SPCategoryPeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF8171EFE4F00476277 /* SPCategoryPeekView.m */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -696,6 +702,10 @@
 		1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPCategoryViewCell.m; sourceTree = "<group>"; };
 		1C304BEA171EE99900476277 /* channelbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = channelbg.png; sourceTree = "<group>"; };
 		1C304BEB171EE99900476277 /* channelbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channelbg@2x.png"; sourceTree = "<group>"; };
+		1C304BF2171EF0B000476277 /* SPCategoryDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCategoryDisplay.h; sourceTree = "<group>"; };
+		1C304BF3171EF0B000476277 /* SPCategoryDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPCategoryDisplay.m; sourceTree = "<group>"; };
+		1C304BF7171EFE4F00476277 /* SPCategoryPeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCategoryPeekView.h; sourceTree = "<group>"; };
+		1C304BF8171EFE4F00476277 /* SPCategoryPeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPCategoryPeekView.m; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1404,6 +1414,8 @@
 			children = (
 				8EB3B19A16AFA7F9008587FD /* SPModel.h */,
 				8EB3B19B16AFA7F9008587FD /* SPModel.m */,
+				1C304BF2171EF0B000476277 /* SPCategoryDisplay.h */,
+				1C304BF3171EF0B000476277 /* SPCategoryDisplay.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1434,6 +1446,8 @@
 				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
 				1C22E3C1171C79D700A1CAEC /* SPCategoryViewCell.h */,
 				1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */,
+				1C304BF7171EFE4F00476277 /* SPCategoryPeekView.h */,
+				1C304BF8171EFE4F00476277 /* SPCategoryPeekView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2368,6 +2382,8 @@
 				1C3D91271714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3A91718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
 				1C22E3C4171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
+				1C304BF5171EF0B000476277 /* SPCategoryDisplay.m in Sources */,
+				1C304BFA171EFE4F00476277 /* SPCategoryPeekView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2451,6 +2467,8 @@
 				1C3D91281714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3AA1718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
 				1C22E3C5171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
+				1C304BF6171EF0B000476277 /* SPCategoryDisplay.m in Sources */,
+				1C304BFB171EFE4F00476277 /* SPCategoryPeekView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2534,6 +2552,8 @@
 				1C3D91261714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3A81718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
 				1C22E3C3171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
+				1C304BF4171EF0B000476277 /* SPCategoryDisplay.m in Sources */,
+				1C304BF9171EFE4F00476277 /* SPCategoryPeekView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

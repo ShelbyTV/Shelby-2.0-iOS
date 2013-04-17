@@ -19,6 +19,9 @@
 // Utilities
 #import "ImageUtilities.h"
 
+// Models
+#import "SPCategoryDisplay.h"
+
 @interface BrowseViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
@@ -51,8 +54,8 @@
 //- (void)personalRollGestureScale:(UIPinchGestureRecognizer *)gesture;
 //- (void)streamGestureScale:(UIPinchGestureRecognizer *)gesture;
 
-- (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated;
-
+// Helper methods
+- (SPCategoryViewCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
 
 /// Authentication Methods
 - (void)loginAction;
@@ -66,6 +69,7 @@
 - (void)animateSwitchCategories:(SPVideoReel *)viewControllerToPresent;
 - (void)animateOpenCategories:(SPVideoReel *)viewControllerToPresent;
 - (void)animateCloseCategories:(SPVideoReel *)viewController;
+- (NSInteger)nextCategoryForDirection:(BOOL)up;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -166,9 +170,17 @@
     [self.categoriesTable reloadData];
 }
 
-- (void)scrollCollectionViewToPage:(int)page animated:(BOOL)animated
-{    
-//    [self.collectionView setContentOffset:[((CollectionViewGroupsLayout *)self.collectionView.collectionViewLayout) pointAtPage:page] animated:animated];
+- (SPCategoryViewCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated
+{
+    SPCategoryViewCell *categoryCell = (SPCategoryViewCell *)[self.categoriesTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
+    if (!categoryCell) {
+        UITableViewScrollPosition position = up ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:row inSection:0];
+        [self.categoriesTable scrollToRowAtIndexPath:nextIndexPath atScrollPosition:position animated:animated];
+        [self.categoriesTable reloadRowsAtIndexPaths:@[nextIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
+    return categoryCell;
 }
 
 - (void)resetVersionLabel
@@ -585,6 +597,19 @@
 }
 
 
+- (NSInteger)nextCategoryForDirection:(BOOL)up
+{
+    NSInteger next = up ? -1 : 1;
+    NSInteger nextCategory = self.activeCategoryIndex + next;
+    if (nextCategory < 0) {
+        nextCategory = [self.categories count] + nextCategory;
+    } else if (nextCategory == [self.categories count]) {
+        nextCategory = 0;
+    }
+
+    return nextCategory;
+}
+
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent
 {
     if (self.activeVideoReel) {
@@ -619,29 +644,26 @@
 #pragma mark - SPVideoReel Delegate
 - (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
 {
-    NSInteger next = up ? -1 : 1;
     [self setActiveVideoReel:videoReel];
-    NSInteger nextCategory = self.activeCategoryIndex + next;
-    if (nextCategory < 0) {
-        nextCategory = [self.categories count] + nextCategory;
-    } else if (nextCategory == [self.categories count]) {
-        nextCategory = 0;
-    }
 
+    NSInteger nextCategory = [self nextCategoryForDirection:up];
     [self launchPlayer:nextCategory];
     
-    SPCategoryViewCell *categoryCell = (SPCategoryViewCell *)[self.categoriesTable cellForRowAtIndexPath:[NSIndexPath indexPathForItem:nextCategory inSection:0]];
-    if (!categoryCell) {
-        UITableViewScrollPosition position = up ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
-        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextCategory inSection:0];
-        [self.categoriesTable scrollToRowAtIndexPath:nextIndexPath atScrollPosition:position animated:NO];
-        [self.categoriesTable reloadRowsAtIndexPaths:@[nextIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
-    
+    [self loadCell:nextCategory withDirection:up animated:NO];
 }
 
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel
 {
     [self animateCloseCategories:videoReel];
+}
+
+- (SPCategoryDisplay *)categoryDisplayForDirection:(BOOL)up
+{
+    NSInteger nextCategory = [self nextCategoryForDirection:up];
+    
+    SPCategoryViewCell *categoryCell = [self loadCell:nextCategory withDirection:up animated:NO];
+    SPCategoryDisplay *categoryDisplay = [[SPCategoryDisplay alloc] initWithCategoryColor:[categoryCell categoryDisplayColor] andCategoryDisplayTitle:[categoryCell categoryDisplayTitle]];
+    
+    return categoryDisplay;
 }
 @end

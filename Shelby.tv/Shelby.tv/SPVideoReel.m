@@ -15,10 +15,10 @@
 #import "DeviceUtilities.h"
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
+#import "SPCategoryPeekView.h"
 
-
-#define kShelbySPSlowSpeed 0.5
-#define kShelbySPFastSpeed 0.2
+#define kShelbySPSlowSpeed 0.8
+#define kShelbySPFastSpeed 0.5
 
 @interface SPVideoReel ()
 
@@ -34,6 +34,7 @@
 @property (assign, nonatomic) NSUInteger *videoStartIndex;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
+@property (nonatomic) SPCategoryPeekView *peekCategoryView;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
@@ -133,6 +134,8 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
+    
+    _peekCategoryView = [[SPCategoryPeekView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     [self setup];
 }
@@ -893,14 +896,30 @@
         return;
     }
     
-    int y = self.model.currentVideoPlayer.view.frame.origin.y;
-    int x = self.model.currentVideoPlayer.view.frame.origin.x;
+    NSInteger y = self.model.currentVideoPlayer.view.frame.origin.y;
+    NSInteger x = self.model.currentVideoPlayer.view.frame.origin.x;
     CGPoint translation = [gestureRecognizer translationInView:self.view];
     
+    BOOL peekUp = y >= 0 ? YES : NO;
+    SPCategoryDisplay *categoryDisplay = nil;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(categoryDisplayForDirection:)]) {
+       categoryDisplay =  [self.delegate categoryDisplayForDirection:peekUp];
+    }
+
+    int peekHeight = peekUp ? y : -1 * y;
+    int yOriginForPeekView = peekUp ? 0 : 768 - peekHeight;
+    CGRect peekViewRect = peekViewRect = CGRectMake(0, yOriginForPeekView, kShelbySPVideoWidth, peekHeight);
+    
+    [self.peekCategoryView setupWithCategoryDisplay:categoryDisplay];
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
+        [self.view addSubview:self.peekCategoryView];
+    }
+    
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-            self.model.currentVideoPlayer.view.frame = CGRectMake(x, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
-            self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
-        DLog(@"frame = %@\n", NSStringFromCGRect(self.model.currentVideoPlayer.view.frame));
+        self.model.currentVideoPlayer.view.frame = CGRectMake(x, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
+        self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
+        self.peekCategoryView.frame = peekViewRect;
+        
         [gestureRecognizer setTranslation:CGPointZero inView:self.view];
     } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
         CGPoint velocity = [gestureRecognizer velocityInView:self.view];
@@ -908,10 +927,19 @@
             [self animateUp:kShelbySPFastSpeed andSwitchCategory:YES];
         } else if (velocity.y > 200) {
             [self animateDown:kShelbySPFastSpeed andSwitchCategory:YES];
-        } else if (kShelbySPVideoHeight - (y + translation.y) > self.model.currentVideoPlayer.view.frame.size.height/3) {
-            [self animateUp:kShelbySPSlowSpeed andSwitchCategory:NO];
         } else {
-            [self animateDown:kShelbySPSlowSpeed andSwitchCategory:NO];
+            NSInteger currentY = y + translation.y;
+            if (currentY > 0) {
+                if (currentY > kShelbySPVideoHeight / 2) {
+                    [self animateDown:kShelbySPSlowSpeed andSwitchCategory:YES];
+                } else {
+                    [self animateUp:kShelbySPSlowSpeed andSwitchCategory:NO];
+                }
+            } else if (-1 * currentY > kShelbySPVideoHeight / 2) {
+                [self animateUp:kShelbySPSlowSpeed andSwitchCategory:YES];
+            } else {
+                [self animateDown:kShelbySPSlowSpeed andSwitchCategory:NO];
+            }
         }
     }
 
@@ -922,14 +950,22 @@
     CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
  
     NSInteger finalyYPosition = switchCategory ? self.view.frame.size.height : 0;
-
+    CGRect peekViewFrame;
+    if (switchCategory) {
+        peekViewFrame = CGRectMake(0, 80, 1024, 680);
+    } else {
+        peekViewFrame = CGRectMake(0, 1024, 1024, 0);
+    }
+    
     [UIView animateWithDuration:speed animations:^{
         [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.peekCategoryView setFrame:peekViewFrame];
     } completion:^(BOOL finished) {
         if (switchCategory) {
             [self switchChannelWithDirectionUp:YES];
         }
+        [self.peekCategoryView removeFromSuperview];
     }];
 
 }
@@ -939,14 +975,22 @@
     CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
     
     NSInteger finalyYPosition = switchCategory ? -self.view.frame.size.height : 0;
-    
+    CGRect peekViewFrame;
+    if (switchCategory) {
+        peekViewFrame = CGRectMake(0, 80, 1024, 680);
+    } else {
+        peekViewFrame = CGRectMake(0, 0, 1024, 0);
+    }
+
     [UIView animateWithDuration:speed animations:^{
         [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.peekCategoryView setFrame:peekViewFrame];
     } completion:^(BOOL finished) {
         if (switchCategory) {
             [self switchChannelWithDirectionUp:NO];
         }
+        [self.peekCategoryView removeFromSuperview];
     }];
 }
 
