@@ -196,14 +196,23 @@
     [self.changableDataMapper setObject:[NSNumber numberWithInt:indexPath.row] forKey:[NSNumber numberWithUnsignedInt:hash]];
     
     id category = (id)self.categories[indexPath.row];
-    NSString *title = nil;
-    if ([category isMemberOfClass:[Channel class]]) {
-        title = [((Channel *)category) displayTitle];
-    } else if ([category isMemberOfClass:[Roll class]]) {
-        title = [((Roll *)category) displayTitle];
+    
+    if ([category isKindOfClass:[NSManagedObject class]]) {
+        NSManagedObjectID *categoryObjectID = [category objectID];
+        NSManagedObjectContext *context = [self context];
+        NSString *title = nil;
+       
+        if ([category isMemberOfClass:[Channel class]]) {
+            Channel *channel = (Channel *) [context existingObjectWithID:categoryObjectID error:nil];
+            title = [channel displayTitle];
+        } else if ([category isMemberOfClass:[Roll class]]) {
+            Roll *roll = (Roll *) [context existingObjectWithID:categoryObjectID error:nil];
+            title = [roll displayTitle];
+        }
+
+        [cell setcategoryColor:@"333" andTitle:title];
     }
 
-    [cell setcategoryColor:@"333" andTitle:title];
 
     return cell;
 }
