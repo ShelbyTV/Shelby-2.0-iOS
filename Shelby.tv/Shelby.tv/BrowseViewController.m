@@ -15,6 +15,7 @@
 #import "PageControl.h"
 #import "SPVideoItemViewCell.h"
 #import "SPCategoryViewCell.h"
+#import "SPVideoItemViewCellLabel.h"
 
 // Utilities
 #import "ImageUtilities.h"

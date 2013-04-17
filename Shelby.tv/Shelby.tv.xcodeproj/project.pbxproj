@@ -641,6 +641,9 @@
 		8EA2CB2616729E8700D59B73 /* SPVideoItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
+		8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
+		8EAB0069171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
+		8EAB006A171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EB19AA116E6FC4A00B22228 /* cardTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB19AA016E6FC4A00B22228 /* cardTemplate.png */; };
 		8EB3B18C16AF68A5008587FD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */; };
 		8EB3B19C16AFA7FA008587FD /* SPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19B16AFA7F9008587FD /* SPModel.m */; };
@@ -953,6 +956,8 @@
 		8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtility.m; sourceTree = "<group>"; };
 		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
 		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
+		8EAB0066171F27E20021DF31 /* SPVideoItemViewCellLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemViewCellLabel.h; sourceTree = "<group>"; };
+		8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemViewCellLabel.m; sourceTree = "<group>"; };
 		8EB19AA016E6FC4A00B22228 /* cardTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardTemplate.png; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		8EB3B19A16AFA7F9008587FD /* SPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPModel.h; sourceTree = "<group>"; };
@@ -1411,11 +1416,11 @@
 		8E68A1CA16C0C4F70031C3D2 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */,
-				1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */,
+				1C22E3BD171C79AA00A1CAEC /* SPCategoryViewCell.xib */,
 				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
 				8EF03BEC16D576EC0019669F /* SPShareRollView.xib */,
-				1C22E3BD171C79AA00A1CAEC /* SPCategoryViewCell.xib */,
+				8EA2CB2516729E8700D59B73 /* SPVideoItemView.xib */,
+				1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -1424,16 +1429,18 @@
 			isa = PBXGroup;
 			children = (
 				8E68A1CA16C0C4F70031C3D2 /* Xibs */,
+				1C22E3C1171C79D700A1CAEC /* SPCategoryViewCell.h */,
+				1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */,
 				8E4C55751666A9F90019DD15 /* SPOverlayView.h */,
 				8E4C55761666A9F90019DD15 /* SPOverlayView.m */,
-				1C22E3A61718976A00A1CAEC /* SPVideoItemViewCell.h */,
-				1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */,
 				8EF03C5E16D57C170019669F /* SPShareRollView.h */,
 				8EF03C5F16D57C170019669F /* SPShareRollView.m */,
 				8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */,
 				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
-				1C22E3C1171C79D700A1CAEC /* SPCategoryViewCell.h */,
-				1C22E3C2171C79D700A1CAEC /* SPCategoryViewCell.m */,
+				1C22E3A61718976A00A1CAEC /* SPVideoItemViewCell.h */,
+				1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */,
+				8EAB0066171F27E20021DF31 /* SPVideoItemViewCellLabel.h */,
+				8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2368,6 +2375,7 @@
 				1C3D91271714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3A91718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
 				1C22E3C4171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
+				8EAB0069171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2451,6 +2459,7 @@
 				1C3D91281714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3AA1718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
 				1C22E3C5171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
+				8EAB006A171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2534,6 +2543,7 @@
 				1C3D91261714C00100105839 /* FacebookHandler.m in Sources */,
 				1C22E3A81718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */,
 				1C22E3C3171C79D700A1CAEC /* SPCategoryViewCell.m in Sources */,
+				8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
