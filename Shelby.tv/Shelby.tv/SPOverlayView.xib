@@ -62,10 +62,10 @@
 							<object class="IBUILabel" id="627050986">
 								<reference key="NSNextResponder" ref="169041156"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{70, 77}, {228, 21}}</string>
+								<string key="NSFrame">{{58, 75}, {228, 16}}</string>
 								<reference key="NSSuperview" ref="169041156"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="958116918"/>
+								<reference key="NSNextKeyView" ref="427795009"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -81,14 +81,44 @@
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">12</float>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<string key="name">HelveticaNeue</string>
+									<string key="name">HelveticaNeue-Bold</string>
 									<string key="family">Helvetica Neue</string>
-									<int key="traits">0</int>
+									<int key="traits">2</int>
 									<double key="pointSize">14</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="965663638">
-									<string key="NSName">HelveticaNeue-Medium</string>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">HelveticaNeue-Bold</string>
 									<double key="NSSize">14</double>
+									<int key="NSfFlags">16</int>
+								</object>
+							</object>
+							<object class="IBUILabel" id="427795009">
+								<reference key="NSNextResponder" ref="169041156"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{60, 92}, {228, 16}}</string>
+								<reference key="NSSuperview" ref="169041156"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="958116918"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">7</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+								<string key="IBUIText">Date</string>
+								<reference key="IBUITextColor" ref="505833979"/>
+								<nil key="IBUIHighlightedColor"/>
+								<int key="IBUIBaselineAdjustment">0</int>
+								<float key="IBUIMinimumFontSize">12</float>
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
+									<string key="name">HelveticaNeue-Light</string>
+									<string key="family">Helvetica Neue</string>
+									<int key="traits">0</int>
+									<double key="pointSize">13</double>
+								</object>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">HelveticaNeue-Medium</string>
+									<double key="NSSize">13</double>
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
@@ -118,11 +148,11 @@
 									<string key="name">HelveticaNeue-Bold</string>
 									<string key="family">Helvetica Neue</string>
 									<int key="traits">2</int>
-									<double key="pointSize">18</double>
+									<double key="pointSize">20</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">HelveticaNeue-Bold</string>
-									<double key="NSSize">18</double>
+									<double key="NSSize">20</double>
 									<int key="NSfFlags">16</int>
 								</object>
 								<double key="preferredMaxLayoutWidth">670</double>
@@ -238,7 +268,11 @@
 									<int key="traits">0</int>
 									<double key="pointSize">14</double>
 								</object>
-								<reference key="IBUIFont" ref="965663638"/>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">HelveticaNeue-Medium</string>
+									<double key="NSSize">14</double>
+									<int key="NSfFlags">16</int>
+								</object>
 							</object>
 						</array>
 						<string key="NSFrame">{{20, 30}, {720, 120}}</string>
@@ -375,6 +409,7 @@
 						<reference key="NSNextKeyView" ref="1002610958"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="290922202"/>
+						<float key="IBUIAlpha">0.5</float>
 						<array key="IBUIGestureRecognizers" id="0"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>
@@ -620,6 +655,14 @@
 					<int key="connectionID">167</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">videoTimestamp</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="427795009"/>
+					</object>
+					<int key="connectionID">172</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">restartPlaybackButtonAction:</string>
 						<reference key="source" ref="883161448"/>
@@ -740,8 +783,9 @@
 							<reference ref="642058558"/>
 							<reference ref="958116918"/>
 							<reference ref="216755980"/>
-							<reference ref="627050986"/>
 							<reference ref="626961961"/>
+							<reference ref="627050986"/>
+							<reference ref="427795009"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">VideoInfoView</string>
@@ -846,6 +890,12 @@
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Swipe Down Gesture Recognizer</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">171</int>
+						<reference key="object" ref="427795009"/>
+						<reference key="parent" ref="169041156"/>
+						<string key="objectName">infoPanel - Date</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -868,6 +918,7 @@
 				<string key="151.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="156.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="160.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="171.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="38.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="39.CustomClassName">TopAlignedLabel</string>
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -880,7 +931,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">170</int>
+			<int key="maxID">172</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -926,6 +977,7 @@
 						<string key="versionButton">UIButton</string>
 						<string key="videoCaptionLabel">TopAlignedLabel</string>
 						<string key="videoInfoView">UIView</string>
+						<string key="videoTimestamp">UILabel</string>
 						<string key="videoTitleLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -1004,6 +1056,10 @@
 						<object class="IBToOneOutletInfo" key="videoInfoView">
 							<string key="name">videoInfoView</string>
 							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="videoTimestamp">
+							<string key="name">videoTimestamp</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="videoTitleLabel">
 							<string key="name">videoTitleLabel</string>

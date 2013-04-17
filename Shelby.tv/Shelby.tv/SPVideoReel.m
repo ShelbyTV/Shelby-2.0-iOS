@@ -463,10 +463,17 @@
     
     // Set index of video playing
     [self setVideoStartIndex:position];
+ 
+    NSManagedObjectID *videoObjectID = [videoFrame.video objectID];
+    if (videoObjectID) {
+        Video *video = (Video *)[context existingObjectWithID:videoObjectID error:nil];
+        if (video) {
+            self.overlayView.videoCaptionLabel.text = [video caption];
+        }
+    }
     
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    self.overlayView.videoCaptionLabel.text = [dataUtility fetchTextFromFirstMessageInConversation:videoFrame.conversation];
-    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"Shared by %@", videoFrame.creator.nickname];
+    self.overlayView.videoTimestamp.text = [videoFrame createdAt];
+    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"%@", videoFrame.creator.nickname];
     [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
                                  forImageView:_overlayView.userImageView
                               withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
