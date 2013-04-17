@@ -169,7 +169,7 @@
     [self.videoInfoView setHidden:NO];
 
     [UIView animateWithDuration:0.3 animations:^{
-        [self.videoInfoView setAlpha:1];
+        [self.videoInfoView setAlpha:0.5];
     }];
 }
 
