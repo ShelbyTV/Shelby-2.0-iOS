@@ -10,6 +10,8 @@
 #import "CoreDataUtility.h"
 #import "SPVideoExtractor.h"
 
+NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificationCategoriesFinishedSync";
+
 @interface CoreDataUtility ()
 
 @property (strong ,nonatomic) NSManagedObjectContext *context;
@@ -493,6 +495,9 @@
     
     [self saveContext:_context];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFinishedSync object:nil];
+    });
 }
 
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID

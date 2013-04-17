@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
+extern NSString * const kShelbyNotificationCategoriesFinishedSync;
+
 @interface CoreDataUtility : NSObject
 
 @property (copy, nonatomic) NSString *videoID;

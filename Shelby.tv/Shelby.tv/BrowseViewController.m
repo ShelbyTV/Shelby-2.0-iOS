@@ -93,6 +93,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchAllCategories) name:kShelbyNotificationCategoriesFinishedSync object:nil];
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
