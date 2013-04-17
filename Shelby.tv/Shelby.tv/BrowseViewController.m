@@ -255,7 +255,7 @@
     NSMutableArray *frames = self.categoriesData[key];
     Frame *frame = (Frame *)frames[indexPath.row];
 
-    if (frames) {
+    if (frame) {
         NSManagedObjectContext *context = [self context];
         NSManagedObjectID *frameObjectID = [frame objectID];
         Frame *videoFrame = (Frame *)[context existingObjectWithID:frameObjectID error:nil];
@@ -268,9 +268,21 @@
             
             NSManagedObjectID *videoObjectID = [videoFrame.video objectID];
             if (videoObjectID) {
+                
                 Video *video = (Video *)[context existingObjectWithID:videoObjectID error:nil];
+                
                 if (video) {
-                    [[cell caption] setText:[video caption]];
+                    
+                    [cell.caption setText:[video caption]];
+                    CGRect captionFrame = [cell.caption frame];
+                    CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
+                                                                     constrainedToSize:captionFrame.size
+                                                                lineBreakMode:NSLineBreakByWordWrapping].height;
+                    
+                    [cell.caption setFrame:CGRectMake(captionFrame.origin.x,
+                                                      cell.frame.size.height - textBasedHeight,
+                                                      cell.frame.size.width,
+                                                      textBasedHeight)];
                 }
             }
         }
