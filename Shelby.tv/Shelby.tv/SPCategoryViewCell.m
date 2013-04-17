@@ -20,6 +20,8 @@
 - (void)awakeFromNib
 {
     [[self selectedBackgroundView] setBackgroundColor:[UIColor clearColor]];
+    [self.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"channelbg.png"]]];
+
 }
 
 - (void)setcategoryColor:(NSString *)hex andTitle:(NSString *)title
