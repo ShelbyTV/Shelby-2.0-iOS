@@ -545,7 +545,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     
     [self presentViewController:viewControllerToPresent animated:NO completion:^{
-        [UIView animateWithDuration:1.5 animations:^{
+        [UIView animateWithDuration:1 animations:^{
             [topImageView setFrame:CGRectMake(0, -topImageView.frame.size.height, topImageView.frame.size.width, topImageView.frame.size.height)];
             [bottomImageView setFrame:CGRectMake(0, 900, bottomImageView.frame.size.width, bottomImageView.frame.size.height)];
             [categoryImageView setFrame:CGRectMake(0, 1024, categoryImageView.frame.size.width, categoryImageView.frame.size.height)];
@@ -594,7 +594,7 @@
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
-    [UIView animateWithDuration:1.5 animations:^{
+    [UIView animateWithDuration:1 animations:^{
         [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y + 20, 1024, categoryCell.frame.size.height)];
         [topImageView setFrame:CGRectMake(topRect.origin.x, topRect.origin.y + 20, topRect.size.width, topRect.size.height)];
         [bottomImageView setFrame:CGRectMake(bottomRect.origin.x, bottomRect.origin.y + 20, bottomRect.size.width, bottomRect.size.height)];
