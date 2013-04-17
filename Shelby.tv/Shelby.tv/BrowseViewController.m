@@ -15,6 +15,7 @@
 #import "PageControl.h"
 #import "SPVideoItemViewCell.h"
 #import "SPCategoryViewCell.h"
+#import "SPVideoItemViewCellLabel.h"
 
 // Utilities
 #import "ImageUtilities.h"
@@ -153,21 +154,21 @@
     [self.categories removeAllObjects];
     [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
     
-    int i = 0;
-    for (id category in self.categories) {
-        NSMutableArray *frames = nil;
-        if ([category isKindOfClass:[Channel class]]) {
-            frames = [datautility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
-        } else if ([category isKindOfClass:[Roll class]]) {
-            frames = [datautility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
-        } else {
-            frames = [@[] mutableCopy];
+        int i = 0;
+        for (id category in self.categories) {
+            NSMutableArray *frames = nil;
+            if ([category isKindOfClass:[Channel class]]) {
+                frames = [datautility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
+            } else if ([category isKindOfClass:[Roll class]]) {
+                frames = [datautility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
+            } else {
+                frames = [@[] mutableCopy];
+            }
+            [self.categoriesData setObject:frames forKey:[NSNumber numberWithInt:i]];
+            i++;
         }
-        [self.categoriesData setObject:frames forKey:[NSNumber numberWithInt:i]];
-        i++;
-    }
-
-    [self.categoriesTable reloadData];
+        
+        [self.categoriesTable reloadData];
 }
 
 - (SPCategoryViewCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated
@@ -267,7 +268,7 @@
     NSMutableArray *frames = self.categoriesData[key];
     Frame *frame = (Frame *)frames[indexPath.row];
 
-    if (frames) {
+    if (frame) {
         NSManagedObjectContext *context = [self context];
         NSManagedObjectID *frameObjectID = [frame objectID];
         Frame *videoFrame = (Frame *)[context existingObjectWithID:frameObjectID error:nil];
@@ -280,9 +281,21 @@
             
             NSManagedObjectID *videoObjectID = [videoFrame.video objectID];
             if (videoObjectID) {
+                
                 Video *video = (Video *)[context existingObjectWithID:videoObjectID error:nil];
+                
                 if (video) {
-                    [[cell caption] setText:[video caption]];
+                    
+                    [cell.caption setText:[video caption]];
+                    CGRect captionFrame = [cell.caption frame];
+                    CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
+                                                                     constrainedToSize:captionFrame.size
+                                                                lineBreakMode:NSLineBreakByWordWrapping].height;
+                    
+                    [cell.caption setFrame:CGRectMake(captionFrame.origin.x,
+                                                      cell.frame.size.height - textBasedHeight,
+                                                      cell.frame.size.width,
+                                                      textBasedHeight)];
                 }
             }
         }

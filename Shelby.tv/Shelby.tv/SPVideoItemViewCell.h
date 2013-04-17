@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class SPVideoItemViewCellLabel;
+
 @interface SPVideoItemViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UILabel *caption;
+
+@property (weak, nonatomic) IBOutlet SPVideoItemViewCellLabel *caption;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+
 @end
