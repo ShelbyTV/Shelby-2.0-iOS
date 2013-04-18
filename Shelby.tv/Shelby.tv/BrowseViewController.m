@@ -101,8 +101,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+<<<<<<< HEAD
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceShouldUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
+=======
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dataSourceShouldUpdateFromWeb:)
+                                                 name:kShelbySPUserDidScrollToUpdate
+                                               object:nil];
+>>>>>>> 36c84a6d4775673a003ba94e9ba8adf889a558bd
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchFramesForCategory:) name:kShelbyNotificationCategoryFramesFetched object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCategoriesForTable) name:kShelbyNotificationCategoriesFinishedSync object:nil];
     
