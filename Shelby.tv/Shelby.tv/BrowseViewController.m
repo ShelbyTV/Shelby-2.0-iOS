@@ -355,9 +355,29 @@
     NSNumber *key = self.changableDataMapper[changableMapperKey];
     NSMutableArray *frames = self.categoriesData[key];
 
+    NSManagedObjectContext *context = [self context];
+    id category = (id)self.categories[[key intValue]];
+    GroupType groupType = GroupType_Unknown;
+    NSString *categoryID = nil;
+    if ([category isMemberOfClass:[Roll class]]) {
+        groupType = GroupType_CategoryRoll;
+        Roll *roll = (id)category;
+        roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
+        categoryID = roll.rollID;
+    } else if ([category isMemberOfClass:[Channel class]]) {
+        groupType = GroupType_Unknown;
+        Channel *channel = (id)category;
+        channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
+        categoryID = channel.channelID;
+    }
+
     float percentage = ((float)[indexPath row]/(float)[frames count]);
     if (percentage >= 0.6) {
-        [self fetchOlderVideosForIndex:key];
+        
+        if ( !self.collectionViewDataSourceUpdater[categoryID] || [self.collectionViewDataSourceUpdater[categoryID] isEqual:@0] ) {
+             [self fetchOlderVideosForIndex:key];
+        }
+    
     }
     
     Frame *frame = (Frame *)frames[indexPath.row];
@@ -748,6 +768,8 @@
         categoryID = channel.channelID;
     }
 
+    self.collectionViewDataSourceUpdater[categoryID] = @1;
+    
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     
     switch ( groupType ) {
@@ -782,17 +804,18 @@
     
     NSString *categoryID = [notification object];
      if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
+         
          NSInteger i = [self indexForCategory:categoryID];
          
          if (i == -1) {
+             self.collectionViewDataSourceUpdater[categoryID] = @0;
              return;
          }
          
          id category = self.categories[i];
 
          NSManagedObjectContext *context = [self context];
-         
-        
+
          GroupType groupType = GroupType_Unknown;
          NSString *categoryID = nil;
          if ([category isMemberOfClass:[Roll class]]) {
@@ -810,11 +833,13 @@
          NSMutableArray *frames = self.categoriesData[[NSNumber numberWithInt:i]];
          NSManagedObjectID *lastFramedObjectID = [[frames lastObject] objectID];
          if (!lastFramedObjectID) {
+             self.collectionViewDataSourceUpdater[categoryID] = @0;
              return;
          }
         
          Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
          if (!lastFrame) {
+             self.collectionViewDataSourceUpdater[categoryID] = @0;
              return;
          }
         
@@ -844,11 +869,13 @@
             Frame *firstFrame = (Frame *)olderFramesArray[0];
             NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
             if (!firstFrameObjectID) {
+                self.collectionViewDataSourceUpdater[categoryID] = @0;
                 return;
             }
             
             firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
             if (!firstFrame) {
+                self.collectionViewDataSourceUpdater[categoryID] = @0;
                 return;
             }
             if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
@@ -857,11 +884,14 @@
             
             // Add deduplicated frames from olderFramesArray to videoFrames
             [frames addObjectsFromArray:olderFramesArray];
+   
+            [self.categoriesTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             
-            [self.categoriesTable reloadData];
+            self.collectionViewDataSourceUpdater[categoryID] = @0;
             
         } else {
             // No older videos fetched. Don't reset flags to avoid unncessary API calls, since they'll return no older frames.
+            self.collectionViewDataSourceUpdater[categoryID] = @0;
         }
     }
 }
