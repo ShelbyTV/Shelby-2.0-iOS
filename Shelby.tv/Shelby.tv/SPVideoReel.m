@@ -24,7 +24,7 @@
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
 
-#define kShelbySPSlowSpeed 0.8
+#define kShelbySPSlowSpeed 0.2
 #define kShelbySPFastSpeed 0.5
 
 @interface SPVideoReel ()
@@ -982,7 +982,7 @@
     NSInteger finalyYPosition = switchCategory ? self.view.frame.size.height : 0;
     CGRect peekViewFrame;
     if (switchCategory) {
-        peekViewFrame = CGRectMake(0, 80, 1024, 680);
+        peekViewFrame = CGRectMake(0, 0, 1024, 768);
     } else {
         CGFloat finalyY = self.peekCategoryView.frame.origin.y;
         if (finalyY != 0) {
@@ -991,8 +991,8 @@
         peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
     }
     
-    [UIView animateWithDuration:speed animations:^{
-        [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+       [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.peekCategoryView setFrame:peekViewFrame];
     } completion:^(BOOL finished) {
@@ -1011,7 +1011,7 @@
     NSInteger finalyYPosition = switchCategory ? -self.view.frame.size.height : 0;
     CGRect peekViewFrame;
     if (switchCategory) {
-        peekViewFrame = CGRectMake(0, 80, 1024, 680);
+        peekViewFrame = CGRectMake(0, 0, 1024, 768);
     } else {
         CGFloat finalyY = self.peekCategoryView.frame.origin.y;
         if (finalyY != 0) {
@@ -1020,8 +1020,8 @@
         peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
     }
 
-    [UIView animateWithDuration:speed animations:^{
-        [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+       [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.peekCategoryView setFrame:peekViewFrame];
     } completion:^(BOOL finished) {

@@ -659,11 +659,12 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     
     [self presentViewController:viewControllerToPresent animated:NO completion:^{
-        [UIView animateWithDuration:1 animations:^{
+        [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             [topImageView setFrame:CGRectMake(0, -topImageView.frame.size.height, topImageView.frame.size.width, topImageView.frame.size.height)];
             [bottomImageView setFrame:CGRectMake(0, 900, bottomImageView.frame.size.width, bottomImageView.frame.size.height)];
-            [categoryImageView setFrame:CGRectMake(0, 1024, categoryImageView.frame.size.width, categoryImageView.frame.size.height)];
+            [categoryImageView setFrame:CGRectMake(51, categoryImageView.frame.origin.y, categoryImageView.frame.size.width*0.9, categoryImageView.frame.size.height*0.9)];
             
+            [categoryImageView setAlpha:0];
         } completion:^(BOOL finished) {
             [categoryImageView removeFromSuperview];
             [bottomImageView removeFromSuperview];
@@ -707,9 +708,14 @@
     [categoryImageView setFrame:CGRectMake(0, 1024, categoryImageView.frame.size.width, categoryImageView.frame.size.height)];
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+    [categoryImageView setAlpha:0];
+
+    [categoryImageView setFrame:CGRectMake(51, categoryCellOriginInWindow.y, categoryImageView.frame.size.width*0.9, categoryImageView.frame.size.height*0.9)];
     
-    [UIView animateWithDuration:1 animations:^{
-        [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y + 20, 1024, categoryCell.frame.size.height)];
+    [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+       [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y + 20, 1024, categoryCell.frame.size.height)];
+        
+        [categoryImageView setAlpha:1];
         [topImageView setFrame:CGRectMake(topRect.origin.x, topRect.origin.y + 20, topRect.size.width, topRect.size.height)];
         [bottomImageView setFrame:CGRectMake(bottomRect.origin.x, bottomRect.origin.y + 20, bottomRect.size.width, bottomRect.size.height)];
         
