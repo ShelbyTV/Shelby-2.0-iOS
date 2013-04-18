@@ -156,7 +156,6 @@
 		1C8109B616EE2CBF0030077C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
 		1C8109B716EE2CBF0030077C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
 		1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209715162F3A60000A2DFD /* CoreGraphics.framework */; };
-		1C8109B916EE2CBF0030077C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EE5FAB71685622900DBEA13 /* Crashlytics.framework */; };
 		1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E20971A162F3A61000A2DFD /* InfoPlist.strings */; };
 		1C8109BD16EE2CBF0030077C /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
@@ -316,7 +315,6 @@
 		1C810A6C16EE5EED0030077C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
 		1C810A6D16EE5EED0030077C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
 		1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209715162F3A60000A2DFD /* CoreGraphics.framework */; };
-		1C810A6F16EE5EED0030077C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EE5FAB71685622900DBEA13 /* Crashlytics.framework */; };
 		1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E20971A162F3A61000A2DFD /* InfoPlist.strings */; };
 		1C810A7316EE5EED0030077C /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
@@ -660,7 +658,6 @@
 		8EC65F8016E4FD42009EC83D /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7B16E4FD42009EC83D /* Panhandler.m */; };
 		8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
-		8EE5FAB81685622900DBEA13 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EE5FAB71685622900DBEA13 /* Crashlytics.framework */; };
 		8EEED7A816800DAC00D9F4CD /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */; };
 		8EEED7A916800DAC00D9F4CD /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */; };
 		8EEED7AA16800DAC00D9F4CD /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */; };
@@ -985,7 +982,6 @@
 		8EC65F7B16E4FD42009EC83D /* Panhandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Panhandler.m; sourceTree = "<group>"; };
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
-		8EE5FAB71685622900DBEA13 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Shelby.tv/Crashlytics.framework; sourceTree = "<group>"; };
 		8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
 		8EEED7A616800DAC00D9F4CD /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
 		8EEED7A716800DAC00D9F4CD /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
@@ -1038,7 +1034,6 @@
 				1C8109B616EE2CBF0030077C /* UIKit.framework in Frameworks */,
 				1C8109B716EE2CBF0030077C /* Foundation.framework in Frameworks */,
 				1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */,
-				1C8109B916EE2CBF0030077C /* Crashlytics.framework in Frameworks */,
 				1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
@@ -1064,7 +1059,6 @@
 				1C810A6C16EE5EED0030077C /* UIKit.framework in Frameworks */,
 				1C810A6D16EE5EED0030077C /* Foundation.framework in Frameworks */,
 				1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */,
-				1C810A6F16EE5EED0030077C /* Crashlytics.framework in Frameworks */,
 				1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
@@ -1090,7 +1084,6 @@
 				8E209712162F3A60000A2DFD /* UIKit.framework in Frameworks */,
 				8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */,
 				8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */,
-				8EE5FAB81685622900DBEA13 /* Crashlytics.framework in Frameworks */,
 				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */,
@@ -1254,7 +1247,6 @@
 				1CE56C4E1714BEC40049057F /* FacebookSDK.framework */,
 				1C81096916EE22AD0030077C /* CoreText.framework */,
 				8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */,
-				8EE5FAB71685622900DBEA13 /* Crashlytics.framework */,
 				8E285DE6168124FC002A7935 /* QuartzCore.framework */,
 				8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */,
 				8E82EE111631C7B90044D97E /* MobileCoreServices.framework */,
@@ -1799,7 +1791,6 @@
 				1C810A2A16EE5EED0030077C /* Sources */,
 				1C810A6316EE5EED0030077C /* Frameworks */,
 				1C810A7116EE5EED0030077C /* Resources */,
-				1C810AD916EE5EED0030077C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2270,19 +2261,6 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		1C810A2316EE2CBF0030077C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 84a79b7ee6f2eca13877cd17b9b9a290790f99aa";
-		};
-		1C810AD916EE5EED0030077C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

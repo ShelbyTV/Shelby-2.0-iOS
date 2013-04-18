@@ -20,7 +20,6 @@
     #import <Social/Social.h>
 
     // Analytics
-    #import <Crashlytics/Crashlytics.h>
     #import "GAI.h"
 
     // Third Party Libraries
