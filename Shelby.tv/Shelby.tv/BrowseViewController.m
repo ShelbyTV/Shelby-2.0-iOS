@@ -360,15 +360,12 @@
 
     NSManagedObjectContext *context = [self context];
     id category = (id)self.categories[[key intValue]];
-    GroupType groupType = GroupType_Unknown;
     NSString *categoryID = nil;
     if ([category isMemberOfClass:[Roll class]]) {
-        groupType = GroupType_CategoryRoll;
         Roll *roll = (id)category;
         roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
         categoryID = roll.rollID;
     } else if ([category isMemberOfClass:[Channel class]]) {
-        groupType = GroupType_Unknown;
         Channel *channel = (id)category;
         channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
         categoryID = channel.channelID;
