@@ -93,9 +93,10 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
         
         // Remove SPVideoReel if more than 5 minutes (300 seconds) have elapsed since app went to background
         if (interval >= 300) {
-            if ([[SPModel sharedInstance] videoReel]) {
+            SPVideoReel *videoReel = [[SPModel sharedInstance] videoReel];
+            if (videoReel && [videoReel delegate]) {
                 // TODO ARTHUR
-//                [[[SPModel sharedInstance] videoReel] homeButtonAction:self];
+                [[videoReel delegate] userDidCloseChannel:videoReel];
             }
         }
         
