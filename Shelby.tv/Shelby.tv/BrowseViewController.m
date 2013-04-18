@@ -37,7 +37,7 @@
 
 @property (nonatomic) NSMutableArray *categories;
 @property (nonatomic) NSMutableDictionary *categoriesData;
-@property (nonatomic) NSMutableDictionary *changableDataMapper;
+@property (nonatomic) NSMutableDictionary *changeableDataMapper;
 @property (nonatomic) NSMutableDictionary *collectionViewDataSourceUpdater;
 
 @property (assign, nonatomic) SecretMode secretMode;
@@ -124,7 +124,7 @@
     
     [self setCategories:[@[] mutableCopy]];
     [self setCategoriesData:[@{} mutableCopy]];
-    [self setChangableDataMapper:[@{} mutableCopy]];
+    [self setChangeableDataMapper:[@{} mutableCopy]];
     [self setCollectionViewDataSourceUpdater:[@{} mutableCopy]];
     
     [self setSecretMode:SecretMode_None];
@@ -301,7 +301,7 @@
     [categoryFrames setDataSource:self];
     [categoryFrames reloadData];
     NSUInteger hash = [categoryFrames hash];
-    [self.changableDataMapper setObject:[NSNumber numberWithInt:indexPath.row] forKey:[NSNumber numberWithUnsignedInt:hash]];
+    [self.changeableDataMapper setObject:[NSNumber numberWithInt:indexPath.row] forKey:[NSNumber numberWithUnsignedInt:hash]];
     
     id category = (id)self.categories[indexPath.row];
     if ([category isKindOfClass:[NSManagedObject class]]) {
@@ -336,7 +336,7 @@
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[view hash]];
-    NSNumber *key = self.changableDataMapper[changableMapperKey];
+    NSNumber *key = self.changeableDataMapper[changableMapperKey];
     NSMutableArray *frames = self.categoriesData[key];
     if (frames) {
         return [frames count];
@@ -355,7 +355,7 @@
     SPVideoItemViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"SPVideoItemViewCell" forIndexPath:indexPath];
     
     NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[cv hash]];
-    NSNumber *key = self.changableDataMapper[changableMapperKey];
+    NSNumber *key = self.changeableDataMapper[changableMapperKey];
     NSMutableArray *frames = self.categoriesData[key];
 
     NSManagedObjectContext *context = [self context];
@@ -433,7 +433,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[collectionView hash]];
-    NSNumber *key = self.changableDataMapper[changableMapperKey];
+    NSNumber *key = self.changeableDataMapper[changableMapperKey];
     [self launchPlayer:[key intValue] andVideo:indexPath.row];
 }
 
