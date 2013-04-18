@@ -1038,7 +1038,7 @@
         return;
     }
     
-    if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(userDidCloseChannel:)]) {
             [self.delegate userDidCloseChannel:self];
         }
