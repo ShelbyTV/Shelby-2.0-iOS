@@ -174,6 +174,7 @@
 
 - (void)fetchFramesForCategory:(NSNotification *)notification
 {
+    // KP KP: TODO: once we add logged in user, add support for Personal Rolls, Likes and Stream
     
     NSString *channelID = [notification object];
     if (channelID && [channelID isKindOfClass:[NSString class]]) {
