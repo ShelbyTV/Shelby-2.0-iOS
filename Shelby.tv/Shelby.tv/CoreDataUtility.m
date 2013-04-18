@@ -528,6 +528,10 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     }
     
     [self saveContext:_context];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:rollID];
+    });
 }
 
 - (void)storeFrameInLoggedOutLikes:(Frame *)frame
