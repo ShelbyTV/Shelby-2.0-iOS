@@ -77,8 +77,6 @@
 /// Fetch Methods
 - (void)fetchOlderVideosForIndex:(NSNumber *)key;
 - (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
-- (void)fetchMoreFramesForIndex:(NSNumber *)key;
-- (void)dataSourceDidUpdateForIndex:(NSNumber *)key;
 - (void)fetchFramesForCategory:(NSNotification *)notification;
 - (void)setCategoriesForTable;
 
@@ -103,20 +101,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fetchAllCategories)
-                                                 name:kShelbyNotificationCategoriesFinishedSync
-                                               object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(dataSourceShouldUpdateFromWeb:)
-                                                 name:kShelbySPUserDidScrollToUpdate
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceShouldUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchFramesForCategory:) name:kShelbyNotificationCategoryFramesFetched object:nil];
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCategoriesForTable) name:kShelbyNotificationCategoriesFinishedSync object:nil];
-
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
@@ -742,8 +730,6 @@
 #pragma mark - Fetching Methods
 - (void)fetchOlderVideosForIndex:(NSNumber *)key
 {
-    
-    self.collectionViewDataSourceUpdater[key] = @1;
 
     NSManagedObjectContext *context = [self context];
     
@@ -762,6 +748,8 @@
         categoryID = channel.channelID;
     }
 
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    
     switch ( groupType ) {
             
         case GroupType_CategoryChannel: {
@@ -792,85 +780,89 @@
 - (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification
 {
     
-    NSString *categoryID = nil;
-    if ( [notification.object isKindOfClass:[NSString class]] ) {
-        categoryID = [notification.object copy];
-    }
-    
-    NSManagedObjectContext *context = [self context];
-    
-    id category = (id)self.categories[[key intValue]];
-    GroupType groupType = GroupType_Unknown;
-    NSString *categoryID = nil;
-    if ([category isMemberOfClass:[Roll class]]) {
-        groupType = GroupType_CategoryRoll;
-        Roll *roll = (id)category;
-        roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
-        categoryID = roll.rollID;
-    } else if ([category isMemberOfClass:[Channel class]]) {
-        groupType = GroupType_Unknown;
-        Channel *channel = (id)category;
-        channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
-        categoryID = channel.channelID;
-    }
-    
-    NSMutableArray *frames = self.categoriesData[key];
-    NSManagedObjectID *lastFramedObjectID = [[frames lastObject] objectID];
-    if (!lastFramedObjectID) {
-        return;
-    }
-    
-    Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
-    if (!lastFrame) {
-        return;
-    }
-    
-    NSDate *date = lastFrame.timestamp;
-    
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    NSMutableArray *olderFramesArray = [@[] mutableCopy];
-    
-    switch ( groupType ) {
-            
-        case GroupType_CategoryChannel:{
-            [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:categoryID afterDate:date]];
-        } break;
-            
-        case GroupType_CategoryRoll:{
-            [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:categoryID afterDate:date]];
-        } break;
-            
-        default: {
+    NSString *categoryID = [notification object];
+     if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
+         NSInteger i = [self indexForCategory:categoryID];
          
-            // Handle remaining cases later
+         if (i == -1) {
+             return;
+         }
+         
+         id category = self.categories[i];
+
+         NSManagedObjectContext *context = [self context];
+         
+        
+         GroupType groupType = GroupType_Unknown;
+         NSString *categoryID = nil;
+         if ([category isMemberOfClass:[Roll class]]) {
+             groupType = GroupType_CategoryRoll;
+             Roll *roll = (id)category;
+             roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
+             categoryID = roll.rollID;
+         } else if ([category isMemberOfClass:[Channel class]]) {
+             groupType = GroupType_Unknown;
+             Channel *channel = (id)category;
+             channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
+             categoryID = channel.channelID;
+         }
+        
+         NSMutableArray *frames = self.categoriesData[[NSNumber numberWithInt:i]];
+         NSManagedObjectID *lastFramedObjectID = [[frames lastObject] objectID];
+         if (!lastFramedObjectID) {
+             return;
+         }
+        
+         Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
+         if (!lastFrame) {
+             return;
+         }
+        
+         NSDate *date = lastFrame.timestamp;
+        
+         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+         NSMutableArray *olderFramesArray = [@[] mutableCopy];
+        
+         switch ( groupType ) {
+                
+             case GroupType_CategoryChannel:{
+                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:categoryID afterDate:date]];
+             } break;
+                
+             case GroupType_CategoryRoll:{
+                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:categoryID afterDate:date]];
+             } break;
+                
+             default: {
+                // Handle remaining cases later  
+             }
+        }
+        
+        // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
+        if ( [olderFramesArray count] ) {
             
+            Frame *firstFrame = (Frame *)olderFramesArray[0];
+            NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
+            if (!firstFrameObjectID) {
+                return;
+            }
+            
+            firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
+            if (!firstFrame) {
+                return;
+            }
+            if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
+                [olderFramesArray removeObject:firstFrame];
+            }
+            
+            // Add deduplicated frames from olderFramesArray to videoFrames
+            [frames addObjectsFromArray:olderFramesArray];
+            
+            [self.categoriesTable reloadData];
+            
+        } else {
+            // No older videos fetched. Don't reset flags to avoid unncessary API calls, since they'll return no older frames.
         }
-    }
-    
-    // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
-    if ( [olderFramesArray count] ) {
-        
-        Frame *firstFrame = (Frame *)olderFramesArray[0];
-        NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
-        if (!firstFrameObjectID) {
-            return;
-        }
-        
-        firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
-        if (!firstFrame) {
-            return;
-        }
-        if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
-            [olderFramesArray removeObject:firstFrame];
-        }
-        
-        // Add deduplicated frames from olderFramesArray to videoFrames
-        [frames addObjectsFromArray:olderFramesArray];
-        
-        [self.categoriesTable reloadData];
-        
-    } else {
-        // No older videos fetched. Don't reset flags to avoid unncessary API calls, since they'll return no older frames.
     }
 }
 
