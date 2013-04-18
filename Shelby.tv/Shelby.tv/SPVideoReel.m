@@ -599,6 +599,11 @@
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                     [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:_categoryID];
                     
+                } break;
+                    
+                case GroupType_Unknown: {
+                    
+                    // Do nothing
                     
                 } break;
             }
@@ -672,6 +677,10 @@
                 
             case GroupType_CategoryRoll:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:_categoryID afterDate:date]];
+            } break;
+                
+            case GroupType_Unknown: {
+                // Do nothing
             } break;
                 
         }
