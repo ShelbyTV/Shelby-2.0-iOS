@@ -26,7 +26,7 @@
 - (void)setupWithCategoryDisplay:(SPCategoryDisplay *)categoryDisplay;
 {
     [self.title setTextAlignment:NSTextAlignmentCenter];
-    [self.title setText:[categoryDisplay categoryDisplayTitle]];
+    [self.title setText:[NSString stringWithFormat:@"# %@",[categoryDisplay categoryDisplayTitle]]];
     [self.title setTextColor:[UIColor whiteColor]];
     [self.title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0]];
     [self.title setBackgroundColor:[UIColor clearColor]];
