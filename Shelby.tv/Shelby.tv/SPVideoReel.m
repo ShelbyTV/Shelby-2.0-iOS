@@ -599,6 +599,11 @@
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                     [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:_categoryID];
                     
+                } break;
+                    
+                case GroupType_Unknown: {
+                    
+                    // Do nothing
                     
                 } break;
             }
@@ -674,6 +679,10 @@
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:_categoryID afterDate:date]];
             } break;
                 
+            case GroupType_Unknown: {
+                // Do nothing
+            } break;
+                
         }
         
         // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
@@ -700,12 +709,11 @@
             
         } else {
             
-            /*
-             
-             No older videos fetched.
-             Don't rest flags to avoid unncessary API calls, since they'll return no older frames.
-             
-             */
+            // No older videos fetched.
+            
+            [self setFetchingOlderVideos:NO];
+            [self setLoadingOlderVideos:NO];
+            
         }
     }
 }
