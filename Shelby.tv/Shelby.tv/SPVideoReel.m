@@ -7,15 +7,22 @@
 //
 
 #import "SPVideoReel.h"
+
+// Views
 #import "SPOverlayView.h"
+#import "SPCategoryPeekView.h"
+
+// Controllers
 #import "SPVideoExtractor.h"
-#import "SPVideoItemView.h"
-#import "SPVideoPlayer.h"
 #import "SPVideoScrubber.h"
+
+// View Controllers
+#import "SPVideoPlayer.h"
+
+// Utilities
 #import "DeviceUtilities.h"
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
-#import "SPCategoryPeekView.h"
 
 #define kShelbySPSlowSpeed 0.8
 #define kShelbySPFastSpeed 0.5

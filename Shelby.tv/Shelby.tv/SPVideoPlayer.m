@@ -49,7 +49,6 @@
 - (void)itemDidFinishPlaying:(NSNotification *)notification;
 - (void)updateBufferProgressView:(NSNumber *)buffered;
 
-//
 - (void)animatePlay;
 @end
 
@@ -189,13 +188,7 @@
     [self setIsPlayable:YES];
     
     if ( self == _model.currentVideoPlayer ) {
-        
         [self.overlayView.restartPlaybackButton setHidden:YES];
-//        [self.overlayView.playButton setEnabled:YES];
-//        [self.overlayView.scrubber setEnabled:YES];
-//        [self.overlayView.scrubber setHidden:NO];
-//        [self.overlayView.shareButton setEnabled:YES];
-        
     }
     
     // Add Gesture Recognizer
