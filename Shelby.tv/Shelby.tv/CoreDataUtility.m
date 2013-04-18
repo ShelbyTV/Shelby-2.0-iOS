@@ -250,6 +250,12 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
             [self removeOlderVideoFramesFromCategoryRoll:categoryID];
             
         }
+            
+        case GroupType_Unknown: {
+            
+            // Do nothing
+            
+        } break;
     }
 }
 
