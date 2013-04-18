@@ -154,6 +154,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching Stream");
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:user.userID];
         
     }];
     
@@ -242,6 +243,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching Likes Roll");
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:user.likesRollID];
         
     }];
     
@@ -301,6 +303,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching User Personal Roll");
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:user.personalRollID];
         
     }];
     
