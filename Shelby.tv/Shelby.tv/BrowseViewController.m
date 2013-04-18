@@ -38,6 +38,7 @@
 @property (nonatomic) NSMutableArray *categories;
 @property (nonatomic) NSMutableDictionary *categoriesData;
 @property (nonatomic) NSMutableDictionary *changableDataMapper;
+@property (nonatomic) NSMutableDictionary *collectionViewDataSourceUpdater;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -71,6 +72,10 @@
 - (void)animateOpenCategories:(SPVideoReel *)viewControllerToPresent;
 - (void)animateCloseCategories:(SPVideoReel *)viewController;
 - (NSInteger)nextCategoryForDirection:(BOOL)up;
+
+/// Fetch Methods
+- (void)fetchMoreFramesForIndex:(NSNumber *)key;
+- (void)dataSourceDidUpdateForIndex:(NSNumber *)key;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -113,6 +118,7 @@
     [self setCategories:[@[] mutableCopy]];
     [self setCategoriesData:[@{} mutableCopy]];
     [self setChangableDataMapper:[@{} mutableCopy]];
+    [self setCollectionViewDataSourceUpdater:[@{} mutableCopy]];
     
     [self setSecretMode:SecretMode_None];
     
@@ -268,8 +274,17 @@
     NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[cv hash]];
     NSNumber *key = self.changableDataMapper[changableMapperKey];
     NSMutableArray *frames = self.categoriesData[key];
-    Frame *frame = (Frame *)frames[indexPath.row];
 
+    float percentage = ((float)[indexPath row]/(float)[frames count]);
+    if (percentage >= 0.6) {
+
+        if ( !self.collectionViewDataSourceUpdater[key] || [self.collectionViewDataSourceUpdater[key] isEqual:@0] ) {
+            [self fetchMoreFramesForIndex:key];
+        }
+    }
+    
+    Frame *frame = (Frame *)frames[indexPath.row];
+    
     if (frame) {
         NSManagedObjectContext *context = [self context];
         NSManagedObjectID *frameObjectID = [frame objectID];
@@ -633,6 +648,95 @@
         [self animateOpenCategories:(SPVideoReel *)viewControllerToPresent];
     }
 }
+
+
+#pragma mark - Fetching Methods
+- (void)fetchMoreFramesForIndex:(NSNumber *)key
+{
+    self.collectionViewDataSourceUpdater[key] = @1;
+    
+    NSManagedObjectContext *context = [self context];
+    
+    id category = (id)self.categories[[key intValue]];
+    GroupType groupType;
+    NSString *categoryID = nil;
+    if ([category isMemberOfClass:[Roll class]]) {
+        groupType = GroupType_CategoryRoll;
+        Roll *roll = (id)category;
+        roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
+        categoryID = roll.rollID;
+    } else if ([category isMemberOfClass:[Channel class]]) {
+        groupType = GroupType_CategoryChannel;
+        Channel *channel = (id)category;
+        channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
+        categoryID = channel.channelID;
+    }
+    
+    NSMutableArray *frames = self.categoriesData[key];
+    NSManagedObjectID *lastFramedObjectID = [[frames lastObject] objectID];
+    if (!lastFramedObjectID) {
+        self.collectionViewDataSourceUpdater[key] = @0;
+        return;
+    }
+    
+    Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
+    if (!lastFrame) {
+        self.collectionViewDataSourceUpdater[key] = @0;
+        return;
+    }
+    
+    NSDate *date = lastFrame.timestamp;
+    
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    NSMutableArray *olderFramesArray = [@[] mutableCopy];
+    
+    switch ( groupType ) {
+            
+        case GroupType_CategoryChannel:{
+            [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:categoryID afterDate:date]];
+        } break;
+            
+        case GroupType_CategoryRoll:{
+            [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:categoryID afterDate:date]];
+        } break;
+            
+        default: {
+         
+            // Handle remaining cases later
+            
+        }
+    }
+    
+    // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
+    if ( [olderFramesArray count] ) {
+        
+        Frame *firstFrame = (Frame *)olderFramesArray[0];
+        NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
+        if (!firstFrameObjectID) {
+            return;
+        }
+        
+        firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
+        if (!firstFrame) {
+            return;
+        }
+        if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
+            [olderFramesArray removeObject:firstFrame];
+        }
+        
+        // Add deduplicated frames from olderFramesArray to videoFrames
+        [frames addObjectsFromArray:olderFramesArray];
+        
+        [self.categoriesTable reloadData];
+        
+        self.collectionViewDataSourceUpdater[key] = @0;
+        
+    } else {
+        // No older videos fetched. Don't rest flags to avoid unncessary API calls, since they'll return no older frames.
+        self.collectionViewDataSourceUpdater[key] = @0;
+    }
+}
+
 
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
