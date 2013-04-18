@@ -17,6 +17,7 @@ NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificati
 @property (strong ,nonatomic) NSManagedObjectContext *context;
 @property (nonatomic) AppDelegate *appDelegate;
 @property (assign, nonatomic) DataRequestType requestType;
+@property (copy, nonatomic) NSString *categoryID;
 
 /// Persistance Methods
 - (id)checkIfEntity:(NSString *)entityName
@@ -68,6 +69,7 @@ NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificati
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         _context = [_appDelegate context];
         _requestType = requestType;
+        _categoryID = nil;
         
         // Add observer for mergining contexts
         [[NSNotificationCenter defaultCenter] addObserver:_appDelegate
@@ -172,9 +174,9 @@ NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificati
                     DLog(@"User Action Update Successful");
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidScrollToUpdate object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidScrollToUpdate object:[self categoryID]];
                     });
-                    
+                
                 } break;
                     
                 case DataRequestType_VideoExtracted: {
@@ -487,6 +489,7 @@ NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificati
                                       forIDKey:kShelbyCoreDataFrameID];
             
             frame.channelID = channelID;
+            self.categoryID = channelID;
             
             [self storeFrame:frame forDictionary:frameDictionary];
             
@@ -513,6 +516,7 @@ NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificati
                                       forIDKey:kShelbyCoreDataFrameID];
             
             frame.rollID = rollID;
+            self.categoryID = rollID;
             
             [self storeFrame:frame forDictionary:resultsArray[i]];
             

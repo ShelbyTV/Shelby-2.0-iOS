@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, DataRequestType)
 typedef NS_ENUM(NSUInteger, GroupType)
 {
     
+    GroupType_Unknown,
     GroupType_Stream,
     GroupType_Likes,
     GroupType_PersonalRoll,

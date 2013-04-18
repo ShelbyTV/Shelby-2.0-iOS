@@ -74,8 +74,8 @@
 - (NSInteger)nextCategoryForDirection:(BOOL)up;
 
 /// Fetch Methods
-- (void)fetchMoreFramesForIndex:(NSNumber *)key;
-- (void)dataSourceDidUpdateForIndex:(NSNumber *)key;
+- (void)fetchOlderVideosForIndex:(NSNumber *)key;
+- (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -99,8 +99,16 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchAllCategories) name:kShelbyNotificationCategoriesFinishedSync object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchAllCategories)
+                                                 name:kShelbyNotificationCategoriesFinishedSync
+                                               object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dataSourceShouldUpdateFromWeb:)
+                                                 name:kShelbySPUserDidScrollToUpdate
+                                               object:nil];
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
     [self setAnimationInProgress:NO];
@@ -277,10 +285,7 @@
 
     float percentage = ((float)[indexPath row]/(float)[frames count]);
     if (percentage >= 0.6) {
-
-        if ( !self.collectionViewDataSourceUpdater[key] || [self.collectionViewDataSourceUpdater[key] isEqual:@0] ) {
-            [self fetchMoreFramesForIndex:key];
-        }
+        [self fetchOlderVideosForIndex:key];
     }
     
     Frame *frame = (Frame *)frames[indexPath.row];
@@ -651,14 +656,15 @@
 
 
 #pragma mark - Fetching Methods
-- (void)fetchMoreFramesForIndex:(NSNumber *)key
+- (void)fetchOlderVideosForIndex:(NSNumber *)key
 {
-    self.collectionViewDataSourceUpdater[key] = @1;
     
+    self.collectionViewDataSourceUpdater[key] = @1;
+
     NSManagedObjectContext *context = [self context];
     
     id category = (id)self.categories[[key intValue]];
-    GroupType groupType;
+    GroupType groupType = GroupType_CategoryChannel;
     NSString *categoryID = nil;
     if ([category isMemberOfClass:[Roll class]]) {
         groupType = GroupType_CategoryRoll;
@@ -671,17 +677,67 @@
         channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
         categoryID = channel.channelID;
     }
+
+    switch ( groupType ) {
+            
+        case GroupType_CategoryChannel: {
+            
+            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:categoryID];
+            NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+            [ShelbyAPIClient getMoreFrames:numberToString forCategoryChannel:categoryID];
+            
+        } break;
+            
+        case GroupType_CategoryRoll: {
+            
+            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:categoryID];
+            NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+            [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:categoryID];
+            
+        } break;
+            
+        default: {
+            
+            // Handle remaining cases later
+            
+        }
+    }
+}
+
+
+- (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification
+{
+    
+    NSString *categoryID = nil;
+    if ( [notification.object isKindOfClass:[NSString class]] ) {
+        categoryID = [notification.object copy];
+    }
+    
+    NSManagedObjectContext *context = [self context];
+    
+    id category = (id)self.categories[[key intValue]];
+    GroupType groupType = GroupType_Unknown;
+    NSString *categoryID = nil;
+    if ([category isMemberOfClass:[Roll class]]) {
+        groupType = GroupType_CategoryRoll;
+        Roll *roll = (id)category;
+        roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
+        categoryID = roll.rollID;
+    } else if ([category isMemberOfClass:[Channel class]]) {
+        groupType = GroupType_Unknown;
+        Channel *channel = (id)category;
+        channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
+        categoryID = channel.channelID;
+    }
     
     NSMutableArray *frames = self.categoriesData[key];
     NSManagedObjectID *lastFramedObjectID = [[frames lastObject] objectID];
     if (!lastFramedObjectID) {
-        self.collectionViewDataSourceUpdater[key] = @0;
         return;
     }
     
     Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
     if (!lastFrame) {
-        self.collectionViewDataSourceUpdater[key] = @0;
         return;
     }
     
@@ -729,11 +785,8 @@
         
         [self.categoriesTable reloadData];
         
-        self.collectionViewDataSourceUpdater[key] = @0;
-        
     } else {
-        // No older videos fetched. Don't rest flags to avoid unncessary API calls, since they'll return no older frames.
-        self.collectionViewDataSourceUpdater[key] = @0;
+        // No older videos fetched. Don't reset flags to avoid unncessary API calls, since they'll return no older frames.
     }
 }
 
