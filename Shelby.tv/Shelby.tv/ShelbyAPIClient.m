@@ -378,6 +378,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching more frames for channel: %@", requestString);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:channelID];
         
     }];
     
@@ -430,6 +431,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching Category Roll");
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:rollID];
         
     }];
     

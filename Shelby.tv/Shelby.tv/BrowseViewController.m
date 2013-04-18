@@ -75,7 +75,8 @@
 - (NSInteger)nextCategoryForDirection:(BOOL)up;
 
 /// Fetch Methods
-- (void)fetchOlderVideosForIndex:(NSNumber *)key;
+- (void)fetchOlderFramesForIndex:(NSNumber *)key;
+- (void)fetchOlderFramesDidFail:(NSNotification *)notification;
 - (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
 - (void)fetchFramesForCategory:(NSNotification *)notification;
 - (void)setCategoriesForTable;
@@ -103,6 +104,7 @@
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceShouldUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderFramesFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchFramesForCategory:) name:kShelbyNotificationCategoryFramesFetched object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCategoriesForTable) name:kShelbyNotificationCategoriesFinishedSync object:nil];
     
@@ -375,7 +377,7 @@
     if (percentage >= 0.6) {
         
         if ( !self.collectionViewDataSourceUpdater[categoryID] || [self.collectionViewDataSourceUpdater[categoryID] isEqual:@0] ) {
-             [self fetchOlderVideosForIndex:key];
+             [self fetchOlderFramesForIndex:key];
         }
     
     }
@@ -748,7 +750,7 @@
 
 
 #pragma mark - Fetching Methods
-- (void)fetchOlderVideosForIndex:(NSNumber *)key
+- (void)fetchOlderFramesForIndex:(NSNumber *)key
 {
 
     NSManagedObjectContext *context = [self context];
@@ -896,6 +898,13 @@
     }
 }
 
+- (void)fetchOlderFramesDidFail:(NSNotification *)notification
+{
+    NSString *categoryID = [notification object];
+    if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
+        self.collectionViewDataSourceUpdater[categoryID] = @0;
+    }
+}
 
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
