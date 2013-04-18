@@ -38,7 +38,7 @@
 @property (nonatomic) NSMutableArray *categories;
 @property (nonatomic) NSMutableDictionary *categoriesData;
 @property (nonatomic) NSMutableDictionary *changeableDataMapper;
-@property (nonatomic) NSMutableDictionary *collectionViewDataSourceUpdater;
+@property (nonatomic) NSMutableSet *collectionViewDataSourceUpdater;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -125,7 +125,7 @@
     [self setCategories:[@[] mutableCopy]];
     [self setCategoriesData:[@{} mutableCopy]];
     [self setChangeableDataMapper:[@{} mutableCopy]];
-    [self setCollectionViewDataSourceUpdater:[@{} mutableCopy]];
+    self.collectionViewDataSourceUpdater = [[NSMutableSet alloc] init];
     
     [self setSecretMode:SecretMode_None];
     
@@ -377,7 +377,7 @@
     float percentage = ((float)[indexPath row]/(float)[frames count]);
     if (percentage >= 0.6) {
         
-        if ( !self.collectionViewDataSourceUpdater[categoryID] || [self.collectionViewDataSourceUpdater[categoryID] isEqual:@0] ) {
+        if ( ![self.collectionViewDataSourceUpdater containsObject:category] ) {
              [self fetchOlderFramesForIndex:key];
         }
     
@@ -771,7 +771,7 @@
         categoryID = channel.channelID;
     }
 
-    self.collectionViewDataSourceUpdater[categoryID] = @1;
+    [self.collectionViewDataSourceUpdater addObject:categoryID];
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     
@@ -811,7 +811,7 @@
          NSInteger i = [self indexForCategory:categoryID];
          
          if (i == -1) {
-             self.collectionViewDataSourceUpdater[categoryID] = @0;
+             [self.collectionViewDataSourceUpdater removeObject:categoryID];
              return;
          }
          
@@ -836,13 +836,13 @@
          NSMutableArray *frames = self.categoriesData[[NSNumber numberWithInt:i]];
          NSManagedObjectID *lastFramedObjectID = [[frames lastObject] objectID];
          if (!lastFramedObjectID) {
-             self.collectionViewDataSourceUpdater[categoryID] = @0;
+             [self.collectionViewDataSourceUpdater removeObject:categoryID];
              return;
          }
         
          Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
          if (!lastFrame) {
-             self.collectionViewDataSourceUpdater[categoryID] = @0;
+             [self.collectionViewDataSourceUpdater removeObject:categoryID];
              return;
          }
         
@@ -872,13 +872,13 @@
             Frame *firstFrame = (Frame *)olderFramesArray[0];
             NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
             if (!firstFrameObjectID) {
-                self.collectionViewDataSourceUpdater[categoryID] = @0;
+                [self.collectionViewDataSourceUpdater removeObject:categoryID];
                 return;
             }
             
             firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
             if (!firstFrame) {
-                self.collectionViewDataSourceUpdater[categoryID] = @0;
+                [self.collectionViewDataSourceUpdater removeObject:categoryID];
                 return;
             }
             if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
@@ -890,11 +890,11 @@
    
             [self.categoriesTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             
-            self.collectionViewDataSourceUpdater[categoryID] = @0;
+            [self.collectionViewDataSourceUpdater removeObject:categoryID];
             
         } else {
             // No older videos fetched. Don't reset flags to avoid unncessary API calls, since they'll return no older frames.
-            self.collectionViewDataSourceUpdater[categoryID] = @0;
+            [self.collectionViewDataSourceUpdater removeObject:categoryID];
         }
     }
 }
@@ -903,7 +903,7 @@
 {
     NSString *categoryID = [notification object];
     if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
-        self.collectionViewDataSourceUpdater[categoryID] = @0;
+            [self.collectionViewDataSourceUpdater removeObject:categoryID];
     }
 }
 
