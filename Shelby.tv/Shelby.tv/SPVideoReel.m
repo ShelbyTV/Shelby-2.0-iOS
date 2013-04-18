@@ -937,22 +937,30 @@
         [gestureRecognizer setTranslation:CGPointZero inView:self.view];
     } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
         CGPoint velocity = [gestureRecognizer velocityInView:self.view];
+        NSInteger currentY = y + translation.y;
         if (velocity.y < -200) {
-            [self animateUp:kShelbySPFastSpeed andSwitchCategory:YES];
-        } else if (velocity.y > 200) {
-            [self animateDown:kShelbySPFastSpeed andSwitchCategory:YES];
-        } else {
-            NSInteger currentY = y + translation.y;
-            if (currentY > 0) {
-                if (currentY > kShelbySPVideoHeight / 2) {
-                    [self animateDown:kShelbySPSlowSpeed andSwitchCategory:YES];
-                } else {
-                    [self animateUp:kShelbySPSlowSpeed andSwitchCategory:NO];
-                }
-            } else if (-1 * currentY > kShelbySPVideoHeight / 2) {
-                [self animateUp:kShelbySPSlowSpeed andSwitchCategory:YES];
+            if (-1 * currentY < kShelbySPVideoHeight / 11) {
+                [self animateUp:kShelbySPFastSpeed andSwitchCategory:NO];
             } else {
+                [self animateUp:kShelbySPFastSpeed andSwitchCategory:YES];
+            }
+        } else if (velocity.y > 200) {
+            if (currentY < kShelbySPVideoHeight / 11) {
+                [self animateDown:kShelbySPFastSpeed andSwitchCategory:NO];
+            } else {
+                [self animateDown:kShelbySPFastSpeed andSwitchCategory:YES];
+            }
+        } else {
+            if (currentY > 0) {
+                if (currentY < 3 * kShelbySPVideoHeight / 4) {
+                    [self animateUp:kShelbySPSlowSpeed andSwitchCategory:NO];
+                } else {
+                    [self animateDown:kShelbySPSlowSpeed andSwitchCategory:YES];
+                }
+            } else if (-1 * currentY < 3 * kShelbySPVideoHeight / 4) {
                 [self animateDown:kShelbySPSlowSpeed andSwitchCategory:NO];
+            } else {
+                [self animateUp:kShelbySPSlowSpeed andSwitchCategory:YES];
             }
         }
     }
