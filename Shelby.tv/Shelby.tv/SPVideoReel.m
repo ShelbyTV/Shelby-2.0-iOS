@@ -709,12 +709,11 @@
             
         } else {
             
-            /*
-             
-             No older videos fetched.
-             Don't rest flags to avoid unncessary API calls, since they'll return no older frames.
-             
-             */
+            // No older videos fetched.
+            
+            [self setFetchingOlderVideos:NO];
+            [self setLoadingOlderVideos:NO];
+            
         }
     }
 }
