@@ -105,11 +105,6 @@
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fetchAllCategories)
-                                                 name:kShelbyNotificationCategoriesFinishedSync
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dataSourceShouldUpdateFromWeb:)
                                                  name:kShelbySPUserDidScrollToUpdate
                                                object:nil];
