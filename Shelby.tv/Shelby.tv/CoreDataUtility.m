@@ -397,6 +397,12 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     
     [self saveContext:_context];
     
+    
+    User *user = [self fetchUser];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:user.userID];
+    });
+    
 }
 
 - (void)storeCategories:(NSDictionary *)resultsDictionary
