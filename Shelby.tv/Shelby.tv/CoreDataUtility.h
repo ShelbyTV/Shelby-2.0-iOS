@@ -7,6 +7,7 @@
 //
 
 extern NSString * const kShelbyNotificationCategoriesFinishedSync;
+extern NSString * const kShelbyNotificationCategoryFramesFetched;
 
 @interface CoreDataUtility : NSObject
 

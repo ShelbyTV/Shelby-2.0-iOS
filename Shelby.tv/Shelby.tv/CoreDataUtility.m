@@ -11,7 +11,7 @@
 #import "SPVideoExtractor.h"
 
 NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificationCategoriesFinishedSync";
-
+NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificationCategoryFramesFetched";
 @interface CoreDataUtility ()
 
 @property (strong ,nonatomic) NSManagedObjectContext *context;
@@ -158,6 +158,10 @@ NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificati
                 case DataRequestType_StoreCategories: {
                     
                     DLog(@"Categories Synced and Saved Successfully");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFinishedSync object:nil];
+                    });
+
                     
                 } break;
                     
@@ -496,7 +500,7 @@ NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificati
     [self saveContext:_context];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFinishedSync object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:channelID];
     });
 }
 

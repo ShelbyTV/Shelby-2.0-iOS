@@ -58,6 +58,7 @@
 
 // Helper methods
 - (SPCategoryViewCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
+- (NSInteger)indexForCategory:(NSString *)categoryID;
 
 /// Authentication Methods
 - (void)loginAction;
@@ -76,6 +77,8 @@
 /// Fetch Methods
 - (void)fetchMoreFramesForIndex:(NSNumber *)key;
 - (void)dataSourceDidUpdateForIndex:(NSNumber *)key;
+- (void)fetchFramesForCategory:(NSNotification *)notification;
+- (void)setCategoriesForTable;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -99,8 +102,10 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchAllCategories) name:kShelbyNotificationCategoriesFinishedSync object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchFramesForCategory:) name:kShelbyNotificationCategoryFramesFetched object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCategoriesForTable) name:kShelbyNotificationCategoriesFinishedSync object:nil];
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
     [self setAnimationInProgress:NO];
@@ -156,6 +161,52 @@
     }
 }
 
+- (void)setCategoriesForTable
+{
+    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    [self.categories removeAllObjects];
+    [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
+ 
+    [self.categoriesTable reloadData];
+}
+
+- (void)fetchFramesForCategory:(NSNotification *)notification
+{
+    
+    NSString *channelID = [notification object];
+    if (channelID && [channelID isKindOfClass:[NSString class]]) {
+        CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        NSInteger i = [self indexForCategory:channelID];
+        if (i == -1) {
+            return;
+        }
+        id category = self.categories[i];
+        NSMutableArray *frames = nil;
+        if ([category isKindOfClass:[NSManagedObject class]]) {
+            NSManagedObjectID *categoryObjectID = [category objectID];
+            NSManagedObjectContext *context = [self context];
+            if ([category isMemberOfClass:[Channel class]]) {
+                Channel *channel = (Channel *)[context existingObjectWithID:categoryObjectID error:nil];
+                NSString *objectID = [channel channelID];
+                if ([objectID isEqualToString:channelID]) {
+                    frames = [datautility fetchFramesInCategoryChannel:channelID];
+                }
+            } else if ([category isMemberOfClass:[Roll class]]) {
+                Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
+                NSString *objectID = [roll rollID];
+                if ([objectID isEqualToString:channelID]) {
+                    frames = [datautility fetchFramesInCategoryRoll:channelID];
+                }
+            }
+        }
+     
+        if (frames) {
+            [self.categoriesData setObject:frames forKey:[NSNumber numberWithInt:i]];
+            [self.categoriesTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+}
+
 - (void)fetchAllCategories
 {
     CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
@@ -190,6 +241,35 @@
     }
     
     return categoryCell;
+}
+
+- (NSInteger)indexForCategory:(NSString *)categoryID
+{
+    if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
+        NSInteger i = 0;
+        for (id category in self.categories) {
+            if ([category isKindOfClass:[NSManagedObject class]]) {
+                NSManagedObjectID *categoryObjectID = [category objectID];
+                NSManagedObjectContext *context = [self context];
+                if ([category isMemberOfClass:[Channel class]]) {
+                    Channel *channel = (Channel *)[context existingObjectWithID:categoryObjectID error:nil];
+                    NSString *channelID = [channel channelID];
+                    if ([channelID isEqualToString:categoryID]) {
+                        return i;
+                    }
+                } else if ([category isMemberOfClass:[Roll class]]) {
+                    Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
+                    NSString *rollID = [roll rollID];
+                    if ([rollID isEqualToString:categoryID]) {
+                        return i;
+                    }
+                }
+            }
+            i++;
+        }
+    }
+    
+    return -1; // Category wasn't found
 }
 
 - (void)resetVersionLabel
