@@ -976,7 +976,11 @@
     if (switchCategory) {
         peekViewFrame = CGRectMake(0, 80, 1024, 680);
     } else {
-        peekViewFrame = CGRectMake(0, 1024, 1024, 0);
+        CGFloat finalyY = self.peekCategoryView.frame.origin.y;
+        if (finalyY != 0) {
+            finalyY = 768;
+        }
+        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
     }
     
     [UIView animateWithDuration:speed animations:^{
@@ -1001,7 +1005,11 @@
     if (switchCategory) {
         peekViewFrame = CGRectMake(0, 80, 1024, 680);
     } else {
-        peekViewFrame = CGRectMake(0, 0, 1024, 0);
+        CGFloat finalyY = self.peekCategoryView.frame.origin.y;
+        if (finalyY != 0) {
+            finalyY = 768;
+        }
+        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
     }
 
     [UIView animateWithDuration:speed animations:^{
