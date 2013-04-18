@@ -20,11 +20,8 @@
 - (void)syncScrubber;
 - (void)stopObserving;
 
-/// Scrubbing Method
+/// Scrubbing Methods
 - (void)seekToTimeWithPercentage:(CGFloat)percentage;
-- (void)scrub;
-- (void)beginScrubbing;
-- (void)endScrubbing;
 
 /// Player Methods
 - (CMTime)duration;
