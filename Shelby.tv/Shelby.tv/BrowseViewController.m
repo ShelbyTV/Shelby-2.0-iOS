@@ -374,8 +374,8 @@
         categoryID = channel.channelID;
     }
 
-    float percentage = ((float)[indexPath row]/(float)[frames count]);
-    if (percentage >= 0.6) {
+    NSInteger cellsLeftToDisplay = [frames count] - [indexPath row];
+    if (cellsLeftToDisplay < 10) {
         
         if ( ![self.collectionViewDataSourceUpdater containsObject:categoryID] ) {
             [self.collectionViewDataSourceUpdater addObject:categoryID];   
