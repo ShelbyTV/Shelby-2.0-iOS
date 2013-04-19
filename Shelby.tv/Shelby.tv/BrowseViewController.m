@@ -799,7 +799,7 @@
         } break;
             
         default: {
-            
+            [self.collectionViewDataSourceUpdater removeObject:categoryID];
             // Handle remaining cases later
             
         }
@@ -896,12 +896,11 @@
    
             [self.categoriesTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             
-            [self.collectionViewDataSourceUpdater removeObject:categoryID];
-            
         } else {
             // No older videos fetched. Don't reset flags to avoid unncessary API calls, since they'll return no older frames.
-            [self.collectionViewDataSourceUpdater removeObject:categoryID];
         }
+        
+         [self.collectionViewDataSourceUpdater removeObject:categoryID];
     }
 }
 
