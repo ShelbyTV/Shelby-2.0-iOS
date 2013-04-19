@@ -105,7 +105,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceShouldUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderFramesFailed object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceShouldUpdateFromWeb:) name:kShelbyNotificationCategoryFramesFetched object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchFramesForCategory:) name:kShelbyNotificationCategoryFramesFetched object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCategoriesForTable) name:kShelbyNotificationCategoriesFinishedSync object:nil];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
@@ -182,8 +182,11 @@
         if (i == -1) {
             return;
         }
+        NSMutableArray *frames = self.categoriesData[[NSNumber numberWithInt:i]];
+        if (frames || [frames count] != 0) {
+            return;
+        }
         id category = self.categories[i];
-        NSMutableArray *frames = nil;
         if ([category isKindOfClass:[NSManagedObject class]]) {
             NSManagedObjectID *categoryObjectID = [category objectID];
             NSManagedObjectContext *context = [self context];
