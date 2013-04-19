@@ -17,6 +17,9 @@
 #import "SPCategoryViewCell.h"
 #import "SPVideoItemViewCellLabel.h"
 
+
+#define kShelbyTutorialMode @"kShelbyTutorialMode"
+
 // Utilities
 #import "ImageUtilities.h"
 
@@ -46,6 +49,8 @@
 @property (assign, nonatomic) SPVideoReel *activeVideoReel;
 
 @property (assign, nonatomic) BOOL animationInProgress;
+
+@property (nonatomic) UIView *tutorialView;
 
 - (void)fetchUserNickname;
 
@@ -83,6 +88,9 @@
 
 /// Version Label
 - (void)resetVersionLabel;
+
+///Tutorial
+- (IBAction)openChannelZero:(id)sender;
 
 @end
 
@@ -132,6 +140,24 @@
     // Register Cell Nibs
     [self.categoriesTable registerNib:[UINib nibWithNibName:@"SPCategoryViewCell" bundle:nil] forCellReuseIdentifier:@"SPCategoryViewCell"];
     [self fetchAllCategories];
+    
+    NSDate *tutorialDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTutorialMode];
+    if (!tutorialDate) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
+        if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
+            UIView *tutorial = nib[0];
+            [tutorial setAlpha:0.95];
+            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
+            UIView *mask = [[UIView alloc] initWithFrame:self.view.frame];
+            [self.view addSubview:mask];
+            [self.view bringSubviewToFront:mask];
+            [mask setAlpha:0.5];
+            [mask setBackgroundColor:[UIColor blackColor]];
+            [self setTutorialView:mask];
+            [self.view addSubview:tutorial];
+            [self.view bringSubviewToFront:tutorial];
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -288,6 +314,23 @@
     [self.versionLabel setTextColor:kShelbyColorBlack];
 }
 
+
+- (IBAction)openChannelZero:(id)sender
+{
+    UIButton *button = sender;
+    UIView *parent = [button superview];
+    [UIView animateWithDuration:0.4 animations:^{
+        [parent setAlpha:0];
+        [self.tutorialView setAlpha:0];
+
+    } completion:^(BOOL finished) {
+        [parent removeFromSuperview];
+        [self.tutorialView removeFromSuperview];
+        [self setTutorialView:nil];
+    }];
+    
+    [self launchPlayer:0];
+}
 
 #pragma mark - UITableViewDataSource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

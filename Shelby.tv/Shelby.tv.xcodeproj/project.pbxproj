@@ -53,6 +53,15 @@
 		1C52849F16F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
 		1C5284A016F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
 		1C5284A116F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
+		1C6ACFD21721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
+		1C6ACFD31721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
+		1C6ACFD41721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
+		1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
+		1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
+		1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
+		1C6ACFDB1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
+		1C6ACFDC1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
+		1C6ACFDD1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
 		1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
@@ -611,6 +620,9 @@
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
 		1C52849516F7AE6C00B43A94 /* greyButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyButton@2x.png"; sourceTree = "<group>"; };
+		1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelZeroTutorialView.xib; sourceTree = "<group>"; };
+		1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial.png"; sourceTree = "<group>"; };
+		1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial@2x.png"; sourceTree = "<group>"; };
 		1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtilities.h; sourceTree = "<group>"; };
 		1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtilities.m; sourceTree = "<group>"; };
 		1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
@@ -974,6 +986,15 @@
 			name = FormViews;
 			sourceTree = "<group>";
 		};
+		1C6ACFD51721E0B20008DEC2 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */,
+				1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1192,6 +1213,7 @@
 		8E32BF86167FA58400753723 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1C6ACFD51721E0B20008DEC2 /* Tutorial */,
 				1CFD670F17203D5A00324A27 /* Browse Images */,
 				8E2FC87216C6F19D0022B58C /* Login & Signup Images */,
 				8EF03C0616D577800019669F /* Rolling Images */,
@@ -1524,6 +1546,7 @@
 			isa = PBXGroup;
 			children = (
 				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
+				1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */,
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
 			);
 			name = Xibs;
@@ -1775,6 +1798,9 @@
 				1C22E3BF171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */,
 				1CFD671317203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671617203D5A00324A27 /* channelbg@2x.png in Resources */,
+				1C6ACFD31721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */,
+				1C6ACFDC1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1878,6 +1904,9 @@
 				1C22E3C0171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */,
 				1CFD671417203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671717203D5A00324A27 /* channelbg@2x.png in Resources */,
+				1C6ACFD41721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */,
+				1C6ACFDD1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1982,6 +2011,9 @@
 				1C22E3BE171C79AB00A1CAEC /* SPCategoryViewCell.xib in Resources */,
 				1CFD671217203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671517203D5A00324A27 /* channelbg@2x.png in Resources */,
+				1C6ACFD21721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */,
+				1C6ACFDB1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
