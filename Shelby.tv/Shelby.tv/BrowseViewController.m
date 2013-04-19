@@ -178,7 +178,6 @@
     
     NSString *channelID = [notification object];
     if (channelID && [channelID isKindOfClass:[NSString class]]) {
-        CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSInteger i = [self indexForCategory:channelID];
         if (i == -1) {
             return;
@@ -192,12 +191,14 @@
                 Channel *channel = (Channel *)[context existingObjectWithID:categoryObjectID error:nil];
                 NSString *objectID = [channel channelID];
                 if ([objectID isEqualToString:channelID]) {
+                    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                     frames = [datautility fetchFramesInCategoryChannel:channelID];
                 }
             } else if ([category isMemberOfClass:[Roll class]]) {
                 Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
                 NSString *objectID = [roll rollID];
                 if ([objectID isEqualToString:channelID]) {
+                    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                     frames = [datautility fetchFramesInCategoryRoll:channelID];
                 }
             }
@@ -212,17 +213,19 @@
 
 - (void)fetchAllCategories
 {
-    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [self.categories removeAllObjects];
-    [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
+    [self.categories addObjectsFromArray:[dataUtility fetchAllCategories]];
     
     int i = 0;
     for (id category in self.categories) {
         NSMutableArray *frames = nil;
         if ([category isKindOfClass:[Channel class]]) {
-            frames = [datautility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
+            CoreDataUtility *channelDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            frames = [channelDataUtility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
         } else if ([category isKindOfClass:[Roll class]]) {
-            frames = [datautility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
+            CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            frames = [rollDataUtility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
         } else {
             frames = [@[] mutableCopy];
         }
@@ -851,16 +854,17 @@
         
          NSDate *date = lastFrame.timestamp;
         
-         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
          NSMutableArray *olderFramesArray = [@[] mutableCopy];
         
          switch ( groupType ) {
                 
              case GroupType_CategoryChannel:{
+                  CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                  [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:categoryID afterDate:date]];
              } break;
                 
              case GroupType_CategoryRoll:{
+                  CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                  [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:categoryID afterDate:date]];
              } break;
                 
