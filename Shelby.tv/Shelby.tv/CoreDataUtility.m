@@ -984,7 +984,6 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [request setSortDescriptors:@[sortDescriptor]];
-    // Set Predicate
     
     // Filter by rollID and timestamp
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((channelID == %@) AND (timestamp < %@))", channelID, date];
@@ -1055,8 +1054,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     // Sort by timestamp
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
     [request setSortDescriptors:@[sortDescriptor]];
-    // Set Predicate
-    
+
     // Filter by rollID and timestamp
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", rollID, date];
     [request setPredicate:predicate];

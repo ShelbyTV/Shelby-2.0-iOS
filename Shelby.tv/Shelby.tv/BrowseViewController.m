@@ -77,7 +77,7 @@
 /// Fetch Methods
 - (void)fetchOlderFramesForIndex:(NSNumber *)key;
 - (void)fetchOlderFramesDidFail:(NSNotification *)notification;
-- (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
+- (void)dataSourceDidUpdateFromWeb:(NSNotification *)notification;
 - (void)fetchFramesForCategory:(NSNotification *)notification;
 - (void)setCategoriesForTable;
 
@@ -103,7 +103,7 @@
 {
     [super viewDidLoad];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceShouldUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceDidUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderFramesFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchFramesForCategory:) name:kShelbyNotificationCategoryFramesFetched object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCategoriesForTable) name:kShelbyNotificationCategoriesFinishedSync object:nil];
@@ -781,12 +781,11 @@
         categoryID = channel.channelID;
     }
     
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    
     switch ( groupType ) {
             
         case GroupType_CategoryChannel: {
             
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:categoryID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreFrames:numberToString forCategoryChannel:categoryID];
@@ -795,6 +794,7 @@
             
         case GroupType_CategoryRoll: {
             
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:categoryID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:categoryID];
@@ -810,25 +810,23 @@
 }
 
 
-- (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification
+- (void)dataSourceDidUpdateFromWeb:(NSNotification *)notification
 {
     
     NSString *categoryID = [notification object];
      if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
          
          NSInteger i = [self indexForCategory:categoryID];
-         
          if (i == -1) {
              [self.collectionViewDataSourceUpdater removeObject:categoryID];
              return;
          }
          
-         id category = self.categories[i];
-
          NSManagedObjectContext *context = [self context];
-
-         GroupType groupType = GroupType_Unknown;
+         
+         id category = self.categories[i];
          NSString *categoryID = nil;
+         GroupType groupType = GroupType_Unknown;
          if ([category isMemberOfClass:[Roll class]]) {
              groupType = GroupType_CategoryRoll;
              Roll *roll = (id)category;
@@ -875,7 +873,7 @@
              }
         }
         
-        // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
+        // If olderFramesArray is populated, compare against existing visddeos, and deduplicate if necessary
         if ( [olderFramesArray count] ) {
             
             Frame *firstFrame = (Frame *)olderFramesArray[0];
@@ -894,14 +892,12 @@
                 [olderFramesArray removeObject:firstFrame];
             }
             
-            // Add deduplicated frames from olderFramesArray to videoFrames
+            // Add deduplicated frames from olderFramesArray to frames
             [frames addObjectsFromArray:olderFramesArray];
    
             [self.categoriesTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             
-        } else {
-            // No older videos fetched. Don't reset flags to avoid unncessary API calls, since they'll return no older frames.
-        }
+        } 
         
          [self.collectionViewDataSourceUpdater removeObject:categoryID];
     }
