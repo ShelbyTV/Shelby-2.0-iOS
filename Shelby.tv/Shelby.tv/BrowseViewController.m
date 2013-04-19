@@ -72,7 +72,9 @@
 /// Video Player Launch Methods
 - (void)launchPlayer:(NSUInteger)categoryIndex;
 - (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex;
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType;
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(BOOL)tutorialMode;
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType  withTutorialMode:(BOOL)tutorialMode;
+
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent;
 - (void)animateSwitchCategories:(SPVideoReel *)viewControllerToPresent;
 - (void)animateOpenCategories:(SPVideoReel *)viewControllerToPresent;
@@ -329,7 +331,7 @@
         [self setTutorialView:nil];
     }];
     
-    [self launchPlayer:0];
+    [self launchPlayer:0 andVideo:0 withTutorialMode:YES];
 }
 
 #pragma mark - UITableViewDataSource Methods
@@ -577,10 +579,15 @@
 #pragma mark - Video Player Launch Methods (Private)
 - (void)launchPlayer:(NSUInteger)categoryIndex
 {
-    [self launchPlayer:categoryIndex andVideo:0];
+    [self launchPlayer:categoryIndex andVideo:0 withTutorialMode:NO];
 }
 
 - (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex
+{
+    [self launchPlayer:categoryIndex andVideo:videoIndex withTutorialMode:NO];
+}
+
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(BOOL)tutorialMode
 {
     id category = (id)self.categories[categoryIndex];
     GroupType groupType = GroupType_CategoryRoll;
@@ -588,10 +595,10 @@
         groupType = GroupType_CategoryChannel;
     }
     
-    [self launchPlayer:categoryIndex andVideo:videoIndex withGroupType:groupType];
+    [self launchPlayer:categoryIndex andVideo:videoIndex andGroupType:groupType withTutorialMode:tutorialMode];
 }
 
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType withTutorialMode:(BOOL)tutorialMode
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -645,6 +652,7 @@
                 }
                 SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:videoIndex andCategoryID:categoryID];
                 [videoReel setDelegate:self];
+                [videoReel setTutorialMode:tutorialMode];
                 [self setActiveCategoryIndex:categoryIndex];
                 [self presentViewController:videoReel];
 

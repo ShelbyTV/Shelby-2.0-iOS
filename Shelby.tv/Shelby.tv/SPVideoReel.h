@@ -26,6 +26,7 @@
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
 @property (copy, nonatomic) NSString *groupTitle;
+@property (assign, nonatomic) BOOL tutorialMode;
 
 - (id)initWithGroupType:(GroupType)groupType
              groupTitle:(NSString *)groupTitle
