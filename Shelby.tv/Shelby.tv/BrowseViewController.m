@@ -72,8 +72,8 @@
 /// Video Player Launch Methods
 - (void)launchPlayer:(NSUInteger)categoryIndex;
 - (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex;
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(BOOL)tutorialMode;
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType  withTutorialMode:(BOOL)tutorialMode;
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(SPTutorialMode)tutorialMode;
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType  withTutorialMode:(SPTutorialMode)tutorialMode;
 
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent;
 - (void)animateSwitchCategories:(SPVideoReel *)viewControllerToPresent;
@@ -584,10 +584,10 @@
 
 - (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex
 {
-    [self launchPlayer:categoryIndex andVideo:videoIndex withTutorialMode:NO];
+    [self launchPlayer:categoryIndex andVideo:videoIndex withTutorialMode:SPTutorialModeNone];
 }
 
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(BOOL)tutorialMode
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(SPTutorialMode)tutorialMode
 {
     id category = (id)self.categories[categoryIndex];
     GroupType groupType = GroupType_CategoryRoll;
@@ -598,7 +598,7 @@
     [self launchPlayer:categoryIndex andVideo:videoIndex andGroupType:groupType withTutorialMode:tutorialMode];
 }
 
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType withTutorialMode:(BOOL)tutorialMode
+- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType withTutorialMode:(SPTutorialMode)tutorialMode
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -990,13 +990,15 @@
     [self setActiveVideoReel:videoReel];
 
     NSInteger nextCategory = [self nextCategoryForDirection:up];
-    [self launchPlayer:nextCategory];
+    [self launchPlayer:nextCategory andVideo:0 withTutorialMode:SPTutorialModePinch];
     
     [self loadCell:nextCategory withDirection:up animated:NO];
 }
 
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel
 {
+    // KP KP: TODO: set tutorial done in NSUserDefaults
+    
     [self animateCloseCategories:videoReel];
 }
 
