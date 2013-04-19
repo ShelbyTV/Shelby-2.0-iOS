@@ -25,7 +25,7 @@
 #define kShelbyAPIPutUnplayableVideo        @"https://api.shelby.tv/v1/video/%@/unplayable?auth_token=%@"
 
 /// GET Rolls
-#define kShelbyAPIGetRollFrames             @"http:x//api.shelby.tv/v1/roll/%@/frames"
+#define kShelbyAPIGetRollFrames             @"http://api.shelby.tv/v1/roll/%@/frames"
 #define kShelbyAPIGetMoreRollFrames         @"http://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
 #define kShelbyAPIGetRollFramesForSync      @"http://api.shelby.tv/v1/roll/%@/frames?limit=%d"
 
