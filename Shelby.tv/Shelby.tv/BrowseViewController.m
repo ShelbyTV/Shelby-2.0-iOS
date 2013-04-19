@@ -377,8 +377,9 @@
     float percentage = ((float)[indexPath row]/(float)[frames count]);
     if (percentage >= 0.6) {
         
-        if ( ![self.collectionViewDataSourceUpdater containsObject:category] ) {
-             [self fetchOlderFramesForIndex:key];
+        if ( ![self.collectionViewDataSourceUpdater containsObject:categoryID] ) {
+            [self.collectionViewDataSourceUpdater addObject:categoryID];   
+            [self fetchOlderFramesForIndex:key];
         }
     
     }
@@ -776,8 +777,6 @@
         channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
         categoryID = channel.channelID;
     }
-
-    [self.collectionViewDataSourceUpdater addObject:categoryID];
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     
