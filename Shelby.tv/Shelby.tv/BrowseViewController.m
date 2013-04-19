@@ -105,7 +105,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceShouldUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderFramesFailed object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchFramesForCategory:) name:kShelbyNotificationCategoryFramesFetched object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceShouldUpdateFromWeb:) name:kShelbyNotificationCategoryFramesFetched object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCategoriesForTable) name:kShelbyNotificationCategoriesFinishedSync object:nil];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
@@ -832,7 +832,7 @@
              roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
              categoryID = roll.rollID;
          } else if ([category isMemberOfClass:[Channel class]]) {
-             groupType = GroupType_Unknown;
+             groupType = GroupType_CategoryChannel;
              Channel *channel = (id)category;
              channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
              categoryID = channel.channelID;
