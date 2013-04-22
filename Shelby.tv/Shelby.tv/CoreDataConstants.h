@@ -24,7 +24,6 @@
 #define kShelbyCoreDataEntityFrame                      @"Frame"
 #define kShelbyCoreDataEntityMessages                   @"Messages"
 #define kShelbyCoreDataEntityRoll                       @"Roll"
-#define kShelbyCoreDataEntityStreamEntry                @"StreamEntry"
 #define kShelbyCoreDataEntityUser                       @"User"
 #define kShelbyCoreDataEntityVideo                      @"Video"
 

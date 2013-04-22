@@ -272,16 +272,16 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    // Search Stream table
+    // Search video table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityVideo inManagedObjectContext:_context];
     [request setEntity:description];
     
-    // Execute request that returns array of stream entries
-    NSMutableArray *entries = [[self.context executeFetchRequest:request error:nil] mutableCopy];
+    // Execute request that returns array of videos
+    NSMutableArray *videos = [[self.context executeFetchRequest:request error:nil] mutableCopy];
     
-    for (NSUInteger i = 0; i < [entries count]; ++i ) {
+    for (NSUInteger i = 0; i < [videos count]; ++i ) {
         
-        Video *video = (Video *)[entries objectAtIndex:i];
+        Video *video = (Video *)[videos objectAtIndex:i];
         [video setExtractedURL:nil];
         
     }
