@@ -96,6 +96,7 @@
 								<string key="NSFrame">{{42, 11}, {168, 21}}</string>
 								<reference key="NSSuperview" ref="852312895"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -176,14 +177,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">categoryFrames</string>
-						<reference key="source" ref="1038451655"/>
-						<reference key="destination" ref="154438975"/>
-					</object>
-					<int key="connectionID">14</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">channelTitle</string>
 						<reference key="source" ref="1038451655"/>
 						<reference key="destination" ref="9967735"/>
@@ -197,6 +190,14 @@
 						<reference key="destination" ref="818094938"/>
 					</object>
 					<int key="connectionID">93</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">channelFrames</string>
+						<reference key="source" ref="1038451655"/>
+						<reference key="destination" ref="154438975"/>
+					</object>
+					<int key="connectionID">94</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -280,7 +281,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">93</int>
+			<int key="maxID">94</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -290,6 +291,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="categoryFrames">UICollectionView</string>
 						<string key="channelColorView">UIView</string>
+						<string key="channelFrames">UICollectionView</string>
 						<string key="channelTitle">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -300,6 +302,10 @@
 						<object class="IBToOneOutletInfo" key="channelColorView">
 							<string key="name">channelColorView</string>
 							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="channelFrames">
+							<string key="name">channelFrames</string>
+							<string key="candidateClassName">UICollectionView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="channelTitle">
 							<string key="name">channelTitle</string>

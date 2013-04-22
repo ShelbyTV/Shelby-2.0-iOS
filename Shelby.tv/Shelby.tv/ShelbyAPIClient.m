@@ -310,7 +310,7 @@
     [operation start];
 }
 
-#pragma mark - Categories (GET)
+#pragma mark - Channels (GET)
 + (void)getAllChannels
 {
     
@@ -322,14 +322,14 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreCategories];
-            [dataUtility storeCategories:JSON];
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreChannels];
+            [dataUtility storeChannels:JSON];
             
         });
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 
-        DLog(@"Problem fetching all Categories");
+        DLog(@"Problem fetching all Channels");
         
     }];
     
@@ -355,7 +355,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching channel: %@", requestString);
+        DLog(@"Problem fetching ChannelDashboard: %@", requestString);
         
     }];
     
@@ -380,7 +380,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching more frames for channel: %@", requestString);
+        DLog(@"Problem fetching more dashboardEntries for ChannelDashboard: %@", requestString);
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:dashboardID];
         
     }];
@@ -388,7 +388,7 @@
     [operation start];
 }
 
-+ (void)getCategoryRoll:(NSString *)rollID
++ (void)getChannelRoll:(NSString *)rollID
 {
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID]];
@@ -400,13 +400,13 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-            [dataUtility storeFrames:JSON forCategoryRoll:rollID];
+            [dataUtility storeFrames:JSON forChannelRoll:rollID];
             
         });
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Category Roll");
+        DLog(@"Problem fetching ChannelRoll");
         
     }];
     
@@ -415,7 +415,7 @@
 }
 
 
-+ (void)getMoreFrames:(NSString *)skipParam forCategoryRoll:(NSString *)rollID
++ (void)getMoreFrames:(NSString *)skipParam forChannelRoll:(NSString *)rollID
 {
 
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, rollID, skipParam]];
@@ -433,7 +433,7 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
-        DLog(@"Problem fetching Category Roll");
+        DLog(@"Problem fetching ChannelRoll");
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:rollID];
         
     }];

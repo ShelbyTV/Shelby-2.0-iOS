@@ -18,56 +18,41 @@ extern NSString * const kShelbyNotificationChannelDataFetched;
 
 /// Persistance Methods
 - (void)saveContext:(NSManagedObjectContext *)context;
-- (void)removeOlderVideoFramesForGroupType:(GroupType)groupType andCategoryID:(NSString *)categoryID;
+- (void)removeOlderVideoFramesForGroupType:(GroupType)groupType andChannelID:(NSString *)channelID;
 - (void)removeAllVideoExtractionURLReferences;
 
 /// Storage Methods
-// User
 - (void)storeUser:(NSDictionary *)resultsDictionary;
-
-// Stream
 - (void)storeStreamEntries:(NSDictionary *)resultsDictionary;
-
-// Rolls
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary forGroupType:(GroupType)groupType;
-
-// Channels
-- (void)storeCategories:(NSDictionary *)resultsDictionary;
+- (void)storeChannels:(NSDictionary *)resultsDictionary;
 - (void)storeDashboardEntries:(NSDictionary *)resultsDictionary forDashboard:(NSString *)dashboardID;
-- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID;
-
-// Logged-Out Likes
+- (void)storeFrames:(NSDictionary *)resultsDictionary forChannelRoll:(NSString *)rollID;
 - (void)storeFrameInLoggedOutLikes:(Frame *)frame;
 
 /// Fetching Methods
 - (User *)fetchUser;
-
 - (NSUInteger)fetchStreamEntryCount;
 - (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
-- (NSUInteger)fetchCountForCategoryChannel:(NSString *)channelID;
-- (NSUInteger)fetchCountForCategoryRoll:(NSString *)rollID;
-
+- (NSUInteger)fetchCountForChannelDashboard:(NSString *)channelID;
+- (NSUInteger)fetchCountForChannelRoll:(NSString *)rollID;
 - (NSMutableArray *)fetchStreamEntries;
 - (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date;
-
 - (NSMutableArray *)fetchLikesEntries;
 - (NSMutableArray *)fetchMoreLikesEntriesAfterDate:(NSDate *)date;
-
 - (NSMutableArray *)fetchPersonalRollEntries;
 - (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date;
-
 - (NSMutableArray *)fetchDashboardEntriesInDashboard:(NSString *)dashboardID;
 - (NSMutableArray *)fetchMoreDashboardEntriesInDashboard:(NSString *)dashboardID afterDate:(NSDate *)date;
-- (NSMutableArray *)fetchFramesInCategoryRoll:(NSString *)rollID;
-- (NSMutableArray *)fetchMoreFramesInCategoryRoll:(NSString *)rollID afterDate:(NSDate *)date;
-
+- (NSMutableArray *)fetchFramesInChannelRoll:(NSString *)rollID;
+- (NSMutableArray *)fetchMoreFramesInChannelRoll:(NSString *)rollID afterDate:(NSDate *)date;
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
 - (NSMutableArray *)fetchAllChannels;
 
 /// Sync Methods
 - (void)syncLoggedOutLikes;
-- (void)syncLikes:(NSDictionary *)webResuhanneltsDictionary;
+- (void)syncLikes:(NSDictionary *)webResultsDictionary;
 - (void)syncPersonalRoll:(NSDictionary *)webResultsDictionary;
 
 @end

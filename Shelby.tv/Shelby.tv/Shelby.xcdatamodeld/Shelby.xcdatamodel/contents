@@ -65,7 +65,7 @@
         <attribute name="displayThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="frameCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="isCategory" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isChannel" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>

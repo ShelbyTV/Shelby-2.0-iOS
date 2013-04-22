@@ -1,5 +1,5 @@
 //
-//  SPCategoryPeekView.h
+//  SPChannelPeekView.h
 //  Shelby.tv
 //
 //  Created by Keren on 4/17/13.
@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SPChannelDisplay.h"
 
-@interface SPCategoryPeekView : UIView
+@interface SPChannelPeekView : UIView
 
-- (void)setupWithCategoryDisplay:(SPChannelDisplay *)categoryDisplay;
+- (void)setupWithChannelDisplay:(SPChannelDisplay *)channelDisplay;
 
 @end

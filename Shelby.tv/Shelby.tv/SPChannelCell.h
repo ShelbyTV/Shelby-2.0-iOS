@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SPChannelCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UICollectionView *categoryFrames;
+@property (weak, nonatomic) IBOutlet UICollectionView *channelFrames;
 
 - (UIColor *)channelDisplayColor;
 - (NSString *)channelDisplayTitle;

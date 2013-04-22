@@ -51,21 +51,21 @@
 
 // Helper methods
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
-- (NSInteger)indexForChannel:(NSString *)categoryID;
+- (NSInteger)indexForChannel:(NSString *)channelID;
 
 /// Authentication Methods
 - (void)loginAction;
 - (void)logoutAction;
 
 /// Video Player Launch Methods
-- (void)launchPlayer:(NSUInteger)categoryIndex;
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex;
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType;
+- (void)launchPlayer:(NSUInteger)channelIndex;
+- (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex;
+- (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType;
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent;
 - (void)animateSwitchChannels:(SPVideoReel *)viewControllerToPresent;
 - (void)animateOpenChannels:(SPVideoReel *)viewControllerToPresent;
 - (void)animateCloseChannels:(SPVideoReel *)viewController;
-- (NSInteger)nextCategoryForDirection:(BOOL)up;
+- (NSInteger)nextChannelForDirection:(BOOL)up;
 
 /// Fetch Methods
 - (void)fetchOlderFramesForIndex:(NSNumber *)key;
@@ -169,23 +169,23 @@
         if (frames || [frames count] != 0) {
             return;
         }
-        id category = self.channels[i];
-        if ([category isKindOfClass:[NSManagedObject class]]) {
-            NSManagedObjectID *categoryObjectID = [category objectID];
+        id channel = self.channels[i];
+        if ([channel isKindOfClass:[NSManagedObject class]]) {
+            NSManagedObjectID *channelObjectID = [channel objectID];
             NSManagedObjectContext *context = [self context];
-            if ([category isMemberOfClass:[Dashboard class]]) {
-                Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:categoryObjectID error:nil];
+            if ([channel isMemberOfClass:[Dashboard class]]) {
+                Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:channelObjectID error:nil];
                 NSString *objectID = [dashboard dashboardID];
                 if ([objectID isEqualToString:channelID]) {
                     CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                     frames = [datautility fetchDashboardEntriesInDashboard:channelID];
                 }
-            } else if ([category isMemberOfClass:[Roll class]]) {
-                Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
+            } else if ([channel isMemberOfClass:[Roll class]]) {
+                Roll *roll = (Roll *)[context existingObjectWithID:channelObjectID error:nil];
                 NSString *objectID = [roll rollID];
                 if ([objectID isEqualToString:channelID]) {
                     CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                    frames = [datautility fetchFramesInCategoryRoll:channelID];
+                    frames = [datautility fetchFramesInChannelRoll:channelID];
                 }
             }
         }
@@ -211,7 +211,7 @@
             frames = [channelDataUtility fetchDashboardEntriesInDashboard:[((Dashboard *)channel) dashboardID]];
         } else if ([channel isKindOfClass:[Roll class]]) {
             CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-            frames = [rollDataUtility fetchFramesInCategoryRoll:[((Roll *)channel) rollID]];
+            frames = [rollDataUtility fetchFramesInChannelRoll:[((Roll *)channel) rollID]];
         } else {
             frames = [@[] mutableCopy];
         }
@@ -235,24 +235,24 @@
     return channelCell;
 }
 
-- (NSInteger)indexForChannel:(NSString *)categoryID
+- (NSInteger)indexForChannel:(NSString *)channelID
 {
-    if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
+    if (channelID && [channelID isKindOfClass:[NSString class]]) {
         NSInteger i = 0;
-        for (id category in self.channels) {
-            if ([category isKindOfClass:[NSManagedObject class]]) {
-                NSManagedObjectID *categoryObjectID = [category objectID];
+        for (id channel in self.channels) {
+            if ([channel isKindOfClass:[NSManagedObject class]]) {
+                NSManagedObjectID *channelObjectID = [channel objectID];
                 NSManagedObjectContext *context = [self context];
-                if ([category isMemberOfClass:[Dashboard class]]) {
-                    Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:categoryObjectID error:nil];
+                if ([channel isMemberOfClass:[Dashboard class]]) {
+                    Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:channelObjectID error:nil];
                     NSString *dashboardID = [dashboard dashboardID];
-                    if ([dashboardID isEqualToString:categoryID]) {
+                    if ([dashboardID isEqualToString:channelID]) {
                         return i;
                     }
-                } else if ([category isMemberOfClass:[Roll class]]) {
-                    Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
+                } else if ([channel isMemberOfClass:[Roll class]]) {
+                    Roll *roll = (Roll *)[context existingObjectWithID:channelObjectID error:nil];
                     NSString *rollID = [roll rollID];
-                    if ([rollID isEqualToString:categoryID]) {
+                    if ([rollID isEqualToString:channelID]) {
                         return i;
                     }
                 }
@@ -261,7 +261,7 @@
         }
     }
     
-    return -1; // Category wasn't found
+    return -1; // channel wasn't found
 }
 
 - (void)resetVersionLabel
@@ -284,26 +284,26 @@
 
     SPChannelCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SPChannelCell" forIndexPath:indexPath];
     
-    UICollectionView *categoryFrames = [cell categoryFrames];
-    [categoryFrames registerNib:[UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil] forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
-    [categoryFrames setDelegate:self];
-    [categoryFrames setDataSource:self];
-    [categoryFrames reloadData];
-    NSUInteger hash = [categoryFrames hash];
+    UICollectionView *channelFrames = [cell channelFrames];
+    [channelFrames registerNib:[UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil] forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
+    [channelFrames setDelegate:self];
+    [channelFrames setDataSource:self];
+    [channelFrames reloadData];
+    NSUInteger hash = [channelFrames hash];
     [self.changeableDataMapper setObject:[NSNumber numberWithInt:indexPath.row] forKey:[NSNumber numberWithUnsignedInt:hash]];
     
-    id category = (id)self.channels[indexPath.row];
-    if ([category isKindOfClass:[NSManagedObject class]]) {
-        NSManagedObjectID *categoryObjectID = [category objectID];
+    id channel = (id)self.channels[indexPath.row];
+    if ([channel isKindOfClass:[NSManagedObject class]]) {
+        NSManagedObjectID *channelObjectID = [channel objectID];
         NSManagedObjectContext *context = [self context];
         NSString *title = nil;
         NSString *color = nil;
-        if ([category isMemberOfClass:[Dashboard class]]) {
-            Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:categoryObjectID error:nil];
+        if ([channel isMemberOfClass:[Dashboard class]]) {
+            Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:channelObjectID error:nil];
             title = [dashboard displayTitle];
             color = [dashboard displayColor];
-        } else if ([category isMemberOfClass:[Roll class]]) {
-            Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
+        } else if ([channel isMemberOfClass:[Roll class]]) {
+            Roll *roll = (Roll *)[context existingObjectWithID:channelObjectID error:nil];
             title = [roll displayTitle];
             color = [roll displayColor];
         }
@@ -348,23 +348,23 @@
     NSMutableArray *frames = self.channelsDataSource[key];
 
     NSManagedObjectContext *context = [self context];
-    id category = (id)self.channels[[key intValue]];
-    NSString *categoryID = nil;
-    if ([category isMemberOfClass:[Roll class]]) {
-        Roll *roll = (id)category;
+    id channel = (id)self.channels[[key intValue]];
+    NSString *channelID = nil;
+    if ([channel isMemberOfClass:[Roll class]]) {
+        Roll *roll = (id)channel;
         roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
-        categoryID = roll.rollID;
-    } else if ([category isMemberOfClass:[Dashboard class]]) {
-        Dashboard *dashboard = (id)category;
+        channelID = roll.rollID;
+    } else if ([channel isMemberOfClass:[Dashboard class]]) {
+        Dashboard *dashboard = (id)channel;
         dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
-        categoryID = dashboard.dashboardID;
+        channelID = dashboard.dashboardID;
     }
 
     NSInteger cellsLeftToDisplay = [frames count] - [indexPath row];
     if (cellsLeftToDisplay < 10) {
         
-        if ( ![self.collectionViewDataSourceUpdater containsObject:categoryID] ) {
-            [self.collectionViewDataSourceUpdater addObject:categoryID];   
+        if ( ![self.collectionViewDataSourceUpdater containsObject:channelID] ) {
+            [self.collectionViewDataSourceUpdater addObject:channelID];
             [self fetchOlderFramesForIndex:key];
         }
     
@@ -515,23 +515,23 @@
 
 
 #pragma mark - Video Player Launch Methods (Private)
-- (void)launchPlayer:(NSUInteger)categoryIndex
+- (void)launchPlayer:(NSUInteger)channelIndex
 {
-    [self launchPlayer:categoryIndex andVideo:0];
+    [self launchPlayer:channelIndex andVideo:0];
 }
 
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex
+- (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex
 {
-    id category = (id)self.channels[categoryIndex];
+    id channel = (id)self.channels[channelIndex];
     GroupType groupType = GroupType_ChannelRoll;
-    if ([category isMemberOfClass:[Dashboard class]]) {
+    if ([channel isMemberOfClass:[Dashboard class]]) {
         groupType = GroupType_ChannelDashboard;
     }
     
-    [self launchPlayer:categoryIndex andVideo:videoIndex withGroupType:groupType];
+    [self launchPlayer:channelIndex andVideo:videoIndex withGroupType:groupType];
 }
 
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType
+- (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -541,7 +541,7 @@
         NSString *title = nil;
 
         NSManagedObjectContext *context = [self context];
-        NSManagedObjectID *objectID = [(self.channels)[categoryIndex] objectID];
+        NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
 
         switch (groupType) {
             case GroupType_ChannelDashboard:
@@ -555,7 +555,7 @@
             case GroupType_ChannelRoll:
             {
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
-                videoFrames = [dataUtility fetchFramesInCategoryRoll:[roll rollID]];
+                videoFrames = [dataUtility fetchFramesInChannelRoll:[roll rollID]];
                 errorMessage = @"No videos in Channel Roll.";
                 title = [roll displayTitle];
                 break;
@@ -569,23 +569,23 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([videoFrames count]) {
                 NSManagedObjectContext *mainThreadContext = [self context];
-                NSString *categoryID = nil;
-                if (groupType == GroupType_ChannelDashboard) { // Category Channel
-                    NSManagedObjectID *objectID = [(self.channels)[categoryIndex] objectID];
+                NSString *channelID = nil;
+                if (groupType == GroupType_ChannelDashboard) { // channel Channel
+                    NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
                     Dashboard *dashboard = (Dashboard *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    categoryID = dashboard.dashboardID;
-                } else if (groupType == GroupType_ChannelRoll) { // Category Roll
-                    NSManagedObjectID *objectID = [(self.channels)[categoryIndex] objectID];
+                    channelID = dashboard.dashboardID;
+                } else if (groupType == GroupType_ChannelRoll) { // channel Roll
+                    NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    categoryID = roll.rollID;
+                    channelID = roll.rollID;
                 }
 
                 if (self.activeVideoReel) {
                     [self.activeVideoReel cleanup];
                 }
-                SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:videoIndex andCategoryID:categoryID];
+                SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:videoIndex andChannelID:channelID];
                 [videoReel setDelegate:self];
-                [self setActiveChannelIndex:categoryIndex];
+                [self setActiveChannelIndex:channelIndex];
                 [self presentViewController:videoReel];
 
             } else {
@@ -622,15 +622,15 @@
         [self setAnimationInProgress:YES];
     }
     
-    SPChannelCell *categoryCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:self.activeChannelIndex inSection:0]];
+    SPChannelCell *channelCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:self.activeChannelIndex inSection:0]];
     
-    UIImage *categoryImage = [ImageUtilities screenshot:categoryCell];
-    UIImageView *categoryImageView = [[UIImageView alloc] initWithImage:categoryImage];
+    UIImage *channelImage = [ImageUtilities screenshot:channelCell];
+    UIImageView *channelImageView = [[UIImageView alloc] initWithImage:channelImage];
     
-    CGPoint categoryCellOriginInWindow = [self.view convertPoint:categoryCell.frame.origin fromView:self.channelsTableView];
+    CGPoint channelCellOriginInWindow = [self.view convertPoint:channelCell.frame.origin fromView:self.channelsTableView];
     
-    CGRect topRect = CGRectMake(0, 0, 1024, categoryCellOriginInWindow.y);
-    CGRect bottomRect = CGRectMake(0, categoryCellOriginInWindow.y + categoryCell.frame.size.height, 1024, 1024 - categoryCellOriginInWindow.y);
+    CGRect topRect = CGRectMake(0, 0, 1024, channelCellOriginInWindow.y);
+    CGRect bottomRect = CGRectMake(0, channelCellOriginInWindow.y + channelCell.frame.size.height, 1024, 1024 - channelCellOriginInWindow.y);
   
     UIImage *channelsImage = [ImageUtilities screenshot:self.view];
     UIImage *topImage = [ImageUtilities crop:channelsImage inRect:topRect];
@@ -639,10 +639,10 @@
     UIImageView *topImageView = [[UIImageView alloc] initWithImage:topImage];
     UIImageView *bottomImageView = [[UIImageView alloc] initWithImage:bottomImage];
     
-    [viewControllerToPresent.view addSubview:categoryImageView];
+    [viewControllerToPresent.view addSubview:channelImageView];
     [viewControllerToPresent.view addSubview:bottomImageView];
     [viewControllerToPresent.view addSubview:topImageView];
-    [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y + 20, 1024, categoryCell.frame.size.height)];
+    [channelImageView setFrame:CGRectMake(0, channelCellOriginInWindow.y + 20, 1024, channelCell.frame.size.height)];
     [topImageView setFrame:CGRectMake(topRect.origin.x, topRect.origin.y + 20, topRect.size.width, topRect.size.height)];
     [bottomImageView setFrame:CGRectMake(bottomRect.origin.x, bottomRect.origin.y + 20, bottomRect.size.width, bottomRect.size.height)];
 
@@ -652,11 +652,11 @@
         [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             [topImageView setFrame:CGRectMake(0, -topImageView.frame.size.height, topImageView.frame.size.width, topImageView.frame.size.height)];
             [bottomImageView setFrame:CGRectMake(0, 900, bottomImageView.frame.size.width, bottomImageView.frame.size.height)];
-            [categoryImageView setFrame:CGRectMake(51, categoryImageView.frame.origin.y, categoryImageView.frame.size.width*0.9, categoryImageView.frame.size.height*0.9)];
+            [channelImageView setFrame:CGRectMake(51, channelImageView.frame.origin.y, channelImageView.frame.size.width*0.9, channelImageView.frame.size.height*0.9)];
             
-            [categoryImageView setAlpha:0];
+            [channelImageView setAlpha:0];
         } completion:^(BOOL finished) {
-            [categoryImageView removeFromSuperview];
+            [channelImageView removeFromSuperview];
             [bottomImageView removeFromSuperview];
             [topImageView removeFromSuperview];
             [self setAnimationInProgress:NO];
@@ -672,15 +672,15 @@
         [self setAnimationInProgress:YES];
     }
 
-    SPChannelCell *categoryCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:self.activeChannelIndex inSection:0]];
+    SPChannelCell *channelCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:self.activeChannelIndex inSection:0]];
     
-    UIImage *categoryImage = [ImageUtilities screenshot:categoryCell];
-    UIImageView *categoryImageView = [[UIImageView alloc] initWithImage:categoryImage];
+    UIImage *channelImage = [ImageUtilities screenshot:channelCell];
+    UIImageView *channelImageView = [[UIImageView alloc] initWithImage:channelImage];
     
-    CGPoint categoryCellOriginInWindow = [self.view convertPoint:categoryCell.frame.origin fromView:self.channelsTableView];
+    CGPoint channelCellOriginInWindow = [self.view convertPoint:channelCell.frame.origin fromView:self.channelsTableView];
     
-    CGRect topRect = CGRectMake(0, 0, 1024, categoryCellOriginInWindow.y);
-    CGRect bottomRect = CGRectMake(0, categoryCellOriginInWindow.y + categoryCell.frame.size.height, 1024, 1024 - categoryCellOriginInWindow.y);
+    CGRect topRect = CGRectMake(0, 0, 1024, channelCellOriginInWindow.y);
+    CGRect bottomRect = CGRectMake(0, channelCellOriginInWindow.y + channelCell.frame.size.height, 1024, 1024 - channelCellOriginInWindow.y);
     
     UIImage *channelsImage = [ImageUtilities screenshot:self.view];
     UIImage *topImage = [ImageUtilities crop:channelsImage inRect:topRect];
@@ -689,28 +689,28 @@
     UIImageView *topImageView = [[UIImageView alloc] initWithImage:topImage];
     UIImageView *bottomImageView = [[UIImageView alloc] initWithImage:bottomImage];
     
-    [viewController.view addSubview:categoryImageView];
+    [viewController.view addSubview:channelImageView];
     [viewController.view addSubview:bottomImageView];
     [viewController.view addSubview:topImageView];
     
     [topImageView setFrame:CGRectMake(0, -topImageView.frame.size.height, topImageView.frame.size.width, topImageView.frame.size.height)];
     [bottomImageView setFrame:CGRectMake(0, 900, bottomImageView.frame.size.width, bottomImageView.frame.size.height)];
-    [categoryImageView setFrame:CGRectMake(0, 1024, categoryImageView.frame.size.width, categoryImageView.frame.size.height)];
+    [channelImageView setFrame:CGRectMake(0, 1024, channelImageView.frame.size.width, channelImageView.frame.size.height)];
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-    [categoryImageView setAlpha:0];
+    [channelImageView setAlpha:0];
 
-    [categoryImageView setFrame:CGRectMake(51, categoryCellOriginInWindow.y, categoryImageView.frame.size.width*0.9, categoryImageView.frame.size.height*0.9)];
+    [channelImageView setFrame:CGRectMake(51, channelCellOriginInWindow.y, channelImageView.frame.size.width*0.9, channelImageView.frame.size.height*0.9)];
     
     [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-       [categoryImageView setFrame:CGRectMake(0, categoryCellOriginInWindow.y + 20, 1024, categoryCell.frame.size.height)];
+       [channelImageView setFrame:CGRectMake(0, channelCellOriginInWindow.y + 20, 1024, channelCell.frame.size.height)];
         
-        [categoryImageView setAlpha:1];
+        [channelImageView setAlpha:1];
         [topImageView setFrame:CGRectMake(topRect.origin.x, topRect.origin.y + 20, topRect.size.width, topRect.size.height)];
         [bottomImageView setFrame:CGRectMake(bottomRect.origin.x, bottomRect.origin.y + 20, bottomRect.size.width, bottomRect.size.height)];
         
     } completion:^(BOOL finished) {
-        [categoryImageView removeFromSuperview];
+        [channelImageView removeFromSuperview];
         [bottomImageView removeFromSuperview];
         [topImageView removeFromSuperview];
         [viewController cleanup];
@@ -720,17 +720,17 @@
 }
 
 
-- (NSInteger)nextCategoryForDirection:(BOOL)up
+- (NSInteger)nextChannelForDirection:(BOOL)up
 {
     NSInteger next = up ? -1 : 1;
-    NSInteger nextCategory = self.activeChannelIndex + next;
-    if (nextCategory < 0) {
-        nextCategory = [self.channels count] + nextCategory;
-    } else if (nextCategory == [self.channels count]) {
-        nextCategory = 0;
+    NSInteger nextChannel = self.activeChannelIndex + next;
+    if (nextChannel < 0) {
+        nextChannel = [self.channels count] + nextChannel;
+    } else if (nextChannel == [self.channels count]) {
+        nextChannel = 0;
     }
 
-    return nextCategory;
+    return nextChannel;
 }
 
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent
@@ -749,19 +749,19 @@
 
     NSManagedObjectContext *context = [self context];
     
-    id category = (id)self.channels[[key intValue]];
+    id channel = (id)self.channels[[key intValue]];
     GroupType groupType = GroupType_ChannelDashboard;
-    NSString *categoryID = nil;
-    if ([category isMemberOfClass:[Roll class]]) {
+    NSString *channelID = nil;
+    if ([channel isMemberOfClass:[Roll class]]) {
         groupType = GroupType_ChannelRoll;
-        Roll *roll = (id)category;
+        Roll *roll = (id)channel;
         roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
-        categoryID = roll.rollID;
-    } else if ([category isMemberOfClass:[Dashboard class]]) {
+        channelID = roll.rollID;
+    } else if ([channel isMemberOfClass:[Dashboard class]]) {
         groupType = GroupType_ChannelDashboard;
-        Dashboard *dashboard = (id)category;
+        Dashboard *dashboard = (id)channel;
         dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
-        categoryID = dashboard.dashboardID;
+        channelID = dashboard.dashboardID;
     }
     
     switch ( groupType ) {
@@ -769,23 +769,23 @@
         case GroupType_ChannelDashboard: {
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:categoryID];
+            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-            [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:categoryID];
+            [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:channelID];
             
         } break;
             
         case GroupType_ChannelRoll: {
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:categoryID];
+            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-            [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:categoryID];
+            [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:channelID];
             
         } break;
             
         default: {
-            [self.collectionViewDataSourceUpdater removeObject:categoryID];
+            [self.collectionViewDataSourceUpdater removeObject:channelID];
             // Handle remaining cases later
             
         }
@@ -796,42 +796,42 @@
 - (void)dataSourceDidUpdateFromWeb:(NSNotification *)notification
 {
     
-    NSString *categoryID = [notification object];
-     if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
+    NSString *channelID = [notification object];
+     if (channelID && [channelID isKindOfClass:[NSString class]]) {
          
-         NSInteger i = [self indexForChannel:categoryID];
+         NSInteger i = [self indexForChannel:channelID];
          if (i == -1) {
-             [self.collectionViewDataSourceUpdater removeObject:categoryID];
+             [self.collectionViewDataSourceUpdater removeObject:channelID];
              return;
          }
          
          NSManagedObjectContext *context = [self context];
          
-         id category = self.channels[i];
-         NSString *categoryID = nil;
+         id channel = self.channels[i];
+         NSString *channelID = nil;
          GroupType groupType = GroupType_Unknown;
-         if ([category isMemberOfClass:[Roll class]]) {
+         if ([channel isMemberOfClass:[Roll class]]) {
              groupType = GroupType_ChannelRoll;
-             Roll *roll = (id)category;
+             Roll *roll = (id)channel;
              roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
-             categoryID = roll.rollID;
-         } else if ([category isMemberOfClass:[Dashboard class]]) {
+             channelID = roll.rollID;
+         } else if ([channel isMemberOfClass:[Dashboard class]]) {
              groupType = GroupType_ChannelDashboard;
-             Dashboard *dashboard = (id)category;
+             Dashboard *dashboard = (id)channel;
              dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
-             categoryID = dashboard.dashboardID;
+             channelID = dashboard.dashboardID;
          }
         
          NSMutableArray *frames = self.channelsDataSource[[NSNumber numberWithInt:i]];
          NSManagedObjectID *lastFramedObjectID = [[frames lastObject] objectID];
          if (!lastFramedObjectID) {
-             [self.collectionViewDataSourceUpdater removeObject:categoryID];
+             [self.collectionViewDataSourceUpdater removeObject:channelID];
              return;
          }
         
          Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
          if (!lastFrame) {
-             [self.collectionViewDataSourceUpdater removeObject:categoryID];
+             [self.collectionViewDataSourceUpdater removeObject:channelID];
              return;
          }
         
@@ -843,12 +843,12 @@
                 
              case GroupType_ChannelDashboard:{
                   CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:categoryID afterDate:date]];
+                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:channelID afterDate:date]];
              } break;
                 
              case GroupType_ChannelRoll:{
                   CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:categoryID afterDate:date]];
+                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannelRoll:channelID afterDate:date]];
              } break;
                 
              default: {
@@ -862,13 +862,13 @@
             Frame *firstFrame = (Frame *)olderFramesArray[0];
             NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
             if (!firstFrameObjectID) {
-                [self.collectionViewDataSourceUpdater removeObject:categoryID];
+                [self.collectionViewDataSourceUpdater removeObject:channelID];
                 return;
             }
             
             firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
             if (!firstFrame) {
-                [self.collectionViewDataSourceUpdater removeObject:categoryID];
+                [self.collectionViewDataSourceUpdater removeObject:channelID];
                 return;
             }
             if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
@@ -882,15 +882,15 @@
             
         } 
         
-         [self.collectionViewDataSourceUpdater removeObject:categoryID];
+         [self.collectionViewDataSourceUpdater removeObject:channelID];
     }
 }
 
 - (void)fetchOlderFramesDidFail:(NSNotification *)notification
 {
-    NSString *categoryID = [notification object];
-    if (categoryID && [categoryID isKindOfClass:[NSString class]]) {
-            [self.collectionViewDataSourceUpdater removeObject:categoryID];
+    NSString *channelID = [notification object];
+    if (channelID && [channelID isKindOfClass:[NSString class]]) {
+            [self.collectionViewDataSourceUpdater removeObject:channelID];
     }
 }
 
@@ -921,10 +921,10 @@
 {
     [self setActiveVideoReel:videoReel];
 
-    NSInteger nextCategory = [self nextCategoryForDirection:up];
-    [self launchPlayer:nextCategory];
+    NSInteger nextChannel = [self nextChannelForDirection:up];
+    [self launchPlayer:nextChannel];
     
-    [self loadCell:nextCategory withDirection:up animated:NO];
+    [self loadCell:nextChannel withDirection:up animated:NO];
 }
 
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel
@@ -932,11 +932,11 @@
     [self animateCloseChannels:videoReel];
 }
 
-- (SPChannelDisplay *)categoryDisplayForDirection:(BOOL)up
+- (SPChannelDisplay *)channelDisplayForDirection:(BOOL)up
 {
-    NSInteger nextCategory = [self nextCategoryForDirection:up];
+    NSInteger nextChannel = [self nextChannelForDirection:up];
     
-    SPChannelCell *channelCell = [self loadCell:nextCategory withDirection:up animated:NO];
+    SPChannelCell *channelCell = [self loadCell:nextChannel withDirection:up animated:NO];
     SPChannelDisplay *channelDisplay = [[SPChannelDisplay alloc] initWithChannelColor:[channelCell channelDisplayColor]
                                                                andChannelDisplayTitle:[channelCell channelDisplayTitle]];
     

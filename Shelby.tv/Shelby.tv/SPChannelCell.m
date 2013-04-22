@@ -28,14 +28,14 @@
 {
     [self.channelTitle setText:title];
     
-    UIColor *categoryColor = nil;
+    UIColor *channelColor = nil;
     if (hex) {
-        categoryColor = [UIColor colorWithHex:hex andAlpha:1];
+        channelColor = [UIColor colorWithHex:hex andAlpha:1];
     } else {
-        categoryColor = kShelbyColorGreen;
+        channelColor = kShelbyColorGreen;
     }
 
-    [self.channelColorView setBackgroundColor:categoryColor];
+    [self.channelColorView setBackgroundColor:channelColor];
 }
 
 - (UIColor *)channelDisplayColor

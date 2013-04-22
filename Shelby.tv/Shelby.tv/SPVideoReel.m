@@ -10,7 +10,7 @@
 
 // Views
 #import "SPOverlayView.h"
-#import "SPCategoryPeekView.h"
+#import "SPChannelPeekView.h"
 
 // Controllers
 #import "SPVideoExtractor.h"
@@ -37,11 +37,11 @@
 @property (nonatomic) NSMutableArray *moreVideoFrames;
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (nonatomic) NSMutableArray *playableVideoPlayers;
-@property (copy, nonatomic) NSString *categoryID;
+@property (copy, nonatomic) NSString *channelID;
 @property (assign, nonatomic) NSUInteger *videoStartIndex;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
-@property (nonatomic) SPCategoryPeekView *peekCategoryView;
+@property (nonatomic) SPChannelPeekView *peelChannelView;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
@@ -66,7 +66,7 @@
 - (void)dataSourceShouldUpdateFromLocalArray;
 - (void)dataSourceShouldUpdateFromWeb:(NSNotification *)notification;
 - (void)dataSourceDidUpdate;
-- (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification*)notification;
+- (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification *)notification;
 - (void)purgeVideoPlayerInformationFromPreviousVideoGroup;
 
 /// Action Methods
@@ -81,8 +81,8 @@
 /// Panning Gestures and Animations
 // Video List Panning
 - (void)panView:(id)sender;
-- (void)animateDown:(float)speed andSwitchCategory:(BOOL)switchCategory;
-- (void)animateUp:(float)speed andSwitchCategory:(BOOL)switchCategory;
+- (void)animateDown:(float)speed andSwitchChannel:(BOOL)switchChannel;
+- (void)animateUp:(float)speed andSwitchChannel:(BOOL)switchChannel;
 - (void)switchChannelWithDirectionUp:(BOOL)up;
 
 @end
@@ -103,7 +103,7 @@
              groupTitle:(NSString *)groupTitle
             videoFrames:(NSMutableArray *)videoFrames
         videoStartIndex:(NSUInteger)videoStartIndex
-          andCategoryID:(NSString *)categoryID
+          andChannelID:(NSString *)channelID
 {
     self = [self initWithGroupType:groupType
                         groupTitle:groupTitle
@@ -111,7 +111,7 @@
                 andVideoStartIndex:videoStartIndex];
     
     if (self) {
-        _categoryID = categoryID;
+        _channelID = channelID;
     }
     
     return self;
@@ -142,7 +142,7 @@
     [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
     
-    _peekCategoryView = [[SPCategoryPeekView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    _peelChannelView = [[SPChannelPeekView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     [self setup];
 }
@@ -587,17 +587,17 @@
                     
                 case GroupType_ChannelDashboard: {
                     
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:_categoryID];
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:_channelID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:_categoryID];
+                    [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:_channelID];
                     
                 } break;
                     
                 case GroupType_ChannelRoll: {
                     
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:_categoryID];
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:_channelID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryRoll:_categoryID];
+                    [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:_channelID];
                     
                 } break;
                     
@@ -672,11 +672,11 @@
             } break;
                 
             case GroupType_ChannelDashboard:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:_categoryID afterDate:date]];
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:_channelID afterDate:date]];
             } break;
                 
             case GroupType_ChannelRoll:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:_categoryID afterDate:date]];
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannelRoll:_channelID afterDate:date]];
             } break;
                 
             case GroupType_Unknown: {
@@ -923,24 +923,24 @@
     CGPoint translation = [gestureRecognizer translationInView:self.view];
     
     BOOL peekUp = y >= 0 ? YES : NO;
-    SPChannelDisplay *categoryDisplay = nil;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(categoryDisplayForDirection:)]) {
-       categoryDisplay =  [self.delegate categoryDisplayForDirection:peekUp];
+    SPChannelDisplay *channelDisplay = nil;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(channelDisplayForDirection:)]) {
+       channelDisplay =  [self.delegate channelDisplayForDirection:peekUp];
     }
 
     int peekHeight = peekUp ? y : -1 * y;
     int yOriginForPeekView = peekUp ? 0 : 768 - peekHeight;
     CGRect peekViewRect = peekViewRect = CGRectMake(0, yOriginForPeekView, kShelbySPVideoWidth, peekHeight);
     
-    [self.peekCategoryView setupWithCategoryDisplay:categoryDisplay];
+    [self.peelChannelView setupWithChannelDisplay:channelDisplay];
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
-        [self.view addSubview:self.peekCategoryView];
+        [self.view addSubview:self.peelChannelView];
     }
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
         self.model.currentVideoPlayer.view.frame = CGRectMake(x, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
         self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
-        self.peekCategoryView.frame = peekViewRect;
+        self.peelChannelView.frame = peekViewRect;
         
         [gestureRecognizer setTranslation:CGPointZero inView:self.view];
     } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
@@ -948,43 +948,43 @@
         NSInteger currentY = y + translation.y;
         if (velocity.y < -200) {
             if (-1 * currentY < kShelbySPVideoHeight / 11) {
-                [self animateUp:kShelbySPFastSpeed andSwitchCategory:NO];
+                [self animateUp:kShelbySPFastSpeed andSwitchChannel:NO];
             } else {
-                [self animateUp:kShelbySPFastSpeed andSwitchCategory:YES];
+                [self animateUp:kShelbySPFastSpeed andSwitchChannel:YES];
             }
         } else if (velocity.y > 200) {
             if (currentY < kShelbySPVideoHeight / 11) {
-                [self animateDown:kShelbySPFastSpeed andSwitchCategory:NO];
+                [self animateDown:kShelbySPFastSpeed andSwitchChannel:NO];
             } else {
-                [self animateDown:kShelbySPFastSpeed andSwitchCategory:YES];
+                [self animateDown:kShelbySPFastSpeed andSwitchChannel:YES];
             }
         } else {
             if (currentY > 0) {
                 if (currentY < 3 * kShelbySPVideoHeight / 4) {
-                    [self animateUp:kShelbySPSlowSpeed andSwitchCategory:NO];
+                    [self animateUp:kShelbySPSlowSpeed andSwitchChannel:NO];
                 } else {
-                    [self animateDown:kShelbySPSlowSpeed andSwitchCategory:YES];
+                    [self animateDown:kShelbySPSlowSpeed andSwitchChannel:YES];
                 }
             } else if (-1 * currentY < 3 * kShelbySPVideoHeight / 4) {
-                [self animateDown:kShelbySPSlowSpeed andSwitchCategory:NO];
+                [self animateDown:kShelbySPSlowSpeed andSwitchChannel:NO];
             } else {
-                [self animateUp:kShelbySPSlowSpeed andSwitchCategory:YES];
+                [self animateUp:kShelbySPSlowSpeed andSwitchChannel:YES];
             }
         }
     }
 
 }
 
-- (void)animateDown:(float)speed andSwitchCategory:(BOOL)switchCategory
+- (void)animateDown:(float)speed andSwitchChannel:(BOOL)switchChannel
 {
     CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
  
-    NSInteger finalyYPosition = switchCategory ? self.view.frame.size.height : 0;
+    NSInteger finalyYPosition = switchChannel ? self.view.frame.size.height : 0;
     CGRect peekViewFrame;
-    if (switchCategory) {
+    if (switchChannel) {
         peekViewFrame = CGRectMake(0, 0, 1024, 768);
     } else {
-        CGFloat finalyY = self.peekCategoryView.frame.origin.y;
+        CGFloat finalyY = self.peelChannelView.frame.origin.y;
         if (finalyY != 0) {
             finalyY = 768;
         }
@@ -994,26 +994,26 @@
     [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
        [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.peekCategoryView setFrame:peekViewFrame];
+        [self.peelChannelView setFrame:peekViewFrame];
     } completion:^(BOOL finished) {
-        if (switchCategory) {
+        if (switchChannel) {
             [self switchChannelWithDirectionUp:YES];
         }
-        [self.peekCategoryView removeFromSuperview];
+        [self.peelChannelView removeFromSuperview];
     }];
 
 }
 
-- (void)animateUp:(float)speed andSwitchCategory:(BOOL)switchCategory
+- (void)animateUp:(float)speed andSwitchChannel:(BOOL)switchChannel
 {
     CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
     
-    NSInteger finalyYPosition = switchCategory ? -self.view.frame.size.height : 0;
+    NSInteger finalyYPosition = switchChannel ? -self.view.frame.size.height : 0;
     CGRect peekViewFrame;
-    if (switchCategory) {
+    if (switchChannel) {
         peekViewFrame = CGRectMake(0, 0, 1024, 768);
     } else {
-        CGFloat finalyY = self.peekCategoryView.frame.origin.y;
+        CGFloat finalyY = self.peelChannelView.frame.origin.y;
         if (finalyY != 0) {
             finalyY = 768;
         }
@@ -1023,12 +1023,12 @@
     [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
        [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.peekCategoryView setFrame:peekViewFrame];
+        [self.peelChannelView setFrame:peekViewFrame];
     } completion:^(BOOL finished) {
-        if (switchCategory) {
+        if (switchChannel) {
             [self switchChannelWithDirectionUp:NO];
         }
-        [self.peekCategoryView removeFromSuperview];
+        [self.peelChannelView removeFromSuperview];
     }];
 }
 
@@ -1078,8 +1078,8 @@
     // Instantiate dataUtility for cleanup
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     
-    // Remove older videos (categoryID will be nil for stream, likes, and personal-roll)
-    [dataUtility removeOlderVideoFramesForGroupType:_groupType andCategoryID:_categoryID];
+    // Remove older videos (channelID will be nil for stream, likes, and personal-roll)
+    [dataUtility removeOlderVideoFramesForGroupType:_groupType andChannelID:_channelID];
     
     // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
     [dataUtility removeAllVideoExtractionURLReferences];

@@ -14,7 +14,7 @@
 
 - (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel;
-- (SPChannelDisplay *)categoryDisplayForDirection:(BOOL)up;
+- (SPChannelDisplay *)channelDisplayForDirection:(BOOL)up;
 @end
 
 @class SPVideoPlayer, SPOverlayView;
@@ -36,7 +36,7 @@
              groupTitle:(NSString *)groupTitle
             videoFrames:(NSMutableArray *)videoFrames
         videoStartIndex:(NSUInteger)videoStartIndex
-          andCategoryID:(NSString *)categoryID;
+           andChannelID:(NSString *)channelID;
 
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;

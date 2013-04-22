@@ -30,12 +30,12 @@
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
 
-/// Categories
+/// Channels
 + (void)getAllChannels;
 + (void)getChannelDashboard:(NSString *)channelID;
 + (void)getMoreDashboardEntries:(NSString *)skipParam forChannelDashboard:(NSString *)dashboardID;
-+ (void)getCategoryRoll:(NSString *)rollID;
-+ (void)getMoreFrames:(NSString *)skipParam forCategoryRoll:(NSString *)rollID;
++ (void)getChannelRoll:(NSString *)rollID;
++ (void)getMoreFrames:(NSString *)skipParam forChannelRoll:(NSString *)rollID;
 
 /// Syncing
 + (void)getLikesForSync;

@@ -17,7 +17,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 @property (strong ,nonatomic) NSManagedObjectContext *context;
 @property (nonatomic) AppDelegate *appDelegate;
 @property (assign, nonatomic) DataRequestType requestType;
-@property (copy, nonatomic) NSString *categoryID;
+@property (copy, nonatomic) NSString *channelID;
 
 /// Persistance Methods
 - (id)checkIfEntity:(NSString *)entityName
@@ -28,8 +28,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 - (void)removeOlderVideoFramesFromStreamEntries;
 - (void)removeOlderVideoFramesFromLikes;
 - (void)removeOlderVideoFramesFromPersonalRoll;
-- (void)removeOlderVideoFramesFromCategoryChannel:(NSString *)channelID;
-- (void)removeOlderVideoFramesFromCategoryRoll:(NSString *)rollID;
+- (void)removeOlderVideoFramesFromChannelDashboard:(NSString *)dashboardID;
+- (void)removeOlderVideoFramesFromChannelRoll:(NSString *)rollID;
 
 /// Storage Methods
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary;
@@ -38,8 +38,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 - (void)storeMessagesFromConversation:(Conversation *)conversation withDictionary:(NSDictionary *)conversationDictionary;
 - (void)storeRoll:(Roll *)roll fromDictionary:(NSDictionary *)rollDictionary;
 - (void)storeVideo:(Video *)video fromDictionary:(NSDictionary *)videoDictionary;
-- (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag;
-- (void)storeCategoryDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag;
+- (void)storeChannelRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag;
+- (void)storeChannelDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag;
 
 /// Fetching Methods
 - (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames;
@@ -49,9 +49,9 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 - (void)postNotificationVideoInContext:(NSManagedObjectContext *)context;
 
 /// Syncing Methods
-- (void)syncCategories:(NSDictionary *)categoriesArray;
-- (void)syncCategoryDashboards:(NSMutableArray *)webChannelIDsArray;
-- (void)syncCategoryRolls:(NSMutableArray *)webRollIDsArray;
+- (void)syncChannels:(NSDictionary *)webResultsDictionary;
+- (void)syncChannelDashboards:(NSMutableArray *)webChannelIDsArray;
+- (void)syncChannelRolls:(NSMutableArray *)webRollIDsArray;
 
 /// Helper methods
 - (BOOL)isSupportedProvider:(Frame *)frame;
@@ -70,7 +70,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         _context = [_appDelegate context];
         _requestType = requestType;
-        _categoryID = nil;
+        _channelID = nil;
         
         // Add observer for mergining contexts
         [[NSNotificationCenter defaultCenter] addObserver:_appDelegate
@@ -158,9 +158,9 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                     
                 } break;
                     
-                case DataRequestType_StoreCategories: {
+                case DataRequestType_StoreChannels: {
                     
-                    DLog(@"Categories Synced and Saved Successfully");
+                    DLog(@"Channels Synced and Saved Successfully");
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFinishedSync object:nil];
                     });
@@ -179,7 +179,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                     DLog(@"User Action Update Successful");
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidScrollToUpdate object:[self categoryID]];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidScrollToUpdate object:[self channelID]];
                     });
                 
                 } break;
@@ -206,7 +206,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [self removeStoredHash];
 }
 
-- (void)removeOlderVideoFramesForGroupType:(GroupType)groupType andCategoryID:(NSString *)categoryID
+- (void)removeOlderVideoFramesForGroupType:(GroupType)groupType andChannelID:(NSString *)channelID
 {
 
     switch ( groupType ) {
@@ -242,13 +242,13 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             
         case GroupType_ChannelDashboard: {
      
-            [self removeOlderVideoFramesFromCategoryChannel:categoryID];
+            [self removeOlderVideoFramesFromChannelDashboard:channelID];
             
         }
             
         case GroupType_ChannelRoll: {
             
-            [self removeOlderVideoFramesFromCategoryRoll:categoryID];
+            [self removeOlderVideoFramesFromChannelRoll:channelID];
             
         }
             
@@ -442,14 +442,14 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     });
 }
 
-- (void)storeCategories:(NSDictionary *)resultsDictionary
+- (void)storeChannels:(NSDictionary *)resultsDictionary
 {
-    NSArray *categoriesArray = resultsDictionary[@"result"];
+    NSArray *channelsArray = resultsDictionary[@"result"];
     NSUInteger displayTag = 0;
     
-    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
+    for ( NSUInteger i = 0; i < [channelsArray count]; ++i ) {
         
-        NSEnumerator *enumerator = [[categoriesArray objectAtIndex:i] keyEnumerator];
+        NSEnumerator *enumerator = [[channelsArray objectAtIndex:i] keyEnumerator];
         NSEnumerator *reverseEnumerator = [[enumerator allObjects] reverseObjectEnumerator];
         
         for(NSString *key in reverseEnumerator) {
@@ -457,9 +457,9 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             if ( [key isEqualToString:@"rolls"] ) {
                 
                 // Parse and store rolls as CategoryRolls
-                NSArray *rollsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"rolls"];
+                NSArray *rollsArray = [[channelsArray objectAtIndex:i] valueForKey:@"rolls"];
                 
-                [self storeCategoryRolls:rollsArray withInitialTag:displayTag];
+                [self storeChannelRolls:rollsArray withInitialTag:displayTag];
                 
                 // Set minimum tag for next itertation
                 NSUInteger total = [rollsArray count];
@@ -467,14 +467,13 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                 
             } else if ( [key isEqualToString:@"user_channels"] ) {
                 
-                // Parse and store user_channels as CategoryChannels
-                NSArray *channelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
-                
-//                [self storeCategoryChannels:channelsArray withInitialTag:displayTag];
-                [self storeCategoryDashboardEntries:channelsArray withInitialTag:displayTag];
+                // Parse and store user_channels as ChannelDashboards
+                NSArray *dashboardArray = [[channelsArray objectAtIndex:i] valueForKey:@"user_channels"];
+
+                [self storeChannelDashboardEntries:dashboardArray withInitialTag:displayTag];
                 
                 // Set minimum tag for next itertation
-                NSUInteger total = [channelsArray count];
+                NSUInteger total = [dashboardArray count];
                 displayTag = displayTag + (total ? (total - 1) : 0);
 
                 
@@ -488,7 +487,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         
     }
     
-    [self syncCategories:resultsDictionary];
+    [self syncChannels:resultsDictionary];
 }
 
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary forGroupType:(GroupType)groupType
@@ -519,7 +518,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         [NSTimer scheduledTimerWithTimeInterval:2.0f target:[ShelbyAPIClient class] selector:@selector(getPersonalRollForSync) userInfo:nil repeats:NO];
         
         
-    } else { // The remaining type, CategoryRolls, is synced at the end of the storeCategories: method
+    } else { // The remaining type, ChannelRolls, is synced at the end of the storeChannels: method
         
         // Do nothing
     }
@@ -538,36 +537,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     }
 }
 
-- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID
-{
-    NSArray *resultsArray = resultsDictionary[@"result"];
-    
-    for ( NSUInteger i = 0; i < [resultsArray count]; ++i ) {
-        
-        @autoreleasepool {
-            
-            NSDictionary *frameDictionary = [resultsArray[i] valueForKey:@"frame"];
-            
-            Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
-                                   withIDValue:[frameDictionary valueForKey:@"id"]
-                                      forIDKey:kShelbyCoreDataFrameID];
-            
-            frame.channelID = channelID;
-            self.categoryID = channelID;
-            
-            [self storeFrame:frame forDictionary:frameDictionary];
-            
-        }
-    }
-    
-    [self saveContext:_context];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:channelID];
-    });
-}
-
-- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID
+- (void)storeFrames:(NSDictionary *)resultsDictionary forChannelRoll:(NSString *)rollID
 {
     NSArray *resultsArray = [resultsDictionary[@"result"] valueForKey:@"frames"];
     
@@ -580,7 +550,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                                       forIDKey:kShelbyCoreDataFrameID];
             
             frame.rollID = rollID;
-            self.categoryID = rollID;
+            self.channelID = rollID;
             
             [self storeFrame:frame forDictionary:resultsArray[i]];
             
@@ -695,7 +665,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     return [frameResults count];
 }
 
-- (NSUInteger)fetchCountForCategoryChannel:(NSString *)channelID
+- (NSUInteger)fetchCountForChannelDashboard:(NSString *)channelID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -717,7 +687,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     return [frameResults count];
 }
 
-- (NSUInteger)fetchCountForCategoryRoll:(NSString *)rollID
+- (NSUInteger)fetchCountForChannelRoll:(NSString *)rollID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1044,7 +1014,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
-- (NSMutableArray *)fetchFramesInCategoryRoll:(NSString *)rollID
+- (NSMutableArray *)fetchFramesInChannelRoll:(NSString *)rollID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1079,7 +1049,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
-- (NSMutableArray *)fetchMoreFramesInCategoryRoll:(NSString *)rollID afterDate:(NSDate *)date
+- (NSMutableArray *)fetchMoreFramesInChannelRoll:(NSString *)rollID afterDate:(NSDate *)date
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1169,7 +1139,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     // Execute request that returns array of channels
     NSArray *dashboardsArray = [self.context executeFetchRequest:dashboardRequest error:nil];
     
-    /// Second, fetch all Rolls objects with isCategory == YES ///
+    /// Second, fetch all Rolls objects with isChannel == YES ///
     
     // Create roll fetch request
     NSFetchRequest *rollRequest = [[NSFetchRequest alloc] init];
@@ -1179,8 +1149,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     NSEntityDescription *rollDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityRoll inManagedObjectContext:_context];
     [rollRequest setEntity:rollDescription];
     
-    // Only include rolls that have isCategory == YES
-    NSPredicate *rollPredicate = [NSPredicate predicateWithFormat:@"isCategory == %d", YES];
+    // Only include rolls that have isChannel == YES
+    NSPredicate *rollPredicate = [NSPredicate predicateWithFormat:@"isChannel == %d", YES];
     [rollRequest setPredicate:rollPredicate];
     
     // Sort by channelID
@@ -1192,16 +1162,16 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
     /// Finally, add dashboardsArray and rollsArray to NSMutableArray object, and return said object
     
-    NSMutableArray *categoriesArray = [[NSMutableArray alloc] init];
-    [categoriesArray addObjectsFromArray:dashboardsArray];
-    [categoriesArray addObjectsFromArray:rollsArray];
+    NSMutableArray *channelsArray = [[NSMutableArray alloc] init];
+    [channelsArray addObjectsFromArray:dashboardsArray];
+    [channelsArray addObjectsFromArray:rollsArray];
     
     NSSortDescriptor *displayTagSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayTag" ascending:YES];
-    [categoriesArray sortUsingDescriptors:[NSArray arrayWithObject:displayTagSortDescriptor]];
+    [channelsArray sortUsingDescriptors:[NSArray arrayWithObject:displayTagSortDescriptor]];
 
     [self removeStoredHash];
     
-    return categoriesArray;
+    return channelsArray;
 }
 
 #pragma mark - Sync Methods (Public)
@@ -1493,18 +1463,18 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     }
 }
 
-- (void)removeOlderVideoFramesFromCategoryChannel:(NSString *)channelID
+- (void)removeOlderVideoFramesFromChannelDashboard:(NSString *)dashboardID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
     // Search CategoryChannels table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityDashboardEntry inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by channelID
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dashboardID == %@", dashboardID];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames
@@ -1532,7 +1502,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     }
 }
 
-- (void)removeOlderVideoFramesFromCategoryRoll:(NSString *)rollID
+- (void)removeOlderVideoFramesFromChannelRoll:(NSString *)rollID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1572,7 +1542,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 }
 
 #pragma mark - Storage Methods (Private) 
-- (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag
+- (void)storeChannelRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag
 {
     for ( NSUInteger i = 0; i < [rollsArray count]; ++i ) {
         
@@ -1587,7 +1557,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             NSString *rollID = [NSString coreDataNullTest:[rollDictionary valueForKey:@"id"]];
             [roll setValue:rollID forKey:kShelbyCoreDataRollID];
             
-            [roll setValue:@YES forKey:kShelbyCoreDataRollIsCategory];
+            [roll setValue:@YES forKey:kShelbyCoreDataRollIsChannel];
             
             [roll setValue:[NSNumber numberWithInt:(displayTag+i)] forKey:kShelbyCoreDataRollDisplayTag];
             
@@ -1604,14 +1574,14 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             displayThumbnail = [NSString stringWithFormat: @"http://shelby.tv%@", displayThumbnail];
             [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
             
-            [ShelbyAPIClient getCategoryRoll:rollID];
+            [ShelbyAPIClient getChannelRoll:rollID];
         }
     }
     
     [self removeStoredHash];
 }
 
-- (void)storeCategoryDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag
+- (void)storeChannelDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag
 {
     for ( NSUInteger i = 0; i < [dashboardEntriesArray count]; ++i ) {
         
@@ -2003,20 +1973,20 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 }
 
 #pragma mark - Syncing Methods (Private)
-- (void)syncCategories:(NSDictionary *)webResultsDictionary
+- (void)syncChannels:(NSDictionary *)webResultsDictionary
 {
     
     /// Reference Web Categories
-    NSArray *categoriesArray = webResultsDictionary[@"result"];
+    NSArray *channelsArray = webResultsDictionary[@"result"];
     NSMutableArray *webRollIDsArray = [@[] mutableCopy];;
     NSMutableArray *webChannelIDsArray = [@[] mutableCopy];
     
-    // Reference all channels and rolls found on web as categories
-    for ( NSUInteger i = 0; i < [categoriesArray count]; ++i ) {
+    // Reference all ChannelDashboards and ChannelRolls found on web
+    for ( NSUInteger i = 0; i < [channelsArray count]; ++i ) {
         
                     
         // Rolls
-        NSArray *webRollsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"rolls"];
+        NSArray *webRollsArray = [[channelsArray objectAtIndex:i] valueForKey:@"rolls"];
         
         for ( NSUInteger j = 0; j < [webRollsArray count]; ++j ) {
             
@@ -2027,7 +1997,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         }
         
         // Dashboards (e.g., user_channels in JSON results)
-        NSArray *webChannelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
+        NSArray *webChannelsArray = [[channelsArray objectAtIndex:i] valueForKey:@"user_channels"];
         
         for ( NSUInteger j = 0; j < [webChannelsArray count]; ++j ) {
             
@@ -2038,11 +2008,11 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         }
     }
     
-    [self syncCategoryRolls:webRollIDsArray];
-    [self syncCategoryDashboards:webChannelIDsArray];
+    [self syncChannelRolls:webRollIDsArray];
+    [self syncChannelDashboards:webChannelIDsArray];
 }
 
-- (void)syncCategoryDashboards:(NSMutableArray *)webChannelIDsArray
+- (void)syncChannelDashboards:(NSMutableArray *)webChannelIDsArray
 {
     // Create dashboard fetch request
     NSFetchRequest *dashboardRequest = [[NSFetchRequest alloc] init];
@@ -2070,7 +2040,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [self saveContext:_context];
 }
 
-- (void)syncCategoryRolls:(NSMutableArray *)webRollIDsArray
+- (void)syncChannelRolls:(NSMutableArray *)webRollIDsArray
 {
     // Create roll fetch request
     NSFetchRequest *rollRequest = [[NSFetchRequest alloc] init];
@@ -2080,8 +2050,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     NSEntityDescription *rollDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityRoll inManagedObjectContext:_context];
     [rollRequest setEntity:rollDescription];
     
-    // Filter by isCategory
-    NSPredicate *rollPredicate = [NSPredicate predicateWithFormat:@"isCategory == %d", YES];
+    // Filter by isChannel
+    NSPredicate *rollPredicate = [NSPredicate predicateWithFormat:@"isChannel == %d", YES];
     [rollRequest setPredicate:rollPredicate];
     
     // Execute request that returns array of rolls
@@ -2095,12 +2065,12 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         
         /*
          If roll doesn't exist as web category any more, retain the roll, but disallow it from showing up in the fetchAllChannels results
-         This is done in case a specific roll is a logged-in user's personal roll (e.g., Reece's roll being a featured CategoryRoll and his personal roll)
+         This is done in case a specific roll is a logged-in user's personal roll (e.g., Reece's roll being a featured ChannelRoll and his personal roll)
          */
         
         if ( ![webRollIDsArray containsObject:rollID] ) {
             
-            roll.isCategory = @NO;
+            roll.isChannel = @NO;
             
         }
     }

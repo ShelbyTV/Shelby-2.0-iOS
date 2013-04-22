@@ -79,7 +79,7 @@
 #define kShelbyCoreDataRollFrameCount                   @"frameCount"
 #define kShelbyCoreDataRollThumbnailURL                 @"thumbnailURL"
 #define kShelbyCoreDataRollTitle                        @"title"
-#define kShelbyCoreDataRollIsCategory                   @"isCategory"
+#define kShelbyCoreDataRollIsChannel                    @"isChannel"
 #define kShelbyCoreDataRollDisplayTitle                 @"displayTitle"
 #define kShelbyCoreDataRollDisplayColor                 @"displayColor"
 #define kShelbyCoreDataRollDisplayDescription           @"displayDescription"

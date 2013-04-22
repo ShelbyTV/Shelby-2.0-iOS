@@ -1,5 +1,5 @@
 //
-//  CollectionViewCategoriesLayout.m
+//  CollectionViewGroupsLayout.m
 //  Shelby.tv
 //
 //  Created by Keren on 2/15/13.
