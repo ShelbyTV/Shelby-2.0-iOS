@@ -25,7 +25,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
            forIDKey:(NSString *)entityIDKey;
 
 - (void)deleteFrame:(Frame *)frame;
-- (void)removeOlderVideoFramesFromStream;
+- (void)removeOlderVideoFramesFromStreamEntries;
 - (void)removeOlderVideoFramesFromLikes;
 - (void)removeOlderVideoFramesFromPersonalRoll;
 - (void)removeOlderVideoFramesFromCategoryChannel:(NSString *)channelID;
@@ -233,7 +233,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
             
             if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
                 
-                [self removeOlderVideoFramesFromStream];
+                [self removeOlderVideoFramesFromStreamEntries];
                 
             }
             
@@ -357,7 +357,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
 
 }
 
-- (void)storeStream:(NSDictionary *)resultsDictionary
+- (void)storeStreamEntries:(NSDictionary *)resultsDictionary
 {
     NSArray *resultsArray = resultsDictionary[@"result"];
     
@@ -375,20 +375,20 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
                 
             } else {
                 
-                Stream *stream = [self checkIfEntity:kShelbyCoreDataEntityStream
-                                         withIDValue:[resultsArray[i] valueForKey:@"id"]
-                                            forIDKey:kShelbyCoreDataStreamID];
+                StreamEntry *streamEntry = [self checkIfEntity:kShelbyCoreDataEntityStreamEntry
+                                                   withIDValue:[resultsArray[i] valueForKey:@"id"]
+                                                      forIDKey:kShelbyCoreDataStreamEntryID];
                 
-                NSString *streamID = [NSString coreDataNullTest:[resultsArray[i] valueForKey:@"id"]];
-                [stream setValue:streamID forKey:kShelbyCoreDataStreamID];
+                NSString *streamEntryID = [NSString coreDataNullTest:[resultsArray[i] valueForKey:@"id"]];
+                [streamEntry setValue:streamEntryID forKey:kShelbyCoreDataStreamEntryID];
                 
-                NSDate *timestamp = [NSDate dataFromBSONObjectID:streamID];
-                [stream setValue:timestamp forKey:kShelbyCoreDataStreamTimestamp];
+                NSDate *timestamp = [NSDate dataFromBSONObjectID:streamEntryID];
+                [streamEntry setValue:timestamp forKey:kShelbyCoreDataStreamEntryTimestamp];
                 
                 Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
                                        withIDValue:[frameDictionary valueForKey:@"id"]
                                           forIDKey:kShelbyCoreDataFrameID];
-                stream.frame = frame;
+                streamEntry.frame = frame;
                 
                 [self storeFrame:frame forDictionary:frameDictionary];
             }
@@ -583,14 +583,14 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     return resultsArray[0];
 }
 
-- (NSUInteger)fetchStreamCount
+- (NSUInteger)fetchStreamEntryCount
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStream inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStreamEntry inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Execute request that returns array of Stream entries
@@ -709,7 +709,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStream inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStreamEntry inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -741,7 +741,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStream inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStreamEntry inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -1339,13 +1339,13 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     [self saveContext:_context];
 }
 
-- (void)removeOlderVideoFramesFromStream
+- (void)removeOlderVideoFramesFromStreamEntries
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStream inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStreamEntry inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Sort by timestamp
@@ -1365,7 +1365,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
         
         while ( i > maxLimit ) {
             
-            Stream *streamEntry = (Stream*)[olderResults lastObject];
+            StreamEntry *streamEntry = (StreamEntry *)[olderResults lastObject];
             [self.context deleteObject:streamEntry];
             [olderResults removeLastObject];
             
@@ -1864,9 +1864,9 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
 {
     NSMutableArray *playableFrames = [@[] mutableCopy];
     
-    for (Stream *stream in frames) {
-        if ([self isSupportedProvider:stream.frame] && ![self isUnplayableVideo:[stream.frame video]]) {
-            [playableFrames addObject:stream.frame];
+    for (StreamEntry *streamEntry in frames) {
+        if ([self isSupportedProvider:streamEntry.frame] && ![self isUnplayableVideo:[streamEntry.frame video]]) {
+            [playableFrames addObject:streamEntry.frame];
         }
     }
     

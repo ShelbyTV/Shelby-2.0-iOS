@@ -1,8 +1,8 @@
 //
-//  Stream.h
+//  StreamEntry.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 2/13/13.
+//  Created by Arthur Ariel Sabintsev on 4/21/13.
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
@@ -11,9 +11,9 @@
 
 @class Frame;
 
-@interface Stream : NSManagedObject
+@interface StreamEntry : NSManagedObject
 
-@property (nonatomic, retain) NSString * streamID;
+@property (nonatomic, retain) NSString * streamEntryID;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) Frame *frame;
 

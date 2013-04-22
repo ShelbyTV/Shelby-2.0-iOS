@@ -563,7 +563,7 @@
                     
                 case GroupType_Stream: {
                     
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamCount];
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamEntryCount];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                     [ShelbyAPIClient getMoreFramesInStream:numberToString];
                     

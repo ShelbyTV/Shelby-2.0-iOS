@@ -23,7 +23,7 @@ extern NSString * const kShelbyNotificationCategoryFramesFetched;
 
 /// Storage Methods
 - (void)storeUser:(NSDictionary *)resultsDictionary;
-- (void)storeStream:(NSDictionary *)resultsDictionary;
+- (void)storeStreamEntries:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary forGroupType:(GroupType)groupType;
 - (void)storeCategories:(NSDictionary *)resultsDictionary;
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID;
@@ -33,7 +33,7 @@ extern NSString * const kShelbyNotificationCategoryFramesFetched;
 /// Fetching Methods
 - (User *)fetchUser;
 
-- (NSUInteger)fetchStreamCount;
+- (NSUInteger)fetchStreamEntryCount;
 - (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
 - (NSUInteger)fetchCountForCategoryChannel:(NSString *)channelID;

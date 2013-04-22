@@ -11,7 +11,7 @@
 #import "Creator.h"
 #import "Frame.h"
 #import "Messages.h"
-#import "Stream.h"
+#import "StreamEntry.h"
 #import "Roll.h"
 #import "User.h"
 #import "Video.h"
@@ -23,7 +23,7 @@
 #define kShelbyCoreDataEntityFrame                      @"Frame"
 #define kShelbyCoreDataEntityMessages                   @"Messages"
 #define kShelbyCoreDataEntityRoll                       @"Roll"
-#define kShelbyCoreDataEntityStream                     @"Stream"
+#define kShelbyCoreDataEntityStreamEntry                @"StreamEntry"
 #define kShelbyCoreDataEntityUser                       @"User"
 #define kShelbyCoreDataEntityVideo                      @"Video"
 
@@ -78,9 +78,9 @@
 #define kShelbyCoreDataRollDisplayThumbnailURL          @"displayThumbnailURL"
 #define kShelbyCoreDataRollDisplayTag                   @"displayTag"
 
-// Stream Attribute Constants
-#define kShelbyCoreDataStreamID                         @"streamID"
-#define kShelbyCoreDataStreamTimestamp                  @"timestamp"
+// StreamEntry Attribute Constants
+#define kShelbyCoreDataStreamEntryID                    @"streamEntryID"
+#define kShelbyCoreDataStreamEntryTimestamp             @"timestamp"
 
 // User Attribute Constants
 #define kShelbyCoreDataUserID                           @"userID"
