@@ -27,7 +27,7 @@
 #define kShelbyNotificationUserAuthenticationDidFail        @"User Authentication Failed"
 #define kShelbyNotificationUserSignupDidSucceed             @"User Signup Succeed"
 #define kShelbyNotificationUserSignupDidFail                @"User Signup Failed"
-#define kShelbyNotificationFetchingOlderFramesFailed        @"Fetching Older Frames Failed"
+#define kShelbyNotificationFetchingOlderVideosFailed        @"Fetching Older Videos Failed"
 
 /// Colors
 #define kShelbyColorBlack                                   [UIColor colorWithHex:@"333" andAlpha:1.0f]

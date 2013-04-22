@@ -15,6 +15,7 @@
 
 @dynamic dashboardEntryID;
 @dynamic timestamp;
+@dynamic dashboardID;
 @dynamic frame;
 @dynamic dashboard;
 

@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * dashboardEntryID;
 @property (nonatomic, retain) NSDate * timestamp;
+@property (nonatomic, retain) NSString * dashboardID;
 @property (nonatomic, retain) Frame *frame;
 @property (nonatomic, retain) Dashboard *dashboard;
 

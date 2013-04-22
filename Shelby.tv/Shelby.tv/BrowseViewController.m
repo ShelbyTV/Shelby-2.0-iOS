@@ -104,7 +104,7 @@
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceDidUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderFramesFailed object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderVideosFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchFramesForCategory:) name:kShelbyNotificationCategoryFramesFetched object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCategoriesForTable) name:kShelbyNotificationCategoriesFinishedSync object:nil];
     
@@ -131,7 +131,7 @@
     
     // Register Cell Nibs
     [self.categoriesTable registerNib:[UINib nibWithNibName:@"SPCategoryViewCell" bundle:nil] forCellReuseIdentifier:@"SPCategoryViewCell"];
-    [self fetchAllCategories];
+    [self fetchAllChannels];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -167,7 +167,7 @@
 {
     CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [self.categories removeAllObjects];
-    [self.categories addObjectsFromArray:[datautility fetchAllCategories]];
+    [self.categories addObjectsFromArray:[datautility fetchAllChannels]];
  
     [self.categoriesTable reloadData];
 }
@@ -190,12 +190,12 @@
         if ([category isKindOfClass:[NSManagedObject class]]) {
             NSManagedObjectID *categoryObjectID = [category objectID];
             NSManagedObjectContext *context = [self context];
-            if ([category isMemberOfClass:[Channel class]]) {
-                Channel *channel = (Channel *)[context existingObjectWithID:categoryObjectID error:nil];
-                NSString *objectID = [channel channelID];
+            if ([category isMemberOfClass:[Dashboard class]]) {
+                Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:categoryObjectID error:nil];
+                NSString *objectID = [dashboard dashboardID];
                 if ([objectID isEqualToString:channelID]) {
                     CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                    frames = [datautility fetchFramesInCategoryChannel:channelID];
+                    frames = [datautility fetchDashboardEntriesInDashboard:channelID];
                 }
             } else if ([category isMemberOfClass:[Roll class]]) {
                 Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
@@ -214,18 +214,18 @@
     }
 }
 
-- (void)fetchAllCategories
+- (void)fetchAllChannels
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [self.categories removeAllObjects];
-    [self.categories addObjectsFromArray:[dataUtility fetchAllCategories]];
+    [self.categories addObjectsFromArray:[dataUtility fetchAllChannels]];
     
     int i = 0;
     for (id category in self.categories) {
         NSMutableArray *frames = nil;
-        if ([category isKindOfClass:[Channel class]]) {
+        if ([category isKindOfClass:[Dashboard class]]) {
             CoreDataUtility *channelDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-            frames = [channelDataUtility fetchFramesInCategoryChannel:[((Channel *)category) channelID]];
+            frames = [channelDataUtility fetchDashboardEntriesInDashboard:[((Dashboard *)category) dashboardID]];
         } else if ([category isKindOfClass:[Roll class]]) {
             CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             frames = [rollDataUtility fetchFramesInCategoryRoll:[((Roll *)category) rollID]];
@@ -260,10 +260,10 @@
             if ([category isKindOfClass:[NSManagedObject class]]) {
                 NSManagedObjectID *categoryObjectID = [category objectID];
                 NSManagedObjectContext *context = [self context];
-                if ([category isMemberOfClass:[Channel class]]) {
-                    Channel *channel = (Channel *)[context existingObjectWithID:categoryObjectID error:nil];
-                    NSString *channelID = [channel channelID];
-                    if ([channelID isEqualToString:categoryID]) {
+                if ([category isMemberOfClass:[Dashboard class]]) {
+                    Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:categoryObjectID error:nil];
+                    NSString *dashboardID = [dashboard dashboardID];
+                    if ([dashboardID isEqualToString:categoryID]) {
                         return i;
                     }
                 } else if ([category isMemberOfClass:[Roll class]]) {
@@ -315,10 +315,10 @@
         NSManagedObjectContext *context = [self context];
         NSString *title = nil;
         NSString *color = nil;
-        if ([category isMemberOfClass:[Channel class]]) {
-            Channel *channel = (Channel *)[context existingObjectWithID:categoryObjectID error:nil];
-            title = [channel displayTitle];
-            color = [channel displayColor];
+        if ([category isMemberOfClass:[Dashboard class]]) {
+            Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:categoryObjectID error:nil];
+            title = [dashboard displayTitle];
+            color = [dashboard displayColor];
         } else if ([category isMemberOfClass:[Roll class]]) {
             Roll *roll = (Roll *)[context existingObjectWithID:categoryObjectID error:nil];
             title = [roll displayTitle];
@@ -371,10 +371,10 @@
         Roll *roll = (id)category;
         roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
         categoryID = roll.rollID;
-    } else if ([category isMemberOfClass:[Channel class]]) {
-        Channel *channel = (id)category;
-        channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
-        categoryID = channel.channelID;
+    } else if ([category isMemberOfClass:[Dashboard class]]) {
+        Dashboard *dashboard = (id)category;
+        dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
+        categoryID = dashboard.dashboardID;
     }
 
     NSInteger cellsLeftToDisplay = [frames count] - [indexPath row];
@@ -541,7 +541,7 @@
 {
     id category = (id)self.categories[categoryIndex];
     GroupType groupType = GroupType_ChannelRoll;
-    if ([category isMemberOfClass:[Channel class]]) {
+    if ([category isMemberOfClass:[Dashboard class]]) {
         groupType = GroupType_ChannelDashboard;
     }
     
@@ -563,17 +563,17 @@
         switch (groupType) {
             case GroupType_ChannelDashboard:
             {
-                Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
-                videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
-                errorMessage = @"No videos in Category Channel.";
-                title = [channel displayTitle];
+                Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:objectID error:nil];
+                videoFrames = [dataUtility fetchDashboardEntriesInDashboard:[dashboard dashboardID]];
+                errorMessage = @"No videos in Channel Dashboard.";
+                title = [dashboard displayTitle];
                 break;
             }
             case GroupType_ChannelRoll:
             {
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryRoll:[roll rollID]];
-                errorMessage = @"No videos in Category Roll.";
+                errorMessage = @"No videos in Channel Roll.";
                 title = [roll displayTitle];
                 break;
             }
@@ -589,8 +589,8 @@
                 NSString *categoryID = nil;
                 if (groupType == GroupType_ChannelDashboard) { // Category Channel
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
-                    Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
-                    categoryID = channel.channelID;
+                    Dashboard *dashboard = (Dashboard *)[mainThreadContext existingObjectWithID:objectID error:nil];
+                    categoryID = dashboard.dashboardID;
                 } else if (groupType == GroupType_ChannelRoll) { // Category Roll
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
@@ -774,11 +774,11 @@
         Roll *roll = (id)category;
         roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
         categoryID = roll.rollID;
-    } else if ([category isMemberOfClass:[Channel class]]) {
+    } else if ([category isMemberOfClass:[Dashboard class]]) {
         groupType = GroupType_ChannelDashboard;
-        Channel *channel = (id)category;
-        channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
-        categoryID = channel.channelID;
+        Dashboard *dashboard = (id)category;
+        dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
+        categoryID = dashboard.dashboardID;
     }
     
     switch ( groupType ) {
@@ -788,7 +788,7 @@
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:categoryID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-            [ShelbyAPIClient getMoreFrames:numberToString forCategoryChannel:categoryID];
+            [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:categoryID];
             
         } break;
             
@@ -832,11 +832,11 @@
              Roll *roll = (id)category;
              roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
              categoryID = roll.rollID;
-         } else if ([category isMemberOfClass:[Channel class]]) {
+         } else if ([category isMemberOfClass:[Dashboard class]]) {
              groupType = GroupType_ChannelDashboard;
-             Channel *channel = (id)category;
-             channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
-             categoryID = channel.channelID;
+             Dashboard *dashboard = (id)category;
+             dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
+             categoryID = dashboard.dashboardID;
          }
         
          NSMutableArray *frames = self.categoriesData[[NSNumber numberWithInt:i]];
@@ -860,7 +860,7 @@
                 
              case GroupType_ChannelDashboard:{
                   CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:categoryID afterDate:date]];
+                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:categoryID afterDate:date]];
              } break;
                 
              case GroupType_ChannelRoll:{
@@ -929,7 +929,7 @@
 {
     [self setIsLoggedIn:YES];
     [self fetchUserNickname];
-    [self fetchAllCategories];
+    [self fetchAllChannels];
 //    [self.collectionView reloadData];
 }
 

@@ -18,6 +18,6 @@
 - (IBAction)toggleSecretModes:(id)sender;
 
 /// DataSource Methods
-- (void)fetchAllCategories;
+- (void)fetchAllChannels;
 
 @end

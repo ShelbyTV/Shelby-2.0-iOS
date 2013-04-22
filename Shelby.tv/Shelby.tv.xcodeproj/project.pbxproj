@@ -116,7 +116,6 @@
 		1C8109A816EE2CBF0030077C /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */; };
 		1C8109A916EE2CBF0030077C /* NSString+HMAC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */; };
 		1C8109AA16EE2CBF0030077C /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8416E9388D000AF8A2 /* Roll.m */; };
-		1C8109AB16EE2CBF0030077C /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8716E9388D000AF8A2 /* Channel.m */; };
 		1C8109AE16EE2CBF0030077C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81096916EE22AD0030077C /* CoreText.framework */; };
 		1C8109AF16EE2CBF0030077C /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */; };
 		1C8109B016EE2CBF0030077C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E285DE6168124FC002A7935 /* QuartzCore.framework */; };
@@ -246,7 +245,6 @@
 		1C810A5E16EE5EED0030077C /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */; };
 		1C810A5F16EE5EED0030077C /* NSString+HMAC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */; };
 		1C810A6016EE5EED0030077C /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8416E9388D000AF8A2 /* Roll.m */; };
-		1C810A6116EE5EED0030077C /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8716E9388D000AF8A2 /* Channel.m */; };
 		1C810A6416EE5EED0030077C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81096916EE22AD0030077C /* CoreText.framework */; };
 		1C810A6516EE5EED0030077C /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */; };
 		1C810A6616EE5EED0030077C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E285DE6168124FC002A7935 /* QuartzCore.framework */; };
@@ -406,9 +404,9 @@
 		8E1F86C51724E3EF0004C1F1 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86C41724E3EF0004C1F1 /* Dashboard.m */; };
 		8E1F86C61724E3EF0004C1F1 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86C41724E3EF0004C1F1 /* Dashboard.m */; };
 		8E1F86C71724E3EF0004C1F1 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86C41724E3EF0004C1F1 /* Dashboard.m */; };
-		8E1F86D41724F00C0004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D31724F00C0004C1F1 /* DashboardEntry.m */; };
-		8E1F86D51724F00C0004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D31724F00C0004C1F1 /* DashboardEntry.m */; };
-		8E1F86D61724F00C0004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D31724F00C0004C1F1 /* DashboardEntry.m */; };
+		8E1F86D91724FD590004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D81724FD590004C1F1 /* DashboardEntry.m */; };
+		8E1F86DA1724FD590004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D81724FD590004C1F1 /* DashboardEntry.m */; };
+		8E1F86DB1724FD590004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D81724FD590004C1F1 /* DashboardEntry.m */; };
 		8E209712162F3A60000A2DFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
 		8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
 		8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209715162F3A60000A2DFD /* CoreGraphics.framework */; };
@@ -424,7 +422,6 @@
 		8E2BA99916D4053C0070613F /* rollActivityButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E2BA99516D4053C0070613F /* rollActivityButton@2x.png */; };
 		8E3DCC8216E8F6F5000AF8A2 /* NSString+HMAC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */; };
 		8E3DCC8516E9388D000AF8A2 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8416E9388D000AF8A2 /* Roll.m */; };
-		8E3DCC8816E9388D000AF8A2 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCC8716E9388D000AF8A2 /* Channel.m */; };
 		8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
 		8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
 		8E40AF6916A4B339007A66CA /* restartButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E40AF6716A4B339007A66CA /* restartButton.png */; };
@@ -698,8 +695,8 @@
 		8E1F86B51724E3250004C1F1 /* StreamEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamEntry.m; sourceTree = "<group>"; };
 		8E1F86C31724E3EF0004C1F1 /* Dashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dashboard.h; sourceTree = "<group>"; };
 		8E1F86C41724E3EF0004C1F1 /* Dashboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dashboard.m; sourceTree = "<group>"; };
-		8E1F86D21724F00C0004C1F1 /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
-		8E1F86D31724F00C0004C1F1 /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
+		8E1F86D71724FD590004C1F1 /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
+		8E1F86D81724FD590004C1F1 /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		8E20970D162F3A60000A2DFD /* Shelby.tv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shelby.tv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E209711162F3A60000A2DFD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8E209713162F3A60000A2DFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -721,8 +718,6 @@
 		8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HMAC.m"; sourceTree = "<group>"; };
 		8E3DCC8316E9388D000AF8A2 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		8E3DCC8416E9388D000AF8A2 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
-		8E3DCC8616E9388D000AF8A2 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
-		8E3DCC8716E9388D000AF8A2 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
 		8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = SOURCE_ROOT; };
 		8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = SOURCE_ROOT; };
 		8E40AF6716A4B339007A66CA /* restartButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restartButton.png; sourceTree = "<group>"; };
@@ -1081,9 +1076,9 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				8E1F86D71724FD590004C1F1 /* DashboardEntry.h */,
+				8E1F86D81724FD590004C1F1 /* DashboardEntry.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
-				8E1F86D21724F00C0004C1F1 /* DashboardEntry.h */,
-				8E1F86D31724F00C0004C1F1 /* DashboardEntry.m */,
 				8E1F86C31724E3EF0004C1F1 /* Dashboard.h */,
 				8E1F86C41724E3EF0004C1F1 /* Dashboard.m */,
 				8E1F86B41724E3250004C1F1 /* StreamEntry.h */,
@@ -1094,8 +1089,6 @@
 				8E73C58B16F2D9CE0001EF5D /* Video.m */,
 				8E3DCC8316E9388D000AF8A2 /* Roll.h */,
 				8E3DCC8416E9388D000AF8A2 /* Roll.m */,
-				8E3DCC8616E9388D000AF8A2 /* Channel.h */,
-				8E3DCC8716E9388D000AF8A2 /* Channel.m */,
 				8EF03BE916D56D5A0019669F /* User.h */,
 				8EF03BEA16D56D5A0019669F /* User.m */,
 				8E77B3FF16CC45D60015D100 /* Messages.h */,
@@ -2081,7 +2074,6 @@
 				1C8109A816EE2CBF0030077C /* UIImageView+AFNetworking.m in Sources */,
 				1C8109A916EE2CBF0030077C /* NSString+HMAC.m in Sources */,
 				1C8109AA16EE2CBF0030077C /* Roll.m in Sources */,
-				1C8109AB16EE2CBF0030077C /* Channel.m in Sources */,
 				1C7B8D4716F0F8590069F570 /* SignupView.m in Sources */,
 				1C7B8D5916F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EB16F21E4200225B4E /* FormView.m in Sources */,
@@ -2115,7 +2107,7 @@
 				8E1F86A81724E3030004C1F1 /* Frame.m in Sources */,
 				8E1F86B71724E3250004C1F1 /* StreamEntry.m in Sources */,
 				8E1F86C61724E3EF0004C1F1 /* Dashboard.m in Sources */,
-				8E1F86D51724F00C0004C1F1 /* DashboardEntry.m in Sources */,
+				8E1F86DA1724FD590004C1F1 /* DashboardEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2169,7 +2161,6 @@
 				1C810A5E16EE5EED0030077C /* UIImageView+AFNetworking.m in Sources */,
 				1C810A5F16EE5EED0030077C /* NSString+HMAC.m in Sources */,
 				1C810A6016EE5EED0030077C /* Roll.m in Sources */,
-				1C810A6116EE5EED0030077C /* Channel.m in Sources */,
 				1C7B8D4816F0F8590069F570 /* SignupView.m in Sources */,
 				1C7B8D5A16F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EC16F21E4200225B4E /* FormView.m in Sources */,
@@ -2203,7 +2194,7 @@
 				8E1F86A91724E3030004C1F1 /* Frame.m in Sources */,
 				8E1F86B81724E3250004C1F1 /* StreamEntry.m in Sources */,
 				8E1F86C71724E3EF0004C1F1 /* Dashboard.m in Sources */,
-				8E1F86D61724F00C0004C1F1 /* DashboardEntry.m in Sources */,
+				8E1F86DB1724FD590004C1F1 /* DashboardEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2257,7 +2248,6 @@
 				8E01AFC316E67365000567D4 /* UIImageView+AFNetworking.m in Sources */,
 				8E3DCC8216E8F6F5000AF8A2 /* NSString+HMAC.m in Sources */,
 				8E3DCC8516E9388D000AF8A2 /* Roll.m in Sources */,
-				8E3DCC8816E9388D000AF8A2 /* Channel.m in Sources */,
 				1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */,
 				1C7B8D5816F113AB0069F570 /* AuthorizationViewController.m in Sources */,
 				1C1D51EA16F21E4200225B4E /* FormView.m in Sources */,
@@ -2291,7 +2281,7 @@
 				8E1F86A71724E3030004C1F1 /* Frame.m in Sources */,
 				8E1F86B61724E3250004C1F1 /* StreamEntry.m in Sources */,
 				8E1F86C51724E3EF0004C1F1 /* Dashboard.m in Sources */,
-				8E1F86D41724F00C0004C1F1 /* DashboardEntry.m in Sources */,
+				8E1F86D91724FD590004C1F1 /* DashboardEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

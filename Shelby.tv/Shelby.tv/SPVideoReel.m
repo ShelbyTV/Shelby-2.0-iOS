@@ -589,7 +589,7 @@
                     
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:_categoryID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFrames:numberToString forCategoryChannel:_categoryID];
+                    [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:_categoryID];
                     
                 } break;
                     
@@ -672,7 +672,7 @@
             } break;
                 
             case GroupType_ChannelDashboard:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:_categoryID afterDate:date]];
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:_categoryID afterDate:date]];
             } break;
                 
             case GroupType_ChannelRoll:{

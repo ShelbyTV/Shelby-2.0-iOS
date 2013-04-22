@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Channel" representedClassName="Channel" syncable="YES">
-        <attribute name="channelID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="displayColor" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="displayDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="displayTag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="displayThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -31,6 +23,7 @@
     </entity>
     <entity name="DashboardEntry" representedClassName="DashboardEntry" syncable="YES">
         <attribute name="dashboardEntryID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dashboardID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="dashboard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dashboard" inverseName="dashboardEntry" inverseEntity="Dashboard" syncable="YES"/>
         <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="dashboardEntry" inverseEntity="Frame" syncable="YES"/>
@@ -109,7 +102,6 @@
         <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="video" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Channel" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Creator" positionX="178" positionY="201" width="128" height="105"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="285"/>
@@ -119,6 +111,6 @@
         <element name="User" positionX="-153" positionY="-9" width="128" height="180"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="225"/>
         <element name="Dashboard" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="DashboardEntry" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="DashboardEntry" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

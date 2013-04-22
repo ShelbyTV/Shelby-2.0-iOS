@@ -22,14 +22,22 @@ extern NSString * const kShelbyNotificationCategoryFramesFetched;
 - (void)removeAllVideoExtractionURLReferences;
 
 /// Storage Methods
+// User
 - (void)storeUser:(NSDictionary *)resultsDictionary;
+
+// Stream
 - (void)storeStreamEntries:(NSDictionary *)resultsDictionary;
+
+// Rolls
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary forGroupType:(GroupType)groupType;
+
+// Channels
 - (void)storeCategories:(NSDictionary *)resultsDictionary;
-- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID;
-- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID;
-- (void)storeFrameInLoggedOutLikes:(Frame *)frame;
 - (void)storeDashboardEntries:(NSDictionary *)resultsDictionary forDashboard:(NSString *)dashboardID;
+- (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID;
+
+// Logged-Out Likes
+- (void)storeFrameInLoggedOutLikes:(Frame *)frame;
 
 /// Fetching Methods
 - (User *)fetchUser;
@@ -49,13 +57,13 @@ extern NSString * const kShelbyNotificationCategoryFramesFetched;
 - (NSMutableArray *)fetchPersonalRollEntries;
 - (NSMutableArray *)fetchMorePersonalRollEntriesAfterDate:(NSDate *)date;
 
-- (NSMutableArray *)fetchFramesInCategoryChannel:(NSString *)channelID;
-- (NSMutableArray *)fetchMoreFramesInCategoryChannel:(NSString *)channelID afterDate:(NSDate *)date;
+- (NSMutableArray *)fetchDashboardEntriesInDashboard:(NSString *)dashboardID;
+- (NSMutableArray *)fetchMoreDashboardEntriesInDashboard:(NSString *)dashboardID afterDate:(NSDate *)date;
 - (NSMutableArray *)fetchFramesInCategoryRoll:(NSString *)rollID;
 - (NSMutableArray *)fetchMoreFramesInCategoryRoll:(NSString *)rollID afterDate:(NSDate *)date;
 
 - (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
-- (NSMutableArray *)fetchAllCategories;
+- (NSMutableArray *)fetchAllChannels;
 
 /// Sync Methods
 - (void)syncLoggedOutLikes;

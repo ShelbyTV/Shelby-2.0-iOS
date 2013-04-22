@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "Channel.h"
 #import "Dashboard.h"
 #import "DashboardEntry.h"
 #import "Conversation.h"
@@ -19,7 +18,6 @@
 #import "Video.h"
 
 // Entity Constants
-#define kShelbyCoreDataEntityChannel                    @"Channel"
 #define kShelbyCoreDataEntityConversation               @"Conversation"
 #define kShelbyCoreDataEntityCreator                    @"Creator"
 #define kShelbyCoreDataEntityDashboard                  @"Dashboard"
@@ -30,14 +28,6 @@
 #define kShelbyCoreDataEntityStreamEntry                @"StreamEntry"
 #define kShelbyCoreDataEntityUser                       @"User"
 #define kShelbyCoreDataEntityVideo                      @"Video"
-
-// Channel Attribute Constants
-#define kShelbyCoreDataChannelID                        @"channelID"
-#define kShelbyCoreDataChannelDisplayTitle              @"displayTitle"
-#define kShelbyCoreDataChannelDisplayColor              @"displayColor"
-#define kShelbyCoreDataChannelDisplayDescription        @"displayDescription"
-#define kShelbyCoreDataChannelDisplayThumbnailURL       @"displayThumbnailURL"
-#define kShelbyCoreDataChannelDisplayTag                @"displayTag"
 
 // Conversation Attribute Constants
 #define kShelbyCoreDataConversationID                   @"conversationID"
@@ -58,6 +48,7 @@
 
 // DashboardEntry Attribute Constants
 #define kShelbyCoreDataDashboardEntryID                 @"dashboardEntryID"
+#define kShelbyCoreDataDashboardEntryDashboardID        @"dashboardID"
 #define kShelbyCoreDataDashboardEntryTimestamp          @"timestamp"
 
 // Frame Attribute Constants
@@ -90,6 +81,7 @@
 #define kShelbyCoreDataRollTitle                        @"title"
 #define kShelbyCoreDataRollIsCategory                   @"isCategory"
 #define kShelbyCoreDataRollDisplayTitle                 @"displayTitle"
+#define kShelbyCoreDataRollDisplayColor                 @"displayColor"
 #define kShelbyCoreDataRollDisplayDescription           @"displayDescription"
 #define kShelbyCoreDataRollDisplayThumbnailURL          @"displayThumbnailURL"
 #define kShelbyCoreDataRollDisplayTag                   @"displayTag"

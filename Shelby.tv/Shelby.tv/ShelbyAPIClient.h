@@ -32,8 +32,8 @@
 
 /// Categories
 + (void)getAllCategories;
-+ (void)getCategoryChannel:(NSString *)channelID;
-+ (void)getMoreFrames:(NSString *)skipParam forCategoryChannel:(NSString *)channelID;
++ (void)getChannelDashboard:(NSString *)channelID;
++ (void)getMoreDashboardEntries:(NSString *)skipParam forChannelDashboard:(NSString *)dashboardID;
 + (void)getCategoryRoll:(NSString *)rollID;
 + (void)getMoreFrames:(NSString *)skipParam forCategoryRoll:(NSString *)rollID;
 

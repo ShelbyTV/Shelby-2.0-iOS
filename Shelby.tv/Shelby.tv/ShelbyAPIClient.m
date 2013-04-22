@@ -154,7 +154,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching Stream");
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:user.userID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:user.userID];
         
     }];
     
@@ -243,7 +243,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching Likes Roll");
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:user.likesRollID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:user.likesRollID];
         
     }];
     
@@ -303,7 +303,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching User Personal Roll");
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:user.personalRollID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:user.personalRollID];
         
     }];
     
@@ -337,7 +337,7 @@
     
 }
 
-+ (void)getCategoryChannel:(NSString *)channelID
++ (void)getChannelDashboard:(NSString *)channelID
 {
     NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboard, channelID];
     NSURL *requestURL = [NSURL URLWithString:requestString];
@@ -349,7 +349,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-            [dataUtility storeFrames:JSON forCategoryChannel:channelID];
+            [dataUtility storeDashboardEntries:JSON forDashboard:channelID];
             
         });
         
@@ -362,9 +362,9 @@
     [operation start];
 }
 
-+ (void)getMoreFrames:(NSString *)skipParam forCategoryChannel:(NSString *)channelID
++ (void)getMoreDashboardEntries:(NSString *)skipParam forChannelDashboard:(NSString *)dashboardID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreChannelDashboard, channelID, skipParam];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreChannelDashboard, dashboardID, skipParam];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
@@ -374,14 +374,14 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
-            [dataUtility storeFrames:JSON forCategoryChannel:channelID];
+            [dataUtility storeDashboardEntries:JSON forDashboard:dashboardID];
             
         });
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching more frames for channel: %@", requestString);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:channelID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:dashboardID];
         
     }];
     
@@ -434,7 +434,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching Category Roll");
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderFramesFailed object:rollID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:rollID];
         
     }];
     
