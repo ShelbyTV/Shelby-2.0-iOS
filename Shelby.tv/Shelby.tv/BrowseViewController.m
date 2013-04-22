@@ -412,7 +412,7 @@
         channelID = dashboard.dashboardID;
     }
 
-    NSInteger cellsLeftToDisplay = [frames count] - [indexPath row];
+    NSInteger cellsLeftToDisplay = abs([frames count] - [indexPath row]);
     if (cellsLeftToDisplay < 10) {
         
         if ( ![self.collectionViewDataSourceUpdater containsObject:channelID] ) {
@@ -821,7 +821,7 @@
     NSManagedObjectContext *context = [self context];
     
     id channel = (id)self.channels[[key intValue]];
-    GroupType groupType = GroupType_ChannelDashboard;
+    GroupType groupType = GroupType_Unknown;
     NSString *channelID = nil;
     if ([channel isMemberOfClass:[Roll class]]) {
         groupType = GroupType_ChannelRoll;

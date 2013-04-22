@@ -579,13 +579,13 @@
             
             self.fetchingOlderVideos = YES;
             
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-            
             switch ( _groupType ) {
                     
                 case GroupType_Stream: {
                     
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchStreamEntryCount];
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+                    User *user = [dataUtility fetchUser];
+                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchDashboardEntriesInDashboard:user.userID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                     [ShelbyAPIClient getMoreFramesInStream:numberToString];
                     
@@ -593,6 +593,7 @@
                     
                 case GroupType_Likes: {
                     
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                     [ShelbyAPIClient getMoreFramesInLikes:numberToString];
@@ -600,7 +601,8 @@
                 } break;
                     
                 case GroupType_PersonalRoll: {
-                    
+
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                     [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
@@ -609,6 +611,7 @@
                     
                 case GroupType_ChannelDashboard: {
                     
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:_channelID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                     [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:_channelID];
@@ -617,6 +620,7 @@
                     
                 case GroupType_ChannelRoll: {
                     
+                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:_channelID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
                     [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:_channelID];
@@ -676,28 +680,33 @@
         }
         NSDate *date = lastFrame.timestamp;
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *olderFramesArray = [@[] mutableCopy];
         
         switch ( _groupType ) {
                 
             case GroupType_Likes:{
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreLikesEntriesAfterDate:date]];
             } break;
                 
             case GroupType_PersonalRoll:{
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
             } break;
                 
             case GroupType_Stream:{
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+                User *user = [dataUtility fetchUser];
+                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:user.userID afterDate:date]];
             } break;
                 
             case GroupType_ChannelDashboard:{
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:_channelID afterDate:date]];
             } break;
                 
             case GroupType_ChannelRoll:{
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannelRoll:_channelID afterDate:date]];
             } break;
                 
