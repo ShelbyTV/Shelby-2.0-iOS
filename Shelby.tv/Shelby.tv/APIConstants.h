@@ -29,10 +29,10 @@
 #define kShelbyAPIGetMoreRollFrames         @"http://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
 #define kShelbyAPIGetRollFramesForSync      @"http://api.shelby.tv/v1/roll/%@/frames?limit=%d"
 
-/// GET Categories
-#define kShelbyAPIGetAllCategories          @"http://api.shelby.tv/v1/roll/featured?segment=ipad_standard"
-#define kShelbyAPIGetCategoryChannel        @"http://api.shelby.tv/v1/user/%@/dashboard"
-#define kShelbyAPIGetMoreCategoryChannel    @"http://api.shelby.tv/v1/user/%@/dashboard?skip=%@&limit=20"
+/// GET Channels
+#define kShelbyAPIGetAllChannels            @"http://api.shelby.tv/v1/roll/featured?segment=ipad_standard"
+#define kShelbyAPIGetChannelDashboard       @"http://api.shelby.tv/v1/user/%@/dashboard"
+#define kShelbyAPIGetMoreChannelDashboard   @"http://api.shelby.tv/v1/user/%@/dashboard?skip=%@&limit=20"
 
 /// GET Shortlink
 #define kShelbyAPIGetShortLink              @"http://api.shelby.tv/v1/frame/%@/short_link"

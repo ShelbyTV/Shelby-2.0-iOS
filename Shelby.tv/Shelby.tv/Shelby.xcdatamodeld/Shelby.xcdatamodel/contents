@@ -20,6 +20,21 @@
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="creator" inverseEntity="Frame" syncable="YES"/>
     </entity>
+    <entity name="Dashboard" representedClassName="Dashboard" syncable="YES">
+        <attribute name="dashboardID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayTag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="displayThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dashboardEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="dashboard" inverseEntity="DashboardEntry" syncable="YES"/>
+    </entity>
+    <entity name="DashboardEntry" representedClassName="DashboardEntry" syncable="YES">
+        <attribute name="dashboardEntryID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="dashboard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dashboard" inverseName="dashboardEntry" inverseEntity="Dashboard" syncable="YES"/>
+        <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="dashboardEntry" inverseEntity="Frame" syncable="YES"/>
+    </entity>
     <entity name="Frame" representedClassName="Frame" syncable="YES">
         <attribute name="channelID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="conversationID" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,6 +48,7 @@
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversation" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Conversation" inverseName="frame" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="creator" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Creator" inverseName="frame" inverseEntity="Creator" syncable="YES"/>
+        <relationship name="dashboardEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="frame" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Roll" inverseName="frame" inverseEntity="Roll" syncable="YES"/>
         <relationship name="streamEntry" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StreamEntry" inverseName="frame" inverseEntity="StreamEntry" syncable="YES"/>
         <relationship name="video" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
@@ -96,11 +112,13 @@
         <element name="Channel" positionX="160" positionY="192" width="128" height="135"/>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Creator" positionX="178" positionY="201" width="128" height="105"/>
-        <element name="Frame" positionX="367" positionY="336" width="128" height="270"/>
+        <element name="Frame" positionX="367" positionY="336" width="128" height="285"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
         <element name="Roll" positionX="-155" positionY="342" width="128" height="225"/>
         <element name="StreamEntry" positionX="682" positionY="216" width="128" height="90"/>
         <element name="User" positionX="-153" positionY="-9" width="128" height="180"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="225"/>
+        <element name="Dashboard" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="DashboardEntry" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

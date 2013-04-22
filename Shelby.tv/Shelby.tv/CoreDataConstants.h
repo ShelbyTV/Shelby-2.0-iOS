@@ -7,6 +7,8 @@
 //
 
 #import "Channel.h"
+#import "Dashboard.h"
+#import "DashboardEntry.h"
 #import "Conversation.h"
 #import "Creator.h"
 #import "Frame.h"
@@ -20,6 +22,8 @@
 #define kShelbyCoreDataEntityChannel                    @"Channel"
 #define kShelbyCoreDataEntityConversation               @"Conversation"
 #define kShelbyCoreDataEntityCreator                    @"Creator"
+#define kShelbyCoreDataEntityDashboard                  @"Dashboard"
+#define kShelbyCoreDataEntityDashboardEntry             @"DashboardEntry"
 #define kShelbyCoreDataEntityFrame                      @"Frame"
 #define kShelbyCoreDataEntityMessages                   @"Messages"
 #define kShelbyCoreDataEntityRoll                       @"Roll"
@@ -43,6 +47,18 @@
 #define kShelbyCoreDataCreatorID                        @"creatorID"
 #define kShelbyCoreDataCreatorNickname                  @"nickname"
 #define kShelbyCoreDataCreatorUserImage                 @"userImage"
+
+// Dashboard Attribute Constants
+#define kShelbyCoreDataDashboardID                      @"dashboardID"
+#define kShelbyCoreDataDashboardDisplayTitle            @"displayTitle"
+#define kShelbyCoreDataDashboardDisplayColor            @"displayColor"
+#define kShelbyCoreDataDashboardDisplayDescription      @"displayDescription"
+#define kShelbyCoreDataDashboardDisplayThumbnailURL     @"displayThumbnailURL"
+#define kShelbyCoreDataDashboardDisplayTag              @"displayTag"
+
+// DashboardEntry Attribute Constants
+#define kShelbyCoreDataDashboardEntryID                 @"dashboardEntryID"
+#define kShelbyCoreDataDashboardEntryTimestamp          @"timestamp"
 
 // Frame Attribute Constants
 #define kShelbyCoreDataFrameID                          @"frameID"

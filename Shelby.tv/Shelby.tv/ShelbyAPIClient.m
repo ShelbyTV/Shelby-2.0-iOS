@@ -314,7 +314,7 @@
 + (void)getAllCategories
 {
     
-    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllCategories];
+    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     
@@ -339,7 +339,7 @@
 
 + (void)getCategoryChannel:(NSString *)channelID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetCategoryChannel, channelID];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboard, channelID];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
@@ -364,7 +364,7 @@
 
 + (void)getMoreFrames:(NSString *)skipParam forCategoryChannel:(NSString *)channelID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreCategoryChannel, channelID, skipParam];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreChannelDashboard, channelID, skipParam];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];

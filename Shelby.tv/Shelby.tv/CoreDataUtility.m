@@ -38,8 +38,9 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
 - (void)storeMessagesFromConversation:(Conversation *)conversation withDictionary:(NSDictionary *)conversationDictionary;
 - (void)storeRoll:(Roll *)roll fromDictionary:(NSDictionary *)rollDictionary;
 - (void)storeVideo:(Video *)video fromDictionary:(NSDictionary *)videoDictionary;
-- (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)tag;
-- (void)storeCategoryChannels:(NSArray *)channelsArray withInitialTag:(NSUInteger)tag;
+- (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag;
+- (void)storeCategoryChannels:(NSArray *)channelsArray withInitialTag:(NSUInteger)displayTag;
+- (void)storeCategoryDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag;
 
 /// Fetching Methods
 - (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames;
@@ -364,40 +365,76 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     for (NSUInteger i = 0; i < [resultsArray count]; ++i ) {
         
         @autoreleasepool {
-            
-            // Conditions for saving entires into database
+
             NSDictionary *frameDictionary = [resultsArray[i] valueForKey:@"frame"];
-            BOOL frameExists = [frameDictionary isKindOfClass:([NSNull class])] ? NO : YES;
+                
+            StreamEntry *streamEntry = [self checkIfEntity:kShelbyCoreDataEntityStreamEntry
+                                               withIDValue:[resultsArray[i] valueForKey:@"id"]
+                                                  forIDKey:kShelbyCoreDataStreamEntryID];
             
-            if ( !frameExists ) {
-                
-                // Do nothing (e.g., don't store this frame in core data)
-                
-            } else {
-                
-                StreamEntry *streamEntry = [self checkIfEntity:kShelbyCoreDataEntityStreamEntry
-                                                   withIDValue:[resultsArray[i] valueForKey:@"id"]
-                                                      forIDKey:kShelbyCoreDataStreamEntryID];
-                
-                NSString *streamEntryID = [NSString coreDataNullTest:[resultsArray[i] valueForKey:@"id"]];
-                [streamEntry setValue:streamEntryID forKey:kShelbyCoreDataStreamEntryID];
-                
-                NSDate *timestamp = [NSDate dataFromBSONObjectID:streamEntryID];
-                [streamEntry setValue:timestamp forKey:kShelbyCoreDataStreamEntryTimestamp];
-                
-                Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
-                                       withIDValue:[frameDictionary valueForKey:@"id"]
-                                          forIDKey:kShelbyCoreDataFrameID];
-                streamEntry.frame = frame;
-                
-                [self storeFrame:frame forDictionary:frameDictionary];
-            }
+            NSString *streamEntryID = [NSString coreDataNullTest:[resultsArray[i] valueForKey:@"id"]];
+            [streamEntry setValue:streamEntryID forKey:kShelbyCoreDataStreamEntryID];
+            
+            NSDate *timestamp = [NSDate dataFromBSONObjectID:streamEntryID];
+            [streamEntry setValue:timestamp forKey:kShelbyCoreDataStreamEntryTimestamp];
+            
+            Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
+                                   withIDValue:[frameDictionary valueForKey:@"id"]
+                                      forIDKey:kShelbyCoreDataFrameID];
+            streamEntry.frame = frame;
+            
+            [self storeFrame:frame forDictionary:frameDictionary];
         }
     }
     
     [self saveContext:_context];
     
     
+    User *user = [self fetchUser];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:user.userID];
+    });
+    
+}
+
+- (void)storeDashboardEntries:(NSDictionary *)resultsDictionary forDashboard:(NSString *)dashboardID
+{
+    NSArray *resultsArray = resultsDictionary[@"result"];
+    
+    for (NSUInteger i = 0; i < [resultsArray count]; ++i ) {
+        
+        @autoreleasepool {
+
+            NSDictionary *frameDictionary = [resultsArray[i] valueForKey:@"frame"];
+            
+            DashboardEntry *dashboardEntry = [self checkIfEntity:kShelbyCoreDataEntityDashboardEntry
+                                                     withIDValue:[resultsArray[i] valueForKey:@"id"]
+                                                        forIDKey:kShelbyCoreDataDashboardEntryID];
+            
+            NSString *streamEntryID = [NSString coreDataNullTest:[resultsArray[i] valueForKey:@"id"]];
+            [dashboardEntry setValue:streamEntryID forKey:kShelbyCoreDataStreamEntryID];
+            
+            NSDate *timestamp = [NSDate dataFromBSONObjectID:streamEntryID];
+            [dashboardEntry setValue:timestamp forKey:kShelbyCoreDataStreamEntryTimestamp];
+            
+            Dashboard *dashboard = [self checkIfEntity:kShelbyCoreDataEntityDashboard
+                                           withIDValue:dashboardID
+                                              forIDKey:kShelbyCoreDataDashboardID];
+            
+            dashboardEntry.dashboard = dashboard;
+            
+            Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
+                                   withIDValue:[frameDictionary valueForKey:@"id"]
+                                      forIDKey:kShelbyCoreDataFrameID];
+            
+            dashboardEntry.frame = frame;
+            
+            [self storeFrame:frame forDictionary:frameDictionary];
+        }
+    }
+    
+    [self saveContext:_context];
+
     User *user = [self fetchUser];
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:user.userID];
@@ -433,7 +470,8 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
                 // Parse and store user_channels as CategoryChannels
                 NSArray *channelsArray = [[categoriesArray objectAtIndex:i] valueForKey:@"user_channels"];
                 
-                [self storeCategoryChannels:channelsArray withInitialTag:displayTag];
+//                [self storeCategoryChannels:channelsArray withInitialTag:displayTag];
+                [self storeCategoryDashboardEntries:channelsArray withInitialTag:displayTag];
                 
                 // Set minimum tag for next itertation
                 NSUInteger total = [channelsArray count];
@@ -1536,7 +1574,6 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
 #pragma mark - Storage Methods (Private) 
 - (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag
 {
-    
     for ( NSUInteger i = 0; i < [rollsArray count]; ++i ) {
         
         NSDictionary *rollDictionary = [rollsArray objectAtIndex:i];
@@ -1568,6 +1605,43 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
             [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
             
             [ShelbyAPIClient getCategoryRoll:rollID];
+        }
+    }
+    
+    [self removeStoredHash];
+}
+
+- (void)storeCategoryDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag
+{
+    for ( NSUInteger i = 0; i < [dashboardEntriesArray count]; ++i ) {
+        
+        NSDictionary *dashboardEntriesDictionary = [dashboardEntriesArray objectAtIndex:i];
+        
+        if ( dashboardEntriesDictionary ) {
+            
+            Dashboard *dashboard = [self checkIfEntity:kShelbyCoreDataEntityDashboard
+                                           withIDValue:[dashboardEntriesDictionary valueForKey:@"user_id"]
+                                              forIDKey:kShelbyCoreDataDashboardID];
+            
+            NSString *dashboardID = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"user_id"]];
+            [dashboard setValue:dashboardID forKey:kShelbyCoreDataDashboardID];
+
+            [dashboard setValue:[NSNumber numberWithInt:(displayTag+i)] forKey:kShelbyCoreDataDashboardDisplayTag];
+            
+            NSString *displayTitle = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"display_title"]];
+            [dashboard setValue:displayTitle forKey:kShelbyCoreDataDashboardDisplayTitle];
+            
+            NSString *displayColor = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"display_channel_color"]];
+            [dashboard setValue:displayColor forKey:kShelbyCoreDataDashboardDisplayColor];
+            
+            NSString *displayDescription = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"display_description"]];
+            [dashboard setValue:displayDescription forKey:kShelbyCoreDataDashboardDisplayDescription];
+            
+            NSString *displayThumbnail = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"display_thumbnail_ipad_src"]];
+            displayThumbnail = [NSString stringWithFormat: @"http://shelby.tv%@", displayThumbnail];
+            [dashboard setValue:displayThumbnail forKey:kShelbyCoreDataDashboardDisplayThumbnailURL];
+            
+            [ShelbyAPIClient getCategoryChannel:dashboardID];
         }
     }
     

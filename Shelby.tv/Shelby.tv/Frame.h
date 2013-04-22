@@ -28,6 +28,7 @@
 @property (nonatomic, retain) Roll *roll;
 @property (nonatomic, retain) NSSet *streamEntry;
 @property (nonatomic, retain) Video *video;
+@property (nonatomic, retain) StreamEntry *dashboardEntry;
 @end
 
 @interface Frame (CoreDataGeneratedAccessors)

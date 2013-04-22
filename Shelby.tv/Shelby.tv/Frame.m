@@ -31,5 +31,6 @@
 @dynamic roll;
 @dynamic streamEntry;
 @dynamic video;
+@dynamic dashboardEntry;
 
 @end

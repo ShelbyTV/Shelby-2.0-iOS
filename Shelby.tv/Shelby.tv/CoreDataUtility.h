@@ -29,6 +29,7 @@ extern NSString * const kShelbyNotificationCategoryFramesFetched;
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryChannel:(NSString *)channelID;
 - (void)storeFrames:(NSDictionary *)resultsDictionary forCategoryRoll:(NSString *)rollID;
 - (void)storeFrameInLoggedOutLikes:(Frame *)frame;
+- (void)storeDashboardEntries:(NSDictionary *)resultsDictionary forDashboard:(NSString *)dashboardID;
 
 /// Fetching Methods
 - (User *)fetchUser;
