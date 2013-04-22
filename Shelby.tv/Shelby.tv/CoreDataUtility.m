@@ -38,7 +38,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 - (void)storeRoll:(Roll *)roll fromDictionary:(NSDictionary *)rollDictionary;
 - (void)storeVideo:(Video *)video fromDictionary:(NSDictionary *)videoDictionary;
 - (void)storeChannelRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag;
-- (void)storeChannelDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag;
+- (void)storeChannelDashboard:(NSArray *)dashboardArray withInitialTag:(NSUInteger)displayTag;
 
 /// Fetching Methods
 - (NSMutableArray *)filterPlayableDashboardFrames:(NSArray *)frames;
@@ -451,7 +451,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                 // Parse and store user_channels as ChannelDashboards
                 NSArray *dashboardArray = [[channelsArray objectAtIndex:i] valueForKey:@"user_channels"];
 
-                [self storeChannelDashboardEntries:dashboardArray withInitialTag:displayTag];
+                [self storeChannelDashboard:dashboardArray withInitialTag:displayTag];
                 
                 // Set minimum tag for next itertation
                 NSUInteger total = [dashboardArray count];
@@ -1438,37 +1438,37 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [self removeStoredHash];
 }
 
-- (void)storeChannelDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag
+- (void)storeChannelDashboard:(NSArray *)dashboardArray withInitialTag:(NSUInteger)displayTag
 {
-    for ( NSUInteger i = 0; i < [dashboardEntriesArray count]; ++i ) {
+    for ( NSUInteger i = 0; i < [dashboardArray count]; ++i ) {
         
-        NSDictionary *dashboardEntriesDictionary = [dashboardEntriesArray objectAtIndex:i];
+        NSDictionary *dashboardDictionary = [dashboardArray objectAtIndex:i];
         
-        if ( dashboardEntriesDictionary ) {
+        if ( dashboardDictionary ) {
             
             Dashboard *dashboard = [self checkIfEntity:kShelbyCoreDataEntityDashboard
-                                           withIDValue:[dashboardEntriesDictionary valueForKey:@"user_id"]
+                                           withIDValue:[dashboardDictionary valueForKey:@"user_id"]
                                               forIDKey:kShelbyCoreDataDashboardID];
             
-            NSString *dashboardID = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"user_id"]];
+            NSString *dashboardID = [NSString coreDataNullTest:[dashboardDictionary valueForKey:@"user_id"]];
             [dashboard setValue:dashboardID forKey:kShelbyCoreDataDashboardID];
 
             [dashboard setValue:[NSNumber numberWithInt:(displayTag+i)] forKey:kShelbyCoreDataDashboardDisplayTag];
             
-            NSString *displayTitle = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"display_title"]];
+            NSString *displayTitle = [NSString coreDataNullTest:[dashboardDictionary valueForKey:@"display_title"]];
             [dashboard setValue:displayTitle forKey:kShelbyCoreDataDashboardDisplayTitle];
             
-            NSString *displayColor = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"display_channel_color"]];
+            NSString *displayColor = [NSString coreDataNullTest:[dashboardDictionary valueForKey:@"display_channel_color"]];
             [dashboard setValue:displayColor forKey:kShelbyCoreDataDashboardDisplayColor];
             
-            NSString *displayDescription = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"display_description"]];
+            NSString *displayDescription = [NSString coreDataNullTest:[dashboardDictionary valueForKey:@"display_description"]];
             [dashboard setValue:displayDescription forKey:kShelbyCoreDataDashboardDisplayDescription];
             
-            NSString *displayThumbnail = [NSString coreDataNullTest:[dashboardEntriesDictionary valueForKey:@"display_thumbnail_ipad_src"]];
+            NSString *displayThumbnail = [NSString coreDataNullTest:[dashboardDictionary valueForKey:@"display_thumbnail_ipad_src"]];
             displayThumbnail = [NSString stringWithFormat: @"http://shelby.tv%@", displayThumbnail];
             [dashboard setValue:displayThumbnail forKey:kShelbyCoreDataDashboardDisplayThumbnailURL];
             
-            [ShelbyAPIClient getChannelDashboard:dashboardID];
+            [ShelbyAPIClient getChannelDashboardEntries:dashboardID];
         }
     }
     

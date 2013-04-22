@@ -32,7 +32,7 @@
 
 /// Channels
 + (void)getAllChannels;
-+ (void)getChannelDashboard:(NSString *)channelID;
++ (void)getChannelDashboardEntries:(NSString *)channelID;
 + (void)getMoreDashboardEntries:(NSString *)skipParam forChannelDashboard:(NSString *)dashboardID;
 + (void)getChannelRoll:(NSString *)rollID;
 + (void)getMoreFrames:(NSString *)skipParam forChannelRoll:(NSString *)rollID;

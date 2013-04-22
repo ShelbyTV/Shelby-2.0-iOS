@@ -205,16 +205,16 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    // Empty existing Video Cache
+    // Empty existing image cache
     [AsynchronousFreeloader removeAllImages];
     
     // Empty existing disk-stored data (if there exists any data)
     [SPVideoDownloader deleteAllDownloadedVideos];
     
-    // Empty existing CoreData Store (if one exists)
+    // Empty existing Core Data store (if one exists)
     [self dumpAllData];
     
-    // Refetch Channels, since core-data store was dumped
+    // Refetch Channels, since the Core Data store was dumped
     [ShelbyAPIClient getAllChannels];
 }
 

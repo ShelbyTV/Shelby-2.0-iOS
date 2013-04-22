@@ -337,9 +337,9 @@
     
 }
 
-+ (void)getChannelDashboard:(NSString *)channelID
++ (void)getChannelDashboardEntries:(NSString *)channelID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboard, channelID];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntries, channelID];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
@@ -364,7 +364,7 @@
 
 + (void)getMoreDashboardEntries:(NSString *)skipParam forChannelDashboard:(NSString *)dashboardID
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreChannelDashboard, dashboardID, skipParam];
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIGetMoreChannelDashboardEntries, dashboardID, skipParam];
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
