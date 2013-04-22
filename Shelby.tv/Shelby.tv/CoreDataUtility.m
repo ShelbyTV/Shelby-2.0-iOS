@@ -25,10 +25,9 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
            forIDKey:(NSString *)entityIDKey;
 
 - (void)deleteFrame:(Frame *)frame;
-- (void)removeOlderVideoFramesFromStreamEntries;
+- (void)removeOlderVideoFramesFromDashboard:(NSString *)dashboardID;
 - (void)removeOlderVideoFramesFromLikes;
 - (void)removeOlderVideoFramesFromPersonalRoll;
-- (void)removeOlderVideoFramesFromChannelDashboard:(NSString *)dashboardID;
 - (void)removeOlderVideoFramesFromChannelRoll:(NSString *)rollID;
 
 /// Storage Methods
@@ -42,7 +41,6 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 - (void)storeChannelDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag;
 
 /// Fetching Methods
-- (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames;
 - (NSMutableArray *)filterPlayableDashboardFrames:(NSArray *)frames;
 - (NSMutableArray *)filterPlayableFrames:(NSArray *)frames;
 - (NSMutableArray *)removeDuplicateFrames:(NSMutableArray *)frames;
@@ -240,7 +238,9 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             
             if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
                 
-                [self removeOlderVideoFramesFromStreamEntries];
+                User *user = [self fetchUser];
+                NSString *dashboardID = user.userID;
+                [self removeOlderVideoFramesFromDashboard:dashboardID];
                 
             }
             
@@ -248,7 +248,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             
         case GroupType_ChannelDashboard: {
      
-            [self removeOlderVideoFramesFromChannelDashboard:channelID];
+            [self removeOlderVideoFramesFromDashboard:channelID];
             
         }
             
@@ -364,43 +364,17 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 
 }
 
-- (void)storeStreamEntries:(NSDictionary *)resultsDictionary
+- (void)storeStream:(NSDictionary *)resultsDictionary
 {
-    NSArray *resultsArray = resultsDictionary[@"result"];
-    
-    for (NSUInteger i = 0; i < [resultsArray count]; ++i ) {
-        
-        @autoreleasepool {
-
-            NSDictionary *frameDictionary = [resultsArray[i] valueForKey:@"frame"];
-                
-            StreamEntry *streamEntry = [self checkIfEntity:kShelbyCoreDataEntityStreamEntry
-                                               withIDValue:[resultsArray[i] valueForKey:@"id"]
-                                                  forIDKey:kShelbyCoreDataStreamEntryID];
-            
-            NSString *streamEntryID = [NSString coreDataNullTest:[resultsArray[i] valueForKey:@"id"]];
-            [streamEntry setValue:streamEntryID forKey:kShelbyCoreDataStreamEntryID];
-            
-            NSDate *timestamp = [NSDate dataFromBSONObjectID:streamEntryID];
-            [streamEntry setValue:timestamp forKey:kShelbyCoreDataStreamEntryTimestamp];
-            
-            Frame *frame = [self checkIfEntity:kShelbyCoreDataEntityFrame
-                                   withIDValue:[frameDictionary valueForKey:@"id"]
-                                      forIDKey:kShelbyCoreDataFrameID];
-            streamEntry.frame = frame;
-            
-            [self storeFrame:frame forDictionary:frameDictionary];
-        }
-    }
-    
-    [self saveContext:_context];
-    
     
     User *user = [self fetchUser];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:user.userID];
-    });
+    Dashboard *dashboard = [self checkIfEntity:kShelbyCoreDataEntityDashboard
+                                   withIDValue:user.userID
+                                      forIDKey:kShelbyCoreDataDashboardID];
     
+    dashboard.dashboardID = user.userID;
+    
+    [self storeDashboardEntries:resultsDictionary forDashboard:user.userID];
 }
 
 - (void)storeDashboardEntries:(NSDictionary *)resultsDictionary forDashboard:(NSString *)dashboardID
@@ -598,24 +572,6 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     return resultsArray[0];
 }
 
-- (NSUInteger)fetchStreamEntryCount
-{
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStreamEntry inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Execute request that returns array of Stream entries
-    NSArray *streamEntries = [self.context executeFetchRequest:request error:nil];
-    
-    [self removeStoredHash];
-    
-    return [streamEntries count];
-}
-
 - (NSUInteger)fetchLikesCount
 {
     // Create fetch request
@@ -625,7 +581,6 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     // Search Likes table
     NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
     [request setEntity:description];
-    
     
     // Filter by rollID
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
@@ -714,74 +669,6 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [self removeStoredHash];
     
     return [frameResults count];
-}
-
-- (NSMutableArray *)fetchStreamEntries
-{
-    
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStreamEntry inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Sort by timestamp
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:@[sortDescriptor]];
-    
-    // Execute request that returns array of Stream entries
-    NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
-    
-    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
-    NSMutableArray *playableFrames = [self filterPlayableStreamFrames:requestResults];
-    
-    // Remove Frames that link to the same Video object
-    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
-    
-    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
-    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
-    
-    [self removeStoredHash];
-    
-    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
-}
-
-- (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date
-{
-    
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Search Stream table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStreamEntry inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Sort by timestamp
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:@[sortDescriptor]];
-    
-    // Filter by timestamp
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp < %@", date];
-    [request setPredicate:predicate];
-    
-    // Execute request that returns array of Stream entries
-    NSArray *requestResults = [self.context executeFetchRequest:request error:nil];
-    
-    // Filter Playable Results (YouTube, Vimeo, DailyMotion)
-    NSMutableArray *playableFrames = [self filterPlayableStreamFrames:requestResults];
-    
-    // Remove Frames that link to the same Video object
-    NSMutableArray *deduplicatedFrames = [self removeDuplicateFrames:playableFrames];
-    
-    // If SecretMode_OfflineView is enabled, return only videos that have been downloaded, otherwise return deduplicated frames
-    BOOL offlineViewModeEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineViewModeEnabled];
-    
-    [self removeStoredHash];
-    
-    return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
 - (NSMutableArray *)fetchLikesEntries
@@ -1351,43 +1238,6 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [self saveContext:_context];
 }
 
-- (void)removeOlderVideoFramesFromStreamEntries
-{
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityStreamEntry inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Sort by timestamp
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:@[sortDescriptor]];
-    
-    // Execute request that returns array of Stream entries}
-    NSArray *results = [self.context executeFetchRequest:request error:nil];
-    
-    NSUInteger maxLimit = 60;
-    
-    // Remove older videos from data store
-    if ( [results count] > maxLimit ) {
-        
-        NSMutableArray *olderResults = [results mutableCopy];
-        NSUInteger i = [results count];
-        
-        while ( i > maxLimit ) {
-            
-            StreamEntry *streamEntry = (StreamEntry *)[olderResults lastObject];
-            [self.context deleteObject:streamEntry];
-            [olderResults removeLastObject];
-            
-            i--;
-        }
-        
-        [self saveContext:_context];
-    }
-}
-
 - (void)removeOlderVideoFramesFromLikes
 {
     
@@ -1467,7 +1317,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     }
 }
 
-- (void)removeOlderVideoFramesFromChannelDashboard:(NSString *)dashboardID
+- (void)removeOlderVideoFramesFromDashboard:(NSString *)dashboardID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1873,19 +1723,6 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 }
 
 #pragma mark - Fetching Methods (Private)
-- (NSMutableArray *)filterPlayableStreamFrames:(NSArray *)frames
-{
-    NSMutableArray *playableFrames = [@[] mutableCopy];
-    
-    for (StreamEntry *streamEntry in frames) {
-        if ([self isSupportedProvider:streamEntry.frame] && ![self isUnplayableVideo:[streamEntry.frame video]]) {
-            [playableFrames addObject:streamEntry.frame];
-        }
-    }
-    
-    return playableFrames;
-}
-
 - (NSMutableArray *)filterPlayableDashboardFrames:(NSArray *)frames
 {
     NSMutableArray *playableFrames = [@[] mutableCopy];

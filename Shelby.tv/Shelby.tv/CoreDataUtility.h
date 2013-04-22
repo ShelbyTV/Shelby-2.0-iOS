@@ -23,7 +23,7 @@ extern NSString * const kShelbyNotificationChannelDataFetched;
 
 /// Storage Methods
 - (void)storeUser:(NSDictionary *)resultsDictionary;
-- (void)storeStreamEntries:(NSDictionary *)resultsDictionary;
+- (void)storeStream:(NSDictionary *)resultsDictionary;
 - (void)storeRollFrames:(NSDictionary *)resultsDictionary forGroupType:(GroupType)groupType;
 - (void)storeChannels:(NSDictionary *)resultsDictionary;
 - (void)storeDashboardEntries:(NSDictionary *)resultsDictionary forDashboard:(NSString *)dashboardID;
@@ -32,13 +32,10 @@ extern NSString * const kShelbyNotificationChannelDataFetched;
 
 /// Fetching Methods
 - (User *)fetchUser;
-- (NSUInteger)fetchStreamEntryCount;
 - (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
 - (NSUInteger)fetchCountForChannelDashboard:(NSString *)dashboardID;
 - (NSUInteger)fetchCountForChannelRoll:(NSString *)rollID;
-- (NSMutableArray *)fetchStreamEntries;
-- (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date;
 - (NSMutableArray *)fetchLikesEntries;
 - (NSMutableArray *)fetchMoreLikesEntriesAfterDate:(NSDate *)date;
 - (NSMutableArray *)fetchPersonalRollEntries;

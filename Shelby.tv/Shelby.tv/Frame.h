@@ -2,14 +2,14 @@
 //  Frame.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 4/21/13.
+//  Created by Arthur Ariel Sabintsev on 4/22/13.
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Conversation, Creator, Roll, StreamEntry, Video;
+@class Conversation, Creator, DashboardEntry, Roll, Video;
 
 @interface Frame : NSManagedObject
 
@@ -25,17 +25,8 @@
 @property (nonatomic, retain) NSString * videoID;
 @property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, retain) Creator *creator;
+@property (nonatomic, retain) DashboardEntry *dashboardEntry;
 @property (nonatomic, retain) Roll *roll;
-@property (nonatomic, retain) NSSet *streamEntry;
 @property (nonatomic, retain) Video *video;
-@property (nonatomic, retain) StreamEntry *dashboardEntry;
-@end
-
-@interface Frame (CoreDataGeneratedAccessors)
-
-- (void)addStreamEntryObject:(StreamEntry *)value;
-- (void)removeStreamEntryObject:(StreamEntry *)value;
-- (void)addStreamEntry:(NSSet *)values;
-- (void)removeStreamEntry:(NSSet *)values;
 
 @end
