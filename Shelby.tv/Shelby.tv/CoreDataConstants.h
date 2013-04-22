@@ -43,6 +43,7 @@
 #define kShelbyCoreDataDashboardDisplayDescription      @"displayDescription"
 #define kShelbyCoreDataDashboardDisplayThumbnailURL     @"displayThumbnailURL"
 #define kShelbyCoreDataDashboardDisplayTag              @"displayTag"
+#define kShelbyCoreDataDashboardIsChannel               @"isChannel"
 
 // DashboardEntry Attribute Constants
 #define kShelbyCoreDataDashboardEntryID                 @"dashboardEntryID"

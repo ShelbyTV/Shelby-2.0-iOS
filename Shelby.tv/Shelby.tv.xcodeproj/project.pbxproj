@@ -429,9 +429,6 @@
 		8E12B18B16825B4100657D32 /* videoListThumbnailOverlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B18316825B4100657D32 /* videoListThumbnailOverlay@2x.png */; };
 		8E1B2E9B16700B1F00D2C0DC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */; };
 		8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
-		8E1F86C51724E3EF0004C1F1 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86C41724E3EF0004C1F1 /* Dashboard.m */; };
-		8E1F86C61724E3EF0004C1F1 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86C41724E3EF0004C1F1 /* Dashboard.m */; };
-		8E1F86C71724E3EF0004C1F1 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86C41724E3EF0004C1F1 /* Dashboard.m */; };
 		8E1F86D91724FD590004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D81724FD590004C1F1 /* DashboardEntry.m */; };
 		8E1F86DA1724FD590004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D81724FD590004C1F1 /* DashboardEntry.m */; };
 		8E1F86DB1724FD590004C1F1 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F86D81724FD590004C1F1 /* DashboardEntry.m */; };
@@ -481,6 +478,11 @@
 		8E669063171611370090C934 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E669062171611370090C934 /* Social.framework */; };
 		8E669066171611490090C934 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E669062171611370090C934 /* Social.framework */; };
 		8E669068171611550090C934 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E669062171611370090C934 /* Social.framework */; };
+		8E671CCC1725FDBE0051A7C8 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E671CCB1725FDBE0051A7C8 /* Dashboard.m */; };
+		8E671CCD1725FDBE0051A7C8 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E671CCB1725FDBE0051A7C8 /* Dashboard.m */; };
+		8E671CD1172601B50051A7C8 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E671CD0172601B50051A7C8 /* Dashboard.m */; };
+		8E671CD2172601B50051A7C8 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E671CD0172601B50051A7C8 /* Dashboard.m */; };
+		8E671CD3172601B50051A7C8 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E671CD0172601B50051A7C8 /* Dashboard.m */; };
 		8E7024B91715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E70248B1715E71500E8DE46 /* AuthenticateTwitterViewController.m */; };
 		8E7024BA1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E70248B1715E71500E8DE46 /* AuthenticateTwitterViewController.m */; };
 		8E7024BB1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E70248B1715E71500E8DE46 /* AuthenticateTwitterViewController.m */; };
@@ -740,8 +742,6 @@
 		8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopAlignedLabel.h; sourceTree = "<group>"; };
 		8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopAlignedLabel.m; sourceTree = "<group>"; };
-		8E1F86C31724E3EF0004C1F1 /* Dashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dashboard.h; sourceTree = "<group>"; };
-		8E1F86C41724E3EF0004C1F1 /* Dashboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dashboard.m; sourceTree = "<group>"; };
 		8E1F86D71724FD590004C1F1 /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
 		8E1F86D81724FD590004C1F1 /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		8E1F86DC172502A80004C1F1 /* SPChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChannelCell.h; sourceTree = "<group>"; };
@@ -795,6 +795,10 @@
 		8E5980421680104A00027181 /* videoPlayerBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoPlayerBar.png; sourceTree = "<group>"; };
 		8E5980431680104A00027181 /* videoPlayerBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoPlayerBar@2x.png"; sourceTree = "<group>"; };
 		8E669062171611370090C934 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		8E671CCA1725FDBE0051A7C8 /* Dashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dashboard.h; sourceTree = "<group>"; };
+		8E671CCB1725FDBE0051A7C8 /* Dashboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dashboard.m; sourceTree = "<group>"; };
+		8E671CCF172601B40051A7C8 /* Dashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dashboard.h; path = Shelby.tv/Dashboard.h; sourceTree = "<group>"; };
+		8E671CD0172601B50051A7C8 /* Dashboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dashboard.m; path = Shelby.tv/Dashboard.m; sourceTree = "<group>"; };
 		8E70248A1715E71500E8DE46 /* AuthenticateTwitterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthenticateTwitterViewController.h; path = ../Library/Twitter/AuthenticateTwitterViewController.h; sourceTree = "<group>"; };
 		8E70248B1715E71500E8DE46 /* AuthenticateTwitterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthenticateTwitterViewController.m; path = ../Library/Twitter/AuthenticateTwitterViewController.m; sourceTree = "<group>"; };
 		8E70248E1715E71500E8DE46 /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
@@ -1147,12 +1151,12 @@
 				8E1F86D71724FD590004C1F1 /* DashboardEntry.h */,
 				8E1F86D81724FD590004C1F1 /* DashboardEntry.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				8E671CCA1725FDBE0051A7C8 /* Dashboard.h */,
+				8E671CCB1725FDBE0051A7C8 /* Dashboard.m */,
 				8EA10D861725956000B90571 /* Frame.h */,
 				8EA10D871725956000B90571 /* Frame.m */,
 				8E1F86E11725057A0004C1F1 /* Roll.h */,
 				8E1F86E21725057A0004C1F1 /* Roll.m */,
-				8E1F86C31724E3EF0004C1F1 /* Dashboard.h */,
-				8E1F86C41724E3EF0004C1F1 /* Dashboard.m */,
 				8E73C58A16F2D9CE0001EF5D /* Video.h */,
 				8E73C58B16F2D9CE0001EF5D /* Video.m */,
 				8EF03BE916D56D5A0019669F /* User.h */,
@@ -1170,6 +1174,8 @@
 		8E209702162F3A60000A2DFD = {
 			isa = PBXGroup;
 			children = (
+				8E671CCF172601B40051A7C8 /* Dashboard.h */,
+				8E671CD0172601B50051A7C8 /* Dashboard.m */,
 				8E209717162F3A61000A2DFD /* Shelby.tv */,
 				8E82EDF11631C7770044D97E /* Library */,
 				8E32BF86167FA58400753723 /* Assets */,
@@ -2210,12 +2216,13 @@
 				1C304BF5171EF0B000476277 /* SPChannelDisplay.m in Sources */,
 				1C304BFA171EFE4F00476277 /* SPChannelPeekView.m in Sources */,
 				8EAB0069171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
-				8E1F86C61724E3EF0004C1F1 /* Dashboard.m in Sources */,
 				8E1F86DA1724FD590004C1F1 /* DashboardEntry.m in Sources */,
 				8E1F86DF172502A80004C1F1 /* SPChannelCell.m in Sources */,
 				8E1F86E41725057A0004C1F1 /* Roll.m in Sources */,
 				1C6AD0051721F9140008DEC2 /* SPTutorialView.m in Sources */,
 				8EA10D891725956000B90571 /* Frame.m in Sources */,
+				8E671CCD1725FDBE0051A7C8 /* Dashboard.m in Sources */,
+				8E671CD2172601B50051A7C8 /* Dashboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2297,12 +2304,12 @@
 				1C304BF6171EF0B000476277 /* SPChannelDisplay.m in Sources */,
 				1C304BFB171EFE4F00476277 /* SPChannelPeekView.m in Sources */,
 				8EAB006A171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
-				8E1F86C71724E3EF0004C1F1 /* Dashboard.m in Sources */,
 				8E1F86DB1724FD590004C1F1 /* DashboardEntry.m in Sources */,
 				8E1F86E0172502A80004C1F1 /* SPChannelCell.m in Sources */,
 				8E1F86E51725057A0004C1F1 /* Roll.m in Sources */,
 				1C6AD0061721F9140008DEC2 /* SPTutorialView.m in Sources */,
 				8EA10D8A1725956000B90571 /* Frame.m in Sources */,
+				8E671CD3172601B50051A7C8 /* Dashboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2384,12 +2391,13 @@
 				1C304BF4171EF0B000476277 /* SPChannelDisplay.m in Sources */,
 				1C304BF9171EFE4F00476277 /* SPChannelPeekView.m in Sources */,
 				8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
-				8E1F86C51724E3EF0004C1F1 /* Dashboard.m in Sources */,
 				8E1F86D91724FD590004C1F1 /* DashboardEntry.m in Sources */,
 				8E1F86DE172502A80004C1F1 /* SPChannelCell.m in Sources */,
 				8E1F86E31725057A0004C1F1 /* Roll.m in Sources */,
 				1C6AD0041721F9140008DEC2 /* SPTutorialView.m in Sources */,
 				8EA10D881725956000B90571 /* Frame.m in Sources */,
+				8E671CCC1725FDBE0051A7C8 /* Dashboard.m in Sources */,
+				8E671CD1172601B50051A7C8 /* Dashboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

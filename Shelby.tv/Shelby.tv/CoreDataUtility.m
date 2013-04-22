@@ -372,7 +372,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                                    withIDValue:user.userID
                                       forIDKey:kShelbyCoreDataDashboardID];
     
-    dashboard.dashboardID = user.userID;
+    [dashboard setValue:user.userID forKey:kShelbyCoreDataDashboardID];
+    [dashboard setValue:@NO forKey:kShelbyCoreDataDashboardIsChannel];
     
     [self storeDashboardEntries:resultsDictionary forDashboard:user.userID];
 }
@@ -1467,6 +1468,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             NSString *displayThumbnail = [NSString coreDataNullTest:[dashboardDictionary valueForKey:@"display_thumbnail_ipad_src"]];
             displayThumbnail = [NSString stringWithFormat: @"http://shelby.tv%@", displayThumbnail];
             [dashboard setValue:displayThumbnail forKey:kShelbyCoreDataDashboardDisplayThumbnailURL];
+            
+            [dashboard setValue:@YES forKey:kShelbyCoreDataDashboardIsChannel];
             
             [ShelbyAPIClient getChannelDashboardEntries:dashboardID];
         }

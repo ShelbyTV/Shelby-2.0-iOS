@@ -19,6 +19,7 @@
         <attribute name="displayTag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="displayThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isChannel" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="dashboardEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="dashboard" inverseEntity="DashboardEntry" syncable="YES"/>
     </entity>
     <entity name="DashboardEntry" representedClassName="DashboardEntry" syncable="YES">
@@ -98,7 +99,7 @@
     <elements>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Creator" positionX="178" positionY="201" width="128" height="105"/>
-        <element name="Dashboard" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Dashboard" positionX="160" positionY="192" width="128" height="163"/>
         <element name="DashboardEntry" positionX="160" positionY="192" width="128" height="120"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="270"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
