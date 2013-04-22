@@ -583,6 +583,9 @@
 		8EA10D881725956000B90571 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA10D871725956000B90571 /* Frame.m */; };
 		8EA10D891725956000B90571 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA10D871725956000B90571 /* Frame.m */; };
 		8EA10D8A1725956000B90571 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA10D871725956000B90571 /* Frame.m */; };
+		8EA10D8C1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
+		8EA10D8D1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
+		8EA10D8E1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
 		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
@@ -877,6 +880,7 @@
 		8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationTextField@2x.png"; sourceTree = "<group>"; };
 		8EA10D861725956000B90571 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		8EA10D871725956000B90571 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		8EA10D8B1725A9DD00B90571 /* Harpy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Harpy.bundle; sourceTree = "<group>"; };
 		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
 		8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemView.m; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
@@ -898,7 +902,6 @@
 		8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
 		8EC65F7616E4FD42009EC83D /* Harpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harpy.h; sourceTree = "<group>"; };
 		8EC65F7716E4FD42009EC83D /* Harpy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Harpy.m; sourceTree = "<group>"; };
-		8EC65F7816E4FD42009EC83D /* HarpyConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarpyConstants.h; sourceTree = "<group>"; };
 		8EC65F7A16E4FD42009EC83D /* Panhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panhandler.h; sourceTree = "<group>"; };
 		8EC65F7B16E4FD42009EC83D /* Panhandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Panhandler.m; sourceTree = "<group>"; };
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
@@ -1541,7 +1544,7 @@
 			children = (
 				8EC65F7616E4FD42009EC83D /* Harpy.h */,
 				8EC65F7716E4FD42009EC83D /* Harpy.m */,
-				8EC65F7816E4FD42009EC83D /* HarpyConstants.h */,
+				8EA10D8B1725A9DD00B90571 /* Harpy.bundle */,
 			);
 			name = Harpy;
 			path = Library/Harpy;
@@ -1860,6 +1863,7 @@
 				1C6ACFFA1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFD1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6AD0001721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
+				8EA10D8D1725A9DD00B90571 /* Harpy.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1975,6 +1979,7 @@
 				1C6ACFFB1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFE1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6AD0011721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
+				8EA10D8E1725A9DD00B90571 /* Harpy.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2091,6 +2096,7 @@
 				1C6ACFF91721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFC1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6ACFFF1721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
+				8EA10D8C1725A9DD00B90571 /* Harpy.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

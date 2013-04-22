@@ -264,7 +264,9 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 {
     
     // Harpy
-    [Harpy checkVersion];
+    [[Harpy sharedInstance] setAppID:@"467849037"];
+    [[Harpy sharedInstance] setAlertType:HarpyAlertTypeOption];
+    [[Harpy sharedInstance] checkVersion];
     
     // TODO - Uncomment for AppStore
     // Panhandler
