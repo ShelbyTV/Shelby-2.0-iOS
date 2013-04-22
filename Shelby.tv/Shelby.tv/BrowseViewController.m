@@ -603,7 +603,6 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         NSMutableArray *videoFrames = nil;
         NSString *errorMessage = nil;
         NSString *title = nil;
@@ -615,7 +614,6 @@
             case GroupType_ChannelDashboard:
             {
                 Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:objectID error:nil];
-                videoFrames = [dataUtility fetchDashboardEntriesInDashboard:[dashboard dashboardID]];
                 errorMessage = @"No videos in Channel Dashboard.";
                 title = [dashboard displayTitle];
                 break;
@@ -623,7 +621,6 @@
             case GroupType_ChannelRoll:
             {
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
-                videoFrames = [dataUtility fetchFramesInChannelRoll:[roll rollID]];
                 errorMessage = @"No videos in Channel Roll.";
                 title = [roll displayTitle];
                 break;
@@ -633,6 +630,8 @@
                 return;
             }
         }
+        
+        videoFrames = self.channelsDataSource[[NSNumber numberWithInt:channelIndex]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([videoFrames count]) {
