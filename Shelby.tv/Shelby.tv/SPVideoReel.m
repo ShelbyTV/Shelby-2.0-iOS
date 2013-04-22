@@ -326,8 +326,17 @@
         }
         
         [self.model setCurrentVideo:[self videoStartIndex]];
-        [self.model setCurrentVideoPlayer:(self.videoPlayers)[[self.model currentVideo]]];
-        [self currentVideoDidChangeToVideo:[self.model currentVideo]];
+        
+        // Making sure we are not accessing index beyond our array. And if we do, go to the last video available.
+        NSInteger currentVideo = [self.model currentVideo];
+        if ([self.videoPlayers count] <= currentVideo) {
+            currentVideo = [self.videoPlayers count] - 1;
+        }
+        
+        if (currentVideo >= 0) {
+            [self.model setCurrentVideoPlayer:(self.videoPlayers)[currentVideo]];
+            [self currentVideoDidChangeToVideo:currentVideo];
+        } 
     }
 }
 
