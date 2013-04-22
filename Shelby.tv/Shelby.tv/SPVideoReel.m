@@ -1103,30 +1103,30 @@
     [[SPVideoScrubber sharedInstance] stopObserving];
     
     // Remove references on model
-    [self.model destroyModel];
+//    [self.model destroyModel];
     
     // Remove videoPlayers
     [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-    [self.videoPlayers removeAllObjects];
-    self.videoPlayers = nil;
+//    [self.videoPlayers removeAllObjects];
+//    self.videoPlayers = nil;
     
     // Remove playableVideoPlayers (e.g., videoPlayers that are stored in local cache)
     [self.playableVideoPlayers makeObjectsPerformSelector:@selector(pause)];
-    [self.playableVideoPlayers removeAllObjects];
-    [self setPlayableVideoPlayers:nil];
+//    [self.playableVideoPlayers removeAllObjects];
+//    [self setPlayableVideoPlayers:nil];
     
-    [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self.videoScrollView removeFromSuperview];
-    [self setVideoScrollView:nil];
+//    [[self.videoScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//    [self.videoScrollView removeFromSuperview];
+//    [self setVideoScrollView:nil];
 
-    // Instantiate dataUtility for cleanup
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    
-    // Remove older videos (channelID will be nil for stream, likes, and personal-roll)
-    [dataUtility removeOlderVideoFramesForGroupType:_groupType andChannelID:_channelID];
-    
-    // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
-    [dataUtility removeAllVideoExtractionURLReferences];
+//    // Instantiate dataUtility for cleanup
+//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//    
+//    // Remove older videos (channelID will be nil for stream, likes, and personal-roll)
+//    [dataUtility removeOlderVideoFramesForGroupType:_groupType andChannelID:_channelID];
+//    
+//    // All video.extractedURL references are temporary (session-dependent), so they should be removed when the app shuts down.
+//    [dataUtility removeAllVideoExtractionURLReferences];
 }
 
 #pragma mark - Tutorial Methods
