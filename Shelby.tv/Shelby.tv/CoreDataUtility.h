@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-extern NSString * const kShelbyNotificationCategoriesFinishedSync;
-extern NSString * const kShelbyNotificationCategoryFramesFetched;
+extern NSString * const kShelbyNotificationChannelsFinishedSync;
+extern NSString * const kShelbyNotificationChannelDataFetched;
 
 @interface CoreDataUtility : NSObject
 

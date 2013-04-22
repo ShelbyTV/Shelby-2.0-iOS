@@ -31,7 +31,7 @@
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
 
 /// Categories
-+ (void)getAllCategories;
++ (void)getAllChannels;
 + (void)getChannelDashboard:(NSString *)channelID;
 + (void)getMoreDashboardEntries:(NSString *)skipParam forChannelDashboard:(NSString *)dashboardID;
 + (void)getCategoryRoll:(NSString *)rollID;

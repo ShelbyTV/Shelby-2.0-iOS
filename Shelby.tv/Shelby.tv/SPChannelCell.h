@@ -1,5 +1,5 @@
 //
-//  SPCategoryViewCell.h
+//  SPChannelCell.h
 //  Shelby.tv
 //
 //  Created by Keren on 4/15/13.
@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SPCategoryViewCell : UITableViewCell
+@interface SPChannelCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UICollectionView *categoryFrames;
 
-- (UIColor *)categoryDisplayColor;
-- (NSString *)categoryDisplayTitle;
-- (void)setcategoryColor:(NSString *)hex andTitle:(NSString *)title;
+- (UIColor *)channelDisplayColor;
+- (NSString *)channelDisplayTitle;
+- (void)setChannelColor:(NSString *)hex andTitle:(NSString *)title;
 @end

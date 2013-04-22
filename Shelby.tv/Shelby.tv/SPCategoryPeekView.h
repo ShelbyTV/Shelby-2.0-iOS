@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SPCategoryDisplay.h"
+#import "SPChannelDisplay.h"
 
 @interface SPCategoryPeekView : UIView
 
-- (void)setupWithCategoryDisplay:(SPCategoryDisplay *)categoryDisplay;
+- (void)setupWithCategoryDisplay:(SPChannelDisplay *)categoryDisplay;
 
 @end

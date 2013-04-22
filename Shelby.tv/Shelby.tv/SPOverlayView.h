@@ -8,7 +8,7 @@
 
 @interface SPOverlayView : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *categoryTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *channelTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *airPlayView; // KP KP: TODO: add this button to nib!
 @property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *videoCaptionLabel;

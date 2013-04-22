@@ -37,7 +37,7 @@
         _model = [SPModel sharedInstance];
         
         // Customize Colors
-        [_categoryTitleLabel setTextColor:kShelbyColorWhite];
+        [_channelTitleLabel setTextColor:kShelbyColorWhite];
         [_nicknameLabel setTextColor:kShelbyColorBlack];
         [_videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
         [_videoCaptionLabel setTextColor:kShelbyColorBlack];

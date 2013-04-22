@@ -923,7 +923,7 @@
     CGPoint translation = [gestureRecognizer translationInView:self.view];
     
     BOOL peekUp = y >= 0 ? YES : NO;
-    SPCategoryDisplay *categoryDisplay = nil;
+    SPChannelDisplay *categoryDisplay = nil;
     if (self.delegate && [self.delegate respondsToSelector:@selector(categoryDisplayForDirection:)]) {
        categoryDisplay =  [self.delegate categoryDisplayForDirection:peekUp];
     }

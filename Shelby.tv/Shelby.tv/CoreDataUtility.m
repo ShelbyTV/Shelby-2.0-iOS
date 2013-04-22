@@ -10,8 +10,8 @@
 #import "CoreDataUtility.h"
 #import "SPVideoExtractor.h"
 
-NSString * const kShelbyNotificationCategoriesFinishedSync = @"kShelbyNotificationCategoriesFinishedSync";
-NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificationCategoryFramesFetched";
+NSString * const kShelbyNotificationChannelsFinishedSync = @"kShelbyNotificationChannelsFinishedSync";
+NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationChannelDataFetched";
 @interface CoreDataUtility ()
 
 @property (strong ,nonatomic) NSManagedObjectContext *context;
@@ -39,7 +39,6 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
 - (void)storeRoll:(Roll *)roll fromDictionary:(NSDictionary *)rollDictionary;
 - (void)storeVideo:(Video *)video fromDictionary:(NSDictionary *)videoDictionary;
 - (void)storeCategoryRolls:(NSArray *)rollsArray withInitialTag:(NSUInteger)displayTag;
-- (void)storeCategoryChannels:(NSArray *)channelsArray withInitialTag:(NSUInteger)displayTag;
 - (void)storeCategoryDashboardEntries:(NSArray *)dashboardEntriesArray withInitialTag:(NSUInteger)displayTag;
 
 /// Fetching Methods
@@ -163,7 +162,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
                     
                     DLog(@"Categories Synced and Saved Successfully");
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoriesFinishedSync object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFinishedSync object:nil];
                     });
 
                     
@@ -393,7 +392,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     
     User *user = [self fetchUser];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:user.userID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:user.userID];
     });
     
 }
@@ -439,7 +438,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     [self saveContext:_context];
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:dashboardID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:dashboardID];
     });
 }
 
@@ -530,11 +529,11 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     User *user = [self fetchUser];
     if ( groupType == GroupType_Likes ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:user.likesRollID];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:user.likesRollID];
         });
     } else if ( groupType == GroupType_PersonalRoll ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:user.personalRollID];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:user.personalRollID];
         });
     }
 }
@@ -564,7 +563,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     [self saveContext:_context];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:channelID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:channelID];
     });
 }
 
@@ -591,7 +590,7 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
     [self saveContext:_context];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationCategoryFramesFetched object:rollID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:rollID];
     });
 }
 

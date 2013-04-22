@@ -7,14 +7,14 @@
 //
 
 #import "SPModel.h"
-#import "SPCategoryDisplay.h"
+#import "SPChannelDisplay.h"
 #import "AuthorizationViewController.h"
 
 @protocol SPVideoReelDelegate <NSObject>
 
 - (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel;
-- (SPCategoryDisplay *)categoryDisplayForDirection:(BOOL)up;
+- (SPChannelDisplay *)categoryDisplayForDirection:(BOOL)up;
 @end
 
 @class SPVideoPlayer, SPOverlayView;

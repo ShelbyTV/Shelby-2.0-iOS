@@ -1,20 +1,20 @@
 //
-//  SPCategoryViewCell.m
+//  SPChannelCell.m
 //  Shelby.tv
 //
 //  Created by Keren on 4/15/13.
 //  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
 //
 
-#import "SPCategoryViewCell.h"
+#import "SPChannelCell.h"
 #import "UIColor+ColorWithHexAndAlpha.h"
 
-@interface SPCategoryViewCell()
-@property (weak, nonatomic) IBOutlet UILabel *categoryTitle;
-@property (weak, nonatomic) IBOutlet UIView *categoryColorView;
+@interface SPChannelCell()
+@property (weak, nonatomic) IBOutlet UILabel *channelTitle;
+@property (weak, nonatomic) IBOutlet UIView *channelColorView;
 @end
 
-@implementation SPCategoryViewCell
+@implementation SPChannelCell
 
 
 - (void)awakeFromNib
@@ -24,9 +24,9 @@
 
 }
 
-- (void)setcategoryColor:(NSString *)hex andTitle:(NSString *)title
+- (void)setChannelColor:(NSString *)hex andTitle:(NSString *)title
 {
-    [self.categoryTitle setText:title];
+    [self.channelTitle setText:title];
     
     UIColor *categoryColor = nil;
     if (hex) {
@@ -35,17 +35,17 @@
         categoryColor = kShelbyColorGreen;
     }
 
-    [self.categoryColorView setBackgroundColor:categoryColor];
+    [self.channelColorView setBackgroundColor:categoryColor];
 }
 
-- (UIColor *)categoryDisplayColor
+- (UIColor *)channelDisplayColor
 {
-    return [self.categoryColorView backgroundColor];
+    return [self.channelColorView backgroundColor];
 }
 
-- (NSString *)categoryDisplayTitle
+- (NSString *)channelDisplayTitle
 {
-    return [self.categoryTitle text];
+    return [self.channelTitle text];
 }
 
 @end

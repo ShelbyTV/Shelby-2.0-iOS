@@ -311,7 +311,7 @@
 }
 
 #pragma mark - Categories (GET)
-+ (void)getAllCategories
++ (void)getAllChannels
 {
     
     NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];

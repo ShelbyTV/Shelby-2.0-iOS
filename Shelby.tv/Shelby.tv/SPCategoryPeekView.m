@@ -23,16 +23,16 @@
     return self;
 }
 
-- (void)setupWithCategoryDisplay:(SPCategoryDisplay *)categoryDisplay;
+- (void)setupWithCategoryDisplay:(SPChannelDisplay *)categoryDisplay;
 {
     [self.title setTextAlignment:NSTextAlignmentCenter];
-    [self.title setText:[NSString stringWithFormat:@"# %@",[categoryDisplay categoryDisplayTitle]]];
+    [self.title setText:[NSString stringWithFormat:@"# %@",[categoryDisplay channelDisplayTitle]]];
     [self.title setTextColor:[UIColor whiteColor]];
     [self.title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0]];
     [self.title setBackgroundColor:[UIColor clearColor]];
     
     [self addSubview:self.title];
-    [self setBackgroundColor:[categoryDisplay categoryDisplayColor]];
+    [self setBackgroundColor:[categoryDisplay channelDisplayColor]];
 }
 
 - (void)setFrame:(CGRect)frame

@@ -112,7 +112,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH , 0), ^{
-        [ShelbyAPIClient getAllCategories];
+        [ShelbyAPIClient getAllChannels];
     });
     
     // Enable Audio Play in Vibrate and Background Modes
@@ -214,8 +214,8 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     // Empty existing CoreData Store (if one exists)
     [self dumpAllData];
     
-    // Refetch Categories, since core-data store was dumped
-    [ShelbyAPIClient getAllCategories];
+    // Refetch Channels, since core-data store was dumped
+    [ShelbyAPIClient getAllChannels];
 }
 
 #pragma mark - Offline Methods (Public)
