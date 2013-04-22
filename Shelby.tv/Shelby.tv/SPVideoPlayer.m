@@ -457,6 +457,9 @@
 
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoFrame objectID];
+    if (!objectID) {
+        return;
+    }
     self.videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
     
     Video *video = [notification.userInfo valueForKey:kShelbySPCurrentVideo];
