@@ -497,15 +497,15 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="rollingCancelButton.png">{65, 31}</string>
-			<string key="rollingContainer.png">{522, 250}</string>
-			<string key="rollingFacebookButtonOff.png">{45, 45}</string>
-			<string key="rollingFacebookButtonOn.png">{45, 45}</string>
-			<string key="rollingRollButton.png">{55, 31}</string>
-			<string key="rollingTextView.png">{404, 100}</string>
-			<string key="rollingThumbnail.png">{98, 98}</string>
-			<string key="rollingTwitterButtonOff.png">{45, 45}</string>
-			<string key="rollingTwitterButtonOn.png">{45, 45}</string>
+			<string key="rollingCancelButton.png">{16, 16}</string>
+			<string key="rollingContainer.png">{16, 16}</string>
+			<string key="rollingFacebookButtonOff.png">{16, 16}</string>
+			<string key="rollingFacebookButtonOn.png">{16, 16}</string>
+			<string key="rollingRollButton.png">{16, 16}</string>
+			<string key="rollingTextView.png">{16, 16}</string>
+			<string key="rollingThumbnail.png">{16, 16}</string>
+			<string key="rollingTwitterButtonOff.png">{16, 16}</string>
+			<string key="rollingTwitterButtonOn.png">{16, 16}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

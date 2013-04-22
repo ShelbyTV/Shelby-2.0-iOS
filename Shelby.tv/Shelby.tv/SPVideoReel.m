@@ -7,10 +7,12 @@
 //
 
 #import "SPVideoReel.h"
+#import <QuartzCore/QuartzCore.h>
 
 // Views
 #import "SPOverlayView.h"
 #import "SPChannelPeekView.h"
+#import "SPTutorialView.h"
 
 // Controllers
 #import "SPVideoExtractor.h"
@@ -42,6 +44,7 @@
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 @property (nonatomic) SPChannelPeekView *peelChannelView;
+@property (nonatomic) SPTutorialView *tutorialView;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
@@ -85,6 +88,14 @@
 - (void)animateUp:(float)speed andSwitchChannel:(BOOL)switchChannel;
 - (void)switchChannelWithDirectionUp:(BOOL)up;
 
+///Tutorial
+- (void)showDoubleTapTutorial;
+- (void)showSwipeLeftTutorial;
+- (void)showSwipeUpTutorial;
+- (void)showPinchTutorial;
+- (void)videoSwipedLeft;
+- (void)videoSwipedUp;
+- (BOOL)tutorialSetup;
 @end
 
 @implementation SPVideoReel 
@@ -94,6 +105,8 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPLoadVideoAfterUnplayableVideo object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
+    
     
     DLog(@"SPVideoReel Deallocated");
 }
@@ -145,6 +158,15 @@
     _peelChannelView = [[SPChannelPeekView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     [self setup];
+    
+    if (self.tutorialMode == SPTutorialModeShow) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(showDoubleTapTutorial)
+                                                     name:kShelbySPVideoExtracted
+                                                   object:nil];
+    } else if (self.tutorialMode == SPTutorialModePinch) {
+        [self performSelector:@selector(showPinchTutorial) withObject:nil afterDelay:5];
+    }
 }
 
 #pragma mark - Setup Methods
@@ -907,6 +929,10 @@
 #pragma mark - Gesutre Methods (Private)
 - (void)switchChannelWithDirectionUp:(BOOL)up
 {
+    if (self.tutorialView) {
+        [self.tutorialView setAlpha:0];
+    }
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(userDidSwitchChannel:direction:)]) {
         [self.delegate userDidSwitchChannel:self direction:up];
     }
@@ -1085,6 +1111,105 @@
     [dataUtility removeAllVideoExtractionURLReferences];
 }
 
+#pragma mark - Tutorial Methods
+- (BOOL)tutorialSetup
+{
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPTutorialView" owner:self options:nil];
+    if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
+        [self setTutorialView:nib[0]];
+        [self.tutorialView setAlpha:0];
+        [self.view addSubview:self.tutorialView];
+        [self.tutorialView setFrame:CGRectMake(kShelbySPVideoWidth / 2 - self.tutorialView.frame.size.width/2, self.view.frame.size.height / 2 - kShelbySPVideoHeight / 2 - 30, self.tutorialView.frame.size.width, self.tutorialView.frame.size.height)];
+        
+        [self.view bringSubviewToFront:self.tutorialView];
+        
+        [self.tutorialView.layer setCornerRadius:10];
+        [self.tutorialView.layer setMasksToBounds:YES];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)showDoubleTapTutorial
+{
+    if ([self tutorialSetup]) {
+        [self setTutorialMode:SPTutorialModeDoubleTap];
+        [UIView animateWithDuration:0.2 animations:^{
+            [self.tutorialView setAlpha:0.9];
+        }];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
+    }
+}
+
+- (void)videoDoubleTapped
+{
+    if (self.tutorialMode == SPTutorialModeDoubleTap) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [self.tutorialView setAlpha:0];
+        } completion:^(BOOL finished) {
+            [self setTutorialMode:SPTutorialModeShow];
+            [self performSelector:@selector(showSwipeLeftTutorial) withObject:nil afterDelay:5];            
+        }];
+    }
+}
+
+- (void)videoSwipedLeft
+{
+    if (self.tutorialMode == SPTutorialModeSwipeLeft) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [self.tutorialView setAlpha:0];
+        } completion:^(BOOL finished) {
+            [self setTutorialMode:SPTutorialModeShow];
+            [self performSelector:@selector(showSwipeUpTutorial) withObject:nil afterDelay:5];
+        }];
+    }
+}
+
+- (void)videoSwipedUp
+{
+    if (self.tutorialMode == SPTutorialModeSwipeUp) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [self.tutorialView setAlpha:0];
+        } completion:^(BOOL finished) {
+            [self setTutorialMode:SPTutorialModeShow];
+            [self performSelector:@selector(showSwipeUpTutorial) withObject:nil afterDelay:5];
+        }];
+    }
+}
+
+- (void)showSwipeLeftTutorial
+{
+    [self setTutorialMode:SPTutorialModeSwipeLeft];
+    [self.tutorialView setupWithImage:@"swipeleft.png" andText:@"Swipe left to play next video in this channel"];
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.tutorialView setAlpha:0.9];
+    }];
+}
+
+- (void)showSwipeUpTutorial
+{
+    [self setTutorialMode:SPTutorialModeSwipeUp];
+    [self.tutorialView setupWithImage:@"swipeup.png" andText:@"Swipe up to change the channel"];
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.tutorialView setAlpha:0.9];
+    }];    
+}
+
+- (void)showPinchTutorial
+{
+    if ([self tutorialSetup]) {
+        [self.tutorialView setupWithImage:@"pinch.png" andText:@"Pinch to close current channel"];
+        [UIView animateWithDuration:0.2 animations:^{
+            [self.tutorialView setAlpha:0.9];
+        }];
+    }
+}
+
+
+
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -1096,6 +1221,9 @@
     // Toggle playback on old and new SPVideoPlayer objects
     if ( page != _model.currentVideo ) {
         [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+        if (page > _model.currentVideo) {
+            [self videoSwipedLeft];
+        }
     } else {
         return;
     }

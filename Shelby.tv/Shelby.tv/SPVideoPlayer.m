@@ -372,6 +372,8 @@
     } else { // Pause
         [self pause];
     }
+    
+    [[SPModel sharedInstance].videoReel videoDoubleTapped];
 }
 
 - (void)restartPlayback

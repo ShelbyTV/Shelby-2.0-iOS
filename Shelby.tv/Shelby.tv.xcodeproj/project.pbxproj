@@ -50,6 +50,45 @@
 		1C52849F16F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
 		1C5284A016F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
 		1C5284A116F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
+		1C6ACFD21721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
+		1C6ACFD31721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
+		1C6ACFD41721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
+		1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
+		1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
+		1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
+		1C6ACFDB1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
+		1C6ACFDC1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
+		1C6ACFDD1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
+		1C6ACFDF1721EA020008DEC2 /* SPTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */; };
+		1C6ACFE01721EA020008DEC2 /* SPTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */; };
+		1C6ACFE11721EA020008DEC2 /* SPTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */; };
+		1C6ACFEA1721EA3F0008DEC2 /* doubletap.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE21721EA3F0008DEC2 /* doubletap.png */; };
+		1C6ACFEB1721EA3F0008DEC2 /* doubletap.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE21721EA3F0008DEC2 /* doubletap.png */; };
+		1C6ACFEC1721EA3F0008DEC2 /* doubletap.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE21721EA3F0008DEC2 /* doubletap.png */; };
+		1C6ACFED1721EA3F0008DEC2 /* doubletap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE31721EA3F0008DEC2 /* doubletap@2x.png */; };
+		1C6ACFEE1721EA3F0008DEC2 /* doubletap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE31721EA3F0008DEC2 /* doubletap@2x.png */; };
+		1C6ACFEF1721EA3F0008DEC2 /* doubletap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE31721EA3F0008DEC2 /* doubletap@2x.png */; };
+		1C6ACFF01721EA3F0008DEC2 /* pinch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE41721EA3F0008DEC2 /* pinch.png */; };
+		1C6ACFF11721EA3F0008DEC2 /* pinch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE41721EA3F0008DEC2 /* pinch.png */; };
+		1C6ACFF21721EA3F0008DEC2 /* pinch.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE41721EA3F0008DEC2 /* pinch.png */; };
+		1C6ACFF31721EA3F0008DEC2 /* pinch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE51721EA3F0008DEC2 /* pinch@2x.png */; };
+		1C6ACFF41721EA3F0008DEC2 /* pinch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE51721EA3F0008DEC2 /* pinch@2x.png */; };
+		1C6ACFF51721EA3F0008DEC2 /* pinch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE51721EA3F0008DEC2 /* pinch@2x.png */; };
+		1C6ACFF61721EA3F0008DEC2 /* swipeleft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE61721EA3F0008DEC2 /* swipeleft.png */; };
+		1C6ACFF71721EA3F0008DEC2 /* swipeleft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE61721EA3F0008DEC2 /* swipeleft.png */; };
+		1C6ACFF81721EA3F0008DEC2 /* swipeleft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE61721EA3F0008DEC2 /* swipeleft.png */; };
+		1C6ACFF91721EA3F0008DEC2 /* swipeleft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE71721EA3F0008DEC2 /* swipeleft@2x.png */; };
+		1C6ACFFA1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE71721EA3F0008DEC2 /* swipeleft@2x.png */; };
+		1C6ACFFB1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE71721EA3F0008DEC2 /* swipeleft@2x.png */; };
+		1C6ACFFC1721EA3F0008DEC2 /* swipeup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE81721EA3F0008DEC2 /* swipeup.png */; };
+		1C6ACFFD1721EA3F0008DEC2 /* swipeup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE81721EA3F0008DEC2 /* swipeup.png */; };
+		1C6ACFFE1721EA3F0008DEC2 /* swipeup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE81721EA3F0008DEC2 /* swipeup.png */; };
+		1C6ACFFF1721EA3F0008DEC2 /* swipeup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE91721EA3F0008DEC2 /* swipeup@2x.png */; };
+		1C6AD0001721EA3F0008DEC2 /* swipeup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE91721EA3F0008DEC2 /* swipeup@2x.png */; };
+		1C6AD0011721EA3F0008DEC2 /* swipeup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE91721EA3F0008DEC2 /* swipeup@2x.png */; };
+		1C6AD0041721F9140008DEC2 /* SPTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6AD0031721F9140008DEC2 /* SPTutorialView.m */; };
+		1C6AD0051721F9140008DEC2 /* SPTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6AD0031721F9140008DEC2 /* SPTutorialView.m */; };
+		1C6AD0061721F9140008DEC2 /* SPTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6AD0031721F9140008DEC2 /* SPTutorialView.m */; };
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
 		1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
@@ -612,6 +651,20 @@
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
 		1C52849516F7AE6C00B43A94 /* greyButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyButton@2x.png"; sourceTree = "<group>"; };
+		1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelZeroTutorialView.xib; sourceTree = "<group>"; };
+		1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial.png"; sourceTree = "<group>"; };
+		1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial@2x.png"; sourceTree = "<group>"; };
+		1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPTutorialView.xib; sourceTree = "<group>"; };
+		1C6ACFE21721EA3F0008DEC2 /* doubletap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doubletap.png; sourceTree = "<group>"; };
+		1C6ACFE31721EA3F0008DEC2 /* doubletap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doubletap@2x.png"; sourceTree = "<group>"; };
+		1C6ACFE41721EA3F0008DEC2 /* pinch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinch.png; sourceTree = "<group>"; };
+		1C6ACFE51721EA3F0008DEC2 /* pinch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pinch@2x.png"; sourceTree = "<group>"; };
+		1C6ACFE61721EA3F0008DEC2 /* swipeleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipeleft.png; sourceTree = "<group>"; };
+		1C6ACFE71721EA3F0008DEC2 /* swipeleft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swipeleft@2x.png"; sourceTree = "<group>"; };
+		1C6ACFE81721EA3F0008DEC2 /* swipeup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipeup.png; sourceTree = "<group>"; };
+		1C6ACFE91721EA3F0008DEC2 /* swipeup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swipeup@2x.png"; sourceTree = "<group>"; };
+		1C6AD0021721F9140008DEC2 /* SPTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTutorialView.h; sourceTree = "<group>"; };
+		1C6AD0031721F9140008DEC2 /* SPTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTutorialView.m; sourceTree = "<group>"; };
 		1C72B8AE16DBF1FA008BA3AD /* ImageUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtilities.h; sourceTree = "<group>"; };
 		1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtilities.m; sourceTree = "<group>"; };
 		1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
@@ -979,6 +1032,23 @@
 			name = FormViews;
 			sourceTree = "<group>";
 		};
+		1C6ACFD51721E0B20008DEC2 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				1C6ACFE21721EA3F0008DEC2 /* doubletap.png */,
+				1C6ACFE31721EA3F0008DEC2 /* doubletap@2x.png */,
+				1C6ACFE41721EA3F0008DEC2 /* pinch.png */,
+				1C6ACFE51721EA3F0008DEC2 /* pinch@2x.png */,
+				1C6ACFE61721EA3F0008DEC2 /* swipeleft.png */,
+				1C6ACFE71721EA3F0008DEC2 /* swipeleft@2x.png */,
+				1C6ACFE81721EA3F0008DEC2 /* swipeup.png */,
+				1C6ACFE91721EA3F0008DEC2 /* swipeup@2x.png */,
+				1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */,
+				1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1199,6 +1269,7 @@
 		8E32BF86167FA58400753723 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1C6ACFD51721E0B20008DEC2 /* Tutorial */,
 				1CFD670F17203D5A00324A27 /* Browse Images */,
 				8E2FC87216C6F19D0022B58C /* Login & Signup Images */,
 				8EF03C0616D577800019669F /* Rolling Images */,
@@ -1274,6 +1345,7 @@
 				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
 				8EF03BEC16D576EC0019669F /* SPShareRollView.xib */,
 				1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */,
+				1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -1289,6 +1361,8 @@
 				8EF03C5E16D57C170019669F /* SPShareRollView.h */,
 				8EF03C5F16D57C170019669F /* SPShareRollView.m */,
 				8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */,
+				1C6AD0021721F9140008DEC2 /* SPTutorialView.h */,
+				1C6AD0031721F9140008DEC2 /* SPTutorialView.m */,
 				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
 				1C304BF7171EFE4F00476277 /* SPChannelPeekView.h */,
 				1C304BF8171EFE4F00476277 /* SPChannelPeekView.m */,
@@ -1529,6 +1603,7 @@
 			isa = PBXGroup;
 			children = (
 				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
+				1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */,
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
 			);
 			name = Xibs;
@@ -1780,6 +1855,18 @@
 				1C22E3BF171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1CFD671317203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671617203D5A00324A27 /* channelbg@2x.png in Resources */,
+				1C6ACFD31721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */,
+				1C6ACFDC1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
+				1C6ACFE01721EA020008DEC2 /* SPTutorialView.xib in Resources */,
+				1C6ACFEB1721EA3F0008DEC2 /* doubletap.png in Resources */,
+				1C6ACFEE1721EA3F0008DEC2 /* doubletap@2x.png in Resources */,
+				1C6ACFF11721EA3F0008DEC2 /* pinch.png in Resources */,
+				1C6ACFF41721EA3F0008DEC2 /* pinch@2x.png in Resources */,
+				1C6ACFF71721EA3F0008DEC2 /* swipeleft.png in Resources */,
+				1C6ACFFA1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
+				1C6ACFFD1721EA3F0008DEC2 /* swipeup.png in Resources */,
+				1C6AD0001721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1883,6 +1970,18 @@
 				1C22E3C0171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1CFD671417203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671717203D5A00324A27 /* channelbg@2x.png in Resources */,
+				1C6ACFD41721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */,
+				1C6ACFDD1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
+				1C6ACFE11721EA020008DEC2 /* SPTutorialView.xib in Resources */,
+				1C6ACFEC1721EA3F0008DEC2 /* doubletap.png in Resources */,
+				1C6ACFEF1721EA3F0008DEC2 /* doubletap@2x.png in Resources */,
+				1C6ACFF21721EA3F0008DEC2 /* pinch.png in Resources */,
+				1C6ACFF51721EA3F0008DEC2 /* pinch@2x.png in Resources */,
+				1C6ACFF81721EA3F0008DEC2 /* swipeleft.png in Resources */,
+				1C6ACFFB1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
+				1C6ACFFE1721EA3F0008DEC2 /* swipeup.png in Resources */,
+				1C6AD0011721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1987,6 +2086,18 @@
 				1C22E3BE171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1CFD671217203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671517203D5A00324A27 /* channelbg@2x.png in Resources */,
+				1C6ACFD21721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */,
+				1C6ACFDB1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
+				1C6ACFDF1721EA020008DEC2 /* SPTutorialView.xib in Resources */,
+				1C6ACFEA1721EA3F0008DEC2 /* doubletap.png in Resources */,
+				1C6ACFED1721EA3F0008DEC2 /* doubletap@2x.png in Resources */,
+				1C6ACFF01721EA3F0008DEC2 /* pinch.png in Resources */,
+				1C6ACFF31721EA3F0008DEC2 /* pinch@2x.png in Resources */,
+				1C6ACFF61721EA3F0008DEC2 /* swipeleft.png in Resources */,
+				1C6ACFF91721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
+				1C6ACFFC1721EA3F0008DEC2 /* swipeup.png in Resources */,
+				1C6ACFFF1721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2100,12 +2211,16 @@
 				1C304BF5171EF0B000476277 /* SPChannelDisplay.m in Sources */,
 				1C304BFA171EFE4F00476277 /* SPChannelPeekView.m in Sources */,
 				8EAB0069171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
+<<<<<<< HEAD
 				8E1F86A81724E3030004C1F1 /* Frame.m in Sources */,
 				8E1F86B71724E3250004C1F1 /* StreamEntry.m in Sources */,
 				8E1F86C61724E3EF0004C1F1 /* Dashboard.m in Sources */,
 				8E1F86DA1724FD590004C1F1 /* DashboardEntry.m in Sources */,
 				8E1F86DF172502A80004C1F1 /* SPChannelCell.m in Sources */,
 				8E1F86E41725057A0004C1F1 /* Roll.m in Sources */,
+=======
+				1C6AD0051721F9140008DEC2 /* SPTutorialView.m in Sources */,
+>>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2187,12 +2302,16 @@
 				1C304BF6171EF0B000476277 /* SPChannelDisplay.m in Sources */,
 				1C304BFB171EFE4F00476277 /* SPChannelPeekView.m in Sources */,
 				8EAB006A171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
+<<<<<<< HEAD
 				8E1F86A91724E3030004C1F1 /* Frame.m in Sources */,
 				8E1F86B81724E3250004C1F1 /* StreamEntry.m in Sources */,
 				8E1F86C71724E3EF0004C1F1 /* Dashboard.m in Sources */,
 				8E1F86DB1724FD590004C1F1 /* DashboardEntry.m in Sources */,
 				8E1F86E0172502A80004C1F1 /* SPChannelCell.m in Sources */,
 				8E1F86E51725057A0004C1F1 /* Roll.m in Sources */,
+=======
+				1C6AD0061721F9140008DEC2 /* SPTutorialView.m in Sources */,
+>>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2274,12 +2393,16 @@
 				1C304BF4171EF0B000476277 /* SPChannelDisplay.m in Sources */,
 				1C304BF9171EFE4F00476277 /* SPChannelPeekView.m in Sources */,
 				8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */,
+<<<<<<< HEAD
 				8E1F86A71724E3030004C1F1 /* Frame.m in Sources */,
 				8E1F86B61724E3250004C1F1 /* StreamEntry.m in Sources */,
 				8E1F86C51724E3EF0004C1F1 /* Dashboard.m in Sources */,
 				8E1F86D91724FD590004C1F1 /* DashboardEntry.m in Sources */,
 				8E1F86DE172502A80004C1F1 /* SPChannelCell.m in Sources */,
 				8E1F86E31725057A0004C1F1 /* Roll.m in Sources */,
+=======
+				1C6AD0041721F9140008DEC2 /* SPTutorialView.m in Sources */,
+>>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

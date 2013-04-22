@@ -10,6 +10,16 @@
 #import "SPChannelDisplay.h"
 #import "AuthorizationViewController.h"
 
+typedef NS_ENUM(NSUInteger, SPTutorialMode)
+{
+    SPTutorialModeNone,
+    SPTutorialModeShow,
+    SPTutorialModeDoubleTap,
+    SPTutorialModeSwipeLeft,
+    SPTutorialModeSwipeUp,
+    SPTutorialModePinch
+};
+
 @protocol SPVideoReelDelegate <NSObject>
 
 - (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
@@ -26,6 +36,7 @@
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
 @property (copy, nonatomic) NSString *groupTitle;
+@property (assign, nonatomic) SPTutorialMode tutorialMode;
 
 - (id)initWithGroupType:(GroupType)groupType
              groupTitle:(NSString *)groupTitle
@@ -49,4 +60,7 @@
 - (IBAction)restartPlaybackButtonAction:(id)sender;
 
 - (void)cleanup;
+
+/// Tutorial
+- (void)videoDoubleTapped;
 @end
