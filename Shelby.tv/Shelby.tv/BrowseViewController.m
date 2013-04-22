@@ -63,17 +63,11 @@
 - (void)logoutAction;
 
 /// Video Player Launch Methods
-<<<<<<< HEAD
 - (void)launchPlayer:(NSUInteger)channelIndex;
 - (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex;
-- (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType;
-=======
-- (void)launchPlayer:(NSUInteger)categoryIndex;
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex;
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(SPTutorialMode)tutorialMode;
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType  withTutorialMode:(SPTutorialMode)tutorialMode;
+- (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(SPTutorialMode)tutorialMode;
+- (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType  withTutorialMode:(SPTutorialMode)tutorialMode;
 
->>>>>>> master
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent;
 - (void)animateSwitchChannels:(SPVideoReel *)viewControllerToPresent;
 - (void)animateOpenChannels:(SPVideoReel *)viewControllerToPresent;
@@ -129,13 +123,9 @@
     [self setSecretMode:SecretMode_None];
     
     // Register Cell Nibs
-<<<<<<< HEAD
     [self.channelsTableView registerNib:[UINib nibWithNibName:@"SPChannelCell" bundle:nil] forCellReuseIdentifier:@"SPChannelCell"];
     [self fetchAllChannels];
-=======
-    [self.categoriesTable registerNib:[UINib nibWithNibName:@"SPCategoryViewCell" bundle:nil] forCellReuseIdentifier:@"SPCategoryViewCell"];
-    [self fetchAllCategories];
-    
+ 
     NSDate *tutorialDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTutorialMode];
     if (!tutorialDate) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
@@ -153,7 +143,6 @@
             [self.view bringSubviewToFront:tutorial];
         }
     }
->>>>>>> master
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -573,16 +562,11 @@
 #pragma mark - Video Player Launch Methods (Private)
 - (void)launchPlayer:(NSUInteger)channelIndex
 {
-<<<<<<< HEAD
-    [self launchPlayer:channelIndex andVideo:0];
-=======
-    [self launchPlayer:categoryIndex andVideo:0 withTutorialMode:NO];
->>>>>>> master
+    [self launchPlayer:channelIndex andVideo:0 withTutorialMode:NO];
 }
 
 - (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex
 {
-<<<<<<< HEAD
     id channel = (id)self.channels[channelIndex];
     GroupType groupType = GroupType_ChannelRoll;
     if ([channel isMemberOfClass:[Dashboard class]]) {
@@ -593,7 +577,6 @@
 }
 
 - (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType
-=======
     [self launchPlayer:categoryIndex andVideo:videoIndex withTutorialMode:SPTutorialModeNone];
 }
 
@@ -663,12 +646,10 @@
                 }
                 SPVideoReel *videoReel = [[SPVideoReel alloc] initWithGroupType:groupType groupTitle:title videoFrames:videoFrames videoStartIndex:videoIndex andChannelID:channelID];
                 [videoReel setDelegate:self];
-<<<<<<< HEAD
+
                 [self setActiveChannelIndex:channelIndex];
-=======
                 [videoReel setTutorialMode:tutorialMode];
                 [self setActiveCategoryIndex:categoryIndex];
->>>>>>> master
                 [self presentViewController:videoReel];
 
             } else {
@@ -1004,26 +985,18 @@
 {
     [self setActiveVideoReel:videoReel];
 
-<<<<<<< HEAD
     NSInteger nextChannel = [self nextChannelForDirection:up];
-    [self launchPlayer:nextChannel];
-=======
-    NSInteger nextCategory = [self nextCategoryForDirection:up];
-    [self launchPlayer:nextCategory andVideo:0 withTutorialMode:SPTutorialModePinch];
->>>>>>> master
+    [self launchPlayer:nextChannel andVideo:0 withTutorialMode:SPTutorialModePinch];
     
     [self loadCell:nextChannel withDirection:up animated:NO];
 }
 
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel
 {
-<<<<<<< HEAD
-    [self animateCloseChannels:videoReel];
-=======
     // KP KP: TODO: set tutorial done in NSUserDefaults
     
-    [self animateCloseCategories:videoReel];
->>>>>>> master
+    [self animateCloseChannels:videoReel];
+
 }
 
 - (SPChannelDisplay *)channelDisplayForDirection:(BOOL)up
