@@ -38,8 +38,8 @@ typedef NS_ENUM(NSUInteger, GroupType)
     GroupType_Stream,
     GroupType_Likes,
     GroupType_PersonalRoll,
-    GroupType_CategoryChannel,
-    GroupType_CategoryRoll
+    GroupType_ChannelDashboard,
+    GroupType_ChannelRoll
     
 };
 

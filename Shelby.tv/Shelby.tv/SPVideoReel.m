@@ -585,7 +585,7 @@
                     
                 } break;
                     
-                case GroupType_CategoryChannel: {
+                case GroupType_ChannelDashboard: {
                     
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:_categoryID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
@@ -593,7 +593,7 @@
                     
                 } break;
                     
-                case GroupType_CategoryRoll: {
+                case GroupType_ChannelRoll: {
                     
                     NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:_categoryID];
                     NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
@@ -671,11 +671,11 @@
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreStreamEntriesAfterDate:date]];
             } break;
                 
-            case GroupType_CategoryChannel:{
+            case GroupType_ChannelDashboard:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:_categoryID afterDate:date]];
             } break;
                 
-            case GroupType_CategoryRoll:{
+            case GroupType_ChannelRoll:{
                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:_categoryID afterDate:date]];
             } break;
                 

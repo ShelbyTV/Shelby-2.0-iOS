@@ -427,7 +427,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
-            [dataUtility storeRollFrames:JSON forGroupType:GroupType_CategoryRoll];
+            [dataUtility storeRollFrames:JSON forGroupType:GroupType_ChannelRoll];
             
         });
         

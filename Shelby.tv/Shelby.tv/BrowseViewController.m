@@ -540,9 +540,9 @@
 - (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex
 {
     id category = (id)self.categories[categoryIndex];
-    GroupType groupType = GroupType_CategoryRoll;
+    GroupType groupType = GroupType_ChannelRoll;
     if ([category isMemberOfClass:[Channel class]]) {
-        groupType = GroupType_CategoryChannel;
+        groupType = GroupType_ChannelDashboard;
     }
     
     [self launchPlayer:categoryIndex andVideo:videoIndex withGroupType:groupType];
@@ -561,7 +561,7 @@
         NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
 
         switch (groupType) {
-            case GroupType_CategoryChannel:
+            case GroupType_ChannelDashboard:
             {
                 Channel *channel = (Channel *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryChannel:[channel channelID]];
@@ -569,7 +569,7 @@
                 title = [channel displayTitle];
                 break;
             }
-            case GroupType_CategoryRoll:
+            case GroupType_ChannelRoll:
             {
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
                 videoFrames = [dataUtility fetchFramesInCategoryRoll:[roll rollID]];
@@ -587,11 +587,11 @@
             if ([videoFrames count]) {
                 NSManagedObjectContext *mainThreadContext = [self context];
                 NSString *categoryID = nil;
-                if (groupType == GroupType_CategoryChannel) { // Category Channel
+                if (groupType == GroupType_ChannelDashboard) { // Category Channel
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Channel *channel = (Channel *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     categoryID = channel.channelID;
-                } else if (groupType == GroupType_CategoryRoll) { // Category Roll
+                } else if (groupType == GroupType_ChannelRoll) { // Category Roll
                     NSManagedObjectID *objectID = [(self.categories)[categoryIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     categoryID = roll.rollID;
@@ -767,15 +767,15 @@
     NSManagedObjectContext *context = [self context];
     
     id category = (id)self.categories[[key intValue]];
-    GroupType groupType = GroupType_CategoryChannel;
+    GroupType groupType = GroupType_ChannelDashboard;
     NSString *categoryID = nil;
     if ([category isMemberOfClass:[Roll class]]) {
-        groupType = GroupType_CategoryRoll;
+        groupType = GroupType_ChannelRoll;
         Roll *roll = (id)category;
         roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
         categoryID = roll.rollID;
     } else if ([category isMemberOfClass:[Channel class]]) {
-        groupType = GroupType_CategoryChannel;
+        groupType = GroupType_ChannelDashboard;
         Channel *channel = (id)category;
         channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
         categoryID = channel.channelID;
@@ -783,7 +783,7 @@
     
     switch ( groupType ) {
             
-        case GroupType_CategoryChannel: {
+        case GroupType_ChannelDashboard: {
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryChannel:categoryID];
@@ -792,7 +792,7 @@
             
         } break;
             
-        case GroupType_CategoryRoll: {
+        case GroupType_ChannelRoll: {
             
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForCategoryRoll:categoryID];
@@ -828,12 +828,12 @@
          NSString *categoryID = nil;
          GroupType groupType = GroupType_Unknown;
          if ([category isMemberOfClass:[Roll class]]) {
-             groupType = GroupType_CategoryRoll;
+             groupType = GroupType_ChannelRoll;
              Roll *roll = (id)category;
              roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
              categoryID = roll.rollID;
          } else if ([category isMemberOfClass:[Channel class]]) {
-             groupType = GroupType_CategoryChannel;
+             groupType = GroupType_ChannelDashboard;
              Channel *channel = (id)category;
              channel = (Channel *)[context existingObjectWithID:[channel objectID] error:nil];
              categoryID = channel.channelID;
@@ -858,12 +858,12 @@
         
          switch ( groupType ) {
                 
-             case GroupType_CategoryChannel:{
+             case GroupType_ChannelDashboard:{
                   CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                  [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryChannel:categoryID afterDate:date]];
              } break;
                 
-             case GroupType_CategoryRoll:{
+             case GroupType_ChannelRoll:{
                   CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
                  [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInCategoryRoll:categoryID afterDate:date]];
              } break;

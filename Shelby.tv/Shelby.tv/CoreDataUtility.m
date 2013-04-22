@@ -239,13 +239,13 @@ NSString * const kShelbyNotificationCategoryFramesFetched = @"kShelbyNotificatio
             
         } break;
             
-        case GroupType_CategoryChannel: {
+        case GroupType_ChannelDashboard: {
      
             [self removeOlderVideoFramesFromCategoryChannel:categoryID];
             
         }
             
-        case GroupType_CategoryRoll: {
+        case GroupType_ChannelRoll: {
             
             [self removeOlderVideoFramesFromCategoryRoll:categoryID];
             
