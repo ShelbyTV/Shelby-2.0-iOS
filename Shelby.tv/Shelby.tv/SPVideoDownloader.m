@@ -78,7 +78,7 @@
                 asyncVideo.offlineURL = path;
                 
                 // Save modified video object to CoreData store
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoDownloaded];
                 [dataUtility saveContext:asyncContext];
 
                 dispatch_async(dispatch_get_main_queue(), ^{

@@ -422,7 +422,7 @@
         Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
         NSDictionary *elapsedTimeDictionary = (__bridge_transfer NSDictionary *)(CMTimeCopyAsDictionary([self elapsedTime], kCFAllocatorDefault));
         [videoFrame.video setElapsedTime:elapsedTimeDictionary];
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_SwipeUpdate];
         [dataUtility saveContext:context];
         
     }
@@ -560,7 +560,7 @@
         videoFrame.video.extractedURL = [videoFrame.video offlineURL];
         
         // Save change in Core Data store
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_ActionUpdate];
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_SwipeUpdate];
         [dataUtility saveContext:context];
         
         // Load Player

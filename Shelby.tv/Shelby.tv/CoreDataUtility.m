@@ -174,9 +174,9 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                     
                 } break;
                     
-                case DataRequestType_ActionUpdate: {
+                case DataRequestType_SwipeUpdate: {
                     
-                    DLog(@"User Action Update Successful");
+                    DLog(@"Swipe Update Successful");
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidScrollToUpdate object:[self channelID]];
@@ -194,6 +194,12 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                 case DataRequestType_StoreVideoInCache: {
                     
                     DLog(@"Video Stored in Cache");
+                    
+                } break;
+                    
+                case DataRequestType_VideoDownloaded: {
+                    
+                    DLog(@"Video Downloaded to Device");
                     
                 } break;
                     
@@ -417,7 +423,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             [dashboardEntry setValue:dashboardEntryID forKey:kShelbyCoreDataDashboardEntryID];
             
             NSDate *timestamp = [NSDate dataFromBSONObjectID:dashboardEntryID];
-            [dashboardEntry setValue:timestamp forKey:kShelbyCoreDataStreamEntryTimestamp];
+            [dashboardEntry setValue:timestamp forKey:kShelbyCoreDataDashboardEntryTimestamp];
             
             Dashboard *dashboard = [self checkIfEntity:kShelbyCoreDataEntityDashboard
                                            withIDValue:dashboardID
@@ -431,6 +437,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             
             dashboardEntry.frame = frame;
             
+            self.channelID = dashboardID;
             [self storeFrame:frame forDictionary:frameDictionary];
         }
     }
@@ -665,18 +672,18 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     return [frameResults count];
 }
 
-- (NSUInteger)fetchCountForChannelDashboard:(NSString *)channelID
+- (NSUInteger)fetchCountForChannelDashboard:(NSString *)dashboardID
 {
     // Create fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setReturnsObjectsAsFaults:NO];
     
     // Search Frame table
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityFrame inManagedObjectContext:_context];
+    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityDashboardEntry inManagedObjectContext:_context];
     [request setEntity:description];
     
     // Filter by rollID
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"channelID == %@", channelID];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dashboardID == %@", dashboardID];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames
@@ -1336,12 +1343,9 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 
 - (void)deleteFrame:(Frame *)frame
 {
-    frame = (Frame* )[self.context existingObjectWithID:[frame objectID] error:nil];
-    
-    if ( ![frame isStoredForLoggedOutUser] ) {
-     
-        [self.context deleteObject:frame];
-        
+    Frame *frameToDelete = (Frame *)[self.context existingObjectWithID:[frame objectID] error:nil];
+    if ( frameToDelete && ![frameToDelete isStoredForLoggedOutUser] ) {
+        [self.context deleteObject:frameToDelete];
     }
     
     [self saveContext:_context];
@@ -1490,8 +1494,11 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         
         while ( i > maxLimit ) {
             
-            Frame *frame = (Frame*)[olderResults lastObject];
-            [self deleteFrame:frame];
+            DashboardEntry *dashboardEntry = (DashboardEntry *)[olderResults lastObject];
+            if ([dashboardEntry frame]) {
+                [self deleteFrame:dashboardEntry.frame];
+            }
+            
             [olderResults removeLastObject];
             
             i--;

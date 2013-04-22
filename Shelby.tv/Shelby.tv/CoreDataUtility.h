@@ -35,7 +35,7 @@ extern NSString * const kShelbyNotificationChannelDataFetched;
 - (NSUInteger)fetchStreamEntryCount;
 - (NSUInteger)fetchLikesCount;
 - (NSUInteger)fetchPersonalRollCount;
-- (NSUInteger)fetchCountForChannelDashboard:(NSString *)channelID;
+- (NSUInteger)fetchCountForChannelDashboard:(NSString *)dashboardID;
 - (NSUInteger)fetchCountForChannelRoll:(NSString *)rollID;
 - (NSMutableArray *)fetchStreamEntries;
 - (NSMutableArray *)fetchMoreStreamEntriesAfterDate:(NSDate *)date;
