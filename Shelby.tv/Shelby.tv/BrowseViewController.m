@@ -577,22 +577,22 @@
 }
 
 - (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex withGroupType:(GroupType)groupType
-    [self launchPlayer:categoryIndex andVideo:videoIndex withTutorialMode:SPTutorialModeNone];
+{
+    [self launchPlayer:channelIndex andVideo:videoIndex withTutorialMode:SPTutorialModeNone];
 }
 
 - (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(SPTutorialMode)tutorialMode
 {
-    id category = (id)self.categories[categoryIndex];
-    GroupType groupType = GroupType_CategoryRoll;
-    if ([category isMemberOfClass:[Channel class]]) {
-        groupType = GroupType_CategoryChannel;
+    id channel = (id)self.channels[categoryIndex];
+    GroupType groupType = GroupType_ChannelRoll;
+    if ([channel isMemberOfClass:[Dashboard class]]) {
+        groupType = GroupType_ChannelDashboard;
     }
     
     [self launchPlayer:categoryIndex andVideo:videoIndex andGroupType:groupType withTutorialMode:tutorialMode];
 }
 
-- (void)launchPlayer:(NSUInteger)categoryIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType withTutorialMode:(SPTutorialMode)tutorialMode
->>>>>>> master
+- (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType withTutorialMode:(SPTutorialMode)tutorialMode
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -649,7 +649,7 @@
 
                 [self setActiveChannelIndex:channelIndex];
                 [videoReel setTutorialMode:tutorialMode];
-                [self setActiveCategoryIndex:categoryIndex];
+                [self setActiveChannelIndex:channelIndex];
                 [self presentViewController:videoReel];
 
             } else {
