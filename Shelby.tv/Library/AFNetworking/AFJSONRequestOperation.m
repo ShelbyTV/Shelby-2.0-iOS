@@ -77,8 +77,7 @@ static dispatch_queue_t json_request_operation_processing_queue() {
             // See http://stackoverflow.com/a/12843465/157142
             NSData *JSONData = [self.responseString dataUsingEncoding:self.responseStringEncoding];
             
-            // Conditional if added by Shelby.tv
-            if (JSONData) {
+            if ( JSONData ) {
              
                 self.responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:self.JSONReadingOptions error:&error];
                 
