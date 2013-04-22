@@ -57,6 +57,7 @@
 // Helper methods
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
 - (NSInteger)indexForChannel:(NSString *)channelID;
+- (NSDate *)dateTutorialCompleted;
 
 /// Authentication Methods
 - (void)loginAction;
@@ -126,8 +127,7 @@
     [self.channelsTableView registerNib:[UINib nibWithNibName:@"SPChannelCell" bundle:nil] forCellReuseIdentifier:@"SPChannelCell"];
     [self fetchAllChannels];
  
-    NSDate *tutorialDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTutorialMode];
-    if (!tutorialDate) {
+    if (![self dateTutorialCompleted]) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
         if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
             UIView *tutorial = nib[0];
@@ -291,6 +291,13 @@
     
     return -1; // channel wasn't found
 }
+
+
+- (NSDate *)dateTutorialCompleted
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTutorialMode];
+}
+
 
 - (void)resetVersionLabel
 {
@@ -986,15 +993,22 @@
     [self setActiveVideoReel:videoReel];
 
     NSInteger nextChannel = [self nextChannelForDirection:up];
-    [self launchPlayer:nextChannel andVideo:0 withTutorialMode:SPTutorialModePinch];
+    SPTutorialMode tutorialMode = SPTutorialModeNone;
+    if (![self dateTutorialCompleted]) {
+        tutorialMode = SPTutorialModePinch;
+    }
+    
+    [self launchPlayer:nextChannel andVideo:0 withTutorialMode:tutorialMode];
     
     [self loadCell:nextChannel withDirection:up animated:NO];
 }
 
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel
 {
-    // KP KP: TODO: set tutorial done in NSUserDefaults
-    
+    if (![self dateTutorialCompleted]) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyTutorialMode];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     [self animateCloseChannels:videoReel];
 
 }
