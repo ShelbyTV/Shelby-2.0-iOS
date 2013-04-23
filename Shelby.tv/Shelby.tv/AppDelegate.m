@@ -316,7 +316,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
         
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
-        
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
 }

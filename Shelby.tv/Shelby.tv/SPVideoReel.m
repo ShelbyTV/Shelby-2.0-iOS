@@ -920,6 +920,7 @@
 {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
  
+        // KP KP: TODO: invoke this after user logs in.
         // Setting invocation, so we would roll immediately after user logs in.
         NSMethodSignature *rollSignature = [SPVideoReel instanceMethodSignatureForSelector:@selector(rollVideo)];
         NSInvocation *rollInvocation = [NSInvocation invocationWithMethodSignature:rollSignature];

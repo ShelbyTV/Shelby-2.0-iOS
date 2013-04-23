@@ -342,7 +342,7 @@
     [channelFrames setDataSource:self];
     [channelFrames reloadData];
     NSUInteger hash = [channelFrames hash];
-    [self.changeableDataMapper setObject:[NSNumber numberWithInt:indexPath.row] forKey:[NSNumber numberWithUnsignedInt:hash]];
+    self.changeableDataMapper[[NSNumber numberWithUnsignedInt:hash]] = [NSNumber numberWithInt:indexPath.row];
     
     id channel = (id)self.channels[indexPath.row];
     if ([channel isKindOfClass:[NSManagedObject class]]) {

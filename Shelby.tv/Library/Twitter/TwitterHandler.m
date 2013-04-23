@@ -111,6 +111,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                         [self userHasOneStoredTwitterAccount];
                     } else { // Multiple stored Twitter accounts
                         DLog(@"User has multiple stored accounts");
+                        // KP KP TODO:
                         // Commented out because the method 'getReverseAuthAccessToken:' doens't finish it's APi request
 //                        [self userHasMultipleStoredTwitterAccounts];
                         [self userHasMultipleStoredTwitterAccounts];
