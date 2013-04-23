@@ -60,7 +60,7 @@
 - (NSDate *)dateTutorialCompleted;
 
 /// Authentication Methods
-- (void)loginAction;
+- (IBAction)login:(id)sender;
 - (void)logoutAction;
 
 /// Video Player Launch Methods
@@ -537,7 +537,7 @@
 }
 
 #pragma mark - Authorization Methods (Private)
-- (void)loginAction
+- (IBAction)login:(id)sender;
 {
     AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
     
@@ -983,7 +983,7 @@
     [self setIsLoggedIn:YES];
     [self fetchUserNickname];
     [self fetchAllChannels];
-//    [self.collectionView reloadData];
+//    [ShelbyAPIClient getStream];
 }
 
 #pragma mark - SPVideoReel Delegate
