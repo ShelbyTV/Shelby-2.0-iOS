@@ -98,7 +98,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
         if (interval >= 300) {
             SPVideoReel *videoReel = [[SPModel sharedInstance] videoReel];
             if (videoReel && [videoReel delegate]) {
-                // TODO ARTHUR
                 [[videoReel delegate] userDidCloseChannel:videoReel];
             }
         }

@@ -32,7 +32,10 @@
 @property (weak, nonatomic) IBOutlet UITableView *channelsTableView;
 
 @property (strong, nonatomic) NSString *userNickname;
+@property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) NSString *userImage;
 @property (assign, nonatomic) BOOL isLoggedIn;
+@property (strong, nonatomic) UIView *userView;
 
 @property (nonatomic) LoginView *loginView;
 @property (nonatomic) SignupView *signupView;
@@ -52,7 +55,7 @@
 
 @property (nonatomic) UIView *tutorialView;
 
-- (void)fetchUserNickname;
+- (void)fetchUser;
 
 // Helper methods
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
@@ -60,8 +63,9 @@
 - (NSDate *)dateTutorialCompleted;
 
 /// Authentication Methods
-- (void)loginAction;
-- (void)logoutAction;
+- (void)login;
+- (void)logout;
+- (void)setupUserView;
 
 /// Video Player Launch Methods
 - (void)launchPlayer:(NSUInteger)channelIndex;
@@ -114,7 +118,7 @@
     
     [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
     
-    [self fetchUserNickname];
+    [self fetchUser];
     
     [self setChannels:[@[] mutableCopy]];
     [self setChannelsDataSource:[@{} mutableCopy]];
@@ -165,21 +169,23 @@
     return [appDelegate context];
 }
 
-- (void)fetchUserNickname
+- (void)fetchUser
 {
     if ([self isLoggedIn]) {
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         User *user = [dataUtility fetchUser];
         [self setUserNickname:[user nickname]];
+        [self setUserID:[user userID]];
+        [self setUserImage:[user userImage]];
     }
+    
+    [self setupUserView];
 }
 
 - (void)setChannelsForTable
 {
-    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [self.channels removeAllObjects];
-    [self.channels addObjectsFromArray:[datautility fetchAllChannels]];
- 
+    [self fetchAllChannels];
+    
     [self.channelsTableView reloadData];
 }
 
@@ -194,9 +200,7 @@
             return;
         }
         NSMutableArray *frames = self.channelsDataSource[[NSNumber numberWithInt:i]];
-        if (frames || [frames count] != 0) {
-            return;
-        }
+
         id channel = self.channels[i];
         if ([channel isKindOfClass:[NSManagedObject class]]) {
             NSManagedObjectID *channelObjectID = [channel objectID];
@@ -229,9 +233,29 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [self.channels removeAllObjects];
+    [self.channelsDataSource removeAllObjects];
+    [self.changeableDataMapper removeAllObjects];
     [self.channels addObjectsFromArray:[dataUtility fetchAllChannels]];
     
-    int i = 0;
+    if (self.isLoggedIn) {
+        id streamChannel;
+        for (id channel in self.channels) {
+            if ([channel isKindOfClass:[Dashboard class]]) {
+                if ([[((Dashboard *)channel) dashboardID] isEqualToString:self.userID]) {
+                    streamChannel = channel;
+                    break;
+                }
+            }
+        }
+        
+        if (streamChannel && [self.channels count] > 1) {
+            [self.channels removeObject:streamChannel];
+            [self.channels insertObject:streamChannel atIndex:0];
+            
+        }
+    }
+    
+    NSInteger i = 0;
     for (id channel in self.channels) {
         NSMutableArray *frames = nil;
         if ([channel isKindOfClass:[Dashboard class]]) {
@@ -537,7 +561,7 @@
 }
 
 #pragma mark - Authorization Methods (Private)
-- (void)loginAction
+- (void)login
 {
     AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
     
@@ -554,7 +578,7 @@
     authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
 }
 
-- (void)logoutAction
+- (void)logout
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
                                                         message:@"Are you sure you want to logout?"
@@ -563,6 +587,37 @@
                                               otherButtonTitles:@"Logout", nil];
  	
     [alertView show];
+}
+
+- (void)setupUserView
+{
+    [self.userView removeFromSuperview];
+    if ([self isLoggedIn]) {
+        _userView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
+        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(20, 2, 40, 40)];
+        
+        UIImage *tv = [UIImage imageNamed:@"tv.png"];
+        [AsynchronousFreeloader loadImageFromLink:self.userImage
+                                     forImageView:userAvatar
+                                  withPlaceholder:tv
+                                   andContentMode:UIViewContentModeScaleAspectFill];
+        [self.userView addSubview:userAvatar];
+        UIButton *logout = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+        [logout addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+        [self.userView addSubview:logout];
+    } else {
+        _userView = [[UIView alloc] initWithFrame:CGRectMake(900, 0, 120, 44)];
+        UIButton *login = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
+        [login setTitle:@"Login / Signup" forState:UIControlStateNormal];
+        [[login titleLabel] setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:13]];
+        [login setBackgroundColor:[UIColor grayColor]];
+        [[login titleLabel] setTextColor:[UIColor whiteColor]];
+        [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+        [self.userView addSubview:login];
+    }
+    
+    [self.view addSubview:self.userView];
+    
 }
 
 
@@ -828,32 +883,36 @@
         roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
         channelID = roll.rollID;
     } else if ([channel isMemberOfClass:[Dashboard class]]) {
-        groupType = GroupType_ChannelDashboard;
         Dashboard *dashboard = (id)channel;
         dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
         channelID = dashboard.dashboardID;
+        if (self.isLoggedIn && [channelID isEqualToString:self.userID]) {
+            channelID = self.userID;
+            groupType = GroupType_Stream;
+        } else {
+            groupType = GroupType_ChannelDashboard;
+        }
     }
     
     switch ( groupType ) {
-            
+        case GroupType_Stream: {
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
+            NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+            [ShelbyAPIClient getMoreFramesInStream:numberToString];
+        } break;
         case GroupType_ChannelDashboard: {
-            
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:channelID];
-            
         } break;
-            
         case GroupType_ChannelRoll: {
-            
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:channelID];
-            
         } break;
-            
         default: {
             [self.collectionViewDataSourceUpdater removeObject:channelID];
             // Handle remaining cases later
@@ -973,6 +1032,8 @@
         [self setIsLoggedIn:NO];
         [self setUserNickname:nil];
         [self resetVersionLabel];
+        [self fetchAllChannels];
+        [self setupUserView];
 //        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     }
 }
@@ -981,9 +1042,9 @@
 - (void)authorizationDidComplete
 {
     [self setIsLoggedIn:YES];
-    [self fetchUserNickname];
+    [self fetchUser];
     [self fetchAllChannels];
-//    [self.collectionView reloadData];
+    [ShelbyAPIClient getStream];
 }
 
 #pragma mark - SPVideoReel Delegate

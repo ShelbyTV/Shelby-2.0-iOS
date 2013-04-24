@@ -375,6 +375,10 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [dashboard setValue:user.userID forKey:kShelbyCoreDataDashboardID];
     [dashboard setValue:@NO forKey:kShelbyCoreDataDashboardIsChannel];
     
+    // KP KP: TODO: for now hardcoding color and title for stream
+    [dashboard setDisplayColor:@"000000"];
+    [dashboard setDisplayTitle:@"Stream"];
+    
     [self storeDashboardEntries:resultsDictionary forDashboard:user.userID];
 }
 
@@ -1869,6 +1873,10 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     NSEntityDescription *channelDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityDashboard inManagedObjectContext:_context];
     [dashboardRequest setEntity:channelDescription];
     
+    // Filter by isChannel
+    NSPredicate *dashboardPredicate = [NSPredicate predicateWithFormat:@"isChannel == %d", YES];
+    [dashboardRequest setPredicate:dashboardPredicate];
+
     // Execute request that returns array of rolls
     NSArray *dashboardResults = [self.context executeFetchRequest:dashboardRequest error:nil];
     
