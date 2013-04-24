@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *channelsTableView;
 
 @property (strong, nonatomic) NSString *userNickname;
+@property (strong, nonatomic) NSString *userID;
 @property (assign, nonatomic) BOOL isLoggedIn;
 
 @property (nonatomic) LoginView *loginView;
@@ -52,7 +53,7 @@
 
 @property (nonatomic) UIView *tutorialView;
 
-- (void)fetchUserNickname;
+- (void)fetchUser;
 
 // Helper methods
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
@@ -114,7 +115,7 @@
     
     [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
     
-    [self fetchUserNickname];
+    [self fetchUser];
     
     [self setChannels:[@[] mutableCopy]];
     [self setChannelsDataSource:[@{} mutableCopy]];
@@ -165,12 +166,13 @@
     return [appDelegate context];
 }
 
-- (void)fetchUserNickname
+- (void)fetchUser
 {
     if ([self isLoggedIn]) {
         CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         User *user = [dataUtility fetchUser];
         [self setUserNickname:[user nickname]];
+        [self setUserID:[user userID]];
     }
 }
 
@@ -229,9 +231,29 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     [self.channels removeAllObjects];
+    [self.channelsDataSource removeAllObjects];
+    [self.changeableDataMapper removeAllObjects];
     [self.channels addObjectsFromArray:[dataUtility fetchAllChannels]];
     
-    int i = 0;
+    if (self.isLoggedIn) {
+        id streamChannel;
+        for (id channel in self.channels) {
+            if ([channel isKindOfClass:[Dashboard class]]) {
+                if ([[((Dashboard *)channel) dashboardID] isEqualToString:self.userID]) {
+                    streamChannel = channel;
+                    break;
+                }
+            }
+        }
+        
+        if (streamChannel && [self.channels count] > 1) {
+            [self.channels removeObject:streamChannel];
+            [self.channels insertObject:streamChannel atIndex:0];
+            
+        }
+    }
+    
+    NSInteger i = 0;
     for (id channel in self.channels) {
         NSMutableArray *frames = nil;
         if ([channel isKindOfClass:[Dashboard class]]) {
@@ -828,32 +850,36 @@
         roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
         channelID = roll.rollID;
     } else if ([channel isMemberOfClass:[Dashboard class]]) {
-        groupType = GroupType_ChannelDashboard;
         Dashboard *dashboard = (id)channel;
         dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
         channelID = dashboard.dashboardID;
+        if (self.isLoggedIn && [channelID isEqualToString:self.userID]) {
+            channelID = self.userID;
+            groupType = GroupType_Stream;
+        } else {
+            groupType = GroupType_ChannelDashboard;
+        }
     }
     
     switch ( groupType ) {
-            
+        case GroupType_Stream: {
+            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
+            NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+            [ShelbyAPIClient getMoreFramesInStream:numberToString];
+        } break;
         case GroupType_ChannelDashboard: {
-            
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:channelID];
-            
         } break;
-            
         case GroupType_ChannelRoll: {
-            
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:channelID];
-            
         } break;
-            
         default: {
             [self.collectionViewDataSourceUpdater removeObject:channelID];
             // Handle remaining cases later
@@ -981,9 +1007,9 @@
 - (void)authorizationDidComplete
 {
     [self setIsLoggedIn:YES];
-    [self fetchUserNickname];
+    [self fetchUser];
     [self fetchAllChannels];
-//    [ShelbyAPIClient getStream];
+    [ShelbyAPIClient getStream];
 }
 
 #pragma mark - SPVideoReel Delegate

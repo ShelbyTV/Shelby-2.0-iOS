@@ -375,6 +375,10 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [dashboard setValue:user.userID forKey:kShelbyCoreDataDashboardID];
     [dashboard setValue:@NO forKey:kShelbyCoreDataDashboardIsChannel];
     
+    // KP KP: TODO: for now hardcoding color and title for stream
+    [dashboard setDisplayColor:@"000000"];
+    [dashboard setDisplayTitle:@"Stream"];
+    
     [self storeDashboardEntries:resultsDictionary forDashboard:user.userID];
 }
 
