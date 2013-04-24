@@ -200,9 +200,7 @@
             return;
         }
         NSMutableArray *frames = self.channelsDataSource[[NSNumber numberWithInt:i]];
-        if (frames || [frames count] != 0) {
-            return;
-        }
+
         id channel = self.channels[i];
         if ([channel isKindOfClass:[NSManagedObject class]]) {
             NSManagedObjectID *channelObjectID = [channel objectID];
