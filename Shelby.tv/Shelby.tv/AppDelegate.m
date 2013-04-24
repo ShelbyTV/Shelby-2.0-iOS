@@ -63,6 +63,9 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //must happen first
+    [self setupCrashHandling];
+    
     // Data Utilities
     [self setupDataUtilities];
     
@@ -259,6 +262,21 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     });
 }
 
+-(void)setupCrashHandling
+{
+    // Hockey
+    [[BITHockeyManager sharedHockeyManager] configureWithBetaIdentifier:HOCKEY_BETA
+                                                         liveIdentifier:HOCKEY_LIVE
+                                                               delegate:self];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    
+    // Agressive re-crash prevention
+    if([[BITHockeyManager sharedHockeyManager].crashManager didCrashInLastSession]){
+        DLog(@"Due to crash in last session, destroying Core Data backing file...");
+        [self deletePersistentStoreBackingFile];
+    }
+}
+
 - (void)setupAnalytics
 {
     
@@ -269,13 +287,9 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     // TODO - Uncomment for AppStore
     // Panhandler
-//    [Panhandler sharedInstance];
+    // [Panhandler sharedInstance];
     
-    // Hockey
-    [[BITHockeyManager sharedHockeyManager] configureWithBetaIdentifier:HOCKEY_BETA
-                                                         liveIdentifier:HOCKEY_LIVE
-                                                               delegate:self];
-    [[BITHockeyManager sharedHockeyManager] startManager];
+    
 
     // Google Analytics
     [GAI sharedInstance].trackUncaughtExceptions = YES;     // Optional: automatically send uncaught exceptions to Google Analytics.
@@ -423,6 +437,19 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 
     return _persistentStoreCoordinator;
 }
+
+//TODO: move this, and all the Core Data stuff in AppDelegate, into their own class
+- (void)deletePersistentStoreBackingFile
+{
+    NSAssert(!_persistentStoreCoordinator, @"Do not call -deletePersistentStore after PersistentStore is setup");
+    
+    DLog(@"Deleting Persistent Store Backing File");
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSURL *applicationDocumentsDirectory = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:@"Shelby.tv.sqlite"];
+    [fileManager removeItemAtURL:storeURL error:nil];
+}
+
 - (NSManagedObjectContext *)context;
 {
     
