@@ -16,6 +16,7 @@
 #import "SPVideoItemViewCell.h"
 #import "SPChannelCell.h"
 #import "SPVideoItemViewCellLabel.h"
+#import "SettingsViewController.h"
 
 
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
@@ -36,6 +37,7 @@
 @property (strong, nonatomic) NSString *userImage;
 @property (assign, nonatomic) BOOL isLoggedIn;
 @property (strong, nonatomic) UIView *userView;
+@property (strong, nonatomic) UIPopoverController *settingsPopover;
 
 @property (nonatomic) LoginView *loginView;
 @property (nonatomic) SignupView *signupView;
@@ -66,6 +68,7 @@
 - (void)login;
 - (void)logout;
 - (void)setupUserView;
+- (void)showSettings;
 
 /// Video Player Launch Methods
 - (void)launchPlayer:(NSUInteger)channelIndex;
@@ -589,6 +592,19 @@
     [alertView show];
 }
 
+- (void)showSettings
+{
+    if(!self.settingsPopover) {
+        SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsView" bundle:nil];
+
+        _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
+        [self.settingsPopover setDelegate:self];
+        [settingsViewController setParent:self];
+    }
+    [self.settingsPopover presentPopoverFromRect:self.userView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
+
 - (void)setupUserView
 {
     [self.userView removeFromSuperview];
@@ -602,9 +618,9 @@
                                   withPlaceholder:tv
                                    andContentMode:UIViewContentModeScaleAspectFill];
         [self.userView addSubview:userAvatar];
-        UIButton *logout = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-        [logout addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-        [self.userView addSubview:logout];
+        UIButton *settings = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+        [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+        [self.userView addSubview:settings];
     } else {
         _userView = [[UIView alloc] initWithFrame:CGRectMake(900, 0, 120, 44)];
         UIButton *login = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
@@ -1023,20 +1039,6 @@
     }
 }
 
-#pragma mark - UIAlertViewDelegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate logout];
-        [self setIsLoggedIn:NO];
-        [self setUserNickname:nil];
-        [self resetVersionLabel];
-        [self fetchAllChannels];
-        [self setupUserView];
-//        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-    }
-}
 
 #pragma mark - AuthorizationDelegate Methods
 - (void)authorizationDidComplete
@@ -1082,5 +1084,27 @@
                                                                andChannelDisplayTitle:[channelCell channelDisplayTitle]];
     
     return channelDisplay;
+}
+
+- (void)dismissPopover
+{
+    if (self.settingsPopover && [self.settingsPopover isPopoverVisible]) {
+        [self.settingsPopover dismissPopoverAnimated:NO];
+    }
+    
+    [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
+    
+    if (!self.isLoggedIn) {
+        [self setUserNickname:nil];
+        [self resetVersionLabel];
+        [self fetchAllChannels];
+        [self setupUserView];
+    }
+
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    [self dismissPopover];
 }
 @end

@@ -10,7 +10,7 @@
 #import "AuthorizationViewController.h"
 #import "SPVideoReel.h"
 
-@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, SPVideoReelDelegate, UITableViewDelegate, UIAlertViewDelegate, AuthorizationDelegate>
+@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, SPVideoReelDelegate, UITableViewDelegate, AuthorizationDelegate, UIPopoverControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *toggleSecretButton;
 
@@ -19,5 +19,7 @@
 
 /// DataSource Methods
 - (void)fetchAllChannels;
+
+- (void)dismissPopover;
 
 @end

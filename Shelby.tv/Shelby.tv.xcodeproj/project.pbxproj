@@ -368,6 +368,15 @@
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1CAC4ADA16E55AA90028E1DC /* homeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD816E55AA90028E1DC /* homeButton.png */; };
 		1CAC4ADC16E55AA90028E1DC /* homeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */; };
+		1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
+		1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
+		1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
+		1CACC0B317287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
+		1CACC0B417287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
+		1CACC0B517287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
+		1CACC0B817287632007EDD65 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0B717287632007EDD65 /* SettingsCell.m */; };
+		1CACC0B917287632007EDD65 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0B717287632007EDD65 /* SettingsCell.m */; };
+		1CACC0BA17287632007EDD65 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0B717287632007EDD65 /* SettingsCell.m */; };
 		1CB6ABE31713586C0061914D /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CB6ABE11713586C0061914D /* heart.png */; };
 		1CB6ABE41713586C0061914D /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CB6ABE11713586C0061914D /* heart.png */; };
 		1CB6ABE51713586C0061914D /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CB6ABE11713586C0061914D /* heart.png */; };
@@ -687,6 +696,11 @@
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1CAC4AD816E55AA90028E1DC /* homeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeButton.png; sourceTree = "<group>"; };
 		1CAC4AD916E55AA90028E1DC /* homeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeButton@2x.png"; sourceTree = "<group>"; };
+		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		1CACC0AE17287276007EDD65 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		1CACC0B217287298007EDD65 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		1CACC0B617287632007EDD65 /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
+		1CACC0B717287632007EDD65 /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
 		1CB6ABE11713586C0061914D /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		1CB6ABE21713586C0061914D /* heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart@2x.png"; sourceTree = "<group>"; };
 		1CB6ABF717136B8B0061914D /* heartwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heartwhite.png; sourceTree = "<group>"; };
@@ -1600,6 +1614,7 @@
 			children = (
 				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
 				1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */,
+				1CACC0B217287298007EDD65 /* SettingsView.xib */,
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
 			);
 			name = Xibs;
@@ -1617,6 +1632,8 @@
 				1CCCB55116D2A33600C8C216 /* PageControl.m */,
 				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
 				8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */,
+				1CACC0B617287632007EDD65 /* SettingsCell.h */,
+				1CACC0B717287632007EDD65 /* SettingsCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1630,6 +1647,8 @@
 				8E70248B1715E71500E8DE46 /* AuthenticateTwitterViewController.m */,
 				1CC3387616CBDF2A00E58375 /* BrowseViewController.h */,
 				1CC3387716CBDF2A00E58375 /* BrowseViewController.m */,
+				1CACC0AD17287276007EDD65 /* SettingsViewController.h */,
+				1CACC0AE17287276007EDD65 /* SettingsViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1676,7 +1695,6 @@
 				1C81097416EE2CBF0030077C /* Sources */,
 				1C8109AD16EE2CBF0030077C /* Frameworks */,
 				1C8109BB16EE2CBF0030077C /* Resources */,
-				1C810A2316EE2CBF0030077C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1711,7 +1729,6 @@
 				8E209709162F3A60000A2DFD /* Sources */,
 				8E20970A162F3A60000A2DFD /* Frameworks */,
 				8E20970B162F3A60000A2DFD /* Resources */,
-				8EDB513A1685608700B4DB3B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1864,6 +1881,7 @@
 				1C6ACFFD1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6AD0001721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
 				8EA10D8D1725A9DD00B90571 /* Harpy.bundle in Resources */,
+				1CACC0B417287298007EDD65 /* SettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1980,6 +1998,7 @@
 				1C6ACFFE1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6AD0011721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
 				8EA10D8E1725A9DD00B90571 /* Harpy.bundle in Resources */,
+				1CACC0B517287298007EDD65 /* SettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2097,6 +2116,7 @@
 				1C6ACFFC1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6ACFFF1721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
 				8EA10D8C1725A9DD00B90571 /* Harpy.bundle in Resources */,
+				1CACC0B317287298007EDD65 /* SettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2187,6 +2207,8 @@
 				1C6AD0051721F9140008DEC2 /* SPTutorialView.m in Sources */,
 				8EA10D891725956000B90571 /* Frame.m in Sources */,
 				1C2FC38B1726C98E00BB39AA /* Dashboard.m in Sources */,
+				1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */,
+				1CACC0B917287632007EDD65 /* SettingsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2274,6 +2296,8 @@
 				1C6AD0061721F9140008DEC2 /* SPTutorialView.m in Sources */,
 				8EA10D8A1725956000B90571 /* Frame.m in Sources */,
 				1C2FC38C1726C98E00BB39AA /* Dashboard.m in Sources */,
+				1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */,
+				1CACC0BA17287632007EDD65 /* SettingsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2361,6 +2385,8 @@
 				1C6AD0041721F9140008DEC2 /* SPTutorialView.m in Sources */,
 				8EA10D881725956000B90571 /* Frame.m in Sources */,
 				1C2FC38A1726C98E00BB39AA /* Dashboard.m in Sources */,
+				1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */,
+				1CACC0B817287632007EDD65 /* SettingsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
