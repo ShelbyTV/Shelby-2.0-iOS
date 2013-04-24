@@ -1357,9 +1357,9 @@
 				8EF03C5E16D57C170019669F /* SPShareRollView.h */,
 				8EF03C5F16D57C170019669F /* SPShareRollView.m */,
 				8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */,
+				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
 				1C6AD0021721F9140008DEC2 /* SPTutorialView.h */,
 				1C6AD0031721F9140008DEC2 /* SPTutorialView.m */,
-				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
 				1C304BF7171EFE4F00476277 /* SPChannelPeekView.h */,
 				1C304BF8171EFE4F00476277 /* SPChannelPeekView.m */,
 				1C22E3A61718976A00A1CAEC /* SPVideoItemViewCell.h */,
@@ -1676,7 +1676,6 @@
 				1C81097416EE2CBF0030077C /* Sources */,
 				1C8109AD16EE2CBF0030077C /* Frameworks */,
 				1C8109BB16EE2CBF0030077C /* Resources */,
-				1C810A2316EE2CBF0030077C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1711,7 +1710,6 @@
 				8E209709162F3A60000A2DFD /* Sources */,
 				8E20970A162F3A60000A2DFD /* Frameworks */,
 				8E20970B162F3A60000A2DFD /* Resources */,
-				8EDB513A1685608700B4DB3B /* ShellScript */,
 			);
 			buildRules = (
 			);
