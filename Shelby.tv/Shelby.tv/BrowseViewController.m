@@ -178,10 +178,8 @@
 
 - (void)setChannelsForTable
 {
-    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [self.channels removeAllObjects];
-    [self.channels addObjectsFromArray:[datautility fetchAllChannels]];
- 
+    [self fetchAllChannels];
+    
     [self.channelsTableView reloadData];
 }
 

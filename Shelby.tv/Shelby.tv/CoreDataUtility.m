@@ -1873,6 +1873,10 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     NSEntityDescription *channelDescription = [NSEntityDescription entityForName:kShelbyCoreDataEntityDashboard inManagedObjectContext:_context];
     [dashboardRequest setEntity:channelDescription];
     
+    // Filter by isChannel
+    NSPredicate *dashboardPredicate = [NSPredicate predicateWithFormat:@"isChannel == %d", YES];
+    [dashboardRequest setPredicate:dashboardPredicate];
+
     // Execute request that returns array of rolls
     NSArray *dashboardResults = [self.context executeFetchRequest:dashboardRequest error:nil];
     
