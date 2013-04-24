@@ -58,14 +58,17 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
     [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
         if (!error && [user isKindOfClass:[NSDictionary class]]) {
             NSString *facebookUserID = user[@"id"];
+            NSString *facebookUserName = user[@"name"];
             if (facebookUserID && (!oldFacebookID || ![facebookUserID isEqualToString:oldFacebookID])) {
                 [[NSUserDefaults standardUserDefaults] setObject:facebookUserID forKey:kShelbyFacebookUserID];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-
                 if (facebookToken && (!oldToken || ![facebookToken isEqualToString:oldToken])) {
                     [self sendToken];
                 }
             }
+            if (facebookUserName) {
+                [[NSUserDefaults standardUserDefaults] setObject:facebookUserName forKey:kShelbyFacebookUserFullName];
+            }
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }];
 }
@@ -84,10 +87,15 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserID];
     }
     
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserFullName]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserFullName];
+    }
+
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookToken]) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookToken];
     }
 
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)facebookUserID

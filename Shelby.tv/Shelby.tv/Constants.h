@@ -42,7 +42,9 @@
 /// Facebook
 #define kShelbyFacebookToken                                @"facebookToken"
 #define kShelbyFacebookUserID                               @"facebookUserID"
+#define kShelbyFacebookUserFullName                         @"facebookUserFullName"
 
 /// Twitter
+#define kShelbyTwitterUsername                              @"twitterUsername"
 #define kShelbyTwitterConsumerKey                           @"5DNrVZpdIwhQthCJJXCfnQ"
 #define kShelbyTwitterConsumerSecret                        @"Tlb35nblFFTZRidpu36Uo3z9mfcvSVv1MuZZ19SHaU"

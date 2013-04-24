@@ -352,14 +352,23 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     }
     
     // Remove from UserDefaults old user ID. This will not work now because Backend is not getting updated when a user removes FB.
-    if (![user facebookConnected] && [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID]) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserID];
+    if (![user facebookConnected]) {
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID]) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserID];
+        }
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserFullName]) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserFullName];
+        }
+    }
+    
+    if (![user twitterConnected] && [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyTwitterUsername];
     }
     
     BOOL admin = [[userDictionary valueForKey:@"admin"] boolValue];
     [user setValue:@(admin) forKey:kShelbyCoreDataUserAdmin];
     [[NSUserDefaults standardUserDefaults] setBool:admin forKey:kShelbyDefaultUserIsAdmin];
-    
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self saveContext:_context];
 
 }

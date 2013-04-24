@@ -8,6 +8,8 @@
 
 #import "SettingsViewController.h"
 #import "SettingsCell.h"
+#import "TwitterHandler.h"
+#import "FacebookHandler.h"
 
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -32,6 +34,11 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -53,6 +60,7 @@
     return 3;
 }
 
+// KP KP: TODO: for now not really checking the user object. Need to Check that. Maybe also add username to the coredata object
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath:indexPath];
@@ -66,9 +74,19 @@
         }
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            text = @"Connect to Facebook";
+            NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserFullName];
+            if (name) {
+                text = [NSString stringWithFormat:@"Facebook user: %@", name];
+            } else {
+                text = @"Connect to Facebook";
+            }
         } else {
-            text = @"Connect to Twitter";
+            NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername];
+            if (name) {
+                text = [NSString stringWithFormat:@"Twitter user: @%@", name];
+            } else {
+                text = @"Connect to Twitter";
+            }
         }
     } else {
         text = @"Logout";
@@ -79,8 +97,11 @@
 }
 
 #pragma mark - UITableViewDelegate Methods
+// KP KP: TODO: Right now doing FB/TW connect EVERY single time. Need to do it only if user is not connected
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             // My Likes
@@ -89,9 +110,9 @@
         }
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            // FB
+            [[FacebookHandler sharedInstance] openSession:YES];
         } else {
-            // Twitter
+            [[TwitterHandler sharedInstance] authenticateWithViewController:self.parent];
         }
     } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
@@ -102,9 +123,10 @@
             
             [alertView show];
         // Logout
+        return;
     }
     
-    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self.parent dismissPopover];
 }
 
 

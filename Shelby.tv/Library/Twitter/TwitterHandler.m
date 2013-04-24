@@ -392,6 +392,10 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     [self setTwitterID:ID];
                     [self setTwitterName:name];
                     
+                    if (name) {
+                        [[NSUserDefaults standardUserDefaults] setObject:name forKey:kShelbyTwitterUsername];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
                     // Send Reverse Auth Access Token and Access Token Secret to Shelby for Token Swap
                     [self sendReverseAuthAccessResultsToServer];
                     
