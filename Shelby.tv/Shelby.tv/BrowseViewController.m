@@ -33,7 +33,9 @@
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) NSString *userImage;
 @property (assign, nonatomic) BOOL isLoggedIn;
+@property (strong, nonatomic) UIView *userView;
 
 @property (nonatomic) LoginView *loginView;
 @property (nonatomic) SignupView *signupView;
@@ -61,8 +63,9 @@
 - (NSDate *)dateTutorialCompleted;
 
 /// Authentication Methods
-- (IBAction)login:(id)sender;
-- (void)logoutAction;
+- (void)login;
+- (void)logout;
+- (void)setupUserView;
 
 /// Video Player Launch Methods
 - (void)launchPlayer:(NSUInteger)channelIndex;
@@ -173,15 +176,16 @@
         User *user = [dataUtility fetchUser];
         [self setUserNickname:[user nickname]];
         [self setUserID:[user userID]];
+        [self setUserImage:[user userImage]];
     }
+    
+    [self setupUserView];
 }
 
 - (void)setChannelsForTable
 {
-    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [self.channels removeAllObjects];
-    [self.channels addObjectsFromArray:[datautility fetchAllChannels]];
- 
+    [self fetchAllChannels];
+    
     [self.channelsTableView reloadData];
 }
 
@@ -559,7 +563,7 @@
 }
 
 #pragma mark - Authorization Methods (Private)
-- (IBAction)login:(id)sender;
+- (void)login
 {
     AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
     
@@ -576,7 +580,7 @@
     authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
 }
 
-- (void)logoutAction
+- (void)logout
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
                                                         message:@"Are you sure you want to logout?"
@@ -585,6 +589,37 @@
                                               otherButtonTitles:@"Logout", nil];
  	
     [alertView show];
+}
+
+- (void)setupUserView
+{
+    [self.userView removeFromSuperview];
+    if ([self isLoggedIn]) {
+        _userView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
+        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(20, 2, 40, 40)];
+        
+        UIImage *tv = [UIImage imageNamed:@"tv.png"];
+        [AsynchronousFreeloader loadImageFromLink:self.userImage
+                                     forImageView:userAvatar
+                                  withPlaceholder:tv
+                                   andContentMode:UIViewContentModeScaleAspectFill];
+        [self.userView addSubview:userAvatar];
+        UIButton *logout = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+        [logout addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+        [self.userView addSubview:logout];
+    } else {
+        _userView = [[UIView alloc] initWithFrame:CGRectMake(900, 0, 120, 44)];
+        UIButton *login = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
+        [login setTitle:@"Login / Signup" forState:UIControlStateNormal];
+        [[login titleLabel] setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:13]];
+        [login setBackgroundColor:[UIColor grayColor]];
+        [[login titleLabel] setTextColor:[UIColor whiteColor]];
+        [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+        [self.userView addSubview:login];
+    }
+    
+    [self.view addSubview:self.userView];
+    
 }
 
 
@@ -999,6 +1034,8 @@
         [self setIsLoggedIn:NO];
         [self setUserNickname:nil];
         [self resetVersionLabel];
+        [self fetchAllChannels];
+        [self setupUserView];
 //        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     }
 }
