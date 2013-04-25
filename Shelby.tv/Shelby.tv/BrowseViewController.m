@@ -26,6 +26,7 @@
 
 // Models
 #import "SPChannelDisplay.h"
+#import "Frame+Helper.h"
 
 @interface BrowseViewController ()
 
@@ -488,25 +489,17 @@
                                       withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
                                        andContentMode:UIViewContentModeCenter];
             
-            NSManagedObjectID *videoObjectID = [videoFrame.video objectID];
-            if (videoObjectID) {
-                
-                Video *video = (Video *)[context existingObjectWithID:videoObjectID error:nil];
-                
-                if (video) {
-                    
-                    [cell.caption setText:[video caption]];
-                    CGRect captionFrame = [cell.caption frame];
-                    CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
-                                                                     constrainedToSize:captionFrame.size
-                                                                lineBreakMode:NSLineBreakByWordWrapping].height;
-                    
-                    [cell.caption setFrame:CGRectMake(captionFrame.origin.x,
-                                                      cell.frame.size.height - textBasedHeight,
-                                                      cell.frame.size.width,
-                                                      textBasedHeight)];
-                }
-            }
+            [cell.caption setText:[videoFrame creatorsInitialCommentWithFallback:YES]];
+            //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
+            CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.75);
+            CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
+                                                    constrainedToSize:maxCaptionSize
+                                                        lineBreakMode:NSLineBreakByWordWrapping].height;
+            
+            [cell.caption setFrame:CGRectMake(cell.caption.frame.origin.x,
+                                              cell.frame.size.height - textBasedHeight,
+                                              cell.frame.size.width,
+                                              textBasedHeight)];
         }
     }
 
