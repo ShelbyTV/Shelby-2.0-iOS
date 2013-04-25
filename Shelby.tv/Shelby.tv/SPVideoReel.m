@@ -26,6 +26,9 @@
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
 
+//Core Data Models
+#import "Frame+Helper.h"
+
 #define kShelbySPSlowSpeed 0.2
 #define kShelbySPFastSpeed 0.5
 
@@ -504,13 +507,8 @@
     // Set index of video playing
     [self setVideoStartIndex:position];
  
-    NSManagedObjectID *videoObjectID = [videoFrame.video objectID];
-    if (videoObjectID) {
-        Video *video = (Video *)[context existingObjectWithID:videoObjectID error:nil];
-        if (video) {
-            self.overlayView.videoCaptionLabel.text = [video caption];
-        }
-    }
+    //Show the rollers caption, fallback to video title;
+    self.overlayView.videoCaptionLabel.text = [videoFrame creatorsInitialCommentWithFallback:YES];
     
     self.overlayView.videoTimestamp.text = [videoFrame createdAt];
     self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"%@", videoFrame.creator.nickname];
