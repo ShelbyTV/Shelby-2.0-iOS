@@ -275,7 +275,7 @@
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:kGAICategoryShare
-                               withAction:@"User did tap share button to %@"
+                               withAction:kGAIShareActionShareButton
                                 withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                 withValue:nil];
     
@@ -285,7 +285,7 @@
             // Send event to Google Analytics
             id defaultTracker = [GAI sharedInstance].defaultTracker;
             [defaultTracker sendEventWithCategory:kGAICategoryShare
-                                       withAction:[NSString stringWithFormat:@"User did successfully share to %@", activityType]
+                                       withAction:[NSString stringWithFormat:kGAIShareActionShareSuccess, activityType]
                                         withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                         withValue:nil];
             
@@ -350,7 +350,7 @@
         // Send event to Google Analytics
         id defaultTracker = [GAI sharedInstance].defaultTracker;
         [defaultTracker sendEventWithCategory:kGAICategoryShare
-                                   withAction:@"User did successfully roll video"
+                                   withAction:kGAIShareActionRollSuccess
                                     withLabel:[[SPModel sharedInstance].videoReel groupTitle]
                                     withValue:nil];
         

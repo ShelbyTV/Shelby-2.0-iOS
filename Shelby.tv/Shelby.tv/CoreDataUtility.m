@@ -135,7 +135,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                     // Send event to Google Analytics
                     id defaultTracker = [GAI sharedInstance].defaultTracker;
                     [defaultTracker sendEventWithCategory:kGAICategorySession
-                                               withAction:@"User did login"
+                                               withAction:kGAISessionActionLoginSuccess
                                                 withLabel:user.userID
                                                 withValue:nil];
                     
@@ -150,7 +150,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                     // Send event to Google Analytics
                     id defaultTracker = [GAI sharedInstance].defaultTracker;
                     [defaultTracker sendEventWithCategory:kGAICategorySession
-                                               withAction:@"User did sign up"
+                                               withAction:kGAISessionActionSignupSuccess
                                                 withLabel:user.userID
                                                 withValue:nil];
                     
