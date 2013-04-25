@@ -369,6 +369,8 @@
         [self.view addGestureRecognizer:self.toggleOverlayGesuture];
        
         UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+        panGesture.minimumNumberOfTouches = 1;
+        panGesture.maximumNumberOfTouches = 1;
         [self.view addGestureRecognizer:panGesture];
         
         UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
