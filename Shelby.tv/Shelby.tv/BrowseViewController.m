@@ -1160,6 +1160,13 @@
 #pragma mark - SPVideoReel Delegate
 - (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
 {
+    // Track "swipe vertical to change channel"
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+                               withAction:kGAIVideoPlayerActionSwipeVertical
+                                withLabel:[videoReel groupTitle]
+                                withValue:nil];
+    
     [self setActiveVideoReel:videoReel];
 
     NSInteger nextChannel = [self nextChannelForDirection:up];
@@ -1175,6 +1182,13 @@
 
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel
 {
+    // Track "pinch to browse"
+    id defaultTracker = [GAI sharedInstance].defaultTracker;
+    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+                               withAction:kGAIVideoPlayerActionPinch
+                                withLabel:[videoReel groupTitle]
+                                withValue:nil];
+    
     if (![self dateTutorialCompleted]) {
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyTutorialMode];
         [[NSUserDefaults standardUserDefaults] synchronize];
