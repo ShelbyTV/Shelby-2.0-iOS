@@ -12,4 +12,6 @@
 @interface SettingsViewController : UIViewController <UIAlertViewDelegate>
 
 @property (weak, nonatomic) BrowseViewController *parent;
+
+- (void)logoutUser;
 @end

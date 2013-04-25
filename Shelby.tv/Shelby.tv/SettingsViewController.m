@@ -61,12 +61,16 @@
     if (facebookName) {
         [self.faceookButton setTitle:[NSString stringWithFormat:@"Facebook user: %@", facebookName] forState:UIControlStateDisabled];
         [self.faceookButton setEnabled:NO];
+    } else {
+        [self.faceookButton setEnabled:YES];
     }
     
     NSString *twitterName = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername];
     if (twitterName) {
         [self.twitterButton setTitle:[NSString stringWithFormat:@"Twitter user: @%@", twitterName] forState:UIControlStateDisabled];
         [self.twitterButton setEnabled:NO];
+    } else {
+        [self.twitterButton setEnabled:YES];
     }
 }
 
@@ -111,12 +115,20 @@
 }
 
 
+// KP KP: TODO: until we have a better consistent stay with the backend, 
+- (void)logoutUser
+{
+    [[FacebookHandler sharedInstance] facebookCleanup];
+    [[TwitterHandler sharedInstance] twitterCleanup];
+}
+
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate logout];
+        [self logoutUser];
         [self.parent dismissPopover];
     }
 }

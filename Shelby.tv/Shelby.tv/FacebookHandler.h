@@ -27,4 +27,7 @@ extern NSString * const kShelbyNotificationFacebookAuthorizationCompleted;
 // Methods to support App Delegate
 - (BOOL)handleOpenURL:(NSURL *)url;
 - (void)handleDidBecomeActive;
+
+/// Cleanup
+- (void)facebookCleanup;
 @end

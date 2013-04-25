@@ -326,10 +326,10 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 - (void)reverseAuthRequestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data
 {
     if (ticket.didSucceed) {
-        
         NSString *httpBodyData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         [self getReverseAuthAccessToken:httpBodyData];
-        
+    } else {
+        [self twitterCleanup];
     }
 }
 
@@ -337,6 +337,8 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 {
     // Failed
     DLog(@"Reverse Auth Request Token - Fetch Failure");
+    
+    [self twitterCleanup];
 }
 
 #pragma mark - OAuthConsumer - Reverse Auth Access Token Methods
@@ -430,6 +432,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Twitter <--> Shelby Token Swap Failed");
+        [self twitterCleanup];
         
     }];
     
@@ -446,6 +449,15 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
     // Post token-swap notification to listeners
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
     
+}
+
+// Cleanup
+- (void)twitterCleanup
+{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyTwitterUsername];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 #pragma mark - AuthenticateTwitterDelegate Methods

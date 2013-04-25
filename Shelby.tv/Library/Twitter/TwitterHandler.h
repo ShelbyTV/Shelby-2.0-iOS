@@ -13,4 +13,6 @@ FOUNDATION_EXPORT NSString * const kShelbyNotificationTwitterAuthorizationComple
 + (TwitterHandler *)sharedInstance;
 - (void)authenticateWithViewController:(UIViewController *)viewController;;
 
+/// Cleanup
+- (void)twitterCleanup;
 @end

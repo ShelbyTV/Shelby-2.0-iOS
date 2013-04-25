@@ -22,7 +22,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 - (NSArray *)facebookPermissions;
 - (void)saveFacebookInfo;
 - (void)sendToken;
-- (void)facebookCleanup;
 @end
 
 
@@ -80,8 +79,10 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 
 - (void)facebookCleanup
 {
-    [[FBSession activeSession] closeAndClearTokenInformation];
-    [FBSession setActiveSession:nil];
+    if ([[FBSession activeSession] isOpen]) {
+        [[FBSession activeSession] closeAndClearTokenInformation];
+        [FBSession setActiveSession:nil];
+    }
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID]) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserID];
