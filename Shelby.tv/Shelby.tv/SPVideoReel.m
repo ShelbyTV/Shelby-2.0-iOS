@@ -174,7 +174,7 @@
 {
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:kGAICategoryBrowse
-                               withAction:@"User did launch playlist"
+                               withAction:kGAIBrowseActionLaunchPlaylist
                                 withLabel:_groupTitle
                                 withValue:nil];
     
@@ -871,7 +871,7 @@
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                               withAction:@"Playback toggled via restart button"
+                               withAction:kGAIVideoPlayerActionRestartButton
                                 withLabel:_groupTitle
                                 withValue:nil];
     
@@ -1255,7 +1255,7 @@
     // Send event to Google Analytics
     id defaultTracker = [GAI sharedInstance].defaultTracker;
     [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                               withAction:@"Swiped video player"
+                               withAction:kGAIVideoPlayerActionSwipeHorizontal
                                 withLabel:_groupTitle
                                 withValue:nil];
 }
