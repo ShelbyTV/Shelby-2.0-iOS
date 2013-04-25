@@ -74,12 +74,14 @@
 #pragma mark - User Interaction Methods
 - (IBAction)goToMyLikes:(id)sender
 {
+    [self.parent launchMyLikesPlayer];
     [self.parent dismissPopover];
 }
 
 
 - (IBAction)goToMyRoll:(id)sender
 {
+    [self.parent launchMyRollPlayer];
     [self.parent dismissPopover];
 }
 

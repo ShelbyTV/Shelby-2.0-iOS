@@ -77,6 +77,7 @@
 - (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex;
 - (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex withTutorialMode:(SPTutorialMode)tutorialMode;
 - (void)launchPlayer:(NSUInteger)channelIndex andVideo:(NSUInteger)videoIndex andGroupType:(GroupType)groupType  withTutorialMode:(SPTutorialMode)tutorialMode;
+- (void)launchPlayerWithChannelNumber:(NSNumber *)channelIndex;
 
 - (void)presentViewController:(GAITrackedViewController *)viewControllerToPresent;
 - (void)animateSwitchChannels:(SPVideoReel *)viewControllerToPresent;
@@ -663,6 +664,29 @@
 
 
 #pragma mark - Video Player Launch Methods (Private)
+- (void)launchPlayerWithChannelNumber:(NSNumber *)channelIndex
+{
+    [self launchPlayer:[channelIndex integerValue] andVideo:0];
+}
+
+- (void)launchMyLikesPlayer
+{
+    NSInteger row = [self.channels count] - 2;
+    if (self.isLoggedIn && row > 2) {
+        [self.channelsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self performSelector:@selector(launchPlayerWithChannelNumber:) withObject:[NSNumber numberWithInteger:row] afterDelay:0.25];
+    }
+}
+
+- (void)launchMyRollPlayer
+{
+    NSInteger row = [self.channels count] -1;
+    if (self.isLoggedIn && row) {
+        [self.channelsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self performSelector:@selector(launchPlayerWithChannelNumber:) withObject:[NSNumber numberWithInteger:row] afterDelay:0.25];
+    }
+}
+
 - (void)launchPlayer:(NSUInteger)channelIndex
 {
     [self launchPlayer:channelIndex andVideo:0 withTutorialMode:NO];

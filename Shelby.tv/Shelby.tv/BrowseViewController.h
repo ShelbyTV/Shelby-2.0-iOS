@@ -20,6 +20,10 @@
 /// DataSource Methods
 - (void)fetchAllChannels;
 
+/// Lanuch Player
+- (void)launchMyRollPlayer;
+- (void)launchMyLikesPlayer;
+
 - (void)dismissPopover;
 
 @end
