@@ -1746,7 +1746,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
-				ORGANIZATIONNAME = "Arthur Ariel Sabintsev";
+				ORGANIZATIONNAME = "Shelby TV, Inc.";
 			};
 			buildConfigurationList = 8E209707162F3A60000A2DFD /* Build configuration list for PBXProject "Shelby.tv" */;
 			compatibilityVersion = "Xcode 3.2";
