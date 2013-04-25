@@ -739,7 +739,7 @@
             case GroupType_PersonalRoll:
             {
                 errorMessage = @"No videos in Roll";
-                title = @"Likes";
+                title = @"My Roll";
                 break;
             }
             default:
