@@ -34,6 +34,8 @@
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) NSString *personalRollID;
+@property (strong, nonatomic) NSString *likesRollID;
 @property (strong, nonatomic) NSString *userImage;
 @property (assign, nonatomic) BOOL isLoggedIn;
 @property (strong, nonatomic) UIView *userView;
@@ -256,6 +258,8 @@
             [self.channels insertObject:streamChannel atIndex:0];
             
         }
+        
+        [self addUserRollToChannels];
     }
     
     NSInteger i = 0;
@@ -267,6 +271,14 @@
         } else if ([channel isKindOfClass:[Roll class]]) {
             CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             frames = [rollDataUtility fetchFramesInChannelRoll:[((Roll *)channel) rollID]];
+        } else if ([channel isKindOfClass:[NSString class]]) {
+            if ([((NSString *)channel) isEqualToString:self.personalRollID]) {
+                CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+                frames = [rollDataUtility fetchPersonalRollEntries];
+            } else {
+                CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+                frames = [rollDataUtility fetchLikesEntries];
+            }
         } else {
             frames = [@[] mutableCopy];
         }
@@ -372,11 +384,11 @@
     self.changeableDataMapper[[NSNumber numberWithUnsignedInt:hash]] = [NSNumber numberWithInt:indexPath.row];
     
     id channel = (id)self.channels[indexPath.row];
+    NSString *title = nil;
+    NSString *color = nil;
     if ([channel isKindOfClass:[NSManagedObject class]]) {
         NSManagedObjectID *channelObjectID = [channel objectID];
         NSManagedObjectContext *context = [self context];
-        NSString *title = nil;
-        NSString *color = nil;
         if ([channel isMemberOfClass:[Dashboard class]]) {
             Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:channelObjectID error:nil];
             title = [dashboard displayTitle];
@@ -386,10 +398,17 @@
             title = [roll displayTitle];
             color = [roll displayColor];
         }
-
-        [cell setChannelColor:color andTitle:title];
+    }  else if ([channel isKindOfClass:[NSString class]]) {
+        if ([((NSString *)channel) isEqualToString:self.personalRollID]) {
+            title = @"My Roll";
+            color = @"333";
+        } else {
+            title = @"My Likes";
+            color = @"777";
+        }
     }
-
+    
+    [cell setChannelColor:color andTitle:title];
     return cell;
 }
 
@@ -437,12 +456,18 @@
         Dashboard *dashboard = (id)channel;
         dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
         channelID = dashboard.dashboardID;
+    } else if ([channel isKindOfClass:[NSString class]]) {
+        if ([((NSString *)channel) isEqualToString:self.personalRollID]) {
+            channelID = self.personalRollID;
+        } else {
+            channelID = self.likesRollID;
+        }
     }
 
     NSInteger cellsLeftToDisplay = abs([frames count] - [indexPath row]);
     if (cellsLeftToDisplay < 10) {
         
-        if ( ![self.collectionViewDataSourceUpdater containsObject:channelID] ) {
+        if (![self.collectionViewDataSourceUpdater containsObject:channelID] ) {
             [self.collectionViewDataSourceUpdater addObject:channelID];
             [self fetchOlderFramesForIndex:key];
         }
@@ -665,6 +690,12 @@
     GroupType groupType = GroupType_ChannelRoll;
     if ([channel isMemberOfClass:[Dashboard class]]) {
         groupType = GroupType_ChannelDashboard;
+    } else if ([channel isKindOfClass:[NSString class]]) {
+        if ([((NSString *)channel) isEqualToString:self.personalRollID]) {
+            groupType = GroupType_PersonalRoll;
+        } else {
+            groupType = GroupType_Likes;
+        }
     }
     
     [self launchPlayer:categoryIndex andVideo:videoIndex andGroupType:groupType withTutorialMode:tutorialMode];
@@ -679,8 +710,11 @@
         NSString *title = nil;
 
         NSManagedObjectContext *context = [self context];
-        NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
-
+        id channel = self.channels[channelIndex];
+        NSManagedObjectID *objectID = nil;
+        if (![channel isKindOfClass:[NSString class]]) {
+            objectID = [(self.channels)[channelIndex] objectID];
+        }
         switch (groupType) {
             case GroupType_ChannelDashboard:
             {
@@ -694,6 +728,18 @@
                 Roll *roll = (Roll *)[context existingObjectWithID:objectID error:nil];
                 errorMessage = @"No videos in Channel Roll.";
                 title = [roll displayTitle];
+                break;
+            }
+            case GroupType_Likes:
+            {
+                errorMessage = @"No videos in Likes";
+                title = @"Likes";
+                break;
+            }
+            case GroupType_PersonalRoll:
+            {
+                errorMessage = @"No videos in Roll";
+                title = @"Likes";
                 break;
             }
             default:
@@ -716,6 +762,10 @@
                     NSManagedObjectID *objectID = [(self.channels)[channelIndex] objectID];
                     Roll *roll = (Roll *)[mainThreadContext existingObjectWithID:objectID error:nil];
                     channelID = roll.rollID;
+                } else if (groupType == GroupType_PersonalRoll) {
+                    channelID = self.personalRollID;
+                } else if (groupType == GroupType_Likes) {
+                    channelID = self.likesRollID;
                 }
 
                 if (self.activeVideoReel) {
@@ -908,27 +958,45 @@
         } else {
             groupType = GroupType_ChannelDashboard;
         }
+    } else if ([channel isKindOfClass:[NSString class]]) {
+        channelID = channel;
     }
     
     switch ( groupType ) {
-        case GroupType_Stream: {
+        case GroupType_Stream:
+        {
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreFramesInStream:numberToString];
-        } break;
-        case GroupType_ChannelDashboard: {
+            break;
+        }
+        case GroupType_ChannelDashboard:
+        {
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:channelID];
-        } break;
-        case GroupType_ChannelRoll: {
+            break;
+        }
+        case GroupType_ChannelRoll:
+        {
             CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
             NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:channelID];
             NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
             [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:channelID];
-        } break;
+            break;
+        }
+        case GroupType_Likes:
+        {
+            [ShelbyAPIClient getMoreFramesInLikes:self.likesRollID];
+            break;
+        }
+        case GroupType_PersonalRoll:
+        {
+            [ShelbyAPIClient getMoreFramesInPersonalRoll:self.personalRollID];
+            break;
+        }
         default: {
             [self.collectionViewDataSourceUpdater removeObject:channelID];
             // Handle remaining cases later
@@ -1040,6 +1108,20 @@
 }
 
 
+- (void)addUserRollToChannels
+{
+    if (!self.personalRollID) {
+        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        User *user = [dataUtility fetchUser];
+        [self setPersonalRollID:[user personalRollID]];
+        [self setLikesRollID:[user likesRollID]];
+    }
+    
+    [self.channels addObject:self.likesRollID];
+    [self.channels addObject:self.personalRollID];
+}
+
+
 #pragma mark - AuthorizationDelegate Methods
 - (void)authorizationDidComplete
 {
@@ -1047,6 +1129,8 @@
     [self fetchUser];
     [self fetchAllChannels];
     [ShelbyAPIClient getStream];
+    [ShelbyAPIClient getPersonalRoll];
+    [ShelbyAPIClient getLikes];
 }
 
 #pragma mark - SPVideoReel Delegate

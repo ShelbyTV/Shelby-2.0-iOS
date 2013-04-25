@@ -523,11 +523,11 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     User *user = [self fetchUser];
     if ( groupType == GroupType_Likes ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:user.likesRollID];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFinishedSync object:user.likesRollID];
         });
     } else if ( groupType == GroupType_PersonalRoll ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelDataFetched object:user.personalRollID];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFinishedSync object:user.personalRollID];
         });
     }
 }
