@@ -7,12 +7,22 @@
 //
 
 #import "SettingsViewController.h"
-#import "SettingsCell.h"
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
 
 @interface SettingsViewController ()
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *faceookButton;
+@property (weak, nonatomic) IBOutlet UIButton *twitterButton;
+
+/// User interaction methods
+- (IBAction)connectoToFacebook:(id)sender;
+- (IBAction)connectoToTwitter:(id)sender;
+- (IBAction)goToMyRoll:(id)sender;
+- (IBAction)goToMyLikes:(id)sender;
+- (IBAction)logout:(id)sender;
+
+/// 
+- (void)refreshSocialButtonStatus;
 @end
 
 @implementation SettingsViewController
@@ -29,14 +39,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.tableView registerClass:[SettingsCell class] forCellReuseIdentifier:@"SettingsCell"];
-	// Do any additional setup after loading the view.
+    // KP KP: TODO: Next line will crash in a Universal app.
+    self.contentSizeForViewInPopover = CGSizeMake(330, 205);
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self.tableView reloadData];
+    [self refreshSocialButtonStatus];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,88 +54,58 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - UITableViewDataSource Methods
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (section == 0 || section == 1) {
-        return 2;
-    } else {
-        return 1;
-    }
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 3;
-}
-
 // KP KP: TODO: for now not really checking the user object. Need to Check that. Maybe also add username to the coredata object
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)refreshSocialButtonStatus
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath:indexPath];
-    
-    NSString *text = nil;
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            text = @"My Likes";
-        } else {
-            text = @"My Roll";
-        }
-    } else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserFullName];
-            if (name) {
-                text = [NSString stringWithFormat:@"Facebook user: %@", name];
-            } else {
-                text = @"Connect to Facebook";
-            }
-        } else {
-            NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername];
-            if (name) {
-                text = [NSString stringWithFormat:@"Twitter user: @%@", name];
-            } else {
-                text = @"Connect to Twitter";
-            }
-        }
-    } else {
-        text = @"Logout";
+    NSString *facebookName = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserFullName];
+    if (facebookName) {
+        [self.faceookButton setTitle:[NSString stringWithFormat:@"Facebook user: %@", facebookName] forState:UIControlStateDisabled];
+        [self.faceookButton setEnabled:NO];
     }
     
-    [cell.textLabel setText:text];
-    return cell;
+    NSString *twitterName = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername];
+    if (twitterName) {
+        [self.twitterButton setTitle:[NSString stringWithFormat:@"Twitter user: @%@", twitterName] forState:UIControlStateDisabled];
+        [self.twitterButton setEnabled:NO];
+    }
 }
 
-#pragma mark - UITableViewDelegate Methods
-// KP KP: TODO: Right now doing FB/TW connect EVERY single time. Need to do it only if user is not connected
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            // My Likes
-        } else {
-            // My Rool
-        }
-    } else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            [[FacebookHandler sharedInstance] openSession:YES];
-        } else {
-            [[TwitterHandler sharedInstance] authenticateWithViewController:self.parent];
-        }
-    } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
-                                                                message:@"Are you sure you want to logout?"
-                                                               delegate:self
-                                                      cancelButtonTitle:@"Cancel"
-                                                      otherButtonTitles:@"Logout", nil];
-            
-            [alertView show];
-        // Logout
-        return;
-    }
-    
+#pragma mark - User Interaction Methods
+- (IBAction)goToMyLikes:(id)sender
+{
     [self.parent dismissPopover];
+}
+
+
+- (IBAction)goToMyRoll:(id)sender
+{
+    [self.parent dismissPopover];
+}
+
+// KP KP: TODO: Right now doing FB/TW connect EVERY single time. Need to do it only if user is not connected
+- (IBAction)connectoToFacebook:(id)sender
+{
+    [[FacebookHandler sharedInstance] openSession:YES];
+    [self.parent dismissPopover];
+}
+
+- (IBAction)connectoToTwitter:(id)sender
+{
+    [[TwitterHandler sharedInstance] authenticateWithViewController:self.parent];
+    [self.parent dismissPopover];
+}
+
+
+- (IBAction)logout:(id)sender
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
+                                                        message:@"Are you sure you want to logout?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Logout", nil];
+    
+    [alertView show];
 }
 
 

@@ -374,9 +374,6 @@
 		1CACC0B317287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
 		1CACC0B417287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
 		1CACC0B517287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
-		1CACC0B817287632007EDD65 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0B717287632007EDD65 /* SettingsCell.m */; };
-		1CACC0B917287632007EDD65 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0B717287632007EDD65 /* SettingsCell.m */; };
-		1CACC0BA17287632007EDD65 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0B717287632007EDD65 /* SettingsCell.m */; };
 		1CB6ABE31713586C0061914D /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CB6ABE11713586C0061914D /* heart.png */; };
 		1CB6ABE41713586C0061914D /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CB6ABE11713586C0061914D /* heart.png */; };
 		1CB6ABE51713586C0061914D /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CB6ABE11713586C0061914D /* heart.png */; };
@@ -699,8 +696,6 @@
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1CACC0AE17287276007EDD65 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1CACC0B217287298007EDD65 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
-		1CACC0B617287632007EDD65 /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
-		1CACC0B717287632007EDD65 /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
 		1CB6ABE11713586C0061914D /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		1CB6ABE21713586C0061914D /* heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart@2x.png"; sourceTree = "<group>"; };
 		1CB6ABF717136B8B0061914D /* heartwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heartwhite.png; sourceTree = "<group>"; };
@@ -1632,8 +1627,6 @@
 				1CCCB55116D2A33600C8C216 /* PageControl.m */,
 				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
 				8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */,
-				1CACC0B617287632007EDD65 /* SettingsCell.h */,
-				1CACC0B717287632007EDD65 /* SettingsCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2208,7 +2201,6 @@
 				8EA10D891725956000B90571 /* Frame.m in Sources */,
 				1C2FC38B1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */,
-				1CACC0B917287632007EDD65 /* SettingsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2297,7 +2289,6 @@
 				8EA10D8A1725956000B90571 /* Frame.m in Sources */,
 				1C2FC38C1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */,
-				1CACC0BA17287632007EDD65 /* SettingsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2386,7 +2377,6 @@
 				8EA10D881725956000B90571 /* Frame.m in Sources */,
 				1C2FC38A1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */,
-				1CACC0B817287632007EDD65 /* SettingsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

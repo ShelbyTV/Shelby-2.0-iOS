@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BrowseViewController.h"
 
-@interface SettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface SettingsViewController : UIViewController <UIAlertViewDelegate>
 
 @property (weak, nonatomic) BrowseViewController *parent;
 @end
