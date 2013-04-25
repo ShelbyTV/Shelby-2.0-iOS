@@ -634,6 +634,9 @@
 		8EF03C5C16D57AF20019669F /* rollingTwitterButtonOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03C5916D57AF20019669F /* rollingTwitterButtonOn@2x.png */; };
 		8EF03C6016D57C170019669F /* SPShareRollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03C5F16D57C170019669F /* SPShareRollView.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
+		91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
+		91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
+		91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -946,6 +949,8 @@
 		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Frame+Helper.h"; sourceTree = "<group>"; };
+		91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Frame+Helper.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1172,6 +1177,8 @@
 				8E77B3F116CC45D50015D100 /* Conversation.m */,
 				8E77B3ED16CC45D50015D100 /* Creator.h */,
 				8E77B3EE16CC45D50015D100 /* Creator.m */,
+				91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */,
+				91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -2201,6 +2208,7 @@
 				8EA10D891725956000B90571 /* Frame.m in Sources */,
 				1C2FC38B1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */,
+				91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2289,6 +2297,7 @@
 				8EA10D8A1725956000B90571 /* Frame.m in Sources */,
 				1C2FC38C1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */,
+				91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2377,6 +2386,7 @@
 				8EA10D881725956000B90571 /* Frame.m in Sources */,
 				1C2FC38A1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */,
+				91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
