@@ -365,6 +365,12 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyTwitterUsername];
     }
     
+    // KP KP: TODO: need to store user full name in CoreData
+    NSString *name = userDictionary[@"name"];
+    if (name) {
+        [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"userFullname"];
+    }
+    
     BOOL admin = [[userDictionary valueForKey:@"admin"] boolValue];
     [user setValue:@(admin) forKey:kShelbyCoreDataUserAdmin];
     [[NSUserDefaults standardUserDefaults] setBool:admin forKey:kShelbyDefaultUserIsAdmin];

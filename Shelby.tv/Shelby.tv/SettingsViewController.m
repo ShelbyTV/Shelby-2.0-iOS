@@ -13,6 +13,7 @@
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *faceookButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
+@property (weak, nonatomic) IBOutlet UILabel *fullname;
 
 /// User interaction methods
 - (IBAction)connectoToFacebook:(id)sender;
@@ -47,6 +48,14 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self refreshSocialButtonStatus];
+    
+    // KP KP: TODO: need to store user full name in CoreData
+    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"userFullname"];
+    if (name) {
+        [self.fullname setText:name];
+    } else {
+        [self.fullname setText:@""];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,6 +134,11 @@
     // Reset app mode state (Secred Mode NSUserDefaults)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    // KP KP: TODO: need to store user full name in CoreData
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userFullname"]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userFullname"];
+    }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 
