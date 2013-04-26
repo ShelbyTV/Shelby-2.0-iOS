@@ -1024,7 +1024,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 
     [self removeStoredHash];
     
-    return messageText.length ? messageText : @"No information available";
+    return messageText.length ? messageText : nil;
 }
 
 - (NSMutableArray *)fetchAllChannels
