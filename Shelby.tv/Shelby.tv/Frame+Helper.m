@@ -12,22 +12,22 @@
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle
 {
-    if(self.conversation && self.conversation.messageCount > 0){
+    if(self.conversation && [self.conversation.messages count] > 0){
         // Grab only messages from the creator, use the oldest
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        NSString *message = [dataUtility fetchTextFromFirstMessageInConversation:self.conversation];
-        if (message) {
-            return message;
+        NSPredicate *creatorNickPredicate = [NSPredicate predicateWithFormat:@"nickname == %@", self.creator.nickname];
+        NSSet *messagesFromCreator = [self.conversation.messages filteredSetUsingPredicate:creatorNickPredicate];
+        if([messagesFromCreator count] > 0){
+            NSSortDescriptor *createdAt = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:YES];
+            NSArray *sortedMessagesFromCreator = [messagesFromCreator sortedArrayUsingDescriptors:@[createdAt]];
+            return ((Messages *)sortedMessagesFromCreator[0]).text;
         }
-        //since we don't support conversations right now, this would work:
-        //return ((Messages *)self.conversation.messages.anyObject).text;
     }
     
     if (canUseVideoTitle){
         return self.video.title;
-    } else {
-        return nil;
     }
+    
+    return nil;
 }
 
 @end
