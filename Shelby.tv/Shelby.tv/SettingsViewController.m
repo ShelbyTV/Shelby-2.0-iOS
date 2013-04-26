@@ -3,7 +3,7 @@
 //  Shelby.tv
 //
 //  Created by Keren on 4/24/13.
-//  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
+//  Copyright (c) 2013 Shelby TV. All rights reserved.
 //
 
 #import "SettingsViewController.h"

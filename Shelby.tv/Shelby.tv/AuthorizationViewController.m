@@ -3,7 +3,7 @@
 //  Shelby.tv
 //
 //  Created by Keren on 3/13/13.
-//  Copyright (c) 2013 Arthur Ariel Sabintsev. All rights reserved.
+//  Copyright (c) 2013 Shelby TV. All rights reserved.
 //
 
 #import "AuthorizationViewController.h"
