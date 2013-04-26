@@ -424,12 +424,6 @@
 		1CC75AFD172AF2FC004805A5 /* login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AC9172AF2FC004805A5 /* login@2x.png */; };
 		1CC75AFE172AF2FC004805A5 /* login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AC9172AF2FC004805A5 /* login@2x.png */; };
 		1CC75AFF172AF2FC004805A5 /* login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AC9172AF2FC004805A5 /* login@2x.png */; };
-		1CC75B00172AF2FC004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACA172AF2FC004805A5 /* logo.png */; };
-		1CC75B01172AF2FC004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACA172AF2FC004805A5 /* logo.png */; };
-		1CC75B02172AF2FC004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACA172AF2FC004805A5 /* logo.png */; };
-		1CC75B03172AF2FC004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACB172AF2FC004805A5 /* logo@2x.png */; };
-		1CC75B04172AF2FC004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACB172AF2FC004805A5 /* logo@2x.png */; };
-		1CC75B05172AF2FC004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACB172AF2FC004805A5 /* logo@2x.png */; };
 		1CC75B18172AF2FC004805A5 /* myroll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD2172AF2FC004805A5 /* myroll.png */; };
 		1CC75B19172AF2FC004805A5 /* myroll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD2172AF2FC004805A5 /* myroll.png */; };
 		1CC75B1A172AF2FC004805A5 /* myroll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD2172AF2FC004805A5 /* myroll.png */; };
@@ -448,18 +442,24 @@
 		1CC75B27172AF2FC004805A5 /* settings_pane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD7172AF2FC004805A5 /* settings_pane@2x.png */; };
 		1CC75B28172AF2FC004805A5 /* settings_pane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD7172AF2FC004805A5 /* settings_pane@2x.png */; };
 		1CC75B29172AF2FC004805A5 /* settings_pane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD7172AF2FC004805A5 /* settings_pane@2x.png */; };
-		1CC75B2A172AF2FC004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD8172AF2FC004805A5 /* topbar.png */; };
-		1CC75B2B172AF2FC004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD8172AF2FC004805A5 /* topbar.png */; };
-		1CC75B2C172AF2FC004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD8172AF2FC004805A5 /* topbar.png */; };
-		1CC75B2D172AF2FC004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD9172AF2FC004805A5 /* topbar@2x.png */; };
-		1CC75B2E172AF2FC004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD9172AF2FC004805A5 /* topbar@2x.png */; };
-		1CC75B2F172AF2FC004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD9172AF2FC004805A5 /* topbar@2x.png */; };
 		1CC75B30172AF2FC004805A5 /* twitterconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADA172AF2FC004805A5 /* twitterconnected.png */; };
 		1CC75B31172AF2FC004805A5 /* twitterconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADA172AF2FC004805A5 /* twitterconnected.png */; };
 		1CC75B32172AF2FC004805A5 /* twitterconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADA172AF2FC004805A5 /* twitterconnected.png */; };
 		1CC75B33172AF2FC004805A5 /* twitterconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */; };
 		1CC75B34172AF2FC004805A5 /* twitterconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */; };
 		1CC75B35172AF2FC004805A5 /* twitterconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */; };
+		1CC75B3A172AFCE4004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B36172AFCE3004805A5 /* logo.png */; };
+		1CC75B3B172AFCE4004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B36172AFCE3004805A5 /* logo.png */; };
+		1CC75B3C172AFCE4004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B36172AFCE3004805A5 /* logo.png */; };
+		1CC75B3D172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
+		1CC75B3E172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
+		1CC75B3F172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
+		1CC75B40172AFCE4004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B38172AFCE4004805A5 /* topbar.png */; };
+		1CC75B41172AFCE4004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B38172AFCE4004805A5 /* topbar.png */; };
+		1CC75B42172AFCE4004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B38172AFCE4004805A5 /* topbar.png */; };
+		1CC75B43172AFCE4004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B39172AFCE4004805A5 /* topbar@2x.png */; };
+		1CC75B44172AFCE4004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B39172AFCE4004805A5 /* topbar@2x.png */; };
+		1CC75B45172AFCE4004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B39172AFCE4004805A5 /* topbar@2x.png */; };
 		1CCCB54C16CEECD400C8C216 /* CollectionViewGroupsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */; };
 		1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCCB55116D2A33600C8C216 /* PageControl.m */; };
 		1CD361ED170F6A0F00A8AF98 /* action.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD361E7170F6A0F00A8AF98 /* action.png */; };
@@ -790,18 +790,18 @@
 		1CC75AC7172AF2FC004805A5 /* connecttwitterhighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connecttwitterhighlight@2x.png"; sourceTree = "<group>"; };
 		1CC75AC8172AF2FC004805A5 /* login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login.png; sourceTree = "<group>"; };
 		1CC75AC9172AF2FC004805A5 /* login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login@2x.png"; sourceTree = "<group>"; };
-		1CC75ACA172AF2FC004805A5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		1CC75ACB172AF2FC004805A5 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		1CC75AD2172AF2FC004805A5 /* myroll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myroll.png; sourceTree = "<group>"; };
 		1CC75AD3172AF2FC004805A5 /* myroll@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myroll@2x.png"; sourceTree = "<group>"; };
 		1CC75AD4172AF2FC004805A5 /* myrollhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myrollhighlight.png; sourceTree = "<group>"; };
 		1CC75AD5172AF2FC004805A5 /* myrollhighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myrollhighlight@2x.png"; sourceTree = "<group>"; };
 		1CC75AD6172AF2FC004805A5 /* settings_pane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings_pane.png; sourceTree = "<group>"; };
 		1CC75AD7172AF2FC004805A5 /* settings_pane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_pane@2x.png"; sourceTree = "<group>"; };
-		1CC75AD8172AF2FC004805A5 /* topbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbar.png; sourceTree = "<group>"; };
-		1CC75AD9172AF2FC004805A5 /* topbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topbar@2x.png"; sourceTree = "<group>"; };
 		1CC75ADA172AF2FC004805A5 /* twitterconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitterconnected.png; sourceTree = "<group>"; };
 		1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitterconnected@2x.png"; sourceTree = "<group>"; };
+		1CC75B36172AFCE3004805A5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		1CC75B37172AFCE3004805A5 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		1CC75B38172AFCE4004805A5 /* topbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbar.png; sourceTree = "<group>"; };
+		1CC75B39172AFCE4004805A5 /* topbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topbar@2x.png"; sourceTree = "<group>"; };
 		1CCCB54A16CEECD400C8C216 /* CollectionViewGroupsLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CollectionViewGroupsLayout.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CollectionViewGroupsLayout.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1CCCB55016D2A33500C8C216 /* PageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageControl.h; sourceTree = "<group>"; };
@@ -1206,16 +1206,12 @@
 				1CC75AC7172AF2FC004805A5 /* connecttwitterhighlight@2x.png */,
 				1CC75AC8172AF2FC004805A5 /* login.png */,
 				1CC75AC9172AF2FC004805A5 /* login@2x.png */,
-				1CC75ACA172AF2FC004805A5 /* logo.png */,
-				1CC75ACB172AF2FC004805A5 /* logo@2x.png */,
 				1CC75AD2172AF2FC004805A5 /* myroll.png */,
 				1CC75AD3172AF2FC004805A5 /* myroll@2x.png */,
 				1CC75AD4172AF2FC004805A5 /* myrollhighlight.png */,
 				1CC75AD5172AF2FC004805A5 /* myrollhighlight@2x.png */,
 				1CC75AD6172AF2FC004805A5 /* settings_pane.png */,
 				1CC75AD7172AF2FC004805A5 /* settings_pane@2x.png */,
-				1CC75AD8172AF2FC004805A5 /* topbar.png */,
-				1CC75AD9172AF2FC004805A5 /* topbar@2x.png */,
 				1CC75ADA172AF2FC004805A5 /* twitterconnected.png */,
 				1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */,
 			);
@@ -1234,6 +1230,10 @@
 		1CFD670F17203D5A00324A27 /* Browse Images */ = {
 			isa = PBXGroup;
 			children = (
+				1CC75B36172AFCE3004805A5 /* logo.png */,
+				1CC75B37172AFCE3004805A5 /* logo@2x.png */,
+				1CC75B38172AFCE4004805A5 /* topbar.png */,
+				1CC75B39172AFCE4004805A5 /* topbar@2x.png */,
 				1CFD671017203D5A00324A27 /* channelbg.png */,
 				1CFD671117203D5A00324A27 /* channelbg@2x.png */,
 			);
@@ -2022,18 +2022,18 @@
 				1CC75AF8172AF2FC004805A5 /* connecttwitterhighlight@2x.png in Resources */,
 				1CC75AFB172AF2FC004805A5 /* login.png in Resources */,
 				1CC75AFE172AF2FC004805A5 /* login@2x.png in Resources */,
-				1CC75B01172AF2FC004805A5 /* logo.png in Resources */,
-				1CC75B04172AF2FC004805A5 /* logo@2x.png in Resources */,
 				1CC75B19172AF2FC004805A5 /* myroll.png in Resources */,
 				1CC75B1C172AF2FC004805A5 /* myroll@2x.png in Resources */,
 				1CC75B1F172AF2FC004805A5 /* myrollhighlight.png in Resources */,
 				1CC75B22172AF2FC004805A5 /* myrollhighlight@2x.png in Resources */,
 				1CC75B25172AF2FC004805A5 /* settings_pane.png in Resources */,
 				1CC75B28172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
-				1CC75B2B172AF2FC004805A5 /* topbar.png in Resources */,
-				1CC75B2E172AF2FC004805A5 /* topbar@2x.png in Resources */,
 				1CC75B31172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B34172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
+				1CC75B3B172AFCE4004805A5 /* logo.png in Resources */,
+				1CC75B3E172AFCE4004805A5 /* logo@2x.png in Resources */,
+				1CC75B41172AFCE4004805A5 /* topbar.png in Resources */,
+				1CC75B44172AFCE4004805A5 /* topbar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2163,18 +2163,18 @@
 				1CC75AF9172AF2FC004805A5 /* connecttwitterhighlight@2x.png in Resources */,
 				1CC75AFC172AF2FC004805A5 /* login.png in Resources */,
 				1CC75AFF172AF2FC004805A5 /* login@2x.png in Resources */,
-				1CC75B02172AF2FC004805A5 /* logo.png in Resources */,
-				1CC75B05172AF2FC004805A5 /* logo@2x.png in Resources */,
 				1CC75B1A172AF2FC004805A5 /* myroll.png in Resources */,
 				1CC75B1D172AF2FC004805A5 /* myroll@2x.png in Resources */,
 				1CC75B20172AF2FC004805A5 /* myrollhighlight.png in Resources */,
 				1CC75B23172AF2FC004805A5 /* myrollhighlight@2x.png in Resources */,
 				1CC75B26172AF2FC004805A5 /* settings_pane.png in Resources */,
 				1CC75B29172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
-				1CC75B2C172AF2FC004805A5 /* topbar.png in Resources */,
-				1CC75B2F172AF2FC004805A5 /* topbar@2x.png in Resources */,
 				1CC75B32172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B35172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
+				1CC75B3C172AFCE4004805A5 /* logo.png in Resources */,
+				1CC75B3F172AFCE4004805A5 /* logo@2x.png in Resources */,
+				1CC75B42172AFCE4004805A5 /* topbar.png in Resources */,
+				1CC75B45172AFCE4004805A5 /* topbar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2305,18 +2305,18 @@
 				1CC75AF7172AF2FC004805A5 /* connecttwitterhighlight@2x.png in Resources */,
 				1CC75AFA172AF2FC004805A5 /* login.png in Resources */,
 				1CC75AFD172AF2FC004805A5 /* login@2x.png in Resources */,
-				1CC75B00172AF2FC004805A5 /* logo.png in Resources */,
-				1CC75B03172AF2FC004805A5 /* logo@2x.png in Resources */,
 				1CC75B18172AF2FC004805A5 /* myroll.png in Resources */,
 				1CC75B1B172AF2FC004805A5 /* myroll@2x.png in Resources */,
 				1CC75B1E172AF2FC004805A5 /* myrollhighlight.png in Resources */,
 				1CC75B21172AF2FC004805A5 /* myrollhighlight@2x.png in Resources */,
 				1CC75B24172AF2FC004805A5 /* settings_pane.png in Resources */,
 				1CC75B27172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
-				1CC75B2A172AF2FC004805A5 /* topbar.png in Resources */,
-				1CC75B2D172AF2FC004805A5 /* topbar@2x.png in Resources */,
 				1CC75B30172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B33172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
+				1CC75B3A172AFCE4004805A5 /* logo.png in Resources */,
+				1CC75B3D172AFCE4004805A5 /* logo@2x.png in Resources */,
+				1CC75B40172AFCE4004805A5 /* topbar.png in Resources */,
+				1CC75B43172AFCE4004805A5 /* topbar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
