@@ -40,7 +40,8 @@
 {
     [super viewDidLoad];
     // KP KP: TODO: Next line will crash in a Universal app.
-    self.contentSizeForViewInPopover = CGSizeMake(330, 205);
+    self.contentSizeForViewInPopover = CGSizeMake(332, 230);
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"settings_pane.png"]]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -59,7 +60,7 @@
 {
     NSString *facebookName = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserFullName];
     if (facebookName) {
-        [self.faceookButton setTitle:[NSString stringWithFormat:@"Facebook user: %@", facebookName] forState:UIControlStateDisabled];
+        [self.faceookButton setTitle:[NSString stringWithFormat:@"%@", facebookName] forState:UIControlStateDisabled];
         [self.faceookButton setEnabled:NO];
     } else {
         [self.faceookButton setEnabled:YES];
@@ -67,7 +68,7 @@
     
     NSString *twitterName = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername];
     if (twitterName) {
-        [self.twitterButton setTitle:[NSString stringWithFormat:@"Twitter user: @%@", twitterName] forState:UIControlStateDisabled];
+        [self.twitterButton setTitle:[NSString stringWithFormat:@"@%@", twitterName] forState:UIControlStateDisabled];
         [self.twitterButton setEnabled:NO];
     } else {
         [self.twitterButton setEnabled:YES];

@@ -13,7 +13,5 @@
 
 @property (weak, nonatomic) BrowseViewController *parent;
 
-- (void)logoutUser;
-
 + (void)cleanupSession;
 @end

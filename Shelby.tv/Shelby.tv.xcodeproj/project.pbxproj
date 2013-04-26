@@ -430,24 +430,6 @@
 		1CC75B03172AF2FC004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACB172AF2FC004805A5 /* logo@2x.png */; };
 		1CC75B04172AF2FC004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACB172AF2FC004805A5 /* logo@2x.png */; };
 		1CC75B05172AF2FC004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACB172AF2FC004805A5 /* logo@2x.png */; };
-		1CC75B06172AF2FC004805A5 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACC172AF2FC004805A5 /* logout.png */; };
-		1CC75B07172AF2FC004805A5 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACC172AF2FC004805A5 /* logout.png */; };
-		1CC75B08172AF2FC004805A5 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACC172AF2FC004805A5 /* logout.png */; };
-		1CC75B09172AF2FC004805A5 /* logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACD172AF2FC004805A5 /* logout@2x.png */; };
-		1CC75B0A172AF2FC004805A5 /* logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACD172AF2FC004805A5 /* logout@2x.png */; };
-		1CC75B0B172AF2FC004805A5 /* logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACD172AF2FC004805A5 /* logout@2x.png */; };
-		1CC75B0C172AF2FC004805A5 /* mylikes.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACE172AF2FC004805A5 /* mylikes.png */; };
-		1CC75B0D172AF2FC004805A5 /* mylikes.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACE172AF2FC004805A5 /* mylikes.png */; };
-		1CC75B0E172AF2FC004805A5 /* mylikes.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACE172AF2FC004805A5 /* mylikes.png */; };
-		1CC75B0F172AF2FC004805A5 /* mylikes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACF172AF2FC004805A5 /* mylikes@2x.png */; };
-		1CC75B10172AF2FC004805A5 /* mylikes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACF172AF2FC004805A5 /* mylikes@2x.png */; };
-		1CC75B11172AF2FC004805A5 /* mylikes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ACF172AF2FC004805A5 /* mylikes@2x.png */; };
-		1CC75B12172AF2FC004805A5 /* mylikeshighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD0172AF2FC004805A5 /* mylikeshighlight.png */; };
-		1CC75B13172AF2FC004805A5 /* mylikeshighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD0172AF2FC004805A5 /* mylikeshighlight.png */; };
-		1CC75B14172AF2FC004805A5 /* mylikeshighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD0172AF2FC004805A5 /* mylikeshighlight.png */; };
-		1CC75B15172AF2FC004805A5 /* mylikeshighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD1172AF2FC004805A5 /* mylikeshighlight@2x.png */; };
-		1CC75B16172AF2FC004805A5 /* mylikeshighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD1172AF2FC004805A5 /* mylikeshighlight@2x.png */; };
-		1CC75B17172AF2FC004805A5 /* mylikeshighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD1172AF2FC004805A5 /* mylikeshighlight@2x.png */; };
 		1CC75B18172AF2FC004805A5 /* myroll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD2172AF2FC004805A5 /* myroll.png */; };
 		1CC75B19172AF2FC004805A5 /* myroll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD2172AF2FC004805A5 /* myroll.png */; };
 		1CC75B1A172AF2FC004805A5 /* myroll.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75AD2172AF2FC004805A5 /* myroll.png */; };
@@ -810,12 +792,6 @@
 		1CC75AC9172AF2FC004805A5 /* login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login@2x.png"; sourceTree = "<group>"; };
 		1CC75ACA172AF2FC004805A5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		1CC75ACB172AF2FC004805A5 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
-		1CC75ACC172AF2FC004805A5 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
-		1CC75ACD172AF2FC004805A5 /* logout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logout@2x.png"; sourceTree = "<group>"; };
-		1CC75ACE172AF2FC004805A5 /* mylikes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mylikes.png; sourceTree = "<group>"; };
-		1CC75ACF172AF2FC004805A5 /* mylikes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mylikes@2x.png"; sourceTree = "<group>"; };
-		1CC75AD0172AF2FC004805A5 /* mylikeshighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mylikeshighlight.png; sourceTree = "<group>"; };
-		1CC75AD1172AF2FC004805A5 /* mylikeshighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mylikeshighlight@2x.png"; sourceTree = "<group>"; };
 		1CC75AD2172AF2FC004805A5 /* myroll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myroll.png; sourceTree = "<group>"; };
 		1CC75AD3172AF2FC004805A5 /* myroll@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myroll@2x.png"; sourceTree = "<group>"; };
 		1CC75AD4172AF2FC004805A5 /* myrollhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myrollhighlight.png; sourceTree = "<group>"; };
@@ -1232,12 +1208,6 @@
 				1CC75AC9172AF2FC004805A5 /* login@2x.png */,
 				1CC75ACA172AF2FC004805A5 /* logo.png */,
 				1CC75ACB172AF2FC004805A5 /* logo@2x.png */,
-				1CC75ACC172AF2FC004805A5 /* logout.png */,
-				1CC75ACD172AF2FC004805A5 /* logout@2x.png */,
-				1CC75ACE172AF2FC004805A5 /* mylikes.png */,
-				1CC75ACF172AF2FC004805A5 /* mylikes@2x.png */,
-				1CC75AD0172AF2FC004805A5 /* mylikeshighlight.png */,
-				1CC75AD1172AF2FC004805A5 /* mylikeshighlight@2x.png */,
 				1CC75AD2172AF2FC004805A5 /* myroll.png */,
 				1CC75AD3172AF2FC004805A5 /* myroll@2x.png */,
 				1CC75AD4172AF2FC004805A5 /* myrollhighlight.png */,
@@ -2054,12 +2024,6 @@
 				1CC75AFE172AF2FC004805A5 /* login@2x.png in Resources */,
 				1CC75B01172AF2FC004805A5 /* logo.png in Resources */,
 				1CC75B04172AF2FC004805A5 /* logo@2x.png in Resources */,
-				1CC75B07172AF2FC004805A5 /* logout.png in Resources */,
-				1CC75B0A172AF2FC004805A5 /* logout@2x.png in Resources */,
-				1CC75B0D172AF2FC004805A5 /* mylikes.png in Resources */,
-				1CC75B10172AF2FC004805A5 /* mylikes@2x.png in Resources */,
-				1CC75B13172AF2FC004805A5 /* mylikeshighlight.png in Resources */,
-				1CC75B16172AF2FC004805A5 /* mylikeshighlight@2x.png in Resources */,
 				1CC75B19172AF2FC004805A5 /* myroll.png in Resources */,
 				1CC75B1C172AF2FC004805A5 /* myroll@2x.png in Resources */,
 				1CC75B1F172AF2FC004805A5 /* myrollhighlight.png in Resources */,
@@ -2201,12 +2165,6 @@
 				1CC75AFF172AF2FC004805A5 /* login@2x.png in Resources */,
 				1CC75B02172AF2FC004805A5 /* logo.png in Resources */,
 				1CC75B05172AF2FC004805A5 /* logo@2x.png in Resources */,
-				1CC75B08172AF2FC004805A5 /* logout.png in Resources */,
-				1CC75B0B172AF2FC004805A5 /* logout@2x.png in Resources */,
-				1CC75B0E172AF2FC004805A5 /* mylikes.png in Resources */,
-				1CC75B11172AF2FC004805A5 /* mylikes@2x.png in Resources */,
-				1CC75B14172AF2FC004805A5 /* mylikeshighlight.png in Resources */,
-				1CC75B17172AF2FC004805A5 /* mylikeshighlight@2x.png in Resources */,
 				1CC75B1A172AF2FC004805A5 /* myroll.png in Resources */,
 				1CC75B1D172AF2FC004805A5 /* myroll@2x.png in Resources */,
 				1CC75B20172AF2FC004805A5 /* myrollhighlight.png in Resources */,
@@ -2349,12 +2307,6 @@
 				1CC75AFD172AF2FC004805A5 /* login@2x.png in Resources */,
 				1CC75B00172AF2FC004805A5 /* logo.png in Resources */,
 				1CC75B03172AF2FC004805A5 /* logo@2x.png in Resources */,
-				1CC75B06172AF2FC004805A5 /* logout.png in Resources */,
-				1CC75B09172AF2FC004805A5 /* logout@2x.png in Resources */,
-				1CC75B0C172AF2FC004805A5 /* mylikes.png in Resources */,
-				1CC75B0F172AF2FC004805A5 /* mylikes@2x.png in Resources */,
-				1CC75B12172AF2FC004805A5 /* mylikeshighlight.png in Resources */,
-				1CC75B15172AF2FC004805A5 /* mylikeshighlight@2x.png in Resources */,
 				1CC75B18172AF2FC004805A5 /* myroll.png in Resources */,
 				1CC75B1B172AF2FC004805A5 /* myroll@2x.png in Resources */,
 				1CC75B1E172AF2FC004805A5 /* myrollhighlight.png in Resources */,
