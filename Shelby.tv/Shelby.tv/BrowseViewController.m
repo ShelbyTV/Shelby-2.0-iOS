@@ -630,7 +630,8 @@
     if ([self isLoggedIn]) {
         _userView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
         UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(20, 2, 40, 40)];
-        
+        [userAvatar.layer setCornerRadius:5];
+        [userAvatar.layer setMasksToBounds:YES];
         UIImage *tv = [UIImage imageNamed:@"tv.png"];
         [AsynchronousFreeloader loadImageFromLink:self.userImage
                                      forImageView:userAvatar
