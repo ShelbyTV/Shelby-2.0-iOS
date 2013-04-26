@@ -114,13 +114,23 @@
     [alertView show];
 }
 
-
-// KP KP: TODO: until we have a better consistent stay with the backend, 
-- (void)logoutUser
+// KP KP: TODO: until we have a better consistent stay with the backend,
++ (void)cleanupSession
 {
+    // Reset user state (Authorization NSUserDefaults)
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserIsAdmin];
+    
+    // Reset app mode state (Secred Mode NSUserDefaults)
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     [[FacebookHandler sharedInstance] facebookCleanup];
     [[TwitterHandler sharedInstance] twitterCleanup];
 }
+
 
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -128,7 +138,7 @@
     if (buttonIndex == 1) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate logout];
-        [self logoutUser];
+        [SettingsViewController cleanupSession];
         [self.parent dismissPopover];
     }
 }

@@ -16,6 +16,7 @@
 #import "SPVideoReel.h"
 #import "Video.h"
 #import "FacebookHandler.h"
+#import "SettingsViewController.h"
 
 // HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
 // HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
@@ -197,15 +198,8 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
         return;
     }
     
-    // Reset user state (Authorization NSUserDefaults)
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserIsAdmin];
-    
-    // Reset app mode state (Secred Mode NSUserDefaults)
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    // Remove any session properties
+    [SettingsViewController cleanupSession];
     
     // Empty existing image cache
     [AsynchronousFreeloader removeAllImages];
@@ -274,6 +268,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     if([[BITHockeyManager sharedHockeyManager].crashManager didCrashInLastSession]){
         DLog(@"Due to crash in last session, destroying Core Data backing file...");
         [self deletePersistentStoreBackingFile];
+        [SettingsViewController cleanupSession];
     }
 }
 
