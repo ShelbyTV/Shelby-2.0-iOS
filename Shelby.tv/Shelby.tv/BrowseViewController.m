@@ -32,6 +32,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UITableView *channelsTableView;
+@property (weak, nonatomic) IBOutlet UIView *topBar;
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (strong, nonatomic) NSString *userID;
@@ -108,6 +109,8 @@
 {
     [super viewDidLoad];
 
+    [self.topBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbar.png"]]];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceDidUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderVideosFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchDataSourceForChannel:) name:kShelbyNotificationChannelDataFetched object:nil];
@@ -629,24 +632,24 @@
     [self.userView removeFromSuperview];
     if ([self isLoggedIn]) {
         _userView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
-        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(20, 2, 40, 40)];
+        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(35, 7, 30, 30)];
         [userAvatar.layer setCornerRadius:5];
         [userAvatar.layer setMasksToBounds:YES];
-        UIImage *tv = [UIImage imageNamed:@"tv.png"];
         [AsynchronousFreeloader loadImageFromLink:self.userImage
                                      forImageView:userAvatar
-                                  withPlaceholder:tv
-                                   andContentMode:UIViewContentModeScaleAspectFill];
+                                  withPlaceholder:nil
+                                   andContentMode:UIViewContentModeScaleAspectFit];
         [self.userView addSubview:userAvatar];
         UIButton *settings = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
         [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
         [self.userView addSubview:settings];
     } else {
-        _userView = [[UIView alloc] initWithFrame:CGRectMake(900, 0, 120, 44)];
-        UIButton *login = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 44)];
-        [login setTitle:@"Login / Signup" forState:UIControlStateNormal];
-        [[login titleLabel] setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:13]];
-        [login setBackgroundColor:[UIColor grayColor]];
+        _userView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 120, 44)];
+        UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
+        [login setFrame:CGRectMake(7, 7, 60, 30)];
+        [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
+        [login setTitle:@"Login" forState:UIControlStateNormal];
+        [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
         [[login titleLabel] setTextColor:[UIColor whiteColor]];
         [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
         [self.userView addSubview:login];
