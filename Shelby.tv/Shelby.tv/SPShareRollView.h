@@ -10,7 +10,6 @@
 
 @interface SPShareRollView : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *videoThumbnailView;
 @property (weak, nonatomic) IBOutlet UITextView *rollTextView;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;

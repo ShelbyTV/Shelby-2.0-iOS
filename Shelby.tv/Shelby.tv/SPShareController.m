@@ -158,13 +158,12 @@
 
     self.rollView = nib[0];
     
+    [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"rollingContainer.png"]]];
+    
     // Reference videoFrame in current thread
     NSManagedObjectContext *context = [self.appDelegate context];
     NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
     Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    
-    // Set Video Title
-    [self.rollView.videoTitleLabel setText:[videoFrame.video title]];
     
     // Load Thumbnail
     [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
