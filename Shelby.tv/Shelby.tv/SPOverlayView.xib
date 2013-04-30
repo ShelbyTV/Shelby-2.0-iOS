@@ -304,7 +304,7 @@
 							<object class="IBUILabel" id="1002610958">
 								<reference key="NSNextResponder" ref="721212649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{745, 7}, {56, 14}}</string>
+								<string key="NSFrame">{{725, 7}, {56, 14}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="651669634"/>
@@ -341,10 +341,10 @@
 							<object class="IBUILabel" id="651669634">
 								<reference key="NSNextResponder" ref="721212649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{745, 21}, {56, 14}}</string>
+								<string key="NSFrame">{{725, 21}, {56, 14}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="986732239"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -376,7 +376,7 @@
 							<object class="IBUIView" id="314233088">
 								<reference key="NSNextResponder" ref="721212649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{12, 0}, {725, 44}}</string>
+								<string key="NSFrame">{{12, 0}, {710, 44}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="232483274"/>
@@ -390,10 +390,10 @@
 							<object class="IBUIProgressView" id="232483274">
 								<reference key="NSNextResponder" ref="721212649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{12, 18}, {725, 9}}</string>
+								<string key="NSFrame">{{12, 18}, {710, 9}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="359956817"/>
+								<reference key="NSNextKeyView" ref="1002610958"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="290922202"/>
 								<bool key="IBUIOpaque">NO</bool>
@@ -408,10 +408,10 @@
 							<object class="IBUIProgressView" id="359956817">
 								<reference key="NSNextResponder" ref="721212649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{12, 18}, {725, 9}}</string>
+								<string key="NSFrame">{{5, 18}, {710, 9}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1002610958"/>
+								<reference key="NSNextKeyView" ref="314233088"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="290922202"/>
 								<bool key="IBUIOpaque">NO</bool>
@@ -422,11 +422,22 @@
 								</object>
 								<reference key="IBUITrackTintColor" ref="290922202"/>
 							</object>
+							<object class="IBUIView" id="986732239">
+								<reference key="NSNextResponder" ref="721212649"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{785, 10}, {31, 23}}</string>
+								<reference key="NSSuperview" ref="721212649"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<reference key="IBUIBackgroundColor" ref="290922202"/>
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+							</object>
 						</array>
-						<string key="NSFrame">{{175, 700}, {810, 44}}</string>
+						<string key="NSFrame">{{175, 700}, {820, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="314233088"/>
+						<reference key="NSNextKeyView" ref="359956817"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -687,6 +698,14 @@
 					<int key="connectionID">127</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">airPlayView</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="986732239"/>
+					</object>
+					<int key="connectionID">174</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">restartPlaybackButtonAction:</string>
 						<reference key="source" ref="883161448"/>
@@ -835,6 +854,7 @@
 							<reference ref="1002610958"/>
 							<reference ref="651669634"/>
 							<reference ref="314233088"/>
+							<reference ref="986732239"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Scrubber Container View</string>
@@ -921,6 +941,12 @@
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Button - Like</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">173</int>
+						<reference key="object" ref="986732239"/>
+						<reference key="parent" ref="721212649"/>
+						<string key="objectName">AirPlayView</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -947,6 +973,7 @@
 				<string key="156.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="160.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="171.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="173.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="38.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="39.CustomClassName">TopAlignedLabel</string>
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -959,7 +986,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">172</int>
+			<int key="maxID">174</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
