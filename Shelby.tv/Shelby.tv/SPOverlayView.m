@@ -110,12 +110,15 @@
     if ([self.model groupType] == GroupType_PersonalRoll) {
         [self.rollButton setHidden:YES];
         [self.shareButton setHidden:NO];
+        [self.likesButton setEnabled:YES];
     } else if ([self.model groupType] == GroupType_Likes) {
         [self.rollButton setHidden:NO];
         [self.shareButton setHidden:YES];
+        [self.likesButton setEnabled:NO];
     } else {
         [self.rollButton setHidden:NO];
         [self.shareButton setHidden:YES];
+        [self.likesButton setEnabled:YES];
     }
 
     [[SPVideoScrubber sharedInstance] setupScrubber];
