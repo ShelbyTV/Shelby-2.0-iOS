@@ -297,7 +297,7 @@
         [self.sharePopOverController setDelegate:self];
         [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
                                                      inView:self.model.overlayView
-                                   permittedArrowDirections:UIPopoverArrowDirectionUp
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
                                                    animated:YES];
     }
 
