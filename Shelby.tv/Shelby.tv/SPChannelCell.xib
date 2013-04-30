@@ -66,7 +66,7 @@
 								<string key="NSFrame">{{15, 0}, {1009, 175}}</string>
 								<reference key="NSSuperview" ref="852312895"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="484667404"/>
+								<reference key="NSNextKeyView" ref="9967735"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="613097646">
 									<int key="NSColorSpace">3</int>
@@ -93,7 +93,7 @@
 							<object class="IBUILabel" id="9967735">
 								<reference key="NSNextResponder" ref="852312895"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{42, 11}, {168, 21}}</string>
+								<string key="NSFrame">{{29, 11}, {168, 21}}</string>
 								<reference key="NSSuperview" ref="852312895"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -104,48 +104,27 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<string key="IBUIText"/>
-								<object class="NSColor" key="IBUITextColor" id="843474039">
+								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
 									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
 								</object>
-								<object class="NSColor" key="IBUIHighlightedColor" id="958539695">
+								<object class="NSColor" key="IBUIHighlightedColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="926139159">
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<string key="name">HelveticaNeue-Medium</string>
 									<string key="family">Helvetica Neue</string>
 									<int key="traits">0</int>
 									<double key="pointSize">19</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="484150653">
+								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">HelveticaNeue-Medium</string>
 									<double key="NSSize">19</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-							</object>
-							<object class="IBUILabel" id="484667404">
-								<reference key="NSNextResponder" ref="852312895"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{29, 12}, {12, 21}}</string>
-								<reference key="NSSuperview" ref="852312895"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="9967735"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<int key="IBUIContentMode">7</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<string key="IBUIText">#</string>
-								<reference key="IBUITextColor" ref="843474039"/>
-								<reference key="IBUIHighlightedColor" ref="958539695"/>
-								<int key="IBUIBaselineAdjustment">0</int>
-								<reference key="IBUIFontDescription" ref="926139159"/>
-								<reference key="IBUIFont" ref="484150653"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
@@ -224,7 +203,6 @@
 						<reference key="object" ref="1038451655"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="154438975"/>
-							<reference ref="484667404"/>
 							<reference ref="9967735"/>
 							<reference ref="818094938"/>
 						</array>
@@ -251,12 +229,6 @@
 						<string key="objectName">ChannelNameLabel</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">21</int>
-						<reference key="object" ref="484667404"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="1038451655"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">70</int>
 						<reference key="object" ref="818094938"/>
 						<array class="NSMutableArray" key="children"/>
@@ -270,7 +242,6 @@
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.CustomClassName">SPChannelCell</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -289,16 +260,11 @@
 					<string key="className">SPChannelCell</string>
 					<string key="superclassName">UITableViewCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="categoryFrames">UICollectionView</string>
 						<string key="channelColorView">UIView</string>
 						<string key="channelFrames">UICollectionView</string>
 						<string key="channelTitle">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="categoryFrames">
-							<string key="name">categoryFrames</string>
-							<string key="candidateClassName">UICollectionView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="channelColorView">
 							<string key="name">channelColorView</string>
 							<string key="candidateClassName">UIView</string>

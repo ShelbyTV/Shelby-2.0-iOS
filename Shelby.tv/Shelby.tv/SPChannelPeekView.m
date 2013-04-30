@@ -26,7 +26,7 @@
 - (void)setupWithChannelDisplay:(SPChannelDisplay *)channelDisplay;
 {
     [self.title setTextAlignment:NSTextAlignmentCenter];
-    [self.title setText:[NSString stringWithFormat:@"# %@",[channelDisplay channelDisplayTitle]]];
+    [self.title setText:[NSString stringWithFormat:@"%@",[channelDisplay channelDisplayTitle]]];
     [self.title setTextColor:[UIColor whiteColor]];
     [self.title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0]];
     [self.title setBackgroundColor:[UIColor clearColor]];
