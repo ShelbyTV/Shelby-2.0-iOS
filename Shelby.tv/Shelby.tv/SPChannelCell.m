@@ -43,6 +43,7 @@
                                                 lineBreakMode:NSLineBreakByWordWrapping].width;
     [self.channelTitle setFrame:CGRectMake(self.channelTitle.frame.origin.x, self.channelTitle.frame.origin.y, titleLabelWidth + 10, self.channelTitle.frame.size.height)];
     [self.channelTitle setBackgroundColor:channelColor];
+    [self.channelFrames setChannelColor:channelColor];
 
 }
 

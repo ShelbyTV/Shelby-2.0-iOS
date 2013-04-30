@@ -15,6 +15,7 @@
 #import "PageControl.h"
 #import "SPVideoItemViewCell.h"
 #import "SPChannelCell.h"
+#import "SPChannelCollectionView.h"
 #import "SPVideoItemViewCellLabel.h"
 #import "SettingsViewController.h"
 
@@ -511,10 +512,14 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell highlightItemWithColor:[((SPChannelCollectionView *)collectionView) channelColor]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell unHighlightItem];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

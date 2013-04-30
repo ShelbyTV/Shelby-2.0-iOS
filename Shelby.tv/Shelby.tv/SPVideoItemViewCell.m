@@ -7,6 +7,8 @@
 //
 
 #import "SPVideoItemViewCell.h"
+#import "SPVideoItemViewCellLabel.h"
+
 @interface SPVideoItemViewCell()
 
 @end
@@ -22,13 +24,16 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)highlightItemWithColor:(UIColor *)color
 {
-    // Drawing code
+    [self.caption setBackgroundColor:color];
+    [self.caption setAlpha:1];
 }
-*/
+
+- (void)unHighlightItem
+{
+    [self.caption setBackgroundColor:[UIColor blackColor]];
+    [self.caption setAlpha:0.7];
+}
 
 @end

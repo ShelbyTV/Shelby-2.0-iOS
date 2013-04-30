@@ -41,6 +41,9 @@
 		1C3D913A1714C6E100105839 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91341714C6CC00105839 /* AdSupport.framework */; };
 		1C3D913B1714C6E700105839 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91331714C6CC00105839 /* Accounts.framework */; };
 		1C3D913C1714C6E700105839 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91341714C6CC00105839 /* AdSupport.framework */; };
+		1C4110D117306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
+		1C4110D217306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
+		1C4110D317306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
 		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
@@ -718,6 +721,8 @@
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		1C3D91341714C6CC00105839 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		1C4110CF17306FA0009022EA /* SPChannelCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChannelCollectionView.h; sourceTree = "<group>"; };
+		1C4110D017306FA0009022EA /* SPChannelCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPChannelCollectionView.m; sourceTree = "<group>"; };
 		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
@@ -1490,6 +1495,8 @@
 				1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */,
 				8EAB0066171F27E20021DF31 /* SPVideoItemViewCellLabel.h */,
 				8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */,
+				1C4110CF17306FA0009022EA /* SPChannelCollectionView.h */,
+				1C4110D017306FA0009022EA /* SPChannelCollectionView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2377,6 +2384,7 @@
 				1C2FC38B1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				1C4110D217306FA0009022EA /* SPChannelCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2466,6 +2474,7 @@
 				1C2FC38C1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				1C4110D317306FA0009022EA /* SPChannelCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2555,6 +2564,7 @@
 				1C2FC38A1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				1C4110D117306FA0009022EA /* SPChannelCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
