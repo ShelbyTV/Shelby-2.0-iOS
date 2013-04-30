@@ -631,7 +631,7 @@
     [self.userView removeFromSuperview];
     if ([self isLoggedIn]) {
         _userView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
-        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(35, 7, 30, 30)];
+        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(25, 7, 30, 30)];
         [userAvatar.layer setCornerRadius:5];
         [userAvatar.layer setMasksToBounds:YES];
         [AsynchronousFreeloader loadImageFromLink:self.userImage
