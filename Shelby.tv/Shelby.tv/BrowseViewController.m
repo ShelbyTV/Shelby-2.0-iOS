@@ -493,7 +493,7 @@
             
             [cell.caption setText:[videoFrame creatorsInitialCommentWithFallback:YES]];
             //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
-            CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.75);
+            CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.45);
             CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
                                                     constrainedToSize:maxCaptionSize
                                                         lineBreakMode:NSLineBreakByWordWrapping].height;
