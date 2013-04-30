@@ -66,7 +66,6 @@
 								<string key="NSFrame">{{15, 0}, {1009, 150}}</string>
 								<reference key="NSSuperview" ref="852312895"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="801072538">
 									<int key="NSColorSpace">3</int>
@@ -108,13 +107,13 @@
 								</object>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<string key="name">HelveticaNeue-Medium</string>
+									<string key="name">HelveticaNeue-Bold</string>
 									<string key="family">Helvetica Neue</string>
-									<int key="traits">0</int>
+									<int key="traits">2</int>
 									<double key="pointSize">16</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">HelveticaNeue-Medium</string>
+									<string key="NSName">HelveticaNeue-Bold</string>
 									<double key="NSSize">16</double>
 									<int key="NSfFlags">16</int>
 								</object>
@@ -258,7 +257,7 @@
 					<string key="superclassName">UITableViewCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="channelColorView">UIView</string>
-						<string key="channelFrames">UICollectionView</string>
+						<string key="channelFrames">SPChannelCollectionView</string>
 						<string key="channelTitle">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -268,7 +267,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="channelFrames">
 							<string key="name">channelFrames</string>
-							<string key="candidateClassName">UICollectionView</string>
+							<string key="candidateClassName">SPChannelCollectionView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="channelTitle">
 							<string key="name">channelTitle</string>
@@ -294,6 +293,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/UICollectionViewFlowLayout.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UICollectionViewLayout</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/UICollectionViewLayout.h</string>
 					</object>
 				</object>
 			</array>
