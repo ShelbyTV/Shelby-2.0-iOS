@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
+#import "ShelbyDataMediator.h"
 
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *faceookButton;
@@ -151,8 +152,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate logout];
+        [[ShelbyDataMediator sharedInstance] logout];
         [SettingsViewController cleanupSession];
         [self.parent dismissPopover];
     }

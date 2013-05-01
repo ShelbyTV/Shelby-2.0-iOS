@@ -12,11 +12,15 @@
 #import "SPVideoReel.h"
 #import "FacebookHandler.h"
 #import "TwitterHandler.h"
+#import "User+Helper.h"
+//djs holy shit, a file that actually should talk directly to the API client!
+#import "ShelbyAPIClient.h"
 
 @interface SPShareController ()
 
 @property (weak, nonatomic) SPModel *model;
-@property (weak, nonatomic) AppDelegate *appDelegate;
+//djs
+//@property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
 @property (nonatomic) SPShareRollView *rollView;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
@@ -47,7 +51,8 @@
     if (self) {
         _videoPlayer = videoPlayer;
         _model = (SPModel *)[SPModel sharedInstance];
-        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        //djs
+//        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
     
     return self;
@@ -64,9 +69,10 @@
 - (void)updateTwitterToggle
 {
     if (self.rollView && self.rollView.twitterButton && [self.rollView.twitterButton isKindOfClass:[UIButton class]]) {
-        
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        User *user = [dataUtility fetchUser];
+        //djs TODO: probably shouldn't get our context this way, should be getting it during init
+        User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
+//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//        User *user = [dataUtility fetchUser];
         BOOL connected = user.twitterConnected;
         [self.rollView.twitterButton setSelected:(connected)];
     }
@@ -77,9 +83,10 @@
     
     // Reference social connection status
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-     
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        User *user = [dataUtility fetchUser];
+        //djs TODO: shouldn't get our context this way, should be getting it during init
+        User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
+        //        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+        //        User *user = [dataUtility fetchUser];
         self.facebookConnected = [[user facebookConnected] boolValue];
         self.twitterConnected = [[user twitterConnected] boolValue];
         
@@ -108,9 +115,11 @@
         
         // Reference videoFrame
         self.model = (SPModel *)[SPModel sharedInstance];
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
-        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//        NSManagedObjectContext *context = [self.appDelegate context];
+//        NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
+//        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//        djs just use the current video frame, it's context ought to be be fine
+        Frame *videoFrame = self.videoPlayer.videoFrame;
         
         // Create request for short link
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetShortLink, videoFrame.frameID]];
@@ -120,22 +129,24 @@
         // Perform shortLink fetch and present sharePopOver (on success and fail)
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
  
-            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
+//            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
+            //djs XXX using the videoFrame from outside these blocks... make sure that's okay
             NSString *shareLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
-            NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\": %@ via @Shelby", frame.video.title, shareLink];
+            NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\": %@ via @Shelby", videoFrame.video.title, shareLink];
             
             DLog(@"Succeeded fetching link for frame: %@", shareLink);
-            [self shareWithFrame:frame message:shareMessage andLink:shareLink];
+            [self shareWithFrame:videoFrame message:shareMessage andLink:shareLink];
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             
             // If short link fetch failed, use full_path
-            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
-            NSString *shareLink = [NSString stringWithFormat:kShelbyAPIGetLongLink, frame.video.providerName, frame.video.providerID, frame.frameID];
+//            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
+            //djs XXX using the videoFrame from outside these blocks... make sure that's okay
+            NSString *shareLink = [NSString stringWithFormat:kShelbyAPIGetLongLink, videoFrame.video.providerName, videoFrame.video.providerID, videoFrame.frameID];
             NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", videoFrame.video.title, shareLink];
     
             DLog(@"Failed getting awe.sm short_url. Using full path %@", shareLink);
-            [self shareWithFrame:frame message:shareMessage andLink:shareLink];
+            [self shareWithFrame:videoFrame message:shareMessage andLink:shareLink];
             
         }];
         
@@ -158,10 +169,12 @@
 
     self.rollView = nib[0];
     
-    // Reference videoFrame in current thread
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
-    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//    // Reference videoFrame in current thread
+//    NSManagedObjectContext *context = [self.appDelegate context];
+//    NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
+//    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//    djs should be able to use the frame from video player, context ought to be okay
+    Frame *videoFrame = self.videoPlayer.videoFrame;
     
     // Set Video Title
     [self.rollView.videoTitleLabel setText:[videoFrame.video title]];
@@ -306,17 +319,21 @@
 - (void)roll
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // Fetch User
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        User *user = [dataUtility fetchUser];
+
+        //djs TODO: shouldn't get our context this way, should be getting it during init
+        User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
+//        // Fetch User
+//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//        User *user = [dataUtility fetchUser];
         NSString *authToken = [user token];
         NSString *rollID = [user personalRollID];
         
-        // Fetch videoFrame
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
-        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//        // Fetch videoFrame
+//        NSManagedObjectContext *context = [self.appDelegate context];
+//        NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
+//        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+        //djs player's frame ought to be fine
+        Frame *videoFrame = self.videoPlayer.videoFrame;
         NSString *frameID = [videoFrame frameID];
         
         // Create web safe string

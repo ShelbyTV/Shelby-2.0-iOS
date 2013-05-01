@@ -709,6 +709,12 @@
 		91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
+		91F0CC00172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */; };
+		91F0CC01172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */; };
+		91F0CC02172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */; };
+		91F0CC051730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
+		91F0CC061730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
+		91F0CC071730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1047,6 +1053,10 @@
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Frame+Helper.h"; sourceTree = "<group>"; };
 		91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Frame+Helper.m"; sourceTree = "<group>"; };
+		91F0CBFE172EEF96008B5B34 /* ShelbyDataMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDataMediator.h; sourceTree = "<group>"; };
+		91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyDataMediator.m; sourceTree = "<group>"; };
+		91F0CC031730154E008B5B34 /* User+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Helper.h"; sourceTree = "<group>"; };
+		91F0CC041730154E008B5B34 /* User+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Helper.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1306,6 +1316,8 @@
 				8E77B3EE16CC45D50015D100 /* Creator.m */,
 				91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */,
 				91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */,
+				91F0CC031730154E008B5B34 /* User+Helper.h */,
+				91F0CC041730154E008B5B34 /* User+Helper.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1786,6 +1798,8 @@
 			children = (
 				8E209720162F3A61000A2DFD /* AppDelegate.h */,
 				8E209721162F3A61000A2DFD /* AppDelegate.m */,
+				91F0CBFE172EEF96008B5B34 /* ShelbyDataMediator.h */,
+				91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2409,6 +2423,8 @@
 				1C2FC38B1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				91F0CC01172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
+				91F0CC061730154E008B5B34 /* User+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2498,6 +2514,8 @@
 				1C2FC38C1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				91F0CC02172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
+				91F0CC071730154E008B5B34 /* User+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2587,6 +2605,8 @@
 				1C2FC38A1726C98E00BB39AA /* Dashboard.m in Sources */,
 				1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				91F0CC00172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
+				91F0CC051730154E008B5B34 /* User+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

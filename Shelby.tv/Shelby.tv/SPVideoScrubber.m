@@ -184,6 +184,8 @@
     return convertedTime;
 }
 
+//djs this is absurd.  No reason for the fucking scrubber to be updating core data and calling out to the API
+//djs TODO: refactor, re-enable this code somewhere else
 - (void)updateWatchedRoll
 {
     
@@ -199,17 +201,18 @@
         BOOL equalityCondition = !(elapsedSeconds == startSeconds);
         
         if ( elapsedCondition && differenceCondition && equalityCondition ) {
-            
-            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            NSManagedObjectContext *context = [appDelegate context];
-            NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
-            Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
-            [ShelbyAPIClient postFrameToWatchedRoll:frame.frameID];
-            
-            // Reset startSeconds
-            [self.model.currentVideoPlayer setPlaybackStartTime:[self.model.currentVideoPlayer elapsedTime]];
-            
-            DLog(@"Posting videoFrame %@ to watched roll", frame.frameID);
+            //djsDLog(@"TODO: NEED TO POST WATCHED TO API (from the correct place in code)");
+//            
+//            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//            NSManagedObjectContext *context = [appDelegate context];
+//            NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
+//            Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//            [ShelbyAPIClient postFrameToWatchedRoll:frame.frameID];
+//            
+//            // Reset startSeconds
+//            [self.model.currentVideoPlayer setPlaybackStartTime:[self.model.currentVideoPlayer elapsedTime]];
+//            
+//            DLog(@"Posting videoFrame %@ to watched roll", frame.frameID);
             
         }
     }

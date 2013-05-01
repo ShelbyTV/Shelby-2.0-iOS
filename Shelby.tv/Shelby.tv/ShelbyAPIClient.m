@@ -9,6 +9,11 @@
 #import "ShelbyAPIClient.h"
 #import "LoginView.h"
 
+//XXX djs
+//djs importing CoreDataUtility just to get this fucking thing to build...
+#import "CoreDataUtility.h"
+//XXX djs
+
 @implementation ShelbyAPIClient
 
 #pragma mark - Authentication (POST)

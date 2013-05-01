@@ -108,7 +108,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPLoadVideoAfterUnplayableVideo object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
     
     
     DLog(@"SPVideoReel Deallocated");
@@ -163,10 +163,11 @@
     [self setup];
     
     if (self.tutorialMode == SPTutorialModeShow) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(showDoubleTapTutorial)
-                                                     name:kShelbySPVideoExtracted
-                                                   object:nil];
+// djs TODO: find another way to determine when to start showing the tutorial
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(showDoubleTapTutorial)
+//                                                     name:kShelbySPVideoExtracted
+//                                                   object:nil];
     } else if (self.tutorialMode == SPTutorialModePinch) {
         [self performSelector:@selector(showPinchTutorial) withObject:nil afterDelay:5];
     }
@@ -438,22 +439,26 @@
 {
     SPVideoPlayer *player = (self.videoPlayers)[position];
     
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [player.videoFrame objectID];
-    if (!objectID) {
-        return;
-    }
-    
-    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    if (!videoFrame) {
-        return;
-    }
+//    djs same old bullshit... just use the damn video...
+    Frame *videoFrame = player.videoFrame;
+//    NSManagedObjectContext *context = [self.appDelegate context];
+//    NSManagedObjectID *objectID = [player.videoFrame objectID];
+//    if (!objectID) {
+//        return;
+//    }
+//    
+//    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//    if (!videoFrame) {
+//        return;
+//    }
     
     if ( position < _model.numberOfVideos ) {
-        if ([videoFrame.video offlineURL] && [[videoFrame.video offlineURL] length] > 0 ) { // Load player from disk if video was previously downloaded
-            [player loadVideoFromDisk];
-        } else { // Queue video for mp4 extraction
-            [player queueVideo];
+        //djs XXX this is not the right way to determine if we should use offline vs. streaming video
+        //djs TODO: check the OfflineVideoManager to see if we're in offline mode
+        if ([videoFrame.video offlineURL] && [[videoFrame.video offlineURL] length] > 0 ) {
+            [player prepareForLocalPlayback];
+        } else {
+            [player prepareForStreamingPlayback];
         }
     } 
 }
@@ -490,17 +495,21 @@
     [self.overlayView.nicknameLabel setText:nil];
     [self.overlayView.userImageView setImage:nil];
     
-    // Reference NSManageObjectContext
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
-    if (!objectID) {
-        return;
-    }
+//    // Reference NSManageObjectContext
+//    NSManagedObjectContext *context = [self.appDelegate context];
+//    NSManagedObjectID *objectID = [(self.videoFrames)[_model.currentVideo] objectID];
+//    if (!objectID) {
+//        return;
+//    }
+//    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//    if (!videoFrame) {
+//        return;
+//    }
+//
+    //djs yeah imma just use the frame here
+    Frame *videoFrame = self.videoFrames[_model.currentVideo];
     
-    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    if (!videoFrame) {
-        return;
-    }
+    
     // Set new values on infoPanel
     self.overlayView.videoTitleLabel.text = videoFrame.video.title;
     
@@ -592,47 +601,58 @@
                     
                 case GroupType_Stream: {
                     
-                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                    User *user = [dataUtility fetchUser];
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchDashboardEntriesInDashboard:user.userID];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
+                    //djs
+                    DLog(@"TODO: need more videos for our Stream!");
+//                    djs not yet sure how we're going to do this, but it's not like this...
+//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                    User *user = [dataUtility fetchUser];
+//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchDashboardEntriesInDashboard:user.userID];
+//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+//                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
                     
                 } break;
                     
                 case GroupType_Likes: {
-                    
-                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFramesInLikes:numberToString];
+
+                    //djs
+                    DLog(@"TODO: need more videos for our Likes!");
+//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
+//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+//                    [ShelbyAPIClient getMoreFramesInLikes:numberToString];
                     
                 } break;
                     
                 case GroupType_PersonalRoll: {
 
-                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
+                    //djs
+                    DLog(@"TODO: need more videos for our personal Roll!");
+//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
+//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+//                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
                     
                 } break;
                     
                 case GroupType_ChannelDashboard: {
                     
-                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:_channelID];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:_channelID];
+                    //djs
+                    DLog(@"Need more videos for some channel");
+//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:_channelID];
+//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+//                    [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:_channelID];
                     
                 } break;
                     
                 case GroupType_ChannelRoll: {
-                    
-                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:_channelID];
-                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-                    [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:_channelID];
+
+                    //djs
+                    DLog(@"Need more videos for some roll");
+//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:_channelID];
+//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+//                    [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:_channelID];
                     
                 } break;
                     
@@ -678,66 +698,73 @@
         
         [self setLoadingOlderVideos:YES];
         
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
-        if (!lastFramedObjectID) {
-            return;
-        }
-        Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
-        if (!lastFrame) {
-            return;
-        }
-        NSDate *date = lastFrame.timestamp;
+//        NSManagedObjectContext *context = [self.appDelegate context];
+//        NSManagedObjectID *lastFramedObjectID = [[self.videoFrames lastObject] objectID];
+//        if (!lastFramedObjectID) {
+//            return;
+//        }
+//        Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
+//        if (!lastFrame) {
+//            return;
+//        }
+        //djs again, just using the frame we're holding
+        Frame *lastFrame = [self.videoFrames lastObject];
+        
+//        NSDate *date = lastFrame.timestamp;
         
         NSMutableArray *olderFramesArray = [@[] mutableCopy];
         
-        switch ( _groupType ) {
-                
-            case GroupType_Likes:{
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreLikesEntriesAfterDate:date]];
-            } break;
-                
-            case GroupType_PersonalRoll:{
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
-            } break;
-                
-            case GroupType_Stream:{
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                User *user = [dataUtility fetchUser];
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:user.userID afterDate:date]];
-            } break;
-                
-            case GroupType_ChannelDashboard:{
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:_channelID afterDate:date]];
-            } break;
-                
-            case GroupType_ChannelRoll:{
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannelRoll:_channelID afterDate:date]];
-            } break;
-                
-            case GroupType_Unknown: {
-                // Do nothing
-            } break;
-                
-        }
+        //djs actually, we probably won't be getting data this way anymore...
+        DLog(@"HOLY SHIT! We need to do something with all this data...");
+//        switch ( _groupType ) {
+//                
+//            case GroupType_Likes:{
+//                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreLikesEntriesAfterDate:date]];
+//            } break;
+//                
+//            case GroupType_PersonalRoll:{
+//                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                [olderFramesArray addObjectsFromArray:[dataUtility fetchMorePersonalRollEntriesAfterDate:date]];
+//            } break;
+//                
+//            case GroupType_Stream:{
+//                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                User *user = [dataUtility fetchUser];
+//                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:user.userID afterDate:date]];
+//            } break;
+//                
+//            case GroupType_ChannelDashboard:{
+//                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:_channelID afterDate:date]];
+//            } break;
+//                
+//            case GroupType_ChannelRoll:{
+//                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//                [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannelRoll:_channelID afterDate:date]];
+//            } break;
+//                
+//            case GroupType_Unknown: {
+//                // Do nothing
+//            } break;
+//                
+//        }
         
         // Compare last video from _videoFrames against first result of olderFramesArrays, and deduplicate if necessary
         if ( [olderFramesArray count] ) {
             
             Frame *firstFrame = (Frame *)olderFramesArray[0];
-            NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
-            if (!firstFrameObjectID) {
-                return;
-            }
+            //djs what's wrong with the frame above?
+//            NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
+//            if (!firstFrameObjectID) {
+//                return;
+//            }
+//            firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
+//            if (!firstFrame) {
+//                return;
+//            }
             
-            firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
-            if (!firstFrame) {
-                return;
-            }
+            
             if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
                 [olderFramesArray removeObject:firstFrame];
             }
@@ -772,35 +799,40 @@
             if ( [self.videoFrames count] >= i ) {
                 
                 // videoScrollView
-                NSManagedObjectContext *context = [self.appDelegate context];
-                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-                if (!objectID) {
-                    continue;
-                }
-                Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-                if (!videoFrame) {
-                    return;
-                }
+//                NSManagedObjectContext *context = [self.appDelegate context];
+//                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+//                if (!objectID) {
+//                    continue;
+//                }
+//                Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//                if (!videoFrame) {
+//                    return;
+//                }
+                //djs don't see any reason we can't use the frame we've already got
+                Frame *videoFrame = self.videoFrames[i];
+                
+                
                 CGRect viewframe = [self.videoScrollView frame];
                 viewframe.origin.x = viewframe.size.width * i;
                 SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
                 
                 // Update UI on Main Thread
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    // Reference _videoFrames[i] on main thread
-                    NSManagedObjectContext *context = [self.appDelegate context];
-                    if (!self.videoFrames || [self.videoFrames count] <= i) {
-                        return;
-                    }
-                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-                    if (!objectID) {
-                        return ;
-                    }
-                    Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-                    if (!mainQueuevideoFrame) {
-                        return;
-                    }
+
+                    //djs jesus h christ, we're not even using the frame we get in this convoluted manner!
+//                    // Reference _videoFrames[i] on main thread
+//                    NSManagedObjectContext *context = [self.appDelegate context];
+//                    if (!self.videoFrames || [self.videoFrames count] <= i) {
+//                        return;
+//                    }
+//                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+//                    if (!objectID) {
+//                        return ;
+//                    }
+//                    Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//                    if (!mainQueuevideoFrame) {
+//                        return;
+//                    }
                     // Update scrollViews
                     self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
                     [self.videoPlayers addObject:player];
@@ -830,13 +862,16 @@
             skippedVideoID = nil;
         }
         
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
-        Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
-        if (!currentVideoFrame) {
-            return;
-        }
-        NSString *currentVideoID = [currentVideoFrame videoID];
+//        NSManagedObjectContext *context = [self.appDelegate context];
+//        NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
+//        Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
+//        if (!currentVideoFrame) {
+//            return;
+//        }
+//        NSString *currentVideoID = [currentVideoFrame videoID];
+        //djs just using the stuff we have, we're not saving anything here!
+        NSString *currentVideoID = [self.model.currentVideoPlayer.videoFrame videoID];
+        
         if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
             CGFloat videoX = kShelbySPVideoWidth * position;
             CGFloat videoY = _videoScrollView.contentOffset.y;
@@ -888,32 +923,34 @@
 
 - (IBAction)likeAction:(id)sender
 {
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
-    if (!objectID) {
-        return;
-    }
-    
-    Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
-    if (!frame) {
-        return;
-    }
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
-        [ShelbyAPIClient postFrameToLikes:frame.frameID];
-    } else { // Logged Out
-        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreLoggedOutLike];
-        [ShelbyAPIClient postFrameToLikes:frame.frameID];
-        [dataUtility storeFrameInLoggedOutLikes:frame];
-    }
-    
-    SPModel *model = (SPModel *)[SPModel sharedInstance];
-    [model.overlayView showOverlayView];
-    [model.overlayView showLikeNotificationView];
-    [NSTimer scheduledTimerWithTimeInterval:5.0f
-                                     target:model.overlayView
-                                   selector:@selector(hideLikeNotificationView)
-                                   userInfo:nil
-                                    repeats:NO];
+    DLog(@"TODO: holy shit the like the video! do something great!");
+    //djs easier to comment out everything and rebuild later :-] but :-/
+//    NSManagedObjectContext *context = [self.appDelegate context];
+//    NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
+//    if (!objectID) {
+//        return;
+//    }
+//    
+//    Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
+//    if (!frame) {
+//        return;
+//    }
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
+//        [ShelbyAPIClient postFrameToLikes:frame.frameID];
+//    } else { // Logged Out
+//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreLoggedOutLike];
+//        [ShelbyAPIClient postFrameToLikes:frame.frameID];
+//        [dataUtility storeFrameInLoggedOutLikes:frame];
+//    }
+//    
+//    SPModel *model = (SPModel *)[SPModel sharedInstance];
+//    [model.overlayView showOverlayView];
+//    [model.overlayView showLikeNotificationView];
+//    [NSTimer scheduledTimerWithTimeInterval:5.0f
+//                                     target:model.overlayView
+//                                   selector:@selector(hideLikeNotificationView)
+//                                   userInfo:nil
+//                                    repeats:NO];
 }
 
 - (IBAction)rollAction:(id)sender
@@ -1159,7 +1196,8 @@
             [self.tutorialView setAlpha:0.9];
         }];
         
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
+        //djs probably won't need to replace this with anything
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
     }
 }
 

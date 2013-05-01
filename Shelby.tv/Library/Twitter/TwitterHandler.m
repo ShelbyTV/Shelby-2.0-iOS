@@ -9,6 +9,11 @@
 #import "TwitterHandler.h"
 #import "AuthenticateTwitterViewController.h"
 
+//XXX djs
+//djs importing CoreDataUtility just to get this fucking thing to build...
+#import "CoreDataUtility.h"
+//XXX djs
+
 NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNotificationTwitterAuthorizationCompleted";
 
 @interface TwitterHandler () <AuthenticateTwitterDelegate>

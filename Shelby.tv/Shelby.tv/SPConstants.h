@@ -11,12 +11,16 @@
 #define kShelbySPActivityTypeLike               @"tv.Shelby.Shelby-tv.likes"
 
 /// Temporary Video Cache
-#define kShelbySPVideoPlayerStoredDate          @"SP Video Player Stored Date"
-#define kShelbySPVideoPlayerElapsedTime         @"SP Video Player Elapsed Time"
-#define kShelbySPVideoPlayerExtractedURL        @"SP Video Player Extracted URL"
+//djs pretty sure we don't need this "stored" date (i think it means when the extracted URL was stored)
+//#define kShelbySPVideoPlayerStoredDate          @"SP Video Player Stored Date"
+//djs let's just make this an instance variable on SPVideoPlayer
+//#define kShelbySPVideoPlayerElapsedTime         @"SP Video Player Elapsed Time"
+//djs extracted URL should always be retrieved from SPVideoExtractor (how simple is that!)
+//#define kShelbySPVideoPlayerExtractedURL        @"SP Video Player Extracted URL"
 
 /// Notification
-#define kShelbySPVideoExtracted                 @"SP Video Extracted"
+//djs using blocks now,
+//#define kShelbySPVideoExtracted                 @"SP Video Extracted"
 #define kShelbySPUserDidScrollToUpdate          @"SP User Did Scroll To Update"
 #define kShelbySPLoadVideoAfterUnplayableVideo  @"SP Load Video After Unplayable Video"
 #define kShelbySPUserDidSwipeToNextVideo        @"SP User Did Swipe To Next Video"

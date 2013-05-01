@@ -15,20 +15,22 @@
 @property (assign, nonatomic) BOOL playbackFinished;
 @property (assign, nonatomic) CMTime playbackStartTime;
 
-/// Initialization Methods
+// Initialization
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame;
 - (void)resetPlayer;
 
-/// Video Storage Methods
+// Preloading
+- (void)prepareForStreamingPlayback;
+- (void)prepareForLocalPlayback;
+
+// Playback Info
 - (NSTimeInterval)availableDuration;
 - (CMTime)elapsedTime;
 - (CMTime)duration;
 
-/// Video Fetching Methods
-- (void)queueVideo;
-
-/// Video Playback Methods
-- (void)loadVideoFromDisk;
+// Playback Control
+//djs moved the following to prepareForLocalPlayback
+//- (void)loadVideoFromDisk;
 - (void)togglePlayback:(id)sender;
 - (void)restartPlayback;
 - (void)play;

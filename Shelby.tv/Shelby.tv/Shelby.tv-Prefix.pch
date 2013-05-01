@@ -47,8 +47,9 @@
     #import "BigButton.h"
 
     // Controllers
-    #import "CoreDataUtility.h"
-    #import "ShelbyAPIClient.h"
+    //djs removing these two are (probably) just the beginning...
+    //#import "CoreDataUtility.h"
+    //#import "ShelbyAPIClient.h"
 
 #endif
 

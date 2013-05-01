@@ -44,7 +44,6 @@ extern NSString * const kShelbyNotificationChannelDataFetched;
 - (NSMutableArray *)fetchMoreDashboardEntriesInDashboard:(NSString *)dashboardID afterDate:(NSDate *)date;
 - (NSMutableArray *)fetchFramesInChannelRoll:(NSString *)rollID;
 - (NSMutableArray *)fetchMoreFramesInChannelRoll:(NSString *)rollID afterDate:(NSDate *)date;
-- (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation;
 - (NSMutableArray *)fetchAllChannels;
 
 /// Sync Methods

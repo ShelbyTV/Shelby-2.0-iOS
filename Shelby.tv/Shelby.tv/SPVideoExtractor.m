@@ -8,7 +8,8 @@
 
 #import "SPVideoExtractor.h"
 #import "Video.h"
-#import "ShelbyAPIClient.h"
+//djs this has no reason to know about the API
+//#import "ShelbyAPIClient.h"
 
 @interface SPVideoExtractor () <UIWebViewDelegate>
 
@@ -18,7 +19,8 @@
 @property (nonatomic) NSTimer *currentExtractionTimer;
 @property (assign, nonatomic) BOOL isExtracting;
 
-- (NSManagedObjectContext *)context;
+//djs we shouldn't need a fucking context
+//- (NSManagedObjectContext *)context;
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
 - (void)destroyWebView;
@@ -26,7 +28,7 @@
 - (void)loadVimeoVideo:(Video *)video;
 - (void)loadDailyMotionVideo:(Video *)video;
 - (void)processNotification:(NSNotification *)notification;
-- (void)timerExpired:(NSTimer *)timer;
+- (void)extractionTimerExpired:(NSTimer *)timer;
 
 @end
 
@@ -40,33 +42,41 @@
     dispatch_once(&extractorToken, ^{
         sharedInstance = [[super allocWithZone:NULL] init];
     });
-    
+
     return sharedInstance;
 }
 
 #pragma mark - Public Methods
-- (void)queueVideo:(Video *)video
+//djs deprecated, now use URLForVideo:usingBlock:
+//- (void)queueVideo:(Video *)video
+//{
+//    @synchronized(self) {
+//        
+//        // If queue is empty
+//        if ( ![self videoQueue] ) {
+//            self.videoQueue = [@[] mutableCopy];
+//        }
+//        
+//        if (video) {
+//            [self.videoQueue addObject:video];
+//        }
+//        
+//        [self extractNextVideoFromQueue];
+//        
+//    }
+//}
+
+- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock
 {
-    @synchronized(self) {
-        
-        // If queue is empty
-        if ( ![self videoQueue] ) {
-            self.videoQueue = [@[] mutableCopy];
-        }
-        
-        if (video) {
-            [self.videoQueue addObject:video];
-        }
-        
-        [self extractNextVideoFromQueue];
-        
+    @synchronized(self){
+        //TODO: store the video and completionBlock on videoQueue
     }
 }
 
 - (void)cancelRemainingExtractions
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setIsExtracting:NO];
+    self.isExtracting = NO;
     [self.nextExtractionTimer invalidate];
     [self.videoQueue removeAllObjects];
     [self destroyWebView];
@@ -75,38 +85,29 @@
 }
 
 #pragma mark - Private Methods
-- (NSManagedObjectContext *)context
-{
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    return [appDelegate context];
-}
-
 - (void)extractNextVideoFromQueue
 {
     if ( ![self isExtracting] && [self.videoQueue count] ) {
         
-        NSManagedObjectContext *context = [self context];
-        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
-        [self setIsExtracting:YES];
+        //djs we should be able to use the video handed to us w/o any issue...
+//        NSManagedObjectContext *context = [self context];
+//        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
+//        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
+        Video *video = self.videoQueue[0];
+        self.isExtracting = YES;
         [self createWebView];
         
+        //djs is there not a nice switch statement for this?
         if ( [video.providerName isEqualToString:@"youtube"] ) {
-            
             [self loadYouTubeVideo:video];
-            
         } else if ( [video.providerName isEqualToString:@"vimeo"] ) {
-            
             [self loadVimeoVideo:video];
-            
         } else if ( [video.providerName isEqualToString:@"dailymotion"] ) {
-            
             [self loadDailyMotionVideo:video];
-            
         }
 
-        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:15.0f target:self selector:@selector(timerExpired:) userInfo:[video videoID] repeats:NO];
+        //djs don't think we need the userInfo
+        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:15.0f target:self selector:@selector(extractionTimerExpired:) userInfo:[video videoID] repeats:NO];
         
     }
 }
@@ -213,15 +214,30 @@
                     } else {
                         
                         // Update Core Data video object
-                        NSManagedObjectContext *context = [self context];
-                        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-                        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
-                        [video setValue:extractedURL forKey:kShelbyCoreDataVideoExtractedURL];
+//                        NSManagedObjectContext *context = [self context];
+//                        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
+//                        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
+                        //djs don't need all that core data context sillyness, SO LONG AS we were given a proper ManagedObject
+                        //actually, why are we putting this in the ManagedObject at all???
+                        //we just hit the block now and let somebody else deal with it!
+//                        Video *video = self.videoQueue[0];
+//                        [video setValue:extractedURL forKey:kShelbyCoreDataVideoExtractedURL];
                        
                         // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
-                        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
-                        [dataUtility setVideoID:video.videoID];
-                        [dataUtility saveContext:context];
+//                        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
+//                        [dataUtility setVideoID:video.videoID];
+//                        [dataUtility saveContext:context];
+                        //djs we can just save the fucking video like normal
+//                        [video.managedObjectContext save:nil];
+                        
+                        //djs DataRequestType_VideoExtracted had side effects, posting a notification:
+//                        // Post notification if SPVideoReel object is available
+//                        NSDictionary *videoDictionary = @{kShelbySPCurrentVideo: video};
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoExtracted
+//                                                                            object:nil
+//                                                                          userInfo:videoDictionary];
+                        //djs this is the notification the SPVideoPlayer listened for
+                        
 
                         // Reset variables for next search
                         [self.videoQueue removeObjectAtIndex:0];
@@ -236,7 +252,7 @@
     }
 }
 
-- (void)timerExpired:(NSTimer *)timer
+- (void)extractionTimerExpired:(NSTimer *)timer
 {
     
     if ( [self.videoQueue count] ) {
@@ -252,6 +268,8 @@
 //            Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
 //            [ShelbyAPIClient markUnplayableVideo:[video videoID]];
 //        }
+        
+        //djs TODO: call the block with nil
 
         // 'if' conditional shouldn't be necessary, since _videoQueue should have at least one item, the one that failed to be extracted
         [self.videoQueue removeObjectAtIndex:0];
@@ -265,6 +283,8 @@
     [self destroyWebView];
 
     // Scroll to next video, which subsequently queues the next video for extraction
+    //djs XXX the SPVideoExtractor SHOULD NOT CARE about video playback.
+    //  it should just notify whomever cares tha extraction failed
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPLoadVideoAfterUnplayableVideo object:userInfo];
 
     

@@ -10,7 +10,8 @@
 
 @interface SPVideoDownloader ()
 
-@property (weak, nonatomic) AppDelegate *appDelegate;
+//djs
+//@property (weak, nonatomic) AppDelegate *appDelegate;
 @property (nonatomic) Video *video;
 
 @end
@@ -23,11 +24,13 @@
 {
     self = [super init];
     if (self) {
-        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [video objectID];
-        _video = (Video *)[context existingObjectWithID:objectID error:nil];
+        //djs we should be handed a video that we can use
+        _video = video;
+//        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        
+//        NSManagedObjectContext *context = [self.appDelegate context];
+//        NSManagedObjectID *objectID = [video objectID];
+//        _video = (Video *)[context existingObjectWithID:objectID error:nil];
     }
     
     return self;
@@ -37,12 +40,14 @@
 - (void)startDownloading
 {
 
-    // Retain this SPVideoDownloader instance 
-    [self.appDelegate addVideoDownloader:self];
-    
-    NSManagedObjectContext *context = [self.appDelegate context];
-    NSManagedObjectID *objectID = [self.video objectID];
-    self.video = (Video *)[context existingObjectWithID:objectID error:nil];
+//    djs this is very fucked up... we should not retain outselves... doesn't somebody love us enough to retain us???
+//    // Retain this SPVideoDownloader instance 
+//    [self.appDelegate addVideoDownloader:self];
+
+//    djs also fucked up... our video should be okay to use
+//    NSManagedObjectContext *context = [self.appDelegate context];
+//    NSManagedObjectID *objectID = [self.video objectID];
+//    self.video = (Video *)[context existingObjectWithID:objectID error:nil];
     
     if ( ![self.video offlineURL] ) { // Download video if not already stored.
 
@@ -72,37 +77,42 @@
                 [data writeToFile:path atomically:YES];
                 
                 // Store offlineURL path
-                NSManagedObjectContext *asyncContext = [self.appDelegate context];
-                NSManagedObjectID *asyncObjectID = [self.video objectID];
-                Video *asyncVideo = (Video *)[asyncContext existingObjectWithID:asyncObjectID error:nil];
-                asyncVideo.offlineURL = path;
-                
-                // Save modified video object to CoreData store
-                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoDownloaded];
-                [dataUtility saveContext:asyncContext];
+//                djs don't need to store the offline path, if the path is deterministic
+//                  just need to get/set path via a class method of SPVideoDownloader (and/or OfflineVideoManager)
+//                NSManagedObjectContext *asyncContext = [self.appDelegate context];
+//                NSManagedObjectID *asyncObjectID = [self.video objectID];
+//                Video *asyncVideo = (Video *)[asyncContext existingObjectWithID:asyncObjectID error:nil];
+//                asyncVideo.offlineURL = path;
+//                
+//                // Save modified video object to CoreData store
+//                CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoDownloaded];
+//                [dataUtility saveContext:asyncContext];
 
                 dispatch_async(dispatch_get_main_queue(), ^{
 
                     // Present local notification
-                    NSManagedObjectContext *notificationContext = [self.appDelegate context];
-                    NSManagedObjectID *objectID = [self.video objectID];
-                    Video *notificationVideo = (Video *)[notificationContext existingObjectWithID:objectID error:nil];
+//                    NSManagedObjectContext *notificationContext = [self.appDelegate context];
+//                    NSManagedObjectID *objectID = [self.video objectID];
+//                    Video *notificationVideo = (Video *)[notificationContext existingObjectWithID:objectID error:nil];
 
                     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
                     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
                     localNotification.fireDate = [[datePicker date] dateByAddingTimeInterval:60];
                     localNotification.soundName = UILocalNotificationDefaultSoundName;
                     localNotification.alertAction = @"Finished Downloading Video!";
-                    localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", notificationVideo.title];
+                    // djs adjusted to use the video we were given, not something pulled from a context
+                    localNotification.alertBody = [NSString stringWithFormat:@"The video '%@' has been downloaded and cached.", self.video.title];
                     localNotification.hasAction = YES;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 
                 });
                 
-                DLog(@"Video (%@) downloaded to location: %@", asyncVideo.title, path);
-                
-                // Release this SPVideoDownloader instance 
-                [self.appDelegate removeVideoDownloader:self];
+                //djs adjusted to use video we were given
+                DLog(@"Video (%@) downloaded to location: %@", self.video.title, path);
+
+//                djs not how we do memory management...
+//                // Release this SPVideoDownloader instance
+//                [self.appDelegate removeVideoDownloader:self];
                 
             }
         }];
@@ -110,9 +120,10 @@
     } else { // Do nothing if video previously downloaded
         
         DLog(@"Video was previously downloaded.");
-        
-        // Release this SPVideoDownloader instance
-        [self.appDelegate removeVideoDownloader:self];
+
+        // djs not how we do mem mgt...
+//        // Release this SPVideoDownloader instance
+//        [self.appDelegate removeVideoDownloader:self];
     }
     
 }
@@ -123,9 +134,10 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         // Reference Filename
-        NSManagedObjectContext *context = [self.appDelegate context];
-        NSManagedObjectID *objectID = [self.video objectID];
-        self.video = (Video *)[context existingObjectWithID:objectID error:nil];
+//        djs no need to pull video from context
+//        NSManagedObjectContext *context = [self.appDelegate context];
+//        NSManagedObjectID *objectID = [self.video objectID];
+//        self.video = (Video *)[context existingObjectWithID:objectID error:nil];
         NSString *storedFilename = [NSString stringWithFormat:@"%@.mp4", _video.videoID];
         
         // Reference Cache Path

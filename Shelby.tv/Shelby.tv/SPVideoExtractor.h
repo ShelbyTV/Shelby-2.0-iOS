@@ -5,8 +5,11 @@
 //  Created by Arthur Ariel Sabintsev on 11/2/12.
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
+// Extracts ONE video at a time.
 
 @class Video;
+
+typedef void (^extraction_complete_block)(NSString *videoURL);
 
 @interface SPVideoExtractor : NSObject
 
@@ -14,7 +17,12 @@
 + (SPVideoExtractor *)sharedInstance;
 
 /// Video Processing Methods
-- (void)queueVideo:(Video *)video;
+//djs use URLForVideo:usingBlock:
+//- (void)queueVideo:(Video *)video;
 - (void)cancelRemainingExtractions;
+
+//uses cached URL unless cache is stale (ie. > 300s)
+//calls block with nil if extraction fails
+- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock;
 
 @end

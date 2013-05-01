@@ -18,7 +18,8 @@
 - (IBAction)toggleSecretModes:(id)sender;
 
 /// DataSource Methods
-- (void)fetchAllChannels;
+// djs: TODO: this stuff should be handed to me
+//- (void)fetchAllChannels;
 
 /// Lanuch Player
 - (void)launchMyRollPlayer;

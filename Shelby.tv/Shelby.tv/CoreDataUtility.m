@@ -66,7 +66,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     self = [super init];
     if (self) {
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        _context = [_appDelegate context];
+//djs make it make
+//        _context = [_appDelegate context];
         _requestType = requestType;
         _channelID = nil;
         
@@ -77,7 +78,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                                                    object:_context];
         
         NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
-        [_appDelegate addHash:hash];
+//djs make it make
+//        [_appDelegate addHash:hash];
     }
     
     return self;
@@ -129,7 +131,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                 case DataRequestType_StoreUserForLogin: {
                     
                     DLog(@"User Data Saved Successfully for Logged-In user!");
-                    [self.appDelegate userIsAuthorized];
+//                    djs make it make
+//                    [self.appDelegate userIsAuthorized];
                     
                     User *user = [self fetchUser];
                     // Send event to Google Analytics
@@ -144,7 +147,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                 case DataRequestType_StoreUserForSignUp: {
                     
                     DLog(@"User Data Saved Successfully for newly Signed Up User!");
-                    [self.appDelegate userIsAuthorized];
+//                    djs make it make
+//                    [self.appDelegate userIsAuthorized];
                     
                     User *user = [self fetchUser];
                     // Send event to Google Analytics
@@ -509,14 +513,15 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     }
     
     if ( groupType == GroupType_Likes ) {
-     
-        [NSTimer scheduledTimerWithTimeInterval:2.0f target:[ShelbyAPIClient class] selector:@selector(getLikesForSync) userInfo:nil repeats:NO];
-        
-        [ShelbyAPIClient getLikesForSync];
+//        djs make it make
+//        [NSTimer scheduledTimerWithTimeInterval:2.0f target:[ShelbyAPIClient class] selector:@selector(getLikesForSync) userInfo:nil repeats:NO];
+//        
+//        [ShelbyAPIClient getLikesForSync];
         
     } else if ( groupType == GroupType_PersonalRoll) {
         
-        [NSTimer scheduledTimerWithTimeInterval:2.0f target:[ShelbyAPIClient class] selector:@selector(getPersonalRollForSync) userInfo:nil repeats:NO];
+//        djs make it make
+//        [NSTimer scheduledTimerWithTimeInterval:2.0f target:[ShelbyAPIClient class] selector:@selector(getPersonalRollForSync) userInfo:nil repeats:NO];
         
         
     } else { // The remaining type, ChannelRolls, is synced at the end of the storeChannels: method
@@ -574,6 +579,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 }
 
 #pragma mark - Fetch Methods (Public)
+//djs moved to User+Helper as +currentAuthenticatedUser
 - (User *)fetchUser
 {
     // Create fetch request
@@ -998,41 +1004,6 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     return ( offlineViewModeEnabled ) ? [self filterDownloadedFrames:deduplicatedFrames] : deduplicatedFrames;
 }
 
-- (NSString *)fetchTextFromFirstMessageInConversation:(Conversation *)conversation
-{
-
-    // Create fetch request
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Fetch messages data
-    NSEntityDescription *description = [NSEntityDescription entityForName:kShelbyCoreDataEntityMessages inManagedObjectContext:_context];
-    [request setEntity:description];
-    
-    // Only include messages that belong to this specific conversation
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversationID == %@", conversation.conversationID];
-    [request setPredicate:predicate];
-    
-    // Sort by timestamp
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    [request setSortDescriptors:@[sortDescriptor]];
-    
-    // Execute request that returns array of dashboardEntrys
-    NSArray *messagesArray = [self.context executeFetchRequest:request error:nil];
-    
-    NSString *messageText;
-    
-    if ( [messagesArray count] ) {
-        
-        Messages *message = (Messages *) messagesArray[0];
-        messageText = message.text;
-    }
-
-    [self removeStoredHash];
-    
-    return messageText.length ? messageText : nil;
-}
-
 - (NSMutableArray *)fetchAllChannels
 {
     
@@ -1117,7 +1088,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
         for ( Frame *frame in requestResults ) {
         
-            [ShelbyAPIClient postFrameToLikes:frame.frameID];
+//            djs make it make
+//            [ShelbyAPIClient postFrameToLikes:frame.frameID];
             [frame setIsStoredForLoggedOutUser:NO];
         
         }
@@ -1451,7 +1423,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             displayThumbnail = [NSString stringWithFormat: @"http://shelby.tv%@", displayThumbnail];
             [roll setValue:displayThumbnail forKey:kShelbyCoreDataRollDisplayThumbnailURL];
             
-            [ShelbyAPIClient getChannelRoll:rollID];
+//            djs make it make
+//            [ShelbyAPIClient getChannelRoll:rollID];
         }
     }
     
@@ -1490,7 +1463,8 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
             
             [dashboard setValue:@YES forKey:kShelbyCoreDataDashboardIsChannel];
             
-            [ShelbyAPIClient getChannelDashboardEntries:dashboardID];
+//            djs make it make
+//            [ShelbyAPIClient getChannelDashboardEntries:dashboardID];
         }
     }
     
@@ -1740,8 +1714,9 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 
 - (void)removeStoredHash
 {
-    NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
-    [_appDelegate removeHash:hash];
+//    NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
+//    djs make it make
+//    [_appDelegate removeHash:hash];
 }
 
 #pragma mark - Fetching Methods (Private)
@@ -1831,10 +1806,11 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         Video *video = (Video *)videoArray[0];
         
         // Post notification if SPVideoReel object is available
-        NSDictionary *videoDictionary = @{kShelbySPCurrentVideo: video};
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoExtracted
-                                                            object:nil
-                                                          userInfo:videoDictionary];
+//        NSDictionary *videoDictionary = @{kShelbySPCurrentVideo: video};
+//        djs this entire file is deprecated anyway...
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoExtracted
+//                                                            object:nil
+//                                                          userInfo:videoDictionary];
     }
 }
 
