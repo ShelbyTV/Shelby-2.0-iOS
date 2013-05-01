@@ -35,7 +35,8 @@
 @interface SPVideoReel ()
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
-@property (weak, nonatomic) SPModel *model;
+//djs
+//@property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
 @property (nonatomic) NSMutableArray *videoFrames;
@@ -241,10 +242,11 @@
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     /// Model
-    self.model = [SPModel sharedInstance];
-    self.model.videoReel = self;
-    self.model.groupType = _groupType;
-    self.model.numberOfVideos = [self.videoFrames count];
+    //djs
+//    self.model = [SPModel sharedInstance];
+//    self.model.videoReel = self;
+//    self.model.groupType = _groupType;
+//    self.model.numberOfVideos = [self.videoFrames count];
 
     /// NSMutableArrays
     if ( !_videoPlayers ) {
@@ -284,7 +286,8 @@
         
     }
     
-    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight);
+    //djs use the model handed to us
+//    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight);
     [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
     
 }
@@ -300,12 +303,14 @@
         }
         
         self.overlayView = nib[0];
-        self.model.overlayView = [self overlayView];
+        //djs
+//        self.model.overlayView = [self overlayView];
         [self.view addSubview:_overlayView];
         
     } else {
         
-        self.model.overlayView = [self overlayView];
+        //djs
+//        self.model.overlayView = [self overlayView];
         
     }
 
@@ -313,35 +318,36 @@
 
 - (void)setupVideoPlayers
 {
-    if ( [self.model numberOfVideos] ) {
-
-        for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
-            
-            Frame *videoFrame = (self.videoFrames)[i];
-            
-            CGRect viewframe = [self.videoScrollView frame];
-            viewframe.origin.x = viewframe.size.width * i;
-            viewframe.origin.y = 0.0f;
-            SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-            
-            [self.videoPlayers addObject:player];
-            [self.videoScrollView addSubview:player.view];
-            
-        }
-        
-        [self.model setCurrentVideo:[self videoStartIndex]];
-        
-        // Making sure we are not accessing index beyond our array. And if we do, go to the last video available.
-        NSInteger currentVideo = [self.model currentVideo];
-        if ([self.videoPlayers count] <= currentVideo) {
-            currentVideo = [self.videoPlayers count] - 1;
-        }
-        
-        if (currentVideo >= 0) {
-            [self.model setCurrentVideoPlayer:(self.videoPlayers)[currentVideo]];
-            [self currentVideoDidChangeToVideo:currentVideo];
-        } 
-    }
+    //djs just use the model handed to us, and then uncomment most of this stuff:
+//    if ( [self.model numberOfVideos] ) {
+//
+//        for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
+//            
+//            Frame *videoFrame = (self.videoFrames)[i];
+//            
+//            CGRect viewframe = [self.videoScrollView frame];
+//            viewframe.origin.x = viewframe.size.width * i;
+//            viewframe.origin.y = 0.0f;
+//            SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
+//            
+//            [self.videoPlayers addObject:player];
+//            [self.videoScrollView addSubview:player.view];
+//            
+//        }
+//        
+//        [self.model setCurrentVideo:[self videoStartIndex]];
+//        
+//        // Making sure we are not accessing index beyond our array. And if we do, go to the last video available.
+//        NSInteger currentVideo = [self.model currentVideo];
+//        if ([self.videoPlayers count] <= currentVideo) {
+//            currentVideo = [self.videoPlayers count] - 1;
+//        }
+//        
+//        if (currentVideo >= 0) {
+//            [self.model setCurrentVideoPlayer:(self.videoPlayers)[currentVideo]];
+//            [self currentVideoDidChangeToVideo:currentVideo];
+//        } 
+//    }
 }
 
 - (void)setupAirPlay
@@ -385,11 +391,12 @@
 
 - (void)setupOverlayVisibileItems
 {
-    if ([self.model numberOfVideos]) {
-        [self.overlayView showVideoInfo];
-    } else {
-        [self.overlayView hideVideoInfo];
-    }
+    //djs use our model
+//    if ([self.model numberOfVideos]) {
+//        [self.overlayView showVideoInfo];
+//    } else {
+//        [self.overlayView hideVideoInfo];
+//    }
 }
 
 #pragma mark - Storage Methods (Public)
@@ -415,22 +422,23 @@
     if ( [self.playableVideoPlayers count] > maxVideosAllowed ) { // If more than X number of videos are loaded, unload the older videos in the list
         
         SPVideoPlayer *oldestPlayer = (SPVideoPlayer *)(self.playableVideoPlayers)[0];
-        
-        if ( oldestPlayer != _model.currentVideoPlayer ) { // If oldestPlayer isn't currently being played, remove it
-            
-            [oldestPlayer resetPlayer];
-            [self.playableVideoPlayers removeObject:oldestPlayer];
-            
-        } else { // If oldestPlayer is being played, remove next-oldest video
-            
-            if ( [self.playableVideoPlayers count] > 1) {
-                
-                SPVideoPlayer *nextOldestPlayer = (SPVideoPlayer *)(self.playableVideoPlayers)[1];
-                [nextOldestPlayer resetPlayer];
-                [self.playableVideoPlayers removeObject:nextOldestPlayer];
 
-            }
-        }
+        //djs do this using our own model
+//        if ( oldestPlayer != _model.currentVideoPlayer ) { // If oldestPlayer isn't currently being played, remove it
+//            
+//            [oldestPlayer resetPlayer];
+//            [self.playableVideoPlayers removeObject:oldestPlayer];
+//            
+//        } else { // If oldestPlayer is being played, remove next-oldest video
+//            
+//            if ( [self.playableVideoPlayers count] > 1) {
+//                
+//                SPVideoPlayer *nextOldestPlayer = (SPVideoPlayer *)(self.playableVideoPlayers)[1];
+//                [nextOldestPlayer resetPlayer];
+//                [self.playableVideoPlayers removeObject:nextOldestPlayer];
+//
+//            }
+//        }
     }
 }
 
@@ -451,16 +459,17 @@
 //    if (!videoFrame) {
 //        return;
 //    }
-    
-    if ( position < _model.numberOfVideos ) {
-        //djs XXX this is not the right way to determine if we should use offline vs. streaming video
-        //djs TODO: check the OfflineVideoManager to see if we're in offline mode
-        if ([videoFrame.video offlineURL] && [[videoFrame.video offlineURL] length] > 0 ) {
-            [player prepareForLocalPlayback];
-        } else {
-            [player prepareForStreamingPlayback];
-        }
-    } 
+
+    //djs
+//    if ( position < _model.numberOfVideos ) {
+//        //djs XXX this is not the right way to determine if we should use offline vs. streaming video
+//        //djs TODO: check the OfflineVideoManager to see if we're in offline mode
+//        if ([videoFrame.video offlineURL] && [[videoFrame.video offlineURL] length] > 0 ) {
+//            [player prepareForLocalPlayback];
+//        } else {
+//            [player prepareForStreamingPlayback];
+//        }
+//    } 
 }
 
 #pragma mark -  Update Methods (Private)
@@ -471,20 +480,23 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidSwipeToNextVideo object:nil];
     
     // Disable timer
-    [self.model.overlayTimer invalidate];
+    //djs
+//    [self.model.overlayTimer invalidate];
     
     // Show Overlay
     [self.overlayView showOverlayView];
     
     // Pause current videoPlayer
-    [self.model.currentVideoPlayer pause];
+    //djs
+//    [self.model.currentVideoPlayer pause];
     
     // Stop observing video for videoScrubber
     [[SPVideoScrubber sharedInstance] stopObserving];
     
     // Reset currentVideoPlayer reference after scrolling has finished
-    self.model.currentVideo = position;
-    self.model.currentVideoPlayer = (self.videoPlayers)[position];
+    //djs
+//    self.model.currentVideo = position;
+//    self.model.currentVideoPlayer = (self.videoPlayers)[position];
     
     // Deal with playback methods & UI of current and previous video
     [self updatePlaybackUI];
@@ -506,25 +518,25 @@
 //        return;
 //    }
 //
-    //djs yeah imma just use the frame here
-    Frame *videoFrame = self.videoFrames[_model.currentVideo];
-    
-    
-    // Set new values on infoPanel
-    self.overlayView.videoTitleLabel.text = videoFrame.video.title;
-    
-    // Set index of video playing
-    [self setVideoStartIndex:position];
- 
-    //Show the rollers caption, fallback to video title;
-    self.overlayView.videoCaptionLabel.text = [videoFrame creatorsInitialCommentWithFallback:YES];
-    
-    self.overlayView.videoTimestamp.text = [videoFrame createdAt];
-    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"%@", videoFrame.creator.nickname];
-    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
-                                 forImageView:_overlayView.userImageView
-                              withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
-                               andContentMode:UIViewContentModeScaleAspectFit];
+    //djs uncommont most of this stuff when we have a proper model
+//    Frame *videoFrame = self.videoFrames[_model.currentVideo];
+//    
+//    
+//    // Set new values on infoPanel
+//    self.overlayView.videoTitleLabel.text = videoFrame.video.title;
+//    
+//    // Set index of video playing
+//    [self setVideoStartIndex:position];
+// 
+//    //Show the rollers caption, fallback to video title;
+//    self.overlayView.videoCaptionLabel.text = [videoFrame creatorsInitialCommentWithFallback:YES];
+//    
+//    self.overlayView.videoTimestamp.text = [videoFrame createdAt];
+//    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"%@", videoFrame.creator.nickname];
+//    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
+//                                 forImageView:_overlayView.userImageView
+//                              withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
+//                               andContentMode:UIViewContentModeScaleAspectFit];
     
     
     // Queue current and next 3 videos
@@ -540,26 +552,27 @@
         [self.overlayView.bufferProgressView setProgress:0.0f];
         [self.overlayView.elapsedTimeLabel setText:@""];
         [self.overlayView.totalDurationLabel setText:@""];
-        
-        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
-            
-            [self.model.currentVideoPlayer play];
-            
-            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
 
-                [self.overlayView.restartPlaybackButton setHidden:NO];
-                
-            } else { // Playable video DID NOT finish playing
-                
-                [self.overlayView.restartPlaybackButton setHidden:YES];
-                
-            }
-            
-        } else { // Video IS NOT Playable
-            
-            [self.overlayView.restartPlaybackButton setHidden:YES];
-            
-        }
+        //djs fix when we have a model
+//        if ( [self.model.currentVideoPlayer isPlayable] ) { // Video IS Playable
+//            
+//            [self.model.currentVideoPlayer play];
+//            
+//            if ( [self.model.currentVideoPlayer playbackFinished] ) { // Playable video DID finish playing
+//
+//                [self.overlayView.restartPlaybackButton setHidden:NO];
+//                
+//            } else { // Playable video DID NOT finish playing
+//                
+//                [self.overlayView.restartPlaybackButton setHidden:YES];
+//                
+//            }
+//            
+//        } else { // Video IS NOT Playable
+//            
+//            [self.overlayView.restartPlaybackButton setHidden:YES];
+//            
+//        }
         
     });
     
@@ -567,103 +580,106 @@
 
 - (void)queueMoreVideos:(NSUInteger)position
 {
-    if ( [self.videoPlayers count] ) {
-        // For all iPads
-        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-        [self extractVideoForVideoPlayer:position]; // Load video for current visible view
-        if (position + 1 < self.model.numberOfVideos) {
-            [self extractVideoForVideoPlayer:position+1];
-        }
-        
-        // iPad 3 or better (e.g., device with more RAM and better processor)
-        if ([[UIScreen mainScreen] isRetinaDisplay]) {
-            if (position + 2 < self.model.numberOfVideos) {
-                [self extractVideoForVideoPlayer:position+2];
-            }
-        }
-    }
+    //djs fix when we have a real model
+//    if ( [self.videoPlayers count] ) {
+//        // For all iPads
+//        [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+//        [self extractVideoForVideoPlayer:position]; // Load video for current visible view
+//        if (position + 1 < self.model.numberOfVideos) {
+//            [self extractVideoForVideoPlayer:position+1];
+//        }
+//        
+//        // iPad 3 or better (e.g., device with more RAM and better processor)
+//        if ([[UIScreen mainScreen] isRetinaDisplay]) {
+//            if (position + 2 < self.model.numberOfVideos) {
+//                [self extractVideoForVideoPlayer:position+2];
+//            }
+//        }
+//    }
 }
 
 - (void)fetchOlderVideos:(NSUInteger)position
 {
+
+    //djs going to do this by calling on a protocol, hey, fetch us some more data!
     
-    if ( [self.moreVideoFrames count] ) { // Load older videos from Database
-        
-        [self dataSourceShouldUpdateFromLocalArray];
-        
-    } else { // Get older videos from Web
-        
-        if ( position >= _model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
-            
-            self.fetchingOlderVideos = YES;
-            
-            switch ( _groupType ) {
-                    
-                case GroupType_Stream: {
-                    
-                    //djs
-                    DLog(@"TODO: need more videos for our Stream!");
-//                    djs not yet sure how we're going to do this, but it's not like this...
-//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                    User *user = [dataUtility fetchUser];
-//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchDashboardEntriesInDashboard:user.userID];
-//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-//                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
-                    
-                } break;
-                    
-                case GroupType_Likes: {
-
-                    //djs
-                    DLog(@"TODO: need more videos for our Likes!");
-//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
-//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-//                    [ShelbyAPIClient getMoreFramesInLikes:numberToString];
-                    
-                } break;
-                    
-                case GroupType_PersonalRoll: {
-
-                    //djs
-                    DLog(@"TODO: need more videos for our personal Roll!");
-//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
-//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-//                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
-                    
-                } break;
-                    
-                case GroupType_ChannelDashboard: {
-                    
-                    //djs
-                    DLog(@"Need more videos for some channel");
-//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:_channelID];
-//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-//                    [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:_channelID];
-                    
-                } break;
-                    
-                case GroupType_ChannelRoll: {
-
-                    //djs
-                    DLog(@"Need more videos for some roll");
-//                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:_channelID];
-//                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-//                    [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:_channelID];
-                    
-                } break;
-                    
-                case GroupType_Unknown: {
-                    
-                    // Do nothing
-                    
-                } break;
-            }
-        }
-    }
+//    if ( [self.moreVideoFrames count] ) { // Load older videos from Database
+//        
+//        [self dataSourceShouldUpdateFromLocalArray];
+//        
+//    } else { // Get older videos from Web
+//        
+//        if ( position >= _model.numberOfVideos - 7 && ![self fetchingOlderVideos] ) {
+//            
+//            self.fetchingOlderVideos = YES;
+//            
+//            switch ( _groupType ) {
+//                    
+//                case GroupType_Stream: {
+//                    
+//                    //djs
+//                    DLog(@"TODO: need more videos for our Stream!");
+////                    djs not yet sure how we're going to do this, but it's not like this...
+////                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+////                    User *user = [dataUtility fetchUser];
+////                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchDashboardEntriesInDashboard:user.userID];
+////                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+////                    [ShelbyAPIClient getMoreFramesInStream:numberToString];
+//                    
+//                } break;
+//                    
+//                case GroupType_Likes: {
+//
+//                    //djs
+//                    DLog(@"TODO: need more videos for our Likes!");
+////                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+////                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchLikesCount];
+////                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+////                    [ShelbyAPIClient getMoreFramesInLikes:numberToString];
+//                    
+//                } break;
+//                    
+//                case GroupType_PersonalRoll: {
+//
+//                    //djs
+//                    DLog(@"TODO: need more videos for our personal Roll!");
+////                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+////                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchPersonalRollCount];
+////                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+////                    [ShelbyAPIClient getMoreFramesInPersonalRoll:numberToString];
+//                    
+//                } break;
+//                    
+//                case GroupType_ChannelDashboard: {
+//                    
+//                    //djs
+//                    DLog(@"Need more videos for some channel");
+////                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+////                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:_channelID];
+////                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+////                    [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:_channelID];
+//                    
+//                } break;
+//                    
+//                case GroupType_ChannelRoll: {
+//
+//                    //djs
+//                    DLog(@"Need more videos for some roll");
+////                    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+////                    NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:_channelID];
+////                    NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
+////                    [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:_channelID];
+//                    
+//                } break;
+//                    
+//                case GroupType_Unknown: {
+//                    
+//                    // Do nothing
+//                    
+//                } break;
+//            }
+//        }
+//    }
 }
 
 - (void)dataSourceShouldUpdateFromLocalArray
@@ -787,115 +803,120 @@
 
 - (void)dataSourceDidUpdate
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // Update variables
-        NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
-        self.model.numberOfVideos = [self.videoFrames count];
-        
-        // Update videoScrollView and videoListScrollView
-        for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _model.numberOfVideos; ++i ) {
-            
-            if ( [self.videoFrames count] >= i ) {
-                
-                // videoScrollView
-//                NSManagedObjectContext *context = [self.appDelegate context];
-//                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-//                if (!objectID) {
-//                    continue;
-//                }
-//                Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-//                if (!videoFrame) {
-//                    return;
-//                }
-                //djs don't see any reason we can't use the frame we've already got
-                Frame *videoFrame = self.videoFrames[i];
-                
-                
-                CGRect viewframe = [self.videoScrollView frame];
-                viewframe.origin.x = viewframe.size.width * i;
-                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-                
-                // Update UI on Main Thread
-                dispatch_async(dispatch_get_main_queue(), ^{
-
-                    //djs jesus h christ, we're not even using the frame we get in this convoluted manner!
-//                    // Reference _videoFrames[i] on main thread
-//                    NSManagedObjectContext *context = [self.appDelegate context];
-//                    if (!self.videoFrames || [self.videoFrames count] <= i) {
-//                        return;
-//                    }
-//                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
-//                    if (!objectID) {
-//                        return ;
-//                    }
-//                    Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-//                    if (!mainQueuevideoFrame) {
-//                        return;
-//                    }
-                    // Update scrollViews
-                    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
-                    [self.videoPlayers addObject:player];
-                    [self.videoScrollView addSubview:player.view];
-                    [self.videoScrollView setNeedsDisplay];
-                    
-                    // Set flags
-                    [self setFetchingOlderVideos:NO];
-                    [self setLoadingOlderVideos:NO];
-                });
-                
-            }
-            
-        }
-    });
+    //djs this goes hand in hand w/ the other data update fixes
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        // Update variables
+//        NSUInteger numberOfVideosBeforeUpdate = [self.model numberOfVideos];
+//        self.model.numberOfVideos = [self.videoFrames count];
+//        
+//        // Update videoScrollView and videoListScrollView
+//        for ( NSUInteger i = numberOfVideosBeforeUpdate; i < _model.numberOfVideos; ++i ) {
+//            
+//            if ( [self.videoFrames count] >= i ) {
+//                
+//                // videoScrollView
+////                NSManagedObjectContext *context = [self.appDelegate context];
+////                NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+////                if (!objectID) {
+////                    continue;
+////                }
+////                Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+////                if (!videoFrame) {
+////                    return;
+////                }
+//                //djs don't see any reason we can't use the frame we've already got
+//                Frame *videoFrame = self.videoFrames[i];
+//                
+//                
+//                CGRect viewframe = [self.videoScrollView frame];
+//                viewframe.origin.x = viewframe.size.width * i;
+//                SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
+//                
+//                // Update UI on Main Thread
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                    //djs jesus h christ, we're not even using the frame we get in this convoluted manner!
+////                    // Reference _videoFrames[i] on main thread
+////                    NSManagedObjectContext *context = [self.appDelegate context];
+////                    if (!self.videoFrames || [self.videoFrames count] <= i) {
+////                        return;
+////                    }
+////                    NSManagedObjectID *objectID = [(self.videoFrames)[i] objectID];
+////                    if (!objectID) {
+////                        return ;
+////                    }
+////                    Frame *mainQueuevideoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
+////                    if (!mainQueuevideoFrame) {
+////                        return;
+////                    }
+//                    // Update scrollViews
+//                    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * (i + 1), kShelbySPVideoHeight);
+//                    [self.videoPlayers addObject:player];
+//                    [self.videoScrollView addSubview:player.view];
+//                    [self.videoScrollView setNeedsDisplay];
+//                    
+//                    // Set flags
+//                    [self setFetchingOlderVideos:NO];
+//                    [self setLoadingOlderVideos:NO];
+//                });
+//                
+//            }
+//            
+//        }
+//    });
 }
 
 - (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification *)notification
 {
+
+    //djs uncomment all this when we have a proper model
     
-    // Position after unloadable video (e.g., next video's position)
-    NSUInteger position = _model.currentVideo + 1;
-    
-    if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
-        NSString *skippedVideoID = [notification object];
-        if (![skippedVideoID isKindOfClass:[NSString class]]) {
-            skippedVideoID = nil;
-        }
-        
-//        NSManagedObjectContext *context = [self.appDelegate context];
-//        NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
-//        Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
-//        if (!currentVideoFrame) {
-//            return;
+//    // Position after unloadable video (e.g., next video's position)
+//    NSUInteger position = _model.currentVideo + 1;
+//    
+//    if ( position < _model.numberOfVideos ) { // If next video isn't the last loaded video
+//        NSString *skippedVideoID = [notification object];
+//        if (![skippedVideoID isKindOfClass:[NSString class]]) {
+//            skippedVideoID = nil;
 //        }
-//        NSString *currentVideoID = [currentVideoFrame videoID];
-        //djs just using the stuff we have, we're not saving anything here!
-        NSString *currentVideoID = [self.model.currentVideoPlayer.videoFrame videoID];
-        
-        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
-            CGFloat videoX = kShelbySPVideoWidth * position;
-            CGFloat videoY = _videoScrollView.contentOffset.y;
-            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-            [self currentVideoDidChangeToVideo:position];
-        } else { // Load next video, (but do not scroll)
-            [self extractVideoForVideoPlayer:position];
-        }
-    }
+//        
+////        NSManagedObjectContext *context = [self.appDelegate context];
+////        NSManagedObjectID *currentVideoFrameObjectID = [self.model.currentVideoPlayer.videoFrame objectID];
+////        Frame *currentVideoFrame = (Frame *)[context existingObjectWithID:currentVideoFrameObjectID error:nil];
+////        if (!currentVideoFrame) {
+////            return;
+////        }
+////        NSString *currentVideoID = [currentVideoFrame videoID];
+//        //djs just using the stuff we have, we're not saving anything here!
+//        NSString *currentVideoID = [self.model.currentVideoPlayer.videoFrame videoID];
+//        
+//        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
+//            CGFloat videoX = kShelbySPVideoWidth * position;
+//            CGFloat videoY = _videoScrollView.contentOffset.y;
+//            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
+//            [self currentVideoDidChangeToVideo:position];
+//        } else { // Load next video, (but do not scroll)
+//            [self extractVideoForVideoPlayer:position];
+//        }
+//    }
 }
 
 
 - (void)currentVideoDidFinishPlayback
 {
-    NSUInteger position = _model.currentVideo + 1;
-    CGFloat x = position * kShelbySPVideoWidth;
-    CGFloat y = _videoScrollView.contentOffset.y;
-    
-    if ( position <= (_model.numberOfVideos-1) ) {
-    
-        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-        [self currentVideoDidChangeToVideo:position];
-    
-    }
+    //djs uncomment with proper model
+//    NSUInteger position = _model.currentVideo + 1;
+//    CGFloat x = position * kShelbySPVideoWidth;
+//    CGFloat y = _videoScrollView.contentOffset.y;
+//    
+//    if ( position <= (_model.numberOfVideos-1) ) {
+//    
+//        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+//        [self currentVideoDidChangeToVideo:position];
+//    
+//    }
 }
 
 #pragma mark - Action Methods (Public)
@@ -908,17 +929,19 @@
                                 withLabel:_groupTitle
                                 withValue:nil];
     
-    [self.model.currentVideoPlayer restartPlayback];
+    //djs TODO: we should be holding this, and only us!
+//    [self.model.currentVideoPlayer restartPlayback];
 }
 
 #pragma mark - Action Methods (Private)
 - (IBAction)shareButtonAction:(id)sender
 {
     // Disable overlayTimer
-    [self.model.overlayView showOverlayView];
-    [self.model.overlayTimer invalidate];
-    
-    [self.model.currentVideoPlayer share];
+    //djs TODO: we should hold this, nobody else
+//    [self.model.overlayView showOverlayView];
+//    [self.model.overlayTimer invalidate];
+//    
+//    [self.model.currentVideoPlayer share];
 }
 
 - (IBAction)likeAction:(id)sender
@@ -976,10 +999,11 @@
 - (void)rollVideo
 {
     // Disable overlayTimer
-    [self.model.overlayView showOverlayView];
-    [self.model.overlayTimer invalidate];
-    
-    [self.model.currentVideoPlayer roll];    
+    //djs
+//    [self.model.overlayView showOverlayView];
+//    [self.model.overlayTimer invalidate];
+//    
+//    [self.model.currentVideoPlayer roll];
 }
 
 #pragma mark - Gesutre Methods (Private)
@@ -996,122 +1020,129 @@
 
 - (void)panView:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    if (![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        return;
-    }
     
-    NSInteger y = self.model.currentVideoPlayer.view.frame.origin.y;
-    NSInteger x = self.model.currentVideoPlayer.view.frame.origin.x;
-    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    //djs uncomment when we are holding our own model and video player
     
-    BOOL peekUp = y >= 0 ? YES : NO;
-    SPChannelDisplay *channelDisplay = nil;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(channelDisplayForDirection:)]) {
-       channelDisplay =  [self.delegate channelDisplayForDirection:peekUp];
-    }
-
-    int peekHeight = peekUp ? y : -1 * y;
-    int yOriginForPeekView = peekUp ? 0 : 768 - peekHeight;
-    CGRect peekViewRect = peekViewRect = CGRectMake(0, yOriginForPeekView, kShelbySPVideoWidth, peekHeight);
-    
-    [self.peelChannelView setupWithChannelDisplay:channelDisplay];
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
-        [self.view addSubview:self.peelChannelView];
-    }
-    
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-        self.model.currentVideoPlayer.view.frame = CGRectMake(x, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
-        self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
-        self.peelChannelView.frame = peekViewRect;
-        
-        [gestureRecognizer setTranslation:CGPointZero inView:self.view];
-    } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
-        CGPoint velocity = [gestureRecognizer velocityInView:self.view];
-        NSInteger currentY = y + translation.y;
-        if (velocity.y < -200) {
-            if (-1 * currentY < kShelbySPVideoHeight / 11) {
-                [self animateUp:kShelbySPFastSpeed andSwitchChannel:NO];
-            } else {
-                [self animateUp:kShelbySPFastSpeed andSwitchChannel:YES];
-            }
-        } else if (velocity.y > 200) {
-            if (currentY < kShelbySPVideoHeight / 11) {
-                [self animateDown:kShelbySPFastSpeed andSwitchChannel:NO];
-            } else {
-                [self animateDown:kShelbySPFastSpeed andSwitchChannel:YES];
-            }
-        } else {
-            if (currentY > 0) {
-                if (currentY < 3 * kShelbySPVideoHeight / 4) {
-                    [self animateUp:kShelbySPSlowSpeed andSwitchChannel:NO];
-                } else {
-                    [self animateDown:kShelbySPSlowSpeed andSwitchChannel:YES];
-                }
-            } else if (-1 * currentY < 3 * kShelbySPVideoHeight / 4) {
-                [self animateDown:kShelbySPSlowSpeed andSwitchChannel:NO];
-            } else {
-                [self animateUp:kShelbySPSlowSpeed andSwitchChannel:YES];
-            }
-        }
-    }
+//    if (![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+//        return;
+//    }
+//    
+//    NSInteger y = self.model.currentVideoPlayer.view.frame.origin.y;
+//    NSInteger x = self.model.currentVideoPlayer.view.frame.origin.x;
+//    CGPoint translation = [gestureRecognizer translationInView:self.view];
+//    
+//    BOOL peekUp = y >= 0 ? YES : NO;
+//    SPChannelDisplay *channelDisplay = nil;
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(channelDisplayForDirection:)]) {
+//       channelDisplay =  [self.delegate channelDisplayForDirection:peekUp];
+//    }
+//
+//    int peekHeight = peekUp ? y : -1 * y;
+//    int yOriginForPeekView = peekUp ? 0 : 768 - peekHeight;
+//    CGRect peekViewRect = peekViewRect = CGRectMake(0, yOriginForPeekView, kShelbySPVideoWidth, peekHeight);
+//    
+//    [self.peelChannelView setupWithChannelDisplay:channelDisplay];
+//    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
+//        [self.view addSubview:self.peelChannelView];
+//    }
+//    
+//    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+//        self.model.currentVideoPlayer.view.frame = CGRectMake(x, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
+//        self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
+//        self.peelChannelView.frame = peekViewRect;
+//        
+//        [gestureRecognizer setTranslation:CGPointZero inView:self.view];
+//    } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
+//        CGPoint velocity = [gestureRecognizer velocityInView:self.view];
+//        NSInteger currentY = y + translation.y;
+//        if (velocity.y < -200) {
+//            if (-1 * currentY < kShelbySPVideoHeight / 11) {
+//                [self animateUp:kShelbySPFastSpeed andSwitchChannel:NO];
+//            } else {
+//                [self animateUp:kShelbySPFastSpeed andSwitchChannel:YES];
+//            }
+//        } else if (velocity.y > 200) {
+//            if (currentY < kShelbySPVideoHeight / 11) {
+//                [self animateDown:kShelbySPFastSpeed andSwitchChannel:NO];
+//            } else {
+//                [self animateDown:kShelbySPFastSpeed andSwitchChannel:YES];
+//            }
+//        } else {
+//            if (currentY > 0) {
+//                if (currentY < 3 * kShelbySPVideoHeight / 4) {
+//                    [self animateUp:kShelbySPSlowSpeed andSwitchChannel:NO];
+//                } else {
+//                    [self animateDown:kShelbySPSlowSpeed andSwitchChannel:YES];
+//                }
+//            } else if (-1 * currentY < 3 * kShelbySPVideoHeight / 4) {
+//                [self animateDown:kShelbySPSlowSpeed andSwitchChannel:NO];
+//            } else {
+//                [self animateUp:kShelbySPSlowSpeed andSwitchChannel:YES];
+//            }
+//        }
+//    }
 
 }
 
 - (void)animateDown:(float)speed andSwitchChannel:(BOOL)switchChannel
 {
-    CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
- 
-    NSInteger finalyYPosition = switchChannel ? self.view.frame.size.height : 0;
-    CGRect peekViewFrame;
-    if (switchChannel) {
-        peekViewFrame = CGRectMake(0, 0, 1024, 768);
-    } else {
-        CGFloat finalyY = self.peelChannelView.frame.origin.y;
-        if (finalyY != 0) {
-            finalyY = 768;
-        }
-        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
-    }
+    //djs fix when we have our model and view controllers
     
-    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-       [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.peelChannelView setFrame:peekViewFrame];
-    } completion:^(BOOL finished) {
-        if (switchChannel) {
-            [self switchChannelWithDirectionUp:YES];
-        }
-        [self.peelChannelView removeFromSuperview];
-    }];
+//    CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
+// 
+//    NSInteger finalyYPosition = switchChannel ? self.view.frame.size.height : 0;
+//    CGRect peekViewFrame;
+//    if (switchChannel) {
+//        peekViewFrame = CGRectMake(0, 0, 1024, 768);
+//    } else {
+//        CGFloat finalyY = self.peelChannelView.frame.origin.y;
+//        if (finalyY != 0) {
+//            finalyY = 768;
+//        }
+//        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
+//    }
+//    
+//    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//       [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+//        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+//        [self.peelChannelView setFrame:peekViewFrame];
+//    } completion:^(BOOL finished) {
+//        if (switchChannel) {
+//            [self switchChannelWithDirectionUp:YES];
+//        }
+//        [self.peelChannelView removeFromSuperview];
+//    }];
 
 }
 
 - (void)animateUp:(float)speed andSwitchChannel:(BOOL)switchChannel
 {
-    CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
+    //djs fix when we have our model and view controllers
     
-    NSInteger finalyYPosition = switchChannel ? -self.view.frame.size.height : 0;
-    CGRect peekViewFrame;
-    if (switchChannel) {
-        peekViewFrame = CGRectMake(0, 0, 1024, 768);
-    } else {
-        CGFloat finalyY = self.peelChannelView.frame.origin.y;
-        if (finalyY != 0) {
-            finalyY = 768;
-        }
-        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
-    }
-
-    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-       [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.peelChannelView setFrame:peekViewFrame];
-    } completion:^(BOOL finished) {
-        if (switchChannel) {
-            [self switchChannelWithDirectionUp:NO];
-        }
-        [self.peelChannelView removeFromSuperview];
-    }];
+//    CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
+//    
+//    NSInteger finalyYPosition = switchChannel ? -self.view.frame.size.height : 0;
+//    CGRect peekViewFrame;
+//    if (switchChannel) {
+//        peekViewFrame = CGRectMake(0, 0, 1024, 768);
+//    } else {
+//        CGFloat finalyY = self.peelChannelView.frame.origin.y;
+//        if (finalyY != 0) {
+//            finalyY = 768;
+//        }
+//        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
+//    }
+//
+//    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//       [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+//        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+//        [self.peelChannelView setFrame:peekViewFrame];
+//    } completion:^(BOOL finished) {
+//        if (switchChannel) {
+//            [self switchChannelWithDirectionUp:NO];
+//        }
+//        [self.peelChannelView removeFromSuperview];
+//    }];
 }
 
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
@@ -1270,30 +1301,32 @@
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = scrollView.frame.size.width;
-    CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
-    NSUInteger page = floor(scrollAmount) + 1;
+    //djs fix when we have our model and view controllers
     
-    // Toggle playback on old and new SPVideoPlayer objects
-    if ( page != _model.currentVideo ) {
-        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-        if (page > _model.currentVideo) {
-            [self videoSwipedLeft];
-        }
-    } else {
-        return;
-    }
-    
-    [self currentVideoDidChangeToVideo:page];
-    [self fetchOlderVideos:page];
-
-    // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                               withAction:kGAIVideoPlayerActionSwipeHorizontal
-                                withLabel:_groupTitle
-                                withValue:nil];
+//    // Switch the indicator when more than 50% of the previous/next page is visible
+//    CGFloat pageWidth = scrollView.frame.size.width;
+//    CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
+//    NSUInteger page = floor(scrollAmount) + 1;
+//    
+//    // Toggle playback on old and new SPVideoPlayer objects
+//    if ( page != _model.currentVideo ) {
+//        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+//        if (page > _model.currentVideo) {
+//            [self videoSwipedLeft];
+//        }
+//    } else {
+//        return;
+//    }
+//    
+//    [self currentVideoDidChangeToVideo:page];
+//    [self fetchOlderVideos:page];
+//
+//    // Send event to Google Analytics
+//    id defaultTracker = [GAI sharedInstance].defaultTracker;
+//    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+//                               withAction:kGAIVideoPlayerActionSwipeHorizontal
+//                                withLabel:_groupTitle
+//                                withValue:nil];
 }
 
 @end

@@ -7,12 +7,14 @@
 //
 
 #import "SPVideoScrubber.h"
-#import "SPModel.h"
+//djs
+//#import "SPModel.h"
 #import "SPVideoReel.h"
 
 @interface SPVideoScrubber ()
 
-@property (weak, nonatomic) SPModel *model;
+//djs
+//@property (weak, nonatomic) SPModel *model;
 
 - (NSString *)convertElapsedTimeToString:(CGFloat)elapsedTime;
 - (NSString *)convertDurationToString:(CGFloat)duration;
@@ -50,57 +52,60 @@
 	
     CGFloat duration = CMTimeGetSeconds([self duration]);
 	if ( isfinite(duration) ) {
-        if ( self.model.overlayView.elapsedProgressView ) {
-            CGFloat width = CGRectGetWidth([self.model.overlayView.elapsedProgressView bounds]);
-            interval = 0.5f * duration / width;
-        } else {
-            interval = 0.5f;
-        }
+        //djs show/hide overlayview differently
+//        if ( self.model.overlayView.elapsedProgressView ) {
+//            CGFloat width = CGRectGetWidth([self.model.overlayView.elapsedProgressView bounds]);
+//            interval = 0.5f * duration / width;
+//        } else {
+//            interval = 0.5f;
+//        }
 	}
     
-    // KP KP: TODO: remove observer when scrubber is hidden. Add back when it is not hidden
-    self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
-                                                                                                   queue:NULL /* If you pass NULL, the main queue is used. */
-                                                                                              usingBlock:^(CMTime time) {
-                                                                                                        
-                                                                                                        [self syncScrubber];
-                                                                                                  
-                                                                                                    }];
+//    // KP KP: TODO: remove observer when scrubber is hidden. Add back when it is not hidden
+//    self.scrubberTimeObserver = [self.model.currentVideoPlayer.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
+//                                                                                                   queue:NULL /* If you pass NULL, the main queue is used. */
+//                                                                                              usingBlock:^(CMTime time) {
+//                                                                                                        
+//                                                                                                        [self syncScrubber];
+//                                                                                                  
+//                                                                                                    }];
 }
 
 - (void)syncScrubber
 {
-    
-    CGFloat duration = CMTimeGetSeconds([self duration]);
-    
-	if ( CMTIME_IS_INVALID([self duration]) ) {
-        [self.model.overlayView.elapsedProgressView setProgress:0.0f];
-		return;
-	}
-    
-	if ( isfinite(duration) && self.model.currentVideoPlayer.player ) {
-        
-        CGFloat elapsedTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
-        CGFloat progressValue = elapsedTime/duration;
 
-        self.model.overlayView.elapsedTimeLabel.text = [self convertElapsedTimeToString:elapsedTime];
-        self.model.overlayView.totalDurationLabel.text = [self convertElapsedTimeToString:duration];
-        
-        if ( progressValue > [self.model.overlayView.elapsedProgressView progress] ) {
-            
-            [self.model.overlayView.elapsedProgressView setProgress:progressValue animated:YES];
-            
-        }
-        
-        // Update watched later roll
-        [self updateWatchedRoll];
-        
-    }
+    //djs
+//    CGFloat duration = CMTimeGetSeconds([self duration]);
+//    
+//	if ( CMTIME_IS_INVALID([self duration]) ) {
+//        [self.model.overlayView.elapsedProgressView setProgress:0.0f];
+//		return;
+//	}
+//    
+//	if ( isfinite(duration) && self.model.currentVideoPlayer.player ) {
+//        
+//        CGFloat elapsedTime = CMTimeGetSeconds([self.model.currentVideoPlayer.player currentTime]);
+//        CGFloat progressValue = elapsedTime/duration;
+//
+//        self.model.overlayView.elapsedTimeLabel.text = [self convertElapsedTimeToString:elapsedTime];
+//        self.model.overlayView.totalDurationLabel.text = [self convertElapsedTimeToString:duration];
+//        
+//        if ( progressValue > [self.model.overlayView.elapsedProgressView progress] ) {
+//            
+//            [self.model.overlayView.elapsedProgressView setProgress:progressValue animated:YES];
+//            
+//        }
+//        
+//        // Update watched later roll
+//        [self updateWatchedRoll];
+//        
+//    }
 }
 
 - (void)stopObserving
 {
-    [self.model.currentVideoPlayer.player removeTimeObserver:_scrubberTimeObserver];
+    //djs
+//    [self.model.currentVideoPlayer.player removeTimeObserver:_scrubberTimeObserver];
     [self setScrubberTimeObserver:nil];
 }
 
@@ -117,15 +122,17 @@
     
     if (isfinite(duration)) {
         CGFloat time = percentage * duration;
-        [self.model.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
-        [self.model.overlayView.elapsedProgressView setProgress:percentage];
+        //djs
+//        [self.model.currentVideoPlayer.player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
+//        [self.model.overlayView.elapsedProgressView setProgress:percentage];
     }
 }
 
 #pragma mark - Playback Methods (Public)
 - (CMTime)duration
 {
-    return [self.model.currentVideoPlayer duration];
+    //djs
+//    return [self.model.currentVideoPlayer duration];
 }
 
 #pragma mark - Playback Methods (Private)
@@ -191,16 +198,17 @@
     
     // Only update watched roll if user exists (watched roll doesn't exist for logged-out users)
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-    
-        CMTime elapsedTime = [self.model.currentVideoPlayer elapsedTime];
-        CGFloat elapsedSeconds = elapsedTime.value / elapsedTime.timescale;
-        CGFloat startSeconds = self.model.currentVideoPlayer.playbackStartTime.value / self.model.currentVideoPlayer.playbackStartTime.timescale;
+
+        //djs
+//        CMTime elapsedTime = [self.model.currentVideoPlayer elapsedTime];
+//        CGFloat elapsedSeconds = elapsedTime.value / elapsedTime.timescale;
+//        CGFloat startSeconds = self.model.currentVideoPlayer.playbackStartTime.value / self.model.currentVideoPlayer.playbackStartTime.timescale;
+//        
+//        BOOL elapsedCondition = elapsedSeconds > 0.0f;
+//        BOOL differenceCondition = (NSUInteger)fabs(elapsedSeconds - startSeconds) % 5 == 0;
+//        BOOL equalityCondition = !(elapsedSeconds == startSeconds);
         
-        BOOL elapsedCondition = elapsedSeconds > 0.0f;
-        BOOL differenceCondition = (NSUInteger)fabs(elapsedSeconds - startSeconds) % 5 == 0;
-        BOOL equalityCondition = !(elapsedSeconds == startSeconds);
-        
-        if ( elapsedCondition && differenceCondition && equalityCondition ) {
+//        if ( elapsedCondition && differenceCondition && equalityCondition ) {
             //djsDLog(@"TODO: NEED TO POST WATCHED TO API (from the correct place in code)");
 //            
 //            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -214,14 +222,15 @@
 //            
 //            DLog(@"Posting videoFrame %@ to watched roll", frame.frameID);
             
-        }
+//        }
     }
 }
 
 #pragma mark - Accessor Methods
-- (SPModel *)model
-{
-    return [SPModel sharedInstance];
-}
+//djs
+//- (SPModel *)model
+//{
+//    return [SPModel sharedInstance];
+//}
 
 @end

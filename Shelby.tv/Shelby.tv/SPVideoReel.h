@@ -6,7 +6,8 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
-#import "SPModel.h"
+//djs
+//#import "SPModel.h"
 #import "SPChannelDisplay.h"
 #import "AuthorizationViewController.h"
 
@@ -19,6 +20,8 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
     SPTutorialModeSwipeUp,
     SPTutorialModePinch
 };
+
+@class SPVideoReel;
 
 @protocol SPVideoReelDelegate <NSObject>
 

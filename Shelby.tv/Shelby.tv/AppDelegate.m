@@ -10,7 +10,8 @@
 
 #import <HockeySDK/HockeySDK.h>
 #import "BrowseViewController.h"
-#import "SPModel.h"
+//djs
+//#import "SPModel.h"
 #import "SPVideoDownloader.h"
 #import "SPVideoPlayer.h"
 #import "SPVideoReel.h"
@@ -104,12 +105,13 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
         NSTimeInterval interval = fabs([lastActiveDate timeIntervalSinceNow]);
         
         // Remove SPVideoReel if more than 5 minutes (300 seconds) have elapsed since app went to background
-        if (interval >= 300) {
-            SPVideoReel *videoReel = [[SPModel sharedInstance] videoReel];
-            if (videoReel && [videoReel delegate]) {
-                [[videoReel delegate] userDidCloseChannel:videoReel];
-            }
-        }
+        //djs TODO: this functionality moves to brain
+//        if (interval >= 300) {
+//            SPVideoReel *videoReel = [[SPModel sharedInstance] videoReel];
+//            if (videoReel && [videoReel delegate]) {
+//                [[videoReel delegate] userDidCloseChannel:videoReel];
+//            }
+//        }
         
         // Remove invocationMethod and any pending dataUtilities if app was in background for more than a minute
         //djs we're getting rid of all this...

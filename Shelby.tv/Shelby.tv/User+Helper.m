@@ -16,7 +16,7 @@
     request.fetchLimit = 1;
     NSArray *results = [moc executeFetchRequest:request error:nil];
     
-    return results[0];
+    return [results count] ? results[0] : nil;
 }
 
 @end

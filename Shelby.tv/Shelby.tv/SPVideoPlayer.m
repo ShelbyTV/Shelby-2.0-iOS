@@ -9,7 +9,8 @@
 #import "SPVideoPlayer.h"
 
 // Models
-#import "SPModel.h"
+//djs
+//#import "SPModel.h"
 
 // Views
 #import "SPOverlayView.h"
@@ -30,9 +31,11 @@
 
 //djs
 //@property (weak, nonatomic) AppDelegate *appDelegate;
-@property (weak, nonatomic) SPModel *model;
-@property (weak, nonatomic) SPOverlayView *overlayView;
-@property (weak, nonatomic) SPVideoReel *videoReel;
+//djs
+//@property (weak, nonatomic) SPModel *model;
+//djs shouldn't care about these..
+//@property (weak, nonatomic) SPOverlayView *overlayView;
+//@property (weak, nonatomic) SPVideoReel *videoReel;
 @property (assign, nonatomic) CGRect viewBounds;
 @property (nonatomic) SPShareController *shareController;
 @property (nonatomic) AVPlayerLayer *playerLayer;
@@ -127,13 +130,15 @@
 }
 
 #pragma mark - Setup Methods
+//djs TODO:  kill this method
 - (void)setupReferences
 {
     //djs
 //    [self setAppDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
-    [self setModel:[SPModel sharedInstance]];
-    [self setOverlayView:_model.overlayView];
-    [self setVideoReel:_model.videoReel];
+    //djs this is nice!
+//    [self setModel:[SPModel sharedInstance]];
+//    [self setOverlayView:_model.overlayView];
+//    [self setVideoReel:_model.videoReel];
 }
 
 - (void)setupInitialConditions
@@ -183,17 +188,19 @@
     }
     
     self.isPlayable = YES;
-    
-    if ( self == _model.currentVideoPlayer ) {
-        [self.overlayView.restartPlaybackButton setHidden:YES];
-    }
+
+    //djs this logic goes elsewhere
+//    if ( self == _model.currentVideoPlayer ) {
+//        [self.overlayView.restartPlaybackButton setHidden:YES];
+//    }
     
     // Add Gesture Recognizer
     UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
     [togglePlaybackGesuture setNumberOfTapsRequired:2];
     [self.view addGestureRecognizer:togglePlaybackGesuture];
     
-    [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
+    //djs
+//    [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
     
     // Add Observers
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -205,15 +212,17 @@
      This line stores a video in an array that's used for lazy memory management queue.
      The array purges an older video instance when a limit is reached.
      */
-    [self.videoReel storeLoadedVideoPlayer:self];
+    //djs probably get rid of that method entirely
+//    [self.videoReel storeLoadedVideoPlayer:self];
     
     // Toggle video playback
-    if ( self == _model.currentVideoPlayer ) {
-        [self play];
-        [self.model rescheduleOverlayTimer];
-    } else {
-        [self pause];
-    }
+    //djs may need some other way to determine auto-play
+//    if ( self == _model.currentVideoPlayer ) {
+//        [self play];
+//        [self.model rescheduleOverlayTimer];
+//    } else {
+//        [self pause];
+//    }
 }
 
 #pragma mark - Video Storage Methods (Public)
@@ -278,30 +287,33 @@
     [self animatePlay];
 
     // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
+//    id defaultTracker = [GAI sharedInstance].defaultTracker;
     if ( [sender isMemberOfClass:[UITapGestureRecognizer class]] ) {
-        
-        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                   withAction:kGAIVideoPlayerActionDoubleTap
-                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                    withValue:nil];
+
+        //djs TODO: track this elsewhere
+//        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+//                                   withAction:kGAIVideoPlayerActionDoubleTap
+//                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
+//                                    withValue:nil];
         
     } else if ( [sender isMemberOfClass:[SPVideoReel class]] ) {
         
         
         if ( [self isPlaying] ) {
 
-            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                       withAction:kGAIVideoPlayerActionPauseButton
-                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                        withValue:nil];
+            //djs TODO: track this elsewhere
+//            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+//                                       withAction:kGAIVideoPlayerActionPauseButton
+//                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
+//                                        withValue:nil];
             
         } else {
-            
-            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                                       withAction:kGAIVideoPlayerActionPlayButton
-                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                        withValue:nil];
+
+            //djs TODO: track this elsewhere
+//            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+//                                       withAction:kGAIVideoPlayerActionPlayButton
+//                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
+//                                        withValue:nil];
             
         }
         
@@ -316,13 +328,15 @@
         [self pause];
     }
     
-    [[SPModel sharedInstance].videoReel videoDoubleTapped];
+    //djs
+//    [[SPModel sharedInstance].videoReel videoDoubleTapped];
 }
 
 - (void)restartPlayback
 {
     [self setPlaybackFinished:NO];
-    [self.overlayView.restartPlaybackButton setHidden:YES];
+    //djs
+//    [self.overlayView.restartPlaybackButton setHidden:YES];
 
     [self.player seekToTime:CMTimeMakeWithSeconds(0.0f, NSEC_PER_SEC)];
     [[SPVideoScrubber sharedInstance] syncScrubber];
@@ -338,7 +352,8 @@
     [[SPVideoScrubber sharedInstance] setupScrubber];
     
     // Reschedule Timer
-    [self.model rescheduleOverlayTimer];
+    //djs
+//    [self.model rescheduleOverlayTimer];
     
     // Set Playback Start
     [self setPlaybackStartTime:[self elapsedTime]];
@@ -353,9 +368,10 @@
     [self.player pause];
         
     // Invalide Timer
-    if ( self == _model.currentVideoPlayer ) {
-        [self.model.overlayTimer invalidate];
-    }
+    //djs
+//    if ( self == _model.currentVideoPlayer ) {
+//        [self.model.overlayTimer invalidate];
+//    }
     
     // Store CMTime
     if ( [self isPlaying] ) {
@@ -551,19 +567,24 @@
         // Show Restart Button
         [self setPlaybackFinished:YES];
         // Force scroll videoScrollView
-        [self.videoReel currentVideoDidFinishPlayback];
-    }    
+        //djs TODO: we should tell the delegate itemDidFinishPlaying, not know about video reel directly
+//        [self.videoReel currentVideoDidFinishPlayback];
+    }
 }
 
 - (void)updateBufferProgressView:(NSNumber *)buffered
 {
-    if ( buffered.doubleValue > [self.model.overlayView.bufferProgressView progress] ) {
-        [self.model.overlayView.bufferProgressView setProgress:buffered.doubleValue animated:YES];
-    }
+    //djs TODO: use a delegate
+//    if ( buffered.doubleValue > [self.model.overlayView.bufferProgressView progress] ) {
+//        [self.model.overlayView.bufferProgressView setProgress:buffered.doubleValue animated:YES];
+//    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    //djs TODO: do we really need to know if we're the current player?
+    // do we get notifications that we don't want?  It seems somebody thought we did...
+    
     if ( ![self.player currentItem] ) {
     
         return;
@@ -577,44 +598,50 @@
         }
    
     } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferLikelyToKeepUp]) {
-        
-        if ( [self.player currentItem].playbackLikelyToKeepUp && self == [self.model currentVideoPlayer] ) { // Playback will resume
 
-            // Stop animating indicator
-            if ( [self.indicator isAnimating] ) {
-                [self.indicator stopAnimating];
-                [self.indicator removeFromSuperview];
-                [self play];
-            }
-        }
+        //djs
+//        if ( [self.player currentItem].playbackLikelyToKeepUp && self == [self.model currentVideoPlayer] ) { // Playback will resume
+//
+//            // Stop animating indicator
+//            if ( [self.indicator isAnimating] ) {
+//                [self.indicator stopAnimating];
+//                [self.indicator removeFromSuperview];
+//                [self play];
+//            }
+//        }
         
     } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPLoadedTimeRanges] ) {
-     
-        if ( self == [self.model currentVideoPlayer] ) {
-         
-            NSTimeInterval availableDuration = [self availableDuration];
-            NSTimeInterval duration = CMTimeGetSeconds([self duration]);
-            NSTimeInterval buffered = availableDuration/duration;
-            [self performSelectorOnMainThread:@selector(updateBufferProgressView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
-            
-        }
+
+        //djs i should only observe when i'm current and playing
+        
+//        if ( self == [self.model currentVideoPlayer] ) {
+//         
+//            NSTimeInterval availableDuration = [self availableDuration];
+//            NSTimeInterval duration = CMTimeGetSeconds([self duration]);
+//            NSTimeInterval buffered = availableDuration/duration;
+//            [self performSelectorOnMainThread:@selector(updateBufferProgressView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
+//            
+//        }
     }
 }
 
 #pragma mark - UIResponder Methods
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.model.overlayTimer invalidate];
+    //djs
+//    [self.model.overlayTimer invalidate];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.model.overlayTimer invalidate];
+    //djs
+//    [self.model.overlayTimer invalidate];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.model rescheduleOverlayTimer];
+    //djs
+//    [self.model rescheduleOverlayTimer];
 }
 
 - (void)animatePlay

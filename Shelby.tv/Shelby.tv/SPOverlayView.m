@@ -7,7 +7,8 @@
 //
 
 #import "SPOverlayView.h"
-#import "SPModel.h"
+//djs
+//#import "SPModel.h"
 #import "SPVideoReel.h"
 #import "SPVideoScrubber.h"
 
@@ -16,7 +17,8 @@
 
 @interface SPOverlayView ()
 
-@property (weak, nonatomic) SPModel *model;
+//djs
+//@property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) IBOutlet UIButton *rollButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIView *videoInfoView;
@@ -34,7 +36,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Reference Model
-        _model = [SPModel sharedInstance];
+        //djs
+//        _model = [SPModel sharedInstance];
         
         // Customize Colors
         [_channelTitleLabel setTextColor:kShelbyColorWhite];
@@ -76,25 +79,28 @@
     return NO;
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-    if ([self.model.overlayTimer isValid]) {
-        [self.model.overlayTimer invalidate];
-    }
-    
-    return [super hitTest:point withEvent:event];
-}
+//djs don't need this if we're only calling super
+//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+//{
+//    //djs
+////    if ([self.model.overlayTimer isValid]) {
+////        [self.model.overlayTimer invalidate];
+////    }
+//    
+//    return [super hitTest:point withEvent:event];
+//}
 
 #pragma mark - Overlay Methods
 - (void)toggleOverlay
 {
     
     // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                               withAction:kGAIVideoPlayerActionSingleTap
-                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                withValue:nil];
+    //djs TODO: track this
+//    id defaultTracker = [GAI sharedInstance].defaultTracker;
+//    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
+//                               withAction:kGAIVideoPlayerActionSingleTap
+//                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
+//                                withValue:nil];
     
     ( self.alpha < 1.0f ) ? [self showOverlayView] : [self hideOverlayView];
     
@@ -107,19 +113,20 @@
 
 - (void)showOverlayView
 {
-    if ([self.model groupType] == GroupType_PersonalRoll) {
-        [self.rollButton setHidden:YES];
-        [self.shareButton setHidden:NO];
-        [self.likesButton setEnabled:YES];
-    } else if ([self.model groupType] == GroupType_Likes) {
-        [self.rollButton setHidden:NO];
-        [self.shareButton setHidden:YES];
-        [self.likesButton setEnabled:NO];
-    } else {
-        [self.rollButton setHidden:NO];
-        [self.shareButton setHidden:YES];
-        [self.likesButton setEnabled:YES];
-    }
+    //djs
+//    if ([self.model groupType] == GroupType_PersonalRoll) {
+//        [self.rollButton setHidden:YES];
+//        [self.shareButton setHidden:NO];
+//        [self.likesButton setEnabled:YES];
+//    } else if ([self.model groupType] == GroupType_Likes) {
+//        [self.rollButton setHidden:NO];
+//        [self.shareButton setHidden:YES];
+//        [self.likesButton setEnabled:NO];
+//    } else {
+//        [self.rollButton setHidden:NO];
+//        [self.shareButton setHidden:YES];
+//        [self.likesButton setEnabled:YES];
+//    }
 
     [[SPVideoScrubber sharedInstance] setupScrubber];
     [UIView animateWithDuration:0.5f animations:^{
@@ -172,7 +179,8 @@
 #pragma mark - Timer Methods
 - (void)rescheduleOverlayTimer
 {
-    [self.model rescheduleOverlayTimer];
+    //djs
+//    [self.model rescheduleOverlayTimer];
 }
 
 #pragma mark - Scrubber Touch Methods

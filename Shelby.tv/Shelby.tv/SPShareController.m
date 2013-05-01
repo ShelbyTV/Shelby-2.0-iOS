@@ -7,7 +7,8 @@
 //
 
 #import "SPShareController.h"
-#import "SPModel.h"
+//djs
+//#import "SPModel.h"
 #import "SPShareRollView.h"
 #import "SPVideoReel.h"
 #import "FacebookHandler.h"
@@ -18,7 +19,8 @@
 
 @interface SPShareController ()
 
-@property (weak, nonatomic) SPModel *model;
+//djs
+//@property (weak, nonatomic) SPModel *model;
 //djs
 //@property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
@@ -50,7 +52,8 @@
     self = [super init];
     if (self) {
         _videoPlayer = videoPlayer;
-        _model = (SPModel *)[SPModel sharedInstance];
+        //djs
+//        _model = (SPModel *)[SPModel sharedInstance];
         //djs
 //        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
@@ -96,9 +99,10 @@
     _mask = [[UIView alloc] initWithFrame:CGRectMake(videoPlayerFrame.origin.x, videoPlayerFrame.origin.y, videoPlayerFrame.size.width, videoPlayerFrame.size.height)];
     [self.mask setBackgroundColor:[UIColor blackColor]];
     [self.mask setAlpha:0.0f];
-    [self.model.overlayView addSubview:self.mask];
+    //djs
+//    [self.model.overlayView addSubview:self.mask];
     [self.mask setUserInteractionEnabled:YES];
-    [self.model.overlayView bringSubviewToFront:self.mask];
+//    [self.model.overlayView bringSubviewToFront:self.mask];
 }
 
 #pragma mark - UI Methods (Public)
@@ -114,7 +118,8 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         // Reference videoFrame
-        self.model = (SPModel *)[SPModel sharedInstance];
+        //djs
+//        self.model = (SPModel *)[SPModel sharedInstance];
 //        NSManagedObjectContext *context = [self.appDelegate context];
 //        NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
 //        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
@@ -195,8 +200,9 @@
                                        _videoPlayer.view.frame.size.height,
                                        _rollView.frame.size.width,
                                        _rollView.frame.size.height)];
-    [self.model.overlayView addSubview:_rollView];
-    [self.model.overlayView bringSubviewToFront:self.self.rollView];
+    //djs find a better way to get this on screen
+//    [self.model.overlayView addSubview:_rollView];
+//    [self.model.overlayView bringSubviewToFront:self.self.rollView];
     
     [UIView animateWithDuration:0.5f
                      animations:^{
@@ -284,21 +290,23 @@
                                                            applicationActivities:nil];
     activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryShare
-                               withAction:kGAIShareActionShareButton
-                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                withValue:nil];
+    //djs TODO: add the GA back
+//    id defaultTracker = [GAI sharedInstance].defaultTracker;
+//    [defaultTracker sendEventWithCategory:kGAICategoryShare
+//                               withAction:kGAIShareActionShareButton
+//                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
+//                                withValue:nil];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
             
             // Send event to Google Analytics
-            id defaultTracker = [GAI sharedInstance].defaultTracker;
-            [defaultTracker sendEventWithCategory:kGAICategoryShare
-                                       withAction:[NSString stringWithFormat:kGAIShareActionShareSuccess, activityType]
-                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                        withValue:nil];
+            //djs TODO: add back GA
+//            id defaultTracker = [GAI sharedInstance].defaultTracker;
+//            [defaultTracker sendEventWithCategory:kGAICategoryShare
+//                                       withAction:[NSString stringWithFormat:kGAIShareActionShareSuccess, activityType]
+//                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
+//                                        withValue:nil];
             
         }
     }];
@@ -306,10 +314,11 @@
     if ( ![self sharePopOverController] ) {
         self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
         [self.sharePopOverController setDelegate:self];
-        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-                                                     inView:self.model.overlayView
-                                   permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                   animated:YES];
+        //djs
+//        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
+//                                                     inView:self.model.overlayView
+//                                   permittedArrowDirections:UIPopoverArrowDirectionDown
+//                                                   animated:YES];
     }
 
 }
@@ -363,11 +372,12 @@
         }
        
         // Send event to Google Analytics
-        id defaultTracker = [GAI sharedInstance].defaultTracker;
-        [defaultTracker sendEventWithCategory:kGAICategoryShare
-                                   withAction:kGAIShareActionRollSuccess
-                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                    withValue:nil];
+        //djs TODO send data to GA
+//        id defaultTracker = [GAI sharedInstance].defaultTracker;
+//        [defaultTracker sendEventWithCategory:kGAICategoryShare
+//                                   withAction:kGAIShareActionRollSuccess
+//                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
+//                                    withValue:nil];
         
         // Dismiss rollView
         [self performSelectorOnMainThread:@selector(hideRollView) withObject:nil waitUntilDone:NO];
@@ -397,7 +407,8 @@
                          [self.mask removeFromSuperview];
                      }];
     
-    [self.model rescheduleOverlayTimer];
+    //djs
+//    [self.model rescheduleOverlayTimer];
 }
 
 @end
