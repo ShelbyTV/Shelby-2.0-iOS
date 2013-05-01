@@ -175,9 +175,7 @@
 //    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
 //    djs should be able to use the frame from video player, context ought to be okay
     Frame *videoFrame = self.videoPlayer.videoFrame;
-    
-    // Set Video Title
-    [self.rollView.videoTitleLabel setText:[videoFrame.video title]];
+    [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"rollingContainer.png"]]];
     
     // Load Thumbnail
     [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
@@ -310,7 +308,7 @@
         [self.sharePopOverController setDelegate:self];
         [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
                                                      inView:self.model.overlayView
-                                   permittedArrowDirections:UIPopoverArrowDirectionUp
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
                                                    animated:YES];
     }
 
@@ -342,7 +340,7 @@
         // Roll videoFrame
         NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToPersonalRoll, rollID, frameID, authToken, message];
         [ShelbyAPIClient postFrameToPersonalRoll:rollString];
-        
+
         // Share videoFrame
         if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Share to Facebook and Twitter
             

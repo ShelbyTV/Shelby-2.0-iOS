@@ -15,6 +15,7 @@
 #import "PageControl.h"
 #import "SPVideoItemViewCell.h"
 #import "SPChannelCell.h"
+#import "SPChannelCollectionView.h"
 #import "SPVideoItemViewCellLabel.h"
 #import "SettingsViewController.h"
 
@@ -517,7 +518,7 @@
             
             [cell.caption setText:[videoFrame creatorsInitialCommentWithFallback:YES]];
             //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
-            CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.75);
+            CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.33);
             CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
                                                     constrainedToSize:maxCaptionSize
                                                         lineBreakMode:NSLineBreakByWordWrapping].height;
@@ -535,10 +536,14 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell highlightItemWithColor:[((SPChannelCollectionView *)collectionView) channelColor]];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell unHighlightItem];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -655,7 +660,7 @@
     [self.userView removeFromSuperview];
     if ([self isLoggedIn]) {
         _userView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
-        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(35, 7, 30, 30)];
+        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(25, 7, 30, 30)];
         [userAvatar.layer setCornerRadius:5];
         [userAvatar.layer setMasksToBounds:YES];
         [AsynchronousFreeloader loadImageFromLink:self.userImage

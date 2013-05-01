@@ -15,4 +15,7 @@
 @property (weak, nonatomic) IBOutlet SPVideoItemViewCellLabel *caption;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 
+
+- (void)highlightItemWithColor:(UIColor *)color;
+- (void)unHighlightItem;
 @end

@@ -108,22 +108,17 @@
 - (void)showOverlayView
 {
     if ([self.model groupType] == GroupType_PersonalRoll) {
-//        [self.rollButton setHidden:YES];
-//        [self.likesButton setHidden:NO];
+        [self.rollButton setHidden:YES];
+        [self.shareButton setHidden:NO];
+        [self.likesButton setEnabled:YES];
     } else if ([self.model groupType] == GroupType_Likes) {
-//        [self.rollButton setHidden:NO];
-        CGRect rollRect = CGRectMake((self.likesButton.frame.origin.x
-                                      + self.likesButton.frame.size.width - self.rollButton.frame.size.width), self.rollButton.frame.origin.y, self.rollButton.frame.size.width, self.rollButton.frame.size.height);
-        
-        [self.rollButton setFrame:rollRect];
-//        [self.likesButton setHidden:YES];
+        [self.rollButton setHidden:NO];
+        [self.shareButton setHidden:YES];
+        [self.likesButton setEnabled:NO];
     } else {
-        if (self.likesButton.frame.origin.x + self.likesButton.frame.size.width == self.rollButton.frame.origin.x + self.rollButton.frame.size.width) {
-            [self.rollButton setFrame:CGRectMake(self.rollButton.frame.origin.x
-                                                 - self.likesButton.frame.size.width - 10, self.rollButton.frame.origin.y, self.rollButton.frame.size.width, self.rollButton.frame.size.height)];
-        }
-//        [self.likesButton setHidden:NO];
-//        [self.rollButton setHidden:NO];
+        [self.rollButton setHidden:NO];
+        [self.shareButton setHidden:YES];
+        [self.likesButton setEnabled:YES];
     }
 
     [[SPVideoScrubber sharedInstance] setupScrubber];
