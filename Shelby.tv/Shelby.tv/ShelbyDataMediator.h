@@ -9,9 +9,21 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol ShelbyDataMediatorProtocol <NSObject>
+// channels
+-(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached;
+-(void)fetchChannelsDidCompleteWithError;
+@end
+
 @interface ShelbyDataMediator : NSObject
 
+@property (nonatomic, weak) id<ShelbyDataMediatorProtocol> delegate;
+
 +(ShelbyDataMediator *)sharedInstance;
+
+//fetching
+- (void)fetchChannels;
+
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
 -(void)logout;

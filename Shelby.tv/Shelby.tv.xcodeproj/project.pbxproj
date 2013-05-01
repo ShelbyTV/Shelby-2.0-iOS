@@ -697,6 +697,9 @@
 		8EF03C5C16D57AF20019669F /* rollingTwitterButtonOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03C5916D57AF20019669F /* rollingTwitterButtonOn@2x.png */; };
 		8EF03C6016D57C170019669F /* SPShareRollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03C5F16D57C170019669F /* SPShareRollView.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
+		91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
+		91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
+		91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
@@ -1040,6 +1043,8 @@
 		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
+		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
 		91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Frame+Helper.h"; sourceTree = "<group>"; };
 		91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Frame+Helper.m"; sourceTree = "<group>"; };
 		91F0CBFE172EEF96008B5B34 /* ShelbyDataMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDataMediator.h; sourceTree = "<group>"; };
@@ -1787,6 +1792,8 @@
 				8E209721162F3A61000A2DFD /* AppDelegate.m */,
 				91F0CBFE172EEF96008B5B34 /* ShelbyDataMediator.h */,
 				91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */,
+				91D03EFA1731AB40008131D2 /* ShelbyBrain.h */,
+				91D03EFB1731AB40008131D2 /* ShelbyBrain.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2401,6 +2408,7 @@
 				91F0CC01172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91F0CC061730154E008B5B34 /* User+Helper.m in Sources */,
 				1C4110D217306FA0009022EA /* SPChannelCollectionView.m in Sources */,
+				91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2493,6 +2501,7 @@
 				91F0CC02172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91F0CC071730154E008B5B34 /* User+Helper.m in Sources */,
 				1C4110D317306FA0009022EA /* SPChannelCollectionView.m in Sources */,
+				91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2585,6 +2594,7 @@
 				91F0CC00172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91F0CC051730154E008B5B34 /* User+Helper.m in Sources */,
 				1C4110D117306FA0009022EA /* SPChannelCollectionView.m in Sources */,
+				91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

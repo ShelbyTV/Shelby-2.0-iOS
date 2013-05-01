@@ -27,6 +27,13 @@
     return sharedInstance;
 }
 
+- (void)fetchChannels
+{
+    //1) go to CoreData and hit up the delegate on main thread
+    
+    //2) fetch remotely, hit delgate (on main thread) after fetch and insertion into core data
+}
+
 -(void)logout
 {
     assert(!"TODO: implement logout");

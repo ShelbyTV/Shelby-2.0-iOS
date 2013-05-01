@@ -19,6 +19,7 @@
 #import "FacebookHandler.h"
 #import "SettingsViewController.h"
 #import "ShelbyDataMediator.h"
+#import "ShelbyBrain.h"
 
 // HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
 // HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
@@ -47,7 +48,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 //djs shouldn't need these anymore
 //@property (nonatomic) NSInvocation *invocationMethod;
 //@property (strong) NSMutableArray *dataUtilities;
-@property (strong) BrowseViewController *browseViewController;
+@property (nonatomic, strong) ShelbyBrain *brain;
 
 /// Setup Methods
 //djs move most of this crap into ShelbyAppBrain
@@ -90,8 +91,11 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.browseViewController = [[BrowseViewController alloc] init];
-    self.window.rootViewController = self.browseViewController;
+    BrowseViewController *browseViewController = [[BrowseViewController alloc] init];
+    self.brain = [[ShelbyBrain alloc] init];
+    [self.brain setup];
+    self.brain.browseVC = browseViewController;
+    self.window.rootViewController = browseViewController;
     [self.window makeKeyAndVisible];
 
     return YES;
@@ -99,6 +103,9 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
+    [self.brain handleDidBecomeActive];
+    
     NSDate *lastActiveDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastActiveDate];
     if (lastActiveDate && [lastActiveDate isKindOfClass:[NSDate class]]) {
         
