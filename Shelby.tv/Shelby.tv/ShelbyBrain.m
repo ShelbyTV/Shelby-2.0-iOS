@@ -38,6 +38,22 @@
     
 }
 
+- (void)populateChannelsWithActivityIndicator:(BOOL)showSpinner
+{
+    for (DisplayChannel *channel in self.browseVC.channels){
+        [self populateChannel:channel withActivityIndicator:showSpinner];
+    }
+}
+
+- (void)populateChannel:(DisplayChannel *)channel withActivityIndicator:(BOOL)showSpinner
+{
+    if(showSpinner){
+        //djs TODO: show single-channel spinner in self.browseVC
+    }
+    
+    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:nil];
+}
+
 #pragma mark - ShelbyDataMediatorDelegate
 -(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached
 {
@@ -51,11 +67,13 @@
     if(!curChannels){
         self.browseVC.channels = channels;
         //djs TODO: stop big channels activity indicator
+        [self populateChannelsWithActivityIndicator:YES];
     } else {
         //caveat: changing a DisplayChannel attribute will not trigger an update
         //array needs to be different order/length to trigger update
         if(![channels isEqualToArray:curChannels]){
             self.browseVC.channels = channels;
+            [self populateChannelsWithActivityIndicator:YES];
         } else {
             /* don't replace old channels */
         }
@@ -67,6 +85,18 @@
 }
 
 -(void)fetchChannelsDidCompleteWithError:(NSError *)error
+{
+    //TODO: show error
+}
+
+-(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
+                                    with:(NSArray *)channelEntries fromCache:(BOOL)cached
+{
+    //TODO: something
+}
+
+-(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
+                               withError:(NSError *)error
 {
     //TODO: show error
 }

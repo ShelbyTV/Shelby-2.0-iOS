@@ -73,6 +73,75 @@
     }];
 }
 
+- (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
+{
+    if(channel.roll && (!entry || [entry isKindOfClass:[Frame class]])){
+        [self fetchFramesForRoll:channel.roll inChannel:channel sinceFrame:(Frame *)entry];
+    } else if(channel.dashboard && (!entry || [entry isKindOfClass:[DashboardEntry class]])){
+        [self fetchDashboardEntriesForDashboard:channel.dashboard inChannel:channel sinceDashboardEntry:(DashboardEntry *)entry];
+    } else {
+        NSAssert(false, @"asked to fetch entries in channel with bad parameters");
+    }
+}
+
+- (void) fetchFramesForRoll:(Roll *)roll
+                  inChannel:(DisplayChannel *)channel
+                 sinceFrame:(Frame *)frame
+{
+    //djs TODO
+}
+
+-(void) fetchDashboardEntriesForDashboard:(Dashboard *)dashboard
+                                inChannel:(DisplayChannel *)channel
+                      sinceDashboardEntry:(DashboardEntry *)dashboardEntry
+{
+    // 1) go to CoreData and hit up the delegate on main thread
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSArray *cachedChannels = [DisplayChannel allChannelsInContext:[self createPrivateQueueContext]];
+//        if(cachedChannels && [cachedChannels count]){
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                // 2) load those channels on main thread context
+//                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+//                NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[cachedChannels count]];
+//                for (DisplayChannel *channel in cachedChannels) {
+//                    DisplayChannel *mainThreadChannel = (DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID];
+//                    [mainThreadDisplayChannels addObject:mainThreadChannel];
+//                }
+//                [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:YES];
+//            });
+//        }
+//    });
+    
+    
+    //2) fetch remotely NB: AFNetworking returns us to the main thread
+    [ShelbyAPIClient fetchDashboardEntriesForDashboardID:dashboard.dashboardID
+                                              sinceEntry:dashboardEntry
+                                               withBlock:^(id JSON, NSError *error) {
+        if(JSON){
+            
+            DLog(@"got some dashboard entries json... %@", JSON);
+            
+//            // 1) store this in core data (with a new context b/c we're on some background thread)
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                NSArray *channels = [self channelsForJSON:JSON inContext:[self createPrivateQueueContext]];
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    // 2) load those channels on main thread context
+//                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+//                    NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[channels count]];
+//                    for (DisplayChannel *channel in channels) {
+//                        DisplayChannel *mainThreadChannel = (DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID];
+//                        [mainThreadDisplayChannels addObject:mainThreadChannel];
+//                    }
+//                    [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:NO];
+//                });
+//            });
+            
+        } else {
+            [self.delegate fetchChannelsDidCompleteWithError:error];
+        }
+    }];
+}
+
 -(void)logout
 {
     assert(!"TODO: implement logout");
