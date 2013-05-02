@@ -14,6 +14,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *toggleSecretButton;
 
+//data model: Array of DisplayChannel
+@property (nonatomic, strong) NSArray *channels;
+
 /// Action Methods
 - (IBAction)toggleSecretModes:(id)sender;
 

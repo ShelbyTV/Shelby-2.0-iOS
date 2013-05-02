@@ -42,12 +42,14 @@
     if(!cached){
         self.channelsLoadedAt = [NSDate date];
     }
-    DLog(@"Got the channels: %@", channels);
-    for(DisplayChannel *dc in channels){
-        DLog(@"dashboard looks like: %@", dc.dashboard);
+    
+    if(self.channels){
+        //TODO: merge channels and update browseVC appropriately
+    } else {
+        //TODO: just set self.channels and self.browseVC.displayChannels
     }
-    //TODO be smart about settings browseVC.channels
-    //self.browseVC.channels = channels;
+    self.channels = channels;
+    self.browseVC.channels = channels;
 }
 
 -(void)fetchChannelsDidCompleteWithError:(NSError *)error

@@ -30,6 +30,7 @@
 #import "SPChannelDisplay.h"
 #import "Frame+Helper.h"
 #import "User+Helper.h"
+#import "DisplayChannel+Helper.h"
 
 
 @interface BrowseViewController ()
@@ -51,7 +52,6 @@
 @property (nonatomic) SignupView *signupView;
 @property (nonatomic) UIView *backgroundLoginView;
 
-@property (nonatomic) NSMutableArray *channels;
 @property (nonatomic) NSMutableDictionary *channelsDataSource;
 @property (nonatomic) NSMutableDictionary *changeableDataMapper;
 @property (nonatomic) NSMutableSet *collectionViewDataSourceUpdater;
@@ -175,6 +175,12 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     }
 
+}
+
+- (void)setChannels:(NSArray *)channels
+{
+    _channels = channels;
+    [self.channelsTableView reloadData];
 }
 
 #pragma mark - Private Methods
@@ -394,6 +400,7 @@
 }
 
 
+//djs updating this for real...
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
@@ -407,35 +414,10 @@
     NSUInteger hash = [channelFrames hash];
     self.changeableDataMapper[[NSNumber numberWithUnsignedInt:hash]] = [NSNumber numberWithInt:indexPath.row];
     
-    id channel = (id)self.channels[indexPath.row];
-    NSString *title = nil;
-    NSString *color = nil;
-    if ([channel isKindOfClass:[NSManagedObject class]]) {
-        //djs just using the objects we have...
-        //and just getting this to compile
-        //ideally, we wouldn't have to do this if check (Which is repeated elsewhere in this code)
-//        NSManagedObjectID *channelObjectID = [channel objectID];
-//        NSManagedObjectContext *context = [self context];
-        if ([channel isMemberOfClass:[Dashboard class]]) {
-            Dashboard *dashboard = (Dashboard *)channel;//[context existingObjectWithID:channelObjectID error:nil];
-            title = [dashboard displayTitle];
-            color = [dashboard displayColor];
-        } else if ([channel isMemberOfClass:[Roll class]]) {
-            Roll *roll = (Roll *)channel;//[context existingObjectWithID:channelObjectID error:nil];
-            title = [roll displayTitle];
-            color = [roll displayColor];
-        }
-    }  else if ([channel isKindOfClass:[NSString class]]) {
-        if ([((NSString *)channel) isEqualToString:self.personalRollID]) {
-            title = @"My Roll";
-            color = @"333";
-        } else {
-            title = @"My Likes";
-            color = @"777";
-        }
-    }
-    
-    [cell setChannelColor:color andTitle:title];
+    DisplayChannel *channel = (DisplayChannel *)self.channels[indexPath.row];
+
+    //TODO: deal with no color, no title
+    [cell setChannelColor:[channel displayColor] andTitle:[channel displayTitle]];
     return cell;
 }
 
