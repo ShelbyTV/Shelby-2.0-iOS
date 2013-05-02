@@ -14,6 +14,14 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
 
 @implementation DisplayChannel (Helper)
 
++ (NSArray *)allChannelsInContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDisplayChannel];
+    NSSortDescriptor *sortByOrder = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+    request.sortDescriptors = @[sortByOrder];
+    return [context executeFetchRequest:request error:nil];
+}
+
 + (DisplayChannel *)channelForRollDictionary:(NSDictionary *)rollDict withOrder:(NSInteger)order inContext:(NSManagedObjectContext *)context
 {
     //look for existing DisplayChannel

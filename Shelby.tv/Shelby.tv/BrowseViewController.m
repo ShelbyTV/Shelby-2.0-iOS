@@ -146,23 +146,24 @@
     [self.channelsTableView registerNib:[UINib nibWithNibName:@"SPChannelCell" bundle:nil] forCellReuseIdentifier:@"SPChannelCell"];
     //djs this shouldn't ever fetch channels
 //    [self fetchAllChannels];
- 
-    if (![self dateTutorialCompleted]) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
-        if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
-            UIView *tutorial = nib[0];
-            [tutorial setAlpha:0.95];
-            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
-            UIView *mask = [[UIView alloc] initWithFrame:self.view.frame];
-            [self.view addSubview:mask];
-            [self.view bringSubviewToFront:mask];
-            [mask setAlpha:0.5];
-            [mask setBackgroundColor:[UIColor blackColor]];
-            [self setTutorialView:mask];
-            [self.view addSubview:tutorial];
-            [self.view bringSubviewToFront:tutorial];
-        }
-    }
+
+    //djs bring the tutorial stuff back
+//    if (![self dateTutorialCompleted]) {
+//        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
+//        if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
+//            UIView *tutorial = nib[0];
+//            [tutorial setAlpha:0.95];
+//            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
+//            UIView *mask = [[UIView alloc] initWithFrame:self.view.frame];
+//            [self.view addSubview:mask];
+//            [self.view bringSubviewToFront:mask];
+//            [mask setAlpha:0.5];
+//            [mask setBackgroundColor:[UIColor blackColor]];
+//            [self setTutorialView:mask];
+//            [self.view addSubview:tutorial];
+//            [self.view bringSubviewToFront:tutorial];
+//        }
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

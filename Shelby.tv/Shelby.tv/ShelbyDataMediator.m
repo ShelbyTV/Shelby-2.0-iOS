@@ -31,9 +31,23 @@
 
 - (void)fetchChannels
 {
-    //djs TODO 1) go to CoreData and hit up the delegate on main thread
-    DLog(@"TODO: fetch channels from CoreData");
-    //[self.delegate fetchChannelsDidCompleteWith:nil fromCache:YES];
+    // 1) go to CoreData and hit up the delegate on main thread
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray *cachedChannels = [DisplayChannel allChannelsInContext:[self createPrivateQueueContext]];
+        if(cachedChannels && [cachedChannels count]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // 2) load those channels on main thread context
+                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[cachedChannels count]];
+                for (DisplayChannel *channel in cachedChannels) {
+                    DisplayChannel *mainThreadChannel = (DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID];
+                    [mainThreadDisplayChannels addObject:mainThreadChannel];
+                }
+                [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:YES];
+            });
+        }
+    });
+    
     
     //2) fetch remotely NB: AFNetworking returns us to the main thread
     [ShelbyAPIClient fetchChannelsWithBlock:^(id JSON, NSError *error) {
