@@ -24,7 +24,7 @@
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) Frame *frame;
 @property (nonatomic, retain) DisplayChannel *displayChannel;
+@property (nonatomic, retain) Frame *frame;
 
 @end

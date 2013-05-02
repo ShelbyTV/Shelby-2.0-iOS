@@ -38,10 +38,16 @@
     
 }
 
-- (void)populateChannelsWithActivityIndicator:(BOOL)showSpinner
+- (void)populateChannels
 {
+    //djs TODO: be smart about loading channels and activity indicator
+    //pull each channel from the browseVC
+    // if it's nil, show spinner and fetch
+    // if it's old, show spinner and fetch
+    // if it's new, no spinner (and fetch?)
+    
     for (DisplayChannel *channel in self.browseVC.channels){
-        [self populateChannel:channel withActivityIndicator:showSpinner];
+        [self populateChannel:channel withActivityIndicator:YES];
     }
 }
 
@@ -67,17 +73,17 @@
     if(!curChannels){
         self.browseVC.channels = channels;
         //djs TODO: stop big channels activity indicator
-        [self populateChannelsWithActivityIndicator:YES];
     } else {
         //caveat: changing a DisplayChannel attribute will not trigger an update
         //array needs to be different order/length to trigger update
         if(![channels isEqualToArray:curChannels]){
             self.browseVC.channels = channels;
-            [self populateChannelsWithActivityIndicator:YES];
         } else {
             /* don't replace old channels */
         }
     }
+    
+    [self populateChannels];
     
     if(!cached){
         self.channelsLoadedAt = [NSDate date];

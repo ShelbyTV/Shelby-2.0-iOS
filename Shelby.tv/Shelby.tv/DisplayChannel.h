@@ -14,7 +14,7 @@
 @interface DisplayChannel : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * order;
-@property (nonatomic, retain) Roll *roll;
 @property (nonatomic, retain) Dashboard *dashboard;
+@property (nonatomic, retain) Roll *roll;
 
 @end

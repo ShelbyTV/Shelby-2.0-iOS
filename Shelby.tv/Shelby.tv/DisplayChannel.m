@@ -14,7 +14,7 @@
 @implementation DisplayChannel
 
 @dynamic order;
-@dynamic roll;
 @dynamic dashboard;
+@dynamic roll;
 
 @end

@@ -33,7 +33,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 /// Storage Methods
 - (void)storeFrame:(Frame *)frame forDictionary:(NSDictionary *)frameDictionary;
 - (void)storeConversation:(Conversation *)conversation fromDictionary:(NSDictionary *)conversationDictionary;
-- (void)storeCreator:(Creator *)creator fromDictionary:(NSDictionary *)creatorDictionary;
+//- (void)storeCreator:(Creator *)creator fromDictionary:(NSDictionary *)creatorDictionary;
 - (void)storeMessagesFromConversation:(Conversation *)conversation withDictionary:(NSDictionary *)conversationDictionary;
 - (void)storeRoll:(Roll *)roll fromDictionary:(NSDictionary *)rollDictionary;
 - (void)storeVideo:(Video *)video fromDictionary:(NSDictionary *)videoDictionary;
@@ -401,6 +401,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [self storeDashboardEntries:resultsDictionary forDashboard:user.userID];
 }
 
+//djs moved this to helper!
 - (void)storeDashboardEntries:(NSDictionary *)resultsDictionary forDashboard:(NSString *)dashboardID
 {
     NSArray *resultsArray = resultsDictionary[@"result"];
@@ -539,7 +540,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         });
     } else if ( groupType == GroupType_PersonalRoll ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFinishedSync object:user.personalRollID];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationChannelsFinishedSync object:user.publicRollID];
         });
     }
 }
@@ -643,7 +644,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
     // Filter by rollID
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user publicRollID]];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames
@@ -807,7 +808,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
     // Filter by rollID
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user publicRollID]];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
@@ -845,7 +846,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
     // Filter by rollID and timestamp
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", [user personalRollID], date];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((rollID == %@) AND (timestamp < %@))", [user publicRollID], date];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames in Personal Roll
@@ -1159,7 +1160,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
     // Filter by rollID
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user publicRollID]];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames
@@ -1283,7 +1284,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
     // Filter by rollID
     User *user = [self fetchUser];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user personalRollID]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"rollID == %@", [user publicRollID]];
     [request setPredicate:predicate];
     
     // Execute request that returns array of frames
@@ -1516,18 +1517,18 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         
     }
     
-    // Store Creator
-    Creator *creator = [self checkIfEntity:kShelbyCoreDataEntityCreator
-                               withIDValue:creatorID
-                                  forIDKey:kShelbyCoreDataFrameCreatorID];
-    
-    if ((id)creator != [NSNull null]) {
-    
-        frame.creator = creator;
-        [creator addFrameObject:frame];
-        [self storeCreator:creator fromDictionary:[frameDictionary valueForKey:@"creator"]];
-        
-    }
+//    // Store Creator
+//    Creator *creator = [self checkIfEntity:kShelbyCoreDataEntityCreator
+//                               withIDValue:creatorID
+//                                  forIDKey:kShelbyCoreDataFrameCreatorID];
+//    
+//    if ((id)creator != [NSNull null]) {
+//    
+//        frame.creator = creator;
+//        [creator addFrameObject:frame];
+//        [self storeCreator:creator fromDictionary:[frameDictionary valueForKey:@"creator"]];
+//        
+//    }
     
     // Store Roll
     Roll *roll = [self checkIfEntity:kShelbyCoreDataEntityRoll
@@ -1613,19 +1614,19 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
 }
 
-- (void)storeCreator:(Creator *)creator fromDictionary:(NSDictionary *)creatorDictionary
-{
-    
-    NSString *creatorID = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"id"]];
-    [creator setValue:creatorID forKey:kShelbyCoreDataCreatorID];
-    
-    NSString *nickname = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"nickname"]];
-    [creator setValue:nickname forKey:kShelbyCoreDataCreatorNickname];
-    
-    NSString *userImage = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"user_image"]];
-    [creator setValue:userImage forKey:kShelbyCoreDataCreatorUserImage];
-    
-}
+//- (void)storeCreator:(Creator *)creator fromDictionary:(NSDictionary *)creatorDictionary
+//{
+//    
+//    NSString *creatorID = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"id"]];
+//    [creator setValue:creatorID forKey:kShelbyCoreDataCreatorID];
+//    
+//    NSString *nickname = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"nickname"]];
+//    [creator setValue:nickname forKey:kShelbyCoreDataCreatorNickname];
+//    
+//    NSString *userImage = [NSString coreDataNullTest:[creatorDictionary valueForKey:@"user_image"]];
+//    [creator setValue:userImage forKey:kShelbyCoreDataCreatorUserImage];
+//    
+//}
 
 - (void)storeRoll:(Roll *)roll fromDictionary:(NSArray *)rollDictionary
 {

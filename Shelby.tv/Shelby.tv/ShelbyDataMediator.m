@@ -7,8 +7,11 @@
 //
 
 #import "ShelbyDataMediator.h"
-#import "ShelbyAPIClient.h"
+
+#import "Dashboard+Helper.h"
 #import "DisplayChannel+Helper.h"
+#import "DashboardEntry+Helper.h"
+#import "ShelbyAPIClient.h"
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -117,14 +120,17 @@
     [ShelbyAPIClient fetchDashboardEntriesForDashboardID:dashboard.dashboardID
                                               sinceEntry:dashboardEntry
                                                withBlock:^(id JSON, NSError *error) {
-        if(JSON){
-            
-            DLog(@"got some dashboard entries json... %@", JSON);
-            
-//            // 1) store this in core data (with a new context b/c we're on some background thread)
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                NSArray *channels = [self channelsForJSON:JSON inContext:[self createPrivateQueueContext]];
-//                dispatch_async(dispatch_get_main_queue(), ^{
+        if(JSON){            
+            // 1) store this in core data (with a new context b/c we're on some background thread)
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
+                Dashboard *privateContextDashboard = (Dashboard *)[privateContext objectWithID:dashboard.objectID];
+                NSArray *dashboardEntries = [self dashboardEntriesForJSON:JSON
+                                                            withDashboard:privateContextDashboard
+                                                                inContext:privateContext];
+                DLog(@"got some DBEs: %@", dashboardEntries);
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
 //                    // 2) load those channels on main thread context
 //                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
 //                    NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[channels count]];
@@ -133,8 +139,8 @@
 //                        [mainThreadDisplayChannels addObject:mainThreadChannel];
 //                    }
 //                    [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:NO];
-//                });
-//            });
+                });
+            });
             
         } else {
             [self.delegate fetchChannelsDidCompleteWithError:error];
@@ -229,14 +235,19 @@
 //returns nil on error, otherwise array of DisplayChannel objects
 - (NSArray *)channelsForJSON:(id)JSON inContext:(NSManagedObjectContext *)context
 {
-    NSMutableArray *resultDisplayChannels = [@[] mutableCopy];
-    NSInteger order = 0;
-    
     if(![JSON isKindOfClass:[NSDictionary class]]){
         return nil;
     }
+    
+    NSInteger order = 0;
     NSDictionary *jsonDict = (NSDictionary *)JSON;
     NSArray *categoriesDictArray = jsonDict[@"result"];
+    
+    if(![categoriesDictArray isKindOfClass:[NSArray class]]){
+        return nil;
+    }
+    
+    NSMutableArray *resultDisplayChannels = [@[] mutableCopy];
     
     for (NSDictionary *category in categoriesDictArray) {
         if(![category isKindOfClass:[NSDictionary class]]){
@@ -271,6 +282,35 @@
     
     [context save:nil];
     return resultDisplayChannels;
+}
+
+- (NSArray *)dashboardEntriesForJSON:(id)JSON withDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
+{
+    if(![JSON isKindOfClass:[NSDictionary class]]){
+        return nil;
+    }
+    
+    NSDictionary *jsonDict = (NSDictionary *)JSON;
+    NSArray *dashboardEntriesDictArray = jsonDict[@"result"];
+    
+    if(![dashboardEntriesDictArray isKindOfClass:[NSArray class]]){
+        return nil;
+    }
+    
+    NSMutableArray *resultDashboardEntries = [@[] mutableCopy];
+    
+    for (NSDictionary *dashboardEntryDict in dashboardEntriesDictArray) {
+        if(![dashboardEntryDict isKindOfClass:[NSDictionary class]]){
+            continue;
+        }
+        DashboardEntry *entry = [DashboardEntry dashboardEntryForDictionary:dashboardEntryDict
+                                                              withDashboard:dashboard
+                                                                  inContext:context];
+        [resultDashboardEntries addObject:entry];
+    }
+    
+    [context save:nil];
+    return resultDashboardEntries;
 }
 
 @end

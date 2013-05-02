@@ -9,7 +9,6 @@
 #import "Dashboard.h"
 #import "DashboardEntry.h"
 #import "Conversation.h"
-#import "Creator.h"
 #import "Frame.h"
 #import "Messages.h"
 #import "Roll.h"

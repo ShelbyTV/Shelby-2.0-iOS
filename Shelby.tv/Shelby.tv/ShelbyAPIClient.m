@@ -263,7 +263,7 @@
 
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    NSString *personalRollID = [user personalRollID];
+    NSString *personalRollID = [user publicRollID];
 
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, personalRollID]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -291,7 +291,7 @@
 {
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    NSString *personalRollID = [user personalRollID];
+    NSString *personalRollID = [user publicRollID];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, personalRollID, skipParam]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -309,7 +309,7 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         
         DLog(@"Problem fetching User Personal Roll");
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:user.personalRollID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:user.publicRollID];
         
     }];
     
@@ -474,7 +474,7 @@
     
     CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
     User *user = [dataUtility fetchUser];
-    NSString *personallRollID = [user personalRollID];
+    NSString *personallRollID = [user publicRollID];
     NSUInteger frameCount = [dataUtility fetchPersonalRollCount];
     
     if ( frameCount ) {

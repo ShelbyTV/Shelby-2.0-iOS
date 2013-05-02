@@ -2,8 +2,8 @@
 //  DashboardEntry.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 4/22/13.
-//  Copyright (c) 2013 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 5/2/13.
+//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -15,8 +15,7 @@
 
 @property (nonatomic, retain) NSString * dashboardEntryID;
 @property (nonatomic, retain) NSDate * timestamp;
-@property (nonatomic, retain) NSString * dashboardID;
-@property (nonatomic, retain) Frame *frame;
 @property (nonatomic, retain) Dashboard *dashboard;
+@property (nonatomic, retain) Frame *frame;
 
 @end
