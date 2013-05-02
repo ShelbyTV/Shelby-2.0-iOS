@@ -44,7 +44,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
     }
     
     //this will mege new roll attributes
-    Roll *roll = [Roll rollForRollDictionary:rollDict inContext:context];
+    Roll *roll = [Roll rollForDictionary:rollDict inContext:context];
     if(!roll){
         return nil;
     }

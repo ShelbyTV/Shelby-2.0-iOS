@@ -128,7 +128,8 @@
                 NSArray *dashboardEntries = [self dashboardEntriesForJSON:JSON
                                                             withDashboard:privateContextDashboard
                                                                 inContext:privateContext];
-                DLog(@"got some DBEs: %@", dashboardEntries);
+                
+                DLog(@"those DBEs are... %@", dashboardEntries);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
 //                    // 2) load those channels on main thread context
@@ -175,6 +176,8 @@
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     
+    //djs TODO: handle this gracefully...
+    //djs NB: IF you crash when updating CoreData, next run you can get an EXC_BAD_ACCESS on the following line
     if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
     {
         // Delete datastore if there's a conflict. User can re-login to repopulate the datastore.

@@ -69,7 +69,7 @@
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="displayChannel" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DisplayChannel" inverseName="roll" inverseEntity="DisplayChannel" syncable="YES"/>
-        <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="roll" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Frame" inverseName="roll" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="admin" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -112,7 +112,7 @@
         <element name="DisplayChannel" positionX="-270" positionY="126" width="128" height="88"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="268"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
-        <element name="Roll" positionX="-342" positionY="342" width="128" height="238"/>
+        <element name="Roll" positionX="-342" positionY="342" width="128" height="240"/>
         <element name="User" positionX="-47" positionY="-9" width="128" height="313"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="225"/>
     </elements>

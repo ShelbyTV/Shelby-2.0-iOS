@@ -296,6 +296,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 }
 
 #pragma mark - Storage Methods (Public)
+//djs moved top half of this (not auth and beyond)
 - (void)storeUser:(NSDictionary *)resultsDictionary
 {
     NSDictionary *userDictionary = resultsDictionary[@"result"];
@@ -1648,6 +1649,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     
 }
 
+//djs moved this!
 - (void)storeVideo:(Video *)video fromDictionary:(NSDictionary *)videoDictionary
 {
     NSString *videoID = [NSString coreDataNullTest:[videoDictionary valueForKey:@"id"]];

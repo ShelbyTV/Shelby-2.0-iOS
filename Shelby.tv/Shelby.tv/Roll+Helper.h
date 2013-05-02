@@ -13,7 +13,7 @@
 //find or create a Roll
 //return nil on error
 //NB: does not save context
-+ (Roll *)rollForRollDictionary:(NSDictionary *)rollDict
++ (Roll *)rollForDictionary:(NSDictionary *)rollDict
                       inContext:(NSManagedObjectContext *)context;
 
 @end

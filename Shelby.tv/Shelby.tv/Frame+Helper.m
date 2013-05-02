@@ -7,6 +7,10 @@
 //
 
 #import "Frame+Helper.h"
+#import "Conversation+Helper.h"
+#import "Video+Helper.h"
+#import "Roll+Helper.h"
+#import "User+Helper.h"
 
 @implementation Frame (Helper)
 
@@ -31,14 +35,24 @@
         frame = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityFrame
                                               inManagedObjectContext:context];
         frame.frameID = frameID;
-        //djs TODO...
-        //frame.video = [Video videoForDictionary:dict[@"video"] inContext:context];
-        //frame.roll = [Roll rollForDictionary:dict[@"roll"] inContext:context];
+        NSDictionary *videoDict = dict[@"video"];
+        if([videoDict isKindOfClass:[NSDictionary class]]){
+            frame.video = [Video videoForDictionary:videoDict inContext:context];
+        }
+        NSDictionary *rollDict = dict[@"roll"];
+        if([rollDict isKindOfClass:[NSDictionary class]]){
+            frame.roll = [Roll rollForDictionary:rollDict inContext:context];
+        }
     }
     
-    //djs TODO...
-    //frame.creator = [User userForDictionary:dict[@"creator"] inContext:context];
-    //frame.conversation = [Conversation conversationForDictionary:dict[@"conversation"] inContext:context];
+    NSDictionary *creatorDict = dict[@"creator"];
+    if([creatorDict isKindOfClass:[NSDictionary class]]){
+        frame.creator = [User userForDictionary:creatorDict inContext:context];
+    }
+    NSDictionary *conversationDict = dict[@"conversation"];
+    if([conversationDict isKindOfClass:[NSDictionary class]]){
+        frame.conversation = [Conversation conversationForDictionary:conversationDict inContext:context];
+    }
     
     return frame;
 }

@@ -50,6 +50,9 @@
     //#import "CoreDataUtility.h"
     //#import "ShelbyAPIClient.h"
 
+    //djs TODO: implement this properly
+    #define OBJECT_OR_NIL(object) ((id)object == [NSNull null] ? nil : object)
+
 #endif
 
 #ifdef DEBUG 

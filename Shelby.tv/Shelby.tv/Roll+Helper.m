@@ -14,7 +14,7 @@
 
 @implementation Roll (Helper)
 
-+ (Roll *)rollForRollDictionary:(NSDictionary *)rollDict inContext:(NSManagedObjectContext *)context
++ (Roll *)rollForDictionary:(NSDictionary *)rollDict inContext:(NSManagedObjectContext *)context
 {
     //look for existing Roll
     NSString *rollID = rollDict[@"id"];
@@ -38,8 +38,10 @@
     }
     roll.displayColor = rollDict[@"display_channel_color"];
     roll.displayDescription = rollDict[@"display_description"];
+    roll.frameCount = rollDict[@"frame_count"];
     roll.thumbnailURL = [NSString stringWithFormat:@"http://shelby.tv%@", rollDict[@"display_thumbnail_ipad_src"]];
     roll.displayTitle = rollDict[@"display_title"];
+    roll.title = rollDict[@"title"];
     
     return roll;
 }
