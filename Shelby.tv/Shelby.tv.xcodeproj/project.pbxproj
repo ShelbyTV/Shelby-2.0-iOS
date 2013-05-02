@@ -41,6 +41,12 @@
 		1C4110D117306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
 		1C4110D217306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
 		1C4110D317306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
+		1C4110DA17319002009022EA /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4110D917319002009022EA /* ShelbyHomeView.xib */; };
+		1C4110DB17319002009022EA /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4110D917319002009022EA /* ShelbyHomeView.xib */; };
+		1C4110DC17319002009022EA /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4110D917319002009022EA /* ShelbyHomeView.xib */; };
+		1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
+		1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
+		1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
 		1C52849616F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849716F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
 		1C52849816F7AE6C00B43A94 /* greenButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849216F7AE6C00B43A94 /* greenButton.png */; };
@@ -742,6 +748,9 @@
 		1C3D91341714C6CC00105839 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		1C4110CF17306FA0009022EA /* SPChannelCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChannelCollectionView.h; sourceTree = "<group>"; };
 		1C4110D017306FA0009022EA /* SPChannelCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPChannelCollectionView.m; sourceTree = "<group>"; };
+		1C4110D917319002009022EA /* ShelbyHomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyHomeView.xib; sourceTree = "<group>"; };
+		1C4110DD17319468009022EA /* ShelbyHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyHomeViewController.h; sourceTree = "<group>"; };
+		1C4110DE17319468009022EA /* ShelbyHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHomeViewController.m; sourceTree = "<group>"; };
 		1C52849216F7AE6C00B43A94 /* greenButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenButton.png; sourceTree = "<group>"; };
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
@@ -1779,6 +1788,7 @@
 				1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */,
 				1CACC0B217287298007EDD65 /* SettingsView.xib */,
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
+				1C4110D917319002009022EA /* ShelbyHomeView.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -1810,6 +1820,8 @@
 				1CC3387716CBDF2A00E58375 /* BrowseViewController.m */,
 				1CACC0AD17287276007EDD65 /* SettingsViewController.h */,
 				1CACC0AE17287276007EDD65 /* SettingsViewController.m */,
+				1C4110DD17319468009022EA /* ShelbyHomeViewController.h */,
+				1C4110DE17319468009022EA /* ShelbyHomeViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2067,6 +2079,7 @@
 				1C879E03173022F700B574AB /* sharehighlight.png in Resources */,
 				1C879E06173022F700B574AB /* sharehighlight@2x.png in Resources */,
 				1C879E0A1730232000B574AB /* rollhighlight.png in Resources */,
+				1C4110DB17319002009022EA /* ShelbyHomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2204,6 +2217,7 @@
 				1C879E04173022F700B574AB /* sharehighlight.png in Resources */,
 				1C879E07173022F700B574AB /* sharehighlight@2x.png in Resources */,
 				1C879E0B1730232000B574AB /* rollhighlight.png in Resources */,
+				1C4110DC17319002009022EA /* ShelbyHomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2342,6 +2356,7 @@
 				1C879E02173022F700B574AB /* sharehighlight.png in Resources */,
 				1C879E05173022F700B574AB /* sharehighlight@2x.png in Resources */,
 				1C879E091730232000B574AB /* rollhighlight.png in Resources */,
+				1C4110DA17319002009022EA /* ShelbyHomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2442,6 +2457,7 @@
 				91D03F1C1732B95B008131D2 /* Dashboard.m in Sources */,
 				91D03F211732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				91D03F261732C7FC008131D2 /* Roll.m in Sources */,
+				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2539,6 +2555,7 @@
 				91D03F1D1732B95B008131D2 /* Dashboard.m in Sources */,
 				91D03F221732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				91D03F271732C7FC008131D2 /* Roll.m in Sources */,
+				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2636,6 +2653,7 @@
 				91D03F1B1732B95B008131D2 /* Dashboard.m in Sources */,
 				91D03F201732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				91D03F251732C7FC008131D2 /* Roll.m in Sources */,
+				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

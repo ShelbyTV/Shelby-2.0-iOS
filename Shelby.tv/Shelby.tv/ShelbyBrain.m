@@ -49,7 +49,7 @@
         //TODO: just set self.channels and self.browseVC.displayChannels
     }
     self.channels = channels;
-    self.browseVC.channels = channels;
+    [self.homeVC setChannels:channels];
 }
 
 -(void)fetchChannelsDidCompleteWithError:(NSError *)error

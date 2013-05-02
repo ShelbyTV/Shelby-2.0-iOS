@@ -37,7 +37,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UITableView *channelsTableView;
-@property (weak, nonatomic) IBOutlet UIView *topBar;
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (strong, nonatomic) NSString *userID;
@@ -113,8 +112,6 @@
 {
     [super viewDidLoad];
 
-    [self.topBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbar.png"]]];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceDidUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderVideosFailed object:nil];
     //djs this stuff should be handed to this controller, it shouldn't be fetching them itself

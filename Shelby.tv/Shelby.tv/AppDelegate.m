@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 
 #import <HockeySDK/HockeySDK.h>
-#import "BrowseViewController.h"
+#import "ShelbyHomeViewController.h"
 //djs
 //#import "SPModel.h"
 #import "SPVideoDownloader.h"
@@ -91,11 +91,11 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    BrowseViewController *browseViewController = [[BrowseViewController alloc] init];
+    ShelbyHomeViewController *homeViewController = [[ShelbyHomeViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
+    self.window.rootViewController = homeViewController;
     self.brain = [[ShelbyBrain alloc] init];
     [self.brain setup];
-    self.brain.browseVC = browseViewController;
-    self.window.rootViewController = browseViewController;
+    self.brain.homeVC = homeViewController;
     [self.window makeKeyAndVisible];
 
     return YES;
