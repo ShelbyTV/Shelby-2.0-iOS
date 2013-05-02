@@ -135,7 +135,6 @@
     
     [self fetchUser];
     
-    [self setChannels:[@[] mutableCopy]];
     [self setChannelsDataSource:[@{} mutableCopy]];
     [self setChangeableDataMapper:[@{} mutableCopy]];
     self.collectionViewDataSourceUpdater = [[NSMutableSet alloc] init];

@@ -9,10 +9,9 @@
 #import "ShelbyBrain.h"
 #import "DisplayChannel.h"
 
-#define kShelbyChannelsStaleTime 600 //10 minutes
+#define kShelbyChannelsStaleTime -600 //10 minutes
 
 @interface ShelbyBrain()
-@property (nonatomic, strong) NSArray *channels; //of DisplayChannel
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
 @end
 
@@ -30,7 +29,10 @@
 {
     //TODO: detect sleep time and remove player if it's been too long
         
-    if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] > kShelbyChannelsStaleTime){
+    if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
+        if(!self.browseVC.channels){
+            //djs TODO: start big channels activity indicator
+        }
         [[ShelbyDataMediator sharedInstance] fetchChannels];
     }
     
@@ -39,17 +41,29 @@
 #pragma mark - ShelbyDataMediatorDelegate
 -(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached
 {
+    //cached channels, stale
+    //cached channels, fresh  <--- doesn't get here
+    
+    //api channels, with cache update
+    //api channels, without cache update
+    
+    NSArray *curChannels = self.browseVC.channels;
+    if(!curChannels){
+        self.browseVC.channels = channels;
+        //djs TODO: stop big channels activity indicator
+    } else {
+        //caveat: changing a DisplayChannel attribute will not trigger an update
+        //array needs to be different order/length to trigger update
+        if(![channels isEqualToArray:curChannels]){
+            self.browseVC.channels = channels;
+        } else {
+            /* don't replace old channels */
+        }
+    }
+    
     if(!cached){
         self.channelsLoadedAt = [NSDate date];
     }
-    
-    if(self.channels){
-        //TODO: merge channels and update browseVC appropriately
-    } else {
-        //TODO: just set self.channels and self.browseVC.displayChannels
-    }
-    self.channels = channels;
-    self.browseVC.channels = channels;
 }
 
 -(void)fetchChannelsDidCompleteWithError:(NSError *)error
