@@ -447,6 +447,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     });
 }
 
+//djs started moving this to ShelbyDataMediator
 - (void)storeChannels:(NSDictionary *)resultsDictionary
 {
     NSArray *channelsArray = resultsDictionary[@"result"];
@@ -1431,6 +1432,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     [self removeStoredHash];
 }
 
+//djs moved this to Dashboard+Helper
 - (void)storeChannelDashboard:(NSArray *)dashboardArray withInitialTag:(NSUInteger)displayTag
 {
     for ( NSUInteger i = 0; i < [dashboardArray count]; ++i ) {

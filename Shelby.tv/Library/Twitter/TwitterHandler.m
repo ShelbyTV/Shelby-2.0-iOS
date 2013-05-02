@@ -14,6 +14,10 @@
 #import "CoreDataUtility.h"
 //XXX djs
 
+//djs XXX do we need AFNEtworking in here?  Should probably just do all via API
+#import "AFNetworking.h"
+//djs XXX
+
 NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNotificationTwitterAuthorizationCompleted";
 
 @interface TwitterHandler () <AuthenticateTwitterDelegate>

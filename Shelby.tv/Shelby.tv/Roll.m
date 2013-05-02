@@ -2,11 +2,12 @@
 //  Roll.m
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 4/22/13.
-//  Copyright (c) 2013 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 5/2/13.
+//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import "Roll.h"
+#import "DisplayChannel.h"
 #import "Frame.h"
 
 
@@ -24,5 +25,6 @@
 @dynamic thumbnailURL;
 @dynamic title;
 @dynamic frame;
+@dynamic displayChannel;
 
 @end

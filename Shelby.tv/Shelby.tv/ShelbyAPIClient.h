@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
+typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
+
 @interface ShelbyAPIClient : NSObject
 
 /// Authentication
@@ -31,7 +33,7 @@
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
 
 /// Channels
-+ (void)getAllChannels;
++ (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
 + (void)getChannelDashboardEntries:(NSString *)channelID;
 + (void)getMoreDashboardEntries:(NSString *)skipParam forChannelDashboard:(NSString *)dashboardID;
 + (void)getChannelRoll:(NSString *)rollID;

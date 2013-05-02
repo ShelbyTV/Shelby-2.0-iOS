@@ -8,6 +8,7 @@
 
 #import "ShelbyAPIClient.h"
 #import "LoginView.h"
+#import "AFNetworking.h"
 
 //XXX djs
 //djs importing CoreDataUtility just to get this fucking thing to build...
@@ -316,7 +317,8 @@
 }
 
 #pragma mark - Channels (GET)
-+ (void)getAllChannels
+//djs update done!
++ (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     
     NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
@@ -324,22 +326,11 @@
     [request setHTTPMethod:@"GET"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreChannels];
-            [dataUtility storeChannels:JSON];
-            
-        });
-        
+        completionBlock(JSON, nil);
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-
-        DLog(@"Problem fetching all Channels");
-        
+        completionBlock(nil, error);
     }];
-    
     [operation start];
-    
 }
 
 + (void)getChannelDashboardEntries:(NSString *)channelID

@@ -9,10 +9,11 @@
 
 #import <Foundation/Foundation.h>
 
+//NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>
 // channels
 -(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached;
--(void)fetchChannelsDidCompleteWithError;
+-(void)fetchChannelsDidCompleteWithError:(NSError *)error;
 @end
 
 @interface ShelbyDataMediator : NSObject
@@ -35,5 +36,9 @@
 //we're using Thread Confinement for CoreData concurrency
 //that is, each thread has it's own ManagedObjectContext, all sharing a single PersistentStoreCoordinator
 -(NSManagedObjectContext *)mainThreadContext;
+
+// use this when operating on background threads
+// kick back to main thread where you can use mainThreadContext
+-(NSManagedObjectContext *)createPrivateQueueContext;
 
 @end

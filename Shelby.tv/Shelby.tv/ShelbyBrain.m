@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyBrain.h"
+#import "DisplayChannel.h"
 
 #define kShelbyChannelsStaleTime 600 //10 minutes
 
@@ -41,11 +42,15 @@
     if(!cached){
         self.channelsLoadedAt = [NSDate date];
     }
+    DLog(@"Got the channels: %@", channels);
+    for(DisplayChannel *dc in channels){
+        DLog(@"dashboard looks like: %@", dc.dashboard);
+    }
     //TODO be smart about settings browseVC.channels
     //self.browseVC.channels = channels;
 }
 
--(void)fetchChannelsDidCompleteWithError
+-(void)fetchChannelsDidCompleteWithError:(NSError *)error
 {
     //TODO: show error
 }

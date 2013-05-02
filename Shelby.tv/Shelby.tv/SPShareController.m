@@ -17,6 +17,10 @@
 //djs holy shit, a file that actually should talk directly to the API client!
 #import "ShelbyAPIClient.h"
 
+//djs XXX do we need AFNEtworking in here?  Should probably just do all via API
+#import "AFNetworking.h"
+//djs XXX
+
 @interface SPShareController ()
 
 //djs
