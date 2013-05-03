@@ -40,10 +40,16 @@
     //NB: intentionally not duplicating timestamp out of BSON id
     NSDictionary *frameDict = dict[@"frame"];
     if(![frameDict isKindOfClass:[NSDictionary class]]){
+        [context deleteObject:dashboardEntry];
         return nil;
     }
     dashboardEntry.frame = [Frame frameForDictionary:frameDict inContext:context];
     
+    if (!dashboardEntry.frame) {
+        [context deleteObject:dashboardEntry];
+        return nil;
+    }
+
     return dashboardEntry;
 }
 

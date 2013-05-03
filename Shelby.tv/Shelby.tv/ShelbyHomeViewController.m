@@ -62,6 +62,11 @@
     self.browseVC.channels = channels;
 }
 
+- (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
+{
+    [self.browseVC setEntries:channelEntries forChannel:channel];
+}
+
 - (void)setCurrentUser:(User *)currentUser
 {
     _currentUser = nil;//currentUser;

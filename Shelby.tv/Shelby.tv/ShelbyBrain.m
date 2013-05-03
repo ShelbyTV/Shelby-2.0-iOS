@@ -101,6 +101,7 @@
                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached
 {
     //TODO: something
+    [self.homeVC setEntries:channelEntries forChannel:channel];
 }
 
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel

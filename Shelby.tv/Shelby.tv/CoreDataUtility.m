@@ -1679,6 +1679,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
 }
 
 #pragma mark - Helper Methods (Private)
+// KP KP moving to category
 - (BOOL)isSupportedProvider:(Frame *)frame
 {
     NSString *providerName = frame.video.providerName;
@@ -1692,6 +1693,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     return NO;
 }
 
+// KP KP moving to category
 - (BOOL)isUnplayableVideo:(Video *)video
 {
     NSNumber *firstUnplayable = [video firstUnplayable];

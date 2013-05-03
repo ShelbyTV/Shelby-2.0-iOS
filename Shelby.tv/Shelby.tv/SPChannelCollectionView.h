@@ -10,6 +10,7 @@
 
 @interface SPChannelCollectionView : UICollectionView
 
+@property (nonatomic, strong) NSString *channelKey;
 @property (nonatomic, strong) UIColor *channelColor;
 
 @end

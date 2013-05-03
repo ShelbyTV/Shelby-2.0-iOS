@@ -51,9 +51,7 @@
 @property (nonatomic) SignupView *signupView;
 @property (nonatomic) UIView *backgroundLoginView;
 
-@property (nonatomic) NSMutableDictionary *channelsDataSource;
-@property (nonatomic) NSMutableDictionary *changeableDataMapper;
-@property (nonatomic) NSMutableSet *collectionViewDataSourceUpdater;
+@property (nonatomic, strong) NSMutableDictionary *channelEntries;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -68,7 +66,6 @@
 
 // Helper methods
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
-- (NSInteger)indexForChannel:(NSString *)channelID;
 - (NSDate *)dateTutorialCompleted;
 
 /// Authentication Methods
@@ -88,14 +85,6 @@
 - (void)animateCloseChannels:(SPVideoReel *)viewController;
 - (NSInteger)nextChannelForDirection:(BOOL)up;
 
-/// Fetch Methods
-- (void)fetchOlderFramesForIndex:(NSNumber *)key;
-- (void)fetchOlderFramesDidFail:(NSNotification *)notification;
-- (void)dataSourceDidUpdateFromWeb:(NSNotification *)notification;
-//djs don't like this part of the flow, killing it
-//- (void)fetchDataSourceForChannel:(NSNotification *)notification;
-- (void)setChannelsForTable;
-
 /// Version Label
 - (void)resetVersionLabel;
 
@@ -110,12 +99,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataSourceDidUpdateFromWeb:) name:kShelbySPUserDidScrollToUpdate object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchOlderFramesDidFail:) name:kShelbyNotificationFetchingOlderVideosFailed object:nil];
-    //djs this stuff should be handed to this controller, it shouldn't be fetching them itself
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchDataSourceForChannel:) name:kShelbyNotificationChannelDataFetched object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setChannelsForTable) name:kShelbyNotificationChannelsFinishedSync object:nil];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     
@@ -131,16 +114,13 @@
     
     [self fetchUser];
     
-    [self setChannelsDataSource:[@{} mutableCopy]];
-    [self setChangeableDataMapper:[@{} mutableCopy]];
-    self.collectionViewDataSourceUpdater = [[NSMutableSet alloc] init];
+    self.channelEntries = [@{} mutableCopy];
     
     [self setSecretMode:SecretMode_None];
     
     // Register Cell Nibs
     [self.channelsTableView registerNib:[UINib nibWithNibName:@"SPChannelCell" bundle:nil] forCellReuseIdentifier:@"SPChannelCell"];
     //djs this shouldn't ever fetch channels
-//    [self fetchAllChannels];
 
     //djs bring the tutorial stuff back
 //    if (![self dateTutorialCompleted]) {
@@ -179,6 +159,14 @@
     [self.channelsTableView reloadData];
 }
 
+- (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
+{
+    NSString *key =  [self keyForChannelAtIndex:[channel.order integerValue]];
+    self.channelEntries[key] = channelEntries;
+ 
+    [self.channelsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
+}
+
 #pragma mark - Private Methods
 //djs get context otherwise
 //- (NSManagedObjectContext *)context
@@ -201,115 +189,6 @@
     }
 }
 
-- (void)setChannelsForTable
-{
-    //djs this shouldn't ever fetch channels
-//    [self fetchAllChannels];
-    
-    [self.channelsTableView reloadData];
-}
-
-- (void)fetchDataSourceForChannel:(NSNotification *)notification
-{
-    //djs I don't think this will be part of the flow at all anymore...
-    assert(!"BrowseVC shouldn't fetchDataSourceForChannel");
-    
-//    // KP KP: TODO: once we add logged in user, add support for Personal Rolls, Likes and Stream
-//    
-//    NSString *channelID = [notification object];
-//    if (channelID && [channelID isKindOfClass:[NSString class]]) {
-//        NSInteger i = [self indexForChannel:channelID];
-//        if (i == -1) {
-//            return;
-//        }
-//        NSMutableArray *frames = self.channelsDataSource[[NSNumber numberWithInt:i]];
-//
-//        id channel = self.channels[i];
-//        if ([channel isKindOfClass:[NSManagedObject class]]) {
-//            NSManagedObjectID *channelObjectID = [channel objectID];
-//            NSManagedObjectContext *context = [self context];
-//            if ([channel isMemberOfClass:[Dashboard class]]) {
-//                Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:channelObjectID error:nil];
-//                NSString *objectID = [dashboard dashboardID];
-//                if ([objectID isEqualToString:channelID]) {
-//                    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                    frames = [datautility fetchDashboardEntriesInDashboard:channelID];
-//                }
-//            } else if ([channel isMemberOfClass:[Roll class]]) {
-//                Roll *roll = (Roll *)[context existingObjectWithID:channelObjectID error:nil];
-//                NSString *objectID = [roll rollID];
-//                if ([objectID isEqualToString:channelID]) {
-//                    CoreDataUtility *datautility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                    frames = [datautility fetchFramesInChannelRoll:channelID];
-//                }
-//            }
-//        }
-//     
-//        if (frames) {
-//            [self.channelsDataSource setObject:frames forKey:[NSNumber numberWithInt:i]];
-//            [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-//        }
-//    }
-}
-
-- (void)fetchAllChannels
-{
-    //djs *definately* don't like the fetch all channels crap in here...
-    assert(!"don't fetch all channels anymore");
-    
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    [self.channels removeAllObjects];
-//    [self.channelsDataSource removeAllObjects];
-//    [self.changeableDataMapper removeAllObjects];
-//    [self.channels addObjectsFromArray:[dataUtility fetchAllChannels]];
-//    
-//    if (self.isLoggedIn) {
-//        id streamChannel;
-//        for (id channel in self.channels) {
-//            if ([channel isKindOfClass:[Dashboard class]]) {
-//                if ([[((Dashboard *)channel) dashboardID] isEqualToString:self.userID]) {
-//                    streamChannel = channel;
-//                    break;
-//                }
-//            }
-//        }
-//        
-//        if (streamChannel && [self.channels count] > 1) {
-//            [self.channels removeObject:streamChannel];
-//            [self.channels insertObject:streamChannel atIndex:0];
-//            
-//        }
-//        
-//        [self addUserRollToChannels];
-//    }
-//    
-//    NSInteger i = 0;
-//    for (id channel in self.channels) {
-//        NSMutableArray *frames = nil;
-//        if ([channel isKindOfClass:[Dashboard class]]) {
-//            CoreDataUtility *channelDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//            frames = [channelDataUtility fetchDashboardEntriesInDashboard:[((Dashboard *)channel) dashboardID]];
-//        } else if ([channel isKindOfClass:[Roll class]]) {
-//            CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//            frames = [rollDataUtility fetchFramesInChannelRoll:[((Roll *)channel) rollID]];
-//        } else if ([channel isKindOfClass:[NSString class]]) {
-//            if ([((NSString *)channel) isEqualToString:self.personalRollID]) {
-//                CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                frames = [rollDataUtility fetchPersonalRollEntries];
-//            } else {
-//                CoreDataUtility *rollDataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                frames = [rollDataUtility fetchLikesEntries];
-//            }
-//        } else {
-//            frames = [@[] mutableCopy];
-//        }
-//        [self.channelsDataSource setObject:frames forKey:[NSNumber numberWithInt:i]];
-//        i++;
-//    }
-//    
-//    [self.channelsTableView reloadData];
-}
-
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated
 {
     SPChannelCell *channelCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
@@ -321,38 +200,6 @@
     }
     
     return channelCell;
-}
-
-- (NSInteger)indexForChannel:(NSString *)channelID
-{
-    if (channelID && [channelID isKindOfClass:[NSString class]]) {
-        NSInteger i = 0;
-        for (id channel in self.channels) {
-            if ([channel isKindOfClass:[NSManagedObject class]]) {
-                //djs just going to use the channels we have
-//                NSManagedObjectID *channelObjectID = [channel objectID];
-//                NSManagedObjectContext *context = [self context];
-                if ([channel isMemberOfClass:[Dashboard class]]) {
-                    //djs core data refactor
-//                    Dashboard *dashboard = (Dashboard *)[context existingObjectWithID:channelObjectID error:nil];
-                    NSString *dashboardID = [((Dashboard *)channel) dashboardID];
-                    if ([dashboardID isEqualToString:channelID]) {
-                        return i;
-                    }
-                } else if ([channel isMemberOfClass:[Roll class]]) {
-                    //djs core data refactor
-//                    Roll *roll = (Roll *)[context existingObjectWithID:channelObjectID error:nil];
-                    NSString *rollID = [((Roll *)channel) rollID];
-                    if ([rollID isEqualToString:channelID]) {
-                        return i;
-                    }
-                }
-            }
-            i++;
-        }
-    }
-    
-    return -1; // channel wasn't found
 }
 
 
@@ -400,19 +247,24 @@
 
     SPChannelCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SPChannelCell" forIndexPath:indexPath];
     
-    UICollectionView *channelFrames = [cell channelFrames];
+    SPChannelCollectionView *channelFrames = [cell channelFrames];
     [channelFrames registerNib:[UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil] forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
     [channelFrames setDelegate:self];
     [channelFrames setDataSource:self];
     [channelFrames reloadData];
-    NSUInteger hash = [channelFrames hash];
-    self.changeableDataMapper[[NSNumber numberWithUnsignedInt:hash]] = [NSNumber numberWithInt:indexPath.row];
     
     DisplayChannel *channel = (DisplayChannel *)self.channels[indexPath.row];
 
+    channelFrames.channelKey = [self keyForChannelAtIndex:indexPath.row];
     //TODO: deal with no color, no title
     [cell setChannelColor:[channel displayColor] andTitle:[channel displayTitle]];
     return cell;
+}
+
+
+- (NSString *)keyForChannelAtIndex:(NSInteger)index
+{
+    return [NSString stringWithFormat:@"%d", index];
 }
 
 #pragma mark - UITableViewDelegate Methods
@@ -425,11 +277,12 @@
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[view hash]];
-    NSNumber *key = self.changeableDataMapper[changableMapperKey];
-    NSMutableArray *frames = self.channelsDataSource[key];
-    if (frames) {
-        return [frames count];
+    SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)view;
+    if ([channelCollection isKindOfClass:[SPChannelCollectionView class]]) {
+        NSArray *entries = self.channelEntries[channelCollection.channelKey];
+        if (entries) {
+             return [entries count];
+        }
     }
     
     return 0;
@@ -444,54 +297,43 @@
 {
     SPVideoItemViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"SPVideoItemViewCell" forIndexPath:indexPath];
     
-    NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[cv hash]];
-    NSNumber *key = self.changeableDataMapper[changableMapperKey];
-    NSMutableArray *frames = self.channelsDataSource[key];
+    id entry = nil;
+    SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)cv;
+    if ([channelCollection isKindOfClass:[SPChannelCollectionView class]]) {
+        NSArray *entries = self.channelEntries[channelCollection.channelKey];
+        if (indexPath.row < [entries count]) {
+            entry = entries[indexPath.row];
+        }
+    }
 
-    //djs using the objects we have
-//    NSManagedObjectContext *context = [self context];
-    id channel = (id)self.channels[[key intValue]];
-    NSString *channelID = nil;
-    if ([channel isMemberOfClass:[Roll class]]) {
-        Roll *roll = (Roll *)channel;
-//        roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
-        channelID = roll.rollID;
-    } else if ([channel isMemberOfClass:[Dashboard class]]) {
-        Dashboard *dashboard = (Dashboard *)channel;
-//        dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
-        channelID = dashboard.dashboardID;
-    } else if ([channel isKindOfClass:[NSString class]]) {
-        if ([((NSString *)channel) isEqualToString:self.personalRollID]) {
-            channelID = self.personalRollID;
+//    NSInteger cellsLeftToDisplay = abs([frames count] - [indexPath row]);
+//    if (cellsLeftToDisplay < 10) {
+//        
+//        if (![self.collectionViewDataSourceUpdater containsObject:channelID] ) {
+//            [self.collectionViewDataSourceUpdater addObject:channelID];
+//            [self fetchOlderFramesForIndex:key];
+//        }
+//    
+//    }
+    
+//    Frame *frame = (Frame *)frames[indexPath.row];
+    
+    if (entry) {
+        Frame *videoFrame = nil;
+        if ([entry isKindOfClass:[DashboardEntry class]]) {
+            videoFrame = ((DashboardEntry *)entry).frame;
         } else {
-            channelID = self.likesRollID;
+            DLog(@"Not a DashboardEntry");
         }
-    }
+        if (videoFrame && videoFrame.video) {
+            Video *video = videoFrame.video;
+            if (video && video.thumbnailURL) {
+                    [AsynchronousFreeloader loadImageFromLink:video.thumbnailURL
+                                                 forImageView:cell.thumbnailImageView
+                                              withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
+                                               andContentMode:UIViewContentModeCenter];
+            }
 
-    NSInteger cellsLeftToDisplay = abs([frames count] - [indexPath row]);
-    if (cellsLeftToDisplay < 10) {
-        
-        if (![self.collectionViewDataSourceUpdater containsObject:channelID] ) {
-            [self.collectionViewDataSourceUpdater addObject:channelID];
-            [self fetchOlderFramesForIndex:key];
-        }
-    
-    }
-    
-    Frame *frame = (Frame *)frames[indexPath.row];
-    
-    if (frame) {
-        //djs using the objects we have
-//        NSManagedObjectContext *context = [self context];
-//        NSManagedObjectID *frameObjectID = [frame objectID];
-        Frame *videoFrame = frame;//[context existingObjectWithID:frameObjectID error:nil];
-        
-        if (videoFrame && [videoFrame video]) {
-            [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
-                                         forImageView:cell.thumbnailImageView
-                                      withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
-                                       andContentMode:UIViewContentModeCenter];
-            
             [cell.caption setText:[videoFrame creatorsInitialCommentWithFallback:YES]];
             //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
             CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.33);
@@ -522,11 +364,12 @@
     [cell unHighlightItem];
 }
 
+// KP KP: TODO
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[collectionView hash]];
-    NSNumber *key = self.changeableDataMapper[changableMapperKey];
-    [self launchPlayer:[key intValue] andVideo:indexPath.row];
+//    NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[collectionView hash]];
+//    NSNumber *key = self.changeableDataMapper[changableMapperKey];
+//    [self launchPlayer:[key intValue] andVideo:indexPath.row];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -925,188 +768,6 @@
 }
 
 
-#pragma mark - Fetching Methods
-- (void)fetchOlderFramesForIndex:(NSNumber *)key
-{
-
-    DLog(@"TODO: fetch older frames for index");
-    //djs this should be completely re-thought with the new architecture, so i'm not fixing stuff just yet
-    
-//    NSManagedObjectContext *context = [self context];
-//    
-//    id channel = (id)self.channels[[key intValue]];
-//    GroupType groupType = GroupType_Unknown;
-//    NSString *channelID = nil;
-//    if ([channel isMemberOfClass:[Roll class]]) {
-//        groupType = GroupType_ChannelRoll;
-//        Roll *roll = (id)channel;
-//        roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
-//        channelID = roll.rollID;
-//    } else if ([channel isMemberOfClass:[Dashboard class]]) {
-//        Dashboard *dashboard = (id)channel;
-//        dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
-//        channelID = dashboard.dashboardID;
-//        if (self.isLoggedIn && [channelID isEqualToString:self.userID]) {
-//            channelID = self.userID;
-//            groupType = GroupType_Stream;
-//        } else {
-//            groupType = GroupType_ChannelDashboard;
-//        }
-//    } else if ([channel isKindOfClass:[NSString class]]) {
-//        channelID = channel;
-//    }
-//    
-//    switch ( groupType ) {
-//        case GroupType_Stream:
-//        {
-//            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
-//            NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-//            [ShelbyAPIClient getMoreFramesInStream:numberToString];
-//            break;
-//        }
-//        case GroupType_ChannelDashboard:
-//        {
-//            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelDashboard:channelID];
-//            NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-//            [ShelbyAPIClient getMoreDashboardEntries:numberToString forChannelDashboard:channelID];
-//            break;
-//        }
-//        case GroupType_ChannelRoll:
-//        {
-//            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//            NSUInteger totalNumberOfVideosInDatabase = [dataUtility fetchCountForChannelRoll:channelID];
-//            NSString *numberToString = [NSString stringWithFormat:@"%d", totalNumberOfVideosInDatabase];
-//            [ShelbyAPIClient getMoreFrames:numberToString forChannelRoll:channelID];
-//            break;
-//        }
-//        case GroupType_Likes:
-//        {
-//            [ShelbyAPIClient getMoreFramesInLikes:self.likesRollID];
-//            break;
-//        }
-//        case GroupType_PersonalRoll:
-//        {
-//            [ShelbyAPIClient getMoreFramesInPersonalRoll:self.personalRollID];
-//            break;
-//        }
-//        default: {
-//            [self.collectionViewDataSourceUpdater removeObject:channelID];
-//            // Handle remaining cases later
-//            
-//        }
-//    }
-}
-
-
-- (void)dataSourceDidUpdateFromWeb:(NSNotification *)notification
-{
-
-    //djs this is going to change big time as well...
-    //the brain should simply hand us the models and/or updates
-    //could even be done via a setter
-    //def. not via notifications.
-    
-//    NSString *channelID = [notification object];
-//     if (channelID && [channelID isKindOfClass:[NSString class]]) {
-//         
-//         NSInteger i = [self indexForChannel:channelID];
-//         if (i == -1) {
-//             [self.collectionViewDataSourceUpdater removeObject:channelID];
-//             return;
-//         }
-//         
-//         NSManagedObjectContext *context = [self context];
-//         
-//         id channel = self.channels[i];
-//         NSString *channelID = nil;
-//         GroupType groupType = GroupType_Unknown;
-//         if ([channel isMemberOfClass:[Roll class]]) {
-//             groupType = GroupType_ChannelRoll;
-//             Roll *roll = (id)channel;
-//             roll = (Roll *)[context existingObjectWithID:[roll objectID] error:nil];
-//             channelID = roll.rollID;
-//         } else if ([channel isMemberOfClass:[Dashboard class]]) {
-//             groupType = GroupType_ChannelDashboard;
-//             Dashboard *dashboard = (id)channel;
-//             dashboard = (Dashboard *)[context existingObjectWithID:[dashboard objectID] error:nil];
-//             channelID = dashboard.dashboardID;
-//         }
-//        
-//         NSMutableArray *frames = self.channelsDataSource[[NSNumber numberWithInt:i]];
-//         NSManagedObjectID *lastFramedObjectID = [[frames lastObject] objectID];
-//         if (!lastFramedObjectID) {
-//             [self.collectionViewDataSourceUpdater removeObject:channelID];
-//             return;
-//         }
-//        
-//         Frame *lastFrame = (Frame *)[context existingObjectWithID:lastFramedObjectID error:nil];
-//         if (!lastFrame) {
-//             [self.collectionViewDataSourceUpdater removeObject:channelID];
-//             return;
-//         }
-//        
-//         NSDate *date = lastFrame.timestamp;
-//        
-//         NSMutableArray *olderFramesArray = [@[] mutableCopy];
-//        
-//         switch ( groupType ) {
-//                
-//             case GroupType_ChannelDashboard:{
-//                  CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreDashboardEntriesInDashboard:channelID afterDate:date]];
-//             } break;
-//                
-//             case GroupType_ChannelRoll:{
-//                  CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//                 [olderFramesArray addObjectsFromArray:[dataUtility fetchMoreFramesInChannelRoll:channelID afterDate:date]];
-//             } break;
-//                
-//             default: {
-//                // Handle remaining cases later  
-//             }
-//        }
-//        
-//        // If olderFramesArray is populated, compare against existing visddeos, and deduplicate if necessary
-//        if ( [olderFramesArray count] ) {
-//            
-//            Frame *firstFrame = (Frame *)olderFramesArray[0];
-//            NSManagedObjectID *firstFrameObjectID = [firstFrame objectID];
-//            if (!firstFrameObjectID) {
-//                [self.collectionViewDataSourceUpdater removeObject:channelID];
-//                return;
-//            }
-//            
-//            firstFrame = (Frame *)[context existingObjectWithID:firstFrameObjectID error:nil];
-//            if (!firstFrame) {
-//                [self.collectionViewDataSourceUpdater removeObject:channelID];
-//                return;
-//            }
-//            if ( [firstFrame.videoID isEqualToString:lastFrame.videoID] ) {
-//                [olderFramesArray removeObject:firstFrame];
-//            }
-//            
-//            // Add deduplicated frames from olderFramesArray to frames
-//            [frames addObjectsFromArray:olderFramesArray];
-//   
-//            [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-//            
-//        } 
-//        
-//         [self.collectionViewDataSourceUpdater removeObject:channelID];
-//    }
-}
-
-- (void)fetchOlderFramesDidFail:(NSNotification *)notification
-{
-    NSString *channelID = [notification object];
-    if (channelID && [channelID isKindOfClass:[NSString class]]) {
-            [self.collectionViewDataSourceUpdater removeObject:channelID];
-    }
-}
-
-
 // djs was only called by deprecated code, should not be added back
 //- (void)addUserRollToChannels
 //{
@@ -1130,7 +791,6 @@
     [self setIsLoggedIn:YES];
     //djs the rest of this stuff should be handled by other objects
 //    [self fetchUser];
-//    [self fetchAllChannels];
 //    [ShelbyAPIClient getStream];
 //    [ShelbyAPIClient getPersonalRoll];
 //    [ShelbyAPIClient getLikes];
@@ -1199,7 +859,6 @@
         [self setUserNickname:nil];
         [self resetVersionLabel];
         //djs this shouldn't ever fetch channels
-//        [self fetchAllChannels];
     }
 
 }

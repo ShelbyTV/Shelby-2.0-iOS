@@ -140,6 +140,12 @@
                 DLog(@"those DBEs are... %@", dashboardEntries);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    NSMutableArray *results = [@[] mutableCopy];
+                    for (DashboardEntry *dashboardEntry in dashboardEntries) {
+                        DashboardEntry *mainThreadDashboardEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:dashboardEntry.objectID];
+                        [results addObject:mainThreadDashboardEntry];
+                    }
+                    [self.delegate fetchEntriesDidCompleteForChannel:channel with:results fromCache:NO];
 //                    // 2) load those channels on main thread context
 //                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
 //                    NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[channels count]];
@@ -317,7 +323,9 @@
         DashboardEntry *entry = [DashboardEntry dashboardEntryForDictionary:dashboardEntryDict
                                                               withDashboard:dashboard
                                                                   inContext:context];
-        [resultDashboardEntries addObject:entry];
+        if (entry) {
+            [resultDashboardEntries addObject:entry];
+        }
     }
     
     [context save:nil];

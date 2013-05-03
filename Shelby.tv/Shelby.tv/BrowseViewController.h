@@ -24,6 +24,8 @@
 // djs: TODO: this stuff should be handed to me
 //- (void)fetchAllChannels;
 
+- (void)setEntries:(NSArray *)entries forChannel:(DisplayChannel *)channel;
+
 /// Lanuch Player
 - (void)launchMyRollPlayer;
 - (void)launchMyLikesPlayer;

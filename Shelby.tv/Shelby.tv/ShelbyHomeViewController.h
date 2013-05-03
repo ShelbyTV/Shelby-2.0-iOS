@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) NSArray *channels;
 @property (nonatomic, strong) User *currentUser;
+
+- (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
 @end
