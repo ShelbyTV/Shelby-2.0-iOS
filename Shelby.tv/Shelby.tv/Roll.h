@@ -24,7 +24,15 @@
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) Frame *frame;
 @property (nonatomic, retain) DisplayChannel *displayChannel;
+@property (nonatomic, retain) NSSet *frame;
+@end
+
+@interface Roll (CoreDataGeneratedAccessors)
+
+- (void)addFrameObject:(Frame *)value;
+- (void)removeFrameObject:(Frame *)value;
+- (void)addFrame:(NSSet *)values;
+- (void)removeFrame:(NSSet *)values;
 
 @end

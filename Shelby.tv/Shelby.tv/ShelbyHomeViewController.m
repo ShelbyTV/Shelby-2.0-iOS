@@ -53,6 +53,7 @@
 
 - (void)setChannels:(NSArray *)channels
 {
+    _channels = channels;
     self.browseVC.channels = channels;
 }
 

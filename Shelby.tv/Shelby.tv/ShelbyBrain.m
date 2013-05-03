@@ -9,10 +9,9 @@
 #import "ShelbyBrain.h"
 #import "DisplayChannel.h"
 
-#define kShelbyChannelsStaleTime 600 //10 minutes
+#define kShelbyChannelsStaleTime -600 //10 minutes
 
 @interface ShelbyBrain()
-@property (nonatomic, strong) NSArray *channels; //of DisplayChannel
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
 @end
 
@@ -30,29 +29,80 @@
 {
     //TODO: detect sleep time and remove player if it's been too long
         
-    if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] > kShelbyChannelsStaleTime){
+    if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
+        if(!self.homeVC.channels){
+            //djs TODO: start big channels activity indicator
+        }
         [[ShelbyDataMediator sharedInstance] fetchChannels];
     }
     
 }
 
+- (void)populateChannels
+{
+    //djs TODO: be smart about loading channels and activity indicator
+    //pull each channel from the browseVC
+    // if it's nil, show spinner and fetch
+    // if it's old, show spinner and fetch
+    // if it's new, no spinner (and fetch?)
+    
+    for (DisplayChannel *channel in self.homeVC.channels){
+        [self populateChannel:channel withActivityIndicator:YES];
+    }
+}
+
+- (void)populateChannel:(DisplayChannel *)channel withActivityIndicator:(BOOL)showSpinner
+{
+    if(showSpinner){
+        //djs TODO: show single-channel spinner in self.browseVC
+    }
+    
+    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:nil];
+}
+
 #pragma mark - ShelbyDataMediatorDelegate
 -(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached
 {
+    //cached channels, stale
+    //cached channels, fresh  <--- doesn't get here
+    
+    //api channels, with cache update
+    //api channels, without cache update
+    
+    NSArray *curChannels = self.homeVC.channels;
+    if(!curChannels){
+        self.homeVC.channels = channels;
+        //djs TODO: stop big channels activity indicator
+    } else {
+        //caveat: changing a DisplayChannel attribute will not trigger an update
+        //array needs to be different order/length to trigger update
+        if(![channels isEqualToArray:curChannels]){
+            self.homeVC.channels = channels;
+        } else {
+            /* don't replace old channels */
+        }
+    }
+    
+    [self populateChannels];
+    
     if(!cached){
         self.channelsLoadedAt = [NSDate date];
     }
-    
-    if(self.channels){
-        //TODO: merge channels and update browseVC appropriately
-    } else {
-        //TODO: just set self.channels and self.browseVC.displayChannels
-    }
-    self.channels = channels;
-    [self.homeVC setChannels:channels];
 }
 
 -(void)fetchChannelsDidCompleteWithError:(NSError *)error
+{
+    //TODO: show error
+}
+
+-(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
+                                    with:(NSArray *)channelEntries fromCache:(BOOL)cached
+{
+    //TODO: something
+}
+
+-(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
+                               withError:(NSError *)error
 {
     //TODO: show error
 }

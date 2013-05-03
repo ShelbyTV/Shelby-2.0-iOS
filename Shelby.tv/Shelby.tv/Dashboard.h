@@ -20,7 +20,15 @@
 @property (nonatomic, retain) NSString * displayThumbnailURL;
 @property (nonatomic, retain) NSString * displayTitle;
 @property (nonatomic, retain) NSNumber * isChannel;
-@property (nonatomic, retain) DashboardEntry *dashboardEntry;
+@property (nonatomic, retain) NSSet *dashboardEntry;
 @property (nonatomic, retain) DisplayChannel *displayChannel;
+@end
+
+@interface Dashboard (CoreDataGeneratedAccessors)
+
+- (void)addDashboardEntryObject:(DashboardEntry *)value;
+- (void)removeDashboardEntryObject:(DashboardEntry *)value;
+- (void)addDashboardEntry:(NSSet *)values;
+- (void)removeDashboardEntry:(NSSet *)values;
 
 @end

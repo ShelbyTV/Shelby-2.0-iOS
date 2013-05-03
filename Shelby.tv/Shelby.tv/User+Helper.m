@@ -10,6 +10,59 @@
 
 @implementation User (Helper)
 
++ (User *)userForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
+{
+    //look for existing User
+    NSString *userID = dict[@"id"];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityUser];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userID == %@", userID];
+    request.predicate = pred;
+    request.fetchLimit = 1;
+    NSError *error;
+    NSArray *fetchedUsers = [context executeFetchRequest:request error:&error];
+    if(error || !fetchedUsers){
+        return nil;
+    }
+    
+    User *user = nil;
+    if([fetchedUsers count] == 1){
+        user = fetchedUsers[0];
+    } else {
+        user = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityUser
+                                              inManagedObjectContext:context];
+        user.userID = userID;
+        user.userImage = OBJECT_OR_NIL(dict[@"user_image"]);
+        user.userType = OBJECT_OR_NIL(dict[@"user_type"]);
+        user.publicRollID = dict[@"public_roll_id"];
+        user.likesRollID = dict[@"watch_later_roll_id"];
+    }
+    
+    user.nickname = dict[@"nickname"];
+    user.name = OBJECT_OR_NIL(dict[@"name"]);
+    user.token = dict[@"authentication_token"];
+    
+    //auths
+    NSArray *authentications = dict[@"authentications"];
+    if([authentications isKindOfClass:[NSArray class]]){
+        for (NSDictionary *authDict in authentications) {
+            NSString *provider = authDict[@"provider"];
+            if([provider isEqualToString:@"twitter"]){
+                user.twitterNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
+                user.twitterUID = OBJECT_OR_NIL(authDict[@"uid"]);
+            } else if([provider isEqualToString:@"facebook"]){
+                user.facebookNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
+                user.facebookUID = OBJECT_OR_NIL(authDict[@"uid"]);
+            } else if([provider isEqualToString:@"tumblr"]){
+                user.tumblrNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
+                user.tumblrUID = OBJECT_OR_NIL(authDict[@"uid"]);
+            }
+        }
+    }
+    
+    return user;
+}
+
+//djs XXX this is no longer valid b/c we store many users in DB now...
 +(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityUser];

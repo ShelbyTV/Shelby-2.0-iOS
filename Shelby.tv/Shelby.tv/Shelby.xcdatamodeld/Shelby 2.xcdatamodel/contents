@@ -6,12 +6,6 @@
         <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="conversation" inverseEntity="Frame" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Messages" inverseName="conversation" inverseEntity="Messages" syncable="YES"/>
     </entity>
-    <entity name="Creator" representedClassName="Creator" syncable="YES">
-        <attribute name="creatorID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="frame" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="creator" inverseEntity="Frame" syncable="YES"/>
-    </entity>
     <entity name="Dashboard" representedClassName="Dashboard" syncable="YES">
         <attribute name="dashboardID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayColor" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,15 +14,14 @@
         <attribute name="displayThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isChannel" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="dashboardEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="dashboard" inverseEntity="DashboardEntry" syncable="YES"/>
+        <relationship name="dashboardEntry" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="dashboard" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="displayChannel" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DisplayChannel" inverseName="dashboard" inverseEntity="DisplayChannel" syncable="YES"/>
     </entity>
     <entity name="DashboardEntry" representedClassName="DashboardEntry" syncable="YES">
         <attribute name="dashboardEntryID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dashboardID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="dashboard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dashboard" inverseName="dashboardEntry" inverseEntity="Dashboard" syncable="YES"/>
-        <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="dashboardEntry" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="dashboard" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Dashboard" inverseName="dashboardEntry" inverseEntity="Dashboard" syncable="YES"/>
+        <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="dashboardEntry" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="DisplayChannel" representedClassName="DisplayChannel" syncable="YES">
         <attribute name="order" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
@@ -47,7 +40,7 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversation" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Conversation" inverseName="frame" inverseEntity="Conversation" syncable="YES"/>
-        <relationship name="creator" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Creator" inverseName="frame" inverseEntity="Creator" syncable="YES"/>
+        <relationship name="creator" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="frames" inverseEntity="User" syncable="YES"/>
         <relationship name="dashboardEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="frame" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Roll" inverseName="frame" inverseEntity="Roll" syncable="YES"/>
         <relationship name="video" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
@@ -76,18 +69,27 @@
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="displayChannel" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DisplayChannel" inverseName="roll" inverseEntity="DisplayChannel" syncable="YES"/>
-        <relationship name="frame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="roll" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Frame" inverseName="roll" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="admin" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="facebookConnected" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="facebookNickname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facebookUID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="likesRollID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="personalRollID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publicRollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tumblrNickname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tumblrUID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="twitterConnected" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="twitterNickname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twitterUID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="frames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Frame" inverseName="creator" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="Video" representedClassName="Video" syncable="YES">
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
@@ -105,14 +107,13 @@
     </entity>
     <elements>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
-        <element name="Creator" positionX="178" positionY="201" width="128" height="105"/>
         <element name="Dashboard" positionX="-198" positionY="341" width="128" height="178"/>
-        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="120"/>
+        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="103"/>
+        <element name="DisplayChannel" positionX="-270" positionY="126" width="128" height="88"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="268"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
-        <element name="Roll" positionX="-342" positionY="342" width="128" height="238"/>
-        <element name="User" positionX="-47" positionY="-9" width="128" height="180"/>
+        <element name="Roll" positionX="-342" positionY="342" width="128" height="240"/>
+        <element name="User" positionX="-47" positionY="-9" width="128" height="313"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="225"/>
-        <element name="DisplayChannel" positionX="-270" positionY="126" width="128" height="88"/>
     </elements>
 </model>

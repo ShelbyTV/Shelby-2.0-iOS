@@ -7,8 +7,11 @@
 //
 
 #import "ShelbyDataMediator.h"
-#import "ShelbyAPIClient.h"
+
+#import "Dashboard+Helper.h"
 #import "DisplayChannel+Helper.h"
+#import "DashboardEntry+Helper.h"
+#import "ShelbyAPIClient.h"
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -31,9 +34,23 @@
 
 - (void)fetchChannels
 {
-    //djs TODO 1) go to CoreData and hit up the delegate on main thread
-    DLog(@"TODO: fetch channels from CoreData");
-    //[self.delegate fetchChannelsDidCompleteWith:nil fromCache:YES];
+    // 1) go to CoreData and hit up the delegate on main thread
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray *cachedChannels = [DisplayChannel allChannelsInContext:[self createPrivateQueueContext]];
+        if(cachedChannels && [cachedChannels count]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // 2) load those channels on main thread context
+                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[cachedChannels count]];
+                for (DisplayChannel *channel in cachedChannels) {
+                    DisplayChannel *mainThreadChannel = (DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID];
+                    [mainThreadDisplayChannels addObject:mainThreadChannel];
+                }
+                [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:YES];
+            });
+        }
+    });
+    
     
     //2) fetch remotely NB: AFNetworking returns us to the main thread
     [ShelbyAPIClient fetchChannelsWithBlock:^(id JSON, NSError *error) {
@@ -50,6 +67,79 @@
                         [mainThreadDisplayChannels addObject:mainThreadChannel];
                     }
                     [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:NO];
+                });
+            });
+            
+        } else {
+            [self.delegate fetchChannelsDidCompleteWithError:error];
+        }
+    }];
+}
+
+- (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
+{
+    if(channel.roll && (!entry || [entry isKindOfClass:[Frame class]])){
+        [self fetchFramesForRoll:channel.roll inChannel:channel sinceFrame:(Frame *)entry];
+    } else if(channel.dashboard && (!entry || [entry isKindOfClass:[DashboardEntry class]])){
+        [self fetchDashboardEntriesForDashboard:channel.dashboard inChannel:channel sinceDashboardEntry:(DashboardEntry *)entry];
+    } else {
+        NSAssert(false, @"asked to fetch entries in channel with bad parameters");
+    }
+}
+
+- (void) fetchFramesForRoll:(Roll *)roll
+                  inChannel:(DisplayChannel *)channel
+                 sinceFrame:(Frame *)frame
+{
+    //djs TODO
+}
+
+-(void) fetchDashboardEntriesForDashboard:(Dashboard *)dashboard
+                                inChannel:(DisplayChannel *)channel
+                      sinceDashboardEntry:(DashboardEntry *)dashboardEntry
+{
+    // 1) go to CoreData and hit up the delegate on main thread
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSArray *cachedChannels = [DisplayChannel allChannelsInContext:[self createPrivateQueueContext]];
+//        if(cachedChannels && [cachedChannels count]){
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                // 2) load those channels on main thread context
+//                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+//                NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[cachedChannels count]];
+//                for (DisplayChannel *channel in cachedChannels) {
+//                    DisplayChannel *mainThreadChannel = (DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID];
+//                    [mainThreadDisplayChannels addObject:mainThreadChannel];
+//                }
+//                [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:YES];
+//            });
+//        }
+//    });
+    
+    
+    //2) fetch remotely NB: AFNetworking returns us to the main thread
+    [ShelbyAPIClient fetchDashboardEntriesForDashboardID:dashboard.dashboardID
+                                              sinceEntry:dashboardEntry
+                                               withBlock:^(id JSON, NSError *error) {
+        if(JSON){            
+            // 1) store this in core data (with a new context b/c we're on some background thread)
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
+                Dashboard *privateContextDashboard = (Dashboard *)[privateContext objectWithID:dashboard.objectID];
+                NSArray *dashboardEntries = [self dashboardEntriesForJSON:JSON
+                                                            withDashboard:privateContextDashboard
+                                                                inContext:privateContext];
+                
+                DLog(@"those DBEs are... %@", dashboardEntries);
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+//                    // 2) load those channels on main thread context
+//                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+//                    NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[channels count]];
+//                    for (DisplayChannel *channel in channels) {
+//                        DisplayChannel *mainThreadChannel = (DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID];
+//                        [mainThreadDisplayChannels addObject:mainThreadChannel];
+//                    }
+//                    [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:NO];
                 });
             });
             
@@ -86,6 +176,8 @@
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     
+    //djs TODO: handle this gracefully...
+    //djs NB: IF you crash when updating CoreData, next run you can get an EXC_BAD_ACCESS on the following line
     if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
     {
         // Delete datastore if there's a conflict. User can re-login to repopulate the datastore.
@@ -146,14 +238,19 @@
 //returns nil on error, otherwise array of DisplayChannel objects
 - (NSArray *)channelsForJSON:(id)JSON inContext:(NSManagedObjectContext *)context
 {
-    NSMutableArray *resultDisplayChannels = [@[] mutableCopy];
-    NSInteger order = 0;
-    
     if(![JSON isKindOfClass:[NSDictionary class]]){
         return nil;
     }
+    
+    NSInteger order = 0;
     NSDictionary *jsonDict = (NSDictionary *)JSON;
     NSArray *categoriesDictArray = jsonDict[@"result"];
+    
+    if(![categoriesDictArray isKindOfClass:[NSArray class]]){
+        return nil;
+    }
+    
+    NSMutableArray *resultDisplayChannels = [@[] mutableCopy];
     
     for (NSDictionary *category in categoriesDictArray) {
         if(![category isKindOfClass:[NSDictionary class]]){
@@ -188,6 +285,35 @@
     
     [context save:nil];
     return resultDisplayChannels;
+}
+
+- (NSArray *)dashboardEntriesForJSON:(id)JSON withDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
+{
+    if(![JSON isKindOfClass:[NSDictionary class]]){
+        return nil;
+    }
+    
+    NSDictionary *jsonDict = (NSDictionary *)JSON;
+    NSArray *dashboardEntriesDictArray = jsonDict[@"result"];
+    
+    if(![dashboardEntriesDictArray isKindOfClass:[NSArray class]]){
+        return nil;
+    }
+    
+    NSMutableArray *resultDashboardEntries = [@[] mutableCopy];
+    
+    for (NSDictionary *dashboardEntryDict in dashboardEntriesDictArray) {
+        if(![dashboardEntryDict isKindOfClass:[NSDictionary class]]){
+            continue;
+        }
+        DashboardEntry *entry = [DashboardEntry dashboardEntryForDictionary:dashboardEntryDict
+                                                              withDashboard:dashboard
+                                                                  inContext:context];
+        [resultDashboardEntries addObject:entry];
+    }
+    
+    [context save:nil];
+    return resultDashboardEntries;
 }
 
 @end

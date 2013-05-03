@@ -7,8 +7,55 @@
 //
 
 #import "Frame+Helper.h"
+#import "Conversation+Helper.h"
+#import "Video+Helper.h"
+#import "Roll+Helper.h"
+#import "User+Helper.h"
 
 @implementation Frame (Helper)
+
++ (Frame *)frameForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
+{
+    //look for existing Frame
+    NSString *frameID = dict[@"id"];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"frameID == %@", frameID];
+    request.predicate = pred;
+    request.fetchLimit = 1;
+    NSError *error;
+    NSArray *fetchedFrames = [context executeFetchRequest:request error:&error];
+    if(error || !fetchedFrames){
+        return nil;
+    }
+    
+    Frame *frame = nil;
+    if([fetchedFrames count] == 1){
+        frame = fetchedFrames[0];
+    } else {
+        frame = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityFrame
+                                              inManagedObjectContext:context];
+        frame.frameID = frameID;
+        NSDictionary *videoDict = dict[@"video"];
+        if([videoDict isKindOfClass:[NSDictionary class]]){
+            frame.video = [Video videoForDictionary:videoDict inContext:context];
+        }
+        NSDictionary *rollDict = dict[@"roll"];
+        if([rollDict isKindOfClass:[NSDictionary class]]){
+            frame.roll = [Roll rollForDictionary:rollDict inContext:context];
+        }
+    }
+    
+    NSDictionary *creatorDict = dict[@"creator"];
+    if([creatorDict isKindOfClass:[NSDictionary class]]){
+        frame.creator = [User userForDictionary:creatorDict inContext:context];
+    }
+    NSDictionary *conversationDict = dict[@"conversation"];
+    if([conversationDict isKindOfClass:[NSDictionary class]]){
+        frame.conversation = [Conversation conversationForDictionary:conversationDict inContext:context];
+    }
+    
+    return frame;
+}
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle
 {

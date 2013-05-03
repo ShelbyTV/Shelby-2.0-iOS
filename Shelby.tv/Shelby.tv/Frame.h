@@ -2,14 +2,14 @@
 //  Frame.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 4/22/13.
-//  Copyright (c) 2013 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 5/2/13.
+//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Conversation, Creator, DashboardEntry, Roll, Video;
+@class Conversation, DashboardEntry, Roll, User, Video;
 
 @interface Frame : NSManagedObject
 
@@ -24,7 +24,7 @@
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * videoID;
 @property (nonatomic, retain) Conversation *conversation;
-@property (nonatomic, retain) Creator *creator;
+@property (nonatomic, retain) User *creator;
 @property (nonatomic, retain) DashboardEntry *dashboardEntry;
 @property (nonatomic, retain) Roll *roll;
 @property (nonatomic, retain) Video *video;

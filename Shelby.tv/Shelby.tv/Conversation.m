@@ -2,8 +2,8 @@
 //  Conversation.m
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 2/13/13.
-//  Copyright (c) 2013 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 5/2/13.
+//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import "Conversation.h"

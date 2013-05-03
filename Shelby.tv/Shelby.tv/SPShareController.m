@@ -337,7 +337,7 @@
 //        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
 //        User *user = [dataUtility fetchUser];
         NSString *authToken = [user token];
-        NSString *rollID = [user personalRollID];
+        NSString *rollID = [user publicRollID];
         
 //        // Fetch videoFrame
 //        NSManagedObjectContext *context = [self.appDelegate context];

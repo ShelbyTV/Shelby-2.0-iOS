@@ -10,6 +10,9 @@
 
 @interface User (Helper)
 
++ (User *)userForDictionary:(NSDictionary *)dict
+                    inContext:(NSManagedObjectContext *)context;
+
 //return the current, authenticated User, or nil if user isn't logged in
 +(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc;
 

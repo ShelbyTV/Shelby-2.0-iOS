@@ -24,7 +24,7 @@
 @dynamic rollID;
 @dynamic thumbnailURL;
 @dynamic title;
-@dynamic frame;
 @dynamic displayChannel;
+@dynamic frame;
 
 @end

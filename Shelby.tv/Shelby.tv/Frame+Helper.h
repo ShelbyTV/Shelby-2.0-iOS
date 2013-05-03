@@ -10,6 +10,9 @@
 
 @interface Frame (Helper)
 
++ (Frame *)frameForDictionary:(NSDictionary *)dict
+                    inContext:(NSManagedObjectContext *)context;
+
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 
 @end

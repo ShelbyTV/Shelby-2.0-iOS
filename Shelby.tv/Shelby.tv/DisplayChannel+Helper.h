@@ -10,6 +10,10 @@
 
 @interface DisplayChannel (Helper)
 
+//sorted by order
+//return nil on error
++ (NSArray *)allChannelsInContext:(NSManagedObjectContext *)context;
+
 //find or create DisplayChannel, will find or create underlying Roll
 //return nil on error
 //NB: does not save context

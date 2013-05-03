@@ -11,5 +11,5 @@
 
 @interface ShelbyHomeViewController : UIViewController
 
-- (void)setChannels:(NSArray *)channels;
+@property (nonatomic, strong) NSArray *channels;
 @end

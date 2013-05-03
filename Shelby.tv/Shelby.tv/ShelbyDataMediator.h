@@ -14,6 +14,11 @@
 // channels
 -(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached;
 -(void)fetchChannelsDidCompleteWithError:(NSError *)error;
+// channel entries
+-(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
+                                    with:(NSArray *)channelEntries fromCache:(BOOL)cached;
+-(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
+                               withError:(NSError *)error;
 @end
 
 @interface ShelbyDataMediator : NSObject
@@ -24,6 +29,7 @@
 
 //fetching
 - (void)fetchChannels;
+- (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
