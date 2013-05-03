@@ -51,7 +51,7 @@
 @property (nonatomic) SignupView *signupView;
 @property (nonatomic) UIView *backgroundLoginView;
 
-@property (nonatomic, strong) NSMutableDictionary *channelEntries;
+@property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -114,7 +114,7 @@
     
     [self fetchUser];
     
-    self.channelEntries = [@{} mutableCopy];
+    self.channelEntriesByObjectID = [@{} mutableCopy];
     
     [self setSecretMode:SecretMode_None];
     
@@ -161,8 +161,7 @@
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-    NSString *key =  [self keyForChannelAtIndex:[channel.order integerValue]];
-    self.channelEntries[key] = channelEntries;
+    self.channelEntriesByObjectID[channel.objectID] = channelEntries;
  
     [self.channelsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
 }
@@ -255,17 +254,12 @@
     
     DisplayChannel *channel = (DisplayChannel *)self.channels[indexPath.row];
 
-    channelFrames.channelKey = [self keyForChannelAtIndex:indexPath.row];
+    channelFrames.channel = channel;
     //TODO: deal with no color, no title
     [cell setChannelColor:[channel displayColor] andTitle:[channel displayTitle]];
     return cell;
 }
 
-
-- (NSString *)keyForChannelAtIndex:(NSInteger)index
-{
-    return [NSString stringWithFormat:@"%d", index];
-}
 
 #pragma mark - UITableViewDelegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -279,7 +273,7 @@
 {
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)view;
     if ([channelCollection isKindOfClass:[SPChannelCollectionView class]]) {
-        NSArray *entries = self.channelEntries[channelCollection.channelKey];
+        NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
         if (entries) {
              return [entries count];
         }
@@ -300,7 +294,7 @@
     id entry = nil;
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)cv;
     if ([channelCollection isKindOfClass:[SPChannelCollectionView class]]) {
-        NSArray *entries = self.channelEntries[channelCollection.channelKey];
+        NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
         if (indexPath.row < [entries count]) {
             entry = entries[indexPath.row];
         }

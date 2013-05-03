@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DisplayChannel.h"
 
 @interface SPChannelCollectionView : UICollectionView
 
-@property (nonatomic, strong) NSString *channelKey;
+@property (nonatomic, strong) DisplayChannel *channel;
 @property (nonatomic, strong) UIColor *channelColor;
 
 @end
