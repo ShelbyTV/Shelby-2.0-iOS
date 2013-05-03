@@ -14,5 +14,5 @@
                     inContext:(NSManagedObjectContext *)context;
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
-
+- (BOOL)isPlayable;
 @end

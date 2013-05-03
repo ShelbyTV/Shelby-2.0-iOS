@@ -12,5 +12,5 @@
 
 + (Video *)videoForDictionary:(NSDictionary *)dict
                     inContext:(NSManagedObjectContext *)context;
-
+- (BOOL)isPlayable;
 @end

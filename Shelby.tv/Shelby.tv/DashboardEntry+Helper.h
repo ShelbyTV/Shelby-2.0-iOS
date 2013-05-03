@@ -14,4 +14,5 @@
                                   withDashboard:(Dashboard *)dashboard
                                       inContext:(NSManagedObjectContext *)context;
 
+- (BOOL)isPlayable;
 @end

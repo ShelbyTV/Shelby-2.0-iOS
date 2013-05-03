@@ -323,7 +323,7 @@
         DashboardEntry *entry = [DashboardEntry dashboardEntryForDictionary:dashboardEntryDict
                                                               withDashboard:dashboard
                                                                   inContext:context];
-        if (entry) {
+        if ([entry isPlayable]) {
             [resultDashboardEntries addObject:entry];
         }
     }

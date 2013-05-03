@@ -38,10 +38,6 @@
         NSDictionary *videoDict = dict[@"video"];
         if([videoDict isKindOfClass:[NSDictionary class]]){
             frame.video = [Video videoForDictionary:videoDict inContext:context];
-            if (!frame.video) {
-                [context deleteObject:frame];
-                return nil;
-            }
         }
         NSDictionary *rollDict = dict[@"roll"];
         if([rollDict isKindOfClass:[NSDictionary class]]){
@@ -79,6 +75,15 @@
     }
     
     return nil;
+}
+
+- (BOOL)isPlayable
+{
+    if (self.video) {
+        return [self.video isPlayable];
+    }
+    
+    return NO;
 }
 
 @end
