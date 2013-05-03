@@ -30,7 +30,7 @@
 //fetching
 - (void)fetchChannels;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
-
+- (User *)fetchAuthenticatedUser;
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
 -(void)logout;

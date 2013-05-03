@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "BrowseViewController.h"
+#import "User.h"
 
 @interface ShelbyHomeViewController : UIViewController
 
 @property (nonatomic, strong) NSArray *channels;
+@property (nonatomic, strong) User *currentUser;
 @end

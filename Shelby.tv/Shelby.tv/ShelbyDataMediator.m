@@ -12,6 +12,7 @@
 #import "DisplayChannel+Helper.h"
 #import "DashboardEntry+Helper.h"
 #import "ShelbyAPIClient.h"
+#import "User+Helper.h"
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -86,6 +87,13 @@
         NSAssert(false, @"asked to fetch entries in channel with bad parameters");
     }
 }
+
+
+- (User *)fetchAuthenticatedUser
+{
+    return [User currentAuthenticatedUserInContext:[self mainThreadContext]];
+}
+
 
 - (void) fetchFramesForRoll:(Roll *)roll
                   inChannel:(DisplayChannel *)channel

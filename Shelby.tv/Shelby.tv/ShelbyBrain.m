@@ -27,6 +27,8 @@
 
 - (void)handleDidBecomeActive
 {
+    self.homeVC.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUser];
+
     //TODO: detect sleep time and remove player if it's been too long
         
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
