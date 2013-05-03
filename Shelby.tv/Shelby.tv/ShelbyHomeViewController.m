@@ -34,6 +34,7 @@
 
     BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
 
+    [self setBrowseVC:browseViewController];
     [self addChildViewController:browseViewController];
     [browseViewController.view setFrame:CGRectMake(0, 44, browseViewController.view.frame.size.width, browseViewController.view.frame.size.height)];
 
