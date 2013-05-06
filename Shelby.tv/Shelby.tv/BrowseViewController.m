@@ -162,18 +162,10 @@
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
     self.channelEntriesByObjectID[channel.objectID] = channelEntries;
- 
-    [self.channelsTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
+    [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
 }
 
 #pragma mark - Private Methods
-//djs get context otherwise
-//- (NSManagedObjectContext *)context
-//{
-//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    
-//    return [appDelegate context];
-//}
 
 - (void)fetchUser
 {
