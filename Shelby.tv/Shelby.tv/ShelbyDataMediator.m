@@ -137,15 +137,17 @@
                                                             withDashboard:privateContextDashboard
                                                                 inContext:privateContext];
                 
-                DLog(@"those DBEs are... %@", dashboardEntries);
-                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSMutableArray *results = [@[] mutableCopy];
+                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                    //this is probably fairly slow
                     for (DashboardEntry *dashboardEntry in dashboardEntries) {
                         DashboardEntry *mainThreadDashboardEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:dashboardEntry.objectID];
                         [results addObject:mainThreadDashboardEntry];
                     }
-                    [self.delegate fetchEntriesDidCompleteForChannel:channel with:results fromCache:NO];
+                    [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+                                                                with:results
+                                                           fromCache:NO];
 //                    // 2) load those channels on main thread context
 //                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
 //                    NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[channels count]];
@@ -297,7 +299,9 @@
         }
     }
     
-    [context save:nil];
+    NSError *error;
+    [context save:&error];
+    NSAssert(!error, @"context save failed, put your DEBUG hat on...");
     return resultDisplayChannels;
 }
 
@@ -328,7 +332,9 @@
         }
     }
     
-    [context save:nil];
+    NSError *error;
+    [context save:&error];
+    NSAssert(!error, @"context save failed, put your DEBUG hat on...");
     return resultDashboardEntries;
 }
 

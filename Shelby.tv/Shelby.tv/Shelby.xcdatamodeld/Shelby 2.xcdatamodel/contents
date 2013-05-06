@@ -41,7 +41,7 @@
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversation" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Conversation" inverseName="frame" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="creator" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="frames" inverseEntity="User" syncable="YES"/>
-        <relationship name="dashboardEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="frame" inverseEntity="DashboardEntry" syncable="YES"/>
+        <relationship name="dashboardEntry" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="frame" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Roll" inverseName="frame" inverseEntity="Roll" syncable="YES"/>
         <relationship name="video" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
     </entity>
@@ -108,9 +108,9 @@
     <elements>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Dashboard" positionX="-198" positionY="341" width="128" height="178"/>
-        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="103"/>
+        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="105"/>
         <element name="DisplayChannel" positionX="-270" positionY="126" width="128" height="88"/>
-        <element name="Frame" positionX="367" positionY="336" width="128" height="268"/>
+        <element name="Frame" positionX="367" positionY="336" width="128" height="270"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
         <element name="Roll" positionX="-342" positionY="342" width="128" height="240"/>
         <element name="User" positionX="-47" positionY="-9" width="128" height="313"/>
