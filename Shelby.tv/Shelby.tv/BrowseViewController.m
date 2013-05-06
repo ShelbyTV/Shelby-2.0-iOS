@@ -9,7 +9,6 @@
 #import "BrowseViewController.h"
 
 // Views
-#import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
 #import "SignupView.h"
 #import "PageControl.h"
