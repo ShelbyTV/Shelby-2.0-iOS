@@ -35,6 +35,7 @@
 //- (void)fetchAllChannels;
 
 - (void)setEntries:(NSArray *)entries forChannel:(DisplayChannel *)channel;
+- (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 
 /// Lanuch Player
 - (void)launchMyRollPlayer;

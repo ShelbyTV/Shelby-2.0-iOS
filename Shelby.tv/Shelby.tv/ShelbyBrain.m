@@ -33,7 +33,7 @@
         
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
         if(!self.homeVC.channels){
-            //djs TODO: start big channels activity indicator
+            [self.homeVC.channelsLoadingActivityIndicator startAnimating];
         }
         [[ShelbyDataMediator sharedInstance] fetchChannels];
     }
@@ -56,7 +56,7 @@
 - (void)populateChannel:(DisplayChannel *)channel withActivityIndicator:(BOOL)showSpinner
 {
     if(showSpinner){
-        //djs TODO: show single-channel spinner in self.browseVC
+        [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:YES];
     }
     
     [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:nil];
@@ -74,7 +74,6 @@
     NSArray *curChannels = self.homeVC.channels;
     if(!curChannels){
         self.homeVC.channels = channels;
-        //djs TODO: stop big channels activity indicator
     } else {
         //caveat: changing a DisplayChannel attribute will not trigger an update
         //array needs to be different order/length to trigger update
@@ -85,9 +84,11 @@
         }
     }
     
-    [self populateChannels];
-    
-    if(!cached){
+    if(cached){
+        //djs TODO: populate channels with cached data, only
+    } else {
+        [self.homeVC.channelsLoadingActivityIndicator stopAnimating];
+        [self populateChannels];
         self.channelsLoadedAt = [NSDate date];
     }
 }
@@ -100,14 +101,17 @@
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached
 {
-    //TODO: something
     [self.homeVC setEntries:channelEntries forChannel:channel];
+    if(!cached){
+        [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
+    }
 }
 
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                withError:(NSError *)error
 {
     //TODO: show error
+    [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
 }
 
 #pragma mark - ShelbyBrowseProtocol Methods

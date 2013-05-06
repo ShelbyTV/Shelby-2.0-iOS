@@ -162,7 +162,15 @@
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
     self.channelEntriesByObjectID[channel.objectID] = channelEntries;
+    //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
     [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
+}
+
+- (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
+{
+    //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
+    SPChannelCell *cell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]];
+    [cell.refreshActivityIndicator stopAnimating];
 }
 
 #pragma mark - Private Methods

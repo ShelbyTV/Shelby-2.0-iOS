@@ -53,6 +53,8 @@
     [browseViewController didMoveToParentViewController:self];
     
     [self setupSettingsView];
+    
+    [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,6 +75,11 @@
     self.channelEntriesByObjectID[channel.objectID] = channelEntries;
 
     [self.browseVC setEntries:channelEntries forChannel:channel];
+}
+
+- (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
+{
+    [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
 }
 
 - (void)setBrowseDelegete:(id<ShelbyBrowseProtocol>)delegete
