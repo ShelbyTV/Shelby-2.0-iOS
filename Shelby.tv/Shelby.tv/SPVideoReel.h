@@ -10,6 +10,7 @@
 //#import "SPModel.h"
 #import "SPChannelDisplay.h"
 #import "AuthorizationViewController.h"
+#import "SPVideoPlayer.h"
 
 typedef NS_ENUM(NSUInteger, SPTutorialMode)
 {
@@ -28,11 +29,12 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
 - (void)userDidCloseChannel:(SPVideoReel *)videoReel;
 - (SPChannelDisplay *)channelDisplayForDirection:(BOOL)up;
+- (void)videoDidFinishPlaying;
 @end
 
 @class SPVideoPlayer, SPOverlayView;
 
-@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate>
 
 @property (weak, nonatomic) id <SPVideoReelDelegate> delegate;
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
@@ -51,6 +53,9 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
             videoFrames:(NSMutableArray *)videoFrames
         videoStartIndex:(NSUInteger)videoStartIndex
            andChannelID:(NSString *)channelID;
+
+- (id)initWithVideoFrames:(NSMutableArray *)videoFrames
+                  atIndex:(NSUInteger)videoStartIndex;
 
 /// Update Methods
 - (void)extractVideoForVideoPlayer:(NSUInteger)position;

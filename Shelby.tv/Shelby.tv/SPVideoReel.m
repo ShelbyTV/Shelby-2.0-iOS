@@ -18,9 +18,6 @@
 #import "SPVideoExtractor.h"
 #import "SPVideoScrubber.h"
 
-// View Controllers
-#import "SPVideoPlayer.h"
-
 // Utilities
 #import "DeviceUtilities.h"
 #import "TwitterHandler.h"
@@ -49,6 +46,7 @@
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 @property (nonatomic) SPChannelPeekView *peelChannelView;
 @property (nonatomic) SPTutorialView *tutorialView;
+@property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
@@ -66,7 +64,7 @@
 - (void)setupOverlayVisibileItems;
 
 /// Update Methods
-- (void)currentVideoDidChangeToVideo:(NSUInteger)position;
+- (void)currentVideoShouldChangeToVideo:(NSUInteger)position;
 - (void)updatePlaybackUI;
 - (void)queueMoreVideos:(NSUInteger)position;
 - (void)fetchOlderVideos:(NSUInteger)position;
@@ -147,6 +145,19 @@
         _videoStartIndex = videoStartIndex;
     }
     
+    return self;
+}
+
+- (id)initWithVideoFrames:(NSMutableArray *)videoFrames
+                  atIndex:(NSUInteger)videoStartIndex
+{
+    self = [super init];
+    if (self) {
+        _videoFrames = videoFrames;
+        _videoStartIndex = videoStartIndex;
+        _currentVideoPlayingIndex = -1;
+    }
+
     return self;
 }
 
@@ -273,21 +284,19 @@
 - (void)setupVideoScrollView
 {
     
-    if ( ![[self.view subviews] containsObject:_videoScrollView] ) {
-        
-        self.videoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+    if (!self.videoScrollView) {
+        _videoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
         self.videoScrollView.delegate = self;
         self.videoScrollView.pagingEnabled = YES;
         self.videoScrollView.showsHorizontalScrollIndicator = NO;
         self.videoScrollView.showsVerticalScrollIndicator = NO;
         self.videoScrollView.scrollsToTop = NO;
         [self.videoScrollView setDelaysContentTouches:YES];
-        [self.view addSubview:_videoScrollView];
-        
+        [self.view addSubview:self.videoScrollView];
     }
     
     //djs use the model handed to us
-//    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.model numberOfVideos], kShelbySPVideoHeight);
+    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.videoFrames count], kShelbySPVideoHeight);
     [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
     
 }
@@ -319,35 +328,28 @@
 - (void)setupVideoPlayers
 {
     //djs just use the model handed to us, and then uncomment most of this stuff:
-//    if ( [self.model numberOfVideos] ) {
-//
-//        for ( NSUInteger i = 0; i < _model.numberOfVideos; ++i ) {
-//            
-//            Frame *videoFrame = (self.videoFrames)[i];
-//            
-//            CGRect viewframe = [self.videoScrollView frame];
-//            viewframe.origin.x = viewframe.size.width * i;
-//            viewframe.origin.y = 0.0f;
-//            SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:videoFrame];
-//            
-//            [self.videoPlayers addObject:player];
-//            [self.videoScrollView addSubview:player.view];
-//            
-//        }
-//        
-//        [self.model setCurrentVideo:[self videoStartIndex]];
-//        
-//        // Making sure we are not accessing index beyond our array. And if we do, go to the last video available.
+    if ([self.videoFrames count]) {
+        NSInteger i = 0;
+        for (DashboardEntry *dashboardEntry in self.videoFrames) {
+            CGRect viewframe = [self.videoScrollView frame];
+            viewframe.origin.x = viewframe.size.width * i;
+            viewframe.origin.y = 0.0f;
+            SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:dashboardEntry.frame];
+            player.videoPlayerDelegate = self;
+            [self.videoPlayers addObject:player];
+            [self.videoScrollView addSubview:player.view];
+            
+            i++;
+        }
+        
+        // Making sure we are not accessing index beyond our array. And if we do, go to the last video available.
 //        NSInteger currentVideo = [self.model currentVideo];
 //        if ([self.videoPlayers count] <= currentVideo) {
 //            currentVideo = [self.videoPlayers count] - 1;
 //        }
-//        
-//        if (currentVideo >= 0) {
-//            [self.model setCurrentVideoPlayer:(self.videoPlayers)[currentVideo]];
-//            [self currentVideoDidChangeToVideo:currentVideo];
-//        } 
-//    }
+        
+        [self currentVideoShouldChangeToVideo:self.videoStartIndex];
+    }
 }
 
 - (void)setupAirPlay
@@ -448,7 +450,8 @@
     SPVideoPlayer *player = (self.videoPlayers)[position];
     
 //    djs same old bullshit... just use the damn video...
-    Frame *videoFrame = player.videoFrame;
+//    Frame *videoFrame = player.videoFrame;
+    [player prepareForStreamingPlayback];
 //    NSManagedObjectContext *context = [self.appDelegate context];
 //    NSManagedObjectID *objectID = [player.videoFrame objectID];
 //    if (!objectID) {
@@ -473,7 +476,7 @@
 }
 
 #pragma mark -  Update Methods (Private)
-- (void)currentVideoDidChangeToVideo:(NSUInteger)position
+- (void)currentVideoShouldChangeToVideo:(NSUInteger)position
 {
     
     // Post notification (to rollViews that may have a keyboard loaded in view)
@@ -518,26 +521,44 @@
 //        return;
 //    }
 //
-    //djs uncommont most of this stuff when we have a proper model
-//    Frame *videoFrame = self.videoFrames[_model.currentVideo];
-//    
-//    
-//    // Set new values on infoPanel
-//    self.overlayView.videoTitleLabel.text = videoFrame.video.title;
-//    
-//    // Set index of video playing
-//    [self setVideoStartIndex:position];
-// 
-//    //Show the rollers caption, fallback to video title;
-//    self.overlayView.videoCaptionLabel.text = [videoFrame creatorsInitialCommentWithFallback:YES];
-//    
-//    self.overlayView.videoTimestamp.text = [videoFrame createdAt];
-//    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"%@", videoFrame.creator.nickname];
-//    [AsynchronousFreeloader loadImageFromLink:videoFrame.creator.userImage
-//                                 forImageView:_overlayView.userImageView
-//                              withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
-//                               andContentMode:UIViewContentModeScaleAspectFit];
+    // Set current player to not autoplay and pause player
+    SPVideoPlayer *player = nil;
+    if (self.currentVideoPlayingIndex >= 0) {
+        player = (self.videoPlayers)[self.currentVideoPlayingIndex];
+        player.shouldAutoPlay = NO;
+        [player pause];
+    }
     
+    // Set the new current player to auto play.
+    self.currentVideoPlayingIndex = position;
+    player = (self.videoPlayers)[self.currentVideoPlayingIndex];
+    player.shouldAutoPlay = YES;
+
+    // KP KP: TODO: if video is already loaded, start playing and return
+
+    
+    //djs uncommont most of this stuff when we have a proper model
+    DashboardEntry *dashboardEntry = self.videoFrames[self.currentVideoPlayingIndex];
+    
+    // Set new values on infoPanel
+    self.overlayView.videoTitleLabel.text = dashboardEntry.frame.video.title;
+    
+    // Set index of video playing
+    [self setVideoStartIndex:position];
+ 
+    //Show the rollers caption, fallback to video title;
+    self.overlayView.videoCaptionLabel.text = [dashboardEntry.frame creatorsInitialCommentWithFallback:YES];
+    
+    self.overlayView.videoTimestamp.text = [dashboardEntry.frame createdAt];
+    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"%@", dashboardEntry.frame.creator.nickname];
+    [AsynchronousFreeloader loadImageFromLink:dashboardEntry.frame.creator.userImage
+                                 forImageView:_overlayView.userImageView
+                              withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
+                               andContentMode:UIViewContentModeScaleAspectFit];
+    
+    
+    // notify all players they are not autoplayed
+    [self extractVideoForVideoPlayer:self.currentVideoPlayingIndex];
     
     // Queue current and next 3 videos
     [self queueMoreVideos:position];
@@ -896,7 +917,7 @@
 //            CGFloat videoX = kShelbySPVideoWidth * position;
 //            CGFloat videoY = _videoScrollView.contentOffset.y;
 //            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-//            [self currentVideoDidChangeToVideo:position];
+//            [self currentVideoShouldChangeToVideo:position];
 //        } else { // Load next video, (but do not scroll)
 //            [self extractVideoForVideoPlayer:position];
 //        }
@@ -914,7 +935,7 @@
 //    if ( position <= (_model.numberOfVideos-1) ) {
 //    
 //        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-//        [self currentVideoDidChangeToVideo:position];
+//        [self currentVideoShouldChangeToVideo:position];
 //    
 //    }
 }
@@ -1297,28 +1318,36 @@
 }
 
 
+#pragma mark - SPVideoPlayerDelegete Methods
+- (void)videoDidFinishPlaying
+{
+    
+}
+
 
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     //djs fix when we have our model and view controllers
     
-//    // Switch the indicator when more than 50% of the previous/next page is visible
-//    CGFloat pageWidth = scrollView.frame.size.width;
-//    CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
-//    NSUInteger page = floor(scrollAmount) + 1;
-//    
+    // Switch the indicator when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = scrollView.frame.size.width;
+    CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
+    NSUInteger page = floor(scrollAmount) + 1;
+    
 //    // Toggle playback on old and new SPVideoPlayer objects
-//    if ( page != _model.currentVideo ) {
-//        [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-//        if (page > _model.currentVideo) {
-//            [self videoSwipedLeft];
-//        }
-//    } else {
-//        return;
-//    }
-//    
-//    [self currentVideoDidChangeToVideo:page];
+    if (page == self.currentVideoPlayingIndex) {
+        return;
+    }
+
+//    [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
+    
+    if (page > self.currentVideoPlayingIndex) {
+        [self videoSwipedLeft];
+    }
+//
+    
+    [self currentVideoShouldChangeToVideo:page];
 //    [self fetchOlderVideos:page];
 //
 //    // Send event to Google Analytics

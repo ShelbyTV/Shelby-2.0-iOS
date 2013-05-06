@@ -8,7 +8,9 @@
 
 #import "ShelbyHomeViewController.h"
 #import "BrowseViewController.h"
+#import "DisplayChannel.h"
 #import "ShelbyBrain.h"
+#import "SPVideoReel.h"
 #import "User+Helper.h"
 
 @interface ShelbyHomeViewController ()
@@ -16,6 +18,8 @@
 
 @property (nonatomic, strong) UIView *settingsView;
 @property (nonatomic, strong) BrowseViewController *browseVC;
+@property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
+
 
 @end
 
@@ -33,6 +37,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.channelEntriesByObjectID = [@{} mutableCopy];
 
     [self.topBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbar.png"]]];
 
@@ -64,7 +70,14 @@
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
+    self.channelEntriesByObjectID[channel.objectID] = channelEntries;
+
     [self.browseVC setEntries:channelEntries forChannel:channel];
+}
+
+- (void)setBrowseDelegete:(id<ShelbyBrowseProtocol>)delegete
+{
+    self.browseVC.browseDelegate = delegete;
 }
 
 - (void)setCurrentUser:(User *)currentUser
@@ -105,6 +118,12 @@
     }
     
     [self.view addSubview:self.settingsView];
+}
+
+- (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
+{
+    SPVideoReel *videoReel = [[SPVideoReel alloc] initWithVideoFrames:self.channelEntriesByObjectID[channel.objectID] atIndex:index];
+    [self presentViewController:videoReel animated:YES completion:nil];
 }
 
 @end

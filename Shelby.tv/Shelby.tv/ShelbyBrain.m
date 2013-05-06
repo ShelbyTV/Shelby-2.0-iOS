@@ -28,7 +28,7 @@
 - (void)handleDidBecomeActive
 {
     self.homeVC.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUser];
-
+    [self.homeVC setBrowseDelegete:self];
     //TODO: detect sleep time and remove player if it's been too long
         
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
@@ -108,6 +108,18 @@
                                withError:(NSError *)error
 {
     //TODO: show error
+}
+
+#pragma mark - ShelbyBrowseProtocol Methods
+- (void)launchChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
+{
+    [self.homeVC launchPlayerForChannel:channel atIndex:index];
+}
+
+- (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
+{
+    // Need to find the item pressed and 
+    [self launchChannel:channel atIndex:0];
 }
 
 @end

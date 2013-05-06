@@ -96,6 +96,7 @@
     if (self) {
         _viewBounds = bounds;
         _videoFrame = videoFrame;
+        _shouldAutoPlay = NO;
     }
     
     return self;
@@ -208,6 +209,10 @@
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
                                                object:playerItem];
     
+    if (self.shouldAutoPlay) {
+        [self play];
+    }
+    
     /*
      This line stores a video in an array that's used for lazy memory management queue.
      The array purges an older video instance when a limit is reached.
@@ -266,6 +271,8 @@
 //        return;
 //    }
     
+//    NSString urlForVideo = self.videoFrame.dashboardEntry.frame.video;
+    
     [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL) {
         if(videoURL){
             [self setupPlayerForURL:[NSURL URLWithString:videoURL]];
@@ -276,6 +283,7 @@
             }
         } else {
             //djs TODO handle extraction fail
+            // KP KP: TODO: scroll to next video
         }
     }];
 }

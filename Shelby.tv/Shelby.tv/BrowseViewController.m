@@ -18,6 +18,7 @@
 #import "SPChannelCollectionView.h"
 #import "SPVideoItemViewCellLabel.h"
 #import "SettingsViewController.h"
+#import "ShelbyBrain.h"
 
 
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
@@ -361,6 +362,19 @@
 // KP KP: TODO
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    SPChannelCollectionView *channelCollectionView = (SPChannelCollectionView *)collectionView;
+    if ([channelCollectionView isKindOfClass:[SPChannelCollectionView class]]) {
+        DisplayChannel *channel = channelCollectionView.channel;
+        if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
+            NSArray *entries = self.channelEntriesByObjectID[channelCollectionView.channel.objectID];
+            id entry = nil;
+            if (indexPath.row < [entries count]) {
+                entry = entries[indexPath.row];
+            }
+            [self.browseDelegate userPressedChannel:channel atItem:entry];
+        }
+    }
+    
 //    NSNumber *changableMapperKey = [NSNumber numberWithUnsignedInt:[collectionView hash]];
 //    NSNumber *key = self.changeableDataMapper[changableMapperKey];
 //    [self launchPlayer:[key intValue] andVideo:indexPath.row];
@@ -828,6 +842,11 @@
     }
     [self animateCloseChannels:videoReel];
 
+}
+
+- (void)videoDidFinishPlaying
+{
+    
 }
 
 - (SPChannelDisplay *)channelDisplayForDirection:(BOOL)up

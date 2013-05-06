@@ -8,10 +8,11 @@
 //  Single instance, created by AppDelegate, runs the show.
 
 #import <Foundation/Foundation.h>
+#import "BrowseViewController.h"
 #import "ShelbyHomeViewController.h"
 #import "ShelbyDataMediator.h"
 
-@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol>
+@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol>
 
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 

@@ -6,6 +6,12 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
+@protocol SPVideoPlayerDelegate <NSObject>
+
+- (void)videoDidFinishPlaying;
+
+@end
+
 @interface SPVideoPlayer : GAITrackedViewController
 
 @property (nonatomic) Frame *videoFrame;
@@ -14,6 +20,8 @@
 @property (assign, nonatomic) BOOL isPlaying;
 @property (assign, nonatomic) BOOL playbackFinished;
 @property (assign, nonatomic) CMTime playbackStartTime;
+@property (assign, nonatomic) BOOL shouldAutoPlay;
+@property (nonatomic, weak) id<SPVideoPlayerDelegate> videoPlayerDelegate;
 
 // Initialization
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame;

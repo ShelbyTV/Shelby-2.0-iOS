@@ -16,4 +16,6 @@
 @property (nonatomic, strong) User *currentUser;
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
+- (void)setBrowseDelegete:(id<ShelbyBrowseProtocol>)delegete;
+- (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 @end
