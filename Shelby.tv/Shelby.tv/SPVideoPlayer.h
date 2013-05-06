@@ -39,7 +39,7 @@
 // Playback Control
 //djs moved the following to prepareForLocalPlayback
 //- (void)loadVideoFromDisk;
-- (void)togglePlayback:(id)sender;
+- (void)togglePlayback;
 - (void)restartPlayback;
 - (void)play;
 - (void)pause;

@@ -388,6 +388,13 @@
         UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
         [self.view addGestureRecognizer:pinchGesture];
         
+        UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
+        [togglePlaybackGesuture setNumberOfTapsRequired:2];
+        [self.view addGestureRecognizer:togglePlaybackGesuture];
+
+        [self.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
+        
+        
     }
 }
 
@@ -442,6 +449,44 @@
 //            }
 //        }
     }
+}
+
+- (void)animatePlaybackState:(BOOL)videoPlaying
+{
+    NSString *imageName = nil;
+    if (videoPlaying) {
+        imageName =  @"pauseButton.png";
+    } else {
+        imageName = @"playButton.png";
+    }
+    
+    UIImageView *playPauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    [playPauseImage setContentMode:UIViewContentModeScaleAspectFill];
+    [self.view addSubview:playPauseImage];
+    [self.view bringSubviewToFront:playPauseImage];
+    
+    CGRect startFrame = CGRectMake((kShelbySPVideoWidth - playPauseImage.frame.size.width) / 2, (kShelbySPVideoHeight - playPauseImage.frame.size.height) / 2, playPauseImage.frame.size.width, playPauseImage.frame.size.height);
+    
+    [playPauseImage setFrame:startFrame];
+    
+    CGRect endFrame = CGRectMake(startFrame.origin.x - startFrame.size.width, startFrame.origin.y - startFrame.size.height, startFrame.size.width * 4, startFrame.size.height * 4);
+    [UIView animateWithDuration:1 animations:^{
+        [playPauseImage setFrame:endFrame];
+        [playPauseImage setAlpha:0];
+    } completion:^(BOOL finished) {
+        [playPauseImage removeFromSuperview];
+    }];
+}
+
+
+- (void)togglePlayback:(UIGestureRecognizer *)recognizer
+{
+    SPVideoPlayer *player = self.videoPlayers[self.currentVideoPlayingIndex];
+    
+    // Animating Play/Pause icon on the screen
+    [self animatePlaybackState:player.isPlaying];
+
+    [player togglePlayback];
 }
 
 #pragma mark - Update Methods (Public)

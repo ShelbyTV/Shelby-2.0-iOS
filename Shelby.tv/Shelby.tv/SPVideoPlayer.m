@@ -62,7 +62,6 @@
 - (void)itemDidFinishPlaying:(NSNotification *)notification;
 - (void)updateBufferProgressView:(NSNumber *)buffered;
 
-- (void)animatePlay;
 @end
 
 @implementation SPVideoPlayer
@@ -195,14 +194,6 @@
 //        [self.overlayView.restartPlaybackButton setHidden:YES];
 //    }
     
-    // Add Gesture Recognizer
-    UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
-    [togglePlaybackGesuture setNumberOfTapsRequired:2];
-    [self.view addGestureRecognizer:togglePlaybackGesuture];
-    
-    //djs
-//    [self.videoReel.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
-    
     // Add Observers
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(itemDidFinishPlaying:)
@@ -289,14 +280,12 @@
 }
 
 #pragma mark - Video Playback Methods (Public)
-- (void)togglePlayback:(id)sender
+- (void)togglePlayback
 {
     
-    [self animatePlay];
-
     // Send event to Google Analytics
 //    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    if ( [sender isMemberOfClass:[UITapGestureRecognizer class]] ) {
+//    if ( [sender isMemberOfClass:[UITapGestureRecognizer class]] ) {
 
         //djs TODO: track this elsewhere
 //        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
@@ -304,8 +293,8 @@
 //                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
 //                                    withValue:nil];
         
-    } else if ( [sender isMemberOfClass:[SPVideoReel class]] ) {
-        
+//    } else if ( [sender isMemberOfClass:[SPVideoReel class]] ) {
+    
         
         if ( [self isPlaying] ) {
 
@@ -325,9 +314,9 @@
             
         }
         
-    } else {
-        // Do nothing
-    }
+//    } else {
+//        // Do nothing
+//    }
     
     // Toggle Playback
     if ( 0.0 == _player.rate && _isPlayable ) { // Play
@@ -652,31 +641,5 @@
 //    [self.model rescheduleOverlayTimer];
 }
 
-- (void)animatePlay
-{
-    NSString *imageName = nil;
-    if ([self isPlaying]) {
-        imageName =  @"pauseButton.png";
-    } else {
-        imageName = @"playButton.png";
-    }
-    
-    UIImageView *playPauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-    [playPauseImage setContentMode:UIViewContentModeScaleAspectFill];
-    [self.view addSubview:playPauseImage];
-    [self.view bringSubviewToFront:playPauseImage];
-    
-    CGRect startFrame = CGRectMake((kShelbySPVideoWidth - playPauseImage.frame.size.width) / 2, (kShelbySPVideoHeight - playPauseImage.frame.size.height) / 2, playPauseImage.frame.size.width, playPauseImage.frame.size.height);
-
-    [playPauseImage setFrame:startFrame];
-
-    CGRect endFrame = CGRectMake(startFrame.origin.x - startFrame.size.width, startFrame.origin.y - startFrame.size.height, startFrame.size.width * 4, startFrame.size.height * 4);
-    [UIView animateWithDuration:1 animations:^{
-        [playPauseImage setFrame:endFrame];
-        [playPauseImage setAlpha:0];
-    } completion:^(BOOL finished) {
-        [playPauseImage removeFromSuperview];
-    }];
-}
 
 @end
