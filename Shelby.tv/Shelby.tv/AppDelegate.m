@@ -204,8 +204,9 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     // Empty existing image cache
     [AsynchronousFreeloader removeAllImages];
     
+    // KP KP: Don't delete videos after logout - (for a demo)
     // Empty existing disk-stored data (if there exists any data)
-    [SPVideoDownloader deleteAllDownloadedVideos];
+//    [SPVideoDownloader deleteAllDownloadedVideos];
     
     // Empty existing Core Data store (if one exists)
     [self dumpAllData];
