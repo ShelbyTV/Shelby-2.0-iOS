@@ -125,7 +125,6 @@
 		1C81097F16EE2CBF0030077C /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		1C81098016EE2CBF0030077C /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
-		1C81098216EE2CBF0030077C /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		1C81098516EE2CBF0030077C /* SPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19B16AFA7F9008587FD /* SPModel.m */; };
@@ -239,7 +238,6 @@
 		1C810A3516EE5EED0030077C /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		1C810A3616EE5EED0030077C /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
-		1C810A3816EE5EED0030077C /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		1C810A3B16EE5EED0030077C /* SPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19B16AFA7F9008587FD /* SPModel.m */; };
@@ -635,7 +633,6 @@
 		8EA10D8C1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
 		8EA10D8D1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
 		8EA10D8E1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
-		8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */; };
 		8EAAEE5B163A29BA00AEF100 /* CoreDataUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE5A163A29A900AEF100 /* CoreDataUtility.m */; };
 		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
@@ -1001,8 +998,6 @@
 		8E9FBD5616C7145F00731912 /* authenticationTextField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationTextField.png; sourceTree = "<group>"; };
 		8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationTextField@2x.png"; sourceTree = "<group>"; };
 		8EA10D8B1725A9DD00B90571 /* Harpy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Harpy.bundle; sourceTree = "<group>"; };
-		8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemView.h; sourceTree = "<group>"; };
-		8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemView.m; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
 		8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataConstants.h; sourceTree = "<group>"; };
 		8EAAEE59163A29A900AEF100 /* CoreDataUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataUtility.h; sourceTree = "<group>"; };
@@ -1057,7 +1052,7 @@
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
 		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
-		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
+		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
 		91D03F051731C49B008131D2 /* DisplayChannel+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DisplayChannel+Helper.h"; sourceTree = "<group>"; };
 		91D03F061731C49B008131D2 /* DisplayChannel+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DisplayChannel+Helper.m"; sourceTree = "<group>"; };
 		91D03F0A1732B507008131D2 /* Roll+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Roll+Helper.h"; sourceTree = "<group>"; };
@@ -1561,8 +1556,6 @@
 				8E4C55761666A9F90019DD15 /* SPOverlayView.m */,
 				8EF03C5E16D57C170019669F /* SPShareRollView.h */,
 				8EF03C5F16D57C170019669F /* SPShareRollView.m */,
-				8EA2CB2116729AC700D59B73 /* SPVideoItemView.h */,
-				8EA2CB2216729AC700D59B73 /* SPVideoItemView.m */,
 				1C6AD0021721F9140008DEC2 /* SPTutorialView.h */,
 				1C6AD0031721F9140008DEC2 /* SPTutorialView.m */,
 				1C304BF7171EFE4F00476277 /* SPChannelPeekView.h */,
@@ -2398,7 +2391,6 @@
 				1C81097F16EE2CBF0030077C /* NSString+CoreDataNullTest.m in Sources */,
 				1C81098016EE2CBF0030077C /* SPOverlayView.m in Sources */,
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
-				1C81098216EE2CBF0030077C /* SPVideoItemView.m in Sources */,
 				1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
 				1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				1C81098516EE2CBF0030077C /* SPModel.m in Sources */,
@@ -2468,7 +2460,6 @@
 				91D03F081731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0D1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F211732BC98008131D2 /* Dashboard+Helper.m in Sources */,
-				91D03F261732C7FC008131D2 /* Roll.m in Sources */,
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3A17331495008131D2 /* DisplayChannel.m in Sources */,
@@ -2500,7 +2491,6 @@
 				1C810A3516EE5EED0030077C /* NSString+CoreDataNullTest.m in Sources */,
 				1C810A3616EE5EED0030077C /* SPOverlayView.m in Sources */,
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
-				1C810A3816EE5EED0030077C /* SPVideoItemView.m in Sources */,
 				1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
 				1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				1C810A3B16EE5EED0030077C /* SPModel.m in Sources */,
@@ -2570,7 +2560,6 @@
 				91D03F091731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0E1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F221732BC98008131D2 /* Dashboard+Helper.m in Sources */,
-				91D03F271732C7FC008131D2 /* Roll.m in Sources */,
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3B17331495008131D2 /* DisplayChannel.m in Sources */,
@@ -2602,7 +2591,6 @@
 				8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */,
 				8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */,
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
-				8EA2CB2316729AC700D59B73 /* SPVideoItemView.m in Sources */,
 				8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */,
 				8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				8EB3B19C16AFA7FA008587FD /* SPModel.m in Sources */,
@@ -2672,7 +2660,6 @@
 				91D03F071731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0C1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F201732BC98008131D2 /* Dashboard+Helper.m in Sources */,
-				91D03F251732C7FC008131D2 /* Roll.m in Sources */,
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3917331495008131D2 /* DisplayChannel.m in Sources */,
