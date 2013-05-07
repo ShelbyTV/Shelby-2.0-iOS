@@ -85,7 +85,7 @@
     }
     
     if(cached){
-        //djs TODO: populate channels with cached data, only
+        //could populate channels w/ cached data only here, and then API request data in else block
     } else {
         [self.homeVC.channelsLoadingActivityIndicator stopAnimating];
         [self populateChannels];
@@ -101,6 +101,7 @@
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached
 {
+    //djs TODO: set these smartly, don't just overwrite everything
     [self.homeVC setEntries:channelEntries forChannel:channel];
     if(!cached){
         [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];

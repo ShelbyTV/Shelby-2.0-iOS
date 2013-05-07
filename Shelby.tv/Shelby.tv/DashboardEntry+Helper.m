@@ -47,6 +47,21 @@
     return dashboardEntry;
 }
 
++ (NSArray *)entriesForDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDashboardEntry];
+    NSPredicate *entriesInDashboard = [NSPredicate predicateWithFormat:@"dashboard == %@", dashboard];
+    request.predicate = entriesInDashboard;
+    //Mongo IDs are prefixed with timestamp, so this gives us reverse-chron
+    NSSortDescriptor *sortById = [NSSortDescriptor sortDescriptorWithKey:@"dashboardEntryID" ascending:NO];
+    request.sortDescriptors = @[sortById];
+    
+    NSError *err;
+    NSArray *results = [context executeFetchRequest:request error:&err];
+    NSAssert(!err, @"couldn't fetch dashboard entries!");
+    return results;
+}
+
 - (BOOL)isPlayable
 {
     if (self.frame) {
