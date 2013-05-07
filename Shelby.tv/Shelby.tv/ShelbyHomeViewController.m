@@ -197,6 +197,8 @@
             [animationViews.centerView removeFromSuperview];
             [animationViews.bottomView removeFromSuperview];
             [animationViews.topView removeFromSuperview];
+            
+            // KP KP: TODO: send a message to brain that it can start accepting new events
             [self setAnimationInProgress:NO];
         }];
     }];

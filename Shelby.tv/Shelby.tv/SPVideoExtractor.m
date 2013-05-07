@@ -107,6 +107,7 @@
             extraction_complete_block completionBlock = self.currentlyExtracting[@"block"];
             completionBlock(nil);
             self.currentlyExtracting = nil;
+            // TODO: user perform selector instead
             [self extractNextVideoFromQueue];
             return;
         }
@@ -304,6 +305,8 @@
     extraction_complete_block completionBlock = self.currentlyExtracting[@"block"];
     completionBlock(nil);
     self.currentlyExtracting = nil;
+    
+    //TODO: do this w/ timer
     [self extractNextVideoFromQueue];
     return;
     

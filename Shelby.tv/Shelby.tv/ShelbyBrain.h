@@ -13,6 +13,7 @@
 #import "ShelbyDataMediator.h"
 #import "SPVideoReel.h"
 
+// TODO: rename protocol - > delegate
 @interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, SPVideoReelDelegate>
 
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;

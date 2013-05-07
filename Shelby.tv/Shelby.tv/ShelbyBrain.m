@@ -156,6 +156,8 @@
 #pragma mark - ShelbyBrowseProtocol Methods
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
 {
+    // KP KP: TODO: prevent animated twice here and NOT in ShelbyHome. ---> same goes to Close animation
+    
     self.currentChannel = channel;
     
     NSInteger index = [self.homeVC indexOfItem:item inChannel:channel];
