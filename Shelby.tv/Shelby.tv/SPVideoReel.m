@@ -114,40 +114,6 @@
 }
 
 #pragma mark - Initialization
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)groupTitle
-            videoFrames:(NSMutableArray *)videoFrames
-        videoStartIndex:(NSUInteger)videoStartIndex
-          andChannelID:(NSString *)channelID
-{
-    self = [self initWithGroupType:groupType
-                        groupTitle:groupTitle
-                       videoFrames:videoFrames
-                andVideoStartIndex:videoStartIndex];
-    
-    if (self) {
-        _channelID = channelID;
-    }
-    
-    return self;
-}
-
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)groupTitle
-            videoFrames:(NSMutableArray *)videoFrames
-     andVideoStartIndex:(NSUInteger)videoStartIndex
-{
-    self = [super init];
-    if (self) {
-        _groupType = groupType;
-        _groupTitle = groupTitle;
-        _videoFrames = videoFrames;
-        _videoStartIndex = videoStartIndex;
-    }
-    
-    return self;
-}
-
 - (id)initWithVideoFrames:(NSMutableArray *)videoFrames
                   atIndex:(NSUInteger)videoStartIndex
 {
@@ -1219,6 +1185,7 @@
     }
 }
 
+// KP KP: TODO: this is no longer getting called - figure out if we need to call it or can deal with the cleanup differently.
 - (void)cleanup
 {
     [self purgeVideoPlayerInformationFromPreviousVideoGroup];

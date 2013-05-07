@@ -43,17 +43,6 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 @property (copy, nonatomic) NSString *groupTitle;
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
 
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)groupTitle
-            videoFrames:(NSMutableArray *)videoFrames
-     andVideoStartIndex:(NSUInteger)videoStartIndex;
-
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)groupTitle
-            videoFrames:(NSMutableArray *)videoFrames
-        videoStartIndex:(NSUInteger)videoStartIndex
-           andChannelID:(NSString *)channelID;
-
 - (id)initWithVideoFrames:(NSMutableArray *)videoFrames
                   atIndex:(NSUInteger)videoStartIndex;
 
