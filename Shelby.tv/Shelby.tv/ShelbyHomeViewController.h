@@ -18,6 +18,7 @@
 @property (nonatomic, weak) id brainAsDelegate;
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
+- (NSInteger)indexOfItem:(id)item inChannel:(DisplayChannel *)channel;
 
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;

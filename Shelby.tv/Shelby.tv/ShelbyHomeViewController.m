@@ -77,6 +77,12 @@
     [self.browseVC setEntries:channelEntries forChannel:channel];
 }
 
+- (NSInteger)indexOfItem:(id)item inChannel:(DisplayChannel *)channel
+{
+    NSArray *entries = self.channelEntriesByObjectID[channel.objectID];
+    return [entries indexOfObject:item];
+}
+
 - (void)setBrainAsDelegate:(id)brainAsDelegate
 {
     _brainAsDelegate = brainAsDelegate;

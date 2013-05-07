@@ -137,9 +137,13 @@
 #pragma mark - ShelbyBrowseProtocol Methods
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
 {
-    // KP KP: TODO: Need to find the item pressed and
     self.currentChannel = channel;
-    [self.homeVC animateLaunchPlayerForChannel:channel atIndex:0];
+    
+    NSInteger index = [self.homeVC indexOfItem:item inChannel:channel];
+    if (index == NSNotFound) {
+        index = 0;
+    }
+    [self.homeVC animateLaunchPlayerForChannel:channel atIndex:index];
 }
 
 #pragma mark - SPVideoReelProtocol Methods
