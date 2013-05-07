@@ -1079,136 +1079,131 @@
         [self.tutorialView setAlpha:0];
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(userDidSwitchChannel:direction:)]) {
-        [self.delegate userDidSwitchChannel:self direction:up];
+    if (self.delegate && [self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)]) {
+        [self.delegate userDidSwitchChannelForDirectionUp:up];
     }
 }
 
 - (void)panView:(UIPanGestureRecognizer *)gestureRecognizer
 {
+    if (![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return;
+    }
     
-    //djs uncomment when we are holding our own model and video player
+    SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
     
-//    if (![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-//        return;
-//    }
-//    
-//    NSInteger y = self.model.currentVideoPlayer.view.frame.origin.y;
-//    NSInteger x = self.model.currentVideoPlayer.view.frame.origin.x;
-//    CGPoint translation = [gestureRecognizer translationInView:self.view];
-//    
-//    BOOL peekUp = y >= 0 ? YES : NO;
-//    SPChannelDisplay *channelDisplay = nil;
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(channelDisplayForDirection:)]) {
-//       channelDisplay =  [self.delegate channelDisplayForDirection:peekUp];
-//    }
-//
-//    int peekHeight = peekUp ? y : -1 * y;
-//    int yOriginForPeekView = peekUp ? 0 : 768 - peekHeight;
-//    CGRect peekViewRect = peekViewRect = CGRectMake(0, yOriginForPeekView, kShelbySPVideoWidth, peekHeight);
-//    
-//    [self.peelChannelView setupWithChannelDisplay:channelDisplay];
-//    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
-//        [self.view addSubview:self.peelChannelView];
-//    }
-//    
-//    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-//        self.model.currentVideoPlayer.view.frame = CGRectMake(x, y + translation.y, self.model.currentVideoPlayer.view.frame.size.width, self.model.currentVideoPlayer.view.frame.size.height);
-//        self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
-//        self.peelChannelView.frame = peekViewRect;
-//        
-//        [gestureRecognizer setTranslation:CGPointZero inView:self.view];
-//    } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
-//        CGPoint velocity = [gestureRecognizer velocityInView:self.view];
-//        NSInteger currentY = y + translation.y;
-//        if (velocity.y < -200) {
-//            if (-1 * currentY < kShelbySPVideoHeight / 11) {
-//                [self animateUp:kShelbySPFastSpeed andSwitchChannel:NO];
-//            } else {
-//                [self animateUp:kShelbySPFastSpeed andSwitchChannel:YES];
-//            }
-//        } else if (velocity.y > 200) {
-//            if (currentY < kShelbySPVideoHeight / 11) {
-//                [self animateDown:kShelbySPFastSpeed andSwitchChannel:NO];
-//            } else {
-//                [self animateDown:kShelbySPFastSpeed andSwitchChannel:YES];
-//            }
-//        } else {
-//            if (currentY > 0) {
-//                if (currentY < 3 * kShelbySPVideoHeight / 4) {
-//                    [self animateUp:kShelbySPSlowSpeed andSwitchChannel:NO];
-//                } else {
-//                    [self animateDown:kShelbySPSlowSpeed andSwitchChannel:YES];
-//                }
-//            } else if (-1 * currentY < 3 * kShelbySPVideoHeight / 4) {
-//                [self animateDown:kShelbySPSlowSpeed andSwitchChannel:NO];
-//            } else {
-//                [self animateUp:kShelbySPSlowSpeed andSwitchChannel:YES];
-//            }
-//        }
-//    }
+    NSInteger y = currentPlayer.view.frame.origin.y;
+    NSInteger x = currentPlayer.view.frame.origin.x;
+    CGPoint translation = [gestureRecognizer translationInView:self.view];
+    
+    BOOL peekUp = y >= 0 ? YES : NO;
+    DisplayChannel *dispalayChannel = nil;
+    if (self.delegate && [self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)]) {
+       dispalayChannel =  [self.delegate displayChannelForDirection:peekUp];
+    }
 
+    int peekHeight = peekUp ? y : -1 * y;
+    int yOriginForPeekView = peekUp ? 0 : 768 - peekHeight;
+    CGRect peekViewRect = peekViewRect = CGRectMake(0, yOriginForPeekView, kShelbySPVideoWidth, peekHeight);
+    
+    [self.peelChannelView setupWithChannelDisplay:dispalayChannel];
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
+        [self.view addSubview:self.peelChannelView];
+    }
+    
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+        currentPlayer.view.frame = CGRectMake(x, y + translation.y, currentPlayer.view.frame.size.width, currentPlayer.view.frame.size.height);
+        self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
+        self.peelChannelView.frame = peekViewRect;
+        
+        [gestureRecognizer setTranslation:CGPointZero inView:self.view];
+    } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
+        CGPoint velocity = [gestureRecognizer velocityInView:self.view];
+        NSInteger currentY = y + translation.y;
+        if (velocity.y < -200) {
+            if (-1 * currentY < kShelbySPVideoHeight / 11) {
+                [self animateUp:kShelbySPFastSpeed andSwitchChannel:NO];
+            } else {
+                [self animateUp:kShelbySPFastSpeed andSwitchChannel:YES];
+            }
+        } else if (velocity.y > 200) {
+            if (currentY < kShelbySPVideoHeight / 11) {
+                [self animateDown:kShelbySPFastSpeed andSwitchChannel:NO];
+            } else {
+                [self animateDown:kShelbySPFastSpeed andSwitchChannel:YES];
+            }
+        } else {
+            if (currentY > 0) {
+                if (currentY < 3 * kShelbySPVideoHeight / 4) {
+                    [self animateUp:kShelbySPSlowSpeed andSwitchChannel:NO];
+                } else {
+                    [self animateDown:kShelbySPSlowSpeed andSwitchChannel:YES];
+                }
+            } else if (-1 * currentY < 3 * kShelbySPVideoHeight / 4) {
+                [self animateDown:kShelbySPSlowSpeed andSwitchChannel:NO];
+            } else {
+                [self animateUp:kShelbySPSlowSpeed andSwitchChannel:YES];
+            }
+        }
+    }
 }
 
 - (void)animateDown:(float)speed andSwitchChannel:(BOOL)switchChannel
 {
-    //djs fix when we have our model and view controllers
+    SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
+    CGRect currentPlayerFrame = currentPlayer.view.frame;
     
-//    CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
-// 
-//    NSInteger finalyYPosition = switchChannel ? self.view.frame.size.height : 0;
-//    CGRect peekViewFrame;
-//    if (switchChannel) {
-//        peekViewFrame = CGRectMake(0, 0, 1024, 768);
-//    } else {
-//        CGFloat finalyY = self.peelChannelView.frame.origin.y;
-//        if (finalyY != 0) {
-//            finalyY = 768;
-//        }
-//        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
-//    }
-//    
-//    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//       [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-//        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-//        [self.peelChannelView setFrame:peekViewFrame];
-//    } completion:^(BOOL finished) {
-//        if (switchChannel) {
-//            [self switchChannelWithDirectionUp:YES];
-//        }
-//        [self.peelChannelView removeFromSuperview];
-//    }];
-
+    NSInteger finalyYPosition = switchChannel ? self.view.frame.size.height : 0;
+    CGRect peekViewFrame;
+    if (switchChannel) {
+        peekViewFrame = CGRectMake(0, 0, 1024, 768);
+    } else {
+        CGFloat finalyY = self.peelChannelView.frame.origin.y;
+        if (finalyY != 0) {
+            finalyY = 768;
+        }
+        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
+    }
+    
+    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+       [currentPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.peelChannelView setFrame:peekViewFrame];
+    } completion:^(BOOL finished) {
+        if (switchChannel) {
+            [self switchChannelWithDirectionUp:YES];
+        }
+        [self.peelChannelView removeFromSuperview];
+    }];
 }
 
 - (void)animateUp:(float)speed andSwitchChannel:(BOOL)switchChannel
 {
-    //djs fix when we have our model and view controllers
+    SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
+    CGRect currentPlayerFrame = currentPlayer.view.frame;
     
-//    CGRect currentPlayerFrame = self.model.currentVideoPlayer.view.frame;
-//    
-//    NSInteger finalyYPosition = switchChannel ? -self.view.frame.size.height : 0;
-//    CGRect peekViewFrame;
-//    if (switchChannel) {
-//        peekViewFrame = CGRectMake(0, 0, 1024, 768);
-//    } else {
-//        CGFloat finalyY = self.peelChannelView.frame.origin.y;
-//        if (finalyY != 0) {
-//            finalyY = 768;
-//        }
-//        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
-//    }
-//
-//    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//       [self.model.currentVideoPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-//        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-//        [self.peelChannelView setFrame:peekViewFrame];
-//    } completion:^(BOOL finished) {
-//        if (switchChannel) {
-//            [self switchChannelWithDirectionUp:NO];
-//        }
-//        [self.peelChannelView removeFromSuperview];
-//    }];
+    NSInteger finalyYPosition = switchChannel ? -self.view.frame.size.height : 0;
+    CGRect peekViewFrame;
+    if (switchChannel) {
+        peekViewFrame = CGRectMake(0, 0, 1024, 768);
+    } else {
+        CGFloat finalyY = self.peelChannelView.frame.origin.y;
+        if (finalyY != 0) {
+            finalyY = 768;
+        }
+        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
+    }
+
+    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+       [currentPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
+        [self.peelChannelView setFrame:peekViewFrame];
+    } completion:^(BOOL finished) {
+        if (switchChannel) {
+            [self switchChannelWithDirectionUp:NO];
+        }
+        [self.peelChannelView removeFromSuperview];
+    }];
 }
 
 - (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
@@ -1218,8 +1213,8 @@
     }
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(userDidCloseChannel:)]) {
-            [self.delegate userDidCloseChannel:self];
+        if (self.delegate && [self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)]) {
+            [self.delegate userDidCloseChannel];
         }
     }
 }

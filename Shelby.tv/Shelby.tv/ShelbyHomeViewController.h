@@ -14,8 +14,13 @@
 
 @property (nonatomic, strong) NSArray *channels;
 @property (nonatomic, strong) User *currentUser;
+// KP KP: Better way to send the delegete to the views below?
+@property (nonatomic, weak) id brainAsDelegate;
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
-- (void)setBrowseDelegete:(id<ShelbyBrowseProtocol>)delegete;
+
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
+- (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
+- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel;
+- (void)dismissPlayer;
 @end

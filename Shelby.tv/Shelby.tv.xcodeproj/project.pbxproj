@@ -380,6 +380,9 @@
 		1C879E091730232000B574AB /* rollhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C879E081730232000B574AB /* rollhighlight.png */; };
 		1C879E0A1730232000B574AB /* rollhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C879E081730232000B574AB /* rollhighlight.png */; };
 		1C879E0B1730232000B574AB /* rollhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C879E081730232000B574AB /* rollhighlight.png */; };
+		1CA631D817386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
+		1CA631D917386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
+		1CA631DA17386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
 		1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
 		1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
 		1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
@@ -808,6 +811,8 @@
 		1C879DF4173022F700B574AB /* sharehighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sharehighlight.png; sourceTree = "<group>"; };
 		1C879DF5173022F700B574AB /* sharehighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharehighlight@2x.png"; sourceTree = "<group>"; };
 		1C879E081730232000B574AB /* rollhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rollhighlight.png; sourceTree = "<group>"; };
+		1CA631D617386442004101B1 /* ShelbyHideBrowseAnimationViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyHideBrowseAnimationViews.h; sourceTree = "<group>"; };
+		1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHideBrowseAnimationViews.m; sourceTree = "<group>"; };
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1CACC0AE17287276007EDD65 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1CACC0B217287298007EDD65 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
@@ -1057,7 +1062,7 @@
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
 		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
-		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
+		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
 		91D03F051731C49B008131D2 /* DisplayChannel+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DisplayChannel+Helper.h"; sourceTree = "<group>"; };
 		91D03F061731C49B008131D2 /* DisplayChannel+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DisplayChannel+Helper.m"; sourceTree = "<group>"; };
 		91D03F0A1732B507008131D2 /* Roll+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Roll+Helper.h"; sourceTree = "<group>"; };
@@ -1856,6 +1861,8 @@
 				91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */,
 				91D03EFA1731AB40008131D2 /* ShelbyBrain.h */,
 				91D03EFB1731AB40008131D2 /* ShelbyBrain.m */,
+				1CA631D617386442004101B1 /* ShelbyHideBrowseAnimationViews.h */,
+				1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2468,7 +2475,6 @@
 				91D03F081731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0D1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F211732BC98008131D2 /* Dashboard+Helper.m in Sources */,
-				91D03F261732C7FC008131D2 /* Roll.m in Sources */,
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3A17331495008131D2 /* DisplayChannel.m in Sources */,
@@ -2483,6 +2489,7 @@
 				91D03F6C17331CBB008131D2 /* Roll.m in Sources */,
 				91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F76173321AD008131D2 /* Messages+Helper.m in Sources */,
+				1CA631D917386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2570,7 +2577,6 @@
 				91D03F091731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0E1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F221732BC98008131D2 /* Dashboard+Helper.m in Sources */,
-				91D03F271732C7FC008131D2 /* Roll.m in Sources */,
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3B17331495008131D2 /* DisplayChannel.m in Sources */,
@@ -2585,6 +2591,7 @@
 				91D03F6D17331CBB008131D2 /* Roll.m in Sources */,
 				91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F77173321AD008131D2 /* Messages+Helper.m in Sources */,
+				1CA631DA17386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2672,7 +2679,6 @@
 				91D03F071731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0C1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F201732BC98008131D2 /* Dashboard+Helper.m in Sources */,
-				91D03F251732C7FC008131D2 /* Roll.m in Sources */,
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3917331495008131D2 /* DisplayChannel.m in Sources */,
@@ -2687,6 +2693,7 @@
 				91D03F6B17331CBB008131D2 /* Roll.m in Sources */,
 				91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F75173321AD008131D2 /* Messages+Helper.m in Sources */,
+				1CA631D817386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

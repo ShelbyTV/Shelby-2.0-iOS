@@ -8,7 +8,7 @@
 
 //djs
 //#import "SPModel.h"
-#import "SPChannelDisplay.h"
+#import "DisplayChannel.h"
 #import "AuthorizationViewController.h"
 #import "SPVideoPlayer.h"
 
@@ -26,9 +26,9 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 
 @protocol SPVideoReelDelegate <NSObject>
 
-- (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
-- (void)userDidCloseChannel:(SPVideoReel *)videoReel;
-- (SPChannelDisplay *)channelDisplayForDirection:(BOOL)up;
+- (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
+- (void)userDidCloseChannel;
+- (DisplayChannel *)displayChannelForDirection:(BOOL)up;
 - (void)videoDidFinishPlaying;
 @end
 

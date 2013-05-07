@@ -7,6 +7,8 @@
 //
 
 #import "SPChannelPeekView.h"
+#import "UIColor+ColorWithHexAndAlpha.h"
+
 @interface SPChannelPeekView()
 @property (nonatomic) UILabel *title;
 @end
@@ -23,16 +25,27 @@
     return self;
 }
 
-- (void)setupWithChannelDisplay:(SPChannelDisplay *)channelDisplay;
+- (void)setupWithChannelDisplay:(DisplayChannel *)displayChannel;
 {
     [self.title setTextAlignment:NSTextAlignmentCenter];
-    [self.title setText:[NSString stringWithFormat:@"%@",[channelDisplay channelDisplayTitle]]];
+    NSString *color = nil;
+    if (displayChannel.dashboard) {
+        [self.title setText:displayChannel.dashboard.displayTitle];
+        color = displayChannel.dashboard.displayColor;
+    } else {
+        [self.title setText:displayChannel.roll.displayTitle];
+        color = displayChannel.roll.displayColor;
+    }
     [self.title setTextColor:[UIColor whiteColor]];
     [self.title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0]];
     [self.title setBackgroundColor:[UIColor clearColor]];
     
+    if (color) {
+        UIColor *displayColor = [UIColor colorWithHex:color andAlpha:1];
+        [self setBackgroundColor:displayColor];
+    }
+    
     [self addSubview:self.title];
-    [self setBackgroundColor:[channelDisplay channelDisplayColor]];
 }
 
 - (void)setFrame:(CGRect)frame

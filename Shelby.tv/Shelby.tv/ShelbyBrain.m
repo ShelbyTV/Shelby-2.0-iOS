@@ -13,6 +13,7 @@
 
 @interface ShelbyBrain()
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
+@property (nonatomic, strong) DisplayChannel *currentChannel;
 @end
 
 @implementation ShelbyBrain
@@ -28,7 +29,7 @@
 - (void)handleDidBecomeActive
 {
     self.homeVC.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUser];
-    [self.homeVC setBrowseDelegete:self];
+    self.homeVC.brainAsDelegate = self;
     //TODO: detect sleep time and remove player if it's been too long
         
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
@@ -110,16 +111,61 @@
     //TODO: show error
 }
 
-#pragma mark - ShelbyBrowseProtocol Methods
+#pragma mark - Helper Methods
+- (NSInteger)nextChannelForDirection:(BOOL)up
+{
+    NSArray *channels = self.homeVC.channels;
+    NSUInteger numberOfChannels = [channels count];
+    NSInteger currentChannelIndex = [channels indexOfObject:self.currentChannel];
+    NSInteger next = up ? -1 : 1;
+    NSInteger nextChannel = currentChannelIndex + next;
+    if (nextChannel < 0) {
+        nextChannel = numberOfChannels + nextChannel;
+    } else if (nextChannel == numberOfChannels) {
+        nextChannel = 0;
+    }
+    
+    return nextChannel;
+}
+
 - (void)launchChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
+    self.currentChannel = channel;
     [self.homeVC launchPlayerForChannel:channel atIndex:index];
 }
 
+#pragma mark - ShelbyBrowseProtocol Methods
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
 {
-    // Need to find the item pressed and 
-    [self launchChannel:channel atIndex:0];
+    // KP KP: TODO: Need to find the item pressed and
+    self.currentChannel = channel;
+    [self.homeVC animateLaunchPlayerForChannel:channel atIndex:0];
 }
+
+#pragma mark - SPVideoReelProtocol Methods
+- (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
+{
+    [self.homeVC dismissPlayer];
+    NSInteger nextChannel = [self nextChannelForDirection:up];
+    [self launchChannel:self.homeVC.channels[nextChannel] atIndex:0];
+}
+
+- (void)userDidCloseChannel
+{
+    [self.homeVC animateDismissPlayerForChannel:self.currentChannel];
+}
+
+- (DisplayChannel *)displayChannelForDirection:(BOOL)up
+{
+    NSInteger nextChannel = [self nextChannelForDirection:up];
+    
+    return self.homeVC.channels[nextChannel];
+}
+
+- (void)videoDidFinishPlaying
+{
+    // TODO
+}
+
 
 @end

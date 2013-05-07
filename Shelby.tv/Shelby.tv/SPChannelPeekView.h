@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SPChannelDisplay.h"
+#import "DisplayChannel.h"
 
 @interface SPChannelPeekView : UIView
 
-- (void)setupWithChannelDisplay:(SPChannelDisplay *)channelDisplay;
+- (void)setupWithChannelDisplay:(DisplayChannel *)displayChannel;
 
 @end

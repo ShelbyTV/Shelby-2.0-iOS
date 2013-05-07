@@ -189,6 +189,7 @@
         NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:row inSection:0];
         [self.channelsTableView scrollToRowAtIndexPath:nextIndexPath atScrollPosition:position animated:animated];
         [self.channelsTableView reloadRowsAtIndexPaths:@[nextIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        channelCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
     }
     
     return channelCell;
@@ -639,6 +640,78 @@
     }];
 }
 
+- (ShelbyHideBrowseAnimationViews *)animationViewForOpeningChannel:(DisplayChannel *)channel
+{
+    NSInteger row = [self.channels indexOfObject:channel];
+    
+    SPChannelCell *channelCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
+    
+    UIImage *channelImage = [ImageUtilities screenshot:channelCell];
+    UIImageView *channelImageView = [[UIImageView alloc] initWithImage:channelImage];
+    
+    CGPoint channelCellOriginInWindow = [self.view convertPoint:channelCell.frame.origin fromView:self.channelsTableView];
+    
+    CGRect topRect = CGRectMake(0, 0, 1024, channelCellOriginInWindow.y);
+    CGRect bottomRect = CGRectMake(0, channelCellOriginInWindow.y + channelCell.frame.size.height, 1024, 1024 - channelCellOriginInWindow.y);
+    
+    UIImage *channelsImage = [ImageUtilities screenshot:self.view];
+    UIImage *topImage = [ImageUtilities crop:channelsImage inRect:topRect];
+    UIImage *bottomImage = [ImageUtilities crop:channelsImage inRect:bottomRect];
+    
+    UIImageView *topImageView = [[UIImageView alloc] initWithImage:topImage];
+    UIImageView *bottomImageView = [[UIImageView alloc] initWithImage:bottomImage];
+    
+    [channelImageView setFrame:CGRectMake(0, channelCellOriginInWindow.y + 20, 1024, channelCell.frame.size.height)];
+    [topImageView setFrame:CGRectMake(topRect.origin.x, topRect.origin.y + 20, topRect.size.width, topRect.size.height)];
+    [bottomImageView setFrame:CGRectMake(bottomRect.origin.x, bottomRect.origin.y + 20, bottomRect.size.width, bottomRect.size.height)];
+    
+    CGRect finalTopFrame = CGRectMake(0, -topImageView.frame.size.height, topImageView.frame.size.width, topImageView.frame.size.height);
+    CGRect finalBottomFrame = CGRectMake(0, 900, bottomImageView.frame.size.width, bottomImageView.frame.size.height);
+    CGRect finalCenterFrame = CGRectMake(51, channelImageView.frame.origin.y, channelImageView.frame.size.width*0.9, channelImageView.frame.size.height*0.9);
+
+    return [ShelbyHideBrowseAnimationViews createWithTop:topImageView finalTopFrame:finalTopFrame center:channelImageView finalCenterFrame:finalCenterFrame bottom:bottomImageView andFinalBottomFrame:finalBottomFrame];
+}
+
+
+- (ShelbyHideBrowseAnimationViews *)animationViewForClosingChannel:(DisplayChannel *)channel
+{
+    NSInteger row = [self.channels indexOfObject:channel];
+    
+    BOOL up = NO;
+    if (row == 0) {
+        up = YES;
+    }
+
+    SPChannelCell *channelCell =  [self loadCell:row withDirection:up animated:NO];
+    
+    UIImage *channelImage = [ImageUtilities screenshot:channelCell];
+    UIImageView *channelImageView = [[UIImageView alloc] initWithImage:channelImage];
+    
+    CGPoint channelCellOriginInWindow = [self.view convertPoint:channelCell.frame.origin fromView:self.channelsTableView];
+    
+    CGRect topRect = CGRectMake(0, 0, 1024, channelCellOriginInWindow.y);
+    CGRect bottomRect = CGRectMake(0, channelCellOriginInWindow.y + channelCell.frame.size.height, 1024, 1024 - channelCellOriginInWindow.y);
+    
+    UIImage *channelsImage = [ImageUtilities screenshot:self.view];
+    UIImage *topImage = [ImageUtilities crop:channelsImage inRect:topRect];
+    UIImage *bottomImage = [ImageUtilities crop:channelsImage inRect:bottomRect];
+    
+    UIImageView *topImageView = [[UIImageView alloc] initWithImage:topImage];
+    UIImageView *bottomImageView = [[UIImageView alloc] initWithImage:bottomImage];
+    
+    [topImageView setFrame:CGRectMake(0, -topImageView.frame.size.height, topImageView.frame.size.width, topImageView.frame.size.height)];
+    [bottomImageView setFrame:CGRectMake(0, 900, bottomImageView.frame.size.width, bottomImageView.frame.size.height)];
+    [channelImageView setFrame:CGRectMake(51, channelCellOriginInWindow.y, channelImageView.frame.size.width*0.9, channelImageView.frame.size.height*0.9)];
+    
+    CGRect finalCenterFrame = CGRectMake(0, channelCellOriginInWindow.y + 20, 1024, channelCell.frame.size.height);
+        
+    CGRect finalTopFrame = CGRectMake(topRect.origin.x, topRect.origin.y + 20, topRect.size.width, topRect.size.height);
+    CGRect finalBottomFrame = CGRectMake(bottomRect.origin.x, bottomRect.origin.y + 20, bottomRect.size.width, bottomRect.size.height);
+
+    
+    return [ShelbyHideBrowseAnimationViews createWithTop:topImageView finalTopFrame:finalTopFrame center:channelImageView finalCenterFrame:finalCenterFrame bottom:bottomImageView andFinalBottomFrame:finalBottomFrame];
+}
+
 - (void)animateOpenChannels:(SPVideoReel *)viewControllerToPresent
 {
     if (self.animationInProgress) {
@@ -841,16 +914,17 @@
     
 }
 
-- (SPChannelDisplay *)channelDisplayForDirection:(BOOL)up
+- (DisplayChannel *)displayChannelForDirection:(BOOL)up
 {
-    NSInteger nextChannel = [self nextChannelForDirection:up];
-    
-    SPChannelCell *channelCell = [self loadCell:nextChannel withDirection:up animated:NO];
-    SPChannelDisplay *channelDisplay = [[SPChannelDisplay alloc] initWithChannelColor:[channelCell channelDisplayColor]
-                                                               andChannelDisplayTitle:[channelCell channelDisplayTitle]];
-    
-    return channelDisplay;
+//    NSInteger nextChannel = [self nextChannelForDirection:up];
+//    
+//    SPChannelCell *channelCell = [self loadCell:nextChannel withDirection:up animated:NO];
+//    SPChannelDisplay *channelDisplay = [[SPChannelDisplay alloc] initWithChannelColor:[channelCell channelDisplayColor]
+//                                                               andChannelDisplayTitle:[channelCell channelDisplayTitle]];
+//    
+//    return channelDisplay;
 }
+
 
 - (void)dismissPopover
 {

@@ -12,6 +12,7 @@
 #import "ShelbyBrain.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
+#import "ImageUtilities.h"
 
 @interface ShelbyHomeViewController ()
 @property (nonatomic, weak) IBOutlet UIView *topBar;
@@ -19,7 +20,8 @@
 @property (nonatomic, strong) UIView *settingsView;
 @property (nonatomic, strong) BrowseViewController *browseVC;
 @property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
-
+@property (nonatomic, strong) SPVideoReel *videoReel;
+@property (nonatomic, assign) BOOL animationInProgress;
 
 @end
 
@@ -75,9 +77,10 @@
     [self.browseVC setEntries:channelEntries forChannel:channel];
 }
 
-- (void)setBrowseDelegete:(id<ShelbyBrowseProtocol>)delegete
+- (void)setBrainAsDelegate:(id)brainAsDelegate
 {
-    self.browseVC.browseDelegate = delegete;
+    _brainAsDelegate = brainAsDelegate;
+    self.browseVC.browseDelegate = brainAsDelegate;
 }
 
 - (void)setCurrentUser:(User *)currentUser
@@ -122,8 +125,112 @@
 
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    SPVideoReel *videoReel = [[SPVideoReel alloc] initWithVideoFrames:self.channelEntriesByObjectID[channel.objectID] atIndex:index];
-    [self presentViewController:videoReel animated:YES completion:nil];
+    [self initializeVideoReelWithChannel:channel atIndex:index];
+    [self presentViewController:self.videoReel animated:NO completion:nil];
+}
+
+- (void)dismissPlayer
+{
+    [self.videoReel dismissViewControllerAnimated:NO completion:nil];
+    self.videoReel = nil;
+}
+
+- (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
+{
+    [self initializeVideoReelWithChannel:channel atIndex:index];
+    [self animateOpenChannels:channel];
+}
+
+- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel
+{
+    [self animateCloseChannels:channel];
+}
+
+
+#pragma mark - ShelbyHome Private methods
+- (void)animateOpenChannels:(DisplayChannel *)channel 
+{
+    if (self.animationInProgress) {
+        return;
+    } else {
+        [self setAnimationInProgress:YES];
+    }
+    
+    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForOpeningChannel:channel];
+    
+    CGFloat topBarHeight = self.topBar.frame.size.height;
+    animationViews.topView.frame = CGRectMake(animationViews.topView.frame.origin.x, animationViews.topView.frame.origin.y + topBarHeight, animationViews.topView.frame.size.width, animationViews.topView.frame.size.height);
+    animationViews.centerView.frame = CGRectMake(animationViews.centerView.frame.origin.x, animationViews.centerView.frame.origin.y + topBarHeight, animationViews.centerView.frame.size.width, animationViews.centerView.frame.size.height);
+    animationViews.bottomView.frame = CGRectMake(animationViews.bottomView.frame.origin.x, animationViews.bottomView.frame.origin.y + topBarHeight, animationViews.bottomView.frame.size.width, animationViews.bottomView.frame.size.height);
+    
+    
+    [self.videoReel.view addSubview:animationViews.centerView];
+    [self.videoReel.view addSubview:animationViews.bottomView];
+    [self.videoReel.view addSubview:animationViews.topView];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+    
+    [self presentViewController:self.videoReel animated:NO completion:^{
+        [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            [animationViews.centerView setFrame:animationViews.finalCenterFrame];
+            [animationViews.centerView setAlpha:0];
+            [animationViews.topView setFrame:animationViews.finalTopFrame];
+            [animationViews.bottomView setFrame:animationViews.finalBottomFrame];
+        } completion:^(BOOL finished) {
+            [animationViews.centerView removeFromSuperview];
+            [animationViews.bottomView removeFromSuperview];
+            [animationViews.topView removeFromSuperview];
+            [self setAnimationInProgress:NO];
+        }];
+    }];
+}
+
+- (void)animateCloseChannels:(DisplayChannel *)channel
+{
+    if (self.animationInProgress) {
+        return;
+    } else {
+        [self setAnimationInProgress:YES];
+    }
+
+    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForClosingChannel:channel];
+ 
+    [self.videoReel.view addSubview:animationViews.centerView];
+    [self.videoReel.view addSubview:animationViews.bottomView];
+    [self.videoReel.view addSubview:animationViews.topView];
+    
+    [self.videoReel.view bringSubviewToFront:animationViews.centerView];
+    [self.videoReel.view bringSubviewToFront:animationViews.bottomView];
+    [self.videoReel.view bringSubviewToFront:animationViews.topView];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+    [animationViews.centerView setAlpha:0];
+    
+    CGFloat topBarHeight = self.topBar.frame.size.height;
+    CGRect finalTopFrame = CGRectMake(animationViews.finalTopFrame.origin.x, animationViews.finalTopFrame.origin.y + topBarHeight, animationViews.finalTopFrame.size.width, animationViews.finalTopFrame.size.height);
+    CGRect finalCenterFrame = CGRectMake(animationViews.finalCenterFrame.origin.x, animationViews.finalCenterFrame.origin.y + topBarHeight, animationViews.finalCenterFrame.size.width, animationViews.finalCenterFrame.size.height);
+    CGRect finalBottomFrame = CGRectMake(animationViews.finalBottomFrame.origin.x, animationViews.finalBottomFrame.origin.y + topBarHeight, animationViews.finalBottomFrame.size.width, animationViews.finalBottomFrame.size.height);
+    
+    [self.topBar setAlpha:0];
+    [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [animationViews.centerView setFrame:finalCenterFrame];
+        [animationViews.centerView setAlpha:1];
+        [animationViews.topView setFrame:finalTopFrame];
+        [animationViews.bottomView setFrame:finalBottomFrame];
+        [self.topBar setAlpha:1];
+    } completion:^(BOOL finished) {
+        [animationViews.centerView removeFromSuperview];
+        [animationViews.bottomView removeFromSuperview];
+        [animationViews.topView removeFromSuperview];
+        [self.videoReel dismissViewControllerAnimated:NO completion:nil];
+        [self setAnimationInProgress:NO];
+    }];
+}
+
+- (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
+{
+    _videoReel = [[SPVideoReel alloc] initWithVideoFrames:self.channelEntriesByObjectID[channel.objectID] atIndex:index];
+    self.videoReel.delegate = self.brainAsDelegate;
 }
 
 @end

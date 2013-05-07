@@ -11,8 +11,9 @@
 #import "BrowseViewController.h"
 #import "ShelbyHomeViewController.h"
 #import "ShelbyDataMediator.h"
+#import "SPVideoReel.h"
 
-@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol>
+@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, SPVideoReelDelegate>
 
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 
