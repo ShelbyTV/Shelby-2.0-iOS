@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *channelsLoadingActivityIndicator;
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
+- (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel;
+- (NSArray *)entriesForChannel:(DisplayChannel *)channel;
+
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 - (void)setBrowseDelegete:(id<ShelbyBrowseProtocol>)delegete;
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;

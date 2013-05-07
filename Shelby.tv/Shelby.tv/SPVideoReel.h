@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
         videoStartIndex:(NSUInteger)videoStartIndex
            andChannelID:(NSString *)channelID;
 
-- (id)initWithVideoFrames:(NSMutableArray *)videoFrames
+- (id)initWithVideoFrames:(NSArray *)videoFrames
                   atIndex:(NSUInteger)videoStartIndex;
 
 /// Update Methods

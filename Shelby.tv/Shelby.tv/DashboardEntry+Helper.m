@@ -71,4 +71,9 @@
     return NO;
 }
 
+- (NSString *)shelbyID
+{
+    return self.dashboardEntryID;
+}
+
 @end

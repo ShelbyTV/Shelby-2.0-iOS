@@ -8,6 +8,7 @@
 
 #import "ShelbyBrain.h"
 #import "DisplayChannel.h"
+#import "ShelbyModel.h"
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
 
@@ -98,11 +99,23 @@
     //TODO: show error
 }
 
+//channelEntries filled with ShelbyModel (specifically, a DashboardEntry or Frame)
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached
 {
-    //djs TODO: set these smartly, don't just overwrite everything
-    [self.homeVC setEntries:channelEntries forChannel:channel];
+    NSArray *curEntries = [self.homeVC entriesForChannel:channel];
+    if(curEntries){
+        ShelbyArrayMergeInstructions mergeInstructions = [self instructionsToMerge:channelEntries into:curEntries];
+        if(mergeInstructions.shouldMerge){
+            NSArray *newChannelEntries = [channelEntries subarrayWithRange:mergeInstructions.range];
+            [self.homeVC addEntries:newChannelEntries toEnd:mergeInstructions.append ofChannel:channel];
+        } else {
+           //full subset, nothing to do
+        }
+    } else {
+        [self.homeVC setEntries:channelEntries forChannel:channel];
+    }
+    
     if(!cached){
         [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
@@ -125,6 +138,75 @@
 {
     // Need to find the item pressed and 
     [self launchChannel:channel atIndex:0];
+}
+
+#pragma mark - Helpers
+
+typedef struct _ShelbyArrayMergeInstructions {
+    bool shouldMerge;
+    bool append;
+    NSRange range;
+} ShelbyArrayMergeInstructions;
+
+//NB: objects in array must repond to selector shelbyID
+- (ShelbyArrayMergeInstructions)instructionsToMerge:(NSArray *)newArray into:(NSArray *)curArray
+{
+    ShelbyArrayMergeInstructions instructions;
+    
+    NSUInteger firstEntryIndex = [curArray indexOfObject:newArray[0]];
+    NSUInteger lastEntryIndex = [curArray indexOfObject:[newArray lastObject]];
+    if(firstEntryIndex == NSNotFound){
+        //shelbyID is a MongoID which starts with timestamp
+        if([[newArray[0] shelbyID] compare:[curArray[0] shelbyID]] == NSOrderedDescending){
+            //first new element > first old element
+            firstEntryIndex = -1;
+        } else {
+            firstEntryIndex = [curArray count];
+        }
+    }
+    if(lastEntryIndex == NSNotFound){
+        if([[[curArray lastObject] shelbyID] compare:[[newArray lastObject] shelbyID]] == NSOrderedDescending){
+            //last old element > last new element
+            lastEntryIndex = [curArray count];
+        } else {
+            lastEntryIndex = -1;
+        }
+        
+    }
+    
+    if(firstEntryIndex == -1){
+        if(lastEntryIndex == -1){
+            //full prepend (untested)
+            DLog(@"100%% prepend");
+            instructions.shouldMerge = YES;
+            instructions.append = NO;
+            instructions.range = NSMakeRange(0, [newArray count]);
+        } else {
+            //partial prepend (well tested)
+            instructions.shouldMerge = YES;
+            instructions.append = NO;
+            NSUInteger overlapIdx = [newArray indexOfObject:curArray[0]];
+            instructions.range = NSMakeRange(0, overlapIdx);
+        }
+    } else if(firstEntryIndex == [curArray count]){
+        //full append (untested)
+        DLog(@"100%% append");
+        instructions.shouldMerge = YES;
+        instructions.append = YES;
+        instructions.range = NSMakeRange(0, [newArray count]);
+    } else if(lastEntryIndex < [curArray count]){
+        //subset (well tested)
+        instructions.shouldMerge = NO;
+    } else {
+        //partial append (!untested!)
+        DLog(@"partial append");
+        instructions.shouldMerge = YES;
+        instructions.append = YES;
+        NSUInteger overlapIdx = [newArray indexOfObject:[curArray lastObject]];
+        instructions.range = NSMakeRange(overlapIdx+1, [newArray count]-(overlapIdx+1));
+    }
+    
+    return instructions;
 }
 
 @end

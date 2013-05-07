@@ -109,6 +109,9 @@
     //1) go to CoreData and hit up the delegate on main thread
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
+
+        //djs TODO: delete cached DashboardEntries > 200
+ 
         NSArray *cachedDashboardEntries = [DashboardEntry entriesForDashboard:(Dashboard *)[privateContext objectWithID:dashboard.objectID]
                                                                     inContext:privateContext];
         if(cachedDashboardEntries && [cachedDashboardEntries count]){

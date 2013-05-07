@@ -7,8 +7,9 @@
 //
 
 #import "DashboardEntry.h"
+#import "ShelbyModel.h"
 
-@interface DashboardEntry (Helper)
+@interface DashboardEntry (Helper) <ShelbyModel>
 
 + (DashboardEntry *)dashboardEntryForDictionary:(NSDictionary *)dict
                                   withDashboard:(Dashboard *)dashboard
@@ -18,4 +19,5 @@
                      inContext:(NSManagedObjectContext *)context;
 
 - (BOOL)isPlayable;
+
 @end

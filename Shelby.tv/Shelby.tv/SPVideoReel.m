@@ -148,12 +148,12 @@
     return self;
 }
 
-- (id)initWithVideoFrames:(NSMutableArray *)videoFrames
+- (id)initWithVideoFrames:(NSArray *)videoFrames
                   atIndex:(NSUInteger)videoStartIndex
 {
     self = [super init];
     if (self) {
-        _videoFrames = videoFrames;
+        _videoFrames = [videoFrames mutableCopy];
         _videoStartIndex = videoStartIndex;
         _currentVideoPlayingIndex = -1;
     }

@@ -18,8 +18,6 @@
 
 @property (nonatomic, strong) UIView *settingsView;
 @property (nonatomic, strong) BrowseViewController *browseVC;
-@property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
-
 
 @end
 
@@ -37,8 +35,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.channelEntriesByObjectID = [@{} mutableCopy];
 
     [self.topBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbar.png"]]];
 
@@ -72,9 +68,17 @@
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-    self.channelEntriesByObjectID[channel.objectID] = channelEntries;
-
     [self.browseVC setEntries:channelEntries forChannel:channel];
+}
+
+- (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
+{
+    [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
+}
+
+- (NSArray *)entriesForChannel:(DisplayChannel *)channel
+{
+    return [self.browseVC entriesForChannel:channel];
 }
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
@@ -129,7 +133,7 @@
 
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    SPVideoReel *videoReel = [[SPVideoReel alloc] initWithVideoFrames:self.channelEntriesByObjectID[channel.objectID] atIndex:index];
+    SPVideoReel *videoReel = [[SPVideoReel alloc] initWithVideoFrames:[self entriesForChannel:channel] atIndex:index];
     [self presentViewController:videoReel animated:YES completion:nil];
 }
 

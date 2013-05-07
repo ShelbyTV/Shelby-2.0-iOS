@@ -7,12 +7,14 @@
 //
 
 #import "Frame.h"
+#import "ShelbyModel.h"
 
-@interface Frame (Helper)
+@interface Frame (Helper) <ShelbyModel>
 
 + (Frame *)frameForDictionary:(NSDictionary *)dict
                     inContext:(NSManagedObjectContext *)context;
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 - (BOOL)isPlayable;
+
 @end
