@@ -60,4 +60,6 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 
 /// Tutorial
 - (void)videoDoubleTapped;
+
+- (void)hideOverlayView;
 @end

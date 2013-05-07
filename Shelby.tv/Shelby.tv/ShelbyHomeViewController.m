@@ -218,17 +218,18 @@
     CGRect finalBottomFrame = CGRectMake(animationViews.finalBottomFrame.origin.x, animationViews.finalBottomFrame.origin.y + topBarHeight, animationViews.finalBottomFrame.size.width, animationViews.finalBottomFrame.size.height);
     
     [self.topBar setAlpha:0];
+    [self.videoReel hideOverlayView];
     [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [animationViews.centerView setFrame:finalCenterFrame];
         [animationViews.centerView setAlpha:1];
         [animationViews.topView setFrame:finalTopFrame];
         [animationViews.bottomView setFrame:finalBottomFrame];
-        [self.topBar setAlpha:1];
     } completion:^(BOOL finished) {
-        [animationViews.centerView removeFromSuperview];
-        [animationViews.bottomView removeFromSuperview];
-        [animationViews.topView removeFromSuperview];
-        [self.videoReel dismissViewControllerAnimated:NO completion:nil];
+        [self.videoReel dismissViewControllerAnimated:NO completion:^{
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.topBar setAlpha:1];
+            }];
+        }];
         [self setAnimationInProgress:NO];
     }];
 }

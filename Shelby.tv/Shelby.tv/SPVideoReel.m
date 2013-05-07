@@ -1038,6 +1038,11 @@
 //    [self.model.currentVideoPlayer roll];
 }
 
+
+- (void)hideOverlayView
+{
+    [self.overlayView hideOverlayView];
+}
 #pragma mark - Gesutre Methods (Private)
 - (void)switchChannelWithDirectionUp:(BOOL)up
 {
