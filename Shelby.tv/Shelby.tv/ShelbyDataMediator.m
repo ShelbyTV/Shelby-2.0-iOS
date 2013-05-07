@@ -104,36 +104,38 @@
 
 -(void) fetchDashboardEntriesForDashboard:(Dashboard *)dashboard
                                 inChannel:(DisplayChannel *)channel
-                      sinceDashboardEntry:(DashboardEntry *)dashboardEntry
+                      sinceDashboardEntry:(DashboardEntry *)sinceDashboardEntry
 {
-    //1) go to CoreData and hit up the delegate on main thread
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
+    if(!sinceDashboardEntry){
+        //1) go to CoreData and hit up the delegate on main thread
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
 
-        //djs TODO: delete cached DashboardEntries > 200
- 
-        NSArray *cachedDashboardEntries = [DashboardEntry entriesForDashboard:(Dashboard *)[privateContext objectWithID:dashboard.objectID]
-                                                                    inContext:privateContext];
-        if(cachedDashboardEntries && [cachedDashboardEntries count]){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // 2) load those dashboard entries on main thread context
-                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                NSMutableArray *mainThreadDashboardEntries = [NSMutableArray arrayWithCapacity:[cachedDashboardEntries count]];
-                for (DashboardEntry *entry in cachedDashboardEntries) {
-                    DashboardEntry *mainThreadEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:entry.objectID];
-                    [mainThreadDashboardEntries addObject:mainThreadEntry];
-                }
-                [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
-                                                            with:mainThreadDashboardEntries
-                                                       fromCache:YES];
-            });
-        }
-    });
+            //djs TODO: delete cached DashboardEntries > 200
+     
+            NSArray *cachedDashboardEntries = [DashboardEntry entriesForDashboard:(Dashboard *)[privateContext objectWithID:dashboard.objectID]
+                                                                        inContext:privateContext];
+            if(cachedDashboardEntries && [cachedDashboardEntries count]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // 2) load those dashboard entries on main thread context
+                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                    NSMutableArray *mainThreadDashboardEntries = [NSMutableArray arrayWithCapacity:[cachedDashboardEntries count]];
+                    for (DashboardEntry *entry in cachedDashboardEntries) {
+                        DashboardEntry *mainThreadEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:entry.objectID];
+                        [mainThreadDashboardEntries addObject:mainThreadEntry];
+                    }
+                    [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+                                                                with:mainThreadDashboardEntries
+                                                           fromCache:YES];
+                });
+            }
+        });
+    }
     
     
     //2) fetch remotely NB: AFNetworking returns us to the main thread
     [ShelbyAPIClient fetchDashboardEntriesForDashboardID:dashboard.dashboardID
-                                              sinceEntry:dashboardEntry
+                                              sinceEntry:sinceDashboardEntry
                                                withBlock:^(id JSON, NSError *error) {
         if(JSON){            
             // 1) store this in core data (with a new context b/c we're on some background thread)

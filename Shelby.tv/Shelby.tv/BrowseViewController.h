@@ -15,6 +15,7 @@
 @protocol ShelbyBrowseProtocol <NSObject>
 
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item;
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 
 @end
 
@@ -41,6 +42,7 @@
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
+- (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 
 - (void)dismissPopover;
 - (ShelbyHideBrowseAnimationViews *)animationViewForOpeningChannel:(DisplayChannel *)channel;
