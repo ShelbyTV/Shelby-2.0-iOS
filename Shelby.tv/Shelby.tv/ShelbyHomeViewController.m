@@ -81,6 +81,7 @@
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
+    //TODO: if SPVideoReel is open on the same channel, addEntries: over there, too
     [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
 }
 
@@ -92,6 +93,11 @@
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
 {
     [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
+}
+
+- (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
+{
+    [self.browseVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
 }
 
 - (void)setBrowseAndVideoReelDelegate:(id)browseAndVideoReelDelegate

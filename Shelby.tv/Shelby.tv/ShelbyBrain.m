@@ -98,6 +98,7 @@
 -(void)fetchChannelsDidCompleteWithError:(NSError *)error
 {
     //TODO: show error
+    DLog(@"TODO: handle fetch channels did complete with error %@", error);
 }
 
 //channelEntries filled with ShelbyModel (specifically, a DashboardEntry or Frame)
@@ -119,6 +120,7 @@
     
     if(!cached){
         [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
+        [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
 }
 
@@ -127,6 +129,8 @@
 {
     //TODO: show error
     [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
+    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
+    DLog(@"TODO: handle fetch channels did complete with error %@", error);
 }
 
 #pragma mark - Helper Methods
@@ -193,6 +197,12 @@
     // TODO
 }
 
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
+{
+    //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
+    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:YES];
+    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
+}
 
 #pragma mark - Helpers
 
@@ -230,8 +240,6 @@ typedef struct _ShelbyArrayMergeInstructions {
     
     if(firstEntryIndex == -1){
         if(lastEntryIndex == -1){
-            //full prepend (untested)
-            DLog(@"100%% prepend");
             instructions.shouldMerge = YES;
             instructions.append = NO;
             instructions.range = NSMakeRange(0, [newArray count]);
@@ -243,8 +251,6 @@ typedef struct _ShelbyArrayMergeInstructions {
             instructions.range = NSMakeRange(0, overlapIdx);
         }
     } else if(firstEntryIndex == [curArray count]){
-        //full append (untested)
-        DLog(@"100%% append");
         instructions.shouldMerge = YES;
         instructions.append = YES;
         instructions.range = NSMakeRange(0, [newArray count]);
@@ -252,8 +258,7 @@ typedef struct _ShelbyArrayMergeInstructions {
         //subset (well tested)
         instructions.shouldMerge = NO;
     } else {
-        //partial append (!untested!)
-        DLog(@"partial append");
+        //partial append (well untested)
         instructions.shouldMerge = YES;
         instructions.append = YES;
         NSUInteger overlapIdx = [newArray indexOfObject:[curArray lastObject]];

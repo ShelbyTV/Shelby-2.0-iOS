@@ -25,6 +25,7 @@
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
+- (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 
 // KP KP: TODO: merge these two methods. With an :animated property
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
