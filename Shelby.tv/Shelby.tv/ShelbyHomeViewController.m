@@ -9,7 +9,6 @@
 #import "ShelbyHomeViewController.h"
 #import "BrowseViewController.h"
 #import "DisplayChannel.h"
-#import "ShelbyBrain.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 #import "ImageUtilities.h"
@@ -95,10 +94,10 @@
     [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
 }
 
-- (void)setBrainAsDelegate:(id)brainAsDelegate
+- (void)setBrowseAndVideoReelDelegate:(id)browseAndVideoReelDelegate
 {
-    _brainAsDelegate = brainAsDelegate;
-    self.browseVC.browseDelegate = brainAsDelegate;
+    _browseAndVideoReelDelegate = browseAndVideoReelDelegate;
+    self.browseVC.browseDelegate = browseAndVideoReelDelegate;
 }
 
 - (void)setCurrentUser:(User *)currentUser
@@ -249,7 +248,7 @@
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
     _videoReel = [[SPVideoReel alloc] initWithVideoFrames:[self entriesForChannel:channel] atIndex:index];
-    self.videoReel.delegate = self.brainAsDelegate;
+    self.videoReel.delegate = self.browseAndVideoReelDelegate;
 }
 
 @end

@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSArray *channels;
 @property (nonatomic, strong) User *currentUser;
 // KP KP: Better way to send the delegete to the views below?
-@property (nonatomic, weak) id brainAsDelegate;
+@property (nonatomic, weak) id browseAndVideoReelDelegate;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *channelsLoadingActivityIndicator;
 
 - (NSInteger)indexOfItem:(id)item inChannel:(DisplayChannel *)channel;
