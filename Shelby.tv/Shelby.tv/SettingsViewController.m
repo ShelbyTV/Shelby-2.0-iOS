@@ -87,16 +87,17 @@
 
 
 #pragma mark - User Interaction Methods
+// KP KP: TODO - this methods should tell the brain to open MyRoll/Likes
 - (IBAction)goToMyLikes:(id)sender
 {
-    [self.parent launchMyLikesPlayer];
+//    [self.parent launchMyLikesPlayer];
     [self.parent dismissPopover];
 }
 
 
 - (IBAction)goToMyRoll:(id)sender
 {
-    [self.parent launchMyRollPlayer];
+//    [self.parent launchMyRollPlayer];
     [self.parent dismissPopover];
 }
 

@@ -38,10 +38,6 @@
 
 - (void)setEntries:(NSArray *)entries forChannel:(DisplayChannel *)channel;
 
-/// Lanuch Player
-- (void)launchMyRollPlayer;
-- (void)launchMyLikesPlayer;
-
 - (void)dismissPopover;
 - (ShelbyHideBrowseAnimationViews *)animationViewForOpeningChannel:(DisplayChannel *)channel;
 - (ShelbyHideBrowseAnimationViews *)animationViewForClosingChannel:(DisplayChannel *)channel;
