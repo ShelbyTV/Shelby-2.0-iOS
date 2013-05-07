@@ -9,7 +9,6 @@
 #import "BrowseViewController.h"
 
 // Views
-#import "CollectionViewGroupsLayout.h"
 #import "LoginView.h"
 #import "SignupView.h"
 #import "PageControl.h"
@@ -52,6 +51,7 @@
 @property (nonatomic) SignupView *signupView;
 @property (nonatomic) UIView *backgroundLoginView;
 
+// { channelObjectID: [/*array of DashboardEntry or Frame*/], ... }
 @property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
 
 @property (assign, nonatomic) SecretMode secretMode;
@@ -151,10 +151,51 @@
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
     self.channelEntriesByObjectID[channel.objectID] = channelEntries;
+    //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
     [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
 }
 
+- (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
+{
+    NSArray *curEntries = self.channelEntriesByObjectID[channel.objectID];
+    SPChannelCell *cell = [self cellForChannel:channel];
+    NSMutableArray *indexPathsForInsert = [NSMutableArray arrayWithCapacity:[newChannelEntries count]];
+    if(shouldAppend){
+        self.channelEntriesByObjectID[channel.objectID] = [curEntries arrayByAddingObjectsFromArray:newChannelEntries];
+        for(NSUInteger i = 0; i < [newChannelEntries count]; i++){
+            [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i+[newChannelEntries count] inSection:0]];
+        }
+    } else {
+        //prepend by appending in reverse
+        self.channelEntriesByObjectID[channel.objectID] = [newChannelEntries arrayByAddingObjectsFromArray:curEntries];
+        for(NSUInteger i = 0; i < [newChannelEntries count]; i++){
+            [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i inSection:0]];
+        }
+    }
+    //cell may be nil if offscreen, that's ok
+    [cell.channelFrames insertItemsAtIndexPaths:indexPathsForInsert];
+}
+
+- (NSArray *)entriesForChannel:(DisplayChannel *)channel
+{
+    return self.channelEntriesByObjectID[channel.objectID];
+}
+
+- (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
+{
+    SPChannelCell *cell = [self cellForChannel:channel];
+    [cell.refreshActivityIndicator stopAnimating];
+}
+
 #pragma mark - Private Methods
+
+//TODO: FIXME
+- (SPChannelCell *)cellForChannel:(DisplayChannel *)channel
+{
+    //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
+    SPChannelCell *cell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]];
+    return cell;
+}
 
 - (void)fetchUser
 {

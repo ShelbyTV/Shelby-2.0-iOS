@@ -16,10 +16,15 @@
 @property (nonatomic, strong) User *currentUser;
 // KP KP: Better way to send the delegete to the views below?
 @property (nonatomic, weak) id brainAsDelegate;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *channelsLoadingActivityIndicator;
 
-- (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
 - (NSInteger)indexOfItem:(id)item inChannel:(DisplayChannel *)channel;
 
+- (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
+- (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel;
+- (NSArray *)entriesForChannel:(DisplayChannel *)channel;
+
+- (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 - (void)animateDismissPlayerForChannel:(DisplayChannel *)channel;

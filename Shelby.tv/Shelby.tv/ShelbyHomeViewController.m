@@ -19,7 +19,6 @@
 
 @property (nonatomic, strong) UIView *settingsView;
 @property (nonatomic, strong) BrowseViewController *browseVC;
-@property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, assign) BOOL animationInProgress;
 
@@ -40,8 +39,6 @@
 {
     [super viewDidLoad];
 
-    self.channelEntriesByObjectID = [@{} mutableCopy];
-
     [self.topBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbar.png"]]];
 
     BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
@@ -55,6 +52,8 @@
     [browseViewController didMoveToParentViewController:self];
     
     [self setupSettingsView];
+    
+    [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,15 +71,28 @@
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-    self.channelEntriesByObjectID[channel.objectID] = channelEntries;
-
     [self.browseVC setEntries:channelEntries forChannel:channel];
 }
 
 - (NSInteger)indexOfItem:(id)item inChannel:(DisplayChannel *)channel
 {
-    NSArray *entries = self.channelEntriesByObjectID[channel.objectID];
+    NSArray *entries = [self entriesForChannel:channel];
     return [entries indexOfObject:item];
+}
+
+- (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
+{
+    [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
+}
+
+- (NSArray *)entriesForChannel:(DisplayChannel *)channel
+{
+    return [self.browseVC entriesForChannel:channel];
+}
+
+- (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
+{
+    [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
 }
 
 - (void)setBrainAsDelegate:(id)brainAsDelegate
@@ -236,7 +248,7 @@
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    _videoReel = [[SPVideoReel alloc] initWithVideoFrames:self.channelEntriesByObjectID[channel.objectID] atIndex:index];
+    _videoReel = [[SPVideoReel alloc] initWithVideoFrames:[self entriesForChannel:channel] atIndex:index];
     self.videoReel.delegate = self.brainAsDelegate;
 }
 

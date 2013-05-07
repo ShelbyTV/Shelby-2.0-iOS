@@ -86,4 +86,9 @@
     return NO;
 }
 
+- (NSString *)shelbyID
+{
+    return self.frameID;
+}
+
 @end
