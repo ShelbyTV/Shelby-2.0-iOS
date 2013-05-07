@@ -464,6 +464,7 @@
 
 - (ShelbyHideBrowseAnimationViews *)animationViewForOpeningChannel:(DisplayChannel *)channel
 {
+    // KP KP: TODO: deal with the case that the channel not found - maybe make the check in ShelbyHome before calling BrowseVC
     NSInteger row = [self.channels indexOfObject:channel];
     
     SPChannelCell *channelCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
@@ -497,6 +498,7 @@
 
 - (ShelbyHideBrowseAnimationViews *)animationViewForClosingChannel:(DisplayChannel *)channel
 {
+    // KP KP: TODO: deal with the case that the channel not found - maybe make the check in ShelbyHome before calling BrowseVC
     NSInteger row = [self.channels indexOfObject:channel];
     
     BOOL up = NO;

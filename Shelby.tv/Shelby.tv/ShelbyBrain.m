@@ -116,6 +116,7 @@
 {
     NSArray *channels = self.homeVC.channels;
     NSUInteger numberOfChannels = [channels count];
+    // KP KP: TODO: deal with the case that the channel not found
     NSInteger currentChannelIndex = [channels indexOfObject:self.currentChannel];
     NSInteger next = up ? -1 : 1;
     NSInteger nextChannel = currentChannelIndex + next;
@@ -141,6 +142,7 @@
     
     NSInteger index = [self.homeVC indexOfItem:item inChannel:channel];
     if (index == NSNotFound) {
+        // KP KP: TODO: what is the channel have no videos at all? Deal with that case
         index = 0;
     }
     [self.homeVC animateLaunchPlayerForChannel:channel atIndex:index];
