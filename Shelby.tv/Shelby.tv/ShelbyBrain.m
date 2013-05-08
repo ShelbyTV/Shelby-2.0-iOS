@@ -258,10 +258,14 @@ typedef struct _ShelbyArrayMergeInstructions {
         //subset (well tested)
         instructions.shouldMerge = NO;
     } else {
-        //partial append (well untested)
+        //partial append (questionable...)
         instructions.shouldMerge = YES;
         instructions.append = YES;
         NSUInteger overlapIdx = [newArray indexOfObject:[curArray lastObject]];
+        if(overlapIdx == NSNotFound){
+            DLog(@"firstEntryIndex:%lu, lastEntryIndex:%lu", (unsigned long)firstEntryIndex, (unsigned long)lastEntryIndex);
+            NSAssert(false, @"expected an overlap, what's up?");
+        }
         instructions.range = NSMakeRange(overlapIdx+1, [newArray count]-(overlapIdx+1));
     }
     

@@ -154,6 +154,7 @@
 
 - (void)dismissPlayer
 {
+    [self.videoReel shutdown];
     [self.videoReel dismissViewControllerAnimated:NO completion:nil];
     self.videoReel = nil;
 }
@@ -248,6 +249,8 @@
             [UIView animateWithDuration:0.5 animations:^{
                 [self.topBar setAlpha:1];
             }];
+            [self.videoReel shutdown];
+            self.videoReel = nil;
         }];
         [self setAnimationInProgress:NO];
     }];
@@ -255,7 +258,7 @@
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    _videoReel = [[SPVideoReel alloc] initWithVideoFrames:[self entriesForChannel:channel] atIndex:index];
+    _videoReel = [[SPVideoReel alloc] initWithVideoEntities:[self entriesForChannel:channel] atIndex:index];
     self.videoReel.delegate = self.browseAndVideoReelDelegate;
 }
 

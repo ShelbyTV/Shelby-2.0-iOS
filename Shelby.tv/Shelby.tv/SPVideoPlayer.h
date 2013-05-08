@@ -15,19 +15,19 @@
 @interface SPVideoPlayer : GAITrackedViewController
 
 @property (nonatomic) Frame *videoFrame;
-@property (nonatomic) AVPlayer *player;
-@property (assign, nonatomic) BOOL isPlayable;
 @property (assign, nonatomic) BOOL isPlaying;
-@property (assign, nonatomic) BOOL playbackFinished;
-@property (assign, nonatomic) CMTime playbackStartTime;
-@property (assign, nonatomic) BOOL shouldAutoPlay;
+@property (assign, nonatomic) BOOL isPlayable;
+@property (assign, nonatomic) BOOL shouldAutoplay;
 @property (nonatomic, weak) id<SPVideoPlayerDelegate> videoPlayerDelegate;
 
 // Initialization
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame;
+
 - (void)resetPlayer;
 
-// Preloading
+// Does not load video
+- (void)warmVideoExtractionCache;
+// Does preload video
 - (void)prepareForStreamingPlayback;
 - (void)prepareForLocalPlayback;
 
@@ -40,7 +40,6 @@
 //djs moved the following to prepareForLocalPlayback
 //- (void)loadVideoFromDisk;
 - (void)togglePlayback;
-- (void)restartPlayback;
 - (void)play;
 - (void)pause;
 - (void)share;

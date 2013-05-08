@@ -58,7 +58,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 #pragma mark - Public Methods
 
-- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock
+- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)queueNext
 {
     @synchronized(self){
         if (!self.extractionQueue) {
@@ -67,30 +67,47 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         
         NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
         if(alreadyExtractedURL){
-            DLog(@"Already extracted for video: %@, url: %@", video.objectID, alreadyExtractedURL);
+//            DLog(@"Already extracted for video: %@", video.videoID);
             if(completionBlock){
                 completionBlock(alreadyExtractedURL);
             }
         } else {
-            [self.extractionQueue addObject:@{kSPVideoExtractorVideoKey: video,
-                                              kSPVideoExtractorBlockKey: completionBlock}];
-            DLog(@"Added for later extraction: %@", [self.extractionQueue lastObject]);
+            NSMutableDictionary *extractionDict = [@{kSPVideoExtractorVideoKey: video} mutableCopy];
+            if(completionBlock){
+                extractionDict[kSPVideoExtractorBlockKey] = completionBlock;
+            }
+            
+            if(queueNext){
+//                DLog(@"Queuing for HIGH Priority extraction: %@", video.videoID);
+                [self.extractionQueue insertObject:extractionDict atIndex:0];
+                //djs TODO: cancel current extraction here (handle timer properly)
+            } else {
+//                DLog(@"Queuing for low priority extraction: %@", video.videoID);
+                [self.extractionQueue addObject:extractionDict];
+            }
             [self scheduleNextExtraction];
         }
     }
 }
 
+- (void)warmCacheForVideo:(Video *)video
+{
+    if(!self.extractionQueue || [self.extractionQueue count] < 5){
+        [self URLForVideo:video usingBlock:nil highPriority:NO];
+    }
+}
+
 - (void)scheduleNextExtraction
 {
-    if(!self.startNextExtractionTimer || ![self.startNextExtractionTimer isValid]){
-        DLog(@"scheduled next extraction...");
+    if(!self.startNextExtractionTimer){
+//        DLog(@"scheduled next extraction timer...");
         self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.75
                                                                          target:self
                                                                        selector:@selector(extractNextVideoFromQueue)
                                                                        userInfo:nil
                                                                         repeats:NO];
     } else {
-        DLog(@"extraction already scheduled");
+//        DLog(@"next extraction timer already scheduled");
     }
 }
 
@@ -119,16 +136,17 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     [self.extractionQueue removeAllObjects];
     
     [self destroyWebView];
-    
-    DLog(@"Remaining Extractions Cancelled!");
+//    DLog(@"Remaining Extractions Cancelled!");
 }
 
 #pragma mark - Private Methods
 
 - (void)extractNextVideoFromQueue
 {
+    self.startNextExtractionTimer = nil;
+    
     if (!self.currentlyExtracting && [self.extractionQueue count]) {
-        DLog(@"setting up next extraction...");
+//        DLog(@"setting up a new extraction...");
         self.currentlyExtracting = self.extractionQueue[0];
         [self.extractionQueue removeObjectAtIndex:0];
         Video *video = self.currentlyExtracting[kSPVideoExtractorVideoKey];
@@ -146,7 +164,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
         if(alreadyExtractedURL){
             //already extracted while it was waiting
-            DLog(@"Already extracted for video: %@, url: %@", video, alreadyExtractedURL);
+//            DLog(@"Already extracted for video: %@", video.videoID);
             extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
             if(completionBlock){
                 completionBlock(alreadyExtractedURL);
@@ -172,7 +190,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                                                                                  repeats:NO];
         }
     } else {
-        DLog(@"********* not setting up extraction (queue depth: %lu) ***********", (unsigned long)[self.extractionQueue count]);
+//        DLog(@"********* not setting up extraction (queue depth: %lu) ***********", (unsigned long)[self.extractionQueue count]);
     }
 }
 
@@ -251,14 +269,13 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         if ( notification.userInfo && ![notification.userInfo isKindOfClass:[NSNull class]] ) {
             
             NSArray *allValues = [notification.userInfo allValues];
-        
             for (id value in allValues) {
                 
                 // 'path' is an instance method on 'MPAVItem'
                 SEL pathSelector = NSSelectorFromString([NSString stringWithFormat:@"%@%@%@%@", @"p",@"a",@"t",@"h"]);
                 
                 if ([value respondsToSelector:pathSelector]) {
-                    DLog(@"Great extraction success!");
+//                    DLog(@"Great extraction success!");
 
                     // Remove myself as an observer -- otherwise we could initiate 'playVideo' multiple times, slowing down video display
                     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -293,7 +310,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 {
     //prevent possible async timing issue
     if(self.currentlyExtracting && self.currentlyExtracting == timer.userInfo){
-        DLog(@"Extraction TIMED OUT, cancelling current extraction...");
+//        DLog(@"Extraction TIMED OUT, cancelling current extraction...");
         self.currentExtractionTimeoutTimer = nil;
         
         [self destroyWebView];
