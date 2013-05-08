@@ -8,21 +8,20 @@
 
 #import "SPVideoExtractor.h"
 #import "Video.h"
-//djs this has no reason to know about the API
-//#import "ShelbyAPIClient.h"
 
 @interface SPVideoExtractor () <UIWebViewDelegate>
 
-@property (nonatomic) NSMutableArray *videoQueue;
 @property (nonatomic) UIWebView *webView;
-@property (nonatomic) NSTimer *nextExtractionTimer;
-@property (nonatomic) NSTimer *currentExtractionTimer;
-// KP KP remove isEx
-@property (assign, nonatomic) BOOL isExtracting;
+@property (nonatomic) NSTimer *startNextExtractionTimer;
+@property (nonatomic) NSTimer *currentExtractionTimeoutTimer;
+// array of {kSPVideoExtractorVideoKey: Video*, kSPVideoExtractorBlockKey: extraction_complete_block} waiting to be processed
+@property (nonatomic) NSMutableArray *extractionQueue;
+// {kSPVideoExtractorVideoKey: Video*, kSPVideoExtractorBlockKey: extraction_complete_block} currently processing
 @property (nonatomic, strong) NSDictionary *currentlyExtracting;
+// array of {kSPVideoExtractorVideoObjectIDKey: Video*, kSPVideoExtractorExtractedURLStringKey: NSString*, kSPVideoExtractorExtractedAtKey: NSDate*}
+// Videosalready processed, 
+@property (nonatomic) NSMutableDictionary *extractedURLCache;
 
-//djs we shouldn't need a fucking context
-//- (NSManagedObjectContext *)context;
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
 - (void)destroyWebView;
@@ -30,9 +29,18 @@
 - (void)loadVimeoVideo:(Video *)video;
 - (void)loadDailyMotionVideo:(Video *)video;
 - (void)processNotification:(NSNotification *)notification;
-- (void)extractionTimerExpired:(NSTimer *)timer;
+- (void)extractionTimedOut:(NSTimer *)timer;
 
 @end
+
+//for extraction
+NSString * const kSPVideoExtractorVideoKey = @"video";
+NSString * const kSPVideoExtractorBlockKey = @"block";
+//extraction caching
+NSString * const kSPVideoExtractorVideoObjectIDKey = @"videoObjectID";
+NSString * const kSPVideoExtractorExtractedURLStringKey = @"extractedURLString";
+NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
+#define EXTRACTED_URL_TTL_S -300 //URLs are valid for 300s (5m)
 
 @implementation SPVideoExtractor
 
@@ -49,83 +57,122 @@
 }
 
 #pragma mark - Public Methods
-//djs deprecated, now use URLForVideo:usingBlock:
-//- (void)queueVideo:(Video *)video
-//{
-//    @synchronized(self) {
-//        
-//        // If queue is empty
-//        if ( ![self videoQueue] ) {
-//            self.videoQueue = [@[] mutableCopy];
-//        }
-//        
-//        if (video) {
-//            [self.videoQueue addObject:video];
-//        }
-//        
-//        [self extractNextVideoFromQueue];
-//        
-//    }
-//}
 
 - (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock
 {
     @synchronized(self){
-        if (!self.videoQueue) {
-            self.videoQueue = [@[] mutableCopy];
+        if (!self.extractionQueue) {
+            self.extractionQueue = [@[] mutableCopy];
         }
-        // KP KP: TODO: make the keys externs
-        [self.videoQueue addObject:@{@"video" : video, @"block" : completionBlock}];
         
-        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.75 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
-        
-        //TODO: store the video and completionBlock on videoQueue
+        NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
+        if(alreadyExtractedURL){
+            DLog(@"Already extracted for video: %@, url: %@", video.objectID, alreadyExtractedURL);
+            if(completionBlock){
+                completionBlock(alreadyExtractedURL);
+            }
+        } else {
+            [self.extractionQueue addObject:@{kSPVideoExtractorVideoKey: video,
+                                              kSPVideoExtractorBlockKey: completionBlock}];
+            DLog(@"Added for later extraction: %@", [self.extractionQueue lastObject]);
+            [self scheduleNextExtraction];
+        }
+    }
+}
+
+- (void)scheduleNextExtraction
+{
+    if(!self.startNextExtractionTimer || ![self.startNextExtractionTimer isValid]){
+        DLog(@"scheduled next extraction...");
+        self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.75
+                                                                         target:self
+                                                                       selector:@selector(extractNextVideoFromQueue)
+                                                                       userInfo:nil
+                                                                        repeats:NO];
+    } else {
+        DLog(@"extraction already scheduled");
     }
 }
 
 - (void)cancelRemainingExtractions
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    self.isExtracting = NO;
-    [self.nextExtractionTimer invalidate];
-    [self.videoQueue removeAllObjects];
+    [self.startNextExtractionTimer invalidate];
+    self.startNextExtractionTimer = nil;
+    [self.currentExtractionTimeoutTimer invalidate];
+    self.currentExtractionTimeoutTimer = nil;
+    
+    //fail all pending extractions
+    if(self.currentlyExtracting){
+        extraction_complete_block currentCompletionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+        if(currentCompletionBlock){
+            currentCompletionBlock(nil);
+        }
+    }
+    self.currentlyExtracting = nil;
+    for (NSDictionary *queuedExtraction in self.extractionQueue) {
+        extraction_complete_block completionBlock = queuedExtraction[kSPVideoExtractorBlockKey];
+        if(completionBlock){
+            completionBlock(nil);
+        }
+    }
+    [self.extractionQueue removeAllObjects];
+    
     [self destroyWebView];
     
     DLog(@"Remaining Extractions Cancelled!");
 }
 
 #pragma mark - Private Methods
+
 - (void)extractNextVideoFromQueue
 {
-    if (!self.currentlyExtracting && [self.videoQueue count]) {
-        //djs we should be able to use the video handed to us w/o any issue...
-        self.currentlyExtracting = self.videoQueue[0];
-        [self.videoQueue removeObjectAtIndex:0];
-        Video *video = self.currentlyExtracting[@"video"];
-        // KP KP: TODO: move to a method
+    if (!self.currentlyExtracting && [self.extractionQueue count]) {
+        DLog(@"setting up next extraction...");
+        self.currentlyExtracting = self.extractionQueue[0];
+        [self.extractionQueue removeObjectAtIndex:0];
+        Video *video = self.currentlyExtracting[kSPVideoExtractorVideoKey];
+        
         if (!video) {
-            extraction_complete_block completionBlock = self.currentlyExtracting[@"block"];
-            completionBlock(nil);
+            extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+            if(completionBlock){
+                completionBlock(nil);
+            }
             self.currentlyExtracting = nil;
-            // TODO: user perform selector instead
-            [self extractNextVideoFromQueue];
+            [self scheduleNextExtraction];
             return;
         }
-
-        [self createWebView];
         
-        //djs is there not a nice switch statement for this?
-        if ([video.providerName isEqualToString:@"youtube"]) {
-            [self loadYouTubeVideo:video];
-        } else if ([video.providerName isEqualToString:@"vimeo"]) {
-            [self loadVimeoVideo:video];
-        } else if ([video.providerName isEqualToString:@"dailymotion"]) {
-            [self loadDailyMotionVideo:video];
+        NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
+        if(alreadyExtractedURL){
+            //already extracted while it was waiting
+            DLog(@"Already extracted for video: %@, url: %@", video, alreadyExtractedURL);
+            extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+            if(completionBlock){
+                completionBlock(alreadyExtractedURL);
+            }
+            self.currentlyExtracting = nil;
+            [self scheduleNextExtraction];
+            return;
+        } else {
+            //perform actual extraction
+            [self createWebView];
+            if ([video.providerName isEqualToString:@"youtube"]) {
+                [self loadYouTubeVideo:video];
+            } else if ([video.providerName isEqualToString:@"vimeo"]) {
+                [self loadVimeoVideo:video];
+            } else if ([video.providerName isEqualToString:@"dailymotion"]) {
+                [self loadDailyMotionVideo:video];
+            }
+
+            self.currentExtractionTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
+                                                                                  target:self
+                                                                                selector:@selector(extractionTimedOut:)
+                                                                                userInfo:self.currentlyExtracting
+                                                                                 repeats:NO];
         }
-
-        //djs don't think we need the userInfo
-        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(extractionTimerExpired:) userInfo:[video videoID] repeats:NO];
-        
+    } else {
+        DLog(@"********* not setting up extraction (queue depth: %lu) ***********", (unsigned long)[self.extractionQueue count]);
     }
 }
 
@@ -211,114 +258,56 @@
                 SEL pathSelector = NSSelectorFromString([NSString stringWithFormat:@"%@%@%@%@", @"p",@"a",@"t",@"h"]);
                 
                 if ([value respondsToSelector:pathSelector]) {
-                    
+                    DLog(@"Great extraction success!");
+
                     // Remove myself as an observer -- otherwise we could initiate 'playVideo' multiple times, slowing down video display
                     [[NSNotificationCenter defaultCenter] removeObserver:self];
-                    
+
                     // Remove webView
                     [self destroyWebView];
                     
+                    [self.currentExtractionTimeoutTimer invalidate];
+                    self.currentExtractionTimeoutTimer = nil;
+
                     // Get videoURL to playable video file
-                    // hard to remove warning, since 'value' is an instance of a private class - MPAVItem.
+                    #pragma GCC diagnostic push
+                    #pragma GCC diagnostic ignored "-Warc-performSelector-leaks"
                     NSString *extractedURL = [value performSelector:pathSelector];
-                    
-                    [self.currentExtractionTimer invalidate];
-                    [self setCurrentExtractionTimer:nil];
-//                    if ( 0 == [self.videoQueue count] ) {
-                        
-                        // Do nothing if the HOME button is pushed in SPVideoReel while a video was being processed.
-                        
-//                    } else {
-                    
-                        // Update Core Data video object
-//                        NSManagedObjectContext *context = [self context];
-//                        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-//                        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
-                        //djs don't need all that core data context sillyness, SO LONG AS we were given a proper ManagedObject
-                        //actually, why are we putting this in the ManagedObject at all???
-                        //we just hit the block now and let somebody else deal with it!
-//                        Video *video = self.videoQueue[0];
-//                        [video setValue:extractedURL forKey:kShelbyCoreDataVideoExtractedURL];
-                       
-                        // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
-//                        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
-//                        [dataUtility setVideoID:video.videoID];
-//                        [dataUtility saveContext:context];
-                        //djs we can just save the fucking video like normal
-//                        [video.managedObjectContext save:nil];
-                        
-                        //djs DataRequestType_VideoExtracted had side effects, posting a notification:
-//                        // Post notification if SPVideoReel object is available
-//                        NSDictionary *videoDictionary = @{kShelbySPCurrentVideo: video};
-//                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoExtracted
-//                                                                            object:nil
-//                                                                          userInfo:videoDictionary];
-                        //djs this is the notification the SPVideoPlayer listened for
-                        
+                    #pragma GCC diagnostic pop
 
-                        // Reset variables for next search
-//                        [self.videoQueue removeObjectAtIndex:0];
-//                        [self setIsExtracting:NO];
-                    
-                    extraction_complete_block completionBlock = self.currentlyExtracting[@"block"];
-                    completionBlock(extractedURL);
+                    [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
+                    extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+                    if(completionBlock){
+                        completionBlock(extractedURL);
+                    }
                     self.currentlyExtracting = nil;
-//                        
-                    self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.75 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
 
-//                    }
+                    [self scheduleNextExtraction];
                 }
             }
         }
     }
 }
 
-- (void)extractionTimerExpired:(NSTimer *)timer
+- (void)extractionTimedOut:(NSTimer *)timer
 {
-    
-//    if ( [self.videoQueue count] ) {
-
-        // TODO (comment via Arthur to Keren): I think this should only work for logged-in users, since the markUnplayableVideo: method involves the use of an auth_token. Double check to see if auth_token is necessary.
+    //prevent possible async timing issue
+    if(self.currentlyExtracting && self.currentlyExtracting == timer.userInfo){
+        DLog(@"Extraction TIMED OUT, cancelling current extraction...");
+        self.currentExtractionTimeoutTimer = nil;
         
-        // TODO: not marking unplayable as it might be playable on the web. Need to have seperate properties for web and mobile
-
-//        NSManagedObjectContext *context = [self context];
-//        
-//        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-//        if (objectID) {
-//            Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
-//            [ShelbyAPIClient markUnplayableVideo:[video videoID]];
-//        }
+        [self destroyWebView];
         
-        //djs TODO: call the block with nil
+        extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+        if(completionBlock){
+            completionBlock(nil);
+        }
+        self.currentlyExtracting = nil;
 
-        // 'if' conditional shouldn't be necessary, since _videoQueue should have at least one item, the one that failed to be extracted
-//        [self.videoQueue removeObjectAtIndex:0];
-//        
-//    }
-    
-    [self.nextExtractionTimer invalidate];
-    [self.currentExtractionTimer invalidate];
-    [self destroyWebView];
-
-    
-    extraction_complete_block completionBlock = self.currentlyExtracting[@"block"];
-    completionBlock(nil);
-    self.currentlyExtracting = nil;
-    
-    //TODO: do this w/ timer
-    [self extractNextVideoFromQueue];
-    return;
-    
-
-//    id userInfo = [timer userInfo];
- 
-    // Scroll to next video, which subsequently queues the next video for extraction
-    //djs XXX the SPVideoExtractor SHOULD NOT CARE about video playback.
-    //  it should just notify whomever cares tha extraction failed
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPLoadVideoAfterUnplayableVideo object:userInfo];
-
-    
+        [self scheduleNextExtraction];
+    } else {
+        DLog(@"Extraction TIMED OUT, but not the *current* extraction.  current: %@, timed out: %@", self.currentlyExtracting, timer.userInfo);
+    }
 }
 
 #pragma mark - UIWebViewDelegate Methods
@@ -330,6 +319,31 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     return YES;
+}
+
+#pragma mark - caching
+- (NSString *)getCachedURLForVideo:(Video *)video
+{
+    if(self.extractedURLCache){
+        NSDictionary *previousExtraction = self.extractedURLCache[video.objectID];
+        if([previousExtraction[kSPVideoExtractorExtractedAtKey] timeIntervalSinceNow] < EXTRACTED_URL_TTL_S){
+            //expired
+            [self.extractedURLCache removeObjectForKey:video.objectID];
+            return nil;
+        } else {
+            return previousExtraction[kSPVideoExtractorExtractedURLStringKey];
+        }
+    }
+    return nil;
+}
+
+- (void)cacheExtractedURL:(NSString *)extractedURL forVideo:(Video *)video
+{
+    if(!self.extractedURLCache){
+        self.extractedURLCache = [[NSMutableDictionary alloc] init];
+    }
+    self.extractedURLCache[video.objectID] = @{kSPVideoExtractorExtractedURLStringKey: extractedURL,
+                                               kSPVideoExtractorExtractedAtKey: [NSDate date]};
 }
 
 @end
