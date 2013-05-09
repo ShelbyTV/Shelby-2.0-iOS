@@ -89,6 +89,16 @@
 - (BOOL)tutorialSetup;
 @end
 
+typedef enum {
+    SPVideoReelPreloadStrategyNotSet        = -1,
+    SPVideoReelPreloadNone                  = 0,
+    SPVideoReelPreloadNextOnly              = 1,
+    SPVideoReelPreloadNextKeepPrevious      = 2,
+    SPVideoReelPreloadNextTwoKeepPrevious   = 3,
+    SPVideoReelPreloadNextThreeKeepPrevious = 4
+} SPVideoReelPreloadStrategy;
+static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNotSet;
+
 @implementation SPVideoReel 
 
 #pragma mark - Memory Management
@@ -150,6 +160,7 @@
         self.videoPlayers = [@[] mutableCopy];
     }
     
+    [self setupVideoPreloadStrategy];
     [self setupObservers];
     [self setupVideoScrollView];
     [self setupOverlayView];
@@ -402,41 +413,90 @@
     [self warmURLExtractionCache];
 }
 
+#pragma mark - Video Preload Strategery
+
+- (void)setupVideoPreloadStrategy
+{
+    if (preloadStrategy == SPVideoReelPreloadStrategyNotSet) {
+        if ([[UIScreen mainScreen] isRetinaDisplay]) {
+            //TODO: determine best preload strategy for iPad Retina
+            preloadStrategy = SPVideoReelPreloadNextThreeKeepPrevious;
+            DLog(@"Preload strategy: next 3, keep previous");
+        } else if ([DeviceUtilities isIpadMini1]) {
+            //TODO: determine best preload strategy for iPadMini1
+            preloadStrategy = SPVideoReelPreloadNextOnly;
+            DLog(@"Preload strategy: next only");
+        } else {
+            //TODO: determine best preload strategy for iPad2,3
+            preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
+            DLog(@"Preload strategy: next 1, keep previous");
+        }
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    DLog(@"Dumping all but current player, degrading video preload strategy");
+    [self degradeVideoPreloadStrategy];
+}
+
+- (void)degradeVideoPreloadStrategy
+{
+    if(preloadStrategy > SPVideoReelPreloadNone){
+        preloadStrategy--;
+    }
+    [self manageLoadedVideoPlayersForCurrentPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
+                                    previousPlayer:nil];
+}
+
 - (void)manageLoadedVideoPlayersForCurrentPlayer:(SPVideoPlayer *)currentPlayer previousPlayer:(SPVideoPlayer *)previousPlayer
 {
-    NSArray *playersToKeep;
+    NSMutableArray *playersToKeep = [@[] mutableCopy];
+    SPVideoPlayer *additionalPlayer;
     
-    if ([[UIScreen mainScreen] isRetinaDisplay]) {
-        //Retina: keep the *current*, *previous*, load up the *next*
-        SPVideoPlayer *nextPlayer = self.videoPlayers[self.currentVideoPlayingIndex+1];
-        nextPlayer.shouldAutoplay = NO;
-        [nextPlayer prepareForStreamingPlayback];
-        playersToKeep = @[currentPlayer, previousPlayer, nextPlayer];
-    } else if ([DeviceUtilities isIpadMini1]) {
-        //iPad Mini 1: keep the *current*, load up the *next*
-        SPVideoPlayer *nextPlayer = self.videoPlayers[self.currentVideoPlayingIndex+1];
-        nextPlayer.shouldAutoplay = NO;
-        [nextPlayer prepareForStreamingPlayback];
-        playersToKeep = @[currentPlayer, nextPlayer];
-    } else {
-        //iPad 2, 3: keep the *current*, load up the *next*
-        SPVideoPlayer *nextPlayer = self.videoPlayers[self.currentVideoPlayingIndex+1];
-        nextPlayer.shouldAutoplay = NO;
-        [nextPlayer prepareForStreamingPlayback];
-        playersToKeep = @[currentPlayer, nextPlayer];
+    //progressively build up playerToKeep
+    switch (preloadStrategy) {
+        case SPVideoReelPreloadNextThreeKeepPrevious:
+            additionalPlayer = [self preloadedPlayerAtIndex:self.currentVideoPlayingIndex+3];
+            if(additionalPlayer){ [playersToKeep addObject:additionalPlayer]; }
+            
+        case SPVideoReelPreloadNextTwoKeepPrevious:
+            additionalPlayer = [self preloadedPlayerAtIndex:self.currentVideoPlayingIndex+2];
+            if(additionalPlayer){ [playersToKeep addObject:additionalPlayer]; }
+            
+        case SPVideoReelPreloadNextKeepPrevious:
+            if(previousPlayer){ [playersToKeep addObject:previousPlayer]; }
+            
+        case SPVideoReelPreloadNextOnly:
+            additionalPlayer = [self preloadedPlayerAtIndex:self.currentVideoPlayingIndex+1];
+            if(additionalPlayer){ [playersToKeep addObject:additionalPlayer]; }
+            
+        case SPVideoReelPreloadNone:
+        case SPVideoReelPreloadStrategyNotSet:
+            [playersToKeep addObject:currentPlayer];
     }
     
+    //reset players not on keep list
     if(self.possiblyPlayablePlayers){
         for(SPVideoPlayer *playerToKeep in playersToKeep){
             [self.possiblyPlayablePlayers removeObject:playerToKeep];
         }
-        //reset players not on keep list
         for(SPVideoPlayer *playerToKill in self.possiblyPlayablePlayers){
             [playerToKill resetPlayer];
         }
     }
     
-    self.possiblyPlayablePlayers = [playersToKeep mutableCopy];
+    self.possiblyPlayablePlayers = playersToKeep;
+}
+
+- (SPVideoPlayer *)preloadedPlayerAtIndex:(NSInteger)idx
+{
+    SPVideoPlayer *player = self.videoPlayers[idx];
+    if(player){
+        player.shouldAutoplay = NO;
+        [player prepareForStreamingPlayback];
+    }
+    return player;
 }
 
 - (void)warmURLExtractionCache
@@ -448,6 +508,8 @@
         [player warmVideoExtractionCache];
     }
 }
+
+#pragma mark - stuff
 
 //djs TODO: this doesn't update, it resets... do we still use it?  why?
 - (void)updatePlaybackUI
