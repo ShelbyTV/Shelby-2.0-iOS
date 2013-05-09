@@ -77,7 +77,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
                                                      name:NSManagedObjectContextDidSaveNotification
                                                    object:_context];
         
-        NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
+//        NSNumber *hash = [NSNumber numberWithInt:[_context hash]];
 //djs make it make
 //        [_appDelegate addHash:hash];
     }
@@ -1539,7 +1539,7 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
     if ((id)roll != [NSNull null]) {
         
         frame.roll = roll;
-        roll.frame = frame;
+//        roll.frame = frame;
         [self storeRoll:roll fromDictionary:[frameDictionary valueForKey:@"roll"]];
         
     }
@@ -1807,10 +1807,10 @@ NSString * const kShelbyNotificationChannelDataFetched = @"kShelbyNotificationCh
         [request setPredicate:predicate];
         
         // Execute request that returns array of Videos (should only have one object)
-        NSArray *videoArray = [self.context executeFetchRequest:request error:nil];
+//        NSArray *videoArray = [self.context executeFetchRequest:request error:nil];
         
         // Extract video from videoArray
-        Video *video = (Video *)videoArray[0];
+//        Video *video = (Video *)videoArray[0];
         
         // Post notification if SPVideoReel object is available
 //        NSDictionary *videoDictionary = @{kShelbySPCurrentVideo: video};
