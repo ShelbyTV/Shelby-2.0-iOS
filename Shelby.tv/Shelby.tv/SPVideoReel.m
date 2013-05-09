@@ -319,9 +319,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     // Pause current player if there is one
     SPVideoPlayer *previousPlayer = self.currentPlayer;
+    self.currentPlayer = nil;
     if (previousPlayer) {
-        [previousPlayer pause];
         previousPlayer.shouldAutoplay = NO;
+        [previousPlayer pause];
     }
     
     //update overlay
@@ -792,8 +793,15 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player
 {
-    //djs TODO
-    DLog(@"TODO: Alert about unplayable video & scroll to next video");
+    if (self.currentPlayer == player) {
+        //djs TODO: a real error and auto-skip
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Problem Video"
+                                                            message:@"It won't play right now, so annoying.  Swipe it away..."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"whatever"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }
     
     //djs only keeping this for some math, possibly...
     //        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus

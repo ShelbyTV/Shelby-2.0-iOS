@@ -9,7 +9,7 @@
 
 @class Video;
 
-typedef void (^extraction_complete_block)(NSString *videoURL);
+typedef void (^extraction_complete_block)(NSString *videoURL, BOOL wasError);
 
 @interface SPVideoExtractor : NSObject
 
@@ -23,11 +23,12 @@ typedef void (^extraction_complete_block)(NSString *videoURL);
 
 //uses cached URL unless cache is stale (ie. > 300s)
 //calls block with nil if extraction fails
-- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)queueNext;
+//high priority will jump the high priority queue
+- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue;
 
 //tries to extract URL without a completion block, caching result
 //only queues processing if current queue length isn't too long
-//queue this extraction LAST
+//queue this extraction LAST on a low priority queue
 - (void)warmCacheForVideo:(Video *)video;
 
 @end

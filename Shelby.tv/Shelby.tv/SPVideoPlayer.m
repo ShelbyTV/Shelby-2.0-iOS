@@ -173,8 +173,8 @@
     [self videoLoadingIndicatorShouldAnimate:YES];
     
     //no retain cycle b/c the block's owner (SPVideoExtractor) is not self
-    [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL) {
-        if(videoURL){
+    [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL, BOOL wasError) {
+        if (videoURL) {
             [self setupPlayerForURL:[NSURL URLWithString:videoURL]];
             if (self.shouldAutoplay) {
                 [self play];
@@ -184,14 +184,16 @@
                 //djs TODO: this shouldn't go thru app delegate... WTF... create a new fucking manager to handle this
                 //[self.appDelegate downloadVideo:video];
             }
-        } else {
+        } else if (wasError) {
             if(self.shouldAutoplay){
                 [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
             } else {
                 /* will try extraction again when we become the current player */
             }
+        } else {
+            /* extraction was cancelled, do nothing */
         }
-    } highPriority:YES];
+    } highPriority:self.shouldAutoplay];
 }
 
 - (void)prepareForLocalPlayback
