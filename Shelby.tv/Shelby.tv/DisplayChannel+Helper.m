@@ -9,6 +9,7 @@
 #import "DisplayChannel+Helper.h"
 #import "Roll+Helper.h"
 #import "Dashboard+Helper.h"
+#import "UIColor+ColorWithHexAndAlpha.h"
 
 NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
 
@@ -90,12 +91,12 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
     return displayChannel;
 }
 
-- (NSString *)displayColor
+- (UIColor *)displayColor
 {
     if(self.roll){
-        return self.roll.displayColor;
+        return [UIColor colorWithHex:self.roll.displayColor andAlpha:1.0];
     } else if(self.dashboard){
-        return self.dashboard.displayColor;
+        return [UIColor colorWithHex:self.dashboard.displayColor andAlpha:1.0];
     } else {
         return nil;
     }

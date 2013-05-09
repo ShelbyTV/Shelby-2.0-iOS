@@ -6,9 +6,17 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
+@class SPVideoPlayer;
+
 @protocol SPVideoPlayerDelegate <NSObject>
 
-- (void)videoDidFinishPlaying;
+- (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player;
+- (void)videoLoadingStatus:(BOOL)isLoading forPlayer:(SPVideoPlayer *)player;
+- (void)videoBufferedRange:(CMTimeRange)bufferedRange forPlayer:(SPVideoPlayer *)player;
+- (void)videoDuration:(CMTime)duration forPlayer:(SPVideoPlayer *)player;
+- (void)videoCurrentTime:(CMTime)time forPlayer:(SPVideoPlayer *)player;
+- (void)videoPlaybackStatus:(BOOL)isPlaying forPlayer:(SPVideoPlayer *)player;
+- (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player;
 
 @end
 
@@ -31,17 +39,11 @@
 - (void)prepareForStreamingPlayback;
 - (void)prepareForLocalPlayback;
 
-// Playback Info
-- (NSTimeInterval)availableDuration;
-- (CMTime)elapsedTime;
 - (CMTime)duration;
 
 // Playback Control
-//djs moved the following to prepareForLocalPlayback
-//- (void)loadVideoFromDisk;
-- (void)togglePlayback;
 - (void)play;
 - (void)pause;
-- (void)share;
-- (void)roll;
+- (void)togglePlayback;
+
 @end

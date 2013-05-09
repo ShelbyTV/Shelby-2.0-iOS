@@ -130,7 +130,6 @@
 		1C81098516EE2CBF0030077C /* SPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19B16AFA7F9008587FD /* SPModel.m */; };
 		1C81098616EE2CBF0030077C /* BigButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E41EF2D16B0742400C831A4 /* BigButton.m */; };
 		1C81098716EE2CBF0030077C /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
-		1C81098816EE2CBF0030077C /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
 		1C81098916EE2CBF0030077C /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		1C81098A16EE2CBF0030077C /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4A16C7139300731912 /* LoginView.m */; };
 		1C81098B16EE2CBF0030077C /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
@@ -243,7 +242,6 @@
 		1C810A3B16EE5EED0030077C /* SPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3B19B16AFA7F9008587FD /* SPModel.m */; };
 		1C810A3C16EE5EED0030077C /* BigButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E41EF2D16B0742400C831A4 /* BigButton.m */; };
 		1C810A3D16EE5EED0030077C /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
-		1C810A3E16EE5EED0030077C /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
 		1C810A3F16EE5EED0030077C /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		1C810A4016EE5EED0030077C /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4A16C7139300731912 /* LoginView.m */; };
 		1C810A4116EE5EED0030077C /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
@@ -495,7 +493,6 @@
 		8E01AFC216E67365000567D4 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB816E67365000567D4 /* AFXMLRequestOperation.m */; };
 		8E01AFC316E67365000567D4 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */; };
 		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
-		8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */; };
 		8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		8E12B18816825B4100657D32 /* videoListThumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B18016825B4100657D32 /* videoListThumbnail.png */; };
 		8E12B18916825B4100657D32 /* videoListThumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E12B18116825B4100657D32 /* videoListThumbnail@2x.png */; };
@@ -873,8 +870,6 @@
 		8E01AFB916E67365000567D4 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
-		8E0CFE1116C4A87F009620F9 /* SPVideoScrubber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoScrubber.h; sourceTree = "<group>"; };
-		8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoScrubber.m; sourceTree = "<group>"; };
 		8E0CFE1416C4C54E009620F9 /* UIScreen+Resolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Resolution.h"; sourceTree = "<group>"; };
 		8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Resolution.m"; sourceTree = "<group>"; };
 		8E12B18016825B4100657D32 /* videoListThumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoListThumbnail.png; sourceTree = "<group>"; };
@@ -1597,8 +1592,6 @@
 				8E91173116DC288600719F9B /* SPVideoDownloader.m */,
 				8E7247A71665B4560008F439 /* SPVideoExtractor.h */,
 				8E7247A81665B4560008F439 /* SPVideoExtractor.m */,
-				8E0CFE1116C4A87F009620F9 /* SPVideoScrubber.h */,
-				8E0CFE1216C4A87F009620F9 /* SPVideoScrubber.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2405,7 +2398,6 @@
 				1C81098516EE2CBF0030077C /* SPModel.m in Sources */,
 				1C81098616EE2CBF0030077C /* BigButton.m in Sources */,
 				1C81098716EE2CBF0030077C /* Shelby.xcdatamodeld in Sources */,
-				1C81098816EE2CBF0030077C /* SPVideoScrubber.m in Sources */,
 				1C81098916EE2CBF0030077C /* UIScreen+Resolution.m in Sources */,
 				1C81098A16EE2CBF0030077C /* LoginView.m in Sources */,
 				1C81098B16EE2CBF0030077C /* BrowseViewController.m in Sources */,
@@ -2506,7 +2498,6 @@
 				1C810A3B16EE5EED0030077C /* SPModel.m in Sources */,
 				1C810A3C16EE5EED0030077C /* BigButton.m in Sources */,
 				1C810A3D16EE5EED0030077C /* Shelby.xcdatamodeld in Sources */,
-				1C810A3E16EE5EED0030077C /* SPVideoScrubber.m in Sources */,
 				1C810A3F16EE5EED0030077C /* UIScreen+Resolution.m in Sources */,
 				1C810A4016EE5EED0030077C /* LoginView.m in Sources */,
 				1C810A4116EE5EED0030077C /* BrowseViewController.m in Sources */,
@@ -2607,7 +2598,6 @@
 				8EB3B19C16AFA7FA008587FD /* SPModel.m in Sources */,
 				8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */,
 				8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */,
-				8E0CFE1316C4A87F009620F9 /* SPVideoScrubber.m in Sources */,
 				8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */,
 				8E9FBD4B16C7139300731912 /* LoginView.m in Sources */,
 				1CC3387816CBDF2A00E58375 /* BrowseViewController.m in Sources */,

@@ -7,7 +7,6 @@
 //
 
 #import "SPChannelCell.h"
-#import "UIColor+ColorWithHexAndAlpha.h"
 
 @interface SPChannelCell()
 @property (weak, nonatomic) IBOutlet UILabel *channelTitle;
@@ -24,16 +23,11 @@
 
 }
 
-- (void)setChannelColor:(NSString *)hex andTitle:(NSString *)title
+- (void)setChannelColor:(UIColor *)color andTitle:(NSString *)title
 {
     [self.channelTitle setText:title];
     
-    UIColor *channelColor = nil;
-    if (hex) {
-        channelColor = [UIColor colorWithHex:hex andAlpha:1];
-    } else {
-        channelColor = kShelbyColorGreen;
-    }
+    UIColor *channelColor = color ?: kShelbyColorGreen;
 
     [self.channelColorView setBackgroundColor:channelColor];
     

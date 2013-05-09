@@ -28,7 +28,7 @@
                                         withOrder:(NSInteger)order
                                         inContext:(NSManagedObjectContext *)context;
 
-- (NSString *)displayColor;
+- (UIColor *)displayColor;
 - (NSString *)displayTitle;
 
 @end

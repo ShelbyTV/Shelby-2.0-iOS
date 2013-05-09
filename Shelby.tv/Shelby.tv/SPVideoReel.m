@@ -7,18 +7,18 @@
 //
 
 #import "SPVideoReel.h"
-#import <QuartzCore/QuartzCore.h>
 #import "DeviceUtilities.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
+#import <QuartzCore/QuartzCore.h>
 #import "SPShareController.h"
+#import "SPOverlayView.h"
 #import "SPChannelPeekView.h"
 #import "SPOverlayView.h"
 #import "SPTutorialView.h"
 #import "SPVideoExtractor.h"
-#import "SPVideoScrubber.h"
 #import "TwitterHandler.h"
-
+#import "TwitterHandler.h"
 
 
 #define kShelbySPSlowSpeed 0.2
@@ -30,6 +30,7 @@
 @property (nonatomic) UIScrollView *videoScrollView;
 //Array of DashboardEntry or Frame
 @property (nonatomic) NSMutableArray *videoEntities;
+@property (nonatomic, strong) DisplayChannel *channel;
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (copy, nonatomic) NSString *channelID;
 @property (assign, nonatomic) NSUInteger *videoStartIndex;
@@ -38,6 +39,7 @@
 @property (nonatomic) SPChannelPeekView *peelChannelView;
 @property (nonatomic) SPTutorialView *tutorialView;
 @property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
+@property (nonatomic, weak) SPVideoPlayer *currentPlayer;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
 
 @property (nonatomic, strong) SPShareController *shareController;
@@ -45,45 +47,12 @@
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
 
-/// Setup Methods
-- (void)setup;
-- (void)setupObservers;
-- (void)setupVideoScrollView;
-- (void)setupOverlayView;
-- (void)setupAirPlay;
-- (void)setupVideoPlayers;
-- (void)setupGestures;
-- (void)setupOverlayVisibileItems;
-
-/// Update Methods
-- (void)currentVideoShouldChangeToVideo:(NSUInteger)position;
-- (void)updatePlaybackUI;
-- (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification *)notification;
-
 /// Action Methods
 - (IBAction)shareButtonAction:(id)sender;
 - (IBAction)likeAction:(id)sender;
 - (IBAction)rollAction:(id)sender;
 - (void)rollVideo;
 
-/// Gesture Methods
-- (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer;
-
-/// Panning Gestures and Animations
-// Video List Panning
-- (void)panView:(id)sender;
-- (void)animateDown:(float)speed andSwitchChannel:(BOOL)switchChannel;
-- (void)animateUp:(float)speed andSwitchChannel:(BOOL)switchChannel;
-- (void)switchChannelWithDirectionUp:(BOOL)up;
-
-///Tutorial
-- (void)showDoubleTapTutorial;
-- (void)showSwipeLeftTutorial;
-- (void)showSwipeUpTutorial;
-- (void)showPinchTutorial;
-- (void)videoSwipedLeft;
-- (void)videoSwipedUp;
-- (BOOL)tutorialSetup;
 @end
 
 typedef enum {
@@ -96,7 +65,7 @@ typedef enum {
 } SPVideoReelPreloadStrategy;
 static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNotSet;
 
-@implementation SPVideoReel 
+@implementation SPVideoReel
 
 #pragma mark - Memory Management
 - (void)dealloc
@@ -105,11 +74,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 }
 
 #pragma mark - Initialization
-- (id)initWithVideoEntities:(NSArray *)videoEntities
-                    atIndex:(NSUInteger)videoStartIndex
+- (id) initWithChannel:(DisplayChannel *)channel
+      andVideoEntities:(NSArray *)videoEntities
+               atIndex:(NSUInteger)videoStartIndex
 {
     self = [super init];
     if (self) {
+        _channel = channel;
         _videoEntities = [videoEntities mutableCopy];
         _videoStartIndex = videoStartIndex;
         _currentVideoPlayingIndex = -1;
@@ -177,20 +148,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                                              selector:@selector(dataSourceShouldUpdateFromWeb:)
                                                  name:kShelbySPUserDidScrollToUpdate
                                                object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(scrollToNextVideoAfterUnplayableVideo:)
-                                                 name:kShelbySPLoadVideoAfterUnplayableVideo
-                                               object:nil];
 }
 
 - (void)removeObservers
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kShelbySPUserDidScrollToUpdate
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kShelbySPLoadVideoAfterUnplayableVideo
                                                   object:nil];
 }
 
@@ -213,26 +176,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupOverlayView
 {
-    
-    if ( ![[self.view subviews] containsObject:_overlayView] ) {
-        
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
-        if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
-            return;
-        }
-        
-        self.overlayView = nib[0];
-        //djs
-//        self.model.overlayView = [self overlayView];
-        [self.view addSubview:_overlayView];
-        
-    } else {
-        
-        //djs
-//        self.model.overlayView = [self overlayView];
-        
-    }
-
+    NSAssert(!self.overlayView, @"should only setup overlay view once");
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+    NSAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
+    self.overlayView = nib[0];
+    [self.view addSubview:self.overlayView];
+    [self.overlayView setAccentColor:self.channel.displayColor];
 }
 
 //called via -setup via -viewDidLoad
@@ -317,6 +266,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 //    }
 }
 
+- (void)shutdown
+{
+    //resetting all possibly players (including current player) will pause and free memory of AVPlayer
+    [self.possiblyPlayablePlayers makeObjectsPerformSelector:@selector(resetPlayer)];
+    
+    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+}
+
 #pragma mark - Storage Methods (Public)
 
 - (void)animatePlaybackState:(BOOL)videoPlaying
@@ -360,52 +317,25 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 #pragma mark -  Update Methods (Private)
 - (void)currentVideoShouldChangeToVideo:(NSUInteger)position
 {
-    // Post notification (to rollViews that may have a keyboard loaded in view)
-    //djs: this seems wrong/bad
-    //djs: TODO: remove this or understand and do it differently
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPUserDidSwipeToNextVideo object:nil];
-    
-    // Show Overlay
-    //djs haven't looked at this yet
-    [self.overlayView showOverlayView];
-    
-    // Stop observing video for videoScrubber
-    //djs haven't looked at this yet
-    [[SPVideoScrubber sharedInstance] stopObserving];
-    
-    // Deal with playback methods & UI of current and previous video
-    //djs: i haven't looked at this yet
-    [self updatePlaybackUI];
-
     // Pause current player if there is one
-    SPVideoPlayer *previousPlayer;
-    if (self.currentVideoPlayingIndex >= 0) {
-        previousPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
+    SPVideoPlayer *previousPlayer = self.currentPlayer;
+    if (previousPlayer) {
         [previousPlayer pause];
         previousPlayer.shouldAutoplay = NO;
     }
     
+    //update overlay
+    //FUN: if we had a direction from which the new video was coming, could animate this update
+    [self.overlayView showOverlayView];
+    [self.overlayView setFrameOrDashboardEntry:self.videoEntities[position]];
+    
     // Set the new current player to auto play and get it going...
     self.currentVideoPlayingIndex = position;
-    SPVideoPlayer *player = self.videoPlayers[self.currentVideoPlayingIndex];
-    player.shouldAutoplay = YES;
-    [player prepareForStreamingPlayback];
+    self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
+    self.currentPlayer.shouldAutoplay = YES;
+    [self.currentPlayer prepareForStreamingPlayback];
     
-    
-    //djs TODO: FIXME: this could be DashboardEntry or Frame
-    DashboardEntry *dashboardEntry = self.videoEntities[self.currentVideoPlayingIndex];
-    
-    // Set new values on infoPanel
-    self.overlayView.videoTitleLabel.text = dashboardEntry.frame.video.title;
-    self.overlayView.videoCaptionLabel.text = [dashboardEntry.frame creatorsInitialCommentWithFallback:YES];
-    self.overlayView.videoTimestamp.text = [dashboardEntry.frame createdAt];
-    self.overlayView.nicknameLabel.text = [NSString stringWithFormat:@"%@", dashboardEntry.frame.creator.nickname];
-    [AsynchronousFreeloader loadImageFromLink:dashboardEntry.frame.creator.userImage
-                                 forImageView:_overlayView.userImageView
-                              withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
-                               andContentMode:UIViewContentModeScaleAspectFit];
-    
-    [self manageLoadedVideoPlayersForCurrentPlayer:player
+    [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
                                     previousPlayer:previousPlayer];
     [self warmURLExtractionCache];
 }
@@ -442,7 +372,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     if(preloadStrategy > SPVideoReelPreloadNone){
         preloadStrategy--;
     }
-    [self manageLoadedVideoPlayersForCurrentPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
+    [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
                                     previousPlayer:nil];
 }
 
@@ -506,70 +436,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
-#pragma mark - stuff
-
-//djs TODO: this doesn't update, it resets... do we still use it?  why?
-- (void)updatePlaybackUI
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.overlayView.elapsedProgressView setProgress:0.0f];
-        [self.overlayView.bufferProgressView setProgress:0.0f];
-        [self.overlayView.elapsedTimeLabel setText:@""];
-        [self.overlayView.totalDurationLabel setText:@""];
-    });
-    
-}
-
-- (void)scrollToNextVideoAfterUnplayableVideo:(NSNotification *)notification
-{
-    //djs TODO
-    DLog(@"TODO: Alert about unplayable video & scroll to next video");
-
-
-    //djs only keeping this for some math, possibly...
-//        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
-//            CGFloat videoX = kShelbySPVideoWidth * position;
-//            CGFloat videoY = _videoScrollView.contentOffset.y;
-//            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-//            [self currentVideoShouldChangeToVideo:position];
-//        } else { // Load next video, (but do not scroll)
-//            [self extractVideoForVideoPlayer:position];
-//        }
-//    }
-}
-
-
-- (void)currentVideoDidFinishPlayback
-{
-    DLog(@"TODO: scroll to next video b/c current one finished");
-    
-    //djs only keeping this for some math, possibly...
-//    NSUInteger position = _model.currentVideo + 1;
-//    CGFloat x = position * kShelbySPVideoWidth;
-//    CGFloat y = _videoScrollView.contentOffset.y;
-//    
-//    if ( position <= (_model.numberOfVideos-1) ) {
-//    
-//        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-//        [self currentVideoShouldChangeToVideo:position];
-//    
-//    }
-}
-
-#pragma mark - Action Methods (Public)
-- (void)restartPlaybackButtonAction:(id)sender
-{
-    // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                               withAction:kGAIVideoPlayerActionRestartButton
-                                withLabel:_groupTitle
-                                withValue:nil];
-    
-    //djs TODO: we should be holding this, and only us!
-//    [self.model.currentVideoPlayer restartPlayback];
-}
-
 #pragma mark - Action Methods (Private)
 - (IBAction)shareButtonAction:(id)sender
 {
@@ -580,7 +446,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 //    
 //    [self.model.currentVideoPlayer share];
     
-    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex] fromRect:self.overlayView.shareButton.frame];
+    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
+                                                                 fromRect:self.overlayView.shareButton.frame];
     [self.shareController share];
     
 }
@@ -799,17 +666,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
-- (void)shutdown
-{
-    //resetting all possibly players (including current player) will pause and free memory of AVPlayer
-    [self.possiblyPlayablePlayers makeObjectsPerformSelector:@selector(resetPlayer)];
-    
-    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
-    
-    // Remove Scrubber Timer and Observer
-    [[SPVideoScrubber sharedInstance] stopObserving];
-}
-
 #pragma mark - Tutorial Methods
 - (BOOL)tutorialSetup
 {
@@ -910,9 +766,69 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 
 #pragma mark - SPVideoPlayerDelegete Methods
-- (void)videoDidFinishPlaying
+
+//djs TODO
+- (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player{
+    //TODO
+    //djs only keeping this for some math, possibly...
+    //    NSUInteger position = _model.currentVideo + 1;
+    //    CGFloat x = position * kShelbySPVideoWidth;
+    //    CGFloat y = _videoScrollView.contentOffset.y;
+    //
+    //    if ( position <= (_model.numberOfVideos-1) ) {
+    //
+    //        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
+    //        [self currentVideoShouldChangeToVideo:position];
+    //    
+    //    }
+}
+
+- (void)videoLoadingStatus:(BOOL)isLoading forPlayer:(SPVideoPlayer *)player
 {
+    //djs TODO
+}
+
+- (void)videoBufferedRange:(CMTimeRange)bufferedRange forPlayer:(SPVideoPlayer *)player
+{
+    if (self.currentPlayer == player) {
+        [self.overlayView updateBufferedRange:bufferedRange];
+    }
+}
+
+- (void)videoDuration:(CMTime)duration forPlayer:(SPVideoPlayer *)player
+{
+    if (self.currentPlayer == player) {
+        [self.overlayView setDuration:duration];
+    }
+}
+
+- (void)videoCurrentTime:(CMTime)time forPlayer:(SPVideoPlayer *)player
+{
+    if (self.currentPlayer == player) {
+        [self.overlayView updateCurrentTime:time];
+    }
+}
+
+- (void)videoPlaybackStatus:(BOOL)isPlaying forPlayer:(SPVideoPlayer *)player
+{
+    //djs TODO
+}
+
+- (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player
+{
+    //djs TODO
+    DLog(@"TODO: Alert about unplayable video & scroll to next video");
     
+    //djs only keeping this for some math, possibly...
+    //        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
+    //            CGFloat videoX = kShelbySPVideoWidth * position;
+    //            CGFloat videoY = _videoScrollView.contentOffset.y;
+    //            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
+    //            [self currentVideoShouldChangeToVideo:position];
+    //        } else { // Load next video, (but do not scroll)
+    //            [self extractVideoForVideoPlayer:position];
+    //        }
+    //    }
 }
 
 

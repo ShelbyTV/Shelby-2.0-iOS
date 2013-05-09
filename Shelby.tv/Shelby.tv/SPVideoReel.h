@@ -6,9 +6,7 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
-//djs
-//#import "SPModel.h"
-#import "DisplayChannel.h"
+#import "DisplayChannel+Helper.h"
 #import "AuthorizationViewController.h"
 #import "SPVideoPlayer.h"
 
@@ -25,7 +23,6 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 @class SPVideoReel;
 
 @protocol SPVideoReelDelegate <NSObject>
-
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
 - (void)userDidCloseChannel;
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up;
@@ -43,19 +40,14 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 @property (copy, nonatomic) NSString *groupTitle;
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
 
-- (id)initWithVideoEntities:(NSArray *)videoEntities
-                    atIndex:(NSUInteger)videoStartIndex;
-
-/// Update Methods
-- (void)currentVideoDidFinishPlayback;
-
-/// Action Methods
-- (IBAction)restartPlaybackButtonAction:(id)sender;
+- (id)initWithChannel:(DisplayChannel *)channel
+     andVideoEntities:(NSArray *)videoEntities
+              atIndex:(NSUInteger)videoStartIndex;
 
 - (void)shutdown;
 
-/// Tutorial
 - (void)videoDoubleTapped;
 
 - (void)hideOverlayView;
+
 @end

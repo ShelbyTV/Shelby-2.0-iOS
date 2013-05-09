@@ -16,5 +16,5 @@
 
 - (UIColor *)channelDisplayColor;
 - (NSString *)channelDisplayTitle;
-- (void)setChannelColor:(NSString *)hex andTitle:(NSString *)title;
+- (void)setChannelColor:(UIColor *)color andTitle:(NSString *)title;
 @end

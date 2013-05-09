@@ -7,44 +7,23 @@
 //
 
 #import "SPVideoPlayer.h"
-
-// Models
-//djs
-//#import "SPModel.h"
-
-// Views
-#import "SPOverlayView.h"
-
-// Controllers
-#import "SPShareController.h"
-#import "SPVideoExtractor.h"
 #import "SPVideoDownloader.h"
-#import "SPVideoScrubber.h"
-
-// View Controllers
+#import "SPVideoExtractor.h"
 #import "SPVideoReel.h"
 
 @interface SPVideoPlayer ()
 
-//djs shouldn't care about these..
-//@property (weak, nonatomic) SPOverlayView *overlayView;
 @property (assign, nonatomic) CGRect viewBounds;
-@property (nonatomic) SPShareController *shareController;
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *videoLoadingIndicator;
 
-@property (assign, nonatomic) BOOL isPlaying;
-@property (assign, nonatomic) BOOL isPlayable;
-
 @property (nonatomic) AVPlayer *player;
-@property (assign, nonatomic) BOOL playbackFinished;
 //on reset, this is set to NO which prevents from loading (is reset by -prepareFor...Playback)
 @property (assign, nonatomic) BOOL canBecomePlayable;
+@property (assign, nonatomic) BOOL isPlayable;
+@property (assign, nonatomic) BOOL isPlaying;
 @property (assign, nonatomic) CMTime lastPlayheadPosition;
-
-/// Observer Methods
-- (void)itemDidFinishPlaying:(NSNotification *)notification;
-- (void)updateBufferProgressView:(NSNumber *)buffered;
+@property (strong, nonatomic) id playerTimeObserver;
 
 @end
 
@@ -58,6 +37,7 @@
 
 - (void)didReceiveMemoryWarning
 {
+    //see SPVideoReel for memory warning handling
     [super didReceiveMemoryWarning];
 }
 
@@ -79,7 +59,6 @@
     [super viewDidLoad];
     
     [self.view setFrame:self.viewBounds];
-    self.playbackFinished = NO;
     self.isPlayable = NO;
     self.isPlaying = NO;
     self.shouldAutoplay = NO;
@@ -127,11 +106,22 @@
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPLoadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
     
-    // Observe for video complete
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(itemDidFinishPlaying:)
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
                                                object:self.player.currentItem];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemPlaybackStalled:)
+                                                 name:AVPlayerItemPlaybackStalledNotification
+                                               object:self.player.currentItem];
+    
+    //the only way to observe current time changes
+    __weak SPVideoPlayer *weakSelf = self;
+    self.playerTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.25f, NSEC_PER_MSEC)
+                                                                        queue:NULL
+                                                                   usingBlock:^(CMTime time) {
+                                                                       [weakSelf currentTimeUpdated:time];
+                                                                   }];
 }
 
 - (void)removeAllObservers
@@ -141,20 +131,10 @@
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-}
-
-#pragma mark - Video Storage Methods (Public)
-- (NSTimeInterval)availableDuration
-{
-    if ( [self.player currentItem] ) {
-        NSArray *loadedTimeRanges = [self.player.currentItem loadedTimeRanges];
-        CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
-        CGFloat startSeconds = CMTimeGetSeconds(timeRange.start);
-        CGFloat durationSeconds = CMTimeGetSeconds(timeRange.duration);
-        NSTimeInterval result = startSeconds + durationSeconds;
-        return result;
-    }
-    return 0.0f;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemPlaybackStalledNotification object:nil];
+    
+    [self.player removeTimeObserver:self.playerTimeObserver];
+    self.playerTimeObserver = nil;
 }
 
 - (CMTime)elapsedTime
@@ -167,13 +147,11 @@
 
 - (CMTime)duration
 {
-    if ( [self.player currentItem].status == AVPlayerItemStatusReadyToPlay ) {
+    if ( [self.player currentItem].status != AVPlayerItemStatusFailed ) {
 		return [self.player.currentItem duration];
     }
 	return kCMTimeInvalid;
 }
-
-#pragma mark - Video Fetching Methods (Public)
 
 - (void)warmVideoExtractionCache
 {
@@ -184,8 +162,7 @@
 - (void)prepareForStreamingPlayback
 {
     self.canBecomePlayable = YES;
-    
-    //if we're already playable, just play
+
     if(self.isPlayable){
         if (self.shouldAutoplay) {
             [self play];
@@ -208,8 +185,11 @@
                 //[self.appDelegate downloadVideo:video];
             }
         } else {
-            //djs TODO handle extraction fail
-            // TODO: only scroll to next video if we should autoplay
+            if(self.shouldAutoplay){
+                [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
+            } else {
+                /* will try extraction again when we become the current player */
+            }
         }
     } highPriority:YES];
 }
@@ -250,78 +230,47 @@
 #pragma mark - Video Playback Methods (Public)
 - (void)togglePlayback
 {
-    if (0.0 == _player.rate && _isPlayable) {
+    if (self.isPlayable && 0.0 == self.player.rate) {
         [self play];
     } else {
         [self pause];
     }
 }
 
-
 - (void)play
 {
     //djs TODO: should this all be done on the main thread???
     //b/c of how this gets called, it's not necessarily on main thread
-    
     [self.player play];
     self.isPlaying = YES;
     
-    // Begin updating videoScrubber periodically
-    //djs TODO: is this correct? need to do scrubber stuff...
-    [[SPVideoScrubber sharedInstance] setupScrubber];
-    
-    //djs TODO: tell delegate about playback event
+    [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
+    [self.videoPlayerDelegate videoPlaybackStatus:YES forPlayer:self];
 }
 
 - (void)pause
 {
     //djs TODO: should this all be done on the main thread???
     //b/c of how this gets called, it's not necessarily on main thread
-    
     [self.player pause];
     self.isPlaying = NO;
-
-    //djs do we need this? is this correct?
-    [[SPVideoScrubber sharedInstance] syncScrubber];
     
-    //djs TODO: tell delegate about playback event
-}
-
-// Now done from the SPVideoReel
-- (void)share
-{
-    // TODO - Uncomment for AppStore
-//    [[Panhandler sharedInstance] recordEvent];
-    
-//    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self];
-//    [self.shareController share];
-}
-
-- (void)roll
-{
-    // TODO - Uncomment for AppStore
-//    [[Panhandler sharedInstance] recordEvent];
-    
-    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self];
-    [self.shareController showRollView];
+    [self.videoPlayerDelegate videoPlaybackStatus:NO forPlayer:self];
 }
 
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
-    if ( _player.currentItem == notification.object && ![self playbackFinished]) {
-        self.playbackFinished = YES;
-        // Force scroll videoScrollView
-        //djs TODO: we should tell the delegate itemDidFinishPlaying, not know about video reel directly
-//        [self.videoReel currentVideoDidFinishPlayback];
+    if ( _player.currentItem == notification.object) {
+        [self.videoPlayerDelegate videoDidFinishPlayingForPlayer:self];
     }
 }
 
-- (void)updateBufferProgressView:(NSNumber *)buffered
+- (void)itemPlaybackStalled:(NSNotification *)notification
 {
-    //djs TODO: use a delegate
-//    if ( buffered.doubleValue > [self.model.overlayView.bufferProgressView progress] ) {
-//        [self.model.overlayView.bufferProgressView setProgress:buffered.doubleValue animated:YES];
-//    }
+    if ( _player.currentItem == notification.object) {
+        [self pause];
+        DLog(@"PLAYBACK STALLED");
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -337,37 +286,21 @@
         [self videoLoadingIndicatorShouldAnimate:NO];
         
     } else if ([keyPath isEqualToString:kShelbySPLoadedTimeRanges]) {
-        //djs XXX: we used to check to make sure this player was the current player
-        //is that b/c we were glitching when other players got switched in?
-        //if so, SPVideoReel can maintain a isCurrentPlayer on us
-        NSTimeInterval availableDuration = [self availableDuration];
-        NSTimeInterval duration = CMTimeGetSeconds([self duration]);
-        NSTimeInterval buffered = availableDuration/duration;
-        [self performSelectorOnMainThread:@selector(updateBufferProgressView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
+        NSArray *loadedTimeRanges = [self.player.currentItem loadedTimeRanges];
+        CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
+        [self.videoPlayerDelegate videoBufferedRange:timeRange forPlayer:self];
+        
     }
 }
 
-#pragma mark - UIResponder Methods
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)currentTimeUpdated:(CMTime)time
 {
-    //djs
-//    [self.model.overlayTimer invalidate];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    //djs
-//    [self.model.overlayTimer invalidate];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    //djs
-//    [self.model rescheduleOverlayTimer];
+    [self.videoPlayerDelegate videoCurrentTime:time forPlayer:self];
 }
 
 - (void)videoLoadingIndicatorShouldAnimate:(BOOL)animate
 {
+    [self.videoPlayerDelegate videoLoadingStatus:animate forPlayer:self];
     if(!self.videoLoadingIndicator){
         CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
         self.videoLoadingIndicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
