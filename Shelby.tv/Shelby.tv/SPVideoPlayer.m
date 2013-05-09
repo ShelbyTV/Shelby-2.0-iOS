@@ -24,38 +24,23 @@
 // View Controllers
 #import "SPVideoReel.h"
 
-// Data
-#import "ShelbyDataMediator.h"
-
 @interface SPVideoPlayer ()
 
-//djs
-//@property (weak, nonatomic) AppDelegate *appDelegate;
-//djs
-//@property (weak, nonatomic) SPModel *model;
 //djs shouldn't care about these..
 //@property (weak, nonatomic) SPOverlayView *overlayView;
-//@property (weak, nonatomic) SPVideoReel *videoReel;
 @property (assign, nonatomic) CGRect viewBounds;
 @property (nonatomic) SPShareController *shareController;
 @property (nonatomic) AVPlayerLayer *playerLayer;
-@property (nonatomic) UIActivityIndicatorView *indicator;
+@property (nonatomic) UIActivityIndicatorView *videoLoadingIndicator;
 
-//djs moved from public interface...
+@property (assign, nonatomic) BOOL isPlaying;
+@property (assign, nonatomic) BOOL isPlayable;
+
 @property (nonatomic) AVPlayer *player;
 @property (assign, nonatomic) BOOL playbackFinished;
 //on reset, this is set to NO which prevents from loading (is reset by -prepareFor...Playback)
 @property (assign, nonatomic) BOOL canBecomePlayable;
-
-//djs we don't need this thing anymore
-//@property (nonatomic) NSMutableDictionary *videoInformation;
-//djs the one bit of it we do need
 @property (assign, nonatomic) CMTime lastPlayheadPosition;
-
-/// Setup Methods
-- (void)setupInitialConditions;
-- (void)setupIndicator;
-- (void)setupPlayerForURL:(NSURL *)playerURL;
 
 /// Observer Methods
 - (void)itemDidFinishPlaying:(NSNotification *)notification;
@@ -94,36 +79,15 @@
     [super viewDidLoad];
     
     [self.view setFrame:self.viewBounds];
-    [self setupInitialConditions];
+    self.playbackFinished = NO;
+    self.isPlayable = NO;
+    self.isPlaying = NO;
+    self.shouldAutoplay = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    //djs not sure about this, haven't done offline stuff, haven't looked into setupIndicator
-    if ( ![_videoFrame.video.offlineURL length] ) {
-        [self setupIndicator];
-    }
-}
-
-#pragma mark - Setup Methods
-
-- (void)setupInitialConditions
-{
-    self.playbackFinished = NO;
-    self.isPlayable = NO;
-    self.isPlaying = NO;
-}
-
-- (void)setupIndicator
-{
-    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-    self.indicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
-    self.indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    self.indicator.hidesWhenStopped = YES;
-    [self.indicator startAnimating];
-    [self.view addSubview:_indicator];
 }
 
 - (void)setupPlayerForURL:(NSURL *)playerURL
@@ -229,6 +193,8 @@
         return;
     }
     
+    [self videoLoadingIndicatorShouldAnimate:YES];
+    
     //no retain cycle b/c the block's owner (SPVideoExtractor) is not self
     [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL) {
         if(videoURL){
@@ -250,7 +216,6 @@
 
 - (void)prepareForLocalPlayback
 {
-    
     self.canBecomePlayable = YES;
     
     //if we're already playable, just play
@@ -285,51 +250,11 @@
 #pragma mark - Video Playback Methods (Public)
 - (void)togglePlayback
 {
-    
-    // Send event to Google Analytics
-//    id defaultTracker = [GAI sharedInstance].defaultTracker;
-//    if ( [sender isMemberOfClass:[UITapGestureRecognizer class]] ) {
-
-        //djs TODO: track this elsewhere
-//        [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-//                                   withAction:kGAIVideoPlayerActionDoubleTap
-//                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-//                                    withValue:nil];
-        
-//    } else if ( [sender isMemberOfClass:[SPVideoReel class]] ) {
-    
-        
-        if ( [self isPlaying] ) {
-
-            //djs TODO: track this elsewhere
-//            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-//                                       withAction:kGAIVideoPlayerActionPauseButton
-//                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-//                                        withValue:nil];
-            
-        } else {
-
-            //djs TODO: track this elsewhere
-//            [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-//                                       withAction:kGAIVideoPlayerActionPlayButton
-//                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-//                                        withValue:nil];
-            
-        }
-        
-//    } else {
-//        // Do nothing
-//    }
-    
-    // Toggle Playback
-    if ( 0.0 == _player.rate && _isPlayable ) { // Play
+    if (0.0 == _player.rate && _isPlayable) {
         [self play];
     } else {
         [self pause];
     }
-    
-    //djs
-//    [[SPModel sharedInstance].videoReel videoDoubleTapped];
 }
 
 
@@ -341,8 +266,11 @@
     [self.player play];
     self.isPlaying = YES;
     
-    // Begin updating videoScrubber periodically 
+    // Begin updating videoScrubber periodically
+    //djs TODO: is this correct? need to do scrubber stuff...
     [[SPVideoScrubber sharedInstance] setupScrubber];
+    
+    //djs TODO: tell delegate about playback event
 }
 
 - (void)pause
@@ -353,8 +281,10 @@
     [self.player pause];
     self.isPlaying = NO;
 
-    //djs do we need this?
+    //djs do we need this? is this correct?
     [[SPVideoScrubber sharedInstance] syncScrubber];
+    
+    //djs TODO: tell delegate about playback event
 }
 
 - (void)share
@@ -378,8 +308,7 @@
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
     if ( _player.currentItem == notification.object && ![self playbackFinished]) {
-        // Show Restart Button
-        [self setPlaybackFinished:YES];
+        self.playbackFinished = YES;
         // Force scroll videoScrollView
         //djs TODO: we should tell the delegate itemDidFinishPlaying, not know about video reel directly
 //        [self.videoReel currentVideoDidFinishPlayback];
@@ -396,46 +325,24 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    //djs TODO: do we really need to know if we're the current player?
     // do we get notifications that we don't want?  It seems somebody thought we did...
-    
-    if ( ![self.player currentItem] ) {
-    
+    if (![self.player currentItem] || object != [_player currentItem]) {
         return;
-    
-    } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferEmpty] ) {
-   
-        if ( [self.player currentItem].playbackBufferEmpty) { // Buffer is Empty
         
-            [self setupIndicator];
-    
-        }
-   
-    } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPVideoBufferLikelyToKeepUp]) {
-
-        //djs
-//        if ( [self.player currentItem].playbackLikelyToKeepUp && self == [self.model currentVideoPlayer] ) { // Playback will resume
-//
-//            // Stop animating indicator
-//            if ( [self.indicator isAnimating] ) {
-//                [self.indicator stopAnimating];
-//                [self.indicator removeFromSuperview];
-//                [self play];
-//            }
-//        }
+    } else if ([keyPath isEqualToString:kShelbySPVideoBufferEmpty] && [self.player currentItem].playbackBufferEmpty) {
+        [self videoLoadingIndicatorShouldAnimate:YES];
         
-    } else if ( object == _player.currentItem && [keyPath isEqualToString:kShelbySPLoadedTimeRanges] ) {
-
-        //djs i should only observe when i'm current and playing
+    } else if ([keyPath isEqualToString:kShelbySPVideoBufferLikelyToKeepUp] && [self.player currentItem].playbackLikelyToKeepUp) {
+        [self videoLoadingIndicatorShouldAnimate:NO];
         
-//        if ( self == [self.model currentVideoPlayer] ) {
-//         
-//            NSTimeInterval availableDuration = [self availableDuration];
-//            NSTimeInterval duration = CMTimeGetSeconds([self duration]);
-//            NSTimeInterval buffered = availableDuration/duration;
-//            [self performSelectorOnMainThread:@selector(updateBufferProgressView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
-//            
-//        }
+    } else if ([keyPath isEqualToString:kShelbySPLoadedTimeRanges]) {
+        //djs XXX: we used to check to make sure this player was the current player
+        //is that b/c we were glitching when other players got switched in?
+        //if so, SPVideoReel can maintain a isCurrentPlayer on us
+        NSTimeInterval availableDuration = [self availableDuration];
+        NSTimeInterval duration = CMTimeGetSeconds([self duration]);
+        NSTimeInterval buffered = availableDuration/duration;
+        [self performSelectorOnMainThread:@selector(updateBufferProgressView:) withObject:[NSNumber numberWithDouble:buffered] waitUntilDone:NO];
     }
 }
 
@@ -458,5 +365,20 @@
 //    [self.model rescheduleOverlayTimer];
 }
 
+- (void)videoLoadingIndicatorShouldAnimate:(BOOL)animate
+{
+    if(!self.videoLoadingIndicator){
+        CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        self.videoLoadingIndicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
+        self.videoLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        self.videoLoadingIndicator.hidesWhenStopped = YES;
+        [self.view addSubview:self.videoLoadingIndicator];
+    }
+    if(animate){
+        [self.videoLoadingIndicator startAnimating];
+    } else {
+        [self.videoLoadingIndicator stopAnimating];
+    }
+}
 
 @end

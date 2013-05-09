@@ -15,8 +15,8 @@
 @interface SPVideoPlayer : GAITrackedViewController
 
 @property (nonatomic) Frame *videoFrame;
-@property (assign, nonatomic) BOOL isPlaying;
-@property (assign, nonatomic) BOOL isPlayable;
+@property (readonly) BOOL isPlaying;
+@property (readonly) BOOL isPlayable;
 @property (assign, nonatomic) BOOL shouldAutoplay;
 @property (nonatomic, weak) id<SPVideoPlayerDelegate> videoPlayerDelegate;
 
