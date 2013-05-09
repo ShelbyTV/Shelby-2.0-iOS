@@ -16,4 +16,5 @@
 //return the current, authenticated User, or nil if user isn't logged in
 +(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc;
 
++ (User *)updateUserWithFacebookUser:(NSDictionary *)facebookUser inContext:(NSManagedObjectContext *)moc;
 @end

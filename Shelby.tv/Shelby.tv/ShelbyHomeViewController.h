@@ -8,14 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "BrowseViewController.h"
+#import "SettingsViewController.h"
 #import "User.h"
 
-@interface ShelbyHomeViewController : UIViewController
+@protocol ShelbyHomeDelegate <NSObject>
+
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
+- (void)logoutUser;
+- (void)connectToFacebook;
+- (void)connectToTwitter;
+@end
+
+
+@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, SettingsViewDelegate, AuthorizationDelegate>
 
 @property (nonatomic, strong) NSArray *channels;
-@property (nonatomic, strong) User *currentUser;
 // KP KP: Better way to send the delegete to the views below?
-@property (nonatomic, weak) id browseAndVideoReelDelegate;
+@property (nonatomic, weak) id masterDelegate;
+@property (strong, nonatomic) User *currentUser;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *channelsLoadingActivityIndicator;
 
 - (NSInteger)indexOfItem:(id)item inChannel:(DisplayChannel *)channel;
@@ -29,4 +39,7 @@
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 - (void)animateDismissPlayerForChannel:(DisplayChannel *)channel;
 - (void)dismissPlayer;
+
+- (void)userLoginFailedWithError:(NSString *)errorMessage;
+- (void)connectToFacebookFailedWithError:(NSString *)errorMessage;
 @end

@@ -11,7 +11,9 @@
 #import "Dashboard+Helper.h"
 #import "DisplayChannel+Helper.h"
 #import "DashboardEntry+Helper.h"
+#import "FacebookHandler.h"
 #import "ShelbyAPIClient.h"
+#import "TwitterHandler.h"
 #import "User+Helper.h"
 
 @interface ShelbyDataMediator()
@@ -164,9 +166,89 @@
     }];
 }
 
+- (void)cleanupSession
+{
+    [[FacebookHandler sharedInstance] facebookCleanup];   
+}
+
+
 -(void)logout
 {
-    assert(!"TODO: implement logout");
+    User *user = [self fetchAuthenticatedUser];
+ // TODO: remove if, set token in helper
+    if (user) {
+//        [user logout];
+        user.token = nil;
+    }
+    
+
+    [self cleanupSession];
+    
+    NSError *error;
+    [[self mainThreadContext] save:&error];
+    NSAssert(!error, @"context save failed, put your DEBUG hat on...");
+}
+
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
+{
+    [ShelbyAPIClient loginUserWithEmail:email password:password andBlock:^(id JSON, NSError *error) {
+  
+        if (JSON) {
+            NSManagedObjectContext *context = [self mainThreadContext];
+            NSDictionary *result = JSON[@"result"];
+            if ([result isKindOfClass:[NSDictionary class]]) {
+                User *user = [User userForDictionary:result inContext:context];
+                NSError *error;
+                [context save:&error];
+                NSAssert(!error, @"context save failed, put your DEBUG hat on...");
+                
+                [self.delegate loginUserDidCompleteWithUser:user];
+                return;
+            }
+        }
+
+        NSString *errorMessage = nil;
+        // Error code -1009 - no connection
+        // Error code -1001 - timeout
+        if ([error code] == -1009 || [error code] == -1001) {
+            errorMessage = @"Please make sure you are connected to the Internet";
+        } else {
+            errorMessage = @"Please make sure you've entered your login credientials correctly.";
+        }
+        
+        [self.delegate loginUserDidCompleteWithError:errorMessage];
+    }];
+}
+
+- (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI
+{
+    [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES withBlock:^(NSDictionary *facebookUser,
+                                                                                  NSString *facebookToken,
+                                                                                  NSString *errorMessage) {
+  
+        User *user = nil;
+        if (facebookUser) {
+            NSManagedObjectContext *context = [self mainThreadContext];
+            user = [User updateUserWithFacebookUser:facebookUser inContext:context];
+        
+            NSError *error;
+            [context save:&error];
+            NSAssert(!error, @"context save failed, put your DEBUG hat on...");
+     
+            [self.delegate facebookConnectDidCompleteWithUser:user];
+        }
+        if (facebookToken && user) {
+            [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:user.facebookUID token: facebookToken andSecret:nil];
+        }
+        if (errorMessage) {
+            [self.delegate facebookConnectDidCompleteWithError:errorMessage];
+        }
+    }];
+}
+
+- (void)connectTwitterWithViewController:(UIViewController *)viewController
+{
+    [[TwitterHandler sharedInstance] authenticateWithViewController:viewController];
 }
 
 - (NSManagedObjectModel *)managedObjectModel
@@ -245,6 +327,8 @@
     
     DLog(@"Recreating Persistent Store Coordinator");
     [self persistentStoreCoordinator];
+    
+    [self cleanupSession];
 }
 
 #pragma mark - Parsing Helpers

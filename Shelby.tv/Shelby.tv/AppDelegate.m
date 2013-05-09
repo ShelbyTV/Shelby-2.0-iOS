@@ -293,7 +293,6 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     if([[BITHockeyManager sharedHockeyManager].crashManager didCrashInLastSession]){
         DLog(@"Due to crash in last session, destroying Core Data backing file...");
         [[ShelbyDataMediator sharedInstance] nuclearCleanup];
-        [SettingsViewController cleanupSession];
     }
 }
 

@@ -9,14 +9,18 @@
 #import "ShelbyHomeViewController.h"
 #import "BrowseViewController.h"
 #import "DisplayChannel.h"
+#import "ImageUtilities.h"
+#import "SettingsViewController.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
-#import "ImageUtilities.h"
 
 @interface ShelbyHomeViewController ()
 @property (nonatomic, weak) IBOutlet UIView *topBar;
 
 @property (nonatomic, strong) UIView *settingsView;
+@property (strong, nonatomic) UIPopoverController *settingsPopover;
+@property (strong, nonatomic) AuthorizationViewController *authorizationVC;
+
 @property (nonatomic, strong) BrowseViewController *browseVC;
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, assign) BOOL animationInProgress;
@@ -62,6 +66,21 @@
 }
 
 
+
+- (void)userLoginFailedWithError:(NSString *)errorMessage;
+{
+    if (self.authorizationVC) {
+        [self.authorizationVC userLoginFailedWithError:errorMessage];
+    }
+    [self setCurrentUser:nil];
+}
+
+- (void)connectToFacebookFailedWithError:(NSString *)errorMessage
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+}
+
 - (void)setChannels:(NSArray *)channels
 {
     _channels = channels;
@@ -94,17 +113,21 @@
     [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
 }
 
-- (void)setBrowseAndVideoReelDelegate:(id)browseAndVideoReelDelegate
+- (void)setMasterDelegate:(id)masterDelegate
 {
-    _browseAndVideoReelDelegate = browseAndVideoReelDelegate;
-    self.browseVC.browseDelegate = browseAndVideoReelDelegate;
+    _masterDelegate = masterDelegate;
+    self.browseVC.browseDelegate = masterDelegate;
 }
 
 - (void)setCurrentUser:(User *)currentUser
 {
-    _currentUser = nil;//currentUser;
-    // KP KP: TODO: need to have fetch user return the logged in user or nil.
-//    [self setupSettingsView];
+    _currentUser = currentUser;
+    
+    if (currentUser) {
+        [self dismissAuthorizationVC];
+    }
+
+    [self setupSettingsView];
 }
 
 // KP KP: TODO: maybe create a special UserAvatarView, pass a target to it.
@@ -123,7 +146,7 @@
                                    andContentMode:UIViewContentModeScaleAspectFit];
         [self.settingsView addSubview:userAvatar];
         UIButton *settings = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-//        [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+        [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
         [self.settingsView addSubview:settings];
     } else {
         _settingsView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 120, 44)];
@@ -133,12 +156,26 @@
         [login setTitle:@"Login" forState:UIControlStateNormal];
         [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
         [[login titleLabel] setTextColor:[UIColor whiteColor]];
-//        [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+        [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
         [self.settingsView addSubview:login];
     }
     
     [self.view addSubview:self.settingsView];
 }
+
+- (void)showSettings
+{
+    if(!self.settingsPopover) {
+        SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithUser:self.currentUser];
+        
+        _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
+        [self.settingsPopover setDelegate:self];
+        [settingsViewController setDelegate:self];
+    }
+    
+    [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+}
+
 
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
@@ -248,7 +285,107 @@
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
     _videoReel = [[SPVideoReel alloc] initWithVideoFrames:[self entriesForChannel:channel] atIndex:index];
-    self.videoReel.delegate = self.browseAndVideoReelDelegate;
+    self.videoReel.delegate = self.masterDelegate;
 }
 
+#pragma mark - Authorization Methods (Private)
+- (void)dismissAuthorizationVC
+{
+    if (self.authorizationVC) {
+        [self.authorizationVC dismissViewControllerAnimated:NO completion:nil];
+        self.authorizationVC = nil;
+    }
+}
+
+- (void)login
+{
+    _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
+    
+    CGFloat xOrigin = self.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
+    CGFloat yOrigin = self.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;
+    CGSize loginDialogSize = self.authorizationVC.view.frame.size;
+    
+    [self.authorizationVC setModalInPopover:YES];
+    [self.authorizationVC setModalPresentationStyle:UIModalPresentationFormSheet];
+    [self.authorizationVC setDelegate:self];
+    
+    [self presentViewController:self.authorizationVC animated:YES completion:nil];
+    
+    self.authorizationVC.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+}
+
+- (void)logout
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
+                                                        message:@"Are you sure you want to logout?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Logout", nil];
+ 	
+    [alertView show];
+}
+
+#pragma mark - UIPopoverControllerDelegate methods
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.settingsPopover = nil;
+}
+
+#pragma mark - SettingsViewDelegate methods
+- (void)dismissPopover
+{
+    if (self.settingsPopover && [self.settingsPopover isPopoverVisible]) {
+        [self.settingsPopover dismissPopoverAnimated:NO];
+        self.settingsPopover = nil;
+    }
+    // logged in or not? update settingsView
+}
+
+- (void)logoutUser
+{
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(logoutUser)]) {
+        [self.masterDelegate logoutUser];
+    }
+    
+    [self dismissPopover];
+    [self setupSettingsView];
+}
+
+- (void)connectToFacebook
+{
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToFacebook)]) {
+        [self.masterDelegate connectToFacebook];
+    }
+    
+    [self dismissPopover];
+}
+
+- (void)connectToTwitter
+{
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToTwitter)]) {
+//        [self.masterDelegate connectToTwitter];
+    }
+    
+    [self dismissPopover];
+}
+
+- (void)launchMyRoll
+{
+    [self dismissPopover];
+    // TODO:
+}
+
+- (void)launchMyLikes
+{
+    [self dismissPopover];
+    // TODO:  
+}
+
+#pragma mark - AuthorizationDelegate
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
+{
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(loginUserWithEmail:password:)]) {
+        [self.masterDelegate loginUserWithEmail:email password:password];
+    }
+}
 @end

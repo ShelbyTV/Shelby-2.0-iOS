@@ -19,6 +19,14 @@
                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached;
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                withError:(NSError *)error;
+
+// Login
+- (void)loginUserDidCompleteWithUser:(User *)user;
+- (void)loginUserDidCompleteWithError:(NSString *)errorMessage;
+
+// Facebook
+- (void)facebookConnectDidCompleteWithUser:(User *)user;
+- (void)facebookConnectDidCompleteWithError:(NSString *)errorMessage;
 @end
 
 @interface ShelbyDataMediator : NSObject
@@ -30,10 +38,16 @@
 //fetching
 - (void)fetchChannels;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
+// TODO: rename to: fetchAuthenticatedUserOnMainThreadContext
 - (User *)fetchAuthenticatedUser;
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
 -(void)logout;
+
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
+
+- (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+- (void)connectTwitterWithViewController:(UIViewController *)viewController;
 
 //do whatever it takes to get us to a clean state, guaranteed
 -(void)nuclearCleanup;

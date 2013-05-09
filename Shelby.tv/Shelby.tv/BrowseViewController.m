@@ -9,18 +9,10 @@
 #import "BrowseViewController.h"
 
 // Views
-#import "LoginView.h"
-#import "SignupView.h"
-#import "PageControl.h"
 #import "SPVideoItemViewCell.h"
 #import "SPChannelCell.h"
 #import "SPChannelCollectionView.h"
 #import "SPVideoItemViewCellLabel.h"
-#import "SettingsViewController.h"
-#import "ShelbyBrain.h"
-
-
-#define kShelbyTutorialMode @"kShelbyTutorialMode"
 
 // Utilities
 #import "ImageUtilities.h"
@@ -32,24 +24,13 @@
 #import "User+Helper.h"
 #import "DisplayChannel+Helper.h"
 
+#define kShelbyTutorialMode @"kShelbyTutorialMode"
+
 
 @interface BrowseViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UITableView *channelsTableView;
-
-@property (strong, nonatomic) NSString *userNickname;
-@property (strong, nonatomic) NSString *userID;
-@property (strong, nonatomic) NSString *personalRollID;
-@property (strong, nonatomic) NSString *likesRollID;
-@property (strong, nonatomic) NSString *userImage;
-@property (assign, nonatomic) BOOL isLoggedIn;
-@property (strong, nonatomic) UIView *userView;
-@property (strong, nonatomic) UIPopoverController *settingsPopover;
-
-@property (nonatomic) LoginView *loginView;
-@property (nonatomic) SignupView *signupView;
-@property (nonatomic) UIView *backgroundLoginView;
 
 // { channelObjectID: [/*array of DashboardEntry or Frame*/], ... }
 @property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
@@ -63,16 +44,11 @@
 
 @property (nonatomic) UIView *tutorialView;
 
-- (void)fetchUser;
+//- (void)fetchUser;
 
 // Helper methods
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
 - (NSDate *)dateTutorialCompleted;
-
-/// Authentication Methods
-- (void)login;
-- (void)logout;
-- (void)showSettings;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -99,9 +75,7 @@
     
     [self resetVersionLabel];
     
-    [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
-    
-    [self fetchUser];
+//    [self fetchUser];
     
     self.channelEntriesByObjectID = [@{} mutableCopy];
     
@@ -197,18 +171,18 @@
     return cell;
 }
 
-- (void)fetchUser
-{
-    if ([self isLoggedIn]) {
-        //djs proper way to get current user
-        User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//        User *user = [dataUtility fetchUser];
-        [self setUserNickname:[user nickname]];
-        [self setUserID:[user userID]];
-        [self setUserImage:[user userImage]];
-    }
-}
+//- (void)fetchUser
+//{
+//    if ([self isLoggedIn]) {
+//        //djs proper way to get current user
+//        User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+////        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+////        User *user = [dataUtility fetchUser];
+//        [self setUserNickname:[user nickname]];
+//        [self setUserID:[user userID]];
+//        [self setUserImage:[user userImage]];
+//    }
+//}
 
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated
 {
@@ -462,47 +436,6 @@
     }
 }
 
-#pragma mark - Authorization Methods (Private)
-- (void)login
-{
-    AuthorizationViewController *authorizationViewController = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
-    
-    CGFloat xOrigin = self.view.frame.size.width / 2.0f - authorizationViewController.view.frame.size.width / 4.0f;
-    CGFloat yOrigin = self.view.frame.size.height / 5.0f - authorizationViewController.view.frame.size.height / 4.0f;
-    CGSize loginDialogSize = authorizationViewController.view.frame.size;
-    
-    [authorizationViewController setModalInPopover:YES];
-    [authorizationViewController setModalPresentationStyle:UIModalPresentationFormSheet];
-    [authorizationViewController setDelegate:self];
-    
-    [self presentViewController:authorizationViewController animated:YES completion:nil];
-    
-    authorizationViewController.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
-}
-
-- (void)logout
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
-                                                        message:@"Are you sure you want to logout?"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Logout", nil];
- 	
-    [alertView show];
-}
-
-- (void)showSettings
-{
-    if(!self.settingsPopover) {
-        SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsView" bundle:nil];
-
-        _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
-        [self.settingsPopover setDelegate:self];
-        [settingsViewController setParent:self];
-    }
-    [self.settingsPopover presentPopoverFromRect:self.userView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-}
-
 - (ShelbyHideBrowseAnimationViews *)animationViewForOpeningChannel:(DisplayChannel *)channel
 {
     // KP KP: TODO: deal with the case that the channel not found - maybe make the check in ShelbyHome before calling BrowseVC
@@ -592,38 +525,4 @@
 //    [self.channels addObject:self.personalRollID];
 //}
 
-
-#pragma mark - AuthorizationDelegate Methods
-- (void)authorizationDidComplete
-{
-    //djs not sure we're going to be a AuthorizationDelegate in the future
-    //but if we are, this is about the only thing I can imagine is okay to do:
-    [self setIsLoggedIn:YES];
-    //djs the rest of this stuff should be handled by other objects
-//    [self fetchUser];
-//    [ShelbyAPIClient getStream];
-//    [ShelbyAPIClient getPersonalRoll];
-//    [ShelbyAPIClient getLikes];
-}
-
-- (void)dismissPopover
-{
-    if (self.settingsPopover && [self.settingsPopover isPopoverVisible]) {
-        [self.settingsPopover dismissPopoverAnimated:NO];
-    }
-    
-    [self setIsLoggedIn:[[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]];
-    
-    if (!self.isLoggedIn) {
-        [self setUserNickname:nil];
-        [self resetVersionLabel];
-        //djs this shouldn't ever fetch channels
-    }
-
-}
-
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-{
-    [self dismissPopover];
-}
 @end

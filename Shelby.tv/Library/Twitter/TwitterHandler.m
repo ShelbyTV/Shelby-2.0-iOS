@@ -463,10 +463,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 // Cleanup
 - (void)twitterCleanup
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername]) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyTwitterUsername];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+
 }
 
 #pragma mark - AuthenticateTwitterDelegate Methods

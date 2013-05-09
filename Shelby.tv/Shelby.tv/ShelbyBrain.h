@@ -13,7 +13,7 @@
 #import "ShelbyDataMediator.h"
 #import "SPVideoReel.h"
 
-@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, SPVideoReelDelegate>
+@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, SPVideoReelDelegate, ShelbyHomeDelegate>
 
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 

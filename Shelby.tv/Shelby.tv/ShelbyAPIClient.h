@@ -32,6 +32,11 @@ typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
 
+// Login
++ (void)loginUserWithEmail:(NSString *)email
+                  password:(NSString *)password
+                 andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 /// Channels
 + (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
 + (void)fetchDashboardEntriesForDashboardID:(NSString *)dashboardID

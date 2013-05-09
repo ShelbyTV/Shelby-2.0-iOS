@@ -316,6 +316,28 @@
     [operation start];
 }
 
+#pragma mark - Authentication (POST)
++ (void)loginUserWithEmail:(NSString *)email
+                  password:(NSString *)password
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostLogin, email, password];
+    [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *requestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setTimeoutInterval:30.0];
+    [request setHTTPMethod:@"POST"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+       completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    
+    [operation start];
+}
+
+
 #pragma mark - Channels (GET)
 //djs update done!
 + (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock

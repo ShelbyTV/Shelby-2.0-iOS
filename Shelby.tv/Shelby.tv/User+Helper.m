@@ -41,6 +41,14 @@
     user.name = OBJECT_OR_NIL(dict[@"name"]);
     user.token = dict[@"authentication_token"];
     
+    // Resetting all auths:
+    user.twitterNickname = nil;
+    user.twitterUID = nil;
+    user.facebookNickname = nil;
+    user.facebookUID = nil;
+    user.tumblrNickname = nil;
+    user.tumblrUID = nil;
+
     //auths
     NSArray *authentications = dict[@"authentications"];
     if([authentications isKindOfClass:[NSArray class]]){
@@ -62,11 +70,24 @@
     return user;
 }
 
-//djs XXX this is no longer valid b/c we store many users in DB now...
++ (User *)updateUserWithFacebookUser:(NSDictionary *)facebookUser inContext:(NSManagedObjectContext *)moc
+{
+    User *user = [User currentAuthenticatedUserInContext:moc];
+    user.facebookUID = facebookUser[@"id"];
+    user.facebookNickname = facebookUser[@"name"];
+  
+    return user;
+}
+
+
 +(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityUser];
     request.fetchLimit = 1;
+  
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"token.length > 0"];
+    [request setPredicate:predicate];
+    
     NSArray *results = [moc executeFetchRequest:request error:nil];
     
     return [results count] ? results[0] : nil;

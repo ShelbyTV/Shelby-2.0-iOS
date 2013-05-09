@@ -53,6 +53,17 @@
     [self.currentForm resetForm];
 }
 
+
+- (void)userLoginFailedWithError:(NSString *)errorMessage
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:errorMessage
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
+}
+
 #pragma mark - User Authentication Methods (Private)
 - (IBAction)login:(id)sender
 {
@@ -105,10 +116,11 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationDidNotComplete)]) {
-        [self.delegate authorizationDidNotComplete];
-    }
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationDidNotComplete)]) {
+//        [self.delegate authorizationDidNotComplete];
+//    }
 
+    // TODO: send a message to delegate that I was canceled. Then, in delegate nil the property
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -116,17 +128,11 @@
 - (void)performAuthentication
 {
     if ([self.currentForm validateFields]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(userAuthenticationDidSucceed:)
-                                                     name:kShelbyNotificationUserAuthenticationDidSucceed object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(userAuthenticationDidFail:)
-                                                     name:kShelbyNotificationUserAuthenticationDidFail object:nil];
-        
         [self.currentForm processingForm];
         
-        [ShelbyAPIClient postAuthenticationWithEmail:[self.loginView.emailField.text lowercaseString] andPassword:self.loginView.passwordField.text];
+        if ([self.delegate conformsToProtocol:@protocol(AuthorizationDelegate)] && [self.delegate respondsToSelector:@selector(loginUserWithEmail:password:)]) {
+            [self.delegate loginUserWithEmail:[self.loginView.emailField.text lowercaseString] password:self.loginView.passwordField.text];
+        }
     }
 }
 
@@ -171,16 +177,16 @@
     }
 }
 
-- (void)userAuthenticationDidSucceed:(NSNotification *)notification
-{
-    [[NSNotificationCenter defaultCenter] removeObserver: self];
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationDidComplete)]) {
-        [self.delegate authorizationDidComplete];
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+//- (void)userAuthenticationDidSucceed:(NSNotification *)notification
+//{
+//    [[NSNotificationCenter defaultCenter] removeObserver: self];
+//    
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationDidComplete)]) {
+//        [self.delegate authorizationDidComplete];
+//    }
+//    
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 
 #pragma mark - UITextFieldDelegate Methods

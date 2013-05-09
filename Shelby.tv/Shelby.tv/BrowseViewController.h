@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AuthorizationViewController.h"
 #import "SPVideoReel.h"
 #import "SPChannelCell.h"
 #import "ShelbyHideBrowseAnimationViews.h"
@@ -21,7 +20,7 @@
 @protocol ShelbyPlayerProtocol;
 
 // KP KP: TODO: right now, browseVC is the delegate of the SPVideoReel. Need to be changed - the brain should be the delegate
-@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, AuthorizationDelegate, UIPopoverControllerDelegate>
+@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *toggleSecretButton;
 @property (weak, nonatomic) id<ShelbyBrowseProtocol> browseDelegate;
@@ -42,7 +41,6 @@
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 
-- (void)dismissPopover;
 - (ShelbyHideBrowseAnimationViews *)animationViewForOpeningChannel:(DisplayChannel *)channel;
 - (ShelbyHideBrowseAnimationViews *)animationViewForClosingChannel:(DisplayChannel *)channel;
 @end

@@ -83,20 +83,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
         [[FBSession activeSession] closeAndClearTokenInformation];
         [FBSession setActiveSession:nil];
     }
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID]) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserID];
-    }
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserFullName]) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookUserFullName];
-    }
-
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookToken]) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyFacebookToken];
-    }
-
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)facebookUserID
@@ -116,24 +102,35 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 }
 
 #pragma mark - Facebook Read/Write Permissions (Public)
-- (void)openSession:(BOOL)allowLoginUI
+- (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI withBlock:(shelby_facebook_request_complete_block_t)completionBlock
 {
     if ([[FBSession activeSession] isOpen]) {
         return;
     }
     
-    [FBSession openActiveSessionWithReadPermissions:@[@"email", @"read_stream"] allowLoginUI:allowLoginUI completionHandler:^(FBSession *session,
-                                                                                                                              FBSessionState status,
-                                                                                                                              NSError *error) {
+    [FBSession openActiveSessionWithReadPermissions:@[@"email", @"read_stream"]
+                                       allowLoginUI:allowLoginUI
+                                  completionHandler:^(FBSession *session,
+                                                      FBSessionState status,
+                                                      NSError *error) {
         if (status == FBSessionStateClosedLoginFailed || status == FBSessionStateCreatedOpening) {
             [self facebookCleanup];
             
             if (status == FBSessionStateClosedLoginFailed) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Go to Settings -> Facebook and turn ON Shelby" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alertView show];
+                completionBlock(nil, nil, @"Go to Settings -> Facebook and turn Shelby ON");
+//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Go to Settings -> Facebook and turn Shelby ON" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//                [alertView show];
             }
         } else {
-            [self saveFacebookInfo];
+//            [self saveFacebookInfo];
+            // KP KP: TODO: dump this, open issue on backend to get user full name
+            [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+                if (!error && [user isKindOfClass:[NSDictionary class]]) {
+                    completionBlock(user, [self facebookToken], nil);
+                } else {
+                    // error? could not fetch user.
+                }
+            }];
             
             if (self.invocationMethod) {
                 [self.invocationMethod invoke];
@@ -159,16 +156,17 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 
 - (void)askForPublishPermissions
 {
+    // KP KP: TODO: deal with invocation
     if (![[FBSession activeSession] isOpen]) {
-        NSMethodSignature *signature = [FacebookHandler instanceMethodSignatureForSelector:@selector(askForPublishPermissions)];
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-        
-        [invocation setTarget:self];
-        [invocation setSelector:@selector(askForPublishPermissions)];
-        
-        [self setInvocationMethod:invocation];
-        
-        [self openSession:YES];
+//        NSMethodSignature *signature = [FacebookHandler instanceMethodSignatureForSelector:@selector(askForPublishPermissions)];
+//        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+//        
+//        [invocation setTarget:self];
+//        [invocation setSelector:@selector(askForPublishPermissions)];
+//        
+//        [self setInvocationMethod:invocation];
+//        
+//        [self openSessionWithAllowLoginUI:YES];
         return;
     }
     

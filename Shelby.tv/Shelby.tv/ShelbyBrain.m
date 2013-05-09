@@ -30,7 +30,7 @@
 - (void)handleDidBecomeActive
 {
     self.homeVC.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUser];
-    self.homeVC.browseAndVideoReelDelegate = self;
+    self.homeVC.masterDelegate = self;
     //TODO: detect sleep time and remove player if it's been too long
         
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
@@ -65,6 +65,26 @@
 }
 
 #pragma mark - ShelbyDataMediatorDelegate
+- (void)loginUserDidCompleteWithError:(NSString *)errorMessage
+{
+    [self.homeVC userLoginFailedWithError:errorMessage];
+}
+
+- (void)loginUserDidCompleteWithUser:(User *)user
+{
+    [self.homeVC setCurrentUser:user];
+}
+
+- (void)facebookConnectDidCompleteWithUser:(User *)user
+{
+    [self.homeVC setCurrentUser:user];
+}
+
+- (void)facebookConnectDidCompleteWithError:(NSString *)errorMessage
+{
+    [self.homeVC connectToFacebookFailedWithError:errorMessage];
+}
+
 -(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached
 {
     //cached channels, stale
@@ -260,4 +280,27 @@ typedef struct _ShelbyArrayMergeInstructions {
     
     return instructions;
 }
+
+#pragma mark - ShelbyHomeDelegate
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
+{
+    [[ShelbyDataMediator sharedInstance] loginUserWithEmail:email password:password];
+}
+
+- (void)logoutUser
+{
+    [[ShelbyDataMediator sharedInstance] logout];
+    [self.homeVC setCurrentUser:nil];
+}
+
+- (void)connectToFacebook
+{
+    [[ShelbyDataMediator sharedInstance] openFacebookSessionWithAllowLoginUI:YES];
+}
+
+- (void)connectToTwitter
+{
+//    [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:self.homeVC];
+}
+
 @end

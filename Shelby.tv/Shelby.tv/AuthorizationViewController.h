@@ -10,10 +10,11 @@
 
 @protocol AuthorizationDelegate <NSObject>
 
-- (void)authorizationDidComplete;
+//- (void)authorizationDidComplete;
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 
-@optional
-- (void)authorizationDidNotComplete;
+//@optional
+//- (void)authorizationDidNotComplete;
 
 @end
 
@@ -22,4 +23,5 @@
 
 @property (weak, nonatomic) id<AuthorizationDelegate> delegate;
 
+- (void)userLoginFailedWithError:(NSString *)errorMessage;
 @end
