@@ -100,6 +100,7 @@
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
+    //TODO: if SPVideoReel is open on the same channel, addEntries: over there, too
     [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
 }
 
@@ -111,6 +112,11 @@
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
 {
     [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
+}
+
+- (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
+{
+    [self.browseVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
 }
 
 - (void)setMasterDelegate:(id)masterDelegate
@@ -185,6 +191,7 @@
 
 - (void)dismissPlayer
 {
+    [self.videoReel shutdown];
     [self.videoReel dismissViewControllerAnimated:NO completion:nil];
     self.videoReel = nil;
 }
@@ -234,6 +241,8 @@
             [animationViews.centerView removeFromSuperview];
             [animationViews.bottomView removeFromSuperview];
             [animationViews.topView removeFromSuperview];
+            
+            // KP KP: TODO: send a message to brain that it can start accepting new events
             [self setAnimationInProgress:NO];
         }];
     }];
@@ -277,6 +286,8 @@
             [UIView animateWithDuration:0.5 animations:^{
                 [self.topBar setAlpha:1];
             }];
+            [self.videoReel shutdown];
+            self.videoReel = nil;
         }];
         [self setAnimationInProgress:NO];
     }];
@@ -284,7 +295,7 @@
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    _videoReel = [[SPVideoReel alloc] initWithVideoFrames:[self entriesForChannel:channel] atIndex:index];
+    _videoReel = [[SPVideoReel alloc] initWithVideoEntities:[self entriesForChannel:channel] atIndex:index];
     self.videoReel.delegate = self.masterDelegate;
 }
 

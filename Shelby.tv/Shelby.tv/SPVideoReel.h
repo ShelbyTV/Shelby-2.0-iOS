@@ -43,20 +43,16 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 @property (copy, nonatomic) NSString *groupTitle;
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
 
-- (id)initWithVideoFrames:(NSArray *)videoFrames
-                  atIndex:(NSUInteger)videoStartIndex;
+- (id)initWithVideoEntities:(NSArray *)videoEntities
+                    atIndex:(NSUInteger)videoStartIndex;
 
 /// Update Methods
-- (void)extractVideoForVideoPlayer:(NSUInteger)position;
 - (void)currentVideoDidFinishPlayback;
-
-/// Storage Methods
-- (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player;
 
 /// Action Methods
 - (IBAction)restartPlaybackButtonAction:(id)sender;
 
-- (void)cleanup;
+- (void)shutdown;
 
 /// Tutorial
 - (void)videoDoubleTapped;

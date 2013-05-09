@@ -12,6 +12,8 @@
 @property (nonatomic, strong) NSString *channelDisplayTitle;
 @end
 
+
+// TODO: remove me
 @implementation SPChannelDisplay
 
 -(id)initWithChannelColor:(UIColor *)channelDisplayColor andChannelDisplayTitle:(NSString *)channelDisplayTitle

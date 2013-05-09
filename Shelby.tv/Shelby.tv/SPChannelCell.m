@@ -45,7 +45,7 @@
     [self.channelTitle setBackgroundColor:channelColor];
     [self.channelFrames setChannelColor:channelColor];
     self.channelFrames.backgroundColor = channelColor;
-
+    self.loadMoreActivityIndicator.color = channelColor;
 }
 
 - (UIColor *)channelDisplayColor

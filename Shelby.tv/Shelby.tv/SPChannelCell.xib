@@ -124,13 +124,25 @@
 							<object class="IBUIActivityIndicatorView" id="180663028">
 								<reference key="NSNextResponder" ref="852312895"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{32, 64}, {20, 20}}</string>
+								<string key="NSFrame">{{23, 65}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="852312895"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="754330648"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<bool key="IBUIAnimating">YES</bool>
+							</object>
+							<object class="IBUIActivityIndicatorView" id="754330648">
+								<reference key="NSNextResponder" ref="852312895"/>
+								<int key="NSvFlags">-2147483356</int>
+								<string key="NSFrame">{{984, 65}, {20, 20}}</string>
+								<reference key="NSSuperview" ref="852312895"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 							</object>
 						</array>
 						<string key="NSFrameSize">{1024, 149}</string>
@@ -194,6 +206,14 @@
 					</object>
 					<int key="connectionID">98</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">loadMoreActivityIndicator</string>
+						<reference key="source" ref="1038451655"/>
+						<reference key="destination" ref="754330648"/>
+					</object>
+					<int key="connectionID">101</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -222,6 +242,7 @@
 							<reference ref="9967735"/>
 							<reference ref="818094938"/>
 							<reference ref="180663028"/>
+							<reference ref="754330648"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -256,6 +277,11 @@
 						<reference key="object" ref="180663028"/>
 						<reference key="parent" ref="1038451655"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">99</int>
+						<reference key="object" ref="754330648"/>
+						<reference key="parent" ref="1038451655"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -271,12 +297,13 @@
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="70.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="95.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="99.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">98</int>
+			<int key="maxID">102</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -287,6 +314,7 @@
 						<string key="channelColorView">UIView</string>
 						<string key="channelFrames">SPChannelCollectionView</string>
 						<string key="channelTitle">UILabel</string>
+						<string key="loadMoreActivityIndicator">UIActivityIndicatorView</string>
 						<string key="refreshActivityIndicator">UIActivityIndicatorView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -301,6 +329,10 @@
 						<object class="IBToOneOutletInfo" key="channelTitle">
 							<string key="name">channelTitle</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="loadMoreActivityIndicator">
+							<string key="name">loadMoreActivityIndicator</string>
+							<string key="candidateClassName">UIActivityIndicatorView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="refreshActivityIndicator">
 							<string key="name">refreshActivityIndicator</string>

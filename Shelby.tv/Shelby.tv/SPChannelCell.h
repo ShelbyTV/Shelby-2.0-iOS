@@ -12,6 +12,7 @@
 @interface SPChannelCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet SPChannelCollectionView *channelFrames;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshActivityIndicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadMoreActivityIndicator;
 
 - (UIColor *)channelDisplayColor;
 - (NSString *)channelDisplayTitle;

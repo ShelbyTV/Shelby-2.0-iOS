@@ -23,6 +23,11 @@ typedef void (^extraction_complete_block)(NSString *videoURL);
 
 //uses cached URL unless cache is stale (ie. > 300s)
 //calls block with nil if extraction fails
-- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock;
+- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)queueNext;
+
+//tries to extract URL without a completion block, caching result
+//only queues processing if current queue length isn't too long
+//queue this extraction LAST
+- (void)warmCacheForVideo:(Video *)video;
 
 @end

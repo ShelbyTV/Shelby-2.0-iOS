@@ -137,16 +137,14 @@
     if(shouldAppend){
         self.channelEntriesByObjectID[channel.objectID] = [curEntries arrayByAddingObjectsFromArray:newChannelEntries];
         for(NSUInteger i = 0; i < [newChannelEntries count]; i++){
-            [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i+[newChannelEntries count] inSection:0]];
+            [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i+[curEntries count] inSection:0]];
         }
     } else {
-        //prepend by appending in reverse
         self.channelEntriesByObjectID[channel.objectID] = [newChannelEntries arrayByAddingObjectsFromArray:curEntries];
         for(NSUInteger i = 0; i < [newChannelEntries count]; i++){
             [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i inSection:0]];
         }
     }
-    //cell may be nil if offscreen, that's ok
     [cell.channelFrames insertItemsAtIndexPaths:indexPathsForInsert];
 }
 
@@ -158,7 +156,21 @@
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
 {
     SPChannelCell *cell = [self cellForChannel:channel];
-    [cell.refreshActivityIndicator stopAnimating];
+    if(shouldAnimate){
+        [cell.refreshActivityIndicator startAnimating];
+    } else {
+        [cell.refreshActivityIndicator stopAnimating];
+    }
+}
+
+- (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
+{
+    SPChannelCell *cell = [self cellForChannel:channel];
+    if(shouldAnimate){
+        [cell.loadMoreActivityIndicator startAnimating];
+    } else {
+        [cell.loadMoreActivityIndicator stopAnimating];
+    }
 }
 
 #pragma mark - Private Methods
@@ -288,55 +300,46 @@
 {
     SPVideoItemViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"SPVideoItemViewCell" forIndexPath:indexPath];
     
-    id entry = nil;
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)cv;
-    if ([channelCollection isKindOfClass:[SPChannelCollectionView class]]) {
-        NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
-        if (indexPath.row < [entries count]) {
-            entry = entries[indexPath.row];
-        }
+    NSAssert([channelCollection isKindOfClass:[SPChannelCollectionView class]], @"expecting a different class!");
+    NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
+    NSAssert(indexPath.row < [entries count], @"expected a valid index path row");
+    id entry = entries[indexPath.row];
+    
+    Frame *videoFrame = nil;
+    if ([entry isKindOfClass:[DashboardEntry class]]) {
+        videoFrame = ((DashboardEntry *)entry).frame;
+    } else if([entry isKindOfClass:[Frame class]]) {
+        videoFrame = entry;
+    } else {
+        NSAssert(false, @"Expected a DashboardEntry or Frame");
     }
-
-//    NSInteger cellsLeftToDisplay = abs([frames count] - [indexPath row]);
-//    if (cellsLeftToDisplay < 10) {
-//        
-//        if (![self.collectionViewDataSourceUpdater containsObject:channelID] ) {
-//            [self.collectionViewDataSourceUpdater addObject:channelID];
-//            [self fetchOlderFramesForIndex:key];
-//        }
-//    
-//    }
-    
-//    Frame *frame = (Frame *)frames[indexPath.row];
-    
-    if (entry) {
-        Frame *videoFrame = nil;
-        if ([entry isKindOfClass:[DashboardEntry class]]) {
-            videoFrame = ((DashboardEntry *)entry).frame;
-        } else {
-            DLog(@"Not a DashboardEntry");
+    if (videoFrame && videoFrame.video) {
+        Video *video = videoFrame.video;
+        if (video && video.thumbnailURL) {
+                [AsynchronousFreeloader loadImageFromLink:video.thumbnailURL
+                                             forImageView:cell.thumbnailImageView
+                                          withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
+                                           andContentMode:UIViewContentModeCenter];
         }
-        if (videoFrame && videoFrame.video) {
-            Video *video = videoFrame.video;
-            if (video && video.thumbnailURL) {
-                    [AsynchronousFreeloader loadImageFromLink:video.thumbnailURL
-                                                 forImageView:cell.thumbnailImageView
-                                              withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
-                                               andContentMode:UIViewContentModeCenter];
-            }
 
-            [cell.caption setText:[videoFrame creatorsInitialCommentWithFallback:YES]];
-            //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
-            CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.33);
-            CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
-                                                    constrainedToSize:maxCaptionSize
-                                                        lineBreakMode:NSLineBreakByWordWrapping].height;
-            
-            [cell.caption setFrame:CGRectMake(cell.caption.frame.origin.x,
-                                              cell.frame.size.height - textBasedHeight,
-                                              cell.frame.size.width,
-                                              textBasedHeight)];
-        }
+        [cell.caption setText:[videoFrame creatorsInitialCommentWithFallback:YES]];
+        //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
+        CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.33);
+        CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
+                                                constrainedToSize:maxCaptionSize
+                                                    lineBreakMode:NSLineBreakByWordWrapping].height;
+        
+        [cell.caption setFrame:CGRectMake(cell.caption.frame.origin.x,
+                                          cell.frame.size.height - textBasedHeight,
+                                          cell.frame.size.width,
+                                          textBasedHeight)];
+    }
+    
+    //load more data
+    NSInteger cellsBeyond = [entries count] - [indexPath row];
+    if(cellsBeyond == 1){
+        [self.browseDelegate loadMoreEntriesInChannel:channelCollection.channel sinceEntry:[entries lastObject]];
     }
 
     return cell;

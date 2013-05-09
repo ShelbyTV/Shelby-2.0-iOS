@@ -72,6 +72,11 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
 #pragma mark - UIApplicationDelegate Methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if( getenv("NSZombieEnabled") || getenv("NSAutoreleaseFreedObjectCheckEnabled") ) {
+        //objects are never free'd under NSZombie, expect memory usage to continually grow
+        DLog(@"NSZombieEnabled/NSAutoreleaseFreedObjectCheckEnabled enabled!");
+    }
+    
     //must happen first
     [self setupCrashHandling];
     
