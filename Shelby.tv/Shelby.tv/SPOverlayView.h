@@ -10,7 +10,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *airPlayView; // KP KP: TODO: add this button to nib!
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *scrubberGesture;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
 /// Toggle UI
 //djs TODO: haven't worked on these methods yet

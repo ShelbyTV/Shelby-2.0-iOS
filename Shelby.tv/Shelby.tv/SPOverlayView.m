@@ -19,6 +19,7 @@
 //@property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) IBOutlet UIButton *rollButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIView *videoInfoView;
 @property (weak, nonatomic) IBOutlet TopAlignedLabel *primaryTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userTimestamp;

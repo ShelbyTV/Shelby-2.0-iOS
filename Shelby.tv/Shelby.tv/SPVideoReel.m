@@ -445,9 +445,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 //    [self.model.overlayTimer invalidate];
 //    
 //    [self.model.currentVideoPlayer share];
+    UIButton *shareButton = (UIButton *)sender;
+    NSAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
     
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
-                                                                 fromRect:self.overlayView.shareButton.frame];
+                                                                 fromRect:shareButton.frame];
     [self.shareController share];
     
 }
