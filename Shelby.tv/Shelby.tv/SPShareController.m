@@ -28,6 +28,7 @@
 //djs
 //@property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
+@property (nonatomic, assign) CGRect fromFrame;
 @property (nonatomic) SPShareRollView *rollView;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 @property (assign, nonatomic) BOOL facebookConnected;
@@ -63,6 +64,17 @@
     }
     
     return self;
+}
+
+- (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer fromRect:(CGRect)frame
+{
+    self = [super init];
+     if (self) {
+         _videoPlayer = videoPlayer;
+         _fromFrame = frame;
+     }
+     
+     return self;
 }
 
 #pragma mark - Setup Methods
@@ -319,10 +331,10 @@
         self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
         [self.sharePopOverController setDelegate:self];
         //djs
-//        [self.sharePopOverController presentPopoverFromRect:[self.model.overlayView.shareButton frame]
-//                                                     inView:self.model.overlayView
-//                                   permittedArrowDirections:UIPopoverArrowDirectionDown
-//                                                   animated:YES];
+        [self.sharePopOverController presentPopoverFromRect:self.fromFrame
+                                                     inView:self.videoPlayer.view
+                                   permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                   animated:YES];
     }
 
 }

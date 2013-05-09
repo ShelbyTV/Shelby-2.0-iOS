@@ -11,6 +11,7 @@
 @interface SPShareController : NSObject <UITextViewDelegate, UIPopoverControllerDelegate>
 
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer;
+- (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer fromRect:(CGRect)frame;
 
 /// UI Methods
 - (void)share;

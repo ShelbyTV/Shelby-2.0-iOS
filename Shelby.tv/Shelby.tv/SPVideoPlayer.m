@@ -287,13 +287,14 @@
     //djs TODO: tell delegate about playback event
 }
 
+// Now done from the SPVideoReel
 - (void)share
 {
     // TODO - Uncomment for AppStore
 //    [[Panhandler sharedInstance] recordEvent];
     
-    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self];
-    [self.shareController share];
+//    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self];
+//    [self.shareController share];
 }
 
 - (void)roll

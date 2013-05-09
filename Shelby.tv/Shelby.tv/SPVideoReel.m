@@ -8,23 +8,18 @@
 
 #import "SPVideoReel.h"
 #import <QuartzCore/QuartzCore.h>
-
-// Views
-#import "SPOverlayView.h"
+#import "DeviceUtilities.h"
+#import "FacebookHandler.h"
+#import "Frame+Helper.h"
+#import "SPShareController.h"
 #import "SPChannelPeekView.h"
+#import "SPOverlayView.h"
 #import "SPTutorialView.h"
-
-// Controllers
 #import "SPVideoExtractor.h"
 #import "SPVideoScrubber.h"
-
-// Utilities
-#import "DeviceUtilities.h"
 #import "TwitterHandler.h"
-#import "FacebookHandler.h"
 
-//Core Data Models
-#import "Frame+Helper.h"
+
 
 #define kShelbySPSlowSpeed 0.2
 #define kShelbySPFastSpeed 0.5
@@ -44,6 +39,8 @@
 @property (nonatomic) SPTutorialView *tutorialView;
 @property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
+
+@property (nonatomic, strong) SPShareController *shareController;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
@@ -582,6 +579,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 //    [self.model.overlayTimer invalidate];
 //    
 //    [self.model.currentVideoPlayer share];
+    
+    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex] fromRect:self.overlayView.shareButton.frame];
+    [self.shareController share];
+    
 }
 
 - (IBAction)likeAction:(id)sender
