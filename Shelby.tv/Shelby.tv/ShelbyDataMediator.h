@@ -38,8 +38,7 @@
 //fetching
 - (void)fetchChannels;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
-// TODO: rename to: fetchAuthenticatedUserOnMainThreadContext
-- (User *)fetchAuthenticatedUser;
+- (User *)fetchAuthenticatedUserOnMainThreadContext;
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
 -(void)logout;
@@ -48,6 +47,8 @@
 
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)connectTwitterWithViewController:(UIViewController *)viewController;
+
+- (void)toggleLikeForFrame:(Frame *)frame;
 
 //do whatever it takes to get us to a clean state, guaranteed
 -(void)nuclearCleanup;

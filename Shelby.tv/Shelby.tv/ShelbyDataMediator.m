@@ -91,7 +91,25 @@
 }
 
 
-- (User *)fetchAuthenticatedUser
+- (void)toggleLikeForFrame:(Frame *)frame
+{
+    User *user = [self fetchAuthenticatedUserOnMainThreadContext];
+    if (user) {
+        [ShelbyAPIClient postUserLikedFrame:frame.frameID userToken:user.token withBlock:^(id JSON, NSError *error) {
+            if (JSON) { // success
+                return;
+            }   
+        }];
+    }
+    
+    frame.unsyncedLike = frame.unsyncedLike ? @0 : @1;
+
+    NSError *error;
+    [[self mainThreadContext] save:&error];
+    NSAssert(!error, @"context save failed, in toggleLikeForFrame...");
+}
+
+- (User *)fetchAuthenticatedUserOnMainThreadContext
 {
     return [User currentAuthenticatedUserInContext:[self mainThreadContext]];
 }
@@ -176,7 +194,7 @@
 
 -(void)logout
 {
-    User *user = [self fetchAuthenticatedUser];
+    User *user = [self fetchAuthenticatedUserOnMainThreadContext];
  // TODO: remove if, set token in helper
     if (user) {
 //        [user logout];

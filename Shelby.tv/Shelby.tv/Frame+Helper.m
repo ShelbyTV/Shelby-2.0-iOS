@@ -10,6 +10,7 @@
 #import "Conversation+Helper.h"
 #import "Video+Helper.h"
 #import "Roll+Helper.h"
+#import "ShelbyDataMediator.h"
 #import "User+Helper.h"
 
 @implementation Frame (Helper)
@@ -89,6 +90,11 @@
 - (NSString *)shelbyID
 {
     return self.frameID;
+}
+
+- (void)toggleLike
+{
+    [[ShelbyDataMediator sharedInstance] toggleLikeForFrame:self];
 }
 
 @end

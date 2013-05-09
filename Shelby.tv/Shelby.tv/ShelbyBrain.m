@@ -29,7 +29,7 @@
 
 - (void)handleDidBecomeActive
 {
-    self.homeVC.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUser];
+    self.homeVC.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     self.homeVC.masterDelegate = self;
     //TODO: detect sleep time and remove player if it's been too long
         

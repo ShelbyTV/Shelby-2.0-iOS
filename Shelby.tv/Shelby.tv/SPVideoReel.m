@@ -587,7 +587,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (IBAction)likeAction:(id)sender
 {
-    DLog(@"TODO: holy shit the like the video! do something great!");
+    SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
+    
+    [currentPlayer.videoFrame toggleLike];
     //djs easier to comment out everything and rebuild later :-] but :-/
 //    NSManagedObjectContext *context = [self.appDelegate context];
 //    NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];

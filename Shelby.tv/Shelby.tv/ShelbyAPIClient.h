@@ -54,7 +54,8 @@ typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
 + (void)postFrameToWatchedRoll:(NSString *)frameID;
 
 /// Liking
-+ (void)postFrameToLikes:(NSString *)frameID;
++ (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock;
+//+ (void)postFrameToLikes:(NSString *)frameID;
 
 /// Rolling
 + (void)postFrameToPersonalRoll:(NSString*)requestString;

@@ -55,7 +55,7 @@
 #define kShelbyCoreDataFrameConversationID              @"conversationID"
 #define kShelbyCoreDataFrameCreatedAt                   @"createdAt"
 #define kShelbyCoreDataFrameCreatorID                   @"creatorID"
-#define kShelbyCoreDataFrameIsSynced                    @"isSynced"
+#define kShelbyCoreDataFrameunsyncedLike                @"unsyncedLike"
 #define kShelbyCoreDataFrameIsStoredForLoggedOutUser    @"isStoredForLoggedOutUser"
 #define kShelbyCoreDataFrameRollID                      @"rollID"
 #define kShelbyCoreDataFrameTimestamp                   @"timestamp"

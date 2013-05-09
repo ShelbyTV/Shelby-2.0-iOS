@@ -16,5 +16,5 @@
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 - (BOOL)isPlayable;
-
+- (void)toggleLike;
 @end
