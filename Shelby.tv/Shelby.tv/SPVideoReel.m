@@ -430,7 +430,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)warmURLExtractionCache
 {
     //every time video changes, warm up the cache for the next 10 videos
-    int maxI = MAX(self.currentVideoPlayingIndex+10, [self.videoPlayers count]);
+    int maxI = MIN(self.currentVideoPlayingIndex+10, [self.videoPlayers count]);
     for(int i = self.currentVideoPlayingIndex; i < maxI; i++){
         SPVideoPlayer *player = self.videoPlayers[i];
         [player warmVideoExtractionCache];
