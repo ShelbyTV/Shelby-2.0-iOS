@@ -36,6 +36,7 @@
         frame = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityFrame
                                               inManagedObjectContext:context];
         frame.frameID = frameID;
+        frame.createdAt = dict[@"created_at"];
         NSDictionary *videoDict = dict[@"video"];
         if([videoDict isKindOfClass:[NSDictionary class]]){
             frame.video = [Video videoForDictionary:videoDict inContext:context];

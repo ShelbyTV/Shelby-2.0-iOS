@@ -232,6 +232,8 @@ typedef struct _ShelbyArrayMergeInstructions {
     NSRange range;
 } ShelbyArrayMergeInstructions;
 
+#define NEWER_THAN_INTO_ARRAY NSNotFound
+
 //NB: objects in array must repond to selector shelbyID
 - (ShelbyArrayMergeInstructions)instructionsToMerge:(NSArray *)newArray into:(NSArray *)curArray
 {
@@ -243,7 +245,7 @@ typedef struct _ShelbyArrayMergeInstructions {
         //shelbyID is a MongoID which starts with timestamp
         if([[newArray[0] shelbyID] compare:[curArray[0] shelbyID]] == NSOrderedDescending){
             //first new element > first old element
-            firstEntryIndex = -1;
+            firstEntryIndex = NEWER_THAN_INTO_ARRAY;
         } else {
             firstEntryIndex = [curArray count];
         }
@@ -253,38 +255,48 @@ typedef struct _ShelbyArrayMergeInstructions {
             //last old element > last new element
             lastEntryIndex = [curArray count];
         } else {
-            lastEntryIndex = -1;
+            lastEntryIndex = NEWER_THAN_INTO_ARRAY;
         }
         
     }
     
-    if(firstEntryIndex == -1){
-        if(lastEntryIndex == -1){
+    if(firstEntryIndex == NEWER_THAN_INTO_ARRAY){
+        if(lastEntryIndex == NEWER_THAN_INTO_ARRAY){
+            //full prepend
             instructions.shouldMerge = YES;
             instructions.append = NO;
             instructions.range = NSMakeRange(0, [newArray count]);
         } else {
-            //partial prepend (well tested)
+            //partial prepend
             instructions.shouldMerge = YES;
             instructions.append = NO;
             NSUInteger overlapIdx = [newArray indexOfObject:curArray[0]];
+            //djs debug code
+            if(overlapIdx == NSNotFound){
+                DLog(@"firstEntryIndex:%lu, lastEntryIndex:%lu", (unsigned long)firstEntryIndex, (unsigned long)lastEntryIndex);
+                DLog(@"curArray: %@ // newArray: %@", curArray, newArray);
+                NSAssert(false, @"v1-expected an overlap, what's up?");
+            }
             instructions.range = NSMakeRange(0, overlapIdx);
         }
     } else if(firstEntryIndex == [curArray count]){
+        //full append
         instructions.shouldMerge = YES;
         instructions.append = YES;
         instructions.range = NSMakeRange(0, [newArray count]);
     } else if(lastEntryIndex < [curArray count]){
-        //subset (well tested)
+        //complete subset
         instructions.shouldMerge = NO;
     } else {
-        //partial append (questionable...)
+        //partial append
         instructions.shouldMerge = YES;
         instructions.append = YES;
         NSUInteger overlapIdx = [newArray indexOfObject:[curArray lastObject]];
+        //djs debug code
         if(overlapIdx == NSNotFound){
             DLog(@"firstEntryIndex:%lu, lastEntryIndex:%lu", (unsigned long)firstEntryIndex, (unsigned long)lastEntryIndex);
-            NSAssert(false, @"expected an overlap, what's up?");
+            DLog(@"curArray: %@ // newArray: %@", curArray, newArray);
+            NSAssert(false, @"v2-expected an overlap, what's up?");
         }
         instructions.range = NSMakeRange(overlapIdx+1, [newArray count]-(overlapIdx+1));
     }

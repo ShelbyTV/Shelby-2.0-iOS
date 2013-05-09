@@ -135,7 +135,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<string key="IBUIText">Caption</string>
+								<string key="IBUIText">Primary Text</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEAA</bytes>
@@ -379,7 +379,7 @@
 								<string key="NSFrame">{{12, 0}, {710, 44}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="232483274"/>
+								<reference key="NSNextKeyView" ref="1002610958"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="290922202">
 									<int key="NSColorSpace">3</int>
@@ -390,13 +390,14 @@
 							<object class="IBUIProgressView" id="232483274">
 								<reference key="NSNextResponder" ref="721212649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{12, 18}, {710, 9}}</string>
+								<string key="NSFrame">{{10, 17}, {710, 9}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1002610958"/>
+								<reference key="NSNextKeyView" ref="359956817"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="290922202"/>
 								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<object class="NSColor" key="IBUIProgressTintColor">
 									<int key="NSColorSpace">1</int>
@@ -408,7 +409,7 @@
 							<object class="IBUIProgressView" id="359956817">
 								<reference key="NSNextResponder" ref="721212649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{5, 18}, {710, 9}}</string>
+								<string key="NSFrame">{{10, 17}, {710, 9}}</string>
 								<reference key="NSSuperview" ref="721212649"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="314233088"/>
@@ -420,7 +421,10 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4wNDMxMzcyNTQ5IDAuNzQ1MDk4MDM5MiAwLjI3ODQzMTM3MjUAA</bytes>
 								</object>
-								<reference key="IBUITrackTintColor" ref="290922202"/>
+								<object class="NSColor" key="IBUITrackTintColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+								</object>
 							</object>
 							<object class="IBUIView" id="986732239">
 								<reference key="NSNextResponder" ref="721212649"/>
@@ -434,10 +438,10 @@
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 							</object>
 						</array>
-						<string key="NSFrame">{{175, 700}, {820, 44}}</string>
+						<string key="NSFrame">{{180, 700}, {820, 42}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="359956817"/>
+						<reference key="NSNextKeyView" ref="232483274"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -567,14 +571,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">videoCaptionLabel</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="626961961"/>
-					</object>
-					<int key="connectionID">64</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">bufferProgressView</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="232483274"/>
@@ -667,14 +663,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">videoTimestamp</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="427795009"/>
-					</object>
-					<int key="connectionID">172</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">rollButton</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="642058558"/>
@@ -704,6 +692,22 @@
 						<reference key="destination" ref="986732239"/>
 					</object>
 					<int key="connectionID">174</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">primaryTextLabel</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="626961961"/>
+					</object>
+					<int key="connectionID">175</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">userTimestamp</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="427795009"/>
+					</object>
+					<int key="connectionID">176</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -986,7 +990,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">174</int>
+			<int key="maxID">176</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1015,12 +1019,12 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="airPlayView">UIView</string>
 						<string key="bufferProgressView">UIProgressView</string>
-						<string key="channelTitleLabel">UILabel</string>
 						<string key="elapsedProgressView">UIProgressView</string>
 						<string key="elapsedTimeLabel">UILabel</string>
 						<string key="likeNotificationView">UIImageView</string>
 						<string key="likesButton">UIButton</string>
 						<string key="nicknameLabel">UILabel</string>
+						<string key="primaryTextLabel">TopAlignedLabel</string>
 						<string key="restartPlaybackButton">UIButton</string>
 						<string key="rollButton">UIButton</string>
 						<string key="scrubberContainerView">UIView</string>
@@ -1029,11 +1033,9 @@
 						<string key="shareButton">UIButton</string>
 						<string key="totalDurationLabel">UILabel</string>
 						<string key="userImageView">UIImageView</string>
+						<string key="userTimestamp">UILabel</string>
 						<string key="versionButton">UIButton</string>
-						<string key="videoCaptionLabel">TopAlignedLabel</string>
 						<string key="videoInfoView">UIView</string>
-						<string key="videoTimestamp">UILabel</string>
-						<string key="videoTitleLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="airPlayView">
@@ -1043,10 +1045,6 @@
 						<object class="IBToOneOutletInfo" key="bufferProgressView">
 							<string key="name">bufferProgressView</string>
 							<string key="candidateClassName">UIProgressView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="channelTitleLabel">
-							<string key="name">channelTitleLabel</string>
-							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="elapsedProgressView">
 							<string key="name">elapsedProgressView</string>
@@ -1067,6 +1065,10 @@
 						<object class="IBToOneOutletInfo" key="nicknameLabel">
 							<string key="name">nicknameLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="primaryTextLabel">
+							<string key="name">primaryTextLabel</string>
+							<string key="candidateClassName">TopAlignedLabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="restartPlaybackButton">
 							<string key="name">restartPlaybackButton</string>
@@ -1100,25 +1102,17 @@
 							<string key="name">userImageView</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="userTimestamp">
+							<string key="name">userTimestamp</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="versionButton">
 							<string key="name">versionButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="videoCaptionLabel">
-							<string key="name">videoCaptionLabel</string>
-							<string key="candidateClassName">TopAlignedLabel</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="videoInfoView">
 							<string key="name">videoInfoView</string>
 							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="videoTimestamp">
-							<string key="name">videoTimestamp</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="videoTitleLabel">
-							<string key="name">videoTitleLabel</string>
-							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -1131,17 +1125,12 @@
 					<string key="superclassName">GAITrackedViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="likeAction:">id</string>
-						<string key="restartPlaybackButtonAction:">id</string>
 						<string key="rollAction:">id</string>
 						<string key="shareButtonAction:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="likeAction:">
 							<string key="name">likeAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="restartPlaybackButtonAction:">
-							<string key="name">restartPlaybackButtonAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="rollAction:">

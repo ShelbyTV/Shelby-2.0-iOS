@@ -296,7 +296,9 @@
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    _videoReel = [[SPVideoReel alloc] initWithVideoEntities:[self entriesForChannel:channel] atIndex:index];
+    _videoReel = [[SPVideoReel alloc] initWithChannel:channel
+                                     andVideoEntities:[self entriesForChannel:channel]
+                                              atIndex:index];
     self.videoReel.delegate = self.masterDelegate;
 }
 
