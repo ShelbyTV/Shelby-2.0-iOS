@@ -114,7 +114,7 @@ NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
     NSDate *lastActiveDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastActiveDate];
     if (lastActiveDate && [lastActiveDate isKindOfClass:[NSDate class]]) {
         
-        NSTimeInterval interval = fabs([lastActiveDate timeIntervalSinceNow]);
+//        NSTimeInterval interval = fabs([lastActiveDate timeIntervalSinceNow]);
         
         // Remove SPVideoReel if more than 5 minutes (300 seconds) have elapsed since app went to background
         //djs TODO: this functionality moves to brain
