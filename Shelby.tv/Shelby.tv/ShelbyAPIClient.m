@@ -548,47 +548,7 @@
     [operation start];
 }
 
-//+ (void)postFrameToLikes:(NSString *)frameID
-//{
-//    
-//    NSURL *url;
-//    
-//    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//        User *user = [dataUtility fetchUser];
-//        NSString *authToken = [user token];
-//        NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToLikesWithAuthentication, frameID, authToken];
-//
-//        DLog(@"%@", requestString);
-//        
-//        url = [NSURL URLWithString:requestString];
-//    } else {
-//        NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToLikesWithoutAuthentication, frameID];
-//        url = [NSURL URLWithString:requestString];
-//    }
-//    
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"PUT"];
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        
-//        DLog(@"Succeassfully posted Frame (%@) to Likes", frameID);
-//        
-//        // Fetch likes to update CoreData store if user is logged in
-//        if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-//            [self getLikes];
-//        }
-//       
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        
-//        DLog(@"Problem posting frame to likes: %@", frameID);
-//        
-//    }];
-//    
-//    [operation start];
-//}
-
-
+// TODO: deal with unlike, sync likes after user logs in.
 + (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToLikesWithAuthentication, frameID, authToken];

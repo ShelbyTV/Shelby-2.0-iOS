@@ -457,35 +457,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (IBAction)likeAction:(id)sender
 {
     SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    
     [currentPlayer.videoFrame toggleLike];
-    //djs easier to comment out everything and rebuild later :-] but :-/
-//    NSManagedObjectContext *context = [self.appDelegate context];
-//    NSManagedObjectID *objectID = [self.model.currentVideoPlayer.videoFrame objectID];
-//    if (!objectID) {
-//        return;
-//    }
-//    
-//    Frame *frame = (Frame *)[context existingObjectWithID:objectID error:nil];
-//    if (!frame) {
-//        return;
-//    }
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
-//        [ShelbyAPIClient postFrameToLikes:frame.frameID];
-//    } else { // Logged Out
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreLoggedOutLike];
-//        [ShelbyAPIClient postFrameToLikes:frame.frameID];
-//        [dataUtility storeFrameInLoggedOutLikes:frame];
-//    }
-//    
-//    SPModel *model = (SPModel *)[SPModel sharedInstance];
-//    [model.overlayView showOverlayView];
-//    [model.overlayView showLikeNotificationView];
-//    [NSTimer scheduledTimerWithTimeInterval:5.0f
-//                                     target:model.overlayView
-//                                   selector:@selector(hideLikeNotificationView)
-//                                   userInfo:nil
-//                                    repeats:NO];
 }
 
 - (IBAction)rollAction:(id)sender

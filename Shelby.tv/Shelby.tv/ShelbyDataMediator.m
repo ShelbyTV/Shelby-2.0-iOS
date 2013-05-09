@@ -93,10 +93,17 @@
 
 - (void)toggleLikeForFrame:(Frame *)frame
 {
+    NSAssert(frame.managedObjectContext == [self mainThreadContext], @"toggleLike expected frame from main context");
+    
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
     if (user) {
         [ShelbyAPIClient postUserLikedFrame:frame.frameID userToken:user.token withBlock:^(id JSON, NSError *error) {
             if (JSON) { // success
+                frame.unsyncedLike = nil;
+                
+                NSError *error;
+                [frame.managedObjectContext save:&error];
+                NSAssert(!error, @"context save failed, in toggleLikeForFrame (in block)...");
                 return;
             }   
         }];
@@ -105,7 +112,7 @@
     frame.unsyncedLike = frame.unsyncedLike ? @0 : @1;
 
     NSError *error;
-    [[self mainThreadContext] save:&error];
+    [frame.managedObjectContext save:&error];
     NSAssert(!error, @"context save failed, in toggleLikeForFrame...");
 }
 
