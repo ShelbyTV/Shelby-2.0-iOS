@@ -151,22 +151,26 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)cancelCurrentExtraction
 {
-    [self.startNextExtractionTimer invalidate];
-    self.startNextExtractionTimer = nil;
-    [self.currentExtractionTimeoutTimer invalidate];
-    self.currentExtractionTimeoutTimer = nil;
-    
-    //fail current extraction
-    if(self.currentlyExtracting){
-        extraction_complete_block currentCompletionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
-        if(currentCompletionBlock){
-            currentCompletionBlock(nil, NO);
+    //notification observer is also synchronized to prevent us from sending messages
+    //to players after cancellation
+    @synchronized(self){
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        self.currentlyExtracting = nil;
+        [self destroyWebView];
+        
+        [self.startNextExtractionTimer invalidate];
+        self.startNextExtractionTimer = nil;
+        [self.currentExtractionTimeoutTimer invalidate];
+        self.currentExtractionTimeoutTimer = nil;
+        
+        //fail current extraction
+        if(self.currentlyExtracting){
+            extraction_complete_block currentCompletionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+            if(currentCompletionBlock){
+                currentCompletionBlock(nil, NO);
+            }
         }
     }
-    self.currentlyExtracting = nil;
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self destroyWebView];
 }
 
 #pragma mark - Private Methods
@@ -299,7 +303,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 {
     @synchronized(self) {
         
-        if ( notification.userInfo && ![notification.userInfo isKindOfClass:[NSNull class]] ) {
+        if (self.currentlyExtracting && notification.userInfo && ![notification.userInfo isKindOfClass:[NSNull class]]) {
             
             NSArray *allValues = [notification.userInfo allValues];
             for (id value in allValues) {

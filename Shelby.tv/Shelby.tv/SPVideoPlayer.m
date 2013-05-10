@@ -19,7 +19,7 @@
 
 @property (nonatomic) AVPlayer *player;
 //on reset, this is set to NO which prevents from loading (is reset by -prepareFor...Playback)
-@property (assign, nonatomic) BOOL canBecomePlayable;
+@property (assign, atomic) BOOL canBecomePlayable;
 @property (assign, nonatomic) BOOL isPlayable;
 @property (assign, nonatomic) BOOL isPlaying;
 @property (assign, nonatomic) CMTime lastPlayheadPosition;
@@ -32,6 +32,7 @@
 #pragma mark - Memory Management Methods
 - (void)dealloc
 {
+    _videoPlayerDelegate = nil;
     [self removeAllObservers];
 }
 
@@ -126,6 +127,7 @@
 
 - (void)removeAllObservers
 {
+    NSAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
@@ -174,6 +176,15 @@
     
     //no retain cycle b/c the block's owner (SPVideoExtractor) is not self
     [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL, BOOL wasError) {
+        if (!self.canBecomePlayable) {
+            //Zombie discussion
+            // This video player was reset (and observers removed) while we were waiting
+            // This block has the only reference to self (the SPVideoPlayer)
+            // If we were to setup player, we would register notifications - don't want to do that!
+            // When this block exits, refcount = 0 and self is dealloc'd
+            return;
+        }
+        
         if (videoURL) {
             [self setupPlayerForURL:[NSURL URLWithString:videoURL]];
             if (self.shouldAutoplay) {
@@ -215,18 +226,18 @@
 
 - (void)resetPlayer
 {
-    [self pause];
-    
+    // Keep these three lines first to prevent messages being sent to zombies
+    self.canBecomePlayable = NO; //must be reset by -prepareFor...Playback methods
+    self.shouldAutoplay = NO;
     [self removeAllObservers];
+    
+    [self pause];
+    self.lastPlayheadPosition = [self elapsedTime];
+    self.isPlayable = NO;
     
     [self.playerLayer removeFromSuperlayer];
     self.playerLayer = nil;
     self.player = nil;
-    
-    self.lastPlayheadPosition = [self elapsedTime];
-    self.shouldAutoplay = NO;
-    self.isPlayable = NO;
-    self.canBecomePlayable = NO; //must be reset by -prepareFor...Playback methods
 }
 
 #pragma mark - Video Playback Methods (Public)

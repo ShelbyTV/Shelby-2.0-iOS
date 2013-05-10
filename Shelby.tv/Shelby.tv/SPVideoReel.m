@@ -268,10 +268,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)shutdown
 {
-    //resetting all possibly players (including current player) will pause and free memory of AVPlayer
-    [self.possiblyPlayablePlayers makeObjectsPerformSelector:@selector(resetPlayer)];
-    
     [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+    
+    //resetting all possibly playable players (including current player) will pause and free memory of AVPlayer
+    //not entirely true: if the player has an extraction pending, that block holds a reference to the player
+    //but resetPlayer: is respected by that block; it will do nothing if it's player has been reset.
+    [self.possiblyPlayablePlayers makeObjectsPerformSelector:@selector(resetPlayer)];
 }
 
 #pragma mark - Storage Methods (Public)
