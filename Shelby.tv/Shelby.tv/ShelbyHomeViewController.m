@@ -62,7 +62,10 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    if (self.videoReel) {
+        DLog(@"dimissing player b/c of memory warning");
+        [self dismissPlayer];
+    }
 }
 
 

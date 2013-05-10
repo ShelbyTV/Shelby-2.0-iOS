@@ -343,6 +343,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 #pragma mark - Video Preload Strategery
 
+/* --Performance testing notes--
+ * TEST: DS, ipad Mini 1 w/ SPVideoReelPreloadNextOnly, 5/9/13
+ * NB:   NSZombieEnabled=YES -- so this test is more of a worst-case scenario
+ * RESULT:
+ *  Received occasional memory warning when returning to browse view from video reel,
+ *  but generally it ran very well.
+ *
+ */
 - (void)setupVideoPreloadStrategy
 {
     if (preloadStrategy == SPVideoReelPreloadStrategyNotSet) {
@@ -351,7 +359,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             preloadStrategy = SPVideoReelPreloadNextThreeKeepPrevious;
             DLog(@"Preload strategy: next 3, keep previous");
         } else if ([DeviceUtilities isIpadMini1]) {
-            //TODO: determine best preload strategy for iPadMini1
             preloadStrategy = SPVideoReelPreloadNextOnly;
             DLog(@"Preload strategy: next only");
         } else {
@@ -385,18 +392,18 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     //progressively build up playerToKeep
     switch (preloadStrategy) {
         case SPVideoReelPreloadNextThreeKeepPrevious:
-            additionalPlayer = [self preloadedPlayerAtIndex:self.currentVideoPlayingIndex+3];
+            additionalPlayer = [self preloadPlayerAtIndex:self.currentVideoPlayingIndex+3];
             if(additionalPlayer){ [playersToKeep addObject:additionalPlayer]; }
             
         case SPVideoReelPreloadNextTwoKeepPrevious:
-            additionalPlayer = [self preloadedPlayerAtIndex:self.currentVideoPlayingIndex+2];
+            additionalPlayer = [self preloadPlayerAtIndex:self.currentVideoPlayingIndex+2];
             if(additionalPlayer){ [playersToKeep addObject:additionalPlayer]; }
             
         case SPVideoReelPreloadNextKeepPrevious:
             if(previousPlayer){ [playersToKeep addObject:previousPlayer]; }
             
         case SPVideoReelPreloadNextOnly:
-            additionalPlayer = [self preloadedPlayerAtIndex:self.currentVideoPlayingIndex+1];
+            additionalPlayer = [self preloadPlayerAtIndex:self.currentVideoPlayingIndex+1];
             if(additionalPlayer){ [playersToKeep addObject:additionalPlayer]; }
             
         case SPVideoReelPreloadNone:
@@ -417,8 +424,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     self.possiblyPlayablePlayers = playersToKeep;
 }
 
-- (SPVideoPlayer *)preloadedPlayerAtIndex:(NSInteger)idx
+- (SPVideoPlayer *)preloadPlayerAtIndex:(NSInteger)idx
 {
+    //djs TODO: indicate that we need more video!
+    if(idx >= [self.videoPlayers count]){
+        return nil;
+    }
+    
     SPVideoPlayer *player = self.videoPlayers[idx];
     if(player){
         player.shouldAutoplay = NO;
