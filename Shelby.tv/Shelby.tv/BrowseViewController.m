@@ -145,7 +145,13 @@
             [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i inSection:0]];
         }
     }
-    [cell.channelFrames insertItemsAtIndexPaths:indexPathsForInsert];
+    [cell.channelCollectionView insertItemsAtIndexPaths:indexPathsForInsert];
+}
+
+- (void)fetchDidCompleteForChannel:(DisplayChannel *)channel
+{
+    SPChannelCell *cell = [self cellForChannel:channel];
+    cell.isRefreshing = NO;
 }
 
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
@@ -249,26 +255,58 @@
 }
 
 
-//djs updating this for real...
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     SPChannelCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SPChannelCell" forIndexPath:indexPath];
     
-    SPChannelCollectionView *channelFrames = [cell channelFrames];
-    [channelFrames registerNib:[UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil] forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
-    [channelFrames setDelegate:self];
-    [channelFrames setDataSource:self];
-    [channelFrames reloadData];
+    SPChannelCollectionView *channelCollectionView = [cell channelCollectionView];
+    [channelCollectionView registerNib:[UINib nibWithNibName:@"SPVideoItemViewCell" bundle:nil] forCellWithReuseIdentifier:@"SPVideoItemViewCell"];
+    [channelCollectionView setDelegate:self];
+    [channelCollectionView setDataSource:self];
+    [channelCollectionView reloadData];
+    
+    channelCollectionView.delegate = self;
     
     DisplayChannel *channel = (DisplayChannel *)self.channels[indexPath.row];
 
-    channelFrames.channel = channel;
-    //TODO: deal with no color, no title
-    [cell setChannelColor:[channel displayColor] andTitle:[channel displayTitle]];
+    channelCollectionView.channel = channel;
+    cell.color = channel.displayColor;
+    cell.title = channel.displayTitle;
     return cell;
 }
 
+
+#pragma mark - UIScrollViewDelegate Methods
+
+#define PULL_TO_REFRESH_DISTANCE -150.0
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    if(scrollView.contentOffset.x < PULL_TO_REFRESH_DISTANCE){
+        SPChannelCollectionView *channelCollectionView = (SPChannelCollectionView *)scrollView;
+        SPChannelCell *cell = channelCollectionView.parentCell;
+        cell.isRefreshing = YES;
+        [self.browseDelegate loadMoreEntriesInChannel:channelCollectionView.channel sinceEntry:nil];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    //NB: this could get triggered with enough velocity.
+    // we may be okay with that, but could use other callbacks to maintain state and prevent that
+    if(scrollView.contentOffset.x < 0){
+        SPChannelCollectionView *channelCollectionView = (SPChannelCollectionView *)scrollView;
+        SPChannelCell *cell = channelCollectionView.parentCell;
+        [cell setProximityToRefreshMode:(scrollView.contentOffset.x/PULL_TO_REFRESH_DISTANCE)];
+        if(scrollView.contentOffset.x < PULL_TO_REFRESH_DISTANCE){
+            cell.willRefresh = YES;
+        } else {
+            cell.willRefresh = NO;
+        }
+    }
+}
 
 #pragma mark - UITableViewDelegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

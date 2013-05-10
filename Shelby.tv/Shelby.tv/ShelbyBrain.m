@@ -136,7 +136,7 @@
                 [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:newChannelEntries[0]];
             }
         } else {
-           //full subset, nothing to do
+            //full subset, nothing to add
         }
     } else {
         [self.homeVC setEntries:channelEntries forChannel:channel];
@@ -144,6 +144,7 @@
     }
     
     if(!cached){
+        [self.homeVC fetchDidCompleteForChannel:channel];
         [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
         [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
@@ -197,6 +198,13 @@
     [self.homeVC animateLaunchPlayerForChannel:channel atIndex:index];
 }
 
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
+{
+    //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
+    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:YES];
+    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
+}
+
 #pragma mark - SPVideoReelProtocol Methods
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
 {
@@ -220,13 +228,6 @@
 - (void)videoDidFinishPlaying
 {
     // TODO
-}
-
-- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
-{
-    //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
-    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:YES];
-    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
 }
 
 #pragma mark - Helpers

@@ -30,6 +30,7 @@
 
 - (NSInteger)indexOfItem:(id)item inChannel:(DisplayChannel *)channel;
 
+- (void)fetchDidCompleteForChannel:(DisplayChannel *)channel;
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel;
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;
