@@ -289,6 +289,7 @@
 {
     if ( _player.currentItem == notification.object) {
         [self pause];
+        //djs TODO: take advantage of this notification, we can make the UX really nice
         DLog(@"PLAYBACK STALLED");
     }
 }
