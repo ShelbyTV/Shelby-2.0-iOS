@@ -275,13 +275,7 @@ typedef struct _ShelbyArrayMergeInstructions {
             //partial prepend
             instructions.shouldMerge = YES;
             instructions.append = NO;
-            NSUInteger overlapIdx = [newArray indexOfObject:curArray[0]];
-            //djs debug code
-            if(overlapIdx == NSNotFound){
-                DLog(@"firstEntryIndex:%lu, lastEntryIndex:%lu", (unsigned long)firstEntryIndex, (unsigned long)lastEntryIndex);
-                DLog(@"curArray: %@ // newArray: %@", curArray, newArray);
-                NSAssert(false, @"v1-expected an overlap, what's up?");
-            }
+            NSUInteger overlapIdx = [self indexOfFirstCommonObjectFromFront:YES of:curArray into:newArray];
             instructions.range = NSMakeRange(0, overlapIdx);
         }
     } else if(firstEntryIndex == [curArray count]){
@@ -296,17 +290,27 @@ typedef struct _ShelbyArrayMergeInstructions {
         //partial append
         instructions.shouldMerge = YES;
         instructions.append = YES;
-        NSUInteger overlapIdx = [newArray indexOfObject:[curArray lastObject]];
-        //djs debug code
-        if(overlapIdx == NSNotFound){
-            DLog(@"firstEntryIndex:%lu, lastEntryIndex:%lu", (unsigned long)firstEntryIndex, (unsigned long)lastEntryIndex);
-            DLog(@"curArray: %@ // newArray: %@", curArray, newArray);
-            NSAssert(false, @"v2-expected an overlap, what's up?");
-        }
+        NSUInteger overlapIdx = [self indexOfFirstCommonObjectFromFront:NO of:curArray into:newArray];
         instructions.range = NSMakeRange(overlapIdx+1, [newArray count]-(overlapIdx+1));
     }
     
     return instructions;
+}
+
+//we know there is overlap, but it's possible that curArray[0] or [curArray lastObject] is not in newArray
+//so, we try those first, then keep moving deeper into array
+- (NSUInteger)indexOfFirstCommonObjectFromFront:(BOOL)front of:(NSArray *)curArray into:(NSArray *)newArray
+{
+    NSUInteger idx = NSNotFound;
+    NSEnumerator *curArrayEnumerator = front ? [curArray objectEnumerator] : [curArray reverseObjectEnumerator];
+    for (id obj in curArrayEnumerator) {
+        idx = [newArray indexOfObject:obj];
+        if(idx != NSNotFound){
+            return idx;
+        }
+    }
+    NSAssert(NO, @"expected a common object, didn't find one.");
+    return 0;
 }
 
 #pragma mark - ShelbyHomeDelegate
