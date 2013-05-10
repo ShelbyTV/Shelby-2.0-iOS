@@ -344,6 +344,8 @@
     NSAssert(indexPath.row < [entries count], @"expected a valid index path row");
     id entry = entries[indexPath.row];
     
+    cell.thumbnailImageView.backgroundColor = channelCollection.channel.displayColor;
+    
     Frame *videoFrame = nil;
     if ([entry isKindOfClass:[DashboardEntry class]]) {
         videoFrame = ((DashboardEntry *)entry).frame;
@@ -355,10 +357,10 @@
     if (videoFrame && videoFrame.video) {
         Video *video = videoFrame.video;
         if (video && video.thumbnailURL) {
-                [AsynchronousFreeloader loadImageFromLink:video.thumbnailURL
-                                             forImageView:cell.thumbnailImageView
-                                          withPlaceholder:[UIImage imageNamed:@"videoListThumbnail"]
-                                           andContentMode:UIViewContentModeCenter];
+            [AsynchronousFreeloader loadImageFromLink:video.thumbnailURL
+                                         forImageView:cell.thumbnailImageView
+                                      withPlaceholder:nil
+                                       andContentMode:UIViewContentModeScaleAspectFill];
         }
 
         [cell.caption setText:[videoFrame creatorsInitialCommentWithFallback:YES]];

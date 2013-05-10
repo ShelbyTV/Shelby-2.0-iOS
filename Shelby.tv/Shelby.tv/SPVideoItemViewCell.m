@@ -24,6 +24,11 @@
     return self;
 }
 
+- (void)prepareForReuse
+{
+    self.thumbnailImageView.image = nil;
+}
+
 - (void)highlightItemWithColor:(UIColor *)color
 {
     [self.caption setBackgroundColor:color];
