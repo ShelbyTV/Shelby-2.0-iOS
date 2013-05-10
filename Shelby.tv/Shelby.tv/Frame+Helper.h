@@ -8,8 +8,9 @@
 
 #import "Frame.h"
 #import "ShelbyModel.h"
+#import "ShelbyVideoContainer.h"
 
-@interface Frame (Helper) <ShelbyModel>
+@interface Frame (Helper) <ShelbyModel, ShelbyVideoContainer>
 
 + (Frame *)frameForDictionary:(NSDictionary *)dict
                     inContext:(NSManagedObjectContext *)context;

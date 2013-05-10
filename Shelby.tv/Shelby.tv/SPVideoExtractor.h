@@ -7,6 +7,8 @@
 //
 // Extracts ONE video at a time.
 
+#import "ShelbyVideoContainer.h"
+
 @class Video;
 
 typedef void (^extraction_complete_block)(NSString *videoURL, BOOL wasError);
@@ -30,5 +32,6 @@ typedef void (^extraction_complete_block)(NSString *videoURL, BOOL wasError);
 //only queues processing if current queue length isn't too long
 //queue this extraction LAST on a low priority queue
 - (void)warmCacheForVideo:(Video *)video;
+- (void)warmCacheForVideoContainer:(id<ShelbyVideoContainer>)videoContainer;
 
 @end

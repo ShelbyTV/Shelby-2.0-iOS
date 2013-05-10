@@ -7,8 +7,9 @@
 //
 
 #import "Video.h"
+#import "ShelbyVideoContainer.h"
 
-@interface Video (Helper)
+@interface Video (Helper) <ShelbyVideoContainer>
 
 + (Video *)videoForDictionary:(NSDictionary *)dict
                     inContext:(NSManagedObjectContext *)context;

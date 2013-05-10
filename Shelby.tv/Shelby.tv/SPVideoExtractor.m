@@ -105,6 +105,12 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     }
 }
 
+- (void)warmCacheForVideoContainer:(id<ShelbyVideoContainer>)videoContainer
+{
+    NSAssert([videoContainer conformsToProtocol:@protocol(ShelbyVideoContainer)], @"warm cache for entity expected a video container");
+    [self warmCacheForVideo:[videoContainer containedVideo]];
+}
+
 - (NSDictionary *)nextItemForExtraction
 {
     @synchronized(self){

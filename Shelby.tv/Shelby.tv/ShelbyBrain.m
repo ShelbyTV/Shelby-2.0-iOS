@@ -9,6 +9,7 @@
 #import "ShelbyBrain.h"
 #import "DisplayChannel.h"
 #import "ShelbyModel.h"
+#import "SPVideoExtractor.h"
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
 
@@ -131,11 +132,15 @@
         if(mergeInstructions.shouldMerge){
             NSArray *newChannelEntries = [channelEntries subarrayWithRange:mergeInstructions.range];
             [self.homeVC addEntries:newChannelEntries toEnd:mergeInstructions.append ofChannel:channel];
+            if(!mergeInstructions.append){
+                [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:newChannelEntries[0]];
+            }
         } else {
            //full subset, nothing to do
         }
     } else {
         [self.homeVC setEntries:channelEntries forChannel:channel];
+        [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:channelEntries[0]];
     }
     
     if(!cached){

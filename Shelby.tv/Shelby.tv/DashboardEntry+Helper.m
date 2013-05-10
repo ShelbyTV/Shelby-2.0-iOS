@@ -76,4 +76,9 @@
     return self.dashboardEntryID;
 }
 
+- (Video *)containedVideo
+{
+    return self.frame.video;
+}
+
 @end

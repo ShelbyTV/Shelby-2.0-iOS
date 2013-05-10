@@ -93,6 +93,11 @@
     return self.frameID;
 }
 
+- (Video *)containedVideo
+{
+    return self.video;
+}
+
 - (void)toggleLike
 {
     [[ShelbyDataMediator sharedInstance] toggleLikeForFrame:self];

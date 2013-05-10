@@ -85,4 +85,9 @@
     return YES;
 }
 
+- (Video *)containedVideo
+{
+    return self;
+}
+
 @end
