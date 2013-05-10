@@ -12,7 +12,6 @@
 #import "Frame+Helper.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SPShareController.h"
-#import "SPOverlayView.h"
 #import "SPChannelPeekView.h"
 #import "SPOverlayView.h"
 #import "SPTutorialView.h"
@@ -180,6 +179,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
     NSAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
     self.overlayView = nib[0];
+    self.overlayView.delegate = self;
     [self.view addSubview:self.overlayView];
     [self.overlayView setAccentColor:self.channel.displayColor];
 }
@@ -308,12 +308,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)togglePlayback:(UIGestureRecognizer *)recognizer
 {
-    SPVideoPlayer *player = self.videoPlayers[self.currentVideoPlayingIndex];
-    
-    // Animating Play/Pause icon on the screen
-    [self animatePlaybackState:player.isPlaying];
+    [self animatePlaybackState:self.currentPlayer.isPlaying];
 
-    [player togglePlayback];
+    [self.currentPlayer togglePlayback];
+}
+
+- (void)scrubToPercent:(CGFloat)scrubPct
+{
+    [self.currentPlayer scrubToPct:scrubPct];
 }
 
 #pragma mark -  Update Methods (Private)

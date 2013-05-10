@@ -254,8 +254,8 @@
     UITapGestureRecognizer *gesture = (UITapGestureRecognizer *)sender;
     CGPoint position = [gesture locationInView:self.scrubberTouchView];
     CGFloat percentage = position.x / self.elapsedProgressView.frame.size.width;
+    [self.delegate scrubToPercent:percentage];
     [self rescheduleOverlayTimer];
-    //djs TODO: call out to a delegate
 }
 
 #pragma mark - Text Helper

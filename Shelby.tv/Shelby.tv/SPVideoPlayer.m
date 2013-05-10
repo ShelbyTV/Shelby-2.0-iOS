@@ -271,6 +271,13 @@
     [self.videoPlayerDelegate videoPlaybackStatus:NO forPlayer:self];
 }
 
+- (void)scrubToPct:(CGFloat)scrubPct
+{
+    if (CMTIME_IS_VALID([self duration])) {
+        [self.player seekToTime:CMTimeMultiplyByFloat64([self duration], MAX(0.0,MIN(scrubPct,1.0)))];
+    }
+}
+
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
     if ( _player.currentItem == notification.object) {

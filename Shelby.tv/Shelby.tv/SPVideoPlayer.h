@@ -45,5 +45,6 @@
 - (void)play;
 - (void)pause;
 - (void)togglePlayback;
+- (void)scrubToPct:(CGFloat)scrubPct;
 
 @end
