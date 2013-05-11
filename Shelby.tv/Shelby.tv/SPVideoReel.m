@@ -276,8 +276,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.possiblyPlayablePlayers makeObjectsPerformSelector:@selector(resetPlayer)];
 }
 
-#pragma mark - Storage Methods (Public)
-
 - (void)animatePlaybackState:(BOOL)videoPlaying
 {
     NSString *imageName = nil;
@@ -456,12 +454,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 #pragma mark - Action Methods (Private)
 - (IBAction)shareButtonAction:(id)sender
 {
-    // Disable overlayTimer
-    //djs TODO: we should hold this, nobody else
-//    [self.model.overlayView showOverlayView];
-//    [self.model.overlayTimer invalidate];
-//    
-//    [self.model.currentVideoPlayer share];
     UIButton *shareButton = (UIButton *)sender;
     STVAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
     
@@ -499,12 +491,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)rollVideo
 {
-    // Disable overlayTimer
-    //djs
-//    [self.model.overlayView showOverlayView];
-//    [self.model.overlayTimer invalidate];
-//    
-//    [self.model.currentVideoPlayer roll];
+    // TODO
 }
 
 
@@ -774,6 +761,29 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     //        [self currentVideoShouldChangeToVideo:position];
     //    
     //    }
+}
+
+- (void)videoDidStallForPlayer:(SPVideoPlayer *)player
+{
+    if (self.currentPlayer == player) {
+        [player pause];
+        [self.overlayView showOverlayView];
+        //djs TODO: a nice, subtle notification
+        //djs IMPORTANT: this is more likely to happen when you seek beyond the buffer
+        //** need to handle that case nicely, not just the "normal playback" stalled case
+        /* Idea:
+         * Keep track of the current playhead and the amount buffered beyond it.
+         * Have a fun little view that shows something filling up, getting ready to resume playback!
+         * 
+         * Focus more time than seems necessary on this, b/c it makes watching a single video very enjoyable.
+         */
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Downloading... Slowly..."
+                                                            message:@"Give it a little time to buffer.  Then double-tap to resume playback."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"whatever"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 - (void)videoLoadingStatus:(BOOL)isLoading forPlayer:(SPVideoPlayer *)player

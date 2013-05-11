@@ -29,7 +29,6 @@
 - (void)hideLikeNotificationView;
 - (void)showVideoInfo;
 - (void)hideVideoInfo;
-- (void)rescheduleOverlayTimer;
 
 - (void)updateBufferedRange:(CMTimeRange)bufferedRange;
 - (void)updateCurrentTime:(CMTime)time;

@@ -422,9 +422,6 @@
                      } completion:^(BOOL finished) {
                          [self.mask removeFromSuperview];
                      }];
-    
-    //djs
-//    [self.model rescheduleOverlayTimer];
 }
 
 @end

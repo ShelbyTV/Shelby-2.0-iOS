@@ -11,6 +11,7 @@
 @protocol SPVideoPlayerDelegate <NSObject>
 
 - (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player;
+- (void)videoDidStallForPlayer:(SPVideoPlayer *)player;
 - (void)videoLoadingStatus:(BOOL)isLoading forPlayer:(SPVideoPlayer *)player;
 - (void)videoBufferedRange:(CMTimeRange)bufferedRange forPlayer:(SPVideoPlayer *)player;
 - (void)videoDuration:(CMTime)duration forPlayer:(SPVideoPlayer *)player;
