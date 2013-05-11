@@ -58,7 +58,7 @@
     
     NSError *err;
     NSArray *results = [context executeFetchRequest:request error:&err];
-    NSAssert(!err, @"couldn't fetch dashboard entries!");
+    STVAssert(!err, @"couldn't fetch dashboard entries!");
     return results;
 }
 

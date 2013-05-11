@@ -175,9 +175,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupOverlayView
 {
-    NSAssert(!self.overlayView, @"should only setup overlay view once");
+    STVAssert(!self.overlayView, @"should only setup overlay view once");
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
-    NSAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
+    STVAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
     self.overlayView = nib[0];
     self.overlayView.delegate = self;
     [self.view addSubview:self.overlayView];
@@ -199,7 +199,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             } else if([videoEntry isKindOfClass:[Frame class]]){
                 player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:((Frame *)videoEntry)];
             } else {
-                NSAssert(false, @"expected videoEntry to be a DashboardEntry or Frame");
+                STVAssert(false, @"expected videoEntry to be a DashboardEntry or Frame");
             }
             player.videoPlayerDelegate = self;
             [self.videoPlayers addObject:player];
@@ -463,7 +463,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 //    
 //    [self.model.currentVideoPlayer share];
     UIButton *shareButton = (UIButton *)sender;
-    NSAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
+    STVAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
     
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
                                                                  fromRect:shareButton.frame];

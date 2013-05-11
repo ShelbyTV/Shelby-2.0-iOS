@@ -34,7 +34,7 @@
             break;
             
         default:
-            NSAssert( hex.length == 6 || hex.length == 3 , @"Your hex color value is malformed. It should either be three or six characters in length.");
+            STVAssert( hex.length == 6 || hex.length == 3 , @"Your hex color value is malformed. It should either be three or six characters in length.");
             break;
     }
     

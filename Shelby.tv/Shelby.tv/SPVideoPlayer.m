@@ -127,7 +127,7 @@
 
 - (void)removeAllObservers
 {
-    NSAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
+    STVAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];

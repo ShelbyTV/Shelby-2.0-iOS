@@ -339,9 +339,9 @@
     SPVideoItemViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"SPVideoItemViewCell" forIndexPath:indexPath];
     
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)cv;
-    NSAssert([channelCollection isKindOfClass:[SPChannelCollectionView class]], @"expecting a different class!");
+    STVAssert([channelCollection isKindOfClass:[SPChannelCollectionView class]], @"expecting a different class!");
     NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
-    NSAssert(indexPath.row < [entries count], @"expected a valid index path row");
+    STVAssert(indexPath.row < [entries count], @"expected a valid index path row");
     id entry = entries[indexPath.row];
     
     cell.thumbnailImageView.backgroundColor = channelCollection.channel.displayColor;
@@ -352,7 +352,7 @@
     } else if([entry isKindOfClass:[Frame class]]) {
         videoFrame = entry;
     } else {
-        NSAssert(false, @"Expected a DashboardEntry or Frame");
+        STVAssert(false, @"Expected a DashboardEntry or Frame");
     }
     if (videoFrame && videoFrame.video) {
         Video *video = videoFrame.video;

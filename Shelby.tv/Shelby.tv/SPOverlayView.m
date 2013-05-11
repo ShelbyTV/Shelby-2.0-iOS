@@ -107,7 +107,7 @@
     } else if ([entity isKindOfClass:[Frame class]]) {
         frame = (Frame *)entity;
     } else {
-        NSAssert( false, @"Overlay expects DashboardEntry or Frame");
+        STVAssert( false, @"Overlay expects DashboardEntry or Frame");
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{

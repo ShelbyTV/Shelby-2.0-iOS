@@ -86,14 +86,14 @@
     } else if(channel.dashboard && (!entry || [entry isKindOfClass:[DashboardEntry class]])){
         [self fetchDashboardEntriesForDashboard:channel.dashboard inChannel:channel sinceDashboardEntry:(DashboardEntry *)entry];
     } else {
-        NSAssert(false, @"asked to fetch entries in channel with bad parameters");
+        STVAssert(false, @"asked to fetch entries in channel with bad parameters");
     }
 }
 
 
 - (void)toggleLikeForFrame:(Frame *)frame
 {
-    NSAssert(frame.managedObjectContext == [self mainThreadContext], @"toggleLike expected frame from main context");
+    STVAssert(frame.managedObjectContext == [self mainThreadContext], @"toggleLike expected frame from main context");
     
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
     if (user) {
@@ -103,7 +103,7 @@
                 
                 NSError *error;
                 [frame.managedObjectContext save:&error];
-                NSAssert(!error, @"context save failed, in toggleLikeForFrame (in block)...");
+                STVAssert(!error, @"context save failed, in toggleLikeForFrame (in block)...");
                 return;
             }   
         }];
@@ -113,7 +113,7 @@
 
     NSError *error;
     [frame.managedObjectContext save:&error];
-    NSAssert(!error, @"context save failed, in toggleLikeForFrame...");
+    STVAssert(!error, @"context save failed, in toggleLikeForFrame...");
 }
 
 - (User *)fetchAuthenticatedUserOnMainThreadContext
@@ -213,7 +213,7 @@
     
     NSError *error;
     [[self mainThreadContext] save:&error];
-    NSAssert(!error, @"context save failed, put your DEBUG hat on...");
+    STVAssert(!error, @"context save failed, put your DEBUG hat on...");
 }
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
@@ -227,7 +227,7 @@
                 User *user = [User userForDictionary:result inContext:context];
                 NSError *error;
                 [context save:&error];
-                NSAssert(!error, @"context save failed, put your DEBUG hat on...");
+                STVAssert(!error, @"context save failed, put your DEBUG hat on...");
                 
                 [self.delegate loginUserDidCompleteWithUser:user];
                 return;
@@ -260,7 +260,7 @@
         
             NSError *error;
             [context save:&error];
-            NSAssert(!error, @"context save failed, put your DEBUG hat on...");
+            STVAssert(!error, @"context save failed, put your DEBUG hat on...");
      
             [self.delegate facebookConnectDidCompleteWithUser:user];
         }
@@ -320,7 +320,7 @@
 
 - (NSManagedObjectContext *)mainThreadContext
 {
-    NSAssert([NSThread isMainThread], @"must only use main thread context on main thread");
+    STVAssert([NSThread isMainThread], @"must only use main thread context on main thread");
     if(!self.mainThreadMOC){
         self.mainThreadMOC = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         self.mainThreadMOC.persistentStoreCoordinator = [self persistentStoreCoordinator];
@@ -411,7 +411,7 @@
     
     NSError *error;
     [context save:&error];
-    NSAssert(!error, @"context save failed, put your DEBUG hat on...");
+    STVAssert(!error, @"context save failed, put your DEBUG hat on...");
     return resultDisplayChannels;
 }
 
@@ -444,7 +444,7 @@
     
     NSError *error;
     [context save:&error];
-    NSAssert(!error, @"context save failed, put your DEBUG hat on...");
+    STVAssert(!error, @"context save failed, put your DEBUG hat on...");
     return resultDashboardEntries;
 }
 

@@ -310,7 +310,7 @@ typedef struct _ShelbyArrayMergeInstructions {
             return idx;
         }
     }
-    NSAssert(NO, @"expected a common object, didn't find one.");
+    STVAssert(NO, @"expected a common object, didn't find one.");
     return 0;
 }
 
