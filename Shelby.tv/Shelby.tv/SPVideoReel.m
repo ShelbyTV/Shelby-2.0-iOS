@@ -747,20 +747,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 #pragma mark - SPVideoPlayerDelegete Methods
 
-//djs TODO
 - (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player{
-    //TODO
-    //djs only keeping this for some math, possibly...
-    //    NSUInteger position = _model.currentVideo + 1;
-    //    CGFloat x = position * kShelbySPVideoWidth;
-    //    CGFloat y = _videoScrollView.contentOffset.y;
-    //
-    //    if ( position <= (_model.numberOfVideos-1) ) {
-    //
-    //        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-    //        [self currentVideoShouldChangeToVideo:position];
-    //    
-    //    }
+    [self changeVideoInForwardDirection:YES];
 }
 
 - (void)videoDidStallForPlayer:(SPVideoPlayer *)player
@@ -814,7 +802,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)videoPlaybackStatus:(BOOL)isPlaying forPlayer:(SPVideoPlayer *)player
 {
-    //djs TODO
+    //noop for now
 }
 
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player
@@ -827,18 +815,23 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                                                   cancelButtonTitle:@"whatever"
                                                   otherButtonTitles:nil, nil];
         [alertView show];
+        //djs TODO: when user hits OK:
+        //[self changeVideoInForwardDirection:YES];
     }
-    
-    //djs only keeping this for some math, possibly...
-    //        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
-    //            CGFloat videoX = kShelbySPVideoWidth * position;
-    //            CGFloat videoY = _videoScrollView.contentOffset.y;
-    //            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-    //            [self currentVideoShouldChangeToVideo:position];
-    //        } else { // Load next video, (but do not scroll)
-    //            [self extractVideoForVideoPlayer:position];
-    //        }
-    //    }
+}
+
+- (BOOL)changeVideoInForwardDirection:(BOOL)forward
+{
+    NSUInteger idx = self.currentVideoPlayingIndex + (forward ? 1 : -1);
+    if (idx > 0 && idx < [self.videoEntities count]) {
+        CGFloat videoX = idx * kShelbySPVideoWidth;
+        CGFloat videoY = self.videoScrollView.contentOffset.y;
+        [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
+        [self currentVideoShouldChangeToVideo:idx];
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 

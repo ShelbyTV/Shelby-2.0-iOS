@@ -282,6 +282,7 @@
 {
     if ( _player.currentItem == notification.object) {
         [self.videoPlayerDelegate videoDidFinishPlayingForPlayer:self];
+        [self scrubToPct:0.0];
     }
 }
 
