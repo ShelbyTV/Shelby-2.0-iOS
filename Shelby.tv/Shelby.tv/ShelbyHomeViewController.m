@@ -115,6 +115,11 @@
     [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
 }
 
+- (void)fetchDidCompleteForChannel:(DisplayChannel *)channel
+{
+    [self.browseVC fetchDidCompleteForChannel:channel];
+}
+
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
 {
     return [self.browseVC entriesForChannel:channel];

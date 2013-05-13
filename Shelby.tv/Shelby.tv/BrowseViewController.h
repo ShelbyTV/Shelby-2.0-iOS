@@ -21,7 +21,7 @@
 @protocol ShelbyPlayerProtocol;
 
 // KP KP: TODO: right now, browseVC is the delegate of the SPVideoReel. Need to be changed - the brain should be the delegate
-@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *toggleSecretButton;
 @property (weak, nonatomic) id<ShelbyBrowseProtocol> browseDelegate;
@@ -32,10 +32,8 @@
 /// Action Methods
 - (IBAction)toggleSecretModes:(id)sender;
 
-/// DataSource Methods
-// djs: TODO: this stuff should be handed to me
-//- (void)fetchAllChannels;
 
+- (void)fetchDidCompleteForChannel:(DisplayChannel *)channel;
 - (void)setEntries:(NSArray *)entries forChannel:(DisplayChannel *)channel;
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel;
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;

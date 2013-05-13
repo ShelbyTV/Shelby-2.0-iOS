@@ -86,17 +86,6 @@
     return NO;
 }
 
-//djs don't need this if we're only calling super
-//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-//{
-//    //djs
-////    if ([self.model.overlayTimer isValid]) {
-////        [self.model.overlayTimer invalidate];
-////    }
-//    
-//    return [super hitTest:point withEvent:event];
-//}
-
 #pragma mark - View Updating Methods
 
 - (void)setFrameOrDashboardEntry:(id)entity
@@ -107,7 +96,7 @@
     } else if ([entity isKindOfClass:[Frame class]]) {
         frame = (Frame *)entity;
     } else {
-        NSAssert( false, @"Overlay expects DashboardEntry or Frame");
+        STVAssert( false, @"Overlay expects DashboardEntry or Frame");
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -240,14 +229,6 @@
     }];
 }
 
-
-#pragma mark - Timer Methods
-- (void)rescheduleOverlayTimer
-{
-    //djs
-//    [self.model rescheduleOverlayTimer];
-}
-
 #pragma mark - Scrubber Touch Methods
 - (IBAction)scrubberTouched:(id)sender
 {
@@ -255,7 +236,6 @@
     CGPoint position = [gesture locationInView:self.scrubberTouchView];
     CGFloat percentage = position.x / self.elapsedProgressView.frame.size.width;
     [self.delegate scrubToPercent:percentage];
-    [self rescheduleOverlayTimer];
 }
 
 #pragma mark - Text Helper

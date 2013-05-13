@@ -60,7 +60,12 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 imageView.contentMode = contentMode;
                 imageView.clipsToBounds = YES;
-                imageView.image = [UIImage imageWithContentsOfFile:[[cache objectForKey:AsynchronousFreeloaderCachePaths] valueForKey:link]];
+                [UIView transitionWithView:imageView
+                                  duration:0.2
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    imageView.image = [UIImage imageWithContentsOfFile:[[cache objectForKey:AsynchronousFreeloaderCachePaths] valueForKey:link]];
+                                } completion:nil];
             });
                            
             
@@ -326,7 +331,12 @@
         // Update imageView on Main Thread
         imageView.contentMode = contentMode;
         imageView.clipsToBounds = YES;
-        imageView.image = [UIImage imageWithData:data];
+        [UIView transitionWithView:imageView
+                          duration:0.1
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            imageView.image = [UIImage imageWithData:data];
+                        } completion:nil];
     
     });
     

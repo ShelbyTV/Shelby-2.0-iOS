@@ -127,7 +127,7 @@
 
 - (void)removeAllObservers
 {
-    NSAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
+    STVAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
@@ -282,15 +282,14 @@
 {
     if ( _player.currentItem == notification.object) {
         [self.videoPlayerDelegate videoDidFinishPlayingForPlayer:self];
+        [self scrubToPct:0.0];
     }
 }
 
 - (void)itemPlaybackStalled:(NSNotification *)notification
 {
     if ( _player.currentItem == notification.object) {
-        [self pause];
-        //djs TODO: take advantage of this notification, we can make the UX really nice
-        DLog(@"PLAYBACK STALLED");
+        [self.videoPlayerDelegate videoDidStallForPlayer:self];
     }
 }
 

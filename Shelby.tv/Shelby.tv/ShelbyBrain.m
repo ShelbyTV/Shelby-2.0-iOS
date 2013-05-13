@@ -7,7 +7,7 @@
 //
 
 #import "ShelbyBrain.h"
-#import "DisplayChannel.h"
+#import "DisplayChannel+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
 
@@ -159,7 +159,7 @@
                 [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:newChannelEntries[0]];
             }
         } else {
-           //full subset, nothing to do
+            //full subset, nothing to add
         }
     } else {
         [self.homeVC setEntries:channelEntries forChannel:channel];
@@ -167,6 +167,7 @@
     }
     
     if(!cached){
+        [self.homeVC fetchDidCompleteForChannel:channel];
         [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
         [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
@@ -230,10 +231,17 @@
     return nextChannel;
 }
 
-- (void)launchChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
+//returns YES if we launched the channel
+//only launches the channel if it has content and the index into that content is valid
+- (BOOL)launchChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    self.currentChannel = channel;
-    [self.homeVC launchPlayerForChannel:channel atIndex:index];
+    if([channel hasEntityAtIndex:index]){
+        self.currentChannel = channel;
+        [self.homeVC launchPlayerForChannel:channel atIndex:index];
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - ShelbyBrowseProtocol Methods
@@ -251,12 +259,22 @@
     [self.homeVC animateLaunchPlayerForChannel:channel atIndex:index];
 }
 
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
+{
+    //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
+    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:YES];
+    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
+}
+
 #pragma mark - SPVideoReelProtocol Methods
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
 {
     [self.homeVC dismissPlayer];
     NSInteger nextChannel = [self nextChannelForDirection:up];
-    [self launchChannel:self.homeVC.channels[nextChannel] atIndex:0];
+    BOOL didChangeChannels = [self launchChannel:self.homeVC.channels[nextChannel] atIndex:0];
+    if(!didChangeChannels){
+        [self userDidSwitchChannelForDirectionUp:up];
+    }
 }
 
 - (void)userDidCloseChannel
@@ -274,13 +292,6 @@
 - (void)videoDidFinishPlaying
 {
     // TODO
-}
-
-- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
-{
-    //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
-    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:YES];
-    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
 }
 
 #pragma mark - Helpers
@@ -363,7 +374,7 @@ typedef struct _ShelbyArrayMergeInstructions {
             return idx;
         }
     }
-    NSAssert(NO, @"expected a common object, didn't find one.");
+    STVAssert(NO, @"expected a common object, didn't find one.");
     return 0;
 }
 

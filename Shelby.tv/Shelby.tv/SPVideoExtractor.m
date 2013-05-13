@@ -62,7 +62,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue
 {
-    NSAssert(completionBlock, @"urlForVideo expects an extraction block");
+    STVAssert(completionBlock, @"urlForVideo expects an extraction block");
     
     @synchronized(self){
         if (!self.highPriorityExtractionQueue) {
@@ -107,7 +107,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)warmCacheForVideoContainer:(id<ShelbyVideoContainer>)videoContainer
 {
-    NSAssert([videoContainer conformsToProtocol:@protocol(ShelbyVideoContainer)], @"warm cache for entity expected a video container");
+    STVAssert([videoContainer conformsToProtocol:@protocol(ShelbyVideoContainer)], @"warm cache for entity expected a video container");
     [self warmCacheForVideo:[videoContainer containedVideo]];
 }
 

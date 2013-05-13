@@ -175,9 +175,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupOverlayView
 {
-    NSAssert(!self.overlayView, @"should only setup overlay view once");
+    STVAssert(!self.overlayView, @"should only setup overlay view once");
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
-    NSAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
+    STVAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
     self.overlayView = nib[0];
     self.overlayView.delegate = self;
     [self.view addSubview:self.overlayView];
@@ -199,7 +199,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             } else if([videoEntry isKindOfClass:[Frame class]]){
                 player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:((Frame *)videoEntry)];
             } else {
-                NSAssert(false, @"expected videoEntry to be a DashboardEntry or Frame");
+                STVAssert(false, @"expected videoEntry to be a DashboardEntry or Frame");
             }
             player.videoPlayerDelegate = self;
             [self.videoPlayers addObject:player];
@@ -230,30 +230,39 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupGestures
 {
-    // Setup gestrues only onces - Toggle Overlay Gesture
-    if (![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture]) {
-        _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
-        [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-        [self.toggleOverlayGesuture setDelegate:self];
-        [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
-        [self.view addGestureRecognizer:self.toggleOverlayGesuture];
-       
-        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-        panGesture.minimumNumberOfTouches = 1;
-        panGesture.maximumNumberOfTouches = 1;
-        [self.view addGestureRecognizer:panGesture];
-        
-        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
-        [self.view addGestureRecognizer:pinchGesture];
-        
-        UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
-        [togglePlaybackGesuture setNumberOfTapsRequired:2];
-        [self.view addGestureRecognizer:togglePlaybackGesuture];
+    STVAssert(![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture], @"should only setup gestures once");
 
-        [self.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
-        
-        
-    }
+    //hide/shower overlay (single tap)
+    _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
+    [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
+    [self.toggleOverlayGesuture setDelegate:self];
+    [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
+    [self.view addGestureRecognizer:self.toggleOverlayGesuture];
+
+    //change channels (pan vertically)
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+    panGesture.minimumNumberOfTouches = 1;
+    panGesture.maximumNumberOfTouches = 1;
+    [self.view addGestureRecognizer:panGesture];
+    
+    //change video (pan horizontallay)
+    //handled by self.videoScrollView.panGestureRecognizer
+    
+    //exit (pinch)
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
+    [self.view addGestureRecognizer:pinchGesture];
+
+    //play/pause (double tap)
+    UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
+    [togglePlaybackGesuture setNumberOfTapsRequired:2];
+    [self.view addGestureRecognizer:togglePlaybackGesuture];
+    [self.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
+    
+    //update scroll view to better interact with the above gesure recognizers
+    STVAssert(self.videoScrollView && self.videoScrollView.panGestureRecognizer, @"scroll view should be initialized");
+    self.videoScrollView.panGestureRecognizer.minimumNumberOfTouches = 1;
+    self.videoScrollView.panGestureRecognizer.maximumNumberOfTouches = 1;
+    self.videoScrollView.pinchGestureRecognizer.enabled = NO;
 }
 
 - (void)setupOverlayVisibileItems
@@ -275,8 +284,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     //but resetPlayer: is respected by that block; it will do nothing if it's player has been reset.
     [self.possiblyPlayablePlayers makeObjectsPerformSelector:@selector(resetPlayer)];
 }
-
-#pragma mark - Storage Methods (Public)
 
 - (void)animatePlaybackState:(BOOL)videoPlaying
 {
@@ -456,14 +463,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 #pragma mark - Action Methods (Private)
 - (IBAction)shareButtonAction:(id)sender
 {
-    // Disable overlayTimer
-    //djs TODO: we should hold this, nobody else
-//    [self.model.overlayView showOverlayView];
-//    [self.model.overlayTimer invalidate];
-//    
-//    [self.model.currentVideoPlayer share];
     UIButton *shareButton = (UIButton *)sender;
-    NSAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
+    STVAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
     
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
                                                                  fromRect:shareButton.frame];
@@ -499,12 +500,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)rollVideo
 {
-    // Disable overlayTimer
-    //djs
-//    [self.model.overlayView showOverlayView];
-//    [self.model.overlayTimer invalidate];
-//    
-//    [self.model.currentVideoPlayer roll];
+    // TODO
 }
 
 
@@ -760,20 +756,31 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 #pragma mark - SPVideoPlayerDelegete Methods
 
-//djs TODO
 - (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player{
-    //TODO
-    //djs only keeping this for some math, possibly...
-    //    NSUInteger position = _model.currentVideo + 1;
-    //    CGFloat x = position * kShelbySPVideoWidth;
-    //    CGFloat y = _videoScrollView.contentOffset.y;
-    //
-    //    if ( position <= (_model.numberOfVideos-1) ) {
-    //
-    //        [self.videoScrollView setContentOffset:CGPointMake(x, y) animated:YES];
-    //        [self currentVideoShouldChangeToVideo:position];
-    //    
-    //    }
+    [self changeVideoInForwardDirection:YES];
+}
+
+- (void)videoDidStallForPlayer:(SPVideoPlayer *)player
+{
+    if (self.currentPlayer == player) {
+        [player pause];
+        [self.overlayView showOverlayView];
+        //djs TODO: a nice, subtle notification
+        //djs IMPORTANT: this is more likely to happen when you seek beyond the buffer
+        //** need to handle that case nicely, not just the "normal playback" stalled case
+        /* Idea:
+         * Keep track of the current playhead and the amount buffered beyond it.
+         * Have a fun little view that shows something filling up, getting ready to resume playback!
+         * 
+         * Focus more time than seems necessary on this, b/c it makes watching a single video very enjoyable.
+         */
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Downloading... Slowly..."
+                                                            message:@"Give it a little time to buffer.  Then double-tap to resume playback."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"whatever"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 - (void)videoLoadingStatus:(BOOL)isLoading forPlayer:(SPVideoPlayer *)player
@@ -804,7 +811,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)videoPlaybackStatus:(BOOL)isPlaying forPlayer:(SPVideoPlayer *)player
 {
-    //djs TODO
+    //noop for now
 }
 
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player
@@ -817,18 +824,23 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                                                   cancelButtonTitle:@"whatever"
                                                   otherButtonTitles:nil, nil];
         [alertView show];
+        //djs TODO: when user hits OK:
+        //[self changeVideoInForwardDirection:YES];
     }
-    
-    //djs only keeping this for some math, possibly...
-    //        if (![self.model.currentVideoPlayer isPlayable] && [skippedVideoID isEqualToString:currentVideoID]) { // Load AND scroll to next video if current video is in focus
-    //            CGFloat videoX = kShelbySPVideoWidth * position;
-    //            CGFloat videoY = _videoScrollView.contentOffset.y;
-    //            [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-    //            [self currentVideoShouldChangeToVideo:position];
-    //        } else { // Load next video, (but do not scroll)
-    //            [self extractVideoForVideoPlayer:position];
-    //        }
-    //    }
+}
+
+- (BOOL)changeVideoInForwardDirection:(BOOL)forward
+{
+    NSUInteger idx = self.currentVideoPlayingIndex + (forward ? 1 : -1);
+    if (idx > 0 && idx < [self.videoEntities count]) {
+        CGFloat videoX = idx * kShelbySPVideoWidth;
+        CGFloat videoY = self.videoScrollView.contentOffset.y;
+        [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
+        [self currentVideoShouldChangeToVideo:idx];
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 
