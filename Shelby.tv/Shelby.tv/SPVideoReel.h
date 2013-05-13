@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 
 @protocol SPVideoReelDelegate <NSObject>
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
-- (void)userDidCloseChannel;
+- (void)userDidCloseChannelAtFrame:(Frame *)frame;
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up;
 - (void)videoDidFinishPlaying;
 @end

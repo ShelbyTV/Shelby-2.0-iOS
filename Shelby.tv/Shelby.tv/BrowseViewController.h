@@ -43,4 +43,6 @@
 
 - (ShelbyHideBrowseAnimationViews *)animationViewForOpeningChannel:(DisplayChannel *)channel;
 - (ShelbyHideBrowseAnimationViews *)animationViewForClosingChannel:(DisplayChannel *)channel;
+
+- (void)highlightFrame:(Frame *)frame atChannel:(DisplayChannel *)channel;
 @end

@@ -44,6 +44,8 @@
 
 @property (nonatomic) UIView *tutorialView;
 
+@property (nonatomic, strong) SPVideoItemViewCell *lastHighlightedCell;
+
 //- (void)fetchUser;
 
 // Helper methods
@@ -279,6 +281,54 @@
 }
 
 
+- (void)highlightFrame:(Frame *)frame atChannel:(DisplayChannel *)channel
+{
+    // Find the channel
+    NSInteger row = [self.channels indexOfObject:channel];
+    
+    SPChannelCell *cell = [self loadCell:row withDirection:YES animated:NO];
+    SPChannelCollectionView *collectionView = cell.channelCollectionView;
+    
+    NSArray *entries = self.channelEntriesByObjectID[collectionView.channel.objectID];
+    
+    NSInteger highlightIndex = 0;
+    BOOL frameFound = NO;
+    for (id entry in entries) {
+        if ([entry isKindOfClass:[DashboardEntry class]]) {
+            if (((DashboardEntry *)entry).frame == frame) {
+                frameFound = YES;
+                break;
+            }
+        } else if ([entry isKindOfClass:[Frame class]]) {
+            frameFound = YES;
+            break;
+        }
+        highlightIndex++;
+    }
+    
+    // Frame not found in channel, nothing to select.
+    if (!frameFound) {
+        return;
+    }
+
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:highlightIndex inSection:0];
+ 
+    SPVideoItemViewCell *collectionCell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    // If frame is off screen - scroll and reload item.
+    if (!collectionCell) {
+        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+         [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+        collectionCell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];    
+    }
+
+    // Make sure old cell is de-highlighted
+    [self.lastHighlightedCell unHighlightItem];
+    
+    self.lastHighlightedCell = collectionCell;
+    [collectionCell highlightItemWithColor:collectionView.channel.displayColor];
+}
+
 #pragma mark - UIScrollViewDelegate Methods
 
 #define PULL_TO_REFRESH_DISTANCE -150.0
@@ -391,14 +441,16 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.lastHighlightedCell unHighlightItem];
+    
     SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell highlightItemWithColor:[((SPChannelCollectionView *)collectionView) channelColor]];
+
+    self.lastHighlightedCell = cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell unHighlightItem];
 }
 
 // KP KP: TODO
@@ -414,6 +466,8 @@
                 entry = entries[indexPath.row];
             }
             [self.browseDelegate userPressedChannel:channel atItem:entry];
+            SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+            [cell unHighlightItem];
         }
     }
     

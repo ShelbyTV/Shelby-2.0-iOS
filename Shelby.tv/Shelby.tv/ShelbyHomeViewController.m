@@ -219,9 +219,9 @@
     [self animateOpenChannels:channel];
 }
 
-- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel
+- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel atFrame:(Frame *)videoFrame
 {
-    [self animateCloseChannels:channel];
+    [self animateCloseChannels:channel atFrame:videoFrame];
 }
 
 
@@ -265,7 +265,7 @@
     }];
 }
 
-- (void)animateCloseChannels:(DisplayChannel *)channel
+- (void)animateCloseChannels:(DisplayChannel *)channel atFrame:(Frame *)frame
 {
     if (self.animationInProgress) {
         return;
@@ -273,6 +273,8 @@
         [self setAnimationInProgress:YES];
     }
 
+    [self.browseVC highlightFrame:frame atChannel:channel];
+    
     ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForClosingChannel:channel];
  
     [self.videoReel.view addSubview:animationViews.centerView];

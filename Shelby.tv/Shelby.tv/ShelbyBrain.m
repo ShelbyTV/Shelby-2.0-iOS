@@ -279,9 +279,9 @@
     }
 }
 
-- (void)userDidCloseChannel
+- (void)userDidCloseChannelAtFrame:(Frame *)frame
 {
-    [self.homeVC animateDismissPlayerForChannel:self.currentChannel];
+    [self.homeVC animateDismissPlayerForChannel:self.currentChannel atFrame:frame];
 }
 
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up

@@ -650,7 +650,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
         if (self.delegate && [self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)]) {
-            [self.delegate userDidCloseChannel];
+            [self.delegate userDidCloseChannelAtFrame:self.currentPlayer.videoFrame];
         }
     }
 }

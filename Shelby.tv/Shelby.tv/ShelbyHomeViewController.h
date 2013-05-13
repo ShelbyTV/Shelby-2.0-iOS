@@ -44,7 +44,7 @@
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 
-- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel;
+- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel atFrame:(Frame *)videoFrame;
 - (void)dismissPlayer;
 
 - (void)userLoginFailedWithError:(NSString *)errorMessage;
