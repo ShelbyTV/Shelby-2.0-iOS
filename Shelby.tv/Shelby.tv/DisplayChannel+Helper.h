@@ -28,6 +28,9 @@
                                         withOrder:(NSInteger)order
                                         inContext:(NSManagedObjectContext *)context;
 
++ (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
+                                          inContext:(NSManagedObjectContext *)context;
+
 - (UIColor *)displayColor;
 - (NSString *)displayTitle;
 

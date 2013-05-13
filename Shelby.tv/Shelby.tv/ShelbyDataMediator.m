@@ -12,9 +12,12 @@
 #import "DisplayChannel+Helper.h"
 #import "DashboardEntry+Helper.h"
 #import "FacebookHandler.h"
+#import "Frame+Helper.h"
 #import "ShelbyAPIClient.h"
 #import "TwitterHandler.h"
 #import "User+Helper.h"
+
+NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -79,6 +82,27 @@
     }];
 }
 
+- (void)fetchAllUnsyncedLikes
+{
+    // KP KP: TODO: don't hardcode the order!
+    DisplayChannel *likesChannel = [DisplayChannel channelForOfflineLikesWithOrder:7 inContext:[self mainThreadContext]];
+    NSArray *channelEntries = [likesChannel.roll.frame allObjects];
+    
+    // If there are no more likes, delete the Unsynced Likes channels from CoreData
+    if (![channelEntries count]) {
+        [likesChannel.managedObjectContext deleteObject:likesChannel];
+        
+        NSError *error;
+        [likesChannel.managedObjectContext save:&error];
+        NSAssert(!error, @"context save failed, in delete empty likes channel");
+        
+        channelEntries = nil;
+        
+    }
+    
+    [self.delegate fetchOfflineLikesDidCompleteForChannel:likesChannel with:channelEntries];
+}
+
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
 {
     if(channel.roll && (!entry || [entry isKindOfClass:[Frame class]])){
@@ -114,6 +138,8 @@
     NSError *error;
     [frame.managedObjectContext save:&error];
     NSAssert(!error, @"context save failed, in toggleLikeForFrame...");
+    
+    [self fetchAllUnsyncedLikes];
 }
 
 - (User *)fetchAuthenticatedUserOnMainThreadContext
@@ -124,7 +150,7 @@
 
 - (void) fetchFramesForRoll:(Roll *)roll
                   inChannel:(DisplayChannel *)channel
-                 sinceFrame:(Frame *)frame
+                 sinceFrame:(Frame *)sinceFrame
 {
     //djs TODO
 }

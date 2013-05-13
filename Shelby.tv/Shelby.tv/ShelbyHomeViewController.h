@@ -34,6 +34,8 @@
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel;
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;
 
+- (void)removeChannel:(DisplayChannel *)channel;
+
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 - (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 

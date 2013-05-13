@@ -90,6 +90,14 @@
     self.browseVC.channels = channels;
 }
 
+- (void)removeChannel:(DisplayChannel *)channel
+{
+    NSMutableArray *channels = [self.browseVC.channels mutableCopy];
+    [channels removeObject:channel];
+    self.browseVC.channels = channels;
+}
+
+
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
     [self.browseVC setEntries:channelEntries forChannel:channel];

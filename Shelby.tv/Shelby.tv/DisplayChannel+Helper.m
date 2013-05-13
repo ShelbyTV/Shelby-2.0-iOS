@@ -10,6 +10,7 @@
 #import "Roll+Helper.h"
 #import "Dashboard+Helper.h"
 #import "UIColor+ColorWithHexAndAlpha.h"
+#import "ShelbyDataMediator.h"
 
 NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
 
@@ -87,6 +88,35 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
     
     displayChannel.order = [NSNumber numberWithInt:order];
     displayChannel.dashboard = dashboard;
+    
+    return displayChannel;
+}
+
+
++ (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
+                                          inContext:(NSManagedObjectContext *)context
+{
+    NSString *rollID = kShelbyOfflineLikesID;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDisplayChannel];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"roll.rollID == %@", rollID];
+    request.predicate = pred;
+    request.fetchLimit = 1;
+    NSError *error;
+    NSArray *fetchedDisplayChannels = [context executeFetchRequest:request error:&error];
+    if(error || !fetchedDisplayChannels){
+        return nil;
+    }
+
+    DisplayChannel *displayChannel;
+    if([fetchedDisplayChannels count] == 1){
+        displayChannel = fetchedDisplayChannels[0];
+    } else {
+        displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
+                                                       inManagedObjectContext:context];
+    }
+    
+    Roll *likesRoll = [Roll fetchLikesRollInContext:context];
+    displayChannel.roll = likesRoll;
     
     return displayChannel;
 }

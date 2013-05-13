@@ -16,4 +16,5 @@
 + (Roll *)rollForDictionary:(NSDictionary *)rollDict
                       inContext:(NSManagedObjectContext *)context;
 
++ (Roll *)fetchLikesRollInContext:(NSManagedObjectContext *)context;
 @end

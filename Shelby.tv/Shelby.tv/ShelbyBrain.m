@@ -30,10 +30,16 @@
 
 - (void)handleDidBecomeActive
 {
-    self.homeVC.currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    self.homeVC.currentUser = currentUser;
     self.homeVC.masterDelegate = self;
     //TODO: detect sleep time and remove player if it's been too long
-        
+  
+    // If user is not logged in, fetch unsynced likes. (KP KP: We might want to still fetch/merge unsynced likes with Likes Roll for logged in user)
+    if (!currentUser) {
+        [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
+    }
+    
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
         if(!self.homeVC.channels){
             [self.homeVC.channelsLoadingActivityIndicator startAnimating];
@@ -101,8 +107,25 @@
         //caveat: changing a DisplayChannel attribute will not trigger an update
         //array needs to be different order/length to trigger update
         if(![channels isEqualToArray:curChannels]){
-            self.homeVC.channels = channels;
-        } else {
+            NSArray *curChannels = self.homeVC.channels;
+            
+            // Since Unsynced likes, doesn't come with the regurlar channels, make sure we re-add them to the channels array.
+            DisplayChannel *likesChannel = nil;
+            for (DisplayChannel *channel in curChannels) {
+                if (channel.roll && [channel.roll.rollID isEqualToString:kShelbyOfflineLikesID]) {
+                    likesChannel = channel;
+                    break;
+                }
+            }
+            
+            NSMutableArray *channelsArray = [[NSMutableArray alloc] init];
+            [channelsArray addObjectsFromArray:channels];
+            if (likesChannel) {
+                [channelsArray addObject:likesChannel];
+            }
+
+            self.homeVC.channels = channelsArray;
+   } else {
             /* don't replace old channels */
         }
     }
@@ -127,7 +150,7 @@
                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached
 {
     NSArray *curEntries = [self.homeVC entriesForChannel:channel];
-    if(curEntries){
+    if(curEntries && [curEntries count]){
         ShelbyArrayMergeInstructions mergeInstructions = [self instructionsToMerge:channelEntries into:curEntries];
         if(mergeInstructions.shouldMerge){
             NSArray *newChannelEntries = [channelEntries subarrayWithRange:mergeInstructions.range];
@@ -156,6 +179,37 @@
     [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
     [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     DLog(@"TODO: handle fetch channels did complete with error %@", error);
+}
+
+-(void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
+                                         with:(NSArray *)channelEntries
+{
+
+    // If channelEntries is nil - there are no more OfflineLikes - so need to remove the channel
+    if (!channelEntries) {
+        [self.homeVC removeChannel:channel];
+        return;
+    }
+    
+    // Since Unsynced likes, doesn't come with the regurlar channels, make sure we re-add them to the channels array.
+    NSArray *curChannels = self.homeVC.channels;
+    DisplayChannel *likesChannel = nil;
+    for (DisplayChannel *channel in curChannels) {
+        if (channel.roll && [channel.roll.rollID isEqualToString:kShelbyOfflineLikesID]) {
+            likesChannel = channel;
+            break;
+        }
+    }
+    
+    // If likes channel doesn't exist - create it
+    if (!likesChannel && [channelEntries count]) {
+        NSMutableArray *channelsArray = [[NSMutableArray alloc] init];
+        [channelsArray addObjectsFromArray:curChannels];
+        [channelsArray addObject:channel];
+        [self.homeVC setChannels:channelsArray];
+    }
+    
+    [self fetchEntriesDidCompleteForChannel:channel with:channelEntries fromCache:YES];
 }
 
 #pragma mark - Helper Methods

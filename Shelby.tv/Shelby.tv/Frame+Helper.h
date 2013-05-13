@@ -15,6 +15,8 @@
 + (Frame *)frameForDictionary:(NSDictionary *)dict
                     inContext:(NSManagedObjectContext *)context;
 
++ (NSArray *)fetchAllLikesInContext:(NSManagedObjectContext *)context;
+
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 - (BOOL)isPlayable;
 - (void)toggleLike;

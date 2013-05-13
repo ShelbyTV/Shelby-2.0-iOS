@@ -126,7 +126,9 @@
 {
     self.channelEntriesByObjectID[channel.objectID] = channelEntries;
     //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
-    [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
+    if ([self.channels count] > [channel.order integerValue]) {
+        [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
+    }
 }
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
@@ -179,7 +181,8 @@
 - (SPChannelCell *)cellForChannel:(DisplayChannel *)channel
 {
     //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
-    SPChannelCell *cell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0];
+    SPChannelCell *cell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:indexPath];
     return cell;
 }
 

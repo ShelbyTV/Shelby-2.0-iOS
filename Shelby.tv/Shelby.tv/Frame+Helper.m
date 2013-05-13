@@ -59,6 +59,15 @@
     return frame;
 }
 
+
++ (NSArray *)fetchAllLikesInContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
+    NSPredicate *likesPredicate = [NSPredicate predicateWithFormat:@"self.unsyncedLike == %@", @1];
+    request.predicate = likesPredicate;
+    return [context executeFetchRequest:request error:nil];
+}
+
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle
 {
     if(self.conversation && [self.conversation.messages count] > 0){

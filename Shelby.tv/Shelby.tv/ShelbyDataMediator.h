@@ -9,6 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kShelbyOfflineLikesID;
+
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>
 // channels
@@ -19,6 +21,8 @@
                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached;
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                withError:(NSError *)error;
+-(void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
+                                         with:(NSArray *)channelEntries;
 
 // Login
 - (void)loginUserDidCompleteWithUser:(User *)user;
@@ -39,6 +43,7 @@
 - (void)fetchChannels;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 - (User *)fetchAuthenticatedUserOnMainThreadContext;
+- (void)fetchAllUnsyncedLikes;
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
 -(void)logout;
