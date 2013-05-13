@@ -212,7 +212,7 @@
         [self.homeVC setChannels:channelsArray];
     }
     
-    [self fetchEntriesDidCompleteForChannel:channel with:channelEntries fromCache:YES];
+    [self.homeVC setEntries:channelEntries forChannel:channel];
 }
 
 #pragma mark - Helper Methods
