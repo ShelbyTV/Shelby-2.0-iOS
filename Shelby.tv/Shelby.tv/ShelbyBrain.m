@@ -7,7 +7,7 @@
 //
 
 #import "ShelbyBrain.h"
-#import "DisplayChannel.h"
+#import "DisplayChannel+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
 
@@ -177,10 +177,17 @@
     return nextChannel;
 }
 
-- (void)launchChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
+//returns YES if we launched the channel
+//only launches the channel if it has content and the index into that content is valid
+- (BOOL)launchChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    self.currentChannel = channel;
-    [self.homeVC launchPlayerForChannel:channel atIndex:index];
+    if([channel hasEntityAtIndex:index]){
+        self.currentChannel = channel;
+        [self.homeVC launchPlayerForChannel:channel atIndex:index];
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - ShelbyBrowseProtocol Methods
@@ -210,7 +217,10 @@
 {
     [self.homeVC dismissPlayer];
     NSInteger nextChannel = [self nextChannelForDirection:up];
-    [self launchChannel:self.homeVC.channels[nextChannel] atIndex:0];
+    BOOL didChangeChannels = [self launchChannel:self.homeVC.channels[nextChannel] atIndex:0];
+    if(!didChangeChannels){
+        [self userDidSwitchChannelForDirectionUp:up];
+    }
 }
 
 - (void)userDidCloseChannel

@@ -113,4 +113,15 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
     }
 }
 
+- (BOOL)hasEntityAtIndex:(NSInteger)idx
+{
+    if(self.roll){
+        return [self.roll.frame count] > idx;
+    } else if(self.dashboard){
+        return [self.dashboard.dashboardEntry count] > idx;
+    } else {
+        return NO;
+    }
+}
+
 @end
