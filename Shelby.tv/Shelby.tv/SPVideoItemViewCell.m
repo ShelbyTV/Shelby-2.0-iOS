@@ -27,6 +27,7 @@
 - (void)prepareForReuse
 {
     self.thumbnailImageView.image = nil;
+    [self unHighlightItem];
 }
 
 - (void)highlightItemWithColor:(UIColor *)color
