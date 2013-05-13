@@ -123,7 +123,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     if (user) {
         [ShelbyAPIClient postUserLikedFrame:frame.frameID userToken:user.token withBlock:^(id JSON, NSError *error) {
             if (JSON) { // success
-                frame.unsyncedLike = nil;
+                frame.clientLikedAt = nil;
                 
                 NSError *error;
                 [frame.managedObjectContext save:&error];
@@ -133,7 +133,13 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         }];
     }
     
-    frame.unsyncedLike = frame.unsyncedLike ? @0 : @1;
+    frame.clientUnsyncedLike = frame.clientUnsyncedLike ? @0 : @1;
+    
+    if (frame.clientUnsyncedLike) {
+        frame.clientLikedAt = [NSDate date];
+    } else {
+        frame.clientLikedAt = nil;
+    }
 
     NSError *error;
     [frame.managedObjectContext save:&error];

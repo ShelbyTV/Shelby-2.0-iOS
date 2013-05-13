@@ -2,7 +2,7 @@
 //  Frame.h
 //  Shelby.tv
 //
-//  Created by Keren on 5/9/13.
+//  Created by Keren on 5/13/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -19,10 +19,11 @@
 @property (nonatomic, retain) NSString * creatorID;
 @property (nonatomic, retain) NSString * frameID;
 @property (nonatomic, retain) NSNumber * isStoredForLoggedOutUser;
-@property (nonatomic, retain) NSNumber * unsyncedLike;
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSDate * timestamp;
+@property (nonatomic, retain) NSNumber * clientUnsyncedLike;
 @property (nonatomic, retain) NSString * videoID;
+@property (nonatomic, retain) NSDate * clientLikedAt;
 @property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, retain) User *creator;
 @property (nonatomic, retain) NSSet *dashboardEntry;

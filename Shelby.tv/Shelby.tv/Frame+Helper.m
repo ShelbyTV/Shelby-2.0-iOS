@@ -63,8 +63,11 @@
 + (NSArray *)fetchAllLikesInContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
-    NSPredicate *likesPredicate = [NSPredicate predicateWithFormat:@"self.unsyncedLike == %@", @1];
+    NSPredicate *likesPredicate = [NSPredicate predicateWithFormat:@"self.clientUnsyncedLike == %@", @1];
     request.predicate = likesPredicate;
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientLikedAt" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+
     return [context executeFetchRequest:request error:nil];
 }
 
