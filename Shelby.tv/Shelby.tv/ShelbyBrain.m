@@ -122,6 +122,7 @@
             [channelsArray addObjectsFromArray:channels];
             if (likesChannel) {
                 [channelsArray addObject:likesChannel];
+                [likesChannel setOrder:@([channelsArray count] - 1)];
             }
 
             self.homeVC.channels = channelsArray;
@@ -207,6 +208,7 @@
         NSMutableArray *channelsArray = [[NSMutableArray alloc] init];
         [channelsArray addObjectsFromArray:curChannels];
         [channelsArray addObject:channel];
+        [channel setOrder:@([channelsArray count] - 1)];
         [self.homeVC setChannels:channelsArray];
     }
     
