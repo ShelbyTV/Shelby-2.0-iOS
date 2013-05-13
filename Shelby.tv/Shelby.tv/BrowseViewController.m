@@ -26,14 +26,18 @@
 
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
 
+NSString *const kShelbyChannelMetadataEntriesKey                = @"kShelbyChEntr";
+NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDEntr";
 
 @interface BrowseViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UITableView *channelsTableView;
 
-// { channelObjectID: [/*array of DashboardEntry or Frame*/], ... }
-@property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
+//internal data model for entries:
+// { channelObjectID: { entries:[/*array of DashboardEntry or Frame*/],
+//          deduplicatedEntries:[/*array of DashboardEntry or Frame*/]}, ... }
+@property (nonatomic, strong) NSMutableDictionary *channelMetadataByObjectID;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -79,7 +83,7 @@
     
 //    [self fetchUser];
     
-    self.channelEntriesByObjectID = [@{} mutableCopy];
+    self.channelMetadataByObjectID = [@{} mutableCopy];
     
     [self setSecretMode:SecretMode_None];
     
@@ -126,25 +130,34 @@
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-    self.channelEntriesByObjectID[channel.objectID] = channelEntries;
-    //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
-    if ([self.channels count] > [channel.order integerValue]) {
-        [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
+    STVAssert([self.channels indexOfObject:channel] != NSNotFound, @"channel must be set before its entries");
+    
+    NSMutableDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
+    if(!chMetadata){
+        chMetadata = [@{} mutableCopy];
+        self.channelMetadataByObjectID[channel.objectID] = chMetadata;
     }
+    chMetadata[kShelbyChannelMetadataEntriesKey] = channelEntries;
+    
+    [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[self.channels indexOfObject:channel] inSection:0]]
+                                  withRowAnimation:NO];
 }
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
-    NSArray *curEntries = self.channelEntriesByObjectID[channel.objectID];
+    NSMutableDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
+    STVAssert(chMetadata, @"channel must be set before adding entries");
+    NSArray *curEntries = chMetadata[kShelbyChannelMetadataEntriesKey];
+    
     SPChannelCell *cell = [self cellForChannel:channel];
     NSMutableArray *indexPathsForInsert = [NSMutableArray arrayWithCapacity:[newChannelEntries count]];
     if(shouldAppend){
-        self.channelEntriesByObjectID[channel.objectID] = [curEntries arrayByAddingObjectsFromArray:newChannelEntries];
+        chMetadata[kShelbyChannelMetadataEntriesKey] = [curEntries arrayByAddingObjectsFromArray:newChannelEntries];
         for(NSUInteger i = 0; i < [newChannelEntries count]; i++){
             [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i+[curEntries count] inSection:0]];
         }
     } else {
-        self.channelEntriesByObjectID[channel.objectID] = [newChannelEntries arrayByAddingObjectsFromArray:curEntries];
+        chMetadata[kShelbyChannelMetadataEntriesKey] = [newChannelEntries arrayByAddingObjectsFromArray:curEntries];
         for(NSUInteger i = 0; i < [newChannelEntries count]; i++){
             [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i inSection:0]];
         }
@@ -160,7 +173,8 @@
 
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
 {
-    return self.channelEntriesByObjectID[channel.objectID];
+    NSDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
+    return chMetadata ? chMetadata[kShelbyChannelMetadataEntriesKey] : nil;
 }
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
@@ -289,7 +303,7 @@
     SPChannelCell *cell = [self loadCell:row withDirection:YES animated:NO];
     SPChannelCollectionView *collectionView = cell.channelCollectionView;
     
-    NSArray *entries = self.channelEntriesByObjectID[collectionView.channel.objectID];
+    NSArray *entries = [self entriesForChannel:channel];
     
     NSInteger highlightIndex = 0;
     BOOL frameFound = NO;
@@ -373,7 +387,7 @@
 {
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)view;
     if ([channelCollection isKindOfClass:[SPChannelCollectionView class]]) {
-        NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
+        NSArray *entries = [self entriesForChannel:channelCollection.channel];
         if (entries) {
              return [entries count];
         }
@@ -393,7 +407,7 @@
     
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)cv;
     STVAssert([channelCollection isKindOfClass:[SPChannelCollectionView class]], @"expecting a different class!");
-    NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
+    NSArray *entries = [self entriesForChannel:channelCollection.channel];
     STVAssert(indexPath.row < [entries count], @"expected a valid index path row");
     id entry = entries[indexPath.row];
     
@@ -460,7 +474,7 @@
     if ([channelCollectionView isKindOfClass:[SPChannelCollectionView class]]) {
         DisplayChannel *channel = channelCollectionView.channel;
         if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
-            NSArray *entries = self.channelEntriesByObjectID[channelCollectionView.channel.objectID];
+            NSArray *entries = [self entriesForChannel:channelCollectionView.channel];
             id entry = nil;
             if (indexPath.row < [entries count]) {
                 entry = entries[indexPath.row];
