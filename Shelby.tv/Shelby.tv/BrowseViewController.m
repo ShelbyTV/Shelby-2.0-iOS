@@ -299,7 +299,7 @@
                 frameFound = YES;
                 break;
             }
-        } else if ([entry isKindOfClass:[Frame class]]) {
+        } else if ([entry isKindOfClass:[Frame class]] && ((Frame *)entry) == frame) {
             frameFound = YES;
             break;
         }
