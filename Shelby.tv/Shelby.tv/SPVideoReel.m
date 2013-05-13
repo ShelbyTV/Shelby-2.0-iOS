@@ -230,30 +230,39 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupGestures
 {
-    // Setup gestrues only onces - Toggle Overlay Gesture
-    if (![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture]) {
-        _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
-        [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-        [self.toggleOverlayGesuture setDelegate:self];
-        [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
-        [self.view addGestureRecognizer:self.toggleOverlayGesuture];
-       
-        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-        panGesture.minimumNumberOfTouches = 1;
-        panGesture.maximumNumberOfTouches = 1;
-        [self.view addGestureRecognizer:panGesture];
-        
-        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
-        [self.view addGestureRecognizer:pinchGesture];
-        
-        UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
-        [togglePlaybackGesuture setNumberOfTapsRequired:2];
-        [self.view addGestureRecognizer:togglePlaybackGesuture];
+    STVAssert(![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture], @"should only setup gestures once");
 
-        [self.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
-        
-        
-    }
+    //hide/shower overlay (single tap)
+    _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
+    [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
+    [self.toggleOverlayGesuture setDelegate:self];
+    [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
+    [self.view addGestureRecognizer:self.toggleOverlayGesuture];
+
+    //change channels (pan vertically)
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+    panGesture.minimumNumberOfTouches = 1;
+    panGesture.maximumNumberOfTouches = 1;
+    [self.view addGestureRecognizer:panGesture];
+    
+    //change video (pan horizontallay)
+    //handled by self.videoScrollView.panGestureRecognizer
+    
+    //exit (pinch)
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
+    [self.view addGestureRecognizer:pinchGesture];
+
+    //play/pause (double tap)
+    UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
+    [togglePlaybackGesuture setNumberOfTapsRequired:2];
+    [self.view addGestureRecognizer:togglePlaybackGesuture];
+    [self.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
+    
+    //update scroll view to better interact with the above gesure recognizers
+    STVAssert(self.videoScrollView && self.videoScrollView.panGestureRecognizer, @"scroll view should be initialized");
+    self.videoScrollView.panGestureRecognizer.minimumNumberOfTouches = 1;
+    self.videoScrollView.panGestureRecognizer.maximumNumberOfTouches = 1;
+    self.videoScrollView.pinchGestureRecognizer.enabled = NO;
 }
 
 - (void)setupOverlayVisibileItems
