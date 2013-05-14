@@ -24,9 +24,6 @@
 #import "User+Helper.h"
 #import "DisplayChannel+Helper.h"
 
-#define kShelbyTutorialMode @"kShelbyTutorialMode"
-
-
 @interface BrowseViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
@@ -43,6 +40,7 @@
 @property (assign, nonatomic) BOOL animationInProgress;
 
 @property (nonatomic) UIView *tutorialView;
+@property (nonatomic, assign) BOOL tutorialViewSeenInSession;
 
 @property (nonatomic, strong) SPVideoItemViewCell *lastHighlightedCell;
 
@@ -50,7 +48,6 @@
 
 // Helper methods
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated;
-- (NSDate *)dateTutorialCompleted;
 
 /// Version Label
 - (void)resetVersionLabel;
@@ -86,24 +83,6 @@
     // Register Cell Nibs
     [self.channelsTableView registerNib:[UINib nibWithNibName:@"SPChannelCell" bundle:nil] forCellReuseIdentifier:@"SPChannelCell"];
     //djs this shouldn't ever fetch channels
-
-    //djs bring the tutorial stuff back
-//    if (![self dateTutorialCompleted]) {
-//        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
-//        if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
-//            UIView *tutorial = nib[0];
-//            [tutorial setAlpha:0.95];
-//            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
-//            UIView *mask = [[UIView alloc] initWithFrame:self.view.frame];
-//            [self.view addSubview:mask];
-//            [self.view bringSubviewToFront:mask];
-//            [mask setAlpha:0.5];
-//            [mask setBackgroundColor:[UIColor blackColor]];
-//            [self setTutorialView:mask];
-//            [self.view addSubview:tutorial];
-//            [self.view bringSubviewToFront:tutorial];
-//        }
-//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -115,7 +94,26 @@
         // ... re-display status bar
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     }
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (!self.tutorialViewSeenInSession && [self.browseDelegate conformsToProtocol:@protocol(ShelbyBrowseProtocol)] && [self.browseDelegate respondsToSelector:@selector(tutorialModeOn)] && [self.browseDelegate tutorialModeOn]) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
+        if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
+            UIView *tutorial = nib[0];
+            [tutorial setAlpha:0.95];
+            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
+            UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            [self.view addSubview:mask];
+            [self.view bringSubviewToFront:mask];
+            [mask setAlpha:0.5];
+            [mask setBackgroundColor:[UIColor blackColor]];
+            [self setTutorialView:mask];
+            [self.view addSubview:tutorial];
+            [self.view bringSubviewToFront:tutorial];
+        }
+    }
 }
 
 - (void)setChannels:(NSArray *)channels
@@ -222,12 +220,6 @@
 }
 
 
-- (NSDate *)dateTutorialCompleted
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTutorialMode];
-}
-
-
 - (void)resetVersionLabel
 {
     [self.versionLabel setFont:[UIFont fontWithName:@"Ubuntu-Bold" size:_versionLabel.font.pointSize]];
@@ -248,9 +240,14 @@
         [parent removeFromSuperview];
         [self.tutorialView removeFromSuperview];
         [self setTutorialView:nil];
+        self.tutorialViewSeenInSession = YES;
+
     }];
     
-//    [self launchPlayer:0 andVideo:0 withTutorialMode:YES];
+    SPChannelCell *channelZero = [self loadCell:0 withDirection:YES animated:NO];
+    DisplayChannel *channelZeroDisplayChannel = channelZero.channelCollectionView.channel;
+    
+    [self.browseDelegate userPressedChannel:channelZeroDisplayChannel atItem:0];
 }
 
 #pragma mark - UITableViewDataSource Methods

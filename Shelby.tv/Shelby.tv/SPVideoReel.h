@@ -28,6 +28,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)userDidCloseChannelAtFrame:(Frame *)frame;
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up;
 - (void)videoDidFinishPlaying;
+- (SPTutorialMode)tutorialModeForCurrentPlayer;
 @end
 
 @class SPVideoPlayer, SPOverlayView;
@@ -39,7 +40,6 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
 @property (copy, nonatomic) NSString *groupTitle;
-@property (assign, nonatomic) SPTutorialMode tutorialMode;
 
 - (id)initWithChannel:(DisplayChannel *)channel
      andVideoEntities:(NSArray *)videoEntities

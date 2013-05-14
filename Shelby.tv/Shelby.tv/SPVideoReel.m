@@ -22,6 +22,7 @@
 
 #define kShelbySPSlowSpeed 0.2
 #define kShelbySPFastSpeed 0.5
+#define kShelbyTutorialIntervalBetweenTutorials 3
 
 @interface SPVideoReel ()
 
@@ -40,7 +41,7 @@
 @property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
 @property (nonatomic, weak) SPVideoPlayer *currentPlayer;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
-
+@property (assign, nonatomic) SPTutorialMode tutorialMode;
 @property (nonatomic, strong) SPShareController *shareController;
 
 // Make sure we let user roll immediately after they log in.
@@ -99,16 +100,22 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     
     _peelChannelView = [[SPChannelPeekView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
+    if ([self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)] && [self.delegate respondsToSelector:@selector(tutorialModeForCurrentPlayer)]) {
+        self.tutorialMode = [self.delegate tutorialModeForCurrentPlayer];
+    }
+
     [self setup];
-    
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
     if (self.tutorialMode == SPTutorialModeShow) {
-// djs TODO: find another way to determine when to start showing the tutorial
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(showDoubleTapTutorial)
-//                                                     name:kShelbySPVideoExtracted
-//                                                   object:nil];
-    } else if (self.tutorialMode == SPTutorialModePinch) {
-        [self performSelector:@selector(showPinchTutorial) withObject:nil afterDelay:5];
+        [self performSelector:@selector(showDoubleTapTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
+     } else if (self.tutorialMode == SPTutorialModePinch) {
+        [self performSelector:@selector(showPinchTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
     }
 }
 
@@ -315,6 +322,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)togglePlayback:(UIGestureRecognizer *)recognizer
 {
+    if (self.tutorialMode == SPTutorialModeDoubleTap) {
+        [self videoDoubleTapped];
+    }
+    
     [self animatePlaybackState:self.currentPlayer.isPlaying];
 
     [self.currentPlayer togglePlayback];
@@ -344,7 +355,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     // Set the new current player to auto play and get it going...
     self.currentVideoPlayingIndex = position;
     self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    self.currentPlayer.shouldAutoplay = YES;
+    
+    // If we are in Tutorial Show Mode, we want the video to be paused.
+    if (self.tutorialMode != SPTutorialModeShow) {
+        self.currentPlayer.shouldAutoplay = YES;
+    }
     [self.currentPlayer prepareForStreamingPlayback];
     
     [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
@@ -683,9 +698,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [UIView animateWithDuration:0.2 animations:^{
             [self.tutorialView setAlpha:0.9];
         }];
-        
-        //djs probably won't need to replace this with anything
-//        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbySPVideoExtracted object:nil];
     }
 }
 
@@ -696,21 +708,19 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             [self.tutorialView setAlpha:0];
         } completion:^(BOOL finished) {
             [self setTutorialMode:SPTutorialModeShow];
-            [self performSelector:@selector(showSwipeLeftTutorial) withObject:nil afterDelay:5];            
+            [self performSelector:@selector(showSwipeLeftTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];            
         }];
     }
 }
 
 - (void)videoSwipedLeft
 {
-    if (self.tutorialMode == SPTutorialModeSwipeLeft) {
-        [UIView animateWithDuration:0.2 animations:^{
-            [self.tutorialView setAlpha:0];
-        } completion:^(BOOL finished) {
-            [self setTutorialMode:SPTutorialModeShow];
-            [self performSelector:@selector(showSwipeUpTutorial) withObject:nil afterDelay:5];
-        }];
-    }
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.tutorialView setAlpha:0];
+    } completion:^(BOOL finished) {
+        [self setTutorialMode:SPTutorialModeShow];
+        [self performSelector:@selector(showSwipeUpTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
+    }];
 }
 
 - (void)videoSwipedUp
@@ -720,7 +730,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             [self.tutorialView setAlpha:0];
         } completion:^(BOOL finished) {
             [self setTutorialMode:SPTutorialModeShow];
-            [self performSelector:@selector(showSwipeUpTutorial) withObject:nil afterDelay:5];
+            [self performSelector:@selector(showSwipeUpTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
         }];
     }
 }
@@ -861,12 +871,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 //    [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
     
-    if (page > self.currentVideoPlayingIndex) {
+    [self currentVideoShouldChangeToVideo:page];
+    
+    if (self.tutorialMode == SPTutorialModeSwipeLeft) {
+        // Doesn't really matter which direction the user swiped - just indicate the user passed the 'SwipeLeft' tutorial
         [self videoSwipedLeft];
     }
-//
-    
-    [self currentVideoShouldChangeToVideo:page];
+
 //    [self fetchOlderVideos:page];
 //
 //    // Send event to Google Analytics

@@ -12,10 +12,13 @@
 #import "SPVideoExtractor.h"
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
+#define kShelbyTutorialMode @"kShelbyTutorialMode"
 
 @interface ShelbyBrain()
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
 @property (nonatomic, strong) DisplayChannel *currentChannel;
+
+@property (nonatomic, assign) SPTutorialMode currentTutorialMode;
 @end
 
 @implementation ShelbyBrain
@@ -25,6 +28,10 @@
 - (void)setup
 {
     [ShelbyDataMediator sharedInstance].delegate = self;
+    
+    if (![self tutorialCompleted]) {
+        self.currentTutorialMode = SPTutorialModeShow;
+    }
 }
 
 
@@ -281,11 +288,19 @@
 
 - (void)userDidCloseChannelAtFrame:(Frame *)frame
 {
+    if (self.currentTutorialMode != SPTutorialModeNone) {
+        [self setTutorialCompleted];
+    }
+
     [self.homeVC animateDismissPlayerForChannel:self.currentChannel atFrame:frame];
 }
 
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up
 {
+    if (self.currentTutorialMode != SPTutorialModeNone) {
+        self.currentTutorialMode = SPTutorialModePinch;
+    }
+
     NSInteger nextChannel = [self nextChannelForDirection:up];
     
     return self.homeVC.channels[nextChannel];
@@ -294,6 +309,11 @@
 - (void)videoDidFinishPlaying
 {
     // TODO
+}
+
+- (SPTutorialMode)tutorialModeForCurrentPlayer
+{
+    return self.currentTutorialMode;
 }
 
 #pragma mark - Helpers
@@ -402,4 +422,22 @@ typedef struct _ShelbyArrayMergeInstructions {
 //    [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:self.homeVC];
 }
 
+- (BOOL)tutorialModeOn
+{
+    return self.currentTutorialMode == SPTutorialModeShow;
+}
+
+#pragma mark - Tutorial Mode
+- (NSDate *)tutorialCompleted
+{
+    NSDate *tutoraialCompletedOn = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTutorialMode];
+    return tutoraialCompletedOn;
+}
+
+- (void)setTutorialCompleted
+{
+    self.currentTutorialMode = SPTutorialModeNone;
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyTutorialMode];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 @end

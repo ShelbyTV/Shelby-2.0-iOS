@@ -15,6 +15,7 @@
 
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item;
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
+- (BOOL)tutorialModeOn;
 
 @end
 
