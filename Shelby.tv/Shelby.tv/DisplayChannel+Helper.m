@@ -121,6 +121,12 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
     return displayChannel;
 }
 
+- (BOOL) canRefresh
+{
+    //only offline Likes cannot refresh
+    return !(self.roll && [self.roll.rollID isEqualToString:kShelbyOfflineLikesID]);
+}
+
 - (UIColor *)displayColor
 {
     if(self.roll){

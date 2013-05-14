@@ -374,9 +374,11 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 {
     if(scrollView.contentOffset.x < PULL_TO_REFRESH_DISTANCE){
         SPChannelCollectionView *channelCollectionView = (SPChannelCollectionView *)scrollView;
-        SPChannelCell *cell = channelCollectionView.parentCell;
-        cell.isRefreshing = YES;
-        [self.browseDelegate loadMoreEntriesInChannel:channelCollectionView.channel sinceEntry:nil];
+        if(channelCollectionView.channel.canRefresh){
+            SPChannelCell *cell = channelCollectionView.parentCell;
+            cell.isRefreshing = YES;
+            [self.browseDelegate loadMoreEntriesInChannel:channelCollectionView.channel sinceEntry:nil];
+        }
     }
 }
 
@@ -386,12 +388,14 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     // we may be okay with that, but could use other callbacks to maintain state and prevent that
     if(scrollView.contentOffset.x < 0){
         SPChannelCollectionView *channelCollectionView = (SPChannelCollectionView *)scrollView;
-        SPChannelCell *cell = channelCollectionView.parentCell;
-        [cell setProximityToRefreshMode:(scrollView.contentOffset.x/PULL_TO_REFRESH_DISTANCE)];
-        if(scrollView.contentOffset.x < PULL_TO_REFRESH_DISTANCE){
-            cell.willRefresh = YES;
-        } else {
-            cell.willRefresh = NO;
+        if(channelCollectionView.channel.canRefresh){
+            SPChannelCell *cell = channelCollectionView.parentCell;
+            [cell setProximityToRefreshMode:(scrollView.contentOffset.x/PULL_TO_REFRESH_DISTANCE)];
+            if(scrollView.contentOffset.x < PULL_TO_REFRESH_DISTANCE){
+                cell.willRefresh = YES;
+            } else {
+                cell.willRefresh = NO;
+            }
         }
     }
 }
