@@ -260,7 +260,7 @@
     
     self.currentChannel = channel;
     
-    NSInteger index = [self.homeVC indexOfItem:item inChannel:channel];
+    NSInteger index = [self.homeVC indexOfDisplayedEntry:item inChannel:channel];
     if (index == NSNotFound) {
         // KP KP: TODO: what is the channel have no videos at all? Deal with that case
         index = 0;

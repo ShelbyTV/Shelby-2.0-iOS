@@ -97,16 +97,15 @@
     self.browseVC.channels = channels;
 }
 
-
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
     [self.browseVC setEntries:channelEntries forChannel:channel];
 }
 
-- (NSInteger)indexOfItem:(id)item inChannel:(DisplayChannel *)channel
+- (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel
 {
-    NSArray *entries = [self entriesForChannel:channel];
-    return [entries indexOfObject:item];
+    NSArray *dedupdEntries = [self deduplicatedEntriesForChannel:channel];
+    return [dedupdEntries indexOfObject:entry];
 }
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
@@ -123,6 +122,11 @@
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
 {
     return [self.browseVC entriesForChannel:channel];
+}
+
+- (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
+{
+    return [self.browseVC deduplicatedEntriesForChannel:channel];
 }
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
@@ -315,7 +319,7 @@
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
     _videoReel = [[SPVideoReel alloc] initWithChannel:channel
-                                     andVideoEntities:[self entriesForChannel:channel]
+                                     andVideoEntities:[self deduplicatedEntriesForChannel:channel]
                                               atIndex:index];
     self.videoReel.delegate = self.masterDelegate;
 }

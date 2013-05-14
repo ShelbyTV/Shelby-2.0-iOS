@@ -8,29 +8,32 @@
 
 #import "BrowseViewController.h"
 
-// Views
-#import "SPVideoItemViewCell.h"
+#import "DeduplicationUtility.h"
+#import "DisplayChannel+Helper.h"
+#import "Frame+Helper.h"
+#import "ImageUtilities.h"
+#import "ShelbyDataMediator.h"
 #import "SPChannelCell.h"
 #import "SPChannelCollectionView.h"
-#import "SPVideoItemViewCellLabel.h"
-
-// Utilities
-#import "ImageUtilities.h"
-
-// Models
-#import "ShelbyDataMediator.h"
 #import "SPChannelDisplay.h"
-#import "Frame+Helper.h"
+#import "SPVideoItemViewCell.h"
+#import "SPVideoItemViewCellLabel.h"
 #import "User+Helper.h"
-#import "DisplayChannel+Helper.h"
+
+#define kShelbyTutorialMode @"kShelbyTutorialMode"
+
+NSString *const kShelbyChannelMetadataEntriesKey                = @"kShelbyChEntr";
+NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDEntr";
 
 @interface BrowseViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UITableView *channelsTableView;
 
-// { channelObjectID: [/*array of DashboardEntry or Frame*/], ... }
-@property (nonatomic, strong) NSMutableDictionary *channelEntriesByObjectID;
+//internal data model for entries:
+// { channelObjectID: { entries:[/*array of DashboardEntry or Frame*/],
+//          deduplicatedEntries:[/*array of DashboardEntry or Frame*/]}, ... }
+@property (nonatomic, strong) NSMutableDictionary *channelMetadataByObjectID;
 
 @property (assign, nonatomic) SecretMode secretMode;
 
@@ -76,7 +79,7 @@
     
 //    [self fetchUser];
     
-    self.channelEntriesByObjectID = [@{} mutableCopy];
+    self.channelMetadataByObjectID = [@{} mutableCopy];
     
     [self setSecretMode:SecretMode_None];
     
@@ -124,30 +127,58 @@
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-    self.channelEntriesByObjectID[channel.objectID] = channelEntries;
-    //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
-    if ([self.channels count] > [channel.order integerValue]) {
-        [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0]] withRowAnimation:NO];
+    STVAssert([self.channels indexOfObject:channel] != NSNotFound, @"channel must be set before its entries");
+    
+    NSMutableDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
+    if(!chMetadata){
+        chMetadata = [@{} mutableCopy];
+        self.channelMetadataByObjectID[channel.objectID] = chMetadata;
     }
+    chMetadata[kShelbyChannelMetadataEntriesKey] = channelEntries;
+    chMetadata[kShelbyChannelMetadataDeduplicatedEntriesKey] = [DeduplicationUtility deduplicatedCopy:channelEntries];
+    
+    [self.channelsTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:[self.channels indexOfObject:channel] inSection:0]]
+                                  withRowAnimation:NO];
 }
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
-    NSArray *curEntries = self.channelEntriesByObjectID[channel.objectID];
+    NSMutableDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
+    STVAssert(chMetadata, @"channel must be set before adding entries");
+    NSArray *curEntries = chMetadata[kShelbyChannelMetadataEntriesKey];
+    NSArray *curDedupedEntries = chMetadata[kShelbyChannelMetadataDeduplicatedEntriesKey];
+    
     SPChannelCell *cell = [self cellForChannel:channel];
-    NSMutableArray *indexPathsForInsert = [NSMutableArray arrayWithCapacity:[newChannelEntries count]];
+    NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
+    
     if(shouldAppend){
-        self.channelEntriesByObjectID[channel.objectID] = [curEntries arrayByAddingObjectsFromArray:newChannelEntries];
-        for(NSUInteger i = 0; i < [newChannelEntries count]; i++){
-            [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i+[curEntries count] inSection:0]];
-        }
+        chMetadata[kShelbyChannelMetadataEntriesKey] = [curEntries arrayByAddingObjectsFromArray:newChannelEntries];
+        chMetadata[kShelbyChannelMetadataDeduplicatedEntriesKey] = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
+                                                                                                       toDedupedArray:curDedupedEntries
+                                                                                                            didInsert:&indexPathsForInsert
+                                                                                                            didDelete:&indexPathsForDelete
+                                                                                                            didUpdate:&indexPathsForReload];
     } else {
-        self.channelEntriesByObjectID[channel.objectID] = [newChannelEntries arrayByAddingObjectsFromArray:curEntries];
-        for(NSUInteger i = 0; i < [newChannelEntries count]; i++){
-            [indexPathsForInsert addObject:[NSIndexPath indexPathForItem:i inSection:0]];
-        }
+        chMetadata[kShelbyChannelMetadataEntriesKey] = [newChannelEntries arrayByAddingObjectsFromArray:curEntries];
+        chMetadata[kShelbyChannelMetadataDeduplicatedEntriesKey] = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
+                                                                                                        toDedupedArray:curDedupedEntries
+                                                                                                             didInsert:&indexPathsForInsert
+                                                                                                             didDelete:&indexPathsForDelete
+                                                                                                             didUpdate:&indexPathsForReload];
     }
-    [cell.channelCollectionView insertItemsAtIndexPaths:indexPathsForInsert];
+    
+    // The index paths returned by DeduplicationUtility are relative to the original array.
+    // Because of performBatchUpdates:completion: semantics per documentation...
+    /* When you group operations to insert, delete, reload, or move sections inside a single batch job, all operations are performed based on the current indexes of the collection view. This is unlike modifying a mutable array where the insertion or deletion of items affects the indexes of successive operations. Therefore, you do not have to remember which items or sections were inserted, deleted, or moved and adjust the indexes of all other operations accordingly.
+     */
+    [cell.channelCollectionView performBatchUpdates:^{
+        DLog(@"inserting: %@, reloading: %@, deleting: %@", indexPathsForInsert, indexPathsForReload, indexPathsForDelete);
+        [cell.channelCollectionView insertItemsAtIndexPaths:indexPathsForInsert];
+        [cell.channelCollectionView deleteItemsAtIndexPaths:indexPathsForDelete];
+        [cell.channelCollectionView reloadItemsAtIndexPaths:indexPathsForReload];
+    } completion:^(BOOL finished) {
+        //nothing
+    }];
 }
 
 - (void)fetchDidCompleteForChannel:(DisplayChannel *)channel
@@ -158,7 +189,14 @@
 
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
 {
-    return self.channelEntriesByObjectID[channel.objectID];
+    NSDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
+    return chMetadata ? chMetadata[kShelbyChannelMetadataEntriesKey] : nil;
+}
+
+- (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
+{
+    NSDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
+    return chMetadata ? chMetadata[kShelbyChannelMetadataDeduplicatedEntriesKey] : nil;
 }
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
@@ -286,11 +324,11 @@
     SPChannelCell *cell = [self loadCell:row withDirection:YES animated:NO];
     SPChannelCollectionView *collectionView = cell.channelCollectionView;
     
-    NSArray *entries = self.channelEntriesByObjectID[collectionView.channel.objectID];
+    NSArray *dedupedEntries = [self deduplicatedEntriesForChannel:channel];
     
     NSInteger highlightIndex = 0;
     BOOL frameFound = NO;
-    for (id entry in entries) {
+    for (id entry in dedupedEntries) {
         if ([entry isKindOfClass:[DashboardEntry class]]) {
             if (((DashboardEntry *)entry).frame == frame) {
                 frameFound = YES;
@@ -370,9 +408,9 @@
 {
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)view;
     if ([channelCollection isKindOfClass:[SPChannelCollectionView class]]) {
-        NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
-        if (entries) {
-             return [entries count];
+        NSArray *dedupedEntries = [self deduplicatedEntriesForChannel:channelCollection.channel];
+        if (dedupedEntries) {
+             return [dedupedEntries count];
         }
     }
     
@@ -390,9 +428,9 @@
     
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)cv;
     STVAssert([channelCollection isKindOfClass:[SPChannelCollectionView class]], @"expecting a different class!");
-    NSArray *entries = self.channelEntriesByObjectID[channelCollection.channel.objectID];
-    STVAssert(indexPath.row < [entries count], @"expected a valid index path row");
-    id entry = entries[indexPath.row];
+    NSArray *dedupedEntries = [self deduplicatedEntriesForChannel:channelCollection.channel];
+    STVAssert(indexPath.row < [dedupedEntries count], @"expected a valid index path row");
+    id entry = dedupedEntries[indexPath.row];
     
     cell.thumbnailImageView.backgroundColor = channelCollection.channel.displayColor;
     
@@ -427,9 +465,11 @@
     }
     
     //load more data
-    NSInteger cellsBeyond = [entries count] - [indexPath row];
+    NSInteger cellsBeyond = [dedupedEntries count] - [indexPath row];
     if(cellsBeyond == 1){
-        [self.browseDelegate loadMoreEntriesInChannel:channelCollection.channel sinceEntry:[entries lastObject]];
+        //since id should come from raw entries, not de-duped entries
+        [self.browseDelegate loadMoreEntriesInChannel:channelCollection.channel
+                                           sinceEntry:[[self entriesForChannel:channelCollection.channel] lastObject]];
     }
 
     return cell;
@@ -457,10 +497,10 @@
     if ([channelCollectionView isKindOfClass:[SPChannelCollectionView class]]) {
         DisplayChannel *channel = channelCollectionView.channel;
         if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
-            NSArray *entries = self.channelEntriesByObjectID[channelCollectionView.channel.objectID];
+            NSArray *dedupedEntries = [self deduplicatedEntriesForChannel:channelCollectionView.channel];
             id entry = nil;
-            if (indexPath.row < [entries count]) {
-                entry = entries[indexPath.row];
+            if (indexPath.row < [dedupedEntries count]) {
+                entry = dedupedEntries[indexPath.row];
             }
             [self.browseDelegate userPressedChannel:channel atItem:entry];
             SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];

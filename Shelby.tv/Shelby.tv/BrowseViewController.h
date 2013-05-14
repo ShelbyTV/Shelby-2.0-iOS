@@ -28,6 +28,8 @@
 @property (weak, nonatomic) id<ShelbyBrowseProtocol> browseDelegate;
 
 //data model: Array of DisplayChannel
+//NB 1: the ordering of this array (when set) will be used to determine display ordering
+//NB 2: the entries for a given channel are part of data model as well, set with methods (below)
 @property (nonatomic, strong) NSArray *channels;
 
 /// Action Methods
@@ -38,6 +40,7 @@
 - (void)setEntries:(NSArray *)entries forChannel:(DisplayChannel *)channel;
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel;
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;
+- (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel;
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 - (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
