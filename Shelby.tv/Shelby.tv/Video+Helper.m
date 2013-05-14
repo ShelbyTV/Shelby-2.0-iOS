@@ -32,10 +32,10 @@
                                               inManagedObjectContext:context];
         video.videoID = videoID;
         video.caption = OBJECT_OR_NIL(dict[@"description"]);
-        video.providerName = dict[@"provider_name"];
-        video.providerID = dict[@"provider_id"];
-        video.thumbnailURL = dict[@"thumbnail_url"];
-        video.title = dict[@"title"];
+        video.providerName = OBJECT_OR_NIL(dict[@"provider_name"]);
+        video.providerID = OBJECT_OR_NIL(dict[@"provider_id"]);
+        video.thumbnailURL = OBJECT_OR_NIL(dict[@"thumbnail_url"]);
+        video.title = OBJECT_OR_NIL(dict[@"title"]);
         video.firstUnplayable =  OBJECT_OR_NIL(dict[@"first_unplayable_at"]);
         video.lastUnplayable = OBJECT_OR_NIL(dict[@"last_unplayable_at"]);
  
