@@ -9,11 +9,6 @@
 #import "TwitterHandler.h"
 #import "AuthenticateTwitterViewController.h"
 
-//XXX djs
-//djs importing CoreDataUtility just to get this fucking thing to build...
-#import "CoreDataUtility.h"
-//XXX djs
-
 //djs XXX do we need AFNEtworking in here?  Should probably just do all via API
 #import "AFNetworking.h"
 //djs XXX
@@ -452,8 +447,9 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 - (void)tokenSwapWasSuccessfulForUser:(NSDictionary *)userDictionary
 {
     // Store user Dictionary in Core Data
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [dataUtility storeUser:userDictionary];
+    //djs XXX TODO
+//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//    [dataUtility storeUser:userDictionary];
     
     // Post token-swap notification to listeners
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
