@@ -45,6 +45,18 @@
     self.loadMoreActivityIndicator.color = color;
 }
 
+- (void)setTitle:(NSString *)title
+{
+    _title = title;
+    
+    self.channelTitle.text = _title;
+    CGSize maxCaptionSize = CGSizeMake(self.frame.size.width - 10, self.channelTitle.frame.size.height);
+    CGFloat titleLabelWidth = [title sizeWithFont:[self.channelTitle font]
+                                constrainedToSize:maxCaptionSize
+                                    lineBreakMode:NSLineBreakByWordWrapping].width;
+    [self.channelTitle setFrame:CGRectMake(self.channelTitle.frame.origin.x, self.channelTitle.frame.origin.y, titleLabelWidth + 10, self.channelTitle.frame.size.height)];
+}
+
 - (void)setProximityToRefreshMode:(float)pct
 {
     CGFloat hue, saturation, brightness, alpha;
@@ -55,21 +67,9 @@
     }
 }
 
-- (void)setTitle:(NSString *)title
+- (void)setWillRefresh:(BOOL)willRefresh
 {
-    _title = title;
-    
-    self.channelTitle.text = _title;
-    CGSize maxCaptionSize = CGSizeMake(self.frame.size.width - 10, self.channelTitle.frame.size.height);
-    CGFloat titleLabelWidth = [title sizeWithFont:[self.channelTitle font]
-                                            constrainedToSize:maxCaptionSize
-                                                lineBreakMode:NSLineBreakByWordWrapping].width;
-    [self.channelTitle setFrame:CGRectMake(self.channelTitle.frame.origin.x, self.channelTitle.frame.origin.y, titleLabelWidth + 10, self.channelTitle.frame.size.height)];
-}
-
-- (void) setWillRefresh:(BOOL)willRefresh
-{
-    if(_willRefresh != willRefresh){
+    if(_willRefresh != willRefresh && !_isRefreshing){
         _willRefresh = willRefresh;
         if(_willRefresh){
             self.titleBeforeRefreshing = self.title;
@@ -87,23 +87,25 @@
 }
 
 #define REFRESH_X_PUSH 110
-- (void) setIsRefreshing:(BOOL)isRefreshing
+- (void)setIsRefreshing:(BOOL)isRefreshing
 {
-    _isRefreshing = isRefreshing;
-    if (_isRefreshing) {
-        [self.refreshActivityIndicator startAnimating];
-        self.title = @"Refreshing...";
-        self.channelTitle.textColor = [UIColor whiteColor];
-        self.color = [UIColor blackColor];
-        [UIView animateWithDuration:0.2 animations:^{
-            self.channelCollectionView.frame = CGRectMake(self.channelCollectionView.frame.origin.x + REFRESH_X_PUSH, self.channelCollectionView.frame.origin.y, self.channelCollectionView.frame.size.width, self.channelCollectionView.frame.size.height);
-        }];
-    } else if(_willRefresh) {
-        self.willRefresh = NO;
-        self.color = self.colorBeforeRefreshing;
-        [UIView animateWithDuration:0.5 animations:^{
-            self.channelCollectionView.frame = self.channelCollectionFrameBeforeRefreshing;
-        }];
+    if(_isRefreshing != isRefreshing){
+        _isRefreshing = isRefreshing;
+        if (_isRefreshing) {
+            [self.refreshActivityIndicator startAnimating];
+            self.title = @"Refreshing...";
+            self.channelTitle.textColor = [UIColor whiteColor];
+            self.color = [UIColor blackColor];
+            [UIView animateWithDuration:0.2 animations:^{
+                self.channelCollectionView.frame = CGRectMake(self.channelCollectionView.frame.origin.x + REFRESH_X_PUSH, self.channelCollectionView.frame.origin.y, self.channelCollectionView.frame.size.width, self.channelCollectionView.frame.size.height);
+            }];
+        } else if(_willRefresh) {
+            self.willRefresh = NO;
+            self.color = self.colorBeforeRefreshing;
+            [UIView animateWithDuration:0.5 animations:^{
+                self.channelCollectionView.frame = self.channelCollectionFrameBeforeRefreshing;
+            }];
+        }
     }
 }
 
