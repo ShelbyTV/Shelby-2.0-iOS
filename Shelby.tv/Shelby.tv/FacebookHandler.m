@@ -9,7 +9,6 @@
 #import "FacebookHandler.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "ShelbyAPIClient.h"
-#import "CoreDataUtility.h"
 #import "User.h"
 
 NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNotificationFacebookAuthorizationCompleted";
