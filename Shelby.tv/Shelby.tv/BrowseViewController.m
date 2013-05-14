@@ -172,7 +172,6 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     /* When you group operations to insert, delete, reload, or move sections inside a single batch job, all operations are performed based on the current indexes of the collection view. This is unlike modifying a mutable array where the insertion or deletion of items affects the indexes of successive operations. Therefore, you do not have to remember which items or sections were inserted, deleted, or moved and adjust the indexes of all other operations accordingly.
      */
     [cell.channelCollectionView performBatchUpdates:^{
-        DLog(@"inserting: %@, reloading: %@, deleting: %@", indexPathsForInsert, indexPathsForReload, indexPathsForDelete);
         [cell.channelCollectionView insertItemsAtIndexPaths:indexPathsForInsert];
         [cell.channelCollectionView deleteItemsAtIndexPaths:indexPathsForDelete];
         [cell.channelCollectionView reloadItemsAtIndexPaths:indexPathsForReload];
