@@ -8,6 +8,7 @@
 
 #import "DisplayChannel+Helper.h"
 #import "AuthorizationViewController.h"
+#import "GAITrackedViewController.h"
 #import "SPOverlayView.h"
 #import "SPVideoPlayer.h"
 

@@ -10,6 +10,7 @@
 #import "DeviceUtilities.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
+#import "GAI.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SPShareController.h"
 #import "SPChannelPeekView.h"
@@ -186,6 +187,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
     STVAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
     self.overlayView = nib[0];
+    self.overlayView.alpha = 0;
     self.overlayView.delegate = self;
     [self.view addSubview:self.overlayView];
     [self.overlayView setAccentColor:self.channel.displayColor];
