@@ -53,7 +53,9 @@ extern NSString * const kShelbyOfflineLikesID;
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)connectTwitterWithViewController:(UIViewController *)viewController;
 
-- (void)toggleLikeForFrame:(Frame *)frame;
+//returns YES if the toggle should result in this frame being liked
+//NB: does not guarantee async post will succeed
+- (BOOL)toggleLikeForFrame:(Frame *)frame;
 
 //do whatever it takes to get us to a clean state, guaranteed
 -(void)nuclearCleanup;

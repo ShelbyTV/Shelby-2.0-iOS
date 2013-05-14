@@ -20,5 +20,7 @@
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 - (BOOL)isPlayable;
-- (void)toggleLike;
+//returns YES if the toggle should result in this frame being liked
+- (BOOL)toggleLike;
+
 @end

@@ -114,8 +114,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 }
 
-
-- (void)toggleLikeForFrame:(Frame *)frame
+- (BOOL)toggleLikeForFrame:(Frame *)frame
 {
     STVAssert(frame.managedObjectContext == [self mainThreadContext], @"toggleLike expected frame from main context");
     
@@ -133,7 +132,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         }];
     }
     
-    frame.clientUnsyncedLike = frame.clientUnsyncedLike ? @0 : @1;
+    BOOL shouldBeLiked = ![frame.clientUnsyncedLike boolValue];
+    frame.clientUnsyncedLike = shouldBeLiked ? @1 : @0;
     
     if (frame.clientUnsyncedLike) {
         frame.clientLikedAt = [NSDate date];
@@ -146,6 +146,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     NSAssert(!error, @"context save failed, in toggleLikeForFrame...");
     
     [self fetchAllUnsyncedLikes];
+    
+    return shouldBeLiked;
 }
 
 - (User *)fetchAuthenticatedUserOnMainThreadContext

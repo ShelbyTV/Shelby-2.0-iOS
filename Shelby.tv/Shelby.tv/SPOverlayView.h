@@ -25,8 +25,6 @@
 - (void)showOverlayView;
 - (void)hideOverlayView;
 - (BOOL)isOverlayHidden;
-- (void)showLikeNotificationView;
-- (void)hideLikeNotificationView;
 - (void)showVideoInfo;
 - (void)hideVideoInfo;
 
@@ -36,5 +34,7 @@
 
 - (void)setFrameOrDashboardEntry:(id)entity;
 - (void)setAccentColor:(UIColor *)accent;
+
+- (void)didLikeCurrentEntry:(BOOL)like;
 
 @end

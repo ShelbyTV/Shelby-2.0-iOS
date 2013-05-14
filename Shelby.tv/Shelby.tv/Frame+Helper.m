@@ -113,9 +113,9 @@
     return self.video;
 }
 
-- (void)toggleLike
+- (BOOL)toggleLike
 {
-    [[ShelbyDataMediator sharedInstance] toggleLikeForFrame:self];
+    return [[ShelbyDataMediator sharedInstance] toggleLikeForFrame:self];
 }
 
 @end

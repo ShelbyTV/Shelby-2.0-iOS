@@ -492,7 +492,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (IBAction)likeAction:(id)sender
 {
     SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    [currentPlayer.videoFrame toggleLike];
+    BOOL didLike = [currentPlayer.videoFrame toggleLike];
+    [self.overlayView didLikeCurrentEntry:didLike];
 }
 
 - (IBAction)rollAction:(id)sender

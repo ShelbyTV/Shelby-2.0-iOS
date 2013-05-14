@@ -15,8 +15,6 @@
 
 @interface SPOverlayView ()
 
-//djs
-//@property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) IBOutlet UIButton *rollButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
@@ -105,6 +103,8 @@
         //don't touch total duration
         self.bufferProgressView.progress = 0.0;
         
+        self.likesButton.selected = [frame.clientUnsyncedLike boolValue];
+        
         self.primaryTextLabel.text = [frame creatorsInitialCommentWithFallback:YES];
         self.userTimestamp.text = frame.createdAt;
         self.nicknameLabel.text = frame.creator.nickname;
@@ -182,20 +182,29 @@
     }];
 }
 
-#pragma mark - Like Notification Methods
-- (void)showLikeNotificationView
+
+- (void)didLikeCurrentEntry:(BOOL)like
 {
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.likeNotificationView setAlpha:1.0f];
-    }];
+    if(like){
+        //djs TODO: flash the like notifications views
+    }
+    self.likesButton.selected = like;
 }
 
-- (void)hideLikeNotificationView
-{
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.likeNotificationView setAlpha:0.0f];
-    }];
-}
+//#pragma mark - Like Notification Methods
+//- (void)showLikeNotificationView
+//{
+//    [UIView animateWithDuration:0.5f animations:^{
+//        [self.likeNotificationView setAlpha:1.0f];
+//    }];
+//}
+//
+//- (void)hideLikeNotificationView
+//{
+//    [UIView animateWithDuration:0.5f animations:^{
+//        [self.likeNotificationView setAlpha:0.0f];
+//    }];
+//}
 
 #pragma mark - Playlist Methods
 - (void)hideVideoInfo
