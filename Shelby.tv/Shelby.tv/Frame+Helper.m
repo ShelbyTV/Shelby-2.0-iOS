@@ -8,12 +8,15 @@
 
 #import "Frame+Helper.h"
 #import "Conversation+Helper.h"
-#import "Video+Helper.h"
 #import "Roll+Helper.h"
 #import "ShelbyDataMediator.h"
 #import "User+Helper.h"
+#import "Video+Helper.h"
 
 @implementation Frame (Helper)
+
+@dynamic duplicateOf;
+@dynamic duplicates;
 
 + (Frame *)frameForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {

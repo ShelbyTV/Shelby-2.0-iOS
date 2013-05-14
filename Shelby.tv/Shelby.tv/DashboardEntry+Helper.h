@@ -8,9 +8,10 @@
 
 #import "DashboardEntry.h"
 #import "ShelbyModel.h"
+#import "ShelbyDuplicateContainer.h"
 #import "ShelbyVideoContainer.h"
 
-@interface DashboardEntry (Helper) <ShelbyModel, ShelbyVideoContainer>
+@interface DashboardEntry (Helper) <ShelbyModel, ShelbyDuplicateContainer, ShelbyVideoContainer>
 
 + (DashboardEntry *)dashboardEntryForDictionary:(NSDictionary *)dict
                                   withDashboard:(Dashboard *)dashboard

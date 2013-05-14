@@ -11,6 +11,9 @@
 
 @implementation DashboardEntry (Helper)
 
+@dynamic duplicateOf;
+@dynamic duplicates;
+
 + (DashboardEntry *)dashboardEntryForDictionary:(NSDictionary *)dict
                                   withDashboard:(Dashboard *)dashboard
                                       inContext:(NSManagedObjectContext *)context
