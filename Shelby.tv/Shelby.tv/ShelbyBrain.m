@@ -19,6 +19,8 @@
 @property (nonatomic, strong) DisplayChannel *currentChannel;
 
 @property (nonatomic, assign) SPTutorialMode currentTutorialMode;
+
+@property (strong) NSDictionary *postFetchInvocationForChannel;
 @end
 
 @implementation ShelbyBrain
@@ -179,6 +181,10 @@
         [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
         [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
+    
+    if (self.postFetchInvocationForChannel && [channel objectID] && self.postFetchInvocationForChannel[channel.objectID]) {
+        [self.postFetchInvocationForChannel[channel.objectID] invoke];
+    }
 }
 
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
@@ -257,6 +263,18 @@
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
 {
     // KP KP: TODO: prevent animated twice here and NOT in ShelbyHome. ---> same goes to Close animation
+    NSArray *entriesForChannel = [self.homeVC entriesForChannel:channel];
+    if (!entriesForChannel || ![entriesForChannel count]) {
+        self.postFetchInvocationForChannel = nil;
+        NSMethodSignature *channelPressed = [ShelbyBrain instanceMethodSignatureForSelector:@selector(userPressedChannel:atItem:)];
+        NSInvocation *channelPressedInvocation = [NSInvocation invocationWithMethodSignature:channelPressed];
+        [channelPressedInvocation setTarget:self];
+        [channelPressedInvocation setSelector:@selector(userPressedChannel:atItem:)];
+        [channelPressedInvocation setArgument:&channel atIndex:2];
+        [channelPressedInvocation setArgument:&item atIndex:3];
+        self.postFetchInvocationForChannel = @{[channel objectID] : channelPressedInvocation};
+        return;
+    }
     
     self.currentChannel = channel;
     

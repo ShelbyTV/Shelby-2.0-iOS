@@ -101,28 +101,16 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    if (!self.tutorialViewSeenInSession && [self.browseDelegate conformsToProtocol:@protocol(ShelbyBrowseProtocol)] && [self.browseDelegate respondsToSelector:@selector(tutorialModeOn)] && [self.browseDelegate tutorialModeOn]) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
-        if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
-            UIView *tutorial = nib[0];
-            [tutorial setAlpha:0.95];
-            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
-            UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-            [self.view addSubview:mask];
-            [self.view bringSubviewToFront:mask];
-            [mask setAlpha:0.5];
-            [mask setBackgroundColor:[UIColor blackColor]];
-            [self setTutorialView:mask];
-            [self.view addSubview:tutorial];
-            [self.view bringSubviewToFront:tutorial];
-        }
-    }
 }
 
 - (void)setChannels:(NSArray *)channels
 {
     _channels = channels;
     [self.channelsTableView reloadData];
+    
+    if (self.channels && [self.channels count]) {
+        [self openFirstTimeTutorial];
+    }
 }
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
@@ -218,6 +206,26 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     }
 }
 
+- (void)openFirstTimeTutorial
+{
+    if (!self.tutorialViewSeenInSession && [self.browseDelegate conformsToProtocol:@protocol(ShelbyBrowseProtocol)] && [self.browseDelegate respondsToSelector:@selector(tutorialModeOn)] && [self.browseDelegate tutorialModeOn]) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
+        if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
+            UIView *tutorial = nib[0];
+            [tutorial setAlpha:0.95];
+            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
+            UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            [self.view addSubview:mask];
+            [self.view bringSubviewToFront:mask];
+            [mask setAlpha:0.5];
+            [mask setBackgroundColor:[UIColor blackColor]];
+            [self setTutorialView:mask];
+            [self.view addSubview:tutorial];
+            [self.view bringSubviewToFront:tutorial];
+        }
+    }
+}
+
 #pragma mark - Private Methods
 
 //TODO: FIXME
@@ -245,7 +253,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 - (SPChannelCell *)loadCell:(NSInteger)row withDirection:(BOOL)up animated:(BOOL)animated
 {
     SPChannelCell *channelCell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
-    if (!channelCell) {
+    if (!channelCell && [self.channelsTableView numberOfRowsInSection:0] > row) {
         UITableViewScrollPosition position = up ? UITableViewScrollPositionTop : UITableViewScrollPositionBottom;
         NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:row inSection:0];
         [self.channelsTableView scrollToRowAtIndexPath:nextIndexPath atScrollPosition:position animated:animated];
