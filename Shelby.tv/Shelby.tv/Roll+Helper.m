@@ -70,13 +70,11 @@
         roll.rollID = rollID;
     }
     
-    roll.displayColor = @"1d829e";
-    roll.displayDescription = @"My Likes";
-    
     NSArray *likes = [Frame fetchAllLikesInContext:context];
     
     roll.frameCount = @([likes count]);
     roll.thumbnailURL = nil;
+    roll.displayColor = kShelbyColorLikesRedString;
     roll.displayTitle = @"My Likes";
     roll.title = @"My Likes";
     

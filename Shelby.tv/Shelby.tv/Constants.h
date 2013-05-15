@@ -34,6 +34,8 @@
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
 #define kShelbyColorGreen                                   [UIColor colorWithHex:@"6ab843" andAlpha:1.0f]
 #define kShelbyColorTutorialGreen                           [UIColor colorWithHex:@"7DC400" andAlpha:1.0f]
+#define kShelbyColorLikesRedString                          @"D84955"
+#define kShelbyColorLikesRed                                [UIColor colorWithHex:kShelbyColorLikesRedString andAlpha:1.0f]
 #define kShelbyColorWhite                                   [UIColor colorWithHex:@"f4f4f4" andAlpha:1.0f]
 
 /// Size
