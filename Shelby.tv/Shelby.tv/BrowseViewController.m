@@ -12,6 +12,7 @@
 #import "DisplayChannel+Helper.h"
 #import "Frame+Helper.h"
 #import "ImageUtilities.h"
+#import "ShelbyBrowseTutorialView.h"
 #import "ShelbyDataMediator.h"
 #import "SPChannelCell.h"
 #import "SPChannelCollectionView.h"
@@ -43,7 +44,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 @property (assign, nonatomic) BOOL animationInProgress;
 
 @property (nonatomic) UIView *tutorialView;
-@property (nonatomic, assign) BOOL tutorialViewSeenInSession;
+@property (nonatomic, assign) ShelbyBrowseTutorialMode tutorialMode;
 
 @property (nonatomic, strong) SPVideoItemViewCell *lastHighlightedCell;
 
@@ -56,7 +57,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 - (void)resetVersionLabel;
 
 ///Tutorial
-- (IBAction)openChannelZero:(id)sender;
+- (IBAction)tutorialDismissed:(id)sender;
 
 @end
 
@@ -97,6 +98,13 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
         // ... re-display status bar
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self openEndTutorial];
 }
 
 - (void)setChannels:(NSArray *)channels
@@ -202,23 +210,52 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     }
 }
 
+- (void)openTutorialForFirstTime:(BOOL)firstTime
+{
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyBrowseTutorialView" owner:self options:nil];
+    if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
+        ShelbyBrowseTutorialView *tutorial = nib[0];
+        [tutorial setAlpha:0.95];
+        [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
+        UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.view addSubview:mask];
+        [self.view bringSubviewToFront:mask];
+        [mask setAlpha:0.5];
+        [mask setBackgroundColor:[UIColor blackColor]];
+        [self setTutorialView:mask];
+        [self.view addSubview:tutorial];
+        [self.view bringSubviewToFront:tutorial];
+    
+        if (firstTime) {
+            [tutorial setupWithTitle:@"Welcome to Shelby TV" message:@"first, a quick gesture" andCloseButtonText:@"Play Channel 0"];
+        } else {
+            [tutorial setupWithTitle:@"You're Done!" message:@"Good job!" andCloseButtonText:@"Yay"];
+        }
+    }
+}
+
 - (void)openFirstTimeTutorial
 {
-    if (!self.tutorialViewSeenInSession && [self.browseDelegate conformsToProtocol:@protocol(ShelbyBrowseProtocol)] && [self.browseDelegate respondsToSelector:@selector(tutorialModeOn)] && [self.browseDelegate tutorialModeOn]) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
-        if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
-            UIView *tutorial = nib[0];
-            [tutorial setAlpha:0.95];
-            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
-            UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-            [self.view addSubview:mask];
-            [self.view bringSubviewToFront:mask];
-            [mask setAlpha:0.5];
-            [mask setBackgroundColor:[UIColor blackColor]];
-            [self setTutorialView:mask];
-            [self.view addSubview:tutorial];
-            [self.view bringSubviewToFront:tutorial];
+    if ([self.browseDelegate conformsToProtocol:@protocol(ShelbyBrowseProtocol)] && [self.browseDelegate respondsToSelector:@selector(browseTutorialMode)]) {
+        self.tutorialMode = [self.browseDelegate browseTutorialMode];
+        if (self.tutorialMode != ShelbyBrowseTutorialModeShow) {
+            return;
         }
+
+        [self openTutorialForFirstTime:YES];
+    }
+}
+
+
+- (void)openEndTutorial
+{
+    if ([self.browseDelegate conformsToProtocol:@protocol(ShelbyBrowseProtocol)] && [self.browseDelegate respondsToSelector:@selector(browseTutorialMode)]) {
+        self.tutorialMode = [self.browseDelegate browseTutorialMode];
+        if (self.tutorialMode != ShelbyBrowseTutorialModeEnd) {
+            return;
+        }
+        
+        [self openTutorialForFirstTime:NO];
     }
 }
 
@@ -268,23 +305,31 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     [self.versionLabel setTextColor:kShelbyColorBlack];
 }
 
-
-- (IBAction)openChannelZero:(id)sender
+- (IBAction)tutorialDismissed:(id)sender
 {
     UIButton *button = sender;
     UIView *parent = [button superview];
     [UIView animateWithDuration:0.4 animations:^{
         [parent setAlpha:0];
         [self.tutorialView setAlpha:0];
-
     } completion:^(BOOL finished) {
         [parent removeFromSuperview];
         [self.tutorialView removeFromSuperview];
         [self setTutorialView:nil];
-        self.tutorialViewSeenInSession = YES;
-
     }];
     
+
+    if (self.tutorialMode == ShelbyBrowseTutorialModeShow) {
+        UIButton *button = sender;
+        UIView *messageView = [button superview];
+        [self openChannelZeroWithView:messageView];
+    } else if ([self.browseDelegate conformsToProtocol:@protocol(ShelbyBrowseProtocol)] && [self.browseDelegate respondsToSelector:@selector(userDidCompleteTutorial)]) {
+            [self.browseDelegate userDidCompleteTutorial];
+    }
+}
+
+- (void)openChannelZeroWithView:(UIView *)messageView
+{
     SPChannelCell *channelZero = [self loadCell:0 withDirection:YES animated:NO];
     DisplayChannel *channelZeroDisplayChannel = channelZero.channelCollectionView.channel;
     

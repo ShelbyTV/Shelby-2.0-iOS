@@ -18,9 +18,10 @@
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
 @property (nonatomic, strong) DisplayChannel *currentChannel;
 
-@property (nonatomic, assign) SPTutorialMode currentTutorialMode;
+@property (nonatomic, assign) SPTutorialMode currentPlayerTutorialMode;
+@property (nonatomic, assign) ShelbyBrowseTutorialMode currentBrowseTutorialMode;
 
-@property (strong) NSDictionary *postFetchInvocationForChannel;
+@property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 @end
 
 @implementation ShelbyBrain
@@ -32,7 +33,8 @@
     [ShelbyDataMediator sharedInstance].delegate = self;
     
     if (![self tutorialCompleted]) {
-        self.currentTutorialMode = SPTutorialModeShow;
+        self.currentPlayerTutorialMode = SPTutorialModeShow;
+        self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeShow;
     }
 }
 
@@ -303,8 +305,9 @@
 
 - (void)userDidCloseChannelAtFrame:(Frame *)frame
 {
-    if (self.currentTutorialMode != SPTutorialModeNone) {
-        [self setTutorialCompleted];
+    if (self.currentPlayerTutorialMode != SPTutorialModeNone) {
+        self.currentPlayerTutorialMode = SPTutorialModeNone;
+        self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeEnd;
     }
 
     [self.homeVC animateDismissPlayerForChannel:self.currentChannel atFrame:frame];
@@ -312,8 +315,8 @@
 
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up
 {
-    if (self.currentTutorialMode != SPTutorialModeNone) {
-        self.currentTutorialMode = SPTutorialModePinch;
+    if (self.currentPlayerTutorialMode != SPTutorialModeNone) {
+        self.currentPlayerTutorialMode = SPTutorialModePinch;
     }
 
     NSInteger nextChannel = [self nextChannelForDirection:up];
@@ -328,7 +331,13 @@
 
 - (SPTutorialMode)tutorialModeForCurrentPlayer
 {
-    return self.currentTutorialMode;
+    return self.currentPlayerTutorialMode;
+}
+
+- (void)userDidCompleteTutorial
+{
+    self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeNone;
+    [self setTutorialCompleted];
 }
 
 #pragma mark - Helpers
@@ -437,9 +446,9 @@ typedef struct _ShelbyArrayMergeInstructions {
 //    [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:self.homeVC];
 }
 
-- (BOOL)tutorialModeOn
+- (ShelbyBrowseTutorialMode)browseTutorialMode
 {
-    return self.currentTutorialMode == SPTutorialModeShow;
+    return self.currentBrowseTutorialMode;
 }
 
 #pragma mark - Tutorial Mode
@@ -451,7 +460,6 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 - (void)setTutorialCompleted
 {
-    self.currentTutorialMode = SPTutorialModeNone;
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyTutorialMode];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

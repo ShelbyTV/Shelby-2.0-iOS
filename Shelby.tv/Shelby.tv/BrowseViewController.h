@@ -11,12 +11,19 @@
 #import "SPChannelCell.h"
 #import "ShelbyHideBrowseAnimationViews.h"
 
+typedef NS_ENUM(NSUInteger, ShelbyBrowseTutorialMode)
+{
+    ShelbyBrowseTutorialModeNone,
+    ShelbyBrowseTutorialModeShow,
+    ShelbyBrowseTutorialModeEnd
+};
+
 @protocol ShelbyBrowseProtocol <NSObject>
 
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item;
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
-- (BOOL)tutorialModeOn;
-
+- (ShelbyBrowseTutorialMode)browseTutorialMode;
+- (void)userDidCompleteTutorial;
 @end
 
 @protocol ShelbyPlayerProtocol;

@@ -11,6 +11,9 @@
 		1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */; };
 		1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */; };
 		1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */; };
+		1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
+		1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
+		1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
@@ -59,9 +62,9 @@
 		1C52849F16F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
 		1C5284A016F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
 		1C5284A116F7AE6C00B43A94 /* greyButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C52849516F7AE6C00B43A94 /* greyButton@2x.png */; };
-		1C6ACFD21721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
-		1C6ACFD31721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
-		1C6ACFD41721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */; };
+		1C6ACFD21721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
+		1C6ACFD31721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
+		1C6ACFD41721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
 		1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
 		1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
 		1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
@@ -735,6 +738,8 @@
 /* Begin PBXFileReference section */
 		1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Enterprise-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Nightly-Info.plist"; sourceTree = SOURCE_ROOT; };
+		1C06C5C91743E5D9004E8E20 /* ShelbyBrowseTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrowseTutorialView.h; sourceTree = "<group>"; };
+		1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrowseTutorialView.m; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
 		1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemViewCell.xib; sourceTree = "<group>"; };
@@ -758,7 +763,7 @@
 		1C52849316F7AE6C00B43A94 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		1C52849416F7AE6C00B43A94 /* greyButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyButton.png; sourceTree = "<group>"; };
 		1C52849516F7AE6C00B43A94 /* greyButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyButton@2x.png"; sourceTree = "<group>"; };
-		1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyChannelZeroTutorialView.xib; sourceTree = "<group>"; };
+		1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyBrowseTutorialView.xib; sourceTree = "<group>"; };
 		1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial.png"; sourceTree = "<group>"; };
 		1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial@2x.png"; sourceTree = "<group>"; };
 		1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPTutorialView.xib; sourceTree = "<group>"; };
@@ -1798,7 +1803,7 @@
 			isa = PBXGroup;
 			children = (
 				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
-				1C6ACFD11721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib */,
+				1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */,
 				1CACC0B217287298007EDD65 /* SettingsView.xib */,
 				1CC3387916CBE20800E58375 /* BrowseView.xib */,
 				1C4110D917319002009022EA /* ShelbyHomeView.xib */,
@@ -1818,6 +1823,8 @@
 				1CCCB55116D2A33600C8C216 /* PageControl.m */,
 				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
 				8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */,
+				1C06C5C91743E5D9004E8E20 /* ShelbyBrowseTutorialView.h */,
+				1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2042,7 +2049,7 @@
 				1C22E3BF171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1CFD671317203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671617203D5A00324A27 /* channelbg@2x.png in Resources */,
-				1C6ACFD31721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFD31721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDC1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 				1C6ACFE01721EA020008DEC2 /* SPTutorialView.xib in Resources */,
@@ -2180,7 +2187,7 @@
 				1C22E3C0171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1CFD671417203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671717203D5A00324A27 /* channelbg@2x.png in Resources */,
-				1C6ACFD41721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFD41721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDD1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 				1C6ACFE11721EA020008DEC2 /* SPTutorialView.xib in Resources */,
@@ -2319,7 +2326,7 @@
 				1C22E3BE171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1CFD671217203D5A00324A27 /* channelbg.png in Resources */,
 				1CFD671517203D5A00324A27 /* channelbg@2x.png in Resources */,
-				1C6ACFD21721DE5B0008DEC2 /* ShelbyChannelZeroTutorialView.xib in Resources */,
+				1C6ACFD21721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDB1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 				1C6ACFDF1721EA020008DEC2 /* SPTutorialView.xib in Resources */,
@@ -2472,6 +2479,7 @@
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED417426FDC00A9265B /* Frame.m in Sources */,
 				91649ED917426FDD00A9265B /* DashboardEntry.m in Sources */,
+				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2571,6 +2579,7 @@
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED517426FDC00A9265B /* Frame.m in Sources */,
 				91649EDA17426FDD00A9265B /* DashboardEntry.m in Sources */,
+				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2670,6 +2679,7 @@
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED317426FDC00A9265B /* Frame.m in Sources */,
 				91649ED817426FDD00A9265B /* DashboardEntry.m in Sources */,
+				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
