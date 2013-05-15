@@ -105,12 +105,14 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyChannelZeroTutorialView" owner:self options:nil];
         if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
             UIView *tutorial = nib[0];
-            [tutorial setAlpha:0.95];
-            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
+            [tutorial setAlpha:1.0];
+            tutorial.layer.borderColor = kShelbyColorTutorialGreen.CGColor;
+            tutorial.layer.borderWidth = 15;
+            [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, tutorial.frame.size.height/6, tutorial.frame.size.width, tutorial.frame.size.height)];
             UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
             [self.view addSubview:mask];
             [self.view bringSubviewToFront:mask];
-            [mask setAlpha:0.5];
+            [mask setAlpha:0.8];
             [mask setBackgroundColor:[UIColor blackColor]];
             [self setTutorialView:mask];
             [self.view addSubview:tutorial];
