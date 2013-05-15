@@ -107,8 +107,12 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
 {
-    //djs until we have logic to properly handle this
-    STVAssert(channel.canRefresh, @"should not try to fetch entries in channel that cannot refresh");
+    if(!channel.canFetchRemoteEntries){
+        //djs should probably do a local fetch and update accordingly
+        //but, we only have 1 special case right now.
+        //so, until we have logic to properly handle this...
+        return;
+    }
     
     if(channel.roll && (!entry || [entry isKindOfClass:[Frame class]])){
         [self fetchFramesForRoll:channel.roll inChannel:channel sinceFrame:(Frame *)entry];

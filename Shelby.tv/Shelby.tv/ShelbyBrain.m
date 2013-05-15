@@ -59,9 +59,7 @@
 - (void)populateChannels
 {
     for (DisplayChannel *channel in self.homeVC.channels){
-        if(channel.canRefresh){
-            [self populateChannel:channel withActivityIndicator:YES];
-        }
+        [self populateChannel:channel withActivityIndicator:YES];
     }
 }
 
