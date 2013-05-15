@@ -58,14 +58,10 @@
 
 - (void)populateChannels
 {
-    //djs TODO: be smart about loading channels and activity indicator
-    //pull each channel from the browseVC
-    // if it's nil, show spinner and fetch
-    // if it's old, show spinner and fetch
-    // if it's new, no spinner (and fetch?)
-    
     for (DisplayChannel *channel in self.homeVC.channels){
-        [self populateChannel:channel withActivityIndicator:YES];
+        if(channel.canRefresh){
+            [self populateChannel:channel withActivityIndicator:YES];
+        }
     }
 }
 
@@ -220,6 +216,9 @@
     }
     
     [self.homeVC setEntries:channelEntries forChannel:channel];
+    
+    [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
+    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
 }
 
 #pragma mark - Helper Methods
