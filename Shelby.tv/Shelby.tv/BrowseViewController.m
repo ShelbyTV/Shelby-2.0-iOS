@@ -503,7 +503,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
                                        andContentMode:UIViewContentModeScaleAspectFill];
         }
 
-        [cell.caption setText:[videoFrame creatorsInitialCommentWithFallback:YES]];
+        [cell.caption setText:[NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]]];
         //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
         CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.33);
         CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
