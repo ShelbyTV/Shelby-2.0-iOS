@@ -14,6 +14,9 @@
 		1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
+		1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */; };
+		1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */; };
+		1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */; };
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
@@ -740,6 +743,8 @@
 		1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Nightly-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1C06C5C91743E5D9004E8E20 /* ShelbyBrowseTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrowseTutorialView.h; sourceTree = "<group>"; };
 		1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrowseTutorialView.m; sourceTree = "<group>"; };
+		1C06C5C41742F5CA004E8E20 /* ShelbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyViewController.h; sourceTree = "<group>"; };
+		1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyViewController.m; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
 		1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemViewCell.xib; sourceTree = "<group>"; };
@@ -1842,6 +1847,8 @@
 				1CACC0AE17287276007EDD65 /* SettingsViewController.m */,
 				1C4110DD17319468009022EA /* ShelbyHomeViewController.h */,
 				1C4110DE17319468009022EA /* ShelbyHomeViewController.m */,
+				1C06C5C41742F5CA004E8E20 /* ShelbyViewController.h */,
+				1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2480,6 +2487,7 @@
 				91649ED417426FDC00A9265B /* Frame.m in Sources */,
 				91649ED917426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
+				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2580,6 +2588,7 @@
 				91649ED517426FDC00A9265B /* Frame.m in Sources */,
 				91649EDA17426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
+				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2680,6 +2689,7 @@
 				91649ED317426FDC00A9265B /* Frame.m in Sources */,
 				91649ED817426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
+				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

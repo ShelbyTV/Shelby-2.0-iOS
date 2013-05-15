@@ -8,7 +8,7 @@
 
 #import "DisplayChannel+Helper.h"
 #import "AuthorizationViewController.h"
-#import "GAITrackedViewController.h"
+#import "ShelbyViewController.h"
 #import "SPOverlayView.h"
 #import "SPVideoPlayer.h"
 
@@ -34,7 +34,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 
 @class SPVideoPlayer, SPOverlayView;
 
-@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPOverlayViewDelegate>
+@interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPOverlayViewDelegate>
 
 @property (weak, nonatomic) id <SPVideoReelDelegate> delegate;
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;

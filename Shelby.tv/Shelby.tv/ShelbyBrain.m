@@ -283,6 +283,8 @@
         index = 0;
     }
     [self.homeVC animateLaunchPlayerForChannel:channel atIndex:index];
+    
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
 }
 
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
@@ -301,6 +303,8 @@
     if(!didChangeChannels){
         [self userDidSwitchChannelForDirectionUp:up];
     }
+    
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistVerticalSwipe withLabel:nil];
 }
 
 - (void)userDidCloseChannelAtFrame:(Frame *)frame
@@ -311,6 +315,9 @@
     }
 
     [self.homeVC animateDismissPlayerForChannel:self.currentChannel atFrame:frame];
+    
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionClosePlayerByPinch withLabel:nil];
+
 }
 
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up

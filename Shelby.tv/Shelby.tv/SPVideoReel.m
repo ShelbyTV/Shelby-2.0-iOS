@@ -124,12 +124,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 #pragma mark - Setup Methods
 - (void)setup
 {
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryBrowse
-                               withAction:kGAIBrowseActionLaunchPlaylist
-                                withLabel:_groupTitle
-                                withValue:nil];
-    
     [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
     
     if ( !_videoPlayers ) {
@@ -332,6 +326,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self animatePlaybackState:self.currentPlayer.isPlaying];
 
     [self.currentPlayer togglePlayback];
+    
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionDoubleTap withLabel:nil];
 }
 
 - (void)scrubToPercent:(CGFloat)scrubPct
@@ -495,6 +491,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
     BOOL didLike = [currentPlayer.videoFrame toggleLike];
     [self.overlayView didLikeCurrentEntry:didLike];
+    
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerToggleLike withLabel:(didLike ? @"Liked" : @"Unliked")];
 }
 
 - (IBAction)rollAction:(id)sender
@@ -885,13 +883,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 
 //    [self fetchOlderVideos:page];
-//
-//    // Send event to Google Analytics
-//    id defaultTracker = [GAI sharedInstance].defaultTracker;
-//    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-//                               withAction:kGAIVideoPlayerActionSwipeHorizontal
-//                                withLabel:_groupTitle
-//                                withValue:nil];
+
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionSwipeHorizontal withLabel:self.title];
+
 }
 
 @end

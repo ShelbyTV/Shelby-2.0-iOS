@@ -10,6 +10,7 @@
 #import "SPVideoReel.h"
 #import "SPChannelCell.h"
 #import "ShelbyHideBrowseAnimationViews.h"
+#import "ShelbyViewController.h"
 
 typedef NS_ENUM(NSUInteger, ShelbyBrowseTutorialMode)
 {
@@ -29,7 +30,7 @@ typedef NS_ENUM(NSUInteger, ShelbyBrowseTutorialMode)
 @protocol ShelbyPlayerProtocol;
 
 // KP KP: TODO: right now, browseVC is the delegate of the SPVideoReel. Need to be changed - the brain should be the delegate
-@interface BrowseViewController : GAITrackedViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface BrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *toggleSecretButton;
 @property (weak, nonatomic) id<ShelbyBrowseProtocol> browseDelegate;

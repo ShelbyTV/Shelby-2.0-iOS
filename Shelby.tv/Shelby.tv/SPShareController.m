@@ -16,6 +16,7 @@
 #import "User+Helper.h"
 //djs holy shit, a file that actually should talk directly to the API client!
 #import "ShelbyAPIClient.h"
+#import "ShelbyViewController.h"
 
 //djs XXX do we need AFNEtworking in here?  Should probably just do all via API
 #import "AFNetworking.h"
@@ -313,17 +314,11 @@
 //                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
 //                                withValue:nil];
     
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareButton withLabel:frame.video.title];
+    
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
-            
-            // Send event to Google Analytics
-            //djs TODO: add back GA
-//            id defaultTracker = [GAI sharedInstance].defaultTracker;
-//            [defaultTracker sendEventWithCategory:kGAICategoryShare
-//                                       withAction:[NSString stringWithFormat:kGAIShareActionShareSuccess, activityType]
-//                                        withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-//                                        withValue:nil];
-            
+            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
         }
     }];
 

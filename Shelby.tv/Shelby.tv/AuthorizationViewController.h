@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShelbyViewController.h"
 
 @protocol AuthorizationDelegate <NSObject>
 
@@ -19,7 +20,7 @@
 @end
 
 
-@interface AuthorizationViewController : GAITrackedViewController <UITextFieldDelegate, UIAlertViewDelegate>
+@interface AuthorizationViewController : ShelbyViewController <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) id<AuthorizationDelegate> delegate;
 

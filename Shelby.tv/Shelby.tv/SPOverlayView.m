@@ -147,18 +147,8 @@
 
 #pragma mark - Overlay Methods
 - (void)toggleOverlay
-{
-    
-    // Send event to Google Analytics
-    //djs TODO: track this
-//    id defaultTracker = [GAI sharedInstance].defaultTracker;
-//    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-//                               withAction:kGAIVideoPlayerActionSingleTap
-//                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-//                                withValue:nil];
-    
+{    
     ( self.alpha < 1.0f ) ? [self showOverlayView] : [self hideOverlayView];
-    
 }
 
 - (BOOL)isOverlayHidden

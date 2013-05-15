@@ -5,6 +5,7 @@
 //  Created by Arthur Ariel Sabintsev on 11/1/12.
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
+#import "ShelbyViewController.h"
 
 @class SPVideoPlayer;
 
@@ -21,7 +22,7 @@
 
 @end
 
-@interface SPVideoPlayer : GAITrackedViewController
+@interface SPVideoPlayer : ShelbyViewController
 
 @property (nonatomic) Frame *videoFrame;
 @property (readonly) BOOL isPlaying;
