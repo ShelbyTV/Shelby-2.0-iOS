@@ -980,15 +980,15 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="infoPanelIconPlaceholder.png">{49, 49}</string>
-			<string key="like.png">{47, 42}</string>
-			<string key="likeNotification.png">{261, 157}</string>
-			<string key="likeactive.png">{47, 42}</string>
-			<string key="likehighlight.png">{47, 42}</string>
-			<string key="restartButton.png">{100, 100}</string>
-			<string key="roll.png">{89, 42}</string>
-			<string key="rollhighlight.png">{89, 42}</string>
-			<string key="share.png">{105, 42}</string>
+			<string key="infoPanelIconPlaceholder.png">{16, 16}</string>
+			<string key="like.png">{16, 16}</string>
+			<string key="likeNotification.png">{16, 16}</string>
+			<string key="likeactive.png">{16, 16}</string>
+			<string key="likehighlight.png">{16, 16}</string>
+			<string key="restartButton.png">{16, 16}</string>
+			<string key="roll.png">{16, 16}</string>
+			<string key="rollhighlight.png">{16, 16}</string>
+			<string key="share.png">{16, 16}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

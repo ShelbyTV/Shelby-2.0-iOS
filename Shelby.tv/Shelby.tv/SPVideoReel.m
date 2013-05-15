@@ -12,6 +12,7 @@
 #import "Frame+Helper.h"
 #import "GAI.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ShelbyAlertView.h"
 #import "SPShareController.h"
 #import "SPChannelPeekView.h"
 #import "SPOverlayView.h"
@@ -788,11 +789,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
          * 
          * Focus more time than seems necessary on this, b/c it makes watching a single video very enjoyable.
          */
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Downloading... Slowly..."
-                                                            message:@"Give it a little time to buffer.  Then double-tap to resume playback."
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"whatever"
-                                                  otherButtonTitles:nil, nil];
+        ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Video Downloading Slowly"
+                                                                    message:@"Give it a little time to buffer.  Then double-tap to resume playback."
+                                                         dismissButtonTitle:@"ok"
+                                                             autodimissTime:3.0f
+                                                                  onDismiss:nil];
         [alertView show];
     }
 }
@@ -831,15 +832,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player
 {
     if (self.currentPlayer == player) {
-        //djs TODO: a real error and auto-skip
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Problem Video"
-                                                            message:@"It won't play right now, so annoying.  Swipe it away..."
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"whatever"
-                                                  otherButtonTitles:nil, nil];
+        ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Problem Video"
+                                                                    message:@"This video won't play right now.  Skipping it..."
+                                                         dismissButtonTitle:@"Skip Now"
+                                                             autodimissTime:3.0f
+                                                                  onDismiss:^(BOOL didAutoDimiss) {
+                                                                      [self changeVideoInForwardDirection:YES];
+                                                                  }];
         [alertView show];
-        //djs TODO: when user hits OK:
-        //[self changeVideoInForwardDirection:YES];
     }
 }
 
