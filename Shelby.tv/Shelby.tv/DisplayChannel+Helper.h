@@ -31,7 +31,7 @@
 + (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
                                           inContext:(NSManagedObjectContext *)context;
 
-@property (nonatomic, readonly) BOOL canRefresh;
+@property (nonatomic, readonly) BOOL canFetchRemoteEntries;
 
 - (UIColor *)displayColor;
 - (NSString *)displayTitle;

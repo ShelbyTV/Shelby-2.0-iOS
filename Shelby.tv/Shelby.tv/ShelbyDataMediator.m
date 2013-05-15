@@ -86,6 +86,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 {
     // KP KP: TODO: don't hardcode the order!
     DisplayChannel *likesChannel = [DisplayChannel channelForOfflineLikesWithOrder:7 inContext:[self mainThreadContext]];
+    //djs fine for now, but i'd prefer this hit a helper which returned likes in proper order
     NSArray *channelEntries = [likesChannel.roll.frame allObjects];
     
     // If there are no more likes, delete the Unsynced Likes channels from CoreData
@@ -94,17 +95,25 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         
         NSError *error;
         [likesChannel.managedObjectContext save:&error];
-        NSAssert(!error, @"context save failed, in delete empty likes channel");
+        STVAssert(!error, @"context save failed, in delete empty likes channel");
         
         channelEntries = nil;
-        
     }
     
+    NSSortDescriptor *sortLikes = [NSSortDescriptor sortDescriptorWithKey:@"clientLikedAt" ascending:NO];
+    channelEntries = [channelEntries sortedArrayUsingDescriptors:@[sortLikes]];
     [self.delegate fetchOfflineLikesDidCompleteForChannel:likesChannel with:channelEntries];
 }
 
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
 {
+    if(!channel.canFetchRemoteEntries){
+        //djs should probably do a local fetch and update accordingly
+        //but, we only have 1 special case right now.
+        //so, until we have logic to properly handle this...
+        return;
+    }
+    
     if(channel.roll && (!entry || [entry isKindOfClass:[Frame class]])){
         [self fetchFramesForRoll:channel.roll inChannel:channel sinceFrame:(Frame *)entry];
     } else if(channel.dashboard && (!entry || [entry isKindOfClass:[DashboardEntry class]])){
@@ -114,6 +123,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 }
 
+//when login is enabled, this needs to be re-thought...
 - (BOOL)toggleLikeForFrame:(Frame *)frame
 {
     STVAssert(frame.managedObjectContext == [self mainThreadContext], @"toggleLike expected frame from main context");
@@ -143,8 +153,10 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
     NSError *error;
     [frame.managedObjectContext save:&error];
-    NSAssert(!error, @"context save failed, in toggleLikeForFrame...");
+    STVAssert(!error, @"context save failed, in toggleLikeForFrame...");
     
+    //djs TODO: I don't like that we're fetching all unsynced likes here
+    //we should just signal the addition/removal of a single frame
     [self fetchAllUnsyncedLikes];
     
     return shouldBeLiked;

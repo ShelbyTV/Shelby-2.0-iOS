@@ -115,6 +115,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
     if (self.tutorialMode == SPTutorialModeShow) {
         [self performSelector:@selector(showDoubleTapTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
+        [self.overlayView hideOverlayView];
      } else if (self.tutorialMode == SPTutorialModePinch) {
         [self performSelector:@selector(showPinchTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
     }
@@ -687,6 +688,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         
         [self.tutorialView.layer setCornerRadius:10];
         [self.tutorialView.layer setMasksToBounds:YES];
+        self.tutorialView.layer.borderColor = kShelbyColorTutorialGreen.CGColor;
+        self.tutorialView.layer.borderWidth = 15;
         
         return YES;
     }
@@ -741,7 +744,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)showSwipeLeftTutorial
 {
     [self setTutorialMode:SPTutorialModeSwipeLeft];
-    [self.tutorialView setupWithImage:@"swipeleft.png" andText:@"Swipe left to play next video in this channel"];
+    [self.tutorialView setupWithImage:@"swipeleft.png" andText:@"Swipe left to play next video"];
     [UIView animateWithDuration:0.2 animations:^{
         [self.tutorialView setAlpha:0.9];
     }];
@@ -750,7 +753,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)showSwipeUpTutorial
 {
     [self setTutorialMode:SPTutorialModeSwipeUp];
-    [self.tutorialView setupWithImage:@"swipeup.png" andText:@"Swipe up to change the channel"];
+    [self.tutorialView setupWithImage:@"swipeup.png" andText:@"Swipe up to change channels"];
     [UIView animateWithDuration:0.2 animations:^{
         [self.tutorialView setAlpha:0.9];
     }];    
@@ -759,7 +762,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)showPinchTutorial
 {
     if ([self tutorialSetup]) {
-        [self.tutorialView setupWithImage:@"pinch.png" andText:@"Pinch to close current channel"];
+        [self.tutorialView setupWithImage:@"pinch.png" andText:@"Pinch to exit"];
         [UIView animateWithDuration:0.2 animations:^{
             [self.tutorialView setAlpha:0.9];
         }];

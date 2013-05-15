@@ -99,10 +99,6 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-}
-
 - (void)setChannels:(NSArray *)channels
 {
     _channels = channels;
@@ -381,7 +377,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 {
     if(scrollView.contentOffset.x < PULL_TO_REFRESH_DISTANCE){
         SPChannelCollectionView *channelCollectionView = (SPChannelCollectionView *)scrollView;
-        if(channelCollectionView.channel.canRefresh){
+        if(channelCollectionView.channel.canFetchRemoteEntries){
             SPChannelCell *cell = channelCollectionView.parentCell;
             cell.isRefreshing = YES;
             [self.browseDelegate loadMoreEntriesInChannel:channelCollectionView.channel sinceEntry:nil];
@@ -395,7 +391,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     // we may be okay with that, but could use other callbacks to maintain state and prevent that
     if(scrollView.contentOffset.x < 0){
         SPChannelCollectionView *channelCollectionView = (SPChannelCollectionView *)scrollView;
-        if(channelCollectionView.channel.canRefresh){
+        if(channelCollectionView.channel.canFetchRemoteEntries){
             SPChannelCell *cell = channelCollectionView.parentCell;
             [cell setProximityToRefreshMode:(scrollView.contentOffset.x/PULL_TO_REFRESH_DISTANCE)];
             if(scrollView.contentOffset.x < PULL_TO_REFRESH_DISTANCE){
@@ -477,7 +473,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     
     //load more data
     NSInteger cellsBeyond = [dedupedEntries count] - [indexPath row];
-    if(cellsBeyond == 1){
+    if(cellsBeyond == 1 && channelCollection.channel.canFetchRemoteEntries){
         //since id should come from raw entries, not de-duped entries
         [self.browseDelegate loadMoreEntriesInChannel:channelCollection.channel
                                            sinceEntry:[[self entriesForChannel:channelCollection.channel] lastObject]];
