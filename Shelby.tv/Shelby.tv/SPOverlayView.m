@@ -148,7 +148,7 @@
 #pragma mark - Overlay Methods
 - (void)toggleOverlay
 {    
-    ( self.alpha < 1.0f ) ? [self showOverlayView] : [self hideOverlayView];
+    ( self.alpha < 1.0f ) ? [self showOverlayViewWithSpeed:0.5f] : [self hideOverlayView];
 }
 
 - (BOOL)isOverlayHidden
@@ -156,11 +156,16 @@
     return (self.alpha == 0 || self.isHidden);
 }
 
+- (void)showOverlayViewWithSpeed:(CGFloat)speed
+{
+    [UIView animateWithDuration:speed animations:^{
+        [self setAlpha:1.0f];
+    }];    
+}
+
 - (void)showOverlayView
 {
-    [UIView animateWithDuration:3.0f animations:^{
-        [self setAlpha:1.0f];
-    }];
+    [self showOverlayViewWithSpeed:3.0f];
 }
 
 - (void)hideOverlayView
