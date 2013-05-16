@@ -53,8 +53,15 @@
 
 - (void) showAnimatedFromView:(UIView *)view
 {
+    //get topmost visible view
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while ([topViewController presentedViewController]) {
+        topViewController = [topViewController presentedViewController];
+    }
+    
+    UIView *containerView = topViewController.view;
+    
     //determine middle based on status bar orientation
-    UIView *containerView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
     CGFloat hCenter, vCenter;
     switch ([[UIApplication sharedApplication] statusBarOrientation]) {
         case UIInterfaceOrientationLandscapeLeft:

@@ -792,7 +792,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Video Downloading Slowly"
                                                                     message:@"Give it a little time to buffer.  Then double-tap to resume playback."
                                                          dismissButtonTitle:@"ok"
-                                                             autodimissTime:3.0f
+                                                             autodimissTime:6.0f
                                                                   onDismiss:nil];
         [alertView show];
     }
