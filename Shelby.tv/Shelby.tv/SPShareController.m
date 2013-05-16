@@ -12,6 +12,7 @@
 //djs XXX
 #import "AsynchronousFreeloader.h"
 #import "FacebookHandler.h"
+#import "Frame+Helper.h"
 #import "ShelbyAPIClient.h"
 #import "ShelbyViewController.h"
 #import "SPShareRollView.h"
@@ -304,7 +305,7 @@
 //                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
 //                                withValue:nil];
     
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareButton withLabel:frame.video.title];
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareButton withLabel:[frame creatorsInitialCommentWithFallback:YES]];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
