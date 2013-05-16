@@ -8,6 +8,7 @@
 
 #import "BrowseViewController.h"
 
+#import "AFNetworking.h"
 #import "DeduplicationUtility.h"
 #import "DisplayChannel+Helper.h"
 #import "Frame+Helper.h"
@@ -496,12 +497,22 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
         STVAssert(false, @"Expected a DashboardEntry or Frame");
     }
     if (videoFrame && videoFrame.video) {
+        cell.shelbyFrame = videoFrame;
         Video *video = videoFrame.video;
         if (video && video.thumbnailURL) {
-            [AsynchronousFreeloader loadImageFromLink:video.thumbnailURL
-                                         forImageView:cell.thumbnailImageView
-                                      withPlaceholder:nil
-                                       andContentMode:UIViewContentModeScaleAspectFill];
+            NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:video.thumbnailURL]];
+            [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
+                                                 imageProcessingBlock:nil
+                                                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                                  if (cell.shelbyFrame == videoFrame && cell.thumbnailImageView.image == nil) {
+                                                                      cell.thumbnailImageView.image = image;
+                                                                  } else {
+                                                                      //cell has been reused, do nothing
+                                                                  }
+                                                              }
+                                                              failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                                  //ignoring for now
+                                                              }] start];
         }
 
         [cell.caption setText:[NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]]];

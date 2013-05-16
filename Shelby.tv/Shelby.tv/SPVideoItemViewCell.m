@@ -20,6 +20,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _thumbnailImageView.clipsToBounds = YES;
     }
     return self;
 }

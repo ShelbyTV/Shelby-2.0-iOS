@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Frame.h"
 
 @class SPVideoItemViewCellLabel;
 
@@ -15,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet SPVideoItemViewCellLabel *caption;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 
+//the currently displayed frame
+@property (strong, nonatomic) Frame *shelbyFrame;
 
 - (void)highlightItemWithColor:(UIColor *)color;
 - (void)unHighlightItem;
