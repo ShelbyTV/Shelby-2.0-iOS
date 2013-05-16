@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up;
 - (void)videoDidFinishPlaying;
 - (SPTutorialMode)tutorialModeForCurrentPlayer;
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 @end
 
 @class SPVideoPlayer, SPOverlayView;
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 @interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPOverlayViewDelegate>
 
 @property (weak, nonatomic) id <SPVideoReelDelegate> delegate;
+@property (nonatomic, strong) DisplayChannel *channel;
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
@@ -45,6 +47,8 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (id)initWithChannel:(DisplayChannel *)channel
      andVideoEntities:(NSArray *)videoEntities
               atIndex:(NSUInteger)videoStartIndex;
+
+- (void)setEntries:(NSArray *)entries;
 
 - (void)shutdown;
 

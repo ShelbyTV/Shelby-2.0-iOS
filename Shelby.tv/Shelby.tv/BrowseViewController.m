@@ -536,7 +536,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     
     //load more data
     NSInteger cellsBeyond = [dedupedEntries count] - [indexPath row];
-    if(cellsBeyond == 1 && channelCollection.channel.canFetchRemoteEntries){
+    if(cellsBeyond == kShelbyPrefetchEntriesWhenNearEnd && channelCollection.channel.canFetchRemoteEntries){
         //since id should come from raw entries, not de-duped entries
         [self.browseDelegate loadMoreEntriesInChannel:channelCollection.channel
                                            sinceEntry:[[self entriesForChannel:channelCollection.channel] lastObject]];

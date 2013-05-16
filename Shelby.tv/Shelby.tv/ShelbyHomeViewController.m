@@ -96,6 +96,8 @@
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
     [self.browseVC setEntries:channelEntries forChannel:channel];
+    
+    [self setPlayerEntriesForChannel:channel];
 }
 
 - (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel
@@ -108,6 +110,19 @@
 {
     //TODO: if SPVideoReel is open on the same channel, addEntries: over there, too
     [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
+    
+    [self setPlayerEntriesForChannel:channel];
+}
+
+- (void)setPlayerEntriesForChannel:(DisplayChannel *)channel
+{
+    if (self.videoReel) {
+        NSArray *completeChannelEntries = [self.browseVC deduplicatedEntriesForChannel:channel];
+        DisplayChannel *channelInPlayer = self.videoReel.channel;
+        if ([channelInPlayer isEqual:channel]) {
+            [self.videoReel setEntries:completeChannelEntries];
+        }
+    }
 }
 
 - (void)fetchDidCompleteForChannel:(DisplayChannel *)channel

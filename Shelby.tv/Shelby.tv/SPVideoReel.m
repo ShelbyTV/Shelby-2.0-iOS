@@ -32,7 +32,6 @@
 @property (nonatomic) UIScrollView *videoScrollView;
 //Array of DashboardEntry or Frame
 @property (nonatomic) NSMutableArray *videoEntities;
-@property (nonatomic, strong) DisplayChannel *channel;
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (copy, nonatomic) NSString *channelID;
 @property (assign, nonatomic) NSUInteger *videoStartIndex;
@@ -122,6 +121,15 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
+- (void)setEntries:(NSArray *)entries
+{
+    NSUInteger oldCount = [self.videoEntities count];
+    self.videoEntities = [entries mutableCopy];
+    // do some setup
+    [self setupVideoScrollView];
+    [self setupVideoPlayersFromIndex:oldCount];
+}
+
 #pragma mark - Setup Methods
 - (void)setup
 {
@@ -137,7 +145,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self setupOverlayView];
     [self setupGestures];
     
-    [self setupVideoPlayers];
+    [self setupVideoPlayersFromIndex:0];
     [self currentVideoShouldChangeToVideo:self.videoStartIndex];
     
     [self setupAirPlay];
@@ -190,13 +198,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 }
 
 //called via -setup via -viewDidLoad
-- (void)setupVideoPlayers
+- (void)setupVideoPlayersFromIndex:(NSUInteger)index
 {
-    if ([self.videoEntities count]) {
-        NSInteger i = 0;
-        for(id videoEntry in self.videoEntities){
+    NSUInteger count = [self.videoEntities count];
+    if (count && index < count) {
+        for (; index < count; index++) {
+            Frame *videoEntry = self.videoEntities[index];
             CGRect viewframe = [self.videoScrollView frame];
-            viewframe.origin.x = viewframe.size.width * i;
+            viewframe.origin.x = viewframe.size.width * index;
             viewframe.origin.y = 0.0f;
             SPVideoPlayer *player;
             if([videoEntry isKindOfClass:[DashboardEntry class]]){
@@ -209,8 +218,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             player.videoPlayerDelegate = self;
             [self.videoPlayers addObject:player];
             [self.videoScrollView addSubview:player.view];
-            
-            i++;
         }
     }
 }
@@ -876,6 +883,17 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 //    [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
     
     [self currentVideoShouldChangeToVideo:page];
+    
+    NSInteger videosBeyond = [self.videoEntities count] - page;
+    if(videosBeyond == kShelbyPrefetchEntriesWhenNearEnd && self.channel.canFetchRemoteEntries){
+        //since id should come from raw entries, not de-duped entries
+        Frame *lastFrame = [[self videoEntities] lastObject];
+        if (lastFrame.duplicates && [lastFrame.duplicates count]) {
+            lastFrame = lastFrame.duplicates.lastObject;
+        }
+        [self.delegate loadMoreEntriesInChannel:self.channel
+                                     sinceEntry:lastFrame];
+    }
     
     if (self.tutorialMode == SPTutorialModeSwipeLeft) {
         // Doesn't really matter which direction the user swiped - just indicate the user passed the 'SwipeLeft' tutorial

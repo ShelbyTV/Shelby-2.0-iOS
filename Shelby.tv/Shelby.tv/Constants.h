@@ -52,3 +52,6 @@
 #define kShelbyTwitterUsername                              @"twitterUsername"
 #define kShelbyTwitterConsumerKey                           @"5DNrVZpdIwhQthCJJXCfnQ"
 #define kShelbyTwitterConsumerSecret                        @"Tlb35nblFFTZRidpu36Uo3z9mfcvSVv1MuZZ19SHaU"
+
+// Shared BrowseVC & SPVideoReel Prefetching Constant
+#define kShelbyPrefetchEntriesWhenNearEnd                   1

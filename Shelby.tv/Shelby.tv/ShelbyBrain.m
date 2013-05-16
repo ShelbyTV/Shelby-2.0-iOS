@@ -287,6 +287,7 @@
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
 }
 
+// Method below is delegate method of the SPVideoReelProtocol & ShelbyBrowseProtocol
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
 {
     //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
