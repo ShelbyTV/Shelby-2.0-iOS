@@ -21,15 +21,15 @@
 #import "ShelbyDataMediator.h"
 #import "ShelbyBrain.h"
 
-// HOCKEY_APPSTORE                 @"67c862299d06ff9d891434abb89da906"
-// HOCKEY_NIGHTLY                  @"13fd8e2379e7cfff28cf8b069c8b93d3"
-// HOCKEY_ENTERPRISE               @"73f0add2df47cdb17bedfbfe35f9e279"
 #ifdef SHELBY_ENTERPRISE
     #define HOCKEY_BETA                     @"73f0add2df47cdb17bedfbfe35f9e279"
     #define HOCKEY_LIVE                     @"73f0add2df47cdb17bedfbfe35f9e279"
+#elif VERTICAL_ONE
+    #define HOCKEY_BETA                     @"7c8da3b26ada3253fc593ce577a39847"
+    #define HOCKEY_LIVE                     @"7c8da3b26ada3253fc593ce577a39847"
 #else
-    #define HOCKEY_BETA                     @"13fd8e2379e7cfff28cf8b069c8b93d3"
-    #define HOCKEY_LIVE                     @"67c862299d06ff9d891434abb89da906"
+    #define HOCKEY_BETA                     @"13fd8e2379e7cfff28cf8b069c8b93d3"  // Nightly
+    #define HOCKEY_LIVE                     @"67c862299d06ff9d891434abb89da906"  // Live
 #endif
 
 NSString *const kShelbyLastActiveDate       = @"kShelbyLastActiveDate";
