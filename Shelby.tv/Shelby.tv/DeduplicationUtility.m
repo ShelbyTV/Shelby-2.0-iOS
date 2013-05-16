@@ -34,6 +34,7 @@
     NSMutableArray *resultArray = [baseArray mutableCopy];
     NSMutableArray *inserted = [@[] mutableCopy];
     NSMutableArray *updated = [@[] mutableCopy];
+    NSMutableSet *updatedDupeParents = [NSMutableSet set];
     id<ShelbyDuplicateContainer> dupeParent;
     NSInteger indexOfUpdatedEntryInBaseArray;
     
@@ -46,7 +47,8 @@
         if(dupeParent){
             [DeduplicationUtility addDuplicateChild:newEntry toParent:dupeParent flatteningHierarchy:NO];
             indexOfUpdatedEntryInBaseArray = [baseArray indexOfObject:dupeParent];
-            if(indexOfUpdatedEntryInBaseArray != NSNotFound){
+            if(indexOfUpdatedEntryInBaseArray != NSNotFound && ![updatedDupeParents containsObject:dupeParent]){
+                [updatedDupeParents addObject:dupeParent];
                 [updated addObject:[NSIndexPath indexPathForItem:indexOfUpdatedEntryInBaseArray inSection:0]];
             }
         } else {
