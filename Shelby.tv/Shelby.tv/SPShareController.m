@@ -7,27 +7,20 @@
 //
 
 #import "SPShareController.h"
-//djs
-//#import "SPModel.h"
-#import "SPShareRollView.h"
-#import "SPVideoReel.h"
-#import "FacebookHandler.h"
-#import "TwitterHandler.h"
-#import "User+Helper.h"
-//djs holy shit, a file that actually should talk directly to the API client!
-#import "ShelbyAPIClient.h"
-#import "ShelbyViewController.h"
-
 //djs XXX do we need AFNEtworking in here?  Should probably just do all via API
 #import "AFNetworking.h"
 //djs XXX
+#import "AsynchronousFreeloader.h"
+#import "FacebookHandler.h"
+#import "ShelbyAPIClient.h"
+#import "ShelbyViewController.h"
+#import "SPShareRollView.h"
+#import "SPVideoReel.h"
+#import "TwitterHandler.h"
+#import "User+Helper.h"
 
 @interface SPShareController ()
 
-//djs
-//@property (weak, nonatomic) SPModel *model;
-//djs
-//@property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
 @property (nonatomic, assign) CGRect fromFrame;
 @property (nonatomic) SPShareRollView *rollView;
@@ -58,10 +51,6 @@
     self = [super init];
     if (self) {
         _videoPlayer = videoPlayer;
-        //djs
-//        _model = (SPModel *)[SPModel sharedInstance];
-        //djs
-//        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
     
     return self;
@@ -200,6 +189,7 @@
     [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"rollingContainer.png"]]];
     
     // Load Thumbnail
+    //djs TODO: use AFNetworking
     [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
                                  forImageView:_rollView.videoThumbnailView
                               withPlaceholder:nil
