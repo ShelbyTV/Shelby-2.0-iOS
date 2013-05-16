@@ -217,21 +217,27 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ShelbyBrowseTutorialView" owner:self options:nil];
     if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
         ShelbyBrowseTutorialView *tutorial = nib[0];
+        tutorial.layer.borderColor = kShelbyColorTutorialGreen.CGColor;
+        tutorial.layer.borderWidth = 5;
         [tutorial setAlpha:0.95];
         [tutorial setFrame:CGRectMake(self.view.frame.size.width/2 - tutorial.frame.size.width/2, self.view.frame.size.height/2 - tutorial.frame.size.height/2, tutorial.frame.size.width, tutorial.frame.size.height)];
         UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         [self.view addSubview:mask];
         [self.view bringSubviewToFront:mask];
-        [mask setAlpha:0.5];
+        [mask setAlpha:0.75];
         [mask setBackgroundColor:[UIColor blackColor]];
         [self setTutorialView:mask];
         [self.view addSubview:tutorial];
         [self.view bringSubviewToFront:tutorial];
     
         if (firstTime) {
-            [tutorial setupWithTitle:@"Welcome to Shelby TV" message:@"first, a quick gesture" andCloseButtonText:@"Play Channel 0"];
+            [tutorial setupWithTitle:@"Welcome to Unwind\nby Shelby TV"
+                             message:@"First, a quick gesture tutorial.\nThen, great video."
+                  andCloseButtonText:@"Play \"Channel Zero\""];
         } else {
-            [tutorial setupWithTitle:@"You're Done!" message:@"Good job!" andCloseButtonText:@"Yay"];
+            [tutorial setupWithTitle:@"Take Time to Unwind"
+                             message:@"At lunch, or the end of the day, enjoy video curated by the Shelby community."
+                  andCloseButtonText:@"Begin"];
         }
     }
 }
