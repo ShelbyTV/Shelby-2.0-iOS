@@ -62,10 +62,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    if (self.videoReel) {
-        DLog(@"dimissing player b/c of memory warning");
-        [self dismissPlayer];
-    }
 }
 
 
