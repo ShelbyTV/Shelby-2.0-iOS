@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ShelbyBrowseTutorialView : UIView
-- (void)setupWithTitle:(NSString *)title message:(NSString *)message andCloseButtonText:(NSString *)closeButtonText;
+- (id)initWithTitle:(NSString *)title message:(NSString *)message closeButtonText:(NSString *)closeButtonText andOwner:(UIViewController *)owner;
 @end

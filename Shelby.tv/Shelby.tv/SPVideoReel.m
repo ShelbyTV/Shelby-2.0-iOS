@@ -41,6 +41,7 @@
 @property (assign, nonatomic) BOOL loadingOlderVideos;
 @property (nonatomic) SPChannelPeekView *peelChannelView;
 @property (nonatomic) SPTutorialView *tutorialView;
+@property (nonatomic, strong) NSTimer *tutorialTimer;
 @property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
 @property (nonatomic, weak) SPVideoPlayer *currentPlayer;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
@@ -116,10 +117,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [super viewDidAppear:animated];
 
     if (self.tutorialMode == SPTutorialModeShow) {
-        [self performSelector:@selector(showDoubleTapTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
+        self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showDoubleTapTutorial) userInfo:nil repeats:NO];
         [self.overlayView hideOverlayView];
      } else if (self.tutorialMode == SPTutorialModePinch) {
-        [self performSelector:@selector(showPinchTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
+         self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showPinchTutorial) userInfo:nil repeats:NO];
     }
 }
 
@@ -297,6 +298,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     //not entirely true: if the player has an extraction pending, that block holds a reference to the player
     //but resetPlayer: is respected by that block; it will do nothing if it's player has been reset.
     [self.possiblyPlayablePlayers makeObjectsPerformSelector:@selector(resetPlayer)];
+
+    if (self.tutorialTimer) {
+        [self.tutorialTimer invalidate];
+        self.tutorialTimer = nil;
+    }
 }
 
 - (void)animatePlaybackState:(BOOL)videoPlaying
@@ -732,7 +738,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             [self.tutorialView setAlpha:0];
         } completion:^(BOOL finished) {
             [self setTutorialMode:SPTutorialModeShow];
-            [self performSelector:@selector(showSwipeLeftTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];            
+            self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showSwipeLeftTutorial) userInfo:nil repeats:NO];
         }];
     }
 }
@@ -743,7 +749,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self.tutorialView setAlpha:0];
     } completion:^(BOOL finished) {
         [self setTutorialMode:SPTutorialModeShow];
-        [self performSelector:@selector(showSwipeUpTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
+        self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showSwipeUpTutorial) userInfo:nil repeats:NO];
     }];
 }
 
@@ -754,7 +760,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             [self.tutorialView setAlpha:0];
         } completion:^(BOOL finished) {
             [self setTutorialMode:SPTutorialModeShow];
-            [self performSelector:@selector(showSwipeUpTutorial) withObject:nil afterDelay:kShelbyTutorialIntervalBetweenTutorials];
+            self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showSwipeUpTutorial) userInfo:nil repeats:NO];
         }];
     }
 }
