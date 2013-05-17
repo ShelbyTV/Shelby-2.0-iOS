@@ -21,6 +21,7 @@ NSString * const kAnalyticsCategoryVideoPlayer                       = @"Video P
 NSString * const kAnalyticsVideoPlayerActionSwipeHorizontal          = @"Swiped video player";
 NSString * const kAnalyticsVideoPlayerActionDoubleTap                = @"Playback toggled via double tap gesture";
 NSString * const kAnalyticsVideoPlayerToggleLike                     = @"User toggled Like";
+NSString * const kAnalyticsVideoPlayerUserScrub                      = @"User did scrub";
 
 
 

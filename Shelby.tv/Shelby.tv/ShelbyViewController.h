@@ -22,7 +22,7 @@ extern NSString * const kAnalyticsCategoryVideoPlayer;
 extern NSString * const kAnalyticsVideoPlayerActionSwipeHorizontal;
 extern NSString * const kAnalyticsVideoPlayerActionDoubleTap;
 extern NSString * const kAnalyticsVideoPlayerToggleLike;
-
+extern NSString * const kAnalyticsVideoPlayerUserScrub;
 
 @interface ShelbyViewController : GAITrackedViewController
 

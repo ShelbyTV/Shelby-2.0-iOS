@@ -343,6 +343,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)scrubToPercent:(CGFloat)scrubPct
 {
     [self.currentPlayer scrubToPct:scrubPct];
+    
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerUserScrub withLabel:[NSString stringWithFormat:@"%2.2f%%", scrubPct * 100]];
 }
 
 #pragma mark -  Update Methods (Private)
