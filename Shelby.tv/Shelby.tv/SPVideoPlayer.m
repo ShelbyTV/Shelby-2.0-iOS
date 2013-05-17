@@ -315,6 +315,11 @@
 
 - (void)currentTimeUpdated:(CMTime)time
 {
+    if(!self.isPlaying){
+        // This will happen a few times immediatley after pause, but that's innocuous.
+        // This is not a reliable way to detect/prevent issues like double-playback.
+        // -djs
+    }
     [self.videoPlayerDelegate videoCurrentTime:time forPlayer:self];
 }
 

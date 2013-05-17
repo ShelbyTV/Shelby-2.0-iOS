@@ -42,7 +42,7 @@
 @property (nonatomic) SPChannelPeekView *peelChannelView;
 @property (nonatomic) SPTutorialView *tutorialView;
 @property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
-@property (nonatomic, weak) SPVideoPlayer *currentPlayer;
+@property (atomic, weak) SPVideoPlayer *currentPlayer;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
 @property (nonatomic, strong) SPShareController *shareController;
@@ -350,32 +350,34 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 #pragma mark -  Update Methods (Private)
 - (void)currentVideoShouldChangeToVideo:(NSUInteger)position
 {
-    // Pause current player if there is one
-    SPVideoPlayer *previousPlayer = self.currentPlayer;
-    self.currentPlayer = nil;
-    if (previousPlayer) {
-        previousPlayer.shouldAutoplay = NO;
-        [previousPlayer pause];
+    @synchronized(self){
+        // Pause current player if there is one
+        SPVideoPlayer *previousPlayer = self.currentPlayer;
+        self.currentPlayer = nil;
+        if (previousPlayer) {
+            previousPlayer.shouldAutoplay = NO;
+            [previousPlayer pause];
+        }
+        
+        //update overlay
+        //FUN: if we had a direction from which the new video was coming, could animate this update
+        [self.overlayView showOverlayView];
+        [self.overlayView setFrameOrDashboardEntry:self.videoEntities[position]];
+        
+        // Set the new current player to auto play and get it going...
+        self.currentVideoPlayingIndex = position;
+        self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
+        
+        // If we are in Tutorial Show Mode, we want the video to be paused.
+        if (self.tutorialMode != SPTutorialModeShow) {
+            self.currentPlayer.shouldAutoplay = YES;
+        }
+        [self.currentPlayer prepareForStreamingPlayback];
+        
+        [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
+                                        previousPlayer:previousPlayer];
+        [self warmURLExtractionCache];
     }
-    
-    //update overlay
-    //FUN: if we had a direction from which the new video was coming, could animate this update
-    [self.overlayView showOverlayView];
-    [self.overlayView setFrameOrDashboardEntry:self.videoEntities[position]];
-    
-    // Set the new current player to auto play and get it going...
-    self.currentVideoPlayingIndex = position;
-    self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    
-    // If we are in Tutorial Show Mode, we want the video to be paused.
-    if (self.tutorialMode != SPTutorialModeShow) {
-        self.currentPlayer.shouldAutoplay = YES;
-    }
-    [self.currentPlayer prepareForStreamingPlayback];
-    
-    [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
-                                    previousPlayer:previousPlayer];
-    [self warmURLExtractionCache];
 }
 
 #pragma mark - Video Preload Strategery
