@@ -26,6 +26,8 @@
 #define kShelbySPFastSpeed 0.5
 #define kShelbyTutorialIntervalBetweenTutorials 3
 
+#define kShelbyFirstTimeLikedAlert @"kShelbyFirstTimeLikedAlert"
+
 @interface SPVideoReel ()
 
 @property (weak, nonatomic) SPOverlayView *overlayView;
@@ -501,6 +503,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.overlayView didLikeCurrentEntry:didLike];
     
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerToggleLike withLabel:(didLike ? @"Liked" : @"Unliked")];
+
+    // Show alert on the first time Likes button is pressed
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFirstTimeLikedAlert]) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyFirstTimeLikedAlert];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        ShelbyAlertView *likedAlert = [[ShelbyAlertView alloc] initWithTitle:@"Likes" message:@"Your likes are saved in their own channel on the main screen" dismissButtonTitle:@"OK" autodimissTime:6 onDismiss:nil];
+        [likedAlert show];
+    }
 }
 
 - (IBAction)rollAction:(id)sender
