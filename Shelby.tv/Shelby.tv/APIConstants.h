@@ -30,7 +30,7 @@
 #define kShelbyAPIGetRollFramesForSync      @"http://api.shelby.tv/v1/roll/%@/frames?limit=%d"
 
 /// GET Channels
-#ifdef VERTICAL_ONE
+#ifdef SHELBY_ENTERPRISE
     #define kShelbyAPIGetAllChannels                    @"http://api.shelby.tv/v1/roll/featured?segment=ipad_vertical_one"
 #else
     #define kShelbyAPIGetAllChannels                    @"http://api.shelby.tv/v1/roll/featured?segment=ipad_standard"

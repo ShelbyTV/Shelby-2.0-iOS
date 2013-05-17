@@ -24,10 +24,6 @@
 #ifdef SHELBY_ENTERPRISE
     #define HOCKEY_BETA                     @"73f0add2df47cdb17bedfbfe35f9e279"
     #define HOCKEY_LIVE                     @"73f0add2df47cdb17bedfbfe35f9e279"
-    #define GOOGLE_ANALYTICS_ID             @"UA-21191360-12"
-#elif VERTICAL_ONE
-    #define HOCKEY_BETA                     @"7c8da3b26ada3253fc593ce577a39847"
-    #define HOCKEY_LIVE                     @"7c8da3b26ada3253fc593ce577a39847"
     #define GOOGLE_ANALYTICS_ID             @"UA-21191360-14"
 #else
     #define HOCKEY_BETA                     @"13fd8e2379e7cfff28cf8b069c8b93d3"  // Nightly
