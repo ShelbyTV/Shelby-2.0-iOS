@@ -10,6 +10,7 @@
 #import "DisplayChannel+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
+#import "ShelbyAlertView.h"
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
@@ -147,7 +148,7 @@
 
 -(void)fetchChannelsDidCompleteWithError:(NSError *)error
 {
-    //TODO: show error
+    [self showErrorView:error];
     DLog(@"TODO: handle fetch channels did complete with error %@", error);
 }
 
@@ -186,9 +187,10 @@
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                withError:(NSError *)error
 {
-    //TODO: show error
     [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
     [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
+    
+    [self showErrorView:error];
     DLog(@"TODO: handle fetch channels did complete with error %@", error);
 }
 
@@ -256,6 +258,19 @@
     } else {
         return NO;
     }
+}
+
+- (void)showErrorView:(NSError *)error
+{
+    NSString *errorMessage = nil;
+    if (error && (error.code == 1009 || error.code == 1001)) {
+        errorMessage = @"Please make sure you are connected to the Internet.";
+    } else {
+        errorMessage = @"Could not connect. Please try again later.";
+    }
+    
+    ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Error" message:errorMessage dismissButtonTitle:@"OK" autodimissTime:8 onDismiss:nil];
+    [alertView show];
 }
 
 #pragma mark - ShelbyBrowseProtocol Methods
