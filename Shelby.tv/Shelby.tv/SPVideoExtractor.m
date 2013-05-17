@@ -161,14 +161,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     //to players after cancellation
     @synchronized(self){
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        self.currentlyExtracting = nil;
-        [self destroyWebView];
-        
-        [self.startNextExtractionTimer invalidate];
-        self.startNextExtractionTimer = nil;
-        [self.currentExtractionTimeoutTimer invalidate];
-        self.currentExtractionTimeoutTimer = nil;
-        
+
         //fail current extraction
         if(self.currentlyExtracting){
             extraction_complete_block currentCompletionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
@@ -176,6 +169,13 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 currentCompletionBlock(nil, NO);
             }
         }
+        self.currentlyExtracting = nil;
+        [self destroyWebView];
+        
+        [self.startNextExtractionTimer invalidate];
+        self.startNextExtractionTimer = nil;
+        [self.currentExtractionTimeoutTimer invalidate];
+        self.currentExtractionTimeoutTimer = nil;
     }
 }
 
@@ -183,57 +183,60 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)extractNextVideoFromQueue
 {
-    self.startNextExtractionTimer = nil;
-    
-    if(self.currentlyExtracting){
-        return;
-    }
-    
-    NSDictionary *nextExtraction = [self nextItemForExtraction];
-    
-    if (nextExtraction) {
-        self.currentlyExtracting = nextExtraction;
-        Video *video = self.currentlyExtracting[kSPVideoExtractorVideoKey];
+    @synchronized(self) {
         
-        if (!video) {
-            extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
-            if(completionBlock){
-                completionBlock(nil, YES);
-            }
-            self.currentlyExtracting = nil;
-            [self scheduleNextExtraction];
+        self.startNextExtractionTimer = nil;
+        
+        if(self.currentlyExtracting){
             return;
         }
         
-        NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
-        if(alreadyExtractedURL){
-            //already extracted while it was waiting
-            extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
-            if(completionBlock){
-                completionBlock(alreadyExtractedURL, NO);
+        NSDictionary *nextExtraction = [self nextItemForExtraction];
+        
+        if (nextExtraction) {
+            self.currentlyExtracting = nextExtraction;
+            Video *video = self.currentlyExtracting[kSPVideoExtractorVideoKey];
+            
+            if (!video) {
+                extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+                if(completionBlock){
+                    completionBlock(nil, YES);
+                }
+                self.currentlyExtracting = nil;
+                [self scheduleNextExtraction];
+                return;
             }
-            self.currentlyExtracting = nil;
-            [self scheduleNextExtraction];
-            return;
+            
+            NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
+            if(alreadyExtractedURL){
+                //already extracted while it was waiting
+                extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+                if(completionBlock){
+                    completionBlock(alreadyExtractedURL, NO);
+                }
+                self.currentlyExtracting = nil;
+                [self scheduleNextExtraction];
+                return;
+            } else {
+                //perform actual extraction
+                [self createWebView];
+                if ([video.providerName isEqualToString:@"youtube"]) {
+                    [self loadYouTubeVideo:video];
+                } else if ([video.providerName isEqualToString:@"vimeo"]) {
+                    [self loadVimeoVideo:video];
+                } else if ([video.providerName isEqualToString:@"dailymotion"]) {
+                    [self loadDailyMotionVideo:video];
+                }
+                
+                self.currentExtractionTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
+                                                                                      target:self
+                                                                                    selector:@selector(extractionTimedOut:)
+                                                                                    userInfo:self.currentlyExtracting
+                                                                                     repeats:NO];
+            }
         } else {
-            //perform actual extraction
-            [self createWebView];
-            if ([video.providerName isEqualToString:@"youtube"]) {
-                [self loadYouTubeVideo:video];
-            } else if ([video.providerName isEqualToString:@"vimeo"]) {
-                [self loadVimeoVideo:video];
-            } else if ([video.providerName isEqualToString:@"dailymotion"]) {
-                [self loadDailyMotionVideo:video];
-            }
-
-            self.currentExtractionTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
-                                                                                  target:self
-                                                                                selector:@selector(extractionTimedOut:)
-                                                                                userInfo:self.currentlyExtracting
-                                                                                 repeats:NO];
+            //nothing to extract or currently extracting, do nothing
         }
-    } else {
-        //nothing to extract or currently extracting, do nothing
     }
 }
 
