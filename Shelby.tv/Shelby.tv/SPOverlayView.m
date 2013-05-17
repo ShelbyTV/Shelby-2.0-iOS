@@ -165,7 +165,7 @@
 
 - (void)showOverlayView
 {
-    [self showOverlayViewWithSpeed:3.0f];
+    [self showOverlayViewWithSpeed:1.5f];
 }
 
 - (void)hideOverlayView
