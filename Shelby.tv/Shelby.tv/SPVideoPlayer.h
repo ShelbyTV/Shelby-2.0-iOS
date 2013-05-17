@@ -27,7 +27,7 @@
 @property (nonatomic) Frame *videoFrame;
 @property (readonly) BOOL isPlaying;
 @property (readonly) BOOL isPlayable;
-@property (assign, nonatomic) BOOL shouldAutoplay;
+@property (assign, atomic) BOOL shouldAutoplay;
 @property (nonatomic, weak) id<SPVideoPlayerDelegate> videoPlayerDelegate;
 
 // Initialization
