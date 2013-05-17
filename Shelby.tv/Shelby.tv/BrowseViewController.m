@@ -269,11 +269,9 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 
 #pragma mark - Private Methods
 
-//TODO: FIXME
 - (SPChannelCell *)cellForChannel:(DisplayChannel *)channel
 {
-    //djs XXX this is going to break once we have non-channels in the view... can't use channel.order
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[channel.order integerValue] inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.channels indexOfObject:channel] inSection:0];
     SPChannelCell *cell = (SPChannelCell *)[self.channelsTableView cellForRowAtIndexPath:indexPath];
     return cell;
 }
