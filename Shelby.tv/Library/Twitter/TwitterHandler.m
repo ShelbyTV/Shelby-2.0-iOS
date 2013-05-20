@@ -9,6 +9,10 @@
 #import "TwitterHandler.h"
 #import "AuthenticateTwitterViewController.h"
 
+//djs XXX do we need AFNEtworking in here?  Should probably just do all via API
+#import "AFNetworking.h"
+//djs XXX
+
 NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNotificationTwitterAuthorizationCompleted";
 
 @interface TwitterHandler () <AuthenticateTwitterDelegate>
@@ -443,8 +447,9 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 - (void)tokenSwapWasSuccessfulForUser:(NSDictionary *)userDictionary
 {
     // Store user Dictionary in Core Data
-    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    [dataUtility storeUser:userDictionary];
+    //djs XXX TODO
+//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
+//    [dataUtility storeUser:userDictionary];
     
     // Post token-swap notification to listeners
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
@@ -454,10 +459,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 // Cleanup
 - (void)twitterCleanup
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername]) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyTwitterUsername];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+
 }
 
 #pragma mark - AuthenticateTwitterDelegate Methods

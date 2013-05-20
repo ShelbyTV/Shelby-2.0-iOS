@@ -8,17 +8,22 @@
 
 #import "SPVideoExtractor.h"
 #import "Video.h"
-#import "ShelbyAPIClient.h"
 
 @interface SPVideoExtractor () <UIWebViewDelegate>
 
-@property (nonatomic) NSMutableArray *videoQueue;
 @property (nonatomic) UIWebView *webView;
-@property (nonatomic) NSTimer *nextExtractionTimer;
-@property (nonatomic) NSTimer *currentExtractionTimer;
-@property (assign, nonatomic) BOOL isExtracting;
+@property (nonatomic) NSTimer *startNextExtractionTimer;
+@property (nonatomic) NSTimer *currentExtractionTimeoutTimer;
+// array of {kSPVideoExtractorVideoKey: Video*, kSPVideoExtractorBlockKey: extraction_complete_block} waiting to be processed
+@property (nonatomic) NSMutableArray *highPriorityExtractionQueue;
+// same dictionary as above, but without extraction_complete_block
+@property (nonatomic) NSMutableArray *warmCacheExtractionQueue;
+// {kSPVideoExtractorVideoKey: Video*, kSPVideoExtractorBlockKey: extraction_complete_block} currently processing
+@property (nonatomic, strong) NSDictionary *currentlyExtracting;
+// array of {kSPVideoExtractorVideoObjectIDKey: Video*, kSPVideoExtractorExtractedURLStringKey: NSString*, kSPVideoExtractorExtractedAtKey: NSDate*}
+// Videosalready processed, 
+@property (nonatomic) NSMutableDictionary *extractedURLCache;
 
-- (NSManagedObjectContext *)context;
 - (void)extractNextVideoFromQueue;
 - (void)createWebView;
 - (void)destroyWebView;
@@ -26,9 +31,18 @@
 - (void)loadVimeoVideo:(Video *)video;
 - (void)loadDailyMotionVideo:(Video *)video;
 - (void)processNotification:(NSNotification *)notification;
-- (void)timerExpired:(NSTimer *)timer;
+- (void)extractionTimedOut:(NSTimer *)timer;
 
 @end
+
+//for extraction
+NSString * const kSPVideoExtractorVideoKey = @"video";
+NSString * const kSPVideoExtractorBlockKey = @"block";
+//extraction caching
+NSString * const kSPVideoExtractorVideoObjectIDKey = @"videoObjectID";
+NSString * const kSPVideoExtractorExtractedURLStringKey = @"extractedURLString";
+NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
+#define EXTRACTED_URL_TTL_S -300 //URLs are valid for 300s (5m)
 
 @implementation SPVideoExtractor
 
@@ -40,74 +54,189 @@
     dispatch_once(&extractorToken, ^{
         sharedInstance = [[super allocWithZone:NULL] init];
     });
-    
+
     return sharedInstance;
 }
 
 #pragma mark - Public Methods
-- (void)queueVideo:(Video *)video
+
+- (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue
 {
-    @synchronized(self) {
-        
-        // If queue is empty
-        if ( ![self videoQueue] ) {
-            self.videoQueue = [@[] mutableCopy];
+    STVAssert(completionBlock, @"urlForVideo expects an extraction block");
+    
+    @synchronized(self){
+        if (!self.highPriorityExtractionQueue) {
+            self.highPriorityExtractionQueue = [@[] mutableCopy];
         }
         
-        if (video) {
-            [self.videoQueue addObject:video];
+        NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
+        if(alreadyExtractedURL){
+            if(completionBlock){
+                completionBlock(alreadyExtractedURL, NO);
+            }
+        } else {
+            NSDictionary *extractionDict = @{kSPVideoExtractorVideoKey: video,
+                                             kSPVideoExtractorBlockKey: completionBlock};
+            if(jumpQueue){
+                //a jumpQueue means video was changed and we didn't have URL pre-extracted
+                //we can cancel all extractions b/c new preloading & cache warming will be sent later
+                [self cancelRemainingExtractions];
+//                DLog(@"Jumped queue for (%@)", video.videoID);
+                [self.highPriorityExtractionQueue insertObject:extractionDict atIndex:0];
+            } else {
+//                DLog(@"Queue (%@) at end of high priority queue with size: %lu", video.videoID, (unsigned long)[self.highPriorityExtractionQueue count]);
+                [self.highPriorityExtractionQueue addObject:extractionDict];
+            }
+            [self scheduleNextExtraction];
         }
-        
-        [self extractNextVideoFromQueue];
-        
+    }
+}
+
+- (void)warmCacheForVideo:(Video *)video
+{
+    @synchronized(self){
+        if (!self.warmCacheExtractionQueue) {
+            self.warmCacheExtractionQueue = [@[] mutableCopy];
+        }
+        if([self.warmCacheExtractionQueue count] < 5){
+        [self.warmCacheExtractionQueue addObject:@{kSPVideoExtractorVideoKey: video}];
+            [self scheduleNextExtraction];
+        }
+    }
+}
+
+- (void)warmCacheForVideoContainer:(id<ShelbyVideoContainer>)videoContainer
+{
+    STVAssert([videoContainer conformsToProtocol:@protocol(ShelbyVideoContainer)], @"warm cache for entity expected a video container");
+    [self warmCacheForVideo:[videoContainer containedVideo]];
+}
+
+- (NSDictionary *)nextItemForExtraction
+{
+    @synchronized(self){
+        NSDictionary *upNext = nil;
+        if ([self.highPriorityExtractionQueue count]) {
+            upNext = self.highPriorityExtractionQueue[0];
+            [self.highPriorityExtractionQueue removeObject:upNext];
+//            DLog(@"Starting high priority extraction of (%@), highPriorityQueueSize: %lu, warmCaccheQueueSize: %lu", ((Video*)upNext[kSPVideoExtractorVideoKey]).videoID, (unsigned long)[self.highPriorityExtractionQueue count], (unsigned long)[self.warmCacheExtractionQueue count]);
+        } else if ([self.warmCacheExtractionQueue count]) {
+            upNext = self.warmCacheExtractionQueue[0];
+            [self.warmCacheExtractionQueue removeObject:upNext];
+//            DLog(@"Starting cache warm extraction of (%@), highPriorityQueueSize: %lu, warmCacheQueueSize: %lu", ((Video*)upNext[kSPVideoExtractorVideoKey]).videoID, (unsigned long)[self.highPriorityExtractionQueue count], (unsigned long)[self.warmCacheExtractionQueue count]);
+        }
+        return upNext;
+    }
+}
+
+- (void)scheduleNextExtraction
+{
+    if(!self.startNextExtractionTimer){
+        self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.75
+                                                                         target:self
+                                                                       selector:@selector(extractNextVideoFromQueue)
+                                                                       userInfo:nil
+                                                                        repeats:NO];
+    } else {
+        /* timer already scheduled */
     }
 }
 
 - (void)cancelRemainingExtractions
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setIsExtracting:NO];
-    [self.nextExtractionTimer invalidate];
-    [self.videoQueue removeAllObjects];
-    [self destroyWebView];
+    [self cancelCurrentExtraction];
     
-    DLog(@"Remaining Extractions Cancelled!");
+    for (NSDictionary *queuedExtraction in self.highPriorityExtractionQueue) {
+        extraction_complete_block completionBlock = queuedExtraction[kSPVideoExtractorBlockKey];
+        if(completionBlock){
+            completionBlock(nil, NO);
+        }
+    }
+    [self.highPriorityExtractionQueue removeAllObjects];
+    [self.warmCacheExtractionQueue removeAllObjects];
+}
+
+- (void)cancelCurrentExtraction
+{
+    //notification observer is also synchronized to prevent us from sending messages
+    //to players after cancellation
+    @synchronized(self){
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+        //fail current extraction
+        if(self.currentlyExtracting){
+            extraction_complete_block currentCompletionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+            if(currentCompletionBlock){
+                currentCompletionBlock(nil, NO);
+            }
+        }
+        self.currentlyExtracting = nil;
+        [self destroyWebView];
+        
+        [self.startNextExtractionTimer invalidate];
+        self.startNextExtractionTimer = nil;
+        [self.currentExtractionTimeoutTimer invalidate];
+        self.currentExtractionTimeoutTimer = nil;
+    }
 }
 
 #pragma mark - Private Methods
-- (NSManagedObjectContext *)context
-{
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    return [appDelegate context];
-}
 
 - (void)extractNextVideoFromQueue
 {
-    if ( ![self isExtracting] && [self.videoQueue count] ) {
+    @synchronized(self) {
         
-        NSManagedObjectContext *context = [self context];
-        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
-        [self setIsExtracting:YES];
-        [self createWebView];
+        self.startNextExtractionTimer = nil;
         
-        if ( [video.providerName isEqualToString:@"youtube"] ) {
-            
-            [self loadYouTubeVideo:video];
-            
-        } else if ( [video.providerName isEqualToString:@"vimeo"] ) {
-            
-            [self loadVimeoVideo:video];
-            
-        } else if ( [video.providerName isEqualToString:@"dailymotion"] ) {
-            
-            [self loadDailyMotionVideo:video];
-            
+        if(self.currentlyExtracting){
+            return;
         }
-
-        self.currentExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:15.0f target:self selector:@selector(timerExpired:) userInfo:[video videoID] repeats:NO];
         
+        NSDictionary *nextExtraction = [self nextItemForExtraction];
+        
+        if (nextExtraction) {
+            self.currentlyExtracting = nextExtraction;
+            Video *video = self.currentlyExtracting[kSPVideoExtractorVideoKey];
+            
+            if (!video) {
+                extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+                if(completionBlock){
+                    completionBlock(nil, YES);
+                }
+                self.currentlyExtracting = nil;
+                [self scheduleNextExtraction];
+                return;
+            }
+            
+            NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
+            if(alreadyExtractedURL){
+                //already extracted while it was waiting
+                extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+                if(completionBlock){
+                    completionBlock(alreadyExtractedURL, NO);
+                }
+                self.currentlyExtracting = nil;
+                [self scheduleNextExtraction];
+                return;
+            } else {
+                //perform actual extraction
+                [self createWebView];
+                if ([video.providerName isEqualToString:@"youtube"]) {
+                    [self loadYouTubeVideo:video];
+                } else if ([video.providerName isEqualToString:@"vimeo"]) {
+                    [self loadVimeoVideo:video];
+                } else if ([video.providerName isEqualToString:@"dailymotion"]) {
+                    [self loadDailyMotionVideo:video];
+                }
+                
+                self.currentExtractionTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
+                                                                                      target:self
+                                                                                    selector:@selector(extractionTimedOut:)
+                                                                                    userInfo:self.currentlyExtracting
+                                                                                     repeats:NO];
+            }
+        } else {
+            //nothing to extract or currently extracting, do nothing
+        }
     }
 }
 
@@ -183,91 +312,65 @@
 {
     @synchronized(self) {
         
-        if ( notification.userInfo && ![notification.userInfo isKindOfClass:[NSNull class]] ) {
+        if (self.currentlyExtracting && notification.userInfo && ![notification.userInfo isKindOfClass:[NSNull class]]) {
             
             NSArray *allValues = [notification.userInfo allValues];
-        
             for (id value in allValues) {
                 
                 // 'path' is an instance method on 'MPAVItem'
                 SEL pathSelector = NSSelectorFromString([NSString stringWithFormat:@"%@%@%@%@", @"p",@"a",@"t",@"h"]);
                 
                 if ([value respondsToSelector:pathSelector]) {
-                    
+//                    DLog(@"Great extraction success!");
+
                     // Remove myself as an observer -- otherwise we could initiate 'playVideo' multiple times, slowing down video display
                     [[NSNotificationCenter defaultCenter] removeObserver:self];
-                    
+
                     // Remove webView
                     [self destroyWebView];
                     
+                    [self.currentExtractionTimeoutTimer invalidate];
+                    self.currentExtractionTimeoutTimer = nil;
+
                     // Get videoURL to playable video file
-                    // hard to remove warning, since 'value' is an instance of a private class - MPAVItem.
+                    #pragma GCC diagnostic push
+                    #pragma GCC diagnostic ignored "-Warc-performSelector-leaks"
                     NSString *extractedURL = [value performSelector:pathSelector];
-                    
-                    [self.currentExtractionTimer invalidate];
-                    [self setCurrentExtractionTimer:nil];
-                    if ( 0 == [self.videoQueue count] ) {
-                        
-                        // Do nothing if the HOME button is pushed in SPVideoReel while a video was being processed.
-                        
-                    } else {
-                        
-                        // Update Core Data video object
-                        NSManagedObjectContext *context = [self context];
-                        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-                        Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
-                        [video setValue:extractedURL forKey:kShelbyCoreDataVideoExtractedURL];
-                       
-                        // Saved updated Core Data video entry, and post notification for SPVideoPlayer object
-                        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_VideoExtracted];
-                        [dataUtility setVideoID:video.videoID];
-                        [dataUtility saveContext:context];
+                    #pragma GCC diagnostic pop
 
-                        // Reset variables for next search
-                        [self.videoQueue removeObjectAtIndex:0];
-                        [self setIsExtracting:NO];
-                        
-                        self.nextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.75 target:self selector:@selector(extractNextVideoFromQueue) userInfo:nil repeats:NO];
-
+                    [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
+                    extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+                    if(completionBlock){
+                        completionBlock(extractedURL, NO);
                     }
+                    self.currentlyExtracting = nil;
+
+                    [self scheduleNextExtraction];
                 }
             }
         }
     }
 }
 
-- (void)timerExpired:(NSTimer *)timer
+- (void)extractionTimedOut:(NSTimer *)timer
 {
-    
-    if ( [self.videoQueue count] ) {
-
-        // TODO (comment via Arthur to Keren): I think this should only work for logged-in users, since the markUnplayableVideo: method involves the use of an auth_token. Double check to see if auth_token is necessary.
+    //prevent possible async timing issue
+    if(self.currentlyExtracting && self.currentlyExtracting == timer.userInfo){
+//        DLog(@"Extraction TIMED OUT, cancelling current extraction...");
+        self.currentExtractionTimeoutTimer = nil;
         
-        // TODO: not marking unplayable as it might be playable on the web. Need to have seperate properties for web and mobile
-
-//        NSManagedObjectContext *context = [self context];
-//        
-//        NSManagedObjectID *objectID = [(self.videoQueue)[0] objectID];
-//        if (objectID) {
-//            Video *video = (Video *)[context existingObjectWithID:objectID error:nil];
-//            [ShelbyAPIClient markUnplayableVideo:[video videoID]];
-//        }
-
-        // 'if' conditional shouldn't be necessary, since _videoQueue should have at least one item, the one that failed to be extracted
-        [self.videoQueue removeObjectAtIndex:0];
+        [self destroyWebView];
         
+        extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+        if(completionBlock){
+            completionBlock(nil, YES);
+        }
+        self.currentlyExtracting = nil;
+
+        [self scheduleNextExtraction];
+    } else {
+        DLog(@"Extraction TIMED OUT, but not the *current* extraction.  current: %@, timed out: %@", self.currentlyExtracting, timer.userInfo);
     }
-
-    id userInfo = [timer userInfo];
-    [self setIsExtracting:NO];
-    [self.nextExtractionTimer invalidate];
-    [self.currentExtractionTimer invalidate];
-    [self destroyWebView];
-
-    // Scroll to next video, which subsequently queues the next video for extraction
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPLoadVideoAfterUnplayableVideo object:userInfo];
-
-    
 }
 
 #pragma mark - UIWebViewDelegate Methods
@@ -279,6 +382,31 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     return YES;
+}
+
+#pragma mark - caching
+- (NSString *)getCachedURLForVideo:(Video *)video
+{
+    if(self.extractedURLCache){
+        NSDictionary *previousExtraction = self.extractedURLCache[video.objectID];
+        if([previousExtraction[kSPVideoExtractorExtractedAtKey] timeIntervalSinceNow] < EXTRACTED_URL_TTL_S){
+            //expired
+            [self.extractedURLCache removeObjectForKey:video.objectID];
+            return nil;
+        } else {
+            return previousExtraction[kSPVideoExtractorExtractedURLStringKey];
+        }
+    }
+    return nil;
+}
+
+- (void)cacheExtractedURL:(NSString *)extractedURL forVideo:(Video *)video
+{
+    if(!self.extractedURLCache){
+        self.extractedURLCache = [[NSMutableDictionary alloc] init];
+    }
+    self.extractedURLCache[video.objectID] = @{kSPVideoExtractorExtractedURLStringKey: extractedURL,
+                                               kSPVideoExtractorExtractedAtKey: [NSDate date]};
 }
 
 @end

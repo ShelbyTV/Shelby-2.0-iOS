@@ -5,34 +5,48 @@
 //  Created by Arthur Ariel Sabintsev on 11/1/12.
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
+#import "ShelbyViewController.h"
 
-@interface SPVideoPlayer : GAITrackedViewController
+@class SPVideoPlayer;
+
+@protocol SPVideoPlayerDelegate <NSObject>
+
+- (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player;
+- (void)videoDidStallForPlayer:(SPVideoPlayer *)player;
+- (void)videoLoadingStatus:(BOOL)isLoading forPlayer:(SPVideoPlayer *)player;
+- (void)videoBufferedRange:(CMTimeRange)bufferedRange forPlayer:(SPVideoPlayer *)player;
+- (void)videoDuration:(CMTime)duration forPlayer:(SPVideoPlayer *)player;
+- (void)videoCurrentTime:(CMTime)time forPlayer:(SPVideoPlayer *)player;
+- (void)videoPlaybackStatus:(BOOL)isPlaying forPlayer:(SPVideoPlayer *)player;
+- (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player;
+
+@end
+
+@interface SPVideoPlayer : ShelbyViewController
 
 @property (nonatomic) Frame *videoFrame;
-@property (nonatomic) AVPlayer *player;
-@property (assign, nonatomic) BOOL isPlayable;
-@property (assign, nonatomic) BOOL isPlaying;
-@property (assign, nonatomic) BOOL playbackFinished;
-@property (assign, nonatomic) CMTime playbackStartTime;
+@property (readonly) BOOL isPlaying;
+@property (readonly) BOOL isPlayable;
+@property (assign, atomic) BOOL shouldAutoplay;
+@property (nonatomic, weak) id<SPVideoPlayerDelegate> videoPlayerDelegate;
 
-/// Initialization Methods
+// Initialization
 - (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame;
+
 - (void)resetPlayer;
 
-/// Video Storage Methods
-- (NSTimeInterval)availableDuration;
-- (CMTime)elapsedTime;
+// Does not load video
+- (void)warmVideoExtractionCache;
+// Does preload video
+- (void)prepareForStreamingPlayback;
+- (void)prepareForLocalPlayback;
+
 - (CMTime)duration;
 
-/// Video Fetching Methods
-- (void)queueVideo;
-
-/// Video Playback Methods
-- (void)loadVideoFromDisk;
-- (void)togglePlayback:(id)sender;
-- (void)restartPlayback;
+// Playback Control
 - (void)play;
 - (void)pause;
-- (void)share;
-- (void)roll;
+- (void)togglePlayback;
+- (void)scrubToPct:(CGFloat)scrubPct;
+
 @end

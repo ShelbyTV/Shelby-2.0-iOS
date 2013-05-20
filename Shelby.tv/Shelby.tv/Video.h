@@ -2,8 +2,8 @@
 //  Video.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 3/15/13.
-//  Copyright (c) 2013 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 5/2/13.
+//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,6 +14,7 @@
 @interface Video : NSManagedObject
 
 @property (nonatomic, retain) NSString * caption;
+@property (nonatomic, retain) id elapsedTime;
 @property (nonatomic, retain) NSString * extractedURL;
 @property (nonatomic, retain) NSNumber * firstUnplayable;
 @property (nonatomic, retain) NSNumber * lastUnplayable;
@@ -23,7 +24,6 @@
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * videoID;
-@property (nonatomic, retain) id elapsedTime;
 @property (nonatomic, retain) NSSet *frame;
 @end
 

@@ -19,6 +19,4 @@
     return self;
 }
 
-
-
 @end

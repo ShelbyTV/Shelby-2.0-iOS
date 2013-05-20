@@ -2,14 +2,14 @@
 //  Dashboard.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 4/22/13.
-//  Copyright (c) 2013 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 5/2/13.
+//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class DashboardEntry;
+@class DashboardEntry, DisplayChannel;
 
 @interface Dashboard : NSManagedObject
 
@@ -20,6 +20,15 @@
 @property (nonatomic, retain) NSString * displayThumbnailURL;
 @property (nonatomic, retain) NSString * displayTitle;
 @property (nonatomic, retain) NSNumber * isChannel;
-@property (nonatomic, retain) DashboardEntry *dashboardEntry;
+@property (nonatomic, retain) NSSet *dashboardEntry;
+@property (nonatomic, retain) DisplayChannel *displayChannel;
+@end
+
+@interface Dashboard (CoreDataGeneratedAccessors)
+
+- (void)addDashboardEntryObject:(DashboardEntry *)value;
+- (void)removeDashboardEntryObject:(DashboardEntry *)value;
+- (void)addDashboardEntry:(NSSet *)values;
+- (void)removeDashboardEntry:(NSSet *)values;
 
 @end

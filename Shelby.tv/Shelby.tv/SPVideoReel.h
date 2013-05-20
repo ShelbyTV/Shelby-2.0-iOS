@@ -6,9 +6,11 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
-#import "SPModel.h"
-#import "SPChannelDisplay.h"
+#import "DisplayChannel+Helper.h"
 #import "AuthorizationViewController.h"
+#import "ShelbyViewController.h"
+#import "SPOverlayView.h"
+#import "SPVideoPlayer.h"
 
 typedef NS_ENUM(NSUInteger, SPTutorialMode)
 {
@@ -20,47 +22,38 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
     SPTutorialModePinch
 };
 
-@protocol SPVideoReelDelegate <NSObject>
+@class SPVideoReel;
 
-- (void)userDidSwitchChannel:(SPVideoReel *)videoReel direction:(BOOL)up;
-- (void)userDidCloseChannel:(SPVideoReel *)videoReel;
-- (SPChannelDisplay *)channelDisplayForDirection:(BOOL)up;
+@protocol SPVideoReelDelegate <NSObject>
+- (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
+- (void)userDidCloseChannelAtFrame:(Frame *)frame;
+- (DisplayChannel *)displayChannelForDirection:(BOOL)up;
+- (void)videoDidFinishPlaying;
+- (SPTutorialMode)tutorialModeForCurrentPlayer;
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 @end
 
 @class SPVideoPlayer, SPOverlayView;
 
-@interface SPVideoReel : GAITrackedViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPOverlayViewDelegate>
 
 @property (weak, nonatomic) id <SPVideoReelDelegate> delegate;
+@property (nonatomic, strong) DisplayChannel *channel;
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
 @property (copy, nonatomic) NSString *groupTitle;
-@property (assign, nonatomic) SPTutorialMode tutorialMode;
 
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)groupTitle
-            videoFrames:(NSMutableArray *)videoFrames
-     andVideoStartIndex:(NSUInteger)videoStartIndex;
+- (id)initWithChannel:(DisplayChannel *)channel
+     andVideoEntities:(NSArray *)videoEntities
+              atIndex:(NSUInteger)videoStartIndex;
 
-- (id)initWithGroupType:(GroupType)groupType
-             groupTitle:(NSString *)groupTitle
-            videoFrames:(NSMutableArray *)videoFrames
-        videoStartIndex:(NSUInteger)videoStartIndex
-           andChannelID:(NSString *)channelID;
+- (void)setEntries:(NSArray *)entries;
 
-/// Update Methods
-- (void)extractVideoForVideoPlayer:(NSUInteger)position;
-- (void)currentVideoDidFinishPlayback;
+- (void)shutdown;
 
-/// Storage Methods
-- (void)storeLoadedVideoPlayer:(SPVideoPlayer *)player;
-
-/// Action Methods
-- (IBAction)restartPlaybackButtonAction:(id)sender;
-
-- (void)cleanup;
-
-/// Tutorial
 - (void)videoDoubleTapped;
+
+- (void)hideOverlayView;
+
 @end

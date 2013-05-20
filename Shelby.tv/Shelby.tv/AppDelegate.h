@@ -11,25 +11,31 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic) UIWindow *window;
-@property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic, readonly) NSManagedObjectContext *context;
+//djs pretty sure we *never* need to hold on to the context... you just get it from a managed object
+//@property (nonatomic, readonly) NSManagedObjectContext *context;
 
 /// Add/remove dataUtilities hash
-- (void)addHash:(NSNumber *)hash;
-- (void)removeHash:(NSNumber *)hash;
+//djs don't think we should have this stuff
+//- (void)addHash:(NSNumber *)hash;
+//- (void)removeHash:(NSNumber *)hash;
 
 /// Authentication Methods
-- (void)userIsAuthorized;
-- (void)logout;
+//djs does this need to be explicit?  If so, do we really mean "authorized" ?
+//- (void)userIsAuthorized;
+//djs moved skeleton to ShelbyDataMediator
+//- (void)logout;
 
 /// Offline Methods
+//djs TODO: manage video downloading completely outside of AppDelegate
+//probably have SPVideoDownloader do it all, used by ShelbyAppBrain
 - (void)downloadVideo:(Video *)video;
 - (void)addVideoDownloader:(SPVideoDownloader *)videoDownloader;
 - (void)removeVideoDownloader:(SPVideoDownloader *)videoDownloader;
 
 /// Core Data Methods
-- (void)mergeChanges:(NSNotification *)notification;
-- (void)dumpAllData;
+//djs if anything, this is a private member of ShelbyDataMediator
+//- (void)mergeChanges:(NSNotification *)notification;
+//djs what do we need this for?
+// - (void)dumpAllData;
 
 @end

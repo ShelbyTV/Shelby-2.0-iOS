@@ -99,12 +99,12 @@
     <elements>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Creator" positionX="178" positionY="201" width="128" height="105"/>
-        <element name="Dashboard" positionX="160" positionY="192" width="128" height="163"/>
-        <element name="DashboardEntry" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Dashboard" positionX="-198" positionY="341" width="128" height="163"/>
+        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="120"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="270"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
-        <element name="Roll" positionX="-155" positionY="342" width="128" height="225"/>
-        <element name="User" positionX="-153" positionY="-9" width="128" height="180"/>
+        <element name="Roll" positionX="-342" positionY="342" width="128" height="225"/>
+        <element name="User" positionX="-47" positionY="-9" width="128" height="180"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="225"/>
     </elements>
 </model>

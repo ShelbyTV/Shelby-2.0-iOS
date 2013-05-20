@@ -23,8 +23,6 @@
     #import "GAI.h"
 
     // Third Party Libraries
-    #import "AFNetworking.h"
-    #import "AsynchronousFreeloader.h"
     #import "Harpy.h"
     #import "Panhandler.h"
     #import "OAuthConsumer.h"
@@ -47,8 +45,12 @@
     #import "BigButton.h"
 
     // Controllers
-    #import "CoreDataUtility.h"
-    #import "ShelbyAPIClient.h"
+    //djs removing these two are (probably) just the beginning...
+    //#import "CoreDataUtility.h"
+    //#import "ShelbyAPIClient.h"
+
+    //djs TODO: implement this properly
+    #define OBJECT_OR_NIL(object) ((id)object == [NSNull null] ? nil : object)
 
 #endif
 
@@ -57,3 +59,12 @@
 #else
 #   define DLog(...)
 #endif
+
+#define STVAssert(expression, ...) \
+do { \
+    if(!(expression)) { \
+        NSString *__STVAssert_temp_string = [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __func__, __FILE__, __LINE__, [NSString stringWithFormat: @"" __VA_ARGS__]]; \
+        NSLog(@"%@", __STVAssert_temp_string); \
+        abort(); \
+    } \
+} while(0)

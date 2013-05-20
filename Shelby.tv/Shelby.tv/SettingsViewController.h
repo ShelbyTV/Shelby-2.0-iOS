@@ -7,11 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BrowseViewController.h"
+#import "User.h"
+
+@protocol SettingsViewDelegate <NSObject>
+- (void)logoutUser;
+- (void)connectToFacebook;
+- (void)connectToTwitter;
+- (void)launchMyRoll;
+- (void)launchMyLikes;
+@end
 
 @interface SettingsViewController : UIViewController <UIAlertViewDelegate>
 
-@property (weak, nonatomic) BrowseViewController *parent;
+@property (nonatomic, weak) id<SettingsViewDelegate> delegate;
 
-+ (void)cleanupSession;
+- (id)initWithUser:(User *)user;
+
 @end

@@ -7,22 +7,39 @@
 //
 
 #import "SPOverlayView.h"
-#import "SPModel.h"
-#import "SPVideoReel.h"
-#import "SPVideoScrubber.h"
+#import "AsynchronousFreeloader.h"
+#import "Frame+Helper.h"
 
 #define kShelbySPSlowSpeed 0.5
 #define kShelbySPFastSpeed 0.2
 
 @interface SPOverlayView ()
 
-@property (weak, nonatomic) SPModel *model;
 @property (weak, nonatomic) IBOutlet UIButton *rollButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIView *videoInfoView;
+@property (weak, nonatomic) IBOutlet TopAlignedLabel *primaryTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userTimestamp;
+@property (weak, nonatomic) IBOutlet UIImageView *userImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *restartPlaybackButton;
+@property (weak, nonatomic) IBOutlet UIImageView *likeNotificationView;
+@property (weak, nonatomic) IBOutlet UIProgressView *bufferProgressView;
+@property (weak, nonatomic) IBOutlet UIProgressView *elapsedProgressView;
+@property (weak, nonatomic) IBOutlet UILabel *elapsedTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalDurationLabel;
+@property (weak, nonatomic) IBOutlet UIView *scrubberContainerView;
+@property (weak, nonatomic) IBOutlet UIView *scrubberTouchView;
+@property (weak, nonatomic) IBOutlet UIButton *versionButton;
+
 
 // Scrubber
 - (IBAction)scrubberTouched:(id)sender;
+
+
+@property (assign, nonatomic) CMTime duration;
 
 @end
 
@@ -33,14 +50,8 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        // Reference Model
-        _model = [SPModel sharedInstance];
-        
-        // Customize Colors
-        [_channelTitleLabel setTextColor:kShelbyColorWhite];
         [_nicknameLabel setTextColor:kShelbyColorBlack];
-        [_videoTitleLabel setTextColor:[UIColor colorWithHex:@"777" andAlpha:1.0f]];
-        [_videoCaptionLabel setTextColor:kShelbyColorBlack];
+        [_primaryTextLabel setTextColor:kShelbyColorBlack];
         [_userImageView.layer setBorderColor:[kShelbyColorGray CGColor]];
     }
     
@@ -52,12 +63,9 @@
 {
     [super awakeFromNib];
 
-    // Customize Borders
+    //non-Nib customizations
     [self.userImageView.layer setBorderWidth:0.5];
-    
-    // Customize Background Colors
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
-    [self.videoTitleLabel setBackgroundColor:[UIColor clearColor]];
 }
 
 #pragma mark - UIView Overridden Methods
@@ -76,28 +84,71 @@
     return NO;
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+#pragma mark - View Updating Methods
+
+- (void)setFrameOrDashboardEntry:(id)entity
 {
-    if ([self.model.overlayTimer isValid]) {
-        [self.model.overlayTimer invalidate];
+    Frame *frame;
+    if ([entity isKindOfClass:[DashboardEntry class]]) {
+        frame = ((DashboardEntry *)entity).frame;
+    } else if ([entity isKindOfClass:[Frame class]]) {
+        frame = (Frame *)entity;
+    } else {
+        STVAssert( false, @"Overlay expects DashboardEntry or Frame");
     }
     
-    return [super hitTest:point withEvent:event];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.elapsedTimeLabel.text = @"";
+        self.elapsedProgressView.progress = 0.0;
+        //don't touch total duration
+        self.bufferProgressView.progress = 0.0;
+        
+        self.likesButton.selected = [frame.clientUnsyncedLike boolValue];
+        
+        self.primaryTextLabel.text = [frame creatorsInitialCommentWithFallback:YES];
+        self.userTimestamp.text = frame.createdAt;
+        self.nicknameLabel.text = frame.creator.nickname;
+        [AsynchronousFreeloader loadImageFromLink:frame.creator.userImage
+                                     forImageView:self.userImageView
+                                  withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
+                                   andContentMode:UIViewContentModeScaleAspectFit];
+    });
 }
+
+- (void)setAccentColor:(UIColor *)accentColor
+{
+    self.videoInfoView.layer.borderWidth = 3.0;
+    self.videoInfoView.layer.borderColor = [accentColor colorWithAlphaComponent:0.75].CGColor;
+    
+    self.scrubberContainerView.layer.borderWidth = 1.0;
+    self.scrubberContainerView.layer.borderColor = [accentColor colorWithAlphaComponent:0.25].CGColor;
+    self.scrubberContainerView.layer.cornerRadius = 5.0;
+    
+    self.elapsedProgressView.progressTintColor = accentColor;
+}
+
+- (void)updateBufferedRange:(CMTimeRange)bufferedRange
+{
+    self.bufferProgressView.progress = (CMTimeGetSeconds(bufferedRange.start) + CMTimeGetSeconds(bufferedRange.duration)) / CMTimeGetSeconds(self.duration);
+}
+
+- (void)updateCurrentTime:(CMTime)time
+{
+    self.elapsedTimeLabel.text = [self prettyStringForTime:time];
+    self.elapsedProgressView.progress = CMTimeGetSeconds(time)/CMTimeGetSeconds(self.duration);
+}
+
+- (void)setDuration:(CMTime)duration
+{
+    _duration = duration;
+    self.totalDurationLabel.text = [self prettyStringForTime:duration];
+}
+
 
 #pragma mark - Overlay Methods
 - (void)toggleOverlay
-{
-    
-    // Send event to Google Analytics
-    id defaultTracker = [GAI sharedInstance].defaultTracker;
-    [defaultTracker sendEventWithCategory:kGAICategoryVideoPlayer
-                               withAction:kGAIVideoPlayerActionSingleTap
-                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-                                withValue:nil];
-    
-    ( self.alpha < 1.0f ) ? [self showOverlayView] : [self hideOverlayView];
-    
+{    
+    ( self.alpha < 1.0f ) ? [self showOverlayViewWithSpeed:0.5f] : [self hideOverlayView];
 }
 
 - (BOOL)isOverlayHidden
@@ -105,26 +156,16 @@
     return (self.alpha == 0 || self.isHidden);
 }
 
+- (void)showOverlayViewWithSpeed:(CGFloat)speed
+{
+    [UIView animateWithDuration:speed animations:^{
+        [self setAlpha:1.0f];
+    }];    
+}
+
 - (void)showOverlayView
 {
-    if ([self.model groupType] == GroupType_PersonalRoll) {
-        [self.rollButton setHidden:YES];
-        [self.shareButton setHidden:NO];
-        [self.likesButton setEnabled:YES];
-    } else if ([self.model groupType] == GroupType_Likes) {
-        [self.rollButton setHidden:NO];
-        [self.shareButton setHidden:YES];
-        [self.likesButton setEnabled:NO];
-    } else {
-        [self.rollButton setHidden:NO];
-        [self.shareButton setHidden:YES];
-        [self.likesButton setEnabled:YES];
-    }
-
-    [[SPVideoScrubber sharedInstance] setupScrubber];
-    [UIView animateWithDuration:0.5f animations:^{
-        [self setAlpha:1.0f];
-    }];
+    [self showOverlayViewWithSpeed:1.5f];
 }
 
 - (void)hideOverlayView
@@ -132,24 +173,33 @@
     [UIView animateWithDuration:0.5f animations:^{
         [self setAlpha:0.0f];
     } completion:^(BOOL finished) {
-        [[SPVideoScrubber sharedInstance] stopObserving];
+        //nothing
     }];
 }
 
-#pragma mark - Like Notification Methods
-- (void)showLikeNotificationView
+
+- (void)didLikeCurrentEntry:(BOOL)like
 {
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.likeNotificationView setAlpha:1.0f];
-    }];
+    if(like){
+        //djs TODO: flash the like notifications views
+    }
+    self.likesButton.selected = like;
 }
 
-- (void)hideLikeNotificationView
-{
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.likeNotificationView setAlpha:0.0f];
-    }];
-}
+//#pragma mark - Like Notification Methods
+//- (void)showLikeNotificationView
+//{
+//    [UIView animateWithDuration:0.5f animations:^{
+//        [self.likeNotificationView setAlpha:1.0f];
+//    }];
+//}
+//
+//- (void)hideLikeNotificationView
+//{
+//    [UIView animateWithDuration:0.5f animations:^{
+//        [self.likeNotificationView setAlpha:0.0f];
+//    }];
+//}
 
 #pragma mark - Playlist Methods
 - (void)hideVideoInfo
@@ -168,20 +218,39 @@
     }];
 }
 
-
-#pragma mark - Timer Methods
-- (void)rescheduleOverlayTimer
-{
-    [self.model rescheduleOverlayTimer];
-}
-
 #pragma mark - Scrubber Touch Methods
 - (IBAction)scrubberTouched:(id)sender
 {
     UITapGestureRecognizer *gesture = (UITapGestureRecognizer *)sender;
     CGPoint position = [gesture locationInView:self.scrubberTouchView];
     CGFloat percentage = position.x / self.elapsedProgressView.frame.size.width;
-    [[SPVideoScrubber sharedInstance] seekToTimeWithPercentage:percentage];
-    [self rescheduleOverlayTimer];
+    [self.delegate scrubToPercent:percentage];
 }
+
+#pragma mark - Text Helper
+
+- (NSString *)prettyStringForTime:(CMTime)t
+{
+    NSInteger time = (NSInteger)CMTimeGetSeconds(t);
+    
+    NSString *convertedTime = nil;
+    NSInteger elapsedTimeSeconds = 0;
+    NSInteger elapsedTimeHours = 0;
+    NSInteger elapsedTimeMinutes = 0;
+    
+    elapsedTimeSeconds = ((NSInteger)time % 60);
+    elapsedTimeMinutes = (((NSInteger)time / 60) % 60);
+    elapsedTimeHours = ((NSInteger)time / 3600);
+    
+    if (elapsedTimeHours > 0) {
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", elapsedTimeHours, elapsedTimeMinutes, elapsedTimeSeconds];
+    } else if (elapsedTimeMinutes > 0) {
+        convertedTime = [NSString stringWithFormat:@"%.2d:%.2d", elapsedTimeMinutes, elapsedTimeSeconds];
+    } else {
+        convertedTime = [NSString stringWithFormat:@"0:%.2d", elapsedTimeSeconds];
+    }
+    
+    return convertedTime;
+}
+
 @end

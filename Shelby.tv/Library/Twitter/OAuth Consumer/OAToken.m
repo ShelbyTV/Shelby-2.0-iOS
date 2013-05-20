@@ -127,7 +127,7 @@
       renewable = [[OAToken loadSetting:@"renewable" provider:provider prefix:prefix] boolValue];
 
       if (![self isValid]) {
-          NSAssert(NO, @"Created invalid OAToken.");
+          STVAssert(NO, @"Created invalid OAToken.");
           self = nil;
           return nil;
       }

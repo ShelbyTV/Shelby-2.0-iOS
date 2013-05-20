@@ -7,19 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShelbyViewController.h"
 
 @protocol AuthorizationDelegate <NSObject>
 
-- (void)authorizationDidComplete;
+//- (void)authorizationDidComplete;
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 
-@optional
-- (void)authorizationDidNotComplete;
+//@optional
+//- (void)authorizationDidNotComplete;
 
 @end
 
 
-@interface AuthorizationViewController : GAITrackedViewController <UITextFieldDelegate, UIAlertViewDelegate>
+@interface AuthorizationViewController : ShelbyViewController <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) id<AuthorizationDelegate> delegate;
 
+- (void)userLoginFailedWithError:(NSString *)errorMessage;
 @end

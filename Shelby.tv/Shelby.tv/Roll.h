@@ -2,14 +2,14 @@
 //  Roll.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 4/22/13.
-//  Copyright (c) 2013 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 5/2/13.
+//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Frame;
+@class DisplayChannel, Frame;
 
 @interface Roll : NSManagedObject
 
@@ -24,6 +24,15 @@
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) Frame *frame;
+@property (nonatomic, retain) DisplayChannel *displayChannel;
+@property (nonatomic, retain) NSSet *frame;
+@end
+
+@interface Roll (CoreDataGeneratedAccessors)
+
+- (void)addFrameObject:(Frame *)value;
+- (void)removeFrameObject:(Frame *)value;
+- (void)addFrame:(NSSet *)values;
+- (void)removeFrame:(NSSet *)values;
 
 @end

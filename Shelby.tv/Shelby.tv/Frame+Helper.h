@@ -7,9 +7,20 @@
 //
 
 #import "Frame.h"
+#import "ShelbyModel.h"
+#import "ShelbyDuplicateContainer.h"
+#import "ShelbyVideoContainer.h"
 
-@interface Frame (Helper)
+@interface Frame (Helper) <ShelbyModel, ShelbyDuplicateContainer, ShelbyVideoContainer>
+
++ (Frame *)frameForDictionary:(NSDictionary *)dict
+                    inContext:(NSManagedObjectContext *)context;
+
++ (NSArray *)fetchAllLikesInContext:(NSManagedObjectContext *)context;
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
+- (BOOL)isPlayable;
+//returns YES if the toggle should result in this frame being liked
+- (BOOL)toggleLike;
 
 @end

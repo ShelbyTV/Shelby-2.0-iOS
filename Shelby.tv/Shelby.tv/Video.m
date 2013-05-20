@@ -2,8 +2,8 @@
 //  Video.m
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 3/15/13.
-//  Copyright (c) 2013 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 5/2/13.
+//  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import "Video.h"
@@ -13,6 +13,7 @@
 @implementation Video
 
 @dynamic caption;
+@dynamic elapsedTime;
 @dynamic extractedURL;
 @dynamic firstUnplayable;
 @dynamic lastUnplayable;
@@ -22,7 +23,6 @@
 @dynamic thumbnailURL;
 @dynamic title;
 @dynamic videoID;
-@dynamic elapsedTime;
 @dynamic frame;
 
 @end

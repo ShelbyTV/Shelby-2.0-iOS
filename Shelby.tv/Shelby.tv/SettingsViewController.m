@@ -9,11 +9,14 @@
 #import "SettingsViewController.h"
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
+#import "ShelbyDataMediator.h"
 
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *faceookButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @property (weak, nonatomic) IBOutlet UILabel *fullname;
+
+@property (nonatomic, strong) User *user;
 
 /// User interaction methods
 - (IBAction)connectoToFacebook:(id)sender;
@@ -28,11 +31,11 @@
 
 @implementation SettingsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithUser:(User *)user
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"SettingsView" bundle:nil];
     if (self) {
-        // Custom initialization
+        _user = user;
     }
     return self;
 }
@@ -50,7 +53,7 @@
     [self refreshSocialButtonStatus];
     
     // KP KP: TODO: need to store user full name in CoreData
-    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"userFullname"];
+    NSString *name = self.user.name;
     if (name) {
         [self.fullname setText:name];
     } else {
@@ -67,7 +70,7 @@
 // KP KP: TODO: for now not really checking the user object. Need to Check that. Maybe also add username to the coredata object
 - (void)refreshSocialButtonStatus
 {
-    NSString *facebookName = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserFullName];
+    NSString *facebookName = self.user.facebookNickname;
     if (facebookName) {
         [self.faceookButton setTitle:[NSString stringWithFormat:@"%@", facebookName] forState:UIControlStateDisabled];
         [self.faceookButton setEnabled:NO];
@@ -75,7 +78,7 @@
         [self.faceookButton setEnabled:YES];
     }
     
-    NSString *twitterName = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterUsername];
+    NSString *twitterName = self.user.twitterNickname;
     if (twitterName) {
         [self.twitterButton setTitle:[NSString stringWithFormat:@"@%@", twitterName] forState:UIControlStateDisabled];
         [self.twitterButton setEnabled:NO];
@@ -88,28 +91,31 @@
 #pragma mark - User Interaction Methods
 - (IBAction)goToMyLikes:(id)sender
 {
-    [self.parent launchMyLikesPlayer];
-    [self.parent dismissPopover];
+    if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(launchMyLikes)]) {
+        [self.delegate launchMyLikes];
+    }
 }
-
 
 - (IBAction)goToMyRoll:(id)sender
 {
-    [self.parent launchMyRollPlayer];
-    [self.parent dismissPopover];
+    if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(launchMyRoll)]) {
+        [self.delegate launchMyRoll];
+    }
 }
 
-// KP KP: TODO: Right now doing FB/TW connect EVERY single time. Need to do it only if user is not connected
 - (IBAction)connectoToFacebook:(id)sender
 {
-    [[FacebookHandler sharedInstance] openSession:YES];
-    [self.parent dismissPopover];
+    if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(connectToFacebook)]) {
+        [self.delegate connectToFacebook];
+    }
 }
 
 - (IBAction)connectoToTwitter:(id)sender
 {
-    [[TwitterHandler sharedInstance] authenticateWithViewController:self.parent];
-    [self.parent dismissPopover];
+    if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(connectToTwitter)]) {
+        [self.delegate connectToTwitter];
+    }
+//    [self.delegate dismissPopover];
 }
 
 
@@ -124,37 +130,16 @@
     [alertView show];
 }
 
-// KP KP: TODO: until we have a better consistent stay with the backend,
-+ (void)cleanupSession
-{
-    // Reset user state (Authorization NSUserDefaults)
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserAuthorized];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultUserIsAdmin];
-    
-    // Reset app mode state (Secred Mode NSUserDefaults)
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineModeEnabled];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShelbyDefaultOfflineViewModeEnabled];
-    
-    // KP KP: TODO: need to store user full name in CoreData
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userFullname"]) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userFullname"];
-    }
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    [[FacebookHandler sharedInstance] facebookCleanup];
-    [[TwitterHandler sharedInstance] twitterCleanup];
-}
-
-
 #pragma mark - UIAlertViewDelegate Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate logout];
-        [SettingsViewController cleanupSession];
-        [self.parent dismissPopover];
+        if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(logout)]) {
+            [self.delegate logoutUser];
+        }
+   
+        // KP KP: TODO: should be done nicely somewhere else
+//        [SettingsViewController cleanupSession];
     }
 }
 

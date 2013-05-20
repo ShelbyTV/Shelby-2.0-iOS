@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
+typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
+
 @interface ShelbyAPIClient : NSObject
 
 /// Authentication
@@ -30,22 +32,20 @@
 + (void)getPersonalRoll;
 + (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
 
+// Login
++ (void)loginUserWithEmail:(NSString *)email
+                  password:(NSString *)password
+                 andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 /// Channels
-+ (void)getAllChannels;
-+ (void)getChannelDashboardEntries:(NSString *)channelID;
-+ (void)getMoreDashboardEntries:(NSString *)skipParam forChannelDashboard:(NSString *)dashboardID;
-+ (void)getChannelRoll:(NSString *)rollID;
-+ (void)getMoreFrames:(NSString *)skipParam forChannelRoll:(NSString *)rollID;
-
-/// Syncing
-+ (void)getLikesForSync;
-+ (void)getPersonalRollForSync;
-
-/// Watching
-+ (void)postFrameToWatchedRoll:(NSString *)frameID;
++ (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
++ (void)fetchDashboardEntriesForDashboardID:(NSString *)dashboardID
+                                 sinceEntry:(DashboardEntry *)sinceEntry
+                                  withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 /// Liking
-+ (void)postFrameToLikes:(NSString *)frameID;
++ (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock;
+//+ (void)postFrameToLikes:(NSString *)frameID;
 
 /// Rolling
 + (void)postFrameToPersonalRoll:(NSString*)requestString;

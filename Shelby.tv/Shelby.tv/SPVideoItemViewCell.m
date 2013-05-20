@@ -20,8 +20,16 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        _thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _thumbnailImageView.clipsToBounds = YES;
     }
     return self;
+}
+
+- (void)prepareForReuse
+{
+    self.thumbnailImageView.image = nil;
+    [self unHighlightItem];
 }
 
 - (void)highlightItemWithColor:(UIColor *)color
