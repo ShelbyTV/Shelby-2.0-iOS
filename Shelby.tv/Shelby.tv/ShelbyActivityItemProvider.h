@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ShelbyActivityItemProvider : UIActivityItemProvider <UIActivityItemSource>
-- (id)initWithShareText:(NSString *)shareText;
+- (id)initWithShareText:(NSString *)shareText andShareLink:(NSString *)shareLink;
 @end
