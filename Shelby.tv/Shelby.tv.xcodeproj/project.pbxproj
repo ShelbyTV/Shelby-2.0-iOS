@@ -1407,7 +1407,6 @@
 		8E209702162F3A60000A2DFD = {
 			isa = PBXGroup;
 			children = (
-				91FCC69F174A8F14004255F5 /* MessageUI.framework */,
 				8E209717162F3A61000A2DFD /* Shelby.tv */,
 				8E82EDF11631C7770044D97E /* Library */,
 				8E32BF86167FA58400753723 /* Assets */,
@@ -1429,6 +1428,7 @@
 		8E209710162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91FCC69F174A8F14004255F5 /* MessageUI.framework */,
 				8E669062171611370090C934 /* Social.framework */,
 				1C3D91331714C6CC00105839 /* Accounts.framework */,
 				1C3D91341714C6CC00105839 /* AdSupport.framework */,
