@@ -13,6 +13,7 @@
 #import "AsynchronousFreeloader.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
+#import "ShelbyActivityItemProvider.h"
 #import "ShelbyAPIClient.h"
 #import "ShelbyViewController.h"
 #import "SPShareRollView.h"
@@ -294,8 +295,8 @@
 #pragma mark - Action Methods (Private)
 - (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link
 {
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
-                                                           applicationActivities:nil];
+    ShelbyActivityItemProvider *activity = [[ShelbyActivityItemProvider alloc] initWithShareText:message];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[activity] applicationActivities:nil];
     activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     // Send event to Google Analytics
     //djs TODO: add the GA back
