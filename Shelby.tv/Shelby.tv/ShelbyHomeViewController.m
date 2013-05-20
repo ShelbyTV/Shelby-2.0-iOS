@@ -11,6 +11,7 @@
 #import "DisplayChannel.h"
 #import "ImageUtilities.h"
 #import "SettingsViewController.h"
+#import "ShelbyAlertView.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 
@@ -435,4 +436,28 @@
         [self.masterDelegate loginUserWithEmail:email password:password];
     }
 }
+
+#pragma mark - Beta Stuff
+- (IBAction)feedbackTapped:(UIButton *)sender {
+    if([MFMailComposeViewController canSendMail]){
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        mailer.mailComposeDelegate = self;
+        [mailer setSubject:[NSString stringWithFormat:@"Shelby iOS Feedback (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]]];
+        [mailer setToRecipients:@[@"feedback+ios@shelby.tv"]];
+        [self presentViewController:mailer animated:YES completion:nil];
+    } else {
+        [[[ShelbyAlertView alloc] initWithTitle:@"We'd Love to Hear from You!"
+                                        message:@"Please email your feedback to us: feedback@shelby.tv"
+                             dismissButtonTitle:@"Ok"
+                                 autodimissTime:0
+                                      onDismiss:nil]
+         show];
+    }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BrowseViewController.h"
+#import <MessageUI/MessageUI.h>
 #import "SettingsViewController.h"
 #import "User.h"
 
@@ -20,7 +21,7 @@
 @end
 
 
-@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, SettingsViewDelegate, AuthorizationDelegate>
+@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, SettingsViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *channels;
 // KP KP: Better way to send the delegete to the views below?

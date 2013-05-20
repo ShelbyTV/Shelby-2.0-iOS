@@ -745,6 +745,9 @@
 		91F0CC051730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 		91F0CC061730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 		91F0CC071730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
+		91FCC6A0174A8F14004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
+		91FCC6A1174A8F1F004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
+		91FCC6A2174A8F25004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1113,6 +1116,7 @@
 		91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyDataMediator.m; sourceTree = "<group>"; };
 		91F0CC031730154E008B5B34 /* User+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Helper.h"; sourceTree = "<group>"; };
 		91F0CC041730154E008B5B34 /* User+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Helper.m"; sourceTree = "<group>"; };
+		91FCC69F174A8F14004255F5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1120,6 +1124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91FCC6A1174A8F1F004255F5 /* MessageUI.framework in Frameworks */,
 				8E669066171611490090C934 /* Social.framework in Frameworks */,
 				1C3D91391714C6E100105839 /* Accounts.framework in Frameworks */,
 				1C3D913A1714C6E100105839 /* AdSupport.framework in Frameworks */,
@@ -1145,6 +1150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91FCC6A2174A8F25004255F5 /* MessageUI.framework in Frameworks */,
 				8E669063171611370090C934 /* Social.framework in Frameworks */,
 				1C3D91371714C6DB00105839 /* Accounts.framework in Frameworks */,
 				1C3D91381714C6DB00105839 /* AdSupport.framework in Frameworks */,
@@ -1170,6 +1176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91FCC6A0174A8F14004255F5 /* MessageUI.framework in Frameworks */,
 				8E669068171611550090C934 /* Social.framework in Frameworks */,
 				1C3D913B1714C6E700105839 /* Accounts.framework in Frameworks */,
 				1C3D913C1714C6E700105839 /* AdSupport.framework in Frameworks */,
@@ -1400,6 +1407,7 @@
 		8E209702162F3A60000A2DFD = {
 			isa = PBXGroup;
 			children = (
+				91FCC69F174A8F14004255F5 /* MessageUI.framework */,
 				8E209717162F3A61000A2DFD /* Shelby.tv */,
 				8E82EDF11631C7770044D97E /* Library */,
 				8E32BF86167FA58400753723 /* Assets */,
