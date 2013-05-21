@@ -442,7 +442,7 @@
     if([MFMailComposeViewController canSendMail]){
         MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
         mailer.mailComposeDelegate = self;
-        [mailer setSubject:[NSString stringWithFormat:@"iPad Feedback (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]]];
+        [mailer setSubject:[NSString stringWithFormat:@"iPad Feedback (%@, %@ v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]]];
         [mailer setToRecipients:@[@"ipad@shelby.tv"]];
         [mailer setMessageBody:@"You're emailing with a human.  :-]\n\nWe really appreciate your ideas and feedback, and we're going to write back to you!" isHTML:NO];
         [self presentViewController:mailer animated:YES completion:nil];
