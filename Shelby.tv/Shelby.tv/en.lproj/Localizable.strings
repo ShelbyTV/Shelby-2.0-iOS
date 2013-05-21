@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  Shelby.tv
+
+  Created by Daniel Spinosa on 5/21/13.
+  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
+*/
+
+// --Tutorial-- 1) Welcome
+"TUTORIAL_WELCOME_TITLE" = "Thanks for testing\nShelby TV beta!";
+"TUTORIAL_WELCOME_MESSAGE" = "We've hand picked great channels of video.\nBut first, a quick gesture tutorial.";
+"TUTORIAL_WELCOME_BUTTON" = "Increase Knowledge";
+
+// 2) Double Tap
+"TUTORIAL_DBLTAP_MESSAGE" = "Welcome to our trending channel!\nThe video is paused.\nDouble-tap to play.";
+
+// 3) Swipe left to change video
+"TUTORIAL_SWPH_MESSAGE" = "Swipe left to play the next video in this channel.";
+
+// 4) Swipe up to change channel
+"TUTORIAL_SWPV_MESSAGE" = "Our hand picked channels are stacked on top of each other.\nTry swiping up.";
+
+// 5) Pinch to exit
+"TUTORIAL_PINCH_MESSAGE" = "Ok, you've changed the channel!  Now, pinch to go back to your guide.";
+
+// 6) Done
+"TUTORIAL_DONE_TITLE" = "We're Building Shelby TV for You";
+"TUTORIAL_DONE_MESSAGE" = "We hope you love it!\nSo, tell us what you think.  Help us make it better and better.";
+"TUTORIAL_DONE_BUTTON" = "Play \"Trending\"";
+
+// --First Like--
+"FIRST_LIKE_TITLE" = "Likes";
+"FIRST_LIKE_MESSAGE" = "This video is now saved in your \"Likes\" channel in the guide!";
+"FIRST_LIKE_BUTTON" = "Ok";
+
+// --Playback Stalled--
+"PLAYBACK_STALLED_TITLE" = "Video Downloading Slowly";
+"PLAYBACK_STALLED_MESSAGE" = "Give it a little time to buffer.  Then double-tap to resume playback.";
+"PLAYBACK_STALLED_BUTTON" = "Ok";
+
+// --Extraction Fail--
+"EXTRACTION_FAIL_TITLE" = "Problem Video";
+"EXTRACTION_FAIL_MESSAGE" = "This video won't play right now.  Skipping it...";
+"EXTRACTION_FAIL_BUTTON" = "Skip Now";

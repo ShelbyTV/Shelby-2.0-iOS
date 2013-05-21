@@ -145,7 +145,7 @@
 //            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
             //djs XXX using the videoFrame from outside these blocks... make sure that's okay
             NSString *shareLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
-            NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\": %@ via @Shelby", videoFrame.video.title, shareLink];
+            NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrame.video.title];
             
             DLog(@"Succeeded fetching link for frame: %@", shareLink);
             [self shareWithFrame:videoFrame message:shareMessage andLink:shareLink];
@@ -156,7 +156,7 @@
 //            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
             //djs XXX using the videoFrame from outside these blocks... make sure that's okay
             NSString *shareLink = [NSString stringWithFormat:kShelbyAPIGetLongLink, videoFrame.video.providerName, videoFrame.video.providerID, videoFrame.frameID];
-            NSString *shareMessage = [NSString stringWithFormat:@"Watch \"%@\" %@ /via @Shelby", videoFrame.video.title, shareLink];
+            NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrame.video.title];
     
             DLog(@"Failed getting awe.sm short_url. Using full path %@", shareLink);
             [self shareWithFrame:videoFrame message:shareMessage andLink:shareLink];
@@ -295,7 +295,7 @@
 #pragma mark - Action Methods (Private)
 - (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link
 {
-    ShelbyActivityItemProvider *activity = [[ShelbyActivityItemProvider alloc] initWithShareText:message];
+    ShelbyActivityItemProvider *activity = [[ShelbyActivityItemProvider alloc] initWithShareText:message andShareLink:link];
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[activity] applicationActivities:nil];
     activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     // Send event to Google Analytics
