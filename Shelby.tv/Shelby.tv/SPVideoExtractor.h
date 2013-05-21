@@ -18,10 +18,8 @@ typedef void (^extraction_complete_block)(NSString *videoURL, BOOL wasError);
 /// Singleton Methods
 + (SPVideoExtractor *)sharedInstance;
 
-/// Video Processing Methods
-//djs use URLForVideo:usingBlock:
-//- (void)queueVideo:(Video *)video;
-- (void)cancelRemainingExtractions;
+//fails current extraction (if any) and removes all queued extractions.
+- (void)cancelAllExtractions;
 
 //uses cached URL unless cache is stale (ie. > 300s)
 //calls block with nil if extraction fails

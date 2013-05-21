@@ -292,7 +292,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)shutdown
 {
-    [[SPVideoExtractor sharedInstance] cancelRemainingExtractions];
+    [[SPVideoExtractor sharedInstance] cancelAllExtractions];
     
     //resetting all possibly playable players (including current player) will pause and free memory of AVPlayer
     //not entirely true: if the player has an extraction pending, that block holds a reference to the player

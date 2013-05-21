@@ -24,15 +24,6 @@
 // Videosalready processed, 
 @property (nonatomic) NSMutableDictionary *extractedURLCache;
 
-- (void)extractNextVideoFromQueue;
-- (void)createWebView;
-- (void)destroyWebView;
-- (void)loadYouTubeVideo:(Video *)video;
-- (void)loadVimeoVideo:(Video *)video;
-- (void)loadDailyMotionVideo:(Video *)video;
-- (void)processNotification:(NSNotification *)notification;
-- (void)extractionTimedOut:(NSTimer *)timer;
-
 @end
 
 //for extraction
@@ -58,17 +49,23 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     return sharedInstance;
 }
 
+- (id)init{
+    self = [super init];
+    if(self){
+        _extractedURLCache = [@{} mutableCopy];
+        _warmCacheExtractionQueue = [@[] mutableCopy];
+        _highPriorityExtractionQueue = [@[] mutableCopy];
+    }
+    return self;
+}
+
 #pragma mark - Public Methods
 
 - (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue
 {
     STVAssert(completionBlock, @"urlForVideo expects an extraction block");
     
-    @synchronized(self){
-        if (!self.highPriorityExtractionQueue) {
-            self.highPriorityExtractionQueue = [@[] mutableCopy];
-        }
-        
+    @synchronized(self){        
         NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
         if(alreadyExtractedURL){
             if(completionBlock){
@@ -80,13 +77,9 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             if(jumpQueue){
                 //a jumpQueue means video was changed and we didn't have URL pre-extracted
                 //we can cancel all extractions b/c new preloading & cache warming will be sent later
-                [self cancelRemainingExtractions];
-//                DLog(@"Jumped queue for (%@)", video.videoID);
-                [self.highPriorityExtractionQueue insertObject:extractionDict atIndex:0];
-            } else {
-//                DLog(@"Queue (%@) at end of high priority queue with size: %lu", video.videoID, (unsigned long)[self.highPriorityExtractionQueue count]);
-                [self.highPriorityExtractionQueue addObject:extractionDict];
+                [self cancelAllExtractions];
             }
+            [self.highPriorityExtractionQueue addObject:extractionDict];
             [self scheduleNextExtraction];
         }
     }
@@ -95,9 +88,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 - (void)warmCacheForVideo:(Video *)video
 {
     @synchronized(self){
-        if (!self.warmCacheExtractionQueue) {
-            self.warmCacheExtractionQueue = [@[] mutableCopy];
-        }
         if([self.warmCacheExtractionQueue count] < 5){
         [self.warmCacheExtractionQueue addObject:@{kSPVideoExtractorVideoKey: video}];
             [self scheduleNextExtraction];
@@ -111,48 +101,35 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     [self warmCacheForVideo:[videoContainer containedVideo]];
 }
 
-- (NSDictionary *)nextItemForExtraction
-{
-    @synchronized(self){
-        NSDictionary *upNext = nil;
-        if ([self.highPriorityExtractionQueue count]) {
-            upNext = self.highPriorityExtractionQueue[0];
-            [self.highPriorityExtractionQueue removeObject:upNext];
-//            DLog(@"Starting high priority extraction of (%@), highPriorityQueueSize: %lu, warmCaccheQueueSize: %lu", ((Video*)upNext[kSPVideoExtractorVideoKey]).videoID, (unsigned long)[self.highPriorityExtractionQueue count], (unsigned long)[self.warmCacheExtractionQueue count]);
-        } else if ([self.warmCacheExtractionQueue count]) {
-            upNext = self.warmCacheExtractionQueue[0];
-            [self.warmCacheExtractionQueue removeObject:upNext];
-//            DLog(@"Starting cache warm extraction of (%@), highPriorityQueueSize: %lu, warmCacheQueueSize: %lu", ((Video*)upNext[kSPVideoExtractorVideoKey]).videoID, (unsigned long)[self.highPriorityExtractionQueue count], (unsigned long)[self.warmCacheExtractionQueue count]);
-        }
-        return upNext;
-    }
-}
-
 - (void)scheduleNextExtraction
 {
-    if(!self.startNextExtractionTimer){
-        self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.75
-                                                                         target:self
-                                                                       selector:@selector(extractNextVideoFromQueue)
-                                                                       userInfo:nil
-                                                                        repeats:NO];
-    } else {
-        /* timer already scheduled */
+    @synchronized(self){
+        if(!self.startNextExtractionTimer){
+            self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.01
+                                                                             target:self
+                                                                           selector:@selector(extractNextVideoFromQueue)
+                                                                           userInfo:nil
+                                                                            repeats:NO];
+        } else {
+            /* timer already scheduled */
+        }
     }
 }
 
-- (void)cancelRemainingExtractions
+- (void)cancelAllExtractions
 {
-    [self cancelCurrentExtraction];
-    
-    for (NSDictionary *queuedExtraction in self.highPriorityExtractionQueue) {
-        extraction_complete_block completionBlock = queuedExtraction[kSPVideoExtractorBlockKey];
-        if(completionBlock){
-            completionBlock(nil, NO);
+    @synchronized(self){
+        [self cancelCurrentExtraction];
+        
+        for (NSDictionary *queuedExtraction in self.highPriorityExtractionQueue) {
+            extraction_complete_block completionBlock = queuedExtraction[kSPVideoExtractorBlockKey];
+            if(completionBlock){
+                completionBlock(nil, NO);
+            }
         }
+        [self.highPriorityExtractionQueue removeAllObjects];
+        [self.warmCacheExtractionQueue removeAllObjects];
     }
-    [self.highPriorityExtractionQueue removeAllObjects];
-    [self.warmCacheExtractionQueue removeAllObjects];
 }
 
 - (void)cancelCurrentExtraction
@@ -165,12 +142,14 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         //fail current extraction
         if(self.currentlyExtracting){
             extraction_complete_block currentCompletionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+            [self destroyWebView];
+            self.currentlyExtracting = nil;
             if(currentCompletionBlock){
                 currentCompletionBlock(nil, NO);
             }
+        } else {
+            STVAssert(self.webView == nil, @"should not have a web view w/o currently Extracting");
         }
-        self.currentlyExtracting = nil;
-        [self destroyWebView];
         
         [self.startNextExtractionTimer invalidate];
         self.startNextExtractionTimer = nil;
@@ -180,6 +159,21 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 }
 
 #pragma mark - Private Methods
+
+- (NSDictionary *)nextItemForExtraction
+{
+    @synchronized(self){
+        NSDictionary *upNext = nil;
+        if ([self.highPriorityExtractionQueue count]) {
+            upNext = self.highPriorityExtractionQueue[0];
+            [self.highPriorityExtractionQueue removeObject:upNext];
+        } else if ([self.warmCacheExtractionQueue count]) {
+            upNext = self.warmCacheExtractionQueue[0];
+            [self.warmCacheExtractionQueue removeObject:upNext];
+        }
+        return upNext;
+    }
+}
 
 - (void)extractNextVideoFromQueue
 {
@@ -194,18 +188,11 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         NSDictionary *nextExtraction = [self nextItemForExtraction];
         
         if (nextExtraction) {
+            STVAssert(self.webView == nil, @"webview should be nil");
+            
             self.currentlyExtracting = nextExtraction;
             Video *video = self.currentlyExtracting[kSPVideoExtractorVideoKey];
-            
-            if (!video) {
-                extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
-                if(completionBlock){
-                    completionBlock(nil, YES);
-                }
-                self.currentlyExtracting = nil;
-                [self scheduleNextExtraction];
-                return;
-            }
+            STVAssert(video, @"expected valid job w/ video");
             
             NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
             if(alreadyExtractedURL){
@@ -219,6 +206,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 return;
             } else {
                 //perform actual extraction
+                STVAssert(!self.webView, @"should not have a web view already");
                 [self createWebView];
                 if ([video.providerName isEqualToString:@"youtube"]) {
                     [self loadYouTubeVideo:video];
@@ -228,6 +216,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                     [self loadDailyMotionVideo:video];
                 }
                 
+                STVAssert(self.currentExtractionTimeoutTimer == nil, @"shouldn't have a current extraction timeout timer");
                 self.currentExtractionTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
                                                                                       target:self
                                                                                     selector:@selector(extractionTimedOut:)
@@ -248,12 +237,12 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     self.webView.mediaPlaybackRequiresUserAction = NO;
     self.webView.mediaPlaybackAllowsAirPlay = YES;
     self.webView.hidden = YES;
-    self.webView.delegate = self;
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
 - (void)destroyWebView
 {
+    [self.webView stopLoading];
     [self.webView loadHTMLString:@"" baseURL:nil];
     [self.webView stopLoading];
     [self.webView setDelegate:nil];
@@ -314,6 +303,16 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         
         if (self.currentlyExtracting && notification.userInfo && ![notification.userInfo isKindOfClass:[NSNull class]]) {
             
+            // When using a webview to play video, it creates its own MPAVPlayer/Controller via some subsystem.
+            // When we destroy the webview, it's possible that the multimedia subsystem keeps the AVPlayer around.
+            // When this happens, we see different notifications than the initial "got video" notification (which is
+            // an "MPAVControllerItemChangedNotification" responding to path) and we need to ignore them...
+            if ([notification.name isEqualToString:@"MPAVControllerItemWillChangeNotification"] ||
+                [notification.name isEqualToString:@"MPAVControllerSizeDidChangeNotification"] ||
+                [notification.name isEqualToString:@"MPAVControllerItemReadyToPlayNotification"]) {
+                return;
+            }
+
             NSArray *allValues = [notification.userInfo allValues];
             for (id value in allValues) {
                 
@@ -321,9 +320,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 SEL pathSelector = NSSelectorFromString([NSString stringWithFormat:@"%@%@%@%@", @"p",@"a",@"t",@"h"]);
                 
                 if ([value respondsToSelector:pathSelector]) {
-//                    DLog(@"Great extraction success!");
-
-                    // Remove myself as an observer -- otherwise we could initiate 'playVideo' multiple times, slowing down video display
+                    // Remove myself as an observer -- otherwise we could initiate multiple times
                     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
                     // Remove webView
@@ -332,7 +329,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                     [self.currentExtractionTimeoutTimer invalidate];
                     self.currentExtractionTimeoutTimer = nil;
 
-                    // Get videoURL to playable video file
+                    // Get URL to playable video file
                     #pragma GCC diagnostic push
                     #pragma GCC diagnostic ignored "-Warc-performSelector-leaks"
                     NSString *extractedURL = [value performSelector:pathSelector];
@@ -356,7 +353,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 {
     //prevent possible async timing issue
     if(self.currentlyExtracting && self.currentlyExtracting == timer.userInfo){
-//        DLog(@"Extraction TIMED OUT, cancelling current extraction...");
         self.currentExtractionTimeoutTimer = nil;
         
         [self destroyWebView];
@@ -402,9 +398,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)cacheExtractedURL:(NSString *)extractedURL forVideo:(Video *)video
 {
-    if(!self.extractedURLCache){
-        self.extractedURLCache = [[NSMutableDictionary alloc] init];
-    }
     self.extractedURLCache[video.objectID] = @{kSPVideoExtractorExtractedURLStringKey: extractedURL,
                                                kSPVideoExtractorExtractedAtKey: [NSDate date]};
 }
