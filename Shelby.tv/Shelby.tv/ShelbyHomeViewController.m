@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyHomeViewController.h"
+#import "AsynchronousFreeloader.h"
 #import "BrowseViewController.h"
 #import "DisplayChannel.h"
 #import "ImageUtilities.h"
@@ -173,33 +174,34 @@
 - (void)setupSettingsView
 {
     // KP KP: TODO: once fetching user done correctly, add the two targets. 
-//    [self.settingsView removeFromSuperview];
-//    if (self.currentUser) {
-//        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
-//        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(25, 7, 30, 30)];
-//        [userAvatar.layer setCornerRadius:5];
-//        [userAvatar.layer setMasksToBounds:YES];
-//        [AsynchronousFreeloader loadImageFromLink:self.currentUser.userImage
-//                                     forImageView:userAvatar
-//                                  withPlaceholder:nil
-//                                   andContentMode:UIViewContentModeScaleAspectFit];
-//        [self.settingsView addSubview:userAvatar];
-//        UIButton *settings = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-//        [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
-//        [self.settingsView addSubview:settings];
-//    } else {
-//        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 120, 44)];
-//        UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [login setFrame:CGRectMake(7, 7, 60, 30)];
-//        [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
-//        [login setTitle:@"Login" forState:UIControlStateNormal];
-//        [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
-//        [[login titleLabel] setTextColor:[UIColor whiteColor]];
-//        [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
-//        [self.settingsView addSubview:login];
-//    }
-//    
-//    [self.view addSubview:self.settingsView];
+    [self.settingsView removeFromSuperview];
+    if (self.currentUser) {
+        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
+        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(25, 7, 30, 30)];
+        [userAvatar.layer setCornerRadius:5];
+        [userAvatar.layer setMasksToBounds:YES];
+        // KP KP: TODO: Use AFNetworking instead of AsynchronousFreeloader
+        [AsynchronousFreeloader loadImageFromLink:self.currentUser.userImage
+                                     forImageView:userAvatar
+                                  withPlaceholder:nil
+                                   andContentMode:UIViewContentModeScaleAspectFit];
+        [self.settingsView addSubview:userAvatar];
+        UIButton *settings = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+        [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+        [self.settingsView addSubview:settings];
+    } else {
+        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 120, 44)];
+        UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
+        [login setFrame:CGRectMake(7, 7, 60, 30)];
+        [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
+        [login setTitle:@"Login" forState:UIControlStateNormal];
+        [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
+        [[login titleLabel] setTextColor:[UIColor whiteColor]];
+        [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+        [self.settingsView addSubview:login];
+    }
+    
+    [self.view addSubview:self.settingsView];
 }
 
 - (void)showSettings

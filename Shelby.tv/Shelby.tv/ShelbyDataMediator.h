@@ -23,6 +23,10 @@ extern NSString * const kShelbyOfflineLikesID;
                                withError:(NSError *)error;
 -(void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
                                          with:(NSArray *)channelEntries;
+// User Channels
+- (void)fetchUserChannelDidCompleteWithChannel:(DisplayChannel *)myStreamChannel
+                                          with:(NSArray *)channelEntries
+                                     fromCache:(BOOL)cached;
 
 // Login
 - (void)loginUserDidCompleteWithUser:(User *)user;
@@ -45,8 +49,11 @@ extern NSString * const kShelbyOfflineLikesID;
 - (User *)fetchAuthenticatedUserOnMainThreadContext;
 - (void)fetchAllUnsyncedLikes;
 
+// User
+- (void)fetchStreamForUser;
+
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
--(void)logout;
+-(void)logoutWithUserChannels:(NSArray *)userChannels;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 

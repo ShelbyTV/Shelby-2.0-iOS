@@ -22,6 +22,9 @@
 @property (nonatomic, assign) SPTutorialMode currentPlayerTutorialMode;
 @property (nonatomic, assign) ShelbyBrowseTutorialMode currentBrowseTutorialMode;
 
+@property (nonatomic, strong) NSMutableArray *userChannels;
+@property (nonatomic, strong) NSMutableArray *globalChannels;
+
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 @end
 
@@ -50,6 +53,8 @@
     // If user is not logged in, fetch unsynced likes. (KP KP: We might want to still fetch/merge unsynced likes with Likes Roll for logged in user)
     if (!currentUser) {
         [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
+    } else {
+        [self fetchUserChannels];
     }
     
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
@@ -61,9 +66,15 @@
     
 }
 
+- (void)fetchUserChannels
+{
+    [[ShelbyDataMediator sharedInstance] fetchStreamForUser];
+}
+
 - (void)populateChannels
 {
-    for (DisplayChannel *channel in self.homeVC.channels){
+    NSMutableArray *allChannels = [self constructAllChannelsArray];
+    for (DisplayChannel *channel in allChannels){
         [self populateChannel:channel withActivityIndicator:YES];
     }
 }
@@ -86,6 +97,8 @@
 - (void)loginUserDidCompleteWithUser:(User *)user
 {
     [self.homeVC setCurrentUser:user];
+    
+    [self fetchUserChannels];
 }
 
 - (void)facebookConnectDidCompleteWithUser:(User *)user
@@ -108,7 +121,8 @@
     
     NSArray *curChannels = self.homeVC.channels;
     if(!curChannels){
-        self.homeVC.channels = channels;
+        self.globalChannels = [channels mutableCopy];
+        self.homeVC.channels = [self constructAllChannelsArray];
     } else {
         //caveat: changing a DisplayChannel attribute will not trigger an update
         //array needs to be different order/length to trigger update
@@ -131,9 +145,10 @@
                 [likesChannel setOrder:@([channelsArray count] - 1)];
             }
 
-            self.homeVC.channels = channelsArray;
-   } else {
-            /* don't replace old channels */
+            self.globalChannels = channelsArray;
+            self.homeVC.channels = [self constructAllChannelsArray];
+        } else {
+                /* don't replace old channels */
         }
     }
     
@@ -220,6 +235,7 @@
         [channelsArray addObjectsFromArray:curChannels];
         [channelsArray addObject:channel];
         [channel setOrder:@([channelsArray count] - 1)];
+        self.globalChannels = channelsArray;
         [self.homeVC setChannels:channelsArray];
     }
     
@@ -227,6 +243,36 @@
     
     [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
     [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
+}
+
+- (void)fetchUserChannelDidCompleteWithChannel:(DisplayChannel *)myStreamChannel
+                                          with:(NSArray *)channelEntries
+                                     fromCache:(BOOL)cached
+{
+    if (!self.userChannels) {
+        _userChannels = [@[] mutableCopy];
+    }
+
+    [self.userChannels addObject:myStreamChannel];
+    
+    self.homeVC.channels = [self constructAllChannelsArray];
+    
+    [self fetchEntriesDidCompleteForChannel:myStreamChannel with:channelEntries fromCache:cached];
+}
+
+
+- (NSMutableArray *)constructAllChannelsArray
+{
+    NSMutableArray *allChannels = [@[] mutableCopy];
+    if (self.userChannels) {
+        [allChannels addObjectsFromArray:self.userChannels];
+    }
+    
+    if (self.globalChannels) {
+        [allChannels addObjectsFromArray:self.globalChannels];
+    }
+    
+    return allChannels;
 }
 
 #pragma mark - Helper Methods
@@ -455,7 +501,13 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 - (void)logoutUser
 {
-    [[ShelbyDataMediator sharedInstance] logout];
+    [[ShelbyDataMediator sharedInstance] logoutWithUserChannels:self.userChannels];
+    for (DisplayChannel *channel in self.userChannels) {
+        [self.homeVC removeChannel:channel];
+    }
+    
+    self.userChannels = nil;
+
     [self.homeVC setCurrentUser:nil];
 }
 

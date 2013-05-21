@@ -123,6 +123,48 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 }
 
+// User
+- (void)fetchStreamForUser
+{
+    User *user = [self fetchAuthenticatedUserOnMainThreadContext];
+    if (user) {
+        [ShelbyAPIClient fetchStreamForUserWithAuthToken:[user token] andBlock:^(id JSON, NSError *error) {
+            if (JSON) {
+                NSMutableDictionary *rollDictionary = [NSMutableDictionary dictionaryWithDictionary:JSON];
+                rollDictionary[@"user_id"] = [user userID];
+                rollDictionary[@"display_channel_color"] = @"444";
+                rollDictionary[@"display_description"] = @"My Stream";
+                rollDictionary[@"display_title"] = @"My Stream";
+                
+                NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
+                DisplayChannel *myRoll = [DisplayChannel userChannelForDashboardDictionary:rollDictionary withID:[user userID] withOrder:0 inContext:privateContext];
+               
+                NSArray *dashboardEntries = [self dashboardEntriesForJSON:JSON
+                                                            withDashboard:myRoll.dashboard
+                                                                inContext:privateContext];
+
+                NSError *error;
+                [myRoll.managedObjectContext save:&error];
+                STVAssert(!error, @"context save failed, in fetch stream for user");
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // 2) load those channels on main thread context
+                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+
+                    DisplayChannel *mainThreadDisplayChannel =  (DisplayChannel *)[[self mainThreadContext] objectWithID:myRoll.objectID];
+                    
+                    NSMutableArray *mainThreadDashboardEntries = [self mainThreadDashboardEntries:dashboardEntries];
+     
+                    [self.delegate fetchUserChannelDidCompleteWithChannel:mainThreadDisplayChannel with:mainThreadDashboardEntries fromCache:NO];
+                });                
+            } else if (error) {
+                
+            }
+        }];
+    }
+}
+
+
 //when login is enabled, this needs to be re-thought...
 - (BOOL)toggleLikeForFrame:(Frame *)frame
 {
@@ -192,11 +234,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                 dispatch_async(dispatch_get_main_queue(), ^{
                     // 2) load those dashboard entries on main thread context
                     //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                    NSMutableArray *mainThreadDashboardEntries = [NSMutableArray arrayWithCapacity:[cachedDashboardEntries count]];
-                    for (DashboardEntry *entry in cachedDashboardEntries) {
-                        DashboardEntry *mainThreadEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:entry.objectID];
-                        [mainThreadDashboardEntries addObject:mainThreadEntry];
-                    }
+                    NSMutableArray *mainThreadDashboardEntries = [self mainThreadDashboardEntries:cachedDashboardEntries];
+                    
                     [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
                                                                 with:mainThreadDashboardEntries
                                                            fromCache:YES];
@@ -245,7 +284,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 }
 
 
--(void)logout
+- (void)logoutWithUserChannels:(NSArray *)userChannels
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
  // TODO: remove if, set token in helper
@@ -254,6 +293,12 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         user.token = nil;
     }
     
+    if (userChannels) {
+        NSManagedObjectContext *mainContext = [self mainThreadContext];
+        for (DisplayChannel *displayChannel in userChannels) {
+            [mainContext deleteObject:displayChannel];
+        }
+    }
 
     [self cleanupSession];
     
@@ -405,6 +450,18 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 }
 
 #pragma mark - Parsing Helpers
+- (NSMutableArray *)mainThreadDashboardEntries:(NSArray *)backgroundThreadDashboardEntries
+{
+    NSMutableArray *mainThreadDashboardEntries = [NSMutableArray arrayWithCapacity:[backgroundThreadDashboardEntries count]];
+    for (DashboardEntry *entry in backgroundThreadDashboardEntries) {
+        DashboardEntry *mainThreadEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:entry.objectID];
+        [mainThreadDashboardEntries addObject:mainThreadEntry];
+    }
+
+    return mainThreadDashboardEntries;
+
+}
+
 
 //djs TODO: make constant strings externs
 //returns nil on error, otherwise array of DisplayChannel objects

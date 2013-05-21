@@ -121,6 +121,36 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
     return displayChannel;
 }
 
++ (DisplayChannel *)userChannelForDashboardDictionary:(NSDictionary *)dictionary
+                                               withID:(NSString *)channelID
+                                            withOrder:(NSInteger)order
+                                            inContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDisplayChannel];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"dashboard.dashboardID == %@", channelID];
+    request.predicate = pred;
+    request.fetchLimit = 1;
+    NSError *error;
+    NSArray *fetchedDisplayChannels = [context executeFetchRequest:request error:&error];
+    if(error || !fetchedDisplayChannels){
+        return nil;
+    }
+    
+    DisplayChannel *displayChannel;
+    if ([fetchedDisplayChannels count] == 1) { 
+        displayChannel = fetchedDisplayChannels[0];
+    } else {
+        displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
+                                                       inManagedObjectContext:context];
+    }
+    
+    Dashboard *myStreams = [Dashboard dashboardForDashboardDictionary:dictionary inContext:context];
+    displayChannel.dashboard = myStreams;
+    
+    return displayChannel;
+}
+
+
 - (BOOL) canFetchRemoteEntries
 {
     //only offline Likes cannot refresh

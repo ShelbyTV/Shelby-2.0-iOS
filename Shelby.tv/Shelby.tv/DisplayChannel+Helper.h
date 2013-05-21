@@ -31,6 +31,11 @@
 + (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
                                           inContext:(NSManagedObjectContext *)context;
 
++ (DisplayChannel *)userChannelForDashboardDictionary:(NSDictionary *)dictionary
+                                               withID:(NSString *)channelID
+                                                withOrder:(NSInteger)order
+                                                inContext:(NSManagedObjectContext *)context;
+
 @property (nonatomic, readonly) BOOL canFetchRemoteEntries;
 
 - (UIColor *)displayColor;
