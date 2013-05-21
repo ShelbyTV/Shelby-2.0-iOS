@@ -313,14 +313,15 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
         [self setTutorialView:nil];
         
         if (self.tutorialMode == ShelbyBrowseTutorialModeShow) {
-            [self openChannelZero];
+            [self openFirstChannel];
         } else if ([self.browseDelegate conformsToProtocol:@protocol(ShelbyBrowseProtocol)] && [self.browseDelegate respondsToSelector:@selector(userDidCompleteTutorial)]) {
             [self.browseDelegate userDidCompleteTutorial];
+            [self openFirstChannel];
         }
     }];
 }
 
-- (void)openChannelZero
+- (void)openFirstChannel
 {
     SPChannelCell *channelZero = [self loadCell:0 withDirection:YES animated:NO];
     DisplayChannel *channelZeroDisplayChannel = channelZero.channelCollectionView.channel;
