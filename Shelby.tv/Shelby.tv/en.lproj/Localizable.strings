@@ -31,4 +31,14 @@
 // --First Like--
 "FIRST_LIKE_TITLE" = "Likes";
 "FIRST_LIKE_MESSAGE" = "This video is now saved in your \"Likes\" channel in the guide!";
-"FIRST_LIKE_BUTTON" = "OK";
+"FIRST_LIKE_BUTTON" = "Ok";
+
+// --Playback Stalled--
+"PLAYBACK_STALLED_TITLE" = "Video Downloading Slowly";
+"PLAYBACK_STALLED_MESSAGE" = "Give it a little time to buffer.  Then double-tap to resume playback.";
+"PLAYBACK_STALLED_BUTTON" = "Ok";
+
+// --Extraction Fail--
+"EXTRACTION_FAIL_TITLE" = "Problem Video";
+"EXTRACTION_FAIL_MESSAGE" = "This video won't play right now.  Skipping it...";
+"EXTRACTION_FAIL_BUTTON" = "Skip Now";

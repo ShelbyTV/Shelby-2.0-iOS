@@ -826,9 +826,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
          * Focus more time than seems necessary on this, b/c it makes watching a single video very enjoyable.
          */
         if (self.tutorialMode == SPTutorialModeNone) {
-            ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Video Downloading Slowly"
-                                                                        message:@"Give it a little time to buffer.  Then double-tap to resume playback."
-                                                             dismissButtonTitle:@"ok"
+            ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
+                                                                        message:NSLocalizedString(@"PLAYBACK_STALLED_MESSAGE", nil)
+                                                             dismissButtonTitle:NSLocalizedString(@"PLAYBACK_STALLED_BUTTON", nil)
                                                                  autodimissTime:6.0f
                                                                       onDismiss:nil];
             [alertView show];
@@ -871,9 +871,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     if (self.currentPlayer == player) {
         if (self.tutorialMode == SPTutorialModeNone) {
-            ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Problem Video"
-                                                                        message:@"This video won't play right now.  Skipping it..."
-                                                             dismissButtonTitle:@"Skip Now"
+            ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
+                                                                        message:NSLocalizedString(@"EXTRACTION_FAIL_MESSAGE", nil)
+                                                             dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_BUTTON", nil)
                                                                  autodimissTime:3.0f
                                                                       onDismiss:^(BOOL didAutoDimiss) {
                                                                           [self changeVideoInForwardDirection:YES];
