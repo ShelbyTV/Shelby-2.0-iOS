@@ -12,7 +12,7 @@
 "TUTORIAL_WELCOME_BUTTON" = "Increase Knowledge";
 
 // 2) Double Tap
-"TUTORIAL_DBLTAP_MESSAGE" = "Welcome to your first channel!\nThe video is paused.\nDouble-tap to play.";
+"TUTORIAL_DBLTAP_MESSAGE" = "Welcome to our trending channel!\nThe video is paused.\nDouble-tap to play.";
 
 // 3) Swipe left to change video
 "TUTORIAL_SWPH_MESSAGE" = "Swipe left to play the next video in this channel.";
@@ -25,10 +25,10 @@
 
 // 6) Done
 "TUTORIAL_DONE_TITLE" = "We're Building Shelby TV for You";
-"TUTORIAL_DONE_MESSAGE" = "We hope you love it!\nSo, please tell us what you think.  Help us make it better and better.";
+"TUTORIAL_DONE_MESSAGE" = "We hope you love it!\nSo, tell us what you think.  Help us make it better and better.";
 "TUTORIAL_DONE_BUTTON" = "Play \"Trending\"";
 
 // --First Like--
 "FIRST_LIKE_TITLE" = "Likes";
 "FIRST_LIKE_MESSAGE" = "This video is now saved in your \"Likes\" channel in the guide!";
-"FIRST_LIST_BUTTON" = "OK";
+"FIRST_LIKE_BUTTON" = "OK";

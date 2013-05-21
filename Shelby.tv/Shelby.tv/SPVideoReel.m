@@ -825,12 +825,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
          * 
          * Focus more time than seems necessary on this, b/c it makes watching a single video very enjoyable.
          */
-        ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Video Downloading Slowly"
-                                                                    message:@"Give it a little time to buffer.  Then double-tap to resume playback."
-                                                         dismissButtonTitle:@"ok"
-                                                             autodimissTime:6.0f
-                                                                  onDismiss:nil];
-        [alertView show];
+        if (self.tutorialMode == SPTutorialModeNone) {
+            ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Video Downloading Slowly"
+                                                                        message:@"Give it a little time to buffer.  Then double-tap to resume playback."
+                                                             dismissButtonTitle:@"ok"
+                                                                 autodimissTime:6.0f
+                                                                      onDismiss:nil];
+            [alertView show];
+        }
     }
 }
 
@@ -868,14 +870,18 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player
 {
     if (self.currentPlayer == player) {
-        ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Problem Video"
-                                                                    message:@"This video won't play right now.  Skipping it..."
-                                                         dismissButtonTitle:@"Skip Now"
-                                                             autodimissTime:3.0f
-                                                                  onDismiss:^(BOOL didAutoDimiss) {
-                                                                      [self changeVideoInForwardDirection:YES];
-                                                                  }];
-        [alertView show];
+        if (self.tutorialMode == SPTutorialModeNone) {
+            ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Problem Video"
+                                                                        message:@"This video won't play right now.  Skipping it..."
+                                                             dismissButtonTitle:@"Skip Now"
+                                                                 autodimissTime:3.0f
+                                                                      onDismiss:^(BOOL didAutoDimiss) {
+                                                                          [self changeVideoInForwardDirection:YES];
+                                                                      }];
+            [alertView show];
+        } else {
+            [self changeVideoInForwardDirection:YES];
+        }
     }
 }
 
