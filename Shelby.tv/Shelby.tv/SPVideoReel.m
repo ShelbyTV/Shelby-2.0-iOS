@@ -518,7 +518,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     if (![[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFirstTimeLikedAlert]) {
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyFirstTimeLikedAlert];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        ShelbyAlertView *likedAlert = [[ShelbyAlertView alloc] initWithTitle:@"Likes" message:@"Your likes are saved in their own channel on the main screen" dismissButtonTitle:@"OK" autodimissTime:6 onDismiss:nil];
+        ShelbyAlertView *likedAlert = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"FIRST_LIKE_TITLE", @"--First Like--")
+                                                                     message:NSLocalizedString(@"FIRST_LIKE_MESSAGE", nil)
+                                                          dismissButtonTitle:NSLocalizedString(@"FIRST_LIKE_BUTTON", nil)
+                                                              autodimissTime:6
+                                                                   onDismiss:nil];
         [likedAlert show];
     }
 }
@@ -727,6 +731,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     if ([self tutorialSetup]) {
         [self setTutorialMode:SPTutorialModeDoubleTap];
+        [self.tutorialView setupWithImage:@"doubletap.png"
+                                  andText:NSLocalizedString(@"TUTORIAL_DBLTAP_MESSAGE", @"2) Double Tap")];
         [UIView animateWithDuration:0.2 animations:^{
             [self.tutorialView setAlpha:0.9];
         }];
@@ -770,7 +776,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)showSwipeLeftTutorial
 {
     [self setTutorialMode:SPTutorialModeSwipeLeft];
-    [self.tutorialView setupWithImage:@"swipeleft.png" andText:@"Swipe left to play next video"];
+    [self.tutorialView setupWithImage:@"swipeleft.png"
+                              andText:NSLocalizedString(@"TUTORIAL_SWPH_MESSAGE", @"3) Swipe left to change video")];
     [UIView animateWithDuration:0.2 animations:^{
         [self.tutorialView setAlpha:0.9];
     }];
@@ -779,7 +786,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)showSwipeUpTutorial
 {
     [self setTutorialMode:SPTutorialModeSwipeUp];
-    [self.tutorialView setupWithImage:@"swipeup.png" andText:@"Swipe up to change channels"];
+    [self.tutorialView setupWithImage:@"swipeup.png"
+                              andText:NSLocalizedString(@"TUTORIAL_SWPV_MESSAGE", @"4) Swipe up to change channel")];
     [UIView animateWithDuration:0.2 animations:^{
         [self.tutorialView setAlpha:0.9];
     }];    
@@ -788,7 +796,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)showPinchTutorial
 {
     if ([self tutorialSetup]) {
-        [self.tutorialView setupWithImage:@"pinch.png" andText:@"Pinch to exit"];
+        [self.tutorialView setupWithImage:@"pinch.png"
+                                  andText:NSLocalizedString(@"TUTORIAL_PINCH_MESSAGE", @"5) Pinch to exit")];
         [UIView animateWithDuration:0.2 animations:^{
             [self.tutorialView setAlpha:0.9];
         }];

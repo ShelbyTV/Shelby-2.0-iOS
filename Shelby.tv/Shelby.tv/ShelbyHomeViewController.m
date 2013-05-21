@@ -444,6 +444,7 @@
         mailer.mailComposeDelegate = self;
         [mailer setSubject:[NSString stringWithFormat:@"iPad Feedback (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]]];
         [mailer setToRecipients:@[@"ipad@shelby.tv"]];
+        [mailer setMessageBody:@"You're emailing with a human.  :-]\n\nWe really appreciate your ideas and feedback, and we're going to write back to you!" isHTML:NO];
         [self presentViewController:mailer animated:YES completion:nil];
     } else {
         [[[ShelbyAlertView alloc] initWithTitle:@"We'd Love to Hear from You!"

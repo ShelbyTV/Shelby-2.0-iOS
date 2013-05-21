@@ -748,6 +748,9 @@
 		91FCC6A0174A8F14004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 		91FCC6A1174A8F1F004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 		91FCC6A2174A8F25004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
+		91FCC6A7174BF118004255F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91FCC6AB174BF118004255F5 /* Localizable.strings */; };
+		91FCC6A8174BF118004255F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91FCC6AB174BF118004255F5 /* Localizable.strings */; };
+		91FCC6A9174BF118004255F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91FCC6AB174BF118004255F5 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1117,6 +1120,7 @@
 		91F0CC031730154E008B5B34 /* User+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Helper.h"; sourceTree = "<group>"; };
 		91F0CC041730154E008B5B34 /* User+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Helper.m"; sourceTree = "<group>"; };
 		91FCC69F174A8F14004255F5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1475,6 +1479,7 @@
 				1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */,
 				8E20971D162F3A61000A2DFD /* main.m */,
 				8E20971F162F3A61000A2DFD /* Shelby.tv-Prefix.pch */,
+				91FCC6AB174BF118004255F5 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2135,6 +2140,7 @@
 				1C879E0A1730232000B574AB /* rollhighlight.png in Resources */,
 				1C4110DB17319002009022EA /* ShelbyHomeView.xib in Resources */,
 				9109330D1743E61B00AC038E /* ShelbyAlertView.xib in Resources */,
+				91FCC6A8174BF118004255F5 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2274,6 +2280,7 @@
 				1C879E0B1730232000B574AB /* rollhighlight.png in Resources */,
 				1C4110DC17319002009022EA /* ShelbyHomeView.xib in Resources */,
 				9109330E1743E61B00AC038E /* ShelbyAlertView.xib in Resources */,
+				91FCC6A9174BF118004255F5 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2414,6 +2421,7 @@
 				1C879E091730232000B574AB /* rollhighlight.png in Resources */,
 				1C4110DA17319002009022EA /* ShelbyHomeView.xib in Resources */,
 				9109330C1743E61B00AC038E /* ShelbyAlertView.xib in Resources */,
+				91FCC6A7174BF118004255F5 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2738,6 +2746,14 @@
 				8E20971B162F3A61000A2DFD /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		91FCC6AB174BF118004255F5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				91FCC6AA174BF118004255F5 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

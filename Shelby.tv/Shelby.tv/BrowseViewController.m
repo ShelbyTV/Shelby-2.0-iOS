@@ -219,13 +219,15 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 
     ShelbyBrowseTutorialView *tutorial = nil;
     if (firstTime) {
-        tutorial =  [[ShelbyBrowseTutorialView alloc] initWithTitle:@"Welcome to Unwind\nby Shelby TV"
-                                                                 message:@"First, a quick gesture tutorial.\nThen, great video."
-                                                         closeButtonText:@"Play \"Channel Zero\"" andOwner:self];
+        tutorial =  [[ShelbyBrowseTutorialView alloc] initWithTitle:NSLocalizedString(@"TUTORIAL_WELCOME_TITLE", @"--Tutorial-- 1) Welcome")
+                                                            message:NSLocalizedString(@"TUTORIAL_WELCOME_MESSAGE", nil)
+                                                    closeButtonText:NSLocalizedString(@"TUTORIAL_WELCOME_BUTTON", nil)
+                                                           andOwner:self];
     } else {
-        tutorial =  [[ShelbyBrowseTutorialView alloc] initWithTitle:@"Take Time to Unwind"
-                                                                 message:@"At lunch, or the end of the day, enjoy video curated by the Shelby community."
-                                                         closeButtonText:@"Begin" andOwner:self];
+        tutorial =  [[ShelbyBrowseTutorialView alloc] initWithTitle:NSLocalizedString(@"TUTORIAL_DONE_TITLE", @"6) Done")
+                                                            message:NSLocalizedString(@"TUTORIAL_DONE_MESSAGE", nil)
+                                                    closeButtonText:NSLocalizedString(@"TUTORIAL_DONE_BUTTON", nil)
+                                                           andOwner:self];
     }
     
     [self.view addSubview:tutorial];
