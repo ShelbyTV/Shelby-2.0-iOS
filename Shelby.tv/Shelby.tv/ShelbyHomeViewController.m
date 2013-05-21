@@ -442,12 +442,12 @@
     if([MFMailComposeViewController canSendMail]){
         MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
         mailer.mailComposeDelegate = self;
-        [mailer setSubject:[NSString stringWithFormat:@"Shelby iOS Feedback (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]]];
-        [mailer setToRecipients:@[@"feedback+ios@shelby.tv"]];
+        [mailer setSubject:[NSString stringWithFormat:@"Shelby iPad Feedback (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]]];
+        [mailer setToRecipients:@[@"ipadFeedback@shelby.tv"]];
         [self presentViewController:mailer animated:YES completion:nil];
     } else {
         [[[ShelbyAlertView alloc] initWithTitle:@"We'd Love to Hear from You!"
-                                        message:@"Please email your feedback to us: feedback@shelby.tv"
+                                        message:@"Please email your feedback to us: ipadFeedback@shelby.tv"
                              dismissButtonTitle:@"Ok"
                                  autodimissTime:0
                                       onDismiss:nil]
