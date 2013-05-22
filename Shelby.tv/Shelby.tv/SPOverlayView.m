@@ -11,6 +11,7 @@
 #import "AsynchronousFreeloader.h"
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
+#import <QuartzCore/QuartzCore.h>
 #import "TopAlignedLabel.h"
 #import "User+Helper.h"
 

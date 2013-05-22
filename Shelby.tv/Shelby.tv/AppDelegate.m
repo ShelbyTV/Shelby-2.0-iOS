@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+#import <AVFoundation/AVFoundation.h>
 #import <HockeySDK/HockeySDK.h>
 #import "FacebookHandler.h"
 #import "GAI.h"

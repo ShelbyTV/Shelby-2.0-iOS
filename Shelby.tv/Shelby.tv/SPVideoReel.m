@@ -8,11 +8,13 @@
 
 #import "SPVideoReel.h"
 
+#import <CoreMedia/CoreMedia.h>
 #import "DashboardEntry+Helper.h"
 #import "DeviceUtilities.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
 #import "GAI.h"
+#import <MediaPlayer/MediaPlayer.h>
 #import <QuartzCore/QuartzCore.h>
 #import "ShelbyAlertView.h"
 #import "SPShareController.h"

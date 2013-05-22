@@ -7,6 +7,8 @@
 //
 
 #import "SPVideoPlayer.h"
+
+#import <AVFoundation/AVFoundation.h>
 #import "SPVideoDownloader.h"
 #import "SPVideoExtractor.h"
 #import "SPVideoReel.h"

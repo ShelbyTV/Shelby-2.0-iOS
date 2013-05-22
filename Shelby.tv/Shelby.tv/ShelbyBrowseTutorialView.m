@@ -8,6 +8,8 @@
 
 #import "ShelbyBrowseTutorialView.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @interface ShelbyBrowseTutorialView()
 @property (nonatomic, weak) IBOutlet UILabel *title;
 @property (nonatomic, weak) IBOutlet UILabel *message;

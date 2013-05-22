@@ -8,6 +8,8 @@
 
 #import "FormView.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @interface FormView()
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;

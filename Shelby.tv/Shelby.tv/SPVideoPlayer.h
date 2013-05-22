@@ -7,6 +7,8 @@
 //
 
 #import "Frame+Helper.h"
+
+#import <CoreMedia/CoreMedia.h>
 #import "ShelbyViewController.h"
 
 @class SPVideoPlayer;

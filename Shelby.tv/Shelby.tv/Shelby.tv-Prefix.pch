@@ -5,23 +5,10 @@
 #import <Availability.h>
 
 #ifdef __OBJC__
-
-    // Apple's Crap
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-    #import <AVFoundation/AVFoundation.h>
-    #import <CoreData/CoreData.h>
-    #import <CoreMedia/CoreMedia.h>
-    #import <MediaPlayer/MediaPlayer.h>
-    #import <MobileCoreServices/MobileCoreServices.h>
-    #import <QuartzCore/QuartzCore.h>
-    #import <SystemConfiguration/SystemConfiguration.h>
-    #import <Accounts/Accounts.h>
-    #import <Social/Social.h>
-
-    // Our Shit
+    // feel ok with this in here (though it still needs cleaning up...)
     #import "Constants.h"
-
 #endif
 
 #ifdef DEBUG 

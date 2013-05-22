@@ -7,8 +7,11 @@
 //
 
 #import "TwitterHandler.h"
+
+#import <Accounts/Accounts.h>
 #import "AuthenticateTwitterViewController.h"
 #import "OAuthConsumer.h"
+#import <Social/Social.h>
 
 //djs XXX do we need AFNEtworking in here?  Should probably just do all via API
 #import "AFNetworking.h"

@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
+#import <CoreMedia/CoreMedia.h>
+
 @protocol SPOverlayViewDelegate <NSObject>
 
 - (void)scrubToPercent:(CGFloat)scrubPct;
