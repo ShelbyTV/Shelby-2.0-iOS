@@ -688,6 +688,9 @@
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
+		91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
+		91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
+		91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
 		91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
@@ -1078,6 +1081,8 @@
 		91405303174C419400E18A6B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
 		9140530D174D055700E18A6B /* NSObject+NullHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NullHelper.m"; sourceTree = "<group>"; };
+		91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Helper.h"; sourceTree = "<group>"; };
+		91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Helper.m"; sourceTree = "<group>"; };
 		91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContainer.h; sourceTree = "<group>"; };
 		91649ECB1741B1A000A9265B /* DeduplicationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeduplicationUtility.h; sourceTree = "<group>"; };
 		91649ECC1741B1A000A9265B /* DeduplicationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeduplicationUtility.m; sourceTree = "<group>"; };
@@ -1404,6 +1409,8 @@
 				9135400E173937BB00093CA7 /* ShelbyModel.h */,
 				91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */,
 				91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */,
+				91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */,
+				91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -2527,6 +2534,7 @@
 				914052FB174C411600E18A6B /* DashboardEntry.m in Sources */,
 				91405305174C419400E18A6B /* User.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
+				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2630,6 +2638,7 @@
 				914052FC174C411600E18A6B /* DashboardEntry.m in Sources */,
 				91405306174C419400E18A6B /* User.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
+				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2733,6 +2742,7 @@
 				914052FA174C411600E18A6B /* DashboardEntry.m in Sources */,
 				91405304174C419400E18A6B /* User.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
+				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

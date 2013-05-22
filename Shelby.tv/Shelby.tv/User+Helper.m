@@ -6,31 +6,25 @@
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
-#import "NSObject+NullHelper.h"
 #import "User+Helper.h"
 
+#import "NSManagedObject+Helper.h"
+#import "NSObject+NullHelper.h"
+
 NSString * const kShelbyCoreDataEntityUser = @"User";
+NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 
 @implementation User (Helper)
 
 + (User *)userForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {
-    //look for existing User
     NSString *userID = dict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityUser];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userID == %@", userID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedUsers = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedUsers){
-        return nil;
-    }
-    
-    User *user = nil;
-    if([fetchedUsers count] == 1){
-        user = fetchedUsers[0];
-    } else {
+    User *user = [self fetchOneEntityNamed:kShelbyCoreDataEntityUser
+                           withIDPredicate:kShelbyCoreDataEntityUserIDPredicate
+                                     andID:userID
+                                 inContext:context];
+
+    if (!user) {
         user = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityUser
                                               inManagedObjectContext:context];
         user.userID = userID;

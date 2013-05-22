@@ -7,31 +7,25 @@
 //
 
 #import "Roll+Helper.h"
+
 #import "Frame+Helper.h"
+#import "NSManagedObject+Helper.h"
 #import "ShelbyDataMediator.h"
 
 NSString * const kShelbyCoreDataEntityRoll = @"Roll";
+NSString * const kShelbyCoreDataEntityRollIDPredicate = @"rollID == %@";
 
 @implementation Roll (Helper)
 
 + (Roll *)rollForDictionary:(NSDictionary *)rollDict inContext:(NSManagedObjectContext *)context
 {
-    //look for existing Roll
     NSString *rollID = rollDict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityRoll];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedRolls = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedRolls){
-        return nil;
-    }
+    Roll *roll = [self fetchOneEntityNamed:kShelbyCoreDataEntityRoll
+                           withIDPredicate:kShelbyCoreDataEntityRollIDPredicate
+                                     andID:rollID
+                                 inContext:context];
     
-    Roll *roll = nil;
-    if([fetchedRolls count] == 1){
-        roll = fetchedRolls[0];
-    } else {
+    if (!roll) {
         roll = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityRoll
                                                inManagedObjectContext:context];
         roll.rollID = rollID;
@@ -49,20 +43,12 @@ NSString * const kShelbyCoreDataEntityRoll = @"Roll";
 + (Roll *)fetchLikesRollInContext:(NSManagedObjectContext *)context
 {
     NSString *rollID = kShelbyOfflineLikesID;
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityRoll];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"rollID == %@", rollID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedRolls = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedRolls){
-        return nil;
-    }
+    Roll *roll = [self fetchOneEntityNamed:kShelbyCoreDataEntityRoll
+                           withIDPredicate:kShelbyCoreDataEntityRollIDPredicate
+                                     andID:rollID
+                                 inContext:context];
     
-    Roll *roll = nil;
-    if([fetchedRolls count] == 1){
-        roll = fetchedRolls[0];
-    } else {
+    if (!roll) {
         roll = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityRoll
                                              inManagedObjectContext:context];
         roll.rollID = rollID;

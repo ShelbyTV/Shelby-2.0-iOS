@@ -6,31 +6,25 @@
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
-#import "NSObject+NullHelper.h"
 #import "Video+Helper.h"
 
+#import "NSManagedObject+Helper.h"
+#import "NSObject+NullHelper.h"
+
 NSString * const kShelbyCoreDataEntityVideo = @"Video";
+NSString * const kShelbyCoreDataEntityVideoIDPredicate = @"videoID == %@";
 
 @implementation Video (Helper)
 
 + (Video *)videoForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {
-    //look for existing Video
     NSString *videoID = dict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityVideo];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"videoID == %@", videoID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedVideos = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedVideos){
-        return nil;
-    }
+    Video *video = [self fetchOneEntityNamed:kShelbyCoreDataEntityVideo
+                             withIDPredicate:kShelbyCoreDataEntityVideoIDPredicate
+                                       andID:videoID
+                                   inContext:context];
     
-    Video *video = nil;
-    if([fetchedVideos count] == 1){
-        video = fetchedVideos[0];
-    } else {
+    if (!video) {
         video = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityVideo
                                               inManagedObjectContext:context];
         video.videoID = videoID;
@@ -41,7 +35,6 @@ NSString * const kShelbyCoreDataEntityVideo = @"Video";
         video.title = [dict[@"title"] nilOrSelfWhenNotNull];
         video.firstUnplayable =  [dict[@"first_unplayable_at"] nilOrSelfWhenNotNull];
         video.lastUnplayable = [dict[@"last_unplayable_at"] nilOrSelfWhenNotNull];
- 
     }
 
     return video;

@@ -7,9 +7,12 @@
 //
 
 #import "DashboardEntry+Helper.h"
+
 #import "Frame+Helper.h"
+#import "NSManagedObject+Helper.h"
 
 NSString * const kShelbyCoreDataEntityDashboardEntry = @"DashboardEntry";
+NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEntryID == %@";
 
 @implementation DashboardEntry (Helper)
 
@@ -20,22 +23,13 @@ NSString * const kShelbyCoreDataEntityDashboardEntry = @"DashboardEntry";
                                   withDashboard:(Dashboard *)dashboard
                                       inContext:(NSManagedObjectContext *)context
 {
-    //look for existing DashboardEntry
     NSString *dashboardEntryID = dict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDashboardEntry];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"dashboardEntryID == %@", dashboardEntryID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedDashboardEntries = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedDashboardEntries){
-        return nil;
-    }
+    DashboardEntry *dashboardEntry = [self fetchOneEntityNamed:kShelbyCoreDataEntityDashboardEntry
+                                               withIDPredicate:kShelbyCoreDataEntityDashboardEntryIDPredicate
+                                                         andID:dashboardEntryID
+                                                     inContext:context];
     
-    DashboardEntry *dashboardEntry = nil;
-    if([fetchedDashboardEntries count] == 1){
-        dashboardEntry = fetchedDashboardEntries[0];
-    } else {
+    if (!dashboardEntry) {
         dashboardEntry = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDashboardEntry
                                                        inManagedObjectContext:context];
         dashboardEntry.dashboardEntryID = dashboardEntryID;

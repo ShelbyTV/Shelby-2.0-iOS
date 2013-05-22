@@ -7,30 +7,24 @@
 //
 
 #import "Messages+Helper.h"
+
+#import "NSManagedObject+Helper.h"
 #import "NSObject+NullHelper.h"
 
 NSString * const kShelbyCoreDataEntityMessages = @"Messages";
+NSString * const kShelbyCoreDataEntityMessagesIDPredicate = @"messageID == %@";
 
 @implementation Messages (Helper)
 
 + (Messages *)messageForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {
-    //look for existing Message
     NSString *messageID = dict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityMessages];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"messageID == %@", messageID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedMessages = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedMessages){
-        return nil;
-    }
+    Messages *message = [self fetchOneEntityNamed:kShelbyCoreDataEntityMessages
+                                  withIDPredicate:kShelbyCoreDataEntityMessagesIDPredicate
+                                            andID:messageID
+                                        inContext:context];
     
-    Messages *message = nil;
-    if([fetchedMessages count] == 1){
-        message = fetchedMessages[0];
-    } else {
+    if (!message) {
         message = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityMessages
                                                 inManagedObjectContext:context];
         message.messageID = messageID;
