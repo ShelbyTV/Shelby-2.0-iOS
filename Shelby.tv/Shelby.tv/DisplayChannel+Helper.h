@@ -36,6 +36,6 @@
 - (UIColor *)displayColor;
 - (NSString *)displayTitle;
 
-- (BOOL)hasEntityAtIndex:(NSInteger)idx;
+- (BOOL)hasEntityAtIndex:(NSUInteger)idx;
 
 @end

@@ -46,7 +46,7 @@
 @property (nonatomic) SPChannelPeekView *peelChannelView;
 @property (nonatomic) SPTutorialView *tutorialView;
 @property (nonatomic, strong) NSTimer *tutorialTimer;
-@property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
+@property (nonatomic, assign) NSUInteger currentVideoPlayingIndex;
 @property (atomic, weak) SPVideoPlayer *currentPlayer;
 @property (nonatomic, assign) BOOL shouldResumePlaybackAfterShare;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
@@ -474,7 +474,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     self.possiblyPlayablePlayers = playersToKeep;
 }
 
-- (SPVideoPlayer *)preloadPlayerAtIndex:(NSInteger)idx
+- (SPVideoPlayer *)preloadPlayerAtIndex:(NSUInteger)idx
 {
     //djs TODO: indicate that we need more video!
     if(idx >= [self.videoPlayers count]){

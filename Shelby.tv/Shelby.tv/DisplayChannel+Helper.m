@@ -130,7 +130,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     }
 }
 
-- (BOOL)hasEntityAtIndex:(NSInteger)idx
+- (BOOL)hasEntityAtIndex:(NSUInteger)idx
 {
     if(self.roll){
         return [self.roll.frame count] > idx;
