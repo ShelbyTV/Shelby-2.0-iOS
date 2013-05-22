@@ -7,6 +7,9 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    //for AFNetworking
+    #import <MobileCoreServices/MobileCoreServices.h>
+    #import <SystemConfiguration/SystemConfiguration.h>
     // feel ok with this in here (though it still needs cleaning up...)
     #import "Constants.h"
 #endif
