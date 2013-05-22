@@ -144,7 +144,6 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                                                             withDashboard:myStreamChannel.dashboard
                                                                 inContext:privateContext];
 
-                myStreamChannel.dashboard.dashboardEntry = [NSSet setWithArray:dashboardEntries];
                 NSError *error;
                 [myStreamChannel.managedObjectContext save:&error];
                 STVAssert(!error, @"context save failed, in fetch stream for user");
