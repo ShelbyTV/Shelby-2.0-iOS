@@ -7,6 +7,7 @@
 //
 
 #import "Messages+Helper.h"
+#import "NSObject+NullHelper.h"
 
 NSString * const kShelbyCoreDataEntityMessages = @"Messages";
 
@@ -35,9 +36,9 @@ NSString * const kShelbyCoreDataEntityMessages = @"Messages";
         message.messageID = messageID;
         message.nickname = dict[@"nickname"];
         message.text = dict[@"text"];
-        message.userImage = OBJECT_OR_NIL(dict[@"user_image_url"]);
+        message.userImage = [dict[@"user_image_url"] nilOrSelfWhenNotNull];
         message.createdAt = dict[@"created_at"];
-        message.originNetwork = OBJECT_OR_NIL(dict[@"origin_network"]);
+        message.originNetwork = [dict[@"origin_network"] nilOrSelfWhenNotNull];
     }
     
     return message;

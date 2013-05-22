@@ -127,7 +127,6 @@
 		1C81097916EE2CBF0030077C /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		1C81097D16EE2CBF0030077C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E20971D162F3A61000A2DFD /* main.m */; };
 		1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E209721162F3A61000A2DFD /* AppDelegate.m */; };
-		1C81097F16EE2CBF0030077C /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		1C81098016EE2CBF0030077C /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
@@ -237,7 +236,6 @@
 		1C810A2F16EE5EED0030077C /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		1C810A3316EE5EED0030077C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E20971D162F3A61000A2DFD /* main.m */; };
 		1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E209721162F3A61000A2DFD /* AppDelegate.m */; };
-		1C810A3516EE5EED0030077C /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		1C810A3616EE5EED0030077C /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
@@ -638,7 +636,6 @@
 		8EA10D8C1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
 		8EA10D8D1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
 		8EA10D8E1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
-		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EAB0069171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EAB006A171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
@@ -688,6 +685,9 @@
 		91405304174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
 		91405305174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
 		91405306174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
+		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
+		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
+		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
@@ -1023,8 +1023,6 @@
 		8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationTextField@2x.png"; sourceTree = "<group>"; };
 		8EA10D8B1725A9DD00B90571 /* Harpy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Harpy.bundle; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
-		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
-		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
 		8EAB0066171F27E20021DF31 /* SPVideoItemViewCellLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemViewCellLabel.h; sourceTree = "<group>"; };
 		8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemViewCellLabel.m; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -1078,6 +1076,8 @@
 		914052F9174C411600E18A6B /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		91405302174C419400E18A6B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		91405303174C419400E18A6B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
+		9140530D174D055700E18A6B /* NSObject+NullHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NullHelper.m"; sourceTree = "<group>"; };
 		91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContainer.h; sourceTree = "<group>"; };
 		91649ECB1741B1A000A9265B /* DeduplicationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeduplicationUtility.h; sourceTree = "<group>"; };
 		91649ECC1741B1A000A9265B /* DeduplicationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeduplicationUtility.m; sourceTree = "<group>"; };
@@ -1757,10 +1757,10 @@
 				8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */,
 				8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */,
 				8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */,
-				8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */,
-				8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */,
 				8E3DCC8016E8F6F5000AF8A2 /* NSString+HMAC.h */,
 				8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */,
+				9140530C174D055700E18A6B /* NSObject+NullHelper.h */,
+				9140530D174D055700E18A6B /* NSObject+NullHelper.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -2437,7 +2437,6 @@
 				1C81097916EE2CBF0030077C /* SPVideoExtractor.m in Sources */,
 				1C81097D16EE2CBF0030077C /* main.m in Sources */,
 				1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */,
-				1C81097F16EE2CBF0030077C /* NSString+CoreDataNullTest.m in Sources */,
 				1C81098016EE2CBF0030077C /* SPOverlayView.m in Sources */,
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
 				1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
@@ -2527,6 +2526,7 @@
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				914052FB174C411600E18A6B /* DashboardEntry.m in Sources */,
 				91405305174C419400E18A6B /* User.m in Sources */,
+				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2540,7 +2540,6 @@
 				1C810A2F16EE5EED0030077C /* SPVideoExtractor.m in Sources */,
 				1C810A3316EE5EED0030077C /* main.m in Sources */,
 				1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */,
-				1C810A3516EE5EED0030077C /* NSString+CoreDataNullTest.m in Sources */,
 				1C810A3616EE5EED0030077C /* SPOverlayView.m in Sources */,
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
 				1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
@@ -2630,6 +2629,7 @@
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				914052FC174C411600E18A6B /* DashboardEntry.m in Sources */,
 				91405306174C419400E18A6B /* User.m in Sources */,
+				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2643,7 +2643,6 @@
 				8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */,
 				8E20971E162F3A61000A2DFD /* main.m in Sources */,
 				8E209722162F3A61000A2DFD /* AppDelegate.m in Sources */,
-				8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */,
 				8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */,
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
 				8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */,
@@ -2733,6 +2732,7 @@
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				914052FA174C411600E18A6B /* DashboardEntry.m in Sources */,
 				91405304174C419400E18A6B /* User.m in Sources */,
+				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

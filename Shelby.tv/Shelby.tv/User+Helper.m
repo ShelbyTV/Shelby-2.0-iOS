@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
+#import "NSObject+NullHelper.h"
 #import "User+Helper.h"
 
 NSString * const kShelbyCoreDataEntityUser = @"User";
@@ -33,14 +34,14 @@ NSString * const kShelbyCoreDataEntityUser = @"User";
         user = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityUser
                                               inManagedObjectContext:context];
         user.userID = userID;
-        user.userImage = OBJECT_OR_NIL(dict[@"user_image"]);
-        user.userType = OBJECT_OR_NIL(dict[@"user_type"]);
+        user.userImage = [dict[@"user_image"] nilOrSelfWhenNotNull];
+        user.userType = [dict[@"user_type"] nilOrSelfWhenNotNull];
         user.publicRollID = dict[@"public_roll_id"];
         user.likesRollID = dict[@"watch_later_roll_id"];
     }
     
     user.nickname = dict[@"nickname"];
-    user.name = OBJECT_OR_NIL(dict[@"name"]);
+    user.name = [dict[@"name"] nilOrSelfWhenNotNull];
     user.token = dict[@"authentication_token"];
     
     // Resetting all auths:
@@ -57,14 +58,14 @@ NSString * const kShelbyCoreDataEntityUser = @"User";
         for (NSDictionary *authDict in authentications) {
             NSString *provider = authDict[@"provider"];
             if([provider isEqualToString:@"twitter"]){
-                user.twitterNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
-                user.twitterUID = OBJECT_OR_NIL(authDict[@"uid"]);
+                user.twitterNickname = [authDict[@"nickname"] nilOrSelfWhenNotNull];
+                user.twitterUID = [authDict[@"uid"] nilOrSelfWhenNotNull];
             } else if([provider isEqualToString:@"facebook"]){
-                user.facebookNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
-                user.facebookUID = OBJECT_OR_NIL(authDict[@"uid"]);
+                user.facebookNickname = [authDict[@"nickname"] nilOrSelfWhenNotNull];
+                user.facebookUID = [authDict[@"uid"] nilOrSelfWhenNotNull];
             } else if([provider isEqualToString:@"tumblr"]){
-                user.tumblrNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
-                user.tumblrUID = OBJECT_OR_NIL(authDict[@"uid"]);
+                user.tumblrNickname = [authDict[@"nickname"] nilOrSelfWhenNotNull];
+                user.tumblrUID = [authDict[@"uid"] nilOrSelfWhenNotNull];
             }
         }
     }

@@ -32,7 +32,6 @@
 
     // Cateogories
     #import "NSDate+DateFromBSONObjectID.h"
-    #import "NSString+CoreDataNullTest.h"
     #import "NSString+HMAC.h"
     #import "UIColor+ColorWithHexAndAlpha.h"
     #import "UIScreen+Resolution.h"
@@ -48,9 +47,6 @@
     //djs removing these two are (probably) just the beginning...
     //#import "CoreDataUtility.h"
     //#import "ShelbyAPIClient.h"
-
-    //djs TODO: implement this properly
-    #define OBJECT_OR_NIL(object) ((id)object == [NSNull null] ? nil : object)
 
 #endif
 
