@@ -17,7 +17,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <QuartzCore/QuartzCore.h>
 #import "ShelbyAlertView.h"
-#import "SPShareController.h"
 #import "SPChannelPeekView.h"
 #import "SPOverlayView.h"
 #import "SPTutorialView.h"
@@ -49,6 +48,7 @@
 @property (nonatomic, strong) NSTimer *tutorialTimer;
 @property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
 @property (atomic, weak) SPVideoPlayer *currentPlayer;
+@property (nonatomic, assign) BOOL shouldResumePlaybackAfterShare;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
 @property (nonatomic, strong) SPShareController *shareController;
@@ -507,8 +507,19 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
                                                                  fromRect:shareButton.frame];
+    self.shareController.delegate = self;
+    self.shouldResumePlaybackAfterShare = self.currentPlayer.isPlaying;
+    if (self.shouldResumePlaybackAfterShare) {
+        [self.currentPlayer pause];
+    }
     [self.shareController share];
-    
+}
+
+- (void)shareDidFinish:(BOOL)complete
+{
+    if (self.shouldResumePlaybackAfterShare) {
+        [self.currentPlayer play];
+    }
 }
 
 - (IBAction)likeAction:(id)sender

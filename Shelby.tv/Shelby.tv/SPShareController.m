@@ -255,6 +255,7 @@
                                       withLabel:[frame creatorsInitialCommentWithFallback:YES]];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        [self.delegate shareDidFinish:completed];
         if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
             [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
         }
@@ -263,13 +264,11 @@
     if ( ![self sharePopOverController] ) {
         self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
         [self.sharePopOverController setDelegate:self];
-        //djs
         [self.sharePopOverController presentPopoverFromRect:self.fromFrame
                                                      inView:self.videoPlayer.view
                                    permittedArrowDirections:UIPopoverArrowDirectionDown
                                                    animated:YES];
     }
-
 }
 
 - (void)roll

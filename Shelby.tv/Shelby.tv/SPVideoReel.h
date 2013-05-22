@@ -10,6 +10,7 @@
 #import "AuthorizationViewController.h"
 #import "ShelbyViewController.h"
 #import "SPOverlayView.h"
+#import "SPShareController.h"
 #import "SPVideoPlayer.h"
 
 typedef NS_ENUM(NSUInteger, SPTutorialMode)
@@ -35,7 +36,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 
 @class SPVideoPlayer, SPOverlayView;
 
-@interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPOverlayViewDelegate>
+@interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPOverlayViewDelegate, SPShareControllerDelegate>
 
 @property (weak, nonatomic) id <SPVideoReelDelegate> delegate;
 @property (nonatomic, strong) DisplayChannel *channel;
