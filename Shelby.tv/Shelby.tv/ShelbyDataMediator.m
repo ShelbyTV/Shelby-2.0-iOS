@@ -13,6 +13,7 @@
 #import "DashboardEntry+Helper.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
+#import "Roll+Helper.h"
 #import "ShelbyAPIClient.h"
 #import "TwitterHandler.h"
 #import "User+Helper.h"
@@ -164,6 +165,44 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 }
 
+
+- (void)fetchMyRollForUser
+{
+    User *user = [self fetchAuthenticatedUserOnMainThreadContext];
+    if (user) {
+        [ShelbyAPIClient fetchRollForUser:user.publicRollID withBlock:^(id JSON, NSError *error) {
+            if (JSON) {
+                NSMutableDictionary *rollDictionary = [NSMutableDictionary dictionaryWithDictionary:JSON];
+                rollDictionary[@"user_id"] = [user publicRollID];
+                rollDictionary[@"display_channel_color"] = @"222";
+                rollDictionary[@"display_description"] = @"My Roll";
+                rollDictionary[@"display_title"] = @"My Roll";
+                
+                NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
+                DisplayChannel *myRoll = [DisplayChannel userChannelForDashboardDictionary:rollDictionary withID:[user userID] withOrder:1 inContext:privateContext];
+                
+                NSArray *frames = [self framesForJSON:rollDictionary withRoll:myRoll.roll inContext:privateContext];
+
+                NSError *error;
+                [myRoll.managedObjectContext save:&error];
+                STVAssert(!error, @"context save failed, in fetch my roll for user");
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // 2) load those channels on main thread context
+                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                    
+                    DisplayChannel *mainThreadDisplayChannel =  (DisplayChannel *)[[self mainThreadContext] objectWithID:myRoll.objectID];
+                    
+                    NSMutableArray *mainThreadFrames = [self mainThreadFrames:frames];
+                    
+                    [self.delegate fetchUserChannelDidCompleteWithChannel:mainThreadDisplayChannel with:mainThreadFrames fromCache:NO];
+                });
+            } else if (error) {
+                
+            }
+        }];
+    }
+}
 
 //when login is enabled, this needs to be re-thought...
 - (BOOL)toggleLikeForFrame:(Frame *)frame
@@ -459,9 +498,19 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 
     return mainThreadDashboardEntries;
-
 }
 
+- (NSMutableArray *)mainThreadFrames:(NSArray *)backgroundThreadFrames
+{
+    NSMutableArray *mainThreadFrames = [NSMutableArray arrayWithCapacity:[backgroundThreadFrames count]];
+    for (Frame *entry in backgroundThreadFrames) {
+        Frame *mainThreadEntry = (Frame *)[[self mainThreadContext] objectWithID:entry.objectID];
+        [mainThreadFrames addObject:mainThreadEntry];
+    }
+    
+    return mainThreadFrames;
+    
+}
 
 //djs TODO: make constant strings externs
 //returns nil on error, otherwise array of DisplayChannel objects
@@ -517,6 +566,44 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     STVAssert(!error, @"context save failed, put your DEBUG hat on...");
     return resultDisplayChannels;
 }
+
+
+- (NSArray *)framesForJSON:(id)JSON withRoll:(Roll *)roll inContext:(NSManagedObjectContext *)context
+{
+    if(![JSON isKindOfClass:[NSDictionary class]]){
+        return nil;
+    }
+    
+    NSDictionary *jsonDict = (NSDictionary *)JSON;
+    NSDictionary *rollDictArray = jsonDict[@"result"];
+    
+    if(![rollDictArray isKindOfClass:[NSDictionary class]]){
+        return nil;
+    }
+    
+    NSArray *frames = rollDictArray[@"frames"];
+    if (![frames isKindOfClass:[NSArray class]]){
+        return nil;
+    }
+
+    NSMutableArray *resultDashboardEntries = [@[] mutableCopy];
+    
+    for (NSDictionary *frameDict in frames) {
+        if(![frameDict isKindOfClass:[NSDictionary class]]){
+            continue;
+        }
+        
+        Frame *entry = [Frame frameForDictionary:frameDict inContext:context];
+ 
+        [resultDashboardEntries addObject:entry];
+    }
+    
+    NSError *error;
+    [context save:&error];
+    STVAssert(!error, @"context save failed, in framesForJSON...");
+    return resultDashboardEntries;
+}
+
 
 - (NSArray *)dashboardEntriesForJSON:(id)JSON withDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
 {

@@ -69,6 +69,8 @@
 - (void)fetchUserChannels
 {
     [[ShelbyDataMediator sharedInstance] fetchStreamForUser];
+    [[ShelbyDataMediator sharedInstance] fetchMyRollForUser];
+
 }
 
 - (void)populateChannels
@@ -252,8 +254,22 @@
     if (!self.userChannels) {
         _userChannels = [@[] mutableCopy];
     }
-
-    [self.userChannels addObject:myStreamChannel];
+    
+    NSInteger i = 0;
+    for (DisplayChannel *userChannel in self.userChannels) {
+        if (userChannel.dashboard && myStreamChannel.dashboard && [myStreamChannel.dashboard.dashboardID isEqualToString:userChannel.dashboard.dashboardID]) {
+            break;
+        } else if (userChannel.roll && myStreamChannel.roll && [userChannel.roll.rollID isEqualToString:myStreamChannel.roll.rollID]) {
+            break;
+        }
+        i++;
+    }
+    
+    if (i < [self.userChannels count]) {
+        self.userChannels[i] = myStreamChannel;
+    } else {
+        [self.userChannels addObject:myStreamChannel];
+    }
     
     self.homeVC.channels = [self constructAllChannelsArray];
     
@@ -278,7 +294,7 @@
 #pragma mark - Helper Methods
 - (NSInteger)nextChannelForDirection:(BOOL)up
 {
-    NSArray *channels = self.homeVC.channels;
+    NSArray *channels = [self constructAllChannelsArray];
     NSUInteger numberOfChannels = [channels count];
     // KP KP: TODO: deal with the case that the channel not found
     NSInteger currentChannelIndex = [channels indexOfObject:self.currentChannel];
@@ -390,7 +406,11 @@
 
     NSInteger nextChannel = [self nextChannelForDirection:up];
     
-    return self.homeVC.channels[nextChannel];
+    if (nextChannel < [self.userChannels count]) {
+        return self.userChannels[nextChannel];
+    } else {
+        return self.globalChannels[nextChannel - [self.userChannels count]];
+    }
 }
 
 - (void)videoDidFinishPlaying

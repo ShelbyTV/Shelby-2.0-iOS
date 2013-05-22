@@ -17,6 +17,9 @@
 		1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
+		1C105BC6174C26BC00D9F90B /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C105BC5174C26BC00D9F90B /* Roll.m */; };
+		1C105BC7174C26BC00D9F90B /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C105BC5174C26BC00D9F90B /* Roll.m */; };
+		1C105BC8174C26BC00D9F90B /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C105BC5174C26BC00D9F90B /* Roll.m */; };
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
@@ -727,9 +730,6 @@
 		91D03F66173319D1008131D2 /* Video+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F65173319D0008131D2 /* Video+Helper.m */; };
 		91D03F67173319D1008131D2 /* Video+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F65173319D0008131D2 /* Video+Helper.m */; };
 		91D03F68173319D1008131D2 /* Video+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F65173319D0008131D2 /* Video+Helper.m */; };
-		91D03F6B17331CBB008131D2 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F6A17331CBB008131D2 /* Roll.m */; };
-		91D03F6C17331CBB008131D2 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F6A17331CBB008131D2 /* Roll.m */; };
-		91D03F6D17331CBB008131D2 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F6A17331CBB008131D2 /* Roll.m */; };
 		91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F6F1733201A008131D2 /* Conversation+Helper.m */; };
 		91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F6F1733201A008131D2 /* Conversation+Helper.m */; };
 		91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F6F1733201A008131D2 /* Conversation+Helper.m */; };
@@ -760,6 +760,8 @@
 		1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyViewController.m; sourceTree = "<group>"; };
 		1C06C5C91743E5D9004E8E20 /* ShelbyBrowseTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrowseTutorialView.h; sourceTree = "<group>"; };
 		1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrowseTutorialView.m; sourceTree = "<group>"; };
+		1C105BC4174C26BC00D9F90B /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
+		1C105BC5174C26BC00D9F90B /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
 		1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemViewCell.xib; sourceTree = "<group>"; };
@@ -1107,8 +1109,6 @@
 		91D03F5B173314A0008131D2 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		91D03F64173319D0008131D2 /* Video+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Video+Helper.h"; sourceTree = "<group>"; };
 		91D03F65173319D0008131D2 /* Video+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Video+Helper.m"; sourceTree = "<group>"; };
-		91D03F6917331CBB008131D2 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
-		91D03F6A17331CBB008131D2 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		91D03F6E1733201A008131D2 /* Conversation+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Conversation+Helper.h"; sourceTree = "<group>"; };
 		91D03F6F1733201A008131D2 /* Conversation+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Helper.m"; sourceTree = "<group>"; };
 		91D03F73173321AC008131D2 /* Messages+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Messages+Helper.h"; sourceTree = "<group>"; };
@@ -1120,7 +1120,7 @@
 		91F0CC031730154E008B5B34 /* User+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Helper.h"; sourceTree = "<group>"; };
 		91F0CC041730154E008B5B34 /* User+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Helper.m"; sourceTree = "<group>"; };
 		91FCC69F174A8F14004255F5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1365,12 +1365,12 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				1C105BC4174C26BC00D9F90B /* Roll.h */,
+				1C105BC5174C26BC00D9F90B /* Roll.m */,
 				91649ED117426FDB00A9265B /* Frame.h */,
 				91649ED217426FDB00A9265B /* Frame.m */,
 				91649ED617426FDC00A9265B /* DashboardEntry.h */,
 				91649ED717426FDD00A9265B /* DashboardEntry.m */,
-				91D03F6917331CBB008131D2 /* Roll.h */,
-				91D03F6A17331CBB008131D2 /* Roll.m */,
 				91D03F3717331494008131D2 /* DisplayChannel.h */,
 				91D03F3817331495008131D2 /* DisplayChannel.m */,
 				91D03F5A173314A0008131D2 /* Video.h */,
@@ -2517,7 +2517,6 @@
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F5D173314A0008131D2 /* Video.m in Sources */,
 				91D03F67173319D1008131D2 /* Video+Helper.m in Sources */,
-				91D03F6C17331CBB008131D2 /* Roll.m in Sources */,
 				91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F76173321AD008131D2 /* Messages+Helper.m in Sources */,
 				1CA631D917386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
@@ -2528,6 +2527,7 @@
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
+				1C105BC7174C26BC00D9F90B /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2620,7 +2620,6 @@
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F5E173314A0008131D2 /* Video.m in Sources */,
 				91D03F68173319D1008131D2 /* Video+Helper.m in Sources */,
-				91D03F6D17331CBB008131D2 /* Roll.m in Sources */,
 				91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F77173321AD008131D2 /* Messages+Helper.m in Sources */,
 				1CA631DA17386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
@@ -2631,6 +2630,7 @@
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
+				1C105BC8174C26BC00D9F90B /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2723,7 +2723,6 @@
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F5C173314A0008131D2 /* Video.m in Sources */,
 				91D03F66173319D1008131D2 /* Video+Helper.m in Sources */,
-				91D03F6B17331CBB008131D2 /* Roll.m in Sources */,
 				91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F75173321AD008131D2 /* Messages+Helper.m in Sources */,
 				1CA631D817386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
@@ -2734,6 +2733,7 @@
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
+				1C105BC6174C26BC00D9F90B /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

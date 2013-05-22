@@ -20,7 +20,10 @@ typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
 /// Stream
 + (void)getStream;
 + (void)getMoreFramesInStream:(NSString *)skipParam;
+
+// User
 + (void)fetchStreamForUserWithAuthToken:(NSString *)authToken andBlock:(shelby_api_request_complete_block_t)completionBlock;
++ (void)fetchRollForUser:(NSString *)rollID withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 /// Video
 + (void)markUnplayableVideo:(NSString *)videoID;
