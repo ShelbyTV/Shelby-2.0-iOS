@@ -682,15 +682,18 @@
 		9109330C1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
 		9109330D1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
 		9109330E1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
+		914052FA174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
+		914052FB174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
+		914052FC174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
+		91405304174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
+		91405305174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
+		91405306174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
 		91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ED317426FDC00A9265B /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED217426FDB00A9265B /* Frame.m */; };
 		91649ED417426FDC00A9265B /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED217426FDB00A9265B /* Frame.m */; };
 		91649ED517426FDC00A9265B /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED217426FDB00A9265B /* Frame.m */; };
-		91649ED817426FDD00A9265B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED717426FDD00A9265B /* DashboardEntry.m */; };
-		91649ED917426FDD00A9265B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED717426FDD00A9265B /* DashboardEntry.m */; };
-		91649EDA17426FDD00A9265B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED717426FDD00A9265B /* DashboardEntry.m */; };
 		91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
@@ -709,9 +712,6 @@
 		91D03F3917331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
 		91D03F3A17331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
 		91D03F3B17331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
-		91D03F3E17331498008131D2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3D17331497008131D2 /* User.m */; };
-		91D03F3F17331498008131D2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3D17331497008131D2 /* User.m */; };
-		91D03F4017331498008131D2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3D17331497008131D2 /* User.m */; };
 		91D03F4317331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
 		91D03F4417331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
 		91D03F4517331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
@@ -1074,14 +1074,17 @@
 		910933071743E47F00AC038E /* ShelbyAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlertView.m; sourceTree = "<group>"; };
 		9109330B1743E61B00AC038E /* ShelbyAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyAlertView.xib; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
+		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
+		914052F8174C411600E18A6B /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
+		914052F9174C411600E18A6B /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
+		91405302174C419400E18A6B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		91405303174C419400E18A6B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContainer.h; sourceTree = "<group>"; };
 		91649ECB1741B1A000A9265B /* DeduplicationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeduplicationUtility.h; sourceTree = "<group>"; };
 		91649ECC1741B1A000A9265B /* DeduplicationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeduplicationUtility.m; sourceTree = "<group>"; };
 		91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDuplicateContainer.h; sourceTree = "<group>"; };
 		91649ED117426FDB00A9265B /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		91649ED217426FDB00A9265B /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
-		91649ED617426FDC00A9265B /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
-		91649ED717426FDD00A9265B /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
 		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
 		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -1095,8 +1098,6 @@
 		91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DashboardEntry+Helper.m"; sourceTree = "<group>"; };
 		91D03F3717331494008131D2 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
 		91D03F3817331495008131D2 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
-		91D03F3C17331497008131D2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		91D03F3D17331497008131D2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		91D03F4117331498008131D2 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		91D03F4217331499008131D2 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		91D03F501733149E008131D2 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
@@ -1120,7 +1121,7 @@
 		91F0CC031730154E008B5B34 /* User+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Helper.h"; sourceTree = "<group>"; };
 		91F0CC041730154E008B5B34 /* User+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Helper.m"; sourceTree = "<group>"; };
 		91FCC69F174A8F14004255F5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1365,10 +1366,12 @@
 			isa = PBXGroup;
 			children = (
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				91405302174C419400E18A6B /* User.h */,
+				91405303174C419400E18A6B /* User.m */,
+				914052F8174C411600E18A6B /* DashboardEntry.h */,
+				914052F9174C411600E18A6B /* DashboardEntry.m */,
 				91649ED117426FDB00A9265B /* Frame.h */,
 				91649ED217426FDB00A9265B /* Frame.m */,
-				91649ED617426FDC00A9265B /* DashboardEntry.h */,
-				91649ED717426FDD00A9265B /* DashboardEntry.m */,
 				91D03F6917331CBB008131D2 /* Roll.h */,
 				91D03F6A17331CBB008131D2 /* Roll.m */,
 				91D03F3717331494008131D2 /* DisplayChannel.h */,
@@ -1381,8 +1384,6 @@
 				91D03F511733149E008131D2 /* Messages.m */,
 				91D03F4117331498008131D2 /* Conversation.h */,
 				91D03F4217331499008131D2 /* Conversation.m */,
-				91D03F3C17331497008131D2 /* User.h */,
-				91D03F3D17331497008131D2 /* User.m */,
 				91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */,
 				91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */,
 				91F0CC031730154E008B5B34 /* User+Helper.h */,
@@ -2511,7 +2512,6 @@
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3A17331495008131D2 /* DisplayChannel.m in Sources */,
-				91D03F3F17331498008131D2 /* User.m in Sources */,
 				91D03F4417331499008131D2 /* Conversation.m in Sources */,
 				91D03F531733149F008131D2 /* Messages.m in Sources */,
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
@@ -2523,11 +2523,12 @@
 				1CA631D917386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED417426FDC00A9265B /* Frame.m in Sources */,
-				91649ED917426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
+				914052FB174C411600E18A6B /* DashboardEntry.m in Sources */,
+				91405305174C419400E18A6B /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2614,7 +2615,6 @@
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3B17331495008131D2 /* DisplayChannel.m in Sources */,
-				91D03F4017331498008131D2 /* User.m in Sources */,
 				91D03F4517331499008131D2 /* Conversation.m in Sources */,
 				91D03F541733149F008131D2 /* Messages.m in Sources */,
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
@@ -2626,11 +2626,12 @@
 				1CA631DA17386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED517426FDC00A9265B /* Frame.m in Sources */,
-				91649EDA17426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
+				914052FC174C411600E18A6B /* DashboardEntry.m in Sources */,
+				91405306174C419400E18A6B /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2717,7 +2718,6 @@
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3917331495008131D2 /* DisplayChannel.m in Sources */,
-				91D03F3E17331498008131D2 /* User.m in Sources */,
 				91D03F4317331499008131D2 /* Conversation.m in Sources */,
 				91D03F521733149F008131D2 /* Messages.m in Sources */,
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
@@ -2729,11 +2729,12 @@
 				1CA631D817386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED317426FDC00A9265B /* Frame.m in Sources */,
-				91649ED817426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
+				914052FA174C411600E18A6B /* DashboardEntry.m in Sources */,
+				91405304174C419400E18A6B /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3145,10 +3146,11 @@
 		8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */,
 				91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */,
 				8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */,
 			);
-			currentVersion = 91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */;
+			currentVersion = 914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */;
 			path = Shelby.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -84,8 +84,7 @@
         User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
 //        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
 //        User *user = [dataUtility fetchUser];
-        BOOL connected = user.twitterConnected;
-        [self.rollView.twitterButton setSelected:(connected)];
+        [self.rollView.twitterButton setSelected:(user.isTwitterConnected)];
     }
 }
 
@@ -98,8 +97,8 @@
         User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
         //        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
         //        User *user = [dataUtility fetchUser];
-        self.facebookConnected = [[user facebookConnected] boolValue];
-        self.twitterConnected = [[user twitterConnected] boolValue];
+        self.facebookConnected = user.isFacebookConnected;
+        self.twitterConnected = user.isTwitterConnected;
         
     }
     

@@ -93,4 +93,14 @@
     return [results count] ? results[0] : nil;
 }
 
+- (BOOL)isTwitterConnected
+{
+    return self.twitterNickname != nil;
+}
+
+- (BOOL)isFacebookConnected
+{
+    return self.facebookNickname != nil;
+}
+
 @end
