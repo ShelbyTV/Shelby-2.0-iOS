@@ -107,7 +107,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 {
     @synchronized(self){
         if(!self.startNextExtractionTimer){
-            self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.01
+            self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.10
                                                                              target:self
                                                                            selector:@selector(extractNextVideoFromQueue)
                                                                            userInfo:nil
@@ -332,10 +332,10 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                     self.currentExtractionTimeoutTimer = nil;
 
                     // Get URL to playable video file
-                    #pragma GCC diagnostic push
-                    #pragma GCC diagnostic ignored "-Warc-performSelector-leaks"
+                    #pragma clang diagnostic push
+                    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                     NSString *extractedURL = [value performSelector:pathSelector];
-                    #pragma GCC diagnostic pop
+                    #pragma clang diagnostic pop
 
                     [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
                     extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
