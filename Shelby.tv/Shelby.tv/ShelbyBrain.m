@@ -312,7 +312,7 @@
 }
 
 #pragma mark - SPVideoReelProtocol Methods
-- (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
+- (void)userDidSwitchChannelForDirectionUp:(BOOL)up
 {
     [self.homeVC dismissPlayer];
     NSInteger nextChannel = [self nextChannelForDirection:up];

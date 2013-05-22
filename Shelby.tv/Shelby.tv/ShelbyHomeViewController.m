@@ -66,8 +66,7 @@
 }
 
 
-
-- (void)userLoginFailedWithError:(NSString *)errorMessage;
+- (void)userLoginFailedWithError:(NSString *)errorMessage
 {
     if (self.authorizationVC) {
         [self.authorizationVC userLoginFailedWithError:errorMessage];

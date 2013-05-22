@@ -27,7 +27,7 @@
     return self;
 }
 
-- (void)setupWithChannelDisplay:(DisplayChannel *)displayChannel;
+- (void)setupWithChannelDisplay:(DisplayChannel *)displayChannel
 {
     [self.title setTextAlignment:NSTextAlignmentCenter];
     NSString *color = nil;
