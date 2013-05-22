@@ -8,7 +8,9 @@
 
 #import "SPOverlayView.h"
 #import "AsynchronousFreeloader.h"
+#import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
+#import "User+Helper.h"
 
 #define kShelbySPSlowSpeed 0.5
 #define kShelbySPFastSpeed 0.2

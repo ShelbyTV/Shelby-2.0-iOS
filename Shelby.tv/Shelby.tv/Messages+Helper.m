@@ -8,6 +8,8 @@
 
 #import "Messages+Helper.h"
 
+NSString * const kShelbyCoreDataEntityMessages = @"Messages";
+
 @implementation Messages (Helper)
 
 + (Messages *)messageForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context

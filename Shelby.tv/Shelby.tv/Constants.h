@@ -7,7 +7,6 @@
 //
 
 #import "APIConstants.h"
-#import "CoreDataConstants.h"
 #import "GAIConstants.h"
 #import "Structures.h"
 #import "SPConstants.h"

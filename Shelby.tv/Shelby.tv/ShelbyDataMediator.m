@@ -13,6 +13,7 @@
 #import "DashboardEntry+Helper.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
+#import "Roll+Helper.h"
 #import "ShelbyAPIClient.h"
 #import "TwitterHandler.h"
 #import "User+Helper.h"

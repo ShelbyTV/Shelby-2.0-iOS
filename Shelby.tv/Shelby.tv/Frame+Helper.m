@@ -8,10 +8,13 @@
 
 #import "Frame+Helper.h"
 #import "Conversation+Helper.h"
+#import "Messages+Helper.h"
 #import "Roll+Helper.h"
 #import "ShelbyDataMediator.h"
 #import "User+Helper.h"
 #import "Video+Helper.h"
+
+NSString * const kShelbyCoreDataEntityFrame = @"Frame";
 
 @implementation Frame (Helper)
 

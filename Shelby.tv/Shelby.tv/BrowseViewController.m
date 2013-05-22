@@ -9,6 +9,7 @@
 #import "BrowseViewController.h"
 
 #import "AFNetworking.h"
+#import "DashboardEntry+Helper.h"
 #import "DeduplicationUtility.h"
 #import "DisplayChannel+Helper.h"
 #import "Frame+Helper.h"

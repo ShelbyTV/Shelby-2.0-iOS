@@ -5,6 +5,8 @@
 //  Created by Arthur Ariel Sabintsev on 11/1/12.
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
+
+#import "Frame+Helper.h"
 #import "ShelbyViewController.h"
 
 @class SPVideoPlayer;

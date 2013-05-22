@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Shelby TV. All rights reserved.
 //
 
+#import "Video+Helper.h"
+
 @class SPVideoPlayer;
 
 @interface SPVideoDownloader : NSObject

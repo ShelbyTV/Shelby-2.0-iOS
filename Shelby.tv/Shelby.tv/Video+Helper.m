@@ -8,6 +8,8 @@
 
 #import "Video+Helper.h"
 
+NSString * const kShelbyCoreDataEntityVideo = @"Video";
+
 @implementation Video (Helper)
 
 + (Video *)videoForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context

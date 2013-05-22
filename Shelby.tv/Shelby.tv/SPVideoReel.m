@@ -7,6 +7,7 @@
 //
 
 #import "SPVideoReel.h"
+#import "DashboardEntry+Helper.h"
 #import "DeviceUtilities.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"

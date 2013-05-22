@@ -7,12 +7,10 @@
 //
 
 #import "Roll+Helper.h"
-//djs XXX remove this and add the const
-#import "CoreDataConstants.h"
 #import "Frame+Helper.h"
 #import "ShelbyDataMediator.h"
 
-//NSString * const kShelbyCoreDataEntityRoll = @"Roll";
+NSString * const kShelbyCoreDataEntityRoll = @"Roll";
 
 @implementation Roll (Helper)
 

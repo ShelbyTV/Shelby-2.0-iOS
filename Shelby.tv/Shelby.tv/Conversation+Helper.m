@@ -9,6 +9,8 @@
 #import "Conversation+Helper.h"
 #import "Messages+Helper.h"
 
+NSString * const kShelbyCoreDataEntityConversation = @"Conversation";
+
 @implementation Conversation (Helper)
 
 + (Conversation *)conversationForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context

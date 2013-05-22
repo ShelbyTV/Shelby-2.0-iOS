@@ -8,6 +8,8 @@
 
 #import "User+Helper.h"
 
+NSString * const kShelbyCoreDataEntityUser = @"User";
+
 @implementation User (Helper)
 
 + (User *)userForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context

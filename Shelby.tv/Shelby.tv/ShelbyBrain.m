@@ -8,6 +8,7 @@
 
 #import "ShelbyBrain.h"
 #import "DisplayChannel+Helper.h"
+#import "Roll+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
 #import "ShelbyAlertView.h"

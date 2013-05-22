@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Shelby TV. All rights reserved.
 //
 
+#import "Dashboard+Helper.h"
+#import "Roll+Helper.h"
 #import "SPChannelPeekView.h"
 #import "UIColor+ColorWithHexAndAlpha.h"
 

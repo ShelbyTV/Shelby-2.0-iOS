@@ -7,10 +7,8 @@
 //
 
 #import "Dashboard+Helper.h"
-//djs XXX remove this and add the const
-#import "CoreDataConstants.h"
 
-//NSString * const kShelbyCoreDataEntityDashboard = @"Dashboard";
+NSString * const kShelbyCoreDataEntityDashboard = @"Dashboard";
 
 @implementation Dashboard (Helper)
 

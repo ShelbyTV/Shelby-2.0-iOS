@@ -28,9 +28,9 @@
 /// Offline Methods
 //djs TODO: manage video downloading completely outside of AppDelegate
 //probably have SPVideoDownloader do it all, used by ShelbyAppBrain
-- (void)downloadVideo:(Video *)video;
-- (void)addVideoDownloader:(SPVideoDownloader *)videoDownloader;
-- (void)removeVideoDownloader:(SPVideoDownloader *)videoDownloader;
+//- (void)downloadVideo:(Video *)video;
+//- (void)addVideoDownloader:(SPVideoDownloader *)videoDownloader;
+//- (void)removeVideoDownloader:(SPVideoDownloader *)videoDownloader;
 
 /// Core Data Methods
 //djs if anything, this is a private member of ShelbyDataMediator

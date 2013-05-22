@@ -9,6 +9,8 @@
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 
+NSString * const kShelbyCoreDataEntityDashboardEntry = @"DashboardEntry";
+
 @implementation DashboardEntry (Helper)
 
 @dynamic duplicateOf;
