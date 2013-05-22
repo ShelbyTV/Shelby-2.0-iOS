@@ -36,6 +36,12 @@
                                                 withOrder:(NSInteger)order
                                                 inContext:(NSManagedObjectContext *)context;
 
++ (DisplayChannel *)userChannelForRollDictionary:(NSDictionary *)dictionary
+                                          withID:(NSString *)channelID
+                                       withOrder:(NSInteger)order
+                                       inContext:(NSManagedObjectContext *)context;
+
+
 @property (nonatomic, readonly) BOOL canFetchRemoteEntries;
 
 - (UIColor *)displayColor;

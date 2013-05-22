@@ -36,6 +36,9 @@
 #define kShelbyColorOrange                                  [UIColor colorWithHex:@"F38D00" andAlpha:1.0f]
 #define kShelbyColorTutorialGreen                           [UIColor colorWithHex:@"7DC400" andAlpha:1.0f]
 #define kShelbyColorLikesRedString                          @"D84955"
+#define kShelbyColorMyRollColor                             @"4B0082"
+#define kShelbyColorMyStreamColor                           @"CC6666"
+
 #define kShelbyColorLikesRed                                [UIColor colorWithHex:kShelbyColorLikesRedString andAlpha:1.0f]
 #define kShelbyColorWhite                                   [UIColor colorWithHex:@"f4f4f4" andAlpha:1.0f]
 

@@ -133,26 +133,27 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
             if (JSON) {
                 NSMutableDictionary *rollDictionary = [NSMutableDictionary dictionaryWithDictionary:JSON];
                 rollDictionary[@"user_id"] = [user userID];
-                rollDictionary[@"display_channel_color"] = @"444";
+                rollDictionary[@"display_channel_color"] = kShelbyColorMyStreamColor;
                 rollDictionary[@"display_description"] = @"My Stream";
                 rollDictionary[@"display_title"] = @"My Stream";
                 
                 NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
-                DisplayChannel *myRoll = [DisplayChannel userChannelForDashboardDictionary:rollDictionary withID:[user userID] withOrder:0 inContext:privateContext];
+                DisplayChannel *myStreamChannel = [DisplayChannel userChannelForDashboardDictionary:rollDictionary withID:[user userID] withOrder:0 inContext:privateContext];
                
                 NSArray *dashboardEntries = [self dashboardEntriesForJSON:JSON
-                                                            withDashboard:myRoll.dashboard
+                                                            withDashboard:myStreamChannel.dashboard
                                                                 inContext:privateContext];
 
+                myStreamChannel.dashboard.dashboardEntry = [NSSet setWithArray:dashboardEntries];
                 NSError *error;
-                [myRoll.managedObjectContext save:&error];
+                [myStreamChannel.managedObjectContext save:&error];
                 STVAssert(!error, @"context save failed, in fetch stream for user");
 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     // 2) load those channels on main thread context
                     //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
 
-                    DisplayChannel *mainThreadDisplayChannel =  (DisplayChannel *)[[self mainThreadContext] objectWithID:myRoll.objectID];
+                    DisplayChannel *mainThreadDisplayChannel =  (DisplayChannel *)[[self mainThreadContext] objectWithID:myStreamChannel.objectID];
                     
                     NSMutableArray *mainThreadDashboardEntries = [self mainThreadDashboardEntries:dashboardEntries];
      
@@ -169,39 +170,55 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 - (void)fetchMyRollForUser
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
-    if (user) {
-        [ShelbyAPIClient fetchRollForUser:user.publicRollID withBlock:^(id JSON, NSError *error) {
-            if (JSON) {
-                NSMutableDictionary *rollDictionary = [NSMutableDictionary dictionaryWithDictionary:JSON];
-                rollDictionary[@"user_id"] = [user publicRollID];
-                rollDictionary[@"display_channel_color"] = @"222";
-                rollDictionary[@"display_description"] = @"My Roll";
-                rollDictionary[@"display_title"] = @"My Roll";
-                
-                NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
-                DisplayChannel *myRoll = [DisplayChannel userChannelForDashboardDictionary:rollDictionary withID:[user userID] withOrder:1 inContext:privateContext];
-                
-                NSArray *frames = [self framesForJSON:rollDictionary withRoll:myRoll.roll inContext:privateContext];
-
-                NSError *error;
-                [myRoll.managedObjectContext save:&error];
-                STVAssert(!error, @"context save failed, in fetch my roll for user");
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    // 2) load those channels on main thread context
-                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                    
-                    DisplayChannel *mainThreadDisplayChannel =  (DisplayChannel *)[[self mainThreadContext] objectWithID:myRoll.objectID];
-                    
-                    NSMutableArray *mainThreadFrames = [self mainThreadFrames:frames];
-                    
-                    [self.delegate fetchUserChannelDidCompleteWithChannel:mainThreadDisplayChannel with:mainThreadFrames fromCache:NO];
-                });
-            } else if (error) {
-                
-            }
-        }];
+    if (user && user.publicRollID) {
+        [self fetchUserRollWithID:user.publicRollID displayColor:kShelbyColorMyRollColor andDisplayTitle:@"My Roll"];
     }
+}
+
+
+- (void)fetchLikesForUser
+{
+    User *user = [self fetchAuthenticatedUserOnMainThreadContext];
+    if (user && user.likesRollID) {
+        [self fetchUserRollWithID:user.likesRollID displayColor:kShelbyColorLikesRedString andDisplayTitle:@"My Likes"];
+    }
+}
+
+
+- (void)fetchUserRollWithID:(NSString *)rollID displayColor:(NSString *)displayColor andDisplayTitle:(NSString *)displayTitle
+{
+    [ShelbyAPIClient fetchRollForUser:rollID withBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            NSMutableDictionary *rollDictionary = [NSMutableDictionary dictionaryWithDictionary:JSON];
+            rollDictionary[@"user_id"] = rollID;
+            rollDictionary[@"display_channel_color"] = displayColor;
+            rollDictionary[@"display_description"] = displayTitle;
+            rollDictionary[@"display_title"] = displayTitle;
+            
+            NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
+            DisplayChannel *myRoll = [DisplayChannel userChannelForRollDictionary:rollDictionary withID:rollID withOrder:1 inContext:privateContext];
+            
+            NSArray *frames = [self framesForJSON:rollDictionary withRoll:myRoll.roll inContext:privateContext];
+            
+            myRoll.roll.frame = [NSSet setWithArray:frames];
+            NSError *error;
+            [myRoll.managedObjectContext save:&error];
+            STVAssert(!error, @"context save failed, in fetch my roll for user");
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // 2) load those channels on main thread context
+                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                
+                DisplayChannel *mainThreadDisplayChannel =  (DisplayChannel *)[[self mainThreadContext] objectWithID:myRoll.objectID];
+                
+                NSMutableArray *mainThreadFrames = [self mainThreadFrames:frames];
+                
+                [self.delegate fetchUserChannelDidCompleteWithChannel:mainThreadDisplayChannel with:mainThreadFrames fromCache:NO];
+            });
+        } else if (error) {
+            
+        }
+    }];
 }
 
 //when login is enabled, this needs to be re-thought...

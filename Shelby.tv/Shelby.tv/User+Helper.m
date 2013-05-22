@@ -33,10 +33,10 @@
         user.userID = userID;
         user.userImage = OBJECT_OR_NIL(dict[@"user_image"]);
         user.userType = OBJECT_OR_NIL(dict[@"user_type"]);
-        user.publicRollID = dict[@"personal_roll_id"];
-        user.likesRollID = dict[@"watch_later_roll_id"];
     }
     
+    user.publicRollID = dict[@"personal_roll_id"];
+    user.likesRollID = dict[@"watch_later_roll_id"];
     user.nickname = dict[@"nickname"];
     user.name = OBJECT_OR_NIL(dict[@"name"]);
     user.token = dict[@"authentication_token"];

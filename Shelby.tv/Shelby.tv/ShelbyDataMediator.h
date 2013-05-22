@@ -52,6 +52,7 @@ extern NSString * const kShelbyOfflineLikesID;
 // User
 - (void)fetchStreamForUser;
 - (void)fetchMyRollForUser;
+- (void)fetchLikesForUser;
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
 -(void)logoutWithUserChannels:(NSArray *)userChannels;

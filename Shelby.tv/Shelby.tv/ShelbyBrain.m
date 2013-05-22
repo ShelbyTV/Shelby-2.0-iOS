@@ -70,7 +70,7 @@
 {
     [[ShelbyDataMediator sharedInstance] fetchStreamForUser];
     [[ShelbyDataMediator sharedInstance] fetchMyRollForUser];
-
+    [[ShelbyDataMediator sharedInstance] fetchLikesForUser];
 }
 
 - (void)populateChannels
@@ -294,7 +294,7 @@
 #pragma mark - Helper Methods
 - (NSInteger)nextChannelForDirection:(BOOL)up
 {
-    NSArray *channels = [self constructAllChannelsArray];
+    NSArray *channels = self.homeVC.channels;
     NSUInteger numberOfChannels = [channels count];
     // KP KP: TODO: deal with the case that the channel not found
     NSInteger currentChannelIndex = [channels indexOfObject:self.currentChannel];
@@ -313,8 +313,9 @@
 //only launches the channel if it has content and the index into that content is valid
 - (BOOL)launchChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
+    self.currentChannel = channel;
+
     if([channel hasEntityAtIndex:index]){
-        self.currentChannel = channel;
         [self.homeVC launchPlayerForChannel:channel atIndex:index];
         return YES;
     } else {
@@ -373,7 +374,7 @@
 }
 
 #pragma mark - SPVideoReelProtocol Methods
-- (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
+- (void)userDidSwitchChannelForDirectionUp:(BOOL)up
 {
     [self.homeVC dismissPlayer];
     NSInteger nextChannel = [self nextChannelForDirection:up];
