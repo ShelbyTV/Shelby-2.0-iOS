@@ -7,6 +7,7 @@
 //
 
 #import "SPVideoReel.h"
+
 #import "DashboardEntry+Helper.h"
 #import "DeviceUtilities.h"
 #import "FacebookHandler.h"
@@ -21,6 +22,7 @@
 #import "SPVideoExtractor.h"
 #import "TwitterHandler.h"
 #import "TwitterHandler.h"
+#import "UIScreen+Resolution.h"
 
 
 #define kShelbySPSlowSpeed 0.2

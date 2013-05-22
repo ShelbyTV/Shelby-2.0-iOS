@@ -10,6 +10,8 @@
 
 #import <HockeySDK/HockeySDK.h>
 #import "FacebookHandler.h"
+#import "GAI.h"
+#import "Harpy.h"
 #import "ShelbyBrain.h"
 
 #ifdef SHELBY_ENTERPRISE

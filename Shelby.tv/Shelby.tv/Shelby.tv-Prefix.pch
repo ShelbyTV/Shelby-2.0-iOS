@@ -6,7 +6,7 @@
 
 #ifdef __OBJC__
 
-    // Apple Frameworks
+    // Apple's Crap
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <AVFoundation/AVFoundation.h>
@@ -19,34 +19,8 @@
     #import <Accounts/Accounts.h>
     #import <Social/Social.h>
 
-    // Analytics
-    #import "GAI.h"
-
-    // Third Party Libraries
-    #import "Harpy.h"
-    #import "Panhandler.h"
-    #import "OAuthConsumer.h"
-
-    // Constants
+    // Our Shit
     #import "Constants.h"
-
-    // Cateogories
-    #import "NSDate+DateFromBSONObjectID.h"
-    #import "NSString+HMAC.h"
-    #import "UIColor+ColorWithHexAndAlpha.h"
-    #import "UIScreen+Resolution.h"
-    
-    // Models
-    #import "AppDelegate.h"
-
-    // Views
-    #import "TopAlignedLabel.h"
-    #import "BigButton.h"
-
-    // Controllers
-    //djs removing these two are (probably) just the beginning...
-    //#import "CoreDataUtility.h"
-    //#import "ShelbyAPIClient.h"
 
 #endif
 

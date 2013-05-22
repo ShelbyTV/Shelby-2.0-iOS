@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyBrowseTutorialView.h"
+
 @interface ShelbyBrowseTutorialView()
 @property (nonatomic, weak) IBOutlet UILabel *title;
 @property (nonatomic, weak) IBOutlet UILabel *message;

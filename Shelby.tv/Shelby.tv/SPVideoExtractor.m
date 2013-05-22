@@ -7,6 +7,8 @@
 //
 
 #import "SPVideoExtractor.h"
+
+#import "AppDelegate.h"
 #import "Video.h"
 
 @interface SPVideoExtractor () <UIWebViewDelegate>

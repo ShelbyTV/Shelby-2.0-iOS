@@ -8,6 +8,8 @@
 
 #import "ShelbyViewController.h"
 
+#import "GAI.h"
+
 NSString * const kAnalyticsCategoryBrowse                            = @"Browse Metrics";
 NSString * const kAnalyticsBrowseActionLaunchPlaylistSingleTap       = @"Launch player by single tap";
 NSString * const kAnalyticsBrowseActionLaunchPlaylistVerticalSwipe   = @"Launch player by vertical swipe";
