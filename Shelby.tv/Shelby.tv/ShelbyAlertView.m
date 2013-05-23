@@ -8,6 +8,8 @@
 
 #import "ShelbyAlertView.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @interface ShelbyAlertView ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;

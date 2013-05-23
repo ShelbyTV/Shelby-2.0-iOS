@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
-#import "ShelbyAPIClient.h"
-#import "LoginView.h"
 #import "AFNetworking.h"
+#import "LoginView.h"
+#import "ShelbyAPIClient.h"
+#import "User+Helper.h"
 
 @implementation ShelbyAPIClient
 

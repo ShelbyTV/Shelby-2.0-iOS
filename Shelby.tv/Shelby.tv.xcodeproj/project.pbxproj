@@ -17,9 +17,6 @@
 		1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
-		1C105BC6174C26BC00D9F90B /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C105BC5174C26BC00D9F90B /* Roll.m */; };
-		1C105BC7174C26BC00D9F90B /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C105BC5174C26BC00D9F90B /* Roll.m */; };
-		1C105BC8174C26BC00D9F90B /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C105BC5174C26BC00D9F90B /* Roll.m */; };
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
@@ -130,7 +127,6 @@
 		1C81097916EE2CBF0030077C /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		1C81097D16EE2CBF0030077C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E20971D162F3A61000A2DFD /* main.m */; };
 		1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E209721162F3A61000A2DFD /* AppDelegate.m */; };
-		1C81097F16EE2CBF0030077C /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		1C81098016EE2CBF0030077C /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
@@ -240,7 +236,6 @@
 		1C810A2F16EE5EED0030077C /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		1C810A3316EE5EED0030077C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E20971D162F3A61000A2DFD /* main.m */; };
 		1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E209721162F3A61000A2DFD /* AppDelegate.m */; };
-		1C810A3516EE5EED0030077C /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		1C810A3616EE5EED0030077C /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
@@ -641,7 +636,6 @@
 		8EA10D8C1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
 		8EA10D8D1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
 		8EA10D8E1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
-		8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */; };
 		8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EAB0069171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EAB006A171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
@@ -685,15 +679,24 @@
 		9109330C1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
 		9109330D1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
 		9109330E1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
+		914052FA174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
+		914052FB174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
+		914052FC174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
+		91405304174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
+		91405305174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
+		91405306174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
+		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
+		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
+		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
+		91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
+		91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
+		91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
 		91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ED317426FDC00A9265B /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED217426FDB00A9265B /* Frame.m */; };
 		91649ED417426FDC00A9265B /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED217426FDB00A9265B /* Frame.m */; };
 		91649ED517426FDC00A9265B /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED217426FDB00A9265B /* Frame.m */; };
-		91649ED817426FDD00A9265B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED717426FDD00A9265B /* DashboardEntry.m */; };
-		91649ED917426FDD00A9265B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED717426FDD00A9265B /* DashboardEntry.m */; };
-		91649EDA17426FDD00A9265B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ED717426FDD00A9265B /* DashboardEntry.m */; };
 		91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
@@ -712,9 +715,6 @@
 		91D03F3917331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
 		91D03F3A17331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
 		91D03F3B17331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
-		91D03F3E17331498008131D2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3D17331497008131D2 /* User.m */; };
-		91D03F3F17331498008131D2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3D17331497008131D2 /* User.m */; };
-		91D03F4017331498008131D2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3D17331497008131D2 /* User.m */; };
 		91D03F4317331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
 		91D03F4417331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
 		91D03F4517331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
@@ -736,6 +736,9 @@
 		91D03F75173321AD008131D2 /* Messages+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F74173321AC008131D2 /* Messages+Helper.m */; };
 		91D03F76173321AD008131D2 /* Messages+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F74173321AC008131D2 /* Messages+Helper.m */; };
 		91D03F77173321AD008131D2 /* Messages+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F74173321AC008131D2 /* Messages+Helper.m */; };
+		91E5D463174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
+		91E5D464174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
+		91E5D465174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
 		91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
@@ -760,8 +763,6 @@
 		1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyViewController.m; sourceTree = "<group>"; };
 		1C06C5C91743E5D9004E8E20 /* ShelbyBrowseTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrowseTutorialView.h; sourceTree = "<group>"; };
 		1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrowseTutorialView.m; sourceTree = "<group>"; };
-		1C105BC4174C26BC00D9F90B /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
-		1C105BC5174C26BC00D9F90B /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
 		1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemViewCell.xib; sourceTree = "<group>"; };
@@ -1025,9 +1026,6 @@
 		8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationTextField@2x.png"; sourceTree = "<group>"; };
 		8EA10D8B1725A9DD00B90571 /* Harpy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Harpy.bundle; sourceTree = "<group>"; };
 		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
-		8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataConstants.h; sourceTree = "<group>"; };
-		8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CoreDataNullTest.h"; sourceTree = "<group>"; };
-		8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CoreDataNullTest.m"; sourceTree = "<group>"; };
 		8EAB0066171F27E20021DF31 /* SPVideoItemViewCellLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemViewCellLabel.h; sourceTree = "<group>"; };
 		8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemViewCellLabel.m; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -1076,14 +1074,21 @@
 		910933071743E47F00AC038E /* ShelbyAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlertView.m; sourceTree = "<group>"; };
 		9109330B1743E61B00AC038E /* ShelbyAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyAlertView.xib; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
+		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
+		914052F8174C411600E18A6B /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
+		914052F9174C411600E18A6B /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
+		91405302174C419400E18A6B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		91405303174C419400E18A6B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
+		9140530D174D055700E18A6B /* NSObject+NullHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NullHelper.m"; sourceTree = "<group>"; };
+		91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Helper.h"; sourceTree = "<group>"; };
+		91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Helper.m"; sourceTree = "<group>"; };
 		91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContainer.h; sourceTree = "<group>"; };
 		91649ECB1741B1A000A9265B /* DeduplicationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeduplicationUtility.h; sourceTree = "<group>"; };
 		91649ECC1741B1A000A9265B /* DeduplicationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeduplicationUtility.m; sourceTree = "<group>"; };
 		91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDuplicateContainer.h; sourceTree = "<group>"; };
 		91649ED117426FDB00A9265B /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		91649ED217426FDB00A9265B /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
-		91649ED617426FDC00A9265B /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
-		91649ED717426FDD00A9265B /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
 		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
 		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -1097,8 +1102,6 @@
 		91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DashboardEntry+Helper.m"; sourceTree = "<group>"; };
 		91D03F3717331494008131D2 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
 		91D03F3817331495008131D2 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
-		91D03F3C17331497008131D2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		91D03F3D17331497008131D2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		91D03F4117331498008131D2 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		91D03F4217331499008131D2 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		91D03F501733149E008131D2 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
@@ -1113,6 +1116,8 @@
 		91D03F6F1733201A008131D2 /* Conversation+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Helper.m"; sourceTree = "<group>"; };
 		91D03F73173321AC008131D2 /* Messages+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Messages+Helper.h"; sourceTree = "<group>"; };
 		91D03F74173321AC008131D2 /* Messages+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Messages+Helper.m"; sourceTree = "<group>"; };
+		91E5D461174E938100AD3746 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
+		91E5D462174E938100AD3746 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
 		91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Frame+Helper.h"; sourceTree = "<group>"; };
 		91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Frame+Helper.m"; sourceTree = "<group>"; };
 		91F0CBFE172EEF96008B5B34 /* ShelbyDataMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDataMediator.h; sourceTree = "<group>"; };
@@ -1364,13 +1369,15 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				91E5D461174E938100AD3746 /* Roll.h */,
+				91E5D462174E938100AD3746 /* Roll.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
-				1C105BC4174C26BC00D9F90B /* Roll.h */,
-				1C105BC5174C26BC00D9F90B /* Roll.m */,
+				91405302174C419400E18A6B /* User.h */,
+				91405303174C419400E18A6B /* User.m */,
+				914052F8174C411600E18A6B /* DashboardEntry.h */,
+				914052F9174C411600E18A6B /* DashboardEntry.m */,
 				91649ED117426FDB00A9265B /* Frame.h */,
 				91649ED217426FDB00A9265B /* Frame.m */,
-				91649ED617426FDC00A9265B /* DashboardEntry.h */,
-				91649ED717426FDD00A9265B /* DashboardEntry.m */,
 				91D03F3717331494008131D2 /* DisplayChannel.h */,
 				91D03F3817331495008131D2 /* DisplayChannel.m */,
 				91D03F5A173314A0008131D2 /* Video.h */,
@@ -1381,8 +1388,6 @@
 				91D03F511733149E008131D2 /* Messages.m */,
 				91D03F4117331498008131D2 /* Conversation.h */,
 				91D03F4217331499008131D2 /* Conversation.m */,
-				91D03F3C17331497008131D2 /* User.h */,
-				91D03F3D17331497008131D2 /* User.m */,
 				91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */,
 				91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */,
 				91F0CC031730154E008B5B34 /* User+Helper.h */,
@@ -1404,6 +1409,8 @@
 				9135400E173937BB00093CA7 /* ShelbyModel.h */,
 				91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */,
 				91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */,
+				91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */,
+				91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1757,10 +1764,10 @@
 				8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */,
 				8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */,
 				8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */,
-				8EAAEE63163A314700AEF100 /* NSString+CoreDataNullTest.h */,
-				8EAAEE64163A314700AEF100 /* NSString+CoreDataNullTest.m */,
 				8E3DCC8016E8F6F5000AF8A2 /* NSString+HMAC.h */,
 				8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */,
+				9140530C174D055700E18A6B /* NSObject+NullHelper.h */,
+				9140530D174D055700E18A6B /* NSObject+NullHelper.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1915,7 +1922,6 @@
 				8EF5C35C162F431B0075C35F /* Constants.h */,
 				8EF092361662A325008EE1DD /* Structures.h */,
 				8EAAEE52163A275400AEF100 /* APIConstants.h */,
-				8EAAEE53163A27C100AEF100 /* CoreDataConstants.h */,
 				8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */,
 			);
 			name = Constants;
@@ -2438,7 +2444,6 @@
 				1C81097916EE2CBF0030077C /* SPVideoExtractor.m in Sources */,
 				1C81097D16EE2CBF0030077C /* main.m in Sources */,
 				1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */,
-				1C81097F16EE2CBF0030077C /* NSString+CoreDataNullTest.m in Sources */,
 				1C81098016EE2CBF0030077C /* SPOverlayView.m in Sources */,
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
 				1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
@@ -2511,7 +2516,6 @@
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3A17331495008131D2 /* DisplayChannel.m in Sources */,
-				91D03F3F17331498008131D2 /* User.m in Sources */,
 				91D03F4417331499008131D2 /* Conversation.m in Sources */,
 				91D03F531733149F008131D2 /* Messages.m in Sources */,
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
@@ -2522,12 +2526,15 @@
 				1CA631D917386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED417426FDC00A9265B /* Frame.m in Sources */,
-				91649ED917426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
-				1C105BC7174C26BC00D9F90B /* Roll.m in Sources */,
+				914052FB174C411600E18A6B /* DashboardEntry.m in Sources */,
+				91405305174C419400E18A6B /* User.m in Sources */,
+				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
+				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
+				91E5D464174E938100AD3746 /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2541,7 +2548,6 @@
 				1C810A2F16EE5EED0030077C /* SPVideoExtractor.m in Sources */,
 				1C810A3316EE5EED0030077C /* main.m in Sources */,
 				1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */,
-				1C810A3516EE5EED0030077C /* NSString+CoreDataNullTest.m in Sources */,
 				1C810A3616EE5EED0030077C /* SPOverlayView.m in Sources */,
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
 				1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
@@ -2614,7 +2620,6 @@
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3B17331495008131D2 /* DisplayChannel.m in Sources */,
-				91D03F4017331498008131D2 /* User.m in Sources */,
 				91D03F4517331499008131D2 /* Conversation.m in Sources */,
 				91D03F541733149F008131D2 /* Messages.m in Sources */,
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
@@ -2625,12 +2630,15 @@
 				1CA631DA17386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED517426FDC00A9265B /* Frame.m in Sources */,
-				91649EDA17426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
-				1C105BC8174C26BC00D9F90B /* Roll.m in Sources */,
+				914052FC174C411600E18A6B /* DashboardEntry.m in Sources */,
+				91405306174C419400E18A6B /* User.m in Sources */,
+				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
+				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
+				91E5D465174E938100AD3746 /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2644,7 +2652,6 @@
 				8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */,
 				8E20971E162F3A61000A2DFD /* main.m in Sources */,
 				8E209722162F3A61000A2DFD /* AppDelegate.m in Sources */,
-				8EAAEE65163A314700AEF100 /* NSString+CoreDataNullTest.m in Sources */,
 				8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */,
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
 				8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */,
@@ -2717,7 +2724,6 @@
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F3917331495008131D2 /* DisplayChannel.m in Sources */,
-				91D03F3E17331498008131D2 /* User.m in Sources */,
 				91D03F4317331499008131D2 /* Conversation.m in Sources */,
 				91D03F521733149F008131D2 /* Messages.m in Sources */,
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
@@ -2728,12 +2734,15 @@
 				1CA631D817386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */,
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				91649ED317426FDC00A9265B /* Frame.m in Sources */,
-				91649ED817426FDD00A9265B /* DashboardEntry.m in Sources */,
 				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
-				1C105BC6174C26BC00D9F90B /* Roll.m in Sources */,
+				914052FA174C411600E18A6B /* DashboardEntry.m in Sources */,
+				91405304174C419400E18A6B /* User.m in Sources */,
+				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
+				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
+				91E5D463174E938100AD3746 /* Roll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2970,6 +2979,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wno-arc-performSelector-leaks",
+				);
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -2995,7 +3010,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-Wall",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wno-arc-performSelector-leaks",
+					"-Werror",
+				);
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -3145,10 +3167,11 @@
 		8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */,
 				91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */,
 				8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */,
 			);
-			currentVersion = 91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */;
+			currentVersion = 914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */;
 			path = Shelby.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

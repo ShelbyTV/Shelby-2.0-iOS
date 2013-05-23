@@ -9,37 +9,34 @@
 #import "User+Helper.h"
 #import "DisplayChannel+Helper.h"
 
+#import "NSManagedObject+Helper.h"
+#import "NSObject+NullHelper.h"
+
+NSString * const kShelbyCoreDataEntityUser = @"User";
+NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
+
 @implementation User (Helper)
 
 + (User *)userForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {
-    //look for existing User
     NSString *userID = dict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityUser];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"userID == %@", userID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedUsers = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedUsers){
-        return nil;
-    }
-    
-    User *user = nil;
-    if([fetchedUsers count] == 1){
-        user = fetchedUsers[0];
-    } else {
+    User *user = [self fetchOneEntityNamed:kShelbyCoreDataEntityUser
+                           withIDPredicate:kShelbyCoreDataEntityUserIDPredicate
+                                     andID:userID
+                                 inContext:context];
+
+    if (!user) {
         user = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityUser
                                               inManagedObjectContext:context];
         user.userID = userID;
-        user.userImage = OBJECT_OR_NIL(dict[@"user_image"]);
-        user.userType = OBJECT_OR_NIL(dict[@"user_type"]);
+        user.userImage = [dict[@"user_image"] nilOrSelfWhenNotNull];
+        user.userType = [dict[@"user_type"] nilOrSelfWhenNotNull];
     }
     
     user.publicRollID = dict[@"personal_roll_id"];
     user.likesRollID = dict[@"watch_later_roll_id"];
     user.nickname = dict[@"nickname"];
-    user.name = OBJECT_OR_NIL(dict[@"name"]);
+    user.name = [dict[@"name"] nilOrSelfWhenNotNull];
     user.token = dict[@"authentication_token"];
     
     // Resetting all auths:
@@ -56,14 +53,14 @@
         for (NSDictionary *authDict in authentications) {
             NSString *provider = authDict[@"provider"];
             if([provider isEqualToString:@"twitter"]){
-                user.twitterNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
-                user.twitterUID = OBJECT_OR_NIL(authDict[@"uid"]);
+                user.twitterNickname = [authDict[@"nickname"] nilOrSelfWhenNotNull];
+                user.twitterUID = [authDict[@"uid"] nilOrSelfWhenNotNull];
             } else if([provider isEqualToString:@"facebook"]){
-                user.facebookNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
-                user.facebookUID = OBJECT_OR_NIL(authDict[@"uid"]);
+                user.facebookNickname = [authDict[@"nickname"] nilOrSelfWhenNotNull];
+                user.facebookUID = [authDict[@"uid"] nilOrSelfWhenNotNull];
             } else if([provider isEqualToString:@"tumblr"]){
-                user.tumblrNickname = OBJECT_OR_NIL(authDict[@"nickname"]);
-                user.tumblrUID = OBJECT_OR_NIL(authDict[@"uid"]);
+                user.tumblrNickname = [authDict[@"nickname"] nilOrSelfWhenNotNull];
+                user.tumblrUID = [authDict[@"uid"] nilOrSelfWhenNotNull];
             }
         }
     }
@@ -93,7 +90,6 @@
     
     return [results count] ? results[0] : nil;
 }
-
 
 + (NSDictionary *)dictionaryForUserChannel:(NSString *)channelID withIDKey:(NSString *)idKey displayTitle:(NSString *)displayTitle displayColor:(NSString *)displayColor
 {
@@ -143,4 +139,15 @@
     
     return channels;
 }
+
+- (BOOL)isTwitterConnected
+{
+    return self.twitterNickname != nil;
+}
+
+- (BOOL)isFacebookConnected
+{
+    return self.facebookNickname != nil;
+}
+
 @end

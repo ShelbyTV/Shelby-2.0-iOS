@@ -2,7 +2,7 @@
 //  DashboardEntry.h
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 5/14/13.
+//  Created by Daniel Spinosa on 5/21/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -14,7 +14,6 @@
 @interface DashboardEntry : NSManagedObject
 
 @property (nonatomic, retain) NSString * dashboardEntryID;
-@property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) Dashboard *dashboard;
 @property (nonatomic, retain) DashboardEntry *duplicateOf;
 @property (nonatomic, retain) NSOrderedSet *duplicates;

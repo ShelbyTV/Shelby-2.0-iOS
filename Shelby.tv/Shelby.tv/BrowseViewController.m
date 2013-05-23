@@ -9,6 +9,7 @@
 #import "BrowseViewController.h"
 
 #import "AFNetworking.h"
+#import "DashboardEntry+Helper.h"
 #import "DeduplicationUtility.h"
 #import "DisplayChannel+Helper.h"
 #import "Frame+Helper.h"
@@ -474,7 +475,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
     SPChannelCollectionView *channelCollection = (SPChannelCollectionView *)cv;
     STVAssert([channelCollection isKindOfClass:[SPChannelCollectionView class]], @"expecting a different class!");
     NSArray *dedupedEntries = [self deduplicatedEntriesForChannel:channelCollection.channel];
-    STVAssert(indexPath.row < [dedupedEntries count], @"expected a valid index path row");
+    STVAssert((unsigned)indexPath.row < [dedupedEntries count], @"expected a valid index path row");
     id entry = dedupedEntries[indexPath.row];
     
     cell.thumbnailImageView.backgroundColor = channelCollection.channel.displayColor;
@@ -554,7 +555,7 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
         if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
             NSArray *dedupedEntries = [self deduplicatedEntriesForChannel:channelCollectionView.channel];
             id entry = nil;
-            if (indexPath.row < [dedupedEntries count]) {
+            if (indexPath.row > 0 && (unsigned)indexPath.row < [dedupedEntries count]) {
                 entry = dedupedEntries[indexPath.row];
             }
             [self.browseDelegate userPressedChannel:channel atItem:entry];

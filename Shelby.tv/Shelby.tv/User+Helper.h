@@ -19,4 +19,8 @@
 + (User *)updateUserWithFacebookUser:(NSDictionary *)facebookUser inContext:(NSManagedObjectContext *)moc;
 
 + (NSMutableArray *)channelsForUserInContext:(NSManagedObjectContext *)moc;
+
+- (BOOL)isTwitterConnected;
+- (BOOL)isFacebookConnected;
+
 @end

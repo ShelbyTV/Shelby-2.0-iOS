@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Shelby TV. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface ImageUtilities : NSObject
 + (UIImage *)screenshot:(UIView *)view;

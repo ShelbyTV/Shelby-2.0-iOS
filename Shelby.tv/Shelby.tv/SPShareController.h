@@ -8,7 +8,15 @@
 
 #import "SPVideoPlayer.h"
 
+@protocol SPShareControllerDelegate <NSObject>
+
+- (void)shareDidFinish:(BOOL)complete;
+
+@end
+
 @interface SPShareController : NSObject <UITextViewDelegate, UIPopoverControllerDelegate>
+
+@property (nonatomic, weak) id<SPShareControllerDelegate> delegate;
 
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer;
 - (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer fromRect:(CGRect)frame;

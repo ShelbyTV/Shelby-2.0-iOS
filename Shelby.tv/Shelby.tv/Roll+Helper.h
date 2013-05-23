@@ -17,4 +17,5 @@
                       inContext:(NSManagedObjectContext *)context;
 
 + (Roll *)fetchLikesRollInContext:(NSManagedObjectContext *)context;
+
 @end

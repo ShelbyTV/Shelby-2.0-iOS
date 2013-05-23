@@ -7,32 +7,24 @@
 //
 
 #import "Dashboard+Helper.h"
-//djs XXX remove this and add the const
-#import "CoreDataConstants.h"
 
-//NSString * const kShelbyCoreDataEntityDashboard = @"Dashboard";
+#import "NSManagedObject+Helper.h"
+
+NSString * const kShelbyCoreDataEntityDashboard = @"Dashboard";
+NSString * const kShelbyCoreDataEntityDashboardIDPredicate = @"dashboardID == %@";
 
 @implementation Dashboard (Helper)
 
 + (Dashboard *)dashboardForDashboardDictionary:(NSDictionary *)dashboardDict
                                      inContext:(NSManagedObjectContext *)context
 {
-    //look for existing Dashboard
     NSString *dashboardID = dashboardDict[@"user_id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDashboard];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"dashboardID == %@", dashboardID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedDashboards = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedDashboards){
-        return nil;
-    }
+    Dashboard *dashboard = [self fetchOneEntityNamed:kShelbyCoreDataEntityDashboard
+                                     withIDPredicate:kShelbyCoreDataEntityDashboardIDPredicate
+                                               andID:dashboardID
+                                           inContext:context];
     
-    Dashboard *dashboard = nil;
-    if([fetchedDashboards count] == 1){
-        dashboard = fetchedDashboards[0];
-    } else {
+    if (!dashboard) {
         dashboard = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDashboard
                                                   inManagedObjectContext:context];
         dashboard.dashboardID = dashboardID;

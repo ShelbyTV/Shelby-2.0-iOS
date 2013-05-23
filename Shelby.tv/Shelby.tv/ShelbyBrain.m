@@ -7,7 +7,9 @@
 //
 
 #import "ShelbyBrain.h"
+#import "Dashboard+Helper.h"
 #import "DisplayChannel+Helper.h"
+#import "Roll+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
 #import "ShelbyAlertView.h"
@@ -309,7 +311,7 @@
     NSInteger nextChannel = currentChannelIndex + next;
     if (nextChannel < 0) {
         nextChannel = numberOfChannels + nextChannel;
-    } else if (nextChannel == numberOfChannels) {
+    } else if ((unsigned)nextChannel == numberOfChannels) {
         nextChannel = 0;
     }
     

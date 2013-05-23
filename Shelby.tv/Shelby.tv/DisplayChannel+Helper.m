@@ -7,12 +7,16 @@
 //
 
 #import "DisplayChannel+Helper.h"
-#import "Roll+Helper.h"
+
 #import "Dashboard+Helper.h"
-#import "UIColor+ColorWithHexAndAlpha.h"
+#import "NSManagedObject+Helper.h"
+#import "Roll+Helper.h"
 #import "ShelbyDataMediator.h"
+#import "UIColor+ColorWithHexAndAlpha.h"
 
 NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
+NSString * const kShelbyCoreDataEntityDisplayChannelViaRollIDPredicate = @"roll.rollID == %@";
+NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"dashboard.dashboardID == %@";
 
 @implementation DisplayChannel (Helper)
 
@@ -28,19 +32,12 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
 {
     //look for existing DisplayChannel
     NSString *rollID = rollDict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDisplayChannel];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"roll.rollID == %@", rollID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedDisplayChannels = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedDisplayChannels){
-        return nil;
-    }
-    DisplayChannel *displayChannel;
-    if([fetchedDisplayChannels count] == 1){
-        displayChannel = fetchedDisplayChannels[0];
-    } else {
+    DisplayChannel *displayChannel = [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
+                                               withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaRollIDPredicate
+                                                         andID:rollID
+                                                     inContext:context];
+    
+    if (!displayChannel) {
         displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
                                                        inManagedObjectContext:context];
     }
@@ -61,21 +58,13 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
                                         withOrder:(NSInteger)order
                                         inContext:(NSManagedObjectContext *)context
 {
-    //look for existing DisplayChannel
     NSString *dashboardID = dashboardDict[@"user_id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDisplayChannel];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"dashboard.dashboardID == %@", dashboardID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedDisplayChannels = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedDisplayChannels){
-        return nil;
-    }
-    DisplayChannel *displayChannel;
-    if([fetchedDisplayChannels count] == 1){
-        displayChannel = fetchedDisplayChannels[0];
-    } else {
+    DisplayChannel *displayChannel = [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
+                                               withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate
+                                                         andID:dashboardID
+                                                     inContext:context];
+    
+    if (!displayChannel) {
         displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
                                                        inManagedObjectContext:context];
     }
@@ -97,20 +86,12 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
                                           inContext:(NSManagedObjectContext *)context
 {
     NSString *rollID = kShelbyOfflineLikesID;
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDisplayChannel];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"roll.rollID == %@", rollID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedDisplayChannels = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedDisplayChannels){
-        return nil;
-    }
-
-    DisplayChannel *displayChannel;
-    if([fetchedDisplayChannels count] == 1){
-        displayChannel = fetchedDisplayChannels[0];
-    } else {
+    DisplayChannel *displayChannel = [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
+                                               withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaRollIDPredicate
+                                                         andID:rollID
+                                                     inContext:context];
+    
+    if (!displayChannel) {
         displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
                                                        inManagedObjectContext:context];
     }
@@ -207,7 +188,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
     }
 }
 
-- (BOOL)hasEntityAtIndex:(NSInteger)idx
+- (BOOL)hasEntityAtIndex:(NSUInteger)idx
 {
     if(self.roll){
         return [self.roll.frame count] > idx;

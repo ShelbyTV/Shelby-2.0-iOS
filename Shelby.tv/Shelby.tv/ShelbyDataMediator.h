@@ -8,6 +8,8 @@
 //  You want Shelby Data?  You come here.  Nowhere else.
 
 #import <Foundation/Foundation.h>
+#import "DisplayChannel+Helper.h"
+#import "User+Helper.h"
 
 extern NSString * const kShelbyOfflineLikesID;
 

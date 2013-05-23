@@ -8,37 +8,33 @@
 
 #import "Video+Helper.h"
 
+#import "NSManagedObject+Helper.h"
+#import "NSObject+NullHelper.h"
+
+NSString * const kShelbyCoreDataEntityVideo = @"Video";
+NSString * const kShelbyCoreDataEntityVideoIDPredicate = @"videoID == %@";
+
 @implementation Video (Helper)
 
 + (Video *)videoForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {
-    //look for existing Video
     NSString *videoID = dict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityVideo];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"videoID == %@", videoID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedVideos = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedVideos){
-        return nil;
-    }
+    Video *video = [self fetchOneEntityNamed:kShelbyCoreDataEntityVideo
+                             withIDPredicate:kShelbyCoreDataEntityVideoIDPredicate
+                                       andID:videoID
+                                   inContext:context];
     
-    Video *video = nil;
-    if([fetchedVideos count] == 1){
-        video = fetchedVideos[0];
-    } else {
+    if (!video) {
         video = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityVideo
                                               inManagedObjectContext:context];
         video.videoID = videoID;
-        video.caption = OBJECT_OR_NIL(dict[@"description"]);
-        video.providerName = OBJECT_OR_NIL(dict[@"provider_name"]);
-        video.providerID = OBJECT_OR_NIL(dict[@"provider_id"]);
-        video.thumbnailURL = OBJECT_OR_NIL(dict[@"thumbnail_url"]);
-        video.title = OBJECT_OR_NIL(dict[@"title"]);
-        video.firstUnplayable =  OBJECT_OR_NIL(dict[@"first_unplayable_at"]);
-        video.lastUnplayable = OBJECT_OR_NIL(dict[@"last_unplayable_at"]);
- 
+        video.caption = [dict[@"description"] nilOrSelfWhenNotNull];
+        video.providerName = [dict[@"provider_name"] nilOrSelfWhenNotNull];
+        video.providerID = [dict[@"provider_id"] nilOrSelfWhenNotNull];
+        video.thumbnailURL = [dict[@"thumbnail_url"] nilOrSelfWhenNotNull];
+        video.title = [dict[@"title"] nilOrSelfWhenNotNull];
+        video.firstUnplayable =  [dict[@"first_unplayable_at"] nilOrSelfWhenNotNull];
+        video.lastUnplayable = [dict[@"last_unplayable_at"] nilOrSelfWhenNotNull];
     }
 
     return video;

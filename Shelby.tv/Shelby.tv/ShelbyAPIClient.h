@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
+#import "DashboardEntry+Helper.h"
+
 typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
 
 @interface ShelbyAPIClient : NSObject

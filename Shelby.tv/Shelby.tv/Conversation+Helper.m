@@ -7,7 +7,12 @@
 //
 
 #import "Conversation+Helper.h"
+
 #import "Messages+Helper.h"
+#import "NSManagedObject+Helper.h"
+
+NSString * const kShelbyCoreDataEntityConversation = @"Conversation";
+NSString * const kShelbyCoreDataEntityConversationIDPredicate = @"conversationID == %@";
 
 @implementation Conversation (Helper)
 
@@ -15,20 +20,12 @@
 {
     //look for existing Conversation
     NSString *conversationID = dict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityConversation];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"conversationID == %@", conversationID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedConversations = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedConversations){
-        return nil;
-    }
-    
-    Conversation *conversation = nil;
-    if([fetchedConversations count] == 1){
-        conversation = fetchedConversations[0];
-    } else {
+    Conversation *conversation = [self fetchOneEntityNamed:kShelbyCoreDataEntityConversation
+                                           withIDPredicate:kShelbyCoreDataEntityConversationIDPredicate
+                                                     andID:conversationID
+                                                 inContext:context];
+
+    if (!conversation) {
         conversation = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityConversation
                                                      inManagedObjectContext:context];
         conversation.conversationID = conversationID;

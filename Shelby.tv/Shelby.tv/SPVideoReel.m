@@ -7,19 +7,23 @@
 //
 
 #import "SPVideoReel.h"
+
+#import <CoreMedia/CoreMedia.h>
+#import "DashboardEntry+Helper.h"
 #import "DeviceUtilities.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
 #import "GAI.h"
+#import <MediaPlayer/MediaPlayer.h>
 #import <QuartzCore/QuartzCore.h>
 #import "ShelbyAlertView.h"
-#import "SPShareController.h"
 #import "SPChannelPeekView.h"
 #import "SPOverlayView.h"
 #import "SPTutorialView.h"
 #import "SPVideoExtractor.h"
 #import "TwitterHandler.h"
 #import "TwitterHandler.h"
+#import "UIScreen+Resolution.h"
 
 
 #define kShelbySPSlowSpeed 0.2
@@ -42,8 +46,9 @@
 @property (nonatomic) SPChannelPeekView *peelChannelView;
 @property (nonatomic) SPTutorialView *tutorialView;
 @property (nonatomic, strong) NSTimer *tutorialTimer;
-@property (nonatomic, assign) NSInteger currentVideoPlayingIndex;
+@property (nonatomic, assign) NSUInteger currentVideoPlayingIndex;
 @property (atomic, weak) SPVideoPlayer *currentPlayer;
+@property (nonatomic, assign) BOOL shouldResumePlaybackAfterShare;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
 @property (nonatomic, strong) SPShareController *shareController;
@@ -469,7 +474,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     self.possiblyPlayablePlayers = playersToKeep;
 }
 
-- (SPVideoPlayer *)preloadPlayerAtIndex:(NSInteger)idx
+- (SPVideoPlayer *)preloadPlayerAtIndex:(NSUInteger)idx
 {
     //djs TODO: indicate that we need more video!
     if(idx >= [self.videoPlayers count]){
@@ -502,8 +507,19 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
                                                                  fromRect:shareButton.frame];
+    self.shareController.delegate = self;
+    self.shouldResumePlaybackAfterShare = self.currentPlayer.isPlaying;
+    if (self.shouldResumePlaybackAfterShare) {
+        [self.currentPlayer pause];
+    }
     [self.shareController share];
-    
+}
+
+- (void)shareDidFinish:(BOOL)complete
+{
+    if (self.shouldResumePlaybackAfterShare) {
+        [self.currentPlayer play];
+    }
 }
 
 - (IBAction)likeAction:(id)sender

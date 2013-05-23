@@ -7,9 +7,8 @@
 //
 
 #import "SPShareController.h"
-//djs XXX do we need AFNEtworking in here?  Should probably just do all via API
+
 #import "AFNetworking.h"
-//djs XXX
 #import "AsynchronousFreeloader.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
@@ -30,18 +29,6 @@
 @property (assign, nonatomic) BOOL facebookConnected;
 @property (assign, nonatomic) BOOL twitterConnected;
 @property (strong, nonatomic) UIView *mask;
-
-/// Setup Methods
-- (void)setupMaskView;
-- (void)updateFacebookToggle;
-- (void)updateTwitterToggle;
-
-/// UI Methods
-- (void)toggleSocialButtonStatesOnRollViewLaunch;
-
-/// Action Methods
-- (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link;
-- (void)roll;
 
 @end
 
@@ -80,37 +67,25 @@
 - (void)updateTwitterToggle
 {
     if (self.rollView && self.rollView.twitterButton && [self.rollView.twitterButton isKindOfClass:[UIButton class]]) {
-        //djs TODO: probably shouldn't get our context this way, should be getting it during init
         User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//        User *user = [dataUtility fetchUser];
-        BOOL connected = user.twitterConnected;
-        [self.rollView.twitterButton setSelected:(connected)];
+        [self.rollView.twitterButton setSelected:(user.isTwitterConnected)];
     }
 }
 
 - (void)setupMaskView
 {
-    
     // Reference social connection status
     if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-        //djs TODO: shouldn't get our context this way, should be getting it during init
         User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
-        //        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-        //        User *user = [dataUtility fetchUser];
-        self.facebookConnected = [[user facebookConnected] boolValue];
-        self.twitterConnected = [[user twitterConnected] boolValue];
-        
+        self.facebookConnected = user.isFacebookConnected;
+        self.twitterConnected = user.isTwitterConnected;
     }
     
     CGRect videoPlayerFrame = self.videoPlayer.view.frame;
     _mask = [[UIView alloc] initWithFrame:CGRectMake(videoPlayerFrame.origin.x, videoPlayerFrame.origin.y, videoPlayerFrame.size.width, videoPlayerFrame.size.height)];
     [self.mask setBackgroundColor:[UIColor blackColor]];
     [self.mask setAlpha:0.0f];
-    //djs
-//    [self.model.overlayView addSubview:self.mask];
     [self.mask setUserInteractionEnabled:YES];
-//    [self.model.overlayView bringSubviewToFront:self.mask];
 }
 
 #pragma mark - UI Methods (Public)
@@ -125,13 +100,6 @@
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        // Reference videoFrame
-        //djs
-//        self.model = (SPModel *)[SPModel sharedInstance];
-//        NSManagedObjectContext *context = [self.appDelegate context];
-//        NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
-//        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-//        djs just use the current video frame, it's context ought to be be fine
         Frame *videoFrame = self.videoPlayer.videoFrame;
         
         // Create request for short link
@@ -142,8 +110,6 @@
         // Perform shortLink fetch and present sharePopOver (on success and fail)
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
  
-//            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
-            //djs XXX using the videoFrame from outside these blocks... make sure that's okay
             NSString *shareLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
             NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrame.video.title];
             
@@ -153,8 +119,6 @@
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             
             // If short link fetch failed, use full_path
-//            Frame *frame = (Frame *)[context existingObjectWithID:[videoFrame objectID] error:nil];
-            //djs XXX using the videoFrame from outside these blocks... make sure that's okay
             NSString *shareLink = [NSString stringWithFormat:kShelbyAPIGetLongLink, videoFrame.video.providerName, videoFrame.video.providerID, videoFrame.frameID];
             NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrame.video.title];
     
@@ -164,8 +128,6 @@
         }];
         
         [operation start];
-
-        
     });
     
 }
@@ -182,11 +144,6 @@
 
     self.rollView = nib[0];
     
-//    // Reference videoFrame in current thread
-//    NSManagedObjectContext *context = [self.appDelegate context];
-//    NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
-//    Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-//    djs should be able to use the frame from video player, context ought to be okay
     Frame *videoFrame = self.videoPlayer.videoFrame;
     [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"rollingContainer.png"]]];
     
@@ -200,8 +157,6 @@
     // Set proper states for buttons
     [self toggleSocialButtonStatesOnRollViewLaunch];
     
-
-    
     CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
     CGFloat yOrigin = self.videoPlayer.view.frame.size.height/5.0f - _rollView.frame.size.height/4.0f;
     
@@ -209,9 +164,6 @@
                                        _videoPlayer.view.frame.size.height,
                                        _rollView.frame.size.width,
                                        _rollView.frame.size.height)];
-    //djs find a better way to get this on screen
-//    [self.model.overlayView addSubview:_rollView];
-//    [self.model.overlayView bringSubviewToFront:self.self.rollView];
     
     [UIView animateWithDuration:0.5f
                      animations:^{
@@ -277,7 +229,6 @@
 
 - (IBAction)rollButtonAction:(id)sender
 {
-    
     [self roll];
 }
 
@@ -298,17 +249,13 @@
     ShelbyActivityItemProvider *activity = [[ShelbyActivityItemProvider alloc] initWithShareText:message andShareLink:link];
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[activity] applicationActivities:nil];
     activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
-    // Send event to Google Analytics
-    //djs TODO: add the GA back
-//    id defaultTracker = [GAI sharedInstance].defaultTracker;
-//    [defaultTracker sendEventWithCategory:kGAICategoryShare
-//                               withAction:kGAIShareActionShareButton
-//                                withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-//                                withValue:nil];
     
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareButton withLabel:[frame creatorsInitialCommentWithFallback:YES]];
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare
+                                     withAction:kAnalyticsShareActionShareButton
+                                      withLabel:[frame creatorsInitialCommentWithFallback:YES]];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        [self.delegate shareDidFinish:completed];
         if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
             [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
         }
@@ -317,74 +264,45 @@
     if ( ![self sharePopOverController] ) {
         self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
         [self.sharePopOverController setDelegate:self];
-        //djs
         [self.sharePopOverController presentPopoverFromRect:self.fromFrame
                                                      inView:self.videoPlayer.view
                                    permittedArrowDirections:UIPopoverArrowDirectionDown
                                                    animated:YES];
     }
-
 }
 
 - (void)roll
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
-        //djs TODO: shouldn't get our context this way, should be getting it during init
         User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
-//        // Fetch User
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//        User *user = [dataUtility fetchUser];
         NSString *authToken = [user token];
         NSString *rollID = [user publicRollID];
-        
-//        // Fetch videoFrame
-//        NSManagedObjectContext *context = [self.appDelegate context];
-//        NSManagedObjectID *objectID = [self.videoPlayer.videoFrame objectID];
-//        Frame *videoFrame = (Frame *)[context existingObjectWithID:objectID error:nil];
-        //djs player's frame ought to be fine
+
         Frame *videoFrame = self.videoPlayer.videoFrame;
         NSString *frameID = [videoFrame frameID];
-        
-        // Create web safe string
         NSString *message = [self.rollView.rollTextView.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-        
-        // Roll videoFrame
         NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToPersonalRoll, rollID, frameID, authToken, message];
         [ShelbyAPIClient postFrameToPersonalRoll:rollString];
 
-        // Share videoFrame
         if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Share to Facebook and Twitter
-            
             NSString *socialString = [NSString stringWithFormat:kShelbyAPIPostFrameToAllSocial, frameID, authToken, message];
             [ShelbyAPIClient postShareFrameToSocialNetworks:socialString];
             
         } else if ( ![_rollView.twitterButton isSelected] && [_rollView.twitterButton isSelected] ) { // Share to Facebook
-            
             NSString *facebookString = [NSString stringWithFormat:kShelbyAPIPostFrameToFacebook, frameID, authToken, message];
             [ShelbyAPIClient postShareFrameToSocialNetworks:facebookString];
             
         } else if ( [_rollView.twitterButton isSelected] && ![_rollView.facebookButton isSelected] ) { // Share to Twitter
-            
             NSString *twitterString = [NSString stringWithFormat:kShelbyAPIPostFrameToTwitter, frameID, authToken, message];
             [ShelbyAPIClient postShareFrameToSocialNetworks:twitterString];
             
-        } else { // Don't share to any network
-            
+        } else {
             // Do nothing
         }
        
-        // Send event to Google Analytics
-        //djs TODO send data to GA
-//        id defaultTracker = [GAI sharedInstance].defaultTracker;
-//        [defaultTracker sendEventWithCategory:kGAICategoryShare
-//                                   withAction:kGAIShareActionRollSuccess
-//                                    withLabel:[[SPModel sharedInstance].videoReel groupTitle]
-//                                    withValue:nil];
-        
         // Dismiss rollView
         [self performSelectorOnMainThread:@selector(hideRollView) withObject:nil waitUntilDone:NO];
-        
     });
     
 }

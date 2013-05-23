@@ -7,11 +7,17 @@
 //
 
 #import "Frame+Helper.h"
+
 #import "Conversation+Helper.h"
+#import "Messages+Helper.h"
+#import "NSManagedObject+Helper.h"
 #import "Roll+Helper.h"
 #import "ShelbyDataMediator.h"
 #import "User+Helper.h"
 #import "Video+Helper.h"
+
+NSString * const kShelbyCoreDataEntityFrame = @"Frame";
+NSString * const kShelbyCoreDataEntityFrameIDPredicate = @"frameID == %@";
 
 @implementation Frame (Helper)
 
@@ -20,22 +26,13 @@
 
 + (Frame *)frameForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {
-    //look for existing Frame
     NSString *frameID = dict[@"id"];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"frameID == %@", frameID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedFrames = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedFrames){
-        return nil;
-    }
+    Frame *frame = [self fetchOneEntityNamed:kShelbyCoreDataEntityFrame
+                             withIDPredicate:kShelbyCoreDataEntityFrameIDPredicate
+                                       andID:frameID
+                                   inContext:context];
     
-    Frame *frame = nil;
-    if([fetchedFrames count] == 1){
-        frame = fetchedFrames[0];
-    } else {
+    if (!frame) {
         frame = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityFrame
                                               inManagedObjectContext:context];
         frame.frameID = frameID;

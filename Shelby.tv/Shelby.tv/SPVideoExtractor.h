@@ -13,7 +13,7 @@
 
 typedef void (^extraction_complete_block)(NSString *videoURL, BOOL wasError);
 
-@interface SPVideoExtractor : NSObject
+@interface SPVideoExtractor : NSObject <UIWebViewDelegate>
 
 /// Singleton Methods
 + (SPVideoExtractor *)sharedInstance;

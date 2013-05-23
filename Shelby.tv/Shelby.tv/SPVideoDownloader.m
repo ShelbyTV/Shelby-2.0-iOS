@@ -20,7 +20,7 @@
 
 #pragma mark - Initialization
 
-- (id)initWithVideo:(Video *)video;
+- (id)initWithVideo:(Video *)video
 {
     self = [super init];
     if (self) {
