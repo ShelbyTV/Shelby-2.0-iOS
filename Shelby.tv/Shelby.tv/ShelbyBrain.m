@@ -264,7 +264,7 @@
         _userChannels = [@[] mutableCopy];
     }
     
-    NSInteger i = 0;
+    NSUInteger i = 0;
     for (DisplayChannel *userChannel in self.userChannels) {
         if (userChannel.dashboard && myStreamChannel.dashboard && [myStreamChannel.dashboard.dashboardID isEqualToString:userChannel.dashboard.dashboardID]) {
             break;
@@ -414,7 +414,7 @@
         self.currentPlayerTutorialMode = SPTutorialModePinch;
     }
 
-    NSInteger nextChannel = [self nextChannelForDirection:up];
+    NSUInteger nextChannel = [self nextChannelForDirection:up];
     
     if (nextChannel < [self.userChannels count]) {
         return self.userChannels[nextChannel];
