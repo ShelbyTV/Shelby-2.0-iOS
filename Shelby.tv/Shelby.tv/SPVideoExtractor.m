@@ -239,6 +239,8 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     self.webView.mediaPlaybackRequiresUserAction = NO;
     self.webView.mediaPlaybackAllowsAirPlay = YES;
     self.webView.hidden = YES;
+    //important to set delegate, even though we don't implement any of the methods
+    self.webView.delegate = self;
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
