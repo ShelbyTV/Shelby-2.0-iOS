@@ -18,11 +18,9 @@ typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
 + (void)putGoogleAnalyticsClientID:(NSString *)clientID;
 
 /// Stream
-+ (void)getStream;
 + (void)getMoreFramesInStream:(NSString *)skipParam;
 
 // User
-+ (void)fetchStreamForUserWithAuthToken:(NSString *)authToken andBlock:(shelby_api_request_complete_block_t)completionBlock;
 + (void)fetchRollForUser:(NSString *)rollID withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 /// Video
@@ -45,8 +43,12 @@ typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
 + (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
 + (void)fetchDashboardEntriesForDashboardID:(NSString *)dashboardID
                                  sinceEntry:(DashboardEntry *)sinceEntry
+                               andAuthToken:(NSString *)authToken
                                   withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
++ (void)fetchFramesForRollID:(NSString *)rollID
+                  sinceEntry:(Frame *)sinceFrame
+                   withBlock:(shelby_api_request_complete_block_t)completionBlock;
 /// Liking
 + (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock;
 //+ (void)postFrameToLikes:(NSString *)frameID;

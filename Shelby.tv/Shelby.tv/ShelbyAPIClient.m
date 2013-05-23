@@ -106,26 +106,6 @@
 }
 
 #pragma mark - Stream (GET)
-+ (void)fetchStreamForUserWithAuthToken:(NSString *)authToken andBlock:(shelby_api_request_complete_block_t)completionBlock
-{
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetStream, authToken]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if (JSON) {
-                completionBlock(JSON, nil);
-            }
-        });
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        completionBlock(nil, error);
-    }];
-    
-    [operation start];
-}
-
 + (void)fetchRollForUser:(NSString *)rollID withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID]];
@@ -367,14 +347,22 @@
 //djs update done!
 + (void)fetchDashboardEntriesForDashboardID:(NSString *)dashboardID
                                  sinceEntry:(DashboardEntry *)sinceEntry
+                               andAuthToken:(NSString *)authToken
                                   withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     NSString *requestString;
     if(sinceEntry){
         requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntriesSince, dashboardID, sinceEntry.dashboardEntryID];
+        if (authToken) {
+            requestString = [NSString stringWithFormat:@"%@&auth_token=%@", requestString, authToken];
+        }
     } else {
         requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntries, dashboardID];
+        if (authToken) {
+            requestString = [NSString stringWithFormat:@"%@?auth_token=%@", requestString, authToken];
+        }
     }
+    
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];
@@ -387,6 +375,30 @@
     
     [operation start];
 }
+
++ (void)fetchFramesForRollID:(NSString *)rollID
+                  sinceEntry:(Frame *)sinceFrame
+                   withBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSString *requestString;
+//    if(sinceFrame){
+        requestString = [NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID];
+//    } else {
+//        requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntries, dashboardID];
+//    }
+    NSURL *requestURL = [NSURL URLWithString:requestString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
+    [request setHTTPMethod:@"GET"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    
+    [operation start];
+}
+
 
 // TODO: deal with unlike, sync likes after user logs in.
 + (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock

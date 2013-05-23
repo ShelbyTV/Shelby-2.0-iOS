@@ -7,6 +7,7 @@
 //
 
 #import "User+Helper.h"
+#import "DisplayChannel+Helper.h"
 
 @implementation User (Helper)
 
@@ -93,4 +94,53 @@
     return [results count] ? results[0] : nil;
 }
 
+
++ (NSDictionary *)dictionaryForUserChannel:(NSString *)channelID withIDKey:(NSString *)idKey displayTitle:(NSString *)displayTitle displayColor:(NSString *)displayColor
+{
+    if (!(idKey && channelID && displayColor && displayTitle)) {
+        return nil;
+    }
+    
+    return @{idKey : channelID, @"display_channel_color" : displayColor, @"display_description" :displayTitle, @"display_title" : displayTitle};
+}
+
++ (NSMutableArray *)channelsForUserInContext:(NSManagedObjectContext *)moc
+{
+    User *loggedInUser = [self currentAuthenticatedUserInContext:moc];
+    if (!loggedInUser) {
+        return [@[] mutableCopy];
+    }
+    
+    NSMutableArray *channels = [@[] mutableCopy];
+
+    NSDictionary *streamDict = [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"My Stream" displayColor:kShelbyColorMyStreamColor];
+    if (streamDict) {
+        DisplayChannel *myStreamChannel = [DisplayChannel channelForDashboardDictionary:streamDict withOrder:0 inContext:moc];
+        if (myStreamChannel) {
+            [channels addObject:myStreamChannel];
+        }
+    }
+    
+    NSDictionary *rollDict = [User dictionaryForUserChannel:loggedInUser.publicRollID withIDKey:@"id" displayTitle:@"My Roll" displayColor:kShelbyColorMyRollColor];
+    if (streamDict) {
+        DisplayChannel *myRollChannel = [DisplayChannel channelForRollDictionary:rollDict withOrder:1 inContext:moc];
+        if (myRollChannel) {
+            [channels addObject:myRollChannel];
+        }
+    }
+
+    NSDictionary *likeDict = [User dictionaryForUserChannel:loggedInUser.likesRollID withIDKey:@"id"  displayTitle:@"My Likes" displayColor:kShelbyColorLikesRedString];
+    if (likeDict) {
+        DisplayChannel *myLikesChannel = [DisplayChannel channelForRollDictionary:likeDict withOrder:1 inContext:moc];
+        if (myLikesChannel) {
+            [channels addObject:myLikesChannel];
+        }
+    }
+    
+    NSError *error;
+    [moc save:&error];
+    STVAssert(!error, @"context save saving user channels...");
+    
+    return channels;
+}
 @end

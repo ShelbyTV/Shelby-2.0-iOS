@@ -11,6 +11,7 @@
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
 #import "ShelbyAlertView.h"
+#import "User+Helper.h"
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
@@ -68,9 +69,15 @@
 
 - (void)fetchUserChannels
 {
-    [[ShelbyDataMediator sharedInstance] fetchStreamForUser];
-    [[ShelbyDataMediator sharedInstance] fetchMyRollForUser];
-    [[ShelbyDataMediator sharedInstance] fetchLikesForUser];
+    // tell DataM to create display channels
+    self.userChannels = [User channelsForUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+                         
+    NSArray *allChannels = [self constructAllChannelsArray];
+    self.homeVC.channels = allChannels;
+    
+    for (DisplayChannel *channel in self.userChannels) {
+        [self populateChannel:channel withActivityIndicator:YES];
+    }
 }
 
 - (void)populateChannels

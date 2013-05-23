@@ -17,4 +17,6 @@
 +(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc;
 
 + (User *)updateUserWithFacebookUser:(NSDictionary *)facebookUser inContext:(NSManagedObjectContext *)moc;
+
++ (NSMutableArray *)channelsForUserInContext:(NSManagedObjectContext *)moc;
 @end
