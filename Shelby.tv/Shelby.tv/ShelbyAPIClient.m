@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
-#import "AFNetworking.h"
-#import "LoginView.h"
 #import "ShelbyAPIClient.h"
+#import "AFNetworking.h"
+#import "Frame.h"
+#import "LoginView.h"
 #import "User+Helper.h"
 
 @implementation ShelbyAPIClient
@@ -384,11 +385,11 @@
 {
     // TODO: support sinceFrame
     NSString *requestString;
-//    if(sinceFrame){
+    if (sinceFrame) { 
+        requestString = [NSString stringWithFormat:kShelbyAPIGetRollFramesSinceFrame, rollID, sinceFrame.frameID];
+    } else {
         requestString = [NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID];
-//    } else {
-//        requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntries, dashboardID];
-//    }
+    }
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     [request setHTTPMethod:@"GET"];

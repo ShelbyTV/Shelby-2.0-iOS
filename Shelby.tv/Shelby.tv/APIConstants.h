@@ -26,8 +26,10 @@
 
 /// GET Rolls
 #define kShelbyAPIGetRollFrames             @"http://api.shelby.tv/v1/roll/%@/frames"
-#define kShelbyAPIGetMoreRollFrames         @"http://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
-#define kShelbyAPIGetRollFramesForSync      @"http://api.shelby.tv/v1/roll/%@/frames?limit=%d"
+#define kShelbyAPIGetRollFramesSinceFrame   @"http://api.shelby.tv/v1/roll/%@/frames?since_id=%@"
+
+//#define kShelbyAPIGetMoreRollFrames         @"http://api.shelby.tv/v1/roll/%@/frames?skip=%@&limit=20"
+//#define kShelbyAPIGetRollFramesForSync      @"http://api.shelby.tv/v1/roll/%@/frames?limit=%d"
 
 /// GET Channels
 #ifdef SHELBY_ENTERPRISE
@@ -37,7 +39,7 @@
 #endif
 #define kShelbyAPIGetChannelDashboardEntries        @"http://api.shelby.tv/v1/user/%@/dashboard"
 #define kShelbyAPIGetChannelDashboardEntriesSince   @"http://api.shelby.tv/v1/user/%@/dashboard?since_id=%@"
-#define kShelbyAPIGetMoreChannelDashboardEntries    @"http://api.shelby.tv/v1/user/%@/dashboard?skip=%@&limit=20"
+//#define kShelbyAPIGetMoreChannelDashboardEntries    @"http://api.shelby.tv/v1/user/%@/dashboard?skip=%@&limit=20"
 
 /// GET Shortlink
 #define kShelbyAPIGetShortLink              @"http://api.shelby.tv/v1/frame/%@/short_link"
