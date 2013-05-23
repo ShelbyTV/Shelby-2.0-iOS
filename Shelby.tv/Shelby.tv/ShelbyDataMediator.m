@@ -462,6 +462,44 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     return resultDisplayChannels;
 }
 
+- (NSArray *)framesForJSON:(id)JSON withRoll:(Roll *)roll inContext:(NSManagedObjectContext *)context
+{
+    if(![JSON isKindOfClass:[NSDictionary class]]){
+        return nil;
+    }
+    
+    NSDictionary *jsonDict = (NSDictionary *)JSON;
+    NSDictionary *rollDictArray = jsonDict[@"result"];
+    
+    if(![rollDictArray isKindOfClass:[NSDictionary class]]){
+        return nil;
+    }
+    
+    NSArray *frames = rollDictArray[@"frames"];
+    if (![frames isKindOfClass:[NSArray class]]){
+        return nil;
+    }
+
+    NSMutableArray *resultDashboardEntries = [@[] mutableCopy];
+    
+    for (NSDictionary *frameDict in frames) {
+        if(![frameDict isKindOfClass:[NSDictionary class]]){
+            continue;
+        }
+        
+        Frame *entry = [Frame frameForDictionary:frameDict inContext:context];
+ 
+        if (entry) {
+            [resultDashboardEntries addObject:entry];
+        }
+    }
+    
+    NSError *error;
+    [context save:&error];
+    STVAssert(!error, @"context save failed, in framesForJSON...");
+    return resultDashboardEntries;
+}
+
 - (NSArray *)dashboardEntriesForJSON:(id)JSON withDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
 {
     if(![JSON isKindOfClass:[NSDictionary class]]){

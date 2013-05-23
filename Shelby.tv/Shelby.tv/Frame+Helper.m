@@ -51,6 +51,11 @@ NSString * const kShelbyCoreDataEntityFrameIDPredicate = @"frameID == %@";
     if([creatorDict isKindOfClass:[NSDictionary class]]){
         frame.creator = [User userForDictionary:creatorDict inContext:context];
     }
+    if (!frame.creator) {
+        [context deleteObject:frame];
+        return nil;
+    }
+    
     NSDictionary *conversationDict = dict[@"conversation"];
     if([conversationDict isKindOfClass:[NSDictionary class]]){
         frame.conversation = [Conversation conversationForDictionary:conversationDict inContext:context];
