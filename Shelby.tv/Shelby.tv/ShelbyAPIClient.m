@@ -383,7 +383,6 @@
                   sinceEntry:(Frame *)sinceFrame
                    withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    // TODO: support sinceFrame
     NSString *requestString;
     if (sinceFrame) { 
         requestString = [NSString stringWithFormat:kShelbyAPIGetRollFramesSinceFrame, rollID, sinceFrame.frameID];
