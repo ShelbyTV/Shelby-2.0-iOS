@@ -89,11 +89,14 @@
         //    remove it from the resultArray, and create a deleted index path based on index in baseArray
         if(dupeChild){
             [DeduplicationUtility addDuplicateChild:dupeChild toParent:newEntry flatteningHierarchy:YES];
-            [resultArray removeObject:dupeChild];
+            
+            NSUInteger idxToRemove = [resultArray indexOfObject:dupeChild];
+            STVAssert(idxToRemove != NSNotFound, @"didn't expect dupeChild to dissapear since it was found a few lines ago!");
+            [resultArray removeObjectAtIndex:idxToRemove];
+            
             indexOfRemovedEntryInBaseArray = [baseArray indexOfObject:dupeChild];
-            if(indexOfRemovedEntryInBaseArray != NSNotFound){
-                [deleted addObject:[NSIndexPath indexPathForItem:indexOfRemovedEntryInBaseArray inSection:0]];
-            }
+            STVAssert(indexOfRemovedEntryInBaseArray != NSNotFound, @"update will fail b/c of imbalance! how isn't dupeChild in baseArray?");
+            [deleted addObject:[NSIndexPath indexPathForItem:indexOfRemovedEntryInBaseArray inSection:0]];
         }
     }
     
