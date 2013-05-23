@@ -552,7 +552,9 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         
         Frame *entry = [Frame frameForDictionary:frameDict inContext:context];
  
-        [resultDashboardEntries addObject:entry];
+        if (entry) {
+            [resultDashboardEntries addObject:entry];
+        }
     }
     
     NSError *error;
