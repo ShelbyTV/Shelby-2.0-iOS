@@ -26,6 +26,9 @@
 // Videosalready processed, 
 @property (nonatomic) NSMutableDictionary *extractedURLCache;
 
+// this gate is used to make sure video extraction notification is from the current web view (not the previous one)
+@property (atomic, assign) BOOL currentWebViewDidStartLoading;
+
 @end
 
 //for extraction
@@ -233,13 +236,15 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)createWebView
 {
+    self.currentWebViewDidStartLoading = NO;
+    
     CGRect frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight);
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(frame.size.width/2.0f, frame.size.height/2.0f, 2.0f, 2.0f)];
     self.webView.allowsInlineMediaPlayback = YES;
     self.webView.mediaPlaybackRequiresUserAction = NO;
     self.webView.mediaPlaybackAllowsAirPlay = YES;
     self.webView.hidden = YES;
-    //important to set delegate, even though we don't implement any of the methods
+    //important to set delegate, even if we don't implement any of the methods
     self.webView.delegate = self;
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
@@ -253,9 +258,17 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     [self.webView removeFromSuperview];
     [self setWebView:nil];
     
+    self.currentWebViewDidStartLoading = NO;
+    
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    STVAssert(self.webView == webView, @"we should only have one web view at a time");
+    self.currentWebViewDidStartLoading = YES;
 }
 
 - (void)loadYouTubeVideo:(Video *)video
@@ -309,8 +322,18 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             
             // When using a webview to play video, it creates its own MPAVPlayer/Controller via some subsystem.
             // When we destroy the webview, it's possible that the multimedia subsystem keeps the AVPlayer around.
-            // When this happens, we see different notifications than the initial "got video" notification (which is
-            // an "MPAVControllerItemChangedNotification" responding to path) and we need to ignore them...
+            // This can result in (at least) two bad situations...
+            
+            // 1) We may still see the "got video" notification for the prior video.  So we need to make sure
+            // that the current extraction has actually begun...
+            if(!self.webView || !self.currentWebViewDidStartLoading){
+                return;
+            }
+            
+            // 2) We may see different notifications than the desired "got video" notification (which is
+            // one of many "MPAVControllerItemChangedNotification" responding to path and seems to
+            // always be "MPAVControllerItemChangedNotification").
+            // Not looking for the "correct" one in case it changes, so ignore the known bad ones...
             if ([notification.name isEqualToString:@"MPAVControllerItemWillChangeNotification"] ||
                 [notification.name isEqualToString:@"MPAVControllerSizeDidChangeNotification"] ||
                 [notification.name isEqualToString:@"MPAVControllerItemReadyToPlayNotification"]) {
