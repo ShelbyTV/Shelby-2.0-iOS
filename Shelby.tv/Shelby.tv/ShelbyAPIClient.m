@@ -351,6 +351,7 @@
                                   withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     NSString *requestString;
+    // TODO: do this in a nicer way.
     if(sinceEntry){
         requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntriesSince, dashboardID, sinceEntry.dashboardEntryID];
         if (authToken) {
@@ -380,6 +381,7 @@
                   sinceEntry:(Frame *)sinceFrame
                    withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    // TODO: support sinceFrame
     NSString *requestString;
 //    if(sinceFrame){
         requestString = [NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID];
