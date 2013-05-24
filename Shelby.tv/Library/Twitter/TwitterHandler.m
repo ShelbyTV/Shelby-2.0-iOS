@@ -12,6 +12,7 @@
 #import "AuthenticateTwitterViewController.h"
 #import "OAuthConsumer.h"
 #import <Social/Social.h>
+#import "ShelbyAPIClient.h"
 
 //djs XXX do we need AFNEtworking in here?  Should probably just do all via API
 #import "AFNetworking.h"
@@ -422,29 +423,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 
 - (void)sendReverseAuthAccessResultsToServer
 {
-
-    // Create request for short link
-    DLog(@"Perform Twitter Token Swap with Shelby");
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyToken, @"twitter", self.twitterID, self.twitterReverseAuthToken, self.twitterReverseAuthSecret];
-    NSURL *requestURL = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    [request setHTTPMethod:@"POST"];
-    
-    // Perform shortLink fetch and present sharePopOver (on success and fail)
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        DLog(@"Twitter <--> Shelby Token Swap Succeeded");
-        [self tokenSwapWasSuccessfulForUser:JSON];
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        DLog(@"Twitter <--> Shelby Token Swap Failed");
-        [self twitterCleanup];
-        
-    }];
-    
-    [operation start];
-    
+    [ShelbyAPIClient postThirdPartyToken:@"twitter" accountID:self.twitterID token:self.twitterReverseAuthToken andSecret:self.twitterReverseAuthSecret];
 }
 
 - (void)tokenSwapWasSuccessfulForUser:(NSDictionary *)userDictionary

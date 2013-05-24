@@ -412,7 +412,7 @@
 - (void)connectToTwitter
 {
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToTwitter)]) {
-//        [self.masterDelegate connectToTwitter];
+        [self.masterDelegate connectToTwitter];
     }
     
     [self dismissPopover];

@@ -115,7 +115,6 @@
     if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(connectToTwitter)]) {
         [self.delegate connectToTwitter];
     }
-//    [self.delegate dismissPopover];
 }
 
 

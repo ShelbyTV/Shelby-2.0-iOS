@@ -548,7 +548,7 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 - (void)connectToTwitter
 {
-//    [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:self.homeVC];
+    [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:self.homeVC];
 }
 
 - (ShelbyBrowseTutorialMode)browseTutorialMode
