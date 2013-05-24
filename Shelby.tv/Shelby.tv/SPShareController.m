@@ -164,6 +164,9 @@
                                        _videoPlayer.view.frame.size.height,
                                        _rollView.frame.size.width,
                                        _rollView.frame.size.height)];
+   
+    [self.videoPlayer.view addSubview:self.rollView];
+    [self.videoPlayer.view bringSubviewToFront:self.rollView];
     
     [UIView animateWithDuration:0.5f
                      animations:^{

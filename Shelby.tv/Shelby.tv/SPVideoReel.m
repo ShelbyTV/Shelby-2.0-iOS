@@ -500,18 +500,23 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 }
 
 #pragma mark - Action Methods (Private)
-- (IBAction)shareButtonAction:(id)sender
+- (void)prepareForShareWithFrame:(CGRect)frame
 {
-    UIButton *shareButton = (UIButton *)sender;
-    STVAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
-    
     self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
-                                                                 fromRect:shareButton.frame];
+                                                                 fromRect:frame];
     self.shareController.delegate = self;
     self.shouldResumePlaybackAfterShare = self.currentPlayer.isPlaying;
     if (self.shouldResumePlaybackAfterShare) {
         [self.currentPlayer pause];
     }
+}
+
+- (IBAction)shareButtonAction:(id)sender
+{
+    UIButton *shareButton = (UIButton *)sender;
+    STVAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
+    
+    [self prepareForShareWithFrame:shareButton.frame];
     [self.shareController share];
 }
 
@@ -545,8 +550,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (IBAction)rollAction:(id)sender
 {
+    // KP KP: instead, ask the brain if can roll or not. (if user logged in or not)
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized]) {
- 
         // KP KP: TODO: invoke this after user logs in.
         // Setting invocation, so we would roll immediately after user logs in.
         NSMethodSignature *rollSignature = [SPVideoReel instanceMethodSignatureForSelector:@selector(rollVideo)];
@@ -557,7 +562,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You need to be logged in to roll" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
         [alertView show];
-        
     } else {
         [self rollVideo];
     }
@@ -565,7 +569,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)rollVideo
 {
-    // TODO
+    [self prepareForShareWithFrame:CGRectZero];
+
+    [self.shareController showRollView];
 }
 
 
