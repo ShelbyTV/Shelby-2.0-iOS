@@ -33,11 +33,23 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         user.userType = [dict[@"user_type"] nilOrSelfWhenNotNull];
     }
     
-    user.publicRollID = dict[@"personal_roll_id"];
-    user.likesRollID = dict[@"watch_later_roll_id"];
+    NSString *publicRollID = dict[@"personal_roll_id"];
+    if (publicRollID) {
+        user.publicRollID = publicRollID;
+    }
+    
+    NSString *likesRollID = dict[@"watch_later_roll_id"];
+    if (likesRollID) {
+        user.likesRollID = likesRollID;
+    }
+    
     user.nickname = dict[@"nickname"];
     user.name = [dict[@"name"] nilOrSelfWhenNotNull];
-    user.token = dict[@"authentication_token"];
+    
+    NSString *token = dict[@"authentication_token"];
+    if (token) {
+        user.token = token;
+    }
     
     // Resetting all auths:
     user.twitterNickname = nil;
