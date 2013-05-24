@@ -344,10 +344,12 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         if (facebookUser) {
             NSManagedObjectContext *context = [self mainThreadContext];
             user = [User updateUserWithFacebookUser:facebookUser inContext:context];
-        
+            if (facebookToken) {
+                [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:user.facebookUID token:facebookToken andSecret:nil];
+            }
             NSError *error;
             [context save:&error];
-            STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+            STVAssert(!error, @"context save failed saving User after facebook login...");
      
             [self.delegate facebookConnectDidCompleteWithUser:user];
         }
