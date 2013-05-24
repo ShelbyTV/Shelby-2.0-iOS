@@ -36,7 +36,7 @@
 
 - (void)setFrameOrDashboardEntry:(id)entity;
 - (void)setAccentColor:(UIColor *)accent;
-
+- (void)setRollEnabled:(BOOL)rollEnabled;
 - (void)didLikeCurrentEntry:(BOOL)like;
 
 @end

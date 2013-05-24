@@ -120,6 +120,17 @@
     });
 }
 
+- (void)setRollEnabled:(BOOL)rollEnabled
+{
+    if (rollEnabled) {
+        [self.rollButton setHidden:NO];
+        [self.shareButton setHidden:YES];
+    } else {
+        [self.rollButton setHidden:YES];
+        [self.shareButton setHidden:NO];
+    }
+}
+
 - (void)setAccentColor:(UIColor *)accentColor
 {
     self.videoInfoView.layer.borderWidth = 3.0;

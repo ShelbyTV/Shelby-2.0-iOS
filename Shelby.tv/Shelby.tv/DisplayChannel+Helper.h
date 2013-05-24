@@ -44,6 +44,7 @@
 
 @property (nonatomic, readonly) BOOL canFetchRemoteEntries;
 
+- (BOOL)canRoll;
 - (UIColor *)displayColor;
 - (NSString *)displayTitle;
 

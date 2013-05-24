@@ -439,6 +439,11 @@
     [self setTutorialCompleted];
 }
 
+- (BOOL)canRoll
+{
+    return self.homeVC.currentUser != nil;
+}
+
 #pragma mark - Helpers
 
 typedef struct _ShelbyArrayMergeInstructions {

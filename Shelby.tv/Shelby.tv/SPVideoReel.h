@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)videoDidFinishPlaying;
 - (SPTutorialMode)tutorialModeForCurrentPlayer;
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
+- (BOOL)canRoll;
 @end
 
 @class SPVideoPlayer, SPOverlayView;

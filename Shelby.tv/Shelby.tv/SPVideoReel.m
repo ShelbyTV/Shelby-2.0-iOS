@@ -60,7 +60,6 @@
 - (IBAction)shareButtonAction:(id)sender;
 - (IBAction)likeAction:(id)sender;
 - (IBAction)rollAction:(id)sender;
-- (void)rollVideo;
 
 @end
 
@@ -203,6 +202,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     self.overlayView.delegate = self;
     [self.view addSubview:self.overlayView];
     [self.overlayView setAccentColor:self.channel.displayColor];
+    [self.overlayView setRollEnabled:[self.channel canRoll] && [self.delegate canRoll]];
 }
 
 //called via -setup via -viewDidLoad
