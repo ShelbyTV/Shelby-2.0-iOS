@@ -21,7 +21,7 @@
 + (UIColor *)colorWithHex:(NSString *)hex andAlpha:(CGFloat)alpha
 {
 
-    UIColor *color;
+    UIColor *color = nil;
     
     switch ( hex.length ) {
             
@@ -34,7 +34,8 @@
             break;
             
         default:
-            STVAssert( hex.length == 6 || hex.length == 3 , @"Your hex color value is malformed. It should either be three or six characters in length.");
+            // TODO: deal with fallback
+//            STVAssert( hex.length == 6 || hex.length == 3 , @"Your hex color value is malformed. It should either be three or six characters in length.");
             break;
     }
     
