@@ -55,6 +55,7 @@ extern NSString * const kShelbyOfflineLikesID;
 - (User *)fetchAuthenticatedUserOnMainThreadContext;
 - (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh;
 - (void)fetchAllUnsyncedLikes;
+- (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForID:(NSString *)channelID;
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere
 -(void)logoutWithUserChannels:(NSArray *)userChannels;

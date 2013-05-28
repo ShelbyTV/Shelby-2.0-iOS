@@ -106,6 +106,11 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     [self.delegate fetchOfflineLikesDidCompleteForChannel:likesChannel with:channelEntries];
 }
 
+- (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForID:(NSString *)channelID
+{
+    return [DisplayChannel channelForChannelID:channelID inContext:[self mainThreadContext]];
+}
+
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
 {
     if(!channel.canFetchRemoteEntries){

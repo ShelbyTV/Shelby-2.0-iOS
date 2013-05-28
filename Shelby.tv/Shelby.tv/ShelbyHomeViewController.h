@@ -18,6 +18,8 @@
 - (void)logoutUser;
 - (void)connectToFacebook;
 - (void)connectToTwitter;
+- (void)playMyRoll;
+- (void)playMyLikes;
 @end
 
 

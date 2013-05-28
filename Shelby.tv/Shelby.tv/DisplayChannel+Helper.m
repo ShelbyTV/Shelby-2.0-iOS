@@ -85,11 +85,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
 + (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
                                           inContext:(NSManagedObjectContext *)context
 {
-    NSString *rollID = kShelbyOfflineLikesID;
-    DisplayChannel *displayChannel = [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
-                                               withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaRollIDPredicate
-                                                         andID:rollID
-                                                     inContext:context];
+    DisplayChannel *displayChannel = [DisplayChannel channelForChannelID:kShelbyOfflineLikesID inContext:context];
     
     if (!displayChannel) {
         displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
@@ -158,6 +154,16 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     displayChannel.roll = myStreams;
     
     return displayChannel;
+}
+
++ (DisplayChannel *)channelForChannelID:(NSString *)channelID
+                              inContext:(NSManagedObjectContext *)context
+{
+    return [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
+                     withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaRollIDPredicate
+                               andID:channelID
+                           inContext:context];
+    
 }
 
 - (BOOL) canFetchRemoteEntries

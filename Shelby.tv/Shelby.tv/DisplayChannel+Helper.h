@@ -41,6 +41,8 @@
                                        withOrder:(NSInteger)order
                                        inContext:(NSManagedObjectContext *)context;
 
++ (DisplayChannel *)channelForChannelID:(NSString *)channelID
+                              inContext:(NSManagedObjectContext *)context;
 
 @property (nonatomic, readonly) BOOL canFetchRemoteEntries;
 

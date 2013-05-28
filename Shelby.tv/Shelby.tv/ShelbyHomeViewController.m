@@ -432,13 +432,19 @@
 - (void)launchMyRoll
 {
     [self dismissPopover];
-    // TODO:
+
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(playMyRoll)]) {
+        [self.masterDelegate playMyRoll];
+    }
 }
 
 - (void)launchMyLikes
 {
     [self dismissPopover];
-    // TODO:  
+
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(playMyLikes)]) {
+        [self.masterDelegate playMyLikes];
+    }
 }
 
 #pragma mark - AuthorizationDelegate

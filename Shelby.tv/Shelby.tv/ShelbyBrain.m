@@ -581,6 +581,29 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:self.homeVC];
 }
 
+- (void)playRollForID:(NSString *)rollID
+{
+    if (rollID) {
+        DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForID:rollID];
+        if (rollChannel) {
+            self.currentChannel = rollChannel;
+            [self.homeVC animateLaunchPlayerForChannel:rollChannel atIndex:0];
+        }
+    }
+}
+
+- (void)playMyLikes
+{
+    User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+    [self playRollForID:user.likesRollID];
+}
+
+- (void)playMyRoll
+{
+    User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+    [self playRollForID:user.publicRollID];
+}
+
 - (ShelbyBrowseTutorialMode)browseTutorialMode
 {
     return self.currentBrowseTutorialMode;
