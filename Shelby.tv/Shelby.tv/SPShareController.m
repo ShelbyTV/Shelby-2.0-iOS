@@ -158,7 +158,8 @@
     [self toggleSocialButtonStatesOnRollViewLaunch];
     
     CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
-    CGFloat yOrigin = self.videoPlayer.view.frame.size.height/5.0f - _rollView.frame.size.height/4.0f;
+    // This is the bottom of the video view in overlay view, so we don't go under it. TODO: when we redo all this, make the share view go ABOVE overlay view.
+    CGFloat yOrigin = 160;
     
     [self.rollView setFrame:CGRectMake(xOrigin,
                                        _videoPlayer.view.frame.size.height,
