@@ -81,6 +81,12 @@
     [alertView show];
 }
 
+- (void)connectToTwitterFailedWithError:(NSString *)errorMessage
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+}
+
 - (void)setChannels:(NSArray *)channels
 {
     _channels = channels;
@@ -211,6 +217,11 @@
         _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
         [self.settingsPopover setDelegate:self];
         [settingsViewController setDelegate:self];
+    } else {
+        SettingsViewController *settingsViewController = (SettingsViewController *)[self.settingsPopover contentViewController];
+        if ([settingsViewController isKindOfClass:[SettingsViewController class]]) {
+            settingsViewController.user = self.currentUser;
+        }
     }
     
     [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];

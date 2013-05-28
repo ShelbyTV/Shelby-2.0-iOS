@@ -16,8 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @property (weak, nonatomic) IBOutlet UILabel *fullname;
 
-@property (nonatomic, strong) User *user;
-
 /// User interaction methods
 - (IBAction)connectoToFacebook:(id)sender;
 - (IBAction)connectoToTwitter:(id)sender;

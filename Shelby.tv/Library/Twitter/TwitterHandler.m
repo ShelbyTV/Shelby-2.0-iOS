@@ -32,6 +32,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 @property (copy, nonatomic) NSString *twitterReverseAuthToken;              
 @property (copy, nonatomic) NSString *twitterReverseAuthSecret;
 @property (nonatomic) NSMutableArray *storedTwitterAccounts;
+@property (nonatomic, weak) id<TwitterHandlerDelegate> delegate;
 
 /// Twitter Authorization Methods ///
 - (void)checkForExistingTwitterAccounts;
@@ -78,10 +79,11 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 
 
 #pragma mark - Twitter Authorization Methods
-- (void)authenticateWithViewController:(UIViewController *)viewController
+- (void)authenticateWithViewController:(UIViewController *)viewController andDelegate:(id<TwitterHandlerDelegate>)delegate
 {
     [self setViewController:viewController];
     [self checkForExistingTwitterAccounts];
+    _delegate = delegate;
 }
 
 #pragma mark - Private Methods
@@ -409,6 +411,8 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     STVAssert(!error, @"context save failed saving User after twitter login...");
                     
                     
+                    [self.delegate twitterConnectDidComplete];
+                    
                     if (name) {
                         [[NSUserDefaults standardUserDefaults] setObject:name forKey:kShelbyTwitterUsername];
                         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -417,7 +421,8 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     [self sendReverseAuthAccessResultsToServer];
                     
                 } else {
-                    
+                    // KP KP: TODO: change error message.s
+                    [self.delegate twitterConnectDidCompleteWithError:@"Error Setting Twitter account. Please try again later."];
                     DLog(@"%@", error);
                     
                 }

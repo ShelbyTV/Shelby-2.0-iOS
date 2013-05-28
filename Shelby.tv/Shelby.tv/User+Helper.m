@@ -92,7 +92,6 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 + (User *)updateUserWithTwitterUsername:(NSString *)username andTwitterID:(NSString *)twitterID
 {
     User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
-    
     user.twitterNickname = username;
     user.twitterUID = twitterID;
     
@@ -102,6 +101,11 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 
 +(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc
 {
+    return [User currentAuthenticatedUserInContext:moc forceRefresh:NO];
+}
+
++(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc forceRefresh:(BOOL)forceRefresh
+{
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityUser];
     request.fetchLimit = 1;
   
@@ -110,7 +114,16 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     
     NSArray *results = [moc executeFetchRequest:request error:nil];
     
-    return [results count] ? results[0] : nil;
+    User *user = nil;
+    if ([results count]) {
+        user = results[0];
+        
+        if (forceRefresh) {
+            [user.managedObjectContext refreshObject:user mergeChanges:YES];
+        }
+    }
+    
+    return user;
 }
 
 + (NSDictionary *)dictionaryForUserChannel:(NSString *)channelID withIDKey:(NSString *)idKey displayTitle:(NSString *)displayTitle displayColor:(NSString *)displayColor

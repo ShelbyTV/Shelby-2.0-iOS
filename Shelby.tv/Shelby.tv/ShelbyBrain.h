@@ -12,8 +12,10 @@
 #import "ShelbyHomeViewController.h"
 #import "ShelbyDataMediator.h"
 #import "SPVideoReel.h"
+#import "TwitterHandler.h"
 
-@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, SPVideoReelDelegate, ShelbyHomeDelegate>
+// KP KP: TODO: Once ShelbyDataM takes care of TwitterHandler, there would be no need for the TwitterHandlerDelegate. It would be part of the ShelbyDataMediatorProtocol
+@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, SPVideoReelDelegate, ShelbyHomeDelegate, TwitterHandlerDelegate>
 
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 

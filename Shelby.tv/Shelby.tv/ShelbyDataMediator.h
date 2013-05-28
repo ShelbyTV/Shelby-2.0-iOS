@@ -31,12 +31,16 @@ extern NSString * const kShelbyOfflineLikesID;
                                      fromCache:(BOOL)cached;
 
 // Login
-- (void)loginUserDidCompleteWithUser:(User *)user;
+- (void)loginUserDidComplete;
 - (void)loginUserDidCompleteWithError:(NSString *)errorMessage;
 
 // Facebook
-- (void)facebookConnectDidCompleteWithUser:(User *)user;
+- (void)facebookConnectDidComplete;
 - (void)facebookConnectDidCompleteWithError:(NSString *)errorMessage;
+
+// Twitter
+- (void)twitterConnectDidComplete;
+- (void)twitterConnectDidCompleteWithError:(NSString *)errorMessage;
 @end
 
 @interface ShelbyDataMediator : NSObject
@@ -49,6 +53,7 @@ extern NSString * const kShelbyOfflineLikesID;
 - (void)fetchChannels;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 - (User *)fetchAuthenticatedUserOnMainThreadContext;
+- (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh;
 - (void)fetchAllUnsyncedLikes;
 
 //XXX: This is not the final method signature, just a placeholder for important api removed from elsewhere

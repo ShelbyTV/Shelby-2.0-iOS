@@ -170,7 +170,12 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
 - (User *)fetchAuthenticatedUserOnMainThreadContext
 {
-    return [User currentAuthenticatedUserInContext:[self mainThreadContext]];
+    return [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+}
+
+- (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh
+{
+    return [User currentAuthenticatedUserInContext:[self mainThreadContext] forceRefresh:forceRefresh];
 }
 
 
@@ -313,10 +318,10 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
             if ([result isKindOfClass:[NSDictionary class]]) {
                 User *user = [User userForDictionary:result inContext:context];
                 NSError *error;
-                [context save:&error];
+                [user.managedObjectContext save:&error];
                 STVAssert(!error, @"context save failed, put your DEBUG hat on...");
                 
-                [self.delegate loginUserDidCompleteWithUser:user];
+                [self.delegate loginUserDidComplete];
                 return;
             }
         }
@@ -351,7 +356,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
             [context save:&error];
             STVAssert(!error, @"context save failed saving User after facebook login...");
      
-            [self.delegate facebookConnectDidCompleteWithUser:user];
+            [self.delegate facebookConnectDidComplete];
         }
         if (facebookToken && user) {
             [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:user.facebookUID token: facebookToken andSecret:nil];
@@ -364,7 +369,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
 - (void)connectTwitterWithViewController:(UIViewController *)viewController
 {
-    [[TwitterHandler sharedInstance] authenticateWithViewController:viewController];
+    [[TwitterHandler sharedInstance] authenticateWithViewController:viewController andDelegate:self.delegate];
 }
 
 - (NSManagedObjectModel *)managedObjectModel

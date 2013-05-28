@@ -19,6 +19,7 @@
 
 @interface SettingsViewController : UIViewController <UIAlertViewDelegate>
 
+@property (nonatomic, strong) User *user;
 @property (nonatomic, weak) id<SettingsViewDelegate> delegate;
 
 - (id)initWithUser:(User *)user;

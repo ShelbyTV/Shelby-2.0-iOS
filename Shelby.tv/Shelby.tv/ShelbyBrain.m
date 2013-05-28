@@ -48,7 +48,7 @@
 
 - (void)handleDidBecomeActive
 {
-    User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     self.homeVC.currentUser = currentUser;
     self.homeVC.masterDelegate = self;
     //TODO: detect sleep time and remove player if it's been too long
@@ -99,27 +99,52 @@
     [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:nil];
 }
 
+- (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh
+{
+     return [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:forceRefresh];
+}
+
 #pragma mark - ShelbyDataMediatorDelegate
 - (void)loginUserDidCompleteWithError:(NSString *)errorMessage
 {
     [self.homeVC userLoginFailedWithError:errorMessage];
 }
 
-- (void)loginUserDidCompleteWithUser:(User *)user
+- (void)loginUserDidComplete
 {
-    [self.homeVC setCurrentUser:user];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.homeVC setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+    });
     
     [self fetchUserChannels];
 }
 
-- (void)facebookConnectDidCompleteWithUser:(User *)user
+- (void)facebookConnectDidComplete
 {
-    [self.homeVC setCurrentUser:user];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.homeVC setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+    });
 }
 
 - (void)facebookConnectDidCompleteWithError:(NSString *)errorMessage
 {
-    [self.homeVC connectToFacebookFailedWithError:errorMessage];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.homeVC connectToFacebookFailedWithError:errorMessage];
+    });
+}
+
+- (void)twitterConnectDidComplete
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.homeVC setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+    });
+}
+
+- (void)twitterConnectDidCompleteWithError:(NSString *)errorMessage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.homeVC connectToTwitterFailedWithError:errorMessage];
+    });
 }
 
 -(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached

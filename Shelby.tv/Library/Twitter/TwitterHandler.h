@@ -6,12 +6,22 @@
 //  Copyright (c) 2012 ArtSabintsev. All rights reserved.
 //
 
+#import "User.h"
+
 FOUNDATION_EXPORT NSString * const kShelbyNotificationTwitterAuthorizationCompleted;
+
+@protocol TwitterHandlerDelegate <NSObject>
+
+- (void)twitterConnectDidComplete;
+- (void)twitterConnectDidCompleteWithError:(NSString *)errorMessage;
+
+@end
+
 
 @interface TwitterHandler : NSObject <UIActionSheetDelegate>
 
 + (TwitterHandler *)sharedInstance;
-- (void)authenticateWithViewController:(UIViewController *)viewController;;
+- (void)authenticateWithViewController:(UIViewController *)viewController andDelegate:(id)delegate;
 
 /// Cleanup
 - (void)twitterCleanup;

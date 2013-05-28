@@ -50,4 +50,5 @@
 
 - (void)userLoginFailedWithError:(NSString *)errorMessage;
 - (void)connectToFacebookFailedWithError:(NSString *)errorMessage;
+- (void)connectToTwitterFailedWithError:(NSString *)errorMessage;
 @end
