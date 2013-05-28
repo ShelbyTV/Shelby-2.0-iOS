@@ -13,6 +13,7 @@
 #import "OAuthConsumer.h"
 #import <Social/Social.h>
 #import "ShelbyAPIClient.h"
+#import "User+Helper.h"
 
 //djs XXX do we need AFNEtworking in here?  Should probably just do all via API
 #import "AFNetworking.h"
@@ -401,6 +402,12 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     [self setTwitterReverseAuthSecret:secret];
                     [self setTwitterID:ID];
                     [self setTwitterName:name];
+                    
+                    User *user = [User updateUserWithTwitterUsername:name andTwitterID:ID];
+                    NSError *error;
+                    [user.managedObjectContext save:&error];
+                    STVAssert(!error, @"context save failed saving User after twitter login...");
+                    
                     
                     if (name) {
                         [[NSUserDefaults standardUserDefaults] setObject:name forKey:kShelbyTwitterUsername];

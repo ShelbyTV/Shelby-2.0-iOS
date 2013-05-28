@@ -8,9 +8,9 @@
 
 #import "User+Helper.h"
 #import "DisplayChannel+Helper.h"
-
 #import "NSManagedObject+Helper.h"
 #import "NSObject+NullHelper.h"
+#import "ShelbyDataMediator.h"
 
 NSString * const kShelbyCoreDataEntityUser = @"User";
 NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
@@ -86,6 +86,16 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     user.facebookUID = facebookUser[@"id"];
     user.facebookNickname = facebookUser[@"name"];
   
+    return user;
+}
+
++ (User *)updateUserWithTwitterUsername:(NSString *)username andTwitterID:(NSString *)twitterID
+{
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    
+    user.twitterNickname = username;
+    user.twitterUID = twitterID;
+    
     return user;
 }
 
