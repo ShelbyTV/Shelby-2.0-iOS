@@ -21,7 +21,7 @@ FOUNDATION_EXPORT NSString * const kShelbyNotificationTwitterAuthorizationComple
 @interface TwitterHandler : NSObject <UIActionSheetDelegate>
 
 + (TwitterHandler *)sharedInstance;
-- (void)authenticateWithViewController:(UIViewController *)viewController andDelegate:(id)delegate;
+- (void)authenticateWithViewController:(UIViewController *)viewController withDelegate:(id)delegate andAuthToken:(NSString *)authToken;
 
 /// Cleanup
 - (void)twitterCleanup;

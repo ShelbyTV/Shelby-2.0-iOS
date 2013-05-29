@@ -62,6 +62,10 @@ typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
 + (void)postShareFrameToSocialNetworks:(NSString*)requestString;
 
 /// Send Third Party Token
-+ (void)postThirdPartyToken:(NSString *)provider accountID:(NSString *)accountID token:(NSString *)token andSecret:(NSString *)secret;
++ (void)postThirdPartyToken:(NSString *)provider
+                  accountID:(NSString *)accountID
+                      token:(NSString *)token
+                     secret:(NSString *)secret
+               andAuthToken:(NSString *)authToken;
 
 @end

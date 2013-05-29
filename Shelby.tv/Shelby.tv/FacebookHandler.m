@@ -19,8 +19,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 
 // Helper methods
 - (NSArray *)facebookPermissions;
-- (void)saveFacebookInfo;
-- (void)sendToken;
 @end
 
 
@@ -42,38 +40,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 - (NSArray *)facebookPermissions
 {
     return [[FBSession activeSession] permissions];
-}
-
-- (void)saveFacebookInfo
-{
-    
-    NSString *oldToken = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookToken];
-    NSString *facebookToken = [self facebookToken];
-    [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kShelbyFacebookToken];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    NSString *oldFacebookID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFacebookUserID];
-    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-        if (!error && [user isKindOfClass:[NSDictionary class]]) {
-            NSString *facebookUserID = user[@"id"];
-            NSString *facebookUserName = user[@"name"];
-            if (facebookUserID && (!oldFacebookID || ![facebookUserID isEqualToString:oldFacebookID])) {
-                [[NSUserDefaults standardUserDefaults] setObject:facebookUserID forKey:kShelbyFacebookUserID];
-                if (facebookToken && (!oldToken || ![facebookToken isEqualToString:oldToken])) {
-                    [self sendToken];
-                }
-            }
-            if (facebookUserName) {
-                [[NSUserDefaults standardUserDefaults] setObject:facebookUserName forKey:kShelbyFacebookUserFullName];
-            }
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }];
-}
-
-- (void)sendToken
-{
-    [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:[self facebookUserID] token:[self facebookToken] andSecret:nil];
 }
 
 - (void)facebookCleanup
@@ -121,7 +87,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 //                [alertView show];
             }
         } else {
-//            [self saveFacebookInfo];
             // KP KP: TODO: dump this, open issue on backend to get user full name
             [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
                 if (!error && [user isKindOfClass:[NSDictionary class]]) {
@@ -172,7 +137,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
     [[FBSession activeSession]
      requestNewPublishPermissions:@[@"publish_stream", @"publish_actions"] defaultAudience:FBSessionDefaultAudienceFriends completionHandler:^(FBSession *session, NSError *error) {
          if (!error) {
-             [self saveFacebookInfo];
              // KP KP: TODO: show an alert dialog if there are errors asking user to approver FB?
          }
          

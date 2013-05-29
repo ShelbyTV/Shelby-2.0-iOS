@@ -468,7 +468,11 @@
 
 #pragma mark - Third Party Token (POST)
 // KP KP: TODO: might want to add more checks: If twitter and there is no secret - error.
-+ (void)postThirdPartyToken:(NSString *)provider accountID:(NSString *)accountID token:(NSString *)token andSecret:(NSString *)secret
++ (void)postThirdPartyToken:(NSString *)provider
+                  accountID:(NSString *)accountID
+                      token:(NSString *)token
+                     secret:(NSString *)secret
+              andAuthToken:(NSString *)authToken
 {
     if (!provider || !accountID || !token) {
         return;
@@ -476,9 +480,9 @@
     
     NSString *requestString = nil;
     if (secret) {
-        requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyToken, provider, accountID, token, secret];
+        requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyToken, provider, accountID, token, secret, authToken];
     } else {
-        requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyTokenNoSecret, provider, accountID, token];
+        requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyTokenNoSecret, provider, accountID, token, authToken];
     }
     NSURL *requestURL = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];

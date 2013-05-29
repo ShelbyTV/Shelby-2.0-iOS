@@ -354,18 +354,17 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         if (facebookUser) {
             NSManagedObjectContext *context = [self mainThreadContext];
             user = [User updateUserWithFacebookUser:facebookUser inContext:context];
-            if (facebookToken) {
-                [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:user.facebookUID token:facebookToken andSecret:nil];
-            }
-            NSError *error;
-            [context save:&error];
+               NSError *error;
+            [user.managedObjectContext save:&error];
             STVAssert(!error, @"context save failed saving User after facebook login...");
      
             [self.delegate facebookConnectDidComplete];
         }
+        
         if (facebookToken && user) {
-            [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:user.facebookUID token: facebookToken andSecret:nil];
+            [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:user.facebookUID token:facebookToken secret:nil andAuthToken:user.token];
         }
+
         if (errorMessage) {
             [self.delegate facebookConnectDidCompleteWithError:errorMessage];
         }
@@ -374,7 +373,12 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
 - (void)connectTwitterWithViewController:(UIViewController *)viewController
 {
-    [[TwitterHandler sharedInstance] authenticateWithViewController:viewController andDelegate:self.delegate];
+    User *user = [User currentAuthenticatedUserInContext:[self createPrivateQueueContext]];
+    NSString *token = nil;
+    if (user) {
+        token = user.token;
+    }
+    [[TwitterHandler sharedInstance] authenticateWithViewController:viewController withDelegate:self.delegate andAuthToken:token];
 }
 
 - (NSManagedObjectModel *)managedObjectModel
