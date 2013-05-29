@@ -56,10 +56,20 @@
      return self;
 }
 
+- (void)updateSocialButtons
+{
+    User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
+    if (user) {
+        self.facebookConnected = user.facebookNickname ? YES : NO;
+        self.twitterConnected = user.twitterNickname ? YES : NO;
+    }
+}
+
 #pragma mark - Setup Methods
 - (void)updateFacebookToggle
 {
     if (self.rollView && self.rollView.facebookButton && [self.rollView.facebookButton isKindOfClass:[UIButton class]]) {
+        [self updateSocialButtons];
         [self.rollView.facebookButton setSelected:([[FacebookHandler sharedInstance] allowPublishActions] && self.facebookConnected)];
     }
 }
@@ -67,19 +77,15 @@
 - (void)updateTwitterToggle
 {
     if (self.rollView && self.rollView.twitterButton && [self.rollView.twitterButton isKindOfClass:[UIButton class]]) {
-        User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
-        [self.rollView.twitterButton setSelected:(user.isTwitterConnected)];
+        [self updateSocialButtons];
+        [self.rollView.twitterButton setSelected:self.twitterConnected];
     }
 }
 
 - (void)setupMaskView
 {
     // Reference social connection status
-    if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserAuthorized] ) {
-        User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
-        self.facebookConnected = user.isFacebookConnected;
-        self.twitterConnected = user.isTwitterConnected;
-    }
+    [self updateSocialButtons];
     
     CGRect videoPlayerFrame = self.videoPlayer.view.frame;
     _mask = [[UIView alloc] initWithFrame:CGRectMake(videoPlayerFrame.origin.x, videoPlayerFrame.origin.y, videoPlayerFrame.size.width, videoPlayerFrame.size.height)];
