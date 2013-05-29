@@ -115,9 +115,7 @@
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
-    //TODO: if SPVideoReel is open on the same channel, addEntries: over there, too
     [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
-    
     [self setPlayerEntriesForChannel:channel];
 }
 

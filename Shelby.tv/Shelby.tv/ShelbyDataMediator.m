@@ -540,7 +540,6 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     return resultDisplayChannels;
 }
 
-
 - (NSArray *)framesForJSON:(id)JSON withRoll:(Roll *)roll inContext:(NSManagedObjectContext *)context
 {
     if(![JSON isKindOfClass:[NSDictionary class]]){
@@ -578,7 +577,6 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     STVAssert(!error, @"context save failed, in framesForJSON...");
     return resultDashboardEntries;
 }
-
 
 - (NSArray *)dashboardEntriesForJSON:(id)JSON withDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
 {
