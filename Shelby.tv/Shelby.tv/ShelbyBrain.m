@@ -469,6 +469,11 @@
     return self.homeVC.currentUser != nil;
 }
 
+- (void)userAskForFacebookPublishPermissions
+{
+    [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
+}
+
 #pragma mark - Helpers
 
 typedef struct _ShelbyArrayMergeInstructions {

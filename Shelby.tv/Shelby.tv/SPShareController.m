@@ -243,7 +243,7 @@
     }
     
     if (sender == _rollView.facebookButton && [sender isSelected] && ![[FacebookHandler sharedInstance] allowPublishActions]) {
-        [[FacebookHandler sharedInstance] askForPublishPermissions];
+        [self.delegate userAskForFacebookPublishPermissions];
     }
 }
 

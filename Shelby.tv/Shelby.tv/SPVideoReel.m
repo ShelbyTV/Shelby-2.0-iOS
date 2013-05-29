@@ -527,6 +527,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
+- (void)userAskForFacebookPublishPermissions
+{
+    [self.delegate userAskForFacebookPublishPermissions];
+}
+
 - (IBAction)likeAction:(id)sender
 {
     SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];

@@ -15,7 +15,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 
 @interface FacebookHandler()
 @property (nonatomic, assign) BOOL allowPublishActions;
-@property (nonatomic, strong) NSInvocation *invocationMethod;
 
 // Helper methods
 - (NSArray *)facebookPermissions;
@@ -70,6 +69,7 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 - (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI withBlock:(shelby_facebook_request_complete_block_t)completionBlock
 {
     if ([[FBSession activeSession] isOpen]) {
+        completionBlock(nil, nil, nil);
         return;
     }
     
@@ -91,16 +91,11 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
             [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
                 if (!error && [user isKindOfClass:[NSDictionary class]]) {
                     completionBlock(user, [self facebookToken], nil);
-                } else {
+               } else {
                     // error? could not fetch user.
                 }
             }];
-            
-            if (self.invocationMethod) {
-                [self.invocationMethod invoke];
-                [self setInvocationMethod:nil];
-            }
-        }
+         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
      }];
@@ -120,20 +115,6 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 
 - (void)askForPublishPermissions
 {
-    // KP KP: TODO: deal with invocation
-    if (![[FBSession activeSession] isOpen]) {
-//        NSMethodSignature *signature = [FacebookHandler instanceMethodSignatureForSelector:@selector(askForPublishPermissions)];
-//        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-//        
-//        [invocation setTarget:self];
-//        [invocation setSelector:@selector(askForPublishPermissions)];
-//        
-//        [self setInvocationMethod:invocation];
-//        
-//        [self openSessionWithAllowLoginUI:YES];
-        return;
-    }
-    
     [[FBSession activeSession]
      requestNewPublishPermissions:@[@"publish_stream", @"publish_actions"] defaultAudience:FBSessionDefaultAudienceFriends completionHandler:^(FBSession *session, NSError *error) {
          if (!error) {

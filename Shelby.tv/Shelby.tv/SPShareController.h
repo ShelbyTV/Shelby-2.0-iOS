@@ -11,6 +11,7 @@
 @protocol SPShareControllerDelegate <NSObject>
 
 - (void)shareDidFinish:(BOOL)complete;
+- (void)userAskForFacebookPublishPermissions;
 
 @end
 

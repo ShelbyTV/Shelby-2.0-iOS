@@ -62,6 +62,7 @@ extern NSString * const kShelbyOfflineLikesID;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 
+- (void)userAskForFacebookPublishPermissions;
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)connectTwitterWithViewController:(UIViewController *)viewController;
 

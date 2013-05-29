@@ -344,17 +344,28 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }];
 }
 
+- (void)userAskForFacebookPublishPermissions
+{
+        [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];
+}
+
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI
 {
-    [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES withBlock:^(NSDictionary *facebookUser,
+    [self openFacebookSessionWithAllowLoginUI:allowLoginUI andAskPublishPermissions:NO];
+}
+
+- (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI andAskPublishPermissions:(BOOL)askForPublishPermission
+{
+    __block BOOL askForWritePermission = askForPublishPermission;
+    [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
+                                                        withBlock:^(NSDictionary *facebookUser,
                                                                                   NSString *facebookToken,
                                                                                   NSString *errorMessage) {
-  
         User *user = nil;
         if (facebookUser) {
             NSManagedObjectContext *context = [self mainThreadContext];
             user = [User updateUserWithFacebookUser:facebookUser inContext:context];
-               NSError *error;
+            NSError *error;
             [user.managedObjectContext save:&error];
             STVAssert(!error, @"context save failed saving User after facebook login...");
      
@@ -363,10 +374,22 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         
         if (facebookToken && user) {
             [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:user.facebookUID token:facebookToken secret:nil andAuthToken:user.token];
+            if (askForWritePermission) {
+                askForWritePermission = NO;
+                [[FacebookHandler sharedInstance] askForPublishPermissions];
+            }
         }
 
         if (errorMessage) {
             [self.delegate facebookConnectDidCompleteWithError:errorMessage];
+        }
+        
+        // Session was already open
+        if (!facebookToken && !facebookToken && !errorMessage) {
+            askForWritePermission = NO;
+            if (askForWritePermission) {
+                [[FacebookHandler sharedInstance] askForPublishPermissions];
+            }
         }
     }];
 }
