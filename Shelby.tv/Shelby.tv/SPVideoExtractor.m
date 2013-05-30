@@ -99,7 +99,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 - (void)warmCacheForVideo:(Video *)video
 {
     @synchronized(self){
-        if([self.warmCacheExtractionQueue count] < 5){
+        if([self.warmCacheExtractionQueue count] < 15){
         [self.warmCacheExtractionQueue addObject:@{kSPVideoExtractorVideoKey: video}];
             [self scheduleNextExtraction];
         }
@@ -116,7 +116,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 {
     @synchronized(self){
         if(!self.startNextExtractionTimer){
-            self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.10
+            self.startNextExtractionTimer = [NSTimer scheduledTimerWithTimeInterval:0.01
                                                                              target:self
                                                                            selector:@selector(extractNextVideoFromQueue)
                                                                            userInfo:nil
