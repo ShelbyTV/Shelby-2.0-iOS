@@ -30,6 +30,9 @@
 #define kShelbySPFastSpeed 0.5
 #define kShelbyTutorialIntervalBetweenTutorials 3
 
+//only show the stalled alert view if it hasn't shown in this much time
+#define VIDEO_STALLED_MIN_TIME_BETWEEN_ALERTS -60 // 1m
+
 #define kShelbyFirstTimeLikedAlert @"kShelbyFirstTimeLikedAlert"
 
 @interface SPVideoReel ()
@@ -53,6 +56,7 @@
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
 @property (nonatomic, strong) SPShareController *shareController;
 @property (nonatomic, assign) BOOL isShutdown;
+@property (nonatomic, strong) NSDate *lastVideoStalledAlertTime;
 
 //allows us to dismiss alert view if video changes or we exit
 @property (nonatomic, strong) ShelbyAlertView *currentVideoAlertView;
@@ -856,8 +860,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
          * 
          * Focus more time than seems necessary on this, b/c it makes watching a single video very enjoyable.
          */
-        if (self.tutorialMode == SPTutorialModeNone) {
+        if (self.tutorialMode == SPTutorialModeNone &&
+            (self.lastVideoStalledAlertTime == nil || [self.lastVideoStalledAlertTime timeIntervalSinceNow] < VIDEO_STALLED_MIN_TIME_BETWEEN_ALERTS)) {
             [self.currentVideoAlertView dismiss];
+            self.lastVideoStalledAlertTime = [NSDate date];
             self.currentVideoAlertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
                                                                         message:NSLocalizedString(@"PLAYBACK_STALLED_MESSAGE", nil)
                                                              dismissButtonTitle:NSLocalizedString(@"PLAYBACK_STALLED_BUTTON", nil)
