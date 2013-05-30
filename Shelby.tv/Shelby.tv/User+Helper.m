@@ -55,6 +55,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     user.twitterNickname = nil;
     user.twitterUID = nil;
     user.facebookNickname = nil;
+    user.facebookName = nil;
     user.facebookUID = nil;
     user.tumblrNickname = nil;
     user.tumblrUID = nil;
@@ -68,6 +69,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
                 user.twitterNickname = [authDict[@"nickname"] nilOrSelfWhenNotNull];
                 user.twitterUID = [authDict[@"uid"] nilOrSelfWhenNotNull];
             } else if([provider isEqualToString:@"facebook"]){
+                user.facebookName = [authDict[@"name"] nilOrSelfWhenNotNull];
                 user.facebookNickname = [authDict[@"nickname"] nilOrSelfWhenNotNull];
                 user.facebookUID = [authDict[@"uid"] nilOrSelfWhenNotNull];
             } else if([provider isEqualToString:@"tumblr"]){
@@ -84,7 +86,8 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 {
     User *user = [User currentAuthenticatedUserInContext:moc];
     user.facebookUID = facebookUser[@"id"];
-    user.facebookNickname = facebookUser[@"name"];
+    user.facebookNickname = facebookUser[@"username"];
+    user.facebookName = facebookUser[@"name"];
   
     return user;
 }

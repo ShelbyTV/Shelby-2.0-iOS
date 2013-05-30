@@ -68,7 +68,7 @@
 // KP KP: TODO: for now not really checking the user object. Need to Check that. Maybe also add username to the coredata object
 - (void)refreshSocialButtonStatus
 {
-    NSString *facebookName = self.user.facebookNickname;
+    NSString *facebookName = self.user.facebookName;
     if (facebookName) {
         [self.faceookButton setTitle:[NSString stringWithFormat:@"%@", facebookName] forState:UIControlStateDisabled];
         [self.faceookButton setEnabled:NO];

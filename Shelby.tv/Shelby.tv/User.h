@@ -2,7 +2,7 @@
 //  User.h
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 5/21/13.
+//  Created by Keren on 5/30/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSString * userImage;
 @property (nonatomic, retain) NSNumber * userType;
+@property (nonatomic, retain) NSString * facebookName;
 @property (nonatomic, retain) NSSet *frames;
 @end
 

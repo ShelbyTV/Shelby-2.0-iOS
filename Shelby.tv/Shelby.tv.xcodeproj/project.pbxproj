@@ -385,6 +385,9 @@
 		1CACC0B317287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
 		1CACC0B417287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
 		1CACC0B517287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
+		1CC223BA17580DF9003396B4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC223B917580DF9003396B4 /* User.m */; };
+		1CC223BB17580DF9003396B4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC223B917580DF9003396B4 /* User.m */; };
+		1CC223BC17580DF9003396B4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC223B917580DF9003396B4 /* User.m */; };
 		1CC3387816CBDF2A00E58375 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
 		1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
 		1CC75ADC172AF2FC004805A5 /* connectedfacebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ABE172AF2FC004805A5 /* connectedfacebook.png */; };
@@ -682,9 +685,6 @@
 		914052FA174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
 		914052FB174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
 		914052FC174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
-		91405304174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
-		91405305174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
-		91405306174C419400E18A6B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405303174C419400E18A6B /* User.m */; };
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
@@ -841,6 +841,8 @@
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1CACC0AE17287276007EDD65 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1CACC0B217287298007EDD65 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		1CC223B817580DF9003396B4 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		1CC223B917580DF9003396B4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1CC3387616CBDF2A00E58375 /* BrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseViewController.h; sourceTree = "<group>"; };
 		1CC3387716CBDF2A00E58375 /* BrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowseViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1CC3387916CBE20800E58375 /* BrowseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseView.xib; sourceTree = "<group>"; };
@@ -1083,8 +1085,6 @@
 		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
 		914052F8174C411600E18A6B /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
 		914052F9174C411600E18A6B /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
-		91405302174C419400E18A6B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		91405303174C419400E18A6B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
 		9140530D174D055700E18A6B /* NSObject+NullHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NullHelper.m"; sourceTree = "<group>"; };
 		91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Helper.h"; sourceTree = "<group>"; };
@@ -1381,9 +1381,9 @@
 			children = (
 				91E5D461174E938100AD3746 /* Roll.h */,
 				91E5D462174E938100AD3746 /* Roll.m */,
+				1CC223B817580DF9003396B4 /* User.h */,
+				1CC223B917580DF9003396B4 /* User.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
-				91405302174C419400E18A6B /* User.h */,
-				91405303174C419400E18A6B /* User.m */,
 				914052F8174C411600E18A6B /* DashboardEntry.h */,
 				914052F9174C411600E18A6B /* DashboardEntry.m */,
 				91649ED117426FDB00A9265B /* Frame.h */,
@@ -2563,12 +2563,12 @@
 				910933091743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				914052FB174C411600E18A6B /* DashboardEntry.m in Sources */,
-				91405305174C419400E18A6B /* User.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D464174E938100AD3746 /* Roll.m in Sources */,
 				91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
+				1CC223BB17580DF9003396B4 /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2669,12 +2669,12 @@
 				9109330A1743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				914052FC174C411600E18A6B /* DashboardEntry.m in Sources */,
-				91405306174C419400E18A6B /* User.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D465174E938100AD3746 /* Roll.m in Sources */,
 				91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
+				1CC223BC17580DF9003396B4 /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2775,12 +2775,12 @@
 				910933081743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				914052FA174C411600E18A6B /* DashboardEntry.m in Sources */,
-				91405304174C419400E18A6B /* User.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D463174E938100AD3746 /* Roll.m in Sources */,
 				91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
+				1CC223BA17580DF9003396B4 /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
