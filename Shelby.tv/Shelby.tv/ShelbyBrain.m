@@ -221,7 +221,9 @@
         }
     } else {
         [self.homeVC setEntries:channelEntries forChannel:channel];
-        [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:channelEntries[0]];
+        if ([channelEntries count]) {
+            [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:channelEntries[0]];
+        }
     }
     
     if(!cached){

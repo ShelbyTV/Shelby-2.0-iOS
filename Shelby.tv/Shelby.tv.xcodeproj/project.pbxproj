@@ -739,6 +739,12 @@
 		91E5D463174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
 		91E5D464174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
 		91E5D465174E938100AD3746 /* Roll.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D462174E938100AD3746 /* Roll.m */; };
+		91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
+		91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
+		91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
+		91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */; };
+		91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */; };
+		91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */; };
 		91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
@@ -1118,6 +1124,10 @@
 		91D03F74173321AC008131D2 /* Messages+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Messages+Helper.m"; sourceTree = "<group>"; };
 		91E5D461174E938100AD3746 /* Roll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roll.h; sourceTree = "<group>"; };
 		91E5D462174E938100AD3746 /* Roll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roll.m; sourceTree = "<group>"; };
+		91E5D4671757BA1F00AD3746 /* LBYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubeExtractor.h; sourceTree = "<group>"; };
+		91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubeExtractor.m; sourceTree = "<group>"; };
+		91E5D46D1757C89F00AD3746 /* YTVimeoExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTVimeoExtractor.h; sourceTree = "<group>"; };
+		91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTVimeoExtractor.m; sourceTree = "<group>"; };
 		91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Frame+Helper.h"; sourceTree = "<group>"; };
 		91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Frame+Helper.m"; sourceTree = "<group>"; };
 		91F0CBFE172EEF96008B5B34 /* ShelbyDataMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDataMediator.h; sourceTree = "<group>"; };
@@ -1714,6 +1724,8 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */,
+				91E5D4661757BA1F00AD3746 /* LBYouTubeView */,
 				8E70248C1715E71500E8DE46 /* OAuth Consumer */,
 				8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
@@ -1926,6 +1938,26 @@
 			);
 			name = Constants;
 			sourceTree = "<group>";
+		};
+		91E5D4661757BA1F00AD3746 /* LBYouTubeView */ = {
+			isa = PBXGroup;
+			children = (
+				91E5D4671757BA1F00AD3746 /* LBYouTubeExtractor.h */,
+				91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */,
+			);
+			name = LBYouTubeView;
+			path = Library/LBYouTubeView;
+			sourceTree = SOURCE_ROOT;
+		};
+		91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */ = {
+			isa = PBXGroup;
+			children = (
+				91E5D46D1757C89F00AD3746 /* YTVimeoExtractor.h */,
+				91E5D46E1757C89F00AD3746 /* YTVimeoExtractor.m */,
+			);
+			name = YTVimeoExtractor;
+			path = Library/YTVimeoExtractor;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -2535,6 +2567,8 @@
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D464174E938100AD3746 /* Roll.m in Sources */,
+				91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
+				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2639,6 +2673,8 @@
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D465174E938100AD3746 /* Roll.m in Sources */,
+				91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
+				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2743,6 +2779,8 @@
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D463174E938100AD3746 /* Roll.m in Sources */,
+				91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
+				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
