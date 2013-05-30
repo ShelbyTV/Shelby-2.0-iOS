@@ -474,6 +474,11 @@
     [[ShelbyDataMediator sharedInstance] userAskForFacebookPublishPermissions];
 }
 
+- (void)userAskForTwitterPublishPermissions
+{
+    [self connectToTwitter];
+}
+
 #pragma mark - Helpers
 
 typedef struct _ShelbyArrayMergeInstructions {
@@ -583,7 +588,13 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 - (void)connectToTwitter
 {
-    [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:self.homeVC];
+    //get topmost visible view
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while ([topViewController presentedViewController]) {
+        topViewController = [topViewController presentedViewController];
+    }
+
+    [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:topViewController];
 }
 
 - (void)playRollForID:(NSString *)rollID

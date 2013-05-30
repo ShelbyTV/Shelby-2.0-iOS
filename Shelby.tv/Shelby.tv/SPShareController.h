@@ -12,7 +12,7 @@
 
 - (void)shareDidFinish:(BOOL)complete;
 - (void)userAskForFacebookPublishPermissions;
-
+- (void)userAskForTwitterPublishPermissions;
 @end
 
 @interface SPShareController : NSObject <UITextViewDelegate, UIPopoverControllerDelegate>

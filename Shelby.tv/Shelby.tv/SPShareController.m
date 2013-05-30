@@ -239,16 +239,25 @@
 - (IBAction)toggleSocialButtonStates:(id)sender
 {
     if (sender == self.rollView.facebookButton || sender == self.rollView.twitterButton) {
+        BOOL facebookToggle = sender == self.rollView.facebookButton ? YES : NO;
+        
         BOOL selectionToggle = ![sender isSelected];
         [sender setSelected:selectionToggle];
         
-        NSString *defaultsKey = sender == self.rollView.facebookButton ? kShelbyFacebookShareEnable : kShelbyTwitterShareEnable;
+        NSString *defaultsKey = facebookToggle ? kShelbyFacebookShareEnable : kShelbyTwitterShareEnable;
         [[NSUserDefaults standardUserDefaults] setBool:selectionToggle forKey:defaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
-    }
     
-    if (sender == _rollView.facebookButton && [sender isSelected] && ![[FacebookHandler sharedInstance] allowPublishActions]) {
-        [self.delegate userAskForFacebookPublishPermissions];
+    
+        if (selectionToggle) {
+            if (facebookToggle) {
+                if (![[FacebookHandler sharedInstance] allowPublishActions]) {
+                    [self.delegate userAskForFacebookPublishPermissions];
+                }
+            } else if (!self.twitterConnected) {
+                [self.delegate userAskForTwitterPublishPermissions];
+            }
+        }
     }
 }
 

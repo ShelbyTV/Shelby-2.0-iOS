@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 - (BOOL)canRoll;
 - (void)userAskForFacebookPublishPermissions;
+- (void)userAskForTwitterPublishPermissions;
 @end
 
 @class SPVideoPlayer, SPOverlayView;
