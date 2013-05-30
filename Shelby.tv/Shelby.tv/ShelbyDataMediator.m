@@ -216,7 +216,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                 });
                 
             } else {
-                [self.delegate fetchChannelsDidCompleteWithError:error];
+                [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+                                                       withError:error];
             }
                                      
     }];
@@ -279,7 +280,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                 });
             });
         } else {
-            [self.delegate fetchChannelsDidCompleteWithError:error];
+            [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+                                                   withError:error];
         }
     }];
 }
@@ -598,7 +600,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         
         Frame *entry = [Frame frameForDictionary:frameDict inContext:context];
  
-        if (entry) {
+        if ([entry isPlayable]) {
             [resultDashboardEntries addObject:entry];
         }
     }

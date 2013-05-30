@@ -244,7 +244,7 @@
     [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     
     [self showErrorView:error];
-    DLog(@"TODO: handle fetch channels did complete with error %@", error);
+    DLog(@"TODO: handle fetch entries did complete with error %@", error);
 }
 
 -(void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
