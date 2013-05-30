@@ -13,9 +13,10 @@
 
 @interface SPVideoExtractor () <UIWebViewDelegate>
 
-//youtube extractions
+//non web-view extractions
 @property (nonatomic) LBYouTubeExtractor *ytExtractor;
-//non-youtube extractions
+@property (nonatomic) YTVimeoExtractor *vimeoExtractor;
+//web-view extractions
 @property (nonatomic) UIWebView *webView;
 
 
@@ -154,6 +155,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             extraction_complete_block currentCompletionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
             [self destroyWebView];
             [self destroyYTExtractor];
+            [self destroyVimeoExtractor];
             self.currentlyExtracting = nil;
             if(currentCompletionBlock){
                 currentCompletionBlock(nil, NO);
@@ -221,15 +223,15 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 if ([video.providerName isEqualToString:@"youtube"]) {
                     [self lbYouTube:video];
                     
-                } else {
-                    //WebView based extractions...
+                } else if ([video.providerName isEqualToString:@"vimeo"]) {
+                    [self ytVimeo:video];
+                
+                } else if ([video.providerName isEqualToString:@"dailymotion"]) {
+                    //WebView based extraction...
                     STVAssert(!self.webView, @"should not have a web view already");
                     [self createWebView];
-                    if ([video.providerName isEqualToString:@"vimeo"]) {
-                        [self loadVimeoVideo:video];
-                    } else if ([video.providerName isEqualToString:@"dailymotion"]) {
-                        [self loadDailyMotionVideo:video];
-                    }
+                    
+                    [self loadDailyMotionVideo:video];
                     
                     STVAssert(self.currentExtractionTimeoutTimer == nil, @"shouldn't have a current extraction timeout timer");
                     self.currentExtractionTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
@@ -237,6 +239,8 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                                                                                         selector:@selector(extractionTimedOut:)
                                                                                         userInfo:self.currentlyExtracting
                                                                                          repeats:NO];
+                } else {
+                    STVAssert(NO, @"Invalid video provider");
                 }
             }
         } else {
@@ -289,6 +293,29 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     self.ytExtractor = nil;
 }
 
+- (void)destroyVimeoExtractor
+{
+    //has no cancel
+    self.vimeoExtractor.delegate = nil;
+    self.vimeoExtractor = nil;
+}
+
+- (void)lbYouTube:(Video *)video
+{
+    //TODO - set Quality based on device (iPad vs iPhone)
+    self.ytExtractor = [[LBYouTubeExtractor alloc] initWithID:video.providerID quality:LBYouTubeVideoQualityLarge];
+    self.ytExtractor.delegate = self;
+    [self.ytExtractor startExtracting];
+}
+
+- (void)ytVimeo:(Video *)video
+{
+    //TODO - set Quality based on device (iPad vs iPhone)
+    self.vimeoExtractor = [[YTVimeoExtractor alloc] initWithID:video.providerID quality:YTVimeoVideoQualityHigh];
+    self.vimeoExtractor.delegate = self;
+    [self.vimeoExtractor start];
+}
+
 //deprecated
 - (void)loadYouTubeVideo:(Video *)video
 {
@@ -305,27 +332,18 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     
 }
 
-- (void)lbYouTube:(Video *)video
-{
-    //TODO - set Quality based on device (iPad vs iPhone)
-    self.ytExtractor = [[LBYouTubeExtractor alloc] initWithID:video.providerID quality:LBYouTubeVideoQualityLarge];
-    self.ytExtractor.delegate = self;
-    [self.ytExtractor startExtracting];
-}
-
+//deprecated AND broken
 - (void)loadVimeoVideo:(Video *)video
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processNotification:) name:nil object:nil];
     
-    //static NSString *vimeoExtractor = @"<html><body><center><iframe id=\"player_1\" src=\"http://player.vimeo.com/video/%@?api=1&amp;player_id=player_1\" webkit-playsinline ></iframe><script src=\"http://a.vimeocdn.com/js/froogaloop2.min.js?cdbdb\"></script><script>(function(){var vimeoPlayers = document.querySelectorAll('iframe');$f(vimeoPlayers[0]).addEvent('ready', ready);function ready(player_id) {$f(player_id).api('play');}})();</script></center></body></html>";
-    static NSString *vimeoExtractor = @"<html><body><iframe src=\"http://player.vimeo.com/video/%@?autoplay=1\" width=\"2048\" height=\"1536\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></body></html>";
+    static NSString *vimeoExtractor = @"<html><body><center><iframe id=\"player_1\" src=\"http://player.vimeo.com/video/%@?api=1&amp;player_id=player_1\" webkit-playsinline ></iframe><script src=\"http://a.vimeocdn.com/js/froogaloop2.min.js?cdbdb\"></script><script>(function(){var vimeoPlayers = document.querySelectorAll('iframe');$f(vimeoPlayers[0]).addEvent('ready', ready);function ready(player_id) {$f(player_id).api('play');}})();</script></center></body></html>";
     
     NSString *vimeoRequestString = [NSString stringWithFormat:vimeoExtractor, video.providerID];
-    DLog(@"Vimeo string: %@", vimeoRequestString);
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.window addSubview:_webView];
-    [self.webView loadHTMLString:vimeoRequestString baseURL:[NSURL URLWithString:@"http://goog.le"]];
+    [self.webView loadHTMLString:vimeoRequestString baseURL:[NSURL URLWithString:@"http://shelby.tv"]];
 }
 
 - (void)loadDailyMotionVideo:(Video *)video
@@ -342,7 +360,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 }
 
 #pragma mark - YouTube Extraction Results
-//YT extraction success
 -(void)youTubeExtractor:(LBYouTubeExtractor *)extractor didSuccessfullyExtractYouTubeURL:(NSURL *)videoURL
 {
     @synchronized(self) {
@@ -350,7 +367,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         STVAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
         
         NSString *extractedURL = [videoURL absoluteString];
-        DLog(@"HUZZAH!");
         
         [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
         extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
@@ -370,8 +386,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         STVAssert(self.currentlyExtracting, @"expected to be extracting something!");
         STVAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
         
-        DLog(@"--------------------------------------------------------------BOOOOO: %@", error);
-        
         extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
         if(completionBlock){
             completionBlock(nil, YES);
@@ -380,9 +394,47 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         [self destroyYTExtractor];
         
         [self scheduleNextExtraction];
-
     }
 }
+
+#pragma mark - Vimeo Extraction Results
+- (void)vimeoExtractor:(YTVimeoExtractor *)extractor didSuccessfullyExtractVimeoURL:(NSURL *)videoURL
+{
+    @synchronized(self) {
+        STVAssert(self.currentlyExtracting, @"expected to be extracting something!");
+        STVAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
+        
+        NSString *extractedURL = [videoURL absoluteString];
+        
+        [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
+        extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+        if(completionBlock){
+            completionBlock(extractedURL, NO);
+        }
+        self.currentlyExtracting = nil;
+        [self destroyVimeoExtractor];
+        
+        [self scheduleNextExtraction];
+    }
+}
+
+- (void)vimeoExtractor:(YTVimeoExtractor *)extractor failedExtractingVimeoURLWithError:(NSError *)error
+{
+    @synchronized(self) {
+        STVAssert(self.currentlyExtracting, @"expected to be extracting something!");
+        STVAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
+        
+        extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+        if(completionBlock){
+            completionBlock(nil, YES);
+        }
+        self.currentlyExtracting = nil;
+        [self destroyVimeoExtractor];
+        
+        [self scheduleNextExtraction];
+    }
+}
+
 
 #pragma mark - WebView Extraction Results
 //WebView (non YT) extraction success

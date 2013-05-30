@@ -9,12 +9,13 @@
 
 #import "LBYouTubeExtractor.h"
 #import "ShelbyVideoContainer.h"
+#import "YTVimeoExtractor.h"
 
 @class Video;
 
 typedef void (^extraction_complete_block)(NSString *videoURL, BOOL wasError);
 
-@interface SPVideoExtractor : NSObject <UIWebViewDelegate, LBYouTubeExtractorDelegate>
+@interface SPVideoExtractor : NSObject <UIWebViewDelegate, LBYouTubeExtractorDelegate, YTVimeoExtractorDelegate>
 
 /// Singleton Methods
 + (SPVideoExtractor *)sharedInstance;
