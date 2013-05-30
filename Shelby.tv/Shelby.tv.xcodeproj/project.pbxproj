@@ -739,6 +739,9 @@
 		91D03F75173321AD008131D2 /* Messages+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F74173321AC008131D2 /* Messages+Helper.m */; };
 		91D03F76173321AD008131D2 /* Messages+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F74173321AC008131D2 /* Messages+Helper.m */; };
 		91D03F77173321AD008131D2 /* Messages+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F74173321AC008131D2 /* Messages+Helper.m */; };
+		91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
+		91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
+		91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */; };
 		91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
 		91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */; };
@@ -1118,6 +1121,8 @@
 		91D03F6F1733201A008131D2 /* Conversation+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Helper.m"; sourceTree = "<group>"; };
 		91D03F73173321AC008131D2 /* Messages+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Messages+Helper.h"; sourceTree = "<group>"; };
 		91D03F74173321AC008131D2 /* Messages+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Messages+Helper.m"; sourceTree = "<group>"; };
+		91E5D4671757BA1F00AD3746 /* LBYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubeExtractor.h; sourceTree = "<group>"; };
+		91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubeExtractor.m; sourceTree = "<group>"; };
 		91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Frame+Helper.h"; sourceTree = "<group>"; };
 		91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Frame+Helper.m"; sourceTree = "<group>"; };
 		91F0CBFE172EEF96008B5B34 /* ShelbyDataMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDataMediator.h; sourceTree = "<group>"; };
@@ -1714,6 +1719,7 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				91E5D4661757BA1F00AD3746 /* LBYouTubeView */,
 				8E70248C1715E71500E8DE46 /* OAuth Consumer */,
 				8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
@@ -1926,6 +1932,16 @@
 			);
 			name = Constants;
 			sourceTree = "<group>";
+		};
+		91E5D4661757BA1F00AD3746 /* LBYouTubeView */ = {
+			isa = PBXGroup;
+			children = (
+				91E5D4671757BA1F00AD3746 /* LBYouTubeExtractor.h */,
+				91E5D4681757BA1F00AD3746 /* LBYouTubeExtractor.m */,
+			);
+			name = LBYouTubeView;
+			path = Library/LBYouTubeView;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -2535,6 +2551,7 @@
 				91405305174C419400E18A6B /* User.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
+				91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2639,6 +2656,7 @@
 				91405306174C419400E18A6B /* User.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
+				91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2743,6 +2761,7 @@
 				91405304174C419400E18A6B /* User.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
+				91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
