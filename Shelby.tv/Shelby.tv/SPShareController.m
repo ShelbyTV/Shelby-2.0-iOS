@@ -20,6 +20,9 @@
 #import "TwitterHandler.h"
 #import "User+Helper.h"
 
+#define kShelbyFacebookShareEnable  @"kShelbyFacebookShareEnable"
+#define kShelbyTwitterShareEnable   @"kShelbyTwitterShareEnable"
+
 @interface SPShareController ()
 
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
@@ -60,9 +63,15 @@
 {
     User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
     if (user) {
-        self.facebookConnected = user.facebookNickname ? YES : NO;
-        self.twitterConnected = user.twitterNickname ? YES : NO;
+        self.facebookConnected = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] && [[NSUserDefaults standardUserDefaults] boolForKey: kShelbyFacebookShareEnable] ? YES : NO;
+        self.twitterConnected = user.twitterNickname && [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterShareEnable] ? YES : NO;
+    } else {
+        self.facebookConnected = NO;
+        self.twitterConnected = NO;
     }
+
+    self.rollView.facebookButton.selected = self.facebookConnected;
+    self.rollView.twitterButton.selected = self.twitterConnected;
 }
 
 #pragma mark - Setup Methods
@@ -70,7 +79,6 @@
 {
     if (self.rollView && self.rollView.facebookButton && [self.rollView.facebookButton isKindOfClass:[UIButton class]]) {
         [self updateSocialButtons];
-        [self.rollView.facebookButton setSelected:([[FacebookHandler sharedInstance] allowPublishActions] && self.facebookConnected)];
     }
 }
 
@@ -78,15 +86,11 @@
 {
     if (self.rollView && self.rollView.twitterButton && [self.rollView.twitterButton isKindOfClass:[UIButton class]]) {
         [self updateSocialButtons];
-        [self.rollView.twitterButton setSelected:self.twitterConnected];
     }
 }
 
 - (void)setupMaskView
 {
-    // Reference social connection status
-    [self updateSocialButtons];
-    
     CGRect videoPlayerFrame = self.videoPlayer.view.frame;
     _mask = [[UIView alloc] initWithFrame:CGRectMake(videoPlayerFrame.origin.x, videoPlayerFrame.origin.y, videoPlayerFrame.size.width, videoPlayerFrame.size.height)];
     [self.mask setBackgroundColor:[UIColor blackColor]];
@@ -161,7 +165,7 @@
                                andContentMode:UIViewContentModeScaleAspectFill];
     
     // Set proper states for buttons
-    [self toggleSocialButtonStatesOnRollViewLaunch];
+    [self updateSocialButtons];
     
     CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
     // This is the bottom of the video view in overlay view, so we don't go under it. TODO: when we redo all this, make the share view go ABOVE overlay view.
@@ -221,16 +225,6 @@
                      }];
 }
 
-#pragma mark - UI Methods (Private)
-- (void)toggleSocialButtonStatesOnRollViewLaunch
-{
-    // Facebook Button State
-    [self.rollView.facebookButton setSelected:(self.facebookConnected && [[FacebookHandler sharedInstance] allowPublishActions])];
-    
-    // Twitter Button State
-    [self.rollView.twitterButton setSelected:self.twitterConnected];
-}
-
 #pragma mark - Action Methods (Public)
 - (IBAction)cancelButtonAction:(id)sender
 {
@@ -245,7 +239,12 @@
 - (IBAction)toggleSocialButtonStates:(id)sender
 {
     if (sender == self.rollView.facebookButton || sender == self.rollView.twitterButton) {
-        [sender setSelected:![sender isSelected]];
+        BOOL selectionToggle = ![sender isSelected];
+        [sender setSelected:selectionToggle];
+        
+        NSString *defaultsKey = sender == self.rollView.facebookButton ? kShelbyFacebookShareEnable : kShelbyTwitterShareEnable;
+        [[NSUserDefaults standardUserDefaults] setBool:selectionToggle forKey:defaultsKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     if (sender == _rollView.facebookButton && [sender isSelected] && ![[FacebookHandler sharedInstance] allowPublishActions]) {
