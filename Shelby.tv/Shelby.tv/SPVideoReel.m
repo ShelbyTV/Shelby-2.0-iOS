@@ -52,6 +52,10 @@
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
 @property (nonatomic, strong) SPShareController *shareController;
+@property (nonatomic, assign) BOOL isShutdown;
+
+//allows us to dismiss alert view if video changes or we exit
+@property (nonatomic, strong) ShelbyAlertView *currentVideoAlertView;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
@@ -88,6 +92,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     self = [super init];
     if (self) {
+        _isShutdown = NO;
         _channel = channel;
         _videoEntities = [videoEntities mutableCopy];
         _videoStartIndex = videoStartIndex;
@@ -297,7 +302,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)shutdown
 {
+    STVAssert(!self.isShutdown, @"shoult not already be shutdown");
+    self.isShutdown = YES;
+    
     [[SPVideoExtractor sharedInstance] cancelAllExtractions];
+    
+    //remove any alert particular to current video
+    [self.currentVideoAlertView dismiss];
     
     //resetting all possibly playable players (including current player) will pause and free memory of AVPlayer
     //not entirely true: if the player has an extraction pending, that block holds a reference to the player
@@ -362,6 +373,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)currentVideoShouldChangeToVideo:(NSUInteger)position
 {
     @synchronized(self){
+        if (self.isShutdown) {
+            return;
+        }
+        
         // Pause current player if there is one
         SPVideoPlayer *previousPlayer = self.currentPlayer;
         self.currentPlayer = nil;
@@ -369,6 +384,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             previousPlayer.shouldAutoplay = NO;
             [previousPlayer pause];
         }
+        
+        //remove any alert particular to current video
+        [self.currentVideoAlertView dismiss];
         
         //update overlay
         //FUN: if we had a direction from which the new video was coming, could animate this update
@@ -839,12 +857,15 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
          * Focus more time than seems necessary on this, b/c it makes watching a single video very enjoyable.
          */
         if (self.tutorialMode == SPTutorialModeNone) {
-            ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
+            [self.currentVideoAlertView dismiss];
+            self.currentVideoAlertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
                                                                         message:NSLocalizedString(@"PLAYBACK_STALLED_MESSAGE", nil)
                                                              dismissButtonTitle:NSLocalizedString(@"PLAYBACK_STALLED_BUTTON", nil)
                                                                  autodimissTime:6.0f
-                                                                      onDismiss:nil];
-            [alertView show];
+                                                                      onDismiss:^(BOOL didAutoDimiss) {
+                                                                          self.currentVideoAlertView = nil;
+                                                                      }];
+            [self.currentVideoAlertView show];
         }
     }
 }
@@ -884,14 +905,18 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     if (self.currentPlayer == player) {
         if (self.tutorialMode == SPTutorialModeNone) {
-            ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
+            [self.currentVideoAlertView dismiss];
+            self.currentVideoAlertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
                                                                         message:NSLocalizedString(@"EXTRACTION_FAIL_MESSAGE", nil)
                                                              dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_BUTTON", nil)
                                                                  autodimissTime:3.0f
                                                                       onDismiss:^(BOOL didAutoDimiss) {
-                                                                          [self changeVideoInForwardDirection:YES];
+                                                                          if (self.currentPlayer == player) {
+                                                                              [self changeVideoInForwardDirection:YES];
+                                                                          }
+                                                                          self.currentVideoAlertView = nil;
                                                                       }];
-            [alertView show];
+            [self.currentVideoAlertView show];
         } else {
             [self changeVideoInForwardDirection:YES];
         }

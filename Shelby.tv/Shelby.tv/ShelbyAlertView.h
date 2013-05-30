@@ -20,5 +20,6 @@ typedef void (^alert_dismiss_block_t)(BOOL didAutoDimiss);
 
 - (void) show;
 - (void) showAnimatedFromView:(UIView *)view;
+- (void) dismiss;
 
 @end

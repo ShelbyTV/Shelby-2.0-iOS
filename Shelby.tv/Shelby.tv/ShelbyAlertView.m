@@ -114,4 +114,9 @@
     [self cancelPressed:nil];
 }
 
+- (void)dismiss
+{
+    [self cancelPressed:nil];
+}
+
 @end
