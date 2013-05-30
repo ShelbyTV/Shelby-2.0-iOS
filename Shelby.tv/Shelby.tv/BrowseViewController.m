@@ -135,6 +135,8 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
+    STVAssert([[NSThread currentThread] isMainThread], @"should only happen on main thread... could be the cause of bad updates errors");
+    
     NSMutableDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
     STVAssert(chMetadata, @"channel must be set before adding entries");
     NSArray *curEntries = chMetadata[kShelbyChannelMetadataEntriesKey];
