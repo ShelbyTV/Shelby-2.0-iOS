@@ -30,11 +30,24 @@ NSString * const kShelbyCoreDataEntityRollIDPredicate = @"rollID == %@";
                                                inManagedObjectContext:context];
         roll.rollID = rollID;
     }
-    roll.displayColor = rollDict[@"display_channel_color"];
-    roll.displayDescription = rollDict[@"display_description"];
+    
+    NSString *displayColor = rollDict[@"display_channel_color"];
+    if (displayColor) {
+        roll.displayColor = displayColor;
+    }
+    
+    NSString *displayDescription = rollDict[@"display_description"];
+    if (displayDescription) {
+        roll.displayDescription = displayDescription;
+    }
+    
+    NSString *displayTitle = rollDict[@"display_title"];
+    if (displayTitle) {
+        roll.displayTitle = displayTitle;
+    }
+    
     roll.frameCount = rollDict[@"frame_count"];
     roll.thumbnailURL = [NSString stringWithFormat:@"http://shelby.tv%@", rollDict[@"display_thumbnail_ipad_src"]];
-    roll.displayTitle = rollDict[@"display_title"];
     roll.title = rollDict[@"title"];
     
     return roll;
