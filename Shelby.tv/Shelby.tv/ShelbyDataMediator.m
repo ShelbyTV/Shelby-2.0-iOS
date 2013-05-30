@@ -289,6 +289,13 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     [[FacebookHandler sharedInstance] facebookCleanup];
 }
 
+- (void)clearAllCookies
+{
+    NSHTTPCookieStorage *cookieStore = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in cookieStore.cookies) {
+        [cookieStore deleteCookie:cookie];
+    }
+}
 
 - (void)logoutWithUserChannels:(NSArray *)userChannels
 {
@@ -307,6 +314,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 
     [self cleanupSession];
+    [self clearAllCookies];
     
     NSError *error;
     [[self mainThreadContext] save:&error];
