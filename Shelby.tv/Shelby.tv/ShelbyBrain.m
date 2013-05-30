@@ -207,6 +207,12 @@
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached
 {
+    //the choke point where unplayable videos may not pass
+    NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
+        return [entry isPlayable];
+    }];
+    channelEntries = [channelEntries filteredArrayUsingPredicate:onlyPlayableVideos];
+    
     NSArray *curEntries = [self.homeVC entriesForChannel:channel];
     if(curEntries && [curEntries count]){
         ShelbyArrayMergeInstructions mergeInstructions = [self instructionsToMerge:channelEntries into:curEntries];
