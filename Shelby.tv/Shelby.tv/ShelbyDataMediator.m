@@ -600,7 +600,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         
         Frame *entry = [Frame frameForDictionary:frameDict inContext:context];
  
-        if (entry) {
+        if ([entry isPlayable]) {
             [resultDashboardEntries addObject:entry];
         }
     }
