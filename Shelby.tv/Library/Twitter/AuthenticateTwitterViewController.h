@@ -10,6 +10,7 @@
 
 @protocol AuthenticateTwitterDelegate <NSObject>
 - (void)authenticationRequestDidReturnPin:(NSString*)pin;
+- (void)authenticationRequestDidCancel;
 @end
 
 @interface AuthenticateTwitterViewController : UIViewController <UIWebViewDelegate>

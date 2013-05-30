@@ -464,6 +464,10 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
     [self getAccessTokenWithPin:pin];
 }
 
+- (void)authenticationRequestDidCancel
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
+}
 
 #pragma mark - UIActionSheetDelegate Methods 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

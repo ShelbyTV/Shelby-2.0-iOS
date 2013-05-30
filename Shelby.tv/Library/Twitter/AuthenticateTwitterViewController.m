@@ -45,7 +45,7 @@
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" 
                                                                             style:UIBarButtonItemStyleDone 
                                                                            target:self 
-                                                                           action:@selector(dismissModalViewControllerAnimated:)];
+                                                                           action:@selector(cancelAuthentication)];
     self.navigationItem.leftBarButtonItem = cancelBarButtonItem;
     
     // Add webView to view hierarchy
@@ -56,6 +56,12 @@
     self.webView.delegate = self;
     
     [self.view addSubview:self.webView];
+}
+
+- (void)cancelAuthentication
+{
+    [self.delegate authenticationRequestDidCancel];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UIWebViewDelegate
