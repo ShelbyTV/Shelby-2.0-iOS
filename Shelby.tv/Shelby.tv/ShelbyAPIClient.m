@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "Frame.h"
 #import "LoginView.h"
+#import "ShelbyAlertView.h"
 #import "User+Helper.h"
 
 @implementation ShelbyAPIClient
@@ -472,7 +473,8 @@
                   accountID:(NSString *)accountID
                       token:(NSString *)token
                      secret:(NSString *)secret
-              andAuthToken:(NSString *)authToken
+               andAuthToken:(NSString *)authToken
+                  withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     if (!provider || !accountID || !token) {
         return;
@@ -489,9 +491,28 @@
     [request setHTTPMethod:@"POST"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        DLog(@"%@ - Shelby Token Swap Succeeded", provider);
+        if (completionBlock) {
+            completionBlock(JSON, nil);
+        }
+        
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        DLog(@"%@ - Shelby Token Swap Failed", provider);
+        if ([response statusCode] == 403) {
+            //403 == tried to connect an existing user
+            NSDictionary *errorInfo = JSON[@"message"];
+            NSString *currentNickname = errorInfo[@"current_user_nickname"];
+            NSString *existingUserNickname = errorInfo[@"existing_other_user_nickname"];
+            NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_TITLE", @"--Already Logged In--"), currentNickname];
+            NSString *message = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_MESSAGE", nil), existingUserNickname];
+            ShelbyAlertView *alert = [[ShelbyAlertView alloc] initWithTitle:title
+                                                                    message:message
+                                                         dismissButtonTitle:NSLocalizedString(@"ALREADY_LOGGED_IN_BUTTON", nil)
+                                                             autodimissTime:0
+                                                                  onDismiss:nil];
+            [alert show];
+        }
+        if (completionBlock) {
+            completionBlock(JSON, error);
+        }
     }];
     
     [operation start];

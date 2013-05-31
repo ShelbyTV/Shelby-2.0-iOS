@@ -66,6 +66,7 @@ typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
                   accountID:(NSString *)accountID
                       token:(NSString *)token
                      secret:(NSString *)secret
-               andAuthToken:(NSString *)authToken;
+               andAuthToken:(NSString *)authToken
+                  withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 @end

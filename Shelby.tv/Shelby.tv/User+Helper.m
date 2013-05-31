@@ -82,14 +82,11 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return user;
 }
 
-+ (User *)updateUserWithFacebookUser:(NSDictionary *)facebookUser inContext:(NSManagedObjectContext *)moc
+- (void)updateWithFacebookUser:(NSDictionary *)facebookUser
 {
-    User *user = [User currentAuthenticatedUserInContext:moc];
-    user.facebookUID = facebookUser[@"id"];
-    user.facebookNickname = facebookUser[@"username"];
-    user.facebookName = facebookUser[@"name"];
-  
-    return user;
+    self.facebookUID = facebookUser[@"id"];
+    self.facebookNickname = facebookUser[@"username"];
+    self.facebookName = facebookUser[@"name"];
 }
 
 + (User *)updateUserWithTwitterUsername:(NSString *)username andTwitterID:(NSString *)twitterID

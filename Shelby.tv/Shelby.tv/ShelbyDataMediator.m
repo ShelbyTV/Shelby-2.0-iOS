@@ -366,7 +366,6 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI andAskPublishPermissions:(BOOL)askForPublishPermission
 {
-    __block BOOL askForWritePermission = askForPublishPermission;
     [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
                                                         withBlock:^(NSDictionary *facebookUser,
                                                                                   NSString *facebookToken,
@@ -374,32 +373,34 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         User *user = nil;
         if (facebookUser) {
             NSManagedObjectContext *context = [self mainThreadContext];
-            user = [User updateUserWithFacebookUser:facebookUser inContext:context];
-            NSError *error;
-            [user.managedObjectContext save:&error];
-            STVAssert(!error, @"context save failed saving User after facebook login...");
-     
-            [self.delegate facebookConnectDidComplete];
-        }
-        
-        if (facebookToken && user) {
-            [ShelbyAPIClient postThirdPartyToken:@"facebook" accountID:user.facebookUID token:facebookToken secret:nil andAuthToken:user.token];
-            if (askForWritePermission) {
-                askForWritePermission = NO;
-                [[FacebookHandler sharedInstance] askForPublishPermissions];
-            }
-        }
-
-        if (errorMessage) {
+            user = [User currentAuthenticatedUserInContext:context];
+            //try adding token to the user
+            [ShelbyAPIClient postThirdPartyToken:@"facebook"
+                                       accountID:facebookUser[@"id"]
+                                           token:facebookToken
+                                          secret:nil
+                                    andAuthToken:user.token
+                                       withBlock:^(id JSON, NSError *error) {
+                                           if(!error){
+                                               //user updated by API
+                                               [user updateWithFacebookUser:facebookUser];
+                                               NSError *error;
+                                               [user.managedObjectContext save:&error];
+                                               STVAssert(!error, @"context save failed saving User after facebook login...");
+                                               
+                                               [self.delegate facebookConnectDidComplete];
+                                               
+                                               if (askForPublishPermission) {
+                                                   [[FacebookHandler sharedInstance] askForPublishPermissions];
+                                               }
+                                           } else {
+                                               //did NOT add this auth to the current user
+                                               [self.delegate facebookConnectDidCompleteWithError:nil];
+                                           }
+                                       }];
+            
+        } else if (errorMessage) {
             [self.delegate facebookConnectDidCompleteWithError:errorMessage];
-        }
-        
-        // Session was already open
-        if (!facebookToken && !facebookToken && !errorMessage) {
-            askForWritePermission = NO;
-            if (askForWritePermission) {
-                [[FacebookHandler sharedInstance] askForPublishPermissions];
-            }
         }
     }];
 }

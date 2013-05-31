@@ -39,10 +39,12 @@
 {
     [ShelbyDataMediator sharedInstance].delegate = self;
     
+#ifndef DEBUG
     if (![self tutorialCompleted]) {
         self.currentPlayerTutorialMode = SPTutorialModeShow;
         self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeShow;
     }
+#endif
 }
 
 
@@ -128,9 +130,11 @@
 
 - (void)facebookConnectDidCompleteWithError:(NSString *)errorMessage
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.homeVC connectToFacebookFailedWithError:errorMessage];
-    });
+    if (errorMessage){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.homeVC connectToFacebookFailedWithError:errorMessage];
+        });
+    }
 }
 
 - (void)twitterConnectDidComplete

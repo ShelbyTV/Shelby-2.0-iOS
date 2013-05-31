@@ -437,7 +437,10 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 
 - (void)sendReverseAuthAccessResultsToServer
 {
-    [ShelbyAPIClient postThirdPartyToken:@"twitter" accountID:self.twitterID token:self.twitterReverseAuthToken secret:self.twitterReverseAuthSecret andAuthToken:self.shelbyToken];
+    [ShelbyAPIClient postThirdPartyToken:@"twitter" accountID:self.twitterID token:self.twitterReverseAuthToken secret:self.twitterReverseAuthSecret andAuthToken:self.shelbyToken withBlock:^(id JSON, NSError *error) {
+        //TODO: Twitter ought to care about the results of this
+        //  can't just assume it will work
+    }];
 }
 
 - (void)tokenSwapWasSuccessfulForUser:(NSDictionary *)userDictionary

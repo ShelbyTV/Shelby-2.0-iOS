@@ -42,3 +42,8 @@
 "EXTRACTION_FAIL_TITLE" = "Problem Video";
 "EXTRACTION_FAIL_MESSAGE" = "This video won't play right now.  Skipping it...";
 "EXTRACTION_FAIL_BUTTON" = "Skip Now";
+
+// --Already Logged In--
+"ALREADY_LOGGED_IN_TITLE" = "Logged in as '%@'";
+"ALREADY_LOGGED_IN_MESSAGE" = "You're already logged in.  If you would like to log in as '%@' instead, log out first.";
+"ALREADY_LOGGED_IN_BUTTON" = "Ok";
