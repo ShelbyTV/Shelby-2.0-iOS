@@ -367,6 +367,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI andAskPublishPermissions:(BOOL)askForPublishPermission
 {
     [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
+                                          andAskPublishPermission:askForPublishPermission
                                                         withBlock:^(NSDictionary *facebookUser,
                                                                                   NSString *facebookToken,
                                                                                   NSString *errorMessage) {
@@ -398,11 +399,12 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                                                [self.delegate facebookConnectDidCompleteWithError:nil];
                                            }
                                        }];
-            
+        } else if (facebookToken) {
+            [self.delegate facebookConnectDidComplete];
         } else if (errorMessage) {
             [self.delegate facebookConnectDidCompleteWithError:errorMessage];
         }
-    }];
+     }];
 }
 
 - (void)connectTwitterWithViewController:(UIViewController *)viewController

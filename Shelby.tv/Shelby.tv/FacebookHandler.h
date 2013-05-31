@@ -22,7 +22,9 @@ extern NSString * const kShelbyNotificationFacebookAuthorizationCompleted;
 - (NSString *)facebookAppID;
 
 // Read/Write Permissions
-- (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI withBlock:(shelby_facebook_request_complete_block_t)completionBlock;
+- (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI
+            andAskPublishPermission:(BOOL)askForPublishPermission
+                          withBlock:(shelby_facebook_request_complete_block_t)completionBlock;
 - (void)askForPublishPermissions;
 - (BOOL)allowPublishActions;
 

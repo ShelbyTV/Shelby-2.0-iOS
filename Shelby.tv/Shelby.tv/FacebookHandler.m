@@ -66,10 +66,14 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 }
 
 #pragma mark - Facebook Read/Write Permissions (Public)
-- (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI withBlock:(shelby_facebook_request_complete_block_t)completionBlock
+- (void)openSessionWithAllowLoginUI:(BOOL)allowLoginUI
+            andAskPublishPermission:(BOOL)askForPublishPermission
+                          withBlock:(shelby_facebook_request_complete_block_t)completionBlock
 {
     if ([[FBSession activeSession] isOpen]) {
-        completionBlock(nil, nil, nil);
+        if (askForPublishPermission) {
+            [self askForPublishPermissions];
+        }
         return;
     }
     
@@ -83,19 +87,23 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
             
             if (status == FBSessionStateClosedLoginFailed) {
                 completionBlock(nil, nil, @"Go to Settings -> Facebook and turn Shelby ON");
-//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Go to Settings -> Facebook and turn Shelby ON" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                [alertView show];
             }
         } else {
-            // KP KP: TODO: dump this, open issue on backend to get user full name
-            [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-                if (!error && [user isKindOfClass:[NSDictionary class]]) {
-                    completionBlock(user, [self facebookToken], nil);
-               } else {
-                    // error? could not fetch user.
-                }
-            }];
-         }
+            // If status is OpenTokenExtended - we had a session - no need to change a thing - just call the completion block to let the delegate know facebookSessionDidComplete
+            if (status == FBSessionStateOpenTokenExtended) {
+                completionBlock(nil, [self facebookToken], nil);
+            } else {
+                // Get request for user object - send user and token back.
+                [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+                    if (!error && [user isKindOfClass:[NSDictionary class]]) {
+                        completionBlock(user, [self facebookToken], nil);
+                        
+                    } else {
+                        // error? could not fetch user.
+                    }
+                }];
+            }
+        }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
      }];
