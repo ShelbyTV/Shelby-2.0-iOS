@@ -219,7 +219,7 @@
     channelEntries = [channelEntries filteredArrayUsingPredicate:onlyPlayableVideos];
     
     NSArray *curEntries = [self.homeVC entriesForChannel:channel];
-    if(curEntries && [curEntries count]){
+    if(curEntries && [curEntries count] && [channelEntries count]){
         ShelbyArrayMergeInstructions mergeInstructions = [self instructionsToMerge:channelEntries into:curEntries];
         if(mergeInstructions.shouldMerge){
             NSArray *newChannelEntries = [channelEntries subarrayWithRange:mergeInstructions.range];
