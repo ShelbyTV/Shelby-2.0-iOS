@@ -16,11 +16,27 @@
 + (Frame *)frameForDictionary:(NSDictionary *)dict
                     inContext:(NSManagedObjectContext *)context;
 
+//sorted in reverse-chron
++ (NSArray *)framesForRoll:(Roll *)roll
+                 inContext:(NSManagedObjectContext *)moc;
+
 + (NSArray *)fetchAllLikesInContext:(NSManagedObjectContext *)context;
+
++ (BOOL)doesFrameWithVideoID:(NSString *)videoID
+           existOnRollWithID:(NSString *)rollID
+                   inContext:(NSManagedObjectContext *)moc;
+
++ (Frame *)frameWithVideoID:(NSString *)videoID
+               onRollWithID:(NSString *)rollID
+                  inContext:(NSManagedObjectContext *)moc;
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 - (BOOL)isPlayable;
 //returns YES if the toggle should result in this frame being liked
 - (BOOL)toggleLike;
+
+//Is this frame, or another with same video, on the likes roll
+//of the current user.  Or has it been offline liked.
+- (BOOL)videoIsLiked;
 
 @end

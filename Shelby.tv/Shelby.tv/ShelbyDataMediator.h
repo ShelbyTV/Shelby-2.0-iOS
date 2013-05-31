@@ -16,15 +16,16 @@ extern NSString * const kShelbyOfflineLikesID;
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>
 // channels
--(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached;
--(void)fetchChannelsDidCompleteWithError:(NSError *)error;
+- (void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached;
+- (void)fetchChannelsDidCompleteWithError:(NSError *)error;
 // channel entries
--(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
-                                    with:(NSArray *)channelEntries fromCache:(BOOL)cached;
--(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
-                               withError:(NSError *)error;
--(void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
-                                         with:(NSArray *)channelEntries;
+- (void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
+                                     with:(NSArray *)channelEntries fromCache:(BOOL)cached;
+- (void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
+                                withError:(NSError *)error;
+- (void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
+                                          with:(NSArray *)channelEntries;
+
 // User Channels
 - (void)fetchUserChannelDidCompleteWithChannel:(DisplayChannel *)myStreamChannel
                                           with:(NSArray *)channelEntries

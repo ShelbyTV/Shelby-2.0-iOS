@@ -140,37 +140,62 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     STVAssert(frame.managedObjectContext == [self mainThreadContext], @"toggleLike expected frame from main context");
     
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
+    
     if (user) {
-        [ShelbyAPIClient postUserLikedFrame:frame.frameID userToken:user.token withBlock:^(id JSON, NSError *error) {
-            if (JSON) { // success
-                frame.clientLikedAt = nil;
-                
-                NSError *error;
-                [frame.managedObjectContext save:&error];
-                STVAssert(!error, @"context save failed, in toggleLikeForFrame (in block)...");
-                return;
-            }   
-        }];
-    }
-    
-    BOOL shouldBeLiked = ![frame.clientUnsyncedLike boolValue];
-    frame.clientUnsyncedLike = shouldBeLiked ? @1 : @0;
-    
-    if (frame.clientUnsyncedLike) {
-        frame.clientLikedAt = [NSDate date];
+        if (![user hasLikedVideoOfFrame:frame]) {
+            [ShelbyAPIClient postUserLikedFrame:frame.frameID userToken:user.token withBlock:^(id JSON, NSError *error) {
+                if (JSON) { // success
+                    frame.clientLikedAt = nil;
+                    //API is NOT returning the liked frame, so...
+                    [self fetchEntriesInChannel:[user displayChannelForLikesRoll] sinceEntry:nil];
+                    
+                    NSError *error;
+                    [frame.managedObjectContext save:&error];
+                    STVAssert(!error, @"context save failed, in toggleLikeForFrame when liking (in block)...");
+                }
+            }];
+            return YES;
+            
+        } else {
+            Frame *likedFrame = [user likedFrameWithVideoOfFrame:frame];
+            STVAssert(likedFrame, @"expected liked frame");
+            [ShelbyAPIClient deleteFrame:likedFrame.frameID userToken:user.token withBlock:^(id JSON, NSError *error) {
+                if (JSON) {
+                    likedFrame.clientUnliked = @1;
+                    NSError *error;
+                    [likedFrame.managedObjectContext save:&error];
+                    STVAssert(!error, @"context save failed, in toggleLikeForFrame when deleting (in block)...");
+                    
+                    //djs
+                    //TODO: need to smartly update the Browse View b/c the unliked frame is still in there :(
+                    //... until next launch
+                }
+            }];
+            
+            return NO;
+        }
+        
     } else {
-        frame.clientLikedAt = nil;
+        //not logged in
+        BOOL shouldBeLiked = ![frame.clientUnsyncedLike boolValue];
+        frame.clientUnsyncedLike = shouldBeLiked ? @1 : @0;
+        
+        if (frame.clientUnsyncedLike) {
+            frame.clientLikedAt = [NSDate date];
+        } else {
+            frame.clientLikedAt = nil;
+        }
+        
+        NSError *error;
+        [frame.managedObjectContext save:&error];
+        STVAssert(!error, @"context save failed, in toggleLikeForFrame...");
+        
+        //djs TODO: I don't like that we're fetching all unsynced likes here
+        //we should just signal the addition/removal of a single frame
+        [self fetchAllUnsyncedLikes];
+        
+        return shouldBeLiked;
     }
-
-    NSError *error;
-    [frame.managedObjectContext save:&error];
-    STVAssert(!error, @"context save failed, in toggleLikeForFrame...");
-    
-    //djs TODO: I don't like that we're fetching all unsynced likes here
-    //we should just signal the addition/removal of a single frame
-    [self fetchAllUnsyncedLikes];
-    
-    return shouldBeLiked;
 }
 
 - (User *)fetchAuthenticatedUserOnMainThreadContext
@@ -185,9 +210,33 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
 
 - (void)fetchFramesForRoll:(Roll *)roll
-                  inChannel:(DisplayChannel *)channel
-                 sinceFrame:(Frame *)sinceFrame
+                 inChannel:(DisplayChannel *)channel
+                sinceFrame:(Frame *)sinceFrame
 {
+    if(!sinceFrame){
+        //1) go to CoreData and hit up the delegate on main thread
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
+            
+            Roll *privateContextRoll = (Roll *)[privateContext objectWithID:roll.objectID];
+            //djs TODO: delete cached Frames > 200
+            NSArray *cachedFrames = [Frame framesForRoll:privateContextRoll inContext:privateContext];
+            
+            if(cachedFrames && [cachedFrames count]){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // 2) load those frames on main thread context
+                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                    NSMutableArray *mainThreadFrames = [self mainThreadFrames:cachedFrames];
+                    
+                    [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+                                                                with:mainThreadFrames
+                                                           fromCache:YES];
+                });
+            }
+        });
+    }
+    
+    
     //2) fetch remotely NB: AFNetworking returns us to the main thread
     [ShelbyAPIClient fetchFramesForRollID:roll.rollID
                                sinceEntry:sinceFrame
@@ -218,8 +267,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
             } else {
                 [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
                                                        withError:error];
+                DLog(@"fetch error: %@", error);
             }
-                                     
     }];
 }
 
@@ -234,7 +283,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
             NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
 
             //djs TODO: delete cached DashboardEntries > 200
-     
+            // could use relationship on dashboard, but instead using this helper to get dashboard entries in correct order
             NSArray *cachedDashboardEntries = [DashboardEntry entriesForDashboard:(Dashboard *)[privateContext objectWithID:dashboard.objectID]
                                                                         inContext:privateContext];
             if(cachedDashboardEntries && [cachedDashboardEntries count]){

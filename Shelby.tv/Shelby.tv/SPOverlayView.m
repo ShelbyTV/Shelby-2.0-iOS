@@ -108,7 +108,7 @@
         //don't touch total duration
         self.bufferProgressView.progress = 0.0;
         
-        self.likesButton.selected = [frame.clientUnsyncedLike boolValue];
+        self.likesButton.selected = [frame videoIsLiked];
         
         self.primaryTextLabel.text = [frame creatorsInitialCommentWithFallback:YES];
         self.userTimestamp.text = frame.createdAt;

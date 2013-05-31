@@ -209,7 +209,8 @@
 
 //channelEntries filled with ShelbyModel (specifically, a DashboardEntry or Frame)
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
-                                    with:(NSArray *)channelEntries fromCache:(BOOL)cached
+                                    with:(NSArray *)channelEntries
+                               fromCache:(BOOL)cached
 {
     //the choke point where unplayable videos may not pass
     NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {

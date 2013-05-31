@@ -64,6 +64,21 @@ NSString * const kShelbyCoreDataEntityFrameIDPredicate = @"frameID == %@";
     return frame;
 }
 
++ (NSArray *)framesForRoll:(Roll *)roll
+                 inContext:(NSManagedObjectContext *)moc
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
+    NSPredicate *framesInRoll = [NSPredicate predicateWithFormat:@"rollID == %@ && clientUnliked == NO", roll];
+    request.predicate = framesInRoll;
+    //Mongo IDs are prefixed with timestamp, so this gives us reverse-chron
+    NSSortDescriptor *sortById = [NSSortDescriptor sortDescriptorWithKey:@"frameID" ascending:NO];
+    request.sortDescriptors = @[sortById];
+    
+    NSError *err;
+    NSArray *results = [moc executeFetchRequest:request error:&err];
+    STVAssert(!err, @"couldn't fetch frames on roll!");
+    return results;
+}
 
 + (NSArray *)fetchAllLikesInContext:(NSManagedObjectContext *)context
 {
@@ -74,6 +89,37 @@ NSString * const kShelbyCoreDataEntityFrameIDPredicate = @"frameID == %@";
     [request setSortDescriptors:@[sortDescriptor]];
 
     return [context executeFetchRequest:request error:nil];
+}
+
++ (BOOL)doesFrameWithVideoID:(NSString *)videoID
+           existOnRollWithID:(NSString *)rollID
+                   inContext:(NSManagedObjectContext *)moc
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
+    NSPredicate *videoIDPredicate = [NSPredicate predicateWithFormat:@"self.roll.rollID == %@ AND self.video.videoID == %@", rollID, videoID];
+    request.predicate = videoIDPredicate;
+    request.fetchLimit = 1;
+    
+    NSError *error;
+    NSUInteger count = [moc countForFetchRequest:request error:&error];
+    return !error && count;
+}
+
++ (Frame *)frameWithVideoID:(NSString *)videoID
+               onRollWithID:(NSString *)rollID
+                  inContext:(NSManagedObjectContext *)moc
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
+    NSPredicate *videoIDPredicate = [NSPredicate predicateWithFormat:@"self.roll.rollID == %@ AND self.video.videoID == %@", rollID, videoID];
+    request.predicate = videoIDPredicate;
+    request.fetchLimit = 1;
+    
+    NSError *error;
+    NSArray *frames = [moc executeFetchRequest:request error:&error];
+    if (!error && [frames count]) {
+        return frames[0];
+    }
+    return nil;
 }
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle
@@ -118,6 +164,18 @@ NSString * const kShelbyCoreDataEntityFrameIDPredicate = @"frameID == %@";
 - (BOOL)toggleLike
 {
     return [[ShelbyDataMediator sharedInstance] toggleLikeForFrame:self];
+}
+
+- (BOOL)videoIsLiked
+{
+    User *currentUser = [User currentAuthenticatedUserInContext:self.managedObjectContext];
+    if (currentUser) {
+        return [currentUser hasLikedVideoOfFrame:self];
+    }
+    // FUTURE
+    // We could query the DB for any frame with a matching videoID where clientUnsyncedLike==1, but that would require
+    // an update to the UNLIKE logic, which I'm not doing right now.
+    return [self.clientUnsyncedLike boolValue];
 }
 
 @end

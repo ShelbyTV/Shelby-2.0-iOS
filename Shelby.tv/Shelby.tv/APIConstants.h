@@ -60,6 +60,9 @@
 #define kShelbyAPIPostFrameToTwitter        @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=twitter&text=%@"
 #define kShelbyAPIPostFrameToFacebook       @"https://api.shelby.tv/v1/frame/%@/share?auth_token=%@&destination[]=facebook&text=%@"
 
+/// DELETE Frame
+#define kShelbyAPIDestroyFrameWithAuthentication                @"https://api.shelby.tv/v1/frame/%@?auth_token=%@"
+
 /// POST 3rd Party Token
 #define kShelbyAPIPostThirdPartyToken           @"https://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@&secret=%@&auth_token=%@"
 #define kShelbyAPIPostThirdPartyTokenNoSecret   @"https://api.shelby.tv/v1/token?provider_name=%@&uid=%@&token=%@&auth_token=%@"

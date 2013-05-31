@@ -404,13 +404,31 @@
 }
 
 
-// TODO: deal with unlike, sync likes after user logs in.
+// TODO: deal with sync likes after user logs in.
 + (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToLikesWithAuthentication, frameID, authToken];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
     [request setHTTPMethod:@"PUT"];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    
+    [operation start];
+}
+
++ (void)deleteFrame:(NSString *)frameID
+          userToken:(NSString *)authToken
+          withBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSString *requestString = [NSString stringWithFormat:kShelbyAPIDestroyFrameWithAuthentication, frameID, authToken];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+    [request setHTTPMethod:@"DELETE"];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);

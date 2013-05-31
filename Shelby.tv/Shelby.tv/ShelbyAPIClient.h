@@ -53,7 +53,9 @@ typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
                    withBlock:(shelby_api_request_complete_block_t)completionBlock;
 /// Liking
 + (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock;
-//+ (void)postFrameToLikes:(NSString *)frameID;
+
+// Deleting Frame (== unliking)
++ (void)deleteFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 /// Rolling
 + (void)postFrameToPersonalRoll:(NSString*)requestString;

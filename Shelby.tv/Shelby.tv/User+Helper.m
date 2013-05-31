@@ -8,8 +8,10 @@
 
 #import "User+Helper.h"
 #import "DisplayChannel+Helper.h"
+#import "Frame+Helper.h"
 #import "NSManagedObject+Helper.h"
 #import "NSObject+NullHelper.h"
+#import "Roll+Helper.h"
 #import "ShelbyDataMediator.h"
 
 NSString * const kShelbyCoreDataEntityUser = @"User";
@@ -183,6 +185,29 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 - (BOOL)isFacebookConnected
 {
     return self.facebookNickname != nil;
+}
+
+- (BOOL)hasLikedVideoOfFrame:(Frame *)frame
+{
+    return [Frame doesFrameWithVideoID:frame.video.videoID
+                     existOnRollWithID:self.likesRollID
+                             inContext:self.managedObjectContext];
+}
+
+- (Frame *)likedFrameWithVideoOfFrame:(Frame *)frame
+{
+    return [Frame frameWithVideoID:frame.video.videoID
+                      onRollWithID:self.likesRollID
+                         inContext:self.managedObjectContext];
+}
+
+- (DisplayChannel *)displayChannelForLikesRoll
+{
+    Roll *likesRoll = [Roll rollWithID:self.likesRollID inContext:self.managedObjectContext];
+    if (likesRoll) {
+        return likesRoll.displayChannel;
+    }
+    return nil;
 }
 
 @end

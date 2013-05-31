@@ -82,4 +82,13 @@ NSString * const kShelbyCoreDataEntityRollIDPredicate = @"rollID == %@";
 
 }
 
++ (Roll *)rollWithID:(NSString *)rollID
+           inContext:(NSManagedObjectContext *)context
+{
+    return [self fetchOneEntityNamed:kShelbyCoreDataEntityRoll
+                     withIDPredicate:kShelbyCoreDataEntityRollIDPredicate
+                               andID:rollID
+                           inContext:context];
+}
+
 @end
