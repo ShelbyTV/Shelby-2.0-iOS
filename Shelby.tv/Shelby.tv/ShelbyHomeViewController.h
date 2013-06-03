@@ -23,7 +23,7 @@
 @end
 
 
-@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, SettingsViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate>
+@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, SettingsViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *channels;
 // KP KP: Better way to send the delegete to the views below?

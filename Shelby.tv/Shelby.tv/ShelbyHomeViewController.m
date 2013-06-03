@@ -210,20 +210,26 @@
 
 - (void)showSettings
 {
-    if(!self.settingsPopover) {
-        SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithUser:self.currentUser];
-        
-        _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
-        [self.settingsPopover setDelegate:self];
-        [settingsViewController setDelegate:self];
-    } else {
-        SettingsViewController *settingsViewController = (SettingsViewController *)[self.settingsPopover contentViewController];
-        if ([settingsViewController isKindOfClass:[SettingsViewController class]]) {
-            settingsViewController.user = self.currentUser;
+    if (kShelbyIsIpad) {
+        if(!self.settingsPopover) {
+            SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithUser:self.currentUser];
+            
+            _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
+            [self.settingsPopover setDelegate:self];
+            [settingsViewController setDelegate:self];
+        } else {
+            SettingsViewController *settingsViewController = (SettingsViewController *)[self.settingsPopover contentViewController];
+            if ([settingsViewController isKindOfClass:[SettingsViewController class]]) {
+                settingsViewController.user = self.currentUser;
+            }
         }
+        
+        [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    } else { // iPhone
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"My Roll", @"My Likes", @"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
+        actionSheet.destructiveButtonIndex = 4;
+        [actionSheet showInView:self.view];
     }
-    
-    [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
 
@@ -396,14 +402,23 @@
     self.settingsPopover = nil;
 }
 
+#pragma mark - UIAlertViewDelegate Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self logoutUser];
+    }
+}
 #pragma mark - SettingsViewDelegate methods
 - (void)dismissPopover
 {
-    if (self.settingsPopover && [self.settingsPopover isPopoverVisible]) {
-        [self.settingsPopover dismissPopoverAnimated:NO];
-        self.settingsPopover = nil;
+    // Popover is only for the iPad
+    if (kShelbyIsIpad) {
+        if (self.settingsPopover && [self.settingsPopover isPopoverVisible]) {
+            [self.settingsPopover dismissPopoverAnimated:NO];
+            self.settingsPopover = nil;
+        }
     }
-    // logged in or not? update settingsView
 }
 
 - (void)logoutUser
@@ -484,4 +499,19 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - UIActionSheetDelegate methods
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self launchMyRoll];
+    } else if (buttonIndex == 1) {
+        [self launchMyLikes];
+    } else if (buttonIndex == 2) {
+        [self connectToFacebook];
+    } else if (buttonIndex == 3) {
+        [self connectToTwitter];
+    } else if (buttonIndex == 4) {
+        [self logout];
+    }
+}
 @end
