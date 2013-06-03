@@ -179,7 +179,8 @@
     // KP KP: TODO: once fetching user done correctly, add the two targets. 
     [self.settingsView removeFromSuperview];
     if (self.currentUser) {
-        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 60, 44)];
+        // KP KP: TODO: bad alignment for iPad!
+        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(kShelbyFullscreenWidth - 70, 0, 60, 44)];
         UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(25, 7, 30, 30)];
         [userAvatar.layer setCornerRadius:5];
         [userAvatar.layer setMasksToBounds:YES];
@@ -193,7 +194,7 @@
         [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
         [self.settingsView addSubview:settings];
     } else {
-        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(950, 0, 120, 44)];
+        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(kShelbyFullscreenWidth - 70, 0, 120, 44)];
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
         [login setFrame:CGRectMake(7, 7, 60, 30)];
         [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
@@ -357,7 +358,13 @@
 
 - (void)login
 {
-    _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:@"AuthorizationView" bundle:nil];
+    NSString *authorizationVCNibName = nil;
+    if (kShelbyIsIpad) {
+        authorizationVCNibName = @"AuthorizationView";
+    } else {
+        authorizationVCNibName = @"AuthorizationView-iPhone";
+    }
+    _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:authorizationVCNibName bundle:nil];
     
     CGFloat xOrigin = self.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
     CGFloat yOrigin = self.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;

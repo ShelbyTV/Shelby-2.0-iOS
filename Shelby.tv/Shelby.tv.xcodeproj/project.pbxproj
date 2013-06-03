@@ -376,6 +376,9 @@
 		1C879E091730232000B574AB /* rollhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C879E081730232000B574AB /* rollhighlight.png */; };
 		1C879E0A1730232000B574AB /* rollhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C879E081730232000B574AB /* rollhighlight.png */; };
 		1C879E0B1730232000B574AB /* rollhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C879E081730232000B574AB /* rollhighlight.png */; };
+		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
+		1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
+		1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1CA631D817386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
 		1CA631D917386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
 		1CA631DA17386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
@@ -400,6 +403,9 @@
 		1CBF0931175CD21F001D471A /* Icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0924175CD21F001D471A /* Icon-iPad@2x.png */; };
 		1CBF0932175CD21F001D471A /* Icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0924175CD21F001D471A /* Icon-iPad@2x.png */; };
 		1CBF0933175CD21F001D471A /* Icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0924175CD21F001D471A /* Icon-iPad@2x.png */; };
+		1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
+		1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
+		1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
 		1CC223BA17580DF9003396B4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC223B917580DF9003396B4 /* User.m */; };
 		1CC223BB17580DF9003396B4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC223B917580DF9003396B4 /* User.m */; };
 		1CC223BC17580DF9003396B4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC223B917580DF9003396B4 /* User.m */; };
@@ -851,6 +857,7 @@
 		1C879DF4173022F700B574AB /* sharehighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sharehighlight.png; sourceTree = "<group>"; };
 		1C879DF5173022F700B574AB /* sharehighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharehighlight@2x.png"; sourceTree = "<group>"; };
 		1C879E081730232000B574AB /* rollhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rollhighlight.png; sourceTree = "<group>"; };
+		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
 		1CA631D617386442004101B1 /* ShelbyHideBrowseAnimationViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyHideBrowseAnimationViews.h; sourceTree = "<group>"; };
 		1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHideBrowseAnimationViews.m; sourceTree = "<group>"; };
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -861,6 +868,7 @@
 		1CBF0922175CD21F001D471A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		1CBF0923175CD21F001D471A /* Icon-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPad.png"; sourceTree = SOURCE_ROOT; };
 		1CBF0924175CD21F001D471A /* Icon-iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPad@2x.png"; sourceTree = SOURCE_ROOT; };
+		1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyHomeView-iPhone.xib"; sourceTree = "<group>"; };
 		1CC223B817580DF9003396B4 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		1CC223B917580DF9003396B4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1CC3387616CBDF2A00E58375 /* BrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseViewController.h; sourceTree = "<group>"; };
@@ -1303,6 +1311,15 @@
 				8E7024B81715E71500E8DE46 /* TwitterHandler.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		1CBF0934175CD69D001D471A /* Xib-iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */,
+				1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */,
+			);
+			name = "Xib-iPhone";
 			sourceTree = "<group>";
 		};
 		1CC75A45172AF2B1004805A5 /* Settings Dialog */ = {
@@ -1893,6 +1910,7 @@
 			children = (
 				1CCCB54916CEEC9800C8C216 /* Layouts */,
 				8EF5C350162F41B00075C35F /* Xibs */,
+				1CBF0934175CD69D001D471A /* Xib-iPhone */,
 				1C1D51ED16F22A8B00225B4E /* FormViews */,
 				8E41EF2C16B0742400C831A4 /* BigButton.h */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
@@ -2209,6 +2227,8 @@
 				1CBF092C175CD21F001D471A /* Default@2x.png in Resources */,
 				1CBF092F175CD21F001D471A /* Icon-iPad.png in Resources */,
 				1CBF0932175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
+				1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
+				1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2354,6 +2374,8 @@
 				1CBF092D175CD21F001D471A /* Default@2x.png in Resources */,
 				1CBF0930175CD21F001D471A /* Icon-iPad.png in Resources */,
 				1CBF0933175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
+				1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
+				1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2500,6 +2522,8 @@
 				1CBF092B175CD21F001D471A /* Default@2x.png in Resources */,
 				1CBF092E175CD21F001D471A /* Icon-iPad.png in Resources */,
 				1CBF0931175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
+				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
+				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

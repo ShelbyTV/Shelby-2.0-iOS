@@ -56,7 +56,15 @@
     
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    ShelbyHomeViewController *homeViewController = [[ShelbyHomeViewController alloc] initWithNibName:@"ShelbyHomeView" bundle:nil];
+    
+    NSString *rootViewControllerNibName = nil;
+    if (kShelbyIsIpad) {
+        rootViewControllerNibName = @"ShelbyHomeView";
+    } else {
+        rootViewControllerNibName = @"ShelbyHomeView-iPhone";
+    }
+    
+    ShelbyHomeViewController *homeViewController = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
     self.window.rootViewController = homeViewController;
     self.brain = [[ShelbyBrain alloc] init];
     [self.brain setup];
