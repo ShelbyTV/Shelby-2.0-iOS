@@ -64,7 +64,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    if (kShelbyIsIpad) {
+    if (DEVICE_IPAD) {
         return UIInterfaceOrientationMaskLandscape;
     } else {
         return UIInterfaceOrientationPortrait;
@@ -224,7 +224,7 @@
 
 - (void)showSettings
 {
-    if (kShelbyIsIpad) {
+    if (DEVICE_IPAD) {
         if(!self.settingsPopover) {
             SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithUser:self.currentUser];
             
@@ -379,7 +379,7 @@
 - (void)login
 {
     NSString *authorizationVCNibName = nil;
-    if (kShelbyIsIpad) {
+    if (DEVICE_IPAD) {
         authorizationVCNibName = @"AuthorizationView";
     } else {
         authorizationVCNibName = @"AuthorizationView-iPhone";
@@ -427,7 +427,7 @@
 - (void)dismissPopover
 {
     // Popover is only for the iPad
-    if (kShelbyIsIpad) {
+    if (DEVICE_IPAD) {
         if (self.settingsPopover && [self.settingsPopover isPopoverVisible]) {
             [self.settingsPopover dismissPopoverAnimated:NO];
             self.settingsPopover = nil;

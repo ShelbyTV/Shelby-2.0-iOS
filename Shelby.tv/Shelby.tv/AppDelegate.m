@@ -58,7 +58,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     NSString *rootViewControllerNibName = nil;
-    if (kShelbyIsIpad) {
+    if (DEVICE_IPAD) {
         rootViewControllerNibName = @"ShelbyHomeView";
     } else {
         rootViewControllerNibName = @"ShelbyHomeView-iPhone";

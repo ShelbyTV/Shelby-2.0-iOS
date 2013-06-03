@@ -215,7 +215,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     STVAssert(!self.overlayView, @"should only setup overlay view once");
     NSString *overlayNibName = nil;
-    if (kShelbyIsIpad) {
+    if (DEVICE_IPAD) {
         overlayNibName = @"SPOverlayView";
     } else {
         overlayNibName = @"SPOverlayView-iPhone";

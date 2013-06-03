@@ -59,4 +59,4 @@
 // Shared BrowseVC & SPVideoReel Prefetching Constant
 #define kShelbyPrefetchEntriesWhenNearEnd                   1
 
-#define kShelbyIsIpad                                       (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define DEVICE_IPAD                                       (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
