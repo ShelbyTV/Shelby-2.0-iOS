@@ -18,6 +18,8 @@
 				<string>Icon.png</string>
 				<string>Icon-Small-50.png</string>
 				<string>Icon-Small-50@2x.png</string>
+				<string>Icon-iPad.png</string>
+				<string>Icon-iPad@2x.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
