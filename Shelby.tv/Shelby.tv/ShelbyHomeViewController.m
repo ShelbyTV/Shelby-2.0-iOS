@@ -14,6 +14,7 @@
 #import "SettingsViewController.h"
 #import "ShelbyAlertView.h"
 #import "SPVideoReel.h"
+#import "TriageViewController.h"
 #import "User+Helper.h"
 
 @interface ShelbyHomeViewController ()
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) AuthorizationViewController *authorizationVC;
 
 @property (nonatomic, strong) BrowseViewController *browseVC;
+@property (nonatomic, strong) TriageViewController *triageVC;
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, assign) BOOL animationInProgress;
 
@@ -46,15 +48,24 @@
 
     [self.topBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbar.png"]]];
 
-    BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
+    if (DEVICE_IPAD) {
+        BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
 
-    [self setBrowseVC:browseViewController];
-    [self addChildViewController:browseViewController];
-    [browseViewController.view setFrame:CGRectMake(0, 44, browseViewController.view.frame.size.width, browseViewController.view.frame.size.height)];
+        [self setBrowseVC:browseViewController];
+        [self addChildViewController:browseViewController];
+        [browseViewController.view setFrame:CGRectMake(0, 44, browseViewController.view.frame.size.width, browseViewController.view.frame.size.height)];
 
-    [self.view addSubview:browseViewController.view];
+        [self.view addSubview:browseViewController.view];
     
-    [browseViewController didMoveToParentViewController:self];
+        [browseViewController didMoveToParentViewController:self];
+    } else {
+        TriageViewController *triageViewController = [[TriageViewController alloc] initWithNibName:@"TriageView" bundle:nil];
+        [self setTriageVC:triageViewController];
+        [self addChildViewController:triageViewController];
+        [triageViewController.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
+        
+        [self.view addSubview:triageViewController.view];
+    }
     
     [self setupSettingsView];
     
@@ -104,21 +115,41 @@
 - (void)setChannels:(NSArray *)channels
 {
     _channels = channels;
-    self.browseVC.channels = channels;
+    if (DEVICE_IPAD) {
+        self.browseVC.channels = channels;
+    } else {
+        // KP KP: TODO - we need to send only one channel. this is a hack.
+        if (channels && [channels count] > 0) {
+            self.triageVC.triageChannel = channels[0];
+        }
+    }
 }
 
 - (void)removeChannel:(DisplayChannel *)channel
 {
-    NSMutableArray *channels = [self.browseVC.channels mutableCopy];
-    [channels removeObject:channel];
-    self.browseVC.channels = channels;
+    if (DEVICE_IPAD) {
+        NSMutableArray *channels = [self.browseVC.channels mutableCopy];
+        [channels removeObject:channel];
+        self.browseVC.channels = channels;
+    }
 }
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-    [self.browseVC setEntries:channelEntries forChannel:channel];
-    
+    if (DEVICE_IPAD) {
+        [self.browseVC setEntries:channelEntries forChannel:channel];
+    } else {
+        // KP KP: TODO: Again, this will change once we get correct channel to triage from backend
+        self.triageVC.triageChannel = channel;
+        [self.triageVC setItemsToTriage:channelEntries];
+    }
     [self setPlayerEntriesForChannel:channel];
+}
+
+- (NSInteger)indexOfDisplayedEntry:(id)entry
+{
+    NSArray *triageItems = [self.triageVC itemsToTriage];
+    return [triageItems indexOfObject:entry];
 }
 
 - (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel
@@ -172,7 +203,11 @@
 - (void)setMasterDelegate:(id)masterDelegate
 {
     _masterDelegate = masterDelegate;
-    self.browseVC.browseDelegate = masterDelegate;
+    if (DEVICE_IPAD) {
+        self.browseVC.browseDelegate = masterDelegate;
+    } else {
+        self.triageVC.triageDelegate = masterDelegate;
+    }
 }
 
 - (void)setCurrentUser:(User *)currentUser

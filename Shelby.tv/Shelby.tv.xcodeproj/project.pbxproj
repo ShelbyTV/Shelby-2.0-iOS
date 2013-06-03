@@ -382,6 +382,18 @@
 		1C8AB431175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
 		1C8AB432175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
 		1C8AB433175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
+		1C8AB436175D2377001D5853 /* TriageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8AB435175D2377001D5853 /* TriageViewController.m */; };
+		1C8AB437175D2377001D5853 /* TriageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8AB435175D2377001D5853 /* TriageViewController.m */; };
+		1C8AB438175D2377001D5853 /* TriageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8AB435175D2377001D5853 /* TriageViewController.m */; };
+		1C8AB43A175D23C9001D5853 /* TriageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB439175D23C9001D5853 /* TriageView.xib */; };
+		1C8AB43B175D23C9001D5853 /* TriageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB439175D23C9001D5853 /* TriageView.xib */; };
+		1C8AB43C175D23C9001D5853 /* TriageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB439175D23C9001D5853 /* TriageView.xib */; };
+		1C8AB43E175D274E001D5853 /* SPTriageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB43D175D274E001D5853 /* SPTriageViewCell.xib */; };
+		1C8AB43F175D274E001D5853 /* SPTriageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB43D175D274E001D5853 /* SPTriageViewCell.xib */; };
+		1C8AB440175D274E001D5853 /* SPTriageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB43D175D274E001D5853 /* SPTriageViewCell.xib */; };
+		1C8AB443175D29C8001D5853 /* SPTriageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8AB442175D29C8001D5853 /* SPTriageCell.m */; };
+		1C8AB444175D29C8001D5853 /* SPTriageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8AB442175D29C8001D5853 /* SPTriageCell.m */; };
+		1C8AB445175D29C8001D5853 /* SPTriageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8AB442175D29C8001D5853 /* SPTriageCell.m */; };
 		1CA631D817386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
 		1CA631D917386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
 		1CA631DA17386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
@@ -862,6 +874,12 @@
 		1C879E081730232000B574AB /* rollhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rollhighlight.png; sourceTree = "<group>"; };
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
 		1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SPOverlayView-iPhone.xib"; sourceTree = "<group>"; };
+		1C8AB434175D2377001D5853 /* TriageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriageViewController.h; sourceTree = "<group>"; };
+		1C8AB435175D2377001D5853 /* TriageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TriageViewController.m; sourceTree = "<group>"; };
+		1C8AB439175D23C9001D5853 /* TriageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TriageView.xib; sourceTree = "<group>"; };
+		1C8AB43D175D274E001D5853 /* SPTriageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPTriageViewCell.xib; sourceTree = "<group>"; };
+		1C8AB441175D29C8001D5853 /* SPTriageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTriageCell.h; sourceTree = "<group>"; };
+		1C8AB442175D29C8001D5853 /* SPTriageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTriageCell.m; sourceTree = "<group>"; };
 		1CA631D617386442004101B1 /* ShelbyHideBrowseAnimationViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyHideBrowseAnimationViews.h; sourceTree = "<group>"; };
 		1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHideBrowseAnimationViews.m; sourceTree = "<group>"; };
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -1321,6 +1339,8 @@
 			isa = PBXGroup;
 			children = (
 				1C8AB42F175CF1AB001D5853 /* Xibs */,
+				1C8AB441175D29C8001D5853 /* SPTriageCell.h */,
+				1C8AB442175D29C8001D5853 /* SPTriageCell.m */,
 			);
 			name = "Views-iPhone";
 			sourceTree = "<group>";
@@ -1329,6 +1349,7 @@
 			isa = PBXGroup;
 			children = (
 				1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */,
+				1C8AB43D175D274E001D5853 /* SPTriageViewCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -1337,6 +1358,7 @@
 			isa = PBXGroup;
 			children = (
 				1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */,
+				1C8AB439175D23C9001D5853 /* TriageView.xib */,
 				1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */,
 			);
 			name = "Xib-iPhone";
@@ -1962,6 +1984,8 @@
 				1C4110DE17319468009022EA /* ShelbyHomeViewController.m */,
 				1C06C5C41742F5CA004E8E20 /* ShelbyViewController.h */,
 				1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */,
+				1C8AB434175D2377001D5853 /* TriageViewController.h */,
+				1C8AB435175D2377001D5853 /* TriageViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2251,6 +2275,8 @@
 				1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 				1C8AB432175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
+				1C8AB43B175D23C9001D5853 /* TriageView.xib in Resources */,
+				1C8AB43F175D274E001D5853 /* SPTriageViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2399,6 +2425,8 @@
 				1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 				1C8AB433175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
+				1C8AB43C175D23C9001D5853 /* TriageView.xib in Resources */,
+				1C8AB440175D274E001D5853 /* SPTriageViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2548,6 +2576,8 @@
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 				1C8AB431175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
+				1C8AB43A175D23C9001D5853 /* TriageView.xib in Resources */,
+				1C8AB43E175D274E001D5853 /* SPTriageViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2657,6 +2687,8 @@
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				1CC223BB17580DF9003396B4 /* User.m in Sources */,
 				914FEA531759447500903FEA /* Frame.m in Sources */,
+				1C8AB437175D2377001D5853 /* TriageViewController.m in Sources */,
+				1C8AB444175D29C8001D5853 /* SPTriageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2763,6 +2795,8 @@
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				1CC223BC17580DF9003396B4 /* User.m in Sources */,
 				914FEA541759447500903FEA /* Frame.m in Sources */,
+				1C8AB438175D2377001D5853 /* TriageViewController.m in Sources */,
+				1C8AB445175D29C8001D5853 /* SPTriageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2869,6 +2903,8 @@
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				1CC223BA17580DF9003396B4 /* User.m in Sources */,
 				914FEA521759447500903FEA /* Frame.m in Sources */,
+				1C8AB436175D2377001D5853 /* TriageViewController.m in Sources */,
+				1C8AB443175D29C8001D5853 /* SPTriageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
