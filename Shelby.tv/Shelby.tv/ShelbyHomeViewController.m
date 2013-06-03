@@ -146,12 +146,14 @@
     [self setPlayerEntriesForChannel:channel];
 }
 
+// For iPhone - KP KP: TODO: do differently.
 - (NSInteger)indexOfDisplayedEntry:(id)entry
 {
     NSArray *triageItems = [self.triageVC itemsToTriage];
     return [triageItems indexOfObject:entry];
 }
 
+// For iPad
 - (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel
 {
     NSArray *dedupdEntries = [self deduplicatedEntriesForChannel:channel];

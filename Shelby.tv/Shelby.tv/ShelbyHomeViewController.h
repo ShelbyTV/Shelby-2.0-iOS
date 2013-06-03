@@ -31,6 +31,7 @@
 @property (strong, nonatomic) User *currentUser;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *channelsLoadingActivityIndicator;
 
+- (NSInteger)indexOfDisplayedEntry:(id)entry;
 - (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel;
 
 - (void)fetchDidCompleteForChannel:(DisplayChannel *)channel;

@@ -382,6 +382,17 @@
     [alertView show];
 }
 
+#pragma mark - ShelbyTriageProtocol Methods
+- (void)userPressedTriageChannel:(DisplayChannel *)channel atItem:(id)item
+{
+    NSInteger index = [self.homeVC indexOfDisplayedEntry:item];
+    
+    [self.homeVC launchPlayerForChannel:channel atIndex:index];
+    
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
+
+}
+
 #pragma mark - ShelbyBrowseProtocol Methods
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
 {
@@ -407,7 +418,6 @@
         index = 0;
     }
     [self.homeVC animateLaunchPlayerForChannel:channel atIndex:index];
-    
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
 }
 
