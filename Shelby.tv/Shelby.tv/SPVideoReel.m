@@ -137,6 +137,16 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape;
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
+}
+
+
 - (void)setEntries:(NSArray *)entries
 {
     NSUInteger oldCount = [self.videoEntities count];
@@ -204,7 +214,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)setupOverlayView
 {
     STVAssert(!self.overlayView, @"should only setup overlay view once");
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPOverlayView" owner:self options:nil];
+    NSString *overlayNibName = nil;
+    if (kShelbyIsIpad) {
+        overlayNibName = @"SPOverlayView";
+    } else {
+        overlayNibName = @"SPOverlayView-iPhone";
+    }
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:overlayNibName owner:self options:nil];
     STVAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
     self.overlayView = nib[0];
     self.overlayView.alpha = 0;

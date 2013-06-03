@@ -379,6 +379,9 @@
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
+		1C8AB431175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
+		1C8AB432175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
+		1C8AB433175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
 		1CA631D817386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
 		1CA631D917386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
 		1CA631DA17386442004101B1 /* ShelbyHideBrowseAnimationViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */; };
@@ -858,6 +861,7 @@
 		1C879DF5173022F700B574AB /* sharehighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharehighlight@2x.png"; sourceTree = "<group>"; };
 		1C879E081730232000B574AB /* rollhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rollhighlight.png; sourceTree = "<group>"; };
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
+		1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SPOverlayView-iPhone.xib"; sourceTree = "<group>"; };
 		1CA631D617386442004101B1 /* ShelbyHideBrowseAnimationViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyHideBrowseAnimationViews.h; sourceTree = "<group>"; };
 		1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHideBrowseAnimationViews.m; sourceTree = "<group>"; };
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -1311,6 +1315,22 @@
 				8E7024B81715E71500E8DE46 /* TwitterHandler.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		1C8AB42E175CF1A0001D5853 /* Views-iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				1C8AB42F175CF1AB001D5853 /* Xibs */,
+			);
+			name = "Views-iPhone";
+			sourceTree = "<group>";
+		};
+		1C8AB42F175CF1AB001D5853 /* Xibs */ = {
+			isa = PBXGroup;
+			children = (
+				1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */,
+			);
+			name = Xibs;
 			sourceTree = "<group>";
 		};
 		1CBF0934175CD69D001D471A /* Xib-iPhone */ = {
@@ -1799,6 +1819,7 @@
 			isa = PBXGroup;
 			children = (
 				8E68A1C916C0C4F00031C3D2 /* Models */,
+				1C8AB42E175CF1A0001D5853 /* Views-iPhone */,
 				8E68A1CB16C0C4FC0031C3D2 /* Views */,
 				8E68A1CD16C0C5250031C3D2 /* Controllers */,
 				8E68A1CC16C0C51D0031C3D2 /* View Controllers */,
@@ -2229,6 +2250,7 @@
 				1CBF0932175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
+				1C8AB432175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2376,6 +2398,7 @@
 				1CBF0933175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
+				1C8AB433175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2524,6 +2547,7 @@
 				1CBF0931175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
+				1C8AB431175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

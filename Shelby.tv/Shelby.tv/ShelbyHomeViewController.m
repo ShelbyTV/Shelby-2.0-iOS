@@ -61,6 +61,20 @@
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
 
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (kShelbyIsIpad) {
+        return UIInterfaceOrientationMaskLandscape;
+    } else {
+        return UIInterfaceOrientationPortrait;
+    }
+}
+
+-(BOOL) shouldAutorotate {
+    return NO;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
