@@ -146,8 +146,14 @@
 {
     [self setupMaskView];
     
+    NSString *shareNibName = nil;
+    if (DEVICE_IPAD) {
+        shareNibName = @"SPShareRollView";
+    } else {
+        shareNibName = @"SPShareRollView-iPhone";
+    }
     // Instantiate rollView
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPShareRollView" owner:self options:nil];
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:shareNibName owner:self options:nil];
     if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
         return;
     }
@@ -279,13 +285,17 @@
         }
     }];
 
-    if ( ![self sharePopOverController] ) {
-        self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-        [self.sharePopOverController setDelegate:self];
-        [self.sharePopOverController presentPopoverFromRect:self.fromFrame
-                                                     inView:self.videoPlayer.view
-                                   permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                   animated:YES];
+    if (DEVICE_IPAD) {
+        if ( ![self sharePopOverController] ) {
+            self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+            [self.sharePopOverController setDelegate:self];
+            [self.sharePopOverController presentPopoverFromRect:self.fromFrame
+                                                         inView:self.videoPlayer.view
+                                       permittedArrowDirections:UIPopoverArrowDirectionDown
+                                                       animated:YES];
+        }
+    } else {
+        [self.videoPlayer presentViewController:activityController animated:YES completion:nil];
     }
 }
 
