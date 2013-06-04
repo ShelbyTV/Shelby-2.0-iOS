@@ -13,6 +13,8 @@
 @interface SPTriageCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet SPVideoItemViewCellLabel *caption;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *userImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;
 @property (strong, nonatomic) Frame *shelbyFrame;
 
 - (void)highlightItemWithColor:(UIColor *)color;

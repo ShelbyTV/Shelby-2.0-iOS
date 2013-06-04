@@ -29,17 +29,21 @@
 - (void)prepareForReuse
 {
     self.thumbnailImageView.image = nil;
+    self.caption.backgroundColor = [UIColor blackColor];
+    [self unHighlightItem];
 }
 
 - (void)highlightItemWithColor:(UIColor *)color
 {
-    
+    self.backgroundColor = color;
+    self.caption.backgroundColor = color;
+    self.caption.alpha = 1;
 }
-
 
 - (void)unHighlightItem
 {
-    
+    self.backgroundColor = [UIColor blackColor];
+    self.caption.backgroundColor = [UIColor blackColor];
+    self.caption.alpha = 1;
 }
-
 @end
