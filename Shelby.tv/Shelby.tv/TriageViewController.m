@@ -69,6 +69,23 @@
     id entry = self.itemsToTriage[indexPath.row];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
+    // Swipable Cell Settings
+    [cell setFirstStateIconName:@"check.png"
+                     firstColor:[UIColor colorWithRed:85.0/255.0 green:213.0/255.0 blue:80.0/255.0 alpha:1.0]
+            secondStateIconName:@"cross.png"
+                    secondColor:[UIColor colorWithRed:232.0/255.0 green:61.0/255.0 blue:14.0/255.0 alpha:1.0]
+                  thirdIconName:@"clock.png"
+                     thirdColor:[UIColor colorWithRed:254.0/255.0 green:217.0/255.0 blue:56.0/255.0 alpha:1.0]
+                 fourthIconName:@"list.png"
+                    fourthColor:[UIColor colorWithRed:206.0/255.0 green:149.0/255.0 blue:98.0/255.0 alpha:1.0]];
+    [cell setMode:MCSwipeTableViewCellModeSwitch];
+    [cell setDelegate:self];
+    
+    // We need to set a background to the content view of the cell
+    [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+
+    
     Frame *videoFrame = nil;
     if ([entry isKindOfClass:[DashboardEntry class]]) {
         videoFrame = ((DashboardEntry *)entry).frame;
@@ -115,14 +132,14 @@
         cell.nicknameLabel.text = videoFrame.creator.nickname;
         [cell.caption setText:[NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]]];
         //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
-        CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.33);
+        // KP KP - TODO: for now, hardcoding 260px for the width of the caption label
+        CGSize maxCaptionSize = CGSizeMake(260, cell.frame.size.height * 0.33);
         CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
                                                 constrainedToSize:maxCaptionSize
                                                     lineBreakMode:NSLineBreakByWordWrapping].height;
-        
         [cell.caption setFrame:CGRectMake(cell.caption.frame.origin.x,
                                           cell.frame.size.height - textBasedHeight,
-                                          cell.frame.size.width,
+                                          260,
                                           textBasedHeight)];
     }
 
@@ -147,6 +164,13 @@
 {
     SPTriageCell *cell =  (SPTriageCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell unHighlightItem];
+}
+
+#pragma mark - MCSwipeTableViewCellDelegate
+
+- (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didTriggerState:(MCSwipeTableViewCellState)state withMode:(MCSwipeTableViewCellMode)mode
+{
+    DLog(@"IndexPath : %@ - MCSwipeTableViewCellState : %d - MCSwipeTableViewCellMode : %d", [self.triageTable indexPathForCell:cell], state, mode);
 }
 
 @end

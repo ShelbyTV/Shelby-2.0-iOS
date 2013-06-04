@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Frame.h"
+#import "MCSwipeTableViewCell.h"
 #import "SPVideoItemViewCellLabel.h"
 
-@interface SPTriageCell : UITableViewCell
+@interface SPTriageCell : MCSwipeTableViewCell
 @property (weak, nonatomic) IBOutlet SPVideoItemViewCellLabel *caption;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;

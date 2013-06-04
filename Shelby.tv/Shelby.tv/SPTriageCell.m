@@ -29,7 +29,7 @@
 - (void)prepareForReuse
 {
     self.thumbnailImageView.image = nil;
-    self.caption.backgroundColor = [UIColor blackColor];
+    self.caption.backgroundColor = [UIColor whiteColor];
     [self unHighlightItem];
 }
 
@@ -42,8 +42,8 @@
 
 - (void)unHighlightItem
 {
-    self.backgroundColor = [UIColor blackColor];
-    self.caption.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor whiteColor];
+    self.caption.backgroundColor = [UIColor whiteColor];
     self.caption.alpha = 1;
 }
 @end
