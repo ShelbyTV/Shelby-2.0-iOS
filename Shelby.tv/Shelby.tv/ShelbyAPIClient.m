@@ -335,7 +335,13 @@
 //djs update done!
 + (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
+    NSURL *url = nil;
+    if (DEVICE_IPAD) {
+        url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
+    } else {
+        url = [NSURL URLWithString:kShelbyAPIGetTriageChannels];
+    }
+
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
     

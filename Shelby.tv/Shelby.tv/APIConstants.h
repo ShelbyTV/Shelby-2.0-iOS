@@ -37,6 +37,8 @@
 #else
     #define kShelbyAPIGetAllChannels                    @"http://api.shelby.tv/v1/roll/featured?segment=ipad_standard"
 #endif
+
+#define kShelbyAPIGetTriageChannels                 @"http://api.shelby.tv/v1/roll/featured?segment=iphone_standard"
 #define kShelbyAPIGetChannelDashboardEntries        @"http://api.shelby.tv/v1/user/%@/dashboard"
 #define kShelbyAPIGetChannelDashboardEntriesSince   @"http://api.shelby.tv/v1/user/%@/dashboard?since_id=%@"
 //#define kShelbyAPIGetMoreChannelDashboardEntries    @"http://api.shelby.tv/v1/user/%@/dashboard?skip=%@&limit=20"
