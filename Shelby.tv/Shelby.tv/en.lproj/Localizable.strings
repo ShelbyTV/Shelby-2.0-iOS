@@ -47,3 +47,7 @@
 "ALREADY_LOGGED_IN_TITLE" = "Logged in as '%@'";
 "ALREADY_LOGGED_IN_MESSAGE" = "You're already logged in.  If you would like to log in as '%@' instead, log out first.";
 "ALREADY_LOGGED_IN_BUTTON" = "Ok";
+
+// --DVR Local Notification--
+"DVR_ALERT_ACTION" = "Play";
+"DVR_ALERT_BODY" = "DVR video from %@";

@@ -682,18 +682,27 @@
 		9109330C1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
 		9109330D1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
 		9109330E1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
-		914052FA174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
-		914052FB174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
-		914052FC174C411600E18A6B /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914052F9174C411600E18A6B /* DashboardEntry.m */; };
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
 		91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
 		91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
-		914FEA521759447500903FEA /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA511759447500903FEA /* Frame.m */; };
-		914FEA531759447500903FEA /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA511759447500903FEA /* Frame.m */; };
-		914FEA541759447500903FEA /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA511759447500903FEA /* Frame.m */; };
+		914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA66175E365000903FEA /* ShelbyDVRController.m */; };
+		914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA66175E365000903FEA /* ShelbyDVRController.m */; };
+		914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA66175E365000903FEA /* ShelbyDVRController.m */; };
+		914FEA7B175E3E6800903FEA /* DVREntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA7A175E3E6700903FEA /* DVREntry+Helper.m */; };
+		914FEA7C175E3E6800903FEA /* DVREntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA7A175E3E6700903FEA /* DVREntry+Helper.m */; };
+		914FEA7D175E3E6800903FEA /* DVREntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA7A175E3E6700903FEA /* DVREntry+Helper.m */; };
+		914FEA85175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
+		914FEA86175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
+		914FEA87175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
+		914FEA8A175E40C800903FEA /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA89175E40C800903FEA /* DashboardEntry.m */; };
+		914FEA8B175E40C800903FEA /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA89175E40C800903FEA /* DashboardEntry.m */; };
+		914FEA8C175E40C800903FEA /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA89175E40C800903FEA /* DashboardEntry.m */; };
+		914FEA8F175E40CA00903FEA /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA8E175E40C900903FEA /* Frame.m */; };
+		914FEA90175E40CA00903FEA /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA8E175E40C900903FEA /* Frame.m */; };
+		914FEA91175E40CA00903FEA /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA8E175E40C900903FEA /* Frame.m */; };
 		91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
@@ -1083,14 +1092,20 @@
 		9109330B1743E61B00AC038E /* ShelbyAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyAlertView.xib; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
 		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
-		914052F8174C411600E18A6B /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
-		914052F9174C411600E18A6B /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
 		9140530D174D055700E18A6B /* NSObject+NullHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NullHelper.m"; sourceTree = "<group>"; };
 		91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Helper.h"; sourceTree = "<group>"; };
 		91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Helper.m"; sourceTree = "<group>"; };
-		914FEA501759447500903FEA /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		914FEA511759447500903FEA /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		914FEA65175E365000903FEA /* ShelbyDVRController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDVRController.h; sourceTree = "<group>"; };
+		914FEA66175E365000903FEA /* ShelbyDVRController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyDVRController.m; sourceTree = "<group>"; };
+		914FEA79175E3E6700903FEA /* DVREntry+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVREntry+Helper.h"; sourceTree = "<group>"; };
+		914FEA7A175E3E6700903FEA /* DVREntry+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVREntry+Helper.m"; sourceTree = "<group>"; };
+		914FEA83175E40C600903FEA /* DVREntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVREntry.h; sourceTree = "<group>"; };
+		914FEA84175E40C600903FEA /* DVREntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVREntry.m; sourceTree = "<group>"; };
+		914FEA88175E40C800903FEA /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
+		914FEA89175E40C800903FEA /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
+		914FEA8D175E40C900903FEA /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		914FEA8E175E40C900903FEA /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContainer.h; sourceTree = "<group>"; };
 		91649ECB1741B1A000A9265B /* DeduplicationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeduplicationUtility.h; sourceTree = "<group>"; };
 		91649ECC1741B1A000A9265B /* DeduplicationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeduplicationUtility.m; sourceTree = "<group>"; };
@@ -1379,15 +1394,17 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				914FEA501759447500903FEA /* Frame.h */,
-				914FEA511759447500903FEA /* Frame.m */,
+				914FEA8D175E40C900903FEA /* Frame.h */,
+				914FEA8E175E40C900903FEA /* Frame.m */,
+				914FEA88175E40C800903FEA /* DashboardEntry.h */,
+				914FEA89175E40C800903FEA /* DashboardEntry.m */,
+				914FEA83175E40C600903FEA /* DVREntry.h */,
+				914FEA84175E40C600903FEA /* DVREntry.m */,
 				91E5D461174E938100AD3746 /* Roll.h */,
 				91E5D462174E938100AD3746 /* Roll.m */,
 				1CC223B817580DF9003396B4 /* User.h */,
 				1CC223B917580DF9003396B4 /* User.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
-				914052F8174C411600E18A6B /* DashboardEntry.h */,
-				914052F9174C411600E18A6B /* DashboardEntry.m */,
 				91D03F3717331494008131D2 /* DisplayChannel.h */,
 				91D03F3817331495008131D2 /* DisplayChannel.m */,
 				91D03F5A173314A0008131D2 /* Video.h */,
@@ -1421,6 +1438,8 @@
 				91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */,
 				91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */,
 				91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */,
+				914FEA79175E3E6700903FEA /* DVREntry+Helper.h */,
+				914FEA7A175E3E6700903FEA /* DVREntry+Helper.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1924,6 +1943,8 @@
 			children = (
 				8E888986166FB0B40040D28D /* ShelbyAPIClient.h */,
 				8E888987166FB0B40040D28D /* ShelbyAPIClient.m */,
+				914FEA65175E365000903FEA /* ShelbyDVRController.h */,
+				914FEA66175E365000903FEA /* ShelbyDVRController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2561,14 +2582,17 @@
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
-				914052FB174C411600E18A6B /* DashboardEntry.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D464174E938100AD3746 /* Roll.m in Sources */,
 				91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				1CC223BB17580DF9003396B4 /* User.m in Sources */,
-				914FEA531759447500903FEA /* Frame.m in Sources */,
+				914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */,
+				914FEA7C175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
+				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
+				914FEA8B175E40C800903FEA /* DashboardEntry.m in Sources */,
+				914FEA90175E40CA00903FEA /* Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2667,14 +2691,17 @@
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
-				914052FC174C411600E18A6B /* DashboardEntry.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D465174E938100AD3746 /* Roll.m in Sources */,
 				91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				1CC223BC17580DF9003396B4 /* User.m in Sources */,
-				914FEA541759447500903FEA /* Frame.m in Sources */,
+				914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */,
+				914FEA7D175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
+				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
+				914FEA8C175E40C800903FEA /* DashboardEntry.m in Sources */,
+				914FEA91175E40CA00903FEA /* Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2773,14 +2800,17 @@
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlertView.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
-				914052FA174C411600E18A6B /* DashboardEntry.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D463174E938100AD3746 /* Roll.m in Sources */,
 				91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				1CC223BA17580DF9003396B4 /* User.m in Sources */,
-				914FEA521759447500903FEA /* Frame.m in Sources */,
+				914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */,
+				914FEA7B175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
+				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
+				914FEA8A175E40C800903FEA /* DashboardEntry.m in Sources */,
+				914FEA8F175E40CA00903FEA /* Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
