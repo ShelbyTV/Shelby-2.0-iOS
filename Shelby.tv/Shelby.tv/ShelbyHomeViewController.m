@@ -189,7 +189,11 @@
 
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
 {
-    return [self.browseVC deduplicatedEntriesForChannel:channel];
+    if (DEVICE_IPAD) {
+        return [self.browseVC deduplicatedEntriesForChannel:channel];
+    } else {
+        return [self.triageVC itemsToTriage];
+    }
 }
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate

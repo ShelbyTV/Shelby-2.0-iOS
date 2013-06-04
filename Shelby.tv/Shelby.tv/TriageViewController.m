@@ -117,7 +117,7 @@
 #pragma mark - UITableViewDelegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [self.triageDelegate userPressedTriageChannel:self.triageChannel atItem:self.itemsToTriage[indexPath.row]];
+    [self.triageDelegate userPressedTriageChannel:self.triageChannel atItem:self.itemsToTriage[indexPath.row]];
 }
 
 
