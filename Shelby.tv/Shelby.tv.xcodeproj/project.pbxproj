@@ -106,6 +106,9 @@
 		1C6AD0061721F9140008DEC2 /* SPTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6AD0031721F9140008DEC2 /* SPTutorialView.m */; };
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
+		1C7AC392175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
+		1C7AC393175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
+		1C7AC394175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
 		1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
 		1C7B8D4716F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
 		1C7B8D4816F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
@@ -849,6 +852,8 @@
 		1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtilities.m; sourceTree = "<group>"; };
 		1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
 		1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
+		1C7AC390175E8869007339A1 /* MCSwipeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSwipeTableViewCell.h; sourceTree = "<group>"; };
+		1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSwipeTableViewCell.m; sourceTree = "<group>"; };
 		1C7B8D4416F0F8590069F570 /* SignupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupView.h; sourceTree = "<group>"; };
 		1C7B8D4516F0F8590069F570 /* SignupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupView.m; sourceTree = "<group>"; };
 		1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationSignupView.png; sourceTree = "<group>"; };
@@ -1302,6 +1307,16 @@
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
+		};
+		1C7AC38F175E8869007339A1 /* MCSwipeTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				1C7AC390175E8869007339A1 /* MCSwipeTableViewCell.h */,
+				1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */,
+			);
+			name = MCSwipeTableViewCell;
+			path = Library/MCSwipeTableViewCell;
+			sourceTree = SOURCE_ROOT;
 		};
 		1C81095E16EE21230030077C /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
@@ -1813,6 +1828,7 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				1C7AC38F175E8869007339A1 /* MCSwipeTableViewCell */,
 				91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */,
 				91E5D4661757BA1F00AD3746 /* LBYouTubeView */,
 				8E70248C1715E71500E8DE46 /* OAuth Consumer */,
@@ -2697,6 +2713,7 @@
 				914FEA531759447500903FEA /* Frame.m in Sources */,
 				1C8AB437175D2377001D5853 /* TriageViewController.m in Sources */,
 				1C8AB444175D29C8001D5853 /* SPTriageCell.m in Sources */,
+				1C7AC393175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2805,6 +2822,7 @@
 				914FEA541759447500903FEA /* Frame.m in Sources */,
 				1C8AB438175D2377001D5853 /* TriageViewController.m in Sources */,
 				1C8AB445175D29C8001D5853 /* SPTriageCell.m in Sources */,
+				1C7AC394175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2913,6 +2931,7 @@
 				914FEA521759447500903FEA /* Frame.m in Sources */,
 				1C8AB436175D2377001D5853 /* TriageViewController.m in Sources */,
 				1C8AB443175D29C8001D5853 /* SPTriageCell.m in Sources */,
+				1C7AC392175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
