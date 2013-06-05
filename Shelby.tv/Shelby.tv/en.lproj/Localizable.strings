@@ -47,3 +47,8 @@
 "ALREADY_LOGGED_IN_TITLE" = "Logged in as '%@'";
 "ALREADY_LOGGED_IN_MESSAGE" = "You're already logged in.  If you would like to log in as '%@' instead, log out first.";
 "ALREADY_LOGGED_IN_BUTTON" = "Ok";
+
+// --Rolling Failed--
+"ROLLING_FAIL_TITLE" = "Problem Sharing";
+"ROLLING_FAIL_MESSAGE" = "Your video wasn't shared.  We will look into this issue.  In the meantime, please try again.";
+"ROLLING_FAIL_BUTTON" = "Ok";

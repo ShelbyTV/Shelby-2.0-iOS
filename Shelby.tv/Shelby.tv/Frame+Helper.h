@@ -39,4 +39,7 @@
 //of the current user.  Or has it been offline liked.
 - (BOOL)videoIsLiked;
 
+// The fallback when shortlinking fails
+- (NSString *)longLink;
+
 @end

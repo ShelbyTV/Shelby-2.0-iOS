@@ -19,6 +19,8 @@
 NSString * const kShelbyCoreDataEntityFrame = @"Frame";
 NSString * const kShelbyCoreDataEntityFrameIDPredicate = @"frameID == %@";
 
+NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id=%@";
+
 @implementation Frame (Helper)
 
 @dynamic duplicateOf;
@@ -176,6 +178,11 @@ NSString * const kShelbyCoreDataEntityFrameIDPredicate = @"frameID == %@";
     // We could query the DB for any frame with a matching videoID where clientUnsyncedLike==1, but that would require
     // an update to the UNLIKE logic, which I'm not doing right now.
     return [self.clientUnsyncedLike boolValue];
+}
+
+- (NSString *)longLink
+{
+    return [NSString stringWithFormat:kShelbyFrameLongLink, self.video.providerName, self.video.providerID, self.frameID];
 }
 
 @end

@@ -2,102 +2,131 @@
 //  ShelbyAPIClient.m
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 12/5/12.
-//  Copyright (c) 2012 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 6/5/13.
+//  Copyright (c) 2013 Shelby TV. All rights reserved.
 //
 
 #import "ShelbyAPIClient.h"
 #import "AFNetworking.h"
-#import "Frame.h"
-#import "LoginView.h"
+#import "Frame+Helper.h"
 #import "ShelbyAlertView.h"
+#import "ShelbyDataMediator.h"
 #import "User+Helper.h"
+
+NSString * const kShelbyAPIBaseURL =                        @"https://api.shelby.tv/";
+
+NSString * const DELETE =  @"DELETE";
+NSString * const kShelbyAPIDeleteFramePath =                @"v1/frame/%@";
+NSString * const GET =     @"GET";
+NSString * const kShelbyAPIGetShortLinkPath =               @"v1/frame/%@/short_link";
+NSString * const kShelbyAPIGetRollFramesPath =              @"v1/roll/%@/frames";
+NSString * const kShelbyAPIGetAllChannelsPath =             @"v1/roll/featured";
+NSString * const kShelbyAPIGetChannelDashboardEntriesPath = @"v1/user/%@/dashboard";
+NSString * const POST =    @"POST";
+NSString * const kShelbyAPIPostFrameLikePath =              @"v1/frame/%@/like";
+NSString * const kShelbyAPIPostExternalShare =              @"v1/frame/%@/share";
+NSString * const kShelbyAPIPostFrameWatchedPath =           @"v1/frame/%@/watched";
+NSString * const kShelbyAPIPostFrameToRollPath =            @"v1/roll/%@/frames";
+NSString * const kShelbyAPIPostLoginPath =                  @"v1/token";
+NSString * const kShelbyAPIPostThirdPartyTokenPath =        @"v1/token";
+NSString * const kShelbyAPIPostSignupPath =                 @"v1/user";
+NSString * const PUT =     @"PUT";
+NSString * const kShelbyAPIPutGAClientIdPath =              @"v1/user/%@";
+NSString * const kShelbyAPIPutUnplayableVideoPath =         @"v1/video/%@/unplayable";
+
+NSString * const kShelbyAPIParamAuthToken =                 @"auth_token";
+NSString * const kShelbyAPIParamChannelsSegment =           @"segment";
+//when value for this key is an array of N items, this param is turned into "destination[]" and listed N times
+NSString * const kShelbyAPIParamDestinationArray =          @"destination";
+NSString * const kShelbyAPIParamFrameId =                   @"frame_id";
+NSString * const kShelbyAPIParamGAClientID =                @"google_analytics_client_id";
+NSString * const kShelbyAPIParamLoginEmail =                @"email";
+NSString * const kShelbyAPIParamLoginPassword =             @"password";
+NSString * const kShelbyAPIParamOAuthProviderName =         @"provider_name";
+NSString * const kShelbyAPIParamOAuthUid =                  @"uid";
+NSString * const kShelbyAPIParamOAuthToken =                @"token";
+NSString * const kShelbyAPIParamOAuthSecret =               @"secret";
+NSString * const kShelbyAPIParamSinceId =                   @"since_id";
+NSString * const kShelbyAPIParamSkip =                      @"skip";
+NSString * const kShelbyAPIParamText =                      @"text";
 
 @implementation ShelbyAPIClient
 
-#pragma mark - Authentication (POST)
-+ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password
-{
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostLogin, email, password];
-    [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *requestURL = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    [request setTimeoutInterval:30.0];
-    [request setHTTPMethod:@"POST"];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-            
-        // Store User Data
-        //djs XXX old stuff
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUserForLogin];
-//        [dataUtility storeUser:JSON];
-    
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        DLog(@"%@", error);
-        
-        NSString *errorMessage = nil;
-        // Error code -1009 - no connection
-        // Error code -1001 - timeout
-        if ([error code] == -1009 || [error code] == -1001) {
-            errorMessage = @"Please make sure you are connected to the Internet";
-        } else {
-            errorMessage = @"Please make sure you've entered your login credientials correctly.";
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserAuthenticationDidFail object:errorMessage];
-    }];
-    
-    [operation start];
+static AFHTTPClient *httpClient = nil;
+
++ (void)initialize {
+    httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kShelbyAPIBaseURL]];
 }
 
++ (NSURLRequest *)requestWithMethod:(NSString *)method
+                            forPath:(NSString *)path
+                withQueryParameters:(NSDictionary *)queryParams
+                      shouldAddAuth:(BOOL)addAuthIfUserIsLoggedIn
+{
+    if (addAuthIfUserIsLoggedIn) {
+        User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+        if (user) {
+            NSMutableDictionary *queryWithAuth = queryParams ? [queryParams mutableCopy] : [NSMutableDictionary dictionaryWithCapacity:1];
+            queryWithAuth[kShelbyAPIParamOAuthToken] = user.token;
+            queryParams = queryWithAuth;
+        }
+    }
+    return [httpClient requestWithMethod:method path:path parameters:queryParams];
+}
+
+#pragma mark - User
 + (void)postSignupWithName:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password andEmail:(NSString *)email
 {
-
-    // Params
-    NSDictionary *userDictionary = @{@"name":name,@"nickname":nickname,@"password":password,@"primary_email":email};
-    NSDictionary *params = [NSDictionary dictionaryWithObject:userDictionary forKey:@"user"];
+    NSDictionary *userParams = @{@"user": @{@"name": name,
+                                            @"nickname": nickname,
+                                            @"password": password,
+                                            @"primary_email": email}};
+    NSURLRequest *request = [self requestWithMethod:POST
+                                            forPath:kShelbyAPIPostSignupPath
+                                withQueryParameters:userParams
+                                      shouldAddAuth:NO];
     
-    NSURL *basURL = [NSURL URLWithString:kShelbyAPIBaseURL];
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:basURL];
-    NSURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"/v1/user" parameters:params];
-
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        // Store User Data
-        //djs XXX old stuff
-//        CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_StoreUserForSignUp];
-//        [dataUtility storeUser:JSON];
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         DLog(@"%@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:JSON];
     }];
-
+    
     [operation start];
 }
 
++ (void)loginUserWithEmail:(NSString *)email
+                  password:(NSString *)password
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSDictionary *loginParams = @{kShelbyAPIParamLoginEmail: email,
+                                  kShelbyAPIParamLoginPassword: password};
+    NSURLRequest *request = [self requestWithMethod:POST forPath:kShelbyAPIPostLoginPath withQueryParameters:loginParams shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    
+    [operation start];
+}
 
-#pragma mark - Google Analytics (PUT)
 + (void)putGoogleAnalyticsClientID:(NSString *)clientID
 {
     if (!clientID || [clientID isEqualToString:@""]) {
         return;
     }
 
-    NSDictionary *params = @{@"google_analytics_client_id" : clientID};
-    
-    NSURL *basURL = [NSURL URLWithString:kShelbyAPIBaseURL];
-
-    //djs XXX old stuff
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-    User *user;// = [dataUtility fetchUser];
-    NSString *userID = [user userID];
-    NSString *authToken = [user token];
-    
-    NSString *pathURL =[NSString stringWithFormat:kShelbyAPIPutGAClientId, userID, authToken];
-    
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:basURL];
-    NSURLRequest *request = [httpClient requestWithMethod:@"PUT" path:pathURL parameters:params];
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    NSDictionary *params = @{kShelbyAPIParamGAClientID: clientID,
+                             kShelbyAPIParamAuthToken: user.token};
+    NSURLRequest *request = [self requestWithMethod:PUT
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPutGAClientIdPath, user.userID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
  
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         // Do nothing
@@ -108,236 +137,37 @@
     [operation start];
 }
 
-#pragma mark - Stream (GET)
-+ (void)fetchRollForUser:(NSString *)rollID withBlock:(shelby_api_request_complete_block_t)completionBlock
-{
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if (JSON) {
-                completionBlock(JSON, nil);
-            }
-        });
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        completionBlock(nil, error);
-    }];
-    
-    [operation start];
-}
-
-+ (void)getMoreFramesInStream:(NSString *)skipParam
-{
-
-    //djs XXX old stuff
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    User *user = [dataUtility fetchUser];
-//    
-//    NSString *authToken = [user token];
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreStream, authToken, skipParam]];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_SwipeUpdate];
-//            [dataUtility storeStream:JSON];
-//            
-//        });
-//        
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        
-//        DLog(@"Problem fetching Stream");
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:user.userID];
-//        
-//    }];
-//    
-//    [operation start];
-}
-
-#pragma mark - Video (PUT)
+#pragma mark - Video
 + (void)markUnplayableVideo:(NSString *)videoID
 {
-    //djs XXX old stuff
-//    if (!videoID || [videoID isEqualToString:@""]) {
-//        return;
-//    }
-//    
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    User *user = [dataUtility fetchUser];
-//    
-//    NSString *authToken = [user token];
-//
-//    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPutUnplayableVideo, videoID, authToken];
-//    NSURL *requestURL = [NSURL URLWithString:requestString];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-//    [request setHTTPMethod:@"PUT"];
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//
-//        // Do nothing?
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        DLog(@"Problem marking video unplayable");
-//    }];
-//    
-//    [operation start];
-}
+    NSURLRequest *request = [self requestWithMethod:PUT
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPutUnplayableVideoPath, videoID]
+                                withQueryParameters:nil
+                                      shouldAddAuth:YES];
 
-#pragma mark - Likes (GET)
-+ (void)getLikes
-{
-
-    //djs XXX old stuff
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    User *user = [dataUtility fetchUser];
-//    NSString *likesRollID = [user likesRollID];
-//    
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, likesRollID]];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-//            [dataUtility storeRollFrames:JSON forGroupType:GroupType_Likes];
-//            
-//        });
-//        
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        
-//        DLog(@"Problem fetching Likes Roll");
-//        
-//    }];
-//    
-//    [operation start];
-}
-
-+ (void)getMoreFramesInLikes:(NSString *)skipParam
-{
-    //djs XXX old stuff
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    User *user = [dataUtility fetchUser];
-//    NSString *likesRollID = [user likesRollID];
-//    
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, likesRollID, skipParam]];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_SwipeUpdate];
-//            [dataUtility storeRollFrames:JSON forGroupType:GroupType_Likes];
-//            
-//        });
-//        
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        
-//        DLog(@"Problem fetching Likes Roll");
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:user.likesRollID];
-//        
-//    }];
-//    
-//    [operation start];
-}
-
-#pragma mark - Personal Roll (GET)
-+ (void)getPersonalRoll
-{
-    //djs XXX old stuff
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    User *user = [dataUtility fetchUser];
-//    NSString *personalRollID = [user publicRollID];
-//
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetRollFrames, personalRollID]];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Sync];
-//            [dataUtility storeRollFrames:JSON forGroupType:GroupType_PersonalRoll];
-//            
-//        });
-//        
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        
-//        DLog(@"Problem fetching User Personal Roll");
-//        
-//    }];
-//    
-//    [operation start];
-}
-
-+ (void)getMoreFramesInPersonalRoll:(NSString *)skipParam
-{
-    //djs XXX old stuff
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    User *user = [dataUtility fetchUser];
-//    NSString *personalRollID = [user publicRollID];
-//    
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetMoreRollFrames, personalRollID, skipParam]];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_SwipeUpdate];
-//            [dataUtility storeRollFrames:JSON forGroupType:GroupType_PersonalRoll];
-//            
-//        });
-//        
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        
-//        DLog(@"Problem fetching User Personal Roll");
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFetchingOlderVideosFailed object:user.publicRollID];
-//        
-//    }];
-//    
-//    [operation start];
-}
-
-#pragma mark - Authentication (POST)
-+ (void)loginUserWithEmail:(NSString *)email
-                  password:(NSString *)password
-                  andBlock:(shelby_api_request_complete_block_t)completionBlock
-{
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostLogin, email, password];
-    [requestString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *requestURL = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    [request setTimeoutInterval:30.0];
-    [request setHTTPMethod:@"POST"];
-    
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-       completionBlock(JSON, nil);
+        // Do nothing
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        completionBlock(nil, error);
+        DLog(@"Problem marking video unplayable");
     }];
     
     [operation start];
 }
 
-
-#pragma mark - Channels (GET)
-//djs update done!
+#pragma mark - Channels
 + (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    NSURL *url = [NSURL URLWithString:kShelbyAPIGetAllChannels];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"GET"];
+    NSDictionary *channelsParams = @{kShelbyAPIParamChannelsSegment:
+#ifdef SHELBY_ENTERPRISE
+                                     @"ipad_vertical_one"
+#else
+                                     @"ipad_standard"
+#endif
+                                     };
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:kShelbyAPIGetAllChannelsPath
+                                withQueryParameters:channelsParams
+                                      shouldAddAuth:NO];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);
@@ -347,29 +177,22 @@
     [operation start];
 }
 
-//djs update done!
 + (void)fetchDashboardEntriesForDashboardID:(NSString *)dashboardID
                                  sinceEntry:(DashboardEntry *)sinceEntry
-                               andAuthToken:(NSString *)authToken
-                                  withBlock:(shelby_api_request_complete_block_t)completionBlock
+                              withAuthToken:(NSString *)authToken
+                                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    NSString *requestString;
-    // TODO: do this in a nicer way.
-    if(sinceEntry){
-        requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntriesSince, dashboardID, sinceEntry.dashboardEntryID];
-        if (authToken) {
-            requestString = [NSString stringWithFormat:@"%@&auth_token=%@", requestString, authToken];
-        }
-    } else {
-        requestString = [NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntries, dashboardID];
-        if (authToken) {
-            requestString = [NSString stringWithFormat:@"%@?auth_token=%@", requestString, authToken];
-        }
+    NSMutableDictionary *params = [@{} mutableCopy];
+    if (sinceEntry) {
+        params[kShelbyAPIParamSinceId] = sinceEntry.dashboardEntryID;
     }
-    
-    NSURL *requestURL = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    [request setHTTPMethod:@"GET"];
+    if (authToken) {
+        params[kShelbyAPIParamAuthToken] = authToken;
+    }
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:[NSString stringWithFormat:kShelbyAPIGetChannelDashboardEntriesPath, dashboardID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);
@@ -380,19 +203,19 @@
     [operation start];
 }
 
+#pragma mark - Frames
 + (void)fetchFramesForRollID:(NSString *)rollID
                   sinceEntry:(Frame *)sinceFrame
                    withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    NSString *requestString;
-    if (sinceFrame) { 
-        requestString = [NSString stringWithFormat:kShelbyAPIGetRollFramesSinceFrame, rollID, sinceFrame.frameID];
-    } else {
-        requestString = [NSString stringWithFormat:kShelbyAPIGetRollFrames, rollID];
+    NSMutableDictionary *params = [@{} mutableCopy];
+    if (sinceFrame) {
+        params[kShelbyAPIParamSinceId] = sinceFrame.frameID;
     }
-    NSURL *requestURL = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    [request setHTTPMethod:@"GET"];
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:[NSString stringWithFormat:kShelbyAPIGetRollFramesPath, rollID]
+                                withQueryParameters:params
+                                      shouldAddAuth:YES];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);
@@ -403,32 +226,59 @@
     [operation start];
 }
 
-
 // TODO: deal with sync likes after user logs in.
-+ (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock
++ (void)postUserLikedFrame:(NSString *)frameID
+             withAuthToken:(NSString *)authToken
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIPostFrameToLikesWithAuthentication, frameID, authToken];
+    NSDictionary *params = nil;
+    if (authToken) {
+        params = @{kShelbyAPIParamAuthToken: authToken};
+    }
+    NSURLRequest *request = [self requestWithMethod:PUT
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPostFrameLikePath, frameID]
+                                withQueryParameters:params
+                                      shouldAddAuth:YES];
 
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-    [request setHTTPMethod:@"PUT"];
-    
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         completionBlock(nil, error);
+    }];
+    
+    [operation start];
+}
+
++ (void)postUserWatchedFrame:(NSString *)frameID
+               withAuthToken:(NSString *)authToken
+{
+    NSDictionary *params = @{kShelbyAPIParamAuthToken: authToken};
+    NSURLRequest *request = [self requestWithMethod:POST
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPostFrameWatchedPath, frameID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        //do nothing
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        //do nothing
     }];
     
     [operation start];
 }
 
 + (void)deleteFrame:(NSString *)frameID
-          userToken:(NSString *)authToken
-          withBlock:(shelby_api_request_complete_block_t)completionBlock
+      withAuthToken:(NSString *)authToken
+           andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    NSString *requestString = [NSString stringWithFormat:kShelbyAPIDestroyFrameWithAuthentication, frameID, authToken];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-    [request setHTTPMethod:@"DELETE"];
+    NSDictionary *params = nil;
+    if (authToken) {
+        params = @{kShelbyAPIParamAuthToken: authToken};
+    }
+    NSURLRequest *request = [self requestWithMethod:DELETE
+                                            forPath:[NSString stringWithFormat:kShelbyAPIDeleteFramePath, frameID]
+                                withQueryParameters:params
+                                      shouldAddAuth:YES];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);
@@ -439,74 +289,114 @@
     [operation start];
 }
 
-#pragma mark - Rolling (POST)
-+ (void)postFrameToPersonalRoll:(NSString *)requestString
++ (void)getShortlinkForFrame:(Frame *)frame
+               allowFallback:(BOOL)shouldFallbackToLongLink
+                   withBlock:(shelby_api_shortlink_request_complete_block_t)completionBlock
 {
-    
-    NSURL *url = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:[NSString stringWithFormat:kShelbyAPIGetShortLinkPath, frame.frameID]
+                                withQueryParameters:nil
+                                      shouldAddAuth:NO];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        // Post to Roll and Social Networks
-        DLog(@"Successfully posted frame to roll and networks");
-        
-        [ShelbyAPIClient getPersonalRoll];
+        NSString *shortLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
+        DLog(@"Succeeded fetching short link for frame: %@", shortLink);
+        if (completionBlock) {
+            completionBlock(shortLink, NO);
+        }
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if (shouldFallbackToLongLink && completionBlock) {
+            DLog(@"Failed getting short link for frame. Using long link.");
+            completionBlock([frame longLink], YES);
+        } else if (completionBlock) {
+            completionBlock(nil, YES);
+        }
+    }];
+    
+    [operation start];
+}
+
++ (void)rollFrame:(NSString *)frameID
+         onToRoll:(NSString *)rollID
+      withMessage:(NSString *)message
+        authToken:(NSString *)authToken
+         andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSDictionary *params = @{kShelbyAPIParamFrameId: frameID,
+                             kShelbyAPIParamText: message,
+                             kShelbyAPIParamAuthToken: authToken};
+    NSURLRequest *request = [self requestWithMethod:POST
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPostFrameToRollPath, rollID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        DLog(@"Successfully rolled frame");
+        if (completionBlock){
+            completionBlock(JSON, nil);
+        }
         
-        DLog(@"Problem rolling frame to roll and networks: %@", requestString);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        DLog(@"Problem rolling frame, %@", error);
+        if (completionBlock){
+            completionBlock(JSON, error);
+        }
         
     }];
     
     [operation start];
 }
 
-#pragma mark - Sharing (POST)
-+ (void)postShareFrameToSocialNetworks:(NSString *)requestString
++ (void)shareFrame:(NSString *)frameID
+toExternalDestinations:(NSArray *)destinations
+       withMessage:(NSString *)message
+      andAuthToken:(NSString *)authToken
 {
-    
-    NSURL *url = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
+    NSDictionary *params = @{kShelbyAPIParamDestinationArray: destinations,
+                             kShelbyAPIParamText: message,
+                             kShelbyAPIParamAuthToken: authToken};
+    NSURLRequest *request = [self requestWithMethod:POST
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPostExternalShare, frameID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        // Post to Roll and Social Networks
         DLog(@"Successfully shared frame to social networks");
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        
-        DLog(@"Problem sharing frame to social networks: %@", requestString);
+        DLog(@"Problem sharing frame to social networks: %@", error);
         
     }];
     
     [operation start];
 }
 
-#pragma mark - Third Party Token (POST)
-// KP KP: TODO: might want to add more checks: If twitter and there is no secret - error.
+#pragma mark - OAuth
 + (void)postThirdPartyToken:(NSString *)provider
-                  accountID:(NSString *)accountID
-                      token:(NSString *)token
-                     secret:(NSString *)secret
-               andAuthToken:(NSString *)authToken
-                  withBlock:(shelby_api_request_complete_block_t)completionBlock
+              withAccountID:(NSString *)accountID
+                 oauthToken:(NSString *)token
+                oauthSecret:(NSString *)secret
+            shelbyAuthToken:(NSString *)authToken
+                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     if (!provider || !accountID || !token) {
         return;
     }
     
-    NSString *requestString = nil;
+    NSDictionary *params = @{kShelbyAPIParamOAuthProviderName: provider,
+                             kShelbyAPIParamOAuthUid: accountID,
+                             kShelbyAPIParamOAuthToken: token,
+                             kShelbyAPIParamAuthToken: authToken};
     if (secret) {
-        requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyToken, provider, accountID, token, secret, authToken];
-    } else {
-        requestString = [NSString stringWithFormat:kShelbyAPIPostThirdPartyTokenNoSecret, provider, accountID, token, authToken];
+        NSMutableDictionary *mutableParams = [params mutableCopy];
+        mutableParams[kShelbyAPIParamOAuthSecret] = secret;
+        params = mutableParams;
     }
-    NSURL *requestURL = [NSURL URLWithString:requestString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
-    [request setHTTPMethod:@"POST"];
+    NSURLRequest *request = [self requestWithMethod:POST
+                                            forPath:kShelbyAPIPostThirdPartyTokenPath
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         if (completionBlock) {
@@ -535,6 +425,5 @@
     
     [operation start];
 }
-
 
 @end
