@@ -109,6 +109,12 @@
 		1C7AC392175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
 		1C7AC393175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
 		1C7AC394175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
+		1C7AC397175FB488007339A1 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC395175FB488007339A1 /* exit.png */; };
+		1C7AC398175FB488007339A1 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC395175FB488007339A1 /* exit.png */; };
+		1C7AC399175FB488007339A1 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC395175FB488007339A1 /* exit.png */; };
+		1C7AC39A175FB488007339A1 /* exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC396175FB488007339A1 /* exit@2x.png */; };
+		1C7AC39B175FB488007339A1 /* exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC396175FB488007339A1 /* exit@2x.png */; };
+		1C7AC39C175FB488007339A1 /* exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC396175FB488007339A1 /* exit@2x.png */; };
 		1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
 		1C7B8D4716F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
 		1C7B8D4816F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
@@ -854,6 +860,8 @@
 		1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
 		1C7AC390175E8869007339A1 /* MCSwipeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSwipeTableViewCell.h; sourceTree = "<group>"; };
 		1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSwipeTableViewCell.m; sourceTree = "<group>"; };
+		1C7AC395175FB488007339A1 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exit.png; sourceTree = "<group>"; };
+		1C7AC396175FB488007339A1 /* exit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exit@2x.png"; sourceTree = "<group>"; };
 		1C7B8D4416F0F8590069F570 /* SignupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupView.h; sourceTree = "<group>"; };
 		1C7B8D4516F0F8590069F570 /* SignupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupView.m; sourceTree = "<group>"; };
 		1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationSignupView.png; sourceTree = "<group>"; };
@@ -1643,6 +1651,8 @@
 		8E5980291680104A00027181 /* Shelby Player Images */ = {
 			isa = PBXGroup;
 			children = (
+				1C7AC395175FB488007339A1 /* exit.png */,
+				1C7AC396175FB488007339A1 /* exit@2x.png */,
 				8E84ACB216FCDCD3003D2AA8 /* scrubberBarGreen.png */,
 				8E84ACB316FCDCD3003D2AA8 /* scrubberBarGreen@2x.png */,
 				8EF03BE016D548C90019669F /* likeNotification.png */,
@@ -2297,6 +2307,8 @@
 				1C8AB43B175D23C9001D5853 /* TriageView.xib in Resources */,
 				1C8AB43F175D274E001D5853 /* SPTriageViewCell.xib in Resources */,
 				1C8AB448175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */,
+				1C7AC398175FB488007339A1 /* exit.png in Resources */,
+				1C7AC39B175FB488007339A1 /* exit@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2448,6 +2460,8 @@
 				1C8AB43C175D23C9001D5853 /* TriageView.xib in Resources */,
 				1C8AB440175D274E001D5853 /* SPTriageViewCell.xib in Resources */,
 				1C8AB449175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */,
+				1C7AC399175FB488007339A1 /* exit.png in Resources */,
+				1C7AC39C175FB488007339A1 /* exit@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2600,6 +2614,8 @@
 				1C8AB43A175D23C9001D5853 /* TriageView.xib in Resources */,
 				1C8AB43E175D274E001D5853 /* SPTriageViewCell.xib in Resources */,
 				1C8AB447175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */,
+				1C7AC397175FB488007339A1 /* exit.png in Resources */,
+				1C7AC39A175FB488007339A1 /* exit@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

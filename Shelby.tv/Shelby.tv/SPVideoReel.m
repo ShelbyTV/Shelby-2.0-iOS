@@ -68,6 +68,7 @@
 - (IBAction)shareButtonAction:(id)sender;
 - (IBAction)likeAction:(id)sender;
 - (IBAction)rollAction:(id)sender;
+- (IBAction)closePlayer:(id)sender;
 
 @end
 
@@ -285,18 +286,20 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.view addGestureRecognizer:self.toggleOverlayGesuture];
 
     //change channels (pan vertically)
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-    panGesture.minimumNumberOfTouches = 1;
-    panGesture.maximumNumberOfTouches = 1;
-    [self.view addGestureRecognizer:panGesture];
-    
+    if (DEVICE_IPAD) {
+        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+        panGesture.minimumNumberOfTouches = 1;
+        panGesture.maximumNumberOfTouches = 1;
+        [self.view addGestureRecognizer:panGesture];
+    }
     //change video (pan horizontallay)
     //handled by self.videoScrollView.panGestureRecognizer
     
     //exit (pinch)
-    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
-    [self.view addGestureRecognizer:pinchGesture];
-
+    if (DEVICE_IPAD) {
+        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
+        [self.view addGestureRecognizer:pinchGesture];
+    }
     //play/pause (double tap)
     UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
     [togglePlaybackGesuture setNumberOfTapsRequired:2];
@@ -602,6 +605,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self prepareForShareWithFrame:CGRectZero];
     
     [self.shareController showRollView];
+}
+
+- (IBAction)closePlayer:(id)sender
+{
+    if (self.delegate && [self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)]) {
+        [self.delegate userDidCloseChannelAtFrame:self.currentPlayer.videoFrame];
+    }
 }
 
 - (void)hideOverlayView
