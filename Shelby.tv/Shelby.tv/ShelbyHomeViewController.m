@@ -65,6 +65,7 @@
         [triageViewController.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
         
         [self.view addSubview:triageViewController.view];
+        [self.view sendSubviewToBack:triageViewController.view];
     }
     
     [self setupSettingsView];
