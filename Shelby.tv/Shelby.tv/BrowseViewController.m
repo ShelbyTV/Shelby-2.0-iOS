@@ -135,12 +135,15 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
-    STVAssert([[NSThread currentThread] isMainThread], @"should only happen on main thread... could be the cause of bad updates errors");
-    
     NSMutableDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
     STVAssert(chMetadata, @"channel must be set before adding entries");
     NSArray *curEntries = chMetadata[kShelbyChannelMetadataEntriesKey];
     NSArray *curDedupedEntries = chMetadata[kShelbyChannelMetadataDeduplicatedEntriesKey];
+    
+    //DJS BUG HUNT #312
+    NSUInteger curEntriesOriginalCount = [curEntries count];
+    NSUInteger curDedupedEntriesOriginalCount = [curDedupedEntries count];
+    //DJS BUG HUNT #312
     
     SPChannelCell *cell = [self cellForChannel:channel];
     NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
@@ -160,6 +163,15 @@ NSString *const kShelbyChannelMetadataDeduplicatedEntriesKey    = @"kShelbyChDDE
                                                                                                              didDelete:&indexPathsForDelete
                                                                                                              didUpdate:&indexPathsForReload];
     }
+    
+    //DJS BUG HUNT #312
+    NSUInteger curEntriesNewCount = [chMetadata[kShelbyChannelMetadataEntriesKey] count];
+    NSUInteger curDedupedEntriesNewCount = [chMetadata[kShelbyChannelMetadataDeduplicatedEntriesKey] count];
+    NSUInteger dedupedEntriesExpectedDiff = [indexPathsForInsert count] - [indexPathsForDelete count];
+    if (!(curDedupedEntriesOriginalCount + dedupedEntriesExpectedDiff == curDedupedEntriesNewCount)) {
+        STVAssert(NO, @"bad diff // curEntriesOriginalCount:%lu / curEntriesNewCount:%lu / curDedupedEntriesOriginalCount:%lu / curDedupedEntriesNewCount:%lu / dedupedEntriesExpectedDiff:%lu // insert:%@ / delete:%@ / reload:%@", (unsigned long)curEntriesOriginalCount, (unsigned long)curEntriesNewCount, (unsigned long)curDedupedEntriesOriginalCount, (unsigned long)curDedupedEntriesNewCount, (unsigned long)dedupedEntriesExpectedDiff, indexPathsForInsert, indexPathsForDelete, indexPathsForReload);
+    }
+    //DJS BUG HUNT #312
     
     // The index paths returned by DeduplicationUtility are relative to the original array.
     // Because of performBatchUpdates:completion: semantics per documentation...
