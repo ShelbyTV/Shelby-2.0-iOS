@@ -423,7 +423,6 @@
 								<string key="NSFrame">{{303, 10}, {88, 23}}</string>
 								<reference key="NSSuperview" ref="880298622"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="512558984"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -687,17 +686,15 @@
 						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
-					<int key="connectionID">24</int>
+					<int key="connectionID">214</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
-						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="880298622"/>
-						<reference key="destination" ref="443678265"/>
-						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
-						<bool key="addsContentToExistingCollection">YES</bool>
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">scrubberTouched:</string>
+						<reference key="source" ref="443678265"/>
+						<reference key="destination" ref="191373211"/>
 					</object>
-					<int key="connectionID">214</int>
+					<int key="connectionID">410</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -2611,7 +2608,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">409</int>
+			<int key="maxID">410</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
