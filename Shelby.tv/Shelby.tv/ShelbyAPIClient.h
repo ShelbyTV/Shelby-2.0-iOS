@@ -2,73 +2,78 @@
 //  ShelbyAPIClient.h
 //  Shelby.tv
 //
-//  Created by Arthur Ariel Sabintsev on 12/5/12.
-//  Copyright (c) 2012 Shelby TV. All rights reserved.
+//  Created by Daniel Spinosa on 6/5/13.
+//  Copyright (c) 2013 Shelby TV. All rights reserved.
 //
 
 #import "DashboardEntry+Helper.h"
 
 typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
+typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BOOL shortlinkDidFail);
 
 @interface ShelbyAPIClient : NSObject
 
-/// Authentication
-+ (void)postAuthenticationWithEmail:(NSString *)email andPassword:(NSString *)password;
-+ (void)postSignupWithName:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password andEmail:(NSString *)email;
+// -- User
++ (void)postSignupWithName:(NSString *)name
+                  nickname:(NSString *)nickname
+                  password:(NSString *)password
+                  andEmail:(NSString *)email;
 
-/// Google Analytics
-+ (void)putGoogleAnalyticsClientID:(NSString *)clientID;
-
-/// Stream
-+ (void)getMoreFramesInStream:(NSString *)skipParam;
-
-// User
-+ (void)fetchRollForUser:(NSString *)rollID withBlock:(shelby_api_request_complete_block_t)completionBlock;
-
-/// Video
-+ (void)markUnplayableVideo:(NSString *)videoID;
-
-/// Likes
-+ (void)getLikes;
-+ (void)getMoreFramesInLikes:(NSString *)skipParam;
-
-/// Personal Roll
-+ (void)getPersonalRoll;
-+ (void)getMoreFramesInPersonalRoll:(NSString *)skipParam;
-
-// Login
 + (void)loginUserWithEmail:(NSString *)email
                   password:(NSString *)password
-                 andBlock:(shelby_api_request_complete_block_t)completionBlock;
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
-/// Channels
++ (void)putGoogleAnalyticsClientID:(NSString *)clientID;
+
+// -- Video
++ (void)markUnplayableVideo:(NSString *)videoID;
+
+// -- Channels
 + (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 + (void)fetchDashboardEntriesForDashboardID:(NSString *)dashboardID
                                  sinceEntry:(DashboardEntry *)sinceEntry
-                               andAuthToken:(NSString *)authToken
-                                  withBlock:(shelby_api_request_complete_block_t)completionBlock;
+                              withAuthToken:(NSString *)authToken
+                                   andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
+// -- Frames
 + (void)fetchFramesForRollID:(NSString *)rollID
                   sinceEntry:(Frame *)sinceFrame
                    withBlock:(shelby_api_request_complete_block_t)completionBlock;
-/// Liking
-+ (void)postUserLikedFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
-// Deleting Frame (== unliking)
-+ (void)deleteFrame:(NSString *)frameID userToken:(NSString *)authToken withBlock:(shelby_api_request_complete_block_t)completionBlock;
++ (void)postUserLikedFrame:(NSString *)frameID
+             withAuthToken:(NSString *)authToken
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
-/// Rolling
-+ (void)postFrameToPersonalRoll:(NSString*)requestString;
++ (void)postUserWatchedFrame:(NSString *)frameID
+               withAuthToken:(NSString *)authToken;
 
-/// Sharing
-+ (void)postShareFrameToSocialNetworks:(NSString*)requestString;
+// NB: deleting frame == unliking
++ (void)deleteFrame:(NSString *)frameID
+      withAuthToken:(NSString *)authToken
+           andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
-/// Send Third Party Token
++ (void)getShortlinkForFrame:(Frame *)frame
+               allowFallback:(BOOL)shouldFallbackToLongLink
+                   withBlock:(shelby_api_shortlink_request_complete_block_t)completionBlock;
+
++ (void)rollFrame:(NSString *)frameID
+         onToRoll:(NSString *)rollID
+      withMessage:(NSString *)message
+        authToken:(NSString *)authToken
+         andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
++ (void)shareFrame:(NSString *)frameID
+toExternalDestinations:(NSArray *)destinations
+       withMessage:(NSString *)message
+      andAuthToken:(NSString *)authToken;
+
+// -- OAuth
 + (void)postThirdPartyToken:(NSString *)provider
-                  accountID:(NSString *)accountID
-                      token:(NSString *)token
-                     secret:(NSString *)secret
-               andAuthToken:(NSString *)authToken
-                  withBlock:(shelby_api_request_complete_block_t)completionBlock;
+              withAccountID:(NSString *)accountID
+                 oauthToken:(NSString *)token
+                oauthSecret:(NSString *)secret
+            shelbyAuthToken:(NSString *)authToken
+                   andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 @end

@@ -1092,7 +1092,6 @@
 		8E9FBD5616C7145F00731912 /* authenticationTextField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationTextField.png; sourceTree = "<group>"; };
 		8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationTextField@2x.png"; sourceTree = "<group>"; };
 		8EA10D8B1725A9DD00B90571 /* Harpy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Harpy.bundle; sourceTree = "<group>"; };
-		8EAAEE52163A275400AEF100 /* APIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIConstants.h; sourceTree = "<group>"; };
 		8EAB0066171F27E20021DF31 /* SPVideoItemViewCellLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemViewCellLabel.h; sourceTree = "<group>"; };
 		8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemViewCellLabel.m; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -2042,7 +2041,6 @@
 			children = (
 				8EF5C35C162F431B0075C35F /* Constants.h */,
 				8EF092361662A325008EE1DD /* Structures.h */,
-				8EAAEE52163A275400AEF100 /* APIConstants.h */,
 				8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */,
 			);
 			name = Constants;

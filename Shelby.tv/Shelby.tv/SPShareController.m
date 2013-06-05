@@ -13,6 +13,7 @@
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
 #import "ShelbyActivityItemProvider.h"
+#import "ShelbyAlertView.h"
 #import "ShelbyAPIClient.h"
 #import "ShelbyViewController.h"
 #import "SPShareRollView.h"
@@ -22,6 +23,9 @@
 
 #define kShelbyFacebookShareEnable  @"kShelbyFacebookShareEnable"
 #define kShelbyTwitterShareEnable   @"kShelbyTwitterShareEnable"
+
+NSString * const kShelbyShareDestinationTwitter = @"twitter";
+NSString * const kShelbyShareDestinationFacebook = @"facebook";
 
 @interface SPShareController ()
 
@@ -112,32 +116,14 @@
         
         Frame *videoFrame = self.videoPlayer.videoFrame;
         
-        // Create request for short link
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kShelbyAPIGetShortLink, videoFrame.frameID]];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        [request setHTTPMethod:@"GET"];
-        
-        // Perform shortLink fetch and present sharePopOver (on success and fail)
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
- 
-            NSString *shareLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
-            NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrame.video.title];
-            
-            DLog(@"Succeeded fetching link for frame: %@", shareLink);
-            [self shareWithFrame:videoFrame message:shareMessage andLink:shareLink];
-            
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-            
-            // If short link fetch failed, use full_path
-            NSString *shareLink = [NSString stringWithFormat:kShelbyAPIGetLongLink, videoFrame.video.providerName, videoFrame.video.providerID, videoFrame.frameID];
-            NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrame.video.title];
-    
-            DLog(@"Failed getting awe.sm short_url. Using full path %@", shareLink);
-            [self shareWithFrame:videoFrame message:shareMessage andLink:shareLink];
-            
-        }];
-        
-        [operation start];
+        [ShelbyAPIClient getShortlinkForFrame:self.videoPlayer.videoFrame
+                                allowFallback:YES
+                                    withBlock:^(NSString *link, BOOL shortlinkDidFail) {
+                                        NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrame.video.title];
+                                        [self shareWithFrame:videoFrame
+                                                     message:shareMessage
+                                                     andLink:link];
+                                    }];
     });
     
 }
@@ -301,38 +287,48 @@
 
 - (void)roll
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSString *frameID = self.videoPlayer.videoFrame.frameID;
+    User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
+    NSString *message = self.rollView.rollTextView.text;
 
-        User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
-        NSString *authToken = [user token];
-        NSString *rollID = [user publicRollID];
-
-        Frame *videoFrame = self.videoPlayer.videoFrame;
-        NSString *frameID = [videoFrame frameID];
-        NSString *message = [self.rollView.rollTextView.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-        NSString *rollString = [NSString stringWithFormat:kShelbyAPIPostFrameToPersonalRoll, rollID, frameID, authToken, message];
-        [ShelbyAPIClient postFrameToPersonalRoll:rollString];
-
-        if ( [_rollView.twitterButton isSelected] && [_rollView.facebookButton isSelected] ) { // Share to Facebook and Twitter
-            NSString *socialString = [NSString stringWithFormat:kShelbyAPIPostFrameToAllSocial, frameID, authToken, message];
-            [ShelbyAPIClient postShareFrameToSocialNetworks:socialString];
-            
-        } else if ( ![_rollView.twitterButton isSelected] && [_rollView.twitterButton isSelected] ) { // Share to Facebook
-            NSString *facebookString = [NSString stringWithFormat:kShelbyAPIPostFrameToFacebook, frameID, authToken, message];
-            [ShelbyAPIClient postShareFrameToSocialNetworks:facebookString];
-            
-        } else if ( [_rollView.twitterButton isSelected] && ![_rollView.facebookButton isSelected] ) { // Share to Twitter
-            NSString *twitterString = [NSString stringWithFormat:kShelbyAPIPostFrameToTwitter, frameID, authToken, message];
-            [ShelbyAPIClient postShareFrameToSocialNetworks:twitterString];
-            
-        } else {
-            // Do nothing
-        }
-       
-        // Dismiss rollView
-        [self performSelectorOnMainThread:@selector(hideRollView) withObject:nil waitUntilDone:NO];
-    });
-    
+    [ShelbyAPIClient rollFrame:frameID
+                      onToRoll:user.publicRollID
+                   withMessage:message
+                     authToken:user.token
+                      andBlock:^(id JSON, NSError *error) {
+                          if (!error) {
+                              // share that freshly rolled frame!
+                              NSDictionary *newFrameDict = JSON[@"result"];
+                              if (newFrameDict && newFrameDict[@"id"]) {
+                                  NSString *newFrameID = newFrameDict[@"id"];
+                                  NSMutableArray *destinations = [@[] mutableCopy];
+                                  if ([_rollView.twitterButton isSelected]) {
+                                      [destinations addObject:kShelbyShareDestinationTwitter];
+                                  }
+                                  if ([_rollView.facebookButton isSelected]) {
+                                      [destinations addObject:kShelbyShareDestinationFacebook];
+                                  }
+                                  if ([destinations count]){
+                                      [ShelbyAPIClient shareFrame:newFrameID
+                                           toExternalDestinations:destinations
+                                                      withMessage:message
+                                                     andAuthToken:user.token];
+                                  }
+                              }
+                             
+                          } else {
+                              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                  ShelbyAlertView *alert = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"ROLLING_FAIL_TITLE", @"--Rolling Failed--")
+                                                                                         message:NSLocalizedString(@"ROLLING_FAIL_MESSAGE", nil)
+                                                                              dismissButtonTitle:NSLocalizedString(@"ROLLING_FAIL_BUTTON", nil)
+                                                                                  autodimissTime:0
+                                                                                       onDismiss:nil];
+                                  [alert show];
+                              });
+                          }
+                         
+                          [self performSelectorOnMainThread:@selector(hideRollView) withObject:nil waitUntilDone:NO];
+                      }];
 }
 
 #pragma mark - UITextViewDelegate Methods

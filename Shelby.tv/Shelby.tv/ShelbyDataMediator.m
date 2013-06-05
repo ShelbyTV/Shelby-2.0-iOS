@@ -143,7 +143,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     
     if (user) {
         if (![user hasLikedVideoOfFrame:frame]) {
-            [ShelbyAPIClient postUserLikedFrame:frame.frameID userToken:user.token withBlock:^(id JSON, NSError *error) {
+            [ShelbyAPIClient postUserLikedFrame:frame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
                 if (JSON) { // success
                     frame.clientLikedAt = nil;
                     //API is NOT returning the liked frame, so...
@@ -159,7 +159,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         } else {
             Frame *likedFrame = [user likedFrameWithVideoOfFrame:frame];
             STVAssert(likedFrame, @"expected liked frame");
-            [ShelbyAPIClient deleteFrame:likedFrame.frameID userToken:user.token withBlock:^(id JSON, NSError *error) {
+            [ShelbyAPIClient deleteFrame:likedFrame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
                 if (JSON) {
                     likedFrame.clientUnliked = @1;
                     NSError *error;
@@ -304,8 +304,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     //2) fetch remotely NB: AFNetworking returns us to the main thread
     [ShelbyAPIClient fetchDashboardEntriesForDashboardID:dashboard.dashboardID
                                               sinceEntry:sinceDashboardEntry
-                                            andAuthToken:authToken
-                                               withBlock:^(id JSON, NSError *error) {
+                                           withAuthToken:authToken
+                                                andBlock:^(id JSON, NSError *error) {
         if(JSON){            
             // 1) store this in core data (with a new context b/c we're on some background thread)
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -426,28 +426,28 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
             user = [User currentAuthenticatedUserInContext:context];
             //try adding token to the user
             [ShelbyAPIClient postThirdPartyToken:@"facebook"
-                                       accountID:facebookUser[@"id"]
-                                           token:facebookToken
-                                          secret:nil
-                                    andAuthToken:user.token
-                                       withBlock:^(id JSON, NSError *error) {
-                                           if(!error){
-                                               //user updated by API
-                                               [user updateWithFacebookUser:facebookUser];
-                                               NSError *error;
-                                               [user.managedObjectContext save:&error];
-                                               STVAssert(!error, @"context save failed saving User after facebook login...");
+                                   withAccountID:facebookUser[@"id"]
+                                      oauthToken:facebookToken
+                                     oauthSecret:nil
+                                 shelbyAuthToken:user.token
+                                        andBlock:^(id JSON, NSError *error) {
+                                            if(!error){
+                                                //user updated by API
+                                                [user updateWithFacebookUser:facebookUser];
+                                                NSError *error;
+                                                [user.managedObjectContext save:&error];
+                                                STVAssert(!error, @"context save failed saving User after facebook login...");
                                                
-                                               [self.delegate facebookConnectDidComplete];
+                                                [self.delegate facebookConnectDidComplete];
                                                
-                                               if (askForPublishPermission) {
-                                                   [[FacebookHandler sharedInstance] askForPublishPermissions];
-                                               }
-                                           } else {
-                                               //did NOT add this auth to the current user
-                                               [self.delegate facebookConnectDidCompleteWithError:nil];
-                                           }
-                                       }];
+                                                if (askForPublishPermission) {
+                                                    [[FacebookHandler sharedInstance] askForPublishPermissions];
+                                                }
+                                            } else {
+                                                //did NOT add this auth to the current user
+                                                [self.delegate facebookConnectDidCompleteWithError:nil];
+                                            }
+                                        }];
         } else if (facebookToken) {
             [self.delegate facebookConnectDidComplete];
         } else if (errorMessage) {
