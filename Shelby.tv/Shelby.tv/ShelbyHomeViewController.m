@@ -25,7 +25,7 @@
 @property (strong, nonatomic) AuthorizationViewController *authorizationVC;
 
 @property (nonatomic, strong) BrowseViewController *browseVC;
-@property (nonatomic, strong) TriageViewController *triageVC;
+@property (nonatomic, strong) NSMutableArray *triageVCs;
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, assign) BOOL animationInProgress;
 
@@ -59,8 +59,11 @@
     
         [browseViewController didMoveToParentViewController:self];
     } else {
+        _triageVCs = [@[] mutableCopy];
+        //XXX For now, just holding a single TriageViewController
+        //it gets locked to the first channel we receive (later)
         TriageViewController *triageViewController = [[TriageViewController alloc] initWithNibName:@"TriageView" bundle:nil];
-        [self setTriageVC:triageViewController];
+        [_triageVCs addObject:triageViewController];
         [self addChildViewController:triageViewController];
         [triageViewController.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
         
@@ -105,9 +108,11 @@
     if (DEVICE_IPAD) {
         self.browseVC.channels = channels;
     } else {
-        // KP KP: TODO - we need to send only one channel. this is a hack.
+        // KP KP: djs XXX: This is a hack to limit us to one triage channel
+        // It gets locked to whatever comes back frist.  That's fine for logged out.
+        // TODO: When logged in, we want to use a few different TriageVCs (stream, likes, my roll, trending)
         if (channels && [channels count] > 0) {
-            [self.triageVC setEntries:nil forChannel:channels[0]];
+            [[self triageViewControllerForChannel:nil] setEntries:nil forChannel:channels[0]];
         }
     }
 }
@@ -126,10 +131,19 @@
     if (DEVICE_IPAD) {
         [self.browseVC setEntries:channelEntries forChannel:channel];
     } else {
-        // KP KP: TODO: Again, this will change once we get correct channel to triage from backend
-        [self.triageVC setEntries:channelEntries forChannel:channel];
+        [[self triageViewControllerForChannel:channel] setEntries:channelEntries forChannel:channel];
     }
     [self setPlayerEntriesForChannel:channel];
+}
+
+- (TriageViewController *)triageViewControllerForChannel:(DisplayChannel *)channel
+{
+    for (TriageViewController *tvc in self.triageVCs) {
+        if (tvc.channel == channel) {
+            return tvc;
+        }
+    }
+    return nil;
 }
 
 - (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel
@@ -140,7 +154,11 @@
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
-    [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
+    if (DEVICE_IPAD) {
+        [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
+    } else {
+        [[self triageViewControllerForChannel:channel] addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
+    }
     [self setPlayerEntriesForChannel:channel];
 }
 
@@ -170,7 +188,7 @@
     if (DEVICE_IPAD) {
         return [self.browseVC deduplicatedEntriesForChannel:channel];
     } else {
-        return [self.triageVC deduplicatedEntriesForChannel:channel];
+        return [[self triageViewControllerForChannel:channel] deduplicatedEntriesForChannel:channel];
     }
 }
 
@@ -190,7 +208,9 @@
     if (DEVICE_IPAD) {
         self.browseVC.browseDelegate = masterDelegate;
     } else {
-        self.triageVC.triageDelegate = masterDelegate;
+        for (TriageViewController *tvc in self.triageVCs) {
+            tvc.triageDelegate = masterDelegate;
+        }
     }
 }
 

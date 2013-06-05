@@ -71,6 +71,37 @@
     [self.triageTable reloadData];
 }
 
+- (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
+{
+    STVAssert(self.channel == channel, @"cannot add entries for a different channel");
+    
+    NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
+    
+    if(shouldAppend){
+        self.entries = [self.entries arrayByAddingObjectsFromArray:newChannelEntries];
+        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
+                                                                       toDedupedArray:self.deduplicatedEntries
+                                                                            didInsert:&indexPathsForInsert
+                                                                            didDelete:&indexPathsForDelete
+                                                                            didUpdate:&indexPathsForReload];
+    } else {
+        self.entries = [newChannelEntries arrayByAddingObjectsFromArray:self.entries];
+        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
+                                                                        toDedupedArray:self.deduplicatedEntries
+                                                                             didInsert:&indexPathsForInsert
+                                                                             didDelete:&indexPathsForDelete
+                                                                             didUpdate:&indexPathsForReload];
+    }
+    
+    // The index paths returned by DeduplicationUtility are relative to the original array.
+    // So we group them within beginUpdates ... endUpdates
+    [self.triageTable beginUpdates];
+    [self.triageTable insertRowsAtIndexPaths:indexPathsForInsert withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.triageTable deleteRowsAtIndexPaths:indexPathsForDelete withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.triageTable reloadRowsAtIndexPaths:indexPathsForReload withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.triageTable endUpdates];
+}
+
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
 {
     STVAssert(self.channel == channel, @"These aren't the droid you're looking for.");

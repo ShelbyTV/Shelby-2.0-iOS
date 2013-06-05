@@ -23,6 +23,9 @@
 // our model (channel, entries, deduplicated entries).
 - (void)setEntries:(NSArray *)entries
         forChannel:(DisplayChannel *)channel;
+- (void)addEntries:(NSArray *)newChannelEntries
+             toEnd:(BOOL)shouldAppend
+         ofChannel:(DisplayChannel *)channel;
 
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel;
 
