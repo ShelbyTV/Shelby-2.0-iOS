@@ -385,12 +385,11 @@
 #pragma mark - ShelbyTriageProtocol Methods
 - (void)userPressedTriageChannel:(DisplayChannel *)channel atItem:(id)item
 {
-    NSInteger index = [self.homeVC indexOfDisplayedEntry:item];
+    NSInteger index = [self.homeVC indexOfDisplayedEntry:item inChannel:channel];
     
     [self.homeVC launchPlayerForChannel:channel atIndex:index];
     
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
-
 }
 
 #pragma mark - ShelbyBrowseProtocol Methods
