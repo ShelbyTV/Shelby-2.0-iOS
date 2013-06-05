@@ -107,7 +107,7 @@
     } else {
         // KP KP: TODO - we need to send only one channel. this is a hack.
         if (channels && [channels count] > 0) {
-            self.triageVC.triageChannel = channels[0];
+            [self.triageVC setEntries:nil forChannel:channels[0]];
         }
     }
 }
@@ -127,20 +127,11 @@
         [self.browseVC setEntries:channelEntries forChannel:channel];
     } else {
         // KP KP: TODO: Again, this will change once we get correct channel to triage from backend
-        self.triageVC.triageChannel = channel;
-        [self.triageVC setItemsToTriage:channelEntries];
+        [self.triageVC setEntries:channelEntries forChannel:channel];
     }
     [self setPlayerEntriesForChannel:channel];
 }
 
-// For iPhone - KP KP: TODO: do differently.
-- (NSInteger)indexOfDisplayedEntry:(id)entry
-{
-    NSArray *triageItems = [self.triageVC itemsToTriage];
-    return [triageItems indexOfObject:entry];
-}
-
-// For iPad
 - (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel
 {
     NSArray *dedupdEntries = [self deduplicatedEntriesForChannel:channel];
@@ -179,7 +170,7 @@
     if (DEVICE_IPAD) {
         return [self.browseVC deduplicatedEntriesForChannel:channel];
     } else {
-        return [self.triageVC itemsToTriage];
+        return [self.triageVC deduplicatedEntriesForChannel:channel];
     }
 }
 

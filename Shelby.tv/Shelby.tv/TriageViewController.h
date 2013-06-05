@@ -16,9 +16,14 @@
 
 @interface TriageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MCSwipeTableViewCellDelegate>
 
-@property (nonatomic, strong) NSArray *itemsToTriage;
-@property (nonatomic, strong) DisplayChannel *triageChannel;
+@property (readonly, strong) DisplayChannel *channel;
 @property (weak, nonatomic) id<ShelbyTriageProtocol> triageDelegate;
 
-@end
+// We only have a single channel.  So This replaces the entirety of
+// our model (channel, entries, deduplicated entries).
+- (void)setEntries:(NSArray *)entries
+        forChannel:(DisplayChannel *)channel;
 
+- (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel;
+
+@end

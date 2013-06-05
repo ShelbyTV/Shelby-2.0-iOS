@@ -9,12 +9,16 @@
 #import "TriageViewController.h"
 #import "AFNetworking.h"
 #import "DashboardEntry.h"
+#import "DeduplicationUtility.h"
 #import "Frame+Helper.h"
 #import "SPTriageCell.h"
 #import "Video.h"
 #import "User.h"
 
 @interface TriageViewController ()
+@property (nonatomic, strong) NSArray *entries;
+@property (nonatomic, strong) NSArray *deduplicatedEntries;
+
 @property (nonatomic, weak) IBOutlet UITableView *triageTable;
 @end
 
@@ -33,14 +37,15 @@
 {
     [super viewDidLoad];
 
-    self.itemsToTriage = @[];
+    _channel = nil;
+    _entries = @[];
+    _deduplicatedEntries = @[];
     
     self.view.frame = CGRectMake(0, 20+44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-20-44);
     self.triageTable.frame = self.view.frame;
     
     // Register Cell Nibs
     [self.triageTable registerNib:[UINib nibWithNibName:@"SPTriageViewCell" bundle:nil] forCellReuseIdentifier:@"SPTriageCell"];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,24 +54,40 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setItemsToTriage:(NSMutableArray *)itemsToTriage
+#pragma mark - Setters & Getters
+- (void)setEntries:(NSArray *)entries forChannel:(DisplayChannel *)channel
 {
-    _itemsToTriage = itemsToTriage;
+    DLog(@"setting entries on TriageVC.  Channel: %@", channel);
+    
+    _channel = channel;
+    if (entries) {
+        _entries = entries;
+        _deduplicatedEntries = [DeduplicationUtility deduplicatedCopy:entries];
+    } else {
+        _entries = @[];
+        _deduplicatedEntries = @[];
+    }
     
     [self.triageTable reloadData];
+}
+
+- (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
+{
+    STVAssert(self.channel == channel, @"These aren't the droid you're looking for.");
+    return self.deduplicatedEntries;
 }
 
 #pragma mark - UITableViewDataSource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.itemsToTriage count];
+    return [self.deduplicatedEntries count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SPTriageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SPTriageCell" forIndexPath:indexPath];
-    id entry = self.itemsToTriage[indexPath.row];
+    id entry = self.deduplicatedEntries[indexPath.row];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
@@ -151,7 +172,8 @@
 #pragma mark - UITableViewDelegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.triageDelegate userPressedTriageChannel:self.triageChannel atItem:self.itemsToTriage[indexPath.row]];
+    [self.triageDelegate userPressedTriageChannel:self.channel
+                                           atItem:self.deduplicatedEntries[indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath
@@ -167,7 +189,6 @@
 }
 
 #pragma mark - MCSwipeTableViewCellDelegate
-
 - (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didTriggerState:(MCSwipeTableViewCellState)state withMode:(MCSwipeTableViewCellMode)mode
 {
     DLog(@"IndexPath : %@ - MCSwipeTableViewCellState : %d - MCSwipeTableViewCellMode : %d", [self.triageTable indexPathForCell:cell], state, mode);
