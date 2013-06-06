@@ -445,17 +445,23 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)setupVideoPreloadStrategy
 {
     if (preloadStrategy == SPVideoReelPreloadStrategyNotSet) {
-        if ([[UIScreen mainScreen] isRetinaDisplay]) {
-            //TODO: determine best preload strategy for iPad Retina
-            preloadStrategy = SPVideoReelPreloadNextThreeKeepPrevious;
-            DLog(@"Preload strategy: next 3, keep previous");
-        } else if ([DeviceUtilities isIpadMini1]) {
-            preloadStrategy = SPVideoReelPreloadNextOnly;
-            DLog(@"Preload strategy: next only");
+        if (DEVICE_IPAD) {
+            if ([[UIScreen mainScreen] isRetinaDisplay]) {
+                //TODO: determine best preload strategy for iPad Retina
+                preloadStrategy = SPVideoReelPreloadNextThreeKeepPrevious;
+                DLog(@"Preload strategy: next 3, keep previous");
+            } else if ([DeviceUtilities isIpadMini1]) {
+                preloadStrategy = SPVideoReelPreloadNextOnly;
+                DLog(@"Preload strategy: next only");
+            } else {
+                //TODO: determine best preload strategy for iPad2,3
+                preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
+                DLog(@"Preload strategy: next 1, keep previous");
+            }
         } else {
-            //TODO: determine best preload strategy for iPad2,3
+            //TODO: determine best preload strategy for array of iPhones
             preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
-            DLog(@"Preload strategy: next 1, keep previous");
+            DLog(@"iPhone Preload strategy: next 1, keep previous");
         }
     }
 }
