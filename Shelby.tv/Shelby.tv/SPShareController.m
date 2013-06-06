@@ -145,7 +145,14 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 
     self.rollView = nib[0];
     
-    [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"rollingContainer.png"]]];
+    NSString *containerBackground = nil;
+    if (DEVICE_IPAD) {
+        containerBackground = @"rollingContainer.png";
+    } else {
+        containerBackground = @"rollingContainer-iPhone.png";
+    }
+    
+    [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:containerBackground]]];
     
     // Load Thumbnail
     //djs TODO: use AFNetworking
@@ -165,7 +172,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     }
     
     [self.rollView setFrame:CGRectMake(xOrigin,
-                                       yOrigin,
+                                       self.viewController.view.bounds.size.height,
                                        _rollView.frame.size.width,
                                        _rollView.frame.size.height)];
    
