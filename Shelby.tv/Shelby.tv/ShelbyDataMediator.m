@@ -143,8 +143,10 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     
     if (user) {
         if (![user hasLikedVideoOfFrame:frame]) {
+            //Do Like
             [ShelbyAPIClient postUserLikedFrame:frame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
                 if (JSON) { // success
+                    frame.clientUnsyncedLike = @0;
                     frame.clientLikedAt = nil;
                     //API is NOT returning the liked frame, so...
                     [self fetchEntriesInChannel:[user displayChannelForLikesRoll] sinceEntry:nil];
@@ -152,16 +154,23 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                     NSError *error;
                     [frame.managedObjectContext save:&error];
                     STVAssert(!error, @"context save failed, in toggleLikeForFrame when liking (in block)...");
+                } else {
+                    DLog(@"Failed to like!  DEBUG this %@", error);
                 }
             }];
+            
+            //represent liked state until the API call succeeds
+            frame.clientUnsyncedLike = @1;
+            frame.clientLikedAt = [NSDate date];
+            
             return YES;
             
         } else {
+            //Do Unlike
             Frame *likedFrame = [user likedFrameWithVideoOfFrame:frame];
             STVAssert(likedFrame, @"expected liked frame");
             [ShelbyAPIClient deleteFrame:likedFrame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
                 if (JSON) {
-                    likedFrame.clientUnliked = @1;
                     NSError *error;
                     [likedFrame.managedObjectContext save:&error];
                     STVAssert(!error, @"context save failed, in toggleLikeForFrame when deleting (in block)...");
@@ -169,9 +178,15 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                     //djs
                     //TODO: need to smartly update the Browse View b/c the unliked frame is still in there :(
                     //... until next launch
+                } else {
+                    DLog(@"Failed to delete liked frame, DEBUG this %@", error);
                 }
             }];
             
+            //represnt unliked state assuming the API call succeeds
+            frame.clientUnsyncedLike = @0;
+            frame.clientLikedAt = nil;
+            likedFrame.clientUnliked = @1;
             return NO;
         }
         

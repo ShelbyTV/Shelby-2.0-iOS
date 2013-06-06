@@ -189,16 +189,18 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 
 - (BOOL)hasLikedVideoOfFrame:(Frame *)frame
 {
-    return [Frame doesFrameWithVideoID:frame.video.videoID
-                     existOnRollWithID:self.likesRollID
-                             inContext:self.managedObjectContext];
+    return !![self likedFrameWithVideoOfFrame:frame];
 }
 
 - (Frame *)likedFrameWithVideoOfFrame:(Frame *)frame
 {
-    return [Frame frameWithVideoID:frame.video.videoID
-                      onRollWithID:self.likesRollID
-                         inContext:self.managedObjectContext];
+    Frame *frameOnLikedRoll = [Frame frameWithVideoID:frame.video.videoID
+                                         onRollWithID:self.likesRollID
+                                            inContext:self.managedObjectContext];
+    if (frameOnLikedRoll && ![frameOnLikedRoll.clientUnliked boolValue]) {
+        return frameOnLikedRoll;
+    }
+    return nil;
 }
 
 - (DisplayChannel *)displayChannelForLikesRoll

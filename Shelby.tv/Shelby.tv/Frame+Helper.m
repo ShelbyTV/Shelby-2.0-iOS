@@ -172,7 +172,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
 {
     User *currentUser = [User currentAuthenticatedUserInContext:self.managedObjectContext];
     if (currentUser) {
-        return [currentUser hasLikedVideoOfFrame:self];
+        return [currentUser hasLikedVideoOfFrame:self] || [self.clientUnsyncedLike boolValue];
     }
     // FUTURE
     // We could query the DB for any frame with a matching videoID where clientUnsyncedLike==1, but that would require

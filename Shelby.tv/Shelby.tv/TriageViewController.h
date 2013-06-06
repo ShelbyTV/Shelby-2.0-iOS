@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
 #import "MCSwipeTableViewCell.h"
+#import "ShelbyViewController.h"
 
 @protocol ShelbyTriageProtocol <NSObject>
 - (void)userPressedTriageChannel:(DisplayChannel *)channel atItem:(id)item;
 @end
 
-@interface TriageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MCSwipeTableViewCellDelegate>
+@interface TriageViewController : ShelbyViewController <UITableViewDelegate, UITableViewDataSource, MCSwipeTableViewCellDelegate>
 
 @property (readonly, strong) DisplayChannel *channel;
 @property (weak, nonatomic) id<ShelbyTriageProtocol> triageDelegate;

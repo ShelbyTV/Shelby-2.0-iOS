@@ -11,6 +11,7 @@
 #import "DashboardEntry.h"
 #import "DeduplicationUtility.h"
 #import "Frame+Helper.h"
+#import "ShelbyVideoContainer.h"
 #import "SPTriageCell.h"
 #import "Video.h"
 #import "User.h"
@@ -113,12 +114,18 @@
 {
     SPTriageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SPTriageCell" forIndexPath:indexPath];
     id entry = self.deduplicatedEntries[indexPath.row];
+    Frame *shelbyFrame;
+    if ([entry isKindOfClass:[Frame class]]) {
+        shelbyFrame = entry;
+    } else if ([entry isKindOfClass:[DashboardEntry class]]) {
+        shelbyFrame = ((DashboardEntry *)entry).frame;
+    }
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     // Swipable Cell Settings
      //slightly right = Like
-    [cell setFirstStateIconName:@"like_for_table.png"
+    [cell setFirstStateIconName:([shelbyFrame videoIsLiked] ? @"unlike_for_table.png" : @"like_for_table.png")
                      firstColor:kShelbyColorLikesRed
      //far right = Share
             secondStateIconName:@"share_for_table.png"
@@ -127,8 +134,8 @@
                   thirdIconName:@"dvr_for_table.png"
                      thirdColor:kShelbyColorGreen
      //far right - unused
-                 fourthIconName:@"unlike_for_table.png"
-                    fourthColor:[UIColor colorWithHex:@"f1f1f1" andAlpha:1.0]];
+                 fourthIconName:nil
+                    fourthColor:nil];
     [cell setMode:MCSwipeTableViewCellModeSwitch];
     [cell setDelegate:self];
     
@@ -220,15 +227,26 @@
 #pragma mark - MCSwipeTableViewCellDelegate
 - (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didTriggerState:(MCSwipeTableViewCellState)state withMode:(MCSwipeTableViewCellMode)mode
 {
+    id entry = self.deduplicatedEntries[[self.triageTable indexPathForCell:cell].row];
+    STVAssert([entry isKindOfClass:[Frame class]] || [entry isKindOfClass:[DashboardEntry class]], @"expected Frame or DashboardEntry");
+    Frame *shelbyFrame;
+    if ([entry isKindOfClass:[Frame class]]) {
+        shelbyFrame = entry;
+    } else if ([entry isKindOfClass:[DashboardEntry class]]) {
+        shelbyFrame = ((DashboardEntry *)entry).frame;
+    }
+    
     switch (state) {
         case MCSwipeTableViewCellState1:
             //slightly right = Like
+            [self toggleLikeOfFrame:shelbyFrame];
             break;
         case MCSwipeTableViewCellState2:
             //far right = Share
             break;
         case MCSwipeTableViewCellState3:
             //slightly left = DVR
+            
             break;
         case MCSwipeTableViewCellState4:
             //far right - unused
@@ -237,7 +255,20 @@
             //ignore
             break;
     }
-//    DLog(@"IndexPath : %@ - MCSwipeTableViewCellState : %d - MCSwipeTableViewCellMode : %d", [self.triageTable indexPathForCell:cell], state, mode);
+
+    [self.triageTable reloadRowsAtIndexPaths:@[[self.triageTable indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)toggleLikeOfFrame:(Frame *)shelbyFrame
+{
+    BOOL didLike = [shelbyFrame toggleLike];
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer
+                                     withAction:kAnalyticsVideoPlayerToggleLike
+                                      withLabel:(didLike ? @"Liked" : @"Unliked")];
+    
+    NSError *err;
+    [shelbyFrame.managedObjectContext save:&err];
+    STVAssert(!err, @"like save failed");
 }
 
 @end
