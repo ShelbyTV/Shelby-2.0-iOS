@@ -178,14 +178,14 @@
         cell.nicknameLabel.text = videoFrame.creator.nickname;
         [cell.caption setText:[NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]]];
         //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
-        // KP KP - TODO: for now, hardcoding 260px for the width of the caption label
-        CGSize maxCaptionSize = CGSizeMake(260, cell.frame.size.height * 0.33);
+        // KP KP - TODO: for now, hardcoding 300px for the width of the caption label
+        CGSize maxCaptionSize = CGSizeMake(300, cell.frame.size.height * 0.33);
         CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
                                                 constrainedToSize:maxCaptionSize
                                                     lineBreakMode:NSLineBreakByWordWrapping].height;
         [cell.caption setFrame:CGRectMake(cell.caption.frame.origin.x,
                                           cell.frame.size.height - textBasedHeight,
-                                          260,
+                                          300,
                                           textBasedHeight)];
     }
 
