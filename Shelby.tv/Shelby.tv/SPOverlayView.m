@@ -68,6 +68,7 @@
 {
     [super awakeFromNib];
 
+    self.frame = CGRectMake(0, 0, kShelbySPVideoWidth, kShelbySPVideoHeight);
     //non-Nib customizations
     [self.userImageView.layer setBorderWidth:0.5];
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
