@@ -146,7 +146,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     
     NSMutableArray *channels = [@[] mutableCopy];
 
-    NSDictionary *streamDict = [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"My Stream" displayColor:kShelbyColorMyStreamColor];
+    NSDictionary *streamDict = [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"My Stream" displayColor:kShelbyColorMyStreamColorString];
     if (streamDict) {
         DisplayChannel *myStreamChannel = [DisplayChannel channelForDashboardDictionary:streamDict withOrder:0 inContext:moc];
         if (myStreamChannel) {
@@ -154,7 +154,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         }
     }
     
-    NSDictionary *rollDict = [User dictionaryForUserChannel:loggedInUser.publicRollID withIDKey:@"id" displayTitle:@"My Roll" displayColor:kShelbyColorMyRollColor];
+    NSDictionary *rollDict = [User dictionaryForUserChannel:loggedInUser.publicRollID withIDKey:@"id" displayTitle:@"My Roll" displayColor:kShelbyColorMyRollColorString];
     if (streamDict) {
         DisplayChannel *myRollChannel = [DisplayChannel channelForRollDictionary:rollDict withOrder:1 inContext:moc];
         if (myRollChannel) {

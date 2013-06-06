@@ -117,14 +117,18 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     // Swipable Cell Settings
+     //slightly right = Like
     [cell setFirstStateIconName:@"like_for_table.png"
                      firstColor:kShelbyColorLikesRed
+     //far right = Share
             secondStateIconName:@"share_for_table.png"
-                    secondColor:[UIColor colorWithRed:232.0/255.0 green:61.0/255.0 blue:14.0/255.0 alpha:1.0]
+                    secondColor:kShelbyColorMyRollColor
+     //slightly left = DVR
                   thirdIconName:@"roll_for_table.png"
                      thirdColor:kShelbyColorGreen
-                 fourthIconName:@"list.png"
-                    fourthColor:[UIColor colorWithRed:206.0/255.0 green:149.0/255.0 blue:98.0/255.0 alpha:1.0]];
+     //far right - unused
+                 fourthIconName:nil
+                    fourthColor:nil];
     [cell setMode:MCSwipeTableViewCellModeSwitch];
     [cell setDelegate:self];
     
@@ -216,7 +220,24 @@
 #pragma mark - MCSwipeTableViewCellDelegate
 - (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didTriggerState:(MCSwipeTableViewCellState)state withMode:(MCSwipeTableViewCellMode)mode
 {
-    DLog(@"IndexPath : %@ - MCSwipeTableViewCellState : %d - MCSwipeTableViewCellMode : %d", [self.triageTable indexPathForCell:cell], state, mode);
+    switch (state) {
+        case MCSwipeTableViewCellState1:
+            //slightly right = Like
+            break;
+        case MCSwipeTableViewCellState2:
+            //far right = Share
+            break;
+        case MCSwipeTableViewCellState3:
+            //slightly left = DVR
+            break;
+        case MCSwipeTableViewCellState4:
+            //far right - unused
+            break;
+        case MCSwipeTableViewCellStateNone:
+            //ignore
+            break;
+    }
+//    DLog(@"IndexPath : %@ - MCSwipeTableViewCellState : %d - MCSwipeTableViewCellMode : %d", [self.triageTable indexPathForCell:cell], state, mode);
 }
 
 @end
