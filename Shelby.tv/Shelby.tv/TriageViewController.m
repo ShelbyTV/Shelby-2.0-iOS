@@ -117,12 +117,12 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     // Swipable Cell Settings
-    [cell setFirstStateIconName:@"check.png"
-                     firstColor:[UIColor colorWithRed:85.0/255.0 green:213.0/255.0 blue:80.0/255.0 alpha:1.0]
-            secondStateIconName:@"cross.png"
+    [cell setFirstStateIconName:@"like_for_table.png"
+                     firstColor:kShelbyColorLikesRed
+            secondStateIconName:@"share_for_table.png"
                     secondColor:[UIColor colorWithRed:232.0/255.0 green:61.0/255.0 blue:14.0/255.0 alpha:1.0]
-                  thirdIconName:@"clock.png"
-                     thirdColor:[UIColor colorWithRed:254.0/255.0 green:217.0/255.0 blue:56.0/255.0 alpha:1.0]
+                  thirdIconName:@"roll_for_table.png"
+                     thirdColor:kShelbyColorGreen
                  fourthIconName:@"list.png"
                     fourthColor:[UIColor colorWithRed:206.0/255.0 green:149.0/255.0 blue:98.0/255.0 alpha:1.0]];
     [cell setMode:MCSwipeTableViewCellModeSwitch];
