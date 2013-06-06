@@ -82,6 +82,20 @@
 }
 
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (DEVICE_IPAD) {
+        return UIInterfaceOrientationMaskLandscape;
+    } else {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
+}
+
+
 - (void)userLoginFailedWithError:(NSString *)errorMessage
 {
     if (self.authorizationVC) {
