@@ -40,7 +40,7 @@
     [ShelbyDataMediator sharedInstance].delegate = self;
     
 #ifndef DEBUG
-    if (![self tutorialCompleted] && !DEVICE_IPAD) {
+    if (![self tutorialCompleted] && DEVICE_IPAD) {
         self.currentPlayerTutorialMode = SPTutorialModeShow;
         self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeShow;
     }
