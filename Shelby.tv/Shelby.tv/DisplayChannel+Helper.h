@@ -52,4 +52,7 @@
 
 - (BOOL)hasEntityAtIndex:(NSUInteger)idx;
 
+// refreshes this object and it's children, in the current context
+- (void)deepRefreshMergeChanges:(BOOL)flag;
+
 @end

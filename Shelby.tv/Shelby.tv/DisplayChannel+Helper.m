@@ -218,4 +218,14 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     }
 }
 
+- (void)deepRefreshMergeChanges:(BOOL)flag
+{
+    [self.managedObjectContext refreshObject:self mergeChanges:flag];
+    if(self.roll){
+        [self.managedObjectContext refreshObject:self.roll mergeChanges:flag];
+    } else if(self.dashboard){
+        [self.managedObjectContext refreshObject:self.dashboard mergeChanges:flag];
+    }
+}
+
 @end
