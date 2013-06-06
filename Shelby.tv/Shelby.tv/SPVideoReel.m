@@ -549,8 +549,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 #pragma mark - Action Methods (Private)
 - (void)prepareForShareWithFrame:(CGRect)frame
 {
-    self.shareController = [[SPShareController alloc] initWithVideoPlayer:self.videoPlayers[self.currentVideoPlayingIndex]
-                                                                 fromRect:frame];
+    SPVideoPlayer *currentVideoPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
+    self.shareController = [[SPShareController alloc] initWithVideoFrame:currentVideoPlayer.videoFrame fromViewController:self atRect:frame withVideoPlayer:currentVideoPlayer];
     self.shareController.delegate = self;
     self.shouldResumePlaybackAfterShare = self.currentPlayer.isPlaying;
     if (self.shouldResumePlaybackAfterShare) {

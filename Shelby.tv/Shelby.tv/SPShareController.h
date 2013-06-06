@@ -19,9 +19,8 @@
 
 @property (nonatomic, weak) id<SPShareControllerDelegate> delegate;
 
-- (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer;
-- (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer fromRect:(CGRect)frame;
-
+- (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect withVideoPlayer:(SPVideoPlayer *)videoPlayer;
+- (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect;
 /// UI Methods
 - (void)share;
 - (void)showRollView;

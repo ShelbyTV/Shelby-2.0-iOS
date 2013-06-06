@@ -12,6 +12,7 @@
 #import "DeduplicationUtility.h"
 #import "Frame+Helper.h"
 #import "ShelbyVideoContainer.h"
+#import "SPShareController.h"
 #import "SPTriageCell.h"
 #import "Video.h"
 #import "User.h"
@@ -242,7 +243,7 @@
             [self toggleLikeOfFrame:shelbyFrame];
             break;
         case MCSwipeTableViewCellState2:
-            //far right = Share
+            [self shareFrame:shelbyFrame];
             break;
         case MCSwipeTableViewCellState3:
             //slightly left = DVR
@@ -258,6 +259,15 @@
 
     [self.triageTable reloadRowsAtIndexPaths:@[[self.triageTable indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
+
+- (void)shareFrame:(Frame *)shelbyFrame
+{
+    SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:shelbyFrame fromViewController:self atRect:CGRectZero];
+    shareController.delegate = nil;
+
+    [shareController share];
+}
+
 
 - (void)toggleLikeOfFrame:(Frame *)shelbyFrame
 {

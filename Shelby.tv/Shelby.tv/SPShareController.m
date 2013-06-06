@@ -30,7 +30,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 @interface SPShareController ()
 
 @property (weak, nonatomic) SPVideoPlayer *videoPlayer;
-@property (nonatomic, assign) CGRect fromFrame;
+@property (nonatomic, assign) CGRect rect;
+@property (nonatomic, strong) Frame *videoFrame;
+@property (nonatomic, strong) UIViewController *viewController;
 @property (nonatomic) SPShareRollView *rollView;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 @property (assign, nonatomic) BOOL facebookConnected;
@@ -42,30 +44,27 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 @implementation SPShareController
 
 #pragma mark - Initialization
-- (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer
+- (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect withVideoPlayer:(SPVideoPlayer *)videoPlayer
 {
     self = [super init];
     if (self) {
+        _videoFrame = videoFrame;
+        _viewController = viewController;
+        _rect = rect;
         _videoPlayer = videoPlayer;
     }
     
     return self;
 }
 
-- (id)initWithVideoPlayer:(SPVideoPlayer *)videoPlayer fromRect:(CGRect)frame
+- (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect
 {
-    self = [super init];
-     if (self) {
-         _videoPlayer = videoPlayer;
-         _fromFrame = frame;
-     }
-     
-     return self;
+    return [self initWithVideoFrame:videoFrame fromViewController:viewController atRect:rect withVideoPlayer:nil];
 }
 
 - (void)updateSocialButtons
 {
-    User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
+    User *user = [User currentAuthenticatedUserInContext:self.videoFrame.managedObjectContext];
     if (user) {
         self.facebookConnected = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] && [[NSUserDefaults standardUserDefaults] boolForKey: kShelbyFacebookShareEnable] ? YES : NO;
         self.twitterConnected = user.twitterNickname && [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterShareEnable] ? YES : NO;
@@ -95,7 +94,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 
 - (void)setupMaskView
 {
-    CGRect videoPlayerFrame = self.videoPlayer.view.frame;
+    CGRect videoPlayerFrame = self.viewController.view.frame;
     _mask = [[UIView alloc] initWithFrame:CGRectMake(videoPlayerFrame.origin.x, videoPlayerFrame.origin.y, videoPlayerFrame.size.width, videoPlayerFrame.size.height)];
     [self.mask setBackgroundColor:[UIColor blackColor]];
     [self.mask setAlpha:0.0f];
@@ -114,13 +113,13 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        Frame *videoFrame = self.videoPlayer.videoFrame;
+        Frame *videoFrameToShare = self.videoFrame;
         
-        [ShelbyAPIClient getShortlinkForFrame:self.videoPlayer.videoFrame
+        [ShelbyAPIClient getShortlinkForFrame:videoFrameToShare
                                 allowFallback:YES
                                     withBlock:^(NSString *link, BOOL shortlinkDidFail) {
-                                        NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrame.video.title];
-                                        [self shareWithFrame:videoFrame
+                                        NSString *shareMessage = [NSString stringWithFormat:@"%@", videoFrameToShare.video.title];
+                                        [self shareWithFrame:videoFrameToShare
                                                      message:shareMessage
                                                      andLink:link];
                                     }];
@@ -146,12 +145,11 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 
     self.rollView = nib[0];
     
-    Frame *videoFrame = self.videoPlayer.videoFrame;
     [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"rollingContainer.png"]]];
     
     // Load Thumbnail
     //djs TODO: use AFNetworking
-    [AsynchronousFreeloader loadImageFromLink:videoFrame.video.thumbnailURL
+    [AsynchronousFreeloader loadImageFromLink:self.videoFrame.video.thumbnailURL
                                  forImageView:_rollView.videoThumbnailView
                               withPlaceholder:nil
                                andContentMode:UIViewContentModeScaleAspectFill];
@@ -159,7 +157,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     // Set proper states for buttons
     [self updateSocialButtons];
     
-    CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
+    CGFloat xOrigin = self.viewController.view.bounds.size.width/2.0f - _rollView.frame.size.width/2.0f;
     // This is the bottom of the video view in overlay view, so we don't go under it. TODO: when we redo all this, make the share view go ABOVE overlay view.
     CGFloat yOrigin = 160;
     if (!DEVICE_IPAD) {
@@ -167,12 +165,12 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     }
     
     [self.rollView setFrame:CGRectMake(xOrigin,
-                                       _videoPlayer.view.frame.size.height,
+                                       yOrigin,
                                        _rollView.frame.size.width,
                                        _rollView.frame.size.height)];
    
-    [self.videoPlayer.view addSubview:self.rollView];
-    [self.videoPlayer.view bringSubviewToFront:self.rollView];
+    [self.viewController.view addSubview:self.rollView];
+    [self.viewController.view bringSubviewToFront:self.rollView];
     
     [UIView animateWithDuration:0.5f
                      animations:^{
@@ -204,10 +202,10 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     [UIView animateWithDuration:0.5
                      animations:^{
                          
-                         CGFloat xOrigin = self.videoPlayer.view.frame.size.width/2.0f - _rollView.frame.size.width/2.0f;
+                         CGFloat xOrigin = self.viewController.view.bounds.size.width/2.0f - _rollView.frame.size.width/2.0f;
                          [self.mask setAlpha:0];
                          [self.rollView setFrame:CGRectMake(xOrigin,
-                                                            self.videoPlayer.view.frame.size.height,
+                                                            self.viewController.view.bounds.size.height,
                                                             _rollView.frame.size.width,
                                                             _rollView.frame.size.height)];
                          
@@ -278,20 +276,20 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         if ( ![self sharePopOverController] ) {
             self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
             [self.sharePopOverController setDelegate:self];
-            [self.sharePopOverController presentPopoverFromRect:self.fromFrame
-                                                         inView:self.videoPlayer.view
+            [self.sharePopOverController presentPopoverFromRect:self.rect
+                                                         inView:self.viewController.view
                                        permittedArrowDirections:UIPopoverArrowDirectionDown
                                                        animated:YES];
         }
     } else {
-        [self.videoPlayer presentViewController:activityController animated:YES completion:nil];
+        [self.viewController presentViewController:activityController animated:YES completion:nil];
     }
 }
 
 - (void)roll
 {
-    NSString *frameID = self.videoPlayer.videoFrame.frameID;
-    User *user = [User currentAuthenticatedUserInContext:self.videoPlayer.videoFrame.managedObjectContext];
+    NSString *frameID = self.videoFrame.frameID;
+    User *user = [User currentAuthenticatedUserInContext:self.videoFrame.managedObjectContext];
     NSString *message = self.rollView.rollTextView.text;
 
     [ShelbyAPIClient rollFrame:frameID
