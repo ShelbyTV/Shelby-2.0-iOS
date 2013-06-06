@@ -36,10 +36,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    _channel = nil;
-    _entries = @[];
-    _deduplicatedEntries = @[];
     
     self.view.frame = CGRectMake(0, 20+44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-20-44);
     self.triageTable.frame = self.view.frame;
@@ -57,8 +53,6 @@
 #pragma mark - Setters & Getters
 - (void)setEntries:(NSArray *)entries forChannel:(DisplayChannel *)channel
 {
-    DLog(@"setting entries on TriageVC.  Channel: %@", channel);
-    
     _channel = channel;
     if (entries) {
         _entries = entries;

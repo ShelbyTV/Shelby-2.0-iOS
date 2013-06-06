@@ -25,6 +25,7 @@
 
 @interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, SettingsViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate>
 
+// We assume these are all of our channels, in the correct order
 @property (nonatomic, strong) NSArray *channels;
 // KP KP: Better way to send the delegete to the views below?
 @property (nonatomic, weak) id masterDelegate;
