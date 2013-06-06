@@ -119,12 +119,12 @@
     // Swipable Cell Settings
     [cell setFirstStateIconName:@"like_for_table.png"
                      firstColor:kShelbyColorLikesRed
-            secondStateIconName:@"share_for_table.png"
-                    secondColor:[UIColor colorWithRed:232.0/255.0 green:61.0/255.0 blue:14.0/255.0 alpha:1.0]
-                  thirdIconName:@"roll_for_table.png"
-                     thirdColor:kShelbyColorGreen
-                 fourthIconName:@"list.png"
-                    fourthColor:[UIColor colorWithRed:206.0/255.0 green:149.0/255.0 blue:98.0/255.0 alpha:1.0]];
+            secondStateIconName:@"dvr_for_table.png"
+                    secondColor:kShelbyColorGreen
+                  thirdIconName:@"share_for_table.png"
+                     thirdColor:[UIColor colorWithHex:@"0590c4" andAlpha:1.0]
+                 fourthIconName:@"unlike_for_table.png"
+                    fourthColor:[UIColor colorWithHex:@"f1f1f1" andAlpha:1.0]];
     [cell setMode:MCSwipeTableViewCellModeSwitch];
     [cell setDelegate:self];
     
