@@ -122,13 +122,13 @@
                      firstColor:kShelbyColorLikesRed
      //far right = Share
             secondStateIconName:@"share_for_table.png"
-                    secondColor:kShelbyColorMyRollColor
+                    secondColor:[UIColor colorWithHex:@"0590c4" andAlpha:1.0]
      //slightly left = DVR
-                  thirdIconName:@"roll_for_table.png"
+                  thirdIconName:@"dvr_for_table.png"
                      thirdColor:kShelbyColorGreen
      //far right - unused
-                 fourthIconName:nil
-                    fourthColor:nil];
+                 fourthIconName:@"unlike_for_table.png"
+                    fourthColor:[UIColor colorWithHex:@"f1f1f1" andAlpha:1.0]];
     [cell setMode:MCSwipeTableViewCellModeSwitch];
     [cell setDelegate:self];
     
