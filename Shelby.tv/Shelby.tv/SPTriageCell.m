@@ -35,15 +35,14 @@
 
 - (void)highlightItemWithColor:(UIColor *)color
 {
-    self.backgroundColor = color;
+    self.contentView.backgroundColor = color;
     self.caption.backgroundColor = color;
-    self.caption.alpha = 1;
 }
 
 - (void)unHighlightItem
 {
-    self.backgroundColor = [UIColor whiteColor];
+    self.contentView.backgroundColor = [UIColor whiteColor];
     self.caption.backgroundColor = [UIColor whiteColor];
-    self.caption.alpha = 1;
 }
+
 @end
