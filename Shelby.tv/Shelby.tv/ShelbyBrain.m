@@ -323,6 +323,8 @@
 }
 
 
+// 100% of the logic of channel ordering.
+// HomeVC just takes the array it's given, assuming it's in the correct order.
 - (NSMutableArray *)constructAllChannelsArray
 {
     NSMutableArray *allChannels = [@[] mutableCopy];

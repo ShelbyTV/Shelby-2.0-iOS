@@ -11,6 +11,7 @@
 #import "BrowseViewController.h"
 #import "DisplayChannel.h"
 #import "ImageUtilities.h"
+#import "Roll+Helper.h"
 #import "SettingsViewController.h"
 #import "ShelbyAlertView.h"
 #import "SPVideoReel.h"
@@ -19,6 +20,7 @@
 
 @interface ShelbyHomeViewController ()
 @property (nonatomic, weak) IBOutlet UIView *topBar;
+@property (nonatomic, weak) IBOutlet UILabel *topBarTitle;
 
 @property (nonatomic, strong) UIView *settingsView;
 @property (strong, nonatomic) UIPopoverController *settingsPopover;
@@ -60,15 +62,7 @@
         [browseViewController didMoveToParentViewController:self];
     } else {
         _triageVCs = [@[] mutableCopy];
-        //XXX For now, just holding a single TriageViewController
-        //it gets locked to the first channel we receive (later)
-        TriageViewController *triageViewController = [[TriageViewController alloc] initWithNibName:@"TriageView" bundle:nil];
-        [_triageVCs addObject:triageViewController];
-        [self addChildViewController:triageViewController];
-        [triageViewController.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
-        
-        [self.view addSubview:triageViewController.view];
-        [self.view sendSubviewToBack:triageViewController.view];
+        //the actual triage views are created in setChannels:
     }
     
     [self setupSettingsView];
@@ -102,27 +96,55 @@
     [alertView show];
 }
 
+// We assume these are all of our channels, in the correct order
 - (void)setChannels:(NSArray *)channels
 {
-    _channels = channels;
-    if (DEVICE_IPAD) {
-        self.browseVC.channels = channels;
-    } else {
-        // KP KP: djs XXX: This is a hack to limit us to one triage channel
-        // It gets locked to whatever comes back frist.  That's fine for logged out.
-        // TODO: When logged in, we want to use a few different TriageVCs (stream, likes, my roll, trending)
-        if (channels && [channels count] > 0) {
-            [[self triageViewControllerForChannel:nil] setEntries:nil forChannel:channels[0]];
+    if (![channels isEqualToArray:_channels]) {
+        DLog(@"Replacing ALL Channels... %@ --becomes--> %@", _channels, channels);
+        _channels = channels;
+        if (DEVICE_IPAD) {
+            self.browseVC.channels = channels;
+        } else {
+            for (TriageViewController *tvc in _triageVCs) {
+                [tvc.view removeFromSuperview];
+                [tvc removeFromParentViewController];
+            }
+            [_triageVCs removeAllObjects];
+
+            for (DisplayChannel *channel in _channels) {
+                TriageViewController *tvc = [[TriageViewController alloc] initWithNibName:@"TriageView" bundle:nil];
+                [_triageVCs addObject:tvc];
+                [tvc setEntries:nil forChannel:channel];
+                tvc.triageDelegate = self.masterDelegate;
+                [self addChildViewController:tvc];
+                [tvc.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
+            }
+            
+            //TODO: show the correct default VC
+            TriageViewController *defaultVC = ((TriageViewController *)_triageVCs[0]);
+            [self.view addSubview:defaultVC.view];
+            [self.view sendSubviewToBack:defaultVC.view];
+            self.topBarTitle.text = defaultVC.channel.displayTitle;
         }
     }
 }
 
 - (void)removeChannel:(DisplayChannel *)channel
 {
+    DLog(@"Removing channel %@", channel);
+    
+    NSMutableArray *lessChannels = [_channels mutableCopy];
+    [lessChannels removeObject:channel];
+    _channels = lessChannels;
     if (DEVICE_IPAD) {
-        NSMutableArray *channels = [self.browseVC.channels mutableCopy];
-        [channels removeObject:channel];
-        self.browseVC.channels = channels;
+        self.browseVC.channels = _channels;
+    } else {
+        TriageViewController *tvc = [self triageViewControllerForChannel:channel];
+        if (tvc) {
+            [tvc.view removeFromSuperview];
+            [tvc removeFromParentViewController];
+            [_triageVCs removeObject:tvc];
+        }
     }
 }
 
@@ -143,6 +165,7 @@
             return tvc;
         }
     }
+    DLog(@"FAILed to find TriageVC for channel %@", channel);
     return nil;
 }
 
