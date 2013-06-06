@@ -624,9 +624,12 @@ typedef struct _ShelbyArrayMergeInstructions {
 {
     if (rollID) {
         DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForID:rollID];
+        [rollChannel deepRefreshMergeChanges:NO];
+
         if (rollChannel && [rollChannel hasEntityAtIndex:0]) {
             self.currentChannel = rollChannel;
             [self.homeVC animateLaunchPlayerForChannel:rollChannel atIndex:0];
+            
         } else {
             NSString *message = nil;
             if (rollChannel && rollChannel.displayTitle) {
@@ -636,7 +639,6 @@ typedef struct _ShelbyArrayMergeInstructions {
             }
            ShelbyAlertView *alertView =  [[ShelbyAlertView alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
             [alertView show];
-            
         }
     }
 }
