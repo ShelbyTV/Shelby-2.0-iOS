@@ -287,8 +287,7 @@
     // KP KP: TODO: once fetching user done correctly, add the two targets. 
     [self.settingsView removeFromSuperview];
     if (self.currentUser) {
-        // KP KP: TODO: bad alignment for iPad!
-        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(kShelbyFullscreenWidth - 70, 0, 60, 44)];
+        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 60, 44)];
         UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(25, 7, 30, 30)];
         [userAvatar.layer setCornerRadius:5];
         [userAvatar.layer setMasksToBounds:YES];
