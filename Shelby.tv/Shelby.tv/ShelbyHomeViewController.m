@@ -118,27 +118,34 @@
         _channels = channels;
         if (DEVICE_IPAD) {
             self.browseVC.channels = channels;
+            
         } else {
+            //find or create new TriageViewControllers for this array of channels
+            NSMutableArray *newTriageVCs = [@[] mutableCopy];
+            for (DisplayChannel *ch in channels) {
+                TriageViewController *tvc = [self triageViewControllerForChannel:ch];
+                if (!tvc) {
+                    tvc = [[TriageViewController alloc] initWithNibName:@"TriageView" bundle:nil];
+                    [tvc setEntries:nil forChannel:ch];
+                    tvc.triageDelegate = self.masterDelegate;
+                }
+                [newTriageVCs addObject:tvc];
+            }
+            
+            //remove old TVCs (some of which may get re-used)
             for (TriageViewController *tvc in _triageVCs) {
                 [tvc.view removeFromSuperview];
                 [tvc removeFromParentViewController];
             }
-            [_triageVCs removeAllObjects];
-
-            for (DisplayChannel *channel in _channels) {
-                TriageViewController *tvc = [[TriageViewController alloc] initWithNibName:@"TriageView" bundle:nil];
-                [_triageVCs addObject:tvc];
-                [tvc setEntries:nil forChannel:channel];
-                tvc.triageDelegate = self.masterDelegate;
-                [self addChildViewController:tvc];
-                [tvc.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
-            }
             
-            //TODO: show the correct default VC
-            TriageViewController *defaultVC = ((TriageViewController *)_triageVCs[0]);
-            [self.view addSubview:defaultVC.view];
-            [self.view sendSubviewToBack:defaultVC.view];
-            self.topBarTitle.text = defaultVC.channel.displayTitle;
+            //add the new TVCs in correct order
+            for (TriageViewController *newTVC in newTriageVCs) {
+                [self addChildViewController:newTVC];
+                [newTVC.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
+            }
+            _triageVCs = newTriageVCs;
+            
+            [self displayDefaultChannel];
         }
     }
 }
@@ -155,11 +162,23 @@
     } else {
         TriageViewController *tvc = [self triageViewControllerForChannel:channel];
         if (tvc) {
-            [tvc.view removeFromSuperview];
             [tvc removeFromParentViewController];
             [_triageVCs removeObject:tvc];
+            if (tvc.view.superview) {
+                [tvc.view removeFromSuperview];
+                [self displayDefaultChannel];
+            }
         }
     }
+}
+
+- (void)displayDefaultChannel
+{
+    //TODO: show the correct default VC
+    TriageViewController *defaultVC = ((TriageViewController *)_triageVCs[0]);
+    [self.view addSubview:defaultVC.view];
+    [self.view sendSubviewToBack:defaultVC.view];
+    self.topBarTitle.text = defaultVC.channel.displayTitle;
 }
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
@@ -179,7 +198,6 @@
             return tvc;
         }
     }
-    DLog(@"FAILed to find TriageVC for channel %@", channel);
     return nil;
 }
 
