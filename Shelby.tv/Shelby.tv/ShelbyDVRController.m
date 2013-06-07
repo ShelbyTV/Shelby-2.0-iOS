@@ -108,6 +108,7 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.userInfo = @{NOTIFICATION_OBJECT_ID_KEY: [dvrEntry objectIDAsString],
                               NOTIFICATION_DATE_KEY: date};
+    notification.timeZone = [NSTimeZone defaultTimeZone];
     notification.fireDate = date;
     
     notification.applicationIconBadgeNumber = 1;
@@ -115,6 +116,7 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
     notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"DVR_ALERT_BODY", nil),
                               [self nicknamesForNotificationAt:date
                                                      inContext:dvrEntry.managedObjectContext]];
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
 // Using all DVREntries scheduled at the given time, returns a nice string of nicknames like "dan." or "dan, nick, and joe."

@@ -110,10 +110,13 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 - (void)populateChannel:(DisplayChannel *)channel withActivityIndicator:(BOOL)showSpinner
 {
     if (channel == self.dvrChannel) {
-        DLog(@"populating DVR channel...");
         NSArray *dvrEntries = [self.dvrController currentDVREntriesOrderedLIFO:YES
                                                                      inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        [self fetchEntriesDidCompleteForChannel:channel with:dvrEntries fromCache:YES];
+        NSMutableArray *dvrFrames = [[NSMutableArray alloc] initWithCapacity:[dvrEntries count]];
+        for (DVREntry *dvrEntry in dvrEntries) {
+            [dvrFrames addObject:[dvrEntry childFrame]];
+        }
+        [self fetchEntriesDidCompleteForChannel:channel with:dvrFrames fromCache:YES];
     } else {
         //normal channels
         if(showSpinner){
@@ -471,9 +474,11 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 // Method below is delegate method of the SPVideoReelProtocol & ShelbyBrowseProtocol
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry
 {
-    //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
-    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:YES];
-    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
+    if (channel != self.dvrChannel) {
+        //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
+        [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:YES];
+        [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
+    }
 }
 
 #pragma mark - SPVideoReelProtocol Methods

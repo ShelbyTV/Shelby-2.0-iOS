@@ -31,7 +31,12 @@
 
 - (NSString *)objectIDAsString;
 
+//return the child Frame or DashboardEntry's Frame
+- (Frame *)childFrame;
+
 // Then nickname of the user that created the Frame or DashboardEntry's Frame.
 - (NSString *)entityCreatorsNickname;
+
+- (BOOL)isPlayable;
 
 @end

@@ -11,6 +11,7 @@
 #import "DashboardEntry.h"
 #import "DeduplicationUtility.h"
 #import "DisplayChannel+Helper.h"
+#import "ShelbyDVRController.h"
 #import "Frame+Helper.h"
 #import "ShelbyVideoContainer.h"
 #import "SPShareController.h"
@@ -23,6 +24,8 @@
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 
 @property (nonatomic, weak) IBOutlet UITableView *triageTable;
+
+@property (nonatomic, strong) ShelbyDVRController *dvrController;
 @end
 
 @implementation TriageViewController
@@ -31,7 +34,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _dvrController = [[ShelbyDVRController alloc] init];
     }
     return self;
 }
@@ -272,7 +275,10 @@
 
 - (void)dvrFrame:(Frame *)shelbyFrame
 {
-    DLog(@"TODO: DVR");
+    //TODO: something more PoC
+    NSDate *when = [NSDate dateWithTimeIntervalSinceNow:15];
+    DLog(@"DVRing for: %@", when);
+    [self.dvrController setDVRFor:shelbyFrame toRemindAt:when];
 }
 
 - (void)shareFrame:(Frame *)shelbyFrame

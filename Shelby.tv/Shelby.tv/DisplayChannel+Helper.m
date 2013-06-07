@@ -97,6 +97,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
         displayChannel.channelID = channelID;
         displayChannel.entriesAreTransient = @1;
     }
+    displayChannel.titleOverride = title;
     
     return displayChannel;
 }

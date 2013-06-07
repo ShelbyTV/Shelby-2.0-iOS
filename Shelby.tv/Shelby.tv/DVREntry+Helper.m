@@ -46,6 +46,7 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
         entry.frame = frame;
         entry.dashboardEntry = dbe;
     }
+    entry.updatedAt = [NSDate date];
 
     return entry;
 }
@@ -70,7 +71,7 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
          inContext:(NSManagedObjectContext *)moc
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDVREntry];
-    NSPredicate *currentEntries = [NSPredicate predicateWithFormat:@"remindAt == %@", [NSDate date]];
+    NSPredicate *currentEntries = [NSPredicate predicateWithFormat:@"remindAt == %@", date];
     request.predicate = currentEntries;
     NSSortDescriptor *order = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:!newestFirst];
     request.sortDescriptors = @[order];
@@ -86,6 +87,17 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
     return [[self.objectID URIRepresentation] absoluteString];
 }
 
+- (Frame *)childFrame
+{
+    if (self.frame) {
+        return self.frame;
+    } else if (self.dashboardEntry) {
+        return self.dashboardEntry.frame;
+    } else {
+        STVAssert(NO, @"expected Frame or DashboardEntry");
+    }
+}
+
 - (NSString *)entityCreatorsNickname
 {
     if (self.frame) {
@@ -94,6 +106,19 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
         return self.dashboardEntry.frame.creator.nickname;
     } else {
         STVAssert(NO, @"expected Frame or DashboardEntry");
+    }
+}
+
+- (BOOL)isPlayable
+{
+    if (self.frame) {
+        return self.frame.isPlayable;
+    } else if (self.dashboardEntry) {
+        return self.dashboardEntry.isPlayable;
+    } else {
+        //you could make that argument that we should assert here
+        //but this is technically correct:
+        return NO;
     }
 }
 
