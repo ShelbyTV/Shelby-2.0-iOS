@@ -174,8 +174,15 @@
 
 - (void)displayDefaultChannel
 {
+    if (self.triageVCs || [self.triageVCs count] == 0) {
+        // TODO: show an error message?
+        // Or show default page after removing the last TriageVC?
+        // Or maybe call: getChannels?
+        return;
+    }
+
     //TODO: show the correct default VC
-    TriageViewController *defaultVC = ((TriageViewController *)_triageVCs[0]);
+    TriageViewController *defaultVC = ((TriageViewController *)self.triageVCs[0]);
     [self.view addSubview:defaultVC.view];
     [self.view sendSubviewToBack:defaultVC.view];
     self.topBarTitle.text = defaultVC.channel.displayTitle;
