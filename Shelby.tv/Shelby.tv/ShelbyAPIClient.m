@@ -66,6 +66,7 @@ static AFHTTPClient *httpClient = nil;
     if (addAuthIfUserIsLoggedIn) {
         User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
         if (user) {
+            STVAssert(user.token, @"expected user to have token");
             NSMutableDictionary *queryWithAuth = queryParams ? [queryParams mutableCopy] : [NSMutableDictionary dictionaryWithCapacity:1];
             queryWithAuth[kShelbyAPIParamAuthToken] = user.token;
             queryParams = queryWithAuth;
