@@ -137,6 +137,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return @{idKey : channelID, @"display_channel_color" : displayColor, @"display_description" :displayTitle, @"display_title" : displayTitle};
 }
 
+// The array returned here corresponds to the defines in the header
 + (NSMutableArray *)channelsForUserInContext:(NSManagedObjectContext *)moc
 {
     User *loggedInUser = [self currentAuthenticatedUserInContext:moc];
@@ -146,7 +147,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     
     NSMutableArray *channels = [@[] mutableCopy];
 
-    NSDictionary *streamDict = [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"My Stream" displayColor:kShelbyColorMyStreamColorString];
+    NSDictionary *streamDict = [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"Stream" displayColor:kShelbyColorMyStreamColorString];
     if (streamDict) {
         DisplayChannel *myStreamChannel = [DisplayChannel channelForDashboardDictionary:streamDict withOrder:0 inContext:moc];
         if (myStreamChannel) {
@@ -154,7 +155,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         }
     }
     
-    NSDictionary *rollDict = [User dictionaryForUserChannel:loggedInUser.publicRollID withIDKey:@"id" displayTitle:@"My Roll" displayColor:kShelbyColorMyRollColorString];
+    NSDictionary *rollDict = [User dictionaryForUserChannel:loggedInUser.publicRollID withIDKey:@"id" displayTitle:@"My Shares" displayColor:kShelbyColorMyRollColorString];
     if (streamDict) {
         DisplayChannel *myRollChannel = [DisplayChannel channelForRollDictionary:rollDict withOrder:1 inContext:moc];
         if (myRollChannel) {

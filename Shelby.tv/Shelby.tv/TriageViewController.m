@@ -93,8 +93,8 @@
     // The index paths returned by DeduplicationUtility are relative to the original array.
     // So we group them within beginUpdates ... endUpdates
     [self.triageTable beginUpdates];
-    [self.triageTable insertRowsAtIndexPaths:indexPathsForInsert withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.triageTable deleteRowsAtIndexPaths:indexPathsForDelete withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.triageTable insertRowsAtIndexPaths:indexPathsForInsert withRowAnimation:(shouldAppend ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop)];
+    [self.triageTable deleteRowsAtIndexPaths:indexPathsForDelete withRowAnimation:UITableViewRowAnimationFade];
     [self.triageTable reloadRowsAtIndexPaths:indexPathsForReload withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.triageTable endUpdates];
 }
@@ -248,18 +248,19 @@
     
     switch (state) {
         case MCSwipeTableViewCellState1:
-            //slightly right = Like
+            //slightly right
             [self toggleLikeOfFrame:shelbyFrame];
             break;
         case MCSwipeTableViewCellState2:
+            //far right
             [self shareFrame:shelbyFrame];
             break;
         case MCSwipeTableViewCellState3:
-            //slightly left = DVR
-            
+            //slightly left
+            [self dvrFrame:shelbyFrame];
             break;
         case MCSwipeTableViewCellState4:
-            //far right - unused
+            //far left - unused
             break;
         case MCSwipeTableViewCellStateNone:
             //ignore
@@ -269,6 +270,11 @@
     [self.triageTable reloadRowsAtIndexPaths:@[[self.triageTable indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+- (void)dvrFrame:(Frame *)shelbyFrame
+{
+    DLog(@"TODO: DVR");
+}
+
 - (void)shareFrame:(Frame *)shelbyFrame
 {
     SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:shelbyFrame fromViewController:self atRect:CGRectZero];
@@ -276,7 +282,6 @@
 
     [shareController share];
 }
-
 
 - (void)toggleLikeOfFrame:(Frame *)shelbyFrame
 {

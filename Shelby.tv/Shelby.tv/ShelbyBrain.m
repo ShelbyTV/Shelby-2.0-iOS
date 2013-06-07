@@ -78,6 +78,7 @@
                          
     NSArray *allChannels = [self constructAllChannelsArray];
     self.homeVC.channels = allChannels;
+    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
     
     for (DisplayChannel *channel in self.userChannels) {
         [self populateChannel:channel withActivityIndicator:YES];
@@ -163,6 +164,7 @@
     if(!curChannels){
         self.globalChannels = [channels mutableCopy];
         self.homeVC.channels = [self constructAllChannelsArray];
+        [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
     } else {
         //caveat: changing a DisplayChannel attribute will not trigger an update
         //array needs to be different order/length to trigger update
@@ -187,6 +189,7 @@
 
             self.globalChannels = channelsArray;
             self.homeVC.channels = [self constructAllChannelsArray];
+            [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
         } else {
                 /* don't replace old channels */
         }
@@ -285,6 +288,7 @@
         [channel setOrder:@([channelsArray count] - 1)];
         self.globalChannels = channelsArray;
         [self.homeVC setChannels:channelsArray];
+        [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
     }
     
     [self.homeVC setEntries:channelEntries forChannel:channel];
@@ -318,6 +322,7 @@
     }
     
     self.homeVC.channels = [self constructAllChannelsArray];
+    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
     
     [self fetchEntriesDidCompleteForChannel:myStreamChannel with:channelEntries fromCache:cached];
 }
@@ -337,6 +342,19 @@
     }
     
     return allChannels;
+}
+
+- (DisplayChannel *)defaultChannelForFocus
+{
+    if (self.userChannels && [self.userChannels count]){
+        return self.userChannels[USER_CHANNEL_STREAM_IDX];
+    } else if (self.globalChannels && [self.globalChannels count]) {
+        //community channel
+        return self.globalChannels[0];
+    } else {
+        DLog(@"ERROR -- why don't we have a default channel for this poor user?");
+        return nil;
+    }
 }
 
 #pragma mark - Helper Methods
@@ -602,6 +620,7 @@ typedef struct _ShelbyArrayMergeInstructions {
     self.userChannels = nil;
 
     [self.homeVC setCurrentUser:nil];
+    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
 }
 
 - (void)connectToFacebook
@@ -620,39 +639,62 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:topViewController];
 }
 
-- (void)playRollForID:(NSString *)rollID
+- (void)goToRollForID:(NSString *)rollID
 {
-    if (rollID) {
-        DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForID:rollID];
-        [rollChannel deepRefreshMergeChanges:NO];
+    STVAssert(rollID, @"expects valid rollID");
+    DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:rollID];
+    [rollChannel deepRefreshMergeChanges:NO];
+    [self goToDisplayChannel:rollChannel];
+}
 
-        if (rollChannel && [rollChannel hasEntityAtIndex:0]) {
-            self.currentChannel = rollChannel;
-            [self.homeVC animateLaunchPlayerForChannel:rollChannel atIndex:0];
-            
+- (void)goToDashboardForId:(NSString *)dashboardID
+{
+    STVAssert(dashboardID, @"expects valid dashboardID");
+    DisplayChannel *dashboardChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:dashboardID];
+    [dashboardChannel deepRefreshMergeChanges:NO];
+    [self goToDisplayChannel:dashboardChannel];
+}
+
+//on iPad, starts playing roll
+//on iPhone, changes view
+- (void)goToDisplayChannel:(DisplayChannel *)displayChannel
+{
+    if (displayChannel && [displayChannel hasEntityAtIndex:0]) {
+        if (DEVICE_IPAD ) {
+            self.currentChannel = displayChannel;
+            [self.homeVC animateLaunchPlayerForChannel:displayChannel atIndex:0];
         } else {
-            NSString *message = nil;
-            if (rollChannel && rollChannel.displayTitle) {
-                message = [NSString stringWithFormat:@"We'd love to play %@, but it does not have any videos yet!", rollChannel.displayTitle];
-            } else {
-                message = @"Problem loading roll.";
-            }
-           ShelbyAlertView *alertView =  [[ShelbyAlertView alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
-            [alertView show];
+            [self.homeVC focusOnChannel:displayChannel];
         }
+        
+    } else {
+        NSString *message = nil;
+        if (displayChannel && displayChannel.displayTitle) {
+            message = [NSString stringWithFormat:@"We'd love to play %@, but it does not have any videos yet!", displayChannel.displayTitle];
+        } else {
+            message = @"Problem loading channel.";
+        }
+        ShelbyAlertView *alertView =  [[ShelbyAlertView alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
+        [alertView show];
     }
 }
 
-- (void)playMyLikes
+- (void)goToMyLikes
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-    [self playRollForID:user.likesRollID];
+    [self goToRollForID:user.likesRollID];
 }
 
-- (void)playMyRoll
+- (void)goToMyRoll
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-    [self playRollForID:user.publicRollID];
+    [self goToRollForID:user.publicRollID];
+}
+
+- (void)goToMyStream
+{
+    User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+    [self goToDashboardForId:user.userID];
 }
 
 - (ShelbyBrowseTutorialMode)browseTutorialMode

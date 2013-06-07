@@ -9,6 +9,10 @@
 #import "User.h"
 #import "DisplayChannel+Helper.h"
 
+#define USER_CHANNEL_STREAM_IDX 0
+#define USER_CHANNEL_ROLL_IDX 1
+#define USER_CHANNEL_LIKE_IDX 2
+
 @interface User (Helper)
 
 + (User *)userForDictionary:(NSDictionary *)dict
@@ -22,6 +26,7 @@
 // KP KP: TODO: once we move twitter handler stuff to data mediator, we can pass a context. For now, we'll just ask for a private context.
 + (User *)updateUserWithTwitterUsername:(NSString *)username andTwitterID:(NSString *)twitterID;
 
+//use the USER_CHANNEL_*_IDX defines to make sense of this array
 + (NSMutableArray *)channelsForUserInContext:(NSManagedObjectContext *)moc;
 
 - (BOOL)isTwitterConnected;

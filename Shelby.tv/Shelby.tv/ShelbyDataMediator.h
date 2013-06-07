@@ -56,7 +56,8 @@ extern NSString * const kShelbyOfflineLikesID;
 - (User *)fetchAuthenticatedUserOnMainThreadContext;
 - (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh;
 - (void)fetchAllUnsyncedLikes;
-- (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForID:(NSString *)channelID;
+- (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForRollID:(NSString *)rollID;
+- (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForDashboardID:(NSString *)dashboardID;
 
 -(void)logoutWithUserChannels:(NSArray *)userChannels;
 

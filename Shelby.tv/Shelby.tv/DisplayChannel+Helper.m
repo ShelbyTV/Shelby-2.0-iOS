@@ -85,7 +85,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
 + (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
                                           inContext:(NSManagedObjectContext *)context
 {
-    DisplayChannel *displayChannel = [DisplayChannel channelForChannelID:kShelbyOfflineLikesID inContext:context];
+    DisplayChannel *displayChannel = [DisplayChannel channelForRollID:kShelbyOfflineLikesID inContext:context];
     
     if (!displayChannel) {
         displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
@@ -156,14 +156,23 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     return displayChannel;
 }
 
-+ (DisplayChannel *)channelForChannelID:(NSString *)channelID
-                              inContext:(NSManagedObjectContext *)context
++ (DisplayChannel *)channelForRollID:(NSString *)rollID
+                           inContext:(NSManagedObjectContext *)context
 {
     return [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
                      withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaRollIDPredicate
-                               andID:channelID
+                               andID:rollID
                            inContext:context];
     
+}
+
++ (DisplayChannel *)channelForDashboardID:(NSString *)dashboardID
+                                inContext:(NSManagedObjectContext *)context
+{
+    return [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
+                     withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate
+                               andID:dashboardID
+                           inContext:context];
 }
 
 - (BOOL) canFetchRemoteEntries

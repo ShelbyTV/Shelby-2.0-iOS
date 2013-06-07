@@ -18,8 +18,9 @@
 - (void)logoutUser;
 - (void)connectToFacebook;
 - (void)connectToTwitter;
-- (void)playMyRoll;
-- (void)playMyLikes;
+- (void)goToMyRoll;
+- (void)goToMyLikes;
+- (void)goToMyStream;
 @end
 
 
@@ -40,6 +41,9 @@
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;
 
 - (void)removeChannel:(DisplayChannel *)channel;
+
+//currently only used on iPhone to change currently displayed channel
+- (void)focusOnChannel:(DisplayChannel *)channel;
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 - (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;

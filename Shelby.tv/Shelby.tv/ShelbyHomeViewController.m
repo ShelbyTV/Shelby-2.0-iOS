@@ -133,6 +133,8 @@
             }
             
             //remove old TVCs (some of which may get re-used)
+            //NB: expect this code is temporary, otherwise would have tracked _currentTriageVC
+            //NB: we expect new channel for focus to be set by an outsider
             for (TriageViewController *tvc in _triageVCs) {
                 [tvc.view removeFromSuperview];
                 [tvc removeFromParentViewController];
@@ -144,8 +146,6 @@
                 [newTVC.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
             }
             _triageVCs = newTriageVCs;
-            
-            [self displayDefaultChannel];
         }
     }
 }
@@ -165,27 +165,30 @@
             [tvc removeFromParentViewController];
             [_triageVCs removeObject:tvc];
             if (tvc.view.superview) {
+                //NB: we expect new channel for focus to be set by an outsider
                 [tvc.view removeFromSuperview];
-                [self displayDefaultChannel];
             }
         }
     }
 }
 
-- (void)displayDefaultChannel
+- (void)focusOnChannel:(DisplayChannel *)channel
 {
-    if (!self.triageVCs || [self.triageVCs count] == 0) {
-        // TODO: show an error message?
-        // Or show default page after removing the last TriageVC?
-        // Or maybe call: getChannels?
-        return;
+    if (DEVICE_IPAD) {
+        //do nothing
+    } else {
+        //remove current focus
+        //NB: expect this code is temporary, otherwise would have tracked _currentTriageVC
+        for (TriageViewController *tvc in _triageVCs) {
+            [tvc.view removeFromSuperview];
+        }
+        
+        TriageViewController *tvc = [self triageViewControllerForChannel:channel];
+        STVAssert(tvc, @"should not be asked to focus on a channel we don't have!");
+        [self.view addSubview:tvc.view];
+        [self.view sendSubviewToBack:tvc.view];
+        self.topBarTitle.text = tvc.channel.displayTitle;
     }
-
-    //TODO: show the correct default VC
-    TriageViewController *defaultVC = ((TriageViewController *)self.triageVCs[0]);
-    [self.view addSubview:defaultVC.view];
-    [self.view sendSubviewToBack:defaultVC.view];
-    self.topBarTitle.text = defaultVC.channel.displayTitle;
 }
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
@@ -340,7 +343,7 @@
         
         [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else { // iPhone
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"My Roll", @"My Likes", @"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Stream", @"My Shares", @"My Likes", @"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
         actionSheet.destructiveButtonIndex = 4;
         [actionSheet showInView:self.view];
     }
@@ -567,8 +570,8 @@
 {
     [self dismissPopover];
 
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(playMyRoll)]) {
-        [self.masterDelegate playMyRoll];
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyRoll)]) {
+        [self.masterDelegate goToMyRoll];
     }
 }
 
@@ -576,8 +579,17 @@
 {
     [self dismissPopover];
 
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(playMyLikes)]) {
-        [self.masterDelegate playMyLikes];
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyLikes)]) {
+        [self.masterDelegate goToMyLikes];
+    }
+}
+
+- (void)launchMyStream
+{
+    [self dismissPopover];
+    
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyStream)]) {
+        [self.masterDelegate goToMyStream];
     }
 }
 
@@ -617,14 +629,16 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        [self launchMyRoll];
+        [self launchMyStream];
     } else if (buttonIndex == 1) {
-        [self launchMyLikes];
+        [self launchMyRoll];
     } else if (buttonIndex == 2) {
-        [self connectToFacebook];
+        [self launchMyLikes];
     } else if (buttonIndex == 3) {
-        [self connectToTwitter];
+        [self connectToFacebook];
     } else if (buttonIndex == 4) {
+        [self connectToTwitter];
+    } else if (buttonIndex == 5) {
         [self logout];
     }
 }
