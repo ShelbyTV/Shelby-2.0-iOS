@@ -64,7 +64,13 @@ static AFHTTPClient *httpClient = nil;
                       shouldAddAuth:(BOOL)addAuthIfUserIsLoggedIn
 {
     if (addAuthIfUserIsLoggedIn) {
-        User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+        NSManagedObjectContext *moc = nil;
+        if ([NSThread isMainThread]) {
+            moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+        } else {
+            moc = [[ShelbyDataMediator sharedInstance] createPrivateQueueContext];
+        }
+        User *user = [User currentAuthenticatedUserInContext:moc];
         if (user) {
             STVAssert(user.token, @"expected user to have token");
             NSMutableDictionary *queryWithAuth = queryParams ? [queryParams mutableCopy] : [NSMutableDictionary dictionaryWithCapacity:1];
@@ -115,6 +121,7 @@ static AFHTTPClient *httpClient = nil;
     [operation start];
 }
 
+// KP KP: TODO: this method is not getting called. Once we call it, make sure from what thread and get the correct moc.
 + (void)putGoogleAnalyticsClientID:(NSString *)clientID
 {
     if (!clientID || [clientID isEqualToString:@""]) {
