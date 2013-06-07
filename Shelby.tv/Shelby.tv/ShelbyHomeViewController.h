@@ -18,6 +18,8 @@
 - (void)logoutUser;
 - (void)connectToFacebook;
 - (void)connectToTwitter;
+- (void)goToDVR;
+- (void)goToDefaultChannel;
 - (void)goToMyRoll;
 - (void)goToMyLikes;
 - (void)goToMyStream;

@@ -808,6 +808,9 @@
 		91744DA0176215BB00C53B2C /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91744D9F176215BB00C53B2C /* Frame.m */; };
 		91744DA1176215BB00C53B2C /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91744D9F176215BB00C53B2C /* Frame.m */; };
 		91744DA2176215BB00C53B2C /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91744D9F176215BB00C53B2C /* Frame.m */; };
+		91BEC890176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
+		91BEC891176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
+		91BEC892176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
@@ -823,9 +826,6 @@
 		91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */; };
 		91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */; };
 		91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */; };
-		91D03F3917331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
-		91D03F3A17331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
-		91D03F3B17331495008131D2 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F3817331495008131D2 /* DisplayChannel.m */; };
 		91D03F4317331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
 		91D03F4417331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
 		91D03F4517331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
@@ -1248,6 +1248,8 @@
 		91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDuplicateContainer.h; sourceTree = "<group>"; };
 		91744D9E176215BB00C53B2C /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		91744D9F176215BB00C53B2C /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		91BEC88E176274BD00838197 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
+		91BEC88F176274BD00838197 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
 		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
 		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
 		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -1259,8 +1261,6 @@
 		91D03F1F1732BC97008131D2 /* Dashboard+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Dashboard+Helper.m"; sourceTree = "<group>"; };
 		91D03F2817330BD9008131D2 /* DashboardEntry+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DashboardEntry+Helper.h"; sourceTree = "<group>"; };
 		91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DashboardEntry+Helper.m"; sourceTree = "<group>"; };
-		91D03F3717331494008131D2 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
-		91D03F3817331495008131D2 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
 		91D03F4117331498008131D2 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		91D03F4217331499008131D2 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		91D03F501733149E008131D2 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
@@ -1617,11 +1617,11 @@
 				91E5D462174E938100AD3746 /* Roll.m */,
 				1CC223B817580DF9003396B4 /* User.h */,
 				1CC223B917580DF9003396B4 /* User.m */,
+				91BEC88E176274BD00838197 /* DisplayChannel.h */,
+				91BEC88F176274BD00838197 /* DisplayChannel.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
 				91744D9E176215BB00C53B2C /* Frame.h */,
 				91744D9F176215BB00C53B2C /* Frame.m */,
-				91D03F3717331494008131D2 /* DisplayChannel.h */,
-				91D03F3817331495008131D2 /* DisplayChannel.m */,
 				91D03F5A173314A0008131D2 /* Video.h */,
 				91D03F5B173314A0008131D2 /* Video.m */,
 				91D03F551733149F008131D2 /* Dashboard.h */,
@@ -2884,7 +2884,6 @@
 				91D03F211732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
-				91D03F3A17331495008131D2 /* DisplayChannel.m in Sources */,
 				91D03F4417331499008131D2 /* Conversation.m in Sources */,
 				91D03F531733149F008131D2 /* Messages.m in Sources */,
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
@@ -2912,6 +2911,7 @@
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
 				914FEA8B175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91744DA1176215BB00C53B2C /* Frame.m in Sources */,
+				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2996,7 +2996,6 @@
 				91D03F221732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
-				91D03F3B17331495008131D2 /* DisplayChannel.m in Sources */,
 				91D03F4517331499008131D2 /* Conversation.m in Sources */,
 				91D03F541733149F008131D2 /* Messages.m in Sources */,
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
@@ -3024,6 +3023,7 @@
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
 				914FEA8C175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91744DA2176215BB00C53B2C /* Frame.m in Sources */,
+				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3108,7 +3108,6 @@
 				91D03F201732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
-				91D03F3917331495008131D2 /* DisplayChannel.m in Sources */,
 				91D03F4317331499008131D2 /* Conversation.m in Sources */,
 				91D03F521733149F008131D2 /* Messages.m in Sources */,
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
@@ -3136,6 +3135,7 @@
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
 				914FEA8A175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91744DA0176215BB00C53B2C /* Frame.m in Sources */,
+				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

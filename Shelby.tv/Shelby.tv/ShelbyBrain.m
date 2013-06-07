@@ -9,6 +9,7 @@
 #import "ShelbyBrain.h"
 #import "Dashboard+Helper.h"
 #import "DisplayChannel+Helper.h"
+#import "ShelbyDVRController.h"
 #import "Roll+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
@@ -17,6 +18,8 @@
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
+
+NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 
 @interface ShelbyBrain()
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
@@ -29,6 +32,8 @@
 @property (nonatomic, strong) NSMutableArray *globalChannels;
 @property (nonatomic, strong) DisplayChannel *dvrChannel;
 
+@property (nonatomic, strong) ShelbyDVRController *dvrController;
+
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 @end
 
@@ -39,6 +44,13 @@
 - (void)setup
 {
     [ShelbyDataMediator sharedInstance].delegate = self;
+    
+    if (!self.dvrController){
+        self.dvrChannel = [DisplayChannel channelForTransientEntriesWithID:kShelbyDVRDisplayChannelID
+                                                                     title:@"DVR"
+                                                                 inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        self.dvrController = [[ShelbyDVRController alloc] init];
+    }
     
 #ifndef DEBUG
     if (![self tutorialCompleted] && DEVICE_IPAD) {
@@ -94,13 +106,23 @@
     }
 }
 
+// we expect to hear an answer via fetchEntriesDidCompleteForChannel:with:fromCache: on main thread
 - (void)populateChannel:(DisplayChannel *)channel withActivityIndicator:(BOOL)showSpinner
 {
-    if(showSpinner){
-        [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:YES];
+    if (channel == self.dvrChannel) {
+        DLog(@"populating DVR channel...");
+        NSArray *dvrEntries = [self.dvrController currentDVREntriesOrderedLIFO:YES
+                                                                     inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        [self fetchEntriesDidCompleteForChannel:channel with:dvrEntries fromCache:YES];
+    } else {
+        //normal channels
+        if(showSpinner){
+            [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:YES];
+        }
+        
+        [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:nil];
+        
     }
-    
-    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:nil];
 }
 
 - (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh
@@ -216,6 +238,8 @@
                                     with:(NSArray *)channelEntries
                                fromCache:(BOOL)cached
 {
+    STVAssert([NSThread isMainThread], @"expecting to be called on main thread");
+    
     //the choke point where unplayable videos may not pass
     NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
         return [entry isPlayable];
@@ -343,10 +367,7 @@
         [allChannels addObjectsFromArray:self.globalChannels];
     }
     
-    if (!self.dvrChannel){
-        //TODO: create DVR channel
-    }
-    //[allChannels addObject:self.dvrChannel];
+    [allChannels addObject:self.dvrChannel];
     
     return allChannels;
 }
@@ -666,24 +687,26 @@ typedef struct _ShelbyArrayMergeInstructions {
 //on iPhone, changes view
 - (void)goToDisplayChannel:(DisplayChannel *)displayChannel
 {
-    if (displayChannel && [displayChannel hasEntityAtIndex:0]) {
-        if (DEVICE_IPAD ) {
+    if (displayChannel) {
+        if (DEVICE_IPAD && [displayChannel hasEntityAtIndex:0]) {
             self.currentChannel = displayChannel;
             [self.homeVC animateLaunchPlayerForChannel:displayChannel atIndex:0];
+            return;
         } else {
             [self.homeVC focusOnChannel:displayChannel];
+            return;
         }
-        
-    } else {
-        NSString *message = nil;
-        if (displayChannel && displayChannel.displayTitle) {
-            message = [NSString stringWithFormat:@"We'd love to play %@, but it does not have any videos yet!", displayChannel.displayTitle];
-        } else {
-            message = @"Problem loading channel.";
-        }
-        ShelbyAlertView *alertView =  [[ShelbyAlertView alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
-        [alertView show];
     }
+    
+    //fell through, can't go to the channel...
+    NSString *message = nil;
+    if (displayChannel && displayChannel.displayTitle) {
+        message = [NSString stringWithFormat:@"We'd love to play %@, but it does not have any videos yet!", displayChannel.displayTitle];
+    } else {
+        message = @"Problem loading channel.";
+    }
+    ShelbyAlertView *alertView =  [[ShelbyAlertView alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
+    [alertView show];
 }
 
 - (void)goToMyLikes
@@ -702,6 +725,17 @@ typedef struct _ShelbyArrayMergeInstructions {
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     [self goToDashboardForId:user.userID];
+}
+
+- (void)goToDVR
+{
+    [self populateChannel:self.dvrChannel withActivityIndicator:NO];
+    [self goToDisplayChannel:self.dvrChannel];
+}
+
+- (void)goToDefaultChannel
+{
+    [self goToDisplayChannel:[self defaultChannelForFocus]];
 }
 
 - (ShelbyBrowseTutorialMode)browseTutorialMode

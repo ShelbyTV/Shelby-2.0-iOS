@@ -2,7 +2,7 @@
 //  DisplayChannel.h
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 5/2/13.
+//  Created by Daniel Spinosa on 6/7/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -14,6 +14,9 @@
 @interface DisplayChannel : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * order;
+@property (nonatomic, retain) NSNumber * entriesAreTransient;
+@property (nonatomic, retain) NSString * channelID;
+@property (nonatomic, retain) NSString * titleOverride;
 @property (nonatomic, retain) Dashboard *dashboard;
 @property (nonatomic, retain) Roll *roll;
 

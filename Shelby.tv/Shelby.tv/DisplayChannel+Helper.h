@@ -28,6 +28,16 @@
                                         withOrder:(NSInteger)order
                                         inContext:(NSManagedObjectContext *)context;
 
+// A channel with entriesAreTransient==YES means it has no child Roll or
+//Dashboard.  Entries for this channel are determined some other way, and
+//it's not our concern how.
+//
+// Currently used by the home controller to create a DVR channel; the entries
+//are determined by the ShelbyDVRController ad hoc
++ (DisplayChannel *)channelForTransientEntriesWithID:(NSString *)channelID
+                                               title:(NSString *)title
+                                           inContext:(NSManagedObjectContext *)context;
+
 + (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
                                           inContext:(NSManagedObjectContext *)context;
 

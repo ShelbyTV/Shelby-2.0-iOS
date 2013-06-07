@@ -114,7 +114,7 @@
 - (void)setChannels:(NSArray *)channels
 {
     if (![channels isEqualToArray:_channels]) {
-        DLog(@"Replacing ALL Channels... %@ --becomes--> %@", _channels, channels);
+        //DLog(@"Replacing ALL Channels... %@ --becomes--> %@", _channels, channels);
         _channels = channels;
         if (DEVICE_IPAD) {
             self.browseVC.channels = channels;
@@ -590,6 +590,21 @@
     
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyStream)]) {
         [self.masterDelegate goToMyStream];
+    }
+}
+
+- (IBAction)dvrButtonTapped:(UIButton *)sender {
+    //super hacky, fine for now
+    if ([sender.titleLabel.text isEqualToString:@"DVR"]) {
+        if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToDVR)]) {
+            [self.masterDelegate goToDVR];
+            [sender setTitle:@"Back" forState:UIControlStateNormal];
+        }
+    } else {
+        if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToDefaultChannel)]) {
+            [self.masterDelegate goToDefaultChannel];
+            [sender setTitle:@"DVR" forState:UIControlStateNormal];
+        }
     }
 }
 

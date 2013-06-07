@@ -15,6 +15,7 @@
 #import "UIColor+ColorWithHexAndAlpha.h"
 
 NSString * const kShelbyCoreDataEntityDisplayChannel = @"DisplayChannel";
+NSString * const kShelbyCoreDataEntityDisplayChannelIDPredicate = @"channelID == %@";
 NSString * const kShelbyCoreDataEntityDisplayChannelViaRollIDPredicate = @"roll.rollID == %@";
 NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"dashboard.dashboardID == %@";
 
@@ -81,6 +82,24 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     return displayChannel;
 }
 
++ (DisplayChannel *)channelForTransientEntriesWithID:(NSString *)channelID
+                                               title:(NSString *)title
+                                           inContext:(NSManagedObjectContext *)context
+{
+    DisplayChannel *displayChannel = [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
+                                               withIDPredicate:kShelbyCoreDataEntityDisplayChannelIDPredicate
+                                                         andID:channelID
+                                                     inContext:context];
+    
+    if (!displayChannel) {
+        displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
+                                                       inManagedObjectContext:context];
+        displayChannel.channelID = channelID;
+        displayChannel.entriesAreTransient = @1;
+    }
+    
+    return displayChannel;
+}
 
 + (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
                                           inContext:(NSManagedObjectContext *)context

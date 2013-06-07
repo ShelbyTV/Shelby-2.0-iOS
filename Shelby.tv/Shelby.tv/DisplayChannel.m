@@ -2,7 +2,7 @@
 //  DisplayChannel.m
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 5/2/13.
+//  Created by Daniel Spinosa on 6/7/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -14,6 +14,9 @@
 @implementation DisplayChannel
 
 @dynamic order;
+@dynamic entriesAreTransient;
+@dynamic channelID;
+@dynamic titleOverride;
 @dynamic dashboard;
 @dynamic roll;
 
