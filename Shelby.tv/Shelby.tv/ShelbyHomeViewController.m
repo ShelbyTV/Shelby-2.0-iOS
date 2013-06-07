@@ -311,7 +311,7 @@
         [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
         [self.settingsView addSubview:settings];
     } else {
-        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(kShelbyFullscreenWidth - 70, 0, 120, 44)];
+        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 120, 44)];
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
         [login setFrame:CGRectMake(7, 7, 60, 30)];
         [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
