@@ -174,7 +174,7 @@
 
 - (void)displayDefaultChannel
 {
-    if (self.triageVCs || [self.triageVCs count] == 0) {
+    if (!self.triageVCs || [self.triageVCs count] == 0) {
         // TODO: show an error message?
         // Or show default page after removing the last TriageVC?
         // Or maybe call: getChannels?
