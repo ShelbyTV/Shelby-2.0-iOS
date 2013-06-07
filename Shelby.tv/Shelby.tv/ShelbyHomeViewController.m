@@ -344,7 +344,7 @@
         [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else { // iPhone
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Stream", @"My Shares", @"My Likes", @"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
-        actionSheet.destructiveButtonIndex = 4;
+        actionSheet.destructiveButtonIndex = 5;
         [actionSheet showInView:self.view];
     }
 }
