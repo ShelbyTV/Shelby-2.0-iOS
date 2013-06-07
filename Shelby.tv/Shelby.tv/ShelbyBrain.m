@@ -27,6 +27,7 @@
 
 @property (nonatomic, strong) NSMutableArray *userChannels;
 @property (nonatomic, strong) NSMutableArray *globalChannels;
+@property (nonatomic, strong) DisplayChannel *dvrChannel;
 
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 @end
@@ -334,12 +335,18 @@
 {
     NSMutableArray *allChannels = [@[] mutableCopy];
     if (self.userChannels) {
+        //See User+Helper.h for constants to index into this array
         [allChannels addObjectsFromArray:self.userChannels];
     }
     
     if (self.globalChannels) {
         [allChannels addObjectsFromArray:self.globalChannels];
     }
+    
+    if (!self.dvrChannel){
+        //TODO: create DVR channel
+    }
+    //[allChannels addObject:self.dvrChannel];
     
     return allChannels;
 }

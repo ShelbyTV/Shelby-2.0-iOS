@@ -108,12 +108,12 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 
 - (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForRollID:(NSString *)rollID
 {
-    return [DisplayChannel channelForRollID:rollID inContext:[self mainThreadContext]];
+    return [DisplayChannel fetchChannelWithRollID:rollID inContext:[self mainThreadContext]];
 }
 
 - (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForDashboardID:(NSString *)dashboardID
 {
-    return [DisplayChannel channelForDashboardID:dashboardID inContext:[self mainThreadContext]];
+    return [DisplayChannel fetchChannelWithDashboardID:dashboardID inContext:[self mainThreadContext]];
 }
 
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry

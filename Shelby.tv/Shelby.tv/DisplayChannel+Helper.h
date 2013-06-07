@@ -31,20 +31,10 @@
 + (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
                                           inContext:(NSManagedObjectContext *)context;
 
-+ (DisplayChannel *)userChannelForDashboardDictionary:(NSDictionary *)dictionary
-                                               withID:(NSString *)channelID
-                                                withOrder:(NSInteger)order
-                                                inContext:(NSManagedObjectContext *)context;
-
-+ (DisplayChannel *)userChannelForRollDictionary:(NSDictionary *)dictionary
-                                          withID:(NSString *)channelID
-                                       withOrder:(NSInteger)order
-                                       inContext:(NSManagedObjectContext *)context;
-
-+ (DisplayChannel *)channelForRollID:(NSString *)channelID
-                           inContext:(NSManagedObjectContext *)context;
-+ (DisplayChannel *)channelForDashboardID:(NSString *)dashboardID
-                                inContext:(NSManagedObjectContext *)context;
++ (DisplayChannel *)fetchChannelWithRollID:(NSString *)channelID
+                                 inContext:(NSManagedObjectContext *)context;
++ (DisplayChannel *)fetchChannelWithDashboardID:(NSString *)dashboardID
+                                      inContext:(NSManagedObjectContext *)context;
 
 @property (nonatomic, readonly) BOOL canFetchRemoteEntries;
 

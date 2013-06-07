@@ -150,25 +150,22 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     NSDictionary *streamDict = [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"Stream" displayColor:kShelbyColorMyStreamColorString];
     if (streamDict) {
         DisplayChannel *myStreamChannel = [DisplayChannel channelForDashboardDictionary:streamDict withOrder:0 inContext:moc];
-        if (myStreamChannel) {
-            [channels addObject:myStreamChannel];
-        }
+        STVAssert(myStreamChannel, @"failed to create stream channel for user");
+        [channels addObject:myStreamChannel];
     }
     
     NSDictionary *rollDict = [User dictionaryForUserChannel:loggedInUser.publicRollID withIDKey:@"id" displayTitle:@"My Shares" displayColor:kShelbyColorMyRollColorString];
     if (streamDict) {
         DisplayChannel *myRollChannel = [DisplayChannel channelForRollDictionary:rollDict withOrder:1 inContext:moc];
-        if (myRollChannel) {
-            [channels addObject:myRollChannel];
-        }
+        STVAssert(myRollChannel, @"failed to create roll channel for user");
+        [channels addObject:myRollChannel];
     }
 
     NSDictionary *likeDict = [User dictionaryForUserChannel:loggedInUser.likesRollID withIDKey:@"id"  displayTitle:@"My Likes" displayColor:kShelbyColorLikesRedString];
     if (likeDict) {
         DisplayChannel *myLikesChannel = [DisplayChannel channelForRollDictionary:likeDict withOrder:1 inContext:moc];
-        if (myLikesChannel) {
-            [channels addObject:myLikesChannel];
-        }
+        STVAssert(myLikesChannel, @"failed to create likes channel for user");
+        [channels addObject:myLikesChannel];
     }
     
     NSError *error;

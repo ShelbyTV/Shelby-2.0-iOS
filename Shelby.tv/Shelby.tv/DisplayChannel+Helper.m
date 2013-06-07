@@ -85,7 +85,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
 + (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
                                           inContext:(NSManagedObjectContext *)context
 {
-    DisplayChannel *displayChannel = [DisplayChannel channelForRollID:kShelbyOfflineLikesID inContext:context];
+    DisplayChannel *displayChannel = [DisplayChannel fetchChannelWithRollID:kShelbyOfflineLikesID inContext:context];
     
     if (!displayChannel) {
         displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
@@ -98,66 +98,8 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     return displayChannel;
 }
 
-+ (DisplayChannel *)userChannelForDashboardDictionary:(NSDictionary *)dictionary
-                                               withID:(NSString *)channelID
-                                            withOrder:(NSInteger)order
-                                            inContext:(NSManagedObjectContext *)context
-{
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDisplayChannel];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"dashboard.dashboardID == %@", channelID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedDisplayChannels = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedDisplayChannels){
-        return nil;
-    }
-    
-    DisplayChannel *displayChannel;
-    if ([fetchedDisplayChannels count] == 1) { 
-        displayChannel = fetchedDisplayChannels[0];
-    } else {
-        displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
-                                                       inManagedObjectContext:context];
-    }
-    
-    Dashboard *myStreams = [Dashboard dashboardForDashboardDictionary:dictionary inContext:context];
-    displayChannel.dashboard = myStreams;
-    
-    return displayChannel;
-}
-
-+ (DisplayChannel *)userChannelForRollDictionary:(NSDictionary *)dictionary
-                                          withID:(NSString *)channelID
-                                       withOrder:(NSInteger)order
-                                       inContext:(NSManagedObjectContext *)context
-{
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDisplayChannel];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"roll.rollID == %@", channelID];
-    request.predicate = pred;
-    request.fetchLimit = 1;
-    NSError *error;
-    NSArray *fetchedDisplayChannels = [context executeFetchRequest:request error:&error];
-    if(error || !fetchedDisplayChannels){
-        return nil;
-    }
-    
-    DisplayChannel *displayChannel;
-    if ([fetchedDisplayChannels count] == 1) {
-        displayChannel = fetchedDisplayChannels[0];
-    } else {
-        displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
-                                                       inManagedObjectContext:context];
-    }
-    
-    Roll *myStreams = [Roll rollForDictionary:dictionary inContext:context];
-    displayChannel.roll = myStreams;
-    
-    return displayChannel;
-}
-
-+ (DisplayChannel *)channelForRollID:(NSString *)rollID
-                           inContext:(NSManagedObjectContext *)context
++ (DisplayChannel *)fetchChannelWithRollID:(NSString *)rollID
+                                 inContext:(NSManagedObjectContext *)context
 {
     return [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
                      withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaRollIDPredicate
@@ -166,8 +108,8 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     
 }
 
-+ (DisplayChannel *)channelForDashboardID:(NSString *)dashboardID
-                                inContext:(NSManagedObjectContext *)context
++ (DisplayChannel *)fetchChannelWithDashboardID:(NSString *)dashboardID
+                                      inContext:(NSManagedObjectContext *)context
 {
     return [self fetchOneEntityNamed:kShelbyCoreDataEntityDisplayChannel
                      withIDPredicate:kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate
