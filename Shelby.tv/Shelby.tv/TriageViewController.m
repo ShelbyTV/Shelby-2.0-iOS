@@ -274,11 +274,13 @@
 }
 
 - (void)dvrFrame:(Frame *)shelbyFrame
-{
-    //TODO: something more PoC
-    NSDate *when = [NSDate dateWithTimeIntervalSinceNow:15];
-    DLog(@"DVRing for: %@", when);
-    [self.dvrController setDVRFor:shelbyFrame toRemindAt:when];
+{    
+    DVRDatePickerView *dvrPicker = [[DVRDatePickerView alloc] init];
+    dvrPicker.delegate = self;
+    dvrPicker.entityForDVR = shelbyFrame;
+    
+    [self.parentViewController.view addSubview:dvrPicker];
+    [self.parentViewController.view bringSubviewToFront:dvrPicker];
 }
 
 - (void)shareFrame:(Frame *)shelbyFrame
@@ -299,6 +301,26 @@
     NSError *err;
     [shelbyFrame.managedObjectContext save:&err];
     STVAssert(!err, @"like save failed");
+}
+
+#pragma mark - DVRDatePickerViewDelegate
+
+- (void)cancelForDVRDatePickerView:(DVRDatePickerView *)view
+{
+    [view removeFromSuperview];
+}
+
+- (void)setDVRForDVRDatePickerView:(DVRDatePickerView *)view withDatePicker:(UIDatePicker *)datePicker
+{
+    NSDate *when = datePicker.date;
+    //annoyingly, the date picker keeps the seconds as whatever the current time is, so i need to set them to zero
+    NSTimeInterval time = floor([when timeIntervalSinceReferenceDate] / 60.0) * 60.0;
+    when = [NSDate dateWithTimeIntervalSinceReferenceDate:time];
+    
+    DLog(@"DVRing for: %@", when);
+    [self.dvrController setDVRFor:view.entityForDVR toRemindAt:when];
+    
+    [view removeFromSuperview];
 }
 
 @end

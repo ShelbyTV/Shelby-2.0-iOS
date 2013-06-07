@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
+#import "DVRDatePickerView.h"
 #import "MCSwipeTableViewCell.h"
 #import "ShelbyViewController.h"
 
@@ -16,7 +17,7 @@
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 @end
 
-@interface TriageViewController : ShelbyViewController <UITableViewDelegate, UITableViewDataSource, MCSwipeTableViewCellDelegate>
+@interface TriageViewController : ShelbyViewController <DVRDatePickerDelegate, UITableViewDelegate, UITableViewDataSource, MCSwipeTableViewCellDelegate>
 
 @property (readonly, strong) DisplayChannel *channel;
 @property (weak, nonatomic) id<ShelbyTriageProtocol> triageDelegate;

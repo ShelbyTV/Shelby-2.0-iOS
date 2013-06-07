@@ -811,6 +811,12 @@
 		91BEC890176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC891176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC892176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
+		91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BEC8931762961400838197 /* DVRDatePicker.xib */; };
+		91BEC8951762961400838197 /* DVRDatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BEC8931762961400838197 /* DVRDatePicker.xib */; };
+		91BEC8961762961400838197 /* DVRDatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BEC8931762961400838197 /* DVRDatePicker.xib */; };
+		91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
+		91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
+		91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
 		91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
@@ -1250,6 +1256,9 @@
 		91744D9F176215BB00C53B2C /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		91BEC88E176274BD00838197 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
 		91BEC88F176274BD00838197 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
+		91BEC8931762961400838197 /* DVRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DVRDatePicker.xib; sourceTree = "<group>"; };
+		91BEC8971762976800838197 /* DVRDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVRDatePickerView.h; sourceTree = "<group>"; };
+		91BEC8981762976800838197 /* DVRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVRDatePickerView.m; sourceTree = "<group>"; };
 		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
 		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
 		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -1506,6 +1515,7 @@
 				1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */,
 				1C8AB439175D23C9001D5853 /* TriageView.xib */,
 				1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */,
+				91BEC8931762961400838197 /* DVRDatePicker.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2120,6 +2130,8 @@
 				1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */,
 				910933061743E47F00AC038E /* ShelbyAlertView.h */,
 				910933071743E47F00AC038E /* ShelbyAlertView.m */,
+				91BEC8971762976800838197 /* DVRDatePickerView.h */,
+				91BEC8981762976800838197 /* DVRDatePickerView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2454,6 +2466,7 @@
 				1C7AC3E517610FEB007339A1 /* unlike_for_table@2x.png in Resources */,
 				1C7AC3EA176134AE007339A1 /* rollingContainer-iPhone.png in Resources */,
 				1C7AC3ED176134AE007339A1 /* rollingContainer-iPhone@2x.png in Resources */,
+				91BEC8951762961400838197 /* DVRDatePicker.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2625,6 +2638,7 @@
 				1C7AC3E617610FEB007339A1 /* unlike_for_table@2x.png in Resources */,
 				1C7AC3EB176134AE007339A1 /* rollingContainer-iPhone.png in Resources */,
 				1C7AC3EE176134AE007339A1 /* rollingContainer-iPhone@2x.png in Resources */,
+				91BEC8961762961400838197 /* DVRDatePicker.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2797,6 +2811,7 @@
 				1C7AC3E417610FEB007339A1 /* unlike_for_table@2x.png in Resources */,
 				1C7AC3E9176134AE007339A1 /* rollingContainer-iPhone.png in Resources */,
 				1C7AC3EC176134AE007339A1 /* rollingContainer-iPhone@2x.png in Resources */,
+				91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2912,6 +2927,7 @@
 				914FEA8B175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91744DA1176215BB00C53B2C /* Frame.m in Sources */,
 				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
+				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3024,6 +3040,7 @@
 				914FEA8C175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91744DA2176215BB00C53B2C /* Frame.m in Sources */,
 				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
+				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3136,6 +3153,7 @@
 				914FEA8A175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91744DA0176215BB00C53B2C /* Frame.m in Sources */,
 				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
+				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
