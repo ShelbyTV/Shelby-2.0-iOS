@@ -22,12 +22,19 @@
         <relationship name="dashboard" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Dashboard" inverseName="dashboardEntry" inverseEntity="Dashboard" syncable="YES"/>
         <relationship name="duplicateOf" optional="YES" transient="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="duplicates" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="duplicates" optional="YES" transient="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DashboardEntry" inverseName="duplicateOf" inverseEntity="DashboardEntry" syncable="YES"/>
+        <relationship name="dvrEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="DVREntry" inverseName="dashboardEntry" inverseEntity="DVREntry" syncable="YES"/>
         <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="dashboardEntry" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="DisplayChannel" representedClassName="DisplayChannel" syncable="YES">
         <attribute name="order" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
         <relationship name="dashboard" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Dashboard" inverseName="displayChannel" inverseEntity="Dashboard" syncable="YES"/>
         <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Roll" inverseName="displayChannel" inverseEntity="Roll" syncable="YES"/>
+    </entity>
+    <entity name="DVREntry" representedClassName="DVREntry" syncable="YES">
+        <attribute name="remindAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="dashboardEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="dvrEntry" inverseEntity="DashboardEntry" syncable="YES"/>
+        <relationship name="frame" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="dvrEntry" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="Frame" representedClassName="Frame" syncable="YES">
         <attribute name="channelID" optional="YES" attributeType="String" syncable="YES"/>
@@ -47,6 +54,7 @@
         <relationship name="dashboardEntry" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DashboardEntry" inverseName="frame" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="duplicateOf" optional="YES" transient="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="duplicates" inverseEntity="Frame" syncable="YES"/>
         <relationship name="duplicates" optional="YES" transient="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Frame" inverseName="duplicateOf" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="dvrEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="DVREntry" inverseName="frame" inverseEntity="DVREntry" syncable="YES"/>
         <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Roll" inverseName="frame" inverseEntity="Roll" syncable="YES"/>
         <relationship name="video" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
     </entity>
@@ -112,12 +120,13 @@
     <elements>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Dashboard" positionX="-198" positionY="341" width="128" height="178"/>
-        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="120"/>
+        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="135"/>
         <element name="DisplayChannel" positionX="-270" positionY="126" width="128" height="88"/>
-        <element name="Frame" positionX="367" positionY="336" width="128" height="330"/>
+        <element name="Frame" positionX="367" positionY="336" width="128" height="345"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
         <element name="Roll" positionX="-342" positionY="342" width="128" height="240"/>
         <element name="User" positionX="-47" positionY="-9" width="128" height="300"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="225"/>
+        <element name="DVREntry" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

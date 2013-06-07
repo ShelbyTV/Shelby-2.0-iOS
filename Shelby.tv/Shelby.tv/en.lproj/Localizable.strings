@@ -52,3 +52,7 @@
 "ROLLING_FAIL_TITLE" = "Problem Sharing";
 "ROLLING_FAIL_MESSAGE" = "Your video wasn't shared.  We will look into this issue.  In the meantime, please try again.";
 "ROLLING_FAIL_BUTTON" = "Ok";
+
+// --DVR Local Notification--
+"DVR_ALERT_ACTION" = "Play";
+"DVR_ALERT_BODY" = "DVR video from %@";
