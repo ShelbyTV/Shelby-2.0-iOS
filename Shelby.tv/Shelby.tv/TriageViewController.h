@@ -13,6 +13,7 @@
 
 @protocol ShelbyTriageProtocol <NSObject>
 - (void)userPressedTriageChannel:(DisplayChannel *)channel atItem:(id)item;
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 @end
 
 @interface TriageViewController : ShelbyViewController <UITableViewDelegate, UITableViewDataSource, MCSwipeTableViewCellDelegate>

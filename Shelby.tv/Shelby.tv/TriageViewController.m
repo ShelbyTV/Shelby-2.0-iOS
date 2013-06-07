@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "DashboardEntry.h"
 #import "DeduplicationUtility.h"
+#import "DisplayChannel+Helper.h"
 #import "Frame+Helper.h"
 #import "ShelbyVideoContainer.h"
 #import "SPShareController.h"
@@ -199,6 +200,14 @@
                                           cell.caption.frame.origin.y,
                                           300,
                                           textBasedHeight)];
+    }
+
+    //load more data
+    NSInteger cellsBeyond = [self.deduplicatedEntries count] - [indexPath row];
+    if(cellsBeyond == kShelbyPrefetchEntriesWhenNearEnd && [self.channel canFetchRemoteEntries]){
+        //since id should come from raw entries, not de-duped entries
+        [self.triageDelegate loadMoreEntriesInChannel:self.channel
+                                           sinceEntry:[self.entries lastObject]];
     }
 
     
