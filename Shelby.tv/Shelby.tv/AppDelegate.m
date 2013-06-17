@@ -71,8 +71,33 @@
     self.brain.homeVC = homeViewController;
     [self.window makeKeyAndVisible];
 
+    // Handle launching from a notification
+    UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (notification) {
+        application.applicationIconBadgeNumber = 0;
+        [self fireLocalNotification:notification];
+    }
+    
+
     return YES;
 }
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notifcation {
+    // Handle the notificaton when the app is running
+    application.applicationIconBadgeNumber = 0;
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateInactive) {
+        [self fireLocalNotification:notifcation];
+    }
+
+}
+
+
+- (void)fireLocalNotification:(UILocalNotification *)notifcation
+{
+    [self.brain handleLocalNotificationReceived:notifcation];
+}
+
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {

@@ -84,6 +84,11 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     
 }
 
+- (void)handleLocalNotificationReceived:(UILocalNotification *)notification
+{
+    [self goToDVR];
+}
+
 - (void)fetchUserChannels
 {
     // tell DataM to create display channels

@@ -23,5 +23,6 @@
 - (void)setup;
 
 - (void)handleDidBecomeActive;
+- (void)handleLocalNotificationReceived:(UILocalNotification *)notification;
 
 @end
