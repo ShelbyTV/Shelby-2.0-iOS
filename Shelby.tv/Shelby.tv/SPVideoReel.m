@@ -296,16 +296,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     //handled by self.videoScrollView.panGestureRecognizer
     
     //exit (pinch)
-    if (DEVICE_IPAD) {
-        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
-        [self.view addGestureRecognizer:pinchGesture];
-  
-        // Making sure the pan gesture of the scrollView waits for Pinch to fail
-        NSArray *scrollViewGestures = self.videoScrollView.gestureRecognizers;
-        for (UIGestureRecognizer *gesture in scrollViewGestures) {
-            if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]) {
-                [gesture requireGestureRecognizerToFail:pinchGesture];
-            }
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
+    [self.view addGestureRecognizer:pinchGesture];
+    
+    // Making sure the pan gesture of the scrollView waits for Pinch to fail
+    NSArray *scrollViewGestures = self.videoScrollView.gestureRecognizers;
+    for (UIGestureRecognizer *gesture in scrollViewGestures) {
+        if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]) {
+            [gesture requireGestureRecognizerToFail:pinchGesture];
         }
     }
     //play/pause (double tap)
