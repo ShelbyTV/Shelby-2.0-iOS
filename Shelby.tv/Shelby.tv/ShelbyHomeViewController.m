@@ -186,7 +186,7 @@
         TriageViewController *tvc = [self triageViewControllerForChannel:channel];
         STVAssert(tvc, @"should not be asked to focus on a channel we don't have!");
         [self.view addSubview:tvc.view];
-        [self.view sendSubviewToBack:tvc.view];
+        [self.view bringSubviewToFront:tvc.view];
         self.topBarTitle.text = tvc.channel.displayTitle;
     }
 }
