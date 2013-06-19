@@ -395,6 +395,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
     
     [self deleteUnsyncedLikesChannel:likesChannel];
+    [self.delegate fetchOfflineLikesDidCompleteForChannel:likesChannel with:nil];
 }
 
 - (void)cleanupSession
