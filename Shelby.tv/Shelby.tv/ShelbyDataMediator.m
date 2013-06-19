@@ -83,6 +83,15 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }];
 }
 
+- (void)deleteUnsyncedLikesChannel:(DisplayChannel *)likesChannel
+{
+    [likesChannel.managedObjectContext deleteObject:likesChannel];
+    
+    NSError *error;
+    [likesChannel.managedObjectContext save:&error];
+    STVAssert(!error, @"context save failed, in delete empty likes channel");
+}
+
 - (void)fetchAllUnsyncedLikes
 {
     // KP KP: TODO: don't hardcode the order!
@@ -92,12 +101,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     
     // If there are no more likes, delete the Unsynced Likes channels from CoreData
     if (![channelEntries count]) {
-        [likesChannel.managedObjectContext deleteObject:likesChannel];
-        
-        NSError *error;
-        [likesChannel.managedObjectContext save:&error];
-        STVAssert(!error, @"context save failed, in delete empty likes channel");
-        
+        [self deleteUnsyncedLikesChannel:likesChannel];
         channelEntries = nil;
     }
     
@@ -139,6 +143,61 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 }
 
+- (void)likeFrame:(Frame *)frame forUser:(User *)user
+{
+    //Do Like
+    [ShelbyAPIClient postUserLikedFrame:frame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
+        if (JSON) { // success
+            frame.clientUnsyncedLike = @0;
+            frame.clientLikedAt = nil;
+            //API is NOT returning the liked frame, so...
+            [self fetchEntriesInChannel:[user displayChannelForLikesRoll] sinceEntry:nil];
+            
+            NSError *error;
+            [frame.managedObjectContext save:&error];
+            STVAssert(!error, @"context save failed, in toggleLikeForFrame when liking (in block)...");
+        } else {
+            DLog(@"Failed to like!  DEBUG this %@", error);
+        }
+    }];
+}
+
+
+- (void)unlikeFrame:(Frame *)frame forUser:(User *)user
+{
+    [ShelbyAPIClient deleteFrame:frame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            NSError *error;
+            [frame.managedObjectContext save:&error];
+            STVAssert(!error, @"context save failed, in toggleLikeForFrame when deleting (in block)...");
+            
+            //djs
+            //TODO: need to smartly update the Browse View b/c the unliked frame is still in there :(
+            //... until next launch
+        } else {
+            DLog(@"Failed to delete liked frame, DEBUG this %@", error);
+        }
+    }];
+
+}
+
+- (void)toggleUnsyncedLikeForFrame:(Frame *)frame
+{
+    BOOL shouldBeLiked = ![frame.clientUnsyncedLike boolValue];
+
+    frame.clientUnsyncedLike = shouldBeLiked ? @1 : @0;
+    
+    if (frame.clientUnsyncedLike) {
+        frame.clientLikedAt = [NSDate date];
+    } else {
+        frame.clientLikedAt = nil;
+    }
+    
+    NSError *error;
+    [frame.managedObjectContext save:&error];
+    STVAssert(!error, @"context save failed, in toggleLikeForFrame...");
+}
+
 //when login is enabled, this needs to be re-thought...
 - (BOOL)toggleLikeForFrame:(Frame *)frame
 {
@@ -148,21 +207,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     
     if (user) {
         if (![user hasLikedVideoOfFrame:frame]) {
-            //Do Like
-            [ShelbyAPIClient postUserLikedFrame:frame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
-                if (JSON) { // success
-                    frame.clientUnsyncedLike = @0;
-                    frame.clientLikedAt = nil;
-                    //API is NOT returning the liked frame, so...
-                    [self fetchEntriesInChannel:[user displayChannelForLikesRoll] sinceEntry:nil];
-                    
-                    NSError *error;
-                    [frame.managedObjectContext save:&error];
-                    STVAssert(!error, @"context save failed, in toggleLikeForFrame when liking (in block)...");
-                } else {
-                    DLog(@"Failed to like!  DEBUG this %@", error);
-                }
-            }];
+            [self likeFrame:frame forUser:user];
             
             //represent liked state until the API call succeeds
             frame.clientUnsyncedLike = @1;
@@ -174,19 +219,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
             //Do Unlike
             Frame *likedFrame = [user likedFrameWithVideoOfFrame:frame];
             STVAssert(likedFrame, @"expected liked frame");
-            [ShelbyAPIClient deleteFrame:likedFrame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
-                if (JSON) {
-                    NSError *error;
-                    [likedFrame.managedObjectContext save:&error];
-                    STVAssert(!error, @"context save failed, in toggleLikeForFrame when deleting (in block)...");
-                    
-                    //djs
-                    //TODO: need to smartly update the Browse View b/c the unliked frame is still in there :(
-                    //... until next launch
-                } else {
-                    DLog(@"Failed to delete liked frame, DEBUG this %@", error);
-                }
-            }];
+ 
+            [self unlikeFrame:frame forUser:user];
             
             //represnt unliked state assuming the API call succeeds
             frame.clientUnsyncedLike = @0;
@@ -198,17 +232,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     } else {
         //not logged in
         BOOL shouldBeLiked = ![frame.clientUnsyncedLike boolValue];
-        frame.clientUnsyncedLike = shouldBeLiked ? @1 : @0;
-        
-        if (frame.clientUnsyncedLike) {
-            frame.clientLikedAt = [NSDate date];
-        } else {
-            frame.clientLikedAt = nil;
-        }
-        
-        NSError *error;
-        [frame.managedObjectContext save:&error];
-        STVAssert(!error, @"context save failed, in toggleLikeForFrame...");
+        [self toggleUnsyncedLikeForFrame:frame];
         
         //djs TODO: I don't like that we're fetching all unsynced likes here
         //we should just signal the addition/removal of a single frame
@@ -355,6 +379,24 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }];
 }
 
+- (void)syncLikes
+{
+    NSManagedObjectContext *moc = [self mainThreadContext];
+    // KP KP: TODO: don't hardcode the order!
+    DisplayChannel *likesChannel = [DisplayChannel channelForOfflineLikesWithOrder:7 inContext:moc];
+    //djs fine for now, but i'd prefer this hit a helper which returned likes in proper order
+    NSArray *channelEntries = [likesChannel.roll.frame allObjects];
+
+    User *user = [User currentAuthenticatedUserInContext:moc];
+    
+    for (Frame *frame in channelEntries) {
+        [self toggleUnsyncedLikeForFrame:frame];
+        [self likeFrame:frame forUser:user];
+    }
+    
+    [self deleteUnsyncedLikesChannel:likesChannel];
+}
+
 - (void)cleanupSession
 {
     [[FacebookHandler sharedInstance] facebookCleanup];
@@ -406,6 +448,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                 STVAssert(!error, @"context save failed, put your DEBUG hat on...");
                 
                 [self.delegate loginUserDidComplete];
+                
+                [self syncLikes];
                 return;
             }
         }
