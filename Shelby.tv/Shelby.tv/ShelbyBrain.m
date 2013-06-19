@@ -147,7 +147,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 - (void)loginUserDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.homeVC setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+        [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
     });
     
     [self fetchUserChannels];
@@ -156,7 +156,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 - (void)facebookConnectDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.homeVC setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+        [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
     });
 }
 
@@ -172,7 +172,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 - (void)twitterConnectDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.homeVC setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+        [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
     });
 }
 
@@ -642,6 +642,15 @@ typedef struct _ShelbyArrayMergeInstructions {
     return 0;
 }
 
+- (void)setCurrentUser:(User *)user
+{
+    [self.homeVC setCurrentUser:user];
+    
+    if (user) {
+        [[ShelbyDataMediator sharedInstance] syncLikes];
+    }
+}
+
 #pragma mark - ShelbyHomeDelegate
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
 {
@@ -657,7 +666,7 @@ typedef struct _ShelbyArrayMergeInstructions {
     
     self.userChannels = nil;
 
-    [self.homeVC setCurrentUser:nil];
+    [self setCurrentUser:nil];
     [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
 }
 

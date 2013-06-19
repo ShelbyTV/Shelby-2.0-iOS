@@ -390,7 +390,6 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     User *user = [User currentAuthenticatedUserInContext:moc];
     
     for (Frame *frame in channelEntries) {
-        [self toggleUnsyncedLikeForFrame:frame];
         [self likeFrame:frame forUser:user];
     }
     
