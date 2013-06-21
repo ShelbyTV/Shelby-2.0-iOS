@@ -14,8 +14,9 @@
 #import "Roll+Helper.h"
 #import "SettingsViewController.h"
 #import "ShelbyAlertView.h"
+#import "ShelbyStreamBrowseViewController.h"
 #import "SPVideoReel.h"
-#import "TriageViewController.h"
+//#import "TriageViewController.h"
 #import "User+Helper.h"
 
 @interface ShelbyHomeViewController ()
@@ -27,7 +28,8 @@
 @property (strong, nonatomic) AuthorizationViewController *authorizationVC;
 
 @property (nonatomic, strong) BrowseViewController *browseVC;
-@property (nonatomic, strong) NSMutableArray *triageVCs;
+@property (nonatomic, strong) ShelbyStreamBrowseViewController *streamBrowseVC;
+//@property (nonatomic, strong) NSMutableArray *triageVCs;
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, assign) BOOL animationInProgress;
 
@@ -61,8 +63,16 @@
     
         [browseViewController didMoveToParentViewController:self];
     } else {
-        _triageVCs = [@[] mutableCopy];
+//        _triageVCs = [@[] mutableCopy];
         //the actual triage views are created in setChannels:
+        ShelbyStreamBrowseViewController *streamBrowseViewController = [[ShelbyStreamBrowseViewController alloc] initWithNibName:@"ShelbyStreamBrowseView" bundle:nil];
+        [streamBrowseViewController.view setFrame:CGRectMake(0, 44, streamBrowseViewController.view.frame.size.width, streamBrowseViewController.view.frame.size.height)];
+        
+        [self.view addSubview:streamBrowseViewController.view];
+        [self setStreamBrowseVC:streamBrowseViewController];
+        
+        [streamBrowseViewController didMoveToParentViewController:self];
+        
     }
     
     [self setupSettingsView];
@@ -120,32 +130,32 @@
             self.browseVC.channels = channels;
             
         } else {
-            //find or create new TriageViewControllers for this array of channels
-            NSMutableArray *newTriageVCs = [@[] mutableCopy];
-            for (DisplayChannel *ch in channels) {
-                TriageViewController *tvc = [self triageViewControllerForChannel:ch];
-                if (!tvc) {
-                    tvc = [[TriageViewController alloc] initWithNibName:@"TriageView" bundle:nil];
-                    [tvc setEntries:nil forChannel:ch];
-                    tvc.triageDelegate = self.masterDelegate;
-                }
-                [newTriageVCs addObject:tvc];
-            }
-            
-            //remove old TVCs (some of which may get re-used)
-            //NB: expect this code is temporary, otherwise would have tracked _currentTriageVC
-            //NB: we expect new channel for focus to be set by an outsider
-            for (TriageViewController *tvc in _triageVCs) {
-                [tvc.view removeFromSuperview];
-                [tvc removeFromParentViewController];
-            }
-            
-            //add the new TVCs in correct order
-            for (TriageViewController *newTVC in newTriageVCs) {
-                [self addChildViewController:newTVC];
-                [newTVC.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
-            }
-            _triageVCs = newTriageVCs;
+//            //find or create new TriageViewControllers for this array of channels
+//            NSMutableArray *newTriageVCs = [@[] mutableCopy];
+//            for (DisplayChannel *ch in channels) {
+//                TriageViewController *tvc = [self triageViewControllerForChannel:ch];
+//                if (!tvc) {
+//                    tvc = [[TriageViewController alloc] initWithNibName:@"TriageView" bundle:nil];
+//                    [tvc setEntries:nil forChannel:ch];
+//                    tvc.triageDelegate = self.masterDelegate;
+//                }
+//                [newTriageVCs addObject:tvc];
+//            }
+//            
+//            //remove old TVCs (some of which may get re-used)
+//            //NB: expect this code is temporary, otherwise would have tracked _currentTriageVC
+//            //NB: we expect new channel for focus to be set by an outsider
+//            for (TriageViewController *tvc in _triageVCs) {
+//                [tvc.view removeFromSuperview];
+//                [tvc removeFromParentViewController];
+//            }
+//            
+//            //add the new TVCs in correct order
+//            for (TriageViewController *newTVC in newTriageVCs) {
+//                [self addChildViewController:newTVC];
+//                [newTVC.view setFrame:CGRectMake(0, 44, kShelbyFullscreenWidth, kShelbyFullscreenHeight-44-20)];
+//            }
+//            _triageVCs = newTriageVCs;
         }
     }
 }
@@ -160,15 +170,15 @@
     if (DEVICE_IPAD) {
         self.browseVC.channels = _channels;
     } else {
-        TriageViewController *tvc = [self triageViewControllerForChannel:channel];
-        if (tvc) {
-            [tvc removeFromParentViewController];
-            [_triageVCs removeObject:tvc];
-            if (tvc.view.superview) {
-                //NB: we expect new channel for focus to be set by an outsider
-                [tvc.view removeFromSuperview];
-            }
-        }
+//        TriageViewController *tvc = [self triageViewControllerForChannel:channel];
+//        if (tvc) {
+//            [tvc removeFromParentViewController];
+//            [_triageVCs removeObject:tvc];
+//            if (tvc.view.superview) {
+//                //NB: we expect new channel for focus to be set by an outsider
+//                [tvc.view removeFromSuperview];
+//            }
+//        }
     }
 }
 
@@ -179,15 +189,15 @@
     } else {
         //remove current focus
         //NB: expect this code is temporary, otherwise would have tracked _currentTriageVC
-        for (TriageViewController *tvc in _triageVCs) {
-            [tvc.view removeFromSuperview];
-        }
-        
-        TriageViewController *tvc = [self triageViewControllerForChannel:channel];
-        STVAssert(tvc, @"should not be asked to focus on a channel we don't have!");
-        [self.view addSubview:tvc.view];
-        [self.view bringSubviewToFront:tvc.view];
-        self.topBarTitle.text = tvc.channel.displayTitle;
+//        for (TriageViewController *tvc in _triageVCs) {
+//            [tvc.view removeFromSuperview];
+//        }
+//        
+//        TriageViewController *tvc = [self triageViewControllerForChannel:channel];
+//        STVAssert(tvc, @"should not be asked to focus on a channel we don't have!");
+//        [self.view addSubview:tvc.view];
+//        [self.view bringSubviewToFront:tvc.view];
+//        self.topBarTitle.text = tvc.channel.displayTitle;
     }
 }
 
@@ -196,20 +206,21 @@
     if (DEVICE_IPAD) {
         [self.browseVC setEntries:channelEntries forChannel:channel];
     } else {
-        [[self triageViewControllerForChannel:channel] setEntries:channelEntries forChannel:channel];
+//        [[self triageViewControllerForChannel:channel] setEntries:channelEntries forChannel:channel];
+        [self.streamBrowseVC setEntries:channelEntries forChannel:channel];
     }
     [self setPlayerEntriesForChannel:channel];
 }
 
-- (TriageViewController *)triageViewControllerForChannel:(DisplayChannel *)channel
-{
-    for (TriageViewController *tvc in self.triageVCs) {
-        if (tvc.channel == channel) {
-            return tvc;
-        }
-    }
-    return nil;
-}
+//- (TriageViewController *)triageViewControllerForChannel:(DisplayChannel *)channel
+//{
+//    for (TriageViewController *tvc in self.triageVCs) {
+//        if (tvc.channel == channel) {
+//            return tvc;
+//        }
+//    }
+//    return nil;
+//}
 
 - (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel
 {
@@ -222,7 +233,7 @@
     if (DEVICE_IPAD) {
         [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
     } else {
-        [[self triageViewControllerForChannel:channel] addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
+//        [[self triageViewControllerForChannel:channel] addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
     }
     [self setPlayerEntriesForChannel:channel];
 }
@@ -253,7 +264,8 @@
     if (DEVICE_IPAD) {
         return [self.browseVC deduplicatedEntriesForChannel:channel];
     } else {
-        return [[self triageViewControllerForChannel:channel] deduplicatedEntriesForChannel:channel];
+        return [self.streamBrowseVC deduplicatedEntriesForChannel:channel];
+//        return [[self triageViewControllerForChannel:channel] deduplicatedEntriesForChannel:channel];
     }
 }
 
@@ -273,9 +285,9 @@
     if (DEVICE_IPAD) {
         self.browseVC.browseDelegate = masterDelegate;
     } else {
-        for (TriageViewController *tvc in self.triageVCs) {
-            tvc.triageDelegate = masterDelegate;
-        }
+//        for (TriageViewController *tvc in self.triageVCs) {
+//            tvc.triageDelegate = masterDelegate;
+//        }
     }
 }
 
