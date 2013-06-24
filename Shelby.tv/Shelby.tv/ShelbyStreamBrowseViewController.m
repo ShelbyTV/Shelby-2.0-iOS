@@ -7,7 +7,6 @@
 //
 
 #import "ShelbyStreamBrowseViewController.h"
-#import "AFNetworking.h"
 #import "DashboardEntry.h"
 #import "Frame.h"
 #import "ShelbyStreamBrowseViewCell.h"
@@ -34,11 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-    // Register Cell Nibs
-    [self.collectionView registerNib:[UINib nibWithNibName:@"ShelbyStreamBrowseViewCell" bundle:nil] forCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell"];
 
+    [self.collectionView registerClass:[ShelbyStreamBrowseViewCell class] forCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,60 +127,16 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ShelbyStreamBrowseViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell" forIndexPath:indexPath];
-    
-    id entry = self.entries[indexPath.row];
-    
-    cell.thumbnail.backgroundColor = [UIColor blackColor];
-    cell.scrollView.delegate = self;
-    
-    Frame *videoFrame = nil;
-    if ([entry isKindOfClass:[DashboardEntry class]]) {
-        videoFrame = ((DashboardEntry *)entry).frame;
-    } else if([entry isKindOfClass:[Frame class]]) {
-        videoFrame = entry;
-    } else {
-        STVAssert(false, @"Expected a DashboardEntry or Frame");
-    }
-    if (videoFrame && videoFrame.video) {
-//        cell.shelbyFrame = videoFrame;
-        Video *video = videoFrame.video;
-        if (video && video.thumbnailURL) {
-            NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:video.thumbnailURL]];
-            [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
-                                                  imageProcessingBlock:nil
-                                                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//                                                                   if (cell.shelbyFrame == videoFrame && cell.thumbnail.image == nil) {
-                                                                       cell.thumbnail.image = image;
-//                                                                   } else {
-//                                                                       //cell has been reused, do nothing
-//                                                                   }
-                                                               }
-                                                               failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                                                   //ignoring for now
-                                                               }] start];
-        }
-        
-//        [cell.caption setText:[NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]]];
-        //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
-//        CGSize maxCaptionSize = CGSizeMake(cell.frame.size.width, cell.frame.size.height * 0.33);
-//        CGFloat textBasedHeight = [cell.caption.text sizeWithFont:[cell.caption font]
-//                                                constrainedToSize:maxCaptionSize
-//                                                    lineBreakMode:NSLineBreakByWordWrapping].height;
-//        
-//        [cell.caption setFrame:CGRectMake(cell.caption.frame.origin.x,
-//                                          cell.frame.size.height - textBasedHeight,
-//                                          cell.frame.size.width,
-//                                          textBasedHeight)];
-    }
-    
-    //load more data
+    cell.entry = self.entries[indexPath.row];
+
+//load more data
 //    NSInteger cellsBeyond = [dedupedEntries count] - [indexPath row];
 //    if(cellsBeyond == kShelbyPrefetchEntriesWhenNearEnd && channelCollection.channel.canFetchRemoteEntries){
 //        //since id should come from raw entries, not de-duped entries
 //        [self.browseDelegate loadMoreEntriesInChannel:channelCollection.channel
 //                                           sinceEntry:[[self entriesForChannel:channelCollection.channel] lastObject]];
 //    }
-    
+
     return cell;
 }
 
@@ -210,12 +162,6 @@
 
 #pragma mark - UICollectionViewDelegate
 
-
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-   // KP KP - this is when we start transition to info view
-}
 
 
 @end

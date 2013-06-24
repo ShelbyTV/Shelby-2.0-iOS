@@ -638,8 +638,9 @@ typedef struct _ShelbyArrayMergeInstructions {
             return idx;
         }
     }
-    STVAssert(NO, @"expected a common object, didn't find one.");
-    return 0;
+
+    //din't find an overlap, allow for all of newArray to be returned
+    return (front ? [newArray count] : -1);
 }
 
 - (void)setCurrentUser:(User *)user

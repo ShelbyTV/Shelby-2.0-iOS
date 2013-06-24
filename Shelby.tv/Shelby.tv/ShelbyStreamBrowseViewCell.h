@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShelbyVideoContainer.h"
 
 @interface ShelbyStreamBrowseViewCell : UICollectionViewCell
-@property (nonatomic, weak) IBOutlet UIImageView *thumbnail;
-@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
+
+//a Frame or DashboardEntry
+@property (nonatomic, strong) id<ShelbyVideoContainer> entry;
 
 @end
