@@ -208,8 +208,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self.view addSubview:self.videoScrollView];
     }
     
-    self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.videoEntities count], kShelbySPVideoHeight);
-    [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
+    if (DEVICE_IPAD) {
+        self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.videoEntities count], kShelbySPVideoHeight);
+        [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
+    } else {
+        self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth, [self.videoEntities count] * kShelbySPVideoHeight);
+        [self.videoScrollView setContentOffset:CGPointMake(0, (int)self.videoStartIndex * kShelbySPVideoHeight) animated:YES];
+    }
 }
 
 - (void)setupOverlayView
@@ -239,8 +244,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         for (; index < count; index++) {
             Frame *videoEntry = self.videoEntities[index];
             CGRect viewframe = [self.videoScrollView frame];
-            viewframe.origin.x = viewframe.size.width * index;
-            viewframe.origin.y = 0.0f;
+            if (DEVICE_IPAD) {
+                viewframe.origin.x = viewframe.size.width * index;
+                viewframe.origin.y = 0.0f;
+            } else {
+                viewframe.origin.y = viewframe.size.height * index;
+                viewframe.origin.x = 0.0f;
+            }
             SPVideoPlayer *player;
             if([videoEntry isKindOfClass:[DashboardEntry class]]){
                 player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:((DashboardEntry *)videoEntry).frame];
@@ -971,8 +981,16 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     NSUInteger idx = self.currentVideoPlayingIndex + (forward ? 1 : -1);
     if (idx > 0 && idx < [self.videoEntities count]) {
-        CGFloat videoX = idx * kShelbySPVideoWidth;
-        CGFloat videoY = self.videoScrollView.contentOffset.y;
+        CGFloat videoX = 0.0;
+        CGFloat videoY = 0.0;
+        
+        if (DEVICE_IPAD) {
+            videoX = idx * kShelbySPVideoWidth;
+            videoY = self.videoScrollView.contentOffset.y;
+        } else {
+            videoY = idx * kShelbySPVideoHeight;
+            videoX = self.videoScrollView.contentOffset.x;
+        }
         [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
         [self currentVideoShouldChangeToVideo:idx];
         return YES;
@@ -988,8 +1006,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     //djs fix when we have our model and view controllers
     
     // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = scrollView.frame.size.width;
-    CGFloat scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
+    CGFloat scrollAmount = 0.0;
+    if (DEVICE_IPAD) {
+        CGFloat pageWidth = scrollView.frame.size.width;
+       scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
+    } else {
+        CGFloat pageHeight = scrollView.frame.size.height;
+        scrollAmount = (scrollView.contentOffset.y - pageHeight / 2) / pageHeight;
+    }
     NSUInteger page = floor(scrollAmount) + 1;
     
 //    // Toggle playback on old and new SPVideoPlayer objects
