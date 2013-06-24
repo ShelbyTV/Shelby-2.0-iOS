@@ -256,7 +256,11 @@
 
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
 {
-    return [self.browseVC entriesForChannel:channel];
+    if (self.browseVC) {
+        return [self.browseVC entriesForChannel:channel];
+    } else {
+        return [self.streamBrowseVC entriesForChannel:channel];
+    }
 }
 
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
@@ -285,6 +289,7 @@
     if (DEVICE_IPAD) {
         self.browseVC.browseDelegate = masterDelegate;
     } else {
+        self.streamBrowseVC.browseDelegate = masterDelegate;
 //        for (TriageViewController *tvc in self.triageVCs) {
 //            tvc.triageDelegate = masterDelegate;
 //        }

@@ -64,6 +64,15 @@
 
 }
 
+- (NSArray *)entriesForChannel:(DisplayChannel *)channel
+{
+//    NSDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
+//    return chMetadata ? chMetadata[kShelbyChannelMetadataEntriesKey] : nil;
+
+    return self.entries;
+}
+
+
 - (void)addEntries:(NSArray *)newChannelEntries
              toEnd:(BOOL)shouldAppend
          ofChannel:(DisplayChannel *)channel
@@ -179,6 +188,25 @@
     return cell;
 }
 
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // KP KP: TODO: deal with dedups
+    if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
+//            NSArray *dedupedEntries = [self deduplicatedEntriesForChannel:channelCollectionView.channel];
+        id entry = nil;
+//        if (indexPath.row > 0 && (unsigned)indexPath.row < [dedupedEntries count]) {
+        if (indexPath.row > 0 && (unsigned)indexPath.row < [self.entries count]) {
+//            entry = dedupedEntries[indexPath.row];
+            entry = self.entries[indexPath.row];
+        }
+        
+        [self.browseDelegate userPressedChannel:self.channel atItem:entry];
+//            SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//            [cell unHighlightItem];
+//        }
+    }
+}
 
 #pragma mark - UICollectionViewDelegate
 

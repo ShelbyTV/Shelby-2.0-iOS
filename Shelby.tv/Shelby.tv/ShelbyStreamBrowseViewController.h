@@ -9,16 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
 
+@protocol ShelbyStreamBrowseProtocol <NSObject>
+
+- (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item;
+//- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
+//- (ShelbyBrowseTutorialMode)browseTutorialMode;
+//- (void)userDidCompleteTutorial;
+@end
+
 @interface ShelbyStreamBrowseViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
 
 @property (readonly, strong) DisplayChannel *channel;
+@property (nonatomic, assign) id<ShelbyStreamBrowseProtocol>browseDelegate;
 
 - (void)setEntries:(NSArray *)entries
         forChannel:(DisplayChannel *)channel;
 - (void)addEntries:(NSArray *)newChannelEntries
              toEnd:(BOOL)shouldAppend
          ofChannel:(DisplayChannel *)channel;
-
+- (NSArray *)entriesForChannel:(DisplayChannel *)channel;
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel;
 
 @end
