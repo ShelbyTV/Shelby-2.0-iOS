@@ -126,6 +126,7 @@
     id entry = self.entries[indexPath.row];
     
     cell.thumbnail.backgroundColor = [UIColor blackColor];
+    cell.scrollView.delegate = self;
     
     Frame *videoFrame = nil;
     if ([entry isKindOfClass:[DashboardEntry class]]) {
@@ -181,6 +182,12 @@
 
 #pragma mark - UICollectionViewDelegate
 
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+   // KP KP - this is when we start transition to info view
+}
 
 
 @end

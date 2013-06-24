@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
 
-@interface ShelbyStreamBrowseViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ShelbyStreamBrowseViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
 
 @property (readonly, strong) DisplayChannel *channel;
 
