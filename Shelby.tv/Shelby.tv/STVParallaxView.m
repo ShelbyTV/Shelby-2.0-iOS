@@ -28,6 +28,7 @@
 
         _foregroundScroller = [[UIScrollView alloc] initWithFrame:contentFrame];
         _foregroundScroller.pagingEnabled = YES;
+        _foregroundScroller.delegate = self;
         [self addSubview:_foregroundScroller];
     }
     return self;
@@ -38,6 +39,7 @@
     [self.backgroundContent removeFromSuperview];
     _backgroundContent = backgroundContent;
     [self.backgroundScroller addSubview:_backgroundContent];
+    [self bringSubviewToFront:self.foregroundContent];
     self.backgroundScroller.contentSize = self.backgroundContent.frame.size;
 }
 
@@ -46,7 +48,17 @@
     [self.foregroundContent removeFromSuperview];
     _foregroundContent = foregroundContent;
     [self.foregroundScroller addSubview:_foregroundContent];
+    [self bringSubviewToFront:self.foregroundContent];
     self.foregroundScroller.contentSize = self.foregroundContent.frame.size;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat bgX = 0;
+    bgX = self.foregroundScroller.contentOffset.x * self.parallaxRatio;
+    self.backgroundScroller.contentOffset = CGPointMake(bgX, 0);
 }
 
 @end

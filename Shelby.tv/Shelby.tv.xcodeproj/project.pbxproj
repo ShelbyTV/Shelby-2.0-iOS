@@ -826,6 +826,12 @@
 		91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
 		91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
 		91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
+		91CE07491779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */; };
+		91CE074A1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */; };
+		91CE074B1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */; };
+		91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */; };
+		91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */; };
+		91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */; };
 		91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
@@ -1276,6 +1282,9 @@
 		91BEC8931762961400838197 /* DVRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DVRDatePicker.xib; sourceTree = "<group>"; };
 		91BEC8971762976800838197 /* DVRDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVRDatePickerView.h; sourceTree = "<group>"; };
 		91BEC8981762976800838197 /* DVRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVRDatePickerView.m; sourceTree = "<group>"; };
+		91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamBrowseCellForegroundView.xib; sourceTree = "<group>"; };
+		91CE074C1779087800024180 /* StreamBrowseCellForegroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBrowseCellForegroundView.h; sourceTree = "<group>"; };
+		91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBrowseCellForegroundView.m; sourceTree = "<group>"; };
 		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
 		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
 		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -1536,6 +1545,7 @@
 				1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */,
 				91BEC8931762961400838197 /* DVRDatePicker.xib */,
 				1CA191451774DD440039358B /* ShelbyStreamBrowseView.xib */,
+				91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2156,6 +2166,8 @@
 				1CA191521774DE360039358B /* ShelbyStreamBrowseViewCell.m */,
 				91D1C8181778DD5B00CAC1E9 /* STVParallaxView.h */,
 				91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */,
+				91CE074C1779087800024180 /* StreamBrowseCellForegroundView.h */,
+				91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2494,6 +2506,7 @@
 				1C7AC3ED176134AE007339A1 /* rollingContainer-iPhone@2x.png in Resources */,
 				91BEC8951762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA1914A1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
+				91CE074A1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2667,6 +2680,7 @@
 				1C7AC3EE176134AE007339A1 /* rollingContainer-iPhone@2x.png in Resources */,
 				91BEC8961762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA1914B1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
+				91CE074B1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2841,6 +2855,7 @@
 				1C7AC3EC176134AE007339A1 /* rollingContainer-iPhone@2x.png in Resources */,
 				91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA191491774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
+				91CE07491779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2960,6 +2975,7 @@
 				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
 				1CA191471774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191541774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
+				91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3076,6 +3092,7 @@
 				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
 				1CA191481774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191551774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
+				91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3192,6 +3209,7 @@
 				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
 				1CA191461774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191531774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
+				91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

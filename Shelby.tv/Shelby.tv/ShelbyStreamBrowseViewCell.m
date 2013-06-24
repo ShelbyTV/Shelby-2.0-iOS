@@ -11,10 +11,12 @@
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 #import "STVParallaxView.h"
+#import "StreamBrowseCellForegroundView.h"
 
 @interface ShelbyStreamBrowseViewCell()
 @property (nonatomic, strong) STVParallaxView *paralaxView;
 @property (nonatomic, strong) UIImageView *backgroundThumbnailView;
+@property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
 @end
 
 @implementation ShelbyStreamBrowseViewCell
@@ -24,9 +26,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         CGRect subviewFrame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
         _backgroundThumbnailView = [[UIImageView alloc] initWithFrame:subviewFrame];
         _paralaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
         [self addSubview:self.paralaxView];
+        _paralaxView.foregroundContent = _foregroundView;
+        //DS XXX TESTING
+        _paralaxView.parallaxRatio = 0.5;
     }
     return self;
 }
