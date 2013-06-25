@@ -10,13 +10,22 @@
 #import "ShelbyVideoContainer.h"
 #import "STVParallaxView.h"
 
+@class ShelbyStreamBrowseViewCell;
+
+@protocol ShelbyStreamBrowseViewCellDelegate <NSObject>
+
+- (void)parallaxDidChange:(ShelbyStreamBrowseViewCell *)cell;
+- (void)didScrollForPlayback:(ShelbyStreamBrowseViewCell *)cell;
+
+@end
+
 @interface ShelbyStreamBrowseViewCell : UICollectionViewCell <STVParallaxViewDelegate>
 
 //a Frame or DashboardEntry
 @property (nonatomic, strong) id<ShelbyVideoContainer> entry;
 
-@property (nonatomic, weak) id<STVParallaxViewDelegate> parallaxDelegate;
+@property (nonatomic, weak) id<ShelbyStreamBrowseViewCellDelegate> delegate;
 
-- (void)matchParallaxOf:(STVParallaxView *)parallaxView;
+- (void)matchParallaxOf:(ShelbyStreamBrowseViewCell *)cell;
 
 @end

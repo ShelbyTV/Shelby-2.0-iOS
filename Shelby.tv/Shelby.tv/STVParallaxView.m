@@ -61,7 +61,7 @@
     }
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - UIScrollViewDelegate (only of _foregroundScroller)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -70,6 +70,12 @@
     self.backgroundScroller.contentOffset = CGPointMake(bgX, 0);
 
     [self.delegate parallaxDidChange:self];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSUInteger page = (scrollView.contentOffset.x / scrollView.frame.size.width);
+    [self.delegate didScrollToPage:page];
 }
 
 @end

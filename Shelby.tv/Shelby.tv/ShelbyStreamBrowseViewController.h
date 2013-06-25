@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
-#import "STVParallaxView.h"
+#import "ShelbyStreamBrowseViewCell.h"
 
 @protocol ShelbyStreamBrowseProtocol <NSObject>
 
@@ -18,7 +18,7 @@
 //- (void)userDidCompleteTutorial;
 @end
 
-@interface ShelbyStreamBrowseViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, STVParallaxViewDelegate>
+@interface ShelbyStreamBrowseViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, ShelbyStreamBrowseViewCellDelegate>
 
 @property (readonly, strong) DisplayChannel *channel;
 @property (nonatomic, assign) id<ShelbyStreamBrowseProtocol>browseDelegate;

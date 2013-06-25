@@ -10,7 +10,6 @@
 #import "DashboardEntry.h"
 #import "DeduplicationUtility.h"
 #import "Frame.h"
-#import "ShelbyStreamBrowseViewCell.h"
 #import "Video.h"
 
 @interface ShelbyStreamBrowseViewController ()
@@ -21,7 +20,7 @@
 
 //hang on to these to keep parallax in sync
 @property (nonatomic, strong) NSMutableSet *streamBrowseViewCells;
-@property (nonatomic, weak) STVParallaxView *lastUpdatedParallaxView;
+@property (nonatomic, weak) ShelbyStreamBrowseViewCell *lastCellWithParallaxUpdate;
 @end
 
 @implementation ShelbyStreamBrowseViewController
@@ -126,8 +125,8 @@
 {
     ShelbyStreamBrowseViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell" forIndexPath:indexPath];
     [self.streamBrowseViewCells addObject:cell];
-    cell.parallaxDelegate = self;
-    [cell matchParallaxOf:self.lastUpdatedParallaxView];
+    cell.delegate = self;
+    [cell matchParallaxOf:self.lastCellWithParallaxUpdate];
     cell.entry = self.deduplicatedEntries[indexPath.row];
 
 //load more data
@@ -159,17 +158,22 @@
 
 #pragma mark - UICollectionViewDelegate
 
-#pragma mark - STVParallaxViewDelegate
+#pragma mark - ShelbyStreamBrowseViewCellDelegate
 
-- (void)parallaxDidChange:(STVParallaxView *)parallaxView
+- (void)parallaxDidChange:(ShelbyStreamBrowseViewCell *)cell
 {
     // Keep all the parallax views in sync, as if user is moving the entire collection around 2D space.
     // (as opposed to moving an individual cell independently of the others)
-    _lastUpdatedParallaxView = parallaxView;
+    _lastCellWithParallaxUpdate = cell;
     // if only 1 cell is visible on screen at a time, the following line is unnecessary
-    [self.streamBrowseViewCells makeObjectsPerformSelector:@selector(matchParallaxOf:) withObject:parallaxView];
+    [self.streamBrowseViewCells makeObjectsPerformSelector:@selector(matchParallaxOf:) withObject:cell];
 }
 
-
+- (void)didScrollForPlayback:(ShelbyStreamBrowseViewCell *)cell
+{
+    if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
+        [self.browseDelegate userPressedChannel:self.channel atItem:cell.entry];
+    }
+}
 
 @end

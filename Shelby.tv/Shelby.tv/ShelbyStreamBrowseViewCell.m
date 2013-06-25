@@ -18,6 +18,10 @@
 @property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
 @end
 
+#define BASIC_COLUMN 0
+#define DETAIL_COLUMN 1
+#define PLAYBACK_COLUMN 2
+
 @implementation ShelbyStreamBrowseViewCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -42,6 +46,7 @@
 - (void)prepareForReuse
 {
     self.backgroundThumbnailView.image = nil;
+    self.foregroundView.playbackPlacholderThumbnail.image = nil;
 }
 
 - (void)setEntry:(id<ShelbyVideoContainer>)entry
@@ -65,6 +70,8 @@
                                                   imageProcessingBlock:nil
                                                                success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                                                    if (self.entry == entry) {
+                                                                       self.foregroundView.playbackPlacholderThumbnail.image = image;
+
                                                                        self.backgroundThumbnailView.image = image;
                                                                        [self.backgroundThumbnailView sizeToFit];
                                                                        //DS XXX TESTING
@@ -93,10 +100,10 @@
     }
 }
 
-- (void)matchParallaxOf:(STVParallaxView *)parallaxView
+- (void)matchParallaxOf:(ShelbyStreamBrowseViewCell *)cell
 {
-    if (parallaxView && parallaxView != self.parallaxView) {
-        [self.parallaxView matchParallaxOf:parallaxView];
+    if (cell && cell != self) {
+        [self.parallaxView matchParallaxOf:cell.parallaxView];
     }
 }
 
@@ -104,7 +111,14 @@
 
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
 {
-    [self.parallaxDelegate parallaxDidChange:parallaxView];
+    [self.delegate parallaxDidChange:self];
+}
+
+- (void)didScrollToPage:(NSUInteger)page
+{
+    if (page == PLAYBACK_COLUMN) {
+        [self.delegate didScrollForPlayback:self];
+    }
 }
 
 @end
