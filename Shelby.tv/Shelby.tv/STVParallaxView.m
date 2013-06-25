@@ -1,5 +1,5 @@
 //
-//  STVParalaxView.m
+//  STVParallaxView.m
 //  Shelby.tv
 //
 //  Created by Daniel Spinosa on 6/24/13.
@@ -52,6 +52,13 @@
     self.foregroundScroller.contentSize = self.foregroundContent.frame.size;
 }
 
+- (void)matchParallaxOf:(STVParallaxView *)parallaxView
+{
+    if (parallaxView && parallaxView != self) {
+        self.foregroundScroller.contentOffset = parallaxView.foregroundScroller.contentOffset;
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -59,6 +66,8 @@
     CGFloat bgX = 0;
     bgX = self.foregroundScroller.contentOffset.x * self.parallaxRatio;
     self.backgroundScroller.contentOffset = CGPointMake(bgX, 0);
+
+    [self.delegate parallaxDidChange:self];
 }
 
 @end

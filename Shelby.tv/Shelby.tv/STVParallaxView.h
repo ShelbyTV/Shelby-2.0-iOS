@@ -1,5 +1,5 @@
 //
-//  STVParalaxView.h
+//  STVParallaxView.h
 //  Shelby.tv
 //
 //  Created by Daniel Spinosa on 6/24/13.
@@ -12,6 +12,12 @@
 //  The actual content must be provided by the user of this class.
 
 #import <UIKit/UIKit.h>
+
+@class STVParallaxView;
+
+@protocol STVParallaxViewDelegate <NSObject>
+- (void)parallaxDidChange:(STVParallaxView *)parallaxView;
+@end
 
 @interface STVParallaxView : UIView <UIScrollViewDelegate>
 
@@ -27,5 +33,11 @@
 // background will move 1/2 a pixel.  A ratio of 0.0 prevents the background
 // from moving.
 @property (nonatomic, assign) CGFloat parallaxRatio;
+
+@property (nonatomic, weak) id<STVParallaxViewDelegate>delegate;
+
+// Useful, in conjuntion with the delegate, in keeping parallax synchronized
+// between multiple views
+- (void)matchParallaxOf:(STVParallaxView *)parallaxView;
 
 @end

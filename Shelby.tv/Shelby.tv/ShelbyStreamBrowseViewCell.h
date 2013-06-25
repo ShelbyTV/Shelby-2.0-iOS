@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "ShelbyVideoContainer.h"
+#import "STVParallaxView.h"
 
-@interface ShelbyStreamBrowseViewCell : UICollectionViewCell
+@interface ShelbyStreamBrowseViewCell : UICollectionViewCell <STVParallaxViewDelegate>
 
 //a Frame or DashboardEntry
 @property (nonatomic, strong) id<ShelbyVideoContainer> entry;
+
+@property (nonatomic, weak) id<STVParallaxViewDelegate> parallaxDelegate;
+
+- (void)matchParallaxOf:(STVParallaxView *)parallaxView;
 
 @end

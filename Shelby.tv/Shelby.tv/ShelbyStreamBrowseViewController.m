@@ -17,6 +17,10 @@
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+
+//hang on to these to keep parallax in sync
+@property (nonatomic, strong) NSMutableSet *streamBrowseViewCells;
+@property (nonatomic, weak) STVParallaxView *lastUpdatedParallaxView;
 @end
 
 @implementation ShelbyStreamBrowseViewController
@@ -25,7 +29,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _streamBrowseViewCells = [[NSMutableSet set] mutableCopy];
     }
     return self;
 }
@@ -110,13 +114,10 @@
 }
 
 
-
-
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     return [self.entries count];
-    
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
@@ -127,6 +128,9 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ShelbyStreamBrowseViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell" forIndexPath:indexPath];
+    [self.streamBrowseViewCells addObject:cell];
+    cell.parallaxDelegate = self;
+    [cell matchParallaxOf:self.lastUpdatedParallaxView];
     cell.entry = self.entries[indexPath.row];
 
 //load more data
@@ -161,6 +165,17 @@
 }
 
 #pragma mark - UICollectionViewDelegate
+
+#pragma mark - STVParallaxViewDelegate
+
+- (void)parallaxDidChange:(STVParallaxView *)parallaxView
+{
+    // Keep all the parallax views in sync, as if user is moving the entire collection around 2D space.
+    // (as opposed to moving an individual cell independently of the others)
+    _lastUpdatedParallaxView = parallaxView;
+    // if only 1 cell is visible on screen at a time, the following line is unnecessary
+    [self.streamBrowseViewCells makeObjectsPerformSelector:@selector(matchParallaxOf:) withObject:parallaxView];
+}
 
 
 

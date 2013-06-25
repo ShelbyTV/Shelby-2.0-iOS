@@ -10,11 +10,10 @@
 #import "AFNetworking.h"
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
-#import "STVParallaxView.h"
 #import "StreamBrowseCellForegroundView.h"
 
 @interface ShelbyStreamBrowseViewCell()
-@property (nonatomic, strong) STVParallaxView *paralaxView;
+@property (nonatomic, strong) STVParallaxView *parallaxView;
 @property (nonatomic, strong) UIImageView *backgroundThumbnailView;
 @property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
 @end
@@ -27,12 +26,15 @@
     if (self) {
         CGRect subviewFrame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
+
         _backgroundThumbnailView = [[UIImageView alloc] initWithFrame:subviewFrame];
-        _paralaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
-        [self addSubview:self.paralaxView];
-        _paralaxView.foregroundContent = _foregroundView;
+
+        _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
+        _parallaxView.delegate = self;
+        [self addSubview:self.parallaxView];
+        _parallaxView.foregroundContent = _foregroundView;
         //DS XXX TESTING
-        _paralaxView.parallaxRatio = 0.5;
+        _parallaxView.parallaxRatio = 0.5;
     }
     return self;
 }
@@ -67,7 +69,7 @@
                                                                        [self.backgroundThumbnailView sizeToFit];
                                                                        //DS XXX TESTING
                                                                        self.backgroundThumbnailView.frame = CGRectMake(0, 0, image.size.width * 2, image.size.height * 2);
-                                                                       self.paralaxView.backgroundContent = self.backgroundThumbnailView;
+                                                                       self.parallaxView.backgroundContent = self.backgroundThumbnailView;
                                                                    } else {
                                                                        //cell has been reused, do nothing
                                                                    }
@@ -91,13 +93,18 @@
     }
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)matchParallaxOf:(STVParallaxView *)parallaxView
 {
-    // Drawing code
+    if (parallaxView && parallaxView != self.parallaxView) {
+        [self.parallaxView matchParallaxOf:parallaxView];
+    }
 }
-*/
+
+#pragma mark - STVParallaxViewDelegate
+
+- (void)parallaxDidChange:(STVParallaxView *)parallaxView
+{
+    [self.parallaxDelegate parallaxDidChange:parallaxView];
+}
 
 @end
