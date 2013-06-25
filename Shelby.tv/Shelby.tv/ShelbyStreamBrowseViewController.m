@@ -8,6 +8,7 @@
 
 #import "ShelbyStreamBrowseViewController.h"
 #import "DashboardEntry.h"
+#import "DeduplicationUtility.h"
 #import "Frame.h"
 #import "ShelbyStreamBrowseViewCell.h"
 #import "Video.h"
@@ -54,7 +55,7 @@
     _channel = channel;
     if (entries) {
         _entries = entries;
-//        _deduplicatedEntries = [DeduplicationUtility deduplicatedCopy:entries];
+        _deduplicatedEntries = [DeduplicationUtility deduplicatedCopy:entries];
     } else {
         _entries = @[];
         _deduplicatedEntries = @[];
@@ -66,12 +67,13 @@
 
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
 {
-//    NSDictionary *chMetadata = self.channelMetadataByObjectID[channel.objectID];
-//    return chMetadata ? chMetadata[kShelbyChannelMetadataEntriesKey] : nil;
-
     return self.entries;
 }
 
+- (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
+{
+    return self.deduplicatedEntries;
+}
 
 - (void)addEntries:(NSArray *)newChannelEntries
              toEnd:(BOOL)shouldAppend
@@ -80,44 +82,39 @@
 {
     STVAssert(self.channel == channel, @"cannot add entries for a different channel");
     
-//    NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
-    
+    NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
+
     if(shouldAppend){
         self.entries = [self.entries arrayByAddingObjectsFromArray:newChannelEntries];
-//        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
-//                                                                       toDedupedArray:self.deduplicatedEntries
-//                                                                            didInsert:&indexPathsForInsert
-//                                                                            didDelete:&indexPathsForDelete
-//                                                                            didUpdate:&indexPathsForReload];
+        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
+                                                                       toDedupedArray:self.deduplicatedEntries
+                                                                            didInsert:&indexPathsForInsert
+                                                                            didDelete:&indexPathsForDelete
+                                                                            didUpdate:&indexPathsForReload];
     } else {
         self.entries = [newChannelEntries arrayByAddingObjectsFromArray:self.entries];
-//        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
-//                                                                        toDedupedArray:self.deduplicatedEntries
-//                                                                             didInsert:&indexPathsForInsert
-//                                                                             didDelete:&indexPathsForDelete
-//                                                                             didUpdate:&indexPathsForReload];
+        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
+                                                                        toDedupedArray:self.deduplicatedEntries
+                                                                             didInsert:&indexPathsForInsert
+                                                                             didDelete:&indexPathsForDelete
+                                                                             didUpdate:&indexPathsForReload];
     }
     
     // The index paths returned by DeduplicationUtility are relative to the original array.
     // So we group them within beginUpdates ... endUpdates
-//    [self.collectionView beginUpdates];
-//    [self.collectionView insertRowsAtIndexPaths:indexPathsForInsert withRowAnimation:(shouldAppend ? UIColl : UITableViewRowAnimationTop)];
-//    [self.collectionView deleteRowsAtIndexPaths:indexPathsForDelete withRowAnimation:UITableViewRowAnimationFade];
-//    [self.collectionView reloadRowsAtIndexPaths:indexPathsForReload withRowAnimation:UITableViewRowAnimationAutomatic];
-//    [self.collectionView endUpdates];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
+        [self.collectionView deleteItemsAtIndexPaths:indexPathsForDelete];
+        [self.collectionView reloadItemsAtIndexPaths:indexPathsForReload];
+    } completion:^(BOOL finished) {
+        //nothing
+    }];
 }
-
-- (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
-{
-    return self.entries; //KP KP: TODO: until we implement dedups
-//    return self.deduplicatedEntries;
-}
-
 
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return [self.entries count];
+    return [self.deduplicatedEntries count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
@@ -131,7 +128,7 @@
     [self.streamBrowseViewCells addObject:cell];
     cell.parallaxDelegate = self;
     [cell matchParallaxOf:self.lastUpdatedParallaxView];
-    cell.entry = self.entries[indexPath.row];
+    cell.entry = self.deduplicatedEntries[indexPath.row];
 
 //load more data
 //    NSInteger cellsBeyond = [dedupedEntries count] - [indexPath row];
@@ -147,14 +144,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // KP KP: TODO: deal with dedups
     if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
-//            NSArray *dedupedEntries = [self deduplicatedEntriesForChannel:channelCollectionView.channel];
         id entry = nil;
-//        if (indexPath.row > 0 && (unsigned)indexPath.row < [dedupedEntries count]) {
-        if (indexPath.row > 0 && (unsigned)indexPath.row < [self.entries count]) {
-//            entry = dedupedEntries[indexPath.row];
-            entry = self.entries[indexPath.row];
+        if (indexPath.row > 0 && (unsigned)indexPath.row < [self.deduplicatedEntries count]) {
+            entry = self.deduplicatedEntries[indexPath.row];
         }
         
         [self.browseDelegate userPressedChannel:self.channel atItem:entry];
