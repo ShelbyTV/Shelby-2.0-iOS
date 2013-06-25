@@ -24,11 +24,13 @@
         _backgroundScroller = [[UIScrollView alloc] initWithFrame:contentFrame];
         _backgroundScroller.scrollEnabled = NO;
         _backgroundScroller.gestureRecognizers = nil;
+        _backgroundScroller.showsHorizontalScrollIndicator = NO;
         [self addSubview:_backgroundScroller];
 
         _foregroundScroller = [[UIScrollView alloc] initWithFrame:contentFrame];
         _foregroundScroller.pagingEnabled = YES;
         _foregroundScroller.delegate = self;
+        _foregroundScroller.showsHorizontalScrollIndicator = NO;
         [self addSubview:_foregroundScroller];
     }
     return self;
