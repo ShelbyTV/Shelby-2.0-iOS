@@ -31,4 +31,6 @@
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel;
 
+- (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
+
 @end

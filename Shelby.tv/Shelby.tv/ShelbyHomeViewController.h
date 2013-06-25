@@ -46,6 +46,7 @@
 
 //currently only used on iPhone to change currently displayed channel
 - (void)focusOnChannel:(DisplayChannel *)channel;
+- (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 - (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;

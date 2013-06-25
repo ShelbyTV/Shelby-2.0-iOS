@@ -156,6 +156,14 @@
     }
 }
 
+- (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
+{
+    STVAssert(channel == self.channel, @"expected our channel");
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.deduplicatedEntries indexOfObject:entity] inSection:0];
+    STVAssert(indexPath.row != NSNotFound, @"expected to find the entity");
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+}
+
 #pragma mark - UICollectionViewDelegate
 
 #pragma mark - ShelbyStreamBrowseViewCellDelegate

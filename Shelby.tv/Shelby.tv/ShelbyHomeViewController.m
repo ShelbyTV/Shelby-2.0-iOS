@@ -194,6 +194,15 @@
     }
 }
 
+- (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
+{
+    if (DEVICE_IPAD) {
+        //When we implement new iPad interface, will probably want to update our persisten stream view here
+    } else {
+        [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel];
+    }
+}
+
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
     if (DEVICE_IPAD) {

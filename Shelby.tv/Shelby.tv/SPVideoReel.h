@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (BOOL)canRoll;
 - (void)userAskForFacebookPublishPermissions;
 - (void)userAskForTwitterPublishPermissions;
+- (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
 @end
 
 @class SPVideoPlayer, SPOverlayView;

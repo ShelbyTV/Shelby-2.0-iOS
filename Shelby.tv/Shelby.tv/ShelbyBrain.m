@@ -438,16 +438,6 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     [alertView show];
 }
 
-#pragma mark - ShelbyTriageProtocol Methods
-- (void)userPressedTriageChannel:(DisplayChannel *)channel atItem:(id)item
-{
-    NSInteger index = [self.homeVC indexOfDisplayedEntry:item inChannel:channel];
-    
-    [self.homeVC launchPlayerForChannel:channel atIndex:index];
-    
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
-}
-
 #pragma mark - ShelbyBrowseProtocol Methods
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
 {
@@ -530,6 +520,11 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 - (void)videoDidFinishPlaying
 {
     // TODO
+}
+
+- (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
+{
+    [self.homeVC focusOnEntity:entity inChannel:channel];
 }
 
 - (SPTutorialMode)tutorialModeForCurrentPlayer

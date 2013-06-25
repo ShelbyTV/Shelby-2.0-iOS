@@ -39,7 +39,7 @@
 
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
-//Array of DashboardEntry or Frame
+//Array of DashboardEntry or Frame, technically: id<ShelbyVideoContainer>
 @property (nonatomic) NSMutableArray *videoEntities;
 @property (nonatomic) NSMutableArray *videoPlayers;
 @property (copy, nonatomic) NSString *channelID;
@@ -445,6 +445,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
                                         previousPlayer:previousPlayer];
         [self warmURLExtractionCache];
+
+        [self.delegate didChangePlaybackToEntity:self.videoEntities[position] inChannel:self.channel];
     }
 }
 
