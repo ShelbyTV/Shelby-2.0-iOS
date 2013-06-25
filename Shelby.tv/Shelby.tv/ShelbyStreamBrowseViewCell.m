@@ -28,9 +28,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        CGRect subviewFrame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        CGRect subviewFrame = CGRectMake(0, 20, frame.size.width, kShelbyFullscreenHeight - 20);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
 
+        _foregroundView.frame = CGRectMake(0, 20, _foregroundView.frame.size.width, subviewFrame.size.height);
         _backgroundThumbnailView = [[UIImageView alloc] initWithFrame:subviewFrame];
 
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
@@ -75,7 +76,7 @@
                                                                        self.backgroundThumbnailView.image = image;
                                                                        [self.backgroundThumbnailView sizeToFit];
                                                                        //DS XXX TESTING
-                                                                       self.backgroundThumbnailView.frame = CGRectMake(0, 0, image.size.width * 2, image.size.height * 2);
+                                                                       self.backgroundThumbnailView.frame = CGRectMake(-160, 0, 600, kShelbyFullscreenHeight - 20);
                                                                        self.parallaxView.backgroundContent = self.backgroundThumbnailView;
                                                                    } else {
                                                                        //cell has been reused, do nothing

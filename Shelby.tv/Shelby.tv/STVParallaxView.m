@@ -19,18 +19,20 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        CGRect contentFrame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        CGRect contentFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight - 20);
 
         _backgroundScroller = [[UIScrollView alloc] initWithFrame:contentFrame];
         _backgroundScroller.scrollEnabled = NO;
         _backgroundScroller.gestureRecognizers = nil;
         _backgroundScroller.showsHorizontalScrollIndicator = NO;
+        _backgroundScroller.showsVerticalScrollIndicator = NO;
         [self addSubview:_backgroundScroller];
 
         _foregroundScroller = [[UIScrollView alloc] initWithFrame:contentFrame];
         _foregroundScroller.pagingEnabled = YES;
         _foregroundScroller.delegate = self;
         _foregroundScroller.showsHorizontalScrollIndicator = NO;
+        _backgroundScroller.showsVerticalScrollIndicator = NO;
         [self addSubview:_foregroundScroller];
     }
     return self;

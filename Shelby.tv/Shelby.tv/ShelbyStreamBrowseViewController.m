@@ -38,7 +38,12 @@
 {
     [super viewDidLoad];
 
+    // KP KP: TODO: shouldn't be full height because it goes over the bar on the home panel
+    self.view.frame = CGRectMake(0, 0, kShelbyFullscreenWidth, kShelbyFullscreenHeight);
+
     [self.collectionView registerClass:[ShelbyStreamBrowseViewCell class] forCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell"];
+
+    self.collectionView.pagingEnabled = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -165,6 +170,10 @@
 }
 
 #pragma mark - UICollectionViewDelegate
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(kShelbyFullscreenWidth, kShelbyFullscreenHeight - 20);
+}
 
 #pragma mark - ShelbyStreamBrowseViewCellDelegate
 
