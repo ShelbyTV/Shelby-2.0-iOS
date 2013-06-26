@@ -41,4 +41,6 @@
 // between multiple views
 - (void)matchParallaxOf:(STVParallaxView *)parallaxView;
 
+- (CGPoint)foregroundContentOffset;
+
 @end

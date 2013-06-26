@@ -14,13 +14,26 @@
 
 @interface ShelbyStreamBrowseViewCell()
 @property (nonatomic, strong) STVParallaxView *parallaxView;
-@property (nonatomic, strong) UIImageView *backgroundThumbnailView;
+@property (nonatomic, strong) UIView *backgroundThumbnailsView;
+@property (nonatomic, strong) UIImageView *thumbnailRegularView;
+@property (nonatomic, strong) UIImageView *thumbnailBlurredView;
 @property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
+
+//reuse context for better performance
+@property (nonatomic, strong) CIContext *ciContext;
+@property (nonatomic, strong) CIFilter *blurFilter;
 @end
 
 #define BASIC_COLUMN 0
 #define DETAIL_COLUMN 1
 #define PLAYBACK_COLUMN 2
+
+//configure parallax configuration
+#define PARALLAX_RATIO 0.4
+#define PARALLAX_BG_X -150
+#define PARALLAX_BG_Y 0
+#define PARALLAX_BG_WIDTH 650
+#define PARALLAX_BG_HEIGHT (kShelbyFullscreenHeight - 20)
 
 @implementation ShelbyStreamBrowseViewCell
 
@@ -28,25 +41,45 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        //CoreImage stuff to do blurring
+        _ciContext = [CIContext contextWithOptions:nil];
+        _blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
+        [_blurFilter setValue:@5.0 forKey:@"inputRadius"];
+
+        //foreground
         CGRect subviewFrame = CGRectMake(0, 20, frame.size.width, kShelbyFullscreenHeight - 20);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
-
         _foregroundView.frame = CGRectMake(0, 20, _foregroundView.frame.size.width, subviewFrame.size.height);
-        _backgroundThumbnailView = [[UIImageView alloc] initWithFrame:subviewFrame];
 
+
+        //background - thumbnails are on top of each other in a parent view
+        CGRect bgThumbsHolderFrame = CGRectMake(PARALLAX_BG_X, PARALLAX_BG_Y, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
+        _backgroundThumbnailsView = [[UIView alloc] initWithFrame:bgThumbsHolderFrame];
+        CGRect bgThumbsFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
+        _thumbnailRegularView = [[UIImageView alloc] initWithFrame:bgThumbsFrame];
+        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFit;
+        [_backgroundThumbnailsView addSubview:_thumbnailRegularView];
+        _thumbnailBlurredView = [[UIImageView alloc] initWithFrame:bgThumbsFrame];
+        _thumbnailBlurredView.contentMode = UIViewContentModeScaleAspectFit;
+        _thumbnailBlurredView.alpha = 0.0;
+        [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
+
+
+        //parallax for foreground and background (above)
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
         _parallaxView.delegate = self;
         [self addSubview:self.parallaxView];
         _parallaxView.foregroundContent = _foregroundView;
-        //DS XXX TESTING
-        _parallaxView.parallaxRatio = 0.5;
+        _parallaxView.backgroundContent = _backgroundThumbnailsView;
+        _parallaxView.parallaxRatio = PARALLAX_RATIO;
     }
     return self;
 }
 
 - (void)prepareForReuse
 {
-    self.backgroundThumbnailView.image = nil;
+    self.thumbnailRegularView.image = nil;
+    self.thumbnailBlurredView.image = nil;
     self.foregroundView.playbackPlacholderThumbnail.image = nil;
 }
 
@@ -71,13 +104,7 @@
                                                   imageProcessingBlock:nil
                                                                success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                                                    if (self.entry == entry) {
-                                                                       self.foregroundView.playbackPlacholderThumbnail.image = image;
-
-                                                                       self.backgroundThumbnailView.image = image;
-                                                                       [self.backgroundThumbnailView sizeToFit];
-                                                                       //DS XXX TESTING
-                                                                       self.backgroundThumbnailView.frame = CGRectMake(-160, 0, 600, kShelbyFullscreenHeight - 20);
-                                                                       self.parallaxView.backgroundContent = self.backgroundThumbnailView;
+                                                                       [self setupImagesWith:image];
                                                                    } else {
                                                                        //cell has been reused, do nothing
                                                                    }
@@ -101,6 +128,30 @@
     }
 }
 
+- (void)setupImagesWith:(UIImage *)image
+{
+    if (self.thumbnailRegularView.image != image) {
+        //foreground
+        self.foregroundView.playbackPlacholderThumbnail.image = image;
+
+        //regular background
+        self.thumbnailRegularView.image = image;
+        self.thumbnailRegularView.frame = CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
+
+        //blurred background
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self.blurFilter setValue:[CIImage imageWithCGImage:image.CGImage] forKey:@"inputImage"];
+            CIImage *result = [self.blurFilter valueForKey:@"outputImage"];
+            CGImageRef cgImage = [self.ciContext createCGImage:result fromRect:[result extent]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.thumbnailBlurredView.image = [UIImage imageWithCGImage:cgImage];
+                CFRelease(cgImage);
+                [self.blurFilter setValue:nil forKey:@"inputImage"];
+            });
+        });
+    }
+}
+
 - (void)matchParallaxOf:(ShelbyStreamBrowseViewCell *)cell
 {
     if (cell && cell != self) {
@@ -112,6 +163,10 @@
 
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
 {
+    //TODO: this constant won't work when we allow for rotation
+    CGFloat alpha = parallaxView.foregroundContentOffset.x / 320.0;
+    self.thumbnailBlurredView.alpha = alpha;
+
     [self.delegate parallaxDidChange:self];
 }
 

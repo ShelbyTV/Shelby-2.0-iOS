@@ -832,6 +832,12 @@
 		91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */; };
 		91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */; };
 		91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */; };
+		91CE0752177A37A300024180 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CE0751177A37A200024180 /* CoreImage.framework */; };
+		91CE0753177A37AC00024180 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CE0751177A37A200024180 /* CoreImage.framework */; };
+		91CE0754177A37B200024180 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CE0751177A37A200024180 /* CoreImage.framework */; };
+		91CE0758177A417A00024180 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CE0757177A417900024180 /* OpenGLES.framework */; };
+		91CE0759177A418500024180 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CE0757177A417900024180 /* OpenGLES.framework */; };
+		91CE075A177A418B00024180 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CE0757177A417900024180 /* OpenGLES.framework */; };
 		91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
 		91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03EFB1731AB40008131D2 /* ShelbyBrain.m */; };
@@ -1285,6 +1291,8 @@
 		91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamBrowseCellForegroundView.xib; sourceTree = "<group>"; };
 		91CE074C1779087800024180 /* StreamBrowseCellForegroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBrowseCellForegroundView.h; sourceTree = "<group>"; };
 		91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBrowseCellForegroundView.m; sourceTree = "<group>"; };
+		91CE0751177A37A200024180 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		91CE0757177A417900024180 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		91D03EFA1731AB40008131D2 /* ShelbyBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrain.h; sourceTree = "<group>"; };
 		91D03EFB1731AB40008131D2 /* ShelbyBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrain.m; sourceTree = "<group>"; };
 		91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -1333,6 +1341,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91CE0759177A418500024180 /* OpenGLES.framework in Frameworks */,
+				91CE0753177A37AC00024180 /* CoreImage.framework in Frameworks */,
 				91FCC6A1174A8F1F004255F5 /* MessageUI.framework in Frameworks */,
 				8E669066171611490090C934 /* Social.framework in Frameworks */,
 				1C3D91391714C6E100105839 /* Accounts.framework in Frameworks */,
@@ -1359,6 +1369,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91CE0758177A417A00024180 /* OpenGLES.framework in Frameworks */,
+				91CE0752177A37A300024180 /* CoreImage.framework in Frameworks */,
 				91FCC6A2174A8F25004255F5 /* MessageUI.framework in Frameworks */,
 				8E669063171611370090C934 /* Social.framework in Frameworks */,
 				1C3D91371714C6DB00105839 /* Accounts.framework in Frameworks */,
@@ -1385,6 +1397,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91CE075A177A418B00024180 /* OpenGLES.framework in Frameworks */,
+				91CE0754177A37B200024180 /* CoreImage.framework in Frameworks */,
 				91FCC6A0174A8F14004255F5 /* MessageUI.framework in Frameworks */,
 				8E669068171611550090C934 /* Social.framework in Frameworks */,
 				1C3D913B1714C6E700105839 /* Accounts.framework in Frameworks */,
@@ -1723,6 +1737,8 @@
 		8E209710162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91CE0757177A417900024180 /* OpenGLES.framework */,
+				91CE0751177A37A200024180 /* CoreImage.framework */,
 				91FCC69F174A8F14004255F5 /* MessageUI.framework */,
 				8E669062171611370090C934 /* Social.framework */,
 				1C3D91331714C6CC00105839 /* Accounts.framework */,
