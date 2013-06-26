@@ -368,6 +368,8 @@
 
 - (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    
     [self initializeVideoReelWithChannel:channel atIndex:index];
     [self presentViewController:self.videoReel animated:NO completion:nil];
 }
@@ -381,6 +383,8 @@
 
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    
     [self initializeVideoReelWithChannel:channel atIndex:index];
     [self animateOpenChannels:channel];
 }
