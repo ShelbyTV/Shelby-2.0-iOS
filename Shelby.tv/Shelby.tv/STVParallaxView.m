@@ -63,6 +63,11 @@
     }
 }
 
+- (CGPoint)foregroundContentOffset
+{
+    return self.foregroundScroller.contentOffset;
+}
+
 #pragma mark - UIScrollViewDelegate (only of _foregroundScroller)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

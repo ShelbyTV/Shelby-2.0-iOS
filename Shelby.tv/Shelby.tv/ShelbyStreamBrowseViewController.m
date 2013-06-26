@@ -145,22 +145,6 @@
     return cell;
 }
 
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
-        id entry = nil;
-        if (indexPath.row > 0 && (unsigned)indexPath.row < [self.deduplicatedEntries count]) {
-            entry = self.deduplicatedEntries[indexPath.row];
-        }
-        
-        [self.browseDelegate userPressedChannel:self.channel atItem:entry];
-//            SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-//            [cell unHighlightItem];
-//        }
-    }
-}
-
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
     STVAssert(channel == self.channel, @"expected our channel");
@@ -170,6 +154,23 @@
 }
 
 #pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    DLog(@"didSelectItemAtIndexPath:");
+    if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
+        id entry = nil;
+        if (indexPath.row > 0 && (unsigned)indexPath.row < [self.deduplicatedEntries count]) {
+            entry = self.deduplicatedEntries[indexPath.row];
+        }
+
+        [self.browseDelegate userPressedChannel:self.channel atItem:entry];
+        //            SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        //            [cell unHighlightItem];
+        //        }
+    }
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(kShelbyFullscreenWidth, kShelbyFullscreenHeight - 20);
