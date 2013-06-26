@@ -113,7 +113,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [super viewDidLoad];
  
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+//    [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
     
     _peelChannelView = [[SPChannelPeekView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -140,14 +140,37 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskLandscape | UIInterfaceOrientationMaskPortrait;
 }
 
 -(BOOL) shouldAutorotate {
     return YES;
 }
 
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self setupVideoScrollView];
+    [self setupVideoPlayersFromIndex:0];
 
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    CGRect frame = self.view.frame;
+    if (fromInterfaceOrientation == UIInterfaceOrientationMaskLandscape) {
+        frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoHeight, kShelbySPVideoWidth);
+    } else {
+        frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight);
+    }
+    
+    self.view.frame = frame;
+    [self setupVideoScrollView];
+    [self setupVideoPlayersFromIndex:0];
+
+//    self.videoScrollView.frame = frame;
+    
+}
 - (void)setEntries:(NSArray *)entries
 {
     NSUInteger oldCount = [self.videoEntities count];
@@ -197,8 +220,15 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupVideoScrollView
 {
+    CGRect frame;
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (orientation == UIInterfaceOrientationMaskLandscape) {
+        frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight);
+    } else {
+        frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoHeight, kShelbySPVideoWidth);
+    }
     if (!self.videoScrollView) {
-        _videoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
+        _videoScrollView = [[UIScrollView alloc] initWithFrame:frame];
         self.videoScrollView.delegate = self;
         self.videoScrollView.pagingEnabled = YES;
         self.videoScrollView.showsHorizontalScrollIndicator = NO;
@@ -206,13 +236,24 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         self.videoScrollView.scrollsToTop = NO;
         [self.videoScrollView setDelaysContentTouches:YES];
         [self.view addSubview:self.videoScrollView];
+    } else {
+        self.videoScrollView.frame = frame;
     }
     
     if (DEVICE_IPAD) {
         self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.videoEntities count], kShelbySPVideoHeight);
         [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
     } else {
-        self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth, [self.videoEntities count] * kShelbySPVideoHeight);
+        CGRect frame = self.view.frame;
+        CGSize contentSize;
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if (orientation == UIInterfaceOrientationMaskLandscape) {
+            contentSize = CGSizeMake(kShelbySPVideoWidth, [self.videoEntities count] * kShelbySPVideoHeight);
+        } else {
+            contentSize = CGSizeMake(kShelbySPVideoWidth, [self.videoEntities count] * kShelbySPVideoHeight);
+        }
+
+        self.videoScrollView.contentSize = contentSize;
         [self.videoScrollView setContentOffset:CGPointMake(0, (int)self.videoStartIndex * kShelbySPVideoHeight) animated:YES];
     }
 }

@@ -68,7 +68,15 @@
 {
     [super awakeFromNib];
 
-    self.frame = CGRectMake(0, 0, kShelbySPVideoWidth, kShelbySPVideoHeight);
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (orientation == UIInterfaceOrientationMaskLandscape) {
+        [self setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoHeight, kShelbySPVideoWidth)];
+    } else {
+        [self setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoHeight, kShelbySPVideoWidth)];
+    }
+
+    
+//    self.frame = CGRectMake(0, 0, kShelbySPVideoHeight, kShelbySPVideoWidth);
     //non-Nib customizations
     [self.userImageView.layer setBorderWidth:0.5];
     [self.nicknameLabel setBackgroundColor:[UIColor clearColor]];
