@@ -111,9 +111,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- 
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-//    [self.view setFrame:CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight)];
     [self.view setBackgroundColor:[UIColor blackColor]];
     
     _peelChannelView = [[SPChannelPeekView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -124,7 +121,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
     [self setup];
 }
-
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -147,29 +143,33 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     return YES;
 }
 
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    [self setupVideoScrollView];
-    [self setupVideoPlayersFromIndex:0];
-
-}
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    CGRect frame = self.view.frame;
-    if (fromInterfaceOrientation == UIInterfaceOrientationMaskLandscape) {
-        frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoHeight, kShelbySPVideoWidth);
+    NSInteger height, width;
+    
+    if (fromInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+        // Device is Portrait
+        height = self.view.frame.size.height;
+        width = self.view.frame.size.width;
     } else {
-        frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight);
+        // Device is Landscape
+        height = self.view.frame.size.width;
+        width = self.view.frame.size.height;
     }
     
-    self.view.frame = frame;
-    [self setupVideoScrollView];
-    [self setupVideoPlayersFromIndex:0];
-
-//    self.videoScrollView.frame = frame;
+    CGSize contentSize =  CGSizeMake(width, height * [self.videoPlayers count]);
+    CGPoint contentOffset = CGPointMake(0, height * self.currentVideoPlayingIndex);
     
+    self.videoScrollView.contentSize = contentSize;
+    self.videoScrollView.contentOffset = contentOffset;
+    
+    
+    NSInteger i = 0;
+    for (SPVideoPlayer *player in self.videoPlayers) {
+        player.view.frame = CGRectMake(0, height * i, width, height);
+        i++;
+    }
 }
 - (void)setEntries:(NSArray *)entries
 {
@@ -220,41 +220,35 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupVideoScrollView
 {
-    CGRect frame;
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    if (orientation == UIInterfaceOrientationMaskLandscape) {
-        frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoWidth, kShelbySPVideoHeight);
-    } else {
-        frame = CGRectMake(0.0f, 0.0f, kShelbySPVideoHeight, kShelbySPVideoWidth);
-    }
     if (!self.videoScrollView) {
-        _videoScrollView = [[UIScrollView alloc] initWithFrame:frame];
+        _videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
         self.videoScrollView.delegate = self;
         self.videoScrollView.pagingEnabled = YES;
         self.videoScrollView.showsHorizontalScrollIndicator = NO;
         self.videoScrollView.showsVerticalScrollIndicator = NO;
         self.videoScrollView.scrollsToTop = NO;
         [self.videoScrollView setDelaysContentTouches:YES];
+        self.videoScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:self.videoScrollView];
-    } else {
-        self.videoScrollView.frame = frame;
     }
-    
+
     if (DEVICE_IPAD) {
         self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.videoEntities count], kShelbySPVideoHeight);
         [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
     } else {
-        CGRect frame = self.view.frame;
         CGSize contentSize;
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        if (orientation == UIInterfaceOrientationMaskLandscape) {
-            contentSize = CGSizeMake(kShelbySPVideoWidth, [self.videoEntities count] * kShelbySPVideoHeight);
+        NSInteger videoHeight = kShelbyFullscreenHeight;
+        if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+            videoHeight = kShelbyFullscreenWidth;
+            contentSize = CGSizeMake(kShelbyFullscreenHeight, [self.videoEntities count] * videoHeight);
         } else {
-            contentSize = CGSizeMake(kShelbySPVideoWidth, [self.videoEntities count] * kShelbySPVideoHeight);
+            contentSize = CGSizeMake(kShelbyFullscreenWidth, [self.videoEntities count] * videoHeight);
         }
-
+        
         self.videoScrollView.contentSize = contentSize;
-        [self.videoScrollView setContentOffset:CGPointMake(0, (int)self.videoStartIndex * kShelbySPVideoHeight) animated:YES];
+        CGPoint offset = CGPointMake(0, (int)self.videoStartIndex * videoHeight);
+        [self.videoScrollView setContentOffset:offset animated:NO];
     }
 }
 
@@ -289,7 +283,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                 viewframe.origin.x = viewframe.size.width * index;
                 viewframe.origin.y = 0.0f;
             } else {
-                viewframe.origin.y = viewframe.size.height * index;
+                NSInteger videoHeight = kShelbyFullscreenHeight;
+                UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+                if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+                    videoHeight = kShelbyFullscreenWidth;
+                }
+                viewframe.origin.y = videoHeight * index;
                 viewframe.origin.x = 0.0f;
             }
             SPVideoPlayer *player;
@@ -302,7 +301,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             }
             player.videoPlayerDelegate = self;
             [self.videoPlayers addObject:player];
+            [player willMoveToParentViewController:self];
+            [self addChildViewController:player];
             [self.videoScrollView addSubview:player.view];
+            [player didMoveToParentViewController:self];
         }
     }
 }

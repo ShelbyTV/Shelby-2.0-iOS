@@ -72,6 +72,23 @@
     [super viewDidAppear:animated];
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    CGRect frame = CGRectMake(0, 0 , self.view.frame.size.width, self.view.frame.size.height);
+    
+    self.playerLayer.bounds = frame;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape | UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
+}
+
+
 - (void)setupPlayerForURL:(NSURL *)playerURL
 {
     if(!self.canBecomePlayable){
@@ -89,11 +106,11 @@
     [self addAllObservers];
     
     // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-    CGRect modifiedFrame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-    self.playerLayer.frame = modifiedFrame;
-    self.playerLayer.bounds = modifiedFrame;
-    [self.view.layer addSublayer:_playerLayer];
+    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    self.playerLayer.anchorPoint = CGPointMake(0, 0);
+    self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+
+    [self.view.layer addSublayer:self.playerLayer];
     
     if(CMTIME_IS_VALID(self.lastPlayheadPosition)){
         [self.player seekToTime:self.lastPlayheadPosition];
