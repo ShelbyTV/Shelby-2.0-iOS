@@ -144,7 +144,7 @@
             
             //add the new VCs with proper frame
             for (ShelbyStreamBrowseViewController *newSBVC in newStreamBrowseVCs) {
-                [newSBVC.view setFrame:CGRectMake(0, 0, newSBVC.view.frame.size.width, newSBVC.view.frame.size.height)];
+                [newSBVC.view setFrame:CGRectMake(0, 44, newSBVC.view.frame.size.width, newSBVC.view.frame.size.height)];
             }
             _streamBrowseVCs = newStreamBrowseVCs;
         }
@@ -304,9 +304,7 @@
         [self dismissAuthorizationVC];
     }
 
-    if (DEVICE_IPAD) {
-        [self setupSettingsView];
-    }
+    [self setupSettingsView];
 }
 
 // TODO: uncomment when we are ready to support login
