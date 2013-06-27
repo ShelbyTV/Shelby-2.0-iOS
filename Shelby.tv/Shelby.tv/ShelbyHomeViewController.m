@@ -189,9 +189,10 @@
         STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
         [sbvc willMoveToParentViewController:self];
         [self.view addSubview:sbvc.view];
-        [self.view bringSubviewToFront:sbvc.view];
         [self addChildViewController:sbvc];
         [sbvc didMoveToParentViewController:self];
+        [self.view addSubview:self.topBar];
+        [self.view bringSubviewToFront:self.topBar];
     }
 }
 
@@ -339,7 +340,9 @@
         [self.settingsView addSubview:login];
     }
     
-    [self.view addSubview:self.settingsView];
+    [self.topBar addSubview:self.settingsView];
+    [self.settingsView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
+    [self.view bringSubviewToFront:self.topBar];
 }
 
 - (void)showSettings
