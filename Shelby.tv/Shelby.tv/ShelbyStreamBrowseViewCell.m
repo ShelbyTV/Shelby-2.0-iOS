@@ -35,6 +35,8 @@
 #define PARALLAX_BG_WIDTH 650
 #define PARALLAX_BG_HEIGHT (kShelbyFullscreenHeight - 20)
 
+#define BLUR_RADIUS 4.0
+
 @implementation ShelbyStreamBrowseViewCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -44,7 +46,7 @@
         //CoreImage stuff to do blurring
         _ciContext = [CIContext contextWithOptions:nil];
         _blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-        [_blurFilter setValue:@5.0 forKey:@"inputRadius"];
+        [_blurFilter setValue:@(BLUR_RADIUS) forKey:@"inputRadius"];
 
         //foreground
         CGRect subviewFrame = CGRectMake(0, 20, frame.size.width, kShelbyFullscreenHeight - 20);
@@ -55,11 +57,10 @@
         //background - thumbnails are on top of each other in a parent view
         CGRect bgThumbsHolderFrame = CGRectMake(PARALLAX_BG_X, PARALLAX_BG_Y, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
         _backgroundThumbnailsView = [[UIView alloc] initWithFrame:bgThumbsHolderFrame];
-        CGRect bgThumbsFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
-        _thumbnailRegularView = [[UIImageView alloc] initWithFrame:bgThumbsFrame];
+        _thumbnailRegularView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT)];
         _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFit;
         [_backgroundThumbnailsView addSubview:_thumbnailRegularView];
-        _thumbnailBlurredView = [[UIImageView alloc] initWithFrame:bgThumbsFrame];
+        _thumbnailBlurredView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT)];
         _thumbnailBlurredView.contentMode = UIViewContentModeScaleAspectFit;
         _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
