@@ -136,17 +136,11 @@
             
             //remove old VCs (some of which may get re-used)
             //NB: we expect new channel for focus to be set by an outsider
-            for (ShelbyStreamBrowseViewController *sbvc in _streamBrowseVCs) {
-                if (sbvc.view.superview) {
-                    [sbvc.view removeFromSuperview];
-                    [sbvc removeFromParentViewController];
-                }
+            if (self.currentStreamBrowseVC) {
+                [self.currentStreamBrowseVC.view removeFromSuperview];
+                [self.currentStreamBrowseVC removeFromParentViewController];
             }
             
-            //add the new VCs with proper frame
-            for (ShelbyStreamBrowseViewController *newSBVC in newStreamBrowseVCs) {
-                [newSBVC.view setFrame:CGRectMake(0, 0, newSBVC.view.frame.size.width, newSBVC.view.frame.size.height)];
-            }
             _streamBrowseVCs = newStreamBrowseVCs;
         }
     }
@@ -179,11 +173,9 @@
         //do nothing
     } else {
         //remove current focus
-        for (ShelbyStreamBrowseViewController *sbvc in _streamBrowseVCs) {
-            if (sbvc.view.superview) {
-                [sbvc.view removeFromSuperview];
-                [sbvc removeFromParentViewController];
-            }
+        if (self.currentStreamBrowseVC) {
+            [self.currentStreamBrowseVC.view removeFromSuperview];
+            [self.currentStreamBrowseVC removeFromParentViewController];
         }
 
         ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
@@ -191,6 +183,7 @@
         self.currentStreamBrowseVC = sbvc;
         [sbvc willMoveToParentViewController:self];
         [self.view addSubview:sbvc.view];
+        sbvc.view.frame = self.view.frame;
         [self addChildViewController:sbvc];
         [sbvc didMoveToParentViewController:self];
         [self.view addSubview:self.topBar];
