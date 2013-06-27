@@ -43,6 +43,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _viewMode = ShelbyStreamBrowseViewDefault;
+
         //CoreImage stuff to do blurring
         _ciContext = [CIContext contextWithOptions:nil];
         _blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
@@ -155,6 +157,20 @@
 {
     if (cell && cell != self) {
         [self.parallaxView matchParallaxOf:cell.parallaxView];
+    }
+}
+
+- (void)setViewMode:(ShelbyStreamBrowseViewMode)viewMode
+{
+    if (_viewMode != viewMode) {
+        _viewMode = viewMode;
+        switch (_viewMode) {
+            case ShelbyStreamBrowseViewDefault:
+                [self.parallaxView getBackgroundView].hidden = NO;
+                break;
+            case ShelbyStreamBrowseViewForPlayback:
+                [self.parallaxView getBackgroundView].hidden = YES;
+        }
     }
 }
 

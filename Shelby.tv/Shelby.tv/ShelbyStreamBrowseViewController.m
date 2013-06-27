@@ -30,6 +30,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _streamBrowseViewCells = [[NSMutableSet set] mutableCopy];
+        _viewMode = ShelbyStreamBrowseViewDefault;
     }
     return self;
 }
@@ -141,6 +142,7 @@
     [self.streamBrowseViewCells addObject:cell];
     cell.delegate = self;
     [cell matchParallaxOf:self.lastCellWithParallaxUpdate];
+    cell.viewMode = self.viewMode;
     cell.entry = self.deduplicatedEntries[indexPath.row];
 
 //load more data
@@ -160,6 +162,17 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.deduplicatedEntries indexOfObject:entity] inSection:0];
     STVAssert(indexPath.row != NSNotFound, @"expected to find the entity");
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+}
+
+- (void)setViewMode:(ShelbyStreamBrowseViewMode)viewMode
+{
+    if (_viewMode != viewMode) {
+        _viewMode = viewMode;
+        //XXX this is not the proper UX logic, just helpful during dev
+        for (ShelbyStreamBrowseViewCell *cell in self.streamBrowseViewCells) {
+            cell.viewMode = _viewMode;
+        }
+    }
 }
 
 #pragma mark - UICollectionViewDelegate

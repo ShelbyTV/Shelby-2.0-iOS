@@ -43,4 +43,6 @@
 
 - (CGPoint)foregroundContentOffset;
 
+- (UIView *)getBackgroundView;
+
 @end

@@ -51,12 +51,15 @@
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 - (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 
-// KP KP: TODO: merge these two methods. With an :animated property
-- (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
-- (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
-
-- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel atFrame:(Frame *)videoFrame;
+// *** NEW API ***
+// We should use the following two methods exclusively on start/remove playback
+- (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 - (void)dismissPlayer;
+
+//DEPRECATED
+- (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
+//DEPRECATED
+- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel atFrame:(Frame *)videoFrame;
 
 - (void)userLoginFailedWithError:(NSString *)errorMessage;
 - (void)connectToFacebookFailedWithError:(NSString *)errorMessage;

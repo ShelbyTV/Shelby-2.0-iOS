@@ -10,6 +10,12 @@
 #import "ShelbyVideoContainer.h"
 #import "STVParallaxView.h"
 
+typedef NS_ENUM(NSUInteger, ShelbyStreamBrowseViewMode)
+{
+    ShelbyStreamBrowseViewForPlayback,
+    ShelbyStreamBrowseViewDefault
+};
+
 @class ShelbyStreamBrowseViewCell;
 
 @protocol ShelbyStreamBrowseViewCellDelegate <NSObject>
@@ -25,6 +31,8 @@
 @property (nonatomic, strong) id<ShelbyVideoContainer> entry;
 
 @property (nonatomic, weak) id<ShelbyStreamBrowseViewCellDelegate> delegate;
+
+@property (nonatomic, assign) ShelbyStreamBrowseViewMode viewMode;
 
 - (void)matchParallaxOf:(ShelbyStreamBrowseViewCell *)cell;
 

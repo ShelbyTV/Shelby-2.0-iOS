@@ -418,7 +418,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     self.currentChannel = channel;
 
     if([channel hasEntityAtIndex:index]){
-        [self.homeVC launchPlayerForChannel:channel atIndex:index];
+        [self.homeVC playChannel:channel atIndex:index];
         return YES;
     } else {
         return NO;
@@ -462,7 +462,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
         // KP KP: TODO: what is the channel have no videos at all? Deal with that case
         index = 0;
     }
-    [self.homeVC animateLaunchPlayerForChannel:channel atIndex:index];
+    [self.homeVC playChannel:channel atIndex:index];
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
 }
 
@@ -496,7 +496,8 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
         self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeEnd;
     }
 
-    [self.homeVC animateDismissPlayerForChannel:self.currentChannel atFrame:frame];
+    //we used to do this with an old animated dismiss... no longer
+    [self.homeVC dismissPlayer];
     
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionClosePlayerByPinch withLabel:nil];
 

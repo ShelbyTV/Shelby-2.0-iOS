@@ -146,30 +146,15 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    NSInteger height, width;
-    
-    if (fromInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-
-        // If devide from & current orientation is Landscape - it means we are coming from the upside down state and we can ignore this case
-        if ([self isLandscapeOrientation]) {
-            return;
-        }
-
-        // Device is Portrait
-        height = self.view.frame.size.height;
-        width = self.view.frame.size.width;
-    } else {
-        // Device is Landscape
-        height = self.view.frame.size.width;
-        width = self.view.frame.size.height;
-    }
+    //since we are subview, our view's frame is correctly set w/r/t orientation
+    NSInteger height = self.view.frame.size.height;
+    NSInteger width = self.view.frame.size.width;
     
     CGSize contentSize =  CGSizeMake(width, height * [self.videoPlayers count]);
     CGPoint contentOffset = CGPointMake(0, height * self.currentVideoPlayingIndex);
     
     self.videoScrollView.contentSize = contentSize;
     self.videoScrollView.contentOffset = contentOffset;
-    
     
     NSInteger i = 0;
     for (SPVideoPlayer *player in self.videoPlayers) {

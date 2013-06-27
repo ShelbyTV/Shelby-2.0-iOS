@@ -24,6 +24,9 @@
 @property (readonly, strong) DisplayChannel *channel;
 @property (nonatomic, assign) id<ShelbyStreamBrowseProtocol>browseDelegate;
 
+//changes the view mode for all children appropriately
+@property (nonatomic, assign) ShelbyStreamBrowseViewMode viewMode;
+
 - (void)setEntries:(NSArray *)entries
         forChannel:(DisplayChannel *)channel;
 - (void)addEntries:(NSArray *)newChannelEntries

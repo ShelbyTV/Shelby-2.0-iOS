@@ -370,21 +370,36 @@
 }
 
 
-- (void)launchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
+- (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     
     [self initializeVideoReelWithChannel:channel atIndex:index];
-    [self presentViewController:self.videoReel animated:NO completion:nil];
+
+    if (DEVICE_IPAD) {
+        //TODO
+        DLog(@"TODO: handle play channel for iPad");
+    } else {
+        [self.videoReel willMoveToParentViewController:self];
+        [self addChildViewController:self.videoReel];
+        [self.view insertSubview:self.videoReel.view atIndex:0];
+        [self.videoReel didMoveToParentViewController:self];
+        
+        [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewForPlayback;
+    }
 }
 
 - (void)dismissPlayer
 {
+    [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewDefault;
+    
     [self.videoReel shutdown];
-    [self.videoReel dismissViewControllerAnimated:NO completion:nil];
+    [self.videoReel.view removeFromSuperview];
+    [self.videoReel removeFromParentViewController];
     self.videoReel = nil;
 }
 
+//DEPRECATED
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
@@ -393,6 +408,7 @@
     [self animateOpenChannels:channel];
 }
 
+//DEPRECATED
 - (void)animateDismissPlayerForChannel:(DisplayChannel *)channel atFrame:(Frame *)videoFrame
 {
     [self animateCloseChannels:channel atFrame:videoFrame];
@@ -400,6 +416,8 @@
 
 
 #pragma mark - ShelbyHome Private methods
+
+//DEPRECATED
 - (void)animateOpenChannels:(DisplayChannel *)channel 
 {
     if (self.animationInProgress) {
@@ -439,6 +457,7 @@
     }];
 }
 
+//DEPRECATED
 - (void)animateCloseChannels:(DisplayChannel *)channel atFrame:(Frame *)frame
 {
     if (self.animationInProgress) {

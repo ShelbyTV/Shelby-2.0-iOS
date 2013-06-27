@@ -21,6 +21,8 @@
     if (self) {
         CGRect contentFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight - 20);
 
+        self.backgroundColor = [UIColor clearColor];
+
         _backgroundScroller = [[UIScrollView alloc] initWithFrame:contentFrame];
         _backgroundScroller.scrollEnabled = NO;
         _backgroundScroller.gestureRecognizers = nil;
@@ -36,6 +38,11 @@
         [self addSubview:_foregroundScroller];
     }
     return self;
+}
+
+- (UIView *)getBackgroundView
+{
+    return self.backgroundScroller;
 }
 
 - (void)setBackgroundContent:(UIView *)backgroundContent
