@@ -15,7 +15,7 @@
 @protocol ShelbyStreamBrowseViewCellDelegate <NSObject>
 
 - (void)parallaxDidChange:(ShelbyStreamBrowseViewCell *)cell;
-- (void)didScrollForPlayback:(ShelbyStreamBrowseViewCell *)cell;
+- (void)playTapped:(ShelbyStreamBrowseViewCell *)cell;
 
 @end
 

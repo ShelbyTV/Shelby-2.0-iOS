@@ -10,6 +10,7 @@
 
 @interface StreamBrowseCellForegroundView : UIView
 
-@property (weak, nonatomic) IBOutlet UIImageView *playbackPlacholderThumbnail;
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet UIButton *altPlayButton;
 
 @end

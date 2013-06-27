@@ -52,6 +52,8 @@
         CGRect subviewFrame = CGRectMake(0, 20, frame.size.width, kShelbyFullscreenHeight - 20);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
         _foregroundView.frame = CGRectMake(0, 20, _foregroundView.frame.size.width, subviewFrame.size.height);
+        [_foregroundView.playButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [_foregroundView.altPlayButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
 
 
         //background - thumbnails are on top of each other in a parent view
@@ -81,7 +83,6 @@
 {
     self.thumbnailRegularView.image = nil;
     self.thumbnailBlurredView.image = nil;
-    self.foregroundView.playbackPlacholderThumbnail.image = nil;
 }
 
 - (void)setEntry:(id<ShelbyVideoContainer>)entry
@@ -132,9 +133,6 @@
 - (void)setupImagesWith:(UIImage *)image
 {
     if (self.thumbnailRegularView.image != image) {
-        //foreground
-        self.foregroundView.playbackPlacholderThumbnail.image = image;
-
         //regular background
         self.thumbnailRegularView.image = image;
         self.thumbnailRegularView.frame = CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
@@ -160,6 +158,13 @@
     }
 }
 
+#pragma mark - StreamBrowseCellForegroundView
+
+- (void)playTapped:(id)sender
+{
+    [self.delegate playTapped:self];
+}
+
 #pragma mark - STVParallaxViewDelegate
 
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
@@ -173,9 +178,7 @@
 
 - (void)didScrollToPage:(NSUInteger)page
 {
-    if (page == PLAYBACK_COLUMN) {
-        [self.delegate didScrollForPlayback:self];
-    }
+    //this method intentionally left blank
 }
 
 @end
