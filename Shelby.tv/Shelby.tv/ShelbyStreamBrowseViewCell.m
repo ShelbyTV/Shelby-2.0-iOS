@@ -73,10 +73,12 @@
         //parallax for foreground and background (above)
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
         _parallaxView.delegate = self;
-        [self addSubview:self.parallaxView];
+        [self.contentView addSubview:self.parallaxView];
         _parallaxView.foregroundContent = _foregroundView;
         _parallaxView.backgroundContent = _backgroundThumbnailsView;
         _parallaxView.parallaxRatio = PARALLAX_RATIO;
+        
+        [self setAutoresizesSubviews:YES];
     }
     return self;
 }

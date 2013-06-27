@@ -39,9 +39,6 @@
 {
     [super viewDidLoad];
 
-    // KP KP: TODO: shouldn't be full height because it goes over the bar on the home panel
-    self.view.frame = CGRectMake(0, 0, kShelbyFullscreenWidth, kShelbyFullscreenHeight);
-
     [self.collectionView registerClass:[ShelbyStreamBrowseViewCell class] forCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell"];
 
     self.collectionView.pagingEnabled = YES;
@@ -60,6 +57,11 @@
 
 -(BOOL) shouldAutorotate {
     return YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Setters & Getters
@@ -175,6 +177,12 @@
     }
 }
 
+- (BOOL)isLandscapeOrientation
+{
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    return UIInterfaceOrientationIsLandscape(orientation);
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -193,9 +201,10 @@
     }
 }
 
+#pragma mark - UICollectionViewDelegateFlowLayout methods
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(kShelbyFullscreenWidth, kShelbyFullscreenHeight - 20);
+    return self.view.frame.size;
 }
 
 #pragma mark - ShelbyStreamBrowseViewCellDelegate

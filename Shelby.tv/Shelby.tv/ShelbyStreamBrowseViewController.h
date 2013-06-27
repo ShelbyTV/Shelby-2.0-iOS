@@ -19,7 +19,7 @@
 //- (void)userDidCompleteTutorial;
 @end
 
-@interface ShelbyStreamBrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, ShelbyStreamBrowseViewCellDelegate>
+@interface ShelbyStreamBrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ShelbyStreamBrowseViewCellDelegate>
 
 @property (readonly, strong) DisplayChannel *channel;
 @property (nonatomic, assign) id<ShelbyStreamBrowseProtocol>browseDelegate;
