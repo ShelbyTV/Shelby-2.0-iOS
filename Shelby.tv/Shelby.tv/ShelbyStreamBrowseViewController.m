@@ -52,6 +52,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape | UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
+}
+
 #pragma mark - Setters & Getters
 - (void)setEntries:(NSArray *)entries
         forChannel:(DisplayChannel *)channel

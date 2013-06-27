@@ -82,7 +82,7 @@
     if (DEVICE_IPAD) {
         return UIInterfaceOrientationMaskLandscape;
     } else {
-        return UIInterfaceOrientationMaskPortrait;
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
     }
 }
 
@@ -142,9 +142,8 @@
                 }
             }
             
-            //add the new VCs in correct order
+            //add the new VCs with proper frame
             for (ShelbyStreamBrowseViewController *newSBVC in newStreamBrowseVCs) {
-                [self addChildViewController:newSBVC];
                 [newSBVC.view setFrame:CGRectMake(0, 44, newSBVC.view.frame.size.width, newSBVC.view.frame.size.height)];
             }
             _streamBrowseVCs = newStreamBrowseVCs;
@@ -164,9 +163,9 @@
     } else {
         ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
         if (sbvc) {
-            [sbvc removeFromParentViewController];
             if (sbvc.view.superview) {
                 [sbvc.view removeFromSuperview];
+                [sbvc removeFromParentViewController];
             }
             [_streamBrowseVCs removeObject:sbvc];
         }
@@ -188,8 +187,10 @@
 
         ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
         STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
+        [sbvc willMoveToParentViewController:self];
         [self.view addSubview:sbvc.view];
         [self.view bringSubviewToFront:sbvc.view];
+        [self addChildViewController:sbvc];
         [sbvc didMoveToParentViewController:self];
     }
 }
