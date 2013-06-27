@@ -61,4 +61,9 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 
 - (void)hideOverlayView;
 
+// using this to keep view in sync, not change playback
+- (void)scrollTo:(CGPoint)contentOffset;
+// using this to change playback
+- (void)endDecelerating;
+
 @end

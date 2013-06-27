@@ -14,9 +14,7 @@
 #import "Roll+Helper.h"
 #import "SettingsViewController.h"
 #import "ShelbyAlertView.h"
-#import "ShelbyStreamBrowseViewController.h"
 #import "SPVideoReel.h"
-//#import "TriageViewController.h"
 #import "User+Helper.h"
 
 @interface ShelbyHomeViewController ()
@@ -29,6 +27,7 @@
 
 @property (nonatomic, strong) BrowseViewController *browseVC;
 @property (nonatomic, strong) NSMutableArray *streamBrowseVCs;
+@property (nonatomic, strong) ShelbyStreamBrowseViewController *currentStreamBrowseVC;
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, assign) BOOL animationInProgress;
 
@@ -128,7 +127,9 @@
                 if (!sbvc) {
                     sbvc = [[ShelbyStreamBrowseViewController alloc] initWithNibName:@"ShelbyStreamBrowseView" bundle:nil];
                     [sbvc setEntries:nil forChannel:ch];
-                    sbvc.browseDelegate = self.masterDelegate;
+                    sbvc.browseManagementDelegate = self.masterDelegate;
+                    //we want to know about scroll events to keep SPVideoReel in sync, when applicable
+                    sbvc.browseViewDelegate = self;
                 }
                 [newStreamBrowseVCs addObject:sbvc];
             }
@@ -187,6 +188,7 @@
 
         ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
         STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
+        self.currentStreamBrowseVC = sbvc;
         [sbvc willMoveToParentViewController:self];
         [self.view addSubview:sbvc.view];
         [self addChildViewController:sbvc];
@@ -292,7 +294,7 @@
         self.browseVC.browseDelegate = masterDelegate;
     } else {
         for (ShelbyStreamBrowseViewController *sbvc in self.streamBrowseVCs) {
-            sbvc.browseDelegate = masterDelegate;
+            sbvc.browseManagementDelegate = masterDelegate;
         }
     }
 }
@@ -511,6 +513,22 @@
                                      andVideoEntities:[self deduplicatedEntriesForChannel:channel]
                                               atIndex:index];
     self.videoReel.delegate = self.masterDelegate;
+}
+
+#pragma mark - ShelbyStreamBrowseViewDelegate
+// The StreamBrowseView our leader, videoReel is our follower.  Keep them synchronized...
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didScrollTo:(CGPoint)contentOffset
+{
+    if (self.videoReel && vc == self.currentStreamBrowseVC) {
+        [self.videoReel scrollTo:contentOffset];
+    }
+}
+
+- (void)shelbyStreamBrowseViewControllerDidEndDecelerating:(ShelbyStreamBrowseViewController *)vc
+{
+    if (self.videoReel && vc == self.currentStreamBrowseVC) {
+        [self.videoReel endDecelerating];
+    }
 }
 
 #pragma mark - Authorization Methods (Private)

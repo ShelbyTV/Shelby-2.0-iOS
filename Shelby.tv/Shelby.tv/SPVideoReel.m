@@ -37,6 +37,7 @@
 
 @interface SPVideoReel ()
 
+//DEPRECATED
 @property (weak, nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
 //Array of DashboardEntry or Frame, technically: id<ShelbyVideoContainer>
@@ -256,7 +257,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     self.overlayView = nib[0];
     self.overlayView.alpha = 0;
     self.overlayView.delegate = self;
-    [self.view addSubview:self.overlayView];
+    //XXX DJS SPOverlayView is deprecated
+    //All of its functionality will be handled by the ShelbyStreamBrowseViews
+    //I am not killing the code right now, just taking it off screen while we build...
+    //TODO: remove the overlay, all its files, etc.
+//    [self.view addSubview:self.overlayView];
     [self.overlayView setAccentColor:self.channel.displayColor];
     [self.overlayView setRollEnabled:[self.channel canRoll] && [self.delegate canRoll]];
 }
@@ -444,6 +449,25 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.currentPlayer scrubToPct:scrubPct];
     
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerUserScrub withLabel:[NSString stringWithFormat:@"%2.2f%%", scrubPct * 100]];
+}
+
+- (void)scrollTo:(CGPoint)contentOffset
+{
+    //update view only
+    self.videoScrollView.contentOffset = contentOffset;
+}
+
+- (void)endDecelerating
+{
+    //possibly change to a new video
+    CGFloat pageHeight = self.videoScrollView.frame.size.height;
+    NSUInteger page = self.videoScrollView.contentOffset.y / pageHeight;
+
+    if (page == self.currentVideoPlayingIndex) {
+        return;
+    }
+
+    [self currentVideoShouldChangeToVideo:page];
 }
 
 #pragma mark -  Update Methods (Private)
@@ -1041,6 +1065,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 
 #pragma mark - UIScrollViewDelegate Methods
+//DEPRECATED
+//OLD UNUSED
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     //djs fix when we have our model and view controllers

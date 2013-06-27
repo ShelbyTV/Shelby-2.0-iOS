@@ -183,22 +183,17 @@
     return UIInterfaceOrientationIsLandscape(orientation);
 }
 
-#pragma mark - UICollectionViewDelegate
+#pragma mark - UICollectionViewDelegate (actually UIScrollViewDelegate)
+// The browseViewDelegate may use us as "lead view", adjusting other views programatically
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    DLog(@"didSelectItemAtIndexPath:");
-    if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
-        id entry = nil;
-        if (indexPath.row > 0 && (unsigned)indexPath.row < [self.deduplicatedEntries count]) {
-            entry = self.deduplicatedEntries[indexPath.row];
-        }
+    [self.browseViewDelegate shelbyStreamBrowseViewController:self didScrollTo:scrollView.contentOffset];
+}
 
-        [self.browseDelegate userPressedChannel:self.channel atItem:entry];
-        //            SPVideoItemViewCell *cell = (SPVideoItemViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-        //            [cell unHighlightItem];
-        //        }
-    }
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self.browseViewDelegate shelbyStreamBrowseViewControllerDidEndDecelerating:self];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout methods
@@ -220,8 +215,8 @@
 
 - (void)playTapped:(ShelbyStreamBrowseViewCell *)cell
 {
-    if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
-        [self.browseDelegate userPressedChannel:self.channel atItem:cell.entry];
+    if ([self.browseManagementDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
+        [self.browseManagementDelegate userPressedChannel:self.channel atItem:cell.entry];
     }
 }
 

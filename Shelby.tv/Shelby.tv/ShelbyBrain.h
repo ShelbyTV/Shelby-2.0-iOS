@@ -16,7 +16,7 @@
 #import "TwitterHandler.h"
 
 // KP KP: TODO: Once ShelbyDataM takes care of TwitterHandler, there would be no need for the TwitterHandlerDelegate. It would be part of the ShelbyDataMediatorProtocol
-@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, ShelbyStreamBrowseProtocol, SPVideoReelDelegate, ShelbyHomeDelegate, TwitterHandlerDelegate>
+@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, ShelbyStreamBrowseManagementDelegate, SPVideoReelDelegate, ShelbyHomeDelegate, TwitterHandlerDelegate>
 
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 
