@@ -52,6 +52,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape | UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
+}
+
 #pragma mark - Setters & Getters
 - (void)setEntries:(NSArray *)entries
         forChannel:(DisplayChannel *)channel
@@ -187,7 +196,7 @@
     [self.streamBrowseViewCells makeObjectsPerformSelector:@selector(matchParallaxOf:) withObject:cell];
 }
 
-- (void)didScrollForPlayback:(ShelbyStreamBrowseViewCell *)cell
+- (void)playTapped:(ShelbyStreamBrowseViewCell *)cell
 {
     if ([self.browseDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
         [self.browseDelegate userPressedChannel:self.channel atItem:cell.entry];
