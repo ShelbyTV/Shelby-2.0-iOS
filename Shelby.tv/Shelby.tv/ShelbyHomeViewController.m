@@ -374,8 +374,7 @@
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    
+    [self launchPlayerSetup];
     [self initializeVideoReelWithChannel:channel atIndex:index];
 
     if (DEVICE_IPAD) {
@@ -391,6 +390,13 @@
     }
 }
 
+- (void)launchPlayerSetup
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    
+    [self.topBar setHidden:YES];
+}
+
 - (void)dismissPlayer
 {
     [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewDefault;
@@ -399,6 +405,12 @@
     [self.videoReel.view removeFromSuperview];
     [self.videoReel removeFromParentViewController];
     self.videoReel = nil;
+    
+    // The opposite of what we do in: launchPlayerSetup
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    
+    [self.topBar setHidden:NO];
+
 }
 
 //DEPRECATED
@@ -439,8 +451,8 @@
     [self.videoReel.view addSubview:animationViews.centerView];
     [self.videoReel.view addSubview:animationViews.bottomView];
     [self.videoReel.view addSubview:animationViews.topView];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+
+    [self launchPlayerSetup];
     
     [self presentViewController:self.videoReel animated:NO completion:^{
         [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
