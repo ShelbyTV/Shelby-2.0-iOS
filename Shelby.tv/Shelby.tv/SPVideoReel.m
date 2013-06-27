@@ -149,6 +149,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     NSInteger height, width;
     
     if (fromInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+
+        // If devide from & current orientation is Landscape - it means we are coming from the upside down state and we can ignore this case
+        if ([self isLandscapeOrientation]) {
+            return;
+        }
+
         // Device is Portrait
         height = self.view.frame.size.height;
         width = self.view.frame.size.width;
@@ -237,9 +243,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
     } else {
         CGSize contentSize;
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
         NSInteger videoHeight = kShelbyFullscreenHeight;
-        if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+        if ([self isLandscapeOrientation]) {
             videoHeight = kShelbyFullscreenWidth;
             contentSize = CGSizeMake(kShelbyFullscreenHeight, [self.videoEntities count] * videoHeight);
         } else {
@@ -284,8 +289,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                 viewframe.origin.y = 0.0f;
             } else {
                 NSInteger videoHeight = kShelbyFullscreenHeight;
-                UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-                if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+                if ([self isLandscapeOrientation]) {
                     videoHeight = kShelbyFullscreenWidth;
                 }
                 viewframe.origin.y = videoHeight * index;
@@ -401,6 +405,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self.tutorialTimer invalidate];
         self.tutorialTimer = nil;
     }
+}
+
+- (BOOL)isLandscapeOrientation
+{
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    return UIInterfaceOrientationIsLandscape(orientation);
 }
 
 - (void)animatePlaybackState:(BOOL)videoPlaying
