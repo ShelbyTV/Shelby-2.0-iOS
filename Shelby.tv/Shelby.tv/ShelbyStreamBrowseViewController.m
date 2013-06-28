@@ -64,8 +64,10 @@
     return YES;
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
     [self.collectionView reloadData];
 
     // KP KP: TODO: this is where we need to make sure that the same cell is the one visible on the screen - from before and after rotation
