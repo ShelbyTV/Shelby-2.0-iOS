@@ -79,6 +79,11 @@
         _parallaxView.parallaxRatio = PARALLAX_RATIO;
         
         [self setAutoresizesSubviews:YES];
+
+        //XXX LAYOUT TESTING
+        self.layer.borderColor = [UIColor grayColor].CGColor;
+        self.layer.borderWidth = 2.0;
+        //XXX LAYOUT TESTING
     }
     return self;
 }

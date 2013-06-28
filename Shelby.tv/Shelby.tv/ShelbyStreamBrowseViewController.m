@@ -42,6 +42,11 @@
     [self.collectionView registerClass:[ShelbyStreamBrowseViewCell class] forCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell"];
 
     self.collectionView.pagingEnabled = YES;
+
+    //XXX LAYOUT TESTING
+    self.view.layer.borderColor = [UIColor greenColor].CGColor;
+    self.view.layer.borderWidth = 2.0;
+    //XXX LAYOUT TESTING
 }
 
 - (void)didReceiveMemoryWarning

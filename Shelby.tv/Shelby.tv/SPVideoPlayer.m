@@ -65,6 +65,11 @@
     self.isPlayable = NO;
     self.isPlaying = NO;
     self.shouldAutoplay = NO;
+
+    //XXX LAYOUT TESTING
+    self.view.layer.borderColor = [UIColor blueColor].CGColor;
+    self.view.layer.borderWidth = 7.0;
+    //XXX LAYOUT TESTING
 }
 
 - (void)viewDidAppear:(BOOL)animated

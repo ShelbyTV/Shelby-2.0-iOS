@@ -241,6 +241,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         CGPoint offset = CGPointMake(0, (int)self.videoStartIndex * videoHeight);
         [self.videoScrollView setContentOffset:offset animated:NO];
     }
+
+    //XXX LAYOUT TESTING
+    self.videoScrollView.layer.borderColor = [UIColor redColor].CGColor;
+    self.videoScrollView.layer.borderWidth = 4.0;
+    //XXX LAYOUT TESTING
 }
 
 - (void)setupOverlayView
