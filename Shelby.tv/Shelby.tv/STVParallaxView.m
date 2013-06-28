@@ -75,6 +75,34 @@
     return self.foregroundScroller.contentOffset;
 }
 
+
+- (void)updateFrame:(CGRect)frame
+{
+    self.frame = frame;
+    self.backgroundScroller.frame =  frame;
+    self.foregroundScroller.frame = frame;
+
+    NSInteger width;
+    NSInteger height;
+    if (frame.size.width > frame.size.height) {
+        // landscape
+        width = self.backgroundContent.frame.size.height;
+        height = self.backgroundContent.frame.size.width;
+    } else {
+        // Portrait
+        width = self.backgroundContent.frame.size.width;
+        height = self.backgroundContent.frame.size.height;
+    }
+
+    self.backgroundContent.frame = CGRectMake(0, 0, width, height);
+    self.foregroundContent.frame = CGRectMake(0, 0, self.frame.size.width * 2, self.frame.size.height);
+    
+    self.backgroundScroller.contentSize = self.backgroundContent.frame.size;
+    self.foregroundScroller.contentSize = self.foregroundContent.frame.size;
+    
+    // KP KP: TODO: need to also update content offset.
+}
+
 #pragma mark - UIScrollViewDelegate (only of _foregroundScroller)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

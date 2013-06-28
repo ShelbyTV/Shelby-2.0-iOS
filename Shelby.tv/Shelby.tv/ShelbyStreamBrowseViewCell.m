@@ -144,6 +144,11 @@
     }
 }
 
+- (void)updateParallaxFrame:(CGRect)frame
+{
+    [self.parallaxView updateFrame:frame];
+}
+
 - (void)setupImagesWith:(UIImage *)image
 {
     if (self.thumbnailRegularView.image != image) {

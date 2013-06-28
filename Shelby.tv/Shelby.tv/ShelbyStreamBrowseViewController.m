@@ -152,6 +152,8 @@
     cell.viewMode = self.viewMode;
     cell.entry = self.deduplicatedEntries[indexPath.row];
 
+    [cell updateParallaxFrame:self.view.frame];
+
 //load more data
 //    NSInteger cellsBeyond = [dedupedEntries count] - [indexPath row];
 //    if(cellsBeyond == kShelbyPrefetchEntriesWhenNearEnd && channelCollection.channel.canFetchRemoteEntries){

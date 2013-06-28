@@ -45,4 +45,6 @@
 
 - (UIView *)getBackgroundView;
 
+- (void)updateFrame:(CGRect)frame;
+
 @end
