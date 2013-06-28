@@ -19,7 +19,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        CGRect contentFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight - 20);
+        CGRect contentFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight);
 
         self.backgroundColor = [UIColor clearColor];
 

@@ -385,8 +385,9 @@
 
 - (void)launchPlayerSetup
 {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    
+    if (DEVICE_IPAD) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    }
     [self.topBar setHidden:YES];
 }
 
@@ -400,8 +401,9 @@
     self.videoReel = nil;
     
     // The opposite of what we do in: launchPlayerSetup
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    
+    if (DEVICE_IPAD) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    }
     [self.topBar setHidden:NO];
 
 }

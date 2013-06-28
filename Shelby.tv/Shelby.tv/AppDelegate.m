@@ -54,6 +54,10 @@
     // not yet re-implemented
 //    [self setupOfflineMode];
     
+    if (!DEVICE_IPAD) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+    }
+    
     // Create UIWindow and rootViewController
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     

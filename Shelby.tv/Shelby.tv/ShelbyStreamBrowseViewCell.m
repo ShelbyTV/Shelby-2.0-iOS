@@ -33,7 +33,7 @@
 #define PARALLAX_BG_X -150
 #define PARALLAX_BG_Y 0
 #define PARALLAX_BG_WIDTH 650
-#define PARALLAX_BG_HEIGHT (kShelbyFullscreenHeight - 20)
+#define PARALLAX_BG_HEIGHT kShelbyFullscreenHeight
 
 #define BLUR_RADIUS 4.0
 
@@ -51,9 +51,9 @@
         [_blurFilter setValue:@(BLUR_RADIUS) forKey:@"inputRadius"];
 
         //foreground
-        CGRect subviewFrame = CGRectMake(0, 20, frame.size.width, kShelbyFullscreenHeight - 20);
+        CGRect subviewFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
-        _foregroundView.frame = CGRectMake(0, 20, _foregroundView.frame.size.width, subviewFrame.size.height);
+        _foregroundView.frame = CGRectMake(0, 0, _foregroundView.frame.size.width, subviewFrame.size.height);
         [_foregroundView.summaryPlayButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
         [_foregroundView.detailPlayButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -81,7 +81,7 @@
         [self setAutoresizesSubviews:YES];
 
         //XXX LAYOUT TESTING
-        self.layer.borderColor = [UIColor grayColor].CGColor;
+        self.layer.borderColor = [UIColor yellowColor].CGColor;
         self.layer.borderWidth = 2.0;
         //XXX LAYOUT TESTING
     }
