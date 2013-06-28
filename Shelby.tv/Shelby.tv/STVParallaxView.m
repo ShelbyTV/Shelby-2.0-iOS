@@ -99,8 +99,6 @@
     
     self.backgroundScroller.contentSize = self.backgroundContent.frame.size;
     self.foregroundScroller.contentSize = self.foregroundContent.frame.size;
-    
-    // KP KP: TODO: need to also update content offset.
 }
 
 #pragma mark - UIScrollViewDelegate (only of _foregroundScroller)

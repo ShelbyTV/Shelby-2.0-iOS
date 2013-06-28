@@ -67,6 +67,8 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self.collectionView reloadData];
+
+    // KP KP: TODO: this is where we need to make sure that the same cell is the one visible on the screen - from before and after rotation
 }
 
 #pragma mark - Setters & Getters
