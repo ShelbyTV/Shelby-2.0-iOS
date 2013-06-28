@@ -54,8 +54,8 @@
         CGRect subviewFrame = CGRectMake(0, 20, frame.size.width, kShelbyFullscreenHeight - 20);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
         _foregroundView.frame = CGRectMake(0, 20, _foregroundView.frame.size.width, subviewFrame.size.height);
-        [_foregroundView.playButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [_foregroundView.altPlayButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [_foregroundView.summaryPlayButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [_foregroundView.detailPlayButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
 
 
         //background - thumbnails are on top of each other in a parent view
@@ -104,6 +104,7 @@
 
     if (videoFrame && videoFrame.video) {
         Video *video = videoFrame.video;
+        //images
         if (video && video.thumbnailURL) {
             NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:video.thumbnailURL]];
             [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
@@ -119,6 +120,10 @@
                                                                    //ignoring for now
                                                                }] start];
         }
+
+        //title
+        self.foregroundView.summaryTitle.text = videoFrame.video.title;
+        self.foregroundView.detailTitle.text = videoFrame.video.title;
 
 //        [cell.caption setText:[NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]]];
 //don't like this magic number, but also don't think the constant belongs in BrowseViewController...
