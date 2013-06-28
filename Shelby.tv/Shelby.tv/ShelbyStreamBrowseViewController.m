@@ -68,9 +68,23 @@
 {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
+    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        return;
+    }
+    
+    CGPoint currentContentOffset = self.collectionView.contentOffset;
+
+    // Calculate the new contentOffset.y
+    // After rotation Y content offset should be as follows:
+    // a = currentContentOffset.y / currentHeight     - currentHeight = self.view.frame.size.height
+    // afterRotationContentOffsetY = a * afterRotationHeight     - afterRotationHeight = self.view.frame.size.width
+    NSInteger afterRotationContentOffsetY = (NSInteger) currentContentOffset.y / self.view.frame.size.height * self.view.frame.size.width;
+    
+    // KP KP: TODO: behaving weird when swipe to detail view, rotate and then scroll one down (only when rotating to landscape)
+    
     [self.collectionView reloadData];
 
-    // KP KP: TODO: this is where we need to make sure that the same cell is the one visible on the screen - from before and after rotation
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, afterRotationContentOffsetY)];
 }
 
 #pragma mark - Setters & Getters
