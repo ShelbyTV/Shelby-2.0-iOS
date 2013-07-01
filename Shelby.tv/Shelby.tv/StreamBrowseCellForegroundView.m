@@ -8,6 +8,12 @@
 
 #import "StreamBrowseCellForegroundView.h"
 
+@interface  StreamBrowseCellForegroundView()
+@property (nonatomic, weak) IBOutlet UIImageView *summaryUserAvatar;
+@property (weak, nonatomic) IBOutlet UILabel *summaryUsername;
+@property (weak, nonatomic) IBOutlet UILabel *summaryViaNetwork;
+@end
+
 @implementation StreamBrowseCellForegroundView
 
 - (id)initWithFrame:(CGRect)frame

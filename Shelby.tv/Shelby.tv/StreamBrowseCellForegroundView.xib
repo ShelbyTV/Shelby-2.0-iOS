@@ -149,7 +149,6 @@
 						<string key="NSFrame">{{340, 485}, {55, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -303,6 +302,30 @@
 						<reference key="destination" ref="160855130"/>
 					</object>
 					<int key="connectionID">53</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">summaryUserAvatar</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="216714586"/>
+					</object>
+					<int key="connectionID">243</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">summaryUsername</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="300062824"/>
+					</object>
+					<int key="connectionID">244</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">summaryViaNetwork</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="657087566"/>
+					</object>
+					<int key="connectionID">245</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1152,7 +1175,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">242</int>
+			<int key="maxID">245</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1172,6 +1195,9 @@
 						<string key="detailTitle">UILabel</string>
 						<string key="summaryPlayButton">UIButton</string>
 						<string key="summaryTitle">UILabel</string>
+						<string key="summaryUserAvatar">UIImageView</string>
+						<string key="summaryUsername">UILabel</string>
+						<string key="summaryViaNetwork">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="detailPlayButton">
@@ -1188,6 +1214,18 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="summaryTitle">
 							<string key="name">summaryTitle</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="summaryUserAvatar">
+							<string key="name">summaryUserAvatar</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="summaryUsername">
+							<string key="name">summaryUsername</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="summaryViaNetwork">
+							<string key="name">summaryViaNetwork</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
