@@ -44,16 +44,23 @@
   
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         // Landscape
-        self.detailTitle.frame = CGRectMake(xOrigin, 60, 280, 17);
-        self.detailUserView.frame = CGRectMake(xOrigin, 90, 160, 60);
-        self.detailCommentView.frame = CGRectMake(xOrigin, 160, pageWidth - kShelbyInfoViewMargin * 2, 60);
+        // Summary View
+        self.summaryTitle.frame = CGRectMake(20, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
+        // Detail View
+        self.detailTitle.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
+        self.detailUserView.frame = CGRectMake(xOrigin, 105, 160, 60);
+        self.detailCommentView.frame = CGRectMake(xOrigin, 170, pageWidth - kShelbyInfoViewMargin * 2, 60);
         self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, 100, 280, 40);
     } else {
         // Portrait
-        self.detailTitle.frame = CGRectMake(xOrigin, 60, 280, 17);
-        self.detailUserView.frame = CGRectMake(xOrigin, 90, 160, 60);
-        self.detailCommentView.frame = CGRectMake(xOrigin, 160, 280, 100);
-        self.detailNetworkShares.frame = CGRectMake(xOrigin, 270, 280, 40);
+        // Summary View
+        self.summaryTitle.frame = CGRectMake(20, 84, 280, 120);
+     
+        // Detail View
+        self.detailTitle.frame = CGRectMake(xOrigin, 50, 280, 44);
+        self.detailUserView.frame = CGRectMake(xOrigin, 105, 160, 60);
+        self.detailCommentView.frame = CGRectMake(xOrigin, 195, 280, 100);
+        self.detailNetworkShares.frame = CGRectMake(xOrigin, 305, 280, 40);
     }
 }
 
