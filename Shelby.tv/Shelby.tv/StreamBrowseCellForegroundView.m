@@ -16,7 +16,8 @@
 @property (nonatomic, weak) IBOutlet UIImageView *detailUserAvatar;
 @property (weak, nonatomic) IBOutlet UILabel *detailUsername;
 @property (weak, nonatomic) IBOutlet UILabel *detailViaNetwork;
-
+@property (weak, nonatomic) IBOutlet UIView *detailCommentView;
+@property (weak, nonatomic) IBOutlet UIView *detailNetworkShares;
 @end
 
 @implementation StreamBrowseCellForegroundView

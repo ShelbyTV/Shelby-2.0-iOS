@@ -150,7 +150,6 @@
 						<string key="NSFrame">{{340, 485}, {55, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -453,6 +452,22 @@
 						<reference key="destination" ref="630860161"/>
 					</object>
 					<int key="connectionID">284</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">detailCommentView</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="654463852"/>
+					</object>
+					<int key="connectionID">418</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">detailNetworkShares</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="85713753"/>
+					</object>
+					<int key="connectionID">419</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1979,7 +1994,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">417</int>
+			<int key="maxID">419</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1995,6 +2010,8 @@
 					<string key="className">StreamBrowseCellForegroundView</string>
 					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="detailCommentView">UIView</string>
+						<string key="detailNetworkShares">UIView</string>
 						<string key="detailPlayButton">UIButton</string>
 						<string key="detailTitle">UILabel</string>
 						<string key="detailUserAvatar">UIImageView</string>
@@ -2007,6 +2024,14 @@
 						<string key="summaryViaNetwork">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="detailCommentView">
+							<string key="name">detailCommentView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="detailNetworkShares">
+							<string key="name">detailNetworkShares</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="detailPlayButton">
 							<string key="name">detailPlayButton</string>
 							<string key="candidateClassName">UIButton</string>
