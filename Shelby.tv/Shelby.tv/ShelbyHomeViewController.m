@@ -405,7 +405,7 @@
             [self.videoReel playCurrentPlayer];
         }
     } else {
-        [self launchPlayerSetup];
+        [self prepareToShowVideoReel];
         [self initializeVideoReelWithChannel:channel atIndex:index];
 
         if (DEVICE_IPAD) {
@@ -417,16 +417,18 @@
             [self.view insertSubview:self.videoReel.view belowSubview:self.currentStreamBrowseVC.view];
             [self.videoReel didMoveToParentViewController:self];
 
-            //entering playback, hide the overlays
+            //entering playback: hide the overlays and update controls state
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
                 self.videoControlsVC.view.alpha = 0.0;
                 [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+            } completion:^(BOOL finished) {
+                [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
             }];
         }
     }
 }
 
-- (void)launchPlayerSetup
+- (void)prepareToShowVideoReel
 {
     if (DEVICE_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
@@ -490,7 +492,7 @@
     [self.videoReel.view addSubview:animationViews.bottomView];
     [self.videoReel.view addSubview:animationViews.topView];
 
-    [self launchPlayerSetup];
+    [self prepareToShowVideoReel];
     
     [self presentViewController:self.videoReel animated:NO completion:^{
         [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -595,18 +597,18 @@
     }
 }
 
-- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)browseVC wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    if (self.videoReel && self.currentStreamBrowseVC == vc) {
+    if (self.videoReel && self.currentStreamBrowseVC == browseVC) {
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-            if (vc.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
+            if (browseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
                 //show overlays
                 self.videoControlsVC.view.alpha = 1.0;
-                vc.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
+                browseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
             } else {
                 //hide overlays
                 self.videoControlsVC.view.alpha = 0.0;
-                vc.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+                browseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
             }
         }];
     }
@@ -616,6 +618,13 @@
 {
     STVAssert(page == 0 || page == 1, @"bad page");
     if (self.currentStreamBrowseVC == vc) {
+        [self updateVideoControlsForPage:page];
+    }
+}
+
+- (void)updateVideoControlsForPage:(NSUInteger)page
+{
+    [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
         if (self.videoReel) {
             //playback, summary or detail page
             self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
@@ -628,7 +637,7 @@
                 self.videoControlsVC.displayMode = VideoControlsDisplayActionsOnly;
             }
         }
-    }
+    }];
 }
 
 #pragma mark - Authorization Methods (Private)

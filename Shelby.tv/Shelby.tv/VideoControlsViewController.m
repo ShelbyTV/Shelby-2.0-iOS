@@ -142,17 +142,20 @@
 
 - (void)updateViewForCurrentDisplayMode
 {
+    //NB: self.view is part of our plublic API, so bear in mind that anybody from
+    //    the outside world may use self.view to adjust our alpha wholistically
     switch (_displayMode) {
         case VideoControlsDisplayDefault:
-            self.view.alpha = 0.0;
+            [self setActionViewsAlpha:0.0];
+            [self setPlaybackControlViewsAlpha:0.0];
             break;
         case VideoControlsDisplayActionsOnly:
+            [self setActionViewsAlpha:1.0];
             [self setPlaybackControlViewsAlpha:0.0];
-            self.view.alpha = 1.0;
             break;
         case VideoControlsDisplayActionsAndPlaybackControls:
+            [self setActionViewsAlpha:1.0];
             [self setPlaybackControlViewsAlpha:1.0];
-            self.view.alpha = 1.0;
     }
 }
 
@@ -163,6 +166,13 @@
     self.controlsView.currentTimeLabel.alpha = a;
     self.controlsView.durationLabel.alpha = a;
     self.controlsView.bufferProgressView.alpha = a;
+}
+
+- (void)setActionViewsAlpha:(CGFloat)a
+{
+    self.controlsView.likeButton.alpha = a;
+    self.controlsView.unlikeButton.alpha = a;
+    self.controlsView.shareButton.alpha = a;
 }
 
 #pragma mark - Text Helpers
