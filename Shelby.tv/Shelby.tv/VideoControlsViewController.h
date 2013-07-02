@@ -10,6 +10,16 @@
 #import <CoreMedia/CoreMedia.h>
 #import "SPVideoReel.h"
 
+typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
+{
+    //nothing is shown
+    VideoControlsDisplayDefault,
+    //just the lower bar of action buttons is shown
+    VideoControlsDisplayActionsOnly,
+    //upper playback controls and lower action bar are shown
+    VideoControlsDisplayActionsAndPlaybackControls
+};
+
 @class VideoControlsViewController;
 
 @protocol VideoControlsDelegate <NSObject>
@@ -28,6 +38,8 @@
 @property (nonatomic, weak) id<VideoControlsDelegate> delegate;
 
 @property (nonatomic, strong) id<ShelbyVideoContainer>currentEntity;
+
+@property (nonatomic, assign) VideoControlsDisplayMode displayMode;
 
 //a placholder for the system airplay view
 @property (nonatomic, readonly) UIView *airPlayView;

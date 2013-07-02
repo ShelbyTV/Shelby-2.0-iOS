@@ -14,12 +14,15 @@
 
 @interface VideoControlsView : UIView
 
+//-- playback controls --
 //a 31x23 placholder
 @property (weak, nonatomic) IBOutlet UIView *airPlayView;
 @property (weak, nonatomic) IBOutlet UIButton *largePlayButton;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *bufferProgressView;
+
+//-- actions --
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UIButton *unlikeButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;

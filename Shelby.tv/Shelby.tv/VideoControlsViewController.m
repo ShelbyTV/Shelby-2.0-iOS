@@ -23,6 +23,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _videoIsPlaying = NO;
+        _displayMode = VideoControlsDisplayDefault;
     }
     return self;
 }
@@ -33,12 +34,21 @@
 
     _controlsView = (VideoControlsView *)self.view;
     _airPlayView = _controlsView.airPlayView;
+    [self updateViewForCurrentDisplayMode];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setDisplayMode:(VideoControlsDisplayMode)displayMode
+{
+    if (_displayMode != displayMode) {
+        _displayMode = displayMode;
+        [self updateViewForCurrentDisplayMode];
+    }
 }
 
 - (void)setCurrentEntity:(id<ShelbyVideoContainer>)currentEntity
@@ -48,16 +58,6 @@
         [self updateViewForCurrentEntity];
     }
 }
-
-- (void)updateViewForCurrentEntity
-{
-    if (self.currentEntity){
-        BOOL isLiked = [[Frame frameForEntity:self.currentEntity] videoIsLiked];
-        self.controlsView.likeButton.hidden = isLiked;
-        self.controlsView.unlikeButton.hidden = !isLiked;
-    }
-}
-
 #pragma mark - XIB actions
 
 - (IBAction)largePlayButtonTapped:(id)sender {
@@ -129,7 +129,43 @@
     }
 }
 
-#pragma mark - Helpers
+#pragma mark - Visual Helpers
+
+- (void)updateViewForCurrentEntity
+{
+    if (self.currentEntity){
+        BOOL isLiked = [[Frame frameForEntity:self.currentEntity] videoIsLiked];
+        self.controlsView.likeButton.hidden = isLiked;
+        self.controlsView.unlikeButton.hidden = !isLiked;
+    }
+}
+
+- (void)updateViewForCurrentDisplayMode
+{
+    switch (_displayMode) {
+        case VideoControlsDisplayDefault:
+            self.view.alpha = 0.0;
+            break;
+        case VideoControlsDisplayActionsOnly:
+            [self setPlaybackControlViewsAlpha:0.0];
+            self.view.alpha = 1.0;
+            break;
+        case VideoControlsDisplayActionsAndPlaybackControls:
+            [self setPlaybackControlViewsAlpha:1.0];
+            self.view.alpha = 1.0;
+    }
+}
+
+- (void)setPlaybackControlViewsAlpha:(CGFloat)a
+{
+    self.controlsView.airPlayView.alpha = a;
+    self.controlsView.largePlayButton.alpha = a;
+    self.controlsView.currentTimeLabel.alpha = a;
+    self.controlsView.durationLabel.alpha = a;
+    self.controlsView.bufferProgressView.alpha = a;
+}
+
+#pragma mark - Text Helpers
 
 - (NSString *)prettyStringForTime:(CMTime)t
 {

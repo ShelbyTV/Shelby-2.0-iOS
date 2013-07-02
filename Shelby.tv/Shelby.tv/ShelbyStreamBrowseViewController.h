@@ -25,9 +25,9 @@
 @protocol ShelbyStreamBrowseViewDelegate <NSObject>
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didScrollTo:(CGPoint)contentOffset;
 - (void)shelbyStreamBrowseViewControllerDidEndDecelerating:(ShelbyStreamBrowseViewController *)vc;
-
 //indicates a single, 1 touch tap that waits for all panning to fail
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer;
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didChangeToPage:(NSUInteger)page;
 @end
 
 @interface ShelbyStreamBrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ShelbyStreamBrowseViewCellDelegate>
@@ -53,5 +53,8 @@
 
 - (NSIndexPath *)indexPathForCurrentFocus;
 - (id<ShelbyVideoContainer>)entityForCurrentFocus;
+
+//which page (of the parallax of the cells) is currently showing
+@property (nonatomic, assign) NSUInteger currentPage;
 
 @end

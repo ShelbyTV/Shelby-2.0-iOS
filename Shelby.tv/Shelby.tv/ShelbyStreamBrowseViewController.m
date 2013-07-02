@@ -31,6 +31,7 @@
     if (self) {
         _streamBrowseViewCells = [[NSMutableSet set] mutableCopy];
         _viewMode = ShelbyStreamBrowseViewDefault;
+        _currentPage = 0;
     }
     return self;
 }
@@ -257,7 +258,7 @@
 
 #pragma mark - ShelbyStreamBrowseViewCellDelegate
 
-- (void)parallaxDidChange:(ShelbyStreamBrowseViewCell *)cell
+- (void)browseViewCellParallaxDidChange:(ShelbyStreamBrowseViewCell *)cell
 {
     // Keep all the parallax views in sync, as if user is moving the entire collection around 2D space.
     // (as opposed to moving an individual cell independently of the others)
@@ -266,11 +267,17 @@
     [self.streamBrowseViewCells makeObjectsPerformSelector:@selector(matchParallaxOf:) withObject:cell];
 }
 
-- (void)playTapped:(ShelbyStreamBrowseViewCell *)cell
+- (void)browseViewCellPlayTapped:(ShelbyStreamBrowseViewCell *)cell
 {
     if ([self.browseManagementDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
         [self.browseManagementDelegate userPressedChannel:self.channel atItem:cell.entry];
     }
+}
+
+- (void)browseViewCell:(ShelbyStreamBrowseViewCell *)cell parallaxDidChangeToPage:(NSUInteger)page
+{
+    self.currentPage = page;
+    [self.browseViewDelegate shelbyStreamBrowseViewController:self didChangeToPage:page];
 }
 
 @end

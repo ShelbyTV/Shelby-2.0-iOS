@@ -612,6 +612,25 @@
     }
 }
 
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didChangeToPage:(NSUInteger)page
+{
+    STVAssert(page == 0 || page == 1, @"bad page");
+    if (self.currentStreamBrowseVC == vc) {
+        if (self.videoReel) {
+            //playback, summary or detail page
+            self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
+        } else {
+            if (page == 0) {
+                //non playback, summary page
+                self.videoControlsVC.displayMode = VideoControlsDisplayDefault;
+            } else {
+                //non playback, detail page
+                self.videoControlsVC.displayMode = VideoControlsDisplayActionsOnly;
+            }
+        }
+    }
+}
+
 #pragma mark - Authorization Methods (Private)
 - (void)dismissAuthorizationVC
 {

@@ -18,15 +18,12 @@
 @property (nonatomic, strong) UIImageView *thumbnailRegularView;
 @property (nonatomic, strong) UIImageView *thumbnailBlurredView;
 @property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
+@property (nonatomic, strong) UIButton *playButton;
 
 //reuse context for better performance
 @property (nonatomic, strong) CIContext *ciContext;
 @property (nonatomic, strong) CIFilter *blurFilter;
 @end
-
-#define BASIC_COLUMN 0
-#define DETAIL_COLUMN 1
-#define PLAYBACK_COLUMN 2
 
 //configure parallax configuration
 #define PARALLAX_RATIO 0.4
@@ -50,12 +47,12 @@
         _blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
         [_blurFilter setValue:@(BLUR_RADIUS) forKey:@"inputRadius"];
 
-        //foreground
+        //parallax foreground
         CGRect subviewFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
         _foregroundView.frame = CGRectMake(0, 0, _foregroundView.frame.size.width, subviewFrame.size.height);
 
-        //background - thumbnails are on top of each other in a parent view
+        //parallax background - thumbnails are on top of each other in a parent view
         CGRect bgThumbsHolderFrame = CGRectMake(PARALLAX_BG_X, PARALLAX_BG_Y, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
         _backgroundThumbnailsView = [[UIView alloc] initWithFrame:bgThumbsHolderFrame];
         _thumbnailRegularView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT)];
@@ -66,14 +63,28 @@
         _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
 
-
         //parallax for foreground and background (above)
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
         _parallaxView.delegate = self;
-        [self.contentView addSubview:self.parallaxView];
+        [self.contentView addSubview:_parallaxView];
         _parallaxView.foregroundContent = _foregroundView;
         _parallaxView.backgroundContent = _backgroundThumbnailsView;
         _parallaxView.parallaxRatio = PARALLAX_RATIO;
+
+        //a big play button on top of the parallax view (shown when video controls aren't)
+        _playButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [_playButton setTitle:@"PLAY" forState:UIControlStateNormal];
+        [self.contentView insertSubview:_playButton aboveSubview:_parallaxView];
+        _playButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[play]"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:@{@"play":_playButton}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[play]-66-|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:@{@"play":_playButton}]];
         
         [self setAutoresizesSubviews:YES];
 
@@ -166,33 +177,40 @@
         _viewMode = viewMode;
         switch (_viewMode) {
             case ShelbyStreamBrowseViewDefault:
+                self.playButton.alpha = 1.0;
                 [self.parallaxView getBackgroundView].alpha = 1.0;
                 break;
             case ShelbyStreamBrowseViewForPlaybackWithOverlay:
+                self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 1.0;
                 break;
             case ShelbyStreamBrowseViewForPlaybackWithoutOverlay:
+                self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 0.0;
         }
     }
 }
 
+- (void)playButtonTapped:(id)sender
+{
+    [self.delegate browseViewCellPlayTapped:self];
+}
+
 #pragma mark - STVParallaxViewDelegate
 
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
 {
-    //TODO: this constant won't work when we allow for rotation
-    CGFloat alpha = parallaxView.foregroundContentOffset.x / 320.0;
+    CGFloat alpha = parallaxView.foregroundContentOffset.x / self.frame.size.width;
     self.thumbnailBlurredView.alpha = alpha;
 
-    [self.delegate parallaxDidChange:self];
+    [self.delegate browseViewCellParallaxDidChange:self];
 }
 
 - (void)didScrollToPage:(NSUInteger)page
 {
-    //this method intentionally left blank
+    [self.delegate browseViewCell:self parallaxDidChangeToPage:page];
 }
 
 @end
