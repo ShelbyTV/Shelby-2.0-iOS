@@ -9,6 +9,7 @@
 #import "ShelbyHomeViewController.h"
 #import "AsynchronousFreeloader.h"
 #import "BrowseViewController.h"
+#import "DashboardEntry+Helper.h"
 #import "DisplayChannel.h"
 #import "ImageUtilities.h"
 #import "Roll+Helper.h"
@@ -66,14 +67,14 @@
         _videoControlsVC = [[VideoControlsViewController alloc] initWithNibName:@"VideoControlsView" bundle:nil];
         _videoControlsVC.delegate = self;
         [_videoControlsVC willMoveToParentViewController:self];
-        [_videoControlsVC.view setFrame:CGRectMake(0, 100, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
+        [_videoControlsVC.view setFrame:CGRectMake(0, 0, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
         [self.view insertSubview:_videoControlsVC.view aboveSubview:self.topBar];
         _videoControlsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controls]|"
                                                                           options:0
                                                                           metrics:nil
                                                                             views:@{@"controls":_videoControlsVC.view}]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(100)]|"
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(144)]|"
                                                                           options:0
                                                                           metrics:nil
                                                                             views:@{@"controls":_videoControlsVC.view}]];
@@ -158,6 +159,7 @@
             if (self.currentStreamBrowseVC) {
                 [self.currentStreamBrowseVC.view removeFromSuperview];
                 [self.currentStreamBrowseVC removeFromParentViewController];
+                self.currentStreamBrowseVC = nil;
             }
             
             _streamBrowseVCs = newStreamBrowseVCs;
@@ -195,6 +197,7 @@
         if (self.currentStreamBrowseVC) {
             [self.currentStreamBrowseVC.view removeFromSuperview];
             [self.currentStreamBrowseVC removeFromParentViewController];
+            self.currentStreamBrowseVC = nil;
         }
 
         ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
@@ -205,15 +208,19 @@
         sbvc.view.frame = self.view.frame;
         [self addChildViewController:sbvc];
         [sbvc didMoveToParentViewController:self];
+
+        //set current entity on video controls, if applicable
+        self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
     }
 }
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
     if (DEVICE_IPAD) {
-        //When we implement new iPad interface, will probably want to update our persisten stream view here
+        //When we implement new iPad interface, may want to update our persistent stream view here
     } else {
         [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel];
+        self.videoControlsVC.currentEntity = entity;
     }
 }
 
@@ -223,6 +230,10 @@
         [self.browseVC setEntries:channelEntries forChannel:channel];
     } else {
         [[self streamBrowseViewControllerForChannel:channel] setEntries:channelEntries forChannel:channel];
+        if (!self.videoControlsVC.currentEntity && self.currentStreamBrowseVC.channel == channel && [channelEntries count]) {
+            //we're bootstrapping, update the video controls for the 0th entity
+            self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC deduplicatedEntriesForChannel:channel][0];
+        }
     }
     [self setPlayerEntriesForChannel:channel];
 }
@@ -563,8 +574,18 @@
 
 - (void)shelbyStreamBrowseViewControllerDidEndDecelerating:(ShelbyStreamBrowseViewController *)vc
 {
-    if (self.videoReel && vc == self.currentStreamBrowseVC) {
-        [self.videoReel endDecelerating];
+    if (self.videoReel) {
+        if (vc == self.currentStreamBrowseVC) {
+            [self.videoReel endDecelerating];
+            self.videoControlsVC.currentEntity = [self.videoReel getCurrentPlaybackEntity];
+        }
+    } else {
+        if (DEVICE_IPAD) {
+            //TODO: do video controls care about this?
+        } else {
+            //on iPhone, we only show one stream, so current entity did change
+            self.videoControlsVC.currentEntity = [vc entityForCurrentFocus];
+        }
     }
 }
 
@@ -723,6 +744,42 @@
     [self.videoReel scrubCurrentPlayerTo:percent];
 }
 
+- (void)likeCurrentVideo
+{
+    BOOL didLike = [self toggleLikeCurrentVideo];
+    if (!didLike) {
+        DLog(@"***ERROR*** Tried to Like, but action resulted in UNLIKE of the video");
+    }
+}
+
+- (void)unlikeCurrentVideo
+{
+    BOOL didLike = [self toggleLikeCurrentVideo];
+    if (didLike) {
+        DLog(@"***ERROR*** Tried to unlike, but action resulted in LIKE of the video");
+    }
+}
+
+- (BOOL)toggleLikeCurrentVideo
+{
+    Frame *currentFrame;
+    if (self.videoReel) {
+        currentFrame = [Frame frameForEntity:[self.videoReel getCurrentPlaybackEntity]];
+    } else {
+        if (DEVICE_IPAD) {
+            //TODO: what is the "current video" when we don't have a video reel?
+        } else {
+            //on iPhone b/c we only show one frame at a time
+            currentFrame = [Frame frameForEntity:[self.currentStreamBrowseVC entityForCurrentFocus]];
+        }
+    }
+    BOOL didLike = [currentFrame toggleLike];
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer
+                                     withAction:kAnalyticsVideoPlayerToggleLike
+                                      withLabel:(didLike ? @"Liked" : @"Unliked")];
+    return didLike;
+}
+
 #pragma mark - AuthorizationDelegate
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
 {
@@ -772,4 +829,5 @@
         [self logout];
     }
 }
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "VideoControlsViewController.h"
+#import "DashboardEntry+Helper.h"
 #import "VideoControlsView.h"
 
 @interface VideoControlsViewController ()
@@ -40,11 +41,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setCurrentEntryIsLiked:(BOOL)currentEntryIsLiked
+- (void)setCurrentEntity:(id<ShelbyVideoContainer>)currentEntity
 {
-    if (_currentEntryIsLiked != currentEntryIsLiked){
-        _currentEntryIsLiked = currentEntryIsLiked;
-        //TODO: update view
+    if (_currentEntity != currentEntity) {
+        _currentEntity = currentEntity;
+        [self updateViewForCurrentEntity];
+    }
+}
+
+- (void)updateViewForCurrentEntity
+{
+    if (self.currentEntity){
+        BOOL isLiked = [[Frame frameForEntity:self.currentEntity] videoIsLiked];
+        self.controlsView.likeButton.hidden = isLiked;
+        self.controlsView.unlikeButton.hidden = !isLiked;
     }
 }
 
@@ -63,6 +73,20 @@
     CGPoint position = [gesture locationInView:self.controlsView.bufferProgressView];
     CGFloat percentage = position.x / self.controlsView.bufferProgressView.frame.size.width;
     [self.delegate scrubCurrentVideoTo:percentage];
+}
+
+- (IBAction)likeTapped:(id)sender {
+    [self.delegate likeCurrentVideo];
+    [self updateViewForCurrentEntity];
+}
+
+- (IBAction)unlikeTapped:(id)sender {
+    [self.delegate unlikeCurrentVideo];
+    [self updateViewForCurrentEntity];
+}
+
+- (IBAction)shareTapped:(id)sender {
+    //TODO!
 }
 
 #pragma mark - VideoPlaybackDelegate

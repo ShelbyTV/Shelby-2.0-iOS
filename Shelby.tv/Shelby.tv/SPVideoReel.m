@@ -668,7 +668,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.delegate userAskForTwitterPublishPermissions];
 }
 
+- (id<ShelbyVideoContainer>)getCurrentPlaybackEntity
+{
+    return self.videoEntities[self.currentVideoPlayingIndex];
+}
 
+//DEPRECATED
 - (IBAction)likeAction:(id)sender
 {
     SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
