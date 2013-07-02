@@ -9,7 +9,6 @@
 #import "DisplayChannel+Helper.h"
 #import "AuthorizationViewController.h"
 #import "ShelbyViewController.h"
-#import "SPShareController.h"
 #import "SPVideoPlayer.h"
 
 typedef NS_ENUM(NSUInteger, SPTutorialMode)
@@ -44,15 +43,14 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)setDuration:(CMTime)duration;
 @end
 
-@class SPVideoPlayer, SPOverlayView;
+@class SPVideoPlayer;
 
-@interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPShareControllerDelegate>
+@interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate>
 
 @property (nonatomic, weak) id<SPVideoReelDelegate> delegate;
 @property (nonatomic, weak) id<VideoPlaybackDelegate> videoPlaybackDelegate;
 @property (nonatomic, weak) UIView *airPlayView;
 @property (nonatomic, strong) DisplayChannel *channel;
-@property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
 @property (assign, nonatomic) GroupType groupType;
 @property (copy, nonatomic) NSString *groupTitle;
@@ -68,12 +66,11 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)videoDoubleTapped;
 
 //New API for use by playback control elements
+- (BOOL)isCurrentPlayerPlaying;
 - (void)pauseCurrentPlayer;
 - (void)playCurrentPlayer;
 - (void)scrubCurrentPlayerTo:(CGFloat)percent;
 - (id<ShelbyVideoContainer>)getCurrentPlaybackEntity;
-
-- (void)hideOverlayView;
 
 // using this to keep view in sync, not change playback
 - (void)scrollTo:(CGPoint)contentOffset;

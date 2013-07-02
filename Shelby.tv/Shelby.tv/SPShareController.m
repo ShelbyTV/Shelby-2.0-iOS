@@ -9,7 +9,6 @@
 #import "SPShareController.h"
 
 #import "AFNetworking.h"
-#import "AsynchronousFreeloader.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
 #import "ShelbyActivityItemProvider.h"
@@ -29,7 +28,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 
 @interface SPShareController ()
 
-@property (weak, nonatomic) SPVideoPlayer *videoPlayer;
 @property (nonatomic, assign) CGRect rect;
 @property (nonatomic, strong) Frame *videoFrame;
 @property (nonatomic, strong) UIViewController *viewController;
@@ -39,27 +37,22 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 @property (assign, nonatomic) BOOL twitterConnected;
 @property (strong, nonatomic) UIView *mask;
 
+@property (nonatomic, strong) SPShareCompletionHandler completionHandler;
+
 @end
 
 @implementation SPShareController
 
-#pragma mark - Initialization
-- (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect withVideoPlayer:(SPVideoPlayer *)videoPlayer
+- (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect
 {
     self = [super init];
     if (self) {
         _videoFrame = videoFrame;
         _viewController = viewController;
         _rect = rect;
-        _videoPlayer = videoPlayer;
     }
-    
-    return self;
-}
 
-- (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect
-{
-    return [self initWithVideoFrame:videoFrame fromViewController:viewController atRect:rect withVideoPlayer:nil];
+    return self;
 }
 
 - (void)updateSocialButtons
@@ -102,8 +95,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 }
 
 #pragma mark - UI Methods (Public)
-- (void)share
+- (void)shareWithCompletionHandler:(SPShareCompletionHandler)completionHandler
 {
+    self.completionHandler = completionHandler;
     [self setupMaskView];
     
     [UIView animateWithDuration:0.5f
@@ -154,13 +148,17 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     
     [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:containerBackground]]];
     
-    // Load Thumbnail
-    //djs TODO: use AFNetworking
-    [AsynchronousFreeloader loadImageFromLink:self.videoFrame.video.thumbnailURL
-                                 forImageView:_rollView.videoThumbnailView
-                              withPlaceholder:nil
-                               andContentMode:UIViewContentModeScaleAspectFill];
-    
+    // Set Thumbnail
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.videoFrame.video.thumbnailURL]];
+    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
+                                          imageProcessingBlock:nil
+                                                       success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                           self.rollView.videoThumbnailView.image = image;
+                                                       }
+                                                       failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                           //ignoring for now
+                                                       }] start];
+
     // Set proper states for buttons
     [self updateSocialButtons];
     
@@ -190,8 +188,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                      } completion:^(BOOL finished) {
                          
                          [self.rollView.rollTextView becomeFirstResponder];
-                         [self.videoPlayer pause];
-                         
                      }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -219,9 +215,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                      } completion:^(BOOL finished) {
                          [self.mask removeFromSuperview];
                          [self.rollView.rollTextView resignFirstResponder];
-                         [self.rollView removeFromSuperview];
-                         [self.videoPlayer play];
-                         
+                         [self.rollView removeFromSuperview]; 
                      }];
 }
 
@@ -252,10 +246,10 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         if (selectionToggle) {
             if (facebookToggle) {
                 if (![[FacebookHandler sharedInstance] allowPublishActions]) {
-                    [self.delegate userAskForFacebookPublishPermissions];
+                    [self.delegate shareControllerRequestsFacebookPublishPermissions:self];
                 }
             } else if (!self.twitterConnected) {
-                [self.delegate userAskForTwitterPublishPermissions];
+                [self.delegate shareControllerRequestsTwitterPublishPermissions:self];
             }
         }
     }
@@ -273,7 +267,10 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                       withLabel:[frame creatorsInitialCommentWithFallback:YES]];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-        [self.delegate shareDidFinish:completed];
+        if (self.completionHandler) {
+            self.completionHandler(completed);
+        }
+        
         if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
             [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
         }

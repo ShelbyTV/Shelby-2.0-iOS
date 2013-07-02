@@ -288,7 +288,7 @@
     SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:shelbyFrame fromViewController:self atRect:CGRectZero];
     shareController.delegate = nil;
 
-    [shareController share];
+    [shareController shareWithCompletionHandler:nil];
 }
 
 - (void)toggleLikeOfFrame:(Frame *)shelbyFrame
