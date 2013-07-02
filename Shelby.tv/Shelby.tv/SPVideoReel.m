@@ -456,11 +456,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.currentPlayer play];
 }
 
-- (void)scrubToPercent:(CGFloat)scrubPct
+- (void)scrubCurrentPlayerTo:(CGFloat)percent
 {
-    [self.currentPlayer scrubToPct:scrubPct];
+    [self.currentPlayer scrubToPct:percent];
     
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerUserScrub withLabel:[NSString stringWithFormat:@"%2.2f%%", scrubPct * 100]];
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerUserScrub withLabel:[NSString stringWithFormat:@"%2.2f%%", percent * 100]];
 }
 
 - (void)scrollTo:(CGPoint)contentOffset

@@ -69,6 +69,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 
 - (void)pauseCurrentPlayer;
 - (void)playCurrentPlayer;
+- (void)scrubCurrentPlayerTo:(CGFloat)percent;
 
 - (void)hideOverlayView;
 

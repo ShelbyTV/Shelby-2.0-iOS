@@ -40,15 +40,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setCurrentEntryIsLiked:(BOOL)currentEntryIsLiked
+{
+    if (_currentEntryIsLiked != currentEntryIsLiked){
+        _currentEntryIsLiked = currentEntryIsLiked;
+        //TODO: update view
+    }
+}
+
+#pragma mark - XIB actions
+
 - (IBAction)largePlayButtonTapped:(id)sender {
     if (self.videoIsPlaying) {
-        [self.delegate pauseVideo];
+        [self.delegate pauseCurrentVideo];
     } else {
         [self.delegate playVideoWithCurrentFocus];
     }
 }
 
-#pragma mark - External Updates
+- (IBAction)scrubTrackTapped:(id)sender {
+    UITapGestureRecognizer *gesture = (UITapGestureRecognizer *)sender;
+    CGPoint position = [gesture locationInView:self.controlsView.bufferProgressView];
+    CGFloat percentage = position.x / self.controlsView.bufferProgressView.frame.size.width;
+    [self.delegate scrubCurrentVideoTo:percentage];
+}
+
+#pragma mark - VideoPlaybackDelegate
 
 - (void)setVideoIsPlaying:(BOOL)videoIsPlaying
 {
@@ -59,14 +76,6 @@
         } else {
             [self.controlsView.largePlayButton setTitle:@"play" forState:UIControlStateNormal];
         }
-    }
-}
-
-- (void)setCurrentEntryIsLiked:(BOOL)currentEntryIsLiked
-{
-    if (_currentEntryIsLiked != currentEntryIsLiked){
-        _currentEntryIsLiked = currentEntryIsLiked;
-        //TODO: update view
     }
 }
 
@@ -84,6 +93,7 @@
         _currentTime = time;
         self.controlsView.currentTimeLabel.text = [self prettyStringForTime:time];
         //TODO: update the position of the scrub head
+        //pct = CMTimeGetSeconds(time)/CMTimeGetSeconds(self.duration);
     }
 }
 

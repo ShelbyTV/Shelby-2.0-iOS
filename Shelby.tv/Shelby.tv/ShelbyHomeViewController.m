@@ -713,9 +713,14 @@
     [self playChannel:self.currentStreamBrowseVC.channel atIndex:[self.currentStreamBrowseVC indexPathForCurrentFocus].row];
 }
 
-- (void)pauseVideo
+- (void)pauseCurrentVideo
 {
     [self.videoReel pauseCurrentPlayer];
+}
+
+- (void)scrubCurrentVideoTo:(CGFloat)percent
+{
+    [self.videoReel scrubCurrentPlayerTo:percent];
 }
 
 #pragma mark - AuthorizationDelegate

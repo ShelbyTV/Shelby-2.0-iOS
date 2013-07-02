@@ -13,7 +13,8 @@
 @protocol VideoControlsDelegate <NSObject>
 
 - (void)playVideoWithCurrentFocus;
-- (void)pauseVideo;
+- (void)pauseCurrentVideo;
+- (void)scrubCurrentVideoTo:(CGFloat)pct;
 
 @end
 
