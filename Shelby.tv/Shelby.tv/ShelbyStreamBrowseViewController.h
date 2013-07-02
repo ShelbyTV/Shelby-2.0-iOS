@@ -48,4 +48,6 @@
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
 
+- (NSIndexPath *)indexPathForCurrentFocus;
+
 @end

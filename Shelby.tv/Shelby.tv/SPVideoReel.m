@@ -37,8 +37,6 @@
 
 @interface SPVideoReel ()
 
-//DEPRECATED
-@property (weak, nonatomic) SPOverlayView *overlayView;
 @property (nonatomic) UIScrollView *videoScrollView;
 //Array of DashboardEntry or Frame, technically: id<ShelbyVideoContainer>
 @property (nonatomic) NSMutableArray *videoEntities;
@@ -129,7 +127,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
     if (self.tutorialMode == SPTutorialModeShow) {
         self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showDoubleTapTutorial) userInfo:nil repeats:NO];
-        [self.overlayView hideOverlayView];
      } else if (self.tutorialMode == SPTutorialModePinch) {
          self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showPinchTutorial) userInfo:nil repeats:NO];
     }
@@ -250,7 +247,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupOverlayView
 {
-    STVAssert(!self.overlayView, @"should only setup overlay view once");
+//    STVAssert(!self.overlayView, @"should only setup overlay view once");
     NSString *overlayNibName = nil;
     if (DEVICE_IPAD) {
         overlayNibName = @"SPOverlayView";
@@ -259,16 +256,15 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:overlayNibName owner:self options:nil];
     STVAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
-    self.overlayView = nib[0];
-    self.overlayView.alpha = 0;
-    self.overlayView.delegate = self;
+//    self.overlayView = nib[0];
+//    self.overlayView.alpha = 0;
+//    self.overlayView.delegate = self;
     //XXX DJS SPOverlayView is deprecated
-    //All of its functionality will be handled by the ShelbyStreamBrowseViews
     //I am not killing the code right now, just taking it off screen while we build...
     //TODO: remove the overlay, all its files, etc.
 //    [self.view addSubview:self.overlayView];
-    [self.overlayView setAccentColor:self.channel.displayColor];
-    [self.overlayView setRollEnabled:[self.channel canRoll] && [self.delegate canRoll]];
+//    [self.overlayView setAccentColor:self.channel.displayColor];
+//    [self.overlayView setRollEnabled:[self.channel canRoll] && [self.delegate canRoll]];
 }
 
 //called via -setup via -viewDidLoad
@@ -311,10 +307,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)setupAirPlay
 {
     // Instantiate AirPlay button for MPVolumeView
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:_overlayView.airPlayView.bounds];
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.airPlayView.bounds];
     [volumeView setShowsVolumeSlider:NO];
     [volumeView setShowsRouteButton:YES];
-    [self.overlayView.airPlayView addSubview:volumeView];
+    [self.airPlayView addSubview:volumeView];
     
     for (UIView *view in volumeView.subviews) {
         
@@ -331,11 +327,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     STVAssert(![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture], @"should only setup gestures once");
 
     //hide/shower overlay (single tap)
-    _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
-    [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-    [self.toggleOverlayGesuture setDelegate:self];
-    [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
-    [self.view addGestureRecognizer:self.toggleOverlayGesuture];
+    //DJS TODO: new way to hide/show overlays
+//    _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
+//    [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
+//    [self.toggleOverlayGesuture setDelegate:self];
+//    [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
+//    [self.view addGestureRecognizer:self.toggleOverlayGesuture];
 
     //change channels (pan vertically)
     if (DEVICE_IPAD) {
@@ -449,6 +446,16 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionDoubleTap withLabel:nil];
 }
 
+- (void)pauseCurrentPlayer
+{
+    [self.currentPlayer pause];
+}
+
+- (void)playCurrentPlayer
+{
+    [self.currentPlayer play];
+}
+
 - (void)scrubToPercent:(CGFloat)scrubPct
 {
     [self.currentPlayer scrubToPct:scrubPct];
@@ -493,12 +500,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         
         //remove any alert particular to current video
         [self.currentVideoAlertView dismiss];
-        
-        //update overlay
-        //FUN: if we had a direction from which the new video was coming, could animate this update
-        [self.overlayView showOverlayView];
-        [self.overlayView setFrameOrDashboardEntry:self.videoEntities[position]];
-        
+
         // Set the new current player to auto play and get it going...
         self.currentVideoPlayingIndex = position;
         self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
@@ -674,7 +676,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
     BOOL didLike = [currentPlayer.videoFrame toggleLike];
-    [self.overlayView didLikeCurrentEntry:didLike];
     
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerToggleLike withLabel:(didLike ? @"Liked" : @"Unliked")];
 
@@ -707,7 +708,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)hideOverlayView
 {
-    [self.overlayView hideOverlayView];
+    //DJS TODO: show/hide overlays will happen elsewhere now...
+//    [self.overlayView hideOverlayView];
 }
 #pragma mark - Gesutre Methods (Private)
 - (void)switchChannelWithDirectionUp:(BOOL)up
@@ -750,7 +752,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
         currentPlayer.view.frame = CGRectMake(x, y + translation.y, currentPlayer.view.frame.size.width, currentPlayer.view.frame.size.height);
-        self.overlayView.frame = CGRectMake(self.overlayView.frame.origin.x, y + translation.y, self.overlayView.frame.size.width, self.overlayView.frame.size.height);
         self.peelChannelView.frame = peekViewRect;
         
         [gestureRecognizer setTranslation:CGPointZero inView:self.view];
@@ -804,7 +805,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     
     [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
        [currentPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.peelChannelView setFrame:peekViewFrame];
     } completion:^(BOOL finished) {
         if (switchChannel) {
@@ -833,7 +833,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
     [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
        [currentPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.overlayView setFrame:CGRectMake(self.overlayView.frame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
         [self.peelChannelView setFrame:peekViewFrame];
     } completion:^(BOOL finished) {
         if (switchChannel) {
@@ -967,16 +966,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     if (self.currentPlayer == player) {
         [player pause];
-        [self.overlayView showOverlayView];
-        //djs TODO: a nice, subtle notification
-        //djs IMPORTANT: this is more likely to happen when you seek beyond the buffer
-        //** need to handle that case nicely, not just the "normal playback" stalled case
-        /* Idea:
-         * Keep track of the current playhead and the amount buffered beyond it.
-         * Have a fun little view that shows something filling up, getting ready to resume playback!
-         * 
-         * Focus more time than seems necessary on this, b/c it makes watching a single video very enjoyable.
-         */
         if (self.tutorialMode == SPTutorialModeNone &&
             (self.lastVideoStalledAlertTime == nil || [self.lastVideoStalledAlertTime timeIntervalSinceNow] < VIDEO_STALLED_MIN_TIME_BETWEEN_ALERTS)) {
             [self.currentVideoAlertView dismiss];
@@ -1001,27 +990,29 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)videoBufferedRange:(CMTimeRange)bufferedRange forPlayer:(SPVideoPlayer *)player
 {
     if (self.currentPlayer == player) {
-        [self.overlayView updateBufferedRange:bufferedRange];
+        [self.videoPlaybackDelegate setBufferedRange:bufferedRange];
     }
 }
 
 - (void)videoDuration:(CMTime)duration forPlayer:(SPVideoPlayer *)player
 {
     if (self.currentPlayer == player) {
-        [self.overlayView setDuration:duration];
+        [self.videoPlaybackDelegate setDuration:duration];
     }
 }
 
 - (void)videoCurrentTime:(CMTime)time forPlayer:(SPVideoPlayer *)player
 {
     if (self.currentPlayer == player) {
-        [self.overlayView updateCurrentTime:time];
+        [self.videoPlaybackDelegate setCurrentTime:time];
     }
 }
 
 - (void)videoPlaybackStatus:(BOOL)isPlaying forPlayer:(SPVideoPlayer *)player
 {
-    //noop for now
+    if (self.currentPlayer == player) {
+        [self.videoPlaybackDelegate setVideoIsPlaying:isPlaying];
+    }
 }
 
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player

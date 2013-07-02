@@ -9,7 +9,6 @@
 #import "DisplayChannel+Helper.h"
 #import "AuthorizationViewController.h"
 #import "ShelbyViewController.h"
-#import "SPOverlayView.h"
 #import "SPShareController.h"
 #import "SPVideoPlayer.h"
 
@@ -38,11 +37,20 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
 @end
 
+@protocol VideoPlaybackDelegate <NSObject>
+- (void)setVideoIsPlaying:(BOOL)videoIsPlaying;
+- (void)setBufferedRange:(CMTimeRange)bufferedRange;
+- (void)setCurrentTime:(CMTime)time;
+- (void)setDuration:(CMTime)duration;
+@end
+
 @class SPVideoPlayer, SPOverlayView;
 
-@interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPOverlayViewDelegate, SPShareControllerDelegate>
+@interface SPVideoReel : ShelbyViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, SPVideoPlayerDelegate, SPShareControllerDelegate>
 
-@property (weak, nonatomic) id <SPVideoReelDelegate> delegate;
+@property (nonatomic, weak) id<SPVideoReelDelegate> delegate;
+@property (nonatomic, weak) id<VideoPlaybackDelegate> videoPlaybackDelegate;
+@property (nonatomic, weak) UIView *airPlayView;
 @property (nonatomic, strong) DisplayChannel *channel;
 @property (nonatomic) UITapGestureRecognizer *toggleOverlayGesuture;
 @property (nonatomic) UIButton *airPlayButton;
@@ -58,6 +66,9 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)shutdown;
 
 - (void)videoDoubleTapped;
+
+- (void)pauseCurrentPlayer;
+- (void)playCurrentPlayer;
 
 - (void)hideOverlayView;
 

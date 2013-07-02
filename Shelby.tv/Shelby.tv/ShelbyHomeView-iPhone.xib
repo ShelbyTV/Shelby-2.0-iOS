@@ -106,7 +106,6 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="268735521"/>
 							<object class="IBNSLayoutConstraint" id="459611639">
 								<reference key="firstItem" ref="191373211"/>
 								<int key="firstAttribute">4</int>
@@ -171,6 +170,7 @@
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
+							<reference ref="268735521"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -262,7 +262,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">106</int>
+			<int key="maxID">115</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -277,22 +277,9 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ShelbyHomeViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="dvrButtonTapped:">UIButton</string>
-						<string key="feedbackTapped:">UIButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="dvrButtonTapped:">
-							<string key="name">dvrButtonTapped:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBActionInfo" key="feedbackTapped:">
-							<string key="name">feedbackTapped:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="channelsLoadingActivityIndicator">UIActivityIndicatorView</string>
+						<string key="controlsContainerView">UIView</string>
 						<string key="topBar">UIView</string>
 						<string key="topBarTitle">UILabel</string>
 					</dictionary>
@@ -300,6 +287,10 @@
 						<object class="IBToOneOutletInfo" key="channelsLoadingActivityIndicator">
 							<string key="name">channelsLoadingActivityIndicator</string>
 							<string key="candidateClassName">UIActivityIndicatorView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="controlsContainerView">
+							<string key="name">controlsContainerView</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="topBar">
 							<string key="name">topBar</string>

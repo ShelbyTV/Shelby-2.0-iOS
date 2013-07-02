@@ -31,6 +31,8 @@
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, assign) BOOL animationInProgress;
 
+@property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
+
 @end
 
 @implementation ShelbyHomeViewController
@@ -61,7 +63,24 @@
     
         [browseViewController didMoveToParentViewController:self];
     } else {
-        //the actual view controllers are created in setChannels:
+        _videoControlsVC = [[VideoControlsViewController alloc] initWithNibName:@"VideoControlsView" bundle:nil];
+        _videoControlsVC.delegate = self;
+        [_videoControlsVC willMoveToParentViewController:self];
+        [_videoControlsVC.view setFrame:CGRectMake(0, 100, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
+        [self.view insertSubview:_videoControlsVC.view aboveSubview:self.topBar];
+        _videoControlsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controls]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"controls":_videoControlsVC.view}]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(100)]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"controls":_videoControlsVC.view}]];
+        [self addChildViewController:_videoControlsVC];
+        [_videoControlsVC didMoveToParentViewController:self];
+
+        //the actual browse view controllers are created in setChannels:
         _streamBrowseVCs = [@[] mutableCopy];
     }
     
@@ -182,12 +201,10 @@
         STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
         self.currentStreamBrowseVC = sbvc;
         [sbvc willMoveToParentViewController:self];
-        [self.view addSubview:sbvc.view];
+        [self.view insertSubview:sbvc.view belowSubview:self.topBar];
         sbvc.view.frame = self.view.frame;
         [self addChildViewController:sbvc];
         [sbvc didMoveToParentViewController:self];
-        [self.view addSubview:self.topBar];
-        [self.view bringSubviewToFront:self.topBar];
     }
 }
 
@@ -337,7 +354,6 @@
     
     [self.topBar addSubview:self.settingsView];
     [self.settingsView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
-    [self.view bringSubviewToFront:self.topBar];
 }
 
 - (void)showSettings
@@ -367,19 +383,29 @@
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    [self launchPlayerSetup];
-    [self initializeVideoReelWithChannel:channel atIndex:index];
-
-    if (DEVICE_IPAD) {
-        //TODO
-        DLog(@"TODO: handle play channel for iPad");
+    if (self.videoReel) {
+        STVAssert(self.videoReel.channel == channel, @"videoReel should have been shutdown or changed when channel was changed");
+        if (DEVICE_IPAD) {
+            //TODO
+            DLog(@"TODO: handle resume video reel for iPad");
+        } else {
+            [self.videoReel playCurrentPlayer];
+        }
     } else {
-        [self.videoReel willMoveToParentViewController:self];
-        [self addChildViewController:self.videoReel];
-        [self.view insertSubview:self.videoReel.view atIndex:0];
-        [self.videoReel didMoveToParentViewController:self];
-        
-        [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewForPlayback;
+        [self launchPlayerSetup];
+        [self initializeVideoReelWithChannel:channel atIndex:index];
+
+        if (DEVICE_IPAD) {
+            //TODO
+            DLog(@"TODO: handle play channel for iPad");
+        } else {
+            [self.videoReel willMoveToParentViewController:self];
+            [self addChildViewController:self.videoReel];
+            [self.view insertSubview:self.videoReel.view belowSubview:self.currentStreamBrowseVC.view];
+            [self.videoReel didMoveToParentViewController:self];
+
+            [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewForPlayback;
+        }
     }
 }
 
@@ -516,10 +542,14 @@
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
+    STVAssert(!_videoReel, @"expected video reel to be shutdown and nil before initializing a new one");
+    
     _videoReel = [[SPVideoReel alloc] initWithChannel:channel
                                      andVideoEntities:[self deduplicatedEntriesForChannel:channel]
                                               atIndex:index];
     self.videoReel.delegate = self.masterDelegate;
+    self.videoReel.videoPlaybackDelegate = self.videoControlsVC;
+    self.videoReel.airPlayView = self.videoControlsVC.airPlayView;
 }
 
 #pragma mark - ShelbyStreamBrowseViewDelegate
@@ -674,6 +704,18 @@
             [sender setTitle:@"DVR" forState:UIControlStateNormal];
         }
     }
+}
+
+#pragma mark - VideoControlsDelegate
+
+- (void)playVideoWithCurrentFocus
+{
+    [self playChannel:self.currentStreamBrowseVC.channel atIndex:[self.currentStreamBrowseVC indexPathForCurrentFocus].row];
+}
+
+- (void)pauseVideo
+{
+    [self.videoReel pauseCurrentPlayer];
 }
 
 #pragma mark - AuthorizationDelegate

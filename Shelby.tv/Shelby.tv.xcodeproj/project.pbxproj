@@ -793,6 +793,15 @@
 		9109330C1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
 		9109330D1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
 		9109330E1743E61B00AC038E /* ShelbyAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9109330B1743E61B00AC038E /* ShelbyAlertView.xib */; };
+		9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
+		9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
+		9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
+		9119AB73178211D6001C9190 /* VideoControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB72178211D6001C9190 /* VideoControlsViewController.m */; };
+		9119AB74178211D6001C9190 /* VideoControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB72178211D6001C9190 /* VideoControlsViewController.m */; };
+		9119AB75178211D6001C9190 /* VideoControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB72178211D6001C9190 /* VideoControlsViewController.m */; };
+		9119AB7817821A5C001C9190 /* VideoControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB7717821A5C001C9190 /* VideoControlsView.m */; };
+		9119AB7917821A5C001C9190 /* VideoControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB7717821A5C001C9190 /* VideoControlsView.m */; };
+		9119AB7A17821A5C001C9190 /* VideoControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB7717821A5C001C9190 /* VideoControlsView.m */; };
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
@@ -1263,6 +1272,11 @@
 		910933061743E47F00AC038E /* ShelbyAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlertView.h; sourceTree = "<group>"; };
 		910933071743E47F00AC038E /* ShelbyAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlertView.m; sourceTree = "<group>"; };
 		9109330B1743E61B00AC038E /* ShelbyAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyAlertView.xib; sourceTree = "<group>"; };
+		9119AB6D17821133001C9190 /* VideoControlsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoControlsView.xib; sourceTree = "<group>"; };
+		9119AB71178211D5001C9190 /* VideoControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoControlsViewController.h; sourceTree = "<group>"; };
+		9119AB72178211D6001C9190 /* VideoControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoControlsViewController.m; sourceTree = "<group>"; };
+		9119AB7617821A5C001C9190 /* VideoControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoControlsView.h; sourceTree = "<group>"; };
+		9119AB7717821A5C001C9190 /* VideoControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoControlsView.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
 		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
@@ -1560,6 +1574,7 @@
 				91BEC8931762961400838197 /* DVRDatePicker.xib */,
 				1CA191451774DD440039358B /* ShelbyStreamBrowseView.xib */,
 				91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */,
+				9119AB6D17821133001C9190 /* VideoControlsView.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2184,6 +2199,8 @@
 				91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */,
 				91CE074C1779087800024180 /* StreamBrowseCellForegroundView.h */,
 				91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */,
+				9119AB7617821A5C001C9190 /* VideoControlsView.h */,
+				9119AB7717821A5C001C9190 /* VideoControlsView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2191,6 +2208,8 @@
 		8EF5C352162F41BF0075C35F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9119AB71178211D5001C9190 /* VideoControlsViewController.h */,
+				9119AB72178211D6001C9190 /* VideoControlsViewController.m */,
 				1C7B8D5616F113AB0069F570 /* AuthorizationViewController.h */,
 				1C7B8D5716F113AB0069F570 /* AuthorizationViewController.m */,
 				8E70248A1715E71500E8DE46 /* AuthenticateTwitterViewController.h */,
@@ -2523,6 +2542,7 @@
 				91BEC8951762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA1914A1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE074A1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
+				9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2697,6 +2717,7 @@
 				91BEC8961762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA1914B1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE074B1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
+				9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2872,6 +2893,7 @@
 				91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA191491774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE07491779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
+				9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2992,6 +3014,8 @@
 				1CA191471774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191541774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
+				9119AB74178211D6001C9190 /* VideoControlsViewController.m in Sources */,
+				9119AB7917821A5C001C9190 /* VideoControlsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3109,6 +3133,8 @@
 				1CA191481774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191551774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
+				9119AB75178211D6001C9190 /* VideoControlsViewController.m in Sources */,
+				9119AB7A17821A5C001C9190 /* VideoControlsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3226,6 +3252,8 @@
 				1CA191461774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191531774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
+				9119AB73178211D6001C9190 /* VideoControlsViewController.m in Sources */,
+				9119AB7817821A5C001C9190 /* VideoControlsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

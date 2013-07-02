@@ -12,6 +12,7 @@
 #import "SettingsViewController.h"
 #import "ShelbyStreamBrowseViewController.h"
 #import "User.h"
+#import "VideoControlsViewController.h"
 
 @protocol ShelbyHomeDelegate <NSObject>
 
@@ -27,7 +28,7 @@
 @end
 
 
-@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, SettingsViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate, ShelbyStreamBrowseViewDelegate>
+@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, SettingsViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate>
 
 // We assume these are all of our channels, in the correct order
 @property (nonatomic, strong) NSArray *channels;

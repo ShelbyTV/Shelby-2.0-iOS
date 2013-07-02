@@ -208,6 +208,11 @@
     return UIInterfaceOrientationIsLandscape(orientation);
 }
 
+- (NSIndexPath *)indexPathForCurrentFocus
+{
+    return [[self.collectionView indexPathsForVisibleItems] lastObject];
+}
+
 #pragma mark - UICollectionViewDelegate (actually UIScrollViewDelegate)
 // The browseViewDelegate may use us as "lead view", adjusting other views programatically
 
