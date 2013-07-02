@@ -34,6 +34,8 @@
 
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
 
+#define OVERLAY_ANIMATION_DURATION 0.2
+
 @end
 
 @implementation ShelbyHomeViewController
@@ -415,7 +417,11 @@
             [self.view insertSubview:self.videoReel.view belowSubview:self.currentStreamBrowseVC.view];
             [self.videoReel didMoveToParentViewController:self];
 
-            [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewForPlayback;
+            //entering playback, hide the overlays
+            [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+                self.videoControlsVC.view.alpha = 0.0;
+                [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+            }];
         }
     }
 }
@@ -586,6 +592,23 @@
             //on iPhone, we only show one stream, so current entity did change
             self.videoControlsVC.currentEntity = [vc entityForCurrentFocus];
         }
+    }
+}
+
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    if (self.videoReel && self.currentStreamBrowseVC == vc) {
+        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+            if (vc.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
+                //show overlays
+                self.videoControlsVC.view.alpha = 1.0;
+                vc.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
+            } else {
+                //hide overlays
+                self.videoControlsVC.view.alpha = 0.0;
+                vc.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+            }
+        }];
     }
 }
 

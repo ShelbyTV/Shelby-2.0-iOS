@@ -40,8 +40,14 @@
     [super viewDidLoad];
 
     [self.collectionView registerClass:[ShelbyStreamBrowseViewCell class] forCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell"];
-
     self.collectionView.pagingEnabled = YES;
+
+    //a safe tap gesture recognizer for our browseViewDelegate
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(overlayTap:)];
+    tap.numberOfTapsRequired = 1;
+    tap.numberOfTouchesRequired = 1;
+    [tap requireGestureRecognizerToFail:self.collectionView.panGestureRecognizer];
+    [self.collectionView addGestureRecognizer:tap];
 
     //XXX LAYOUT TESTING
     self.view.layer.borderColor = [UIColor greenColor].CGColor;
@@ -234,6 +240,13 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self.browseViewDelegate shelbyStreamBrowseViewControllerDidEndDecelerating:self];
+}
+
+#pragma mark - UITapGestureRecognizer handler
+
+- (void)overlayTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+    [self.browseViewDelegate shelbyStreamBrowseViewController:self wasTapped:gestureRecognizer];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout methods

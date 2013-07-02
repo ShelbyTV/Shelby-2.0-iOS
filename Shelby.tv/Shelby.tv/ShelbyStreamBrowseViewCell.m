@@ -166,10 +166,15 @@
         _viewMode = viewMode;
         switch (_viewMode) {
             case ShelbyStreamBrowseViewDefault:
-                [self.parallaxView getBackgroundView].hidden = NO;
+                [self.parallaxView getBackgroundView].alpha = 1.0;
                 break;
-            case ShelbyStreamBrowseViewForPlayback:
-                [self.parallaxView getBackgroundView].hidden = YES;
+            case ShelbyStreamBrowseViewForPlaybackWithOverlay:
+                [self.parallaxView getBackgroundView].alpha = 0.0;
+                self.foregroundView.alpha = 1.0;
+                break;
+            case ShelbyStreamBrowseViewForPlaybackWithoutOverlay:
+                [self.parallaxView getBackgroundView].alpha = 0.0;
+                self.foregroundView.alpha = 0.0;
         }
     }
 }
