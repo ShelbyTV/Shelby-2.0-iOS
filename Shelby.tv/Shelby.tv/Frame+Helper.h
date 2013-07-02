@@ -30,6 +30,9 @@
                onRollWithID:(NSString *)rollID
                   inContext:(NSManagedObjectContext *)moc;
 
+//returns the Frame for a DashboardEntry or Frame in disguise
++ (Frame *)frameForEntity:(id<ShelbyVideoContainer>)entity;
+
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 - (BOOL)isPlayable;
 //returns YES if the toggle should result in this frame being liked

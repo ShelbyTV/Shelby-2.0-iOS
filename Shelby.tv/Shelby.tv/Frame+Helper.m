@@ -9,6 +9,7 @@
 #import "Frame+Helper.h"
 
 #import "Conversation+Helper.h"
+#import "DashboardEntry+Helper.h"
 #import "Messages+Helper.h"
 #import "NSManagedObject+Helper.h"
 #import "Roll+Helper.h"
@@ -122,6 +123,18 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
         return frames[0];
     }
     return nil;
+}
+
++ (Frame *)frameForEntity:(id<ShelbyVideoContainer>)entity
+{
+    Frame *currentFrame;
+    if ([entity isKindOfClass:[Frame class]]) {
+        currentFrame = (Frame *)entity;
+    } else if ([entity isKindOfClass:[DashboardEntry class]]) {
+        currentFrame = ((DashboardEntry *)entity).frame;
+    }
+    STVAssert(currentFrame, @"expected entity to be a DashboardEntry or Frame");
+    return currentFrame;
 }
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle

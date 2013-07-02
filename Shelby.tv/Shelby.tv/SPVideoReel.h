@@ -67,9 +67,11 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 
 - (void)videoDoubleTapped;
 
+//New API for use by playback control elements
 - (void)pauseCurrentPlayer;
 - (void)playCurrentPlayer;
 - (void)scrubCurrentPlayerTo:(CGFloat)percent;
+- (id<ShelbyVideoContainer>)getCurrentPlaybackEntity;
 
 - (void)hideOverlayView;
 

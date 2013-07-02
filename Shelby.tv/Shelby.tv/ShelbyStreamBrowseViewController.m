@@ -213,6 +213,16 @@
     return [[self.collectionView indexPathsForVisibleItems] lastObject];
 }
 
+- (id<ShelbyVideoContainer>)entityForCurrentFocus
+{
+    NSIndexPath *path = [self indexPathForCurrentFocus];
+    if (path) {
+        return self.deduplicatedEntries[path.row];
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - UICollectionViewDelegate (actually UIScrollViewDelegate)
 // The browseViewDelegate may use us as "lead view", adjusting other views programatically
 

@@ -15,6 +15,8 @@
 - (void)playVideoWithCurrentFocus;
 - (void)pauseCurrentVideo;
 - (void)scrubCurrentVideoTo:(CGFloat)pct;
+- (void)likeCurrentVideo;
+- (void)unlikeCurrentVideo;
 
 @end
 
@@ -22,11 +24,12 @@
 
 @property (nonatomic, weak) id<VideoControlsDelegate> delegate;
 
+@property (nonatomic, strong) id<ShelbyVideoContainer>currentEntity;
+
 //a placholder for the system airplay view
 @property (nonatomic, readonly) UIView *airPlayView;
 
 @property (nonatomic, assign) BOOL videoIsPlaying;
-@property (nonatomic, assign) BOOL currentEntryIsLiked;
 @property (nonatomic, assign) CMTimeRange bufferedRange;
 @property (nonatomic, assign) CMTime currentTime;
 @property (nonatomic, assign) CMTime duration;
