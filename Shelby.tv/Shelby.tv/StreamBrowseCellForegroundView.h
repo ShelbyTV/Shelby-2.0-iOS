@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Frame+Helper.h"
 
 @interface StreamBrowseCellForegroundView : UIView
-
-@property (weak, nonatomic) IBOutlet UILabel *summaryTitle;
-@property (weak, nonatomic) IBOutlet UILabel *detailTitle;
-
+- (void)setInfoForFrame:(Frame *)videoFrame;
 @end
