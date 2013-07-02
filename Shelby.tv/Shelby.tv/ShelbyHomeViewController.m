@@ -74,7 +74,7 @@
                                                                           options:0
                                                                           metrics:nil
                                                                             views:@{@"controls":_videoControlsVC.view}]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(144)]|"
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(88)]|"
                                                                           options:0
                                                                           metrics:nil
                                                                             views:@{@"controls":_videoControlsVC.view}]];
