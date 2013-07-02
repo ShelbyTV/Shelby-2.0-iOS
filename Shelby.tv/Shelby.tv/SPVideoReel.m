@@ -185,7 +185,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self setupGestures];
     
     [self setupVideoPlayersFromIndex:0];
-    [self currentVideoShouldChangeToVideo:self.videoStartIndex];
+    [self currentVideoShouldChangeToVideo:self.videoStartIndex autoplay:YES];
     
     [self setupAirPlay];
     [self setupOverlayVisibileItems];
@@ -479,11 +479,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         return;
     }
 
-    [self currentVideoShouldChangeToVideo:page];
+    [self currentVideoShouldChangeToVideo:page autoplay:self.currentPlayer.isPlaying];
 }
 
 #pragma mark -  Update Methods (Private)
-- (void)currentVideoShouldChangeToVideo:(NSUInteger)position
+- (void)currentVideoShouldChangeToVideo:(NSUInteger)position autoplay:(BOOL)shouldAutoplay
 {
     @synchronized(self){
         if (self.isShutdown) {
@@ -504,11 +504,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         // Set the new current player to auto play and get it going...
         self.currentVideoPlayingIndex = position;
         self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-        
-        // If we are in Tutorial Show Mode, we want the video to be paused.
-        if (self.tutorialMode != SPTutorialModeShow) {
-            self.currentPlayer.shouldAutoplay = YES;
-        }
+        self.currentPlayer.shouldAutoplay = shouldAutoplay;
+
         [self.currentPlayer prepareForStreamingPlayback];
         
         [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
@@ -1052,7 +1049,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             videoX = self.videoScrollView.contentOffset.x;
         }
         [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
-        [self currentVideoShouldChangeToVideo:idx];
+        [self currentVideoShouldChangeToVideo:idx autoplay:YES];
         return YES;
     } else {
         return NO;
@@ -1085,7 +1082,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 //    [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
     
-    [self currentVideoShouldChangeToVideo:page];
+    [self currentVideoShouldChangeToVideo:page autoplay:self.currentPlayer.isPlaying];
     
     NSInteger videosBeyond = [self.videoEntities count] - page;
     if(videosBeyond == kShelbyPrefetchEntriesWhenNearEnd && self.channel.canFetchRemoteEntries){
