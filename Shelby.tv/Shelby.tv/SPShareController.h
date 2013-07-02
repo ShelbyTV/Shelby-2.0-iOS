@@ -6,23 +6,26 @@
 //  Copyright (c) 2013 Shelby TV. All rights reserved.
 //
 
-#import "SPVideoPlayer.h"
+#import "Frame+Helper.h"
+
+typedef void(^SPShareCompletionHandler)(BOOL completed);
+
+@class SPShareController;
 
 @protocol SPShareControllerDelegate <NSObject>
-
-- (void)shareDidFinish:(BOOL)complete;
-- (void)userAskForFacebookPublishPermissions;
-- (void)userAskForTwitterPublishPermissions;
+- (void)shareControllerRequestsFacebookPublishPermissions:(SPShareController *)shareController;
+- (void)shareControllerRequestsTwitterPublishPermissions:(SPShareController *)shareController;
 @end
 
 @interface SPShareController : NSObject <UITextViewDelegate, UIPopoverControllerDelegate>
 
 @property (nonatomic, weak) id<SPShareControllerDelegate> delegate;
 
-- (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect withVideoPlayer:(SPVideoPlayer *)videoPlayer;
 - (id)initWithVideoFrame:(Frame *)videoFrame fromViewController:(UIViewController *)viewController atRect:(CGRect)rect;
+
 /// UI Methods
-- (void)share;
+- (void)shareWithCompletionHandler:(SPShareCompletionHandler)completionHandler;
+//DJS not sure when/why the following two are used, didn't touch them...
 - (void)showRollView;
 - (void)hideRollView;
 

@@ -18,7 +18,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ShelbyAlertView.h"
 #import "SPChannelPeekView.h"
-#import "SPOverlayView.h"
 #import "SPTutorialView.h"
 #import "SPVideoExtractor.h"
 #import "TwitterHandler.h"
@@ -50,10 +49,8 @@
 @property (nonatomic, strong) NSTimer *tutorialTimer;
 @property (nonatomic, assign) NSUInteger currentVideoPlayingIndex;
 @property (atomic, weak) SPVideoPlayer *currentPlayer;
-@property (nonatomic, assign) BOOL shouldResumePlaybackAfterShare;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
 @property (assign, nonatomic) SPTutorialMode tutorialMode;
-@property (nonatomic, strong) SPShareController *shareController;
 @property (nonatomic, assign) BOOL isShutdown;
 @property (nonatomic, strong) NSDate *lastVideoStalledAlertTime;
 
@@ -62,12 +59,6 @@
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
-
-/// Action Methods
-- (IBAction)shareButtonAction:(id)sender;
-- (IBAction)likeAction:(id)sender;
-- (IBAction)rollAction:(id)sender;
-- (IBAction)closePlayer:(id)sender;
 
 @end
 
@@ -181,15 +172,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self setupVideoPreloadStrategy];
     [self setupObservers];
     [self setupVideoScrollView];
-    [self setupOverlayView];
     [self setupGestures];
     
     [self setupVideoPlayersFromIndex:0];
     [self currentVideoShouldChangeToVideo:self.videoStartIndex autoplay:YES];
     
     [self setupAirPlay];
-    [self setupOverlayVisibileItems];
-
 }
 
 - (void)setupObservers
@@ -243,28 +231,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     self.videoScrollView.layer.borderColor = [UIColor redColor].CGColor;
     self.videoScrollView.layer.borderWidth = 4.0;
     //XXX LAYOUT TESTING
-}
-
-- (void)setupOverlayView
-{
-//    STVAssert(!self.overlayView, @"should only setup overlay view once");
-    NSString *overlayNibName = nil;
-    if (DEVICE_IPAD) {
-        overlayNibName = @"SPOverlayView";
-    } else {
-        overlayNibName = @"SPOverlayView-iPhone";
-    }
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:overlayNibName owner:self options:nil];
-    STVAssert([nib isKindOfClass:[NSArray class]] && [nib count] > 0 && [nib[0] isKindOfClass:[UIView class]], @"bad overlay view nib");
-//    self.overlayView = nib[0];
-//    self.overlayView.alpha = 0;
-//    self.overlayView.delegate = self;
-    //XXX DJS SPOverlayView is deprecated
-    //I am not killing the code right now, just taking it off screen while we build...
-    //TODO: remove the overlay, all its files, etc.
-//    [self.view addSubview:self.overlayView];
-//    [self.overlayView setAccentColor:self.channel.displayColor];
-//    [self.overlayView setRollEnabled:[self.channel canRoll] && [self.delegate canRoll]];
 }
 
 //called via -setup via -viewDidLoad
@@ -324,16 +290,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupGestures
 {
-    STVAssert(![[self.view gestureRecognizers] containsObject:self.toggleOverlayGesuture], @"should only setup gestures once");
-
-    //hide/shower overlay (single tap)
-    //DJS TODO: new way to hide/show overlays
-//    _toggleOverlayGesuture = [[UITapGestureRecognizer alloc] initWithTarget:_overlayView action:@selector(toggleOverlay)];
-//    [self.toggleOverlayGesuture setNumberOfTapsRequired:1];
-//    [self.toggleOverlayGesuture setDelegate:self];
-//    [self.toggleOverlayGesuture requireGestureRecognizerToFail:self.overlayView.scrubberGesture];
-//    [self.view addGestureRecognizer:self.toggleOverlayGesuture];
-
     //change channels (pan vertically)
     if (DEVICE_IPAD) {
         UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
@@ -359,23 +315,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
     [togglePlaybackGesuture setNumberOfTapsRequired:2];
     [self.view addGestureRecognizer:togglePlaybackGesuture];
-    [self.toggleOverlayGesuture requireGestureRecognizerToFail:togglePlaybackGesuture];
     
     //update scroll view to better interact with the above gesure recognizers
     STVAssert(self.videoScrollView && self.videoScrollView.panGestureRecognizer, @"scroll view should be initialized");
     self.videoScrollView.panGestureRecognizer.minimumNumberOfTouches = 1;
     self.videoScrollView.panGestureRecognizer.maximumNumberOfTouches = 1;
     self.videoScrollView.pinchGestureRecognizer.enabled = NO;
-}
-
-- (void)setupOverlayVisibileItems
-{
-    //djs use our model
-//    if ([self.model numberOfVideos]) {
-//        [self.overlayView showVideoInfo];
-//    } else {
-//        [self.overlayView hideVideoInfo];
-//    }
 }
 
 - (void)shutdown
@@ -444,6 +389,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.currentPlayer togglePlayback];
     
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionDoubleTap withLabel:nil];
+}
+
+- (BOOL)isCurrentPlayerPlaying
+{
+    return self.currentPlayer.isPlaying;
 }
 
 - (void)pauseCurrentPlayer
@@ -630,76 +580,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
-#pragma mark - Action Methods (Private)
-- (void)prepareForShareWithFrame:(CGRect)frame
-{
-    SPVideoPlayer *currentVideoPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    self.shareController = [[SPShareController alloc] initWithVideoFrame:currentVideoPlayer.videoFrame fromViewController:self atRect:frame withVideoPlayer:currentVideoPlayer];
-    self.shareController.delegate = self;
-    self.shouldResumePlaybackAfterShare = self.currentPlayer.isPlaying;
-    if (self.shouldResumePlaybackAfterShare) {
-        [self.currentPlayer pause];
-    }
-}
-
-- (IBAction)shareButtonAction:(id)sender
-{
-    UIButton *shareButton = (UIButton *)sender;
-    STVAssert([shareButton isKindOfClass:[UIButton class]], @"VideoReel expecting share button");
-    
-    [self prepareForShareWithFrame:shareButton.frame];
-    [self.shareController share];
-}
-
-- (void)shareDidFinish:(BOOL)complete
-{
-    if (self.shouldResumePlaybackAfterShare) {
-        [self.currentPlayer play];
-    }
-}
-
-- (void)userAskForFacebookPublishPermissions
-{
-    [self.delegate userAskForFacebookPublishPermissions];
-}
-
-- (void)userAskForTwitterPublishPermissions
-{
-    [self.delegate userAskForTwitterPublishPermissions];
-}
-
 - (id<ShelbyVideoContainer>)getCurrentPlaybackEntity
 {
     return self.videoEntities[self.currentVideoPlayingIndex];
 }
 
-//DEPRECATED
-- (IBAction)likeAction:(id)sender
-{
-    SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    BOOL didLike = [currentPlayer.videoFrame toggleLike];
-    
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerToggleLike withLabel:(didLike ? @"Liked" : @"Unliked")];
-
-    // Show alert on the first time Likes button is pressed
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:kShelbyFirstTimeLikedAlert]) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyFirstTimeLikedAlert];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        ShelbyAlertView *likedAlert = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"FIRST_LIKE_TITLE", @"--First Like--")
-                                                                     message:NSLocalizedString(@"FIRST_LIKE_MESSAGE", nil)
-                                                          dismissButtonTitle:NSLocalizedString(@"FIRST_LIKE_BUTTON", nil)
-                                                              autodimissTime:6
-                                                                   onDismiss:nil];
-        [likedAlert show];
-    }
-}
-
-- (IBAction)rollAction:(id)sender
-{
-    [self prepareForShareWithFrame:CGRectZero];
-    
-    [self.shareController showRollView];
-}
+#pragma mark - Action Methods (Private)
 
 - (IBAction)closePlayer:(id)sender
 {
@@ -708,11 +594,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
-- (void)hideOverlayView
-{
-    //DJS TODO: show/hide overlays will happen elsewhere now...
-//    [self.overlayView hideOverlayView];
-}
 #pragma mark - Gesutre Methods (Private)
 - (void)switchChannelWithDirectionUp:(BOOL)up
 {

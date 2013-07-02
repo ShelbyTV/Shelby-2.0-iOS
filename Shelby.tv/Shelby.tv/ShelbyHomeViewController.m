@@ -533,7 +533,7 @@
     CGRect finalBottomFrame = CGRectMake(animationViews.finalBottomFrame.origin.x, animationViews.finalBottomFrame.origin.y + topBarHeight, animationViews.finalBottomFrame.size.width, animationViews.finalBottomFrame.size.height);
     
     [self.topBar setAlpha:0];
-    [self.videoReel hideOverlayView];
+
     [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [animationViews.centerView setFrame:finalCenterFrame];
         [animationViews.centerView setAlpha:1];
@@ -729,55 +729,71 @@
 
 #pragma mark - VideoControlsDelegate
 
-- (void)playVideoWithCurrentFocus
+- (void)videoControlsPlayVideoWithCurrentFocus:(VideoControlsViewController *)vcvc
 {
     [self playChannel:self.currentStreamBrowseVC.channel atIndex:[self.currentStreamBrowseVC indexPathForCurrentFocus].row];
 }
 
-- (void)pauseCurrentVideo
+- (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc
 {
     [self.videoReel pauseCurrentPlayer];
 }
 
-- (void)scrubCurrentVideoTo:(CGFloat)percent
+- (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct
 {
-    [self.videoReel scrubCurrentPlayerTo:percent];
+    [self.videoReel scrubCurrentPlayerTo:pct];
 }
 
-- (void)likeCurrentVideo
+- (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc
 {
-    BOOL didLike = [self toggleLikeCurrentVideo];
+    BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
     if (!didLike) {
         DLog(@"***ERROR*** Tried to Like, but action resulted in UNLIKE of the video");
     }
 }
 
-- (void)unlikeCurrentVideo
+- (void)videoControlsUnlikeCurrentVideo:(VideoControlsViewController *)vcvc
 {
-    BOOL didLike = [self toggleLikeCurrentVideo];
+    BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
     if (didLike) {
         DLog(@"***ERROR*** Tried to unlike, but action resulted in LIKE of the video");
     }
 }
 
-- (BOOL)toggleLikeCurrentVideo
+- (BOOL)toggleLikeCurrentVideo:(id<ShelbyVideoContainer>)entity
 {
-    Frame *currentFrame;
-    if (self.videoReel) {
-        currentFrame = [Frame frameForEntity:[self.videoReel getCurrentPlaybackEntity]];
-    } else {
-        if (DEVICE_IPAD) {
-            //TODO: what is the "current video" when we don't have a video reel?
-        } else {
-            //on iPhone b/c we only show one frame at a time
-            currentFrame = [Frame frameForEntity:[self.currentStreamBrowseVC entityForCurrentFocus]];
-        }
-    }
+    Frame *currentFrame = [Frame frameForEntity:entity];
     BOOL didLike = [currentFrame toggleLike];
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer
                                      withAction:kAnalyticsVideoPlayerToggleLike
                                       withLabel:(didLike ? @"Liked" : @"Unliked")];
     return didLike;
+}
+
+- (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc
+{
+    Frame *frame = [Frame frameForEntity:vcvc.currentEntity];
+    SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:frame fromViewController:self atRect:CGRectZero];
+    shareController.delegate = self;
+    BOOL shouldResume = self.videoReel.isCurrentPlayerPlaying;
+    [self.videoReel pauseCurrentPlayer];
+    [shareController shareWithCompletionHandler:^(BOOL completed) {
+        if (shouldResume) {
+            [self.videoReel playCurrentPlayer];
+        }
+    }];
+}
+
+#pragma mark - SPShareControllerDelegate
+
+- (void)shareControllerRequestsFacebookPublishPermissions:(SPShareController *)shareController
+{
+    [self.masterDelegate userAskForFacebookPublishPermissions];
+}
+
+- (void)shareControllerRequestsTwitterPublishPermissions:(SPShareController *)shareController
+{
+    [self.masterDelegate userAskForTwitterPublishPermissions];
 }
 
 #pragma mark - AuthorizationDelegate

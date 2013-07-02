@@ -10,13 +10,16 @@
 #import <CoreMedia/CoreMedia.h>
 #import "SPVideoReel.h"
 
+@class VideoControlsViewController;
+
 @protocol VideoControlsDelegate <NSObject>
 
-- (void)playVideoWithCurrentFocus;
-- (void)pauseCurrentVideo;
-- (void)scrubCurrentVideoTo:(CGFloat)pct;
-- (void)likeCurrentVideo;
-- (void)unlikeCurrentVideo;
+- (void)videoControlsPlayVideoWithCurrentFocus:(VideoControlsViewController *)vcvc;
+- (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc;
+- (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct;
+- (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc;
+- (void)videoControlsUnlikeCurrentVideo:(VideoControlsViewController *)vcvc;
+- (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc;
 
 @end
 

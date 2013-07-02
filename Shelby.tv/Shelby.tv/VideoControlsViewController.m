@@ -62,9 +62,9 @@
 
 - (IBAction)largePlayButtonTapped:(id)sender {
     if (self.videoIsPlaying) {
-        [self.delegate pauseCurrentVideo];
+        [self.delegate videoControlsPauseCurrentVideo:self];
     } else {
-        [self.delegate playVideoWithCurrentFocus];
+        [self.delegate videoControlsPlayVideoWithCurrentFocus:self];
     }
 }
 
@@ -72,21 +72,21 @@
     UITapGestureRecognizer *gesture = (UITapGestureRecognizer *)sender;
     CGPoint position = [gesture locationInView:self.controlsView.bufferProgressView];
     CGFloat percentage = position.x / self.controlsView.bufferProgressView.frame.size.width;
-    [self.delegate scrubCurrentVideoTo:percentage];
+    [self.delegate videoControls:self scrubCurrentVideoTo:percentage];
 }
 
 - (IBAction)likeTapped:(id)sender {
-    [self.delegate likeCurrentVideo];
+    [self.delegate videoControlsLikeCurrentVideo:self];
     [self updateViewForCurrentEntity];
 }
 
 - (IBAction)unlikeTapped:(id)sender {
-    [self.delegate unlikeCurrentVideo];
+    [self.delegate videoControlsUnlikeCurrentVideo:self];
     [self updateViewForCurrentEntity];
 }
 
 - (IBAction)shareTapped:(id)sender {
-    //TODO!
+    [self.delegate videoControlsShareCurrentVideo:self];
 }
 
 #pragma mark - VideoPlaybackDelegate
