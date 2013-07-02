@@ -10,9 +10,7 @@
 
 @interface StreamBrowseCellForegroundView : UIView
 
-@property (weak, nonatomic) IBOutlet UIButton *summaryPlayButton;
-@property (weak, nonatomic) IBOutlet UIButton *detailPlayButton;
-
 @property (weak, nonatomic) IBOutlet UILabel *summaryTitle;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
+
 @end

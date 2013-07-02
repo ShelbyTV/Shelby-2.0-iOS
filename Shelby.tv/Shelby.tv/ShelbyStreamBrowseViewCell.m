@@ -54,9 +54,6 @@
         CGRect subviewFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
         _foregroundView.frame = CGRectMake(0, 0, _foregroundView.frame.size.width, subviewFrame.size.height);
-        [_foregroundView.summaryPlayButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [_foregroundView.detailPlayButton addTarget:self action:@selector(playTapped:) forControlEvents:UIControlEventTouchUpInside];
-
 
         //background - thumbnails are on top of each other in a parent view
         CGRect bgThumbsHolderFrame = CGRectMake(PARALLAX_BG_X, PARALLAX_BG_Y, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
@@ -189,13 +186,6 @@
                 [self.parallaxView getBackgroundView].hidden = YES;
         }
     }
-}
-
-#pragma mark - StreamBrowseCellForegroundView
-
-- (void)playTapped:(id)sender
-{
-    [self.delegate playTapped:self];
 }
 
 #pragma mark - STVParallaxViewDelegate
