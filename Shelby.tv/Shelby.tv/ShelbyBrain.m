@@ -479,7 +479,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 #pragma mark - SPVideoReelProtocol Methods
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up
 {
-    [self.homeVC dismissPlayer];
+    [self.homeVC dismissVideoReel];
     NSInteger nextChannel = [self nextChannelForDirection:up];
     BOOL didChangeChannels = [self launchChannel:self.homeVC.channels[nextChannel] atIndex:0];
     if(!didChangeChannels){
@@ -497,7 +497,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     }
 
     //we used to do this with an old animated dismiss... no longer
-    [self.homeVC dismissPlayer];
+    [self.homeVC dismissVideoReel];
     
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionClosePlayerByPinch withLabel:nil];
 

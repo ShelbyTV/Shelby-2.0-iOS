@@ -436,7 +436,7 @@
     [self.topBar setHidden:YES];
 }
 
-- (void)dismissPlayer
+- (void)dismissVideoReel
 {
     [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewDefault;
     
@@ -580,12 +580,30 @@
     }
 }
 
+//stream browser just landed on a cell.  Update views based on our state...
 - (void)shelbyStreamBrowseViewControllerDidEndDecelerating:(ShelbyStreamBrowseViewController *)vc
 {
+    if (vc != self.currentStreamBrowseVC){
+        return;
+    }
+
     if (self.videoReel) {
-        if (vc == self.currentStreamBrowseVC) {
-            [self.videoReel endDecelerating];
-            self.videoControlsVC.currentEntity = [self.videoReel getCurrentPlaybackEntity];
+        id<ShelbyVideoContainer> previousPlaybackEntity = [self.videoReel getCurrentPlaybackEntity];
+        [self.videoReel endDecelerating];
+        id<ShelbyVideoContainer> currentPlaybackEntity = [self.videoReel getCurrentPlaybackEntity];
+        self.videoControlsVC.currentEntity = currentPlaybackEntity;
+
+        if (!self.videoReel.isCurrentPlayerPlaying && currentPlaybackEntity != previousPlaybackEntity) {
+            //paused & changed videos: transition to default view mode (from playback view mode)
+            STVAssert(vc.viewMode != ShelbyStreamBrowseViewDefault, @"expected a playback mode, since we have a video reel");
+            [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+                [self dismissVideoReel];
+                STVAssert(vc.viewMode == ShelbyStreamBrowseViewDefault, @"expected dismissVideoReel to update view mode");
+                //updating video controls is affected by nil videoReel
+                [self updateVideoControlsForPage:vc.currentPage];
+            }];
+        } else {
+            //playing & changed videos: controls already updated, nothing to do
         }
     } else {
         if (DEVICE_IPAD) {
