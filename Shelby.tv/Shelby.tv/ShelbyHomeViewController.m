@@ -572,11 +572,15 @@
 }
 
 #pragma mark - ShelbyStreamBrowseViewDelegate
-// The StreamBrowseView our leader, videoReel is our follower.  Keep them synchronized...
+
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didScrollTo:(CGPoint)contentOffset
 {
-    if (self.videoReel && vc == self.currentStreamBrowseVC) {
+    if (vc == self.currentStreamBrowseVC) {
+        // StreamBrowseView is our leader, videoReel is our follower.  Keep their scrolling synchronized...
         [self.videoReel scrollTo:contentOffset];
+
+        // and fade the video controls when between pages
+        [self fadeVideoControlsForOffset:contentOffset frameHeight:vc.view.frame.size.height];
     }
 }
 
@@ -638,24 +642,6 @@
     if (self.currentStreamBrowseVC == vc) {
         [self updateVideoControlsForPage:page];
     }
-}
-
-- (void)updateVideoControlsForPage:(NSUInteger)page
-{
-    [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-        if (self.videoReel) {
-            //playback, summary or detail page
-            self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
-        } else {
-            if (page == 0) {
-                //non playback, summary page
-                self.videoControlsVC.displayMode = VideoControlsDisplayDefault;
-            } else {
-                //non playback, detail page
-                self.videoControlsVC.displayMode = VideoControlsDisplayActionsOnly;
-            }
-        }
-    }];
 }
 
 #pragma mark - Authorization Methods (Private)
@@ -871,6 +857,41 @@
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(loginUserWithEmail:password:)]) {
         [self.masterDelegate loginUserWithEmail:email password:password];
     }
+}
+
+#pragma mark - View Helpers
+
+- (void)fadeVideoControlsForOffset:(CGPoint)contentOffset frameHeight:(CGFloat)frameHeight
+{
+    if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
+        return;
+    }
+    
+    // offsetModHeight goes 0->FrameHeight as a page moves offscreen, returning abruptly to 0 as we hit the new page
+    NSInteger offsetModHeight = ((NSInteger)contentOffset.y % (NSInteger)frameHeight);
+    // normalize offsetModHeight into [0, 1]
+    CGFloat offsetModHeightNormalized = offsetModHeight / frameHeight;
+    // shift such that we move smoothly from 1->0->1 as we scroll from one page to the next
+    CGFloat pageBoundaryDelta = fabsf(1.0 - 2.0 * offsetModHeightNormalized);
+    self.videoControlsVC.view.alpha = pageBoundaryDelta;
+}
+
+- (void)updateVideoControlsForPage:(NSUInteger)page
+{
+    [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+        if (self.videoReel) {
+            //playback, summary or detail page
+            self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
+        } else {
+            if (page == 0) {
+                //non playback, summary page
+                self.videoControlsVC.displayMode = VideoControlsDisplayDefault;
+            } else {
+                //non playback, detail page
+                self.videoControlsVC.displayMode = VideoControlsDisplayActionsOnly;
+            }
+        }
+    }];
 }
 
 #pragma mark - Beta Stuff
