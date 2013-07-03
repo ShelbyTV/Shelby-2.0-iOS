@@ -74,14 +74,14 @@
         //a big play button on top of the parallax view (shown when video controls aren't)
         _playButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [_playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [_playButton setTitle:@"PLAY" forState:UIControlStateNormal];
+        [_playButton setTitle:@"play" forState:UIControlStateNormal];
         [self.contentView insertSubview:_playButton aboveSubview:_parallaxView];
         _playButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[play]"
                                                                                  options:0
                                                                                  metrics:nil
                                                                                    views:@{@"play":_playButton}]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[play]-66-|"
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[play]-40-|"
                                                                                  options:0
                                                                                  metrics:nil
                                                                                    views:@{@"play":_playButton}]];
