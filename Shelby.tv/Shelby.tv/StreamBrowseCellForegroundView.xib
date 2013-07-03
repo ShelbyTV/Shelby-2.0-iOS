@@ -218,7 +218,7 @@
 							<object class="IBUILabel" id="970619123">
 								<reference key="NSNextResponder" ref="605545355"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{53, 11}, {110, 21}}</string>
+								<string key="NSFrame">{{53, 11}, {88, 21}}</string>
 								<reference key="NSSuperview" ref="605545355"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="630860161"/>
@@ -239,7 +239,7 @@
 							<object class="IBUILabel" id="630860161">
 								<reference key="NSNextResponder" ref="605545355"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{53, 29}, {110, 21}}</string>
+								<string key="NSFrame">{{53, 29}, {88, 21}}</string>
 								<reference key="NSSuperview" ref="605545355"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="701817059"/>
@@ -1469,10 +1469,10 @@
 								<object class="IBLayoutConstant" key="constant">
 									<double key="value">110</double>
 								</object>
-								<float key="priority">1000</float>
+								<float key="priority">1</float>
 								<reference key="containingView" ref="970619123"/>
-								<int key="scoringType">3</int>
-								<float key="scoringTypeFloat">9</float>
+								<int key="scoringType">9</int>
+								<float key="scoringTypeFloat">40</float>
 								<int key="contentType">1</int>
 							</object>
 							<object class="IBNSLayoutConstraint" id="569479230">
@@ -1967,7 +1967,7 @@
 				</array>
 				<boolean value="NO" key="256.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="257.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<array class="NSMutableArray" key="257.IBViewMetadataConstraints">
+				<array key="257.IBViewMetadataConstraints">
 					<reference ref="569479230"/>
 					<reference ref="907093675"/>
 				</array>

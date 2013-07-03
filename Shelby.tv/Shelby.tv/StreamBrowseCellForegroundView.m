@@ -46,7 +46,9 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
- 
+    self.detailUsername.backgroundColor = [UIColor purpleColor];
+    self.detailViaNetwork.backgroundColor = [UIColor orangeColor];
+
     NSInteger pageWidth = self.frame.size.width / 2;
 //    NSInteger pageHeight = self.frame.size.height;
     NSInteger xOrigin = pageWidth + kShelbyInfoViewMargin;
@@ -57,7 +59,8 @@
         self.summaryTitle.frame = CGRectMake(20, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
         // Detail View
         self.detailTitle.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
-        self.detailUserView.frame = CGRectMake(xOrigin, 95, 160, 60);
+        self.detailUserView.frame = CGRectMake(xOrigin, 95, 165, 60);
+        self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 100, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 170, pageWidth - kShelbyInfoViewMargin * 2, 60);
         self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, self.detailUserView.frame.origin.y + 10, 280, 40);
 
@@ -68,11 +71,14 @@
      
         // Detail View
         self.detailTitle.frame = CGRectMake(xOrigin, 50, 280, 44);
-        self.detailUserView.frame = CGRectMake(xOrigin, 105, 160, 60);
+        self.detailUserView.frame = CGRectMake(xOrigin, 105, 280, 60);
+        self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 215, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 195, 280, 100);
         self.detailNetworkShares.frame = CGRectMake(xOrigin, 305, 280, 40);
     }
     
+    self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.x, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
+
     self.detailCaption.frame = CGRectMake(2, 2, self.detailCommentView.frame.size.width - 4, self.detailCommentView.frame.size.height - 4);
     [self resizeCaptionLabel];
     

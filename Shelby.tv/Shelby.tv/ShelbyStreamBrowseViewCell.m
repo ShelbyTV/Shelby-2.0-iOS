@@ -77,7 +77,7 @@
         [_playButton setTitle:@"play" forState:UIControlStateNormal];
         [self.contentView insertSubview:_playButton aboveSubview:_parallaxView];
         _playButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[play]"
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[play]"
                                                                                  options:0
                                                                                  metrics:nil
                                                                                    views:@{@"play":_playButton}]];
