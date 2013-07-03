@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIView *detailCommentView;
 @property (weak, nonatomic) IBOutlet UIView *detailNetworkShares;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
+@property (weak, nonatomic) IBOutlet UIImageView *detailTriangle;
 @property (weak, nonatomic) IBOutlet UIImageView *detailUserAvatar;
 @property (weak, nonatomic) IBOutlet UILabel *detailUsername;
 @property (weak, nonatomic) IBOutlet UIView *detailUserView;
@@ -56,9 +57,10 @@
         self.summaryTitle.frame = CGRectMake(20, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
         // Detail View
         self.detailTitle.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
-        self.detailUserView.frame = CGRectMake(xOrigin, 105, 160, 60);
+        self.detailUserView.frame = CGRectMake(xOrigin, 95, 160, 60);
         self.detailCommentView.frame = CGRectMake(xOrigin, 170, pageWidth - kShelbyInfoViewMargin * 2, 60);
         self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, self.detailUserView.frame.origin.y + 10, 280, 40);
+
     } else {
         // Portrait
         // Summary View
@@ -73,6 +75,9 @@
     
     self.detailCaption.frame = CGRectMake(2, 2, self.detailCommentView.frame.size.width - 4, self.detailCommentView.frame.size.height - 4);
     [self resizeCaptionLabel];
+    
+    self.detailTriangle.frame = CGRectMake(xOrigin + 10, self.detailCommentView.frame.origin.y - self.detailTriangle.frame.size.height, self.detailTriangle.frame.size.width, self.detailTriangle.frame.size.height);
+
 }
 
 
