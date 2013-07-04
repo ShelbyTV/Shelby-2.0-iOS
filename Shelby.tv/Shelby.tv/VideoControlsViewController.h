@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControlsUnlikeCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc;
+- (void)videoControls:(VideoControlsViewController *)vcvc isScrubbing:(BOOL)isScrubbing;
 
 @end
 

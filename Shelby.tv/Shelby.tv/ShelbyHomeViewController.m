@@ -799,6 +799,22 @@
     [self.videoReel scrubCurrentPlayerTo:pct];
 }
 
+-(void)videoControls:(VideoControlsViewController *)vcvc isScrubbing:(BOOL)isScrubbing
+{
+    //when scrubbing, hide the overlay so we can see (put it back when we're done scrubbing)
+    if (isScrubbing) {
+        STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithOverlay, @"expected overlay to be showing");
+        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+        }];
+    } else {
+        STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay, @"expected overlay not showing");
+        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
+        }];
+    }
+}
+
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc
 {
     BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];

@@ -13,6 +13,7 @@
 @interface VideoControlsViewController ()
 
 @property (nonatomic, weak) VideoControlsView *controlsView;
+@property (nonatomic, assign) BOOL currentlyScrubbing;
 
 @end
 
@@ -24,6 +25,7 @@
     if (self) {
         _videoIsPlaying = NO;
         _displayMode = VideoControlsDisplayDefault;
+        _currentlyScrubbing = NO;
     }
     return self;
 }
@@ -43,6 +45,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    //update the bits that display relative to their size
+    if (CMTIME_IS_VALID(self.currentTime)) {
+        [self updateScrubheadForCurrentTime];
+    }
+    if (CMTIMERANGE_IS_VALID(self.bufferedRange)){
+        [self updateBufferProgressForCurrentBufferedRange];
+    }
+}
+
 - (void)setDisplayMode:(VideoControlsDisplayMode)displayMode
 {
     if (_displayMode != displayMode) {
@@ -58,6 +71,7 @@
         [self updateViewForCurrentEntity];
     }
 }
+
 #pragma mark - XIB actions
 
 - (IBAction)largePlayButtonTapped:(id)sender {
@@ -73,6 +87,31 @@
     CGPoint position = [gesture locationInView:self.controlsView.bufferProgressView];
     CGFloat percentage = position.x / self.controlsView.bufferProgressView.frame.size.width;
     [self.delegate videoControls:self scrubCurrentVideoTo:percentage];
+}
+
+- (IBAction)scrubberButtonTouchDown:(id)sender {
+    self.currentlyScrubbing = YES;
+    [self.delegate videoControls:self isScrubbing:YES];
+}
+
+- (IBAction)scrubberDrag:(UIButton *)scrubHead forEvent:(UIEvent *)event {
+    UITouch *scrubTouch = [[event touchesForView:self.controlsView.scrubheadButton] anyObject];
+    //keep scrubber under finger
+    [self.controlsView positionScrubheadForTouch:scrubTouch];
+    //update player
+    CGFloat pct = [self.controlsView playbackTargetPercentForTouch:scrubTouch];
+    pct = fmaxf(0.0, fminf(1.0, pct));
+    [self.delegate videoControls:self scrubCurrentVideoTo:pct];
+}
+
+- (IBAction)scrubberButtonTouchUp:(id)sender {
+    self.currentlyScrubbing = NO;
+    [self.delegate videoControls:self isScrubbing:NO];
+}
+
+- (IBAction)scrubberTouchUpOutside:(id)sender {
+    self.currentlyScrubbing = NO;
+    [self.delegate videoControls:self isScrubbing:NO];
 }
 
 - (IBAction)likeTapped:(id)sender {
@@ -107,7 +146,7 @@
 {
     if (!CMTimeRangeEqual(_bufferedRange, bufferedRange)) {
         _bufferedRange = bufferedRange;
-        self.controlsView.bufferProgressView.progress = (CMTimeGetSeconds(bufferedRange.start) + CMTimeGetSeconds(bufferedRange.duration)) / CMTimeGetSeconds(self.duration);
+        [self updateBufferProgressForCurrentBufferedRange];
     }
 }
 
@@ -116,8 +155,7 @@
     if (CMTimeCompare(_currentTime, time) != 0) {
         _currentTime = time;
         self.controlsView.currentTimeLabel.text = [self prettyStringForTime:time];
-        //TODO: update the position of the scrub head
-        //pct = CMTimeGetSeconds(time)/CMTimeGetSeconds(self.duration);
+        [self updateScrubheadForCurrentTime];
     }
 }
 
@@ -130,6 +168,20 @@
 }
 
 #pragma mark - Visual Helpers
+
+- (void)updateBufferProgressForCurrentBufferedRange
+{
+    self.controlsView.bufferProgressView.progress = (CMTimeGetSeconds(self.bufferedRange.start) + CMTimeGetSeconds(self.bufferedRange.duration)) / CMTimeGetSeconds(self.duration);
+}
+
+- (void)updateScrubheadForCurrentTime
+{
+    if (!self.currentlyScrubbing) {
+        [self.controlsView positionScrubheadForPercent:(CMTimeGetSeconds(self.currentTime)/CMTimeGetSeconds(self.duration))];
+    } else {
+        //when user is scrubbing, scrubhead is kept under their finger
+    }
+}
 
 - (void)updateViewForCurrentEntity
 {
@@ -166,6 +218,7 @@
     self.controlsView.currentTimeLabel.alpha = a;
     self.controlsView.durationLabel.alpha = a;
     self.controlsView.bufferProgressView.alpha = a;
+    self.controlsView.scrubheadButton.alpha = a;
 }
 
 - (void)setActionViewsAlpha:(CGFloat)a
