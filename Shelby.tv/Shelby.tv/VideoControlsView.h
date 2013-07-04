@@ -28,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *unlikeButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
+// Adding a view? Be sure to update the controllers -viewDidLoad
+
 - (void)positionScrubheadForPercent:(CGFloat)pct;
 - (void)positionScrubheadForTouch:(UITouch *)touch;
 - (CGFloat)playbackTargetPercentForTouch:(UITouch *)touch;

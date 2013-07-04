@@ -14,6 +14,8 @@
 
 @property (nonatomic, weak) VideoControlsView *controlsView;
 @property (nonatomic, assign) BOOL currentlyScrubbing;
+@property (nonatomic, strong) NSArray *playbackControlViews;
+@property (nonatomic, strong) NSArray *actionsViews;
 
 @end
 
@@ -36,6 +38,18 @@
 
     _controlsView = (VideoControlsView *)self.view;
     _airPlayView = _controlsView.airPlayView;
+
+    self.playbackControlViews = @[self.controlsView.airPlayView,
+                                  self.controlsView.largePlayButton,
+                                  self.controlsView.currentTimeLabel,
+                                  self.controlsView.durationLabel,
+                                  self.controlsView.bufferProgressView,
+                                  self.controlsView.scrubheadButton
+                                  ];
+    self.actionsViews = @[self.controlsView.likeButton,
+                          self.controlsView.unlikeButton,
+                          self.controlsView.shareButton
+                          ];
     [self updateViewForCurrentDisplayMode];
 }
 
@@ -198,34 +212,33 @@
     //    the outside world may use self.view to adjust our alpha wholistically
     switch (_displayMode) {
         case VideoControlsDisplayDefault:
-            [self setActionViewsAlpha:0.0];
-            [self setPlaybackControlViewsAlpha:0.0];
+            [self setActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             break;
         case VideoControlsDisplayActionsOnly:
-            [self setActionViewsAlpha:1.0];
-            [self setPlaybackControlViewsAlpha:0.0];
+            [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             break;
         case VideoControlsDisplayActionsAndPlaybackControls:
-            [self setActionViewsAlpha:1.0];
-            [self setPlaybackControlViewsAlpha:1.0];
+            [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
     }
 }
 
-- (void)setPlaybackControlViewsAlpha:(CGFloat)a
+- (void)setPlaybackControlViewsAlpha:(CGFloat)a userInteractionEnabled:(BOOL)interactionEnabled
 {
-    self.controlsView.airPlayView.alpha = a;
-    self.controlsView.largePlayButton.alpha = a;
-    self.controlsView.currentTimeLabel.alpha = a;
-    self.controlsView.durationLabel.alpha = a;
-    self.controlsView.bufferProgressView.alpha = a;
-    self.controlsView.scrubheadButton.alpha = a;
+    for (UIView *v in self.playbackControlViews) {
+        v.alpha = a;
+        v.userInteractionEnabled = interactionEnabled;
+    }
 }
 
-- (void)setActionViewsAlpha:(CGFloat)a
+- (void)setActionViewsAlpha:(CGFloat)a userInteractionEnabled:(BOOL)interactionEnabled
 {
-    self.controlsView.likeButton.alpha = a;
-    self.controlsView.unlikeButton.alpha = a;
-    self.controlsView.shareButton.alpha = a;
+    for (UIView *v in self.actionsViews) {
+        v.alpha = a;
+        v.userInteractionEnabled = interactionEnabled;
+    }
 }
 
 #pragma mark - Text Helpers
