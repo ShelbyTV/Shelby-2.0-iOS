@@ -115,6 +115,11 @@
     self.playerLayer.anchorPoint = CGPointMake(0, 0);
     self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 
+    //XXX LAYOUT TESTING
+    self.playerLayer.borderColor = [UIColor whiteColor].CGColor;
+    self.playerLayer.borderWidth = 8.0;
+    //XXX LAYOUT TESTING
+
     [self.view.layer addSublayer:self.playerLayer];
     
     if(CMTIME_IS_VALID(self.lastPlayheadPosition)){

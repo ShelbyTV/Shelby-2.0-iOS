@@ -109,12 +109,17 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         self.tutorialMode = [self.delegate tutorialModeForCurrentPlayer];
     }
 
-    [self setup];
+    // Any setup stuff that *doesn't* rely on frame sizing can go here
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    // -setup relies on our frame to correctly size the video players...
+    // We used to run it in -viewDidLoad but our frame wasn't yet updated (ie. for landscape)
+    // In -viewDidAppear, our frame is sized correctly and -setup will pass that down the view chain
+    [self setup];
 
     if (self.tutorialMode == SPTutorialModeShow) {
         self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showDoubleTapTutorial) userInfo:nil repeats:NO];
