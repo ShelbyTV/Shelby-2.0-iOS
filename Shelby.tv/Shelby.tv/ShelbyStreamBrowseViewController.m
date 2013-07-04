@@ -71,27 +71,29 @@
     return YES;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
+    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(fromInterfaceOrientation)) {
+        //don't need to do anything if we didn't change! (this happens b/c upside phone isn't supported)
         return;
     }
-    
-    CGPoint currentContentOffset = self.collectionView.contentOffset;
 
-    // Calculate the new contentOffset.y
-    // After rotation Y content offset should be as follows:
-    // a = currentContentOffset.y / currentHeight     - currentHeight = self.view.frame.size.height
-    // afterRotationContentOffsetY = a * afterRotationHeight     - afterRotationHeight = self.view.frame.size.width
-    NSInteger afterRotationContentOffsetY = (NSInteger) currentContentOffset.y / self.view.frame.size.height * self.view.frame.size.width;
-    
+    CGPoint preRotationContentOffset = self.collectionView.contentOffset;
+    //In -didRotateFromInterfaceOrientation: self.view.frame is post-rotation size
+    //So, our width is our old height...
+    NSUInteger preRotationScrollPage = preRotationContentOffset.y / self.view.frame.size.width;
+    NSUInteger postRotationContentOffsetY = preRotationScrollPage * self.view.frame.size.height;
+
     // KP KP: TODO: behaving weird when swipe to detail view, rotate and then scroll one down (only when rotating to landscape)
-    
+
+    //make collection view to redisplay currently visible items
     [self.collectionView reloadData];
 
-    [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, afterRotationContentOffsetY)];
+    //our browseViewDelegate relies on our frame being correct when -viewDidScroll calls into it
+    //so we update contentOffset in -didRotateFromInterfaceOrientation: to make sure context is set up properly for delegate
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, postRotationContentOffsetY)];
 }
 
 #pragma mark - Setters & Getters
