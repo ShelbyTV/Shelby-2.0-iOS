@@ -103,6 +103,12 @@
     NSString *captionText = [NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]];
     [self.detailCaption setText:captionText];
     [self resizeCaptionLabel];
+    
+    // Shares
+    NSOrderedSet *shareFrames = videoFrame.duplicates;
+    if ([shareFrames count]) {
+        // TODO: show share frames
+    }
 }
 
 - (void)resizeCaptionLabel
