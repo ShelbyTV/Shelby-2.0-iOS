@@ -8,6 +8,7 @@
 
 #import "StreamBrowseCellForegroundView.h"
 #import "Video+Helper.h"
+#import "UIImageView+AFNetworking.h"
 #import "User.h"
 
 #define kShelbyInfoViewMargin 15
@@ -96,6 +97,21 @@
     // Username
     self.summaryUsername.text = videoFrame.creator.nickname;
     self.detailUsername.text = videoFrame.creator.nickname;
+    
+    // User Avatar
+    // Request setup was taken from UIImage+AFNetworking. As we have to set a completion block so the detail avatar will be the same as the summary one. (Otherwise, we had to make 2 seperate calls)
+    NSURL *url = [NSURL URLWithString:videoFrame.creator.userImage];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPShouldHandleCookies:NO];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+
+    __weak StreamBrowseCellForegroundView *weakSelf = self;
+    [self.summaryUserAvatar setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        weakSelf.summaryUserAvatar.image = image;
+        weakSelf.detailUserAvatar.image = image;
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        //TODO: retry?
+    }];
     
     // Via Network - TODO:
     
