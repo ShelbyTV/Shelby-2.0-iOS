@@ -12,7 +12,7 @@
 #import "User.h"
 
 #define kShelbyInfoViewMargin 15
-#define kShelbyCaptionMargin 2
+#define kShelbyCaptionMargin 4
 
 @interface  StreamBrowseCellForegroundView()
 // Detail View Outlets
@@ -49,7 +49,7 @@
     [super layoutSubviews];
     self.detailUsername.backgroundColor = [UIColor purpleColor];
     self.detailViaNetwork.backgroundColor = [UIColor orangeColor];
-
+    self.detailCaption.backgroundColor = [UIColor brownColor];
     NSInteger pageWidth = self.frame.size.width / 2;
 //    NSInteger pageHeight = self.frame.size.height;
     NSInteger xOrigin = pageWidth + kShelbyInfoViewMargin;
@@ -80,7 +80,6 @@
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.x, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
 
-    self.detailCaption.frame = CGRectMake(2, 2, self.detailCommentView.frame.size.width - 4, self.detailCommentView.frame.size.height - 4);
     [self resizeCaptionLabel];
     
     self.detailTriangle.frame = CGRectMake(xOrigin + 10, self.detailCommentView.frame.origin.y - self.detailTriangle.frame.size.height, self.detailTriangle.frame.size.width, self.detailTriangle.frame.size.height);
@@ -142,12 +141,11 @@
     CGFloat textBasedHeight = [captionText sizeWithFont:[self.detailCaption font]
                                       constrainedToSize:maxCaptionSize
                                           lineBreakMode:NSLineBreakByWordWrapping].height;
-    
-    [self.detailCaption setFrame:CGRectMake(self.detailCaption.frame.origin.x,
-                                            (self.detailCommentView.frame.size.height - textBasedHeight) / kShelbyCaptionMargin,
-                                            self.detailCommentView.frame.size.width - kShelbyCaptionMargin * 2,
-                                            textBasedHeight)];
-
+    NSInteger yOrigin = (self.detailCommentView.frame.size.height - kShelbyCaptionMargin - textBasedHeight) / 2;
+    self.detailCaption.frame = CGRectMake(self.detailCaption.frame.origin.x,
+                                          yOrigin,
+                                          maxCaptionSize.width,
+                                          textBasedHeight);
 }
 
 /*
