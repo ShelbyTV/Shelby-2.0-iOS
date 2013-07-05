@@ -157,6 +157,23 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     return nil;
 }
 
+- (NSString *)originNetwork
+{
+    // TODO: this is not really working. (seems to not work when origin network comes from Shelby)
+    // Also, right now grabbing whatever network is not nil. 
+    // Grab origin network...
+    if (self.conversation && [self.conversation.messages count] > 0) {
+        NSSet *messages = self.conversation.messages;
+        for (Messages *message in messages) {
+            if (message.originNetwork) {
+                return message.originNetwork;
+            }
+        }
+    }
+  
+    return nil;
+}
+
 - (BOOL)isPlayable
 {
     if (self.video) {

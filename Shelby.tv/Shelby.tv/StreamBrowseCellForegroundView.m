@@ -113,7 +113,14 @@
         //TODO: retry?
     }];
     
-    // Via Network - TODO:
+    // Via Network
+    NSString *viaNetwork = [videoFrame originNetwork];
+    if (viaNetwork) {
+        viaNetwork = [NSString stringWithFormat:@"via %@", viaNetwork];
+    }
+    
+    self.summaryViaNetwork.text = viaNetwork;
+    self.detailViaNetwork.text = self.summaryViaNetwork.text;
     
     // Caption
     NSString *captionText = [NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]];

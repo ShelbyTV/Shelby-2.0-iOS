@@ -34,6 +34,7 @@
 + (Frame *)frameForEntity:(id<ShelbyVideoContainer>)entity;
 
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
+- (NSString *)originNetwork;
 - (BOOL)isPlayable;
 //returns YES if the toggle should result in this frame being liked
 - (BOOL)toggleLike;
