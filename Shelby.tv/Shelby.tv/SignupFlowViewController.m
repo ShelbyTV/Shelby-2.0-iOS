@@ -71,6 +71,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
                                 range:(NSRange){0,[attributeString length]}];
         self.skipSocial.titleLabel.attributedText = attributeString;
     }
+
+    self.videoTypes.allowsMultipleSelection = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -211,6 +213,61 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     return YES;
+}
+
+#pragma mark - UICollectionViewDelegate Methods
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    
+    cell.contentView.layer.borderColor = [UIColor blackColor].CGColor;
+    cell.contentView.layer.borderWidth = 5;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    
+    cell.contentView.layer.borderWidth = 0;
+}
+
+#pragma mark - UICollectionView Datasource
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 6;
+    }
+    
+    return 0; // Right now, 1 section
+}
+
+- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"VideoType" forIndexPath:indexPath];
+    
+    UIColor *color;
+    if (indexPath.row == 0) {
+        color = [UIColor greenColor];
+    } else if (indexPath.row == 1) {
+        color = [UIColor blueColor];
+    } else if (indexPath.row == 2) {
+        color = [UIColor redColor];
+    } else if (indexPath.row == 3) {
+        color = [UIColor orangeColor];
+    } else if (indexPath.row == 4) {
+        color = [UIColor purpleColor];
+    } else if (indexPath.row == 5) {
+        color = [UIColor grayColor];
+    }
+    
+    cell.contentView.backgroundColor = color;
+    
+    return cell;
 }
 
 @end
