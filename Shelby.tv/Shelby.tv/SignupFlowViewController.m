@@ -7,6 +7,7 @@
 //
 
 #import "SignupFlowViewController.h"
+#import "SignupVideoTypeViewCell.h"
 
 NSString * const kShelbySignupAvatarKey          = @"SignupAvatar";
 NSString * const kShelbySignupEmailKey           = @"SignupEmail";
@@ -73,6 +74,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
 
     self.videoTypes.allowsMultipleSelection = YES;
+    [self.videoTypes registerNib:[UINib nibWithNibName:@"SignupVideoTypeViewCell" bundle:nil] forCellWithReuseIdentifier:@"VideoType"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -248,7 +250,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"VideoType" forIndexPath:indexPath];
+    SignupVideoTypeViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"VideoType" forIndexPath:indexPath];
     
     UIColor *color;
     if (indexPath.row == 0) {
