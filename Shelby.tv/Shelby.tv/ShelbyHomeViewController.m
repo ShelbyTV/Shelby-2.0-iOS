@@ -655,25 +655,32 @@
 
 - (void)login
 {
-    NSString *authorizationVCNibName = nil;
-    if (DEVICE_IPAD) {
-        authorizationVCNibName = @"AuthorizationView";
-    } else {
-        authorizationVCNibName = @"AuthorizationView-iPhone";
-    }
-    _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:authorizationVCNibName bundle:nil];
+    // KP KP: TODO: Switched to the new signup (instead of login) for testing
+    UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow"
+                                                             bundle: nil];
     
-    CGFloat xOrigin = self.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
-    CGFloat yOrigin = self.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;
-    CGSize loginDialogSize = self.authorizationVC.view.frame.size;
-    
-    [self.authorizationVC setModalInPopover:YES];
-    [self.authorizationVC setModalPresentationStyle:UIModalPresentationFormSheet];
-    [self.authorizationVC setDelegate:self];
-    
-    [self presentViewController:self.authorizationVC animated:YES completion:nil];
-    
-    self.authorizationVC.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+    UIViewController *signupFlowVC = (UIViewController *)[signupFlowStoryboard
+                                                       instantiateInitialViewController];
+    [self presentViewController:signupFlowVC animated:YES completion:nil];
+//    NSString *authorizationVCNibName = nil;
+//    if (DEVICE_IPAD) {
+//        authorizationVCNibName = @"AuthorizationView";
+//    } else {
+//        authorizationVCNibName = @"AuthorizationView-iPhone";
+//    }
+//    _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:authorizationVCNibName bundle:nil];
+//    
+//    CGFloat xOrigin = self.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
+//    CGFloat yOrigin = self.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;
+//    CGSize loginDialogSize = self.authorizationVC.view.frame.size;
+//    
+//    [self.authorizationVC setModalInPopover:YES];
+//    [self.authorizationVC setModalPresentationStyle:UIModalPresentationFormSheet];
+//    [self.authorizationVC setDelegate:self];
+//    
+//    [self presentViewController:self.authorizationVC animated:YES completion:nil];
+//    
+//    self.authorizationVC.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
 }
 
 - (void)logout
