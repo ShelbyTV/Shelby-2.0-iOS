@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+extern NSString * const kShelbySignupAvatarKey;
+extern NSString * const kShelbySignupEmailKey;
+extern NSString * const kShelbySignupNameKey;
+extern NSString * const kShelbySignupPasswordKey;
+extern NSString * const kShelbySignupUsernameKey;
 
-@interface SignupFlowViewController : UIViewController
+@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic, weak) NSMutableDictionary *signupDictionary;
 @end
