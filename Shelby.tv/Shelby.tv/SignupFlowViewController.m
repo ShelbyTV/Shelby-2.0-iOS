@@ -37,6 +37,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
+
+- (IBAction)unwindSegue:(UIStoryboardSegue *)unwindSegue;
 @end
 
 @implementation SignupFlowViewController
@@ -75,6 +77,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
     self.videoTypes.allowsMultipleSelection = YES;
     [self.videoTypes registerNib:[UINib nibWithNibName:@"SignupVideoTypeViewCell" bundle:nil] forCellWithReuseIdentifier:@"VideoType"];
+    
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,6 +120,12 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if ([viewController isKindOfClass:[SignupFlowViewController class]]) {
         ((SignupFlowViewController *)viewController).signupDictionary = self.signupDictionary;
     }
+}
+
+// TODO: first attempt in unwin segue
+- (IBAction)unwindSegue:(UIStoryboardSegue *)unwindSegue
+{
+    
 }
 
 #pragma mark - Signup Form Methods
