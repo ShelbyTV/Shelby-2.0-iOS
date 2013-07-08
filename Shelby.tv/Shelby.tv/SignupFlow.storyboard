@@ -303,7 +303,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="1I6-gt-YXr" kind="push" identifier="YourAccount" id="D0T-ZH-83e"/>
+                                    <segue destination="1I6-gt-YXr" kind="push" identifier="SkipSocial" id="D0T-ZH-83e"/>
                                 </connections>
                             </button>
                         </subviews>
