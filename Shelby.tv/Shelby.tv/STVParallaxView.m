@@ -11,6 +11,7 @@
 @interface STVParallaxView()
 @property (nonatomic, strong) UIScrollView *backgroundScroller;
 @property (nonatomic, strong) UIScrollView *foregroundScroller;
+@property (nonatomic, assign) NSUInteger currentPage;
 @end
 
 @implementation STVParallaxView
@@ -19,6 +20,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _currentPage = 0;
+        
         CGRect contentFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight);
 
         self.backgroundColor = [UIColor clearColor];
@@ -38,6 +41,15 @@
         [self addSubview:_foregroundScroller];
     }
     return self;
+}
+
+- (void)layoutSubviews
+{
+    //NB: -layoutSubviews is called after rotation of device and after resizing of views' frame
+    [super layoutSubviews];
+
+    //Fix content offset
+    [self scrollToCurrentPageBoundary];
 }
 
 - (UIView *)getBackgroundView
@@ -65,8 +77,9 @@
 
 - (void)matchParallaxOf:(STVParallaxView *)parallaxView
 {
-    if (parallaxView && parallaxView != self) {
+    if (parallaxView && !CGPointEqualToPoint(self.foregroundScroller.contentOffset, parallaxView.foregroundScroller.contentOffset)) {
         self.foregroundScroller.contentOffset = parallaxView.foregroundScroller.contentOffset;
+        self.currentPage = parallaxView.currentPage;
     }
 }
 
@@ -114,8 +127,20 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSUInteger page = (scrollView.contentOffset.x / scrollView.frame.size.width);
-    [self.delegate didScrollToPage:page];
+    self.currentPage = (scrollView.contentOffset.x / scrollView.frame.size.width);
+    [self.delegate didScrollToPage:self.currentPage];
+}
+
+#pragma mark - View/Layout Helpers
+
+- (void)scrollToCurrentPageBoundary
+{
+    // if foreground's contentOffset if it isn't on a page boundary
+    // adjust it to the correct content offset
+    CGFloat remainder = remainderf(self.foregroundScroller.contentOffset.x, self.foregroundScroller.frame.size.width);
+    if (remainder != 0.0) {
+        self.foregroundScroller.contentOffset = CGPointMake(self.currentPage * self.foregroundScroller.frame.size.width, 0);
+    }
 }
 
 @end

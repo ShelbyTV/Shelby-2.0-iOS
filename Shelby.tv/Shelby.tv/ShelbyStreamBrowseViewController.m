@@ -175,11 +175,11 @@
     ShelbyStreamBrowseViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell" forIndexPath:indexPath];
     [self.streamBrowseViewCells addObject:cell];
     cell.delegate = self;
-    [cell matchParallaxOf:self.lastCellWithParallaxUpdate];
     cell.viewMode = self.viewMode;
     cell.entry = self.deduplicatedEntries[indexPath.row];
 
     [cell updateParallaxFrame:self.view.frame];
+    [cell matchParallaxOf:self.lastCellWithParallaxUpdate];
 
 //load more data
 //    NSInteger cellsBeyond = [dedupedEntries count] - [indexPath row];
