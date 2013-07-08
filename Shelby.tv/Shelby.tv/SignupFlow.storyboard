@@ -39,6 +39,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="sgp-ZG-jtU" id="br7-LB-lNZ"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kRx-dM-SUf">
                                 <constraints>
@@ -108,8 +111,9 @@
                                     <constraint firstAttribute="height" constant="60" id="ox3-0p-Lru"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Ringo Starr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2J9-n7-5Wr">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2J9-n7-5Wr" userLabel="Name">
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="tat-xN-Zup"/>
                                     <constraint firstAttribute="width" constant="183" id="w9m-si-T51"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
@@ -201,6 +205,7 @@
                     <navigationItem key="navigationItem" title="What do you like?" id="J7I-2E-QMo"/>
                     <connections>
                         <outlet property="avatar" destination="1Ue-JM-A3m" id="K5W-V4-hDe"/>
+                        <outlet property="nameLabel" destination="2J9-n7-5Wr" id="NIE-oy-IRl"/>
                         <outlet property="videoTypes" destination="bSO-ew-ZPB" id="Fsb-qg-9nk"/>
                     </connections>
                 </viewController>
@@ -238,8 +243,9 @@
                                     <action selector="assignAvatar:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="J7r-zc-9uM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Ringo Starr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT" userLabel="Name">
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="BEs-6j-8Gs"/>
                                     <constraint firstAttribute="width" constant="183" id="miL-0M-uAl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
@@ -329,6 +335,7 @@
                     <navigationItem key="navigationItem" title="Your Friends" id="inz-d9-z8u"/>
                     <connections>
                         <outlet property="avatar" destination="VEZ-cK-rZH" id="MxP-x0-955"/>
+                        <outlet property="nameLabel" destination="SSJ-0W-AXT" id="UJs-kA-gVo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJJ-P1-01Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -365,9 +372,10 @@
                                     <action selector="assignAvatar:" destination="1I6-gt-YXr" eventType="touchUpInside" id="Rw0-vc-SRD"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Ringo Starr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0a-LQ-LoT">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0a-LQ-LoT" userLabel="Name">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="183" id="4ax-Fu-CjI"/>
+                                    <constraint firstAttribute="height" constant="21" id="lss-Vn-I82"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -413,19 +421,28 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="1I6-gt-YXr" id="ama-mz-3HL"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aQQ-99-V5c">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="218" id="Wir-Xt-kdp"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="1I6-gt-YXr" id="jjN-kr-dZU"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kbV-f1-cUt">
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="1I6-gt-YXr" id="3vE-Ct-SLW"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKP-hU-9T0">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="202" id="Ebp-gO-gDc"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Take me to my videos!">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -441,29 +458,29 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="aQQ-99-V5c" firstAttribute="leading" secondItem="wyh-Te-GFE" secondAttribute="leading" type="default" id="1By-2o-BY2"/>
                             <constraint firstItem="1Dn-RK-rK4" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="5hc-W2-Rm8"/>
                             <constraint firstItem="FWn-bs-FeJ" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="32" id="6Ve-Rs-LEw"/>
-                            <constraint firstItem="aQQ-99-V5c" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="59" id="7M1-d5-bHO"/>
                             <constraint firstItem="hEr-vU-Qyy" firstAttribute="leading" secondItem="FWn-bs-FeJ" secondAttribute="leading" type="default" id="81E-Vt-ea0"/>
+                            <constraint firstItem="kbV-f1-cUt" firstAttribute="top" secondItem="aQQ-99-V5c" secondAttribute="bottom" constant="20" type="user" id="88R-ng-Lwb"/>
+                            <constraint firstItem="aQQ-99-V5c" firstAttribute="trailing" secondItem="kbV-f1-cUt" secondAttribute="trailing" type="default" id="8xI-PT-HhZ"/>
                             <constraint firstItem="s0a-LQ-LoT" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="11" id="Bzd-bv-qkz"/>
                             <constraint firstItem="Nee-GH-olu" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="20" symbolic="YES" type="default" id="Dzp-nw-3xr"/>
-                            <constraint firstItem="aQQ-99-V5c" firstAttribute="leading" secondItem="YKP-hU-9T0" secondAttribute="leading" type="default" id="EwY-sJ-MJ6"/>
                             <constraint firstItem="Gza-c5-D7j" firstAttribute="baseline" secondItem="hEr-vU-Qyy" secondAttribute="baseline" type="default" id="KD5-Lc-JAR"/>
+                            <constraint firstItem="aQQ-99-V5c" firstAttribute="leading" secondItem="kbV-f1-cUt" secondAttribute="leading" type="default" id="KIE-1T-m35"/>
+                            <constraint firstItem="wyh-Te-GFE" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="150" id="Ki1-KF-C52"/>
                             <constraint firstItem="Nee-GH-olu" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="LqB-Qh-lEe"/>
                             <constraint firstItem="Nee-GH-olu" firstAttribute="trailing" secondItem="1Dn-RK-rK4" secondAttribute="trailing" type="default" id="OBQ-dD-Xty"/>
                             <constraint firstItem="1Dn-RK-rK4" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="12" id="OuV-ag-Ktt"/>
-                            <constraint firstAttribute="bottom" secondItem="kbV-f1-cUt" secondAttribute="bottom" constant="143" id="PLN-zt-KiT"/>
                             <constraint firstAttribute="bottom" secondItem="YKP-hU-9T0" secondAttribute="bottom" constant="20" type="user" id="RCh-Ek-RY8"/>
                             <constraint firstItem="s0a-LQ-LoT" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="101" id="Uh0-J8-APM"/>
-                            <constraint firstItem="wyh-Te-GFE" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="151" id="Zc7-BZ-mtV"/>
                             <constraint firstItem="YKP-hU-9T0" firstAttribute="centerX" secondItem="IO9-hj-Ipx" secondAttribute="centerX" type="default" id="cJh-ue-Sr2"/>
+                            <constraint firstItem="aQQ-99-V5c" firstAttribute="trailing" secondItem="wyh-Te-GFE" secondAttribute="trailing" type="default" id="jZk-zY-D40"/>
                             <constraint firstItem="s0a-LQ-LoT" firstAttribute="leading" secondItem="FWn-bs-FeJ" secondAttribute="leading" type="default" id="lCo-QS-KEY"/>
                             <constraint firstItem="s0a-LQ-LoT" firstAttribute="trailing" secondItem="FWn-bs-FeJ" secondAttribute="trailing" type="default" id="llK-C5-qMY"/>
-                            <constraint firstItem="wyh-Te-GFE" firstAttribute="trailing" secondItem="kbV-f1-cUt" secondAttribute="trailing" type="default" id="nB3-hs-B89"/>
+                            <constraint firstItem="wyh-Te-GFE" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="58" id="mpM-To-5nf"/>
+                            <constraint firstItem="aQQ-99-V5c" firstAttribute="top" secondItem="wyh-Te-GFE" secondAttribute="bottom" constant="20" type="user" id="nt2-N7-9jL"/>
                             <constraint firstItem="YKP-hU-9T0" firstAttribute="centerX" secondItem="Gza-c5-D7j" secondAttribute="centerX" type="default" id="o5W-Pc-bJ2"/>
-                            <constraint firstItem="wyh-Te-GFE" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="57" id="qkv-G0-Ze6"/>
-                            <constraint firstItem="aQQ-99-V5c" firstAttribute="centerY" secondItem="IO9-hj-Ipx" secondAttribute="centerY" type="default" id="yZK-V6-z79"/>
-                            <constraint firstItem="wyh-Te-GFE" firstAttribute="leading" secondItem="kbV-f1-cUt" secondAttribute="leading" type="default" id="yfB-L0-acg"/>
                             <constraint firstItem="hEr-vU-Qyy" firstAttribute="top" secondItem="FWn-bs-FeJ" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="zHs-CA-fBN"/>
                         </constraints>
                     </view>
@@ -471,6 +488,7 @@
                     <connections>
                         <outlet property="avatar" destination="1Dn-RK-rK4" id="c0r-f0-nkO"/>
                         <outlet property="email" destination="wyh-Te-GFE" id="ht9-GI-J83"/>
+                        <outlet property="nameLabel" destination="s0a-LQ-LoT" id="wRD-6N-YN2"/>
                         <outlet property="password" destination="kbV-f1-cUt" id="rnW-BK-2dU"/>
                         <outlet property="username" destination="aQQ-99-V5c" id="mOD-1n-B4B"/>
                     </connections>
@@ -495,6 +513,7 @@
                 <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="email" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="name" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="password" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="username" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="videoTypes" candidateClass="UICollectionView"/>

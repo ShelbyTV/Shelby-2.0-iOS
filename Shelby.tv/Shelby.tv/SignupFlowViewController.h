@@ -13,6 +13,6 @@ extern NSString * const kShelbySignupNameKey;
 extern NSString * const kShelbySignupPasswordKey;
 extern NSString * const kShelbySignupUsernameKey;
 
-@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
 @property (nonatomic, weak) NSMutableDictionary *signupDictionary;
 @end
