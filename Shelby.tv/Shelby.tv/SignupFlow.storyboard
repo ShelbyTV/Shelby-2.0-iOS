@@ -27,12 +27,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="lKh-j5-ma5">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="101" id="duh-Ct-TRB"/>
-                                    <constraint firstAttribute="width" constant="100" id="sWr-vA-5Pr"/>
-                                </constraints>
-                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="lKh-j5-ma5"/>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Full Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9nE-1k-IW2">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="DeU-rI-5gp"/>
@@ -76,15 +71,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kRx-dM-SUf" firstAttribute="centerX" secondItem="9nE-1k-IW2" secondAttribute="centerX" type="default" id="6tE-oy-B2c"/>
-                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="9nE-1k-IW2" secondAttribute="centerX" type="default" id="8cL-Cf-6NO"/>
-                            <constraint firstItem="9nE-1k-IW2" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="162" id="ABN-rY-btu"/>
-                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="pGl-nd-Jhs" secondAttribute="centerX" type="default" id="BAp-b6-guU"/>
-                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="25" id="HmD-kt-qgi"/>
-                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="trailing" secondItem="lKh-j5-ma5" secondAttribute="trailing" type="default" id="Nwi-p9-ZYK"/>
-                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="leading" secondItem="lKh-j5-ma5" secondAttribute="leading" type="default" id="Pth-jd-j3p"/>
+                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="9nE-1k-IW2" secondAttribute="centerX" type="default" id="WYZ-U5-F1n"/>
                             <constraint firstAttribute="bottom" secondItem="kRx-dM-SUf" secondAttribute="bottom" constant="20" type="user" id="bov-Rf-58Z"/>
                             <constraint firstItem="NKA-Et-Ijp" firstAttribute="top" secondItem="lKh-j5-ma5" secondAttribute="top" type="default" id="fEV-wH-8Ht"/>
-                            <constraint firstItem="lKh-j5-ma5" firstAttribute="bottom" secondItem="NKA-Et-Ijp" secondAttribute="bottom" type="default" id="os0-PY-hjd"/>
+                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="pGl-nd-Jhs" secondAttribute="centerX" type="default" id="nLL-7Y-Tjj"/>
+                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="trailing" secondItem="lKh-j5-ma5" secondAttribute="trailing" type="default" id="ofx-XW-WYX"/>
+                            <constraint firstItem="9nE-1k-IW2" firstAttribute="centerY" secondItem="pGl-nd-Jhs" secondAttribute="centerY" type="default" id="uRB-h0-LFh"/>
+                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="25" id="uc7-zF-mh3"/>
+                            <constraint firstItem="lKh-j5-ma5" firstAttribute="bottom" secondItem="NKA-Et-Ijp" secondAttribute="bottom" type="default" id="xD4-uF-MEh"/>
+                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="leading" secondItem="lKh-j5-ma5" secondAttribute="leading" type="default" id="zk8-1g-FJQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Your Profile" id="HNZ-7l-Jsh"/>
@@ -105,7 +100,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ue-JM-A3m">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="1Ue-JM-A3m">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="KV6-5P-nEl"/>
                                     <constraint firstAttribute="height" constant="60" id="ox3-0p-Lru"/>
@@ -221,7 +216,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEZ-cK-rZH">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="VEZ-cK-rZH">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="YJf-Ey-2ih"/>
                                     <constraint firstAttribute="width" constant="60" id="cqE-GL-xPF"/>
@@ -350,7 +345,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Dn-RK-rK4">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="1Dn-RK-rK4">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="CPe-ql-aAv"/>
                                     <constraint firstAttribute="width" constant="60" id="roD-Ku-zi4"/>
@@ -498,6 +493,9 @@
             <point key="canvasLocation" x="1507" y="-171"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="user_default_avatar.png" width="155" height="155"/>
+    </resources>
     <classes>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
