@@ -22,16 +22,17 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     TextFieldTagPassword
 };
 
-#define kShelbySignupFlowViewYOriginEditMode -80
+#define kShelbySignupFlowViewYOriginEditMode -180
 
 @interface SignupFlowViewController ()
-@property (nonatomic, strong) IBOutlet UIImageView *avatar;
-@property (nonatomic, strong) IBOutlet UITextField *email;
-@property (nonatomic, strong) IBOutlet UITextField *name;
-@property (nonatomic, strong) IBOutlet UILabel *nameLabel;
-@property (nonatomic, strong) IBOutlet UITextField *password;
-@property (nonatomic, strong) IBOutlet UITextField *username;
-@property (nonatomic, strong) IBOutlet UICollectionView *videoTypes;
+@property (nonatomic, weak) IBOutlet UIImageView *avatar;
+@property (nonatomic, weak) IBOutlet UITextField *email;
+@property (nonatomic, weak) IBOutlet UITextField *name;
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
+@property (nonatomic, weak) IBOutlet UITextField *password;
+@property (nonatomic, weak) IBOutlet UIButton *skipSocial;
+@property (nonatomic, weak) IBOutlet UITextField *username;
+@property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
 
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
@@ -61,6 +62,15 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     // Password field should be secure
     self.password.secureTextEntry = YES;
+    
+    // Underline text
+    if (self.skipSocial) {
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:self.skipSocial.titleLabel.text];
+        [attributeString addAttribute:NSUnderlineStyleAttributeName
+                                value:[NSNumber numberWithInt:1]
+                                range:(NSRange){0,[attributeString length]}];
+        self.skipSocial.titleLabel.attributedText = attributeString;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -166,9 +176,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     
-    // Move up view on non iPhone 5
     NSInteger tag = textField.tag;
-    if (self.view.frame.origin.y != kShelbySignupFlowViewYOriginEditMode && self.view.frame.size.height <= 480 && (tag == TextFieldTagEmail || tag == TextFieldTagUsername || tag == TextFieldTagPassword)) {
+    if (self.view.frame.origin.y != kShelbySignupFlowViewYOriginEditMode && (tag == TextFieldTagEmail || tag == TextFieldTagUsername || tag == TextFieldTagPassword)) {
         [UIView animateWithDuration:0.2 animations:^{
             self.view.frame = CGRectMake(0, kShelbySignupFlowViewYOriginEditMode, self.view.frame.size.width, self.view.frame.size.height);
         }];
