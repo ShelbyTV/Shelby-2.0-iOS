@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *summaryTitle;
 @property (nonatomic, weak) IBOutlet UIImageView *summaryUserAvatar;
 @property (weak, nonatomic) IBOutlet UILabel *summaryUsername;
+@property (weak, nonatomic) IBOutlet UIView *summaryUserView;
 @property (weak, nonatomic) IBOutlet UILabel *summaryViaNetwork;
 @end
 
@@ -64,12 +65,10 @@
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 100, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 170, pageWidth - kShelbyInfoViewMargin * 2, 60);
         self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, self.detailUserView.frame.origin.y + 10, 280, 40);
-
     } else {
         // Portrait
         // Summary View
         self.summaryTitle.frame = CGRectMake(20, 84, 280, 120);
-     
         // Detail View
         self.detailTitle.frame = CGRectMake(xOrigin, 50, 280, 44);
         self.detailUserView.frame = CGRectMake(xOrigin, 105, 280, 60);
@@ -78,7 +77,8 @@
         self.detailNetworkShares.frame = CGRectMake(xOrigin, 305, 280, 40);
     }
     
-    self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.x, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
+    self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
+    self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height + 10, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
 
     [self resizeCaptionLabel];
     
