@@ -584,6 +584,12 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     return self.mainThreadMOC;
 }
 
+// XXX Are we using private MOCs properly?
+//
+// According to http://www.objc.io/issue-2/common-background-practices.html
+// when you create a context with NSPrivateQueueConcurrencyType, you must perform all operations on the context
+// via the context's -performBlock or -performBlockAndWait to ensure the operation runs on the private thread (b/c the context itself
+// is managing it's own operation queue).  Although this seems to be working fine, we're not doing that...
 - (NSManagedObjectContext *)createPrivateQueueContext
 {
     NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
