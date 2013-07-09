@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
+- (IBAction)goBack:(id)sender;
 @end
 
 @implementation SignupFlowViewController
@@ -75,6 +76,21 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
     self.videoTypes.allowsMultipleSelection = YES;
     [self.videoTypes registerNib:[UINib nibWithNibName:@"SignupVideoTypeViewCell" bundle:nil] forCellWithReuseIdentifier:@"VideoType"];
+    
+    // Custom "Back" buttons.
+    if (self.navigationItem.leftBarButtonItem && [self.navigationItem.leftBarButtonItem.title isEqualToString:@"Back"]) {
+        UIImage *backButtonImage = [UIImage imageNamed:@"navbar_back_button.png"];
+        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [backButton setImage:backButtonImage forState:UIControlStateNormal];
+        
+        backButton.frame = CGRectMake(0, 0, backButtonImage.size.width, backButtonImage.size.height);
+        
+        [backButton addTarget:self action:@selector(popViewController) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+        self.navigationItem.leftBarButtonItem = backBarButtonItem;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,6 +132,16 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if ([viewController isKindOfClass:[SignupFlowViewController class]]) {
         ((SignupFlowViewController *)viewController).signupDictionary = self.signupDictionary;
     }
+}
+
+- (IBAction)goBack:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)popViewController
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Signup Form Methods

@@ -70,6 +70,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Your Profile" id="HNZ-7l-Jsh">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="y9e-oK-w8g">
+                            <connections>
+                                <action selector="goBack:" destination="sgp-ZG-jtU" id="DXb-MP-q8K"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="QCD-S7-eJ7">
                             <connections>
                                 <segue destination="dtY-NO-hRl" kind="push" identifier="ChooseVideos" id="jfF-IO-Chd"/>
@@ -188,6 +193,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="What do you like?" id="J7I-2E-QMo">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="tCJ-aL-NNL"/>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="dFb-RO-jbB">
                             <connections>
                                 <segue destination="tUF-cC-Ycq" kind="push" identifier="Friends" id="NWV-LJ-wb3"/>
@@ -333,6 +339,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Your Friends" id="inz-d9-z8u">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="p6p-Iy-q22"/>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="BQn-4z-VAh">
                             <connections>
                                 <segue destination="1I6-gt-YXr" kind="push" identifier="YourAccount" id="SxW-ck-4rX"/>
@@ -496,6 +503,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Your Account" id="n1r-LP-Ce5">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="K0S-vp-OJB"/>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="dIT-4X-7Ww">
                             <connections>
                                 <action selector="signup:" destination="1I6-gt-YXr" id="PwK-Pd-Myr"/>
@@ -532,6 +540,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowViewController.h"/>
             <relationships>
                 <relationship kind="action" name="assignAvatar:"/>
+                <relationship kind="action" name="goBack:"/>
                 <relationship kind="action" name="signup:"/>
                 <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="email" candidateClass="UITextField"/>
