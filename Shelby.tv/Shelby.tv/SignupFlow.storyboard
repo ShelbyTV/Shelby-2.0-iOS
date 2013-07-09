@@ -188,11 +188,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="What do you like?" id="J7I-2E-QMo">
-                        <barButtonItem key="leftBarButtonItem" image="navbar_back_button.png" id="Khn-YZ-FHL">
-                            <connections>
-                                <segue destination="A2T-Jq-g0r" kind="unwind" unwindAction="unwindSegue:" id="lwO-Hc-cci"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="dFb-RO-jbB">
                             <connections>
                                 <segue destination="tUF-cC-Ycq" kind="push" identifier="Friends" id="NWV-LJ-wb3"/>
@@ -206,7 +201,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KJu-cd-diU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="A2T-Jq-g0r" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="732" y="-171"/>
         </scene>
@@ -339,11 +333,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Your Friends" id="inz-d9-z8u">
-                        <barButtonItem key="leftBarButtonItem" image="navbar_back_button.png" id="HyO-35-kdh">
-                            <connections>
-                                <segue destination="WV2-bz-wDz" kind="unwind" unwindAction="unwindSegue:" id="Wo5-D0-ncq"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="BQn-4z-VAh">
                             <connections>
                                 <segue destination="1I6-gt-YXr" kind="push" identifier="YourAccount" id="SxW-ck-4rX"/>
@@ -357,7 +346,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJJ-P1-01Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="WV2-bz-wDz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1113" y="-171"/>
         </scene>
@@ -508,11 +496,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Your Account" id="n1r-LP-Ce5">
-                        <barButtonItem key="leftBarButtonItem" image="navbar_back_button.png" id="her-Y5-qpG">
-                            <connections>
-                                <segue destination="l5M-Qq-ypp" kind="unwind" unwindAction="unwindSegue:" id="6u6-oy-Lmy"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="dIT-4X-7Ww">
                             <connections>
                                 <action selector="signup:" destination="1I6-gt-YXr" id="PwK-Pd-Myr"/>
@@ -528,13 +511,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Olc-OR-p7Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="l5M-Qq-ypp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1507" y="-171"/>
         </scene>
     </scenes>
     <resources>
-        <image name="navbar_back_button.png" width="28" height="33"/>
         <image name="user_default_avatar.png" width="155" height="155"/>
     </resources>
     <classes>
@@ -552,7 +533,6 @@
             <relationships>
                 <relationship kind="action" name="assignAvatar:"/>
                 <relationship kind="action" name="signup:"/>
-                <relationship kind="action" name="unwindSegue:" candidateClass="UIStoryboardSegue"/>
                 <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="email" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="name" candidateClass="UITextField"/>
@@ -568,9 +548,6 @@
         </class>
         <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UIStoryboardSegue" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
