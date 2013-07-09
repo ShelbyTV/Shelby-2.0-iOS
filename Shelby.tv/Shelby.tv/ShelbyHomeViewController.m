@@ -19,8 +19,10 @@
 #import "User+Helper.h"
 
 @interface ShelbyHomeViewController ()
-@property (nonatomic, weak) IBOutlet UIView *topBar;
-@property (nonatomic, weak) IBOutlet UILabel *topBarTitle;
+//@property (nonatomic, weak) IBOutlet UIView *topBar;
+//@property (nonatomic, weak) IBOutlet UILabel *topBarTitle;
+@property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
+@property (nonatomic, weak) UIView *navBar;
 
 @property (nonatomic, strong) UIView *settingsView;
 @property (strong, nonatomic) UIPopoverController *settingsPopover;
@@ -53,7 +55,17 @@
 {
     [super viewDidLoad];
 
-    [self.topBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbar.png"]]];
+    //XXX DS NEW NAV BAR SHIT
+    //TODO:move this someplace appropriate
+    self.navBarVC = [[ShelbyNavBarViewController alloc] initWithNibName:@"ShelbyNavBarView" bundle:nil];
+    self.navBarVC.delegate = self;
+    [self.navBarVC willMoveToParentViewController:self];
+    [self addChildViewController:self.navBarVC];
+    self.navBar = self.navBarVC.view;
+    [self.view addSubview:self.navBar];
+    [self.navBarVC didMoveToParentViewController:self];
+    DLog(@"nav is %@", self.navBar);
+    //XXX DS NEW NAV BAR SHIT
 
     if (DEVICE_IPAD) {
         BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
@@ -70,7 +82,7 @@
         _videoControlsVC.delegate = self;
         [_videoControlsVC willMoveToParentViewController:self];
         [_videoControlsVC.view setFrame:CGRectMake(0, 0, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
-        [self.view insertSubview:_videoControlsVC.view aboveSubview:self.topBar];
+        [self.view insertSubview:_videoControlsVC.view aboveSubview:self.navBar];
         _videoControlsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controls]|"
                                                                           options:0
@@ -91,6 +103,17 @@
     
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
+
+//XXX DS NEW NAV BAR
+- (void)viewWillAppear:(BOOL)animated
+{
+    //XXX HACK
+    // Why does the nav bar's height get all screwed up between viewDidLoad and viewWillAppear?
+    DLog(@"nav is %@", self.navBar);
+    self.navBar.frame = CGRectMake(0, 0, self.navBar.frame.size.width, 176);
+    //XXX HACK
+}
+//XXX DS NEW NAV BAR
 
 - (void)didReceiveMemoryWarning
 {
@@ -206,7 +229,7 @@
         STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
         self.currentStreamBrowseVC = sbvc;
         [sbvc willMoveToParentViewController:self];
-        [self.view insertSubview:sbvc.view belowSubview:self.topBar];
+        [self.view insertSubview:sbvc.view belowSubview:self.navBar];
         sbvc.view.frame = self.view.frame;
         [self addChildViewController:sbvc];
         [sbvc didMoveToParentViewController:self];
@@ -333,8 +356,9 @@
     [self setupSettingsView];
 }
 
-// TODO: uncomment when we are ready to support login
-// KP KP: TODO: maybe create a special UserAvatarView, pass a target to it.
+
+//XXX DS NEW NAV BAR
+// XXX TODO: Undo this method, have the nav bar handle all the settings view
 - (void)setupSettingsView
 {
     // KP KP: TODO: once fetching user done correctly, add the two targets. 
@@ -365,7 +389,7 @@
         [self.settingsView addSubview:login];
     }
     
-    [self.topBar addSubview:self.settingsView];
+    [self.navBar addSubview:self.settingsView];
     [self.settingsView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
 }
 
@@ -433,7 +457,7 @@
     if (DEVICE_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     }
-    [self.topBar setHidden:YES];
+    [self.navBar setHidden:YES];
 }
 
 - (void)dismissVideoReel
@@ -449,7 +473,7 @@
     if (DEVICE_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
-    [self.topBar setHidden:NO];
+    [self.navBar setHidden:NO];
 
 }
 
@@ -474,89 +498,89 @@
 //DEPRECATED
 - (void)animateOpenChannels:(DisplayChannel *)channel 
 {
-    if (self.animationInProgress) {
-        return;
-    } else {
-        [self setAnimationInProgress:YES];
-    }
-    
-    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForOpeningChannel:channel];
-    
-    CGFloat topBarHeight = self.topBar.frame.size.height;
-    animationViews.topView.frame = CGRectMake(animationViews.topView.frame.origin.x, animationViews.topView.frame.origin.y + topBarHeight, animationViews.topView.frame.size.width, animationViews.topView.frame.size.height);
-    animationViews.centerView.frame = CGRectMake(animationViews.centerView.frame.origin.x, animationViews.centerView.frame.origin.y + topBarHeight, animationViews.centerView.frame.size.width, animationViews.centerView.frame.size.height);
-    animationViews.bottomView.frame = CGRectMake(animationViews.bottomView.frame.origin.x, animationViews.bottomView.frame.origin.y + topBarHeight, animationViews.bottomView.frame.size.width, animationViews.bottomView.frame.size.height);
-    
-    
-    [self.videoReel.view addSubview:animationViews.centerView];
-    [self.videoReel.view addSubview:animationViews.bottomView];
-    [self.videoReel.view addSubview:animationViews.topView];
-
-    [self prepareToShowVideoReel];
-    
-    [self presentViewController:self.videoReel animated:NO completion:^{
-        [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [animationViews.centerView setFrame:animationViews.finalCenterFrame];
-            [animationViews.centerView setAlpha:0];
-            [animationViews.topView setFrame:animationViews.finalTopFrame];
-            [animationViews.bottomView setFrame:animationViews.finalBottomFrame];
-        } completion:^(BOOL finished) {
-            [animationViews.centerView removeFromSuperview];
-            [animationViews.bottomView removeFromSuperview];
-            [animationViews.topView removeFromSuperview];
-            
-            // KP KP: TODO: send a message to brain that it can start accepting new events
-            [self setAnimationInProgress:NO];
-        }];
-    }];
+//    if (self.animationInProgress) {
+//        return;
+//    } else {
+//        [self setAnimationInProgress:YES];
+//    }
+//    
+//    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForOpeningChannel:channel];
+//    
+//    CGFloat topBarHeight = self.topBar.frame.size.height;
+//    animationViews.topView.frame = CGRectMake(animationViews.topView.frame.origin.x, animationViews.topView.frame.origin.y + topBarHeight, animationViews.topView.frame.size.width, animationViews.topView.frame.size.height);
+//    animationViews.centerView.frame = CGRectMake(animationViews.centerView.frame.origin.x, animationViews.centerView.frame.origin.y + topBarHeight, animationViews.centerView.frame.size.width, animationViews.centerView.frame.size.height);
+//    animationViews.bottomView.frame = CGRectMake(animationViews.bottomView.frame.origin.x, animationViews.bottomView.frame.origin.y + topBarHeight, animationViews.bottomView.frame.size.width, animationViews.bottomView.frame.size.height);
+//    
+//    
+//    [self.videoReel.view addSubview:animationViews.centerView];
+//    [self.videoReel.view addSubview:animationViews.bottomView];
+//    [self.videoReel.view addSubview:animationViews.topView];
+//
+//    [self prepareToShowVideoReel];
+//    
+//    [self presentViewController:self.videoReel animated:NO completion:^{
+//        [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            [animationViews.centerView setFrame:animationViews.finalCenterFrame];
+//            [animationViews.centerView setAlpha:0];
+//            [animationViews.topView setFrame:animationViews.finalTopFrame];
+//            [animationViews.bottomView setFrame:animationViews.finalBottomFrame];
+//        } completion:^(BOOL finished) {
+//            [animationViews.centerView removeFromSuperview];
+//            [animationViews.bottomView removeFromSuperview];
+//            [animationViews.topView removeFromSuperview];
+//            
+//            // KP KP: TODO: send a message to brain that it can start accepting new events
+//            [self setAnimationInProgress:NO];
+//        }];
+//    }];
 }
 
 //DEPRECATED
 - (void)animateCloseChannels:(DisplayChannel *)channel atFrame:(Frame *)frame
 {
-    if (self.animationInProgress) {
-        return;
-    } else {
-        [self setAnimationInProgress:YES];
-    }
-
-    [self.browseVC highlightFrame:frame atChannel:channel];
-    
-    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForClosingChannel:channel];
- 
-    [self.videoReel.view addSubview:animationViews.centerView];
-    [self.videoReel.view addSubview:animationViews.bottomView];
-    [self.videoReel.view addSubview:animationViews.topView];
-    
-    [self.videoReel.view bringSubviewToFront:animationViews.centerView];
-    [self.videoReel.view bringSubviewToFront:animationViews.bottomView];
-    [self.videoReel.view bringSubviewToFront:animationViews.topView];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-    [animationViews.centerView setAlpha:0];
-    
-    CGFloat topBarHeight = self.topBar.frame.size.height;
-    CGRect finalTopFrame = CGRectMake(animationViews.finalTopFrame.origin.x, animationViews.finalTopFrame.origin.y + topBarHeight, animationViews.finalTopFrame.size.width, animationViews.finalTopFrame.size.height);
-    CGRect finalCenterFrame = CGRectMake(animationViews.finalCenterFrame.origin.x, animationViews.finalCenterFrame.origin.y + topBarHeight, animationViews.finalCenterFrame.size.width, animationViews.finalCenterFrame.size.height);
-    CGRect finalBottomFrame = CGRectMake(animationViews.finalBottomFrame.origin.x, animationViews.finalBottomFrame.origin.y + topBarHeight, animationViews.finalBottomFrame.size.width, animationViews.finalBottomFrame.size.height);
-    
-    [self.topBar setAlpha:0];
-
-    [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [animationViews.centerView setFrame:finalCenterFrame];
-        [animationViews.centerView setAlpha:1];
-        [animationViews.topView setFrame:finalTopFrame];
-        [animationViews.bottomView setFrame:finalBottomFrame];
-    } completion:^(BOOL finished) {
-        [self.videoReel dismissViewControllerAnimated:NO completion:^{
-            [UIView animateWithDuration:0.5 animations:^{
-                [self.topBar setAlpha:1];
-            }];
-            [self.videoReel shutdown];
-            self.videoReel = nil;
-        }];
-        [self setAnimationInProgress:NO];
-    }];
+//    if (self.animationInProgress) {
+//        return;
+//    } else {
+//        [self setAnimationInProgress:YES];
+//    }
+//
+//    [self.browseVC highlightFrame:frame atChannel:channel];
+//    
+//    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForClosingChannel:channel];
+// 
+//    [self.videoReel.view addSubview:animationViews.centerView];
+//    [self.videoReel.view addSubview:animationViews.bottomView];
+//    [self.videoReel.view addSubview:animationViews.topView];
+//    
+//    [self.videoReel.view bringSubviewToFront:animationViews.centerView];
+//    [self.videoReel.view bringSubviewToFront:animationViews.bottomView];
+//    [self.videoReel.view bringSubviewToFront:animationViews.topView];
+//    
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+//    [animationViews.centerView setAlpha:0];
+//    
+//    CGFloat topBarHeight = self.topBar.frame.size.height;
+//    CGRect finalTopFrame = CGRectMake(animationViews.finalTopFrame.origin.x, animationViews.finalTopFrame.origin.y + topBarHeight, animationViews.finalTopFrame.size.width, animationViews.finalTopFrame.size.height);
+//    CGRect finalCenterFrame = CGRectMake(animationViews.finalCenterFrame.origin.x, animationViews.finalCenterFrame.origin.y + topBarHeight, animationViews.finalCenterFrame.size.width, animationViews.finalCenterFrame.size.height);
+//    CGRect finalBottomFrame = CGRectMake(animationViews.finalBottomFrame.origin.x, animationViews.finalBottomFrame.origin.y + topBarHeight, animationViews.finalBottomFrame.size.width, animationViews.finalBottomFrame.size.height);
+//    
+//    [self.topBar setAlpha:0];
+//
+//    [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        [animationViews.centerView setFrame:finalCenterFrame];
+//        [animationViews.centerView setAlpha:1];
+//        [animationViews.topView setFrame:finalTopFrame];
+//        [animationViews.bottomView setFrame:finalBottomFrame];
+//    } completion:^(BOOL finished) {
+//        [self.videoReel dismissViewControllerAnimated:NO completion:^{
+//            [UIView animateWithDuration:0.5 animations:^{
+//                [self.topBar setAlpha:1];
+//            }];
+//            [self.videoReel shutdown];
+//            self.videoReel = nil;
+//        }];
+//        [self setAnimationInProgress:NO];
+//    }];
 }
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
@@ -950,6 +974,29 @@
     } else if (buttonIndex == 5) {
         [self logout];
     }
+}
+
+#pragma mark - ShelbyNavBarDelegate
+
+- (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self launchMyStream];
+}
+
+- (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self launchMyLikes];
+}
+
+- (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self launchMyRoll];
+}
+
+- (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    //TODO
+    DLog(@"TODO: go to community");
 }
 
 @end

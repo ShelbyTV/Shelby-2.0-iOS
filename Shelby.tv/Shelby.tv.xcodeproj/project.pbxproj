@@ -573,12 +573,6 @@
 		1CC75B3D172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
 		1CC75B3E172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
 		1CC75B3F172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
-		1CC75B40172AFCE4004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B38172AFCE4004805A5 /* topbar.png */; };
-		1CC75B41172AFCE4004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B38172AFCE4004805A5 /* topbar.png */; };
-		1CC75B42172AFCE4004805A5 /* topbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B38172AFCE4004805A5 /* topbar.png */; };
-		1CC75B43172AFCE4004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B39172AFCE4004805A5 /* topbar@2x.png */; };
-		1CC75B44172AFCE4004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B39172AFCE4004805A5 /* topbar@2x.png */; };
-		1CC75B45172AFCE4004805A5 /* topbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B39172AFCE4004805A5 /* topbar@2x.png */; };
 		1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */; };
 		1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */; };
 		1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */; };
@@ -832,6 +826,15 @@
 		91744DA0176215BB00C53B2C /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91744D9F176215BB00C53B2C /* Frame.m */; };
 		91744DA1176215BB00C53B2C /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91744D9F176215BB00C53B2C /* Frame.m */; };
 		91744DA2176215BB00C53B2C /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91744D9F176215BB00C53B2C /* Frame.m */; };
+		9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
+		9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
+		9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
+		9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */; };
+		9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */; };
+		9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */; };
+		9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
+		9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
+		9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
 		91BEC890176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC891176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC892176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
@@ -1068,8 +1071,6 @@
 		1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitterconnected@2x.png"; sourceTree = "<group>"; };
 		1CC75B36172AFCE3004805A5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		1CC75B37172AFCE3004805A5 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
-		1CC75B38172AFCE4004805A5 /* topbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbar.png; sourceTree = "<group>"; };
-		1CC75B39172AFCE4004805A5 /* topbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topbar@2x.png"; sourceTree = "<group>"; };
 		1CC77A4E174AA48700AD7F05 /* ShelbyActivityItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyActivityItemProvider.h; sourceTree = "<group>"; };
 		1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyActivityItemProvider.m; sourceTree = "<group>"; };
 		1CCCB54A16CEECD400C8C216 /* CollectionViewGroupsLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CollectionViewGroupsLayout.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1305,6 +1306,11 @@
 		91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDuplicateContainer.h; sourceTree = "<group>"; };
 		91744D9E176215BB00C53B2C /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		91744D9F176215BB00C53B2C /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		9188F230178C99F7002F342B /* ShelbyNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNavBarView.xib; sourceTree = "<group>"; };
+		9188F234178C9A1E002F342B /* ShelbyNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarViewController.h; sourceTree = "<group>"; };
+		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
+		9188F239178CBA3C002F342B /* ShelbyNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarView.h; sourceTree = "<group>"; };
+		9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarView.m; sourceTree = "<group>"; };
 		91BEC88E176274BD00838197 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
 		91BEC88F176274BD00838197 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
 		91BEC8931762961400838197 /* DVRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DVRDatePicker.xib; sourceTree = "<group>"; };
@@ -1592,6 +1598,7 @@
 				1CA191451774DD440039358B /* ShelbyStreamBrowseView.xib */,
 				91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */,
 				9119AB6D17821133001C9190 /* VideoControlsView.xib */,
+				9188F230178C99F7002F342B /* ShelbyNavBarView.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -1637,8 +1644,6 @@
 			children = (
 				1CC75B36172AFCE3004805A5 /* logo.png */,
 				1CC75B37172AFCE3004805A5 /* logo@2x.png */,
-				1CC75B38172AFCE4004805A5 /* topbar.png */,
-				1CC75B39172AFCE4004805A5 /* topbar@2x.png */,
 				1CFD671017203D5A00324A27 /* channelbg.png */,
 				1CFD671117203D5A00324A27 /* channelbg@2x.png */,
 			);
@@ -2219,6 +2224,8 @@
 				91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */,
 				9119AB7617821A5C001C9190 /* VideoControlsView.h */,
 				9119AB7717821A5C001C9190 /* VideoControlsView.m */,
+				9188F239178CBA3C002F342B /* ShelbyNavBarView.h */,
+				9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2226,6 +2233,8 @@
 		8EF5C352162F41BF0075C35F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9188F234178C9A1E002F342B /* ShelbyNavBarViewController.h */,
+				9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */,
 				9119AB71178211D5001C9190 /* VideoControlsViewController.h */,
 				9119AB72178211D6001C9190 /* VideoControlsViewController.m */,
 				1C7B8D5616F113AB0069F570 /* AuthorizationViewController.h */,
@@ -2509,8 +2518,6 @@
 				1CC75B34172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
 				1CC75B3B172AFCE4004805A5 /* logo.png in Resources */,
 				1CC75B3E172AFCE4004805A5 /* logo@2x.png in Resources */,
-				1CC75B41172AFCE4004805A5 /* topbar.png in Resources */,
-				1CC75B44172AFCE4004805A5 /* topbar@2x.png in Resources */,
 				1C879DD71730224200B574AB /* likeactive.png in Resources */,
 				1C879DDA1730224200B574AB /* likeactive@2x.png in Resources */,
 				1C879DE31730224200B574AB /* likehighlight.png in Resources */,
@@ -2563,6 +2570,7 @@
 				9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C90E52B17849DF200E87CC0 /* triangle.png in Resources */,
 				1C90E52E17849DF200E87CC0 /* triangle@2x.png in Resources */,
+				9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2686,8 +2694,6 @@
 				1CC75B35172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
 				1CC75B3C172AFCE4004805A5 /* logo.png in Resources */,
 				1CC75B3F172AFCE4004805A5 /* logo@2x.png in Resources */,
-				1CC75B42172AFCE4004805A5 /* topbar.png in Resources */,
-				1CC75B45172AFCE4004805A5 /* topbar@2x.png in Resources */,
 				1C879DD81730224200B574AB /* likeactive.png in Resources */,
 				1C879DDB1730224200B574AB /* likeactive@2x.png in Resources */,
 				1C879DE41730224200B574AB /* likehighlight.png in Resources */,
@@ -2740,6 +2746,7 @@
 				9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C90E52C17849DF200E87CC0 /* triangle.png in Resources */,
 				1C90E52F17849DF200E87CC0 /* triangle@2x.png in Resources */,
+				9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2864,8 +2871,6 @@
 				1CC75B33172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
 				1CC75B3A172AFCE4004805A5 /* logo.png in Resources */,
 				1CC75B3D172AFCE4004805A5 /* logo@2x.png in Resources */,
-				1CC75B40172AFCE4004805A5 /* topbar.png in Resources */,
-				1CC75B43172AFCE4004805A5 /* topbar@2x.png in Resources */,
 				1C879DD61730224200B574AB /* likeactive.png in Resources */,
 				1C879DD91730224200B574AB /* likeactive@2x.png in Resources */,
 				1C879DE21730224200B574AB /* likehighlight.png in Resources */,
@@ -2918,6 +2923,7 @@
 				9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C90E52A17849DF200E87CC0 /* triangle.png in Resources */,
 				1C90E52D17849DF200E87CC0 /* triangle@2x.png in Resources */,
+				9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3040,6 +3046,8 @@
 				91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				9119AB74178211D6001C9190 /* VideoControlsViewController.m in Sources */,
 				9119AB7917821A5C001C9190 /* VideoControlsView.m in Sources */,
+				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
+				9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3159,6 +3167,8 @@
 				91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				9119AB75178211D6001C9190 /* VideoControlsViewController.m in Sources */,
 				9119AB7A17821A5C001C9190 /* VideoControlsView.m in Sources */,
+				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
+				9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3278,6 +3288,8 @@
 				91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				9119AB73178211D6001C9190 /* VideoControlsViewController.m in Sources */,
 				9119AB7817821A5C001C9190 /* VideoControlsView.m in Sources */,
+				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
+				9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
