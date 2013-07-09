@@ -36,6 +36,10 @@
     // Pass the dictionary to the SignupFlowVC
     SignupFlowViewController *rootVC = (SignupFlowViewController *)self.viewControllers[0];
     rootVC.signupDictionary = self.signupDictionary;
+
+
+    // Using special background for back button. TODO: remove text
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"navbar_back_button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 20, 0, 5)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 }
 
 - (void)didReceiveMemoryWarning
