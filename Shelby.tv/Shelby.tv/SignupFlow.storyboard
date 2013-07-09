@@ -220,13 +220,11 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="VEZ-cK-rZH">
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="61" id="Fmw-pz-qkH"/>
                                     <constraint firstAttribute="height" constant="60" id="YJf-Ey-2ih"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofg-zc-5dU">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="usg-Hj-YlS"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -248,7 +246,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Music, Movie Trailers, Sports" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="OwT-pX-5df">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Music, Movie Trailers, Sports" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="OwT-pX-5df">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="L7A-aC-30r"/>
                                     <constraint firstAttribute="width" constant="183" id="Yt7-S3-usL"/>
@@ -315,27 +313,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="VEZ-cK-rZH" firstAttribute="centerX" secondItem="ofg-zc-5dU" secondAttribute="centerX" type="default" id="2eP-9h-stD"/>
                             <constraint firstItem="SSJ-0W-AXT" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="79" id="4dD-RD-ZoK"/>
                             <constraint firstItem="Tce-ZC-snW" firstAttribute="leading" secondItem="NlN-4t-7g7" secondAttribute="leading" type="default" id="5gc-ZB-Mog"/>
                             <constraint firstItem="VEZ-cK-rZH" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="12" id="85K-ZO-PgR"/>
                             <constraint firstItem="ofg-zc-5dU" firstAttribute="top" secondItem="VEZ-cK-rZH" secondAttribute="top" type="default" id="AJL-i7-WKL"/>
+                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="centerX" secondItem="Pjn-tF-HzB" secondAttribute="centerX" type="default" id="BYc-al-HeU"/>
                             <constraint firstItem="ebr-0e-i36" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="184" id="C2s-YD-tDE"/>
-                            <constraint firstItem="NlN-4t-7g7" firstAttribute="centerX" secondItem="lOZ-yG-UMD" secondAttribute="centerX" type="default" id="HSr-gT-ddM"/>
+                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="centerX" secondItem="lOZ-yG-UMD" secondAttribute="centerX" type="default" id="F2x-bX-wYb"/>
                             <constraint firstItem="Pjn-tF-HzB" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="142" id="JhJ-jM-Z6Y"/>
                             <constraint firstItem="1zj-ZG-dsC" firstAttribute="centerX" secondItem="NlN-4t-7g7" secondAttribute="centerX" type="default" id="ORM-6g-5fZ"/>
                             <constraint firstItem="Pjn-tF-HzB" firstAttribute="centerX" secondItem="ebr-0e-i36" secondAttribute="centerX" type="default" id="THg-88-Ayy"/>
                             <constraint firstItem="Tce-ZC-snW" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="239" type="user" id="Te9-us-O5t"/>
+                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="centerX" secondItem="ofg-zc-5dU" secondAttribute="centerX" type="default" id="W16-eK-C4A"/>
                             <constraint firstItem="OwT-pX-5df" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="106" id="Yp0-lC-oLM"/>
                             <constraint firstItem="VEZ-cK-rZH" firstAttribute="leading" secondItem="ofg-zc-5dU" secondAttribute="leading" type="default" id="amV-6F-36d"/>
                             <constraint firstItem="OwT-pX-5df" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="74" id="dkX-hq-9hy"/>
                             <constraint firstItem="ebr-0e-i36" firstAttribute="centerX" secondItem="Tce-ZC-snW" secondAttribute="centerX" type="default" id="e9q-FT-btw"/>
-                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="centerX" secondItem="VEZ-cK-rZH" secondAttribute="centerX" type="default" id="fzo-GS-A1g"/>
                             <constraint firstItem="NlN-4t-7g7" firstAttribute="trailing" secondItem="Tce-ZC-snW" secondAttribute="trailing" type="default" id="gum-6G-Hue"/>
                             <constraint firstAttribute="bottom" secondItem="1zj-ZG-dsC" secondAttribute="bottom" constant="8" id="iP5-gh-Xhd"/>
-                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="centerX" secondItem="ofg-zc-5dU" secondAttribute="centerX" type="default" id="rRr-yC-b8N"/>
                             <constraint firstItem="ofg-zc-5dU" firstAttribute="bottom" secondItem="VEZ-cK-rZH" secondAttribute="bottom" type="default" id="sBH-UN-wxQ"/>
                             <constraint firstItem="NlN-4t-7g7" firstAttribute="top" secondItem="Tce-ZC-snW" secondAttribute="bottom" constant="20" type="user" id="sqV-fO-X0b"/>
-                            <constraint firstItem="Tce-ZC-snW" firstAttribute="centerX" secondItem="SSJ-0W-AXT" secondAttribute="centerX" type="default" id="t5t-QD-uzR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Your Friends" id="inz-d9-z8u">
@@ -350,6 +348,7 @@
                         <outlet property="avatar" destination="VEZ-cK-rZH" id="MxP-x0-955"/>
                         <outlet property="nameLabel" destination="SSJ-0W-AXT" id="UJs-kA-gVo"/>
                         <outlet property="skipSocial" destination="1zj-ZG-dsC" id="YKj-i7-oeF"/>
+                        <outlet property="videoTypesLabel" destination="OwT-pX-5df" id="Ckt-8P-WBq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJJ-P1-01Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -463,9 +462,8 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Music, Movie Trailers, Sports" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="tkR-a7-Ppb">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Music, Movie Trailers, Sports" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="tkR-a7-Ppb">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="183" id="i8A-D0-rRo"/>
                                     <constraint firstAttribute="height" constant="23" id="nDj-fE-rj6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
@@ -478,19 +476,20 @@
                             <constraint firstItem="aQQ-99-V5c" firstAttribute="leading" secondItem="wyh-Te-GFE" secondAttribute="leading" type="default" id="1By-2o-BY2"/>
                             <constraint firstItem="fa6-12-LwR" firstAttribute="centerX" secondItem="wyh-Te-GFE" secondAttribute="centerX" type="default" id="2p9-Ie-clf"/>
                             <constraint firstItem="wyh-Te-GFE" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="260" type="user" id="4Kd-gc-ovT"/>
+                            <constraint firstItem="s0a-LQ-LoT" firstAttribute="leading" secondItem="tkR-a7-Ppb" secondAttribute="leading" type="default" id="7N9-Gw-vUN"/>
+                            <constraint firstItem="s0a-LQ-LoT" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="85" id="82a-nB-fPx"/>
                             <constraint firstItem="kbV-f1-cUt" firstAttribute="top" secondItem="aQQ-99-V5c" secondAttribute="bottom" constant="20" type="user" id="88R-ng-Lwb"/>
                             <constraint firstItem="aQQ-99-V5c" firstAttribute="trailing" secondItem="kbV-f1-cUt" secondAttribute="trailing" type="default" id="8xI-PT-HhZ"/>
                             <constraint firstItem="Gza-c5-D7j" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="20" symbolic="YES" type="default" id="Ep6-dN-Cqk"/>
-                            <constraint firstItem="s0a-LQ-LoT" firstAttribute="centerX" secondItem="1Dn-RK-rK4" secondAttribute="centerX" type="default" id="IDQ-QR-bW7"/>
-                            <constraint firstItem="wyh-Te-GFE" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="57" id="K3c-0u-5vr"/>
                             <constraint firstItem="aQQ-99-V5c" firstAttribute="leading" secondItem="kbV-f1-cUt" secondAttribute="leading" type="default" id="KIE-1T-m35"/>
                             <constraint firstItem="Nee-GH-olu" firstAttribute="top" secondItem="1Dn-RK-rK4" secondAttribute="top" type="default" id="KQD-Vt-IR2"/>
                             <constraint firstItem="tkR-a7-Ppb" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="119" id="PAP-W5-aA1"/>
                             <constraint firstItem="fa6-12-LwR" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="221" type="user" id="RhM-o8-vFJ"/>
                             <constraint firstItem="fa6-12-LwR" firstAttribute="centerX" secondItem="5x2-Bc-FRt" secondAttribute="centerX" type="default" id="T1S-8g-IPD"/>
-                            <constraint firstItem="s0a-LQ-LoT" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="84" id="XD4-Ae-bSf"/>
+                            <constraint firstItem="s0a-LQ-LoT" firstAttribute="centerX" secondItem="1Dn-RK-rK4" secondAttribute="centerX" type="default" id="ZYE-42-y2D"/>
+                            <constraint firstItem="s0a-LQ-LoT" firstAttribute="trailing" secondItem="tkR-a7-Ppb" secondAttribute="trailing" type="default" id="aZC-Qt-Ajc"/>
+                            <constraint firstItem="wyh-Te-GFE" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="57" id="cS3-85-3vw"/>
                             <constraint firstAttribute="trailing" secondItem="hEr-vU-Qyy" secondAttribute="trailing" constant="63" id="dAn-Ez-DFh"/>
-                            <constraint firstItem="tkR-a7-Ppb" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="85" id="giT-Ek-lRS"/>
                             <constraint firstItem="aQQ-99-V5c" firstAttribute="trailing" secondItem="wyh-Te-GFE" secondAttribute="trailing" type="default" id="jZk-zY-D40"/>
                             <constraint firstItem="hEr-vU-Qyy" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="20" symbolic="YES" type="default" id="l2J-8R-eot"/>
                             <constraint firstItem="s0a-LQ-LoT" firstAttribute="top" secondItem="1Dn-RK-rK4" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="lw9-S4-zP0"/>
@@ -516,6 +515,7 @@
                         <outlet property="nameLabel" destination="s0a-LQ-LoT" id="wRD-6N-YN2"/>
                         <outlet property="password" destination="kbV-f1-cUt" id="rnW-BK-2dU"/>
                         <outlet property="username" destination="aQQ-99-V5c" id="mOD-1n-B4B"/>
+                        <outlet property="videoTypesLabel" destination="tkR-a7-Ppb" id="KOp-ZL-aTv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Olc-OR-p7Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -550,6 +550,7 @@
                 <relationship kind="outlet" name="skipSocial" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="username" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="videoTypes" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="videoTypesLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">

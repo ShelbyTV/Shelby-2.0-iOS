@@ -35,7 +35,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (nonatomic, weak) IBOutlet UIButton *skipSocial;
 @property (nonatomic, weak) IBOutlet UITextField *username;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
-@property (nonatomic, strong) NSMutableDictionary *selectedCellsDictionary;
+@property (nonatomic, weak) IBOutlet UILabel *videoTypesLabel;
+@property (nonatomic, strong) NSMutableSet *selectedCellsTitlesSet;
 
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
@@ -120,9 +121,20 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         self.email.text = self.signupDictionary[kShelbySignupEmailKey];
     }
     if (self.signupDictionary[kShelbySignupVideoTypesKey]) {
-        self.selectedCellsDictionary = self.signupDictionary[kShelbySignupVideoTypesKey];
+        self.selectedCellsTitlesSet = self.signupDictionary[kShelbySignupVideoTypesKey];
+        NSMutableString *typesString = [[NSMutableString alloc] init];
+        NSInteger count = 0;
+        for (NSString *type in self.selectedCellsTitlesSet) {
+            if (count > 0) {
+                [typesString appendString:@", "];
+            }
+            [typesString appendString:type];
+            count++;
+        }
+        self.videoTypesLabel.text = typesString;
+        
     } else {
-        self.selectedCellsDictionary = [@{} mutableCopy];
+        self.selectedCellsTitlesSet = [[NSMutableSet alloc] init];
     }
 }
 
@@ -130,8 +142,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 {
     [super viewWillDisappear:animated];
     
-    if (self.selectedCellsDictionary) {
-        self.signupDictionary[kShelbySignupVideoTypesKey] = self.selectedCellsDictionary;
+    if (self.selectedCellsTitlesSet) {
+        self.signupDictionary[kShelbySignupVideoTypesKey] = self.selectedCellsTitlesSet;
     }
 }
 
@@ -179,22 +191,15 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)toggleCellSelectionForIndexPath:(NSIndexPath *)indexPath
 {
     BOOL selected = NO;
-    NSMutableSet *rows = self.selectedCellsDictionary[@(indexPath.section)];
-    if (rows && [rows containsObject:@(indexPath.row)]) {
-        selected = YES;
-    }
+    SignupVideoTypeViewCell *cell = (SignupVideoTypeViewCell *)[self.videoTypes cellForItemAtIndexPath:indexPath];
     
-    if (selected) {
-        [rows removeObject:@(indexPath.row)];
-        if (![rows count]) {
-            [self.selectedCellsDictionary removeObjectForKey:@(indexPath.section)];
+    if (cell.title.text) {
+        if ([self.selectedCellsTitlesSet containsObject:cell.title.text]) {
+            selected = YES;
+            [self.selectedCellsTitlesSet removeObject:cell.title.text];
+        } else {
+            [self.selectedCellsTitlesSet addObject:cell.title.text];
         }
-    } else {
-        if (!rows) {
-            rows = [[NSMutableSet alloc] init];
-            self.selectedCellsDictionary[@(indexPath.section)] = rows;
-        }
-        [rows addObject:@(indexPath.row)];
     }
 
     [self markCellAtIndexPath:indexPath selected:!selected];
@@ -355,10 +360,12 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     cell.contentView.backgroundColor = color;
     cell.title.text = title;
 
-    if (self.selectedCellsDictionary[@(indexPath.section)]) {
-        NSSet *rows = (NSSet *)self.selectedCellsDictionary[@(indexPath.section)];
-        [self markCell:cell selected:[rows containsObject:@(indexPath.row)]];
+    BOOL selected = NO;
+    if ([self.selectedCellsTitlesSet containsObject:title]) {
+        selected = YES;
     }
+    
+    [self markCell:cell selected:selected];
     
     return cell;
 }
