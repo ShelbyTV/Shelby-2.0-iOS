@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SignupVideoTypeViewCell : UICollectionViewCell
-
+@property (nonatomic, weak) IBOutlet UILabel *title;
 @end

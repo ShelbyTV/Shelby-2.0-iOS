@@ -14,6 +14,7 @@ NSString * const kShelbySignupEmailKey           = @"SignupEmail";
 NSString * const kShelbySignupNameKey            = @"SignupName";
 NSString * const kShelbySignupPasswordKey        = @"SignupPassword";
 NSString * const kShelbySignupUsernameKey        = @"SignupUsername";
+NSString * const kShelbySignupVideoTypesKey      = @"SignupVideoTypes";
 
 
 typedef NS_ENUM(NSInteger, TextFieldTag) {
@@ -34,6 +35,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (nonatomic, weak) IBOutlet UIButton *skipSocial;
 @property (nonatomic, weak) IBOutlet UITextField *username;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
+@property (nonatomic, strong) NSMutableDictionary *selectedCellsDictionary;
 
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
@@ -117,6 +119,20 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (self.signupDictionary[kShelbySignupEmailKey]) {
         self.email.text = self.signupDictionary[kShelbySignupEmailKey];
     }
+    if (self.signupDictionary[kShelbySignupVideoTypesKey]) {
+        self.selectedCellsDictionary = self.signupDictionary[kShelbySignupVideoTypesKey];
+    } else {
+        self.selectedCellsDictionary = [@{} mutableCopy];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if (self.selectedCellsDictionary) {
+        self.signupDictionary[kShelbySignupVideoTypesKey] = self.selectedCellsDictionary;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -143,6 +159,47 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void)markCellAtIndexPath:(NSIndexPath *)indexPath selected:(BOOL)selected
+{
+    UICollectionViewCell *cell = [self.videoTypes cellForItemAtIndexPath:indexPath];
+    [self markCell:cell selected:selected];
+}
+
+- (void)markCell:(UICollectionViewCell *)cell selected:(BOOL)selected
+{
+    if (selected) {
+        cell.contentView.layer.borderColor = [UIColor blackColor].CGColor;
+        cell.contentView.layer.borderWidth = 5;
+    } else {
+        cell.contentView.layer.borderWidth = 0;
+    }
+}
+
+- (void)toggleCellSelectionForIndexPath:(NSIndexPath *)indexPath
+{
+    BOOL selected = NO;
+    NSMutableSet *rows = self.selectedCellsDictionary[@(indexPath.section)];
+    if (rows && [rows containsObject:@(indexPath.row)]) {
+        selected = YES;
+    }
+    
+    if (selected) {
+        [rows removeObject:@(indexPath.row)];
+        if (![rows count]) {
+            [self.selectedCellsDictionary removeObjectForKey:@(indexPath.section)];
+        }
+    } else {
+        if (!rows) {
+            rows = [[NSMutableSet alloc] init];
+            self.selectedCellsDictionary[@(indexPath.section)] = rows;
+        }
+        [rows addObject:@(indexPath.row)];
+    }
+
+    [self markCellAtIndexPath:indexPath selected:!selected];
+}
+
 
 #pragma mark - Signup Form Methods
 - (IBAction)signup:(id)sender
@@ -246,17 +303,12 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 #pragma mark - UICollectionViewDelegate Methods
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    
-    cell.contentView.layer.borderColor = [UIColor blackColor].CGColor;
-    cell.contentView.layer.borderWidth = 5;
+    [self toggleCellSelectionForIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    
-    cell.contentView.layer.borderWidth = 0;
+    [self toggleCellSelectionForIndexPath:indexPath];
 }
 
 #pragma mark - UICollectionView Datasource
@@ -279,21 +331,34 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     SignupVideoTypeViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"VideoType" forIndexPath:indexPath];
     
     UIColor *color;
+    NSString *title;
     if (indexPath.row == 0) {
         color = [UIColor greenColor];
+        title = @"News";
     } else if (indexPath.row == 1) {
         color = [UIColor blueColor];
+        title = @"Music";
     } else if (indexPath.row == 2) {
         color = [UIColor redColor];
+        title = @"Beatles";
     } else if (indexPath.row == 3) {
         color = [UIColor orangeColor];
+        title = @"Sports";
     } else if (indexPath.row == 4) {
         color = [UIColor purpleColor];
+        title = @"Apple";
     } else if (indexPath.row == 5) {
         color = [UIColor grayColor];
+        title = @"Movies";
     }
     
     cell.contentView.backgroundColor = color;
+    cell.title.text = title;
+
+    if (self.selectedCellsDictionary[@(indexPath.section)]) {
+        NSSet *rows = (NSSet *)self.selectedCellsDictionary[@(indexPath.section)];
+        [self markCell:cell selected:[rows containsObject:@(indexPath.row)]];
+    }
     
     return cell;
 }
