@@ -145,6 +145,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (self.selectedCellsTitlesSet) {
         self.signupDictionary[kShelbySignupVideoTypesKey] = self.selectedCellsTitlesSet;
     }
+    
+    [self saveValueAndResignActiveTextField];
 }
 
 - (void)didReceiveMemoryWarning
@@ -160,6 +162,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if ([viewController isKindOfClass:[SignupFlowViewController class]]) {
         ((SignupFlowViewController *)viewController).signupDictionary = self.signupDictionary;
     }
+
+    [self saveValueAndResignActiveTextField];
 }
 
 - (IBAction)goBack:(id)sender
@@ -222,6 +226,25 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
         // Error message - should not get here. All supported deviced should have a camera - and hence a saved photo album
+    }
+}
+
+- (void)saveValueAndResignActiveTextField
+{
+    UITextField *activeTextField = nil;
+    if ([self.name isFirstResponder]) {
+        activeTextField = self.name;
+    } else if ([self.username isFirstResponder]) {
+        activeTextField = self.username;
+    } else if ([self.password isFirstResponder]) {
+        activeTextField = self.password;
+    } else if ([self.email isFirstResponder]) {
+        activeTextField = self.email;
+    }
+    
+    if (activeTextField) {
+        [self modifyDictionaryWithTextFieldValue:activeTextField];
+        [activeTextField resignFirstResponder];
     }
 }
 
