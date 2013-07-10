@@ -23,10 +23,10 @@
 - (void)connectToFacebook;
 - (void)connectToTwitter;
 - (void)goToDVR;
-- (void)goToDefaultChannel;
-- (void)goToMyRoll;
-- (void)goToMyLikes;
-- (void)goToMyStream;
+- (void)goToUsersRoll;
+- (void)goToUsersLikes;
+- (void)goToUsersStream;
+- (void)goToCommunityChannel;
 @end
 
 
@@ -59,6 +59,12 @@
 // We should use the following two methods exclusively on start/remove playback
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 - (void)dismissVideoReel;
+
+//allow brain to manage the navigation when necessary
+- (void)didNavigateToCommunityChannel;
+- (void)didNavigateToUsersStream;
+- (void)didNavigateToUsersLikes;
+- (void)didNavigateToUsersRoll;
 
 //DEPRECATED
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;

@@ -19,6 +19,9 @@
 #define kShelbyChannelsStaleTime -600 //10 minutes
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
 
+//NB: making some assumptions about what the API returns us!
+#define GLOBAL_CHANNEL_COMMUNITY_IDX 0
+
 NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 
 @interface ShelbyBrain()
@@ -96,7 +99,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
                          
     NSArray *allChannels = [self constructAllChannelsArray];
     self.homeVC.channels = allChannels;
-    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
+    [self goToUsersStream];
     
     for (DisplayChannel *channel in self.userChannels) {
         [self populateChannel:channel withActivityIndicator:YES];
@@ -195,7 +198,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     if(!curChannels){
         self.globalChannels = [channels mutableCopy];
         self.homeVC.channels = [self constructAllChannelsArray];
-        [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
+        [self goToCommunityChannel];
     } else {
         //caveat: changing a DisplayChannel attribute will not trigger an update
         //array needs to be different order/length to trigger update
@@ -220,7 +223,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 
             self.globalChannels = channelsArray;
             self.homeVC.channels = [self constructAllChannelsArray];
-            [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
+            [self goToCommunityChannel];
         } else {
                 /* don't replace old channels */
         }
@@ -321,7 +324,8 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
         [channel setOrder:@([channelsArray count] - 1)];
         self.globalChannels = channelsArray;
         [self.homeVC setChannels:channelsArray];
-        [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
+        STVAssert([channelsArray containsObject:self.currentChannel], @"expected current channel to remain");
+        [self.homeVC focusOnChannel:self.currentChannel];
     }
     
     [self.homeVC setEntries:channelEntries forChannel:channel];
@@ -355,7 +359,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     }
     
     self.homeVC.channels = [self constructAllChannelsArray];
-    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
+    [self goToUsersStream];
     
     [self fetchEntriesDidCompleteForChannel:myStreamChannel with:channelEntries fromCache:cached];
 }
@@ -380,17 +384,11 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     return allChannels;
 }
 
-- (DisplayChannel *)defaultChannelForFocus
+// NB: This assume API is sending us a single global channel or API is sending global channels where the community channel is first
+- (DisplayChannel *)communityChannel
 {
-    if (self.userChannels && [self.userChannels count]){
-        return self.userChannels[USER_CHANNEL_STREAM_IDX];
-    } else if (self.globalChannels && [self.globalChannels count]) {
-        //community channel
-        return self.globalChannels[0];
-    } else {
-        DLog(@"ERROR -- why don't we have a default channel for this poor user?");
-        return nil;
-    }
+    STVAssert(self.globalChannels && [self.globalChannels count], @"we don't have any channels, let alone a community channel");
+    return self.globalChannels[GLOBAL_CHANNEL_COMMUNITY_IDX];
 }
 
 #pragma mark - Helper Methods
@@ -662,9 +660,9 @@ typedef struct _ShelbyArrayMergeInstructions {
     }
     
     self.userChannels = nil;
+    self.currentUser = nil;
 
-    [self setCurrentUser:nil];
-    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
+    [self goToCommunityChannel];
 }
 
 - (void)connectToFacebook
@@ -725,22 +723,25 @@ typedef struct _ShelbyArrayMergeInstructions {
     [alertView show];
 }
 
-- (void)goToMyLikes
+- (void)goToUsersLikes
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     [self goToRollForID:user.likesRollID];
+    [self.homeVC didNavigateToUsersLikes];
 }
 
-- (void)goToMyRoll
+- (void)goToUsersRoll
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     [self goToRollForID:user.publicRollID];
+    [self.homeVC didNavigateToUsersRoll];
 }
 
-- (void)goToMyStream
+- (void)goToUsersStream
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     [self goToDashboardForId:user.userID];
+    [self.homeVC didNavigateToUsersStream];
 }
 
 - (void)goToDVR
@@ -749,9 +750,10 @@ typedef struct _ShelbyArrayMergeInstructions {
     [self goToDisplayChannel:self.dvrChannel];
 }
 
-- (void)goToDefaultChannel
+- (void)goToCommunityChannel
 {
-    [self goToDisplayChannel:[self defaultChannelForFocus]];
+    [self goToDisplayChannel:[self communityChannel]];
+    [self.homeVC didNavigateToCommunityChannel];
 }
 
 - (ShelbyBrowseTutorialMode)browseTutorialMode
@@ -771,4 +773,5 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyTutorialMode];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
 @end

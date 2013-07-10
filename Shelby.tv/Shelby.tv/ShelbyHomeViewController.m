@@ -213,6 +213,7 @@
     }
 }
 
+//assumes navigation is otherwise correctly set
 - (void)focusOnChannel:(DisplayChannel *)channel
 {
     if (DEVICE_IPAD) {
@@ -411,8 +412,8 @@
         
         [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else { // iPhone
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Stream", @"My Shares", @"My Likes", @"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
-        actionSheet.destructiveButtonIndex = 5;
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
+        actionSheet.destructiveButtonIndex = 2;
         [actionSheet showInView:self.view];
     }
 }
@@ -595,6 +596,26 @@
     self.videoReel.airPlayView = self.videoControlsVC.airPlayView;
 }
 
+- (void)didNavigateToCommunityChannel
+{
+    DLog(@"TODO: show community channel in navigation bar");
+}
+
+- (void)didNavigateToUsersStream
+{
+    DLog(@"TODO: show users stream in navigation bar");
+}
+
+- (void)didNavigateToUsersLikes
+{
+    DLog(@"TODO: show users likes in nav bar");
+}
+
+- (void)didNavigateToUsersRoll
+{
+    DLog(@"TODO: show users shares in nav bar");
+}
+
 #pragma mark - ShelbyStreamBrowseViewDelegate
 
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didScrollTo:(CGPoint)contentOffset
@@ -768,8 +789,8 @@
 {
     [self dismissPopover];
 
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyRoll)]) {
-        [self.masterDelegate goToMyRoll];
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersRoll)]) {
+        [self.masterDelegate goToUsersRoll];
     }
 }
 
@@ -777,8 +798,8 @@
 {
     [self dismissPopover];
 
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyLikes)]) {
-        [self.masterDelegate goToMyLikes];
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersLikes)]) {
+        [self.masterDelegate goToUsersLikes];
     }
 }
 
@@ -786,8 +807,15 @@
 {
     [self dismissPopover];
     
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyStream)]) {
-        [self.masterDelegate goToMyStream];
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersStream)]) {
+        [self.masterDelegate goToUsersStream];
+    }
+}
+
+- (void)launchCommunityChannel
+{
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToCommunityChannel)]) {
+        [self.masterDelegate goToCommunityChannel];
     }
 }
 
@@ -799,8 +827,8 @@
             [sender setTitle:@"Back" forState:UIControlStateNormal];
         }
     } else {
-        if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToDefaultChannel)]) {
-            [self.masterDelegate goToDefaultChannel];
+        if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToCommunityChannel)]) {
+            [self.masterDelegate goToCommunityChannel];
             [sender setTitle:@"DVR" forState:UIControlStateNormal];
         }
     }
@@ -962,16 +990,10 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        [self launchMyStream];
-    } else if (buttonIndex == 1) {
-        [self launchMyRoll];
-    } else if (buttonIndex == 2) {
-        [self launchMyLikes];
-    } else if (buttonIndex == 3) {
         [self connectToFacebook];
-    } else if (buttonIndex == 4) {
+    } else if (buttonIndex == 1) {
         [self connectToTwitter];
-    } else if (buttonIndex == 5) {
+    } else if (buttonIndex == 2) {
         [self logout];
     }
 }
@@ -995,8 +1017,7 @@
 
 - (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC
 {
-    //TODO
-    DLog(@"TODO: go to community");
+    [self launchCommunityChannel];
 }
 
 @end
