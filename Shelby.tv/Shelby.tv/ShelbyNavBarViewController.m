@@ -76,7 +76,7 @@
 
         [UIView animateWithDuration:0.3 animations:^{
             //show the stuff
-            self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+            self.view.frame = CGRectMake(0, 10, self.view.frame.size.width, self.view.frame.size.height);
             for (UIView *v in self.allRowViews) {
                 v.alpha = 0.95;
                 v.userInteractionEnabled = YES;
