@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
 - (IBAction)goBack:(id)sender;
+- (IBAction)connectoToFacebook:(id)sender;
+- (IBAction)connectoToTwitter:(id)sender;
 @end
 
 @implementation SignupFlowViewController
@@ -94,12 +96,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
         self.navigationItem.leftBarButtonItem = backBarButtonItem;
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
+    
     if (self.signupDictionary[kShelbySignupAvatarKey]) {
         self.avatar.image = self.signupDictionary[kShelbySignupAvatarKey];
     }
@@ -226,6 +223,24 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
         // Error message - should not get here. All supported deviced should have a camera - and hence a saved photo album
+    }
+}
+
+// KP KP: TODO: commenting out because need to make sure user has an account - after we implement that, uncomemnt
+- (IBAction)connectoToFacebook:(id)sender
+{
+    UIViewController *parent = self.parentViewController;
+    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+//        [parent performSelector:@selector(connectToFacebook)];
+    }
+}
+
+// KP KP: TODO: commenting out because need to make sure user has an account - after we implement that, uncomemnt
+- (IBAction)connectoToTwitter:(id)sender
+{
+    UIViewController *parent = self.parentViewController;
+    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+//        [parent performSelector:@selector(connectToTwitter)];
     }
 }
 

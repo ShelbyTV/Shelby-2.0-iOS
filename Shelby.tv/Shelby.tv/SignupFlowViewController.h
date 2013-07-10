@@ -14,6 +14,11 @@ extern NSString * const kShelbySignupPasswordKey;
 extern NSString * const kShelbySignupUsernameKey;
 extern NSString * const kShelbySignupVideoTypesKey;
 
+@protocol SignupFlowViewDelegate <NSObject>
+- (void)connectToFacebook;
+- (void)connectToTwitter;
+@end
+
 @interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, weak) NSMutableDictionary *signupDictionary;
 @end

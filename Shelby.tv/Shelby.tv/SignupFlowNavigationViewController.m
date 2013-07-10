@@ -7,7 +7,6 @@
 //
 
 #import "SignupFlowNavigationViewController.h"
-#import "SignupFlowViewController.h"
 
 @interface SignupFlowNavigationViewController ()
 @property (nonatomic, strong) NSMutableDictionary *signupDictionary;
@@ -45,6 +44,18 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+
+#pragma mark - SignupFlowViewDelegate
+- (void)connectToFacebook
+{
+    [self.signupDelegate connectToFacebook];
+}
+
+- (void)connectToTwitter
+{
+    [self.signupDelegate connectToTwitter];
 }
 
 @end

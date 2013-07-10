@@ -659,8 +659,9 @@
     UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow"
                                                              bundle: nil];
     
-    UIViewController *signupFlowVC = (UIViewController *)[signupFlowStoryboard
+    SignupFlowNavigationViewController *signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard
                                                        instantiateInitialViewController];
+    [signupFlowVC setSignupDelegate:self];
     [self presentViewController:signupFlowVC animated:YES completion:nil];
 //    NSString *authorizationVCNibName = nil;
 //    if (DEVICE_IPAD) {
@@ -707,7 +708,7 @@
         [self logoutUser];
     }
 }
-#pragma mark - SettingsViewDelegate methods
+#pragma mark - SettingsViewDelegate methods (FB and TW Connect also part of SignupFlowDelegate)
 - (void)dismissPopover
 {
     // Popover is only for the iPad
