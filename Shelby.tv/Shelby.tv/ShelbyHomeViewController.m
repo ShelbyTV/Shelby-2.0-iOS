@@ -155,7 +155,7 @@
     [alertView show];
 }
 
-// We assume these are all of our channels, in the correct order
+// We assume these are all of our channels, in the correct order (which we cared about on old iPad design)
 - (void)setChannels:(NSArray *)channels
 {
     if (![channels isEqualToArray:_channels]) {
@@ -185,9 +185,7 @@
 }
 
 - (void)removeChannel:(DisplayChannel *)channel
-{
-    DLog(@"Removing channel %@", channel);
-    
+{    
     NSMutableArray *lessChannels = [_channels mutableCopy];
     [lessChannels removeObject:channel];
     _channels = lessChannels;
@@ -247,7 +245,9 @@
     if (DEVICE_IPAD) {
         [self.browseVC setEntries:channelEntries forChannel:channel];
     } else {
-        [[self streamBrowseViewControllerForChannel:channel] setEntries:channelEntries forChannel:channel];
+        ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
+        STVAssert(sbvc, @"expected to set entries for a VC we have");
+        [sbvc setEntries:channelEntries forChannel:channel];
         if (!self.videoControlsVC.currentEntity && self.currentStreamBrowseVC.channel == channel && [channelEntries count]) {
             //we're bootstrapping, update the video controls for the 0th entity
             self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC deduplicatedEntriesForChannel:channel][0];

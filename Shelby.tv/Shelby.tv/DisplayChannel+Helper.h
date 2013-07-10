@@ -38,8 +38,7 @@
                                                title:(NSString *)title
                                            inContext:(NSManagedObjectContext *)context;
 
-+ (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
-                                          inContext:(NSManagedObjectContext *)context;
++ (DisplayChannel *)channelForOfflineLikesInContext:(NSManagedObjectContext *)context;
 
 + (DisplayChannel *)fetchChannelWithRollID:(NSString *)channelID
                                  inContext:(NSManagedObjectContext *)context;
