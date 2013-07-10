@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SignupUserInfoCell.h"
+
 extern NSString * const kShelbySignupAvatarKey;
 extern NSString * const kShelbySignupEmailKey;
 extern NSString * const kShelbySignupNameKey;
@@ -19,6 +21,6 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (void)connectToTwitter;
 @end
 
-@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SignupUserInfoDelegate>
 @property (nonatomic, weak) NSMutableDictionary *signupDictionary;
 @end

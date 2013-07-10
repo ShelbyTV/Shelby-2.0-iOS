@@ -8,6 +8,10 @@
 
 #import "SignupUserInfoCell.h"
 
+@interface SignupUserInfoCell()
+- (IBAction)assignAvatar:(id)sender;
+@end
+
 @implementation SignupUserInfoCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -27,5 +31,10 @@
     // Drawing code
 }
 */
+
+- (IBAction)assignAvatar:(id)sender
+{
+    [self.delegate assignAvatar];
+}
 
 @end

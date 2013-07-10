@@ -8,7 +8,6 @@
 
 #import "SignupFlowViewController.h"
 #import "SignupVideoTypeViewCell.h"
-#import "SignupUserInfoCell.h"
 
 NSString * const kShelbySignupAvatarKey          = @"SignupAvatar";
 NSString * const kShelbySignupEmailKey           = @"SignupEmail";
@@ -100,6 +99,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
         self.navigationItem.leftBarButtonItem = backBarButtonItem;
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     if (self.signupDictionary[kShelbySignupAvatarKey]) {
         self.avatarImage = self.signupDictionary[kShelbySignupAvatarKey];
@@ -219,14 +223,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self markCellAtIndexPath:indexPath selected:!selected];
 }
 
-
-#pragma mark - Signup Form Methods
-- (IBAction)signup:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)assignAvatar:(id)sender
+- (void)openImagePicker
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
@@ -237,6 +234,17 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     } else {
         // Error message - should not get here. All supported deviced should have a camera - and hence a saved photo album
     }
+}
+
+#pragma mark - Signup Form Methods
+- (IBAction)signup:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)assignAvatar:(id)sender
+{
+    [self openImagePicker];
 }
 
 // KP KP: TODO: commenting out because need to make sure user has an account - after we implement that, uncomemnt
@@ -395,6 +403,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
             cell.avatar.image = self.avatarImage;
         }
         cell.name.text = self.fullname;
+        cell.delegate = self;
         return cell;
     }
     
@@ -445,4 +454,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     return CGSizeMake(160, 160);
 }
 
+#pragma mark - SignupUserInfoDelegate method
+- (void)assignAvatar
+{
+    [self openImagePicker];
+}
 @end
