@@ -98,37 +98,27 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="1Ue-JM-A3m">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="3cS-mI-vz4"/>
-                                    <constraint firstAttribute="width" constant="60" id="KV6-5P-nEl"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2J9-n7-5Wr" userLabel="Name">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="tat-xN-Zup"/>
-                                    <constraint firstAttribute="width" constant="183" id="w9m-si-T51"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Choose what you love" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Xt-a2-9W3">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="3pg-7K-5bH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bSO-ew-ZPB">
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="3" constant="216" type="user" id="IUv-T5-qw7"/>
-                                </constraints>
-                                <collectionViewLayout key="collectionViewLayout" id="QKg-w3-lyv" customClass="SignupCollectionViewLayout"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="exu-mU-PdX">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoType" id="kNT-u9-rnz">
-                                        <rect key="frame" x="80" y="0.0" width="160" height="160"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SignupUserInfoCell" id="nO4-Zt-cCK" customClass="SignupUserInfoCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <size key="customSize" width="320" height="200"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="VideoType" id="kNT-u9-rnz">
+                                        <rect key="frame" x="80" y="200" width="160" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
@@ -143,53 +133,13 @@
                                     <outlet property="delegate" destination="dtY-NO-hRl" id="Ogy-TF-Vda"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XO2-hR-khv">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="62" id="lVj-ui-zeC"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="assignAvatar:" destination="dtY-NO-hRl" eventType="touchUpInside" id="5xY-1j-kP0"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Pick at least three so we can find the best stuff for you." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHX-hF-AjI">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="2Su-Ia-bYm"/>
-                                    <constraint firstAttribute="width" constant="295" id="5UA-tu-nMd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="11"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2J9-n7-5Wr" firstAttribute="centerX" secondItem="bSO-ew-ZPB" secondAttribute="centerX" type="default" id="4tT-Mo-xNv"/>
-                            <constraint firstItem="bSO-ew-ZPB" firstAttribute="bottom" secondItem="Grh-fn-liE" secondAttribute="bottom" type="user" id="A6x-lV-86I"/>
                             <constraint firstItem="bSO-ew-ZPB" firstAttribute="leading" secondItem="Grh-fn-liE" secondAttribute="leading" type="user" id="ASf-I9-wCe"/>
-                            <constraint firstItem="1Ue-JM-A3m" firstAttribute="leading" secondItem="XO2-hR-khv" secondAttribute="leading" type="default" id="E2B-jd-9lk"/>
-                            <constraint firstItem="6Xt-a2-9W3" firstAttribute="centerX" secondItem="XO2-hR-khv" secondAttribute="centerX" type="default" id="G07-mc-D3T"/>
-                            <constraint firstItem="6Xt-a2-9W3" firstAttribute="top" secondItem="Grh-fn-liE" secondAttribute="top" constant="117" id="KLI-ta-GaJ"/>
-                            <constraint firstItem="bSO-ew-ZPB" firstAttribute="top" secondItem="Grh-fn-liE" secondAttribute="top" constant="200" type="user" id="MUJ-dA-Kup"/>
-                            <constraint firstItem="1Ue-JM-A3m" firstAttribute="top" secondItem="XO2-hR-khv" secondAttribute="top" type="default" id="Mvb-Er-oel"/>
-                            <constraint firstItem="bSO-ew-ZPB" firstAttribute="bottom" secondItem="Grh-fn-liE" secondAttribute="bottom" type="user" id="Sgo-w1-Uzw"/>
-                            <constraint firstItem="2J9-n7-5Wr" firstAttribute="top" secondItem="XO2-hR-khv" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Uwt-Ac-HI9"/>
-                            <constraint firstItem="bSO-ew-ZPB" firstAttribute="leading" secondItem="Grh-fn-liE" secondAttribute="leading" type="user" id="Xww-2b-8cB"/>
-                            <constraint firstItem="bSO-ew-ZPB" firstAttribute="leading" secondItem="Grh-fn-liE" secondAttribute="leading" type="user" id="ZAv-3e-RYl"/>
-                            <constraint firstItem="6Xt-a2-9W3" firstAttribute="centerX" secondItem="rHX-hF-AjI" secondAttribute="centerX" type="default" id="c22-EN-7Q1"/>
-                            <constraint firstItem="2J9-n7-5Wr" firstAttribute="top" secondItem="1Ue-JM-A3m" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="eIw-ur-AaE"/>
+                            <constraint firstItem="bSO-ew-ZPB" firstAttribute="top" secondItem="Grh-fn-liE" secondAttribute="top" type="default" id="XTk-Br-t57"/>
                             <constraint firstItem="bSO-ew-ZPB" firstAttribute="trailing" secondItem="Grh-fn-liE" secondAttribute="trailing" type="default" id="jdL-bs-IBZ"/>
-                            <constraint firstItem="2J9-n7-5Wr" firstAttribute="centerX" secondItem="1Ue-JM-A3m" secondAttribute="centerX" type="default" id="mCS-Fc-kse"/>
-                            <constraint firstItem="6Xt-a2-9W3" firstAttribute="leading" secondItem="Grh-fn-liE" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="msa-ic-yue"/>
-                            <constraint firstItem="1Ue-JM-A3m" firstAttribute="top" secondItem="Grh-fn-liE" secondAttribute="top" constant="12" id="uPt-PU-nnQ"/>
-                            <constraint firstItem="rHX-hF-AjI" firstAttribute="top" secondItem="Grh-fn-liE" secondAttribute="top" constant="146" id="vv6-oN-vt4"/>
+                            <constraint firstItem="bSO-ew-ZPB" firstAttribute="bottom" secondItem="Grh-fn-liE" secondAttribute="bottom" type="default" id="ye7-ZH-euI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="What do you like?" id="J7I-2E-QMo">
@@ -201,8 +151,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="avatar" destination="1Ue-JM-A3m" id="K5W-V4-hDe"/>
-                        <outlet property="nameLabel" destination="2J9-n7-5Wr" id="NIE-oy-IRl"/>
                         <outlet property="videoTypes" destination="bSO-ew-ZPB" id="Fsb-qg-9nk"/>
                     </connections>
                 </viewController>
@@ -542,9 +490,6 @@
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
-        <class className="SignupCollectionViewLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupCollectionViewLayout.h"/>
-        </class>
         <class className="SignupFlowNavigationViewController" superclassName="UINavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowNavigationViewController.h"/>
         </class>
@@ -567,11 +512,21 @@
                 <relationship kind="outlet" name="videoTypesLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
+        <class className="SignupUserInfoCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupUserInfoCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="UICollectionReusableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
         </class>
         <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

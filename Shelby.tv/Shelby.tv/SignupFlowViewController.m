@@ -8,6 +8,7 @@
 
 #import "SignupFlowViewController.h"
 #import "SignupVideoTypeViewCell.h"
+#import "SignupUserInfoCell.h"
 
 NSString * const kShelbySignupAvatarKey          = @"SignupAvatar";
 NSString * const kShelbySignupEmailKey           = @"SignupEmail";
@@ -37,6 +38,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
 @property (nonatomic, weak) IBOutlet UILabel *videoTypesLabel;
 @property (nonatomic, strong) NSMutableSet *selectedCellsTitlesSet;
+@property (nonatomic, strong) NSString *fullname;
+@property (nonatomic, strong) UIImage *avatarImage;
 
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
@@ -81,6 +84,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
     self.videoTypes.allowsMultipleSelection = YES;
     [self.videoTypes registerNib:[UINib nibWithNibName:@"SignupVideoTypeViewCell" bundle:nil] forCellWithReuseIdentifier:@"VideoType"];
+    [self.videoTypes registerNib:[UINib nibWithNibName:@"SignupUserInfoViewCell" bundle:nil] forCellWithReuseIdentifier:@"SignupUserInfoCell"];
     
     // Custom "Back" buttons.
     if (self.navigationItem.leftBarButtonItem && [self.navigationItem.leftBarButtonItem.title isEqualToString:@"Back"]) {
@@ -98,25 +102,34 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     if (self.signupDictionary[kShelbySignupAvatarKey]) {
-        self.avatar.image = self.signupDictionary[kShelbySignupAvatarKey];
+        self.avatarImage = self.signupDictionary[kShelbySignupAvatarKey];
+        if (self.avatar) {
+            self.avatar.image = self.avatarImage;
+        }
     }
     
     if (self.signupDictionary[kShelbySignupNameKey]) {
-        self.name.text = self.signupDictionary[kShelbySignupNameKey];
-        self.nameLabel.text = self.signupDictionary[kShelbySignupNameKey];
+        self.fullname = self.signupDictionary[kShelbySignupNameKey];
+        if (self.name) {
+            self.name.text = self.fullname;
+        }
+        if (self.nameLabel) {
+            self.nameLabel.text = self.fullname;
+        }
     }
     
-    if (self.signupDictionary[kShelbySignupPasswordKey]) {
+    if (self.signupDictionary[kShelbySignupPasswordKey] && self.password) {
         self.password.text = self.signupDictionary[kShelbySignupPasswordKey];
     }
     
-    if (self.signupDictionary[kShelbySignupUsernameKey]) {
+    if (self.signupDictionary[kShelbySignupUsernameKey] && self.username) {
         self.username.text = self.signupDictionary[kShelbySignupUsernameKey];
     }
 
-    if (self.signupDictionary[kShelbySignupEmailKey]) {
+    if (self.signupDictionary[kShelbySignupEmailKey] && self.email) {
         self.email.text = self.signupDictionary[kShelbySignupEmailKey];
     }
+
     if (self.signupDictionary[kShelbySignupVideoTypesKey]) {
         self.selectedCellsTitlesSet = self.signupDictionary[kShelbySignupVideoTypesKey];
         NSMutableString *typesString = [[NSMutableString alloc] init];
@@ -288,7 +301,12 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     
-    self.avatar.image = image;
+    self.avatarImage = image;
+    self.avatar.image = self.avatarImage;
+    
+    if (self.videoTypes) {
+        [self.videoTypes reloadData];
+    }
 
     self.signupDictionary[kShelbySignupAvatarKey] = image;
     
@@ -357,20 +375,29 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (section == 1) {
         return 6;
     }
     
-    return 0; // Right now, 1 section
+    return 1; 
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
 {
-    return 1;
+    return 2;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        SignupUserInfoCell *cell =  [cv dequeueReusableCellWithReuseIdentifier:@"SignupUserInfoCell" forIndexPath:indexPath];
+        if (self.avatarImage) {
+            cell.avatar.image = self.avatarImage;
+        }
+        cell.name.text = self.fullname;
+        return cell;
+    }
+    
     SignupVideoTypeViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"VideoType" forIndexPath:indexPath];
     
     UIColor *color;
@@ -406,6 +433,16 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self markCell:cell selected:selected];
     
     return cell;
+}
+
+#pragma mark - UICollectionViewFlowLayoutDelegate Methods
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return CGSizeMake(320, 200);
+    }
+    
+    return CGSizeMake(160, 160);
 }
 
 @end

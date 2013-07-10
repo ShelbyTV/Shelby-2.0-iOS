@@ -184,9 +184,6 @@
 		1C7B63D5178B5ED6000C1E84 /* user_default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63D1178B5ED6000C1E84 /* user_default_avatar@2x.png */; };
 		1C7B63D6178B5ED6000C1E84 /* user_default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63D1178B5ED6000C1E84 /* user_default_avatar@2x.png */; };
 		1C7B63D7178B5ED6000C1E84 /* user_default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63D1178B5ED6000C1E84 /* user_default_avatar@2x.png */; };
-		1C7B63DA178B6101000C1E84 /* SignupCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63D9178B6101000C1E84 /* SignupCollectionViewLayout.m */; };
-		1C7B63DB178B6101000C1E84 /* SignupCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63D9178B6101000C1E84 /* SignupCollectionViewLayout.m */; };
-		1C7B63DC178B6101000C1E84 /* SignupCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63D9178B6101000C1E84 /* SignupCollectionViewLayout.m */; };
 		1C7B63DE178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63DD178B7B21000C1E84 /* SignupVideoTypeViewCell.xib */; };
 		1C7B63DF178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63DD178B7B21000C1E84 /* SignupVideoTypeViewCell.xib */; };
 		1C7B63E0178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63DD178B7B21000C1E84 /* SignupVideoTypeViewCell.xib */; };
@@ -199,6 +196,9 @@
 		1C7B63F3178C5379000C1E84 /* navbar_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63EF178C5379000C1E84 /* navbar_back_button@2x.png */; };
 		1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63EF178C5379000C1E84 /* navbar_back_button@2x.png */; };
 		1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63EF178C5379000C1E84 /* navbar_back_button@2x.png */; };
+		1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */; };
+		1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */; };
+		1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */; };
 		1C7B8D4616F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
 		1C7B8D4716F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
 		1C7B8D4816F0F8590069F570 /* SignupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B8D4516F0F8590069F570 /* SignupView.m */; };
@@ -537,6 +537,9 @@
 		1CC223BC17580DF9003396B4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC223B917580DF9003396B4 /* User.m */; };
 		1CC3387816CBDF2A00E58375 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
 		1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
+		1CC5763C178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
+		1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
+		1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
 		1CC75ADC172AF2FC004805A5 /* connectedfacebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ABE172AF2FC004805A5 /* connectedfacebook.png */; };
 		1CC75ADD172AF2FC004805A5 /* connectedfacebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ABE172AF2FC004805A5 /* connectedfacebook.png */; };
 		1CC75ADE172AF2FC004805A5 /* connectedfacebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ABE172AF2FC004805A5 /* connectedfacebook.png */; };
@@ -1025,13 +1028,13 @@
 		1C7B63CB178B33B1000C1E84 /* SignupFlowNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupFlowNavigationViewController.m; sourceTree = "<group>"; };
 		1C7B63D0178B5ED6000C1E84 /* user_default_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_default_avatar.png; sourceTree = "<group>"; };
 		1C7B63D1178B5ED6000C1E84 /* user_default_avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_default_avatar@2x.png"; sourceTree = "<group>"; };
-		1C7B63D8178B6101000C1E84 /* SignupCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupCollectionViewLayout.h; sourceTree = "<group>"; };
-		1C7B63D9178B6101000C1E84 /* SignupCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupCollectionViewLayout.m; sourceTree = "<group>"; };
 		1C7B63DD178B7B21000C1E84 /* SignupVideoTypeViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupVideoTypeViewCell.xib; sourceTree = "<group>"; };
 		1C7B63E1178B7B60000C1E84 /* SignupVideoTypeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupVideoTypeViewCell.h; sourceTree = "<group>"; };
 		1C7B63E2178B7B60000C1E84 /* SignupVideoTypeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupVideoTypeViewCell.m; sourceTree = "<group>"; };
 		1C7B63EE178C5379000C1E84 /* navbar_back_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar_back_button.png; sourceTree = "<group>"; };
 		1C7B63EF178C5379000C1E84 /* navbar_back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbar_back_button@2x.png"; sourceTree = "<group>"; };
+		1C7B63F6178DD4B1000C1E84 /* SignupUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupUserInfoCell.h; sourceTree = "<group>"; };
+		1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupUserInfoCell.m; sourceTree = "<group>"; };
 		1C7B8D4416F0F8590069F570 /* SignupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupView.h; sourceTree = "<group>"; };
 		1C7B8D4516F0F8590069F570 /* SignupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupView.m; sourceTree = "<group>"; };
 		1C7B8D4916F0FDAF0069F570 /* authenticationSignupView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationSignupView.png; sourceTree = "<group>"; };
@@ -1090,6 +1093,7 @@
 		1CC3387616CBDF2A00E58375 /* BrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseViewController.h; sourceTree = "<group>"; };
 		1CC3387716CBDF2A00E58375 /* BrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowseViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1CC3387916CBE20800E58375 /* BrowseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseView.xib; sourceTree = "<group>"; };
+		1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupUserInfoViewCell.xib; sourceTree = "<group>"; };
 		1CC75ABE172AF2FC004805A5 /* connectedfacebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectedfacebook.png; sourceTree = "<group>"; };
 		1CC75ABF172AF2FC004805A5 /* connectedfacebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectedfacebook@2x.png"; sourceTree = "<group>"; };
 		1CC75AC0172AF2FC004805A5 /* connectfacebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectfacebook.png; sourceTree = "<group>"; };
@@ -1649,6 +1653,7 @@
 				9119AB6D17821133001C9190 /* VideoControlsView.xib */,
 				1C7B63C1178B0AC2000C1E84 /* SignupFlow.storyboard */,
 				1C7B63DD178B7B21000C1E84 /* SignupVideoTypeViewCell.xib */,
+				1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -1685,8 +1690,6 @@
 			children = (
 				1CCCB54A16CEECD400C8C216 /* CollectionViewGroupsLayout.h */,
 				1CCCB54B16CEECD400C8C216 /* CollectionViewGroupsLayout.m */,
-				1C7B63D8178B6101000C1E84 /* SignupCollectionViewLayout.h */,
-				1C7B63D9178B6101000C1E84 /* SignupCollectionViewLayout.m */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -2280,6 +2283,8 @@
 				9119AB7617821A5C001C9190 /* VideoControlsView.h */,
 				1C7B63E1178B7B60000C1E84 /* SignupVideoTypeViewCell.h */,
 				1C7B63E2178B7B60000C1E84 /* SignupVideoTypeViewCell.m */,
+				1C7B63F6178DD4B1000C1E84 /* SignupUserInfoCell.h */,
+				1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */,
 				9119AB7717821A5C001C9190 /* VideoControlsView.m */,
 			);
 			name = Views;
@@ -2635,6 +2640,7 @@
 				1C7B63DF178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C7B63F1178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
+				1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2818,6 +2824,7 @@
 				1C7B63E0178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C7B63F2178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
+				1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3002,6 +3009,7 @@
 				1C7B63DE178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C7B63F0178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F3178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
+				1CC5763C178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3126,8 +3134,8 @@
 				9119AB7917821A5C001C9190 /* VideoControlsView.m in Sources */,
 				1C7B63C8178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1C7B63CD178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
-				1C7B63DB178B6101000C1E84 /* SignupCollectionViewLayout.m in Sources */,
 				1C7B63E4178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3249,8 +3257,8 @@
 				9119AB7A17821A5C001C9190 /* VideoControlsView.m in Sources */,
 				1C7B63C9178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1C7B63CE178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
-				1C7B63DC178B6101000C1E84 /* SignupCollectionViewLayout.m in Sources */,
 				1C7B63E5178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3372,8 +3380,8 @@
 				9119AB7817821A5C001C9190 /* VideoControlsView.m in Sources */,
 				1C7B63C7178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1C7B63CC178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
-				1C7B63DA178B6101000C1E84 /* SignupCollectionViewLayout.m in Sources */,
 				1C7B63E3178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
