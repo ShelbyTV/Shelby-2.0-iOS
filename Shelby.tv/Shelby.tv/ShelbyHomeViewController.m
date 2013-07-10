@@ -179,14 +179,6 @@
                 [newStreamBrowseVCs addObject:sbvc];
             }
             
-            //remove old VCs (some of which may get re-used)
-            //NB: we expect new channel for focus to be set by an outsider
-            if (self.currentStreamBrowseVC) {
-                [self.currentStreamBrowseVC.view removeFromSuperview];
-                [self.currentStreamBrowseVC removeFromParentViewController];
-                self.currentStreamBrowseVC = nil;
-            }
-            
             _streamBrowseVCs = newStreamBrowseVCs;
         }
     }
@@ -598,22 +590,22 @@
 
 - (void)didNavigateToCommunityChannel
 {
-    DLog(@"TODO: show community channel in navigation bar");
+    [self.navBarVC didNavigateToCommunityChannel];
 }
 
 - (void)didNavigateToUsersStream
 {
-    DLog(@"TODO: show users stream in navigation bar");
+    [self.navBarVC didNavigateToUsersStream];
 }
 
 - (void)didNavigateToUsersLikes
 {
-    DLog(@"TODO: show users likes in nav bar");
+    [self.navBarVC didNavigateToUsersLikes];
 }
 
 - (void)didNavigateToUsersRoll
 {
-    DLog(@"TODO: show users shares in nav bar");
+    [self.navBarVC didNavigateToUsersShares];
 }
 
 #pragma mark - ShelbyStreamBrowseViewDelegate

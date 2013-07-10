@@ -7,15 +7,14 @@
 //
 
 #import "ShelbyNavBarViewController.h"
+#import "ShelbyNavBarView.h"
 
 @interface ShelbyNavBarViewController ()
-@property (nonatomic, strong) NSArray *allRowViews;
-@property (weak, nonatomic) IBOutlet UIView *streamRow;
-@property (weak, nonatomic) IBOutlet UIView *likesRow;
-@property (weak, nonatomic) IBOutlet UIView *sharesRow;
-@property (weak, nonatomic) IBOutlet UIView *communityRow;
 
-@property (weak, nonatomic) IBOutlet UIView *selectionIdentifier;
+@property (nonatomic, weak) ShelbyNavBarView *navBarView;
+
+@property (nonatomic, strong) NSArray *allRowViews;
+@property (weak, nonatomic) UIView *currentRow;
 
 @end
 
@@ -27,7 +26,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _waitingForSelection = YES;
+        _waitingForSelection = NO;
     }
     return self;
 }
@@ -36,10 +35,13 @@
 {
     [super viewDidLoad];
 
-    self.selectionIdentifier.layer.borderColor = [UIColor greenColor].CGColor;
-    self.selectionIdentifier.layer.borderWidth = 1.0;
-    self.selectionIdentifier.layer.cornerRadius = 2.0;
-    self.allRowViews = @[self.streamRow, self.likesRow, self.sharesRow, self.communityRow];
+    self.navBarView = (ShelbyNavBarView *)self.view;
+
+    self.allRowViews = @[self.navBarView.streamRow, self.navBarView.likesRow, self.navBarView.sharesRow, self.navBarView.communityRow];
+
+    self.navBarView.selectionIdentifier.layer.borderColor = [UIColor greenColor].CGColor;
+    self.navBarView.selectionIdentifier.layer.borderWidth = 1.0;
+    self.navBarView.selectionIdentifier.layer.cornerRadius = 2.0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,55 +50,90 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)navRowTapped:(UIButton *)sender {
+- (void)didNavigateToCommunityChannel
+{
+    if (self.navBarView.communityRow != self.currentRow){
+        [self navigateForButton:self.navBarView.communityButton row:self.navBarView.communityRow];
+    }
+}
+
+- (void)didNavigateToUsersStream
+{
+    if (self.navBarView.streamRow != self.currentRow) {
+        [self navigateForButton:self.navBarView.streamButton row:self.navBarView.streamRow];
+    }
+}
+
+- (void)didNavigateToUsersLikes
+{
+    if (self.navBarView.likesRow != self.currentRow) {
+        [self navigateForButton:self.navBarView.likesButton row:self.navBarView.likesRow];
+    }
+}
+
+- (void)didNavigateToUsersShares
+{
+    if (self.navBarView.sharesRow != self.currentRow) {
+        [self navigateForButton:self.navBarView.sharesButton row:self.navBarView.sharesRow];
+    }
+}
+
+- (IBAction)navButtonTapped:(UIButton *)sender {
     UIView *sendingRow = sender.superview;
 
     if (_waitingForSelection){
-        //user made navigation choice...
+        [self navigateForButton:sender row:sendingRow];
 
-        NSMutableArray *ignoredRowViews = [self.allRowViews mutableCopy];
-        [ignoredRowViews removeObject:sendingRow];
+        if (sendingRow == self.navBarView.streamRow) {
+            [self.delegate navBarViewControllerStreamWasTapped:self];
+        } else if (sendingRow == self.navBarView.likesRow) {
+            [self.delegate navBarViewControllerLikesWasTapped:self];
+        } else if (sendingRow == self.navBarView.sharesRow) {
+            [self.delegate navBarViewControllerSharesWasTapped:self];
+        } else if (sendingRow == self.navBarView.communityRow) {
+            [self.delegate navBarViewControllerCommunityWasTapped:self];
+        } else {
+            STVAssert(NO, @"unhandled nav row");
+        }
 
-        [UIView animateWithDuration:0.3 animations:^{
-            //hide the stuff
-            self.view.frame = CGRectMake(0, -(sendingRow.frame.origin.y), self.view.frame.size.width, self.view.frame.size.height);
-            for (UIView *v in ignoredRowViews) {
-                v.alpha = 0.0;
-                v.userInteractionEnabled = NO;
-            }
-
-            //update selection
-            sendingRow.alpha = 0.85;
-            self.selectionIdentifier.frame = CGRectMake(sender.titleLabel.frame.origin.x - 10, sendingRow.frame.origin.y + 19, self.selectionIdentifier.frame.size.width, self.selectionIdentifier.frame.size.height);
-        } completion:^(BOOL finished) {
-            _waitingForSelection = NO;
-        }];
+        _waitingForSelection = NO;
     } else {
-        //user wants to navigate...
-
-        [UIView animateWithDuration:0.3 animations:^{
-            //show the stuff
-            self.view.frame = CGRectMake(0, 10, self.view.frame.size.width, self.view.frame.size.height);
-            for (UIView *v in self.allRowViews) {
-                v.alpha = 0.95;
-                v.userInteractionEnabled = YES;
-            }
-        } completion:^(BOOL finished) {
-            _waitingForSelection = YES;
-        }];
+        [self showNavigation];
+        _waitingForSelection = YES;
     }
+}
 
-    if (sendingRow == self.streamRow) {
-        [self.delegate navBarViewControllerStreamWasTapped:self];
-    } else if (sendingRow == self.likesRow) {
-        [self.delegate navBarViewControllerLikesWasTapped:self];
-    } else if (sendingRow == self.sharesRow) {
-        [self.delegate navBarViewControllerSharesWasTapped:self];
-    } else if (sendingRow == self.communityRow) {
-        [self.delegate navBarViewControllerCommunityWasTapped:self];
-    } else {
-        STVAssert(NO, @"unhandled nav row");
-    }
+- (void)navigateForButton:(UIButton *)sender row:(UIView *)row
+{
+    NSMutableArray *ignoredRowViews = [self.allRowViews mutableCopy];
+    [ignoredRowViews removeObject:row];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        //hide the stuff
+        self.view.frame = CGRectMake(0, -(row.frame.origin.y), self.view.frame.size.width, self.view.frame.size.height);
+        for (UIView *v in ignoredRowViews) {
+            v.alpha = 0.0;
+            v.userInteractionEnabled = NO;
+        }
+
+        //update selection
+        row.alpha = 0.85;
+        self.navBarView.selectionIdentifier.frame = CGRectMake(sender.titleLabel.frame.origin.x - 10, row.frame.origin.y + 19, self.navBarView.selectionIdentifier.frame.size.width, self.navBarView.selectionIdentifier.frame.size.height);
+    }];
+}
+
+- (void)showNavigation
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        //show the stuff
+        self.view.frame = CGRectMake(0, 10, self.view.frame.size.width, self.view.frame.size.height);
+        for (UIView *v in self.allRowViews) {
+            v.alpha = 0.95;
+            v.userInteractionEnabled = YES;
+        }
+    } completion:^(BOOL finished) {
+        _waitingForSelection = YES;
+    }];
 }
 
 @end

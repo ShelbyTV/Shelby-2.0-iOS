@@ -23,4 +23,9 @@
 
 @property (nonatomic, weak) id<ShelbyNavBarDelegate> delegate;
 
+- (void)didNavigateToCommunityChannel;
+- (void)didNavigateToUsersStream;
+- (void)didNavigateToUsersLikes;
+- (void)didNavigateToUsersShares;
+
 @end

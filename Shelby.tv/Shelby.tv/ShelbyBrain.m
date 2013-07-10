@@ -99,7 +99,9 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
                          
     NSArray *allChannels = [self constructAllChannelsArray];
     self.homeVC.channels = allChannels;
-    [self goToUsersStream];
+    if (!self.currentChannel) {
+        [self goToUsersStream];
+    }
     
     for (DisplayChannel *channel in self.userChannels) {
         [self populateChannel:channel withActivityIndicator:YES];
@@ -196,6 +198,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     
     NSArray *curChannels = self.homeVC.channels;
     if(!curChannels){
+        //channels will include dvr channel b/c it gets saved
         self.globalChannels = [channels mutableCopy];
         self.homeVC.channels = [self constructAllChannelsArray];
         [self goToCommunityChannel];
@@ -223,7 +226,9 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 
             self.globalChannels = channelsArray;
             self.homeVC.channels = [self constructAllChannelsArray];
-            [self goToCommunityChannel];
+            if (!self.currentChannel) {
+                [self goToCommunityChannel];
+            }
         } else {
                 /* don't replace old channels */
         }
@@ -322,7 +327,6 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
         [channelsArray addObjectsFromArray:curChannels];
         [channelsArray addObject:channel];
         [channel setOrder:@([channelsArray count] - 1)];
-        self.globalChannels = channelsArray;
         [self.homeVC setChannels:channelsArray];
         STVAssert([channelsArray containsObject:self.currentChannel], @"expected current channel to remain");
         [self.homeVC focusOnChannel:self.currentChannel];
@@ -359,7 +363,9 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     }
     
     self.homeVC.channels = [self constructAllChannelsArray];
-    [self goToUsersStream];
+    if (!self.currentChannel) {
+        [self goToUsersStream];
+    }
     
     [self fetchEntriesDidCompleteForChannel:myStreamChannel with:channelEntries fromCache:cached];
 }
@@ -707,6 +713,7 @@ typedef struct _ShelbyArrayMergeInstructions {
             [self.homeVC animateLaunchPlayerForChannel:displayChannel atIndex:0];
             return;
         } else {
+            self.currentChannel = displayChannel;
             [self.homeVC focusOnChannel:displayChannel];
             return;
         }
