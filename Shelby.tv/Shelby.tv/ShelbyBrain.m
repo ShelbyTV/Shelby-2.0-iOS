@@ -155,9 +155,9 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+
+        [self fetchUserChannelsForceSwitchToUsersStream:YES];
     });
-    
-    [self fetchUserChannelsForceSwitchToUsersStream:YES];
 }
 
 - (void)facebookConnectDidComplete

@@ -9,20 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface ShelbyNavBarView : UIView
-@property (weak, nonatomic) IBOutlet UIButton *streamButton;
-@property (weak, nonatomic) IBOutlet UIButton *likesButton;
-@property (weak, nonatomic) IBOutlet UIButton *sharesButton;
-@property (weak, nonatomic) IBOutlet UIButton *communityButton;
 
 @property (weak, nonatomic) IBOutlet UIView *streamRow;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *streamRowHeight;
 @property (weak, nonatomic) IBOutlet UIView *likesRow;
 @property (weak, nonatomic) IBOutlet UIView *sharesRow;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sharesRowHeight;
 @property (weak, nonatomic) IBOutlet UIView *communityRow;
-
 @property (weak, nonatomic) IBOutlet UIView *selectionIdentifier;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierX;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierY;
+
+//our model, set to update display state
+@property (weak, nonatomic) UIView *currentRow;
+
+- (void)showLoggedInUserRows:(BOOL)showUserRows;
 
 @end
