@@ -207,22 +207,23 @@
     if (DEVICE_IPAD) {
         //do nothing
     } else {
-        //remove current focus
+
+        ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
+        sbvc.view.frame = self.view.frame;
+        STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
+        
+        [self.currentStreamBrowseVC willMoveToParentViewController:nil];
+        [self addChildViewController:sbvc];
+        
+        [self.view insertSubview:sbvc.view belowSubview:self.navBar];
+
         if (self.currentStreamBrowseVC) {
             [self.currentStreamBrowseVC.view removeFromSuperview];
             [self.currentStreamBrowseVC removeFromParentViewController];
-            self.currentStreamBrowseVC = nil;
         }
-
-        ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
-        STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
-        self.currentStreamBrowseVC = sbvc;
-        [sbvc willMoveToParentViewController:self];
-        [self.view insertSubview:sbvc.view belowSubview:self.navBar];
-        sbvc.view.frame = self.view.frame;
-        [self addChildViewController:sbvc];
         [sbvc didMoveToParentViewController:self];
 
+        self.currentStreamBrowseVC = sbvc;
         //set current entity on video controls, if applicable
         self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
     }
