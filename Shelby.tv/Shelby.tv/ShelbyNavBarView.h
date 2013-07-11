@@ -15,8 +15,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *communityButton;
 
 @property (weak, nonatomic) IBOutlet UIView *streamRow;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *streamRowHeight;
 @property (weak, nonatomic) IBOutlet UIView *likesRow;
 @property (weak, nonatomic) IBOutlet UIView *sharesRow;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sharesRowHeight;
 @property (weak, nonatomic) IBOutlet UIView *communityRow;
 
 @property (weak, nonatomic) IBOutlet UIView *selectionIdentifier;

@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyViewController.h"
+#import "User+Helper.h"
 
 @class ShelbyNavBarViewController;
 
@@ -20,6 +21,9 @@
 @end
 
 @interface ShelbyNavBarViewController : ShelbyViewController
+
+//our model, used to determine which rows we display
+@property (nonatomic, strong) User *currentUser;
 
 @property (nonatomic, weak) id<ShelbyNavBarDelegate> delegate;
 

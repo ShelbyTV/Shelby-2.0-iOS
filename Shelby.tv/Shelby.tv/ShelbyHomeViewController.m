@@ -345,6 +345,8 @@
     }
 
     [self setupSettingsView];
+
+    self.navBarVC.currentUser = currentUser;
 }
 
 

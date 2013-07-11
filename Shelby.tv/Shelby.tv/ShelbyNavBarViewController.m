@@ -50,6 +50,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setCurrentUser:(User *)currentUser
+{
+    _currentUser = currentUser;
+    if (currentUser) {
+        self.navBarView.streamRowHeight.constant = 44;
+        self.navBarView.streamButton.hidden = NO;
+        self.navBarView.sharesRowHeight.constant = 44;
+        self.navBarView.sharesButton.hidden = NO;
+    } else {
+        self.navBarView.streamRowHeight.constant = 0;
+        self.navBarView.streamButton.hidden = YES;
+        self.navBarView.sharesRowHeight.constant = 0;
+        self.navBarView.sharesButton.hidden = YES;
+    }
+
+}
+
 - (void)didNavigateToCommunityChannel
 {
     if (self.navBarView.communityRow != self.currentRow){
