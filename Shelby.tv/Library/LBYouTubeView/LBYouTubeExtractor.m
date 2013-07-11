@@ -22,25 +22,25 @@ static NSString *UnescapeString(NSString *string) {
     // will cause trouble if you have "abc\\\\uvw"
     // \u   --->    \U
     NSString *esc1 = [string stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
-    
+
     // "    --->    \"
     NSString *esc2 = [esc1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    
+
     // \\"  --->    \"
     NSString *esc3 = [esc2 stringByReplacingOccurrencesOfString:@"\\\\\"" withString:@"\\\""];
-    
+
     NSString *quoted = [[@"\"" stringByAppendingString:esc3] stringByAppendingString:@"\""];
     NSData *data = [quoted dataUsingEncoding:NSUTF8StringEncoding];
-    
+
     //  NSPropertyListFormat format = 0;
     //  NSString *errorDescr = nil;
     NSString *unesc = [NSPropertyListSerialization propertyListFromData:data mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:NULL];
-    
+
     if ([unesc isKindOfClass:[NSString class]]) {
         // \U   --->    \u
         return [unesc stringByReplacingOccurrencesOfString:@"\\U" withString:@"\\u"];
     }
-    
+
     return nil;
 }
 
@@ -79,7 +79,7 @@ static NSString *UnescapeString(NSString *string) {
     if (!self.buffer || !self.extractedURL) {
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:self.youTubeURL];
         [request setValue:kUserAgent forHTTPHeaderField:@"User-Agent"];
-        
+
         self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
         [self.connection start];
     }
@@ -106,7 +106,8 @@ static NSString *UnescapeString(NSString *string) {
 
 -(NSURL*)extractYouTubeURLFromFile:(NSString *)html error:(NSError *__autoreleasing *)error {
     NSString* JSONStart = nil;
-    NSString* JSONStartFull = @"ls.setItem('PIGGYBACK_DATA', \")]}'";
+    NSString *JSONStartFull = @"bootstrap_data = \")]}'";
+
     NSString* JSONStartShrunk = [JSONStartFull stringByReplacingOccurrencesOfString:@" " withString:@""];
     if ([html rangeOfString:JSONStartFull].location != NSNotFound) {
         JSONStart = JSONStartFull;
@@ -118,13 +119,15 @@ static NSString *UnescapeString(NSString *string) {
         NSScanner* scanner = [NSScanner scannerWithString:html];
         [scanner scanUpToString:JSONStart intoString:nil];
         [scanner scanString:JSONStart intoString:nil];
-        
+
         NSString* JSON = nil;
-        [scanner scanUpToString:@"\");" intoString:&JSON];
+        [scanner scanUpToString:@"}\";" intoString:&JSON];
+        JSON = [NSString stringWithFormat:@"%@}",JSON]; // Add closing bracket } to get vallid JSON again
+
         JSON = UnescapeString(JSON);
         NSError* decodingError = nil;
         NSDictionary* JSONCode = [NSJSONSerialization JSONObjectWithData:[JSON dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&decodingError];
-        
+
         if (decodingError) {
             *error = decodingError;
         }
@@ -133,7 +136,7 @@ static NSString *UnescapeString(NSString *string) {
             NSString* streamURL = nil;
             if (videos.count) {
                 NSString* streamURLKey = @"url";
-                
+
                 if (self.quality == LBYouTubeVideoQualityLarge) {
                     streamURL = [[videos objectAtIndex:0] objectForKey:streamURLKey];
                 }
@@ -145,7 +148,7 @@ static NSString *UnescapeString(NSString *string) {
                     streamURL = [[videos lastObject] objectForKey:streamURLKey];
                 }
             }
-            
+
             if (streamURL) {
                 return [NSURL URLWithString:streamURL];
             }
@@ -157,7 +160,7 @@ static NSString *UnescapeString(NSString *string) {
     else {
         *error = [NSError errorWithDomain:kLBYouTubePlayerExtractorErrorDomain code:3 userInfo:[NSDictionary dictionaryWithObject:@"The JSON data could not be found." forKey:NSLocalizedDescriptionKey]];
     }
-    
+
     return nil;
 }
 
@@ -165,7 +168,7 @@ static NSString *UnescapeString(NSString *string) {
     if (self.delegate) {
         [self.delegate youTubeExtractor:self didSuccessfullyExtractYouTubeURL:videoURL];
     }
-    
+
     if(self.completionBlock) {
         self.completionBlock(videoURL, nil);
     }
@@ -175,7 +178,7 @@ static NSString *UnescapeString(NSString *string) {
     if (self.delegate) {
         [self.delegate youTubeExtractor:self failedExtractingYouTubeURLWithError:error];
     }
-    
+
     if(self.completionBlock) {
         self.completionBlock(nil, error);
     }
@@ -192,7 +195,7 @@ static NSString *UnescapeString(NSString *string) {
     else {
         capacity = 0;
     }
-    
+
     self.buffer = [[NSMutableData alloc] initWithCapacity:capacity];
 }
 
@@ -203,12 +206,12 @@ static NSString *UnescapeString(NSString *string) {
 -(void)connectionDidFinishLoading:(NSURLConnection *) connection {
     NSString* html = [[NSString alloc] initWithData:self.buffer encoding:NSUTF8StringEncoding];
     [self closeConnection];
-    
+
     if (html.length <= 0) {
         [self failedExtractingYouTubeURLWithError:[NSError errorWithDomain:kLBYouTubePlayerExtractorErrorDomain code:1 userInfo:[NSDictionary dictionaryWithObject:@"Couldn't download the HTML source code. URL might be invalid." forKey:NSLocalizedDescriptionKey]]];
         return;
     }
-    
+
     NSError* error = nil;
     self.extractedURL = [self extractYouTubeURLFromFile:html error:&error];
     if (error) {
