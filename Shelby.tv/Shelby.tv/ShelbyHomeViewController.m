@@ -90,6 +90,10 @@
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"navBar":self.navBar}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navBar]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"navBar":self.navBar}]];
     [self.navBarVC didMoveToParentViewController:self];
 }
 
@@ -405,6 +409,9 @@
         
         [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else { // iPhone
+        //XXX
+        //TODO: Show a new settings view per Wireframes
+        //TODO: And remove the currentStreamBrowseVC
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
         actionSheet.destructiveButtonIndex = 2;
         [actionSheet showInView:self.view];
