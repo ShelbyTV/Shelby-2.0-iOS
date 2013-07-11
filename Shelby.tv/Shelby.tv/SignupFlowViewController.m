@@ -536,6 +536,10 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    if (buttonIndex == 2) {
+        return;
+    }
+    
     UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     if (buttonIndex == 1) {
         // This check for camera is for the Simulator - all iOS6 devices that support iOS6 have camera.
