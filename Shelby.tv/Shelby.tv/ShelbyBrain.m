@@ -74,7 +74,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     if (!currentUser) {
         [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
     } else {
-        [self fetchUserChannels];
+        [self fetchUserChannelsForceSwitchToUsersStream:NO];
     }
     
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
@@ -91,11 +91,11 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     [self goToDVR];
 }
 
-- (void)fetchUserChannels
+- (void)fetchUserChannelsForceSwitchToUsersStream:(BOOL)forceUsersStream
 {
     NSArray *allChannels = [self constructAllChannelsArray];
     self.homeVC.channels = allChannels;
-    if (!self.currentChannel) {
+    if (!self.currentChannel || forceUsersStream) {
         [self goToUsersStream];
     }
 
@@ -157,7 +157,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
         [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
     });
     
-    [self fetchUserChannels];
+    [self fetchUserChannelsForceSwitchToUsersStream:YES];
 }
 
 - (void)facebookConnectDidComplete
