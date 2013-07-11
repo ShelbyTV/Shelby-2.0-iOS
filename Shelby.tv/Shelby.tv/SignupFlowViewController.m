@@ -270,15 +270,8 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
 - (void)openImagePicker
 {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-        imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-        imagePickerController.delegate = self;
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    } else {
-        // Error message - should not get here. All supported deviced should have a camera - and hence a saved photo album
-    }
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera Roll", @"Take Photo", nil];
+    [actionSheet showInView:self.view];
 }
 
 #pragma mark - Signup Form Methods
@@ -537,6 +530,25 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
             [self assignAvatar];
         }
     }
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    if (buttonIndex == 1) {
+        // This check for camera is for the Simulator - all iOS6 devices that support iOS6 have camera.
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            sourceType = UIImagePickerControllerSourceTypeCamera;
+        }
+    }
+
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = sourceType;
+    imagePickerController.delegate = self;
+    [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 @end
