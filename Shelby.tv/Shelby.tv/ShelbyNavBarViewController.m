@@ -31,9 +31,8 @@
 
     self.navBarView = (ShelbyNavBarView *)self.view;
 
-    self.navBarView.selectionIdentifier.layer.borderColor = [UIColor greenColor].CGColor;
-    self.navBarView.selectionIdentifier.layer.borderWidth = 1.0;
-    self.navBarView.selectionIdentifier.layer.cornerRadius = 2.0;
+    self.navBarView.selectionIdentifier.backgroundColor = kShelbyColorGreen;
+    self.navBarView.selectionIdentifier.layer.cornerRadius = 2.5;
 }
 
 - (void)didReceiveMemoryWarning
