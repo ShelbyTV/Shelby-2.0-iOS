@@ -46,6 +46,7 @@
 
             //focus on current row, hide rows that aren't current
             _currentRow.alpha = 0.85;
+            _currentRow.userInteractionEnabled = YES;
             NSMutableArray *allRowsButCurrent = [@[_streamRow, _likesRow, _sharesRow, _communityRow] mutableCopy];
             [allRowsButCurrent removeObject:_currentRow];
             for (UIView *v in allRowsButCurrent) {
