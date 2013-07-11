@@ -96,10 +96,8 @@
             STVAssert(NO, @"unhandled nav row");
         }
 
-        _waitingForSelection = NO;
     } else {
         [self showNavigation];
-        _waitingForSelection = YES;
     }
 }
 
@@ -120,6 +118,8 @@
         //update selection
         row.alpha = 0.85;
         self.navBarView.selectionIdentifier.frame = CGRectMake(sender.titleLabel.frame.origin.x - 10, row.frame.origin.y + 19, self.navBarView.selectionIdentifier.frame.size.width, self.navBarView.selectionIdentifier.frame.size.height);
+    } completion:^(BOOL finished) {
+        _waitingForSelection = NO;
     }];
 }
 
