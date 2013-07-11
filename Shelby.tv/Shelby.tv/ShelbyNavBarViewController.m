@@ -105,6 +105,7 @@
 
 - (void)navigateForButton:(UIButton *)sender row:(UIView *)row
 {
+    self.currentRow = row;
     NSMutableArray *ignoredRowViews = [self.allRowViews mutableCopy];
     [ignoredRowViews removeObject:row];
 

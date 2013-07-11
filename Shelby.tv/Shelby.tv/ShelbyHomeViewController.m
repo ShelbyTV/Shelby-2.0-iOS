@@ -55,18 +55,6 @@
 {
     [super viewDidLoad];
 
-    //XXX DS NEW NAV BAR SHIT
-    //TODO:move this someplace appropriate
-    self.navBarVC = [[ShelbyNavBarViewController alloc] initWithNibName:@"ShelbyNavBarView" bundle:nil];
-    self.navBarVC.delegate = self;
-    [self.navBarVC willMoveToParentViewController:self];
-    [self addChildViewController:self.navBarVC];
-    self.navBar = self.navBarVC.view;
-    [self.view addSubview:self.navBar];
-    [self.navBarVC didMoveToParentViewController:self];
-    DLog(@"nav is %@", self.navBar);
-    //XXX DS NEW NAV BAR SHIT
-
     if (DEVICE_IPAD) {
         BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
 
@@ -78,23 +66,8 @@
     
         [browseViewController didMoveToParentViewController:self];
     } else {
-        _videoControlsVC = [[VideoControlsViewController alloc] initWithNibName:@"VideoControlsView" bundle:nil];
-        _videoControlsVC.delegate = self;
-        [_videoControlsVC willMoveToParentViewController:self];
-        [_videoControlsVC.view setFrame:CGRectMake(0, 0, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
-        [self.view insertSubview:_videoControlsVC.view aboveSubview:self.navBar];
-        _videoControlsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controls]|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:@{@"controls":_videoControlsVC.view}]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(88)]|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:@{@"controls":_videoControlsVC.view}]];
-        [self addChildViewController:_videoControlsVC];
-        [_videoControlsVC didMoveToParentViewController:self];
-
+        [self setupNavBarView];
+        [self setupVideoControlsView];
         //the actual browse view controllers are created in setChannels:
         _streamBrowseVCs = [@[] mutableCopy];
     }
@@ -104,16 +77,42 @@
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
 
-//XXX DS NEW NAV BAR
-- (void)viewWillAppear:(BOOL)animated
+- (void)setupNavBarView
 {
-    //XXX HACK
-    // Why does the nav bar's height get all screwed up between viewDidLoad and viewWillAppear?
+    self.navBarVC = [[ShelbyNavBarViewController alloc] initWithNibName:@"ShelbyNavBarView" bundle:nil];
+    self.navBarVC.delegate = self;
+    [self.navBarVC willMoveToParentViewController:self];
+    [self addChildViewController:self.navBarVC];
+    self.navBar = self.navBarVC.view;
+    [self.view addSubview:self.navBar];
+    self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"navBar":self.navBar}]];
+    [self.navBarVC didMoveToParentViewController:self];
     DLog(@"nav is %@", self.navBar);
-    self.navBar.frame = CGRectMake(0, 0, self.navBar.frame.size.width, 176);
-    //XXX HACK
 }
-//XXX DS NEW NAV BAR
+
+- (void)setupVideoControlsView
+{
+    _videoControlsVC = [[VideoControlsViewController alloc] initWithNibName:@"VideoControlsView" bundle:nil];
+    _videoControlsVC.delegate = self;
+    [_videoControlsVC willMoveToParentViewController:self];
+    [_videoControlsVC.view setFrame:CGRectMake(0, 0, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
+    [self.view insertSubview:_videoControlsVC.view aboveSubview:self.navBar];
+    _videoControlsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controls]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"controls":_videoControlsVC.view}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(88)]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"controls":_videoControlsVC.view}]];
+    [self addChildViewController:_videoControlsVC];
+    [_videoControlsVC didMoveToParentViewController:self];
+}
 
 - (void)didReceiveMemoryWarning
 {
