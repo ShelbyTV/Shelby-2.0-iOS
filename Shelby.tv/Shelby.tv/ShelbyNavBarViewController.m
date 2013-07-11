@@ -94,6 +94,8 @@
             [self.delegate navBarViewControllerSharesWasTapped:self];
         } else if (sendingRow == self.navBarView.communityRow) {
             [self.delegate navBarViewControllerCommunityWasTapped:self];
+        } else if (sendingRow == self.navBarView.settingsRow) {
+            [self.delegate navBarViewControllerSettingsWasTapped:self];
         } else {
             STVAssert(NO, @"unhandled nav row");
         }

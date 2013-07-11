@@ -16,9 +16,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIButton *sharesButton;
 @property (weak, nonatomic) IBOutlet UIButton *communityButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *streamRowHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sharesRowHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsRowHeight;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierX;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierY;
@@ -57,7 +59,7 @@
             //focus on current row, hide rows that aren't current
             _currentRow.alpha = 0.85;
             _currentRow.userInteractionEnabled = YES;
-            NSMutableArray *allRowsButCurrent = [@[_streamRow, _likesRow, _sharesRow, _communityRow] mutableCopy];
+            NSMutableArray *allRowsButCurrent = [@[_streamRow, _likesRow, _sharesRow, _communityRow, _settingsRow] mutableCopy];
             [allRowsButCurrent removeObject:_currentRow];
             for (UIView *v in allRowsButCurrent) {
                 v.alpha = 0.0;
@@ -80,7 +82,7 @@
         }];
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
-            for (UIView *v in @[_streamRow, _likesRow, _sharesRow, _communityRow]) {
+            for (UIView *v in @[_streamRow, _likesRow, _sharesRow, _communityRow, _settingsRow]) {
                 v.alpha = 0.95;
                 v.userInteractionEnabled = YES;
             }
@@ -96,11 +98,15 @@
         _streamButton.hidden = NO;
         _sharesRowHeight.constant = 44;
         _sharesButton.hidden = NO;
+        _settingsRowHeight.constant = 44;
+        _settingsButton.hidden = NO;
     } else {
         _streamRowHeight.constant = 0;
         _streamButton.hidden = YES;
         _sharesRowHeight.constant = 0;
         _sharesButton.hidden = YES;
+        _settingsRowHeight.constant = 0;
+        _settingsButton.hidden = YES;
     }
     [self layoutIfNeeded];
 }

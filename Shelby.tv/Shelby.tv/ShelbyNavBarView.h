@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIView *likesRow;
 @property (weak, nonatomic) IBOutlet UIView *sharesRow;
 @property (weak, nonatomic) IBOutlet UIView *communityRow;
+@property (weak, nonatomic) IBOutlet UIView *settingsRow;
 @property (weak, nonatomic) IBOutlet UIView *selectionIdentifier;
 
 //our model, set to update display state

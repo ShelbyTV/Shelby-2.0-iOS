@@ -1012,4 +1012,9 @@
     [self launchCommunityChannel];
 }
 
+- (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self showSettings];
+}
+
 @end

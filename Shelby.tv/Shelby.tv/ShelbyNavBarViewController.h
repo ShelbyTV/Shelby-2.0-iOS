@@ -17,6 +17,7 @@
 - (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC;
 - (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC;
 - (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC;
+- (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC;
 
 @end
 
