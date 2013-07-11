@@ -46,6 +46,14 @@
     [super didReceiveMemoryWarning];
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
+}
 
 #pragma mark - SignupFlowViewDelegate
 - (void)connectToFacebook
