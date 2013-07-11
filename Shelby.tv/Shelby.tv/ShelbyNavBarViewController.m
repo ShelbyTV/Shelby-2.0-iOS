@@ -34,10 +34,9 @@
     self.navBarView.selectionIdentifier.layer.cornerRadius = 2.5;
 }
 
-- (void)didReceiveMemoryWarning
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.navBarView didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)setCurrentUser:(User *)currentUser

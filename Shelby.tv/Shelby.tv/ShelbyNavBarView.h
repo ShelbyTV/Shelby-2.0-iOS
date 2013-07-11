@@ -22,4 +22,7 @@
 
 - (void)showLoggedInUserRows:(BOOL)showUserRows;
 
+//view controller must call this to allow us to make updates that are orientation dependent
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
+
 @end

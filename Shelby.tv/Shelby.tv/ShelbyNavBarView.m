@@ -76,11 +76,7 @@
         }];
 
         [UIView animateWithDuration:SELECTION_IDENTIFIER_ANIMATION_TIME animations:^{
-            //show selection on current row
-            UIButton *button = [_currentRow.subviews lastObject];
-            _selectionIdentifierX.constant = button.titleLabel.frame.origin.x - 10;
-            _selectionIdentifierY.constant = _currentRow.frame.origin.y + 19;
-            [self layoutIfNeeded];
+            [self updateSelectionIdentifierLocationToCurrentRow];
         }];
 
     } else {
@@ -118,6 +114,19 @@
         _settingsButton.hidden = YES;
     }
     [self layoutIfNeeded];
+}
+
+- (void)updateSelectionIdentifierLocationToCurrentRow
+{
+    UIButton *button = [_currentRow.subviews lastObject];
+    _selectionIdentifierX.constant = button.titleLabel.frame.origin.x - 10;
+    _selectionIdentifierY.constant = _currentRow.frame.origin.y + 19;
+    [self layoutIfNeeded];
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self updateSelectionIdentifierLocationToCurrentRow];
 }
 
 //to allow touch events to pass through the background
