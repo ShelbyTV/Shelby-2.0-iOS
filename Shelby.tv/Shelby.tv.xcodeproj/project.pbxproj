@@ -835,6 +835,15 @@
 		9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
 		9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
 		9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
+		91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3625D178F290300381218 /* UIView+EasingFunctions.m */; };
+		91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3625D178F290300381218 /* UIView+EasingFunctions.m */; };
+		91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3625D178F290300381218 /* UIView+EasingFunctions.m */; };
+		91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A36263178F296B00381218 /* CAKeyframeAnimation+AHEasing.m */; };
+		91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A36263178F296B00381218 /* CAKeyframeAnimation+AHEasing.m */; };
+		91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A36263178F296B00381218 /* CAKeyframeAnimation+AHEasing.m */; };
+		91A36269178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
+		91A3626A178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
+		91A3626B178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
 		91BEC890176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC891176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC892176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
@@ -1311,6 +1320,12 @@
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
 		9188F239178CBA3C002F342B /* ShelbyNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarView.h; sourceTree = "<group>"; };
 		9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarView.m; sourceTree = "<group>"; };
+		91A3625C178F290300381218 /* UIView+EasingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+EasingFunctions.h"; sourceTree = "<group>"; };
+		91A3625D178F290300381218 /* UIView+EasingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EasingFunctions.m"; sourceTree = "<group>"; };
+		91A36262178F296B00381218 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
+		91A36263178F296B00381218 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
+		91A36264178F296B00381218 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = easing.c; sourceTree = "<group>"; };
+		91A36265178F296B00381218 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easing.h; sourceTree = "<group>"; };
 		91BEC88E176274BD00838197 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
 		91BEC88F176274BD00838197 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
 		91BEC8931762961400838197 /* DVRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DVRDatePicker.xib; sourceTree = "<group>"; };
@@ -2054,6 +2069,8 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				91A36261178F296B00381218 /* AHEasing */,
+				91A3625B178F290300381218 /* UIView+EasingFunctions */,
 				1C7AC38F175E8869007339A1 /* MCSwipeTableViewCell */,
 				91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */,
 				91E5D4661757BA1F00AD3746 /* LBYouTubeView */,
@@ -2293,6 +2310,26 @@
 				8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */,
 			);
 			name = Constants;
+			sourceTree = "<group>";
+		};
+		91A3625B178F290300381218 /* UIView+EasingFunctions */ = {
+			isa = PBXGroup;
+			children = (
+				91A3625C178F290300381218 /* UIView+EasingFunctions.h */,
+				91A3625D178F290300381218 /* UIView+EasingFunctions.m */,
+			);
+			path = "UIView+EasingFunctions";
+			sourceTree = "<group>";
+		};
+		91A36261178F296B00381218 /* AHEasing */ = {
+			isa = PBXGroup;
+			children = (
+				91A36262178F296B00381218 /* CAKeyframeAnimation+AHEasing.h */,
+				91A36263178F296B00381218 /* CAKeyframeAnimation+AHEasing.m */,
+				91A36264178F296B00381218 /* easing.c */,
+				91A36265178F296B00381218 /* easing.h */,
+			);
+			path = AHEasing;
 			sourceTree = "<group>";
 		};
 		91E5D4661757BA1F00AD3746 /* LBYouTubeView */ = {
@@ -3048,6 +3085,9 @@
 				9119AB7917821A5C001C9190 /* VideoControlsView.m in Sources */,
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */,
+				91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
+				91A3626A178F296B00381218 /* easing.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3169,6 +3209,9 @@
 				9119AB7A17821A5C001C9190 /* VideoControlsView.m in Sources */,
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */,
+				91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
+				91A3626B178F296B00381218 /* easing.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3290,6 +3333,9 @@
 				9119AB7817821A5C001C9190 /* VideoControlsView.m in Sources */,
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */,
+				91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
+				91A36269178F296B00381218 /* easing.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -31,9 +31,8 @@
 
     self.navBarView = (ShelbyNavBarView *)self.view;
 
-    self.navBarView.selectionIdentifier.layer.borderColor = [UIColor greenColor].CGColor;
-    self.navBarView.selectionIdentifier.layer.borderWidth = 1.0;
-    self.navBarView.selectionIdentifier.layer.cornerRadius = 2.0;
+    self.navBarView.selectionIdentifier.backgroundColor = kShelbyColorGreen;
+    self.navBarView.selectionIdentifier.layer.cornerRadius = 2.5;
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,6 +94,8 @@
             [self.delegate navBarViewControllerSharesWasTapped:self];
         } else if (sendingRow == self.navBarView.communityRow) {
             [self.delegate navBarViewControllerCommunityWasTapped:self];
+        } else if (sendingRow == self.navBarView.settingsRow) {
+            [self.delegate navBarViewControllerSettingsWasTapped:self];
         } else {
             STVAssert(NO, @"unhandled nav row");
         }
