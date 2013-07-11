@@ -91,7 +91,6 @@
                                                                       metrics:nil
                                                                         views:@{@"navBar":self.navBar}]];
     [self.navBarVC didMoveToParentViewController:self];
-    DLog(@"nav is %@", self.navBar);
 }
 
 - (void)setupVideoControlsView
