@@ -10,9 +10,8 @@
 #import "ShelbyNavBarView.h"
 
 @interface ShelbyNavBarViewController ()
-
 @property (nonatomic, weak) ShelbyNavBarView *navBarView;
-
+- (IBAction)navTapped:(id)sender;
 @end
 
 @implementation ShelbyNavBarViewController
@@ -75,7 +74,8 @@
     }
 }
 
-- (IBAction)navButtonTapped:(UIButton *)sender {
+- (IBAction)navTapped:(UIButton *)sender
+{
     UIView *sendingRow = sender.superview;
 
     if (self.navBarView.currentRow){
@@ -102,5 +102,36 @@
 
     }
 }
+
+
+
+//
+//- (IBAction)navButtonTapped:(UIButton *)sender {
+//    UIView *sendingRow = sender.superview;
+//
+//    if (self.navBarView.currentRow){
+//        //we _had_ a current row selected, change to showing them all...
+//        self.navBarView.currentRow = nil;
+//
+//    } else {
+//        //we _were_ waiting for a selection to be made...
+//        self.navBarView.currentRow = sendingRow;
+//
+//        if (sendingRow == self.navBarView.streamRow) {
+//            [self.delegate navBarViewControllerStreamWasTapped:self];
+//        } else if (sendingRow == self.navBarView.likesRow) {
+//            [self.delegate navBarViewControllerLikesWasTapped:self];
+//        } else if (sendingRow == self.navBarView.sharesRow) {
+//            [self.delegate navBarViewControllerSharesWasTapped:self];
+//        } else if (sendingRow == self.navBarView.communityRow) {
+//            [self.delegate navBarViewControllerCommunityWasTapped:self];
+//        } else if (sendingRow == self.navBarView.settingsRow) {
+//            [self.delegate navBarViewControllerSettingsWasTapped:self];
+//        } else {
+//            STVAssert(NO, @"unhandled nav row");
+//        }
+//        
+//    }
+//}
 
 @end

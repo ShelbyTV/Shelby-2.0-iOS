@@ -12,6 +12,9 @@
 
 @interface ShelbyNavBarView()
 
+@property (weak, nonatomic) IBOutlet UIView *slider;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sliderY;
+
 @property (weak, nonatomic) IBOutlet UIButton *streamButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIButton *sharesButton;
@@ -37,10 +40,15 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        //see bottom of file for animation notes
-        [self setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
+
     }
     return self;
+}
+
+-(void)didMoveToSuperview
+{
+    //see bottom of file for animation notes
+    [self.slider setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
 }
 
 - (void)setCurrentRow:(UIView *)currentRow
@@ -51,8 +59,8 @@
 
     if (_currentRow) {
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
-            //move frame to focus on given row
-            self.frame = CGRectMake(0, -(_currentRow.frame.origin.y), self.frame.size.width, self.frame.size.height);
+            self.sliderY.constant = -(_currentRow.frame.origin.y);
+            [self layoutIfNeeded];
         }];
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
@@ -78,7 +86,8 @@
     } else {
         //show all rows
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
-            self.frame = CGRectMake(0, 30, self.frame.size.width, self.frame.size.height);
+            self.sliderY.constant = 30;
+            [self layoutIfNeeded];
         }];
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
