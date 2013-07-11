@@ -26,11 +26,6 @@ extern NSString * const kShelbyOfflineLikesID;
 - (void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
                                           with:(NSArray *)channelEntries;
 
-// User Channels
-- (void)fetchUserChannelDidCompleteWithChannel:(DisplayChannel *)myStreamChannel
-                                          with:(NSArray *)channelEntries
-                                     fromCache:(BOOL)cached;
-
 // Login
 - (void)loginUserDidComplete;
 - (void)loginUserDidCompleteWithError:(NSString *)errorMessage;
@@ -59,7 +54,7 @@ extern NSString * const kShelbyOfflineLikesID;
 - (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForRollID:(NSString *)rollID;
 - (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForDashboardID:(NSString *)dashboardID;
 
--(void)logoutWithUserChannels:(NSArray *)userChannels;
+-(void)logoutCurrentUser;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 

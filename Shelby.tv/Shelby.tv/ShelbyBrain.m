@@ -20,6 +20,7 @@
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
 
 NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
+NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 @interface ShelbyBrain()
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
@@ -28,9 +29,10 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 @property (nonatomic, assign) SPTutorialMode currentPlayerTutorialMode;
 @property (nonatomic, assign) ShelbyBrowseTutorialMode currentBrowseTutorialMode;
 
-@property (nonatomic, strong) NSMutableArray *userChannels;
-@property (nonatomic, strong) NSMutableArray *globalChannels;
+@property (nonatomic, strong) NSMutableArray *cachedFetchedChannels;
+@property (nonatomic, strong) NSMutableArray *remoteFetchedChannels;
 @property (nonatomic, strong) DisplayChannel *dvrChannel;
+@property (nonatomic, strong) DisplayChannel *offlineLikesChannel;
 
 @property (nonatomic, strong) ShelbyDVRController *dvrController;
 
@@ -72,7 +74,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     if (!currentUser) {
         [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
     } else {
-        [self fetchUserChannels];
+        [self fetchUserChannelsForceSwitchToUsersStream:NO];
     }
     
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
@@ -89,16 +91,16 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
     [self goToDVR];
 }
 
-- (void)fetchUserChannels
+- (void)fetchUserChannelsForceSwitchToUsersStream:(BOOL)forceUsersStream
 {
-    // tell DataM to create display channels
-    self.userChannels = [User channelsForUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-                         
     NSArray *allChannels = [self constructAllChannelsArray];
     self.homeVC.channels = allChannels;
-    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
-    
-    for (DisplayChannel *channel in self.userChannels) {
+    if (!self.currentChannel || forceUsersStream) {
+        [self goToUsersStream];
+    }
+
+    NSArray *userChannels = [User channelsForUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    for (DisplayChannel *channel in userChannels) {
         [self populateChannel:channel withActivityIndicator:YES];
     }
 }
@@ -115,6 +117,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 - (void)populateChannel:(DisplayChannel *)channel withActivityIndicator:(BOOL)showSpinner
 {
     if (channel == self.dvrChannel) {
+        //TODO: this should go through DataMediator (like offline likes, below)
         NSArray *dvrEntries = [self.dvrController currentDVREntriesOrderedLIFO:YES
                                                                      inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
         NSMutableArray *dvrFrames = [[NSMutableArray alloc] initWithCapacity:[dvrEntries count]];
@@ -122,6 +125,10 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
             [dvrFrames addObject:[dvrEntry childFrame]];
         }
         [self fetchEntriesDidCompleteForChannel:channel with:dvrFrames fromCache:YES];
+        
+    } else if (channel == self.offlineLikesChannel) {
+        [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
+
     } else {
         //normal channels
         if(showSpinner){
@@ -148,9 +155,9 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+
+        [self fetchUserChannelsForceSwitchToUsersStream:YES];
     });
-    
-    [self fetchUserChannels];
 }
 
 - (void)facebookConnectDidComplete
@@ -185,47 +192,23 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 
 -(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached
 {
-    //cached channels, stale
-    //cached channels, fresh  <--- doesn't get here
-    
-    //api channels, with cache update
-    //api channels, without cache update
-    
-    NSArray *curChannels = self.homeVC.channels;
-    if(!curChannels){
-        self.globalChannels = [channels mutableCopy];
-        self.homeVC.channels = [self constructAllChannelsArray];
-        [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
-    } else {
-        //caveat: changing a DisplayChannel attribute will not trigger an update
-        //array needs to be different order/length to trigger update
-        if(![channels isEqualToArray:curChannels]){
-            NSArray *curChannels = self.homeVC.channels;
-            
-            // Since Unsynced likes, doesn't come with the regurlar channels, make sure we re-add them to the channels array.
-            DisplayChannel *likesChannel = nil;
-            for (DisplayChannel *channel in curChannels) {
-                if (channel.roll && [channel.roll.rollID isEqualToString:kShelbyOfflineLikesID]) {
-                    likesChannel = channel;
-                    break;
-                }
-            }
-            
-            NSMutableArray *channelsArray = [[NSMutableArray alloc] init];
-            [channelsArray addObjectsFromArray:channels];
-            if (likesChannel) {
-                [channelsArray addObject:likesChannel];
-                [likesChannel setOrder:@([channelsArray count] - 1)];
-            }
+    //channels come from CoreData and API
 
-            self.globalChannels = channelsArray;
-            self.homeVC.channels = [self constructAllChannelsArray];
-            [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
-        } else {
-                /* don't replace old channels */
+    if (cached) {
+        self.cachedFetchedChannels = [channels mutableCopy];
+    } else {
+        self.remoteFetchedChannels = [channels mutableCopy];
+    }
+    NSArray *curChannels = self.homeVC.channels;
+
+    if(!curChannels || ![channels isEqualToArray:curChannels]){
+        //new or different channels...  update!
+        self.homeVC.channels = [self constructAllChannelsArray];
+        if (!self.currentChannel && [self communityChannel]) {
+            [self goToCommunityChannel];
         }
     }
-    
+
     if(cached){
         //could populate channels w/ cached data only here, and then API request data in else block
     } else {
@@ -296,101 +279,57 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 -(void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
                                          with:(NSArray *)channelEntries
 {
+    if (!self.offlineLikesChannel) {
+        self.offlineLikesChannel = channel;
+        //update homeVC with this additional channel
+        self.homeVC.channels = [self constructAllChannelsArray];
+    }
+    STVAssert(self.offlineLikesChannel == channel, @"we have multiple offline likes channels, not good");
 
-    // If channelEntries is nil - there are no more OfflineLikes - so need to remove the channel
-    if (!channelEntries) {
-        [self.homeVC removeChannel:channel];
-        return;
-    }
-    
-    // Since Unsynced likes, doesn't come with the regurlar channels, make sure we re-add them to the channels array.
-    NSArray *curChannels = self.homeVC.channels;
-    DisplayChannel *likesChannel = nil;
-    for (DisplayChannel *channel in curChannels) {
-        if (channel.roll && [channel.roll.rollID isEqualToString:kShelbyOfflineLikesID]) {
-            likesChannel = channel;
-            break;
-        }
-    }
-    
-    // If likes channel doesn't exist - create it
-    if (!likesChannel && [channelEntries count]) {
-        NSMutableArray *channelsArray = [[NSMutableArray alloc] init];
-        [channelsArray addObjectsFromArray:curChannels];
-        [channelsArray addObject:channel];
-        [channel setOrder:@([channelsArray count] - 1)];
-        self.globalChannels = channelsArray;
-        [self.homeVC setChannels:channelsArray];
-        [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
-    }
-    
     [self.homeVC setEntries:channelEntries forChannel:channel];
     
     [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
     [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
 }
 
-- (void)fetchUserChannelDidCompleteWithChannel:(DisplayChannel *)myStreamChannel
-                                          with:(NSArray *)channelEntries
-                                     fromCache:(BOOL)cached
-{
-    if (!self.userChannels) {
-        _userChannels = [@[] mutableCopy];
-    }
-    
-    NSUInteger i = 0;
-    for (DisplayChannel *userChannel in self.userChannels) {
-        if (userChannel.dashboard && myStreamChannel.dashboard && [myStreamChannel.dashboard.dashboardID isEqualToString:userChannel.dashboard.dashboardID]) {
-            break;
-        } else if (userChannel.roll && myStreamChannel.roll && [userChannel.roll.rollID isEqualToString:myStreamChannel.roll.rollID]) {
-            break;
-        }
-        i++;
-    }
-    
-    if (i < [self.userChannels count]) {
-        self.userChannels[i] = myStreamChannel;
-    } else {
-        [self.userChannels addObject:myStreamChannel];
-    }
-    
-    self.homeVC.channels = [self constructAllChannelsArray];
-    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
-    
-    [self fetchEntriesDidCompleteForChannel:myStreamChannel with:channelEntries fromCache:cached];
-}
-
-
 // 100% of the logic of channel ordering.
 // HomeVC just takes the array it's given, assuming it's in the correct order.
 - (NSMutableArray *)constructAllChannelsArray
 {
     NSMutableArray *allChannels = [@[] mutableCopy];
-    if (self.userChannels) {
-        //See User+Helper.h for constants to index into this array
-        [allChannels addObjectsFromArray:self.userChannels];
+
+    // add user channels (if there is no user, nothing is added)
+    NSArray *userChannels = [User channelsForUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    [allChannels addObjectsFromArray:userChannels];
+
+    if (self.offlineLikesChannel) {
+        [allChannels addObject:self.offlineLikesChannel];
     }
-    
-    if (self.globalChannels) {
-        [allChannels addObjectsFromArray:self.globalChannels];
+
+    if (self.remoteFetchedChannels) {
+        for (id ch in self.remoteFetchedChannels) {
+            if (![allChannels containsObject:ch]) {
+                [allChannels addObject:ch];
+            }
+        }
     }
-    
-    [allChannels addObject:self.dvrChannel];
-    
+
+    if (self.cachedFetchedChannels) {
+        for (id ch in self.cachedFetchedChannels) {
+            if (![allChannels containsObject:ch]) {
+                [allChannels addObject:ch];
+            }
+        }
+    }
+
     return allChannels;
 }
 
-- (DisplayChannel *)defaultChannelForFocus
+- (DisplayChannel *)communityChannel
 {
-    if (self.userChannels && [self.userChannels count]){
-        return self.userChannels[USER_CHANNEL_STREAM_IDX];
-    } else if (self.globalChannels && [self.globalChannels count]) {
-        //community channel
-        return self.globalChannels[0];
-    } else {
-        DLog(@"ERROR -- why don't we have a default channel for this poor user?");
-        return nil;
-    }
+    DisplayChannel *communityCh = [DisplayChannel fetchChannelWithDashboardID:kShelbyCommunityChannelID
+                                                                    inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    return communityCh;
 }
 
 #pragma mark - Helper Methods
@@ -503,19 +442,22 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 
 }
 
+//DEPRECATED
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up
 {
-    if (self.currentPlayerTutorialMode != SPTutorialModeNone) {
-        self.currentPlayerTutorialMode = SPTutorialModePinch;
-    }
-
-    NSUInteger nextChannel = [self nextChannelForDirection:up];
-    
-    if (nextChannel < [self.userChannels count]) {
-        return self.userChannels[nextChannel];
-    } else {
-        return self.globalChannels[nextChannel - [self.userChannels count]];
-    }
+//    if (self.currentPlayerTutorialMode != SPTutorialModeNone) {
+//        self.currentPlayerTutorialMode = SPTutorialModePinch;
+//    }
+//
+//    NSUInteger nextChannel = [self nextChannelForDirection:up];
+//    
+//    if (nextChannel < [self.userChannels count]) {
+//        return self.userChannels[nextChannel];
+//    } else {
+//        return self.fetchedChannels[nextChannel - [self.userChannels count]];
+//    }
+    STVAssert(NO, @"DEPRECATED");
+    return nil;
 }
 
 - (void)videoDidFinishPlaying
@@ -656,15 +598,10 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 - (void)logoutUser
 {
-    [[ShelbyDataMediator sharedInstance] logoutWithUserChannels:self.userChannels];
-    for (DisplayChannel *channel in self.userChannels) {
-        [self.homeVC removeChannel:channel];
-    }
-    
-    self.userChannels = nil;
+    [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
+    self.currentUser = nil;
 
-    [self setCurrentUser:nil];
-    [self.homeVC focusOnChannel:[self defaultChannelForFocus]];
+    [self goToCommunityChannel];
 }
 
 - (void)connectToFacebook
@@ -709,6 +646,7 @@ typedef struct _ShelbyArrayMergeInstructions {
             [self.homeVC animateLaunchPlayerForChannel:displayChannel atIndex:0];
             return;
         } else {
+            self.currentChannel = displayChannel;
             [self.homeVC focusOnChannel:displayChannel];
             return;
         }
@@ -725,22 +663,30 @@ typedef struct _ShelbyArrayMergeInstructions {
     [alertView show];
 }
 
-- (void)goToMyLikes
+- (void)goToUsersLikes
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-    [self goToRollForID:user.likesRollID];
+    if (user) {
+        [self goToRollForID:user.likesRollID];
+    } else {
+        [self populateChannel:self.offlineLikesChannel withActivityIndicator:NO];
+        [self goToDisplayChannel:self.offlineLikesChannel];
+    }
+    [self.homeVC didNavigateToUsersLikes];
 }
 
-- (void)goToMyRoll
+- (void)goToUsersRoll
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     [self goToRollForID:user.publicRollID];
+    [self.homeVC didNavigateToUsersRoll];
 }
 
-- (void)goToMyStream
+- (void)goToUsersStream
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     [self goToDashboardForId:user.userID];
+    [self.homeVC didNavigateToUsersStream];
 }
 
 - (void)goToDVR
@@ -749,9 +695,10 @@ typedef struct _ShelbyArrayMergeInstructions {
     [self goToDisplayChannel:self.dvrChannel];
 }
 
-- (void)goToDefaultChannel
+- (void)goToCommunityChannel
 {
-    [self goToDisplayChannel:[self defaultChannelForFocus]];
+    [self goToDisplayChannel:[self communityChannel]];
+    [self.homeVC didNavigateToCommunityChannel];
 }
 
 - (ShelbyBrowseTutorialMode)browseTutorialMode
@@ -771,4 +718,5 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyTutorialMode];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
 @end

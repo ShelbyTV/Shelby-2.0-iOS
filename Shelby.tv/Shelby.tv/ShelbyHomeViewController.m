@@ -19,8 +19,10 @@
 #import "User+Helper.h"
 
 @interface ShelbyHomeViewController ()
-@property (nonatomic, weak) IBOutlet UIView *topBar;
-@property (nonatomic, weak) IBOutlet UILabel *topBarTitle;
+//@property (nonatomic, weak) IBOutlet UIView *topBar;
+//@property (nonatomic, weak) IBOutlet UILabel *topBarTitle;
+@property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
+@property (nonatomic, weak) UIView *navBar;
 
 @property (nonatomic, strong) UIView *settingsView;
 @property (strong, nonatomic) UIPopoverController *settingsPopover;
@@ -53,8 +55,6 @@
 {
     [super viewDidLoad];
 
-    [self.topBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"topbar.png"]]];
-
     if (DEVICE_IPAD) {
         BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
 
@@ -66,23 +66,8 @@
     
         [browseViewController didMoveToParentViewController:self];
     } else {
-        _videoControlsVC = [[VideoControlsViewController alloc] initWithNibName:@"VideoControlsView" bundle:nil];
-        _videoControlsVC.delegate = self;
-        [_videoControlsVC willMoveToParentViewController:self];
-        [_videoControlsVC.view setFrame:CGRectMake(0, 0, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
-        [self.view insertSubview:_videoControlsVC.view aboveSubview:self.topBar];
-        _videoControlsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controls]|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:@{@"controls":_videoControlsVC.view}]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(88)]|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:@{@"controls":_videoControlsVC.view}]];
-        [self addChildViewController:_videoControlsVC];
-        [_videoControlsVC didMoveToParentViewController:self];
-
+        [self setupNavBarView];
+        [self setupVideoControlsView];
         //the actual browse view controllers are created in setChannels:
         _streamBrowseVCs = [@[] mutableCopy];
     }
@@ -90,6 +75,42 @@
     [self setupSettingsView];
     
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
+}
+
+- (void)setupNavBarView
+{
+    self.navBarVC = [[ShelbyNavBarViewController alloc] initWithNibName:@"ShelbyNavBarView" bundle:nil];
+    self.navBarVC.delegate = self;
+    [self.navBarVC willMoveToParentViewController:self];
+    [self addChildViewController:self.navBarVC];
+    self.navBar = self.navBarVC.view;
+    [self.view addSubview:self.navBar];
+    self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"navBar":self.navBar}]];
+    [self.navBarVC didMoveToParentViewController:self];
+}
+
+- (void)setupVideoControlsView
+{
+    _videoControlsVC = [[VideoControlsViewController alloc] initWithNibName:@"VideoControlsView" bundle:nil];
+    _videoControlsVC.delegate = self;
+    [_videoControlsVC willMoveToParentViewController:self];
+    [_videoControlsVC.view setFrame:CGRectMake(0, 0, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
+    [self.view insertSubview:_videoControlsVC.view aboveSubview:self.navBar];
+    _videoControlsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controls]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"controls":_videoControlsVC.view}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(88)]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"controls":_videoControlsVC.view}]];
+    [self addChildViewController:_videoControlsVC];
+    [_videoControlsVC didMoveToParentViewController:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -132,7 +153,7 @@
     [alertView show];
 }
 
-// We assume these are all of our channels, in the correct order
+// We assume these are all of our channels, in the correct order (which we cared about on old iPad design)
 - (void)setChannels:(NSArray *)channels
 {
     if (![channels isEqualToArray:_channels]) {
@@ -156,23 +177,13 @@
                 [newStreamBrowseVCs addObject:sbvc];
             }
             
-            //remove old VCs (some of which may get re-used)
-            //NB: we expect new channel for focus to be set by an outsider
-            if (self.currentStreamBrowseVC) {
-                [self.currentStreamBrowseVC.view removeFromSuperview];
-                [self.currentStreamBrowseVC removeFromParentViewController];
-                self.currentStreamBrowseVC = nil;
-            }
-            
             _streamBrowseVCs = newStreamBrowseVCs;
         }
     }
 }
 
 - (void)removeChannel:(DisplayChannel *)channel
-{
-    DLog(@"Removing channel %@", channel);
-    
+{    
     NSMutableArray *lessChannels = [_channels mutableCopy];
     [lessChannels removeObject:channel];
     _channels = lessChannels;
@@ -190,27 +201,29 @@
     }
 }
 
+//assumes navigation is otherwise correctly set
 - (void)focusOnChannel:(DisplayChannel *)channel
 {
     if (DEVICE_IPAD) {
         //do nothing
     } else {
-        //remove current focus
+
+        ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
+        sbvc.view.frame = self.view.frame;
+        STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
+        
+        [self.currentStreamBrowseVC willMoveToParentViewController:nil];
+        [self addChildViewController:sbvc];
+        
+        [self.view insertSubview:sbvc.view belowSubview:self.navBar];
+
         if (self.currentStreamBrowseVC) {
             [self.currentStreamBrowseVC.view removeFromSuperview];
             [self.currentStreamBrowseVC removeFromParentViewController];
-            self.currentStreamBrowseVC = nil;
         }
-
-        ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
-        STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
-        self.currentStreamBrowseVC = sbvc;
-        [sbvc willMoveToParentViewController:self];
-        [self.view insertSubview:sbvc.view belowSubview:self.topBar];
-        sbvc.view.frame = self.view.frame;
-        [self addChildViewController:sbvc];
         [sbvc didMoveToParentViewController:self];
 
+        self.currentStreamBrowseVC = sbvc;
         //set current entity on video controls, if applicable
         self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
     }
@@ -231,7 +244,9 @@
     if (DEVICE_IPAD) {
         [self.browseVC setEntries:channelEntries forChannel:channel];
     } else {
-        [[self streamBrowseViewControllerForChannel:channel] setEntries:channelEntries forChannel:channel];
+        ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
+        STVAssert(sbvc, @"expected to set entries for a VC we have");
+        [sbvc setEntries:channelEntries forChannel:channel];
         if (!self.videoControlsVC.currentEntity && self.currentStreamBrowseVC.channel == channel && [channelEntries count]) {
             //we're bootstrapping, update the video controls for the 0th entity
             self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC deduplicatedEntriesForChannel:channel][0];
@@ -331,10 +346,13 @@
     }
 
     [self setupSettingsView];
+
+    self.navBarVC.currentUser = currentUser;
 }
 
-// TODO: uncomment when we are ready to support login
-// KP KP: TODO: maybe create a special UserAvatarView, pass a target to it.
+
+//XXX DS NEW NAV BAR
+// XXX TODO: Undo this method, have the nav bar handle all the settings view
 - (void)setupSettingsView
 {
     // KP KP: TODO: once fetching user done correctly, add the two targets. 
@@ -365,7 +383,7 @@
         [self.settingsView addSubview:login];
     }
     
-    [self.topBar addSubview:self.settingsView];
+    [self.navBar addSubview:self.settingsView];
     [self.settingsView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
 }
 
@@ -387,8 +405,8 @@
         
         [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else { // iPhone
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Stream", @"My Shares", @"My Likes", @"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
-        actionSheet.destructiveButtonIndex = 5;
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
+        actionSheet.destructiveButtonIndex = 2;
         [actionSheet showInView:self.view];
     }
 }
@@ -433,7 +451,7 @@
     if (DEVICE_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     }
-    [self.topBar setHidden:YES];
+    [self.navBar setHidden:YES];
 }
 
 - (void)dismissVideoReel
@@ -449,7 +467,7 @@
     if (DEVICE_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
-    [self.topBar setHidden:NO];
+    [self.navBar setHidden:NO];
 
 }
 
@@ -474,89 +492,89 @@
 //DEPRECATED
 - (void)animateOpenChannels:(DisplayChannel *)channel 
 {
-    if (self.animationInProgress) {
-        return;
-    } else {
-        [self setAnimationInProgress:YES];
-    }
-    
-    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForOpeningChannel:channel];
-    
-    CGFloat topBarHeight = self.topBar.frame.size.height;
-    animationViews.topView.frame = CGRectMake(animationViews.topView.frame.origin.x, animationViews.topView.frame.origin.y + topBarHeight, animationViews.topView.frame.size.width, animationViews.topView.frame.size.height);
-    animationViews.centerView.frame = CGRectMake(animationViews.centerView.frame.origin.x, animationViews.centerView.frame.origin.y + topBarHeight, animationViews.centerView.frame.size.width, animationViews.centerView.frame.size.height);
-    animationViews.bottomView.frame = CGRectMake(animationViews.bottomView.frame.origin.x, animationViews.bottomView.frame.origin.y + topBarHeight, animationViews.bottomView.frame.size.width, animationViews.bottomView.frame.size.height);
-    
-    
-    [self.videoReel.view addSubview:animationViews.centerView];
-    [self.videoReel.view addSubview:animationViews.bottomView];
-    [self.videoReel.view addSubview:animationViews.topView];
-
-    [self prepareToShowVideoReel];
-    
-    [self presentViewController:self.videoReel animated:NO completion:^{
-        [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [animationViews.centerView setFrame:animationViews.finalCenterFrame];
-            [animationViews.centerView setAlpha:0];
-            [animationViews.topView setFrame:animationViews.finalTopFrame];
-            [animationViews.bottomView setFrame:animationViews.finalBottomFrame];
-        } completion:^(BOOL finished) {
-            [animationViews.centerView removeFromSuperview];
-            [animationViews.bottomView removeFromSuperview];
-            [animationViews.topView removeFromSuperview];
-            
-            // KP KP: TODO: send a message to brain that it can start accepting new events
-            [self setAnimationInProgress:NO];
-        }];
-    }];
+//    if (self.animationInProgress) {
+//        return;
+//    } else {
+//        [self setAnimationInProgress:YES];
+//    }
+//    
+//    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForOpeningChannel:channel];
+//    
+//    CGFloat topBarHeight = self.topBar.frame.size.height;
+//    animationViews.topView.frame = CGRectMake(animationViews.topView.frame.origin.x, animationViews.topView.frame.origin.y + topBarHeight, animationViews.topView.frame.size.width, animationViews.topView.frame.size.height);
+//    animationViews.centerView.frame = CGRectMake(animationViews.centerView.frame.origin.x, animationViews.centerView.frame.origin.y + topBarHeight, animationViews.centerView.frame.size.width, animationViews.centerView.frame.size.height);
+//    animationViews.bottomView.frame = CGRectMake(animationViews.bottomView.frame.origin.x, animationViews.bottomView.frame.origin.y + topBarHeight, animationViews.bottomView.frame.size.width, animationViews.bottomView.frame.size.height);
+//    
+//    
+//    [self.videoReel.view addSubview:animationViews.centerView];
+//    [self.videoReel.view addSubview:animationViews.bottomView];
+//    [self.videoReel.view addSubview:animationViews.topView];
+//
+//    [self prepareToShowVideoReel];
+//    
+//    [self presentViewController:self.videoReel animated:NO completion:^{
+//        [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            [animationViews.centerView setFrame:animationViews.finalCenterFrame];
+//            [animationViews.centerView setAlpha:0];
+//            [animationViews.topView setFrame:animationViews.finalTopFrame];
+//            [animationViews.bottomView setFrame:animationViews.finalBottomFrame];
+//        } completion:^(BOOL finished) {
+//            [animationViews.centerView removeFromSuperview];
+//            [animationViews.bottomView removeFromSuperview];
+//            [animationViews.topView removeFromSuperview];
+//            
+//            // KP KP: TODO: send a message to brain that it can start accepting new events
+//            [self setAnimationInProgress:NO];
+//        }];
+//    }];
 }
 
 //DEPRECATED
 - (void)animateCloseChannels:(DisplayChannel *)channel atFrame:(Frame *)frame
 {
-    if (self.animationInProgress) {
-        return;
-    } else {
-        [self setAnimationInProgress:YES];
-    }
-
-    [self.browseVC highlightFrame:frame atChannel:channel];
-    
-    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForClosingChannel:channel];
- 
-    [self.videoReel.view addSubview:animationViews.centerView];
-    [self.videoReel.view addSubview:animationViews.bottomView];
-    [self.videoReel.view addSubview:animationViews.topView];
-    
-    [self.videoReel.view bringSubviewToFront:animationViews.centerView];
-    [self.videoReel.view bringSubviewToFront:animationViews.bottomView];
-    [self.videoReel.view bringSubviewToFront:animationViews.topView];
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-    [animationViews.centerView setAlpha:0];
-    
-    CGFloat topBarHeight = self.topBar.frame.size.height;
-    CGRect finalTopFrame = CGRectMake(animationViews.finalTopFrame.origin.x, animationViews.finalTopFrame.origin.y + topBarHeight, animationViews.finalTopFrame.size.width, animationViews.finalTopFrame.size.height);
-    CGRect finalCenterFrame = CGRectMake(animationViews.finalCenterFrame.origin.x, animationViews.finalCenterFrame.origin.y + topBarHeight, animationViews.finalCenterFrame.size.width, animationViews.finalCenterFrame.size.height);
-    CGRect finalBottomFrame = CGRectMake(animationViews.finalBottomFrame.origin.x, animationViews.finalBottomFrame.origin.y + topBarHeight, animationViews.finalBottomFrame.size.width, animationViews.finalBottomFrame.size.height);
-    
-    [self.topBar setAlpha:0];
-
-    [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [animationViews.centerView setFrame:finalCenterFrame];
-        [animationViews.centerView setAlpha:1];
-        [animationViews.topView setFrame:finalTopFrame];
-        [animationViews.bottomView setFrame:finalBottomFrame];
-    } completion:^(BOOL finished) {
-        [self.videoReel dismissViewControllerAnimated:NO completion:^{
-            [UIView animateWithDuration:0.5 animations:^{
-                [self.topBar setAlpha:1];
-            }];
-            [self.videoReel shutdown];
-            self.videoReel = nil;
-        }];
-        [self setAnimationInProgress:NO];
-    }];
+//    if (self.animationInProgress) {
+//        return;
+//    } else {
+//        [self setAnimationInProgress:YES];
+//    }
+//
+//    [self.browseVC highlightFrame:frame atChannel:channel];
+//    
+//    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForClosingChannel:channel];
+// 
+//    [self.videoReel.view addSubview:animationViews.centerView];
+//    [self.videoReel.view addSubview:animationViews.bottomView];
+//    [self.videoReel.view addSubview:animationViews.topView];
+//    
+//    [self.videoReel.view bringSubviewToFront:animationViews.centerView];
+//    [self.videoReel.view bringSubviewToFront:animationViews.bottomView];
+//    [self.videoReel.view bringSubviewToFront:animationViews.topView];
+//    
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
+//    [animationViews.centerView setAlpha:0];
+//    
+//    CGFloat topBarHeight = self.topBar.frame.size.height;
+//    CGRect finalTopFrame = CGRectMake(animationViews.finalTopFrame.origin.x, animationViews.finalTopFrame.origin.y + topBarHeight, animationViews.finalTopFrame.size.width, animationViews.finalTopFrame.size.height);
+//    CGRect finalCenterFrame = CGRectMake(animationViews.finalCenterFrame.origin.x, animationViews.finalCenterFrame.origin.y + topBarHeight, animationViews.finalCenterFrame.size.width, animationViews.finalCenterFrame.size.height);
+//    CGRect finalBottomFrame = CGRectMake(animationViews.finalBottomFrame.origin.x, animationViews.finalBottomFrame.origin.y + topBarHeight, animationViews.finalBottomFrame.size.width, animationViews.finalBottomFrame.size.height);
+//    
+//    [self.topBar setAlpha:0];
+//
+//    [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        [animationViews.centerView setFrame:finalCenterFrame];
+//        [animationViews.centerView setAlpha:1];
+//        [animationViews.topView setFrame:finalTopFrame];
+//        [animationViews.bottomView setFrame:finalBottomFrame];
+//    } completion:^(BOOL finished) {
+//        [self.videoReel dismissViewControllerAnimated:NO completion:^{
+//            [UIView animateWithDuration:0.5 animations:^{
+//                [self.topBar setAlpha:1];
+//            }];
+//            [self.videoReel shutdown];
+//            self.videoReel = nil;
+//        }];
+//        [self setAnimationInProgress:NO];
+//    }];
 }
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
@@ -569,6 +587,26 @@
     self.videoReel.delegate = self.masterDelegate;
     self.videoReel.videoPlaybackDelegate = self.videoControlsVC;
     self.videoReel.airPlayView = self.videoControlsVC.airPlayView;
+}
+
+- (void)didNavigateToCommunityChannel
+{
+    [self.navBarVC didNavigateToCommunityChannel];
+}
+
+- (void)didNavigateToUsersStream
+{
+    [self.navBarVC didNavigateToUsersStream];
+}
+
+- (void)didNavigateToUsersLikes
+{
+    [self.navBarVC didNavigateToUsersLikes];
+}
+
+- (void)didNavigateToUsersRoll
+{
+    [self.navBarVC didNavigateToUsersShares];
 }
 
 #pragma mark - ShelbyStreamBrowseViewDelegate
@@ -752,8 +790,8 @@
 {
     [self dismissPopover];
 
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyRoll)]) {
-        [self.masterDelegate goToMyRoll];
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersRoll)]) {
+        [self.masterDelegate goToUsersRoll];
     }
 }
 
@@ -761,8 +799,8 @@
 {
     [self dismissPopover];
 
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyLikes)]) {
-        [self.masterDelegate goToMyLikes];
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersLikes)]) {
+        [self.masterDelegate goToUsersLikes];
     }
 }
 
@@ -770,8 +808,15 @@
 {
     [self dismissPopover];
     
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToMyStream)]) {
-        [self.masterDelegate goToMyStream];
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersStream)]) {
+        [self.masterDelegate goToUsersStream];
+    }
+}
+
+- (void)launchCommunityChannel
+{
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToCommunityChannel)]) {
+        [self.masterDelegate goToCommunityChannel];
     }
 }
 
@@ -783,8 +828,8 @@
             [sender setTitle:@"Back" forState:UIControlStateNormal];
         }
     } else {
-        if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToDefaultChannel)]) {
-            [self.masterDelegate goToDefaultChannel];
+        if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToCommunityChannel)]) {
+            [self.masterDelegate goToCommunityChannel];
             [sender setTitle:@"DVR" forState:UIControlStateNormal];
         }
     }
@@ -946,18 +991,39 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        [self launchMyStream];
-    } else if (buttonIndex == 1) {
-        [self launchMyRoll];
-    } else if (buttonIndex == 2) {
-        [self launchMyLikes];
-    } else if (buttonIndex == 3) {
         [self connectToFacebook];
-    } else if (buttonIndex == 4) {
+    } else if (buttonIndex == 1) {
         [self connectToTwitter];
-    } else if (buttonIndex == 5) {
+    } else if (buttonIndex == 2) {
         [self logout];
     }
+}
+
+#pragma mark - ShelbyNavBarDelegate
+
+- (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self launchMyStream];
+}
+
+- (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self launchMyLikes];
+}
+
+- (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self launchMyRoll];
+}
+
+- (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self launchCommunityChannel];
+}
+
+- (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self showSettings];
 }
 
 @end

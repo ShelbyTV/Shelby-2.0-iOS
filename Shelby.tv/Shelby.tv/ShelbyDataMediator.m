@@ -83,27 +83,10 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }];
 }
 
-- (void)deleteUnsyncedLikesChannel:(DisplayChannel *)likesChannel
-{
-    [likesChannel.managedObjectContext deleteObject:likesChannel];
-    
-    NSError *error;
-    [likesChannel.managedObjectContext save:&error];
-    STVAssert(!error, @"context save failed, in delete empty likes channel");
-}
-
 - (void)fetchAllUnsyncedLikes
 {
-    // KP KP: TODO: don't hardcode the order!
-    DisplayChannel *likesChannel = [DisplayChannel channelForOfflineLikesWithOrder:7 inContext:[self mainThreadContext]];
-    //djs fine for now, but i'd prefer this hit a helper which returned likes in proper order
+    DisplayChannel *likesChannel = [DisplayChannel channelForOfflineLikesInContext:[self mainThreadContext]];
     NSArray *channelEntries = [likesChannel.roll.frame allObjects];
-    
-    // If there are no more likes, delete the Unsynced Likes channels from CoreData
-    if (![channelEntries count]) {
-        [self deleteUnsyncedLikesChannel:likesChannel];
-        channelEntries = nil;
-    }
     
     NSSortDescriptor *sortLikes = [NSSortDescriptor sortDescriptorWithKey:@"clientLikedAt" ascending:NO];
     channelEntries = [channelEntries sortedArrayUsingDescriptors:@[sortLikes]];
@@ -382,18 +365,16 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 - (void)syncLikes
 {
     NSManagedObjectContext *moc = [self mainThreadContext];
-    // KP KP: TODO: don't hardcode the order!
-    DisplayChannel *likesChannel = [DisplayChannel channelForOfflineLikesWithOrder:7 inContext:moc];
-    //djs fine for now, but i'd prefer this hit a helper which returned likes in proper order
+    DisplayChannel *likesChannel = [DisplayChannel channelForOfflineLikesInContext:moc];
     NSArray *channelEntries = [likesChannel.roll.frame allObjects];
 
     User *user = [User currentAuthenticatedUserInContext:moc];
     
     for (Frame *frame in channelEntries) {
         [self likeFrame:frame forUser:user];
+        //TODO: remove this from the offline likes channel
     }
-    
-    [self deleteUnsyncedLikesChannel:likesChannel];
+
     [self.delegate fetchOfflineLikesDidCompleteForChannel:likesChannel with:nil];
 }
 
@@ -410,7 +391,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 }
 
-- (void)logoutWithUserChannels:(NSArray *)userChannels
+- (void)logoutCurrentUser
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
  // TODO: remove if, set token in helper
@@ -418,12 +399,11 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 //        [user logout];
         user.token = nil;
     }
-    
-    if (userChannels) {
-        NSManagedObjectContext *mainContext = [self mainThreadContext];
-        for (DisplayChannel *displayChannel in userChannels) {
-            [mainContext deleteObject:displayChannel];
-        }
+
+    NSManagedObjectContext *mainContext = [self mainThreadContext];
+    NSArray *userChannels = [User channelsForUserInContext:mainContext];
+    for (DisplayChannel *displayChannel in userChannels) {
+        [mainContext deleteObject:displayChannel];
     }
 
     [self cleanupSession];

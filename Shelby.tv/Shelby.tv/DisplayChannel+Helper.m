@@ -102,8 +102,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     return displayChannel;
 }
 
-+ (DisplayChannel *)channelForOfflineLikesWithOrder:(NSInteger)order
-                                          inContext:(NSManagedObjectContext *)context
++ (DisplayChannel *)channelForOfflineLikesInContext:(NSManagedObjectContext *)context
 {
     DisplayChannel *displayChannel = [DisplayChannel fetchChannelWithRollID:kShelbyOfflineLikesID inContext:context];
     

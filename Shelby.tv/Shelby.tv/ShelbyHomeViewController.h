@@ -10,6 +10,7 @@
 #import "BrowseViewController.h"
 #import <MessageUI/MessageUI.h>
 #import "SettingsViewController.h"
+#import "ShelbyNavBarViewController.h"
 #import "ShelbyStreamBrowseViewController.h"
 #import "SignupFlowNavigationViewController.h"
 #import "SPShareController.h"
@@ -23,14 +24,14 @@
 - (void)connectToFacebook;
 - (void)connectToTwitter;
 - (void)goToDVR;
-- (void)goToDefaultChannel;
-- (void)goToMyRoll;
-- (void)goToMyLikes;
-- (void)goToMyStream;
+- (void)goToUsersRoll;
+- (void)goToUsersLikes;
+- (void)goToUsersStream;
+- (void)goToCommunityChannel;
 @end
 
 
-@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, SettingsViewDelegate, SignupFlowNavigationViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate>
+@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, SettingsViewDelegate, SignupFlowNavigationViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate>
 
 // We assume these are all of our channels, in the correct order
 @property (nonatomic, strong) NSArray *channels;
@@ -59,6 +60,12 @@
 // We should use the following two methods exclusively on start/remove playback
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 - (void)dismissVideoReel;
+
+//allow brain to manage the navigation when necessary
+- (void)didNavigateToCommunityChannel;
+- (void)didNavigateToUsersStream;
+- (void)didNavigateToUsersLikes;
+- (void)didNavigateToUsersRoll;
 
 //DEPRECATED
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
