@@ -49,6 +49,8 @@
 {
     //see bottom of file for animation notes
     [self.slider setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
+    //setting userInteractionEnabled in XIB having no effect...
+    self.selectionIdentifier.userInteractionEnabled = NO;
 }
 
 - (void)setCurrentRow:(UIView *)currentRow
@@ -132,7 +134,8 @@
 //to allow touch events to pass through the background
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    for (UIView *v in self.subviews) {
+    //slider's subviews, not stationary wrapper
+    for (UIView *v in self.slider.subviews) {
         if (v.userInteractionEnabled && [v pointInside:[self convertPoint:point toView:v] withEvent:event]){
             return YES;
         }
