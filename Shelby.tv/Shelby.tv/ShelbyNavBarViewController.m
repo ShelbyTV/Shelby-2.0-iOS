@@ -126,7 +126,9 @@
 
     [UIView animateWithDuration:0.3 animations:^{
         //hide the stuff
+        //TODO: make this a method on navBarView
         self.view.frame = CGRectMake(0, -(row.frame.origin.y), self.view.frame.size.width, self.view.frame.size.height);
+        //TODO: make this a method on navBarView
         for (UIView *v in ignoredRowViews) {
             v.alpha = 0.0;
             v.userInteractionEnabled = NO;
@@ -134,7 +136,10 @@
 
         //update selection
         row.alpha = 0.85;
-        self.navBarView.selectionIdentifier.frame = CGRectMake(sender.titleLabel.frame.origin.x - 10, row.frame.origin.y + 19, self.navBarView.selectionIdentifier.frame.size.width, self.navBarView.selectionIdentifier.frame.size.height);
+        //TODO: make this a method on navBarView
+        self.navBarView.selectionIdentifierX.constant = sender.titleLabel.frame.origin.x - 10;
+        self.navBarView.selectionIdentifierY.constant = row.frame.origin.y + 19;
+        [self.navBarView layoutIfNeeded];
     } completion:^(BOOL finished) {
         _waitingForSelection = NO;
     }];
@@ -144,7 +149,9 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         //show the stuff
+        //TODO: make this a method on navBarView
         self.view.frame = CGRectMake(0, 10, self.view.frame.size.width, self.view.frame.size.height);
+        //TODO: make this a method on navBarView
         for (UIView *v in self.allRowViews) {
             v.alpha = 0.95;
             v.userInteractionEnabled = YES;

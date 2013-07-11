@@ -22,5 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *communityRow;
 
 @property (weak, nonatomic) IBOutlet UIView *selectionIdentifier;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierY;
 
 @end
