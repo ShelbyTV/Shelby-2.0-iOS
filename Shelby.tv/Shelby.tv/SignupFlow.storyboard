@@ -77,13 +77,15 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="QCD-S7-eJ7">
                             <connections>
-                                <segue destination="dtY-NO-hRl" kind="push" identifier="ChooseVideos" id="jfF-IO-Chd"/>
+                                <action selector="gotoChooseVideoTypes:" destination="sgp-ZG-jtU" id="aHY-iz-xRH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="avatar" destination="lKh-j5-ma5" id="f6E-To-VVR"/>
                         <outlet property="name" destination="9nE-1k-IW2" id="JcA-ZF-Ad2"/>
+                        <outlet property="nextButton" destination="QCD-S7-eJ7" id="njw-DH-noa"/>
+                        <segue destination="dtY-NO-hRl" kind="push" identifier="ChooseVideos" id="A4V-Ow-igg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FAB-ls-UMC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -146,12 +148,13 @@
                         <barButtonItem key="leftBarButtonItem" title="Back" id="tCJ-aL-NNL"/>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="dFb-RO-jbB">
                             <connections>
-                                <segue destination="tUF-cC-Ycq" kind="push" identifier="Friends" id="NWV-LJ-wb3"/>
+                                <action selector="gotoSocialNetworks:" destination="dtY-NO-hRl" id="Inf-qd-T1B"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="videoTypes" destination="bSO-ew-ZPB" id="Fsb-qg-9nk"/>
+                        <segue destination="tUF-cC-Ycq" kind="push" identifier="SocialNetworks" id="svf-3W-f5V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KJu-cd-diU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -294,7 +297,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Back" id="p6p-Iy-q22"/>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="BQn-4z-VAh">
                             <connections>
-                                <segue destination="1I6-gt-YXr" kind="push" identifier="YourAccount" id="SxW-ck-4rX"/>
+                                <action selector="gotoMyAccount:" destination="tUF-cC-Ycq" id="UbC-zs-rE5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -303,6 +306,7 @@
                         <outlet property="nameLabel" destination="SSJ-0W-AXT" id="UJs-kA-gVo"/>
                         <outlet property="skipSocial" destination="1zj-ZG-dsC" id="YKj-i7-oeF"/>
                         <outlet property="videoTypesLabel" destination="OwT-pX-5df" id="Ckt-8P-WBq"/>
+                        <segue destination="1I6-gt-YXr" kind="push" identifier="MyAccount" id="jJ9-nI-qnN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJJ-P1-01Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -500,11 +504,15 @@
                 <relationship kind="action" name="connectoToFacebook:"/>
                 <relationship kind="action" name="connectoToTwitter:"/>
                 <relationship kind="action" name="goBack:"/>
+                <relationship kind="action" name="gotoChooseVideoTypes:"/>
+                <relationship kind="action" name="gotoMyAccount:"/>
+                <relationship kind="action" name="gotoSocialNetworks:"/>
                 <relationship kind="action" name="signup:"/>
                 <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="email" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="name" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="password" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="skipSocial" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="username" candidateClass="UITextField"/>
@@ -515,6 +523,7 @@
         <class className="SignupUserInfoCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupUserInfoCell.h"/>
             <relationships>
+                <relationship kind="action" name="assignAvatar:"/>
                 <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="name" candidateClass="UILabel"/>
             </relationships>

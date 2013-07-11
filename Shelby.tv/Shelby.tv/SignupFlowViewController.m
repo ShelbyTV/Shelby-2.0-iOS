@@ -24,6 +24,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     TextFieldTagPassword
 };
 
+typedef NS_ENUM(NSInteger, SignupDialogAlert) {
+    SignupDialogAlertNoAvatar,
+    SignupDialogAlertVideoTypes
+};
+
 #define kShelbySignupFlowViewYOriginEditMode -180
 
 @interface SignupFlowViewController ()
@@ -31,6 +36,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (nonatomic, weak) IBOutlet UITextField *email;
 @property (nonatomic, weak) IBOutlet UITextField *name;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *nextButton;
 @property (nonatomic, weak) IBOutlet UITextField *password;
 @property (nonatomic, weak) IBOutlet UIButton *skipSocial;
 @property (nonatomic, weak) IBOutlet UITextField *username;
@@ -43,8 +49,15 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
 - (IBAction)goBack:(id)sender;
+
+// Social Actions
 - (IBAction)connectoToFacebook:(id)sender;
 - (IBAction)connectoToTwitter:(id)sender;
+
+// Initiate Segues
+- (IBAction)gotoChooseVideoTypes:(id)sender;
+- (IBAction)gotoSocialNetworks:(id)sender;
+- (IBAction)gotoMyAccount:(id)sender;
 @end
 
 @implementation SignupFlowViewController
@@ -98,6 +111,10 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
         self.navigationItem.leftBarButtonItem = backBarButtonItem;
+    }
+    
+    if (self.nextButton && [self.name.text isEqualToString:@""]) {
+        self.nextButton.enabled = NO;
     }
 }
 
@@ -179,6 +196,34 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
     [self saveValueAndResignActiveTextField];
 }
+
+- (IBAction)gotoChooseVideoTypes:(id)sender
+{
+    if (!self.avatarImage) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add Your Picture" message:@"Don't be anonymous, let other people see your picture" delegate:self cancelButtonTitle:@"Not Now" otherButtonTitles:@"Choose", nil];
+        alertView.tag = SignupDialogAlertNoAvatar;
+        [alertView show];
+    } else {
+        [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
+    }
+}
+
+- (IBAction)gotoSocialNetworks:(id)sender
+{
+    if ([self.selectedCellsTitlesSet  count] < 3) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Choose Video Types" message:@"Please select at least 3 video types" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        alertView.tag = SignupDialogAlertVideoTypes;
+        [alertView show];
+    } else {
+        [self performSegueWithIdentifier:@"SocialNetworks" sender:self];
+    }
+}
+
+- (IBAction)gotoMyAccount:(id)sender
+{
+    [self performSegueWithIdentifier:@"MyAccount" sender:self];
+}
+
 
 - (IBAction)goBack:(id)sender
 {
@@ -369,6 +414,28 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     return YES;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    // Varification for Name text Field (Making sure we have at least 2 alphanumeric characters - might to verify only character though 
+    if (textField == self.name) {
+        BOOL nextEnabled = NO;
+        NSString *text = textField.text;
+        if ([text length] > 0) {
+            NSString *nonEmptySpaceString = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            
+            if ([nonEmptySpaceString length] + [string length] > 1 + range.length) {
+                BOOL valid = [[string stringByTrimmingCharactersInSet:[NSCharacterSet alphanumericCharacterSet]] isEqualToString:@""];
+                if (valid) {
+                    nextEnabled = YES;
+                }
+            }
+        }
+        self.nextButton.enabled = nextEnabled;
+    }
+
+    return YES;
+}
+
 #pragma mark - UICollectionViewDelegate Methods
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -459,4 +526,17 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 {
     [self openImagePicker];
 }
+
+#pragma mark - UIAlertViewDialog Methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == SignupDialogAlertNoAvatar) {
+        if (buttonIndex == 0) {
+            [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
+        } else {
+            [self assignAvatar];
+        }
+    }
+}
+
 @end

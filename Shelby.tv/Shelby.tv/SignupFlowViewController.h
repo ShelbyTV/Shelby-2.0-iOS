@@ -21,6 +21,6 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (void)connectToTwitter;
 @end
 
-@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SignupUserInfoDelegate>
+@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SignupUserInfoDelegate, UIAlertViewDelegate>
 @property (nonatomic, weak) NSMutableDictionary *signupDictionary;
 @end
