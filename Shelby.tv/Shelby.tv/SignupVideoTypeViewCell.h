@@ -10,4 +10,5 @@
 
 @interface SignupVideoTypeViewCell : UICollectionViewCell
 @property (nonatomic, weak) IBOutlet UILabel *title;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnail;
 @end

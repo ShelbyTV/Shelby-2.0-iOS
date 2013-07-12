@@ -10,6 +10,7 @@
 
 @interface SignupUserInfoCell()
 - (IBAction)assignAvatar:(id)sender;
+@property (nonatomic, weak) IBOutlet UILabel *nameCopyLabel;
 @end
 
 @implementation SignupUserInfoCell
@@ -35,6 +36,12 @@
 - (IBAction)assignAvatar:(id)sender
 {
     [self.delegate assignAvatar];
+}
+
+-(void)setName:(NSString *)name
+{
+    _name = name;
+    self.nameCopyLabel.text = [NSString stringWithFormat:@"%@, let's start your stream off right.", _name];
 }
 
 @end

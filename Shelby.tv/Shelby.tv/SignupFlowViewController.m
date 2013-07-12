@@ -29,19 +29,16 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     SignupDialogAlertVideoTypes
 };
 
-#define kShelbySignupFlowViewYOriginEditMode -180
-
 @interface SignupFlowViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *chooseAvatarButton;
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
 @property (nonatomic, weak) IBOutlet UITextField *email;
-@property (nonatomic, weak) IBOutlet UITextField *name;
+@property (nonatomic, weak) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *nextButton;
 @property (nonatomic, weak) IBOutlet UITextField *password;
-@property (nonatomic, weak) IBOutlet UIButton *skipSocial;
 @property (nonatomic, weak) IBOutlet UITextField *username;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
-@property (nonatomic, weak) IBOutlet UILabel *videoTypesLabel;
 @property (nonatomic, strong) NSMutableSet *selectedCellsTitlesSet;
 @property (nonatomic, strong) NSString *fullname;
 @property (nonatomic, strong) UIImage *avatarImage;
@@ -76,23 +73,14 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    // Assign Tags to TextFields - So we can differenciate them.
-    self.name.tag = TextFieldTagName;
+    // Assign Tags to TextFields - So we can differentiate them.
+    self.nameField.tag = TextFieldTagName;
     self.email.tag = TextFieldTagEmail;
     self.username.tag = TextFieldTagUsername;
     self.password.tag = TextFieldTagPassword;
     
     // Password field should be secure
     self.password.secureTextEntry = YES;
-    
-    // Underline text
-    if (self.skipSocial) {
-        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:self.skipSocial.titleLabel.text];
-        [attributeString addAttribute:NSUnderlineStyleAttributeName
-                                value:[NSNumber numberWithInt:1]
-                                range:(NSRange){0,[attributeString length]}];
-        self.skipSocial.titleLabel.attributedText = attributeString;
-    }
 
     self.videoTypes.allowsMultipleSelection = YES;
     [self.videoTypes registerNib:[UINib nibWithNibName:@"SignupVideoTypeViewCell" bundle:nil] forCellWithReuseIdentifier:@"VideoType"];
@@ -113,7 +101,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         self.navigationItem.leftBarButtonItem = backBarButtonItem;
     }
     
-    if (self.nextButton && [self.name.text isEqualToString:@""]) {
+    if (self.nextButton && [self.nameField.text isEqualToString:@""]) {
         self.nextButton.enabled = NO;
     }
 }
@@ -131,8 +119,11 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     
     if (self.signupDictionary[kShelbySignupNameKey]) {
         self.fullname = self.signupDictionary[kShelbySignupNameKey];
-        if (self.name) {
-            self.name.text = self.fullname;
+        if ([self.view respondsToSelector:@selector(setName:)]) {
+            [self.view performSelector:@selector(setName:) withObject:self.fullname];
+        }
+        if (self.nameField) {
+            self.nameField.text = self.fullname;
         }
         if (self.nameLabel) {
             self.nameLabel.text = self.fullname;
@@ -162,8 +153,9 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
             [typesString appendString:type];
             count++;
         }
-        self.videoTypesLabel.text = typesString;
-        
+        if ([self.view respondsToSelector:@selector(setVideoTypes:)]) {
+            [self.view performSelector:@selector(setVideoTypes:) withObject:typesString];
+        }
     } else {
         self.selectedCellsTitlesSet = [[NSMutableSet alloc] init];
     }
@@ -244,7 +236,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (void)markCell:(UICollectionViewCell *)cell selected:(BOOL)selected
 {
     if (selected) {
-        cell.contentView.layer.borderColor = [UIColor blackColor].CGColor;
+        cell.contentView.layer.borderColor = [UIColor greenColor].CGColor;
         cell.contentView.layer.borderWidth = 5;
     } else {
         cell.contentView.layer.borderWidth = 0;
@@ -253,6 +245,11 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
 - (void)toggleCellSelectionForIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        //can't select the info section
+        return;
+    }
+
     BOOL selected = NO;
     SignupVideoTypeViewCell *cell = (SignupVideoTypeViewCell *)[self.videoTypes cellForItemAtIndexPath:indexPath];
     
@@ -306,8 +303,8 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (void)saveValueAndResignActiveTextField
 {
     UITextField *activeTextField = nil;
-    if ([self.name isFirstResponder]) {
-        activeTextField = self.name;
+    if ([self.nameField isFirstResponder]) {
+        activeTextField = self.nameField;
     } else if ([self.username isFirstResponder]) {
         activeTextField = self.username;
     } else if ([self.password isFirstResponder]) {
@@ -326,7 +323,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 {
     NSString *value = textField.text;
     if (textField.tag == TextFieldTagName) {
-        self.name.text = value;
+        self.nameField.text = value;
         self.signupDictionary[kShelbySignupNameKey] = value;
     } else if (textField.tag == TextFieldTagEmail) {
         self.email.text = value;
@@ -354,6 +351,10 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         [self.videoTypes reloadData];
     }
 
+    if (self.chooseAvatarButton) {
+        [self.chooseAvatarButton setTitle:@"Change" forState:UIControlStateNormal];
+    }
+
     self.signupDictionary[kShelbySignupAvatarKey] = image;
     
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -366,20 +367,13 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 }
 
 #pragma mark - UITextFieldDelegate Methods
-// If in last Signup Flow Form, make sure to animate the view up so the keyboard will not block
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    
-    NSInteger tag = textField.tag;
-    if (self.view.frame.origin.y != kShelbySignupFlowViewYOriginEditMode && (tag == TextFieldTagEmail || tag == TextFieldTagUsername || tag == TextFieldTagPassword)) {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.view.frame = CGRectMake(0, kShelbySignupFlowViewYOriginEditMode, self.view.frame.size.width, self.view.frame.size.height);
-        }];
+    if ([self.view respondsToSelector:@selector(textFieldWillBeginEditing:)]) {
+        [self.view performSelector:@selector(textFieldWillBeginEditing:) withObject:textField];
     }
-    
     return YES;
 }
-
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -393,15 +387,16 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     [textField resignFirstResponder];
 
     // Set focus on the next TextField in the form. If last TextField, move view back down.
+    //TODO: this should be moved in the individual views, since only they know what order their fields are in
     NSInteger tag = textField.tag;
     if (tag == TextFieldTagEmail) {
         [self.username becomeFirstResponder];
     } else if (tag == TextFieldTagUsername) {
         [self.password becomeFirstResponder];
-    } else if (tag == TextFieldTagPassword && self.view.frame.origin.y == kShelbySignupFlowViewYOriginEditMode) {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-        }];
+    }
+
+    if ([self.view respondsToSelector:@selector(textFieldWillReturn:)]) {
+        [self.view performSelector:@selector(textFieldWillReturn:) withObject:textField];
     }
     
     return YES;
@@ -410,7 +405,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     // Varification for Name text Field (Making sure we have at least 2 alphanumeric characters - might to verify only character though 
-    if (textField == self.name) {
+    if (textField == self.nameField) {
         BOOL nextEnabled = NO;
         NSString *text = textField.text;
         if ([text length] > 0) {
@@ -444,7 +439,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     if (section == 1) {
-        return 6;
+        return 10;
     }
     
     return 1; 
@@ -462,37 +457,49 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         if (self.avatarImage) {
             cell.avatar.image = self.avatarImage;
         }
-        cell.name.text = self.fullname;
+        cell.name = self.fullname;
         cell.delegate = self;
         return cell;
     }
     
     SignupVideoTypeViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"VideoType" forIndexPath:indexPath];
     
-    UIColor *color;
     NSString *title;
+    UIImage *image;
     if (indexPath.row == 0) {
-        color = [UIColor greenColor];
-        title = @"News";
+        title = @"Buzzfeed";
+        image = [UIImage imageNamed:@"buzzfeed"];
     } else if (indexPath.row == 1) {
-        color = [UIColor blueColor];
-        title = @"Music";
+        title = @"GoPro";
+        image = [UIImage imageNamed:@"gopro"];
     } else if (indexPath.row == 2) {
-        color = [UIColor redColor];
-        title = @"Beatles";
+        title = @"GQ";
+        image = [UIImage imageNamed:@"gq"];
     } else if (indexPath.row == 3) {
-        color = [UIColor orangeColor];
-        title = @"Sports";
+        title = @"The New York Times";
+        image = [UIImage imageNamed:@"nytimes"];
     } else if (indexPath.row == 4) {
-        color = [UIColor purpleColor];
-        title = @"Apple";
+        title = @"The Onion";
+        image = [UIImage imageNamed:@"onion"];
     } else if (indexPath.row == 5) {
-        color = [UIColor grayColor];
-        title = @"Movies";
+        title = @"PitchFork";
+        image = [UIImage imageNamed:@"pitchfork"];
+    } else if (indexPath.row == 6) {
+        title = @"TED";
+        image = [UIImage imageNamed:@"ted"];
+    } else if (indexPath.row == 7) {
+        title = @"Vice";
+        image = [UIImage imageNamed:@"vice"];
+    } else if (indexPath.row == 8) {
+        title = @"Vogue";
+        image = [UIImage imageNamed:@"vogue"];
+    } else if (indexPath.row == 9) {
+        title = @"Wired";
+        image = [UIImage imageNamed:@"wired"];
     }
-    
-    cell.contentView.backgroundColor = color;
+
     cell.title.text = title;
+    cell.thumbnail.image = image;
 
     BOOL selected = NO;
     if ([self.selectedCellsTitlesSet containsObject:title]) {
@@ -508,7 +515,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return CGSizeMake(320, 200);
+        return CGSizeMake(320, 155);
     }
     
     return CGSizeMake(160, 160);

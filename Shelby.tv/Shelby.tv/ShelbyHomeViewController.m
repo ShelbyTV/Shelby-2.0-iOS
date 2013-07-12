@@ -380,7 +380,7 @@
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
         [login setFrame:CGRectMake(7, 7, 60, 30)];
         [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
-        [login setTitle:@"Login" forState:UIControlStateNormal];
+        [login setTitle:@"Signup" forState:UIControlStateNormal];
         [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
         [[login titleLabel] setTextColor:[UIColor whiteColor]];
         [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];

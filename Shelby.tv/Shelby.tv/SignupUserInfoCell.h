@@ -12,8 +12,10 @@
 @end
 
 @interface SignupUserInfoCell : UICollectionViewCell
+
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
-@property (nonatomic, weak) IBOutlet UILabel *name;
 @property (nonatomic, weak) id<SignupUserInfoDelegate> delegate;
+
+@property (nonatomic, strong) NSString *name;
 
 @end
