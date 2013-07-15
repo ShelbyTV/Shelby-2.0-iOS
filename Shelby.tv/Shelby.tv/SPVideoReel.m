@@ -233,8 +233,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 
     //XXX LAYOUT TESTING
-    self.videoScrollView.layer.borderColor = [UIColor redColor].CGColor;
-    self.videoScrollView.layer.borderWidth = 4.0;
+//    self.videoScrollView.layer.borderColor = [UIColor redColor].CGColor;
+//    self.videoScrollView.layer.borderWidth = 4.0;
     //XXX LAYOUT TESTING
 }
 

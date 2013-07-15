@@ -67,8 +67,8 @@
     self.shouldAutoplay = NO;
 
     //XXX LAYOUT TESTING
-    self.view.layer.borderColor = [UIColor blueColor].CGColor;
-    self.view.layer.borderWidth = 7.0;
+//    self.view.layer.borderColor = [UIColor blueColor].CGColor;
+//    self.view.layer.borderWidth = 7.0;
     //XXX LAYOUT TESTING
 }
 
@@ -116,8 +116,8 @@
     self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 
     //XXX LAYOUT TESTING
-    self.playerLayer.borderColor = [UIColor whiteColor].CGColor;
-    self.playerLayer.borderWidth = 8.0;
+//    self.playerLayer.borderColor = [UIColor whiteColor].CGColor;
+//    self.playerLayer.borderWidth = 8.0;
     //XXX LAYOUT TESTING
 
     [self.view.layer addSublayer:self.playerLayer];

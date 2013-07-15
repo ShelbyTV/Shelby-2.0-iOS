@@ -48,9 +48,12 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.detailUsername.backgroundColor = [UIColor purpleColor];
-    self.detailViaNetwork.backgroundColor = [UIColor orangeColor];
-    self.detailCaption.backgroundColor = [UIColor brownColor];
+    //XXX Layout Test
+//    self.detailUsername.backgroundColor = [UIColor purpleColor];
+//    self.detailViaNetwork.backgroundColor = [UIColor orangeColor];
+//    self.detailCaption.backgroundColor = [UIColor brownColor];
+    //XXX Layout Test
+
     NSInteger pageWidth = self.frame.size.width / 2;
 //    NSInteger pageHeight = self.frame.size.height;
     NSInteger xOrigin = pageWidth + kShelbyInfoViewMargin;

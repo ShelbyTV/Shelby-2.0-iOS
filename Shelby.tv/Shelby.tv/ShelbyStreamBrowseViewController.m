@@ -51,8 +51,8 @@
     [self.collectionView addGestureRecognizer:tap];
 
     //XXX LAYOUT TESTING
-    self.view.layer.borderColor = [UIColor greenColor].CGColor;
-    self.view.layer.borderWidth = 2.0;
+//    self.view.layer.borderColor = [UIColor greenColor].CGColor;
+//    self.view.layer.borderWidth = 2.0;
     //XXX LAYOUT TESTING
 }
 

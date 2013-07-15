@@ -72,12 +72,14 @@
         _parallaxView.parallaxRatio = PARALLAX_RATIO;
 
         //a big play button on top of the parallax view (shown when video controls aren't)
-        _playButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _playButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
+        [_playButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
         [_playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [_playButton setTitle:@"play" forState:UIControlStateNormal];
+        [_playButton setTitle:@"Play" forState:UIControlStateNormal];
         [self.contentView insertSubview:_playButton aboveSubview:_parallaxView];
         _playButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[play]"
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[play]"
                                                                                  options:0
                                                                                  metrics:nil
                                                                                    views:@{@"play":_playButton}]];
@@ -89,8 +91,8 @@
         [self setAutoresizesSubviews:YES];
 
         //XXX LAYOUT TESTING
-        self.layer.borderColor = [UIColor yellowColor].CGColor;
-        self.layer.borderWidth = 2.0;
+//        self.layer.borderColor = [UIColor yellowColor].CGColor;
+//        self.layer.borderWidth = 2.0;
         //XXX LAYOUT TESTING
     }
     return self;
