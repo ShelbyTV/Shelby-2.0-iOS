@@ -380,7 +380,7 @@
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
         [login setFrame:CGRectMake(7, 7, 60, 30)];
         [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
-        [login setTitle:@"Signup" forState:UIControlStateNormal];
+        [login setTitle:@"Login" forState:UIControlStateNormal];
         [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
         [[login titleLabel] setTextColor:[UIColor whiteColor]];
         [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
@@ -701,32 +701,35 @@
 - (void)login
 {
     // KP KP: TODO: Switched to the new signup (instead of login) for testing
-    UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow"
-                                                             bundle: nil];
-    
-    SignupFlowNavigationViewController *signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard
-                                                       instantiateInitialViewController];
-    [signupFlowVC setSignupDelegate:self];
-    [self presentViewController:signupFlowVC animated:YES completion:nil];
-//    NSString *authorizationVCNibName = nil;
-//    if (DEVICE_IPAD) {
-//        authorizationVCNibName = @"AuthorizationView";
-//    } else {
-//        authorizationVCNibName = @"AuthorizationView-iPhone";
-//    }
-//    _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:authorizationVCNibName bundle:nil];
-//    
-//    CGFloat xOrigin = self.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
-//    CGFloat yOrigin = self.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;
-//    CGSize loginDialogSize = self.authorizationVC.view.frame.size;
-//    
-//    [self.authorizationVC setModalInPopover:YES];
-//    [self.authorizationVC setModalPresentationStyle:UIModalPresentationFormSheet];
-//    [self.authorizationVC setDelegate:self];
-//    
-//    [self presentViewController:self.authorizationVC animated:YES completion:nil];
-//    
-//    self.authorizationVC.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+    if (NO) {
+        UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow"
+                                                                 bundle: nil];
+        
+        SignupFlowNavigationViewController *signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard
+                                                           instantiateInitialViewController];
+        [signupFlowVC setSignupDelegate:self];
+        [self presentViewController:signupFlowVC animated:YES completion:nil];
+    } else {
+        NSString *authorizationVCNibName = nil;
+        if (DEVICE_IPAD) {
+            authorizationVCNibName = @"AuthorizationView";
+        } else {
+            authorizationVCNibName = @"AuthorizationView-iPhone";
+        }
+        _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:authorizationVCNibName bundle:nil];
+        
+        CGFloat xOrigin = self.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
+        CGFloat yOrigin = self.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;
+        CGSize loginDialogSize = self.authorizationVC.view.frame.size;
+        
+        [self.authorizationVC setModalInPopover:YES];
+        [self.authorizationVC setModalPresentationStyle:UIModalPresentationFormSheet];
+        [self.authorizationVC setDelegate:self];
+        
+        [self presentViewController:self.authorizationVC animated:YES completion:nil];
+        
+        self.authorizationVC.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+    }
 }
 
 - (void)logout
