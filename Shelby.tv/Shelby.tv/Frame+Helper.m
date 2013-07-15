@@ -170,16 +170,19 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
 
 - (NSString *)originNetwork
 {
-    // TODO: this is not really working. (seems to not work when origin network comes from Shelby)
-    // Also, right now grabbing whatever network is not nil. 
-    // Grab origin network...
-    if (self.conversation && [self.conversation.messages count] > 0) {
-        NSSet *messages = self.conversation.messages;
-        for (Messages *message in messages) {
-            if (message.originNetwork) {
-                return message.originNetwork;
+    // If user_type == 1 show origin_network.
+    // Otherwise, if there is originator, show that. And if no originator show nothing.
+    if ([self.creator.userType isEqualToNumber:@1]) {
+        if (self.conversation && [self.conversation.messages count] > 0) {
+            NSSet *messages = self.conversation.messages;
+            for (Messages *message in messages) {
+                if (message.originNetwork) {
+                    return message.originNetwork;
+                }
             }
         }
+    } else if (self.originatorNickname) {
+        return self.originatorNickname;
     }
   
     return nil;
