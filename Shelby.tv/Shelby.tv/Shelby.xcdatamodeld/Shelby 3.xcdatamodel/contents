@@ -49,6 +49,7 @@
         <attribute name="creatorID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="frameID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isStoredForLoggedOutUser" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="originatorNickname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rollID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
@@ -128,7 +129,7 @@
         <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="135"/>
         <element name="DisplayChannel" positionX="-270" positionY="126" width="128" height="135"/>
         <element name="DVREntry" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Frame" positionX="367" positionY="336" width="128" height="360"/>
+        <element name="Frame" positionX="367" positionY="336" width="128" height="375"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
         <element name="Roll" positionX="-342" positionY="342" width="128" height="240"/>
         <element name="User" positionX="-47" positionY="-9" width="128" height="315"/>

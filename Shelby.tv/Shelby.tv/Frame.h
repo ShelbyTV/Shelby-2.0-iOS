@@ -25,6 +25,7 @@
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * videoID;
+@property (nonatomic, retain) NSString * originatorNickname;
 @property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, retain) User *creator;
 @property (nonatomic, retain) NSSet *dashboardEntry;
@@ -32,8 +33,8 @@
 @property (nonatomic, retain) NSOrderedSet *duplicates;
 @property (nonatomic, retain) DVREntry *dvrEntry;
 @property (nonatomic, retain) Roll *roll;
-@property (nonatomic, retain) Video *video;
 @property (nonatomic, retain) NSSet *upvoters;
+@property (nonatomic, retain) Video *video;
 @end
 
 @interface Frame (CoreDataGeneratedAccessors)

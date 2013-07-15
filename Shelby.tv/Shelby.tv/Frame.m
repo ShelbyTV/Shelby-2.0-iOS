@@ -30,6 +30,7 @@
 @dynamic rollID;
 @dynamic timestamp;
 @dynamic videoID;
+@dynamic originatorNickname;
 @dynamic conversation;
 @dynamic creator;
 @dynamic dashboardEntry;
@@ -37,7 +38,7 @@
 @dynamic duplicates;
 @dynamic dvrEntry;
 @dynamic roll;
-@dynamic video;
 @dynamic upvoters;
+@dynamic video;
 
 @end
