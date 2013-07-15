@@ -134,6 +134,13 @@
     if ([shareFrames count]) {
         // TODO: show share frames
     }
+    
+    if (videoFrame.upvoters && [videoFrame.upvoters count] > 0) {
+        for (User *upvote in videoFrame.upvoters) {
+            // TODO: add avatar to view
+            DLog(@"Upvoted - %@", upvote.name);
+        }
+    }
 }
 
 - (void)resizeCaptionLabel

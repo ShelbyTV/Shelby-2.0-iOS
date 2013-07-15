@@ -22,6 +22,7 @@ NSString * const kShelbyAPIGetShortLinkPath =               @"v1/frame/%@/short_
 NSString * const kShelbyAPIGetRollFramesPath =              @"v1/roll/%@/frames";
 NSString * const kShelbyAPIGetAllChannelsPath =             @"v1/roll/featured";
 NSString * const kShelbyAPIGetChannelDashboardEntriesPath = @"v1/user/%@/dashboard";
+NSString * const kShelbyAPIGetUser =                        @"v1/user/%@";
 NSString * const POST =    @"POST";
 NSString * const kShelbyAPIPostFrameLikePath =              @"v1/frame/%@/like";
 NSString * const kShelbyAPIPostExternalShare =              @"v1/frame/%@/share";
@@ -119,6 +120,28 @@ static AFHTTPClient *httpClient = nil;
     }];
     
     [operation start];
+}
+
++ (void)fetchUserForUserID:(NSString *)userID
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    if (!userID) {
+        return;
+    }
+    
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:[NSString stringWithFormat:kShelbyAPIGetUser, userID]
+                                withQueryParameters:nil
+                                      shouldAddAuth:NO];
+
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    
+    [operation start];
+
 }
 
 // KP KP: TODO: this method is not getting called. Once we call it, make sure from what thread and get the correct moc.

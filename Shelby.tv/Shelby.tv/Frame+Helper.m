@@ -64,6 +64,17 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
         frame.conversation = [Conversation conversationForDictionary:conversationDict inContext:context];
     }
     
+    NSArray *upvoters = dict[@"upvoters"];
+    if ([upvoters isKindOfClass:[NSArray class]] && [upvoters count] > 0) {
+        for (NSString *upvoterId in upvoters) {
+            NSDictionary *userDict = @{@"id": upvoterId};
+            User *upvoterUser = [User userForDictionary:userDict inContext:context];
+            if (upvoterUser) {
+                [frame addUpvotersObject:upvoterUser];
+            }
+        }
+    }
+    
     return frame;
 }
 

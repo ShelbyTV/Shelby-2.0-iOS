@@ -25,6 +25,9 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 
 + (void)putGoogleAnalyticsClientID:(NSString *)clientID;
 
++ (void)fetchUserForUserID:(NSString *)userID
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 // -- Video
 + (void)markUnplayableVideo:(NSString *)videoID;
 

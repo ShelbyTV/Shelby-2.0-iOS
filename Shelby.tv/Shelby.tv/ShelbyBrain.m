@@ -8,6 +8,7 @@
 
 #import "ShelbyBrain.h"
 #import "Dashboard+Helper.h"
+#import "DashboardEntry.h"
 #import "DisplayChannel+Helper.h"
 #import "ShelbyDVRController.h"
 #import "Roll+Helper.h"
@@ -264,6 +265,23 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     
     if (self.postFetchInvocationForChannel && [channel objectID] && self.postFetchInvocationForChannel[channel.objectID]) {
         [self.postFetchInvocationForChannel[channel.objectID] invoke];
+    }
+    
+    for (id entry in channelEntries) {
+        // TODO: add support for Roll
+        if ([entry isKindOfClass:[DashboardEntry class]]) {
+            Frame *frame = ((DashboardEntry *)entry).frame;
+            if (frame.upvoters && [frame.upvoters count] > 0) {
+                NSManagedObjectContext *context = [[ShelbyDataMediator sharedInstance] createPrivateQueueContext];
+                for (User *user in frame.upvoters) {
+                    [[ShelbyDataMediator sharedInstance] fetchUpvoterUser:user.userID inContect:context];
+                }
+               
+                NSError *error;
+                [context save:&error];
+                STVAssert(!error, @"context save failed while saving upvoters...");
+            }
+        }
     }
 }
 

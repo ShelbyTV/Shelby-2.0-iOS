@@ -126,6 +126,16 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }
 }
 
+
+- (void)fetchUpvoterUser:(NSString *)userID inContect:(NSManagedObjectContext *)context
+{
+    [ShelbyAPIClient fetchUserForUserID:userID andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [User userForDictionary:JSON inContext:context];
+        }
+    }];
+}
+
 - (void)likeFrame:(Frame *)frame forUser:(User *)user
 {
     //Do Like
