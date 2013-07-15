@@ -2,7 +2,7 @@
 //  Frame.m
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 6/7/13.
+//  Created by Keren on 7/15/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -38,5 +38,6 @@
 @dynamic dvrEntry;
 @dynamic roll;
 @dynamic video;
+@dynamic upvoters;
 
 @end

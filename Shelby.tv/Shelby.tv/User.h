@@ -2,7 +2,7 @@
 //  User.h
 //  Shelby.tv
 //
-//  Created by Keren on 5/30/13.
+//  Created by Keren on 7/15/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @interface User : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * admin;
+@property (nonatomic, retain) NSString * facebookName;
 @property (nonatomic, retain) NSString * facebookNickname;
 @property (nonatomic, retain) NSString * facebookUID;
 @property (nonatomic, retain) NSString * likesRollID;
@@ -28,8 +29,8 @@
 @property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSString * userImage;
 @property (nonatomic, retain) NSNumber * userType;
-@property (nonatomic, retain) NSString * facebookName;
 @property (nonatomic, retain) NSSet *frames;
+@property (nonatomic, retain) NSSet *upvoted;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
@@ -38,5 +39,10 @@
 - (void)removeFramesObject:(Frame *)value;
 - (void)addFrames:(NSSet *)values;
 - (void)removeFrames:(NSSet *)values;
+
+- (void)addUpvotedObject:(Frame *)value;
+- (void)removeUpvotedObject:(Frame *)value;
+- (void)addUpvoted:(NSSet *)values;
+- (void)removeUpvoted:(NSSet *)values;
 
 @end

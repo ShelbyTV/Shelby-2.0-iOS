@@ -2,7 +2,7 @@
 //  Frame.h
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 6/7/13.
+//  Created by Keren on 7/15/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -33,6 +33,7 @@
 @property (nonatomic, retain) DVREntry *dvrEntry;
 @property (nonatomic, retain) Roll *roll;
 @property (nonatomic, retain) Video *video;
+@property (nonatomic, retain) NSSet *upvoters;
 @end
 
 @interface Frame (CoreDataGeneratedAccessors)
@@ -52,4 +53,9 @@
 - (void)removeDuplicatesObject:(Frame *)value;
 - (void)addDuplicates:(NSOrderedSet *)values;
 - (void)removeDuplicates:(NSOrderedSet *)values;
+- (void)addUpvotersObject:(User *)value;
+- (void)removeUpvotersObject:(User *)value;
+- (void)addUpvoters:(NSSet *)values;
+- (void)removeUpvoters:(NSSet *)values;
+
 @end

@@ -59,6 +59,7 @@
         <relationship name="duplicates" optional="YES" transient="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Frame" inverseName="duplicateOf" inverseEntity="Frame" syncable="YES"/>
         <relationship name="dvrEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="DVREntry" inverseName="frame" inverseEntity="DVREntry" syncable="YES"/>
         <relationship name="roll" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Roll" inverseName="frame" inverseEntity="Roll" syncable="YES"/>
+        <relationship name="upvoters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="upvoted" inverseEntity="User" syncable="YES"/>
         <relationship name="video" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Video" inverseName="frame" inverseEntity="Video" syncable="YES"/>
     </entity>
     <entity name="Messages" representedClassName="Messages" syncable="YES">
@@ -105,6 +106,7 @@
         <attribute name="userImage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="frames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Frame" inverseName="creator" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="upvoted" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Frame" inverseName="upvoters" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="Video" representedClassName="Video" syncable="YES">
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
@@ -126,10 +128,10 @@
         <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="135"/>
         <element name="DisplayChannel" positionX="-270" positionY="126" width="128" height="135"/>
         <element name="DVREntry" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Frame" positionX="367" positionY="336" width="128" height="345"/>
+        <element name="Frame" positionX="367" positionY="336" width="128" height="360"/>
         <element name="Messages" positionX="556" positionY="-90" width="128" height="180"/>
         <element name="Roll" positionX="-342" positionY="342" width="128" height="240"/>
-        <element name="User" positionX="-47" positionY="-9" width="128" height="300"/>
+        <element name="User" positionX="-47" positionY="-9" width="128" height="315"/>
         <element name="Video" positionX="691" positionY="420" width="128" height="225"/>
     </elements>
 </model>

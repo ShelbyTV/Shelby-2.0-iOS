@@ -2,7 +2,7 @@
 //  User.m
 //  Shelby.tv
 //
-//  Created by Keren on 5/30/13.
+//  Created by Keren on 7/15/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -13,6 +13,7 @@
 @implementation User
 
 @dynamic admin;
+@dynamic facebookName;
 @dynamic facebookNickname;
 @dynamic facebookUID;
 @dynamic likesRollID;
@@ -27,7 +28,7 @@
 @dynamic userID;
 @dynamic userImage;
 @dynamic userType;
-@dynamic facebookName;
 @dynamic frames;
+@dynamic upvoted;
 
 @end
