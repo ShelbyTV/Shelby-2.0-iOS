@@ -213,8 +213,13 @@
     } else {
 
         ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
-        sbvc.view.frame = self.view.frame;
         STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
+        if (self.currentStreamBrowseVC == sbvc) {
+            //not changing, nothing to do
+            return;
+        }
+
+        sbvc.view.frame = self.view.frame;
         
         [self.currentStreamBrowseVC willMoveToParentViewController:nil];
         [self addChildViewController:sbvc];
