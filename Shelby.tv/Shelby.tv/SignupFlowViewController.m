@@ -104,8 +104,8 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         self.navigationItem.leftBarButtonItem = backBarButtonItem;
     }
     
-    // If we are on First step or Second step - we might want to disable Next
-    if (self.nextButton && ([self.nameField.text isEqualToString:@""] || self.videoTypes)) {
+    // If we are on First, Second or Fourth step - we might want to disable Next
+    if (self.nextButton && ([self.nameField.text isEqualToString:@""] || self.videoTypes || [self.username.text isEqualToString:@""])) {
         self.nextButton.enabled = NO;
     }
 }
@@ -142,6 +142,12 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         self.username.text = self.signupDictionary[kShelbySignupUsernameKey];
     }
 
+    // TODO: decide the length of username & password that are acceptable
+    // If on Fourth step, enable button if user entered Username & Password
+    if ([self.username.text length] && [self.password.text length]) {
+        self.nextButton.enabled = YES;
+    }
+    
     if (self.signupDictionary[kShelbySignupEmailKey] && (self.email || self.emailLabel)) {
         self.email.text = self.signupDictionary[kShelbySignupEmailKey];
         self.emailLabel.text = self.signupDictionary[kShelbySignupEmailKey];
@@ -447,8 +453,8 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     // Varification for Name text Field (Making sure we have at least 2 alphanumeric characters - might to verify only character though
+    BOOL nextEnabled = NO;
     if (textField == self.nameField || textField == self.email) {
-        BOOL nextEnabled = NO;
         NSString *text = self.nameField.text;
         if ([text length] > 0) {
             NSString *nonEmptySpaceString = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -466,8 +472,32 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
                 }
             }
         }
-        self.nextButton.enabled = nextEnabled;
+    } else {
+        
+        // TODO: decide the length of username & password that are acceptable
+        NSString *password = self.password.text;
+        NSString *username = self.username.text;
+        NSInteger passwordLength = [[password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
+        NSInteger usernameLength = [[username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
+        if (textField == self.password) {
+            if ([string isEqualToString:@""]) {
+                passwordLength -= range.length;
+            } else {
+                passwordLength += [string length];
+            }
+        } else if (textField == self.username) {
+            if ([string isEqualToString:@""]) {
+                usernameLength -= range.length;
+            } else {
+                usernameLength += [string length];
+            }
+        }
+        
+        if (passwordLength > 0 && usernameLength > 0) {
+            nextEnabled = YES;
+        }
     }
+    self.nextButton.enabled = nextEnabled;
 
     return YES;
 }

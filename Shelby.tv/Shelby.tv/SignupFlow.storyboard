@@ -573,6 +573,7 @@
                         <outlet property="blinkingLabel" destination="DvA-F4-1Pg" id="dcN-Xx-Ohb"/>
                         <outlet property="emailLabel" destination="1vh-3N-ke5" id="Hsc-yU-n6q"/>
                         <outlet property="nameLabel" destination="yX5-8h-SLO" id="pwv-gB-46a"/>
+                        <outlet property="nextButton" destination="dIT-4X-7Ww" id="CJY-Jp-Fke"/>
                         <outlet property="password" destination="kbV-f1-cUt" id="rnW-BK-2dU"/>
                         <outlet property="username" destination="aQQ-99-V5c" id="mOD-1n-B4B"/>
                     </connections>
