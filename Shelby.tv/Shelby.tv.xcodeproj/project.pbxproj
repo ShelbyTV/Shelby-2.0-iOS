@@ -629,6 +629,9 @@
 		1CDBEE721795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */; };
 		1CDBEE731795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */; };
 		1CDBEE741795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */; };
+		1CDBEE771795EF8D002ECD76 /* BlinkingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE761795EF8D002ECD76 /* BlinkingLabel.m */; };
+		1CDBEE781795EF8D002ECD76 /* BlinkingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE761795EF8D002ECD76 /* BlinkingLabel.m */; };
+		1CDBEE791795EF8D002ECD76 /* BlinkingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE761795EF8D002ECD76 /* BlinkingLabel.m */; };
 		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
@@ -1181,6 +1184,8 @@
 		1CDBEE6C1794A320002ECD76 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		1CDBEE701795EA20002ECD76 /* SignupFlowFirstStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowFirstStepViewController.h; sourceTree = "<group>"; };
 		1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupFlowFirstStepViewController.m; sourceTree = "<group>"; };
+		1CDBEE751795EF8D002ECD76 /* BlinkingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlinkingLabel.h; sourceTree = "<group>"; };
+		1CDBEE761795EF8D002ECD76 /* BlinkingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlinkingLabel.m; sourceTree = "<group>"; };
 		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
 		1CFD671017203D5A00324A27 /* channelbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = channelbg.png; sourceTree = "<group>"; };
 		1CFD671117203D5A00324A27 /* channelbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channelbg@2x.png"; sourceTree = "<group>"; };
@@ -2469,6 +2474,8 @@
 				91A3626E1790688B00381218 /* SignupFriendsView.m */,
 				91A362721790791000381218 /* SignupConfirmationView.h */,
 				91A362731790791000381218 /* SignupConfirmationView.m */,
+				1CDBEE751795EF8D002ECD76 /* BlinkingLabel.h */,
+				1CDBEE761795EF8D002ECD76 /* BlinkingLabel.m */,
 			);
 			name = "Signup Views";
 			sourceTree = "<group>";
@@ -3304,6 +3311,7 @@
 				1CDBEE691794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE731795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
+				1CDBEE781795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3435,6 +3443,7 @@
 				1CDBEE6A1794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE741795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
+				1CDBEE791795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3566,6 +3575,7 @@
 				1CDBEE681794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE721795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
+				1CDBEE771795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

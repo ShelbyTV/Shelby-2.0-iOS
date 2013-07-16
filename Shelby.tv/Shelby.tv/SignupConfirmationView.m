@@ -9,10 +9,6 @@
 #import "SignupConfirmationView.h"
 #import "Constants.h"
 
-@interface SignupConfirmationView()
-@property (weak, nonatomic) IBOutlet UILabel *summaryLabel;
-@end
-
 #define kShelbySignupFlowViewYOffsetEditMode  (kShelbyFullscreenHeight > 480) ? -60 : -150
 
 @implementation SignupConfirmationView
@@ -25,30 +21,6 @@
     }
     return self;
 }
-
--(void)setName:(NSString *)name
-{
-    _name = name;
-    [self updateSummaryLabel];
-}
-
--(void)setVideoTypes:(NSString *)videoTypes
-{
-    _videoTypes = videoTypes;
-    [self updateSummaryLabel];
-}
-
-- (void)setSocialNetworksConnected:(NSString *)socialNetworksConnected
-{
-    _socialNetworksConnected = socialNetworksConnected;
-    [self updateSummaryLabel];
-}
-
-- (void)updateSummaryLabel
-{
-    self.summaryLabel.text = [NSString stringWithFormat:@"%@, your stream is filling up!  Videos are coming from %@", self.name, self.videoTypes];
-}
-
 
 // TODO: we are not using text field in this method. This is more of a method for the view (caused by touching the textfield) - Should probably not pass textfield.
 - (void)textFieldWillBeginEditing:(UITextField *)textField

@@ -7,6 +7,7 @@
 //
 
 #import "SignupFlowViewController.h"
+#import "BlinkingLabel.h"
 #import "SignupVideoTypeViewCell.h"
 
 NSString * const kShelbySignupAvatarKey          = @"SignupAvatar";
@@ -31,6 +32,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 @interface SignupFlowViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *chooseAvatarButton;
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
+@property (weak, nonatomic) IBOutlet BlinkingLabel *blinkingLabel;
 @property (nonatomic, weak) IBOutlet UITextField *email;
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
 @property (nonatomic, weak) IBOutlet UITextField *nameField;
@@ -147,18 +149,10 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
     if (self.signupDictionary[kShelbySignupVideoTypesKey]) {
         self.selectedCellsTitlesArray = self.signupDictionary[kShelbySignupVideoTypesKey];
-        NSMutableString *typesString = [[NSMutableString alloc] init];
-        NSInteger count = 0;
-        for (NSString *type in self.selectedCellsTitlesArray) {
-            if (count > 0) {
-                [typesString appendString:@", "];
-            }
-            [typesString appendString:type];
-            count++;
+        if (self.blinkingLabel && [self.selectedCellsTitlesArray count] > 0) {
+            [self.blinkingLabel setWords:self.selectedCellsTitlesArray];
         }
-        if ([self.view respondsToSelector:@selector(setVideoTypes:)]) {
-            [self.view performSelector:@selector(setVideoTypes:) withObject:typesString];
-        }
+        
         // If on Second step and more than 3 selected, enable next button
         if (self.videoTypes && [self.selectedCellsTitlesArray count] > 2) {
             self.nextButton.enabled = YES;

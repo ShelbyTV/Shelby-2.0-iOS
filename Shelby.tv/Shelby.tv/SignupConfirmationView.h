@@ -10,10 +10,6 @@
 
 @interface SignupConfirmationView : UIView
 
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *videoTypes;
-@property (nonatomic, strong) NSString *socialNetworksConnected;
-
 - (void)textFieldWillBeginEditing:(UITextField *)textField;
 - (void)textFieldWillReturn:(UITextField *)textField;
 
