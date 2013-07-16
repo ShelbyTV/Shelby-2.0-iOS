@@ -221,6 +221,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="nextButton" destination="dFb-RO-jbB" id="gwF-yb-haJ"/>
                         <outlet property="videoTypes" destination="bSO-ew-ZPB" id="Fsb-qg-9nk"/>
                         <segue destination="tUF-cC-Ycq" kind="push" identifier="SocialNetworks" id="svf-3W-f5V"/>
                     </connections>

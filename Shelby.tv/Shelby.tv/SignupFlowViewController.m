@@ -25,8 +25,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 };
 
 typedef NS_ENUM(NSInteger, SignupDialogAlert) {
-    SignupDialogAlertNoAvatar,
-    SignupDialogAlertVideoTypes
+    SignupDialogAlertNoAvatar
 };
 
 @interface SignupFlowViewController ()
@@ -39,7 +38,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 @property (nonatomic, weak) IBOutlet UITextField *password;
 @property (nonatomic, weak) IBOutlet UITextField *username;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
-@property (nonatomic, strong) NSMutableSet *selectedCellsTitlesSet;
+@property (nonatomic, strong) NSMutableArray *selectedCellsTitlesArray;
 @property (nonatomic, strong) NSString *fullname;
 @property (nonatomic, strong) UIImage *avatarImage;
 
@@ -102,7 +101,8 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         self.navigationItem.leftBarButtonItem = backBarButtonItem;
     }
     
-    if (self.nextButton && [self.nameField.text isEqualToString:@""]) {
+    // If we are on First step or Second step - we might want to disable Next
+    if (self.nextButton && ([self.nameField.text isEqualToString:@""] || self.videoTypes)) {
         self.nextButton.enabled = NO;
     }
 }
@@ -144,10 +144,10 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     }
 
     if (self.signupDictionary[kShelbySignupVideoTypesKey]) {
-        self.selectedCellsTitlesSet = self.signupDictionary[kShelbySignupVideoTypesKey];
+        self.selectedCellsTitlesArray = self.signupDictionary[kShelbySignupVideoTypesKey];
         NSMutableString *typesString = [[NSMutableString alloc] init];
         NSInteger count = 0;
-        for (NSString *type in self.selectedCellsTitlesSet) {
+        for (NSString *type in self.selectedCellsTitlesArray) {
             if (count > 0) {
                 [typesString appendString:@", "];
             }
@@ -157,8 +157,12 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         if ([self.view respondsToSelector:@selector(setVideoTypes:)]) {
             [self.view performSelector:@selector(setVideoTypes:) withObject:typesString];
         }
+        // If on Second step and more than 3 selected, enable next button
+        if (self.videoTypes && [self.selectedCellsTitlesArray count] > 2) {
+            self.nextButton.enabled = YES;
+        }
     } else {
-        self.selectedCellsTitlesSet = [[NSMutableSet alloc] init];
+        self.selectedCellsTitlesArray = [@[] mutableCopy];
     }
 }
 
@@ -166,8 +170,8 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 {
     [super viewWillDisappear:animated];
     
-    if (self.selectedCellsTitlesSet) {
-        self.signupDictionary[kShelbySignupVideoTypesKey] = self.selectedCellsTitlesSet;
+    if (self.selectedCellsTitlesArray) {
+        self.signupDictionary[kShelbySignupVideoTypesKey] = self.selectedCellsTitlesArray;
     }
     
     [self saveValueAndResignActiveTextField];
@@ -203,13 +207,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
 - (IBAction)gotoSocialNetworks:(id)sender
 {
-    if ([self.selectedCellsTitlesSet  count] < 3) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Choose Video Types" message:@"Please select at least 3 video types" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        alertView.tag = SignupDialogAlertVideoTypes;
-        [alertView show];
-    } else {
-        [self performSegueWithIdentifier:@"SocialNetworks" sender:self];
-    }
+    [self performSegueWithIdentifier:@"SocialNetworks" sender:self];
 }
 
 - (IBAction)gotoMyAccount:(id)sender
@@ -253,6 +251,10 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
 - (void)markCell:(UICollectionViewCell *)cell selected:(BOOL)selected
 {
+    SignupVideoTypeViewCell *videoTypeCell = (SignupVideoTypeViewCell *)cell;
+
+    videoTypeCell.overlay.hidden = !selected;
+
     if (selected) {
         cell.contentView.layer.borderColor = [UIColor greenColor].CGColor;
         cell.contentView.layer.borderWidth = 5;
@@ -272,14 +274,22 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     SignupVideoTypeViewCell *cell = (SignupVideoTypeViewCell *)[self.videoTypes cellForItemAtIndexPath:indexPath];
     
     if (cell.title.text) {
-        if ([self.selectedCellsTitlesSet containsObject:cell.title.text]) {
+        if ([self.selectedCellsTitlesArray containsObject:cell.title.text]) {
             selected = YES;
-            [self.selectedCellsTitlesSet removeObject:cell.title.text];
+            [self.selectedCellsTitlesArray removeObject:cell.title.text];
         } else {
-            [self.selectedCellsTitlesSet addObject:cell.title.text];
+            [self.selectedCellsTitlesArray addObject:cell.title.text];
         }
+        
+        [self.videoTypes reloadData];
     }
 
+    if ([self.selectedCellsTitlesArray count] > 2) {
+        self.nextButton.enabled = YES;
+    } else {
+        self.nextButton.enabled = NO;
+    }
+    
     [self markCellAtIndexPath:indexPath selected:!selected];
 }
 
@@ -544,8 +554,12 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     cell.thumbnail.image = image;
 
     BOOL selected = NO;
-    if ([self.selectedCellsTitlesSet containsObject:title]) {
-        selected = YES;
+    if (title) {
+        NSUInteger index = [self.selectedCellsTitlesArray indexOfObject:title];
+        if (index != NSNotFound) {
+            selected = YES;
+            cell.selectionCounter.text = [NSString stringWithFormat:@"%u", index + 1];
+        }
     }
     
     [self markCell:cell selected:selected];
@@ -557,7 +571,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return CGSizeMake(320, 155);
+        return CGSizeMake(320, 220);
     }
     
     return CGSizeMake(160, 160);
