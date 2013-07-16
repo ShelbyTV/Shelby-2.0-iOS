@@ -46,6 +46,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
 - (IBAction)goBack:(id)sender;
+- (IBAction)resignKeyboard:(id)sender;
 
 // Social Actions
 - (IBAction)connectoToFacebook:(id)sender;
@@ -222,6 +223,23 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)resignKeyboard:(id)sender
+{
+    UITextField *activeTextField = nil;
+    
+    if ([self.nameField isFirstResponder]) {
+        activeTextField = self.nameField;
+    } else if ([self.email isFirstResponder]) {
+        activeTextField = self.email;
+    } else if ([self.username isFirstResponder]) {
+        activeTextField = self.username;
+    } else if ([self.password isFirstResponder]) {
+        activeTextField = self.password;
+    }
+
+    [activeTextField resignFirstResponder];
+    [self resignActiveKeyboard:activeTextField];
+}
 - (void)popViewController
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -366,6 +384,14 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+- (void)resignActiveKeyboard:(UITextField *)textField
+{
+    if ([self.view respondsToSelector:@selector(textFieldWillReturn:)]) {
+        [self.view performSelector:@selector(textFieldWillReturn:) withObject:textField];
+    }
+}
+
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -388,15 +414,25 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
     // Set focus on the next TextField in the form. If last TextField, move view back down.
     //TODO: this should be moved in the individual views, since only they know what order their fields are in
+    
+    BOOL shouldResign = NO;
     NSInteger tag = textField.tag;
-    if (tag == TextFieldTagEmail) {
-        [self.username becomeFirstResponder];
+    if (tag == TextFieldTagName) {
+        [self.email becomeFirstResponder];
+    } else if (tag == TextFieldTagEmail) {
+        if (!self.username) {
+            shouldResign = YES;
+        } else {
+            [self.username becomeFirstResponder];
+        }
     } else if (tag == TextFieldTagUsername) {
         [self.password becomeFirstResponder];
+    } else {
+        shouldResign = YES;
     }
-
-    if ([self.view respondsToSelector:@selector(textFieldWillReturn:)]) {
-        [self.view performSelector:@selector(textFieldWillReturn:) withObject:textField];
+    
+    if (shouldResign) {
+        [self resignActiveKeyboard:textField];
     }
     
     return YES;
@@ -404,17 +440,23 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    // Varification for Name text Field (Making sure we have at least 2 alphanumeric characters - might to verify only character though 
-    if (textField == self.nameField) {
+    // Varification for Name text Field (Making sure we have at least 2 alphanumeric characters - might to verify only character though
+    if (textField == self.nameField || textField == self.email) {
         BOOL nextEnabled = NO;
-        NSString *text = textField.text;
+        NSString *text = self.nameField.text;
         if ([text length] > 0) {
             NSString *nonEmptySpaceString = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             
             if ([nonEmptySpaceString length] + [string length] > 1 + range.length) {
                 BOOL valid = [[string stringByTrimmingCharactersInSet:[NSCharacterSet alphanumericCharacterSet]] isEqualToString:@""];
                 if (valid) {
-                    nextEnabled = YES;
+                    // TODO: Now check email address validity - might need to tweak regex.
+                    NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+                    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
+                    
+                    if ([emailTest evaluateWithObject:self.email.text]) {
+                        nextEnabled = YES;
+                    }
                 }
             }
         }

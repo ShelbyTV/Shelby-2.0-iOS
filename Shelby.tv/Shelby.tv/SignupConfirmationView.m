@@ -48,6 +48,8 @@
     self.summaryLabel.text = [NSString stringWithFormat:@"%@, your stream is filling up!  Videos are coming from %@", self.name, self.videoTypes];
 }
 
+
+// TODO: we are not using text field in this method. This is more of a method for the view (caused by touching the textfield) - Should probably not pass textfield.
 - (void)textFieldWillBeginEditing:(UITextField *)textField
 {
     //move up so user can see our text fields
