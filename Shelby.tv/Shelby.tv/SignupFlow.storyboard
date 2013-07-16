@@ -37,7 +37,7 @@
                                     <outlet property="delegate" destination="sgp-ZG-jtU" id="br7-LB-lNZ"/>
                                 </connections>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2tk-Hq-yu9">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2tk-Hq-yu9">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="aQ7-iV-RFB"/>
                                     <constraint firstAttribute="height" constant="70" id="jhQ-h2-CDA"/>
