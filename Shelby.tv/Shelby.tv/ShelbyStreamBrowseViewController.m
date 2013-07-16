@@ -12,7 +12,9 @@
 #import "Frame.h"
 #import "Video.h"
 
-@interface ShelbyStreamBrowseViewController ()
+@interface ShelbyStreamBrowseViewController (){
+    UIInterfaceOrientation _currentlyPresentedInterfaceOrientation;
+}
 @property (nonatomic, strong) NSArray *entries;
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 
@@ -29,6 +31,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _currentlyPresentedInterfaceOrientation = UIInterfaceOrientationPortrait;
         _streamBrowseViewCells = [[NSMutableSet set] mutableCopy];
         _viewMode = ShelbyStreamBrowseViewDefault;
         _currentPage = 0;
@@ -77,6 +80,10 @@
     // But must call this before -didRotate; -reloadData invalidates the view layout.  If we wait until
     // -didRotate, the collectionView is already resized but the cells aren't and iOS logs the glitch.
     [self.collectionView reloadData];
+
+    //We track how our views are currently configured so we can adjust when moving to a parent VC that may be in
+    //a different orientation than we were when we were last actively part of a parent VC
+    _currentlyPresentedInterfaceOrientation = toInterfaceOrientation;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -97,6 +104,19 @@
     //our browseViewDelegate relies on our frame being correct when -viewDidScroll calls into it
     //so we update contentOffset in -didRotateFromInterfaceOrientation: to make sure context is set up properly for delegate
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, postRotationContentOffsetY)];
+
+
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent
+{
+    //if my orientation is different from my parents, adjust myself
+    //NB: Assuming our frame was set correctly before this is called
+    if ([[UIApplication sharedApplication] statusBarOrientation] != _currentlyPresentedInterfaceOrientation) {
+        UIInterfaceOrientation oldOrientation = _currentlyPresentedInterfaceOrientation;
+        [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+        [self didRotateFromInterfaceOrientation:oldOrientation];
+    }
 }
 
 #pragma mark - Setters & Getters
