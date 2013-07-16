@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *summaryLabel;
 @end
 
-#define kShelbySignupFlowViewYOffsetEditMode  (kShelbyFullscreenHeight > 480) ? -50 : -150
+#define kShelbySignupFlowViewYOffsetEditMode  (kShelbyFullscreenHeight > 480) ? -60 : -150
 
 @implementation SignupConfirmationView
 
