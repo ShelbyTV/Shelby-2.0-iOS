@@ -626,6 +626,9 @@
 		1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
 		1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
 		1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
+		1CDBEE721795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */; };
+		1CDBEE731795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */; };
+		1CDBEE741795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */; };
 		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
@@ -1176,6 +1179,8 @@
 		1CDBEE671794706A002ECD76 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1CDBEE6B1794A31F002ECD76 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		1CDBEE6C1794A320002ECD76 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		1CDBEE701795EA20002ECD76 /* SignupFlowFirstStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowFirstStepViewController.h; sourceTree = "<group>"; };
+		1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupFlowFirstStepViewController.m; sourceTree = "<group>"; };
 		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
 		1CFD671017203D5A00324A27 /* channelbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = channelbg.png; sourceTree = "<group>"; };
 		1CFD671117203D5A00324A27 /* channelbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channelbg@2x.png"; sourceTree = "<group>"; };
@@ -2389,6 +2394,8 @@
 				1CA191441774DD440039358B /* ShelbyStreamBrowseViewController.m */,
 				1C7B63C5178B15B5000C1E84 /* SignupFlowViewController.h */,
 				1C7B63C6178B15B5000C1E84 /* SignupFlowViewController.m */,
+				1CDBEE701795EA20002ECD76 /* SignupFlowFirstStepViewController.h */,
+				1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */,
 				1C7B63CA178B33B1000C1E84 /* SignupFlowNavigationViewController.h */,
 				1C7B63CB178B33B1000C1E84 /* SignupFlowNavigationViewController.m */,
 			);
@@ -3296,6 +3303,7 @@
 				91A362751790791100381218 /* SignupConfirmationView.m in Sources */,
 				1CDBEE691794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */,
+				1CDBEE731795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3426,6 +3434,7 @@
 				91A362761790791100381218 /* SignupConfirmationView.m in Sources */,
 				1CDBEE6A1794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */,
+				1CDBEE741795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3556,6 +3565,7 @@
 				91A362741790791100381218 /* SignupConfirmationView.m in Sources */,
 				1CDBEE681794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */,
+				1CDBEE721795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
