@@ -45,7 +45,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKA-Et-Ijp">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="87" id="dt4-Gl-gBF"/>
+                                    <constraint firstAttribute="height" constant="90" id="Vgl-mZ-Dgw"/>
                                     <constraint firstAttribute="width" constant="87" id="eXf-jk-YKW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
