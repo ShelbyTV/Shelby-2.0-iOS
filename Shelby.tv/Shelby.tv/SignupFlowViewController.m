@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 @property (weak, nonatomic) IBOutlet UIButton *chooseAvatarButton;
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
 @property (nonatomic, weak) IBOutlet UITextField *email;
+@property (nonatomic, weak) IBOutlet UILabel *emailLabel;
 @property (nonatomic, weak) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *nextButton;
@@ -139,8 +140,9 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         self.username.text = self.signupDictionary[kShelbySignupUsernameKey];
     }
 
-    if (self.signupDictionary[kShelbySignupEmailKey] && self.email) {
+    if (self.signupDictionary[kShelbySignupEmailKey] && (self.email || self.emailLabel)) {
         self.email.text = self.signupDictionary[kShelbySignupEmailKey];
+        self.emailLabel.text = self.signupDictionary[kShelbySignupEmailKey];
     }
 
     if (self.signupDictionary[kShelbySignupVideoTypesKey]) {

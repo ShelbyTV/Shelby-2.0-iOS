@@ -7,12 +7,13 @@
 //
 
 #import "SignupConfirmationView.h"
+#import "Constants.h"
 
 @interface SignupConfirmationView()
 @property (weak, nonatomic) IBOutlet UILabel *summaryLabel;
 @end
 
-#define kShelbySignupFlowViewYOriginEditMode -180
+#define kShelbySignupFlowViewYOffsetEditMode  (kShelbyFullscreenHeight > 480) ? -50 : -150
 
 @implementation SignupConfirmationView
 
@@ -54,7 +55,7 @@
 {
     //move up so user can see our text fields
     [UIView animateWithDuration:0.2 animations:^{
-        self.frame = CGRectMake(0, kShelbySignupFlowViewYOriginEditMode, self.frame.size.width, self.frame.size.height);
+        self.frame = CGRectMake(0, kShelbySignupFlowViewYOffsetEditMode, self.frame.size.width, self.frame.size.height);
     }];
 }
 
