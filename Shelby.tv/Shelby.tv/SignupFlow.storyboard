@@ -515,7 +515,7 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DvA-F4-1Pg" customClass="BlinkingLabel">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="102" id="6pZ-ty-NrW"/>
+                                    <constraint firstAttribute="width" constant="120" id="f5Z-cr-3vY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
