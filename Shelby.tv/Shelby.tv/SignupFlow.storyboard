@@ -352,7 +352,7 @@
             </objects>
             <point key="canvasLocation" x="1113" y="-171"/>
         </scene>
-        <!--Signup Flow View Controller - Thank You.-->
+        <!--Signup Flow View Controller - Thanks!-->
         <scene sceneID="k8P-xK-euL">
             <objects>
                 <viewController id="1I6-gt-YXr" customClass="SignupFlowViewController" sceneMemberID="viewController">
@@ -489,7 +489,7 @@
                             <constraint firstItem="nQa-fx-j5X" firstAttribute="centerX" secondItem="3iV-a1-g7n" secondAttribute="centerX" type="default" id="xJa-Jx-8Jk"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Thank You." id="n1r-LP-Ce5">
+                    <navigationItem key="navigationItem" title="Thanks!" id="n1r-LP-Ce5">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="K0S-vp-OJB"/>
                         <barButtonItem key="rightBarButtonItem" title="Go to my stream" id="dIT-4X-7Ww">
                             <connections>
