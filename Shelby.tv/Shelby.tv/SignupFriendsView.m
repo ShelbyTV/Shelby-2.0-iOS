@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *spamSwitch;
 @end
 
+// TODO: delete - not using this anymore - but leaving for now as we might change signup flow :-)
 @implementation SignupFriendsView
 
 - (id)initWithFrame:(CGRect)frame

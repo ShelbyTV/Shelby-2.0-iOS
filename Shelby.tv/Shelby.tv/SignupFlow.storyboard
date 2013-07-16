@@ -234,18 +234,18 @@
         <scene sceneID="bP7-YO-hjo">
             <objects>
                 <viewController id="tUF-cC-Ycq" customClass="SignupFlowViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="lOZ-yG-UMD" customClass="SignupFriendsView">
+                    <view key="view" contentMode="scaleToFill" id="lOZ-yG-UMD">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="VEZ-cK-rZH">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="iRq-3t-cWj"/>
+                                    <constraint firstAttribute="width" constant="60" id="0m1-vW-d5P"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofg-zc-5dU">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="bwa-VB-KZE"/>
+                                    <constraint firstAttribute="height" constant="60" id="qA3-En-Vy9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal">
@@ -259,11 +259,12 @@
                                     <action selector="assignAvatar:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="J7r-zc-9uM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="&lt;name>, you might be surprised by the videos your friends like ;-)" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="232" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT" userLabel="Name">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You might be surprised by the videos your friends like ;-)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="206" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT" userLabel="Name">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="232" id="oQV-Ot-oTX"/>
+                                    <constraint firstAttribute="height" constant="83" id="bIA-Xz-Ptn"/>
+                                    <constraint firstAttribute="width" constant="206" id="oGN-aF-IHp"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="19"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -293,57 +294,46 @@
                                     <action selector="connectoToFacebook:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="RIg-B8-5FG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Add friends' videos to your stream..." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="285" translatesAutoresizingMaskIntoConstraints="NO" id="ZfI-nn-4CG">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Add friends' videos to your stream." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="285" translatesAutoresizingMaskIntoConstraints="NO" id="ZfI-nn-4CG">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="fmc-RE-0Me"/>
                                     <constraint firstAttribute="width" constant="285" id="s1a-9I-96z"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please spam my friends" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zch-CB-dJt">
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6UD-Oi-uR1">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We never spam." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zch-CB-dJt">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="77" id="BBw-4D-EMP"/>
+                                    <constraint firstAttribute="width" constant="195" id="Lmh-hj-1xj"/>
+                                    <constraint firstAttribute="height" constant="22" id="kFz-c9-ITH"/>
                                 </constraints>
-                                <connections>
-                                    <action selector="spamSwitchChanged:" destination="lOZ-yG-UMD" eventType="valueChanged" id="fbH-Zx-TfN"/>
-                                </connections>
-                            </switch>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" red="0.67843137249999996" green="0.67843137249999996" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ofg-zc-5dU" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="12" id="0ZO-Ge-CHO"/>
-                            <constraint firstItem="6UD-Oi-uR1" firstAttribute="centerY" secondItem="zch-CB-dJt" secondAttribute="centerY" type="default" id="1nE-n0-xNY"/>
-                            <constraint firstItem="ZfI-nn-4CG" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="119" id="3Xs-WN-iMs"/>
                             <constraint firstItem="ofg-zc-5dU" firstAttribute="top" secondItem="VEZ-cK-rZH" secondAttribute="top" type="default" id="AJL-i7-WKL"/>
                             <constraint firstItem="NlN-4t-7g7" firstAttribute="top" secondItem="Tce-ZC-snW" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="DZo-qN-PuK"/>
                             <constraint firstItem="VEZ-cK-rZH" firstAttribute="leading" secondItem="ofg-zc-5dU" secondAttribute="leading" type="default" id="GVi-dN-7FD"/>
-                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="top" secondItem="VEZ-cK-rZH" secondAttribute="top" type="default" id="HjH-IH-nRQ"/>
+                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="top" secondItem="VEZ-cK-rZH" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="HWQ-rB-E3J"/>
                             <constraint firstAttribute="trailing" secondItem="NlN-4t-7g7" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="K64-g9-qxm"/>
-                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="82" id="TIV-CY-qWG"/>
+                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="centerX" secondItem="Tce-ZC-snW" secondAttribute="centerX" type="default" id="MQ6-hm-2cy"/>
+                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="top" secondItem="ofg-zc-5dU" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Maf-v4-Zvn"/>
+                            <constraint firstItem="VEZ-cK-rZH" firstAttribute="centerX" secondItem="SSJ-0W-AXT" secondAttribute="centerX" type="default" id="SYS-5t-3Rd"/>
+                            <constraint firstAttribute="bottom" secondItem="zch-CB-dJt" secondAttribute="bottom" constant="39" id="XRn-dE-Zmx"/>
                             <constraint firstItem="NlN-4t-7g7" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="aNy-L7-a15"/>
                             <constraint firstAttribute="trailing" secondItem="Tce-ZC-snW" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="fzP-hW-jY1"/>
-                            <constraint firstAttribute="bottom" secondItem="6UD-Oi-uR1" secondAttribute="bottom" constant="92" id="jHn-3I-q3j"/>
-                            <constraint firstItem="zch-CB-dJt" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="lJa-P8-7cY"/>
+                            <constraint firstItem="ZfI-nn-4CG" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="159" id="gaL-q2-kVQ"/>
                             <constraint firstItem="ZfI-nn-4CG" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="pu7-1N-Fm9"/>
-                            <constraint firstItem="ofg-zc-5dU" firstAttribute="bottom" secondItem="VEZ-cK-rZH" secondAttribute="bottom" type="default" id="sBH-UN-wxQ"/>
                             <constraint firstItem="Tce-ZC-snW" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="tVG-DW-BTq"/>
-                            <constraint firstItem="Tce-ZC-snW" firstAttribute="top" secondItem="ZfI-nn-4CG" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="tYZ-Tt-Icf"/>
-                            <constraint firstItem="6UD-Oi-uR1" firstAttribute="leading" secondItem="zch-CB-dJt" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="u1r-Ex-clS"/>
+                            <constraint firstItem="zch-CB-dJt" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="54" id="tXl-eI-cZt"/>
                             <constraint firstItem="ofg-zc-5dU" firstAttribute="trailing" secondItem="VEZ-cK-rZH" secondAttribute="trailing" type="default" id="uKB-B7-eiV"/>
-                            <constraint firstAttribute="trailing" secondItem="6UD-Oi-uR1" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="v02-n5-fg3"/>
-                            <constraint firstItem="VEZ-cK-rZH" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="5" id="wqA-up-Nkv"/>
+                            <constraint firstAttribute="bottom" secondItem="NlN-4t-7g7" secondAttribute="bottom" constant="109" id="zgP-bY-NnT"/>
                         </constraints>
-                        <connections>
-                            <outlet property="nameCopyLabel" destination="SSJ-0W-AXT" id="VUK-NS-CEm"/>
-                            <outlet property="spamSwitch" destination="6UD-Oi-uR1" id="9Fg-on-3DR"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Video from Friends" id="inz-d9-z8u">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="p6p-Iy-q22"/>
@@ -528,13 +518,6 @@
                 <relationship kind="outlet" name="password" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="username" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="videoTypes" candidateClass="UICollectionView"/>
-            </relationships>
-        </class>
-        <class className="SignupFriendsView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFriendsView.h"/>
-            <relationships>
-                <relationship kind="outlet" name="nameCopyLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="spamSwitch" candidateClass="UISwitch"/>
             </relationships>
         </class>
         <class className="SignupUserInfoCell" superclassName="UICollectionViewCell">
