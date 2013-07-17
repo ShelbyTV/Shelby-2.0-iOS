@@ -12,7 +12,6 @@
 #import <HockeySDK/HockeySDK.h>
 #import "FacebookHandler.h"
 #import "GAI.h"
-#import "Harpy.h"
 #import "ShelbyBrain.h"
 
 #ifdef SHELBY_ENTERPRISE
@@ -157,13 +156,6 @@
 
 - (void)setupAnalytics
 {
-    [[Harpy sharedInstance] setAppID:@"467849037"];
-    [[Harpy sharedInstance] setAlertType:HarpyAlertTypeOption];
-    [[Harpy sharedInstance] checkVersion];
-    
-    // TODO - Uncomment for AppStore
-    // [Panhandler sharedInstance];
-    
     [GAI sharedInstance].trackUncaughtExceptions = YES; // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].dispatchInterval = 20;         // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].debug = NO;                    // Optional: set to YES for extra debugging information.

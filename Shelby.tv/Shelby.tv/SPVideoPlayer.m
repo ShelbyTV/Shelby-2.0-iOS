@@ -101,9 +101,6 @@
         return;
     }
     
-    // TODO - Uncomment for AppStore ?
-    //[[Panhandler sharedInstance] recordEvent];
-    
     // Setup player and observers
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];

@@ -238,8 +238,6 @@
 		1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C81099B16EE2CBF0030077C /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
 		1C81099D16EE2CBF0030077C /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
-		1C81099E16EE2CBF0030077C /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7716E4FD42009EC83D /* Harpy.m */; };
-		1C81099F16EE2CBF0030077C /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7B16E4FD42009EC83D /* Panhandler.m */; };
 		1C8109A016EE2CBF0030077C /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
 		1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAD16E67365000567D4 /* AFImageRequestOperation.m */; };
@@ -347,8 +345,6 @@
 		1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C810A5116EE5EED0030077C /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
 		1C810A5316EE5EED0030077C /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
-		1C810A5416EE5EED0030077C /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7716E4FD42009EC83D /* Harpy.m */; };
-		1C810A5516EE5EED0030077C /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7B16E4FD42009EC83D /* Panhandler.m */; };
 		1C810A5616EE5EED0030077C /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
 		1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAD16E67365000567D4 /* AFImageRequestOperation.m */; };
@@ -789,9 +785,6 @@
 		8E9FBD5D16C7145F00731912 /* authenticationLoginView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5516C7145F00731912 /* authenticationLoginView@2x.png */; };
 		8E9FBD5E16C7145F00731912 /* authenticationTextField.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5616C7145F00731912 /* authenticationTextField.png */; };
 		8E9FBD5F16C7145F00731912 /* authenticationTextField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */; };
-		8EA10D8C1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
-		8EA10D8D1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
-		8EA10D8E1725A9DD00B90571 /* Harpy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EA10D8B1725A9DD00B90571 /* Harpy.bundle */; };
 		8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EAB0069171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EAB006A171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
@@ -799,8 +792,6 @@
 		8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
 		8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
 		8EC65F7C16E4FD42009EC83D /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
-		8EC65F7E16E4FD42009EC83D /* Harpy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7716E4FD42009EC83D /* Harpy.m */; };
-		8EC65F8016E4FD42009EC83D /* Panhandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7B16E4FD42009EC83D /* Panhandler.m */; };
 		8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		8EEED7A816800DAC00D9F4CD /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */; };
@@ -1338,7 +1329,6 @@
 		8E9FBD5516C7145F00731912 /* authenticationLoginView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationLoginView@2x.png"; sourceTree = "<group>"; };
 		8E9FBD5616C7145F00731912 /* authenticationTextField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = authenticationTextField.png; sourceTree = "<group>"; };
 		8E9FBD5716C7145F00731912 /* authenticationTextField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "authenticationTextField@2x.png"; sourceTree = "<group>"; };
-		8EA10D8B1725A9DD00B90571 /* Harpy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Harpy.bundle; sourceTree = "<group>"; };
 		8EAB0066171F27E20021DF31 /* SPVideoItemViewCellLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemViewCellLabel.h; sourceTree = "<group>"; };
 		8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemViewCellLabel.m; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -1348,10 +1338,6 @@
 		8EB950561665BD4000E965E0 /* SPVideoReel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoReel.m; sourceTree = "<group>"; };
 		8EC65F7316E4FD42009EC83D /* AsynchronousFreeloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousFreeloader.h; sourceTree = "<group>"; };
 		8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
-		8EC65F7616E4FD42009EC83D /* Harpy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harpy.h; sourceTree = "<group>"; };
-		8EC65F7716E4FD42009EC83D /* Harpy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Harpy.m; sourceTree = "<group>"; };
-		8EC65F7A16E4FD42009EC83D /* Panhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panhandler.h; sourceTree = "<group>"; };
-		8EC65F7B16E4FD42009EC83D /* Panhandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Panhandler.m; sourceTree = "<group>"; };
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
 		8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
@@ -2203,8 +2189,6 @@
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
 				8EC65F7216E4FD42009EC83D /* Asynchronous-Freeloader */,
-				8EC65F7516E4FD42009EC83D /* Harpy */,
-				8EC65F7916E4FD42009EC83D /* Panhandler */,
 			);
 			name = Library;
 			path = Shelby.tv;
@@ -2265,27 +2249,6 @@
 			);
 			name = "Asynchronous-Freeloader";
 			path = "Library/Asynchronous-Freeloader";
-			sourceTree = SOURCE_ROOT;
-		};
-		8EC65F7516E4FD42009EC83D /* Harpy */ = {
-			isa = PBXGroup;
-			children = (
-				8EC65F7616E4FD42009EC83D /* Harpy.h */,
-				8EC65F7716E4FD42009EC83D /* Harpy.m */,
-				8EA10D8B1725A9DD00B90571 /* Harpy.bundle */,
-			);
-			name = Harpy;
-			path = Library/Harpy;
-			sourceTree = SOURCE_ROOT;
-		};
-		8EC65F7916E4FD42009EC83D /* Panhandler */ = {
-			isa = PBXGroup;
-			children = (
-				8EC65F7A16E4FD42009EC83D /* Panhandler.h */,
-				8EC65F7B16E4FD42009EC83D /* Panhandler.m */,
-			);
-			name = Panhandler;
-			path = Library/Panhandler;
 			sourceTree = SOURCE_ROOT;
 		};
 		8EEED7A416800DAC00D9F4CD /* Fonts */ = {
@@ -2696,7 +2659,6 @@
 				1C6ACFFA1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFD1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6AD0001721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
-				8EA10D8D1725A9DD00B90571 /* Harpy.bundle in Resources */,
 				1CACC0B417287298007EDD65 /* SettingsView.xib in Resources */,
 				1CC75ADD172AF2FC004805A5 /* connectedfacebook.png in Resources */,
 				1CC75AE0172AF2FC004805A5 /* connectedfacebook@2x.png in Resources */,
@@ -2889,7 +2851,6 @@
 				1C6ACFFB1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFE1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6AD0011721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
-				8EA10D8E1725A9DD00B90571 /* Harpy.bundle in Resources */,
 				1CACC0B517287298007EDD65 /* SettingsView.xib in Resources */,
 				1CC75ADE172AF2FC004805A5 /* connectedfacebook.png in Resources */,
 				1CC75AE1172AF2FC004805A5 /* connectedfacebook@2x.png in Resources */,
@@ -3083,7 +3044,6 @@
 				1C6ACFF91721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFC1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6ACFFF1721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
-				8EA10D8C1725A9DD00B90571 /* Harpy.bundle in Resources */,
 				1CACC0B317287298007EDD65 /* SettingsView.xib in Resources */,
 				1CC75ADC172AF2FC004805A5 /* connectedfacebook.png in Resources */,
 				1CC75ADF172AF2FC004805A5 /* connectedfacebook@2x.png in Resources */,
@@ -3211,8 +3171,6 @@
 				1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */,
 				1C81099B16EE2CBF0030077C /* UIImage+Scale.m in Sources */,
 				1C81099D16EE2CBF0030077C /* AsynchronousFreeloader.m in Sources */,
-				1C81099E16EE2CBF0030077C /* Harpy.m in Sources */,
-				1C81099F16EE2CBF0030077C /* Panhandler.m in Sources */,
 				1C8109A016EE2CBF0030077C /* AFHTTPClient.m in Sources */,
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */,
@@ -3343,8 +3301,6 @@
 				1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */,
 				1C810A5116EE5EED0030077C /* UIImage+Scale.m in Sources */,
 				1C810A5316EE5EED0030077C /* AsynchronousFreeloader.m in Sources */,
-				1C810A5416EE5EED0030077C /* Harpy.m in Sources */,
-				1C810A5516EE5EED0030077C /* Panhandler.m in Sources */,
 				1C810A5616EE5EED0030077C /* AFHTTPClient.m in Sources */,
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */,
@@ -3475,8 +3431,6 @@
 				1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */,
 				1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */,
 				8EC65F7C16E4FD42009EC83D /* AsynchronousFreeloader.m in Sources */,
-				8EC65F7E16E4FD42009EC83D /* Harpy.m in Sources */,
-				8EC65F8016E4FD42009EC83D /* Panhandler.m in Sources */,
 				8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */,
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
 				8E01AFBD16E67365000567D4 /* AFImageRequestOperation.m in Sources */,
