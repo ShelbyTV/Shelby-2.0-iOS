@@ -9,6 +9,8 @@
 #import "SignupFlowViewController.h"
 #import "BlinkingLabel.h"
 #import "SignupVideoTypeViewCell.h"
+#import "ShelbyDataMediator.h"
+#import "User.h"
 
 NSString * const kShelbySignupAvatarKey          = @"SignupAvatar";
 NSString * const kShelbySignupEmailKey           = @"SignupEmail";
@@ -30,15 +32,17 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 };
 
 @interface SignupFlowViewController ()
-@property (weak, nonatomic) IBOutlet UIButton *chooseAvatarButton;
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
 @property (weak, nonatomic) IBOutlet BlinkingLabel *blinkingLabel;
+@property (weak, nonatomic) IBOutlet UIButton *chooseAvatarButton;
 @property (nonatomic, weak) IBOutlet UITextField *email;
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
+@property (nonatomic, weak) IBOutlet UIButton *facebookButton;
 @property (nonatomic, weak) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *nextButton;
 @property (nonatomic, weak) IBOutlet UITextField *password;
+@property (nonatomic, weak) IBOutlet UIButton *twitterButton;
 @property (nonatomic, weak) IBOutlet UITextField *username;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
 @property (nonatomic, strong) NSMutableArray *selectedCellsTitlesArray;
@@ -108,6 +112,11 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     if (self.nextButton && ([self.nameField.text isEqualToString:@""] || self.videoTypes || [self.username.text isEqualToString:@""])) {
         self.nextButton.enabled = NO;
     }
+    
+    // If Third Step - signup to TW & FB notifications
+    if (self.facebookButton) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSocialButtons) name:kShelbyNotificationTwitterConnectCompleted object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSocialButtons) name:kShelbyNotificationFacebookConnectCompleted object:nil];    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -168,6 +177,29 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // We are on Third Step
+    if (self.facebookButton) {
+        [self refreshSocialButtons];
+    }
+}
+
+- (void)refreshSocialButtons
+{
+    // We might come from a background thread - so make sure we switch to main thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+        if (user.facebookUID) {
+            self.facebookButton.enabled = NO;
+        }
+        if (user.twitterUID) {
+            self.twitterButton.enabled = NO;
+        }
+    });
+}
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];

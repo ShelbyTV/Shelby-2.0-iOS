@@ -345,6 +345,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="avatar" destination="VEZ-cK-rZH" id="MxP-x0-955"/>
+                        <outlet property="facebookButton" destination="Tce-ZC-snW" id="YKm-sG-0aN"/>
+                        <outlet property="twitterButton" destination="NlN-4t-7g7" id="ype-X2-NJd"/>
                         <segue destination="1I6-gt-YXr" kind="push" identifier="MyAccount" id="jJ9-nI-qnN"/>
                     </connections>
                 </viewController>
@@ -628,10 +630,12 @@
                 <relationship kind="outlet" name="chooseAvatarButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="email" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nameField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="password" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="username" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="videoTypes" candidateClass="UICollectionView"/>
             </relationships>

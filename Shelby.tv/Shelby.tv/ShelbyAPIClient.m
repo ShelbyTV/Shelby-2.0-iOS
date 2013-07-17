@@ -463,7 +463,7 @@ toExternalDestinations:(NSArray *)destinations
             shelbyAuthToken:(NSString *)authToken
                    andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    if (!provider || !accountID || !token) {
+    if (!provider || !accountID || !token || !authToken) {
         return;
     }
     

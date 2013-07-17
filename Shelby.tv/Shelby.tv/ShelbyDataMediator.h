@@ -12,6 +12,8 @@
 #import "User+Helper.h"
 
 extern NSString * const kShelbyOfflineLikesID;
+extern NSString * const kShelbyNotificationFacebookConnectCompleted;
+extern NSString * const kShelbyNotificationTwitterConnectCompleted;
 
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>

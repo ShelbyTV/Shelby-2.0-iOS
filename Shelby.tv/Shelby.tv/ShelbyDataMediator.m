@@ -19,6 +19,8 @@
 #import "User+Helper.h"
 
 NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
+NSString * const kShelbyNotificationFacebookConnectCompleted = @"kShelbyNotificationFacebookConnectCompleted";
+NSString * const kShelbyNotificationTwitterConnectCompleted = @"kShelbyNotificationTwitterConnectCompleted";
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -551,6 +553,8 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
                                                
                                                 [self.delegate facebookConnectDidComplete];
                                                
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookConnectCompleted object:nil];
+
                                                 if (askForPublishPermission) {
                                                     [[FacebookHandler sharedInstance] askForPublishPermissions];
                                                 }

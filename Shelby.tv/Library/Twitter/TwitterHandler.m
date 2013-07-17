@@ -12,6 +12,7 @@
 #import "AuthenticateTwitterViewController.h"
 #import "OAuthConsumer.h"
 #import <Social/Social.h>
+#import "ShelbyDataMediator.h"
 #import "ShelbyAPIClient.h"
 #import "User+Helper.h"
 
@@ -415,6 +416,8 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     
                     [self.delegate twitterConnectDidComplete];
                     
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterConnectCompleted object:nil];
+
                     if (name) {
                         [[NSUserDefaults standardUserDefaults] setObject:name forKey:kShelbyTwitterUsername];
                         [[NSUserDefaults standardUserDefaults] synchronize];
