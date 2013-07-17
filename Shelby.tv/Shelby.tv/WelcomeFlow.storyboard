@@ -11,33 +11,7 @@
                     <view key="view" contentMode="scaleToFill" id="iv3-Tn-Ii2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Welcome!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pGl-Yl-cLz">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Y7-em-wwD">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Complete">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="completeTestTapped:" destination="hee-p5-1G5" eventType="touchUpInside" id="lOt-lS-Uc6"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="1Y7-em-wwD" firstAttribute="centerX" secondItem="pGl-Yl-cLz" secondAttribute="centerX" type="default" id="4k5-kS-OiA"/>
-                            <constraint firstItem="pGl-Yl-cLz" firstAttribute="top" secondItem="iv3-Tn-Ii2" secondAttribute="top" constant="273" id="8jL-aw-D3S"/>
-                            <constraint firstAttribute="bottom" secondItem="1Y7-em-wwD" secondAttribute="bottom" constant="146" id="eLA-PM-clV"/>
-                            <constraint firstItem="1Y7-em-wwD" firstAttribute="centerX" secondItem="iv3-Tn-Ii2" secondAttribute="centerX" type="default" id="kY2-F9-Yyo"/>
-                        </constraints>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                 </viewController>

@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyViewController.h"
+#import "STVParallaxView.h"
 
 @class WelcomeFlowViewController;
 
