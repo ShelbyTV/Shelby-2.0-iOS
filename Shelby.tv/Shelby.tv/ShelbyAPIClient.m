@@ -22,7 +22,7 @@ NSString * const kShelbyAPIGetShortLinkPath =               @"v1/frame/%@/short_
 NSString * const kShelbyAPIGetRollFramesPath =              @"v1/roll/%@/frames";
 NSString * const kShelbyAPIGetAllChannelsPath =             @"v1/roll/featured";
 NSString * const kShelbyAPIGetChannelDashboardEntriesPath = @"v1/user/%@/dashboard";
-NSString * const kShelbyAPIGetUser =                        @"v1/user/%@";
+NSString * const kShelbyAPIGetUserPath =                        @"v1/user/%@";
 NSString * const POST =    @"POST";
 NSString * const kShelbyAPIPostFrameLikePath =              @"v1/frame/%@/like";
 NSString * const kShelbyAPIPostExternalShare =              @"v1/frame/%@/share";
@@ -32,7 +32,7 @@ NSString * const kShelbyAPIPostLoginPath =                  @"v1/token";
 NSString * const kShelbyAPIPostThirdPartyTokenPath =        @"v1/token";
 NSString * const kShelbyAPIPostSignupPath =                 @"v1/user";
 NSString * const PUT =     @"PUT";
-NSString * const kShelbyAPIPutGAClientIdPath =              @"v1/user/%@";
+NSString * const kShelbyAPIPutUserPath =              @"v1/user/%@";
 NSString * const kShelbyAPIPutUnplayableVideoPath =         @"v1/video/%@/unplayable";
 
 NSString * const kShelbyAPIParamAuthToken =                 @"auth_token";
@@ -151,7 +151,7 @@ static AFHTTPClient *httpClient = nil;
     }
     
     NSURLRequest *request = [self requestWithMethod:GET
-                                            forPath:[NSString stringWithFormat:kShelbyAPIGetUser, userID]
+                                            forPath:[NSString stringWithFormat:kShelbyAPIGetUserPath, userID]
                                 withQueryParameters:nil
                                       shouldAddAuth:NO];
 
@@ -176,7 +176,7 @@ static AFHTTPClient *httpClient = nil;
     NSDictionary *params = @{kShelbyAPIParamGAClientID: clientID,
                              kShelbyAPIParamAuthToken: user.token};
     NSURLRequest *request = [self requestWithMethod:PUT
-                                            forPath:[NSString stringWithFormat:kShelbyAPIPutGAClientIdPath, user.userID]
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPutUserPath, user.userID]
                                 withQueryParameters:params
                                       shouldAddAuth:NO];
  
