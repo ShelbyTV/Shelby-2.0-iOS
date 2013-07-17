@@ -24,6 +24,11 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 @interface ShelbyBrain()
+
+//our two primary view controllers
+@property (strong, nonatomic) WelcomeFlowViewController *welcomeVC;
+@property (strong, nonatomic) ShelbyHomeViewController *homeVC;
+
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
 @property (nonatomic, strong) DisplayChannel *currentChannel;
 
@@ -42,34 +47,44 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 @implementation ShelbyBrain
 
-//TODO: assert singletone pattern in init method
-
-- (void)setup
-{
-    [ShelbyDataMediator sharedInstance].delegate = self;
-    
-    if (!self.dvrController){
-        self.dvrChannel = [DisplayChannel channelForTransientEntriesWithID:kShelbyDVRDisplayChannelID
-                                                                     title:@"DVR"
-                                                                 inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        self.dvrController = [[ShelbyDVRController alloc] init];
-    }
-    
-#ifndef DEBUG
-    if (![self tutorialCompleted] && DEVICE_IPAD) {
-        self.currentPlayerTutorialMode = SPTutorialModeShow;
-        self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeShow;
-    }
-#endif
-}
-
-
 - (void)handleDidBecomeActive
 {
+    if (![WelcomeFlowViewController isWelcomeComplete]) {
+        [self activeWelcomeFlowViewController];
+    } else {
+        [self activateHomeViewController];
+    }
+    [self.mainWindow makeKeyAndVisible];
+}
+
+- (void)activeWelcomeFlowViewController
+{
+    UIStoryboard *welcomeStoryboard = [UIStoryboard storyboardWithName:@"WelcomeFlow" bundle:nil];
+    self.welcomeVC = [welcomeStoryboard instantiateInitialViewController];
+    self.welcomeVC.delegate = self;
+    self.mainWindow.rootViewController = self.welcomeVC;
+}
+
+- (void)activateHomeViewController
+{
+    NSString *rootViewControllerNibName = nil;
+    if (DEVICE_IPAD) {
+        rootViewControllerNibName = @"ShelbyHomeView";
+    } else {
+        rootViewControllerNibName = @"ShelbyHomeView-iPhone";
+    }
+    self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
+    self.mainWindow.rootViewController = self.homeVC;
+    self.welcomeVC = nil;
+
+    [ShelbyDataMediator sharedInstance].delegate = self;
+
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     self.homeVC.currentUser = currentUser;
     self.homeVC.masterDelegate = self;
     //TODO: detect sleep time and remove player if it's been too long
+
+    [self setupDVR];
   
     // If user is not logged in, fetch unsynced likes. (KP KP: We might want to still fetch/merge unsynced likes with Likes Roll for logged in user)
     if (!currentUser) {
@@ -84,7 +99,14 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
         }
         [[ShelbyDataMediator sharedInstance] fetchChannels];
     }
-    
+}
+
+- (void)setupDVR
+{
+    self.dvrChannel = [DisplayChannel channelForTransientEntriesWithID:kShelbyDVRDisplayChannelID
+                                                                 title:@"DVR"
+                                                             inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    self.dvrController = [[ShelbyDVRController alloc] init];
 }
 
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification
@@ -735,6 +757,13 @@ typedef struct _ShelbyArrayMergeInstructions {
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyTutorialMode];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+# pragma mark - WelcomeFlowDelegate
+
+- (void)welcomeFlowDidTapPreview:(WelcomeFlowViewController *)welcomeFlowVC
+{
+    [self activateHomeViewController];
 }
 
 @end

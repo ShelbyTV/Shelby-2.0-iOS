@@ -988,6 +988,12 @@
 		91F0CC051730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 		91F0CC061730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 		91F0CC071730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
+		91F168171797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
+		91F168181797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
+		91F168191797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
+		91F1681D17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
+		91F1681E17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
+		91F1681F17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
 		91FCC6A0174A8F14004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 		91FCC6A1174A8F1F004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 		91FCC6A2174A8F25004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
@@ -1469,6 +1475,9 @@
 		91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyDataMediator.m; sourceTree = "<group>"; };
 		91F0CC031730154E008B5B34 /* User+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Helper.h"; sourceTree = "<group>"; };
 		91F0CC041730154E008B5B34 /* User+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Helper.m"; sourceTree = "<group>"; };
+		91F168161797122200AF8A2E /* WelcomeFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeFlow.storyboard; sourceTree = "<group>"; };
+		91F1681B17971A2C00AF8A2E /* WelcomeFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeFlowViewController.h; sourceTree = "<group>"; };
+		91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeFlowViewController.m; sourceTree = "<group>"; };
 		91FCC69F174A8F14004255F5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1722,6 +1731,7 @@
 				1C7B63DD178B7B21000C1E84 /* SignupVideoTypeViewCell.xib */,
 				1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */,
 				9188F230178C99F7002F342B /* ShelbyNavBarView.xib */,
+				91F168161797122200AF8A2E /* WelcomeFlow.storyboard */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2366,6 +2376,8 @@
 				1CDBEE711795EA21002ECD76 /* SignupFlowFirstStepViewController.m */,
 				1C7B63CA178B33B1000C1E84 /* SignupFlowNavigationViewController.h */,
 				1C7B63CB178B33B1000C1E84 /* SignupFlowNavigationViewController.m */,
+				91F1681B17971A2C00AF8A2E /* WelcomeFlowViewController.h */,
+				91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2752,6 +2764,7 @@
 				91A362981790822D00381218 /* vice.png in Resources */,
 				91A3629B1790822D00381218 /* vogue.png in Resources */,
 				91A3629E1790822D00381218 /* wired.png in Resources */,
+				91F168181797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2944,6 +2957,7 @@
 				91A362991790822D00381218 /* vice.png in Resources */,
 				91A3629C1790822D00381218 /* vogue.png in Resources */,
 				91A3629F1790822D00381218 /* wired.png in Resources */,
+				91F168191797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3137,6 +3151,7 @@
 				91A362971790822D00381218 /* vice.png in Resources */,
 				91A3629A1790822D00381218 /* vogue.png in Resources */,
 				91A3629D1790822D00381218 /* wired.png in Resources */,
+				91F168171797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3270,6 +3285,7 @@
 				1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE731795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
 				1CDBEE781795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
+				91F1681E17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3400,6 +3416,7 @@
 				1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE741795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
 				1CDBEE791795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
+				91F1681F17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3530,6 +3547,7 @@
 				1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE721795EA21002ECD76 /* SignupFlowFirstStepViewController.m in Sources */,
 				1CDBEE771795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
+				91F1681D17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -57,22 +57,10 @@
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
     }
     
-    // Create UIWindow and rootViewController
+    // Brain will set proper ViewController on window and makeKeyAndVisible during -applicationDidBecomeActive:
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    NSString *rootViewControllerNibName = nil;
-    if (DEVICE_IPAD) {
-        rootViewControllerNibName = @"ShelbyHomeView";
-    } else {
-        rootViewControllerNibName = @"ShelbyHomeView-iPhone";
-    }
-    
-    ShelbyHomeViewController *homeViewController = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
-    self.window.rootViewController = homeViewController;
     self.brain = [[ShelbyBrain alloc] init];
-    [self.brain setup];
-    self.brain.homeVC = homeViewController;
-    [self.window makeKeyAndVisible];
+    self.brain.mainWindow = self.window;
 
     // Handle launching from a notification
     UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
@@ -81,7 +69,6 @@
         [self fireLocalNotification:notification];
     }
     
-
     return YES;
 }
 
@@ -94,7 +81,6 @@
     }
 
 }
-
 
 - (void)fireLocalNotification:(UILocalNotification *)notifcation
 {
