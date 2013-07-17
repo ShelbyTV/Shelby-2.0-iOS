@@ -39,6 +39,31 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     return sharedInstance;
 }
 
+/*
+ * New pattern for using ManagedObjectContexts...
+ *
+ * After watching WWDC 2012 #214 and reading http://www.objc.io/issue-2/common-background-practices.html
+ *
+ * Internal to this class, we should...
+ * 1) create, and hang on to, a permenent privateQueueContext
+ * 2) have it register for change notifications and merge them into itself
+ * 3) have the mainThread context register for change notifications and merge them into itself as well
+ * 4) Re-work the API fetch->save->dispatch logic as follows...
+ *      -initial fetch-
+ *      1) CoreData-only initial fetching can just use the main thread, it's going to be fast
+ *      -API fetch-
+ *      1) do the fetch, then SAVE using a block from private queue
+ *      2) send them to the UI on the main thread MoC like we're already doing
+ *          ** make sure the main thread MoC got the notification before this runs **
+ *
+ *
+ *
+ * Externally, if anybody uses createPrivateQueueContext or mainThreadContext need to make sure....
+ * 1) They are performing operations using block syntax.
+ * 2) They don't hang on to the context
+ *
+ */
+
 - (void)fetchChannels
 {
     // 1) go to CoreData and hit up the delegate on main thread
