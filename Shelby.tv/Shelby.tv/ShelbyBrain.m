@@ -724,6 +724,11 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[ShelbyDataMediator sharedInstance] signupUserWithName:name andEmail:email];
 }
 
+- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
+{
+    [[ShelbyDataMediator sharedInstance] completeSignupUserWithUsername:username andPassword:password];
+}
+
 - (ShelbyBrowseTutorialMode)browseTutorialMode
 {
     return self.currentBrowseTutorialMode;

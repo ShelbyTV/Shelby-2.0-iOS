@@ -75,4 +75,13 @@
     }
 }
 
+- (void)completeSignup
+{
+    NSString *username = self.signupDictionary[kShelbySignupUsernameKey];
+    NSString *password = self.signupDictionary[kShelbySignupPasswordKey];
+    if (username && password) {
+        [self.signupDelegate completeSignupUserWithUsername:username andPassword:password];
+    }
+}
+
 @end

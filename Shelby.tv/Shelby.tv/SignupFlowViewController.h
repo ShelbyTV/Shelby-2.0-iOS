@@ -20,6 +20,7 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (void)connectToFacebook;
 - (void)connectToTwitter;
 - (void)signupUser;
+- (void)completeSignup;
 @end
 
 @interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SignupUserInfoDelegate, UIAlertViewDelegate, UIActionSheetDelegate>

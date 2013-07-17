@@ -29,6 +29,7 @@
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
 - (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email;
+- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password;
 @end
 
 

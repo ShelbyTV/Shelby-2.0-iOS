@@ -126,6 +126,30 @@ static AFHTTPClient *httpClient = nil;
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
 
++ (void)completeUserSignupWithNickname:(NSString *)nickname
+                              password:(NSString *)password
+                  passwordConfirmation:(NSString *)passwordConfirmation
+                              andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    NSDictionary *params = @{@"nickname": nickname,
+                             @"password": password,
+                             @"password_confirmation": passwordConfirmation,
+                             kShelbyAPIParamAuthToken: user.token};
+    NSURLRequest *request = [self requestWithMethod:PUT
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPutUserPath, user.userID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    
+    [operation start];
+}
+
 + (void)loginUserWithEmail:(NSString *)email
                   password:(NSString *)password
                   andBlock:(shelby_api_request_complete_block_t)completionBlock

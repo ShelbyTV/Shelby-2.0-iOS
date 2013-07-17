@@ -24,6 +24,11 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
                   email:(NSString *)email
                   andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
++ (void)completeUserSignupWithNickname:(NSString *)nickname
+                              password:(NSString *)password
+                  passwordConfirmation:(NSString *)passwordConfirmation
+                              andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 + (void)loginUserWithEmail:(NSString *)email
                   password:(NSString *)password
                   andBlock:(shelby_api_request_complete_block_t)completionBlock;

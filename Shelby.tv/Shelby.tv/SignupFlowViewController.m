@@ -312,6 +312,15 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 #pragma mark - Signup Form Methods
 - (IBAction)signup:(id)sender
 {
+    [self saveValueAndResignActiveTextField];
+    
+    UIViewController *parent = self.parentViewController;
+    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+        [parent performSelector:@selector(completeSignup)];
+    }
+    
+    // TODO: send avatar & video types
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -482,28 +482,41 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }];
 }
 
+- (void)saveUserFromJSON:(id)JSON
+{
+    NSManagedObjectContext *context = [self mainThreadContext];
+    NSDictionary *result = JSON[@"result"];
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        User *user = [User userForDictionary:result inContext:context];
+        NSError *error;
+        [user.managedObjectContext save:&error];
+        STVAssert(!error, @"context after saveUserFromJSON");
+        [self syncLikes];
+        return;
+    }
+}
+
 - (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
 {
+    __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient postSignupWithName:name email:email andBlock:^(id JSON, NSError *error) {
-        NSManagedObjectContext *context = [self mainThreadContext];
-        NSDictionary *result = JSON[@"result"];
-        if ([result isKindOfClass:[NSDictionary class]]) {
-            User *user = [User userForDictionary:result inContext:context];
-            NSError *error;
-            [user.managedObjectContext save:&error];
-            STVAssert(!error, @"context after signup");
-            
-//            [self.delegate loginUserDidComplete];
-            
-            [self syncLikes];
-            return;
-        }
+        [weakSelf saveUserFromJSON:JSON];
+        // Not sending loginUserDidComplete until signup process is done.
+    }];
+}
+
+- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
+{
+    __weak ShelbyDataMediator *weakSelf = self;
+    [ShelbyAPIClient completeUserSignupWithNickname:username password:password passwordConfirmation:password andBlock:^(id JSON, NSError *error) {
+        [weakSelf saveUserFromJSON:JSON];
+        [self.delegate loginUserDidComplete];
     }];
 }
 
 - (void)userAskForFacebookPublishPermissions
 {
-        [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];
+    [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];
 }
 
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI

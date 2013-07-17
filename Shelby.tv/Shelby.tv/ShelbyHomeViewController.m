@@ -806,6 +806,11 @@
     [self.masterDelegate signupUserWithName:name andEmail:email];
 }
 
+- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
+{
+    [self.masterDelegate completeSignupUserWithUsername:username andPassword:password];
+}
+
 - (void)launchMyRoll
 {
     [self dismissPopover];
