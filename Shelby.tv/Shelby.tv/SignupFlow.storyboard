@@ -37,21 +37,16 @@
                                     <outlet property="delegate" destination="sgp-ZG-jtU" id="br7-LB-lNZ"/>
                                 </connections>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2tk-Hq-yu9">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="aQ7-iV-RFB"/>
-                                    <constraint firstAttribute="height" constant="70" id="jhQ-h2-CDA"/>
-                                </constraints>
-                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2tk-Hq-yu9"/>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKA-Et-Ijp">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="Vgl-mZ-Dgw"/>
+                                    <constraint firstAttribute="height" constant="95" id="93j-Ah-FH3"/>
                                     <constraint firstAttribute="width" constant="87" id="eXf-jk-YKW"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="20"/>
                                 <state key="normal" title="Add a photo">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -114,13 +109,13 @@
                             <constraint firstItem="ZYL-g5-c1D" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="299" type="user" id="Fxl-fW-9JN"/>
                             <constraint firstItem="o8p-gd-vjo" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="219" type="user" id="Il2-Ac-lSH"/>
                             <constraint firstItem="nwr-uj-CmF" firstAttribute="leading" secondItem="9nE-1k-IW2" secondAttribute="leading" type="default" id="KhJ-ee-tLX"/>
+                            <constraint firstItem="2tk-Hq-yu9" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" constant="120" id="Ng2-Fj-PrS"/>
                             <constraint firstItem="o8p-gd-vjo" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" constant="50" id="Pb5-6x-9XH"/>
                             <constraint firstItem="9nE-1k-IW2" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="240" type="user" id="SSx-nK-7vb"/>
                             <constraint firstItem="o8p-gd-vjo" firstAttribute="leading" secondItem="9nE-1k-IW2" secondAttribute="leading" type="default" id="Sq2-Gd-ZQF"/>
                             <constraint firstItem="I88-xl-uu2" firstAttribute="top" secondItem="M3R-Mq-Khr" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="fKW-jt-Byl"/>
                             <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="I88-xl-uu2" secondAttribute="centerX" type="default" id="fiE-yA-l9K"/>
                             <constraint firstItem="nwr-uj-CmF" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="279" type="user" id="hBx-ia-R4u"/>
-                            <constraint firstItem="2tk-Hq-yu9" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" constant="126" id="j9T-pa-jYh"/>
                             <constraint firstItem="I88-xl-uu2" firstAttribute="centerX" secondItem="M3R-Mq-Khr" secondAttribute="centerX" type="default" id="mBM-1K-7gN"/>
                             <constraint firstItem="NKA-Et-Ijp" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="99" id="rHn-W2-Tcl"/>
                             <constraint firstItem="2tk-Hq-yu9" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="95" id="wMB-3O-vEP"/>
@@ -592,7 +587,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="user_default_avatar.png" width="155" height="155"/>
+        <image name="user_default_avatar.png" width="82" height="82"/>
     </resources>
     <classes>
         <class className="BlinkingLabel" superclassName="UILabel">
