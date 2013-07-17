@@ -108,6 +108,19 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         self.navigationItem.leftBarButtonItem = backBarButtonItem;
     }
     
+    // Next Button
+    NSString *nextTitle = self.navigationItem.rightBarButtonItem.title;
+    SEL selector = self.navigationItem.rightBarButtonItem.action;
+    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    nextButton.frame = CGRectMake(0.0f, 0.0f, 80.0f, 44.0f);
+    [nextButton setTitleColor:[UIColor colorWithHex:@"c4c4c4" andAlpha:1] forState:UIControlStateDisabled];
+    [nextButton setTitleColor:[UIColor colorWithHex:@"6fbe47" andAlpha:1] forState:UIControlStateNormal];
+    [nextButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+    [nextButton setTitle:nextTitle forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nextButton];
+    self.nextButton = self.navigationItem.rightBarButtonItem;
+
+    
     // If we are on First, Second or Fourth step - we might want to disable Next
     if (self.nextButton && ([self.nameField.text isEqualToString:@""] || self.videoTypes || [self.username.text isEqualToString:@""])) {
         self.nextButton.enabled = NO;
