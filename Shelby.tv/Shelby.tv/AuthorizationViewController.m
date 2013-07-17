@@ -107,8 +107,8 @@
                                              selector:@selector(userAuthenticationDidFail:)
                                                  name:kShelbyNotificationUserSignupDidFail object:nil];
     
-    
-    [ShelbyAPIClient postSignupWithName:self.signupView.fullname.text nickname:self.signupView.username.text password:self.signupView.passwordField.text andEmail:self.signupView.emailField.text];
+    // KP KP: not doing signup from this controller anymore.
+//    [ShelbyAPIClient postSignupWithName:self.signupView.fullname.text nickname:self.signupView.username.text password:self.signupView.passwordField.text andEmail:self.signupView.emailField.text];
 }
 
 

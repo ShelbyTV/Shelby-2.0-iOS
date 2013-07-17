@@ -457,6 +457,25 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
     }];
 }
 
+- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
+{
+    [ShelbyAPIClient postSignupWithName:name email:email andBlock:^(id JSON, NSError *error) {
+        NSManagedObjectContext *context = [self mainThreadContext];
+        NSDictionary *result = JSON[@"result"];
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            User *user = [User userForDictionary:result inContext:context];
+            NSError *error;
+            [user.managedObjectContext save:&error];
+            STVAssert(!error, @"context after signup");
+            
+//            [self.delegate loginUserDidComplete];
+            
+            [self syncLikes];
+            return;
+        }
+    }];
+}
+
 - (void)userAskForFacebookPublishPermissions
 {
         [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];

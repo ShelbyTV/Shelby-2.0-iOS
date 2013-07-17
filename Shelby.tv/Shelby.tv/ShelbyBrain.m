@@ -719,6 +719,11 @@ typedef struct _ShelbyArrayMergeInstructions {
     [self.homeVC didNavigateToCommunityChannel];
 }
 
+- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
+{
+    [[ShelbyDataMediator sharedInstance] signupUserWithName:name andEmail:email];
+}
+
 - (ShelbyBrowseTutorialMode)browseTutorialMode
 {
     return self.currentBrowseTutorialMode;

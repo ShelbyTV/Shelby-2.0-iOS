@@ -83,26 +83,47 @@ static AFHTTPClient *httpClient = nil;
 }
 
 #pragma mark - User
-+ (void)postSignupWithName:(NSString *)name nickname:(NSString *)nickname password:(NSString *)password andEmail:(NSString *)email
++ (void)postSignupWithUserParams:(NSDictionary *)userParams
+                        andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    NSDictionary *userParams = @{@"user": @{@"name": name,
-                                            @"nickname": nickname,
-                                            @"password": password,
-                                            @"primary_email": email}};
     NSURLRequest *request = [self requestWithMethod:POST
                                             forPath:kShelbyAPIPostSignupPath
                                 withQueryParameters:userParams
                                       shouldAddAuth:NO];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
-        
+        completionBlock(JSON, nil);
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        DLog(@"%@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:JSON];
+        completionBlock(nil, error);
     }];
     
     [operation start];
+
+}
+
++ (void)postSignupWithName:(NSString *)name
+                  nickname:(NSString *)nickname
+                  password:(NSString *)password
+                     email:(NSString *)email
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSDictionary *userParams = @{@"user": @{@"name": name,
+                                            @"nickname": nickname,
+                                            @"password": password,
+                                            @"primary_email": email}};
+    [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
+}
+
++ (void)postSignupWithName:(NSString *)name
+                     email:(NSString *)email
+                  andBlock:(shelby_api_request_complete_block_t)completionBlock
+
+{
+    NSDictionary *userParams = @{@"user": @{@"name": name,
+                                            @"primary_email": email},
+                                            @"generate_temporary_nickname_and_password" : @"1"};
+
+    [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
 
 + (void)loginUserWithEmail:(NSString *)email

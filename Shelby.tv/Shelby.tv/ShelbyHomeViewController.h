@@ -28,6 +28,7 @@
 - (void)goToUsersLikes;
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
+- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email;
 @end
 
 

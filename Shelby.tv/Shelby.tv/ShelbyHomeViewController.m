@@ -801,6 +801,11 @@
     [self dismissPopover];
 }
 
+- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
+{
+    [self.masterDelegate signupUserWithName:name andEmail:email];
+}
+
 - (void)launchMyRoll
 {
     [self dismissPopover];

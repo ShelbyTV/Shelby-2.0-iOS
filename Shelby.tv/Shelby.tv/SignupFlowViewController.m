@@ -194,6 +194,14 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     }
 
     [self saveValueAndResignActiveTextField];
+
+    // Going to Step 2 - Signup now!
+    if ([[segue identifier] isEqualToString:@"ChooseVideos"]) {
+        UIViewController *parent = self.parentViewController;
+        if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+            [parent performSelector:@selector(signupUser)];
+        }
+    }
 }
 
 - (IBAction)gotoChooseVideoTypes:(id)sender
@@ -317,7 +325,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 {
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
-//        [parent performSelector:@selector(connectToFacebook)];
+        [parent performSelector:@selector(connectToFacebook)];
     }
 }
 
@@ -326,7 +334,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 {
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
-//        [parent performSelector:@selector(connectToTwitter)];
+        [parent performSelector:@selector(connectToTwitter)];
     }
 }
 

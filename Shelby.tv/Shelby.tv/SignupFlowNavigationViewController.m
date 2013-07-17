@@ -66,4 +66,13 @@
     [self.signupDelegate connectToTwitter];
 }
 
+- (void)signupUser
+{
+    NSString *name = self.signupDictionary[kShelbySignupNameKey];
+    NSString *email = self.signupDictionary[kShelbySignupEmailKey];
+    if (name && email) {
+        [self.signupDelegate signupUserWithName:name andEmail:email];
+    }
+}
+
 @end
