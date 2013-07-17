@@ -1,18 +1,18 @@
 //
-//  SignupFlowFirstStepViewController.m
+//  SignupFlowStepFourViewController.m
 //  Shelby.tv
 //
-//  Created by Keren on 7/16/13.
+//  Created by Keren on 7/17/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
-#import "SignupFlowFirstStepViewController.h"
+#import "SignupFlowStepFourViewController.h"
 
-@interface SignupFlowFirstStepViewController ()
-- (IBAction)unwindSegueToStepOne:(UIStoryboardSegue *)segue;
+@interface SignupFlowStepFourViewController ()
+
 @end
 
-@implementation SignupFlowFirstStepViewController
+@implementation SignupFlowStepFourViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,14 +35,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)unwindSegueToStepOne:(UIStoryboardSegue *)segue
-{
-    // Nothing here
-}
-
 - (NSString *)signupStepNumber
 {
-    return @"1";
+    return @"4";
 }
+
 
 @end

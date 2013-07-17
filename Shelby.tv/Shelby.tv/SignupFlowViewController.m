@@ -188,6 +188,14 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     } else {
         self.selectedCellsTitlesArray = [@[] mutableCopy];
     }
+    
+    NSString *imageNameSuffix = nil;
+    if (kShelbyFullscreenHeight > 480) {
+        imageNameSuffix = @"-568h";
+    } else {
+        imageNameSuffix = @"";
+    }
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"bkgd-step%@%@.png", [self signupStepNumber], imageNameSuffix]]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -198,6 +206,12 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     if (self.facebookButton) {
         [self refreshSocialButtons];
     }
+}
+
+- (NSString *)signupStepNumber
+{
+    // Should never get here. All Subclasses should implment
+    return @"1";
 }
 
 - (void)refreshSocialButtons
@@ -594,6 +608,8 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 {
     if (indexPath.section == 0) {
         SignupUserInfoCell *cell =  [cv dequeueReusableCellWithReuseIdentifier:@"SignupUserInfoCell" forIndexPath:indexPath];
+        // TODO: need to make the cell clear
+        cell.contentView.backgroundColor = [UIColor clearColor];
         if (self.avatarImage) {
             cell.avatar.image = self.avatarImage;
         }

@@ -155,10 +155,10 @@
             </objects>
             <point key="canvasLocation" x="341" y="-171"/>
         </scene>
-        <!--Signup Flow View Controller - Video for You-->
+        <!--Signup Flow Step Two View Controller - Video for You-->
         <scene sceneID="peO-1Y-aPw">
             <objects>
-                <viewController id="dtY-NO-hRl" customClass="SignupFlowViewController" sceneMemberID="viewController">
+                <viewController id="dtY-NO-hRl" customClass="SignupFlowStepTwoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Grh-fn-liE">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -179,7 +179,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="320" height="200"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="VideoType" id="kNT-u9-rnz">
@@ -190,6 +190,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="160" height="160"/>
                                     </collectionViewCell>
                                 </cells>
@@ -225,10 +226,10 @@
             </objects>
             <point key="canvasLocation" x="732" y="-171"/>
         </scene>
-        <!--Signup Flow View Controller - Video from Friends-->
+        <!--Signup Flow Step Three View Controller - Video from Friends-->
         <scene sceneID="bP7-YO-hjo">
             <objects>
-                <viewController id="tUF-cC-Ycq" customClass="SignupFlowViewController" sceneMemberID="viewController">
+                <viewController id="tUF-cC-Ycq" customClass="SignupFlowStepThreeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lOZ-yG-UMD">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -349,10 +350,10 @@
             </objects>
             <point key="canvasLocation" x="1113" y="-171"/>
         </scene>
-        <!--Signup Flow View Controller - Thanks!-->
+        <!--Signup Flow Step Four View Controller - Thanks!-->
         <scene sceneID="k8P-xK-euL">
             <objects>
-                <viewController id="1I6-gt-YXr" customClass="SignupFlowViewController" sceneMemberID="viewController">
+                <viewController id="1I6-gt-YXr" customClass="SignupFlowStepFourViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IO9-hj-Ipx" customClass="SignupConfirmationView">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -607,6 +608,15 @@
         </class>
         <class className="SignupFlowNavigationViewController" superclassName="UINavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowNavigationViewController.h"/>
+        </class>
+        <class className="SignupFlowStepFourViewController" superclassName="SignupFlowViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepFourViewController.h"/>
+        </class>
+        <class className="SignupFlowStepThreeViewController" superclassName="SignupFlowViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepThreeViewController.h"/>
+        </class>
+        <class className="SignupFlowStepTwoViewController" superclassName="SignupFlowViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepTwoViewController.h"/>
         </class>
         <class className="SignupFlowViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowViewController.h"/>
