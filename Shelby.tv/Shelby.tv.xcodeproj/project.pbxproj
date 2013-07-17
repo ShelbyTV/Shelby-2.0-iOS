@@ -492,6 +492,12 @@
 		1C90E52D17849DF200E87CC0 /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C90E52317849DF200E87CC0 /* triangle@2x.png */; };
 		1C90E52E17849DF200E87CC0 /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C90E52317849DF200E87CC0 /* triangle@2x.png */; };
 		1C90E52F17849DF200E87CC0 /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C90E52317849DF200E87CC0 /* triangle@2x.png */; };
+		1C96DE9A17975A0900D845DF /* nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9817975A0900D845DF /* nav-bkgd.png */; };
+		1C96DE9B17975A0900D845DF /* nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9817975A0900D845DF /* nav-bkgd.png */; };
+		1C96DE9C17975A0900D845DF /* nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9817975A0900D845DF /* nav-bkgd.png */; };
+		1C96DE9D17975A0900D845DF /* nav-bkgd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9917975A0900D845DF /* nav-bkgd@2x.png */; };
+		1C96DE9E17975A0900D845DF /* nav-bkgd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9917975A0900D845DF /* nav-bkgd@2x.png */; };
+		1C96DE9F17975A0900D845DF /* nav-bkgd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9917975A0900D845DF /* nav-bkgd@2x.png */; };
 		1CA191461774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA191441774DD440039358B /* ShelbyStreamBrowseViewController.m */; };
 		1CA191471774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA191441774DD440039358B /* ShelbyStreamBrowseViewController.m */; };
 		1CA191481774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA191441774DD440039358B /* ShelbyStreamBrowseViewController.m */; };
@@ -1117,6 +1123,8 @@
 		1C8AB446175D57D3001D5853 /* SPShareRollView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SPShareRollView-iPhone.xib"; sourceTree = "<group>"; };
 		1C90E52217849DF200E87CC0 /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle.png; sourceTree = "<group>"; };
 		1C90E52317849DF200E87CC0 /* triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "triangle@2x.png"; sourceTree = "<group>"; };
+		1C96DE9817975A0900D845DF /* nav-bkgd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bkgd.png"; sourceTree = "<group>"; };
+		1C96DE9917975A0900D845DF /* nav-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bkgd@2x.png"; sourceTree = "<group>"; };
 		1CA191431774DD440039358B /* ShelbyStreamBrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyStreamBrowseViewController.h; sourceTree = "<group>"; };
 		1CA191441774DD440039358B /* ShelbyStreamBrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyStreamBrowseViewController.m; sourceTree = "<group>"; };
 		1CA191451774DD440039358B /* ShelbyStreamBrowseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyStreamBrowseView.xib; sourceTree = "<group>"; };
@@ -1639,6 +1647,8 @@
 				1C7B63D1178B5ED6000C1E84 /* user_default_avatar@2x.png */,
 				1C7B63EE178C5379000C1E84 /* navbar_back_button.png */,
 				1C7B63EF178C5379000C1E84 /* navbar_back_button@2x.png */,
+				1C96DE9817975A0900D845DF /* nav-bkgd.png */,
+				1C96DE9917975A0900D845DF /* nav-bkgd@2x.png */,
 			);
 			path = "Signup Flow";
 			sourceTree = "<group>";
@@ -2752,6 +2762,8 @@
 				91A362981790822D00381218 /* vice.png in Resources */,
 				91A3629B1790822D00381218 /* vogue.png in Resources */,
 				91A3629E1790822D00381218 /* wired.png in Resources */,
+				1C96DE9B17975A0900D845DF /* nav-bkgd.png in Resources */,
+				1C96DE9E17975A0900D845DF /* nav-bkgd@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2944,6 +2956,8 @@
 				91A362991790822D00381218 /* vice.png in Resources */,
 				91A3629C1790822D00381218 /* vogue.png in Resources */,
 				91A3629F1790822D00381218 /* wired.png in Resources */,
+				1C96DE9C17975A0900D845DF /* nav-bkgd.png in Resources */,
+				1C96DE9F17975A0900D845DF /* nav-bkgd@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3137,6 +3151,8 @@
 				91A362971790822D00381218 /* vice.png in Resources */,
 				91A3629A1790822D00381218 /* vogue.png in Resources */,
 				91A3629D1790822D00381218 /* wired.png in Resources */,
+				1C96DE9A17975A0900D845DF /* nav-bkgd.png in Resources */,
+				1C96DE9D17975A0900D845DF /* nav-bkgd@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

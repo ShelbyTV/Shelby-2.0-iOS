@@ -36,9 +36,10 @@
     SignupFlowViewController *rootVC = (SignupFlowViewController *)self.viewControllers[0];
     rootVC.signupDictionary = self.signupDictionary;
 
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav-bkgd.png"] forBarMetrics:UIBarMetricsDefault];
 
-    // Using special background for back button.
-//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"navbar_back_button.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 20, 0, 5)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHex:@"333333" andAlpha:1], UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
+    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
 }
 
 - (void)didReceiveMemoryWarning
