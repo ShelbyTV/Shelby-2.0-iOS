@@ -50,6 +50,7 @@
 
 - (void)setCurrentRow:(UIView *)currentRow
 {
+    STVAssert(currentRow == nil || [currentRow isKindOfClass:[UIButton class]], @"current row should be a button in current implementation");
     if (_currentRow != currentRow) {
         _currentRow = currentRow;
     }
@@ -96,7 +97,6 @@
 - (void)showLoggedInUserRows:(BOOL)showUserRows
 {
     if (showUserRows) {
-        DLog(@"showing rows for user!");
         _streamRowHeight.constant = 44;
         _streamButton.hidden = NO;
         _sharesRowHeight.constant = 44;
@@ -106,7 +106,6 @@
         _loginRowHeight.constant = 0;
         _loginButton.hidden = YES;
     } else {
-        DLog(@"HIDEING showing rows for user!");
         _streamRowHeight.constant = 0;
         _streamButton.hidden = YES;
         _sharesRowHeight.constant = 0;
