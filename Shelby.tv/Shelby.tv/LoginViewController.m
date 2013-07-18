@@ -34,6 +34,8 @@
 
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
+
+    [self.usernameField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
