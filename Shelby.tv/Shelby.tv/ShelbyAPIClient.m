@@ -94,7 +94,11 @@ static AFHTTPClient *httpClient = nil;
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        completionBlock(nil, error);
+        if (JSON) { // Backend passing error
+            completionBlock(nil, JSON);
+        } else {
+            completionBlock(nil, error);
+        }
     }];
     
     [operation start];
@@ -144,7 +148,11 @@ static AFHTTPClient *httpClient = nil;
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         completionBlock(JSON, nil);
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        completionBlock(nil, error);
+        if (JSON) { // Backend passing error
+            completionBlock(nil, JSON);
+        } else {
+            completionBlock(nil, error);
+        }
     }];
     
     [operation start];

@@ -21,6 +21,8 @@
 NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 NSString * const kShelbyNotificationFacebookConnectCompleted = @"kShelbyNotificationFacebookConnectCompleted";
 NSString * const kShelbyNotificationTwitterConnectCompleted = @"kShelbyNotificationTwitterConnectCompleted";
+NSString * const kShelbyNotificationUserSignupDidSucceed = @"kShelbyNotificationUserSignupDidSucceed";
+NSString * const kShelbyNotificationUserSignupDidFail = @"kShelbyNotificationUserSignupDidFail";
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -502,7 +504,18 @@ NSString * const kShelbyNotificationTwitterConnectCompleted = @"kShelbyNotificat
 {
     __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient postSignupWithName:name email:email andBlock:^(id JSON, NSError *error) {
-        [weakSelf saveUserFromJSON:JSON];
+        if (JSON) {
+            [weakSelf saveUserFromJSON:JSON];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
+        } else {
+            NSString *errorMessage = nil;
+            if ([error isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *JSONError = (NSDictionary *)error;
+                errorMessage = JSONError[@"message"];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
+            
+        }
         // Not sending loginUserDidComplete until signup process is done.
     }];
 }

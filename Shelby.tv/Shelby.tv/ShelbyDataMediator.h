@@ -14,6 +14,8 @@
 extern NSString * const kShelbyOfflineLikesID;
 extern NSString * const kShelbyNotificationFacebookConnectCompleted;
 extern NSString * const kShelbyNotificationTwitterConnectCompleted;
+extern NSString * const kShelbyNotificationUserSignupDidSucceed;
+extern NSString * const kShelbyNotificationUserSignupDidFail;
 
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>

@@ -156,7 +156,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="QCD-S7-eJ7">
                             <connections>
-                                <action selector="gotoChooseVideoTypes:" destination="sgp-ZG-jtU" id="aHY-iz-xRH"/>
+                                <action selector="gotoChooseVideoTypes:" destination="sgp-ZG-jtU" id="R0n-Zi-Pxs"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -654,7 +654,7 @@
             <relationships>
                 <relationship kind="action" name="connectoToFacebook:"/>
                 <relationship kind="action" name="connectoToTwitter:"/>
-                <relationship kind="action" name="gotoMyAccount:"/>
+                <relationship kind="action" name="gotoChooseVideoTypes:"/>
                 <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
             </relationships>
@@ -667,7 +667,7 @@
             <relationships>
                 <relationship kind="action" name="assignAvatar:"/>
                 <relationship kind="action" name="goBack:"/>
-                <relationship kind="action" name="gotoChooseVideoTypes:"/>
+                <relationship kind="action" name="gotoMyAccount:"/>
                 <relationship kind="action" name="gotoSocialNetworks:"/>
                 <relationship kind="action" name="resignKeyboard:"/>
                 <relationship kind="action" name="signup:"/>
@@ -700,6 +700,9 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
         <class className="UIStoryboardSegue" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>

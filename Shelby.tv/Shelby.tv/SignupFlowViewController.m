@@ -27,10 +27,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     TextFieldTagPassword
 };
 
-typedef NS_ENUM(NSInteger, SignupDialogAlert) {
-    SignupDialogAlertNoAvatar
-};
-
 @interface SignupFlowViewController ()
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
 @property (weak, nonatomic) IBOutlet BlinkingLabel *blinkingLabel;
@@ -39,13 +35,11 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
 @property (nonatomic, weak) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem *nextButton;
 @property (nonatomic, weak) IBOutlet UITextField *password;
 @property (nonatomic, weak) IBOutlet UITextField *username;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
 @property (nonatomic, strong) NSMutableArray *selectedCellsTitlesArray;
 @property (nonatomic, strong) NSString *fullname;
-@property (nonatomic, strong) UIImage *avatarImage;
 
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
@@ -54,7 +48,6 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 
 
 // Initiate Segues
-- (IBAction)gotoChooseVideoTypes:(id)sender;
 - (IBAction)gotoSocialNetworks:(id)sender;
 @end
 
@@ -226,25 +219,6 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     }
 
     [self saveValueAndResignActiveTextField];
-
-    // Going to Step 2 - Signup now!
-    if ([[segue identifier] isEqualToString:@"ChooseVideos"]) {
-        UIViewController *parent = self.parentViewController;
-        if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
-            [parent performSelector:@selector(signupUser)];
-        }
-    }
-}
-
-- (IBAction)gotoChooseVideoTypes:(id)sender
-{
-    if (!self.avatarImage) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add Your Picture" message:@"Don't be anonymous, let other people see your picture" delegate:self cancelButtonTitle:@"Not Now" otherButtonTitles:@"Choose", nil];
-        alertView.tag = SignupDialogAlertNoAvatar;
-        [alertView show];
-    } else {
-        [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
-    }
 }
 
 - (IBAction)gotoSocialNetworks:(id)sender
@@ -372,6 +346,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     if (activeTextField) {
         [self modifyDictionaryWithTextFieldValue:activeTextField];
         [activeTextField resignFirstResponder];
+        [self animateCloseEditing];
     }
 }
 
@@ -430,11 +405,25 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     }
 }
 
+- (void)animateCloseEditing
+{
+    //move up so user can see our text fields
+    [UIView animateWithDuration:0.2 animations:^{
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    }];
+}
+
+- (void)animateOpenEditing
+{
+    // TODO in sublclasss
+}
+
+
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if ([self.view respondsToSelector:@selector(textFieldWillBeginEditing:)]) {
-        [self.view performSelector:@selector(textFieldWillBeginEditing:) withObject:textField];
+    if (self.view.frame.origin.x == 0) {
+        [self animateOpenEditing];
     }
     return YES;
 }
@@ -637,20 +626,8 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     [self openImagePicker];
 }
 
-#pragma mark - UIAlertViewDialog Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == SignupDialogAlertNoAvatar) {
-        if (buttonIndex == 0) {
-            [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
-        } else {
-            [self assignAvatar];
-        }
-    }
-}
 
 #pragma mark - UIActionSheetDelegate
-
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 2) {

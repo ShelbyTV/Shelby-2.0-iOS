@@ -99,13 +99,13 @@
 
     [self.currentForm processingForm];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userAuthenticationDidSucceed:)
-                                                 name:kShelbyNotificationUserSignupDidSucceed object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userAuthenticationDidFail:)
-                                                 name:kShelbyNotificationUserSignupDidFail object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(userAuthenticationDidSucceed:)
+//                                                 name:kShelbyNotificationUserSignupDidSucceed object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(userAuthenticationDidFail:)
+//                                                 name:kShelbyNotificationUserSignupDidFail object:nil];
     
     // KP KP: not doing signup from this controller anymore.
 //    [ShelbyAPIClient postSignupWithName:self.signupView.fullname.text nickname:self.signupView.username.text password:self.signupView.passwordField.text andEmail:self.signupView.emailField.text];

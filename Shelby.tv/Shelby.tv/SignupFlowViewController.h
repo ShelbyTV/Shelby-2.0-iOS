@@ -23,6 +23,13 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (void)completeSignup;
 @end
 
-@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SignupUserInfoDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
+@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SignupUserInfoDelegate, UIActionSheetDelegate>
+
+@property (nonatomic, strong) UIImage *avatarImage;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *nextButton;  // We don't want to lose reference to nextButton.
 @property (nonatomic, weak) NSMutableDictionary *signupDictionary;
+
+- (void)saveValueAndResignActiveTextField;
+- (void)animateOpenEditing;
+- (void)animateCloseEditing;
 @end

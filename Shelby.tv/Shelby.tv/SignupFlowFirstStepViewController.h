@@ -8,6 +8,6 @@
 
 #import "SignupFlowViewController.h"
 
-@interface SignupFlowFirstStepViewController : SignupFlowViewController <UITextFieldDelegate>
+@interface SignupFlowFirstStepViewController : SignupFlowViewController <UIAlertViewDelegate>
 
 @end
