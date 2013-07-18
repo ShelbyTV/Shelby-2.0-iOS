@@ -639,6 +639,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="lle-Rp-YEg" id="Rbq-CA-mXb"/>
+                        <outlet property="activityLabel" destination="7Dp-a3-sZK" id="E8g-MX-gOP"/>
                         <outlet property="avatar" destination="1Dn-RK-rK4" id="c0r-f0-nkO"/>
                         <outlet property="backgroundViewForUserInfo" destination="Okb-5n-y4Z" id="yB7-8J-3qp"/>
                         <outlet property="blinkingLabel" destination="DvA-F4-1Pg" id="dcN-Xx-Ohb"/>
@@ -680,6 +682,8 @@
         <class className="SignupFlowStepFourViewController" superclassName="SignupFlowViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepFourViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="activityLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="backgroundViewForUserInfo" candidateClass="UIView"/>
                 <relationship kind="outlet" name="blinkingLabel" candidateClass="BlinkingLabel"/>
                 <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>

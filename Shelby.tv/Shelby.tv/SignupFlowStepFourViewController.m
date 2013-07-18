@@ -10,7 +10,9 @@
 #import "BlinkingLabel.h"
 
 @interface SignupFlowStepFourViewController ()
-@property (weak, nonatomic) IBOutlet BlinkingLabel *blinkingLabel;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, weak) IBOutlet UILabel *activityLabel;
+@property (nonatomic, weak) IBOutlet BlinkingLabel *blinkingLabel;
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
 @property (nonatomic, weak) IBOutlet UIView *backgroundViewForUserInfo;
 @end
@@ -44,7 +46,14 @@
     self.emailLabel.text = self.signupDictionary[kShelbySignupEmailKey];
 
     if ([self.selectedCellsTitlesArray count] > 0) {
-        [self.blinkingLabel setWords:self.selectedCellsTitlesArray];
+        [self.blinkingLabel setupWords:self.selectedCellsTitlesArray andBlinkingTime:5.0 withCompletionText:@"VIDEOS ADDED!" andBlock:^(BOOL done) {
+            if (YES) {
+                self.activityIndicator.hidden = YES;
+                self.activityLabel.hidden = YES;
+                self.blinkingLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+                
+            }
+        }];
     }
     
     if ([self.username.text length] && [self.password.text length]) {
