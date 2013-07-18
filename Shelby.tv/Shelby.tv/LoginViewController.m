@@ -59,6 +59,10 @@
     [self.delegate loginViewControllerWantsSignup:self];
 }
 
+- (IBAction)forgotPasswordTapped:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kShelbyForgotPasswordURL]];
+}
+
 - (void)loginFailed:(NSString *)errorMessage
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
