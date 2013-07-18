@@ -13,6 +13,8 @@
 
 @protocol ShelbyNavBarDelegate <NSObject>
 
+- (void)navBarViewControllerWillExpand:(ShelbyNavBarViewController *)navBarVC;
+- (void)navBarViewControllerWillContract:(ShelbyNavBarViewController *)navBarVC;
 - (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC;
 - (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC;
 - (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC;

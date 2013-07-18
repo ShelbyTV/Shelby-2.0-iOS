@@ -77,10 +77,12 @@
 {
     if (self.navBarView.currentRow){
         //we _had_ a current row selected, change to showing them all...
+        [self.delegate navBarViewControllerWillExpand:self];
         self.navBarView.currentRow = nil;
 
     } else {
         //we _were_ waiting for a selection to be made...
+        [self.delegate navBarViewControllerWillContract:self];
         self.navBarView.currentRow = sender;
 
         if (sender == self.navBarView.streamButton) {
