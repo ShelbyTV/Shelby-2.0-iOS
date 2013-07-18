@@ -15,15 +15,10 @@
 @property (weak, nonatomic) IBOutlet UIView *slider;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sliderY;
 
-@property (weak, nonatomic) IBOutlet UIButton *streamButton;
-@property (weak, nonatomic) IBOutlet UIButton *likesButton;
-@property (weak, nonatomic) IBOutlet UIButton *sharesButton;
-@property (weak, nonatomic) IBOutlet UIButton *communityButton;
-@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *streamRowHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sharesRowHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsRowHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginRowHeight;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierX;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierY;
@@ -69,7 +64,7 @@
             //focus on current row, hide rows that aren't current
             _currentRow.alpha = 0.85;
             _currentRow.userInteractionEnabled = YES;
-            NSMutableArray *allRowsButCurrent = [@[_streamRow, _likesRow, _sharesRow, _communityRow, _settingsRow] mutableCopy];
+            NSMutableArray *allRowsButCurrent = [@[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton] mutableCopy];
             [allRowsButCurrent removeObject:_currentRow];
             for (UIView *v in allRowsButCurrent) {
                 v.alpha = 0.0;
@@ -89,7 +84,7 @@
         }];
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
-            for (UIView *v in @[_streamRow, _likesRow, _sharesRow, _communityRow, _settingsRow]) {
+            for (UIView *v in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
                 v.alpha = 0.95;
                 v.userInteractionEnabled = YES;
             }
@@ -101,26 +96,32 @@
 - (void)showLoggedInUserRows:(BOOL)showUserRows
 {
     if (showUserRows) {
+        DLog(@"showing rows for user!");
         _streamRowHeight.constant = 44;
         _streamButton.hidden = NO;
         _sharesRowHeight.constant = 44;
         _sharesButton.hidden = NO;
         _settingsRowHeight.constant = 44;
         _settingsButton.hidden = NO;
+        _loginRowHeight.constant = 0;
+        _loginButton.hidden = YES;
     } else {
+        DLog(@"HIDEING showing rows for user!");
         _streamRowHeight.constant = 0;
         _streamButton.hidden = YES;
         _sharesRowHeight.constant = 0;
         _sharesButton.hidden = YES;
         _settingsRowHeight.constant = 0;
         _settingsButton.hidden = YES;
+        _loginRowHeight.constant = 44;
+        _loginButton.hidden = NO;
     }
     [self layoutIfNeeded];
 }
 
 - (void)updateSelectionIdentifierLocationToCurrentRow
 {
-    UIButton *button = [_currentRow.subviews lastObject];
+    UIButton *button = (UIButton *)_currentRow;
     _selectionIdentifierX.constant = button.titleLabel.frame.origin.x - 10;
     _selectionIdentifierY.constant = _currentRow.frame.origin.y + 19;
     [self layoutIfNeeded];

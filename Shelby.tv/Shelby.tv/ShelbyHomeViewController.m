@@ -87,6 +87,8 @@
                                                                       metrics:nil
                                                                         views:@{@"navBar":self.navBar}]];
     [self.navBarVC didMoveToParentViewController:self];
+
+    self.navBarVC.currentUser = self.currentUser;
 }
 
 - (void)setupVideoControlsView
@@ -837,6 +839,11 @@
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC
 {
     [self.masterDelegate goToUsersSettings];
+}
+
+- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self.masterDelegate presentUserLogin];
 }
 
 @end

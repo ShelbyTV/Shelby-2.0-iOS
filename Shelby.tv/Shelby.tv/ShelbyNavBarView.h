@@ -10,12 +10,13 @@
 
 @interface ShelbyNavBarView : UIView
 
-@property (weak, nonatomic) IBOutlet UIView *streamRow;
-@property (weak, nonatomic) IBOutlet UIView *likesRow;
-@property (weak, nonatomic) IBOutlet UIView *sharesRow;
-@property (weak, nonatomic) IBOutlet UIView *communityRow;
-@property (weak, nonatomic) IBOutlet UIView *settingsRow;
 @property (weak, nonatomic) IBOutlet UIView *selectionIdentifier;
+@property (weak, nonatomic) IBOutlet UIButton *streamButton;
+@property (weak, nonatomic) IBOutlet UIButton *likesButton;
+@property (weak, nonatomic) IBOutlet UIButton *sharesButton;
+@property (weak, nonatomic) IBOutlet UIButton *communityButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 //our model, set to update display state
 @property (weak, nonatomic) UIView *currentRow;
