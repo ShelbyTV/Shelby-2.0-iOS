@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BrowseViewController.h"
+#import "LoginViewController.h"
 #import "ShelbyHomeViewController.h"
 #import "ShelbyStreamBrowseViewController.h"
 #import "SignupFlowNavigationViewController.h"
@@ -18,7 +19,7 @@
 #import "WelcomeFlowViewController.h"
 
 // KP KP: TODO: Once ShelbyDataM takes care of TwitterHandler, there would be no need for the TwitterHandlerDelegate. It would be part of the ShelbyDataMediatorProtocol
-@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, ShelbyStreamBrowseManagementDelegate, SPVideoReelDelegate, ShelbyHomeDelegate, TwitterHandlerDelegate, WelcomeFlowDelegate, AuthorizationDelegate, SignupFlowNavigationViewDelegate, UIActionSheetDelegate>
+@interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyBrowseProtocol, ShelbyStreamBrowseManagementDelegate, SPVideoReelDelegate, ShelbyHomeDelegate, TwitterHandlerDelegate, WelcomeFlowDelegate, SignupFlowNavigationViewDelegate, UIActionSheetDelegate, LoginViewControllerDelegate>
 
 @property (nonatomic) UIWindow *mainWindow;
 

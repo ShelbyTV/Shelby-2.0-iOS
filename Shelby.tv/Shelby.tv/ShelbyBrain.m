@@ -30,7 +30,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 
 //login and signup view controllers
-@property (strong, nonatomic) AuthorizationViewController *authorizationVC;
+@property (strong, nonatomic) LoginViewController *loginVC;
 @property (strong, nonatomic) SignupFlowNavigationViewController *signupFlowVC;
 
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
@@ -117,41 +117,33 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     self.dvrController = [[ShelbyDVRController alloc] init];
 }
 
-- (void)presentAuthorizationVC
+- (void)presentLoginVC
 {
-    UIViewController *currentVC = self.mainWindow.rootViewController;
+    UIStoryboard *loginStoryboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    UINavigationController *loginNav = [loginStoryboard instantiateInitialViewController];
+    self.loginVC = loginNav.viewControllers[0];
+    self.loginVC.delegate = self;
 
-    NSString *authorizationVCNibName = nil;
-    if (DEVICE_IPAD) {
-        authorizationVCNibName = @"AuthorizationView";
-    } else {
-        authorizationVCNibName = @"AuthorizationView-iPhone";
-    }
-    _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:authorizationVCNibName bundle:nil];
+    [self.mainWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
+}
 
-    CGFloat xOrigin = currentVC.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
-    CGFloat yOrigin = currentVC.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;
-    CGSize loginDialogSize = self.authorizationVC.view.frame.size;
-
-    [self.authorizationVC setModalInPopover:YES];
-    [self.authorizationVC setModalPresentationStyle:UIModalPresentationFormSheet];
-    self.authorizationVC.delegate = self;
-
-    [currentVC presentViewController:self.authorizationVC animated:YES completion:nil];
-
-    self.authorizationVC.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+- (void)dismissLoginVCCompletion:(void (^)(void))completion
+{
+    [self.loginVC.parentViewController dismissViewControllerAnimated:YES completion:^{
+        self.loginVC = nil;
+        if (completion) {
+            completion();
+        }
+    }];
 }
 
 - (void)presentSignupVC
 {
-    UIViewController *currentVC = self.mainWindow.rootViewController;
-    
-    UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow"
-                                                                   bundle: nil];
+    UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow" bundle:nil];
+    self.signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard instantiateInitialViewController];
+    self.signupFlowVC.signupDelegate = self;
 
-    self.signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard                                                       instantiateInitialViewController];
-    [self.signupFlowVC setSignupDelegate:self];
-    [currentVC presentViewController:self.signupFlowVC animated:YES completion:nil];
+    [self.mainWindow.rootViewController presentViewController:self.signupFlowVC animated:YES completion:nil];
 }
 
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification
@@ -216,17 +208,17 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 #pragma mark - ShelbyDataMediatorDelegate
 - (void)loginUserDidCompleteWithError:(NSString *)errorMessage
 {
-    [self.authorizationVC userLoginFailedWithError:errorMessage];
+    [self.loginVC loginFailed:errorMessage];
 }
 
 - (void)loginUserDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
-        [self.authorizationVC dismissViewControllerAnimated:NO completion:nil];
-        self.authorizationVC = nil;
-        [self activateHomeViewController];
-        [self fetchUserChannelsForceSwitchToUsersStream:YES];
+        [self dismissLoginVCCompletion:^{
+            [self activateHomeViewController];
+            [self fetchUserChannelsForceSwitchToUsersStream:YES];
+        }];
     });
 }
 
@@ -688,16 +680,10 @@ typedef struct _ShelbyArrayMergeInstructions {
     }
 }
 
-#pragma mark - AuthorizationDelegate
-- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
-{
-    [[ShelbyDataMediator sharedInstance] loginUserWithEmail:email password:password];
-}
-
 #pragma mark - ShelbyHomeDelegate
 - (void)presentUserLogin
 {
-    [self presentAuthorizationVC];
+    [self presentLoginVC];
 }
 
 - (void)logoutUser
@@ -871,12 +857,31 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 - (void)welcomeFlowDidTapLogin:(WelcomeFlowViewController *)welcomeFlowVC
 {
-    [self presentAuthorizationVC];
+    [self presentLoginVC];
 }
 
 - (void)welcomeFlowDidTapPreview:(WelcomeFlowViewController *)welcomeFlowVC
 {
     [self activateHomeViewController];
+}
+
+#pragma mark - LoginViewControllerDelegate
+
+- (void)loginViewController:(LoginViewController *)loginVC loginWithUsername:(NSString *)usernameOrEmail password:(NSString *)password
+{
+    [[ShelbyDataMediator sharedInstance] loginUserWithEmail:usernameOrEmail password:password];
+}
+
+- (void)loginViewControllerDidCancel:(LoginViewController *)loginVC
+{
+    [self dismissLoginVCCompletion:nil];
+}
+
+- (void)loginViewControllerWantsSignup:(LoginViewController *)loginVC
+{
+    [self dismissLoginVCCompletion:^{
+        [self presentSignupVC];
+    }];
 }
 
 @end
