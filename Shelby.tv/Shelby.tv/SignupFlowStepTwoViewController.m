@@ -10,6 +10,8 @@
 #import "SignupVideoTypeViewCell.h"
 
 @interface SignupFlowStepTwoViewController ()
+// Initiate Segues
+- (IBAction)gotoSocialNetworks:(id)sender;
 @end
 
 @implementation SignupFlowStepTwoViewController
@@ -49,6 +51,11 @@
 - (NSString *)signupStepNumber
 {
     return @"2";
+}
+
+- (IBAction)gotoSocialNetworks:(id)sender
+{
+    [self performSegueWithIdentifier:@"SocialNetworks" sender:self];
 }
 
 - (void)markCellAtIndexPath:(NSIndexPath *)indexPath selected:(BOOL)selected

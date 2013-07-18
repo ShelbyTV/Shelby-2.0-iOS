@@ -160,7 +160,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Next" id="QCD-S7-eJ7">
                             <connections>
-                                <action selector="gotoChooseVideoTypes:" destination="sgp-ZG-jtU" id="R0n-Zi-Pxs"/>
+                                <action selector="gotoChooseVideoTypes:" destination="sgp-ZG-jtU" id="luP-jE-YY6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -692,6 +692,7 @@
         <class className="SignupFlowStepOneViewController" superclassName="SignupFlowViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepOneViewController.h"/>
             <relationships>
+                <relationship kind="action" name="goBack:"/>
                 <relationship kind="action" name="gotoChooseVideoTypes:"/>
                 <relationship kind="action" name="unwindSegueToStepOne:" candidateClass="UIStoryboardSegue"/>
             </relationships>
@@ -708,13 +709,15 @@
         </class>
         <class className="SignupFlowStepTwoViewController" superclassName="SignupFlowViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepTwoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gotoSocialNetworks:"/>
+            </relationships>
         </class>
         <class className="SignupFlowViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowViewController.h"/>
             <relationships>
                 <relationship kind="action" name="assignAvatar:"/>
                 <relationship kind="action" name="goBack:"/>
-                <relationship kind="action" name="gotoSocialNetworks:"/>
                 <relationship kind="action" name="resignKeyboard:"/>
                 <relationship kind="action" name="signup:"/>
                 <relationship kind="outlet" name="avatar" candidateClass="UIImageView"/>

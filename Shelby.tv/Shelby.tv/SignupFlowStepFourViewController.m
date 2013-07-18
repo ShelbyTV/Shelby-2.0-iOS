@@ -15,6 +15,9 @@
 @property (nonatomic, weak) IBOutlet BlinkingLabel *blinkingLabel;
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
 @property (nonatomic, weak) IBOutlet UIView *backgroundViewForUserInfo;
+
+- (IBAction)signup:(id)sender;
+
 @end
 
 @implementation SignupFlowStepFourViewController
@@ -82,4 +85,17 @@
     return CGRectMake(0.0f, 0.0f, 140.0f, 44.0f);
 }
 
+- (IBAction)signup:(id)sender
+{
+    [self saveValueAndResignActiveTextField];
+    
+    UIViewController *parent = self.parentViewController;
+    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+        [parent performSelector:@selector(completeSignup)];
+    }
+    
+    // TODO: send avatar & video types
+    // TODO: wait for ERRORS from backend
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
