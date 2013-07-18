@@ -1063,6 +1063,21 @@
 		91F0CC051730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 		91F0CC061730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 		91F0CC071730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
+		91F168171797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
+		91F168181797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
+		91F168191797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
+		91F1681D17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
+		91F1681E17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
+		91F1681F17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
+		91F168211797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */; };
+		91F168221797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */; };
+		91F168231797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */; };
+		91F16825179840FF00AF8A2E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F16824179840FF00AF8A2E /* Login.storyboard */; };
+		91F16826179840FF00AF8A2E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F16824179840FF00AF8A2E /* Login.storyboard */; };
+		91F16827179840FF00AF8A2E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F16824179840FF00AF8A2E /* Login.storyboard */; };
+		91F1682A1798422F00AF8A2E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F168291798422F00AF8A2E /* LoginViewController.m */; };
+		91F1682B1798422F00AF8A2E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F168291798422F00AF8A2E /* LoginViewController.m */; };
+		91F1682C1798422F00AF8A2E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F168291798422F00AF8A2E /* LoginViewController.m */; };
 		91FCC6A0174A8F14004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 		91FCC6A1174A8F1F004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 		91FCC6A2174A8F25004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
@@ -1572,6 +1587,13 @@
 		91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyDataMediator.m; sourceTree = "<group>"; };
 		91F0CC031730154E008B5B34 /* User+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Helper.h"; sourceTree = "<group>"; };
 		91F0CC041730154E008B5B34 /* User+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Helper.m"; sourceTree = "<group>"; };
+		91F168161797122200AF8A2E /* WelcomeFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeFlow.storyboard; sourceTree = "<group>"; };
+		91F1681B17971A2C00AF8A2E /* WelcomeFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeFlowViewController.h; sourceTree = "<group>"; };
+		91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeFlowViewController.m; sourceTree = "<group>"; };
+		91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeFlowViews.xib; sourceTree = "<group>"; };
+		91F16824179840FF00AF8A2E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		91F168281798422F00AF8A2E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		91F168291798422F00AF8A2E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		91FCC69F174A8F14004255F5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1847,6 +1869,9 @@
 				1C7B63DD178B7B21000C1E84 /* SignupVideoTypeViewCell.xib */,
 				1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */,
 				9188F230178C99F7002F342B /* ShelbyNavBarView.xib */,
+				91F168161797122200AF8A2E /* WelcomeFlow.storyboard */,
+				91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */,
+				91F16824179840FF00AF8A2E /* Login.storyboard */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2497,6 +2522,10 @@
 				1C96DEDB17975EF800D845DF /* SignupFlowStepFourViewController.m */,
 				1C7B63CA178B33B1000C1E84 /* SignupFlowNavigationViewController.h */,
 				1C7B63CB178B33B1000C1E84 /* SignupFlowNavigationViewController.m */,
+				91F1681B17971A2C00AF8A2E /* WelcomeFlowViewController.h */,
+				91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */,
+				91F168281798422F00AF8A2E /* LoginViewController.h */,
+				91F168291798422F00AF8A2E /* LoginViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2905,6 +2934,9 @@
 				1C96DEF71797689900D845DF /* twitter-fill@2x.png in Resources */,
 				1C96DEFA1797689900D845DF /* twitter.png in Resources */,
 				1C96DEFD1797689900D845DF /* twitter@2x.png in Resources */,
+				91F168181797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
+				91F168221797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
+				91F16826179840FF00AF8A2E /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3119,6 +3151,9 @@
 				1C96DEF81797689900D845DF /* twitter-fill@2x.png in Resources */,
 				1C96DEFB1797689900D845DF /* twitter.png in Resources */,
 				1C96DEFE1797689900D845DF /* twitter@2x.png in Resources */,
+				91F168191797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
+				91F168231797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
+				91F16827179840FF00AF8A2E /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3334,6 +3369,9 @@
 				1C96DEF61797689900D845DF /* twitter-fill@2x.png in Resources */,
 				1C96DEF91797689900D845DF /* twitter.png in Resources */,
 				1C96DEFC1797689900D845DF /* twitter@2x.png in Resources */,
+				91F168171797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
+				91F168211797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
+				91F16825179840FF00AF8A2E /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3470,6 +3508,8 @@
 				1C96DED317975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
 				1C96DED817975EE200D845DF /* SignupFlowStepThreeViewController.m in Sources */,
 				1C96DEDD17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
+				91F1681E17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
+				91F1682B1798422F00AF8A2E /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3603,6 +3643,8 @@
 				1C96DED417975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
 				1C96DED917975EE200D845DF /* SignupFlowStepThreeViewController.m in Sources */,
 				1C96DEDE17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
+				91F1681F17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
+				91F1682C1798422F00AF8A2E /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3736,6 +3778,8 @@
 				1C96DED217975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
 				1C96DED717975EE200D845DF /* SignupFlowStepThreeViewController.m in Sources */,
 				1C96DEDC17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
+				91F1681D17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
+				91F1682A1798422F00AF8A2E /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

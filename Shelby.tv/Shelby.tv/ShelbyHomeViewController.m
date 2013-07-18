@@ -13,7 +13,6 @@
 #import "DisplayChannel.h"
 #import "ImageUtilities.h"
 #import "Roll+Helper.h"
-#import "SettingsViewController.h"
 #import "ShelbyAlertView.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
@@ -23,10 +22,7 @@
 //@property (nonatomic, weak) IBOutlet UILabel *topBarTitle;
 @property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
 @property (nonatomic, weak) UIView *navBar;
-
-@property (nonatomic, strong) UIView *settingsView;
-@property (strong, nonatomic) UIPopoverController *settingsPopover;
-@property (strong, nonatomic) AuthorizationViewController *authorizationVC;
+@property (nonatomic, strong) UIView *navBarLoginView;
 
 @property (nonatomic, strong) BrowseViewController *browseVC;
 @property (nonatomic, strong) NSMutableArray *streamBrowseVCs;
@@ -68,11 +64,7 @@
     } else {
         [self setupNavBarView];
         [self setupVideoControlsView];
-        //the actual browse view controllers are created in setChannels:
-        _streamBrowseVCs = [@[] mutableCopy];
     }
-    
-    [self setupSettingsView];
     
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
@@ -134,27 +126,6 @@
 
 -(BOOL) shouldAutorotate {
     return YES;
-}
-
-
-- (void)userLoginFailedWithError:(NSString *)errorMessage
-{
-    if (self.authorizationVC) {
-        [self.authorizationVC userLoginFailedWithError:errorMessage];
-    }
-    [self setCurrentUser:nil];
-}
-
-- (void)connectToFacebookFailedWithError:(NSString *)errorMessage
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alertView show];
-}
-
-- (void)connectToTwitterFailedWithError:(NSString *)errorMessage
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alertView show];
 }
 
 // We assume these are all of our channels, in the correct order (which we cared about on old iPad design)
@@ -349,80 +320,40 @@
 - (void)setCurrentUser:(User *)currentUser
 {
     _currentUser = currentUser;
-    
-    if (currentUser) {
-        [self dismissAuthorizationVC];
-    }
 
-    [self setupSettingsView];
+    if (_currentUser) {
+        [self.navBarLoginView removeFromSuperview];
+        self.navBarLoginView = nil;
+    } else {
+        [self showLoginViewInNavBar];
+    }
 
     self.navBarVC.currentUser = currentUser;
 }
 
-
-//XXX DS NEW NAV BAR
-// XXX TODO: Undo this method, have the nav bar handle all the settings view
-- (void)setupSettingsView
+- (void)showLoginViewInNavBar
 {
-    // KP KP: TODO: once fetching user done correctly, add the two targets. 
-    [self.settingsView removeFromSuperview];
-    if (self.currentUser) {
-        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 60, 44)];
-        UIImageView *userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(25, 7, 30, 30)];
-        [userAvatar.layer setCornerRadius:5];
-        [userAvatar.layer setMasksToBounds:YES];
-        // KP KP: TODO: Use AFNetworking instead of AsynchronousFreeloader
-        [AsynchronousFreeloader loadImageFromLink:self.currentUser.userImage
-                                     forImageView:userAvatar
-                                  withPlaceholder:nil
-                                   andContentMode:UIViewContentModeScaleAspectFit];
-        [self.settingsView addSubview:userAvatar];
-        UIButton *settings = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-        [settings addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
-        [self.settingsView addSubview:settings];
-    } else {
-        _settingsView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 120, 44)];
-        UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
-        [login setFrame:CGRectMake(7, 7, 60, 30)];
-        [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
-        [login setTitle:@"Login" forState:UIControlStateNormal];
-        [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
-        [[login titleLabel] setTextColor:[UIColor whiteColor]];
-        [login addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
-        [self.settingsView addSubview:login];
-    }
+    STVAssert(!self.navBarLoginView, @"should not be showing login view");
+    STVAssert(!self.currentUser, @"should not be logged in");
+
+    self.navBarLoginView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 120, 44)];
+    UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
+    [login setFrame:CGRectMake(7, 7, 60, 30)];
+    [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
+    [login setTitle:@"Login" forState:UIControlStateNormal];
+    [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
+    [[login titleLabel] setTextColor:[UIColor whiteColor]];
+    [login addTarget:self action:@selector(navBarLoginTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.navBarLoginView addSubview:login];
     
-    [self.navBar addSubview:self.settingsView];
-    [self.settingsView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
+    [self.navBar addSubview:self.navBarLoginView];
+    [self.navBarLoginView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
 }
 
-- (void)showSettings
+- (void)navBarLoginTapped
 {
-    if (DEVICE_IPAD) {
-        if(!self.settingsPopover) {
-            SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithUser:self.currentUser];
-            
-            _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
-            [self.settingsPopover setDelegate:self];
-            [settingsViewController setDelegate:self];
-        } else {
-            SettingsViewController *settingsViewController = (SettingsViewController *)[self.settingsPopover contentViewController];
-            if ([settingsViewController isKindOfClass:[SettingsViewController class]]) {
-                settingsViewController.user = self.currentUser;
-            }
-        }
-        
-        [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-    } else { // iPhone
-        //XXX
-        //TODO: Show a new settings view per Wireframes
-        //TODO: And remove the currentStreamBrowseVC
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
-        actionSheet.destructiveButtonIndex = 2;
-        [actionSheet showInView:self.view];
-    }
+    [self.masterDelegate presentUserLogin];
 }
-
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
@@ -694,112 +625,25 @@
     }
 }
 
-#pragma mark - Authorization Methods (Private)
-- (void)dismissAuthorizationVC
-{
-    if (self.authorizationVC) {
-        [self.authorizationVC dismissViewControllerAnimated:NO completion:nil];
-        self.authorizationVC = nil;
-    }
-}
 
-- (void)login
-{
-    // KP KP: TODO: Switched to the new signup (instead of login) for testing
-    if (NO) {
-        UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow"
-                                                                 bundle: nil];
-        
-        SignupFlowNavigationViewController *signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard
-                                                           instantiateInitialViewController];
-        [signupFlowVC setSignupDelegate:self];
-        [self presentViewController:signupFlowVC animated:YES completion:nil];
-    } else {
-        NSString *authorizationVCNibName = nil;
-        if (DEVICE_IPAD) {
-            authorizationVCNibName = @"AuthorizationView";
-        } else {
-            authorizationVCNibName = @"AuthorizationView-iPhone";
-        }
-        _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:authorizationVCNibName bundle:nil];
-        
-        CGFloat xOrigin = self.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
-        CGFloat yOrigin = self.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;
-        CGSize loginDialogSize = self.authorizationVC.view.frame.size;
-        
-        [self.authorizationVC setModalInPopover:YES];
-        [self.authorizationVC setModalPresentationStyle:UIModalPresentationFormSheet];
-        [self.authorizationVC setDelegate:self];
-        
-        [self presentViewController:self.authorizationVC animated:YES completion:nil];
-        
-        self.authorizationVC.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
-    }
-}
-
-- (void)logout
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Logout?"
-                                                        message:@"Are you sure you want to logout?"
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Logout", nil];
- 	
-    [alertView show];
-}
-
-#pragma mark - UIPopoverControllerDelegate methods
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-{
-    self.settingsPopover = nil;
-}
-
-#pragma mark - UIAlertViewDelegate Methods
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        [self logoutUser];
-    }
-}
-#pragma mark - SettingsViewDelegate methods (FB and TW Connect also part of SignupFlowDelegate)
-- (void)dismissPopover
-{
-    // Popover is only for the iPad
-    if (DEVICE_IPAD) {
-        if (self.settingsPopover && [self.settingsPopover isPopoverVisible]) {
-            [self.settingsPopover dismissPopoverAnimated:NO];
-            self.settingsPopover = nil;
-        }
-    }
-}
-
-- (void)logoutUser
-{
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(logoutUser)]) {
-        [self.masterDelegate logoutUser];
-    }
-    
-    [self dismissPopover];
-    [self setupSettingsView];
-}
-
-- (void)connectToFacebook
-{
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToFacebook)]) {
-        [self.masterDelegate connectToFacebook];
-    }
-    
-    [self dismissPopover];
-}
-
-- (void)connectToTwitter
-{
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToTwitter)]) {
-        [self.masterDelegate connectToTwitter];
-    }
-    
-    [self dismissPopover];
-}
+//
+//- (void)connectToFacebook
+//{
+//    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToFacebook)]) {
+//        [self.masterDelegate connectToFacebook];
+//    }
+//    
+//    [self dismissPopover];
+//}
+//
+//- (void)connectToTwitter
+//{
+//    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToTwitter)]) {
+//        [self.masterDelegate connectToTwitter];
+//    }
+//    
+//    [self dismissPopover];
+//}
 
 - (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
 {
@@ -811,10 +655,9 @@
     [self.masterDelegate completeSignupUserWithUsername:username andPassword:password];
 }
 
+
 - (void)launchMyRoll
 {
-    [self dismissPopover];
-
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersRoll)]) {
         [self.masterDelegate goToUsersRoll];
     }
@@ -822,8 +665,6 @@
 
 - (void)launchMyLikes
 {
-    [self dismissPopover];
-
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersLikes)]) {
         [self.masterDelegate goToUsersLikes];
     }
@@ -831,8 +672,6 @@
 
 - (void)launchMyStream
 {
-    [self dismissPopover];
-    
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersStream)]) {
         [self.masterDelegate goToUsersStream];
     }
@@ -945,14 +784,6 @@
     [self.masterDelegate userAskForTwitterPublishPermissions];
 }
 
-#pragma mark - AuthorizationDelegate
-- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
-{
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(loginUserWithEmail:password:)]) {
-        [self.masterDelegate loginUserWithEmail:email password:password];
-    }
-}
-
 #pragma mark - View Helpers
 
 - (void)fadeVideoControlsForOffset:(CGPoint)contentOffset frameHeight:(CGFloat)frameHeight
@@ -1012,18 +843,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - UIActionSheetDelegate methods
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        [self connectToFacebook];
-    } else if (buttonIndex == 1) {
-        [self connectToTwitter];
-    } else if (buttonIndex == 2) {
-        [self logout];
-    }
-}
-
 #pragma mark - ShelbyNavBarDelegate
 
 - (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC
@@ -1048,7 +867,7 @@
 
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC
 {
-    [self showSettings];
+    [self.masterDelegate goToUsersSettings];
 }
 
 @end
