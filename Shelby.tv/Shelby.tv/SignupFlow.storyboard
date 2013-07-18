@@ -19,10 +19,10 @@
             </objects>
             <point key="canvasLocation" x="-110" y="-171"/>
         </scene>
-        <!--Signup Flow First Step View Controller - Hello!-->
+        <!--Signup Flow Step One View Controller - Hello!-->
         <scene sceneID="buK-fS-gfn">
             <objects>
-                <viewController storyboardIdentifier="FirstStep" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sgp-ZG-jtU" customClass="SignupFlowFirstStepViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FirstStep" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sgp-ZG-jtU" customClass="SignupFlowStepOneViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pGl-nd-Jhs" customClass="SignupConfirmationView">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -642,13 +642,6 @@
         <class className="SignupConfirmationView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupConfirmationView.h"/>
         </class>
-        <class className="SignupFlowFirstStepViewController" superclassName="SignupFlowViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowFirstStepViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="gotoChooseVideoTypes:"/>
-                <relationship kind="action" name="unwindSegueToStepOne:" candidateClass="UIStoryboardSegue"/>
-            </relationships>
-        </class>
         <class className="SignupFlowNavigationViewController" superclassName="UINavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowNavigationViewController.h"/>
         </class>
@@ -708,9 +701,6 @@
         </class>
         <class className="UICollectionViewLayout" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
-        <class className="UIStoryboardSegue" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
