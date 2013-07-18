@@ -65,4 +65,9 @@
     return (kShelbyFullscreenHeight > 480) ? -100 : -175;
 }
 
+- (CGRect)nextButtonFrame
+{
+    return CGRectMake(0.0f, 0.0f, 140.0f, 44.0f);
+}
+
 @end

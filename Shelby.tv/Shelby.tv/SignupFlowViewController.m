@@ -70,26 +70,14 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self.videoTypes registerNib:[UINib nibWithNibName:@"SignupVideoTypeViewCell" bundle:nil] forCellWithReuseIdentifier:@"VideoType"];
     [self.videoTypes registerNib:[UINib nibWithNibName:@"SignupUserInfoViewCell" bundle:nil] forCellWithReuseIdentifier:@"SignupUserInfoCell"];
     
-    // Custom "Back" buttons.
-    if (self.navigationItem.leftBarButtonItem && [self.navigationItem.leftBarButtonItem.title isEqualToString:@"Back"]) {
-        UIImage *backButtonImage = [UIImage imageNamed:@"navbar_back_button.png"];
-        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        [backButton setImage:backButtonImage forState:UIControlStateNormal];
-        
-        backButton.frame = CGRectMake(0, 0, backButtonImage.size.width, backButtonImage.size.height);
-        
-        [backButton addTarget:self action:@selector(popViewController) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-        self.navigationItem.leftBarButtonItem = backBarButtonItem;
-    }
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[self customLeftButtonView]];
+    self.navigationItem.leftBarButtonItem = backBarButtonItem;
     
     // Next Button
     NSString *nextTitle = self.navigationItem.rightBarButtonItem.title;
     SEL selector = self.navigationItem.rightBarButtonItem.action;
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    nextButton.frame = CGRectMake(0.0f, 0.0f, 80.0f, 44.0f);
+    nextButton.frame = [self nextButtonFrame];
     [nextButton setTitleColor:[UIColor colorWithHex:@"c4c4c4" andAlpha:1] forState:UIControlStateDisabled];
     [nextButton setTitleColor:[UIColor colorWithHex:@"6fbe47" andAlpha:1] forState:UIControlStateNormal];
     [nextButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
@@ -325,6 +313,22 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (NSInteger)yOffsetForEditMode
 {
     return 0;
+}
+
+- (CGRect)nextButtonFrame
+{
+    return CGRectMake(0.0f, 0.0f, 80.0f, 44.0f);
+}
+
+- (UIView *)customLeftButtonView
+{
+    UIImage *backButtonImage = [UIImage imageNamed:@"navbar_back_button.png"];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setImage:backButtonImage forState:UIControlStateNormal];
+    backButton.frame = CGRectMake(0, 0, backButtonImage.size.width, backButtonImage.size.height);
+    [backButton addTarget:self action:@selector(popViewController) forControlEvents:UIControlEventTouchUpInside];
+
+    return backButton;
 }
 
 #pragma mark - UITextFieldDelegate Methods

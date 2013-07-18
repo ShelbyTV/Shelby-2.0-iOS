@@ -42,4 +42,6 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (void)animateOpenEditing;
 - (void)animateCloseEditing;
 - (NSInteger)yOffsetForEditMode;
+- (CGRect)nextButtonFrame;
+- (UIView *)customLeftButtonView;
 @end
