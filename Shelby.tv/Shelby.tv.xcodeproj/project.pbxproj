@@ -931,6 +931,9 @@
 		91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
+		916F41A21798A795001D9DF7 /* STVTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A11798A795001D9DF7 /* STVTextField.m */; };
+		916F41A31798A795001D9DF7 /* STVTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A11798A795001D9DF7 /* STVTextField.m */; };
+		916F41A41798A795001D9DF7 /* STVTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A11798A795001D9DF7 /* STVTextField.m */; };
 		9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
@@ -1507,6 +1510,8 @@
 		91649ECB1741B1A000A9265B /* DeduplicationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeduplicationUtility.h; sourceTree = "<group>"; };
 		91649ECC1741B1A000A9265B /* DeduplicationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeduplicationUtility.m; sourceTree = "<group>"; };
 		91649ED017426FB800A9265B /* ShelbyDuplicateContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDuplicateContainer.h; sourceTree = "<group>"; };
+		916F41A01798A795001D9DF7 /* STVTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVTextField.h; sourceTree = "<group>"; };
+		916F41A11798A795001D9DF7 /* STVTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVTextField.m; sourceTree = "<group>"; };
 		9188F230178C99F7002F342B /* ShelbyNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNavBarView.xib; sourceTree = "<group>"; };
 		9188F234178C9A1E002F342B /* ShelbyNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarViewController.h; sourceTree = "<group>"; };
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
@@ -2473,6 +2478,8 @@
 				9119AB7717821A5C001C9190 /* VideoControlsView.m */,
 				9188F239178CBA3C002F342B /* ShelbyNavBarView.h */,
 				9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */,
+				916F41A01798A795001D9DF7 /* STVTextField.h */,
+				916F41A11798A795001D9DF7 /* STVTextField.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3494,6 +3501,7 @@
 				1C96DEDD17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
 				91F1681E17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 				91F1682B1798422F00AF8A2E /* LoginViewController.m in Sources */,
+				916F41A31798A795001D9DF7 /* STVTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3627,6 +3635,7 @@
 				1C96DEDE17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
 				91F1681F17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 				91F1682C1798422F00AF8A2E /* LoginViewController.m in Sources */,
+				916F41A41798A795001D9DF7 /* STVTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3760,6 +3769,7 @@
 				1C96DEDC17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
 				91F1681D17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 				91F1682A1798422F00AF8A2E /* LoginViewController.m in Sources */,
+				916F41A21798A795001D9DF7 /* STVTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
