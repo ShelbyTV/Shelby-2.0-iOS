@@ -625,37 +625,6 @@
     }
 }
 
-
-//
-//- (void)connectToFacebook
-//{
-//    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToFacebook)]) {
-//        [self.masterDelegate connectToFacebook];
-//    }
-//    
-//    [self dismissPopover];
-//}
-//
-//- (void)connectToTwitter
-//{
-//    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(connectToTwitter)]) {
-//        [self.masterDelegate connectToTwitter];
-//    }
-//    
-//    [self dismissPopover];
-//}
-
-- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
-{
-    [self.masterDelegate signupUserWithName:name andEmail:email];
-}
-
-- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
-{
-    [self.masterDelegate completeSignupUserWithUsername:username andPassword:password];
-}
-
-
 - (void)launchMyRoll
 {
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersRoll)]) {
