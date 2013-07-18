@@ -222,7 +222,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         if (user.facebookUID) {
             self.facebookButton.enabled = NO;
         }
-        if (user.twitterUID) {
+        if (user.twitterNickname) {
             self.twitterButton.enabled = NO;
         }
     });
