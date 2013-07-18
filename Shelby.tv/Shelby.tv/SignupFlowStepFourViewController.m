@@ -12,6 +12,7 @@
 @interface SignupFlowStepFourViewController ()
 @property (weak, nonatomic) IBOutlet BlinkingLabel *blinkingLabel;
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
+@property (nonatomic, weak) IBOutlet UIView *backgroundViewForUserInfo;
 @end
 
 @implementation SignupFlowStepFourViewController
@@ -30,6 +31,8 @@
     [super viewDidLoad];
 
     self.nextButton.enabled = NO;
+    self.backgroundViewForUserInfo.layer.cornerRadius = 5;
+    self.backgroundViewForUserInfo.layer.masksToBounds = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
