@@ -53,6 +53,11 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 - (void)handleDidBecomeActive
 {
+ 
+}
+
+- (void)handleDidFinishLaunching
+{
     [ShelbyDataMediator sharedInstance].delegate = self;
     
     if (![WelcomeFlowViewController isWelcomeComplete]) {

@@ -69,6 +69,8 @@
         [self fireLocalNotification:notification];
     }
     
+    [self.brain handleDidFinishLaunching];
+
     return YES;
 }
 

@@ -24,6 +24,7 @@
 @property (nonatomic) UIWindow *mainWindow;
 
 - (void)handleDidBecomeActive;
+- (void)handleDidFinishLaunching;
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification;
 
 @end
