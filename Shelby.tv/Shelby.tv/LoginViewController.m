@@ -36,12 +36,20 @@
     self.passwordField.delegate = self;
 
     [self.usernameField becomeFirstResponder];
+
+    //non-IB view customizations
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bkgd-step1.png"]];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
 }
 
 - (IBAction)cancelTapped:(UIBarButtonItem *)sender {
@@ -57,6 +65,10 @@
 
 - (IBAction)signupTapped:(id)sender {
     [self.delegate loginViewControllerWantsSignup:self];
+}
+
+- (IBAction)forgotPasswordTapped:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kShelbyForgotPasswordURL]];
 }
 
 - (void)loginFailed:(NSString *)errorMessage

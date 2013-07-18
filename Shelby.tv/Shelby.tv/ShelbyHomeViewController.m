@@ -18,8 +18,6 @@
 #import "User+Helper.h"
 
 @interface ShelbyHomeViewController ()
-//@property (nonatomic, weak) IBOutlet UIView *topBar;
-//@property (nonatomic, weak) IBOutlet UILabel *topBarTitle;
 @property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
 @property (nonatomic, weak) UIView *navBar;
 @property (nonatomic, strong) UIView *navBarButtonView;
@@ -33,6 +31,7 @@
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
 
 #define OVERLAY_ANIMATION_DURATION 0.2
+#define NAV_BUTTON_FADE_TIME 0.1
 
 @end
 
@@ -87,6 +86,8 @@
                                                                       metrics:nil
                                                                         views:@{@"navBar":self.navBar}]];
     [self.navBarVC didMoveToParentViewController:self];
+
+    self.navBarVC.currentUser = self.currentUser;
 }
 
 - (void)setupVideoControlsView
@@ -333,21 +334,31 @@
 
 - (void)showNavBarButton
 {
-    STVAssert(!self.navBarButtonView, @"should not be showing nav bar button view");
-    STVAssert(!self.currentUser, @"should not be logged in");
+    if (self.navBarButtonView) {
+        [UIView animateWithDuration:NAV_BUTTON_FADE_TIME animations:^{
+            self.navBarButtonView.alpha = 1.0;
+        }];
+    } else if (!self.currentUser) {
+        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 120, 44)];
+        UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
+        [login setFrame:CGRectMake(7, 7, 60, 30)];
+        [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
+        [login setTitle:@"Sign Up" forState:UIControlStateNormal];
+        [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
+        [[login titleLabel] setTextColor:[UIColor whiteColor]];
+        [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        [self.navBarButtonView addSubview:login];
+        
+        [self.navBar addSubview:self.navBarButtonView];
+        [self.navBarButtonView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
+    }
+}
 
-    self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 120, 44)];
-    UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
-    [login setFrame:CGRectMake(7, 7, 60, 30)];
-    [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
-    [login setTitle:@"Sign Up" forState:UIControlStateNormal];
-    [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
-    [[login titleLabel] setTextColor:[UIColor whiteColor]];
-    [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.navBarButtonView addSubview:login];
-    
-    [self.navBar addSubview:self.navBarButtonView];
-    [self.navBarButtonView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
+- (void)hideNavBarButton
+{
+    [UIView animateWithDuration:NAV_BUTTON_FADE_TIME animations:^{
+        self.navBarButtonView.alpha = 0.0;
+    }];
 }
 
 - (void)navBarButtonTapped
@@ -814,6 +825,16 @@
 
 #pragma mark - ShelbyNavBarDelegate
 
+- (void)navBarViewControllerWillExpand:(ShelbyNavBarViewController *)navBarVC
+{
+    [self hideNavBarButton];
+}
+
+- (void)navBarViewControllerWillContract:(ShelbyNavBarViewController *)navBarVC
+{
+    [self showNavBarButton];
+}
+
 - (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC
 {
     [self launchMyStream];
@@ -837,6 +858,11 @@
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC
 {
     [self.masterDelegate goToUsersSettings];
+}
+
+- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC
+{
+    [self.masterDelegate presentUserLogin];
 }
 
 @end

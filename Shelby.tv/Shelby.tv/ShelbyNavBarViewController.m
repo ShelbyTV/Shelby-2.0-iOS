@@ -47,90 +47,61 @@
 
 - (void)didNavigateToCommunityChannel
 {
-    if (self.navBarView.communityRow != self.navBarView.currentRow){
-        self.navBarView.currentRow = self.navBarView.communityRow;
+    if (self.navBarView.communityButton != self.navBarView.currentRow){
+        self.navBarView.currentRow = self.navBarView.communityButton;
     }
 }
 
 - (void)didNavigateToUsersStream
 {
-    if (self.navBarView.streamRow != self.navBarView.currentRow) {
-        self.navBarView.currentRow = self.navBarView.streamRow;
+    if (self.navBarView.streamButton != self.navBarView.currentRow) {
+        self.navBarView.currentRow = self.navBarView.streamButton;
     }
 }
 
 - (void)didNavigateToUsersLikes
 {
-    if (self.navBarView.likesRow != self.navBarView.currentRow) {
-        self.navBarView.currentRow = self.navBarView.likesRow;
+    if (self.navBarView.likesButton != self.navBarView.currentRow) {
+        self.navBarView.currentRow = self.navBarView.likesButton;
     }
 }
 
 - (void)didNavigateToUsersShares
 {
-    if (self.navBarView.sharesRow != self.navBarView.currentRow) {
-        self.navBarView.currentRow = self.navBarView.sharesRow;
+    if (self.navBarView.sharesButton != self.navBarView.currentRow) {
+        self.navBarView.currentRow = self.navBarView.sharesButton;
     }
 }
 
 - (IBAction)navTapped:(UIButton *)sender
 {
-    UIView *sendingRow = sender.superview;
-
     if (self.navBarView.currentRow){
         //we _had_ a current row selected, change to showing them all...
+        [self.delegate navBarViewControllerWillExpand:self];
         self.navBarView.currentRow = nil;
 
     } else {
         //we _were_ waiting for a selection to be made...
-        self.navBarView.currentRow = sendingRow;
+        [self.delegate navBarViewControllerWillContract:self];
+        self.navBarView.currentRow = sender;
 
-        if (sendingRow == self.navBarView.streamRow) {
+        if (sender == self.navBarView.streamButton) {
             [self.delegate navBarViewControllerStreamWasTapped:self];
-        } else if (sendingRow == self.navBarView.likesRow) {
+        } else if (sender == self.navBarView.likesButton) {
             [self.delegate navBarViewControllerLikesWasTapped:self];
-        } else if (sendingRow == self.navBarView.sharesRow) {
+        } else if (sender == self.navBarView.sharesButton) {
             [self.delegate navBarViewControllerSharesWasTapped:self];
-        } else if (sendingRow == self.navBarView.communityRow) {
+        } else if (sender == self.navBarView.communityButton) {
             [self.delegate navBarViewControllerCommunityWasTapped:self];
-        } else if (sendingRow == self.navBarView.settingsRow) {
+        } else if (sender == self.navBarView.settingsButton) {
             [self.delegate navBarViewControllerSettingsWasTapped:self];
+        } else if (sender == self.navBarView.loginButton) {
+            [self.delegate navBarViewControllerLoginWasTapped:self];
         } else {
             STVAssert(NO, @"unhandled nav row");
         }
 
     }
 }
-
-
-
-//
-//- (IBAction)navButtonTapped:(UIButton *)sender {
-//    UIView *sendingRow = sender.superview;
-//
-//    if (self.navBarView.currentRow){
-//        //we _had_ a current row selected, change to showing them all...
-//        self.navBarView.currentRow = nil;
-//
-//    } else {
-//        //we _were_ waiting for a selection to be made...
-//        self.navBarView.currentRow = sendingRow;
-//
-//        if (sendingRow == self.navBarView.streamRow) {
-//            [self.delegate navBarViewControllerStreamWasTapped:self];
-//        } else if (sendingRow == self.navBarView.likesRow) {
-//            [self.delegate navBarViewControllerLikesWasTapped:self];
-//        } else if (sendingRow == self.navBarView.sharesRow) {
-//            [self.delegate navBarViewControllerSharesWasTapped:self];
-//        } else if (sendingRow == self.navBarView.communityRow) {
-//            [self.delegate navBarViewControllerCommunityWasTapped:self];
-//        } else if (sendingRow == self.navBarView.settingsRow) {
-//            [self.delegate navBarViewControllerSettingsWasTapped:self];
-//        } else {
-//            STVAssert(NO, @"unhandled nav row");
-//        }
-//        
-//    }
-//}
 
 @end
