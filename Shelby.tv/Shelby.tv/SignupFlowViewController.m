@@ -415,9 +415,15 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)animateOpenEditing
 {
-    // TODO in sublclasss
+    //move up so user can see our text fields
+    [UIView animateWithDuration:0.2 animations:^{
+        self.view.frame = CGRectMake(0, [self yOffsetForEditMode], self.view.frame.size.width, self.view.frame.size.height);
+    }];
 }
-
+- (NSInteger)yOffsetForEditMode
+{
+    return 0;
+}
 
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField

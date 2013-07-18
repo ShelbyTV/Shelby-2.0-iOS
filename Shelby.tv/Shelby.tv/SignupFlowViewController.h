@@ -32,4 +32,5 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (void)saveValueAndResignActiveTextField;
 - (void)animateOpenEditing;
 - (void)animateCloseEditing;
+- (NSInteger)yOffsetForEditMode;
 @end

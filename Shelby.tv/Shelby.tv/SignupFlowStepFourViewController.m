@@ -40,5 +40,9 @@
     return @"4";
 }
 
+- (NSInteger)yOffsetForEditMode
+{
+    return (kShelbyFullscreenHeight > 480) ? -80 : -160;
+}
 
 @end
