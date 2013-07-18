@@ -114,6 +114,12 @@
     self.foregroundScroller.contentSize = self.foregroundContent.frame.size;
 }
 
+- (void)scrollToPage:(NSInteger)page
+{
+    [self.foregroundScroller setContentOffset:CGPointMake(page*self.foregroundScroller.frame.size.width, 0) animated:YES];
+    self.currentPage = page;
+}
+
 #pragma mark - UIScrollViewDelegate (only of _foregroundScroller)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

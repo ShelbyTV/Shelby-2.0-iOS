@@ -47,4 +47,6 @@
 
 - (void)updateFrame:(CGRect)frame;
 
+- (void)scrollToPage:(NSInteger)page;
+
 @end

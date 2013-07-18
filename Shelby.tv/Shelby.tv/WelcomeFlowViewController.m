@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
 @property (strong, nonatomic) IBOutlet UIView *page3;
 @property (strong, nonatomic) IBOutlet UIView *page4;
 @property (strong, nonatomic) IBOutlet UIView *background;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @end
 
 @implementation WelcomeFlowViewController
@@ -61,7 +62,11 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
     self.parallaxView.foregroundContent = parallaxForegroundView;
     self.parallaxView.parallaxRatio = 0.5;
 
-    [self.view addSubview:self.parallaxView];
+    [self.view insertSubview:self.parallaxView belowSubview:self.pageControl];
+
+    // 3) Page Control
+    self.parallaxView.delegate = self;
+    [self.pageControl addTarget:self action:@selector(pageChangeRequest:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,6 +106,24 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
 {
     [[NSUserDefaults standardUserDefaults] setInteger:ShelbyWelcomeFlowStatusComplete forKey:kShelbyWelcomeFlowStatusKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - STVParallaxViewDelegate
+
+- (void)parallaxDidChange:(STVParallaxView *)parallaxView
+{
+}
+
+- (void)didScrollToPage:(NSUInteger)page
+{
+    self.pageControl.currentPage = page;
+}
+
+#pragma mark - UIPageControl Delegate
+
+- (void)pageChangeRequest:(UIPageControl *)pageControl
+{
+    [self.parallaxView scrollToPage:pageControl.currentPage];
 }
 
 @end

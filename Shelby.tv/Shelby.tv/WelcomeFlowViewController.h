@@ -17,7 +17,7 @@
 - (void)welcomeFlowDidTapSignup:(WelcomeFlowViewController *)welcomeFlowVC;
 @end
 
-@interface WelcomeFlowViewController : ShelbyViewController
+@interface WelcomeFlowViewController : ShelbyViewController<STVParallaxViewDelegate>
 
 + (bool)isWelcomeComplete;
 
