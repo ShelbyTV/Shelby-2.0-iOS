@@ -949,12 +949,6 @@
 		91A36269178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
 		91A3626A178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
 		91A3626B178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
-		91A3626F1790688B00381218 /* SignupFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3626E1790688B00381218 /* SignupFriendsView.m */; };
-		91A362701790688B00381218 /* SignupFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3626E1790688B00381218 /* SignupFriendsView.m */; };
-		91A362711790688B00381218 /* SignupFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3626E1790688B00381218 /* SignupFriendsView.m */; };
-		91A362741790791100381218 /* SignupConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A362731790791000381218 /* SignupConfirmationView.m */; };
-		91A362751790791100381218 /* SignupConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A362731790791000381218 /* SignupConfirmationView.m */; };
-		91A362761790791100381218 /* SignupConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A362731790791000381218 /* SignupConfirmationView.m */; };
 		91A362821790822D00381218 /* buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362781790822D00381218 /* buzzfeed.png */; };
 		91A362831790822D00381218 /* buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362781790822D00381218 /* buzzfeed.png */; };
 		91A362841790822D00381218 /* buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362781790822D00381218 /* buzzfeed.png */; };
@@ -1524,10 +1518,6 @@
 		91A36263178F296B00381218 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
 		91A36264178F296B00381218 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = easing.c; sourceTree = "<group>"; };
 		91A36265178F296B00381218 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easing.h; sourceTree = "<group>"; };
-		91A3626D1790688B00381218 /* SignupFriendsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFriendsView.h; sourceTree = "<group>"; };
-		91A3626E1790688B00381218 /* SignupFriendsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupFriendsView.m; sourceTree = "<group>"; };
-		91A362721790791000381218 /* SignupConfirmationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupConfirmationView.h; sourceTree = "<group>"; };
-		91A362731790791000381218 /* SignupConfirmationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupConfirmationView.m; sourceTree = "<group>"; };
 		91A362781790822D00381218 /* buzzfeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buzzfeed.png; sourceTree = "<group>"; };
 		91A362791790822D00381218 /* gopro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gopro.png; sourceTree = "<group>"; };
 		91A3627A1790822D00381218 /* gq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gq.png; sourceTree = "<group>"; };
@@ -2593,10 +2583,6 @@
 			children = (
 				1C7B63F6178DD4B1000C1E84 /* SignupUserInfoCell.h */,
 				1C7B63F7178DD4B1000C1E84 /* SignupUserInfoCell.m */,
-				91A3626D1790688B00381218 /* SignupFriendsView.h */,
-				91A3626E1790688B00381218 /* SignupFriendsView.m */,
-				91A362721790791000381218 /* SignupConfirmationView.h */,
-				91A362731790791000381218 /* SignupConfirmationView.m */,
 				1CDBEE751795EF8D002ECD76 /* BlinkingLabel.h */,
 				1CDBEE761795EF8D002ECD76 /* BlinkingLabel.m */,
 			);
@@ -3499,8 +3485,6 @@
 				91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626A178F296B00381218 /* easing.c in Sources */,
-				91A362701790688B00381218 /* SignupFriendsView.m in Sources */,
-				91A362751790791100381218 /* SignupConfirmationView.m in Sources */,
 				1CDBEE691794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE731795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
@@ -3634,8 +3618,6 @@
 				91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626B178F296B00381218 /* easing.c in Sources */,
-				91A362711790688B00381218 /* SignupFriendsView.m in Sources */,
-				91A362761790791100381218 /* SignupConfirmationView.m in Sources */,
 				1CDBEE6A1794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE741795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
@@ -3769,8 +3751,6 @@
 				91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A36269178F296B00381218 /* easing.c in Sources */,
-				91A3626F1790688B00381218 /* SignupFriendsView.m in Sources */,
-				91A362741790791100381218 /* SignupConfirmationView.m in Sources */,
 				1CDBEE681794706A002ECD76 /* User.m in Sources */,
 				1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE721795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,

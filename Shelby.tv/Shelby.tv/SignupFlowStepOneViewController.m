@@ -31,13 +31,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+    self.nextButton.enabled = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // TODO: decide the length of username & password that are acceptable
+    if ([self.nameField.text length] && [self.email.text length]) {
+        self.nextButton.enabled = YES;
+    }
+    
+    self.nameField.text = self.fullname;
+    self.email.text = self.signupDictionary[kShelbySignupEmailKey];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [super prepareForSegue:segue sender:sender];
     
+    self.navigationItem.rightBarButtonItem = self.nextButton;
     [self removeObservers];
 }
 
@@ -100,15 +115,14 @@
 
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+        // Change Right Button with Activity Indicator
+        UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [activity startAnimating];
+        activity.frame = CGRectMake(10, 10, 50, 44);
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
+ 
         [parent performSelector:@selector(signupUser)];
     }
-    
-    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [activity startAnimating];
-    activity.frame = CGRectMake(10, 10, 50, 44);
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
-    
 }
 
 - (void)userSignupDidFail:(NSNotification *)notification

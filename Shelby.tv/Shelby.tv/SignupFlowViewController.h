@@ -32,6 +32,12 @@ extern NSString * const kShelbySignupVideoTypesKey;
 @property (nonatomic, weak) NSMutableDictionary *signupDictionary;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
 
+// Might want to move textfields to corresponding VC, but for now, leaving all TextFields here for now.
+@property (nonatomic, weak) IBOutlet UITextField *email;
+@property (nonatomic, weak) IBOutlet UITextField *nameField;
+@property (nonatomic, weak) IBOutlet UITextField *password;
+@property (nonatomic, weak) IBOutlet UITextField *username;
+
 - (void)saveValueAndResignActiveTextField;
 - (void)animateOpenEditing;
 - (void)animateCloseEditing;

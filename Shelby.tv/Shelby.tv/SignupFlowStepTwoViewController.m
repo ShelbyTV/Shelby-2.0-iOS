@@ -26,9 +26,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
+
+    self.nextButton.enabled = NO;
     self.videoTypes.backgroundColor = self.view.backgroundColor;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (self.videoTypes && [self.selectedCellsTitlesArray count] > 2) {
+        self.nextButton.enabled = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning

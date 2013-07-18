@@ -7,7 +7,6 @@
 //
 
 #import "SignupFlowViewController.h"
-#import "BlinkingLabel.h"
 #import "SignupVideoTypeViewCell.h"
 #import "ShelbyDataMediator.h"
 #import "User.h"
@@ -29,14 +28,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 @interface SignupFlowViewController ()
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
-@property (weak, nonatomic) IBOutlet BlinkingLabel *blinkingLabel;
 @property (weak, nonatomic) IBOutlet UIButton *chooseAvatarButton;
-@property (nonatomic, weak) IBOutlet UITextField *email;
-@property (nonatomic, weak) IBOutlet UILabel *emailLabel;
-@property (nonatomic, weak) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic, weak) IBOutlet UITextField *password;
-@property (nonatomic, weak) IBOutlet UITextField *username;
 
 - (IBAction)assignAvatar:(id)sender;
 - (IBAction)signup:(id)sender;
@@ -104,20 +97,14 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nextButton];
     self.nextButton = self.navigationItem.rightBarButtonItem;
 
-    
-    // If we are on First, Second or Fourth step - we might want to disable Next
-    if (self.nextButton && ([self.nameField.text isEqualToString:@""] || self.videoTypes || [self.username.text isEqualToString:@""])) {
-        self.nextButton.enabled = NO;
-    }
-    
     NSString *imageNameSuffix = nil;
     if (kShelbyFullscreenHeight > 480) {
         imageNameSuffix = @"-568h";
     } else {
         imageNameSuffix = @"";
     }
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"bkgd-step%@%@.png", [self signupStepNumber], imageNameSuffix]]];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -133,46 +120,14 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     if (self.signupDictionary[kShelbySignupNameKey]) {
         self.fullname = self.signupDictionary[kShelbySignupNameKey];
-        if ([self.view respondsToSelector:@selector(setName:)]) {
-            [self.view performSelector:@selector(setName:) withObject:self.fullname];
-        }
-        if (self.nameField) {
-            self.nameField.text = self.fullname;
-        }
+        
         if (self.nameLabel) {
             self.nameLabel.text = self.fullname;
         }
     }
-    
-    if (self.signupDictionary[kShelbySignupPasswordKey] && self.password) {
-        self.password.text = self.signupDictionary[kShelbySignupPasswordKey];
-    }
-    
-    if (self.signupDictionary[kShelbySignupUsernameKey] && self.username) {
-        self.username.text = self.signupDictionary[kShelbySignupUsernameKey];
-    }
-
-    // TODO: decide the length of username & password that are acceptable
-    // If on Fourth step, enable button if user entered Username & Password
-    if ([self.username.text length] && [self.password.text length]) {
-        self.nextButton.enabled = YES;
-    }
-    
-    if (self.signupDictionary[kShelbySignupEmailKey] && (self.email || self.emailLabel)) {
-        self.email.text = self.signupDictionary[kShelbySignupEmailKey];
-        self.emailLabel.text = self.signupDictionary[kShelbySignupEmailKey];
-    }
 
     if (self.signupDictionary[kShelbySignupVideoTypesKey]) {
         self.selectedCellsTitlesArray = self.signupDictionary[kShelbySignupVideoTypesKey];
-        if (self.blinkingLabel && [self.selectedCellsTitlesArray count] > 0) {
-            [self.blinkingLabel setWords:self.selectedCellsTitlesArray];
-        }
-        
-        // If on Second step and more than 3 selected, enable next button
-        if (self.videoTypes && [self.selectedCellsTitlesArray count] > 2) {
-            self.nextButton.enabled = YES;
-        }
     } else {
         self.selectedCellsTitlesArray = [@[] mutableCopy];
     }

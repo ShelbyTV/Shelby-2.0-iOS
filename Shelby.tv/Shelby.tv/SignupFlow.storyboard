@@ -23,7 +23,7 @@
         <scene sceneID="buK-fS-gfn">
             <objects>
                 <viewController storyboardIdentifier="FirstStep" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sgp-ZG-jtU" customClass="SignupFlowStepOneViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="pGl-nd-Jhs" customClass="SignupConfirmationView">
+                    <view key="view" contentMode="scaleToFill" id="pGl-nd-Jhs">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -392,7 +392,7 @@
         <scene sceneID="k8P-xK-euL">
             <objects>
                 <viewController id="1I6-gt-YXr" customClass="SignupFlowStepFourViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="IO9-hj-Ipx" customClass="SignupConfirmationView">
+                    <view key="view" contentMode="scaleToFill" id="IO9-hj-Ipx">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -639,14 +639,18 @@
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
-        <class className="SignupConfirmationView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupConfirmationView.h"/>
-        </class>
         <class className="SignupFlowNavigationViewController" superclassName="UINavigationController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowNavigationViewController.h"/>
         </class>
         <class className="SignupFlowStepFourViewController" superclassName="SignupFlowViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepFourViewController.h"/>
+        </class>
+        <class className="SignupFlowStepOneViewController" superclassName="SignupFlowViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepOneViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="gotoChooseVideoTypes:"/>
+                <relationship kind="action" name="unwindSegueToStepOne:" candidateClass="UIStoryboardSegue"/>
+            </relationships>
         </class>
         <class className="SignupFlowStepThreeViewController" superclassName="SignupFlowViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepThreeViewController.h"/>
@@ -699,8 +703,8 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
