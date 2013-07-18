@@ -27,7 +27,12 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2tk-Hq-yu9"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2tk-Hq-yu9">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="82" type="user" id="5a3-9H-0N2"/>
+                                    <constraint firstAttribute="width" constant="82" type="user" id="MU9-aX-oPa"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKA-Et-Ijp">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="95" id="93j-Ah-FH3"/>
@@ -36,7 +41,7 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="20"/>
                                 <state key="normal" title="Add a photo">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.22745098039215686" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -257,7 +262,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="VEZ-cK-rZH">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="VEZ-cK-rZH">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="hsd-5e-RjF"/>
                                 </constraints>
@@ -393,7 +398,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IGz-wX-mXs">
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="1Dn-RK-rK4">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="1Dn-RK-rK4">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" type="user" id="Atz-So-WTu"/>
                                             <constraint firstAttribute="width" constant="40" type="user" id="Eqp-vr-Rv8"/>
@@ -640,6 +645,7 @@
         <class className="SignupFlowFirstStepViewController" superclassName="SignupFlowViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowFirstStepViewController.h"/>
             <relationships>
+                <relationship kind="action" name="gotoChooseVideoTypes:"/>
                 <relationship kind="action" name="unwindSegueToStepOne:" candidateClass="UIStoryboardSegue"/>
             </relationships>
         </class>
@@ -654,7 +660,7 @@
             <relationships>
                 <relationship kind="action" name="connectoToFacebook:"/>
                 <relationship kind="action" name="connectoToTwitter:"/>
-                <relationship kind="action" name="gotoChooseVideoTypes:"/>
+                <relationship kind="action" name="gotoMyAccount:"/>
                 <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
             </relationships>
@@ -667,7 +673,6 @@
             <relationships>
                 <relationship kind="action" name="assignAvatar:"/>
                 <relationship kind="action" name="goBack:"/>
-                <relationship kind="action" name="gotoMyAccount:"/>
                 <relationship kind="action" name="gotoSocialNetworks:"/>
                 <relationship kind="action" name="resignKeyboard:"/>
                 <relationship kind="action" name="signup:"/>
