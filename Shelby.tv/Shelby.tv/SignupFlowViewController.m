@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
 
     [activeTextField resignFirstResponder];
-    [self resignActiveKeyboard:activeTextField];
+    [self animateCloseEditing];
 }
 - (void)popViewController
 {
@@ -295,14 +295,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-- (void)resignActiveKeyboard:(UITextField *)textField
-{
-    if ([self.view respondsToSelector:@selector(textFieldWillReturn:)]) {
-        [self.view performSelector:@selector(textFieldWillReturn:) withObject:textField];
-    }
-}
-
 - (void)animateCloseEditing
 {
     //move up so user can see our text fields
@@ -379,7 +371,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     if (shouldResign) {
-        [self resignActiveKeyboard:textField];
+        [self animateCloseEditing];
     }
     
     return YES;
