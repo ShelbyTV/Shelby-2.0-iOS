@@ -680,6 +680,18 @@ typedef struct _ShelbyArrayMergeInstructions {
     }
 }
 
+#pragma mark - SignupFlowNavigationViewDelegate
+
+- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
+{
+    [[ShelbyDataMediator sharedInstance] signupUserWithName:name andEmail:email];
+}
+
+- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
+{
+    [[ShelbyDataMediator sharedInstance] completeSignupUserWithUsername:username andPassword:password];
+}
+
 #pragma mark - ShelbyHomeDelegate
 - (void)presentUserLogin
 {
@@ -789,16 +801,6 @@ typedef struct _ShelbyArrayMergeInstructions {
 {
     [self goToDisplayChannel:[self communityChannel]];
     [self.homeVC didNavigateToCommunityChannel];
-}
-
-- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
-{
-    [[ShelbyDataMediator sharedInstance] signupUserWithName:name andEmail:email];
-}
-
-- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
-{
-    [[ShelbyDataMediator sharedInstance] completeSignupUserWithUsername:username andPassword:password];
 }
 
 - (void)goToUsersSettings
