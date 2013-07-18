@@ -651,6 +651,13 @@
         </class>
         <class className="SignupFlowStepThreeViewController" superclassName="SignupFlowViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepThreeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="connectoToFacebook:"/>
+                <relationship kind="action" name="connectoToTwitter:"/>
+                <relationship kind="action" name="gotoMyAccount:"/>
+                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
+            </relationships>
         </class>
         <class className="SignupFlowStepTwoViewController" superclassName="SignupFlowViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowStepTwoViewController.h"/>
@@ -659,11 +666,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignupFlowViewController.h"/>
             <relationships>
                 <relationship kind="action" name="assignAvatar:"/>
-                <relationship kind="action" name="connectoToFacebook:"/>
-                <relationship kind="action" name="connectoToTwitter:"/>
                 <relationship kind="action" name="goBack:"/>
                 <relationship kind="action" name="gotoChooseVideoTypes:"/>
-                <relationship kind="action" name="gotoMyAccount:"/>
                 <relationship kind="action" name="gotoSocialNetworks:"/>
                 <relationship kind="action" name="resignKeyboard:"/>
                 <relationship kind="action" name="signup:"/>
@@ -672,12 +676,10 @@
                 <relationship kind="outlet" name="chooseAvatarButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="email" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nameField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="password" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="twitterButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="username" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="videoTypes" candidateClass="UICollectionView"/>
             </relationships>

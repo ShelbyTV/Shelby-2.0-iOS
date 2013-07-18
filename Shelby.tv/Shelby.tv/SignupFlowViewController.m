@@ -37,12 +37,10 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 @property (weak, nonatomic) IBOutlet UIButton *chooseAvatarButton;
 @property (nonatomic, weak) IBOutlet UITextField *email;
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
-@property (nonatomic, weak) IBOutlet UIButton *facebookButton;
 @property (nonatomic, weak) IBOutlet UITextField *nameField;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *nextButton;
 @property (nonatomic, weak) IBOutlet UITextField *password;
-@property (nonatomic, weak) IBOutlet UIButton *twitterButton;
 @property (nonatomic, weak) IBOutlet UITextField *username;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
 @property (nonatomic, strong) NSMutableArray *selectedCellsTitlesArray;
@@ -54,14 +52,10 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (IBAction)goBack:(id)sender;
 - (IBAction)resignKeyboard:(id)sender;
 
-// Social Actions
-- (IBAction)connectoToFacebook:(id)sender;
-- (IBAction)connectoToTwitter:(id)sender;
 
 // Initiate Segues
 - (IBAction)gotoChooseVideoTypes:(id)sender;
 - (IBAction)gotoSocialNetworks:(id)sender;
-- (IBAction)gotoMyAccount:(id)sender;
 @end
 
 @implementation SignupFlowViewController
@@ -126,10 +120,6 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
         self.nextButton.enabled = NO;
     }
     
-    // If Third Step - signup to TW & FB notifications
-    if (self.facebookButton) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSocialButtons) name:kShelbyNotificationTwitterConnectCompleted object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSocialButtons) name:kShelbyNotificationFacebookConnectCompleted object:nil];    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -201,11 +191,6 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    // We are on Third Step
-    if (self.facebookButton) {
-        [self refreshSocialButtons];
-    }
 }
 
 - (NSString *)signupStepNumber
@@ -214,19 +199,7 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
     return @"1";
 }
 
-- (void)refreshSocialButtons
-{
-    // We might come from a background thread - so make sure we switch to main thread.
-    dispatch_async(dispatch_get_main_queue(), ^{
-        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
-        if (user.facebookUID) {
-            self.facebookButton.enabled = NO;
-        }
-        if (user.twitterNickname) {
-            self.twitterButton.enabled = NO;
-        }
-    });
-}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -277,11 +250,6 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (IBAction)gotoSocialNetworks:(id)sender
 {
     [self performSegueWithIdentifier:@"SocialNetworks" sender:self];
-}
-
-- (IBAction)gotoMyAccount:(id)sender
-{
-    [self performSegueWithIdentifier:@"MyAccount" sender:self];
 }
 
 
@@ -386,24 +354,6 @@ typedef NS_ENUM(NSInteger, SignupDialogAlert) {
 - (IBAction)assignAvatar:(id)sender
 {
     [self openImagePicker];
-}
-
-// KP KP: TODO: commenting out because need to make sure user has an account - after we implement that, uncomemnt
-- (IBAction)connectoToFacebook:(id)sender
-{
-    UIViewController *parent = self.parentViewController;
-    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
-        [parent performSelector:@selector(connectToFacebook)];
-    }
-}
-
-// KP KP: TODO: commenting out because need to make sure user has an account - after we implement that, uncomemnt
-- (IBAction)connectoToTwitter:(id)sender
-{
-    UIViewController *parent = self.parentViewController;
-    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
-        [parent performSelector:@selector(connectToTwitter)];
-    }
 }
 
 - (void)saveValueAndResignActiveTextField
