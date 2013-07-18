@@ -703,6 +703,11 @@ typedef struct _ShelbyArrayMergeInstructions {
     [self presentLoginVC];
 }
 
+- (void)presentUserSignup
+{
+    [self presentSignupVC];
+}
+
 - (void)logoutUser
 {
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];

@@ -22,7 +22,7 @@
 //@property (nonatomic, weak) IBOutlet UILabel *topBarTitle;
 @property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
 @property (nonatomic, weak) UIView *navBar;
-@property (nonatomic, strong) UIView *navBarLoginView;
+@property (nonatomic, strong) UIView *navBarButtonView;
 
 @property (nonatomic, strong) BrowseViewController *browseVC;
 @property (nonatomic, strong) NSMutableArray *streamBrowseVCs;
@@ -322,37 +322,37 @@
     _currentUser = currentUser;
 
     if (_currentUser) {
-        [self.navBarLoginView removeFromSuperview];
-        self.navBarLoginView = nil;
+        [self.navBarButtonView removeFromSuperview];
+        self.navBarButtonView = nil;
     } else {
-        [self showLoginViewInNavBar];
+        [self showNavBarButton];
     }
 
     self.navBarVC.currentUser = currentUser;
 }
 
-- (void)showLoginViewInNavBar
+- (void)showNavBarButton
 {
-    STVAssert(!self.navBarLoginView, @"should not be showing login view");
+    STVAssert(!self.navBarButtonView, @"should not be showing nav bar button view");
     STVAssert(!self.currentUser, @"should not be logged in");
 
-    self.navBarLoginView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 120, 44)];
+    self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 120, 44)];
     UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
     [login setFrame:CGRectMake(7, 7, 60, 30)];
     [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
-    [login setTitle:@"Login" forState:UIControlStateNormal];
+    [login setTitle:@"Sign Up" forState:UIControlStateNormal];
     [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
     [[login titleLabel] setTextColor:[UIColor whiteColor]];
-    [login addTarget:self action:@selector(navBarLoginTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.navBarLoginView addSubview:login];
+    [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.navBarButtonView addSubview:login];
     
-    [self.navBar addSubview:self.navBarLoginView];
-    [self.navBarLoginView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
+    [self.navBar addSubview:self.navBarButtonView];
+    [self.navBarButtonView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
 }
 
-- (void)navBarLoginTapped
+- (void)navBarButtonTapped
 {
-    [self.masterDelegate presentUserLogin];
+    [self.masterDelegate presentUserSignup];
 }
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index

@@ -18,6 +18,7 @@
 
 @protocol ShelbyHomeDelegate <NSObject>
 - (void)presentUserLogin;
+- (void)presentUserSignup;
 - (void)logoutUser;
 - (void)goToDVR;
 - (void)goToUsersRoll;
