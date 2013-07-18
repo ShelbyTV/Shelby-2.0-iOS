@@ -8,6 +8,6 @@
 
 #import "SignupFlowViewController.h"
 
-@interface SignupFlowStepTwoViewController : SignupFlowViewController
+@interface SignupFlowStepTwoViewController : SignupFlowViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @end
