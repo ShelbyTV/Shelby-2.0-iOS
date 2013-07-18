@@ -13,6 +13,8 @@
 
 @protocol WelcomeFlowDelegate <NSObject>
 - (void)welcomeFlowDidTapPreview:(WelcomeFlowViewController *)welcomeFlowVC;
+- (void)welcomeFlowDidTapLogin:(WelcomeFlowViewController *)welcomeFlowVC;
+- (void)welcomeFlowDidTapSignup:(WelcomeFlowViewController *)welcomeFlowVC;
 @end
 
 @interface WelcomeFlowViewController : ShelbyViewController

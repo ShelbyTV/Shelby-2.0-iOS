@@ -429,11 +429,6 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
 - (void)logoutCurrentUser
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
- // TODO: remove if, set token in helper
-    if (user) {
-//        [user logout];
-        user.token = nil;
-    }
 
     NSManagedObjectContext *mainContext = [self mainThreadContext];
     NSArray *userChannels = [User channelsForUserInContext:mainContext];
@@ -441,6 +436,7 @@ NSString * const kShelbyOfflineLikesID = @"kShelbyOfflineLikesID";
         [mainContext deleteObject:displayChannel];
     }
 
+    user.token = nil;
     [self cleanupSession];
     [self clearAllCookies];
     

@@ -79,11 +79,28 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
     return [[NSUserDefaults standardUserDefaults] integerForKey:kShelbyWelcomeFlowStatusKey] == ShelbyWelcomeFlowStatusComplete;
 }
 
-- (IBAction)previewWasTapped:(id)sender {
-    //TODO: enable saving status
-    //    [[NSUserDefaults standardUserDefaults] setInteger:ShelbyWelcomeFlowStatusComplete forKey:kShelbyWelcomeFlowStatusKey];
-    //    [[NSUserDefaults standardUserDefaults] synchronize]
+- (IBAction)signupWasTapped:(id)sender
+{
+    [self welcomeFlowComplete];
+    [self.delegate welcomeFlowDidTapSignup:self];
+}
+
+- (IBAction)loginWasTapped:(id)sender
+{
+    [self welcomeFlowComplete];
+    [self.delegate welcomeFlowDidTapLogin:self];
+}
+
+- (IBAction)previewWasTapped:(id)sender
+{
+    [self welcomeFlowComplete];
     [self.delegate welcomeFlowDidTapPreview:self];
+}
+
+- (void)welcomeFlowComplete
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:ShelbyWelcomeFlowStatusComplete forKey:kShelbyWelcomeFlowStatusKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

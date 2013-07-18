@@ -29,6 +29,10 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 @property (strong, nonatomic) WelcomeFlowViewController *welcomeVC;
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 
+//login and signup view controllers
+@property (strong, nonatomic) AuthorizationViewController *authorizationVC;
+@property (strong, nonatomic) SignupFlowNavigationViewController *signupFlowVC;
+
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
 @property (nonatomic, strong) DisplayChannel *currentChannel;
 
@@ -49,6 +53,8 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 - (void)handleDidBecomeActive
 {
+    [ShelbyDataMediator sharedInstance].delegate = self;
+    
     if (![WelcomeFlowViewController isWelcomeComplete]) {
         [self activeWelcomeFlowViewController];
     } else {
@@ -67,6 +73,10 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 - (void)activateHomeViewController
 {
+    if (self.homeVC) {
+        return;
+    }
+    
     NSString *rootViewControllerNibName = nil;
     if (DEVICE_IPAD) {
         rootViewControllerNibName = @"ShelbyHomeView";
@@ -76,8 +86,6 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
     self.mainWindow.rootViewController = self.homeVC;
     self.welcomeVC = nil;
-
-    [ShelbyDataMediator sharedInstance].delegate = self;
 
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     self.homeVC.currentUser = currentUser;
@@ -107,6 +115,43 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
                                                                  title:@"DVR"
                                                              inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     self.dvrController = [[ShelbyDVRController alloc] init];
+}
+
+- (void)presentAuthorizationVC
+{
+    UIViewController *currentVC = self.mainWindow.rootViewController;
+
+    NSString *authorizationVCNibName = nil;
+    if (DEVICE_IPAD) {
+        authorizationVCNibName = @"AuthorizationView";
+    } else {
+        authorizationVCNibName = @"AuthorizationView-iPhone";
+    }
+    _authorizationVC = [[AuthorizationViewController alloc] initWithNibName:authorizationVCNibName bundle:nil];
+
+    CGFloat xOrigin = currentVC.view.frame.size.width / 2.0f - self.authorizationVC.view.frame.size.width / 4.0f;
+    CGFloat yOrigin = currentVC.view.frame.size.height / 5.0f - self.authorizationVC.view.frame.size.height / 4.0f;
+    CGSize loginDialogSize = self.authorizationVC.view.frame.size;
+
+    [self.authorizationVC setModalInPopover:YES];
+    [self.authorizationVC setModalPresentationStyle:UIModalPresentationFormSheet];
+    self.authorizationVC.delegate = self;
+
+    [currentVC presentViewController:self.authorizationVC animated:YES completion:nil];
+
+    self.authorizationVC.view.superview.frame = CGRectMake(xOrigin, yOrigin, loginDialogSize.width, loginDialogSize.height);
+}
+
+- (void)presentSignupVC
+{
+    UIViewController *currentVC = self.mainWindow.rootViewController;
+    
+    UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow"
+                                                                   bundle: nil];
+
+    self.signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard                                                       instantiateInitialViewController];
+    [self.signupFlowVC setSignupDelegate:self];
+    [currentVC presentViewController:self.signupFlowVC animated:YES completion:nil];
 }
 
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification
@@ -171,18 +216,21 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 #pragma mark - ShelbyDataMediatorDelegate
 - (void)loginUserDidCompleteWithError:(NSString *)errorMessage
 {
-    [self.homeVC userLoginFailedWithError:errorMessage];
+    [self.authorizationVC userLoginFailedWithError:errorMessage];
 }
 
 - (void)loginUserDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
-
+        [self.authorizationVC dismissViewControllerAnimated:NO completion:nil];
+        self.authorizationVC = nil;
+        [self activateHomeViewController];
         [self fetchUserChannelsForceSwitchToUsersStream:YES];
     });
 }
 
+#pragma mark - SignupFlowNavigationViewDelegate
 - (void)facebookConnectDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -194,7 +242,12 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 {
     if (errorMessage){
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.homeVC connectToFacebookFailedWithError:errorMessage];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:errorMessage 
+                                                               delegate:nil 
+                                                      cancelButtonTitle:@"OK" 
+                                                      otherButtonTitles:nil];
+            [alertView show];
         });
     }
 }
@@ -209,7 +262,12 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 - (void)twitterConnectDidCompleteWithError:(NSString *)errorMessage
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.homeVC connectToTwitterFailedWithError:errorMessage];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:errorMessage 
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"OK" 
+                                                  otherButtonTitles:nil];
+        [alertView show];
     });
 }
 
@@ -630,10 +688,16 @@ typedef struct _ShelbyArrayMergeInstructions {
     }
 }
 
-#pragma mark - ShelbyHomeDelegate
+#pragma mark - AuthorizationDelegate
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
 {
     [[ShelbyDataMediator sharedInstance] loginUserWithEmail:email password:password];
+}
+
+#pragma mark - ShelbyHomeDelegate
+- (void)presentUserLogin
+{
+    [self presentAuthorizationVC];
 }
 
 - (void)logoutUser
@@ -741,9 +805,48 @@ typedef struct _ShelbyArrayMergeInstructions {
     [self.homeVC didNavigateToCommunityChannel];
 }
 
+- (void)goToUsersSettings
+{
+    if (DEVICE_IPAD) {
+//        if(!self.settingsPopover) {
+//            SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithUser:self.currentUser];
+//
+//            _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
+//            [self.settingsPopover setDelegate:self];
+//            [settingsViewController setDelegate:self];
+//        } else {
+//            SettingsViewController *settingsViewController = (SettingsViewController *)[self.settingsPopover contentViewController];
+//            if ([settingsViewController isKindOfClass:[SettingsViewController class]]) {
+//                settingsViewController.user = self.currentUser;
+//            }
+//        }
+//
+//        [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    } else {
+        //XXX Temporary
+        //TODO: Show a new settings view per Wireframes
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
+        actionSheet.destructiveButtonIndex = 2;
+        [actionSheet showInView:self.mainWindow.rootViewController.view];
+    }
+}
+
 - (ShelbyBrowseTutorialMode)browseTutorialMode
 {
     return self.currentBrowseTutorialMode;
+}
+
+#pragma mark - UIActionSheetDelegate methods
+//XXX Temporary until we show a proper settings view per Wireframes
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self connectToFacebook];
+    } else if (buttonIndex == 1) {
+        [self connectToTwitter];
+    } else if (buttonIndex == 2) {
+        [self logoutUser];
+    }
 }
 
 #pragma mark - Tutorial Mode
@@ -760,6 +863,16 @@ typedef struct _ShelbyArrayMergeInstructions {
 }
 
 # pragma mark - WelcomeFlowDelegate
+
+- (void)welcomeFlowDidTapSignup:(WelcomeFlowViewController *)welcomeFlowVC
+{
+    [self presentSignupVC];
+}
+
+- (void)welcomeFlowDidTapLogin:(WelcomeFlowViewController *)welcomeFlowVC
+{
+    [self presentAuthorizationVC];
+}
 
 - (void)welcomeFlowDidTapPreview:(WelcomeFlowViewController *)welcomeFlowVC
 {

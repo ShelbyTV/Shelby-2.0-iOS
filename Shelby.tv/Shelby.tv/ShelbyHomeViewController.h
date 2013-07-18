@@ -12,26 +12,23 @@
 #import "SettingsViewController.h"
 #import "ShelbyNavBarViewController.h"
 #import "ShelbyStreamBrowseViewController.h"
-#import "SignupFlowNavigationViewController.h"
 #import "SPShareController.h"
 #import "User.h"
 #import "VideoControlsViewController.h"
 
 @protocol ShelbyHomeDelegate <NSObject>
-
-- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
+- (void)presentUserLogin;
 - (void)logoutUser;
-- (void)connectToFacebook;
-- (void)connectToTwitter;
 - (void)goToDVR;
 - (void)goToUsersRoll;
 - (void)goToUsersLikes;
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
+- (void)goToUsersSettings;
 @end
 
 
-@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, SettingsViewDelegate, SignupFlowNavigationViewDelegate, AuthorizationDelegate, MFMailComposeViewControllerDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate>
+@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate>
 
 // We assume these are all of our channels, in the correct order
 @property (nonatomic, strong) NSArray *channels;
@@ -72,7 +69,4 @@
 //DEPRECATED
 - (void)animateDismissPlayerForChannel:(DisplayChannel *)channel atFrame:(Frame *)videoFrame;
 
-- (void)userLoginFailedWithError:(NSString *)errorMessage;
-- (void)connectToFacebookFailedWithError:(NSString *)errorMessage;
-- (void)connectToTwitterFailedWithError:(NSString *)errorMessage;
 @end
