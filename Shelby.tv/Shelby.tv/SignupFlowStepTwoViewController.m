@@ -135,10 +135,11 @@
         cell.backgroundView.backgroundColor = [UIColor clearColor];
         cell.contentView.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [UIColor clearColor];
-        // TODO: need to make the cell clear
-        cell.contentView.backgroundColor = [UIColor clearColor];
+
         if (self.avatarImage) {
             cell.avatar.image = self.avatarImage;
+            cell.avatar.layer.masksToBounds = YES;
+            cell.avatar.layer.cornerRadius = 5;
         }
         cell.name = self.fullname;
         cell.delegate = self;

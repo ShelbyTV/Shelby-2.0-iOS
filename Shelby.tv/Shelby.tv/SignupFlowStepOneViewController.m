@@ -1,5 +1,5 @@
 //
-//  SignupFlowFirstStepViewController.m
+//  SignupFlowStepOneViewController.m
 //  Shelby.tv
 //
 //  Created by Keren on 7/16/13.

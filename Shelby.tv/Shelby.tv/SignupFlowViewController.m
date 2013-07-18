@@ -10,6 +10,7 @@
 #import "SignupVideoTypeViewCell.h"
 #import "ShelbyDataMediator.h"
 #import "User.h"
+#import <QuartzCore/QuartzCore.h>
 
 NSString * const kShelbySignupAvatarKey          = @"SignupAvatar";
 NSString * const kShelbySignupEmailKey           = @"SignupEmail";
@@ -85,6 +86,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nextButton];
     self.nextButton = self.navigationItem.rightBarButtonItem;
 
+    // Round corners for Avatar
+    if (self.avatar) {
+        self.avatar.layer.cornerRadius = 5;
+        self.avatar.layer.masksToBounds = YES;
+    }
+    
+    // Background Image
     NSString *imageNameSuffix = nil;
     if (kShelbyFullscreenHeight > 480) {
         imageNameSuffix = @"-568h";
