@@ -46,34 +46,42 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YWR-yH-mC6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWR-yH-mC6">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="T81-xe-Dq6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                <state key="normal" title="I don't have an account yet">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="I don't have an account yet">
+                                            <attributes>
+                                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
+                                                <integer key="NSUnderline" value="1"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                 </state>
                                 <connections>
                                     <action selector="signupTapped:" destination="3Qm-VB-UtR" eventType="touchUpInside" id="PjF-Lk-Ni8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hg-ip-j1e">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Hg-ip-j1e">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="C26-Dw-tzf"/>
                                     <constraint firstAttribute="width" constant="142" id="g9a-ze-BHz"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                <state key="normal" title="forgot password">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="forgot password">
+                                            <attributes>
+                                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
+                                                <integer key="NSUnderline" value="1"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                 </state>
                                 <connections>
                                     <action selector="forgotPasswordTapped:" destination="3Qm-VB-UtR" eventType="touchUpInside" id="cY6-sr-iJb"/>
@@ -85,12 +93,12 @@
                             <constraint firstAttribute="trailing" secondItem="X47-Nw-nxG" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="4AG-Xu-rbn"/>
                             <constraint firstItem="MNm-xq-Av8" firstAttribute="top" secondItem="YFZ-6R-ZhK" secondAttribute="bottom" type="user" id="4pC-2L-x3f"/>
                             <constraint firstItem="YFZ-6R-ZhK" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="52d-KL-9u7"/>
+                            <constraint firstItem="YFZ-6R-ZhK" firstAttribute="top" secondItem="SUL-Fv-Viv" secondAttribute="top" constant="97" id="5k0-bS-WQv"/>
                             <constraint firstItem="X47-Nw-nxG" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="GA5-r2-ZIk"/>
                             <constraint firstItem="X47-Nw-nxG" firstAttribute="top" secondItem="kct-Co-1f7" secondAttribute="bottom" type="user" id="HJw-bI-bdc"/>
                             <constraint firstItem="0Hg-ip-j1e" firstAttribute="top" secondItem="SUL-Fv-Viv" secondAttribute="top" constant="86" id="If0-gi-TOZ"/>
                             <constraint firstAttribute="trailing" secondItem="0Hg-ip-j1e" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="M46-U3-OzA"/>
                             <constraint firstItem="YWR-yH-mC6" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Rzw-mg-5tz"/>
-                            <constraint firstItem="YFZ-6R-ZhK" firstAttribute="baseline" secondItem="0Hg-ip-j1e" secondAttribute="baseline" type="default" id="YZ4-WX-fyU"/>
                             <constraint firstAttribute="trailing" secondItem="MNm-xq-Av8" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="ct9-Km-sMx"/>
                             <constraint firstItem="MNm-xq-Av8" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="eVN-AC-m38"/>
                             <constraint firstAttribute="trailing" secondItem="YWR-yH-mC6" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="hY3-Aj-8qn"/>
@@ -143,6 +151,30 @@
             <point key="canvasLocation" x="293" y="127"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="GAITrackedViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
+        </class>
+        <class className="LoginViewController" superclassName="ShelbyViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="signupButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="STVTextField" superclassName="UITextField">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/STVTextField.h"/>
+        </class>
+        <class className="ShelbyViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShelbyViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
