@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    self.videoTypes.backgroundColor = self.view.backgroundColor;
 }
 
 - (void)didReceiveMemoryWarning

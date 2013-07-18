@@ -110,6 +110,14 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         self.nextButton.enabled = NO;
     }
     
+    NSString *imageNameSuffix = nil;
+    if (kShelbyFullscreenHeight > 480) {
+        imageNameSuffix = @"-568h";
+    } else {
+        imageNameSuffix = @"";
+    }
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"bkgd-step%@%@.png", [self signupStepNumber], imageNameSuffix]]];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -168,14 +176,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     } else {
         self.selectedCellsTitlesArray = [@[] mutableCopy];
     }
-    
-    NSString *imageNameSuffix = nil;
-    if (kShelbyFullscreenHeight > 480) {
-        imageNameSuffix = @"-568h";
-    } else {
-        imageNameSuffix = @"";
-    }
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"bkgd-step%@%@.png", [self signupStepNumber], imageNameSuffix]]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
