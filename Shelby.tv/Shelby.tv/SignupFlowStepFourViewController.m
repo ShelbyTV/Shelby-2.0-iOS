@@ -8,6 +8,7 @@
 
 #import "SignupFlowStepFourViewController.h"
 #import "BlinkingLabel.h"
+#import "ShelbyDataMediator.h"
 
 @interface SignupFlowStepFourViewController ()
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -85,17 +86,63 @@
     return CGRectMake(0.0f, 0.0f, 140.0f, 44.0f);
 }
 
+- (void)removeObservers
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
+}
+
 - (IBAction)signup:(id)sender
 {
     [self saveValueAndResignActiveTextField];
     
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
+        
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [activity startAnimating];
+        activity.frame = CGRectMake(10, 10, 50, 44);
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
+        // TODO: send avatar & video types
+
         [parent performSelector:@selector(completeSignup)];
     }
+}
+
+- (void)userSignupDidFail:(NSNotification *)notification
+{
+    [self removeObservers];
+
+    NSString *errorMessage = [notification object];
+    if (!errorMessage || ![errorMessage isKindOfClass:[NSString class]] || [errorMessage isEqualToString:@""]) {
+        errorMessage = @"There was a problem. Please try again later.";
+    }
     
-    // TODO: send avatar & video types
-    // TODO: wait for ERRORS from backend
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:errorMessage
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
+    
+    self.navigationItem.rightBarButtonItem = self.nextButton;
+    self.navigationItem.leftBarButtonItem.enabled = YES;
+    
+}
+
+- (void)userSignupDidSucceed:(NSNotification *)notification
+{
+    [self removeObservers];
+    
+    self.navigationItem.rightBarButtonItem = self.nextButton;
+    self.navigationItem.leftBarButtonItem.enabled = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end

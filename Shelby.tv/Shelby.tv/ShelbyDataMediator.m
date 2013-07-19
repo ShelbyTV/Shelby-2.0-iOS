@@ -520,8 +520,18 @@ NSString * const kShelbyNotificationUserSignupDidFail = @"kShelbyNotificationUse
 {
     __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient completeUserSignupWithNickname:username password:password passwordConfirmation:password andBlock:^(id JSON, NSError *error) {
-        [weakSelf saveUserFromJSON:JSON];
-        [self.delegate loginUserDidComplete];
+        if (JSON) {
+            [weakSelf saveUserFromJSON:JSON];
+            [self.delegate loginUserDidComplete];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
+        } else {
+            NSString *errorMessage = nil;
+            if ([error isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *JSONError = (NSDictionary *)error;
+                errorMessage = JSONError[@"message"];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
+        }
     }];
 }
 

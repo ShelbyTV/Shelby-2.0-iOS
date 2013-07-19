@@ -135,7 +135,9 @@
         [activity startAnimating];
         activity.frame = CGRectMake(10, 10, 50, 44);
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
- 
+
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+
         [parent performSelector:@selector(signupUser)];
     }
 }
@@ -156,6 +158,7 @@
     [alertView show];
     
     self.navigationItem.rightBarButtonItem = self.nextButton;
+    self.navigationItem.leftBarButtonItem.enabled = YES;
     [self removeObservers];
     
 }
@@ -166,6 +169,7 @@
 
     [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
     self.navigationItem.rightBarButtonItem = self.nextButton;
+    self.navigationItem.leftBarButtonItem.enabled = YES;
 }
 
 #pragma mark - UIAlertViewDialog Methods
