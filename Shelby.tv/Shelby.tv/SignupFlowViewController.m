@@ -33,13 +33,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 
 - (IBAction)assignAvatar:(id)sender;
-- (IBAction)signup:(id)sender;
-- (IBAction)goBack:(id)sender;
 - (IBAction)resignKeyboard:(id)sender;
 
-
-// Initiate Segues
-- (IBAction)gotoSocialNetworks:(id)sender;
 @end
 
 @implementation SignupFlowViewController
@@ -160,24 +155,15 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    [super prepareForSegue:segue sender:sender];
+    
+    [self saveValueAndResignActiveTextField];
+
     UIViewController *viewController = [segue destinationViewController];
     // Passing the Signup Dictionary to the next VC in the Storyboard
     if ([viewController isKindOfClass:[SignupFlowViewController class]]) {
         ((SignupFlowViewController *)viewController).signupDictionary = self.signupDictionary;
     }
-
-    [self saveValueAndResignActiveTextField];
-}
-
-- (IBAction)gotoSocialNetworks:(id)sender
-{
-    [self performSegueWithIdentifier:@"SocialNetworks" sender:self];
-}
-
-
-- (IBAction)goBack:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)resignKeyboard:(id)sender
@@ -195,7 +181,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
 
     [activeTextField resignFirstResponder];
-    [self resignActiveKeyboard:activeTextField];
+    [self animateCloseEditing];
 }
 - (void)popViewController
 {
@@ -208,20 +194,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [actionSheet showInView:self.view];
 }
 
-#pragma mark - Signup Form Methods
-- (IBAction)signup:(id)sender
-{
-    [self saveValueAndResignActiveTextField];
-    
-    UIViewController *parent = self.parentViewController;
-    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
-        [parent performSelector:@selector(completeSignup)];
-    }
-    
-    // TODO: send avatar & video types
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 - (IBAction)assignAvatar:(id)sender
 {
@@ -293,14 +265,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-- (void)resignActiveKeyboard:(UITextField *)textField
-{
-    if ([self.view respondsToSelector:@selector(textFieldWillReturn:)]) {
-        [self.view performSelector:@selector(textFieldWillReturn:) withObject:textField];
-    }
 }
 
 - (void)animateCloseEditing
@@ -379,7 +343,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     if (shouldResign) {
-        [self resignActiveKeyboard:textField];
+        [self animateCloseEditing];
     }
     
     return YES;

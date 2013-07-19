@@ -13,6 +13,8 @@
 @interface SignupFlowStepOneViewController ()
 - (IBAction)unwindSegueToStepOne:(UIStoryboardSegue *)segue;
 
+- (IBAction)goBack:(id)sender;
+
 // Segue
 - (IBAction)gotoChooseVideoTypes:(id)sender;
 @end
@@ -53,13 +55,12 @@
     [super prepareForSegue:segue sender:sender];
     
     self.navigationItem.rightBarButtonItem = self.nextButton;
-    [self removeObservers];
 }
 
 - (void)removeObservers
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:kShelbyNotificationUserSignupDidSucceed];
-    [[NSNotificationCenter defaultCenter] removeObserver:kShelbyNotificationUserSignupDidFail];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,6 +104,11 @@
     }];
 }
 
+- (IBAction)goBack:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)gotoChooseVideoTypes:(id)sender
 {
     [self saveValueAndResignActiveTextField];
@@ -111,19 +117,16 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add Your Picture" message:@"Don't be anonymous, let other people see your picture" delegate:self cancelButtonTitle:@"Not Now" otherButtonTitles:@"Choose", nil];
         [alertView show];
     } else {
-        [self signupUser];
+        [self startSignupUser];
     }
 }
 
-- (void)signupUser
+- (void)startSignupUser
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userSignupDidSucceed:)
-                                                 name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userSignupDidFail:)
-                                                 name:kShelbyNotificationUserSignupDidFail object:nil];
 
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
@@ -159,17 +162,17 @@
 
 - (void)userSignupDidSucceed:(NSNotification *)notification
 {
+    [self removeObservers];
+
     [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
     self.navigationItem.rightBarButtonItem = self.nextButton;
-
-    [self removeObservers];
 }
 
 #pragma mark - UIAlertViewDialog Methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        [self signupUser];
+        [self startSignupUser];
     } else {
         [self assignAvatar];
     }

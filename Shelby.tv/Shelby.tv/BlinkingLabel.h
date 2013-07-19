@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void (^shelby_blinking_label_complete_block_t)(BOOL done);
 
 @interface BlinkingLabel : UILabel
-@property (nonatomic, strong) NSArray *words;
+
+- (void)setupWords:(NSArray *)words
+   andBlinkingTime:(CGFloat)time
+withCompletionText:(NSString *)completionText
+          andBlock:(shelby_blinking_label_complete_block_t)completionBlock;
 @end
