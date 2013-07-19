@@ -80,8 +80,9 @@
     NSString *email = self.signupDictionary[kShelbySignupEmailKey];
     NSString *username = self.signupDictionary[kShelbySignupUsernameKey];
     NSString *password = self.signupDictionary[kShelbySignupPasswordKey];
+    UIImage *avatar = self.signupDictionary[kShelbySignupAvatarKey];
     
-    [self.signupDelegate completeSignupUserWithName:name username:username password:password email:email andAvatar:nil];
+    [self.signupDelegate completeSignupUserWithName:name username:username password:password email:email andAvatar:avatar];
 }
 
 @end

@@ -543,10 +543,11 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         params[kShelbyAPIParamEmail] = email;
     }
     
-    if (avatar) {
-        // check if png or jpeg
-        params[kShelbyAPIParamAvatar] = UIImagePNGRepresentation(avatar);
-    }
+    // TODO: Obiously, the image should be passed not as a param.
+//    if (avatar) {
+//        // check if png or jpeg
+//        params[kShelbyAPIParamAvatar] = UIImagePNGRepresentation(avatar);
+//    }
     
     if ([params count] == 0) {
         return;
