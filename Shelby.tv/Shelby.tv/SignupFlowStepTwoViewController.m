@@ -159,42 +159,53 @@
     
     SignupVideoTypeViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"VideoType" forIndexPath:indexPath];
     
-    NSString *title;
+    NSString *title, *rollID;
     UIImage *image;
     if (indexPath.row == 0) {
         title = @"Buzzfeed";
+        rollID = @"4f9577c488ba6b15ec0084c7";
         image = [UIImage imageNamed:@"buzzfeed"];
     } else if (indexPath.row == 1) {
         title = @"GoPro";
+        rollID = @"4f91700d88ba6b2aab000fba";
         image = [UIImage imageNamed:@"gopro"];
     } else if (indexPath.row == 2) {
         title = @"GQ";
+        rollID = @"519bac7cb415cc01910000af";
         image = [UIImage imageNamed:@"gq"];
     } else if (indexPath.row == 3) {
         title = @"The New York Times";
+        rollID = @"50522466b415cc5b81002080";
         image = [UIImage imageNamed:@"nytimes"];
     } else if (indexPath.row == 4) {
         title = @"The Onion";
+        rollID = @"4fc532169a725b2999000354";
         image = [UIImage imageNamed:@"onion"];
     } else if (indexPath.row == 5) {
         title = @"PitchFork";
+        rollID = @"4fa41cfa88ba6b0dcf001a65";
         image = [UIImage imageNamed:@"pitchfork"];
     } else if (indexPath.row == 6) {
         title = @"TED";
+        rollID = @"4fa054ff88ba6b09c8000e93";
         image = [UIImage imageNamed:@"ted"];
     } else if (indexPath.row == 7) {
         title = @"Vice";
+        rollID = @"4f907a9b9a725b46010005c7";
         image = [UIImage imageNamed:@"vice"];
     } else if (indexPath.row == 8) {
         title = @"Vogue";
+        rollID = @"4fa062869a725b0c2c0010fc";
         image = [UIImage imageNamed:@"vogue"];
     } else if (indexPath.row == 9) {
         title = @"Wired";
+        rollID = @"4f9a08909a725b43ad00f798";
         image = [UIImage imageNamed:@"wired"];
     }
-    
+
     cell.title.text = title;
     cell.thumbnail.image = image;
+    cell.rollID = rollID;
     
     BOOL selected = NO;
     if (title) {
