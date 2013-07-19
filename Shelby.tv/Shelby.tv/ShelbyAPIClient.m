@@ -28,11 +28,13 @@ NSString * const kShelbyAPIPostFrameLikePath =              @"v1/frame/%@/like";
 NSString * const kShelbyAPIPostExternalShare =              @"v1/frame/%@/share";
 NSString * const kShelbyAPIPostFrameWatchedPath =           @"v1/frame/%@/watched";
 NSString * const kShelbyAPIPostFrameToRollPath =            @"v1/roll/%@/frames";
+NSString * const kShelbyAPIPostRollFollow =                 @"v1/roll/%@/join";
+NSString * const kShelbyAPIPostRollUnfollow =               @"v1/roll/%@/leave";
 NSString * const kShelbyAPIPostLoginPath =                  @"v1/token";
 NSString * const kShelbyAPIPostThirdPartyTokenPath =        @"v1/token";
 NSString * const kShelbyAPIPostSignupPath =                 @"v1/user";
 NSString * const PUT =     @"PUT";
-NSString * const kShelbyAPIPutUserPath =              @"v1/user/%@";
+NSString * const kShelbyAPIPutUserPath =                    @"v1/user/%@";
 NSString * const kShelbyAPIPutUnplayableVideoPath =         @"v1/video/%@/unplayable";
 
 NSString * const kShelbyAPIParamAuthToken =                 @"auth_token";
@@ -291,6 +293,53 @@ static AFHTTPClient *httpClient = nil;
         completionBlock(nil, error);
     }];
     
+    [operation start];
+}
+
+#pragma mark - Rolls
++ (void)followRoll:(NSString *)rollID
+     withAuthToken:(NSString *)authToken
+          andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSMutableDictionary *params = [@{} mutableCopy];
+    if (authToken) {
+        params[kShelbyAPIParamAuthToken] = authToken;
+    }
+
+    NSURLRequest *request = [self requestWithMethod:POST
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPostRollFollow, rollID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
+
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+
+    [operation start];
+}
+
++ (void)unfollowRoll:(NSString *)rollID
+       withAuthToken:(NSString *)authToken
+            andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSMutableDictionary *params = [@{} mutableCopy];
+    if (authToken) {
+        params[kShelbyAPIParamAuthToken] = authToken;
+    }
+    
+    NSURLRequest *request = [self requestWithMethod:POST
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPostRollUnfollow, rollID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
+
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+
     [operation start];
 }
 
