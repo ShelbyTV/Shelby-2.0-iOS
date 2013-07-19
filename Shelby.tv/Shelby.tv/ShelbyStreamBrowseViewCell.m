@@ -73,7 +73,7 @@
 
         //a big play button on top of the parallax view (shown when video controls aren't)
         _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _playButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
+        _playButton.titleLabel.font = kShelbyFontH5Bold;
         [_playButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
         [_playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [_playButton setTitle:@"Play" forState:UIControlStateNormal];

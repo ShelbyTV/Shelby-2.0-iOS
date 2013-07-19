@@ -48,6 +48,16 @@
 #define  kShelbyFullscreenWidth                             [[UIScreen mainScreen] bounds].size.width
 #define  kShelbyFullscreenHeight                            [[UIScreen mainScreen] bounds].size.height
 
+/// Fonts
+#define kShelbyFontH1Bold                                   [UIFont fontWithName:@"HelveticaNeue-Medium" size:32]
+#define kShelbyFontH2                                       [UIFont fontWithName:@"HelveticaNeue" size:24]
+#define kShelbyFontH3Bold                                   [UIFont fontWithName:@"HelveticaNeue-Bold" size:18]
+#define kShelbyFontH3                                       [UIFont fontWithName:@"HelveticaNeue" size:18]
+#define kShelbyFontH4Bold                                   [UIFont fontWithName:@"HelveticaNeue-Bold" size:14]
+#define kShelbyFontH4                                       [UIFont fontWithName:@"HelveticaNeue" size:14]
+#define kShelbyFontH5Bold                                   [UIFont fontWithName:@"HelveticaNeue-Bold" size:12]
+#define kShelbyFontH6Bold                                   [UIFont fontWithName:@"HelveticaNeue-Bold" size:9]
+
 /// Facebook
 #define kShelbyFacebookToken                                @"facebookToken"
 #define kShelbyFacebookUserID                               @"facebookUserID"

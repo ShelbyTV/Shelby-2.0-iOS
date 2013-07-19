@@ -58,7 +58,7 @@
             if (YES) {
                 self.activityIndicator.hidden = YES;
                 self.activityLabel.hidden = YES;
-                self.blinkingLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+                self.blinkingLabel.font = kShelbyFontH4Bold;
                 
             }
         }];

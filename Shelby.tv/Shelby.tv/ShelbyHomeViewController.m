@@ -344,7 +344,7 @@
         [login setFrame:CGRectMake(7, 7, 60, 30)];
         [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
         [login setTitle:@"Sign Up" forState:UIControlStateNormal];
-        [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
+        [[login titleLabel] setFont:kShelbyFontH3];
         [[login titleLabel] setTextColor:[UIColor whiteColor]];
         [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.navBarButtonView addSubview:login];
