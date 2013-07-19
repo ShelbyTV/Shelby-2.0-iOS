@@ -518,12 +518,18 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     }];
 }
 
-- (void)updateUserNickname:(NSString *)nickname
-                  password:(NSString *)password
-                     email:(NSString *)email
-                 andAvatar:(UIImage *)avatar
+- (void)updateUserName:(NSString *)name
+              nickname:(NSString *)nickname
+              password:(NSString *)password
+                 email:(NSString *)email
+             andAvatar:(UIImage *)avatar
+
 {
     NSMutableDictionary *params = [@{} mutableCopy];
+    if (name) {
+        params[kShelbyAPIParamName] = name;
+    }
+    
     if (nickname) {
         params[kShelbyAPIParamNickname] = nickname;
     }

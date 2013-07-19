@@ -14,7 +14,8 @@
 - (void)connectToFacebook;
 - (void)connectToTwitter;
 - (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email;
-- (void)completeSignupUserWithUsername:(NSString *)username
+- (void)completeSignupUserWithName:(NSString *)name
+                          username:(NSString *)username
                               password:(NSString *)password
                                  email:(NSString *)email
                              andAvatar:(UIImage *)image;
