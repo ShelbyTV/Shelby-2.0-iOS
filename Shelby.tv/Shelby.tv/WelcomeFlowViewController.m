@@ -7,6 +7,7 @@
 //
 
 #import "WelcomeFlowViewController.h"
+#import "WelcomeFlowUFOMothershipViewController.h"
 
 NSString * const kShelbyWelcomeFlowStatusKey = @"welcome_flow_status";
 
@@ -24,6 +25,8 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
 @property (strong, nonatomic) IBOutlet UIView *page4;
 @property (strong, nonatomic) IBOutlet UIView *background;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+
+@property (strong, nonatomic) WelcomeFlowUFOMothershipViewController *ufoMothership;
 @end
 
 @implementation WelcomeFlowViewController
@@ -67,6 +70,23 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
     // 3) Page Control
     self.parallaxView.delegate = self;
     [self.pageControl addTarget:self action:@selector(pageChangeRequest:) forControlEvents:UIControlEventValueChanged];
+
+    // 4) UFO
+    self.ufoMothership = [[WelcomeFlowUFOMothershipViewController alloc] initWithNibName:@"WelcomeFlowMothership" bundle:nil];
+    // NB: we may want to insert the mothership BETWEEN the parallax foreground and background
+    // Not sure just yet.  Depends on design...
+    // If the design HAS NO PARALLAX BACKGROUND then i can just put this below the parallax view...
+    [self.view insertSubview:self.ufoMothership.view belowSubview:self.parallaxView];
+    self.ufoMothership.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[mothership]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"mothership":self.ufoMothership.view}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mothership]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"mothership":self.ufoMothership.view}]];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,11 +132,13 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
 
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
 {
+    [self.ufoMothership controllingContentOffsetDidChange:parallaxView.foregroundContentOffset];
 }
 
 - (void)didScrollToPage:(NSUInteger)page
 {
     self.pageControl.currentPage = page;
+    [self.ufoMothership pageDidChange:page];
 }
 
 #pragma mark - UIPageControl Delegate

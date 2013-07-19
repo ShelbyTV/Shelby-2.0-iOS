@@ -937,6 +937,18 @@
 		916F41A71798B450001D9DF7 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */; };
 		916F41A81798B450001D9DF7 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */; };
 		916F41A91798B450001D9DF7 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */; };
+		916F41AB1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */; };
+		916F41AC1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */; };
+		916F41AD1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */; };
+		916F41B01799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */; };
+		916F41B11799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */; };
+		916F41B21799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */; };
+		916F41B51799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */; };
+		916F41B61799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */; };
+		916F41B71799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */; };
+		916F41B91799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */; };
+		916F41BA1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */; };
+		916F41BB1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */; };
 		9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
@@ -1517,6 +1529,12 @@
 		916F41A11798A795001D9DF7 /* STVTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVTextField.m; sourceTree = "<group>"; };
 		916F41A51798B450001D9DF7 /* LoginNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNavigationViewController.h; sourceTree = "<group>"; };
 		916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNavigationViewController.m; sourceTree = "<group>"; };
+		916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeFlowUFO.xib; sourceTree = "<group>"; };
+		916F41AE1799C063001D9DF7 /* WelcomeFlowUFOView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeFlowUFOView.h; sourceTree = "<group>"; };
+		916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeFlowUFOView.m; sourceTree = "<group>"; };
+		916F41B31799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeFlowUFOMothershipViewController.h; sourceTree = "<group>"; };
+		916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeFlowUFOMothershipViewController.m; sourceTree = "<group>"; };
+		916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeFlowMothership.xib; sourceTree = "<group>"; };
 		9188F230178C99F7002F342B /* ShelbyNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNavBarView.xib; sourceTree = "<group>"; };
 		9188F234178C9A1E002F342B /* ShelbyNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarViewController.h; sourceTree = "<group>"; };
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
@@ -1872,6 +1890,8 @@
 				91F168161797122200AF8A2E /* WelcomeFlow.storyboard */,
 				91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */,
 				91F16824179840FF00AF8A2E /* Login.storyboard */,
+				916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */,
+				916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2485,6 +2505,8 @@
 				9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */,
 				916F41A01798A795001D9DF7 /* STVTextField.h */,
 				916F41A11798A795001D9DF7 /* STVTextField.m */,
+				916F41AE1799C063001D9DF7 /* WelcomeFlowUFOView.h */,
+				916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2530,6 +2552,8 @@
 				91F168291798422F00AF8A2E /* LoginViewController.m */,
 				916F41A51798B450001D9DF7 /* LoginNavigationViewController.h */,
 				916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */,
+				916F41B31799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.h */,
+				916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2937,6 +2961,8 @@
 				91F168181797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
 				91F168221797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
 				91F16826179840FF00AF8A2E /* Login.storyboard in Resources */,
+				916F41AC1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */,
+				916F41BA1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3154,6 +3180,8 @@
 				91F168191797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
 				91F168231797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
 				91F16827179840FF00AF8A2E /* Login.storyboard in Resources */,
+				916F41AD1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */,
+				916F41BB1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3372,6 +3400,8 @@
 				91F168171797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
 				91F168211797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
 				91F16825179840FF00AF8A2E /* Login.storyboard in Resources */,
+				916F41AB1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */,
+				916F41B91799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3510,6 +3540,8 @@
 				91F1682B1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A31798A795001D9DF7 /* STVTextField.m in Sources */,
 				916F41A81798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
+				916F41B11799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
+				916F41B61799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3645,6 +3677,8 @@
 				91F1682C1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A41798A795001D9DF7 /* STVTextField.m in Sources */,
 				916F41A91798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
+				916F41B21799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
+				916F41B71799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3780,6 +3814,8 @@
 				91F1682A1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A21798A795001D9DF7 /* STVTextField.m in Sources */,
 				916F41A71798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
+				916F41B01799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
+				916F41B51799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
