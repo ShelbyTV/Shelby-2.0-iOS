@@ -13,4 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnail;
 @property (weak, nonatomic) IBOutlet UIView *overlay;
 @property (weak, nonatomic) IBOutlet UILabel *selectionCounter;
+
+//the roll to follow
+@property (nonatomic, strong) NSString *rollID;
+
 @end

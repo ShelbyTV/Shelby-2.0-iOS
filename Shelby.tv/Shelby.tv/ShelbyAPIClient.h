@@ -49,6 +49,15 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
                               withAuthToken:(NSString *)authToken
                                    andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
+// -- Rolls
++ (void)followRoll:(NSString *)rollID
+     withAuthToken:(NSString *)authToken
+          andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
++ (void)unfollowRoll:(NSString *)rollID
+       withAuthToken:(NSString *)authToken
+            andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 // -- Frames
 + (void)fetchFramesForRollID:(NSString *)rollID
                   sinceEntry:(Frame *)sinceFrame
