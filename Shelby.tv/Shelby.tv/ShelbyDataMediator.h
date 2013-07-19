@@ -70,12 +70,22 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 - (void)userAskForFacebookPublishPermissions;
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)connectTwitterWithViewController:(UIViewController *)viewController;
-- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email;
+
 - (void)updateUserName:(NSString *)name
               nickname:(NSString *)nickname
               password:(NSString *)password
                  email:(NSString *)email
              andAvatar:(UIImage *)avatar;
+
+// Signup process ONLY
+- (void)createUserWithName:(NSString *)name
+                  andEmail:(NSString *)email;
+- (void)updateUserWithName:(NSString *)name
+                  nickname:(NSString *)nickname
+                  password:(NSString *)password
+                     email:(NSString *)email
+                    avatar:(UIImage *)avatar
+                  andRolls:(NSArray *)followRolls;
 
 //returns YES if the toggle should result in this frame being liked
 //NB: does not guarantee async post will succeed

@@ -498,7 +498,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     }
 }
 
-- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
+- (void)createUserWithName:(NSString *)name andEmail:(NSString *)email
 {
     __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient postSignupWithName:name email:email andBlock:^(id JSON, NSError *error) {
@@ -567,6 +567,40 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                 errorMessage = JSONError[@"message"];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidFail object:errorMessage];
+        }
+    }];
+}
+
+- (void)updateUserWithName:(NSString *)name
+                  nickname:(NSString *)nickname
+                  password:(NSString *)password
+                     email:(NSString *)email
+                    avatar:(UIImage *)avatar
+                  andRolls:(NSArray *)followRolls
+{
+    [self updateUserName:name
+                nickname:nickname
+                password:password
+                   email:email
+               andAvatar:avatar];
+    
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    if (user.token) {
+        for (NSString *rollID in followRolls) {
+            [self followRoll:rollID withAuthToken:user.token];
+        }
+    }
+}
+
+- (void)followRoll:(NSString *)rollID withAuthToken:(NSString *)authToken
+{
+    STVAssert(rollID && authToken, @"Expected rollID & authToken");
+  
+    [ShelbyAPIClient followRoll:rollID withAuthToken:authToken andBlock:^(id JSON, NSError *error) {
+        if (!error) {
+            // Fire and forget
+        } else {
+            // TODO: In the future, try to reschedule it
         }
     }];
 }

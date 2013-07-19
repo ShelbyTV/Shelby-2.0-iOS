@@ -50,7 +50,11 @@
     self.emailLabel.text = self.signupDictionary[kShelbySignupEmailKey];
 
     if ([self.selectedCellsTitlesArray count] > 0) {
-        [self.blinkingLabel setupWords:self.selectedCellsTitlesArray andBlinkingTime:5.0 withCompletionText:@"VIDEOS ADDED!" andBlock:^(BOOL done) {
+        NSMutableArray *videoTitles = [@[] mutableCopy];
+        for (NSDictionary *rollInfo in self.selectedCellsTitlesArray) {
+            [videoTitles addObject:rollInfo[@"title"]];
+        }
+        [self.blinkingLabel setupWords:videoTitles andBlinkingTime:5.0 withCompletionText:@"VIDEOS ADDED!" andBlock:^(BOOL done) {
             if (YES) {
                 self.activityIndicator.hidden = YES;
                 self.activityLabel.hidden = YES;

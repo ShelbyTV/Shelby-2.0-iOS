@@ -170,19 +170,6 @@ static AFHTTPClient *httpClient = nil;
     [operation start];
 }
 
-
-+ (void)completeUserSignupWithNickname:(NSString *)nickname
-                              password:(NSString *)password
-                  passwordConfirmation:(NSString *)passwordConfirmation
-                              andBlock:(shelby_api_request_complete_block_t)completionBlock
-{
-    NSDictionary *params = @{@"nickname": nickname,
-                             @"password": password,
-                             @"password_confirmation": passwordConfirmation};
- 
-    [ShelbyAPIClient putUserWithParams:params andBlock:completionBlock];
-}
-
 + (void)loginUserWithEmail:(NSString *)email
                   password:(NSString *)password
                   andBlock:(shelby_api_request_complete_block_t)completionBlock

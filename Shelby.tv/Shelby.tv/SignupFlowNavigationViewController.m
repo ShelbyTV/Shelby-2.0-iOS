@@ -70,7 +70,7 @@
     NSString *name = self.signupDictionary[kShelbySignupNameKey];
     NSString *email = self.signupDictionary[kShelbySignupEmailKey];
     if (name && email) {
-        [self.signupDelegate signupUserWithName:name andEmail:email];
+        [self.signupDelegate createUserWithName:name andEmail:email];
     }
 }
 
@@ -81,8 +81,14 @@
     NSString *username = self.signupDictionary[kShelbySignupUsernameKey];
     NSString *password = self.signupDictionary[kShelbySignupPasswordKey];
     UIImage *avatar = self.signupDictionary[kShelbySignupAvatarKey];
+ 
+    NSArray *rollsInfo = self.signupDictionary[kShelbySignupVideoTypesKey];
+    NSMutableArray *rollsToFollow = [@[] mutableCopy];
+    for (NSDictionary *rollInfo in rollsInfo) {
+        [rollsToFollow addObject:rollInfo[@"rollID"]];
+    }
     
-    [self.signupDelegate completeSignupUserWithName:name username:username password:password email:email andAvatar:avatar];
+    [self.signupDelegate completeSignupUserWithName:name username:username password:password email:email avatar:avatar andRolls:rollsToFollow];
 }
 
 @end
