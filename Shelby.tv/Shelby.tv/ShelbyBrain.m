@@ -692,9 +692,12 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[ShelbyDataMediator sharedInstance] signupUserWithName:name andEmail:email];
 }
 
-- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
+- (void)completeSignupUserWithUsername:(NSString *)username
+                              password:(NSString *)password
+                                 email:(NSString *)email
+                             andAvatar:(UIImage *)avatar
 {
-    [[ShelbyDataMediator sharedInstance] completeSignupUserWithUsername:username andPassword:password];
+    [[ShelbyDataMediator sharedInstance] updateUserNickname:username password:password email:email andAvatar:avatar];
 }
 
 #pragma mark - ShelbyHomeDelegate

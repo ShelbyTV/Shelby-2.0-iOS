@@ -16,6 +16,8 @@ extern NSString * const kShelbyNotificationFacebookConnectCompleted;
 extern NSString * const kShelbyNotificationTwitterConnectCompleted;
 extern NSString * const kShelbyNotificationUserSignupDidSucceed;
 extern NSString * const kShelbyNotificationUserSignupDidFail;
+extern NSString * const kShelbyNotificationUserUpdateDidSucceed;
+extern NSString * const kShelbyNotificationUserUpdateDidFail;
 
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>
@@ -69,7 +71,7 @@ extern NSString * const kShelbyNotificationUserSignupDidFail;
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)connectTwitterWithViewController:(UIViewController *)viewController;
 - (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email;
-- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password;
+- (void)updateUserNickname:(NSString *)nickname password:(NSString *)password email:(NSString *)email andAvatar:(UIImage *)avatar;
 
 //returns YES if the toggle should result in this frame being liked
 //NB: does not guarantee async post will succeed

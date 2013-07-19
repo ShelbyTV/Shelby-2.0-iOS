@@ -23,6 +23,8 @@ NSString * const kShelbyNotificationFacebookConnectCompleted = @"kShelbyNotifica
 NSString * const kShelbyNotificationTwitterConnectCompleted = @"kShelbyNotificationTwitterConnectCompleted";
 NSString * const kShelbyNotificationUserSignupDidSucceed = @"kShelbyNotificationUserSignupDidSucceed";
 NSString * const kShelbyNotificationUserSignupDidFail = @"kShelbyNotificationUserSignupDidFail";
+NSString * const kShelbyNotificationUserUpdateDidSucceed = @"kShelbyNotificationUserUpdateDidSucceed";
+NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUserUpdateDidFail";
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -516,21 +518,48 @@ NSString * const kShelbyNotificationUserSignupDidFail = @"kShelbyNotificationUse
     }];
 }
 
-- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
+- (void)updateUserNickname:(NSString *)nickname
+                  password:(NSString *)password
+                     email:(NSString *)email
+                 andAvatar:(UIImage *)avatar
 {
+    NSMutableDictionary *params = [@{} mutableCopy];
+    if (nickname) {
+        params[kShelbyAPIParamNickname] = nickname;
+    }
+    
+    if (password) {
+        params[kShelbyAPIParamPassword] = password;
+        params[kShelbyAPIParamPasswordConfirmation] = password;
+    }
+    
+    if (email) {
+        params[kShelbyAPIParamEmail] = email;
+    }
+    
+    if (avatar) {
+        // check if png or jpeg
+        params[kShelbyAPIParamAvatar] = UIImagePNGRepresentation(avatar);
+    }
+    
+    if ([params count] == 0) {
+        return;
+    }
+
     __weak ShelbyDataMediator *weakSelf = self;
-    [ShelbyAPIClient completeUserSignupWithNickname:username password:password passwordConfirmation:password andBlock:^(id JSON, NSError *error) {
+    [ShelbyAPIClient putUserWithParams:params andBlock:^(id JSON, NSError *error) {
         if (JSON) {
             [weakSelf saveUserFromJSON:JSON];
+            // Calling loginDidComplete - to basically force a user refresh
             [self.delegate loginUserDidComplete];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidSucceed object:nil];
         } else {
             NSString *errorMessage = nil;
             if ([error isKindOfClass:[NSDictionary class]]) {
                 NSDictionary *JSONError = (NSDictionary *)error;
                 errorMessage = JSONError[@"message"];
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidFail object:errorMessage];
         }
     }];
 }

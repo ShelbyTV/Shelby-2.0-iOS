@@ -7,6 +7,12 @@
 //
 
 #import "DashboardEntry+Helper.h"
+extern NSString * const kShelbyAPIParamNickname;
+extern NSString * const kShelbyAPIParamEmail;
+extern NSString * const kShelbyAPIParamPassword;
+extern NSString * const kShelbyAPIParamPasswordConfirmation;
+extern NSString * const kShelbyAPIParamName;
+extern NSString * const kShelbyAPIParamAvatar;
 
 typedef void (^shelby_api_request_complete_block_t)(id JSON, NSError *error);
 typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BOOL shortlinkDidFail);
@@ -28,6 +34,9 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
                               password:(NSString *)password
                   passwordConfirmation:(NSString *)passwordConfirmation
                               andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
++ (void)putUserWithParams:(NSDictionary *)params
+                 andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 + (void)loginUserWithEmail:(NSString *)email
                   password:(NSString *)password
