@@ -74,8 +74,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     SEL selector = self.navigationItem.rightBarButtonItem.action;
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
     nextButton.frame = [self nextButtonFrame];
-    [nextButton setTitleColor:[UIColor colorWithHex:@"c4c4c4" andAlpha:1] forState:UIControlStateDisabled];
-    [nextButton setTitleColor:[UIColor colorWithHex:@"6fbe47" andAlpha:1] forState:UIControlStateNormal];
+    [nextButton setTitleColor:kShelbyColorLightGray forState:UIControlStateDisabled];
+    [nextButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
     [nextButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
     [nextButton setTitle:nextTitle forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nextButton];

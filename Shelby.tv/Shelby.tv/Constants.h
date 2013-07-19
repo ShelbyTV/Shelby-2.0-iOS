@@ -28,10 +28,9 @@
 //#define kShelbyNotificationUserSignupDidFail                @"User Signup Failed"
 #define kShelbyNotificationFetchingOlderVideosFailed        @"Fetching Older Videos Failed"
 
-/// Colors
+/// Colors - deprecated
 #define kShelbyColorBlack                                   [UIColor colorWithHex:@"333" andAlpha:1.0f]
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
-#define kShelbyColorGreen                                   [UIColor colorWithHex:@"6ab843" andAlpha:1.0f]
 #define kShelbyColorOrange                                  [UIColor colorWithHex:@"F38D00" andAlpha:1.0f]
 #define kShelbyColorTutorialGreen                           [UIColor colorWithHex:@"7DC400" andAlpha:1.0f]
 #define kShelbyColorLikesRedString                          @"D84955"
@@ -40,6 +39,16 @@
 #define kShelbyColorMyRollColor                             [UIColor colorWithHex:@"4B0082" andAlpha:1.0f]
 #define kShelbyColorMyStreamColorString                     @"CC6666"
 #define kShelbyColorMyStreamColor                           [UIColor colorWithHex:@"CC6666" andAlpha:1.0f]
+
+/// Colors
+#define kShelbyColorLightGray                               [UIColor colorWithHex:@"aaaaaa" andAlpha:1.0f]
+#define kShelbyColorMediumGray                              [UIColor colorWithHex:@"555555" andAlpha:1.0f]
+#define kShelbyColorDarkGray                                [UIColor colorWithHex:@"333333" andAlpha:1.0f]
+#define kShelbyColorGreen                                   [UIColor colorWithHex:@"6fbe47" andAlpha:1.0f]
+#define kShelbyColorTwitterBlue                             [UIColor colorWithHex:@"2ba9e1" andAlpha:1.0f]
+#define kShelbyColorFacebookBlue                            [UIColor colorWithHex:@"3b5998" andAlpha:1.0f]
+
+
 
 #define kShelbyColorLikesRed                                [UIColor colorWithHex:kShelbyColorLikesRedString andAlpha:1.0f]
 #define kShelbyColorWhite                                   [UIColor colorWithHex:@"f4f4f4" andAlpha:1.0f]
