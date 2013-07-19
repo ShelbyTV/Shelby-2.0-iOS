@@ -39,6 +39,27 @@
 
     //non-IB view customizations
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bkgd-step1.png"]];
+
+    // Next Button
+    NSString *nextTitle = self.navigationItem.rightBarButtonItem.title;
+    SEL selector = self.navigationItem.rightBarButtonItem.action;
+    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    nextButton.frame = CGRectMake(0, 0, 60, 44);
+    [nextButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
+    [nextButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+    [nextButton setTitle:nextTitle forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nextButton];
+    self.loginButton = self.navigationItem.rightBarButtonItem;
+
+    // Cancel Button
+    NSString *cancelTitle = self.navigationItem.leftBarButtonItem.title;
+    selector = self.navigationItem.leftBarButtonItem.action;
+    UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelButton.frame = CGRectMake(0, 0, 60, 44);
+    [cancelButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
+    [cancelButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+    [cancelButton setTitle:cancelTitle forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 }
 
 - (void)didReceiveMemoryWarning
