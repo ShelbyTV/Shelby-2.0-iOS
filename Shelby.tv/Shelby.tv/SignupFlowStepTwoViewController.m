@@ -12,6 +12,7 @@
 @interface SignupFlowStepTwoViewController ()
 // Initiate Segues
 - (IBAction)gotoSocialNetworks:(id)sender;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end
 
 @implementation SignupFlowStepTwoViewController
@@ -31,6 +32,9 @@
 
     self.nextButton.enabled = NO;
     self.videoTypes.backgroundColor = self.view.backgroundColor;
+
+    self.collectionView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
+    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated

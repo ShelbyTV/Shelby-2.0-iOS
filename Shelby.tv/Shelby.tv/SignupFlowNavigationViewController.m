@@ -36,10 +36,8 @@
     SignupFlowViewController *rootVC = (SignupFlowViewController *)self.viewControllers[0];
     rootVC.signupDictionary = self.signupDictionary;
 
-    //Hey KP KP, you should uncomment the following line, then adjust the views to take their new height into account
-    //it looks hot.  -DJS
-//    self.navigationBar.translucent = YES;
     //NB: see AppDelegate for appearance proxy setup
+    self.navigationBar.translucent = YES;
 }
 
 - (void)didReceiveMemoryWarning
