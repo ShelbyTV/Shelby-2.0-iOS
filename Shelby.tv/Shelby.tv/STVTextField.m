@@ -39,6 +39,11 @@
     return [self editingRectForBounds:bounds];
 }
 
+-(CGRect)textRectForBounds:(CGRect)bounds
+{
+    return [self editingRectForBounds:bounds];
+}
+
 - (CGRect)editingRectForBounds:(CGRect)bounds
 {
     return CGRectInset(bounds, 14, 0);
