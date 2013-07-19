@@ -74,7 +74,7 @@
         self.summaryTitle.frame = CGRectMake(20, 84, 280, 120);
         // Detail View
         self.detailTitle.frame = CGRectMake(xOrigin, 50, 280, 44);
-        self.detailUserView.frame = CGRectMake(xOrigin, 105, 280, 60);
+        self.detailUserView.frame = CGRectMake(pageWidth, 105, 320, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 215, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 195, 280, 100);
         self.detailNetworkShares.frame = CGRectMake(xOrigin, 305, 280, 40);
