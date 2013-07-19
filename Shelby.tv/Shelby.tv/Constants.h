@@ -29,7 +29,6 @@
 #define kShelbyNotificationFetchingOlderVideosFailed        @"Fetching Older Videos Failed"
 
 /// Colors - deprecated
-#define kShelbyColorBlack                                   [UIColor colorWithHex:@"333" andAlpha:1.0f]
 #define kShelbyColorGray                                    [UIColor colorWithHex:@"adadad" andAlpha:1.0f]
 #define kShelbyColorOrange                                  [UIColor colorWithHex:@"F38D00" andAlpha:1.0f]
 #define kShelbyColorTutorialGreen                           [UIColor colorWithHex:@"7DC400" andAlpha:1.0f]
@@ -41,6 +40,8 @@
 #define kShelbyColorMyStreamColor                           [UIColor colorWithHex:@"CC6666" andAlpha:1.0f]
 
 /// Colors
+#define kShelbyColorBlack                                   [UIColor colorWithHex:@"000000" andAlpha:1.0f]
+#define kShelbyColorWhite                                   [UIColor colorWithHex:@"ffffff" andAlpha:1.0f]
 #define kShelbyColorLightGray                               [UIColor colorWithHex:@"aaaaaa" andAlpha:1.0f]
 #define kShelbyColorMediumGray                              [UIColor colorWithHex:@"555555" andAlpha:1.0f]
 #define kShelbyColorDarkGray                                [UIColor colorWithHex:@"333333" andAlpha:1.0f]
