@@ -36,10 +36,10 @@
     SignupFlowViewController *rootVC = (SignupFlowViewController *)self.viewControllers[0];
     rootVC.signupDictionary = self.signupDictionary;
 
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav-bkgd.png"] forBarMetrics:UIBarMetricsDefault];
-
-    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHex:@"333333" andAlpha:1], UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
-    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
+    //Hey KP KP, you should uncomment the following line, then adjust the views to take their new height into account
+    //it looks hot.  -DJS
+//    self.navigationBar.translucent = YES;
+    //NB: see AppDelegate for appearance proxy setup
 }
 
 - (void)didReceiveMemoryWarning

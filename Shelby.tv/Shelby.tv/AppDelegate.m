@@ -68,7 +68,9 @@
         application.applicationIconBadgeNumber = 0;
         [self fireLocalNotification:notification];
     }
-    
+
+    [self setupAppAppearanceProxies];
+
     [self.brain handleDidFinishLaunching];
 
     return YES;
@@ -127,7 +129,14 @@
 
 #pragma mark - Setup Methods (Private)
 
--(void)setupCrashHandling
+- (void)setupAppAppearanceProxies
+{
+    //navigation bars
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav-bkgd.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0], UITextAttributeTextColor: [UIColor blackColor], UITextAttributeTextShadowColor: [UIColor clearColor]}];
+}
+
+- (void)setupCrashHandling
 {
     // Hockey
     [[BITHockeyManager sharedHockeyManager] configureWithBetaIdentifier:HOCKEY_BETA

@@ -27,10 +27,8 @@
 {
     [super viewDidLoad];
 
-    //nav bar
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav-bkgd.png"] forBarMetrics:UIBarMetricsDefault];
+    //NB: see AppDelegate for appearance proxy setup
     self.navigationBar.translucent = YES;
-    [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0], UITextAttributeTextColor: [UIColor blackColor], UITextAttributeTextShadowColor: [UIColor clearColor]}];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
