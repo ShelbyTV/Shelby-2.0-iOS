@@ -76,11 +76,11 @@
 
 - (void)completeSignup
 {
+    NSString *email = self.signupDictionary[kShelbySignupEmailKey];
     NSString *username = self.signupDictionary[kShelbySignupUsernameKey];
     NSString *password = self.signupDictionary[kShelbySignupPasswordKey];
-    if (username && password) {
-        [self.signupDelegate completeSignupUserWithUsername:username password:password email:nil andAvatar:nil];
-    }
+    
+    [self.signupDelegate completeSignupUserWithUsername:username password:password email:email andAvatar:nil];
 }
 
 @end
