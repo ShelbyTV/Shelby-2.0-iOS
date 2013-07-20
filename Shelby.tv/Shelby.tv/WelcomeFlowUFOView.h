@@ -42,5 +42,6 @@
 
 //start looping into mothership and then back down to bottom of stack
 - (void)startReturnHomeLoopWithVelocity:(CGFloat)pointsPerSecond;
+- (void)cancelReturnHomeLoopAtCurrentPosition;
 
 @end

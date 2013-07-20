@@ -16,7 +16,6 @@
 @interface WelcomeFlowUFOMothershipViewController () {
     NSArray *_ufos;
     NSArray *_ufosAboveMothership;
-    NSUInteger _lastPage;
     BOOL _ufoReturnHomeLoopActive;
 }
 
@@ -31,7 +30,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _lastPage = 0;
         _ufoReturnHomeLoopActive = NO;
     }
     return self;
@@ -51,14 +49,21 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [UIView animateWithDuration:0.5 animations:^{
-        [self moveUFOsToInitialPositions];
-    }];
+    [self moveUFOsToInitialPositions];
 }
 
 - (void)controllingContentOffsetDidChange:(CGPoint)offset
 {
-    if (offset.x < PAGE_WIDTH /* TODO: && !_ufosLoopingIntoMothership ??? */) {
+    //moving between initial position and initial stack position based on offset
+    //if we've already started the return home loop animation, need to cancel that
+    if (offset.x < PAGE_WIDTH) {
+        if (_ufoReturnHomeLoopActive) {
+            for (WelcomeFlowUFOView *ufo in _ufos) {
+                [ufo cancelReturnHomeLoopAtCurrentPosition];
+            }
+            _ufoReturnHomeLoopActive = NO;
+        }
+
         [self moveUFOsToInitialStackPositionPercent:(offset.x / PAGE_WIDTH)];
         [self moveMothershipToInitialStackPositionPercent:(offset.x / PAGE_WIDTH)];
     }
@@ -70,13 +75,18 @@
 
     switch (page) {
         case 0:
-            _lastPage = 0;
+            //noop
             break;
         case 1:
-            if (_lastPage == 0) {
+            if (!_ufoReturnHomeLoopActive) {
                 [self startUFOReturnHomeLoops];
             }
-            _lastPage = 1;
+            break;
+        case 2:
+            //noop
+            break;
+        case 3:
+            //noop
             break;
 
         default:
@@ -88,10 +98,15 @@
 
 - (void)startUFOReturnHomeLoops
 {
-    //TODO: let's just try making them loop, continuously, for now
+    //undo special Z position for some
+    for (WelcomeFlowUFOView *ufo in _ufosAboveMothership) {
+        [self.view insertSubview:ufo belowSubview:self.mothershipView];
+    }
+    
+    //make them all start their loops
     _ufoReturnHomeLoopActive = YES;
     for (WelcomeFlowUFOView *ufo in _ufos) {
-        [ufo startReturnHomeLoopWithVelocity:4];
+        [ufo startReturnHomeLoopWithVelocity:20];
     }
 
 
@@ -107,10 +122,6 @@
     for (WelcomeFlowUFOView *ufo in _ufos) {
         [ufo moveToInitialStackPositionPercent:pct];
     }
-    //undo special Z position for some
-    for (WelcomeFlowUFOView *ufo in _ufosAboveMothership) {
-        [self.view insertSubview:ufo belowSubview:self.mothershipView];
-    }
     
     [self.view layoutIfNeeded];
 }
@@ -122,8 +133,10 @@
 }
 
 - (void)moveUFOsToInitialPositions
-{    
+{
+    //location & initial easing
     for (WelcomeFlowUFOView *ufo in _ufos) {
+        [ufo setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
         [ufo moveToInitialPosition];
     }
     //special Z position for some
@@ -131,7 +144,15 @@
         [self.view insertSubview:ufo aboveSubview:self.mothershipView];
     }
 
-    [self.view layoutIfNeeded];
+    //animate these changes
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        //reset easing
+        for (WelcomeFlowUFOView *ufo in _ufos) {
+            [ufo setEasingFunction:LinearInterpolation forKeyPath:@"frame"];
+        }
+    }];
 }
 
 - (void)moveUFOsToRandomPositions
@@ -151,7 +172,7 @@
     CGFloat StackYDelta = 60;
 
     //the point within the mothership where UFO moves to bottom of stack to restart its journey home
-    CGFloat returnHomeLoopEndY = stackY - (2*StackYDelta);
+    CGFloat returnHomeLoopEndY = stackY - (3*StackYDelta);
     //the bottom of the stack where UFO should restarts its journey home
     //this has to account for number of UFOs minus distance they travel into mothership before restarting
     CGFloat returnHomeLoopStartY = stackY + (5*StackYDelta);
@@ -218,8 +239,6 @@
                                                  constant:0];
         [self.view addConstraints:@[ufo.posX, ufo.posY]];
 
-        [ufo setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
-
         ufo.returnHomeLoopEndY = returnHomeLoopEndY;
         ufo.returnHomeLoopStartY = returnHomeLoopStartY;
 
@@ -227,6 +246,8 @@
         ufo.layer.borderColor = [UIColor redColor].CGColor;
         ufo.layer.borderWidth = 1.0;
     }
+
+    _ufosAboveMothership = @[_ufos[3], _ufos[5], _ufos[7]];
 }
 
 - (WelcomeFlowUFOView *)createUFOWithTitle:(NSString *)name
