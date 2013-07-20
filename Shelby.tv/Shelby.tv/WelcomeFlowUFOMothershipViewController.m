@@ -12,6 +12,7 @@
 #import "WelcomeFlowUFOView.h"
 
 #define PAGE_WIDTH 320.0f
+#define MOTHERSHIP_INITIAL_STACK_POSITION 190.0f
 
 @interface WelcomeFlowUFOMothershipViewController () {
     NSArray *_ufos;
@@ -44,7 +45,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self moveUFOsToRandomPositions];
+    [self moveUFOsToEntrancePositions];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -54,9 +55,12 @@
 
 - (void)controllingContentOffsetDidChange:(CGPoint)offset
 {
-    //moving between initial position and initial stack position based on offset
-    //if we've already started the return home loop animation, need to cancel that
+
     if (offset.x < PAGE_WIDTH) {
+        /* 1 -> 2
+         * moving UFOs between initial position and initial stack position based on offset
+         * move mothership into position to receive UFOs
+         */
         if (_ufoReturnHomeLoopActive) {
             for (WelcomeFlowUFOView *ufo in _ufos) {
                 [ufo cancelReturnHomeLoopAtCurrentPosition];
@@ -66,8 +70,25 @@
 
         [self moveUFOsToInitialStackPositionPercent:(offset.x / PAGE_WIDTH)];
         [self moveMothershipToInitialStackPositionPercent:(offset.x / PAGE_WIDTH)];
+
+    } else if (offset.x > 2 * PAGE_WIDTH) {
+        /* 3 -> 4
+         * moving UFOs between stack position and a final, offscreen position
+         * have mothership fly away
+         */
+        if (_ufoReturnHomeLoopActive) {
+            for (WelcomeFlowUFOView *ufo in _ufos) {
+                [ufo cancelReturnHomeLoopAtCurrentPosition];
+            }
+            _ufoReturnHomeLoopActive = NO;
+        }
+
+        CGFloat pct = (offset.x - 2*PAGE_WIDTH) / PAGE_WIDTH;
+        [self moveUFOsToExitPositionPercent:pct];
+        [self moveMothershipToExitPositionPercent:pct];
+
     }
-    
+
 }
 
 - (void)pageDidChange:(NSUInteger)page
@@ -83,18 +104,37 @@
             }
             break;
         case 2:
-            //noop
+            if (!_ufoReturnHomeLoopActive) {
+                [self startUFOReturnHomeLoops];
+            }
             break;
         case 3:
             //noop
             break;
 
         default:
+            STVAssert(NO, @"should handle all pages");
             break;
     }
 }
 
 #pragma mark - Private Helpers
+
+- (void)moveUFOsToExitPositionPercent:(CGFloat)pct
+{
+    for (WelcomeFlowUFOView *ufo in _ufos) {
+        [ufo moveToExitPositionPercent:pct];
+    }
+    
+    [self.view layoutIfNeeded];
+}
+
+- (void)moveMothershipToExitPositionPercent:(CGFloat)pct
+{
+    self.mothershipDistanceToBottom.constant = MOTHERSHIP_INITIAL_STACK_POSITION + (self.view.frame.size.height * pct)*pct;
+    [self.mothershipView setNeedsUpdateConstraints];
+    [self.view layoutIfNeeded];
+}
 
 - (void)startUFOReturnHomeLoops
 {
@@ -122,13 +162,13 @@
     for (WelcomeFlowUFOView *ufo in _ufos) {
         [ufo moveToInitialStackPositionPercent:pct];
     }
-    
     [self.view layoutIfNeeded];
 }
 
 - (void)moveMothershipToInitialStackPositionPercent:(CGFloat)pct
 {
-    self.mothershipDistanceToBottom.constant = 270 - (80*pct);
+    self.mothershipDistanceToBottom.constant = MOTHERSHIP_INITIAL_STACK_POSITION + (80.0f*(1.0f-pct));
+    [self.mothershipView setNeedsUpdateConstraints];
     [self.view layoutIfNeeded];
 }
 
@@ -155,10 +195,10 @@
     }];
 }
 
-- (void)moveUFOsToRandomPositions
+- (void)moveUFOsToEntrancePositions
 {
     for (WelcomeFlowUFOView *ufo in _ufos) {
-        [ufo moveToRandomPositionForFrame:self.view.frame];
+        [ufo moveToEntrancePosition];
     }
 }
 
@@ -257,11 +297,19 @@
                          initialStackPoint:(CGPoint)initialStackPoint
 {
     WelcomeFlowUFOView *ufo = [[NSBundle mainBundle] loadNibNamed:@"WelcomeFlowUFO" owner:self options:nil][0];
+
+    //XXX for testing
     ufo.nameLabel.text = name;
+
+    //where does ufo start (floating about mothership)
     ufo.initialPoint = initialPoint;
+    ufo.initialSize = size;
+
+    //line up below the mothership the first time
     ufo.initialStackPoint = initialStackPoint;
     ufo.stackSize = stackSize;
-    ufo.initialSize = size;
+
+    //so we can control position
     ufo.width = [NSLayoutConstraint constraintWithItem:ufo
                                              attribute:NSLayoutAttributeWidth
                                              relatedBy:nil

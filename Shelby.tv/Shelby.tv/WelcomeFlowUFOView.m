@@ -8,6 +8,15 @@
 
 #import "WelcomeFlowUFOView.h"
 
+@interface WelcomeFlowUFOView() {
+    //random initial point
+    CGPoint _randomEntrancePoint;
+    //offscreen for the signup/login page
+    CGPoint _randomExitPoint;
+}
+
+@end
+
 @implementation WelcomeFlowUFOView
 
 - (void)awakeFromNib
@@ -15,10 +24,20 @@
     [super awakeFromNib];
 }
 
-- (void)moveToRandomPositionForFrame:(CGRect)frame
+- (void)didMoveToSuperview
 {
-    _posX.constant = arc4random_uniform(frame.size.width);
-    _posY.constant = arc4random_uniform(frame.size.height);
+    //set some nice randomish entrance/exit points
+    CGRect frame = self.superview.frame;
+    _randomEntrancePoint = CGPointMake(arc4random_uniform(frame.size.width), arc4random_uniform(frame.size.height));
+    CGFloat exitX = (arc4random_uniform(3) > 1) ? (-100) : (600);
+    CGFloat exitY = (arc4random_uniform(3) > 1) ? (-100) : (-500);
+    _randomExitPoint = CGPointMake(exitX, exitY);
+}
+
+- (void)moveToEntrancePosition
+{
+    _posX.constant = _randomEntrancePoint.x;
+    _posY.constant = _randomEntrancePoint.y;
     [self setNeedsUpdateConstraints];
 }
 
@@ -73,7 +92,14 @@
     }];
 
     // 2) and reset my initialStackPoint to my current position
-    self.initialStackPoint = CGPointMake(_posX.constant, _posY.constant);
+    self.initialStackPoint = CGPointMake(self.initialStackPoint.x, _posY.constant);
+}
+
+- (void)moveToExitPositionPercent:(CGFloat)pct
+{
+    _posX.constant = _initialStackPoint.x + ((_randomExitPoint.x - _initialStackPoint.x) * pct);
+    _posY.constant = _initialStackPoint.y + ((_randomExitPoint.y - _initialStackPoint.y) * pct);
+    [self setNeedsUpdateConstraints];
 }
 
 @end

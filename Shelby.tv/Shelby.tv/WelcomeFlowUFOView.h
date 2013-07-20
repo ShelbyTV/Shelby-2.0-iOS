@@ -32,7 +32,7 @@
 @property (assign, nonatomic) CGFloat returnHomeLoopStartY;
 
 //move to a random pre-initial position (only used before viewDidLoad)
-- (void)moveToRandomPositionForFrame:(CGRect)frame;
+- (void)moveToEntrancePosition;
 
 //move to initial position (only used on viewDidLoad)
 - (void)moveToInitialPosition;
@@ -43,5 +43,8 @@
 //start looping into mothership and then back down to bottom of stack
 - (void)startReturnHomeLoopWithVelocity:(CGFloat)pointsPerSecond;
 - (void)cancelReturnHomeLoopAtCurrentPosition;
+
+//move to a random, out-of-frame position
+- (void)moveToExitPositionPercent:(CGFloat)pct;
 
 @end
