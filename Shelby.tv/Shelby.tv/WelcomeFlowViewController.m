@@ -8,6 +8,7 @@
 
 #import "WelcomeFlowViewController.h"
 #import "WelcomeFlowUFOMothershipViewController.h"
+#import "NSObject+PerformSelectorWithPrimitive.h"
 
 NSString * const kShelbyWelcomeFlowStatusKey = @"welcome_flow_status";
 
@@ -150,12 +151,8 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
     // -setContentOffset:animated: and scrollView has no other API for this :[
     // * Here's some crazy shit: performSelector:withObject: wants an object, No Shit! But I want to send a primitive...
     // * This is a cool way to do just that using NSInvocation
-    NSInvocation *invoc = [NSInvocation invocationWithMethodSignature:[WelcomeFlowViewController instanceMethodSignatureForSelector:@selector(didScrollToPage:)]];
-    [invoc setSelector:@selector(didScrollToPage:)];
-    [invoc setTarget:self];
     NSUInteger curPage = pageControl.currentPage;
-    [invoc setArgument:&curPage atIndex:2];
-    [invoc performSelector:@selector(invoke) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(didScrollToPage:) withPrimitive:&curPage afterDelay:0.3];
 }
 
 @end
