@@ -22,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *mothershipView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipDistanceToBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipOverlayX;
 
 @end
 
@@ -46,6 +47,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self moveUFOsToEntrancePositions];
+    [self moveMothershipOverlayToCoverPercent:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -71,6 +73,12 @@
         [self moveUFOsToInitialStackPositionPercent:(offset.x / PAGE_WIDTH)];
         [self moveMothershipToInitialStackPositionPercent:(offset.x / PAGE_WIDTH)];
 
+    } else if (offset.x > PAGE_WIDTH && offset.x < 2 * PAGE_WIDTH) {
+        /* 2 -> 3
+         * move the overlay to cover the motherhsip
+         */
+        [self moveMothershipOverlayToCoverPercent:(offset.x - PAGE_WIDTH) / PAGE_WIDTH];
+
     } else if (offset.x > 2 * PAGE_WIDTH) {
         /* 3 -> 4
          * moving UFOs between stack position and a final, offscreen position
@@ -93,7 +101,6 @@
 
 - (void)pageDidChange:(NSUInteger)page
 {
-
     switch (page) {
         case 0:
             //noop
@@ -119,6 +126,13 @@
 }
 
 #pragma mark - Private Helpers
+
+- (void)moveMothershipOverlayToCoverPercent:(CGFloat)pct
+{
+    self.mothershipOverlayX.constant = self.mothershipView.frame.size.width * (1-pct);
+    [self.mothershipView setNeedsUpdateConstraints];
+    [self.view layoutIfNeeded];
+}
 
 - (void)moveUFOsToExitPositionPercent:(CGFloat)pct
 {
