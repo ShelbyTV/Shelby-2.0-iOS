@@ -106,12 +106,18 @@
             //noop
             break;
         case 1:
+            [self moveMothershipOverlayToCoverPercent:0];
             if (!_ufoReturnHomeLoopActive) {
+                [self moveUFOsToInitialStackPositionPercent:1.0];
+                [self moveMothershipToInitialStackPositionPercent:1.0];
                 [self startUFOReturnHomeLoops];
             }
             break;
         case 2:
+            [self moveMothershipOverlayToCoverPercent:1.0];
             if (!_ufoReturnHomeLoopActive) {
+                [self moveUFOsToInitialStackPositionPercent:1.0];
+                [self moveMothershipToInitialStackPositionPercent:1.0];
                 [self startUFOReturnHomeLoops];
             }
             break;
