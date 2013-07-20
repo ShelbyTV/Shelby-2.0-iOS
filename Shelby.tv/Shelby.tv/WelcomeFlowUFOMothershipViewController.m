@@ -263,26 +263,10 @@
         ufo.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view insertSubview:ufo belowSubview:self.mothershipView];
 
-        ufo.posX = [NSLayoutConstraint constraintWithItem:ufo
-                                                attribute:NSLayoutAttributeLeft
-                                                relatedBy:NSLayoutRelationEqual
-                                                   toItem:self.view
-                                                attribute:NSLayoutAttributeLeft
-                                               multiplier:1
-                                                 constant:0];
-        ufo.posY = [NSLayoutConstraint constraintWithItem:ufo
-                                                attribute:NSLayoutAttributeTop
-                                                relatedBy:NSLayoutRelationEqual
-                                                   toItem:self.view
-                                                attribute:NSLayoutAttributeTop
-                                               multiplier:1
-                                                 constant:0];
-        [self.view addConstraints:@[ufo.posX, ufo.posY]];
-
         ufo.returnHomeLoopEndY = returnHomeLoopEndY;
         ufo.returnHomeLoopStartY = returnHomeLoopStartY;
 
-        //XXX remove this testing crap
+        //XXX for testing
         ufo.layer.borderColor = [UIColor redColor].CGColor;
         ufo.layer.borderWidth = 1.0;
     }
@@ -308,23 +292,7 @@
     //line up below the mothership the first time
     ufo.initialStackPoint = initialStackPoint;
     ufo.stackSize = stackSize;
-
-    //so we can control position
-    ufo.width = [NSLayoutConstraint constraintWithItem:ufo
-                                             attribute:NSLayoutAttributeWidth
-                                             relatedBy:nil
-                                                toItem:nil
-                                             attribute:nil
-                                            multiplier:0
-                                              constant:size.width];
-    ufo.height = [NSLayoutConstraint constraintWithItem:ufo
-                                              attribute:NSLayoutAttributeHeight
-                                              relatedBy:nil
-                                                 toItem:nil
-                                              attribute:nil
-                                             multiplier:0
-                                               constant:size.height];
-    [ufo addConstraints:@[ufo.width, ufo.height]];
+    
     return ufo;
 }
 

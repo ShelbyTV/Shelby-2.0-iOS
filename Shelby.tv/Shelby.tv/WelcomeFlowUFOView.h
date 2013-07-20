@@ -9,14 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface WelcomeFlowUFOView : UIView
+
+//XXX for testing
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-
-//the position in space, relative to (0,0) of iPhone screen
-@property (strong, nonatomic) NSLayoutConstraint *posX;
-@property (strong, nonatomic) NSLayoutConstraint *posY;
-
-@property (strong, nonatomic) NSLayoutConstraint *width;
-@property (strong, nonatomic) NSLayoutConstraint *height;
 
 //initialPoint/Size is page 1 when they're about the mothership
 @property (assign, nonatomic) CGPoint initialPoint;

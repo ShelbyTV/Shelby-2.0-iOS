@@ -13,6 +13,14 @@
     CGPoint _randomEntrancePoint;
     //offscreen for the signup/login page
     CGPoint _randomExitPoint;
+
+    //sizing
+    NSLayoutConstraint *_width;
+    NSLayoutConstraint *_height;
+
+    //position in space, relative to (0,0) of iPhone screen
+    NSLayoutConstraint *_posX;
+    NSLayoutConstraint *_posY;
 }
 
 @end
@@ -26,12 +34,51 @@
 
 - (void)didMoveToSuperview
 {
+    //setup X/Y constraints
+    _posX = [NSLayoutConstraint constraintWithItem:self
+                                         attribute:NSLayoutAttributeLeft
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.superview
+                                         attribute:NSLayoutAttributeLeft
+                                        multiplier:1
+                                          constant:0];
+    _posY = [NSLayoutConstraint constraintWithItem:self
+                                         attribute:NSLayoutAttributeTop
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self.superview
+                                         attribute:NSLayoutAttributeTop
+                                        multiplier:1
+                                          constant:0];
+    [self.superview addConstraints:@[_posX, _posY]];
+
     //set some nice randomish entrance/exit points
     CGRect frame = self.superview.frame;
     _randomEntrancePoint = CGPointMake(arc4random_uniform(frame.size.width), arc4random_uniform(frame.size.height));
     CGFloat exitX = (arc4random_uniform(3) > 1) ? (-100) : (600);
     CGFloat exitY = (arc4random_uniform(3) > 1) ? (-100) : (-500);
     _randomExitPoint = CGPointMake(exitX, exitY);
+}
+
+- (void)setInitialSize:(CGSize)size
+{
+    _initialSize = size;
+
+    //constraints so we can control our size when moving to/from the stack
+    _width = [NSLayoutConstraint constraintWithItem:self
+                                          attribute:NSLayoutAttributeWidth
+                                          relatedBy:nil
+                                             toItem:nil
+                                          attribute:nil
+                                         multiplier:0
+                                           constant:size.width];
+    _height = [NSLayoutConstraint constraintWithItem:self
+                                           attribute:NSLayoutAttributeHeight
+                                           relatedBy:nil
+                                              toItem:nil
+                                           attribute:nil
+                                          multiplier:0
+                                            constant:size.height];
+    [self addConstraints:@[_width, _height]];
 }
 
 - (void)moveToEntrancePosition
@@ -65,7 +112,7 @@
     CGFloat pointsToTravel = _posY.constant - _returnHomeLoopEndY;
     NSTimeInterval travelTimeSeconds = pointsToTravel / pointsPerSecond;
 
-    self.posY.constant = self.returnHomeLoopEndY;
+    _posY.constant = self.returnHomeLoopEndY;
     [self setNeedsUpdateConstraints];
 
     [UIView animateWithDuration:travelTimeSeconds animations:^{
@@ -73,7 +120,7 @@
     } completion:^(BOOL finished) {
         if (finished) {
             //reset and restart
-            self.posY.constant = self.returnHomeLoopStartY;
+            _posY.constant = self.returnHomeLoopStartY;
             [self.superview layoutIfNeeded];
             [self startReturnHomeLoopWithVelocity:pointsPerSecond];
         } else {
@@ -85,7 +132,7 @@
 - (void)cancelReturnHomeLoopAtCurrentPosition
 {
     // 1) cancel animation by setting view's location to it's actual current in-flight position
-    self.posY.constant = [[self.layer presentationLayer] frame].origin.y;
+    _posY.constant = [[self.layer presentationLayer] frame].origin.y;
     [self setNeedsUpdateConstraints];
     [UIView animateWithDuration:0.0 animations:^{
         [self.superview layoutIfNeeded];
