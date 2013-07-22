@@ -13,13 +13,18 @@
 #import "Frame.h"
 #import "Video.h"
 
+#define REFRESH_PULL_THRESHOLD 50
+
 @interface ShelbyStreamBrowseViewController (){
     UIInterfaceOrientation _currentlyPresentedInterfaceOrientation;
+    BOOL _isRefreshing;
+    BOOL _ignorePullToRefresh;
 }
 @property (nonatomic, strong) NSArray *entries;
 @property (nonatomic, strong) NSArray *deduplicatedEntries;
 
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshSpinner;
 
 //hang on to these to keep parallax in sync
 @property (nonatomic, strong) NSMutableSet *streamBrowseViewCells;
@@ -36,6 +41,8 @@
         _streamBrowseViewCells = [[NSMutableSet set] mutableCopy];
         _viewMode = ShelbyStreamBrowseViewDefault;
         _currentPage = 0;
+        _isRefreshing = NO;
+        _ignorePullToRefresh = NO;
     }
     return self;
 }
@@ -262,11 +269,16 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self.browseViewDelegate shelbyStreamBrowseViewController:self didScrollTo:scrollView.contentOffset];
+
+    if (scrollView.contentOffset.y < 0) {
+        [self pullToRefreshForOffset:-(scrollView.contentOffset.y)];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self.browseViewDelegate shelbyStreamBrowseViewControllerDidEndDecelerating:self];
+    [self pullToRefreshNoteDidEndDecelerating];
 }
 
 #pragma mark - UITapGestureRecognizer handler
@@ -304,6 +316,52 @@
 {
     self.currentPage = page;
     [self.browseViewDelegate shelbyStreamBrowseViewController:self didChangeToPage:page];
+}
+
+#pragma mark Pull To Refresh Helpers
+
+//pulled should be absolute value
+- (void)pullToRefreshForOffset:(CGFloat)pulled
+{
+    if (_ignorePullToRefresh){ return; }
+
+    if (pulled > REFRESH_PULL_THRESHOLD) {
+        [self pullToRefreshStartRefreshing];
+    } else if (!_isRefreshing) {
+        self.refreshSpinner.alpha = pulled / REFRESH_PULL_THRESHOLD;
+    }
+}
+
+- (void)pullToRefreshStartRefreshing
+{
+    if (!_isRefreshing) {
+        _ignorePullToRefresh = YES;
+        _isRefreshing = YES;
+        self.refreshSpinner.alpha = 1.0;
+        [self.refreshSpinner startAnimating];
+        [self.browseManagementDelegate loadMoreEntriesInChannel:self.channel sinceEntry:nil];
+    }
+}
+
+- (void)pullToRefreshNoteDidEndDecelerating
+{
+    // _ignorePullToRefresh is used as a latch, so we only refresh once per pull
+    _ignorePullToRefresh = NO;
+}
+
+- (void)pullToRefreshDoneRefreshing
+{
+    self.refreshSpinner.alpha = 0.0;
+    [self.refreshSpinner stopAnimating];
+    _isRefreshing = NO;
+}
+
+//we start the spinner ourselves, only care about stopping
+- (void)refreshActivityIndicatorShouldAnimate:(BOOL)shouldAnimate
+{
+    if (!shouldAnimate) {
+        [self pullToRefreshDoneRefreshing];
+    }
 }
 
 @end
