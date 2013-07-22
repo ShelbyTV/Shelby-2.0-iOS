@@ -18,6 +18,7 @@
     NSArray *_ufos;
     NSArray *_ufosAboveMothership;
     BOOL _ufoReturnHomeLoopActive;
+    NSUInteger _currentPage;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *mothershipView;
@@ -33,6 +34,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _ufoReturnHomeLoopActive = NO;
+        _currentPage = 0;
     }
     return self;
 }
@@ -46,13 +48,17 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self moveUFOsToEntrancePositions];
-    [self moveMothershipOverlayToCoverPercent:0];
+    if (_currentPage == 0) {
+        [self moveUFOsToEntrancePositions];
+        [self moveMothershipOverlayToCoverPercent:0];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self moveUFOsToInitialPositions];
+    if (_currentPage == 0) {
+        [self moveUFOsToInitialPositions];
+    }
 }
 
 - (void)controllingContentOffsetDidChange:(CGPoint)offset
@@ -103,9 +109,10 @@
 {
     switch (page) {
         case 0:
-            //noop
+            _currentPage = 0;
             break;
         case 1:
+            _currentPage = 1;
             [self moveMothershipOverlayToCoverPercent:0];
             if (!_ufoReturnHomeLoopActive) {
                 [self moveUFOsToInitialStackPositionPercent:1.0];
@@ -114,6 +121,7 @@
             }
             break;
         case 2:
+            _currentPage = 2;
             [self moveMothershipOverlayToCoverPercent:1.0];
             if (!_ufoReturnHomeLoopActive) {
                 [self moveUFOsToInitialStackPositionPercent:1.0];
@@ -122,7 +130,7 @@
             }
             break;
         case 3:
-            //noop
+            _currentPage = 3;
             break;
 
         default:
