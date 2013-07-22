@@ -128,8 +128,8 @@
 - (void)updateSelectionIdentifierLocationToCurrentRow
 {
     UIButton *button = (UIButton *)_currentRow;
-    _selectionIdentifierX.constant = button.titleLabel.frame.origin.x - 10;
-    _selectionIdentifierY.constant = _currentRow.frame.origin.y + 19;
+    _selectionIdentifierX.constant = button.titleLabel.frame.origin.x  + button.titleLabel.frame.size.width + 5;
+    _selectionIdentifierY.constant = _currentRow.frame.origin.y + 18;
     [self layoutIfNeeded];
 }
 
