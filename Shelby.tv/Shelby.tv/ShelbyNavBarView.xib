@@ -67,8 +67,8 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="601679365">
-									<string key="name">HelveticaNeue</string>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="949808649">
+									<string key="name">HelveticaNeue-Medium</string>
 									<string key="family">Helvetica Neue</string>
 									<int key="traits">0</int>
 									<double key="pointSize">18</double>
@@ -96,7 +96,7 @@
 								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
 								<reference key="IBUINormalTitleColor" ref="560321153"/>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
-								<reference key="IBUIFontDescription" ref="601679365"/>
+								<reference key="IBUIFontDescription" ref="949808649"/>
 								<reference key="IBUIFont" ref="691018094"/>
 							</object>
 							<object class="IBUIButton" id="189192184">
@@ -116,7 +116,7 @@
 								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
 								<reference key="IBUINormalTitleColor" ref="560321153"/>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
-								<reference key="IBUIFontDescription" ref="601679365"/>
+								<reference key="IBUIFontDescription" ref="949808649"/>
 								<reference key="IBUIFont" ref="691018094"/>
 							</object>
 							<object class="IBUIButton" id="871505740">
@@ -136,7 +136,7 @@
 								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
 								<reference key="IBUINormalTitleColor" ref="560321153"/>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
-								<reference key="IBUIFontDescription" ref="601679365"/>
+								<reference key="IBUIFontDescription" ref="949808649"/>
 								<reference key="IBUIFont" ref="691018094"/>
 							</object>
 							<object class="IBUIButton" id="1062595477">
@@ -159,7 +159,7 @@
 									<bytes key="NSWhite">MAA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
-								<reference key="IBUIFontDescription" ref="601679365"/>
+								<reference key="IBUIFontDescription" ref="949808649"/>
 								<reference key="IBUIFont" ref="691018094"/>
 							</object>
 							<object class="IBUIButton" id="923294672">
@@ -178,7 +178,7 @@
 								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
 								<reference key="IBUINormalTitleColor" ref="639941271"/>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
-								<reference key="IBUIFontDescription" ref="601679365"/>
+								<reference key="IBUIFontDescription" ref="949808649"/>
 								<reference key="IBUIFont" ref="691018094"/>
 							</object>
 							<object class="IBUIView" id="867502038">

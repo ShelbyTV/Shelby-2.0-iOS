@@ -67,9 +67,10 @@
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
             //focus on current row, hide rows that aren't current
-            currentButton.alpha = 0.3;
             currentButton.userInteractionEnabled = YES;
+            currentButton.alpha = 1.0;
             [currentButton setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
+            currentButton.backgroundColor = [kShelbyColorWhite colorWithAlphaComponent:0.3];
             NSMutableArray *allRowsButCurrent = [@[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton] mutableCopy];
             [allRowsButCurrent removeObject:_currentRow];
             for (UIButton *b in allRowsButCurrent) {
@@ -92,6 +93,7 @@
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
             for (UIButton *b in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
                 b.alpha = 1.0;
+                b.backgroundColor = kShelbyColorWhite;
                 b.userInteractionEnabled = YES;
                 [b setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
             }
