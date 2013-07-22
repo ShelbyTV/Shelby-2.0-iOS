@@ -57,4 +57,7 @@
 //which page (of the parallax of the cells) is currently showing
 @property (nonatomic, assign) NSUInteger currentPage;
 
+// To allow our superview to adjust visual stylings
+@property (readonly) UICollectionView *collectionView;
+
 @end
