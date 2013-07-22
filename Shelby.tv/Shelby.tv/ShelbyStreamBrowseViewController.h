@@ -51,6 +51,8 @@
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
 
+- (void)refreshActivityIndicatorShouldAnimate:(BOOL)shouldAnimate;
+
 - (NSIndexPath *)indexPathForCurrentFocus;
 - (id<ShelbyVideoContainer>)entityForCurrentFocus;
 

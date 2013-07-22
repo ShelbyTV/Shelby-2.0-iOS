@@ -300,12 +300,21 @@
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
 {
-    [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
+    if (DEVICE_IPAD) {
+        [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
+    } else {
+        [[self streamBrowseViewControllerForChannel:channel] refreshActivityIndicatorShouldAnimate:shouldAnimate];
+    }
 }
 
 - (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
 {
-    [self.browseVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
+    if (DEVICE_IPAD) {
+        [self.browseVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
+    } else {
+        // not currently showing a loadMore activity indicator
+        //[[self streamBrowseViewControllerForChannel:channel] loadMoreActivityIndicatorShouldAnimate:shouldAnimate];
+    }
 }
 
 - (void)setMasterDelegate:(id)masterDelegate
