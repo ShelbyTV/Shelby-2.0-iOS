@@ -10,7 +10,9 @@
 #import "UIView+EasingFunctions/UIView+EasingFunctions.h"
 #import "AHEasing/easing.h"
 
-@interface ShelbyNavBarView()
+@interface ShelbyNavBarView() {
+    NSArray *_separatorLines;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *slider;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sliderY;
@@ -31,7 +33,7 @@
 
 @implementation ShelbyNavBarView
 
--(id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -40,10 +42,40 @@
     return self;
 }
 
--(void)didMoveToSuperview
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    //the grey lines that show when nav is expanded
+    NSMutableArray *lines = [[NSMutableArray alloc] init];
+    for (UIButton *b in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
+        UIView *hr = [[UIView alloc] init];
+        [lines addObject:hr];
+        hr.backgroundColor = [kShelbyColorGray colorWithAlphaComponent:0.3];
+        hr.translatesAutoresizingMaskIntoConstraints = NO;
+        [self insertSubview:hr aboveSubview:b];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[hr]|"
+                                                                   options:nil
+                                                                   metrics:nil
+                                                                     views:@{@"hr":hr, @"b":b}]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[b]-0-[hr(0.5)]"
+                                                                   options:nil
+                                                                   metrics:nil
+                                                                     views:@{@"hr":hr, @"b":b}]];
+
+    }
+    _separatorLines = lines;
+    [self showSeparatorLines:NO];
+
+}
+
+- (void)didMoveToSuperview
 {
     //see bottom of file for animation notes
     [self.slider setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
+    for (UIView *l in _separatorLines) {
+        [l setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
+    }
     //setting userInteractionEnabled in XIB having no effect...
     self.selectionIdentifier.userInteractionEnabled = NO;
 }
@@ -51,11 +83,15 @@
 - (void)setCurrentRow:(UIView *)currentRow
 {
     STVAssert(currentRow == nil || [currentRow isKindOfClass:[UIButton class]], @"current row should be a button in current implementation");
+    UIButton *previousButton = (UIButton *)_currentRow;
     if (_currentRow != currentRow) {
         _currentRow = currentRow;
     }
+    UIButton *currentButton = (UIButton *)currentRow;
 
     if (_currentRow) {
+        //XXX kinda sucks when you select the top row... no animation
+        // one possibility would be to animate a little fake bounce...
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
             self.sliderY.constant = -(_currentRow.frame.origin.y);
             [self layoutIfNeeded];
@@ -63,14 +99,18 @@
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
             //focus on current row, hide rows that aren't current
-            _currentRow.alpha = 0.85;
-            _currentRow.userInteractionEnabled = YES;
+            currentButton.userInteractionEnabled = YES;
+            currentButton.alpha = 1.0;
+            [currentButton setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
+            currentButton.backgroundColor = [kShelbyColorWhite colorWithAlphaComponent:0.3];
             NSMutableArray *allRowsButCurrent = [@[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton] mutableCopy];
             [allRowsButCurrent removeObject:_currentRow];
-            for (UIView *v in allRowsButCurrent) {
-                v.alpha = 0.0;
-                v.userInteractionEnabled = NO;
+            for (UIButton *b in allRowsButCurrent) {
+                b.alpha = 0.0;
+                b.userInteractionEnabled = NO;
             }
+
+            [self showSeparatorLines:NO];
         }];
 
         [UIView animateWithDuration:SELECTION_IDENTIFIER_ANIMATION_TIME animations:^{
@@ -80,15 +120,20 @@
     } else {
         //show all rows
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
-            self.sliderY.constant = 30;
+            self.sliderY.constant = 0;
             [self layoutIfNeeded];
         }];
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
-            for (UIView *v in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
-                v.alpha = 0.95;
-                v.userInteractionEnabled = YES;
+            for (UIButton *b in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
+                b.alpha = 1.0;
+                b.backgroundColor = kShelbyColorWhite;
+                b.userInteractionEnabled = YES;
+                [b setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
             }
+            [previousButton setTitleColor:kShelbyColorBlack forState:UIControlStateNormal];
+
+            [self showSeparatorLines:YES];
         }];
 
     }
@@ -121,8 +166,8 @@
 - (void)updateSelectionIdentifierLocationToCurrentRow
 {
     UIButton *button = (UIButton *)_currentRow;
-    _selectionIdentifierX.constant = button.titleLabel.frame.origin.x - 10;
-    _selectionIdentifierY.constant = _currentRow.frame.origin.y + 19;
+    _selectionIdentifierX.constant = button.titleLabel.frame.origin.x  + button.titleLabel.frame.size.width + 5;
+    _selectionIdentifierY.constant = _currentRow.frame.origin.y + 18;
     [self layoutIfNeeded];
 }
 
@@ -141,6 +186,13 @@
         }
     }
     return NO;
+}
+
+- (void)showSeparatorLines:(BOOL)showLines
+{
+    for (UIView *l in _separatorLines) {
+        l.alpha = (showLines ? 1.0 : 0.0);
+    }
 }
 
 /* Animation Notes

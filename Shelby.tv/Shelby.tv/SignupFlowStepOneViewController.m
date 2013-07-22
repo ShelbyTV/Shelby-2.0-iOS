@@ -57,11 +57,17 @@
     self.navigationItem.rightBarButtonItem = self.nextButton;
 }
 
-- (void)removeObservers
+- (void)removeObserversForSignup:(BOOL)signupNotifications
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
+    if (signupNotifications) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserUpdateDidSucceed object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserUpdateDidFail object:nil];
+    }
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -88,7 +94,7 @@
 {
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     backButton.frame = CGRectMake(0.0f, 0.0f, 80.0f, 44.0f);
-    [backButton setTitleColor:[UIColor colorWithHex:@"888888" andAlpha:1] forState:UIControlStateNormal];
+    [backButton setTitleColor:kShelbyColorMediumGray forState:UIControlStateNormal];
     [backButton setTitle:self.navigationItem.leftBarButtonItem.title forState:UIControlStateNormal];
     [backButton addTarget:self action:self.navigationItem.leftBarButtonItem.action forControlEvents:UIControlEventTouchUpInside];
     
@@ -123,10 +129,6 @@
 
 - (void)startSignupUser
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
-     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
-    
 
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
@@ -135,14 +137,37 @@
         [activity startAnimating];
         activity.frame = CGRectMake(10, 10, 50, 44);
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
- 
-        [parent performSelector:@selector(signupUser)];
+
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+        // If user exists, just update the values. Otherwise, create new user
+        if (user) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidSucceed:) name:kShelbyNotificationUserUpdateDidSucceed object:nil];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidFail:) name:kShelbyNotificationUserUpdateDidFail object:nil];
+            
+            [parent performSelector:@selector(completeSignup)];
+        } else {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
+            
+
+            [parent performSelector:@selector(signupUser)];
+        }
     }
 }
 
-- (void)userSignupDidFail:(NSNotification *)notification
+- (void)signupSuccess
 {
-    NSString *errorMessage = [notification object];
+    [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
+    self.navigationItem.rightBarButtonItem = self.nextButton;
+    self.navigationItem.leftBarButtonItem.enabled = YES;
+}
+
+- (void)signupErrorWithErrorMessage:(NSString *)errorMessage
+{
     if (!errorMessage || ![errorMessage isKindOfClass:[NSString class]] || [errorMessage isEqualToString:@""]) {
         errorMessage = @"There was a problem. Please try again later.";
     }
@@ -156,16 +181,36 @@
     [alertView show];
     
     self.navigationItem.rightBarButtonItem = self.nextButton;
-    [self removeObservers];
+    self.navigationItem.leftBarButtonItem.enabled = YES;
+
+}
+
+- (void)userSignupDidFail:(NSNotification *)notification
+{
+    [self removeObserversForSignup:YES];
     
+    [self signupErrorWithErrorMessage:notification.object];
 }
 
 - (void)userSignupDidSucceed:(NSNotification *)notification
 {
-    [self removeObservers];
+    [self removeObserversForSignup:YES];
+    
+    [self signupSuccess];
+}
 
-    [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
-    self.navigationItem.rightBarButtonItem = self.nextButton;
+- (void)userUpdateDidFail:(NSNotification *)notification
+{
+    [self removeObserversForSignup:NO];
+    
+    [self signupErrorWithErrorMessage:notification.object];
+}
+
+- (void)userUpdateDidSucceed:(NSNotification *)notification
+{
+    [self removeObserversForSignup:NO];
+    
+    [self signupSuccess];
 }
 
 #pragma mark - UIAlertViewDialog Methods

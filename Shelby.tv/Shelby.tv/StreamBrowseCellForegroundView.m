@@ -20,11 +20,11 @@
 @property (weak, nonatomic) IBOutlet UIView *detailCommentView;
 @property (weak, nonatomic) IBOutlet UIView *detailNetworkShares;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
-@property (weak, nonatomic) IBOutlet UIImageView *detailTriangle;
 @property (weak, nonatomic) IBOutlet UIImageView *detailUserAvatar;
 @property (weak, nonatomic) IBOutlet UILabel *detailUsername;
 @property (weak, nonatomic) IBOutlet UIView *detailUserView;
 @property (weak, nonatomic) IBOutlet UILabel *detailViaNetwork;
+@property (weak, nonatomic) IBOutlet UIView *detailWhiteBackground;
 
 // Summary View Outlets
 @property (weak, nonatomic) IBOutlet UILabel *summaryTitle;
@@ -64,6 +64,7 @@
         self.summaryTitle.frame = CGRectMake(20, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
         // Detail View
         self.detailTitle.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
+        self.detailWhiteBackground.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 100, pageWidth, 120);
         self.detailUserView.frame = CGRectMake(xOrigin, 95, 165, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 100, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 170, pageWidth - kShelbyInfoViewMargin * 2, 60);
@@ -74,7 +75,8 @@
         self.summaryTitle.frame = CGRectMake(20, 84, 280, 120);
         // Detail View
         self.detailTitle.frame = CGRectMake(xOrigin, 50, 280, 44);
-        self.detailUserView.frame = CGRectMake(xOrigin, 105, 280, 60);
+        self.detailWhiteBackground.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 100, pageWidth, 200);
+        self.detailUserView.frame = CGRectMake(pageWidth, 105, 320, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 215, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 195, 280, 100);
         self.detailNetworkShares.frame = CGRectMake(xOrigin, 305, 280, 40);
@@ -85,8 +87,6 @@
 
     [self resizeCaptionLabel];
     
-    self.detailTriangle.frame = CGRectMake(xOrigin + 10, self.detailCommentView.frame.origin.y - self.detailTriangle.frame.size.height, self.detailTriangle.frame.size.width, self.detailTriangle.frame.size.height);
-
 }
 
 

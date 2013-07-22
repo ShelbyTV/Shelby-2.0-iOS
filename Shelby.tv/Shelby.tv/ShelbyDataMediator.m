@@ -23,6 +23,8 @@ NSString * const kShelbyNotificationFacebookConnectCompleted = @"kShelbyNotifica
 NSString * const kShelbyNotificationTwitterConnectCompleted = @"kShelbyNotificationTwitterConnectCompleted";
 NSString * const kShelbyNotificationUserSignupDidSucceed = @"kShelbyNotificationUserSignupDidSucceed";
 NSString * const kShelbyNotificationUserSignupDidFail = @"kShelbyNotificationUserSignupDidFail";
+NSString * const kShelbyNotificationUserUpdateDidSucceed = @"kShelbyNotificationUserUpdateDidSucceed";
+NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUserUpdateDidFail";
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -496,7 +498,7 @@ NSString * const kShelbyNotificationUserSignupDidFail = @"kShelbyNotificationUse
     }
 }
 
-- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
+- (void)createUserWithName:(NSString *)name andEmail:(NSString *)email
 {
     __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient postSignupWithName:name email:email andBlock:^(id JSON, NSError *error) {
@@ -516,12 +518,90 @@ NSString * const kShelbyNotificationUserSignupDidFail = @"kShelbyNotificationUse
     }];
 }
 
-- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
+- (void)updateUserName:(NSString *)name
+              nickname:(NSString *)nickname
+              password:(NSString *)password
+                 email:(NSString *)email
+             andAvatar:(UIImage *)avatar
+
 {
+    NSMutableDictionary *params = [@{} mutableCopy];
+    if (name) {
+        params[kShelbyAPIParamName] = name;
+    }
+    
+    if (nickname) {
+        params[kShelbyAPIParamNickname] = nickname;
+    }
+    
+    if (password) {
+        params[kShelbyAPIParamPassword] = password;
+        params[kShelbyAPIParamPasswordConfirmation] = password;
+    }
+    
+    if (email) {
+        params[kShelbyAPIParamEmail] = email;
+    }
+    
+    // TODO: Obiously, the image should be passed not as a param.
+//    if (avatar) {
+//        // check if png or jpeg
+//        params[kShelbyAPIParamAvatar] = UIImagePNGRepresentation(avatar);
+//    }
+    
+    if ([params count] == 0) {
+        return;
+    }
+
     __weak ShelbyDataMediator *weakSelf = self;
-    [ShelbyAPIClient completeUserSignupWithNickname:username password:password passwordConfirmation:password andBlock:^(id JSON, NSError *error) {
-        [weakSelf saveUserFromJSON:JSON];
-        [self.delegate loginUserDidComplete];
+    [ShelbyAPIClient putUserWithParams:params andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [weakSelf saveUserFromJSON:JSON];
+            // Calling loginDidComplete - to basically force a user refresh
+            [self.delegate loginUserDidComplete];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidSucceed object:nil];
+        } else {
+            NSString *errorMessage = nil;
+            if ([error isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *JSONError = (NSDictionary *)error;
+                errorMessage = JSONError[@"message"];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidFail object:errorMessage];
+        }
+    }];
+}
+
+- (void)updateUserWithName:(NSString *)name
+                  nickname:(NSString *)nickname
+                  password:(NSString *)password
+                     email:(NSString *)email
+                    avatar:(UIImage *)avatar
+                  andRolls:(NSArray *)followRolls
+{
+    [self updateUserName:name
+                nickname:nickname
+                password:password
+                   email:email
+               andAvatar:avatar];
+    
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    if (user.token) {
+        for (NSString *rollID in followRolls) {
+            [self followRoll:rollID withAuthToken:user.token];
+        }
+    }
+}
+
+- (void)followRoll:(NSString *)rollID withAuthToken:(NSString *)authToken
+{
+    STVAssert(rollID && authToken, @"Expected rollID & authToken");
+  
+    [ShelbyAPIClient followRoll:rollID withAuthToken:authToken andBlock:^(id JSON, NSError *error) {
+        if (!error) {
+            // Fire and forget
+        } else {
+            // TODO: In the future, try to reschedule it
+        }
     }];
 }
 

@@ -93,11 +93,14 @@
     SignupVideoTypeViewCell *cell = (SignupVideoTypeViewCell *)[self.videoTypes cellForItemAtIndexPath:indexPath];
     
     if (cell.title.text) {
-        if ([self.selectedCellsTitlesArray containsObject:cell.title.text]) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title = %@", cell.title.text];
+        NSArray *match = [self.selectedCellsTitlesArray filteredArrayUsingPredicate:predicate];
+        
+        if ([match count] == 1) {
             selected = YES;
-            [self.selectedCellsTitlesArray removeObject:cell.title.text];
+            [self.selectedCellsTitlesArray removeObject:match[0]];
         } else {
-            [self.selectedCellsTitlesArray addObject:cell.title.text];
+            [self.selectedCellsTitlesArray addObject:@{@"title": cell.title.text, @"rollID" : cell.rollID}];
         }
         
         [self.videoTypes reloadData];
@@ -209,10 +212,14 @@
     
     BOOL selected = NO;
     if (title) {
-        NSUInteger index = [self.selectedCellsTitlesArray indexOfObject:title];
-        if (index != NSNotFound) {
-            selected = YES;
-            cell.selectionCounter.text = [NSString stringWithFormat:@"%u", index + 1];
+        NSInteger index = 0;
+        for (NSDictionary *rollInfo in self.selectedCellsTitlesArray) {
+            if ([title isEqualToString:rollInfo[@"title"]]) {
+                selected = YES;
+                cell.selectionCounter.text = [NSString stringWithFormat:@"%u", index + 1];
+                break;
+            }
+            index++;
         }
     }
     

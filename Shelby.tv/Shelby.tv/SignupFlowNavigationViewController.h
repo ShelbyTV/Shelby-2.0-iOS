@@ -13,8 +13,14 @@
 // KP KP: TODO: take these protocol and make a new protocol out of it (SocialDelegate) and have both, settings and SignupFlow use it.
 - (void)connectToFacebook;
 - (void)connectToTwitter;
-- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email;
-- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password;
+- (void)createUserWithName:(NSString *)name
+                  andEmail:(NSString *)email;
+- (void)completeSignupUserWithName:(NSString *)name
+                          username:(NSString *)username
+                          password:(NSString *)password
+                             email:(NSString *)email
+                            avatar:(UIImage *)image
+                          andRolls:(NSArray *)rolls;
 @end
 
 

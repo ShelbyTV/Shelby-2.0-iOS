@@ -63,6 +63,14 @@
         _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
 
+        // TODO: Overlay should be wider - need to ask Brian For a new image
+         UIImageView *overlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"overlay.png"]];
+        overlay.frame = _thumbnailRegularView.frame;
+        
+        [_thumbnailRegularView addSubview:overlay];
+        [_thumbnailRegularView bringSubviewToFront:overlay];
+        
+        
         //parallax for foreground and background (above)
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
         _parallaxView.delegate = self;
@@ -73,7 +81,7 @@
 
         //a big play button on top of the parallax view (shown when video controls aren't)
         _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _playButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0];
+        _playButton.titleLabel.font = kShelbyFontH5Bold;
         [_playButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
         [_playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [_playButton setTitle:@"Play" forState:UIControlStateNormal];

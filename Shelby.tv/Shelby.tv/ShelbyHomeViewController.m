@@ -63,6 +63,7 @@
     } else {
         [self setupNavBarView];
         [self setupVideoControlsView];
+        [self showNavBarButton];
     }
     
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
@@ -334,18 +335,22 @@
 
 - (void)showNavBarButton
 {
+    if (!self.navBarVC) {
+        //views aren't set up yet...
+        return;
+    }
+
     if (self.navBarButtonView) {
         [UIView animateWithDuration:NAV_BUTTON_FADE_TIME animations:^{
             self.navBarButtonView.alpha = 1.0;
         }];
     } else if (!self.currentUser) {
-        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 0, 120, 44)];
+        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
-        [login setFrame:CGRectMake(7, 7, 60, 30)];
-        [login setBackgroundImage:[UIImage imageNamed:@"login.png"] forState:UIControlStateNormal];
-        [login setTitle:@"Sign Up" forState:UIControlStateNormal];
-        [[login titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14]];
-        [[login titleLabel] setTextColor:[UIColor whiteColor]];
+        [login setFrame:CGRectMake(0, 0, 80, 44)];
+        [login setTitle:@"Sign up" forState:UIControlStateNormal];
+        [[login titleLabel] setFont:kShelbyFontH3];
+        [[login titleLabel] setTextColor:kShelbyColorGreen];
         [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.navBarButtonView addSubview:login];
         

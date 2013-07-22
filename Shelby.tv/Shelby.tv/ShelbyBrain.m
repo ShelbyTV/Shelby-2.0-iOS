@@ -687,14 +687,25 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 #pragma mark - SignupFlowNavigationViewDelegate
 
-- (void)signupUserWithName:(NSString *)name andEmail:(NSString *)email
+- (void)createUserWithName:(NSString *)name
+                  andEmail:(NSString *)email
 {
-    [[ShelbyDataMediator sharedInstance] signupUserWithName:name andEmail:email];
+    [[ShelbyDataMediator sharedInstance] createUserWithName:name andEmail:email];
 }
 
-- (void)completeSignupUserWithUsername:(NSString *)username andPassword:(NSString *)password
+- (void)completeSignupUserWithName:(NSString *)name
+                          username:(NSString *)username
+                          password:(NSString *)password
+                             email:(NSString *)email
+                            avatar:(UIImage *)avatar
+                          andRolls:(NSArray *)rolls
 {
-    [[ShelbyDataMediator sharedInstance] completeSignupUserWithUsername:username andPassword:password];
+    [[ShelbyDataMediator sharedInstance] updateUserWithName:name
+                                                   nickname:username
+                                                   password:password
+                                                      email:email
+                                                     avatar:avatar
+                                                   andRolls:rolls];
 }
 
 #pragma mark - ShelbyHomeDelegate
