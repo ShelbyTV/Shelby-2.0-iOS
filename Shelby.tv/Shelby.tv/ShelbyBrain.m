@@ -472,7 +472,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     [alertView show];
 }
 
-#pragma mark - ShelbyBrowseProtocol Methods
+#pragma mark - ShelbyStreamBrowseManagementDelegate Methods
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
 {
     // KP KP: TODO: prevent animated twice here and NOT in ShelbyHome. ---> same goes to Close animation

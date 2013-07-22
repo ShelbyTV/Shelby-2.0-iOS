@@ -8,6 +8,7 @@
 
 #import "ShelbyStreamBrowseViewController.h"
 #import "DashboardEntry.h"
+#import "DisplayChannel+Helper.h"
 #import "DeduplicationUtility.h"
 #import "Frame.h"
 #import "Video.h"
@@ -204,13 +205,13 @@
     [cell updateParallaxFrame:self.view.frame];
     [cell matchParallaxOf:self.lastCellWithParallaxUpdate];
 
-//load more data
-//    NSInteger cellsBeyond = [dedupedEntries count] - [indexPath row];
-//    if(cellsBeyond == kShelbyPrefetchEntriesWhenNearEnd && channelCollection.channel.canFetchRemoteEntries){
-//        //since id should come from raw entries, not de-duped entries
-//        [self.browseDelegate loadMoreEntriesInChannel:channelCollection.channel
-//                                           sinceEntry:[[self entriesForChannel:channelCollection.channel] lastObject]];
-//    }
+    //load more data
+    NSInteger cellsBeyond = [self.deduplicatedEntries count] - [indexPath row];
+    if(cellsBeyond == kShelbyPrefetchEntriesWhenNearEnd && self.channel.canFetchRemoteEntries){
+        //since id should come from raw entries, not de-duped entries
+        [self.browseManagementDelegate loadMoreEntriesInChannel:self.channel
+                                                     sinceEntry:[self.entries lastObject]];
+    }
 
     return cell;
 }
