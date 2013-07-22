@@ -44,8 +44,8 @@
 {
     [super awakeFromNib];
     
-    self.layer.borderColor = kShelbyColorOrange.CGColor;
-    self.layer.borderWidth = 5;
+    self.layer.cornerRadius = 5;
+    self.layer.masksToBounds = YES;
 }
 
 - (void) show
