@@ -64,13 +64,13 @@
         // Summary View
         self.summaryTitle.frame = CGRectMake(20, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
         // Detail View
-        self.detailCreatedAt.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
-        self.detailTitle.frame = CGRectMake(xOrigin, 80, pageWidth - kShelbyInfoViewMargin * 2, 22);
-        self.detailWhiteBackground.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 100, pageWidth, 150);
-        self.detailUserView.frame = CGRectMake(xOrigin, 105, 185, 60);
+        self.detailCreatedAt.frame = CGRectMake(xOrigin, 40, pageWidth - kShelbyInfoViewMargin * 2, 22);
+        self.detailTitle.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
+        self.detailWhiteBackground.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 85, pageWidth, 140);
+        self.detailUserView.frame = CGRectMake(xOrigin, 85, 185, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 100, self.detailUsername.frame.size.height);
-        self.detailCommentView.frame = CGRectMake(xOrigin, 190, pageWidth - kShelbyInfoViewMargin * 2, 60);
-        self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, self.detailUserView.frame.origin.y + 10, 300, 40);
+        self.detailCommentView.frame = CGRectMake(xOrigin, 160, pageWidth - kShelbyInfoViewMargin * 2, 60);
+        self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, self.detailUserView.frame.origin.y + 10, 240, 40);
     } else {
         // Portrait
         // Summary View
