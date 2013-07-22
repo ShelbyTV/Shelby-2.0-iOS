@@ -79,22 +79,24 @@
         _parallaxView.backgroundContent = _backgroundThumbnailsView;
         _parallaxView.parallaxRatio = PARALLAX_RATIO;
 
+        // KP: For now, moving the play button to the VideoControlsView.
         //a big play button on top of the parallax view (shown when video controls aren't)
-        _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _playButton.titleLabel.font = kShelbyFontH5Bold;
-        [_playButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
-        [_playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [_playButton setTitle:@"Play" forState:UIControlStateNormal];
-        [self.contentView insertSubview:_playButton aboveSubview:_parallaxView];
-        _playButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[play]"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:@{@"play":_playButton}]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[play]-40-|"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:@{@"play":_playButton}]];
+//        _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        _playButton.titleLabel.font = kShelbyFontH5Bold;
+//        [_playButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
+//        [_playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        [_playButton setTitle:@"PLAY" forState:UIControlStateNormal];
+//        
+//        [self.contentView insertSubview:_playButton aboveSubview:_parallaxView];
+//        _playButton.translatesAutoresizingMaskIntoConstraints = NO;
+//        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-13-[play(100)]"
+//                                                                                 options:0
+//                                                                                 metrics:nil
+//                                                                                   views:@{@"play":_playButton}]];
+//        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[play]-40-|"
+//                                                                                 options:0
+//                                                                                 metrics:nil
+//                                                                                   views:@{@"play":_playButton}]];
         
         [self setAutoresizesSubviews:YES];
 

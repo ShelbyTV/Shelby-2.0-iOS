@@ -92,6 +92,11 @@
     if (self.videoIsPlaying) {
         [self.delegate videoControlsPauseCurrentVideo:self];
     } else {
+        // If user just got into playback mode, hide nonPlaybackModeView
+        if (sender == self.controlsView.nonPlaybackModePlayButton) {
+            self.controlsView.nonPlaybackModeView.hidden = YES;
+            [self.controlsView sendSubviewToBack:self.controlsView.nonPlaybackModeView];
+        }
         [self.delegate videoControlsPlayVideoWithCurrentFocus:self];
     }
 }
@@ -149,9 +154,9 @@
     if (_videoIsPlaying != videoIsPlaying) {
         _videoIsPlaying = videoIsPlaying;
         if (_videoIsPlaying) {
-            [self.controlsView.largePlayButton setTitle:@"pause" forState:UIControlStateNormal];
+            [self.controlsView.largePlayButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
         } else {
-            [self.controlsView.largePlayButton setTitle:@"play" forState:UIControlStateNormal];
+            [self.controlsView.largePlayButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
         }
     }
 }
@@ -214,14 +219,20 @@
         case VideoControlsDisplayDefault:
             [self setActionViewsAlpha:0.0 userInteractionEnabled:NO];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
+            self.controlsView.overlay.hidden = YES;
+            self.controlsView.nonPlaybackModeView.hidden = NO;
             break;
         case VideoControlsDisplayActionsOnly:
             [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
+            self.controlsView.overlay.hidden = NO;
+            self.controlsView.nonPlaybackModeView.hidden = NO;
             break;
         case VideoControlsDisplayActionsAndPlaybackControls:
             [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
             [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
+            self.controlsView.overlay.hidden = NO;
+            self.controlsView.nonPlaybackModeView.hidden = YES;
     }
 }
 

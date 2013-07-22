@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *bufferProgressView;
+@property (weak, nonatomic) IBOutlet UIView *nonPlaybackModeView;
+@property (weak, nonatomic) IBOutlet UIButton *nonPlaybackModePlayButton;
 @property (weak, nonatomic) IBOutlet UIButton *scrubheadButton;
 
 //-- actions --
@@ -28,6 +30,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *unlikeButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
+
+//---overlay
+@property (weak, nonatomic) IBOutlet UIView *overlay;
 // Adding a view? Be sure to update the controllers -viewDidLoad
 
 - (void)positionScrubheadForPercent:(CGFloat)pct;
