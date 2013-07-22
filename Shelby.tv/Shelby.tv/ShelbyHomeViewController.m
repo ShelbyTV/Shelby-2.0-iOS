@@ -365,7 +365,7 @@
         [self.navBarButtonView addSubview:login];
         
         [self.navBar addSubview:self.navBarButtonView];
-        [self.navBarButtonView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
+        [self.navBarButtonView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin];
     }
 }
 
