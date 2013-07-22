@@ -63,6 +63,14 @@
         _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
 
+        // TODO: Overlay should be wider - need to ask Brian For a new image
+         UIImageView *overlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"overlay.png"]];
+        overlay.frame = _thumbnailRegularView.frame;
+        
+        [_thumbnailRegularView addSubview:overlay];
+        [_thumbnailRegularView bringSubviewToFront:overlay];
+        
+        
         //parallax for foreground and background (above)
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
         _parallaxView.delegate = self;
