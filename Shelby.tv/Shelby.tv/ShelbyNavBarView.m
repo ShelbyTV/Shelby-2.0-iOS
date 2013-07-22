@@ -10,7 +10,9 @@
 #import "UIView+EasingFunctions/UIView+EasingFunctions.h"
 #import "AHEasing/easing.h"
 
-@interface ShelbyNavBarView()
+@interface ShelbyNavBarView() {
+    NSArray *_separatorLines;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *slider;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sliderY;
@@ -31,7 +33,7 @@
 
 @implementation ShelbyNavBarView
 
--(id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -40,10 +42,40 @@
     return self;
 }
 
--(void)didMoveToSuperview
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    //the grey lines that show when nav is expanded
+    NSMutableArray *lines = [[NSMutableArray alloc] init];
+    for (UIButton *b in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
+        UIView *hr = [[UIView alloc] init];
+        [lines addObject:hr];
+        hr.backgroundColor = [kShelbyColorGray colorWithAlphaComponent:0.3];
+        hr.translatesAutoresizingMaskIntoConstraints = NO;
+        [self insertSubview:hr aboveSubview:b];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[hr]|"
+                                                                   options:nil
+                                                                   metrics:nil
+                                                                     views:@{@"hr":hr, @"b":b}]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[b]-0-[hr(0.5)]"
+                                                                   options:nil
+                                                                   metrics:nil
+                                                                     views:@{@"hr":hr, @"b":b}]];
+
+    }
+    _separatorLines = lines;
+    [self showSeparatorLines:NO];
+
+}
+
+- (void)didMoveToSuperview
 {
     //see bottom of file for animation notes
     [self.slider setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
+    for (UIView *l in _separatorLines) {
+        [l setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
+    }
     //setting userInteractionEnabled in XIB having no effect...
     self.selectionIdentifier.userInteractionEnabled = NO;
 }
@@ -77,6 +109,8 @@
                 b.alpha = 0.0;
                 b.userInteractionEnabled = NO;
             }
+
+            [self showSeparatorLines:NO];
         }];
 
         [UIView animateWithDuration:SELECTION_IDENTIFIER_ANIMATION_TIME animations:^{
@@ -98,6 +132,8 @@
                 [b setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
             }
             [previousButton setTitleColor:kShelbyColorBlack forState:UIControlStateNormal];
+
+            [self showSeparatorLines:YES];
         }];
 
     }
@@ -150,6 +186,13 @@
         }
     }
     return NO;
+}
+
+- (void)showSeparatorLines:(BOOL)showLines
+{
+    for (UIView *l in _separatorLines) {
+        l.alpha = (showLines ? 1.0 : 0.0);
+    }
 }
 
 /* Animation Notes
