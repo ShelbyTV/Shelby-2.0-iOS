@@ -51,11 +51,15 @@
 - (void)setCurrentRow:(UIView *)currentRow
 {
     STVAssert(currentRow == nil || [currentRow isKindOfClass:[UIButton class]], @"current row should be a button in current implementation");
+    UIButton *previousButton = (UIButton *)_currentRow;
     if (_currentRow != currentRow) {
         _currentRow = currentRow;
     }
+    UIButton *currentButton = (UIButton *)currentRow;
 
     if (_currentRow) {
+        //XXX kinda sucks when you select the top row... no animation
+        // one possibility would be to animate a little fake bounce...
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
             self.sliderY.constant = -(_currentRow.frame.origin.y);
             [self layoutIfNeeded];
@@ -63,13 +67,14 @@
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
             //focus on current row, hide rows that aren't current
-            _currentRow.alpha = 0.85;
-            _currentRow.userInteractionEnabled = YES;
+            currentButton.alpha = 0.3;
+            currentButton.userInteractionEnabled = YES;
+            [currentButton setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
             NSMutableArray *allRowsButCurrent = [@[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton] mutableCopy];
             [allRowsButCurrent removeObject:_currentRow];
-            for (UIView *v in allRowsButCurrent) {
-                v.alpha = 0.0;
-                v.userInteractionEnabled = NO;
+            for (UIButton *b in allRowsButCurrent) {
+                b.alpha = 0.0;
+                b.userInteractionEnabled = NO;
             }
         }];
 
@@ -80,15 +85,17 @@
     } else {
         //show all rows
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
-            self.sliderY.constant = 30;
+            self.sliderY.constant = 0;
             [self layoutIfNeeded];
         }];
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
-            for (UIView *v in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
-                v.alpha = 0.95;
-                v.userInteractionEnabled = YES;
+            for (UIButton *b in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
+                b.alpha = 1.0;
+                b.userInteractionEnabled = YES;
+                [b setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
             }
+            [previousButton setTitleColor:kShelbyColorBlack forState:UIControlStateNormal];
         }];
 
     }

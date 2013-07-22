@@ -52,7 +52,6 @@
 
 
 #define kShelbyColorLikesRed                                [UIColor colorWithHex:kShelbyColorLikesRedString andAlpha:1.0f]
-#define kShelbyColorWhite                                   [UIColor colorWithHex:@"f4f4f4" andAlpha:1.0f]
 
 /// Size
 #define  kShelbyFullscreenWidth                             [[UIScreen mainScreen] bounds].size.width
