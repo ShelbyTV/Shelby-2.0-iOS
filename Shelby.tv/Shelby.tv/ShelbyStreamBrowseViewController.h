@@ -16,7 +16,7 @@
 // For interaction and data-model related stuff.
 @protocol ShelbyStreamBrowseManagementDelegate <NSObject>
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item;
-//- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
+- (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 //- (ShelbyBrowseTutorialMode)browseTutorialMode;
 //- (void)userDidCompleteTutorial;
 @end
@@ -56,5 +56,8 @@
 
 //which page (of the parallax of the cells) is currently showing
 @property (nonatomic, assign) NSUInteger currentPage;
+
+// To allow our superview to adjust visual stylings
+@property (readonly) UICollectionView *collectionView;
 
 @end

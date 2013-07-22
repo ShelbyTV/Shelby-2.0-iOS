@@ -198,6 +198,7 @@
         [self addChildViewController:sbvc];
         
         [self.view insertSubview:sbvc.view belowSubview:self.navBar];
+        sbvc.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0);
 
         if (self.currentStreamBrowseVC) {
             [self.currentStreamBrowseVC.view removeFromSuperview];
