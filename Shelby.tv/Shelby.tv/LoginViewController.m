@@ -79,6 +79,7 @@
 
 - (IBAction)loginTapped:(UIBarButtonItem *)sender {
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.frame = CGRectMake(10, 10, 50, 44);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     [spinner startAnimating];
     [self.delegate loginViewController:self loginWithUsername:self.usernameField.text password:self.passwordField.text];
