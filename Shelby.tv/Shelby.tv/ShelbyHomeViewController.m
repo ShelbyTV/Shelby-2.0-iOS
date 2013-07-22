@@ -360,7 +360,7 @@
         [login setFrame:CGRectMake(0, 0, 80, 44)];
         [login setTitle:@"Sign up" forState:UIControlStateNormal];
         [[login titleLabel] setFont:kShelbyFontH3];
-        [[login titleLabel] setTextColor:kShelbyColorGreen];
+        [login setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
         [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.navBarButtonView addSubview:login];
         
