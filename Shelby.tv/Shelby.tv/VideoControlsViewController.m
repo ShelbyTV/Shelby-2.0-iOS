@@ -225,7 +225,7 @@
         case VideoControlsDisplayActionsOnly:
             [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
-            self.controlsView.overlay.hidden = NO;
+            self.controlsView.overlay.hidden = YES;
             self.controlsView.nonPlaybackModeView.hidden = NO;
             break;
         case VideoControlsDisplayActionsAndPlaybackControls:
