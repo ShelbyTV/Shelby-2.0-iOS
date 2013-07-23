@@ -37,6 +37,8 @@
 
 @property (nonatomic, weak) id<STVParallaxViewDelegate>delegate;
 
+- (void)insertViewBelowForeground:(UIView *)view;
+
 // Useful, in conjuntion with the delegate, in keeping parallax synchronized
 // between multiple views
 - (void)matchParallaxOf:(STVParallaxView *)parallaxView;

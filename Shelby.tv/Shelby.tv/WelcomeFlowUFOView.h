@@ -10,8 +10,7 @@
 
 @interface WelcomeFlowUFOView : UIView
 
-//XXX for testing
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) NSString *imageName;
 
 //initialPoint/Size is page 1 when they're about the mothership
 @property (assign, nonatomic) CGPoint initialPoint;

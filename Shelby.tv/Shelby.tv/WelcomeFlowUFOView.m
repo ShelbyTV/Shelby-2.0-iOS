@@ -23,6 +23,8 @@
     NSLayoutConstraint *_posY;
 }
 
+@property (weak, nonatomic) IBOutlet UIImageView *image;
+
 @end
 
 @implementation WelcomeFlowUFOView
@@ -34,6 +36,8 @@
 
 - (void)didMoveToSuperview
 {
+    [self setBackgroundImage];
+
     //setup X/Y constraints
     _posX = [NSLayoutConstraint constraintWithItem:self
                                          attribute:NSLayoutAttributeLeft
@@ -79,6 +83,13 @@
                                           multiplier:0
                                             constant:size.height];
     [self addConstraints:@[_width, _height]];
+}
+
+- (void)setBackgroundImage
+{
+    if (self.imageName) {
+        self.image.image = [UIImage imageNamed:self.imageName];
+    }
 }
 
 - (void)moveToEntrancePosition
