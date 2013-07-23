@@ -123,12 +123,16 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="300062824"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor" id="123057342">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MSAxIDAAA</bytes>
+								<object class="NSColor" key="IBUIBackgroundColor" id="166036497">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MCAwAA</bytes>
 								</object>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage" id="545993287">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">avatar-blank.png</string>
+								</object>
 							</object>
 							<object class="IBUILabel" id="300062824">
 								<reference key="NSNextResponder" ref="497042324"/>
@@ -187,10 +191,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="216714586"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor" id="166036497">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MCAwAA</bytes>
-						</object>
+						<reference key="IBUIBackgroundColor" ref="166036497"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 					<object class="IBUIView" id="370288419">
@@ -223,9 +224,10 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="970619123"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<reference key="IBUIBackgroundColor" ref="123057342"/>
+								<reference key="IBUIBackgroundColor" ref="166036497"/>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIImage" ref="545993287"/>
 							</object>
 							<object class="IBUILabel" id="970619123">
 								<reference key="NSNextResponder" ref="605545355"/>
@@ -338,7 +340,6 @@
 						<string key="NSFrame">{{340, 335}, {280, 40}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="166036497"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -780,6 +781,10 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">avatar-blank.png</string>
+			<string key="NS.object.0">{40, 40}</string>
+		</object>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

@@ -156,7 +156,7 @@
         if (_videoIsPlaying) {
             [self.controlsView.largePlayButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
         } else {
-            [self.controlsView.largePlayButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
+            [self.controlsView.largePlayButton setImage:[UIImage imageNamed:@"play-standard.png"] forState:UIControlStateNormal];
         }
     }
 }

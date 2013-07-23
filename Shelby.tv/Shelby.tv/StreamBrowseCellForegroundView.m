@@ -124,7 +124,10 @@
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
 
     __weak StreamBrowseCellForegroundView *weakSelf = self;
-    [self.summaryUserAvatar setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    
+    UIImage *defaultAvatar = [UIImage imageNamed:@"avatar-blank.png"];
+    self.detailUserAvatar.image = defaultAvatar;
+    [self.summaryUserAvatar setImageWithURLRequest:request placeholderImage:defaultAvatar success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         weakSelf.summaryUserAvatar.image = image;
         weakSelf.detailUserAvatar.image = image;
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
