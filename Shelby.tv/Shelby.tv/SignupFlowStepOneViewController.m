@@ -152,7 +152,7 @@
             
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidFail:) name:kShelbyNotificationUserUpdateDidFail object:nil];
             
-            [parent performSelector:@selector(completeSignup)];
+            [parent performSelector:@selector(updateSignupUser)];
         } else {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
             

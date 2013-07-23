@@ -74,6 +74,15 @@
     }
 }
 
+- (void)updateSignupUser
+{
+    NSString *name = self.signupDictionary[kShelbySignupNameKey];
+    NSString *email = self.signupDictionary[kShelbySignupEmailKey];
+    if (name && email) {
+        [self.signupDelegate updateSignupUserWithName:name email:email];
+    }    
+}
+
 - (void)completeSignup
 {
     NSString *name = self.signupDictionary[kShelbySignupNameKey];

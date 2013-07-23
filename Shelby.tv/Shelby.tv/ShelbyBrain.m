@@ -707,6 +707,12 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[ShelbyDataMediator sharedInstance] createUserWithName:name andEmail:email];
 }
 
+- (void)updateSignupUserWithName:(NSString *)name
+                           email:(NSString *)email
+{
+    [[ShelbyDataMediator sharedInstance] updateUserWithName:name nickname:nil password:nil email:email avatar:nil rolls:nil completion:nil];
+}
+
 - (void)completeSignupUserWithName:(NSString *)name
                           username:(NSString *)username
                           password:(NSString *)password

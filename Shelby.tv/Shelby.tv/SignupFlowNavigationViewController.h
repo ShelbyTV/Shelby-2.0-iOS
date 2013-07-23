@@ -15,6 +15,8 @@
 - (void)connectToTwitter;
 - (void)createUserWithName:(NSString *)name
                   andEmail:(NSString *)email;
+- (void)updateSignupUserWithName:(NSString *)name
+                             email:(NSString *)email;
 - (void)completeSignupUserWithName:(NSString *)name
                           username:(NSString *)username
                           password:(NSString *)password
