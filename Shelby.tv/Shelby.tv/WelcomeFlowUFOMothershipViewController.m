@@ -223,7 +223,9 @@
 
 - (void)moveMothershipToInitialStackPositionPercent:(CGFloat)pct
 {
-    self.mothershipVideoDisplay.alpha = pct*pct;
+    if (pct >= 0) {
+        self.mothershipVideoDisplay.alpha = pct*pct;
+    }
     self.mothershipDistanceToBottom.constant = MOTHERSHIP_INITIAL_STACK_POSITION + (80.0f*(1.0f-pct));
     [self.mothershipView setNeedsUpdateConstraints];
     [self.view layoutIfNeeded];
