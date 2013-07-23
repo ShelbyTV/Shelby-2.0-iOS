@@ -197,7 +197,9 @@
 - (void)mothershipChangeVideoOnDisplay
 {
     if (_ufoReturnHomeLoopActive) {
-        self.mothershipVideoDisplay.image = [self nextVideoImage];
+        [UIView transitionWithView:self.mothershipVideoDisplay duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            self.mothershipVideoDisplay.image = [self nextVideoImage];
+        } completion:nil];
         _mothershipVideoDisplayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                                         target:self
                                                                       selector:@selector(mothershipChangeVideoOnDisplay)
