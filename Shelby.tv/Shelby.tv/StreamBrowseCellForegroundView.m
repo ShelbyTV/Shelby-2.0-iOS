@@ -46,6 +46,16 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    self.detailUserAvatar.layer.cornerRadius = 5;
+    self.detailUserAvatar.layer.masksToBounds = YES;
+    self.summaryUserAvatar.layer.cornerRadius = 5;
+    self.summaryUserAvatar.layer.masksToBounds = YES;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -87,7 +97,7 @@
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
     self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height + 10, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
-
+ 
     [self resizeCaptionLabel];
     
 }
