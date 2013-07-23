@@ -163,6 +163,9 @@
         self.thumbnailRegularView.frame = CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
 
         //blurred background
+        // The one thing that seems slow is blurring very high resolution images...
+        //OPTIMIZE: No need to run on every pixel of a huge image, just to make it blurry.
+        //          Run the filter over a smaller image, see how much faster that gets.
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self.blurFilter setValue:[CIImage imageWithCGImage:image.CGImage] forKey:@"inputImage"];
             CIImage *result = [self.blurFilter valueForKey:@"outputImage"];
@@ -208,6 +211,23 @@
 - (void)playButtonTapped:(id)sender
 {
     [self.delegate browseViewCellPlayTapped:self];
+}
+
++ (void)cacheEntry:(id<ShelbyVideoContainer>)entry
+{
+    /* Networking code will cache requests for us, so all we have to do is make the request.
+     *
+     * Seems premature to do blurring and cache that image, but I DO think we need to optimize
+     * the blurring code (no need to run on huge images)
+     */
+    Video *v = [entry containedVideo];
+    if (v && v.thumbnailURL) {
+        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:v.thumbnailURL]];
+        [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
+                                              imageProcessingBlock:nil
+                                                           success:nil
+                                                           failure:nil] start];
+    }
 }
 
 #pragma mark - STVParallaxViewDelegate

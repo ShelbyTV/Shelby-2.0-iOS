@@ -14,6 +14,7 @@
 #import "Video.h"
 
 #define REFRESH_PULL_THRESHOLD 50
+#define MAX_CELLS_TO_PREFETCH (NSUInteger)2
 
 @interface ShelbyStreamBrowseViewController (){
     UIInterfaceOrientation _currentlyPresentedInterfaceOrientation;
@@ -218,6 +219,15 @@
         //since id should come from raw entries, not de-duped entries
         [self.browseManagementDelegate loadMoreEntriesInChannel:self.channel
                                                      sinceEntry:[self.entries lastObject]];
+    }
+
+    //prefetch next couple of cells
+    NSRange prefetchRange;
+    prefetchRange.location = indexPath.row + 1;
+    //length may be zero, which will result in empty array
+    prefetchRange.length = MIN(MAX_CELLS_TO_PREFETCH, [self.deduplicatedEntries count] - indexPath.row - 1);
+    for (id<ShelbyVideoContainer> svc in [self.deduplicatedEntries subarrayWithRange:prefetchRange]) {
+        [ShelbyStreamBrowseViewCell cacheEntry:svc];
     }
 
     return cell;
