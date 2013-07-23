@@ -349,52 +349,31 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     return YES;
 }
 
+//NB: confusingly, this is the delegate for name/email on step 1 and username/password on step 4
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    // Varification for Name text Field (Making sure we have at least 2 alphanumeric characters - might to verify only character though
     BOOL nextEnabled = NO;
     if (textField == self.nameField || textField == self.email) {
-        NSString *text = self.nameField.text;
-        if ([text length] > 0) {
-            NSString *nonEmptySpaceString = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            
-            if ([nonEmptySpaceString length] + [string length] > 1 + range.length) {
-                BOOL valid = [[string stringByTrimmingCharactersInSet:[NSCharacterSet alphanumericCharacterSet]] isEqualToString:@""];
-                if (valid) {
-                    // TODO: Now check email address validity - might need to tweak regex.
-                    NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-                    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
-                    
-                    if ([emailTest evaluateWithObject:self.email.text]) {
-                        nextEnabled = YES;
-                    }
-                }
-            }
+        NSString *name = self.nameField.text;
+        NSString *email = self.email.text;
+        if (textField == self.nameField) {
+            name = [name stringByReplacingCharactersInRange:range withString:string];
         }
+        if (textField == self.email) {
+            email = [email stringByReplacingCharactersInRange:range withString:string];
+        }
+        nextEnabled = [self isNameValid:name] && [self isEmailValid:email];
+
     } else {
-        
-        // TODO: decide the length of username & password that are acceptable
-        NSString *password = self.password.text;
         NSString *username = self.username.text;
-        NSInteger passwordLength = [[password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
-        NSInteger usernameLength = [[username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
+        NSString *password = self.password.text;
+        if (textField == self.username) {
+            username = [username stringByReplacingCharactersInRange:range withString:string];
+        }
         if (textField == self.password) {
-            if ([string isEqualToString:@""]) {
-                passwordLength -= range.length;
-            } else {
-                passwordLength += [string length];
-            }
-        } else if (textField == self.username) {
-            if ([string isEqualToString:@""]) {
-                usernameLength -= range.length;
-            } else {
-                usernameLength += [string length];
-            }
+            password = [password stringByReplacingCharactersInRange:range withString:string];
         }
-        
-        if (passwordLength > 0 && usernameLength > 0) {
-            nextEnabled = YES;
-        }
+        nextEnabled = [self isUsernameValid:username] && [self isPasswordValid:password];
     }
     self.nextButton.enabled = nextEnabled;
 
@@ -428,6 +407,54 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     imagePickerController.sourceType = sourceType;
     imagePickerController.delegate = self;
     [self presentViewController:imagePickerController animated:YES completion:nil];
+}
+
+#pragma mark - Validity Helpers
+
+- (BOOL)isNameValid:(NSString *)name
+{
+    NSString *trimmedName = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    BOOL isValid = YES;
+
+    //test length
+    isValid &= [trimmedName length] > 1;
+
+    return isValid;
+}
+
+- (BOOL)isEmailValid:(NSString *)email
+{
+    NSString *trimmedEmail = [email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    BOOL isValid = YES;
+
+    //test email regex
+    static NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
+    isValid &= [emailTest evaluateWithObject:trimmedEmail];
+
+    return isValid;
+}
+
+- (BOOL)isUsernameValid:(NSString *)username
+{
+    NSString *trimmedUsername = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    BOOL isValid = YES;
+
+    //test length
+    isValid &= [trimmedUsername length] > 1;
+
+    return isValid;
+}
+
+- (BOOL)isPasswordValid:(NSString *)password
+{
+    NSString *trimmedPassword = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    BOOL isValid = YES;
+
+    //test length
+    isValid &= [trimmedPassword length] > 1;
+
+    return isValid;
 }
 
 @end
