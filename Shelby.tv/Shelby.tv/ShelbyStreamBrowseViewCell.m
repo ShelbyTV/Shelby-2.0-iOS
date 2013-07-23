@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIImageView *thumbnailRegularView;
 @property (nonatomic, strong) UIImageView *thumbnailBlurredView;
 @property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
+@property (nonatomic, strong) UIImageView *overlayImageView;
 @property (nonatomic, strong) UIButton *playButton;
 
 //reuse context for better performance
@@ -63,13 +64,9 @@
         _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
 
-        // TODO: Overlay should be wider - need to ask Brian For a new image
-         UIImageView *overlay = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"overlay.png"]];
-        overlay.frame = _thumbnailRegularView.frame;
-        
-        [_thumbnailRegularView addSubview:overlay];
-        [_thumbnailRegularView bringSubviewToFront:overlay];
-        
+        [self setupOverlayImageView];
+        self.overlayImageView.frame = _thumbnailRegularView.frame;
+        [_backgroundThumbnailsView addSubview:self.overlayImageView];
         
         //parallax for foreground and background (above)
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
@@ -106,6 +103,36 @@
         //XXX LAYOUT TESTING
     }
     return self;
+}
+
+- (void)setupOverlayImageView
+{
+    NSString *imageName = nil;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        imageName = @"overlay-landscape.png";
+    } else {
+        if (kShelbyFullscreenHeight > 480) {
+            imageName = @"overlay-568h.png";
+        } else {
+            imageName = @"overlay.png";
+        }
+    }
+
+    UIImage *overlayImage = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
+    
+    if (!self.overlayImageView) {
+        self.overlayImageView = [[UIImageView alloc] initWithImage:overlayImage];
+    } else {
+        self.overlayImageView.image = overlayImage;
+    }
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+
+    // Reset overlay image after rotation.
+    [self setupOverlayImageView];
 }
 
 - (void)prepareForReuse
