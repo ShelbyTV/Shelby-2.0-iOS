@@ -61,14 +61,14 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     [ShelbyDataMediator sharedInstance].delegate = self;
     
     if (![WelcomeFlowViewController isWelcomeComplete]) {
-        [self activeWelcomeFlowViewController];
+        [self activateWelcomeFlowViewController];
     } else {
         [self activateHomeViewController];
     }
     [self.mainWindow makeKeyAndVisible];
 }
 
-- (void)activeWelcomeFlowViewController
+- (void)activateWelcomeFlowViewController
 {
     UIStoryboard *welcomeStoryboard = [UIStoryboard storyboardWithName:@"WelcomeFlow" bundle:nil];
     self.welcomeVC = [welcomeStoryboard instantiateInitialViewController];
@@ -95,7 +95,6 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     self.homeVC.currentUser = currentUser;
     self.homeVC.masterDelegate = self;
-    //TODO: detect sleep time and remove player if it's been too long
 
     [self setupDVR];
   
@@ -134,7 +133,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 - (void)dismissLoginVCCompletion:(void (^)(void))completion
 {
-    [self.loginVC.parentViewController dismissViewControllerAnimated:YES completion:^{
+    [self.mainWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
         self.loginVC = nil;
         if (completion) {
             completion();
@@ -149,6 +148,16 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     self.signupFlowVC.signupDelegate = self;
 
     [self.mainWindow.rootViewController presentViewController:self.signupFlowVC animated:YES completion:nil];
+}
+
+- (void)dismissSigupVCCompletion:(void (^)(void))completion
+{
+    [self.mainWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
+        self.signupFlowVC = nil;
+        if (completion) {
+            completion();
+        }
+    }];
 }
 
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification
@@ -219,12 +228,17 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 - (void)loginUserDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+        [self userWasUpdated];
         [self dismissLoginVCCompletion:^{
             [self activateHomeViewController];
             [self fetchUserChannelsForceSwitchToUsersStream:YES];
         }];
     });
+}
+
+- (void)userWasUpdated
+{
+    [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
 }
 
 #pragma mark - SignupFlowNavigationViewDelegate
@@ -705,7 +719,15 @@ typedef struct _ShelbyArrayMergeInstructions {
                                                    password:password
                                                       email:email
                                                      avatar:avatar
-                                                   andRolls:rolls];
+                                                      rolls:rolls
+                                                 completion:^(NSError *error) {
+                                                     [self dismissSigupVCCompletion:^{
+                                                         //if we came from welcomeVC, switch over to homeVC (call is idempotent)
+                                                         [self activateHomeViewController];
+                                                         //make sure we're showing updated stream (whether we came from welcome or home)
+                                                         [self fetchUserChannelsForceSwitchToUsersStream:YES];
+                                                     }];
+                                                 }];
 }
 
 #pragma mark - ShelbyHomeDelegate

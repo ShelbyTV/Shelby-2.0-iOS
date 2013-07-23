@@ -522,8 +522,8 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
               nickname:(NSString *)nickname
               password:(NSString *)password
                  email:(NSString *)email
-             andAvatar:(UIImage *)avatar
-
+                avatar:(UIImage *)avatar
+            completion:(void (^)(NSError *error))completion
 {
     NSMutableDictionary *params = [@{} mutableCopy];
     if (name) {
@@ -553,12 +553,12 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         return;
     }
 
+    //DS - You don't need a weak self here.  There's no retain cycle; self doesn't own the block.
     __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient putUserWithParams:params andBlock:^(id JSON, NSError *error) {
         if (JSON) {
             [weakSelf saveUserFromJSON:JSON];
-            // Calling loginDidComplete - to basically force a user refresh
-            [self.delegate loginUserDidComplete];
+            [self.delegate userWasUpdated];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidSucceed object:nil];
         } else {
             NSString *errorMessage = nil;
@@ -568,6 +568,9 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidFail object:errorMessage];
         }
+        if (completion) {
+            completion(error);
+        }
     }];
 }
 
@@ -576,20 +579,21 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                   password:(NSString *)password
                      email:(NSString *)email
                     avatar:(UIImage *)avatar
-                  andRolls:(NSArray *)followRolls
+                     rolls:(NSArray *)followRolls
+                completion:(void (^)(NSError *error))completion
 {
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    STVAssert(user.token, @"expect user to have a valid token (so we can follow rolls)");
+    for (NSString *rollID in followRolls) {
+        [self followRoll:rollID withAuthToken:user.token];
+    }
+
     [self updateUserName:name
                 nickname:nickname
                 password:password
                    email:email
-               andAvatar:avatar];
-    
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
-    if (user.token) {
-        for (NSString *rollID in followRolls) {
-            [self followRoll:rollID withAuthToken:user.token];
-        }
-    }
+                  avatar:avatar
+              completion:completion];
 }
 
 - (void)followRoll:(NSString *)rollID withAuthToken:(NSString *)authToken
