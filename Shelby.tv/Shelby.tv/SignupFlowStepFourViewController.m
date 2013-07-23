@@ -146,7 +146,6 @@
     
     self.navigationItem.rightBarButtonItem = self.nextButton;
     self.navigationItem.leftBarButtonItem.enabled = YES;
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
