@@ -33,6 +33,9 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 + (void)putUserWithParams:(NSDictionary *)params
                  andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
++ (void)uploadUserAvatar:(UIImage *)avatar
+                andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 + (void)loginUserWithEmail:(NSString *)email
                   password:(NSString *)password
                   andBlock:(shelby_api_request_complete_block_t)completionBlock;

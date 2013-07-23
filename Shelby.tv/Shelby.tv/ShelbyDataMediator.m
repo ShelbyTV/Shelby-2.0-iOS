@@ -542,12 +542,11 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         params[kShelbyAPIParamEmail] = email;
     }
     
-    // TODO: Obiously, the image should be passed not as a param.
-//    if (avatar) {
-//        // check if png or jpeg
-//        params[kShelbyAPIParamAvatar] = UIImagePNGRepresentation(avatar);
-//    }
-    
+    if (avatar) {
+        //start async user avatar upload
+        [ShelbyAPIClient uploadUserAvatar:avatar andBlock:nil];
+    }
+
     if ([params count] == 0) {
         return;
     }

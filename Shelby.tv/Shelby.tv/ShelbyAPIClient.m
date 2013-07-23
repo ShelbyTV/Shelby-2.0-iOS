@@ -140,15 +140,15 @@ static AFHTTPClient *httpClient = nil;
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
 
-
-// PUT
 + (void)putUserWithParams:(NSDictionary *)params
                  andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
 
     if (!user) {
-        // TODO: completionblock error
+        if (completionBlock) {
+            completionBlock(nil, nil);
+        }
         return;
     }
     NSMutableDictionary *userParams = [NSMutableDictionary dictionaryWithDictionary:params];
@@ -169,6 +169,32 @@ static AFHTTPClient *httpClient = nil;
         }
     }];
     
+    [operation start];
+}
+
++ (void)uploadUserAvatar:(UIImage *)avatar andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+
+    if (!user) {
+        if (completionBlock) {
+            completionBlock(nil, nil);
+        }
+        return;
+    }
+    NSDictionary *params = @{kShelbyAPIParamAuthToken: user.token};
+
+    NSData *imageData = UIImagePNGRepresentation(avatar);
+    NSURLRequest *request = [httpClient multipartFormRequestWithMethod:PUT path:[NSString stringWithFormat:kShelbyAPIPutUserPath, user.userID] parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData name:kShelbyAPIParamAvatar fileName:@"ios_avatar.png" mimeType:@"image/png"];
+    }];
+
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(JSON, error);
+    }];
+
     [operation start];
 }
 
