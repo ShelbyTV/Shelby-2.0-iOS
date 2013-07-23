@@ -878,6 +878,8 @@
 - (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC
 {
     [self.masterDelegate presentUserLogin];
+    //login is modal, nav hasn't actually changed...
+    [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
 }
 
 @end

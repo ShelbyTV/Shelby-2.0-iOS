@@ -9,7 +9,9 @@
 #import "ShelbyNavBarViewController.h"
 #import "ShelbyNavBarView.h"
 
-@interface ShelbyNavBarViewController ()
+@interface ShelbyNavBarViewController () {
+    UIView *_lastSelectedRow;
+}
 @property (nonatomic, weak) ShelbyNavBarView *navBarView;
 - (IBAction)navTapped:(id)sender;
 @end
@@ -20,6 +22,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _lastSelectedRow = nil;
     }
     return self;
 }
@@ -49,6 +52,7 @@
 {
     if (self.navBarView.communityButton != self.navBarView.currentRow){
         self.navBarView.currentRow = self.navBarView.communityButton;
+        _lastSelectedRow = self.navBarView.communityButton;
     }
 }
 
@@ -56,6 +60,7 @@
 {
     if (self.navBarView.streamButton != self.navBarView.currentRow) {
         self.navBarView.currentRow = self.navBarView.streamButton;
+        _lastSelectedRow = self.navBarView.streamButton;
     }
 }
 
@@ -63,6 +68,7 @@
 {
     if (self.navBarView.likesButton != self.navBarView.currentRow) {
         self.navBarView.currentRow = self.navBarView.likesButton;
+        _lastSelectedRow = self.navBarView.likesButton;
     }
 }
 
@@ -70,6 +76,7 @@
 {
     if (self.navBarView.sharesButton != self.navBarView.currentRow) {
         self.navBarView.currentRow = self.navBarView.sharesButton;
+        _lastSelectedRow = self.navBarView.sharesButton;
     }
 }
 
@@ -102,6 +109,11 @@
         }
 
     }
+}
+
+- (void)returnSelectionToPreviousRow
+{
+    self.navBarView.currentRow = _lastSelectedRow;
 }
 
 @end

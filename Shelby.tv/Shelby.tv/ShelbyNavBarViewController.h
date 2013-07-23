@@ -36,4 +36,6 @@
 - (void)didNavigateToUsersLikes;
 - (void)didNavigateToUsersShares;
 
+- (void)returnSelectionToPreviousRow;
+
 @end
