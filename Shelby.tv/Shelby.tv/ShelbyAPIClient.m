@@ -190,9 +190,13 @@ static AFHTTPClient *httpClient = nil;
     }];
 
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        completionBlock(JSON, nil);
+        if (completionBlock) {
+            completionBlock(JSON, nil);
+        }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        completionBlock(JSON, error);
+        if (completionBlock) {
+            completionBlock(JSON, error);
+        }
     }];
 
     [operation start];

@@ -541,11 +541,6 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     if (email) {
         params[kShelbyAPIParamEmail] = email;
     }
-    
-    if (avatar) {
-        //start async user avatar upload
-        [ShelbyAPIClient uploadUserAvatar:avatar andBlock:nil];
-    }
 
     if ([params count] == 0) {
         return;
@@ -558,6 +553,11 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             [weakSelf saveUserFromJSON:JSON];
             [self.delegate userWasUpdated];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidSucceed object:nil];
+            if (avatar) {
+                //start async user avatar upload
+                [ShelbyAPIClient uploadUserAvatar:avatar andBlock:nil];
+            }
+
         } else {
             NSString *errorMessage = nil;
             if ([error isKindOfClass:[NSDictionary class]]) {
