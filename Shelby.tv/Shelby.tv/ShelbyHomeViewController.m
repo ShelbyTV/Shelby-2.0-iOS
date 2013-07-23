@@ -355,9 +355,9 @@
             self.navBarButtonView.alpha = 1.0;
         }];
     } else if (!self.currentUser) {
-        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
+        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 86, 44)];
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
-        [login setFrame:CGRectMake(0, 0, 80, 44)];
+        [login setFrame:CGRectMake(6, 0, 80, 44)];
         [login setTitle:@"Sign up" forState:UIControlStateNormal];
         [[login titleLabel] setFont:kShelbyFontH3];
         [login setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
