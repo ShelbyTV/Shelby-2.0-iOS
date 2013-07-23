@@ -12,7 +12,7 @@
 #import "WelcomeFlowUFOView.h"
 
 #define PAGE_WIDTH 320.0f
-#define MOTHERSHIP_INITIAL_STACK_POSITION 190.0f
+#define MOTHERSHIP_INITIAL_STACK_POSITION 170.0f
 
 @interface WelcomeFlowUFOMothershipViewController () {
     NSArray *_ufos;
@@ -42,6 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.mothershipView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"welcome-logo"]];
     
     [self createUFOs];
 }
@@ -246,46 +247,46 @@
     CGFloat returnHomeLoopStartY = stackY + (5*StackYDelta);
     //NB: UFO algorithm makes sure it moves at a constant velocity, keeping them all evenly spaced
 
-    _ufos = @[[self createUFOWithTitle:@"FB0"
-                                  size:CGSizeMake(80, 80)
-                             stackSize:kShelbyUFOStackSize
-                          initialPoint:CGPointMake(250, 30)
-                     initialStackPoint:CGPointMake(stackX, stackY + (0*StackYDelta))],
-              [self createUFOWithTitle:@"YT1"
-                                  size:CGSizeMake(60, 60)
-                             stackSize:kShelbyUFOStackSize
-                          initialPoint:CGPointMake(250, 200)
-                     initialStackPoint:CGPointMake(stackX, stackY + (1*StackYDelta))],
-              [self createUFOWithTitle:@"YT2"
-                                  size:CGSizeMake(40, 40)
-                             stackSize:kShelbyUFOStackSize
-                          initialPoint:CGPointMake(75, 265)
-                     initialStackPoint:CGPointMake(stackX, stackY + (2*StackYDelta))],
-              [self createUFOWithTitle:@"YT3"
-                                  size:CGSizeMake(60, 60)
-                             stackSize:kShelbyUFOStackSize
-                          initialPoint:CGPointMake(10, 200)
-                     initialStackPoint:CGPointMake(stackX, stackY + (3*StackYDelta))],
-              [self createUFOWithTitle:@"YT4"
-                                  size:CGSizeMake(40, 40)
-                             stackSize:kShelbyUFOStackSize
-                          initialPoint:CGPointMake(-10, 120)
-                     initialStackPoint:CGPointMake(stackX, stackY + (4*StackYDelta))],
-              [self createUFOWithTitle:@"YT5"
-                                  size:CGSizeMake(50, 50)
-                             stackSize:kShelbyUFOStackSize
-                          initialPoint:CGPointMake(-10, 50)
-                     initialStackPoint:CGPointMake(stackX, stackY + (5*StackYDelta))],
-              [self createUFOWithTitle:@"YT6"
-                                  size:CGSizeMake(60, 60)
-                             stackSize:kShelbyUFOStackSize
-                          initialPoint:CGPointMake(50, 0)
-                     initialStackPoint:CGPointMake(stackX, stackY + (6*StackYDelta))],
-              [self createUFOWithTitle:@"TWT"
-                                  size:CGSizeMake(40, 40)
-                             stackSize:kShelbyUFOStackSize
-                          initialPoint:CGPointMake(200, 0)
-                     initialStackPoint:CGPointMake(stackX, stackY + (7*StackYDelta))]];
+    _ufos = @[[self createUFOWithImageNamed:@"welcome-buzzfeed"
+                                       size:CGSizeMake(80, 80)
+                                  stackSize:kShelbyUFOStackSize
+                               initialPoint:CGPointMake(250, 30)
+                          initialStackPoint:CGPointMake(stackX, stackY + (0*StackYDelta))],
+              [self createUFOWithImageNamed:@"welcome-facebook"
+                                       size:CGSizeMake(60, 60)
+                                  stackSize:kShelbyUFOStackSize
+                               initialPoint:CGPointMake(250, 200)
+                          initialStackPoint:CGPointMake(stackX, stackY + (1*StackYDelta))],
+              [self createUFOWithImageNamed:@"welcome-hungry"
+                                       size:CGSizeMake(40, 40)
+                                  stackSize:kShelbyUFOStackSize
+                               initialPoint:CGPointMake(75, 265)
+                          initialStackPoint:CGPointMake(stackX, stackY + (2*StackYDelta))],
+              [self createUFOWithImageNamed:@"welcome-patagonia"
+                                       size:CGSizeMake(60, 60)
+                                  stackSize:kShelbyUFOStackSize
+                               initialPoint:CGPointMake(10, 200)
+                          initialStackPoint:CGPointMake(stackX, stackY + (3*StackYDelta))],
+              [self createUFOWithImageNamed:@"welcome-rsrv"
+                                       size:CGSizeMake(40, 40)
+                                  stackSize:kShelbyUFOStackSize
+                               initialPoint:CGPointMake(-10, 120)
+                          initialStackPoint:CGPointMake(stackX, stackY + (4*StackYDelta))],
+              [self createUFOWithImageNamed:@"welcome-squid"
+                                       size:CGSizeMake(50, 50)
+                                  stackSize:kShelbyUFOStackSize
+                               initialPoint:CGPointMake(-10, 50)
+                          initialStackPoint:CGPointMake(stackX, stackY + (5*StackYDelta))],
+              [self createUFOWithImageNamed:@"welcome-ted"
+                                       size:CGSizeMake(60, 60)
+                                  stackSize:kShelbyUFOStackSize
+                               initialPoint:CGPointMake(50, -10)
+                          initialStackPoint:CGPointMake(stackX, stackY + (6*StackYDelta))],
+              [self createUFOWithImageNamed:@"welcome-twitter"
+                                       size:CGSizeMake(40, 40)
+                                  stackSize:kShelbyUFOStackSize
+                               initialPoint:CGPointMake(200, 3)
+                          initialStackPoint:CGPointMake(stackX, stackY + (7*StackYDelta))]];
     
     for (WelcomeFlowUFOView *ufo in _ufos) {
         ufo.translatesAutoresizingMaskIntoConstraints = NO;
@@ -293,25 +294,20 @@
 
         ufo.returnHomeLoopEndY = returnHomeLoopEndY;
         ufo.returnHomeLoopStartY = returnHomeLoopStartY;
-
-        //XXX for testing
-        ufo.layer.borderColor = [UIColor redColor].CGColor;
-        ufo.layer.borderWidth = 1.0;
     }
 
     _ufosAboveMothership = @[_ufos[3], _ufos[5], _ufos[7]];
 }
 
-- (WelcomeFlowUFOView *)createUFOWithTitle:(NSString *)name
-                                      size:(CGSize)size
-                                 stackSize:(CGSize)stackSize
-                              initialPoint:(CGPoint)initialPoint
-                         initialStackPoint:(CGPoint)initialStackPoint
+- (WelcomeFlowUFOView *)createUFOWithImageNamed:(NSString *)imageName
+                                           size:(CGSize)size
+                                      stackSize:(CGSize)stackSize
+                                   initialPoint:(CGPoint)initialPoint
+                              initialStackPoint:(CGPoint)initialStackPoint
 {
     WelcomeFlowUFOView *ufo = [[NSBundle mainBundle] loadNibNamed:@"WelcomeFlowUFO" owner:self options:nil][0];
 
-    //XXX for testing
-    ufo.nameLabel.text = name;
+    ufo.imageName = imageName;
 
     //where does ufo start (floating about mothership)
     ufo.initialPoint = initialPoint;

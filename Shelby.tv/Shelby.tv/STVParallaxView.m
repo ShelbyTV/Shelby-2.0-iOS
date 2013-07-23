@@ -43,6 +43,11 @@
     return self;
 }
 
+- (void)insertViewBelowForeground:(UIView *)view
+{
+    [self insertSubview:view belowSubview:_foregroundScroller];
+}
+
 - (void)layoutSubviews
 {
     //NB: -layoutSubviews is called after rotation of device and after resizing of views' frame

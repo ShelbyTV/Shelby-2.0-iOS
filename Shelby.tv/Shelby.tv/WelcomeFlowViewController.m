@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
 @property (strong, nonatomic) IBOutlet UIView *page3;
 @property (strong, nonatomic) IBOutlet UIView *page4;
 @property (strong, nonatomic) IBOutlet UIView *background;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @property (strong, nonatomic) WelcomeFlowUFOMothershipViewController *ufoMothership;
@@ -61,10 +62,10 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
     // 2) Parallax view: configuration
     self.parallaxView = [[STVParallaxView alloc] initWithFrame:self.view.frame];
     //move background left a bit to account for pulling
-    self.background.frame = CGRectMake(-100, 0, self.background.frame.size.width, self.background.frame.size.height);
+    self.background.frame = CGRectMake(-80, 0, self.background.frame.size.width, self.background.frame.size.height);
     self.parallaxView.backgroundContent = self.background;
     self.parallaxView.foregroundContent = parallaxForegroundView;
-    self.parallaxView.parallaxRatio = 0.5;
+    self.parallaxView.parallaxRatio = 0.4;
 
     [self.view insertSubview:self.parallaxView belowSubview:self.pageControl];
 
@@ -74,10 +75,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
 
     // 4) UFO
     self.ufoMothership = [[WelcomeFlowUFOMothershipViewController alloc] initWithNibName:@"WelcomeFlowMothership" bundle:nil];
-    // NB: we may want to insert the mothership BETWEEN the parallax foreground and background
-    // Not sure just yet.  Depends on design...
-    // If the design HAS NO PARALLAX BACKGROUND then i can just put this below the parallax view...
-    [self.view insertSubview:self.ufoMothership.view belowSubview:self.parallaxView];
+    [self.parallaxView insertViewBelowForeground:self.ufoMothership.view];
     self.ufoMothership.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[mothership]|"
                                                                       options:0
