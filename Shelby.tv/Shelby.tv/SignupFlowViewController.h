@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SignupUserInfoCell.h"
+#import "STVTextField.h"
 
 extern NSString * const kShelbySignupAvatarKey;
 extern NSString * const kShelbySignupEmailKey;
@@ -33,10 +34,10 @@ extern NSString * const kShelbySignupVideoTypesKey;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
 
 // Might want to move textfields to corresponding VC, but for now, leaving all TextFields here for now.
-@property (nonatomic, weak) IBOutlet UITextField *email;
-@property (nonatomic, weak) IBOutlet UITextField *nameField;
-@property (nonatomic, weak) IBOutlet UITextField *password;
-@property (nonatomic, weak) IBOutlet UITextField *username;
+@property (nonatomic, weak) IBOutlet STVTextField *email;
+@property (nonatomic, weak) IBOutlet STVTextField *nameField;
+@property (nonatomic, weak) IBOutlet STVTextField *password;
+@property (nonatomic, weak) IBOutlet STVTextField *username;
 
 - (void)saveValueAndResignActiveTextField;
 - (void)animateOpenEditing;
