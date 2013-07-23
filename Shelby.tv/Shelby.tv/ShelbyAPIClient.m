@@ -131,9 +131,11 @@ static AFHTTPClient *httpClient = nil;
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 
 {
+    NSString *clientID = (DEVICE_IPAD ? @"iOS_iPad" : @"iOS_iPhone");
     NSDictionary *userParams = @{@"user": @{@"name": name,
                                             @"primary_email": email},
-                                            @"generate_temporary_nickname_and_password" : @"1"};
+                                            @"generate_temporary_nickname_and_password" : @"1",
+                                            @"client_identifier" : clientID};
 
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
