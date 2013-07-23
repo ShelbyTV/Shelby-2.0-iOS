@@ -388,8 +388,8 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 -(void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
                                          with:(NSArray *)channelEntries
 {
-    if (!self.offlineLikesChannel) {
-        self.offlineLikesChannel = channel;
+    self.offlineLikesChannel = channel;
+    if (self.homeVC && ![self.homeVC.channels containsObject:self.offlineLikesChannel]) {
         //update homeVC with this additional channel
         self.homeVC.channels = [self constructAllChannelsArray];
     }

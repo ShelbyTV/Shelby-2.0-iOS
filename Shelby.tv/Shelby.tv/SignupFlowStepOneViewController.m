@@ -112,6 +112,11 @@
 
 - (IBAction)goBack:(id)sender
 {
+    if ([[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext]) {
+        //a user has been created, need to get rid of that bastard
+        [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -514,7 +514,6 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
             
         }
-        // Not sending loginUserDidComplete until signup process is done.
     }];
 }
 
