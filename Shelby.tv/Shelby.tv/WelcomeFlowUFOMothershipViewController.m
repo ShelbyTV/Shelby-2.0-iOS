@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *mothershipVideoDisplay;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipDistanceToBottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipOverlayX;
+@property (weak, nonatomic) IBOutlet UIView *mothershipOverlay;
 
 @end
 
@@ -48,8 +49,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     self.mothershipView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"welcome-logo"]];
-    
+    self.mothershipOverlay.layer.cornerRadius = 3.0;
     [self createUFOs];
 }
 

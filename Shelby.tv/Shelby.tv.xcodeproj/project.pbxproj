@@ -1081,6 +1081,12 @@
 		916F424F179F1300001D9DF7 /* welcome-vice-video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4221179F1300001D9DF7 /* welcome-vice-video@2x.png */; };
 		916F4250179F1300001D9DF7 /* welcome-vice-video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4221179F1300001D9DF7 /* welcome-vice-video@2x.png */; };
 		916F4251179F1300001D9DF7 /* welcome-vice-video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4221179F1300001D9DF7 /* welcome-vice-video@2x.png */; };
+		916F4254179F1DB5001D9DF7 /* welcome-user-context.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4252179F1DB5001D9DF7 /* welcome-user-context.png */; };
+		916F4255179F1DB5001D9DF7 /* welcome-user-context.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4252179F1DB5001D9DF7 /* welcome-user-context.png */; };
+		916F4256179F1DB5001D9DF7 /* welcome-user-context.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4252179F1DB5001D9DF7 /* welcome-user-context.png */; };
+		916F4257179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */; };
+		916F4258179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */; };
+		916F4259179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */; };
 		9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
@@ -1712,6 +1718,8 @@
 		916F421F179F1300001D9DF7 /* welcome-twitter-video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-twitter-video@2x.png"; sourceTree = "<group>"; };
 		916F4220179F1300001D9DF7 /* welcome-vice-video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-vice-video.png"; sourceTree = "<group>"; };
 		916F4221179F1300001D9DF7 /* welcome-vice-video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-vice-video@2x.png"; sourceTree = "<group>"; };
+		916F4252179F1DB5001D9DF7 /* welcome-user-context.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-user-context.png"; sourceTree = "<group>"; };
+		916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-user-context@2x.png"; sourceTree = "<group>"; };
 		9188F230178C99F7002F342B /* ShelbyNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNavBarView.xib; sourceTree = "<group>"; };
 		9188F234178C9A1E002F342B /* ShelbyNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarViewController.h; sourceTree = "<group>"; };
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
@@ -2794,6 +2802,8 @@
 		916F41C1179F06A9001D9DF7 /* Welcome Images */ = {
 			isa = PBXGroup;
 			children = (
+				916F4252179F1DB5001D9DF7 /* welcome-user-context.png */,
+				916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */,
 				916F4212179F1300001D9DF7 /* welcome-ted-video.png */,
 				916F4213179F1300001D9DF7 /* welcome-ted-video@2x.png */,
 				916F4214179F1300001D9DF7 /* welcome-buzzfeed-video.png */,
@@ -3244,6 +3254,8 @@
 				916F424A179F1300001D9DF7 /* welcome-twitter-video@2x.png in Resources */,
 				916F424D179F1300001D9DF7 /* welcome-vice-video.png in Resources */,
 				916F4250179F1300001D9DF7 /* welcome-vice-video@2x.png in Resources */,
+				916F4255179F1DB5001D9DF7 /* welcome-user-context.png in Resources */,
+				916F4258179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3506,6 +3518,8 @@
 				916F424B179F1300001D9DF7 /* welcome-twitter-video@2x.png in Resources */,
 				916F424E179F1300001D9DF7 /* welcome-vice-video.png in Resources */,
 				916F4251179F1300001D9DF7 /* welcome-vice-video@2x.png in Resources */,
+				916F4256179F1DB5001D9DF7 /* welcome-user-context.png in Resources */,
+				916F4259179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3769,6 +3783,8 @@
 				916F4249179F1300001D9DF7 /* welcome-twitter-video@2x.png in Resources */,
 				916F424C179F1300001D9DF7 /* welcome-vice-video.png in Resources */,
 				916F424F179F1300001D9DF7 /* welcome-vice-video@2x.png in Resources */,
+				916F4254179F1DB5001D9DF7 /* welcome-user-context.png in Resources */,
+				916F4257179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
