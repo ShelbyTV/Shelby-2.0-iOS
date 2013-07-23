@@ -81,7 +81,7 @@
         self.detailWhiteBackground.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 130, pageWidth, 200);
         self.detailUserView.frame = CGRectMake(pageWidth, 135, 320, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 215, self.detailUsername.frame.size.height);
-        self.detailCommentView.frame = CGRectMake(xOrigin, 195, 310, 100);
+        self.detailCommentView.frame = CGRectMake(xOrigin, 195, pageWidth - kShelbyInfoViewMargin * 2, 100);
         self.detailNetworkShares.frame = CGRectMake(xOrigin, 305, 310, 40);
     }
     
