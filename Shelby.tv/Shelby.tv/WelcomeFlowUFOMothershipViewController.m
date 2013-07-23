@@ -17,11 +17,15 @@
 @interface WelcomeFlowUFOMothershipViewController () {
     NSArray *_ufos;
     NSArray *_ufosAboveMothership;
+    NSArray *_videoImages;
+    NSUInteger _curVideoImageIdx;
+    NSTimer *_mothershipVideoDisplayTimer;
     BOOL _ufoReturnHomeLoopActive;
     NSUInteger _currentPage;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *mothershipView;
+@property (weak, nonatomic) IBOutlet UIImageView *mothershipVideoDisplay;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipDistanceToBottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipOverlayX;
 
@@ -35,6 +39,8 @@
     if (self) {
         _ufoReturnHomeLoopActive = NO;
         _currentPage = 0;
+        _curVideoImageIdx = 0;
+        _videoImages = [self createVideoImages];
     }
     return self;
 }
@@ -71,9 +77,8 @@
          * move mothership into position to receive UFOs
          */
         if (_ufoReturnHomeLoopActive) {
-            for (WelcomeFlowUFOView *ufo in _ufos) {
-                [ufo cancelReturnHomeLoopAtCurrentPosition];
-            }
+            [self cancelUFOReturnHomeLoops];
+            [self cancelMothershipVideoDisplayLoops];
             _ufoReturnHomeLoopActive = NO;
         }
 
@@ -92,9 +97,8 @@
          * have mothership fly away
          */
         if (_ufoReturnHomeLoopActive) {
-            for (WelcomeFlowUFOView *ufo in _ufos) {
-                [ufo cancelReturnHomeLoopAtCurrentPosition];
-            }
+            [self cancelUFOReturnHomeLoops];
+            [self cancelMothershipVideoDisplayLoops];
             _ufoReturnHomeLoopActive = NO;
         }
 
@@ -110,6 +114,7 @@
 {
     switch (page) {
         case 0:
+            [self moveMothershipOverlayToCoverPercent:0];
             _currentPage = 0;
             break;
         case 1:
@@ -119,6 +124,7 @@
                 [self moveUFOsToInitialStackPositionPercent:1.0];
                 [self moveMothershipToInitialStackPositionPercent:1.0];
                 [self startUFOReturnHomeLoops];
+                [self mothershipChangeVideoOnDisplay];
             }
             break;
         case 2:
@@ -128,6 +134,7 @@
                 [self moveUFOsToInitialStackPositionPercent:1.0];
                 [self moveMothershipToInitialStackPositionPercent:1.0];
                 [self startUFOReturnHomeLoops];
+                [self mothershipChangeVideoOnDisplay];
             }
             break;
         case 3:
@@ -178,12 +185,30 @@
         [ufo startReturnHomeLoopWithVelocity:20];
     }
 
+}
 
+- (void)cancelUFOReturnHomeLoops
+{
+    for (WelcomeFlowUFOView *ufo in _ufos) {
+        [ufo cancelReturnHomeLoopAtCurrentPosition];
+    }
+}
 
-    // Could just have the UFOs loop continuously and have the mothership cycle videos
-    // and not necessarily have them perfectly coordinated
-    // coordinate just enough to fake it
+- (void)mothershipChangeVideoOnDisplay
+{
+    if (_ufoReturnHomeLoopActive) {
+        self.mothershipVideoDisplay.image = [self nextVideoImage];
+        _mothershipVideoDisplayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                                        target:self
+                                                                      selector:@selector(mothershipChangeVideoOnDisplay)
+                                                                      userInfo:nil
+                                                                       repeats:NO];
+    }
+}
 
+- (void)cancelMothershipVideoDisplayLoops
+{
+    [_mothershipVideoDisplayTimer invalidate];
 }
 
 - (void)moveUFOsToInitialStackPositionPercent:(CGFloat)pct
@@ -196,6 +221,7 @@
 
 - (void)moveMothershipToInitialStackPositionPercent:(CGFloat)pct
 {
+    self.mothershipVideoDisplay.alpha = pct*pct;
     self.mothershipDistanceToBottom.constant = MOTHERSHIP_INITIAL_STACK_POSITION + (80.0f*(1.0f-pct));
     [self.mothershipView setNeedsUpdateConstraints];
     [self.view layoutIfNeeded];
@@ -318,6 +344,26 @@
     ufo.stackSize = stackSize;
     
     return ufo;
+}
+
+- (NSArray *)createVideoImages
+{
+    return @[[UIImage imageNamed:@"welcome-ted-video"],
+             [UIImage imageNamed:@"welcome-buzzfeed-video"],
+             [UIImage imageNamed:@"welcome-facebook-video"],
+             [UIImage imageNamed:@"welcome-patagonia-video"],
+             [UIImage imageNamed:@"welcome-rsrv-video"],
+             [UIImage imageNamed:@"welcome-squid-video"],
+             [UIImage imageNamed:@"welcome-twitter-video"],
+             [UIImage imageNamed:@"welcome-vice-video"]];
+}
+
+- (UIImage *)nextVideoImage
+{
+    if (++_curVideoImageIdx == [_videoImages count]){
+        _curVideoImageIdx = 0;
+    }
+    return _videoImages[_curVideoImageIdx];
 }
 
 @end
