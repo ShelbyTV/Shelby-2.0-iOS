@@ -182,7 +182,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{20, 230}, {280, 60}}</string>
+						<string key="NSFrame">{{15, 230}, {280, 60}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="216714586"/>

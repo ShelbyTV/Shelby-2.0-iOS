@@ -62,7 +62,7 @@
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         // Landscape
         // Summary View
-        self.summaryTitle.frame = CGRectMake(20, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
+        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
         // Detail View
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 40, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailTitle.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
@@ -74,7 +74,7 @@
     } else {
         // Portrait
         // Summary View
-        self.summaryTitle.frame = CGRectMake(20, 84, 280, 120);
+        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 84, 280, 120);
         // Detail View
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailTitle.frame = CGRectMake(xOrigin, 80, 280, 44);
