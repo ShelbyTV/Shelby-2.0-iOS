@@ -85,6 +85,8 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
     // Need collection view to reload our cells (b/c that's where we size them).
     // But must call this before -didRotate; -reloadData invalidates the view layout.  If we wait until
     // -didRotate, the collectionView is already resized but the cells aren't and iOS logs the glitch.
@@ -93,28 +95,19 @@
     //We track how our views are currently configured so we can adjust when moving to a parent VC that may be in
     //a different orientation than we were when we were last actively part of a parent VC
     _currentlyPresentedInterfaceOrientation = toInterfaceOrientation;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(fromInterfaceOrientation)) {
+    
+    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         //don't need to do anything if we didn't change! (this happens b/c upside phone isn't supported)
         return;
     }
 
     CGPoint preRotationContentOffset = self.collectionView.contentOffset;
-    //In -didRotateFromInterfaceOrientation: self.view.frame is post-rotation size
-    //So, our width is our old height...
-    NSUInteger preRotationScrollPage = preRotationContentOffset.y / self.view.frame.size.width;
-    NSUInteger postRotationContentOffsetY = preRotationScrollPage * self.view.frame.size.height;
+    NSUInteger preRotationScrollPage = preRotationContentOffset.y / self.view.frame.size.height;
+    NSUInteger postRotationContentOffsetY = preRotationScrollPage * self.view.frame.size.width;
 
     //our browseViewDelegate relies on our frame being correct when -viewDidScroll calls into it
     //so we update contentOffset in -didRotateFromInterfaceOrientation: to make sure context is set up properly for delegate
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, postRotationContentOffsetY)];
-
-
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent
