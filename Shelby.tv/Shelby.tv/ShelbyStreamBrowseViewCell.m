@@ -27,11 +27,12 @@
 @end
 
 //configure parallax configuration
-#define PARALLAX_RATIO 0.4
-#define PARALLAX_BG_X -150
-#define PARALLAX_BG_Y 0
-#define PARALLAX_BG_WIDTH 650
-#define PARALLAX_BG_HEIGHT kShelbyFullscreenHeight
+#define PARALLAX_RATIO_PORTRAIT 0.4
+#define PARALLAX_BG_WIDTH_PORTRAIT (kShelbyFullscreenWidth*(1+PARALLAX_RATIO_PORTRAIT))
+#define PARALLAX_BG_HEIGHT_PORTRAIT kShelbyFullscreenHeight
+#define PARALLAX_RATIO_LANDSCAPE 0.1
+#define PARALLAX_BG_WIDTH_LANDSCAPE kShelbyFullscreenHeight
+#define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth
 
 #define BLUR_RADIUS 4.0
 
@@ -54,13 +55,13 @@
         _foregroundView.frame = CGRectMake(0, 0, _foregroundView.frame.size.width, subviewFrame.size.height);
 
         //parallax background - thumbnails are on top of each other in a parent view
-        CGRect bgThumbsHolderFrame = CGRectMake(PARALLAX_BG_X, PARALLAX_BG_Y, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
-        _backgroundThumbnailsView = [[UIView alloc] initWithFrame:bgThumbsHolderFrame];
-        _thumbnailRegularView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT)];
-        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFill;
+        CGRect bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
+        _backgroundThumbnailsView = [[UIView alloc] initWithFrame:bgFrame];
+        _thumbnailRegularView = [[UIImageView alloc] initWithFrame:bgFrame];
+        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFit;
         [_backgroundThumbnailsView addSubview:_thumbnailRegularView];
-        _thumbnailBlurredView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT)];
-        _thumbnailBlurredView.contentMode = UIViewContentModeScaleAspectFill;
+        _thumbnailBlurredView = [[UIImageView alloc] initWithFrame:bgFrame];
+        _thumbnailBlurredView.contentMode = UIViewContentModeScaleAspectFit;
         _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
 
@@ -74,7 +75,7 @@
         [self.contentView addSubview:_parallaxView];
         _parallaxView.foregroundContent = _foregroundView;
         _parallaxView.backgroundContent = _backgroundThumbnailsView;
-        _parallaxView.parallaxRatio = PARALLAX_RATIO;
+        _parallaxView.parallaxRatio = PARALLAX_RATIO_PORTRAIT;
 
         // KP: For now, moving the play button to the VideoControlsView.
         //a big play button on top of the parallax view (shown when video controls aren't)
@@ -94,13 +95,6 @@
 //                                                                                 options:0
 //                                                                                 metrics:nil
 //                                                                                   views:@{@"play":_playButton}]];
-        
-        [self setAutoresizesSubviews:YES];
-
-        //XXX LAYOUT TESTING
-//        self.layer.borderColor = [UIColor yellowColor].CGColor;
-//        self.layer.borderWidth = 2.0;
-        //XXX LAYOUT TESTING
     }
     return self;
 }
@@ -127,9 +121,33 @@
     }
 }
 
+- (void)resizeParallaxViews
+{
+    CGRect bgFrame, fullScreenFrame;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_LANDSCAPE, PARALLAX_BG_HEIGHT_LANDSCAPE);
+        fullScreenFrame = CGRectMake(0, 0, kShelbyFullscreenHeight, kShelbyFullscreenWidth);
+        _parallaxView.parallaxRatio = PARALLAX_RATIO_LANDSCAPE;
+    } else {
+        bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
+        fullScreenFrame = CGRectMake(0, 0, kShelbyFullscreenWidth, kShelbyFullscreenHeight);
+        _parallaxView.parallaxRatio = PARALLAX_RATIO_PORTRAIT;
+    }
+
+    [self.parallaxView updateFrame:fullScreenFrame];
+    //when parallax updates it's frame, it updates the content's frame and content size as well.
+    //foreground is fine, but background is not...
+    _backgroundThumbnailsView.frame = bgFrame;
+    _thumbnailRegularView.frame = bgFrame;
+    _thumbnailBlurredView.frame = bgFrame;
+    _parallaxView.backgroundContent = _backgroundThumbnailsView;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+
+    [self resizeParallaxViews];
 
     // Reset overlay image after rotation.
     [self setupOverlayImageView];
@@ -139,6 +157,9 @@
 {
     self.thumbnailRegularView.image = nil;
     self.thumbnailBlurredView.image = nil;
+
+    //we may be in a new orientation...
+    [self resizeParallaxViews];
 }
 
 - (void)setEntry:(id<ShelbyVideoContainer>)entry
@@ -177,17 +198,11 @@
     }
 }
 
-- (void)updateParallaxFrame:(CGRect)frame
-{
-    [self.parallaxView updateFrame:frame];
-}
-
 - (void)setupImagesWith:(UIImage *)image
 {
     if (self.thumbnailRegularView.image != image) {
         //regular background
         self.thumbnailRegularView.image = image;
-        self.thumbnailRegularView.frame = CGRectMake(0, 0, PARALLAX_BG_WIDTH, PARALLAX_BG_HEIGHT);
 
         //blurred background
         // The one thing that seems slow is blurring very high resolution images...
@@ -198,7 +213,9 @@
             CIImage *result = [self.blurFilter valueForKey:@"outputImage"];
             CGImageRef cgImage = [self.ciContext createCGImage:result fromRect:[result extent]];
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.thumbnailBlurredView.image = [UIImage imageWithCGImage:cgImage];
+                [UIView transitionWithView:self.thumbnailBlurredView duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                    self.thumbnailBlurredView.image = [UIImage imageWithCGImage:cgImage];
+                } completion:nil];
                 CFRelease(cgImage);
                 [self.blurFilter setValue:nil forKey:@"inputImage"];
             });
@@ -263,6 +280,7 @@
 {
     CGFloat alpha = parallaxView.foregroundContentOffset.x / self.frame.size.width;
     self.thumbnailBlurredView.alpha = alpha;
+    self.thumbnailRegularView.alpha = 1.0f-(alpha*alpha);
 
     [self.delegate browseViewCellParallaxDidChange:self];
 }
