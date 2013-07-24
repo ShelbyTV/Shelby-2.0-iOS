@@ -662,12 +662,6 @@
 		1CC75B33172AF2FC004805A5 /* twitterconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */; };
 		1CC75B34172AF2FC004805A5 /* twitterconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */; };
 		1CC75B35172AF2FC004805A5 /* twitterconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */; };
-		1CC75B3A172AFCE4004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B36172AFCE3004805A5 /* logo.png */; };
-		1CC75B3B172AFCE4004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B36172AFCE3004805A5 /* logo.png */; };
-		1CC75B3C172AFCE4004805A5 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B36172AFCE3004805A5 /* logo.png */; };
-		1CC75B3D172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
-		1CC75B3E172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
-		1CC75B3F172AFCE4004805A5 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC75B37172AFCE3004805A5 /* logo@2x.png */; };
 		1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */; };
 		1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */; };
 		1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */; };
@@ -1468,8 +1462,6 @@
 		1CC75AD7172AF2FC004805A5 /* settings_pane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_pane@2x.png"; sourceTree = "<group>"; };
 		1CC75ADA172AF2FC004805A5 /* twitterconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitterconnected.png; sourceTree = "<group>"; };
 		1CC75ADB172AF2FC004805A5 /* twitterconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitterconnected@2x.png"; sourceTree = "<group>"; };
-		1CC75B36172AFCE3004805A5 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		1CC75B37172AFCE3004805A5 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		1CC77A4E174AA48700AD7F05 /* ShelbyActivityItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyActivityItemProvider.h; sourceTree = "<group>"; };
 		1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyActivityItemProvider.m; sourceTree = "<group>"; };
 		1CCCB54A16CEECD400C8C216 /* CollectionViewGroupsLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CollectionViewGroupsLayout.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -2203,8 +2195,6 @@
 				1CDCA65D179D7F570098C4E1 /* overlay-568h@2x.png */,
 				1CDCA65E179D7F570098C4E1 /* overlay.png */,
 				1CDCA65F179D7F570098C4E1 /* overlay@2x.png */,
-				1CC75B36172AFCE3004805A5 /* logo.png */,
-				1CC75B37172AFCE3004805A5 /* logo@2x.png */,
 				1CFD671017203D5A00324A27 /* channelbg.png */,
 				1CFD671117203D5A00324A27 /* channelbg@2x.png */,
 			);
@@ -3187,8 +3177,6 @@
 				1CC75B28172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
 				1CC75B31172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B34172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
-				1CC75B3B172AFCE4004805A5 /* logo.png in Resources */,
-				1CC75B3E172AFCE4004805A5 /* logo@2x.png in Resources */,
 				1C879DD71730224200B574AB /* likeactive.png in Resources */,
 				1C879DDA1730224200B574AB /* likeactive@2x.png in Resources */,
 				1C879DE31730224200B574AB /* likehighlight.png in Resources */,
@@ -3466,8 +3454,6 @@
 				1CC75B29172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
 				1CC75B32172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B35172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
-				1CC75B3C172AFCE4004805A5 /* logo.png in Resources */,
-				1CC75B3F172AFCE4004805A5 /* logo@2x.png in Resources */,
 				1C879DD81730224200B574AB /* likeactive.png in Resources */,
 				1C879DDB1730224200B574AB /* likeactive@2x.png in Resources */,
 				1C879DE41730224200B574AB /* likehighlight.png in Resources */,
@@ -3746,8 +3732,6 @@
 				1CC75B27172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
 				1CC75B30172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B33172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
-				1CC75B3A172AFCE4004805A5 /* logo.png in Resources */,
-				1CC75B3D172AFCE4004805A5 /* logo@2x.png in Resources */,
 				1C879DD61730224200B574AB /* likeactive.png in Resources */,
 				1C879DD91730224200B574AB /* likeactive@2x.png in Resources */,
 				1C879DE21730224200B574AB /* likehighlight.png in Resources */,
