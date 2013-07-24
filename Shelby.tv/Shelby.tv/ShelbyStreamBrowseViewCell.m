@@ -105,25 +105,34 @@
     return self;
 }
 
+// TODO: KP KP: this is a total hack. pushing for now, until we get images that work.
 - (void)setupOverlayImageView
 {
     NSString *imageName = nil;
+    UIImage *overlayImage = nil;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         imageName = @"overlay-landscape.png";
+        overlayImage = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
     } else {
         if (kShelbyFullscreenHeight > 480) {
             imageName = @"overlay-568h.png";
+            overlayImage = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
+            
         } else {
-            imageName = @"overlay.png";
+            imageName = @"big-overlay.png";
+            overlayImage = [UIImage imageNamed:imageName];
         }
     }
 
-    UIImage *overlayImage = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
     
     if (!self.overlayImageView) {
         self.overlayImageView = [[UIImageView alloc] initWithImage:overlayImage];
     } else {
         self.overlayImageView.image = overlayImage;
+    }
+    
+    if ([imageName isEqualToString:@"big-overlay.png"]) {
+        self.overlayImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
 }
 
