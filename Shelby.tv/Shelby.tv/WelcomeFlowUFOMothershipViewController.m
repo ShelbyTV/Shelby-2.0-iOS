@@ -12,7 +12,8 @@
 #import "WelcomeFlowUFOView.h"
 
 #define PAGE_WIDTH 320.0f
-#define MOTHERSHIP_INITIAL_STACK_POSITION 170.0f
+#define MOTHERSHIP_INITIAL_STACK_Y 140.0f
+#define MOTHERSHIP_INITIAL_POSITION_STACK_DELTA 90.0f
 
 @interface WelcomeFlowUFOMothershipViewController () {
     NSArray *_ufos;
@@ -26,7 +27,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *mothershipView;
 @property (weak, nonatomic) IBOutlet UIImageView *mothershipVideoDisplay;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipDistanceToBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipY;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mothershipOverlayX;
 @property (weak, nonatomic) IBOutlet UIView *mothershipOverlay;
 
@@ -59,6 +60,7 @@
 {
     if (_currentPage == 0) {
         [self moveUFOsToEntrancePositions];
+        [self moveMothershipToInitialStackPositionPercent:0];
         [self moveMothershipOverlayToCoverPercent:0];
     }
 }
@@ -169,7 +171,7 @@
 
 - (void)moveMothershipToExitPositionPercent:(CGFloat)pct
 {
-    self.mothershipDistanceToBottom.constant = MOTHERSHIP_INITIAL_STACK_POSITION + (self.view.frame.size.height * pct)*pct;
+    self.mothershipY.constant = MOTHERSHIP_INITIAL_STACK_Y - (self.view.frame.size.height * pct*pct);
     [self.mothershipView setNeedsUpdateConstraints];
     [self.view layoutIfNeeded];
 }
@@ -228,7 +230,7 @@
     if (pct >= 0) {
         self.mothershipVideoDisplay.alpha = pct*pct;
     }
-    self.mothershipDistanceToBottom.constant = MOTHERSHIP_INITIAL_STACK_POSITION + (80.0f*(1.0f-pct));
+    self.mothershipY.constant = MOTHERSHIP_INITIAL_STACK_Y - (MOTHERSHIP_INITIAL_POSITION_STACK_DELTA*(1.0f-pct));
     [self.mothershipView setNeedsUpdateConstraints];
     [self.view layoutIfNeeded];
 }
@@ -268,7 +270,7 @@
     //size and position of all UFOs when in stack
     CGSize kShelbyUFOStackSize = CGSizeMake(50, 50);
     CGFloat stackX = (PAGE_WIDTH / 2.0f) - (50.0f/2.0f);
-    CGFloat stackY = self.mothershipView.frame.origin.y + self.mothershipView.frame.size.height + 10;
+    CGFloat stackY = MOTHERSHIP_INITIAL_STACK_Y + self.mothershipView.frame.size.height + 10;
     //distance between each UFO in the stack
     CGFloat StackYDelta = 60;
 
