@@ -69,6 +69,8 @@
     [self.backgroundScroller addSubview:_backgroundContent];
     [self bringSubviewToFront:self.foregroundContent];
     self.backgroundScroller.contentSize = self.backgroundContent.frame.size;
+
+    [self updateBackgroundContentOffset];
 }
 
 - (void)setForegroundContent:(UIView *)foregroundContent
@@ -78,6 +80,16 @@
     [self.foregroundScroller addSubview:_foregroundContent];
     [self bringSubviewToFront:self.foregroundContent];
     self.foregroundScroller.contentSize = self.foregroundContent.frame.size;
+
+    [self updateBackgroundContentOffset];
+}
+
+- (void)setParallaxRatio:(CGFloat)parallaxRatio
+{
+    if (_parallaxRatio != parallaxRatio) {
+        _parallaxRatio = parallaxRatio;
+        [self updateBackgroundContentOffset];
+    }
 }
 
 - (void)matchParallaxOf:(STVParallaxView *)parallaxView
@@ -117,6 +129,8 @@
     
     self.backgroundScroller.contentSize = self.backgroundContent.frame.size;
     self.foregroundScroller.contentSize = self.foregroundContent.frame.size;
+
+    [self updateBackgroundContentOffset];
 }
 
 - (void)scrollToPage:(NSInteger)page
@@ -129,10 +143,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat bgX = 0;
-    bgX = self.foregroundScroller.contentOffset.x * self.parallaxRatio;
-    self.backgroundScroller.contentOffset = CGPointMake(bgX, 0);
-
+    [self updateBackgroundContentOffset];
     [self.delegate parallaxDidChange:self];
 }
 
@@ -152,6 +163,13 @@
     if (remainder != 0.0) {
         self.foregroundScroller.contentOffset = CGPointMake(self.currentPage * self.foregroundScroller.frame.size.width, 0);
     }
+}
+
+- (void)updateBackgroundContentOffset
+{
+    CGFloat bgX = 0;
+    bgX = self.foregroundScroller.contentOffset.x * self.parallaxRatio;
+    self.backgroundScroller.contentOffset = CGPointMake(bgX, 0);
 }
 
 @end
