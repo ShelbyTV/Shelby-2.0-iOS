@@ -52,32 +52,32 @@
 {
     if (self.navBarView.communityButton != self.navBarView.currentRow){
         self.navBarView.currentRow = self.navBarView.communityButton;
-        _lastSelectedRow = self.navBarView.communityButton;
     }
+    _lastSelectedRow = self.navBarView.communityButton;
 }
 
 - (void)didNavigateToUsersStream
 {
     if (self.navBarView.streamButton != self.navBarView.currentRow) {
         self.navBarView.currentRow = self.navBarView.streamButton;
-        _lastSelectedRow = self.navBarView.streamButton;
     }
+    _lastSelectedRow = self.navBarView.streamButton;
 }
 
 - (void)didNavigateToUsersLikes
 {
     if (self.navBarView.likesButton != self.navBarView.currentRow) {
         self.navBarView.currentRow = self.navBarView.likesButton;
-        _lastSelectedRow = self.navBarView.likesButton;
     }
+    _lastSelectedRow = self.navBarView.likesButton;
 }
 
 - (void)didNavigateToUsersShares
 {
     if (self.navBarView.sharesButton != self.navBarView.currentRow) {
         self.navBarView.currentRow = self.navBarView.sharesButton;
-        _lastSelectedRow = self.navBarView.sharesButton;
     }
+    _lastSelectedRow = self.navBarView.sharesButton;
 }
 
 - (IBAction)navTapped:(UIButton *)sender
@@ -93,17 +93,17 @@
         self.navBarView.currentRow = sender;
 
         if (sender == self.navBarView.streamButton) {
-            [self.delegate navBarViewControllerStreamWasTapped:self];
+            [self.delegate navBarViewControllerStreamWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else if (sender == self.navBarView.likesButton) {
-            [self.delegate navBarViewControllerLikesWasTapped:self];
+            [self.delegate navBarViewControllerLikesWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else if (sender == self.navBarView.sharesButton) {
-            [self.delegate navBarViewControllerSharesWasTapped:self];
+            [self.delegate navBarViewControllerSharesWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else if (sender == self.navBarView.communityButton) {
-            [self.delegate navBarViewControllerCommunityWasTapped:self];
+            [self.delegate navBarViewControllerCommunityWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else if (sender == self.navBarView.settingsButton) {
-            [self.delegate navBarViewControllerSettingsWasTapped:self];
+            [self.delegate navBarViewControllerSettingsWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else if (sender == self.navBarView.loginButton) {
-            [self.delegate navBarViewControllerLoginWasTapped:self];
+            [self.delegate navBarViewControllerLoginWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else {
             STVAssert(NO, @"unhandled nav row");
         }

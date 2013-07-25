@@ -409,6 +409,7 @@
 
             //entering playback: hide the overlays and update controls state
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+                self.navBar.alpha = 0.0;
                 self.videoControlsVC.view.alpha = 0.0;
                 [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
             } completion:^(BOOL finished) {
@@ -423,11 +424,12 @@
     if (DEVICE_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     }
-    [self.navBar setHidden:YES];
 }
 
 - (void)dismissVideoReel
 {
+    [self.videoReel pauseCurrentPlayer];
+    
     [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewDefault;
     
     [self.videoReel shutdown];
@@ -439,8 +441,6 @@
     if (DEVICE_IPAD) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
-    [self.navBar setHidden:NO];
-
 }
 
 //DEPRECATED
@@ -635,10 +635,12 @@
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             if (browseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
                 //show overlays
+                self.navBar.alpha = 1.0;
                 self.videoControlsVC.view.alpha = 1.0;
                 browseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
             } else {
                 //hide overlays
+                self.navBar.alpha = 0.0;
                 self.videoControlsVC.view.alpha = 0.0;
                 browseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
             }
@@ -727,11 +729,13 @@
     if (isScrubbing) {
         STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithOverlay, @"expected overlay to be showing");
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+            self.navBar.alpha = 0.0;
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
         }];
     } else {
         STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay, @"expected overlay not showing");
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+            self.navBar.alpha = 1.0;
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
         }];
     }
@@ -860,33 +864,53 @@
     [self showNavBarButton];
 }
 
-- (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC
+- (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
+    if (selectedNewRow && self.videoReel) {
+        [self dismissVideoReel];
+        [self updateVideoControlsForPage:0];
+    }
     [self launchMyStream];
 }
 
-- (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC
+- (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
+    if (selectedNewRow && self.videoReel) {
+        [self dismissVideoReel];
+        [self updateVideoControlsForPage:0];
+    }
     [self launchMyLikes];
 }
 
-- (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC
+- (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
+    if (selectedNewRow && self.videoReel) {
+        [self dismissVideoReel];
+        [self updateVideoControlsForPage:0];
+    }
     [self launchMyRoll];
 }
 
-- (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC
+- (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
+    if (selectedNewRow && self.videoReel) {
+        [self dismissVideoReel];
+        [self updateVideoControlsForPage:0];
+    }
     [self launchCommunityChannel];
 }
 
-- (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC
+- (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
+    [self.videoReel pauseCurrentPlayer];
     [self.masterDelegate goToUsersSettings];
+    //settings will be modal, nav hasn't actually changed...
+    [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
 }
 
-- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC
+- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
+    [self.videoReel pauseCurrentPlayer];
     [self.masterDelegate presentUserLogin];
     //login is modal, nav hasn't actually changed...
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
