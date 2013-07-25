@@ -368,7 +368,7 @@
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
         [login setFrame:CGRectMake(6, 0, 80, 44)];
         [login setTitle:@"SIGN UP" forState:UIControlStateNormal];
-        [[login titleLabel] setFont:kShelbyFontH3];
+        [[login titleLabel] setFont:kShelbyFontH4Bold];
         [login setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
         [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.navBarButtonView addSubview:login];
