@@ -814,7 +814,7 @@
     CGFloat offsetModHeightNormalized = offsetModHeight / frameHeight;
     // shift such that we move smoothly from 1->0->1 as we scroll from one page to the next
     CGFloat pageBoundaryDelta = fabsf(1.0 - 2.0 * offsetModHeightNormalized);
-    self.videoControlsVC.view.alpha = pageBoundaryDelta;
+    self.videoControlsVC.view.alpha = pageBoundaryDelta*pageBoundaryDelta;
 }
 
 - (void)updateVideoControlsForPage:(NSUInteger)page
