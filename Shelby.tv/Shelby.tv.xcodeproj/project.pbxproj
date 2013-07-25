@@ -83,6 +83,9 @@
 		1C534E4017A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */; };
 		1C534E4117A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */; };
 		1C534E4217A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */; };
+		1C534E4517A179DE00B6B3D5 /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */; };
+		1C534E4617A179DE00B6B3D5 /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */; };
+		1C534E4717A179DE00B6B3D5 /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */; };
 		1C6ACFD21721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
 		1C6ACFD31721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
 		1C6ACFD41721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
@@ -1320,6 +1323,8 @@
 		1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape-568h.png"; sourceTree = "<group>"; };
 		1C534E3817A1792700B6B3D5 /* bkgd-landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape.png"; sourceTree = "<group>"; };
 		1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape@2x.png"; sourceTree = "<group>"; };
+		1C534E4317A179DE00B6B3D5 /* NoContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentViewController.h; sourceTree = "<group>"; };
+		1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentViewController.m; sourceTree = "<group>"; };
 		1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyBrowseTutorialView.xib; sourceTree = "<group>"; };
 		1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial.png"; sourceTree = "<group>"; };
 		1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial@2x.png"; sourceTree = "<group>"; };
@@ -2792,6 +2797,8 @@
 				916F41A11798A795001D9DF7 /* STVTextField.m */,
 				916F41AE1799C063001D9DF7 /* WelcomeFlowUFOView.h */,
 				916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */,
+				1C534E4317A179DE00B6B3D5 /* NoContentViewController.h */,
+				1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -4062,6 +4069,7 @@
 				916F41B11799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
 				916F41B61799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 				916F41BF179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
+				1C534E4617A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4200,6 +4208,7 @@
 				916F41B21799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
 				916F41B71799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 				916F41C0179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
+				1C534E4717A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4338,6 +4347,7 @@
 				916F41B01799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
 				916F41B51799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 				916F41BE179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
+				1C534E4517A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

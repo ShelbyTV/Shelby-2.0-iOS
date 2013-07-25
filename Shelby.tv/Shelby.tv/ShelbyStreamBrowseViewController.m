@@ -11,6 +11,7 @@
 #import "DisplayChannel+Helper.h"
 #import "DeduplicationUtility.h"
 #import "Frame.h"
+#import "NoContentViewController.h"
 #import "Video.h"
 
 #define REFRESH_PULL_THRESHOLD 50
@@ -31,7 +32,7 @@
 @property (nonatomic, strong) NSMutableSet *streamBrowseViewCells;
 @property (nonatomic, weak) ShelbyStreamBrowseViewCell *lastCellWithParallaxUpdate;
 
-@property (nonatomic, strong) UIView *noContentView;
+@property (nonatomic, strong) NoContentViewController *noContentVC;
 @property (nonatomic, assign) BOOL hasNoContent;
 @end
 
@@ -84,17 +85,17 @@
         NSString *noContnetViewName = [self.browseManagementDelegate nameForNoContentViewForDisplayChannel:self.channel];
         self.hasNoContent = YES;
         
-        if (noContnetViewName && !self.noContentView) {
-            self.noContentView = [[NSBundle mainBundle] loadNibNamed:noContnetViewName owner:nil options:nil][0];
-            self.noContentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bkgd-step1.png"]];
-            [self.view addSubview:self.noContentView];
+        if (noContnetViewName && !self.noContentVC) {
+            _noContentVC = [[NoContentViewController alloc] initWithNibName:noContnetViewName bundle:nil];
+            self.noContentVC.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bkgd-step1.png"]];
+            [self.view addSubview:self.noContentVC.view];
         }
     } else {
         [self.browseViewDelegate shelbyStreamBrowseViewController:self hasNoContnet:NO];
         self.hasNoContent = NO;
-        if (self.noContentView) {
-            [self.noContentView removeFromSuperview];
-            self.noContentView = nil;
+        if (self.noContentVC.view) {
+            [self.noContentVC.view removeFromSuperview];
+            self.noContentVC = nil;
         }
     }
 }
