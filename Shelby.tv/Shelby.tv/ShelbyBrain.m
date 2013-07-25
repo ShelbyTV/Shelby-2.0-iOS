@@ -342,7 +342,11 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
             //full subset, nothing to add
         }
     } else {
-        [self.homeVC setEntries:channelEntries forChannel:channel];
+        // Don't update entries if we have zero entries in cache
+        if ([channelEntries count] != 0 || !cached) {
+            [self.homeVC setEntries:channelEntries forChannel:channel];
+        }
+
         if ([channelEntries count]) {
             [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:channelEntries[0]];
         }
@@ -523,6 +527,30 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
         [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
     }
 }
+
+// If returns nil there is no NoContentView to show for DisplayChannel. If there is one, return it's name.
+- (NSString *)nameForNoContentViewForDisplayChannel:(DisplayChannel *)channel
+{
+    
+    BOOL likesChannel = NO;
+    User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+    if (user) {
+        if ([user.likesRollID isEqualToString:channel.roll.rollID]) {
+            likesChannel = YES;
+        }
+    } else if (self.offlineLikesChannel == channel) {
+        likesChannel = YES;
+    }
+    
+    // TODO: add MyStream for NoSharesView - in case user has nothing in their roll and they switch to their shares.
+    
+    if (likesChannel) {
+        return @"NoLikesView";
+    } else {
+        return nil;
+    }
+}
+
 
 #pragma mark - SPVideoReelProtocol Methods
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up

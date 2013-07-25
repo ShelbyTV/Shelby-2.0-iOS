@@ -109,6 +109,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
     if (!displayChannel) {
         displayChannel = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDisplayChannel
                                                        inManagedObjectContext:context];
+        displayChannel.channelID = kShelbyOfflineLikesID;
     }
     
     Roll *likesRoll = [Roll fetchLikesRollInContext:context];

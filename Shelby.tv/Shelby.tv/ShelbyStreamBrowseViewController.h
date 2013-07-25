@@ -17,6 +17,7 @@
 @protocol ShelbyStreamBrowseManagementDelegate <NSObject>
 - (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item;
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
+- (NSString *)nameForNoContentViewForDisplayChannel:(DisplayChannel *)channel;
 //- (ShelbyBrowseTutorialMode)browseTutorialMode;
 //- (void)userDidCompleteTutorial;
 @end
@@ -28,6 +29,7 @@
 //indicates a single, 1 touch tap that waits for all panning to fail
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer;
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didChangeToPage:(NSUInteger)page;
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc hasNoContnet:(BOOL)noContent;
 @end
 
 @interface ShelbyStreamBrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ShelbyStreamBrowseViewCellDelegate>
@@ -61,5 +63,6 @@
 
 // To allow our superview to adjust visual stylings
 @property (readonly) UICollectionView *collectionView;
+@property (nonatomic, readonly) BOOL hasNoContent;
 
 @end

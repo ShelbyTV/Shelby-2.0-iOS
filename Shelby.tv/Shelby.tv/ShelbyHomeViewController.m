@@ -209,6 +209,9 @@
         self.currentStreamBrowseVC = sbvc;
         //set current entity on video controls, if applicable
         self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
+        
+        // If there is no content in Stream, don't show video controls
+        self.videoControlsVC.view.hidden = sbvc.hasNoContent;
     }
 }
 
@@ -648,6 +651,13 @@
     STVAssert(page == 0 || page == 1, @"bad page");
     if (self.currentStreamBrowseVC == vc) {
         [self updateVideoControlsForPage:page];
+    }
+}
+
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc hasNoContnet:(BOOL)noContent
+{
+    if (self.currentStreamBrowseVC == vc) {
+        self.videoControlsVC.view.hidden = noContent;
     }
 }
 

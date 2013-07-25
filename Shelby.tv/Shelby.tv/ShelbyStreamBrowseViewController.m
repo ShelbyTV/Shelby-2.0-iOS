@@ -30,6 +30,9 @@
 //hang on to these to keep parallax in sync
 @property (nonatomic, strong) NSMutableSet *streamBrowseViewCells;
 @property (nonatomic, weak) ShelbyStreamBrowseViewCell *lastCellWithParallaxUpdate;
+
+@property (nonatomic, strong) UIView *noContentView;
+@property (nonatomic, assign) BOOL hasNoContent;
 @end
 
 @implementation ShelbyStreamBrowseViewController
@@ -66,6 +69,39 @@
 //    self.view.layer.borderColor = [UIColor greenColor].CGColor;
 //    self.view.layer.borderWidth = 2.0;
     //XXX LAYOUT TESTING
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self updateVisibilityOfNoContentView];
+}
+
+- (void)updateVisibilityOfNoContentView
+{
+    if ([self.deduplicatedEntries count] == 0) {
+        NSString *noContnetViewName = [self.browseManagementDelegate nameForNoContentViewForDisplayChannel:self.channel];
+        self.hasNoContent = YES;
+        
+        if (noContnetViewName && !self.noContentView) {
+            self.noContentView = [[NSBundle mainBundle] loadNibNamed:noContnetViewName owner:nil options:nil][0];
+            self.noContentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bkgd-step1.png"]];
+            [self.view addSubview:self.noContentView];
+        }
+    } else {
+        [self.browseViewDelegate shelbyStreamBrowseViewController:self hasNoContnet:NO];
+        self.hasNoContent = NO;
+        if (self.noContentView) {
+            [self.noContentView removeFromSuperview];
+            self.noContentView = nil;
+        }
+    }
+}
+
+- (void)setHasNoContent:(BOOL)hasNoContent
+{
+    [self.browseViewDelegate shelbyStreamBrowseViewController:self hasNoContnet:hasNoContent];
 }
 
 - (void)didReceiveMemoryWarning
@@ -136,6 +172,7 @@
     
     [self.collectionView reloadData];
 
+    [self updateVisibilityOfNoContentView];
 }
 
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
@@ -182,6 +219,8 @@
     } completion:^(BOOL finished) {
         //nothing
     }];
+    
+    [self updateVisibilityOfNoContentView];
 }
 
 #pragma mark - UICollectionView Datasource
