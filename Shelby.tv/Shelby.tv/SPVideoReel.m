@@ -401,6 +401,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     return self.currentPlayer.isPlaying;
 }
 
+- (BOOL)shouldCurrentPlayerBePlaying
+{
+    return [self.currentPlayer shouldBePlaying];
+}
+
 - (void)pauseCurrentPlayer
 {
     [self.currentPlayer pause];

@@ -47,6 +47,9 @@
 
 - (CMTime)duration;
 
+//isPlaying or will be playing asap w/o any outside help
+- (BOOL)shouldBePlaying;
+
 // Playback Control
 - (void)play;
 - (void)pause;

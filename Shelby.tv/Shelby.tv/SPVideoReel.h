@@ -66,7 +66,10 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)videoDoubleTapped;
 
 //New API for use by playback control elements
+//current player is actually playing
 - (BOOL)isCurrentPlayerPlaying;
+//current player isPlaying or will be playing asap w/o any outside help
+- (BOOL)shouldCurrentPlayerBePlaying;
 - (void)pauseCurrentPlayer;
 - (void)playCurrentPlayer;
 - (void)scrubCurrentPlayerTo:(CGFloat)percent;

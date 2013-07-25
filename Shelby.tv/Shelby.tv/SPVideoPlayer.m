@@ -267,6 +267,12 @@
 }
 
 #pragma mark - Video Playback Methods (Public)
+
+- (BOOL)shouldBePlaying
+{
+    return self.isPlayable && (self.isPlaying || self.shouldAutoplay);
+}
+
 - (void)togglePlayback
 {
     if (self.isPlayable && 0.0 == self.player.rate) {
@@ -293,6 +299,7 @@
     //b/c of how this gets called, it's not necessarily on main thread
     [self.player pause];
     self.isPlaying = NO;
+    self.shouldAutoplay = NO;
     
     [self.videoPlayerDelegate videoPlaybackStatus:NO forPlayer:self];
 }

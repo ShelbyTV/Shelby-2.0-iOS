@@ -608,13 +608,14 @@
     }
 
     if (self.videoReel) {
+        BOOL videoShouldHaveBeenPlaying = [self.videoReel shouldCurrentPlayerBePlaying];
         id<ShelbyVideoContainer> previousPlaybackEntity = [self.videoReel getCurrentPlaybackEntity];
         [self.videoReel endDecelerating];
         id<ShelbyVideoContainer> currentPlaybackEntity = [self.videoReel getCurrentPlaybackEntity];
         self.videoControlsVC.currentEntity = currentPlaybackEntity;
 
-        if (!self.videoReel.isCurrentPlayerPlaying && currentPlaybackEntity != previousPlaybackEntity) {
-            //paused & changed videos: transition to default view mode (from playback view mode)
+        if (!videoShouldHaveBeenPlaying && currentPlaybackEntity != previousPlaybackEntity) {
+            //user paused & changed videos: transition to default view mode (from playback view mode)
             STVAssert(vc.viewMode != ShelbyStreamBrowseViewDefault, @"expected a playback mode, since we have a video reel");
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
                 [self dismissVideoReel];
