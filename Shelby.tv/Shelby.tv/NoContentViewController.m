@@ -27,7 +27,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [self setupBackgroundImageForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     self.imageToAnimate.alpha = 0;
 }
 
@@ -38,6 +44,33 @@
     [UIView animateWithDuration:2 animations:^{
         self.imageToAnimate.alpha = 1;
     }];
+}
+
+- (void)setupBackgroundImageForOrientation:(UIInterfaceOrientation)orientation
+{
+    NSString *largeIphoneImage = nil;
+    if (kShelbyFullscreenHeight > 480) {
+        largeIphoneImage = @"-568h";
+    } else {
+        largeIphoneImage = @"";
+    }
+    
+    NSString *imageName = nil;
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        imageName = [NSString stringWithFormat:@"bkgd-landscape%@.png", largeIphoneImage];
+    } else {
+        imageName = [NSString stringWithFormat:@"bkgd-step1%@.png", largeIphoneImage];;
+    }
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:imageName]];
+}
+
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    [self setupBackgroundImageForOrientation:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning

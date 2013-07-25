@@ -87,13 +87,15 @@
         
         if (noContnetViewName && !self.noContentVC) {
             _noContentVC = [[NoContentViewController alloc] initWithNibName:noContnetViewName bundle:nil];
-            self.noContentVC.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bkgd-step1.png"]];
+            [self addChildViewController:self.noContentVC];
             [self.view addSubview:self.noContentVC.view];
+            [self.noContentVC didMoveToParentViewController:self];
         }
     } else {
         [self.browseViewDelegate shelbyStreamBrowseViewController:self hasNoContnet:NO];
         self.hasNoContent = NO;
         if (self.noContentVC.view) {
+            [self.noContentVC removeFromParentViewController];
             [self.noContentVC.view removeFromSuperview];
             self.noContentVC = nil;
         }
