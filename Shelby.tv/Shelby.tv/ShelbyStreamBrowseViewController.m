@@ -243,7 +243,6 @@
     cell.viewMode = self.viewMode;
     cell.entry = self.deduplicatedEntries[indexPath.row];
 
-    [cell updateParallaxFrame:self.view.frame];
     [cell matchParallaxOf:self.lastCellWithParallaxUpdate];
 
     //load more data

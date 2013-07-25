@@ -35,7 +35,7 @@
 
 // --Playback Stalled--
 "PLAYBACK_STALLED_TITLE" = "Video Downloading Slowly";
-"PLAYBACK_STALLED_MESSAGE" = "Give it a little time to buffer.  Then double-tap to resume playback.";
+"PLAYBACK_STALLED_MESSAGE" = "Give it a little time to buffer.  Then resume playback.";
 "PLAYBACK_STALLED_BUTTON" = "Ok";
 
 // --Extraction Fail--

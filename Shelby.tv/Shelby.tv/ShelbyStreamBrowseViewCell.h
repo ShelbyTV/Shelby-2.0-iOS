@@ -37,6 +37,5 @@ typedef NS_ENUM(NSUInteger, ShelbyStreamBrowseViewMode)
 + (void)cacheEntry:(id<ShelbyVideoContainer>) entry;
 
 - (void)matchParallaxOf:(ShelbyStreamBrowseViewCell *)cell;
-- (void)updateParallaxFrame:(CGRect)frame;
 
 @end
