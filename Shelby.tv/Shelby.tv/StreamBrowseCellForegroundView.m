@@ -110,7 +110,6 @@
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
  
     [self resizeCaptionLabel];
-    
 }
 
 
@@ -185,6 +184,9 @@
                                           0,
                                           maxCaptionSize.width,
                                           textBasedHeight);
+
+    //tighting up the height of surrounding box as well
+    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, 80.0f + textBasedHeight);
 }
 
 /*
