@@ -37,4 +37,6 @@
 
 - (DisplayChannel *)displayChannelForLikesRoll;
 
+- (NSURL *)avatarURL;
+
 @end

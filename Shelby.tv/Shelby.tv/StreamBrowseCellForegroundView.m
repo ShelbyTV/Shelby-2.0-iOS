@@ -9,7 +9,7 @@
 #import "StreamBrowseCellForegroundView.h"
 #import "Video+Helper.h"
 #import "UIImageView+AFNetworking.h"
-#import "User.h"
+#import "User+Helper.h"
 
 #define kShelbyInfoViewMargin 15
 #define kShelbyCaptionMargin 4
@@ -118,7 +118,7 @@
     
     // User Avatar
     // Request setup was taken from UIImage+AFNetworking. As we have to set a completion block so the detail avatar will be the same as the summary one. (Otherwise, we had to make 2 seperate calls)
-    NSURL *url = [NSURL URLWithString:videoFrame.creator.userImage];
+    NSURL *url = [videoFrame.creator avatarURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPShouldHandleCookies:NO];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
