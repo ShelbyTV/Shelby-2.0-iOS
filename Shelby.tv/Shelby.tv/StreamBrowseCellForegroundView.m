@@ -9,7 +9,7 @@
 #import "StreamBrowseCellForegroundView.h"
 #import "Video+Helper.h"
 #import "UIImageView+AFNetworking.h"
-#import "User.h"
+#import "User+Helper.h"
 
 #define kShelbyInfoViewMargin 15
 #define kShelbyCaptionMargin 4
@@ -72,19 +72,31 @@
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         // Landscape
         // Summary View
-        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
+        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 50, pageWidth - kShelbyInfoViewMargin * 2, 90);
+        //XXX this user needs to come to the bottom of the summary title
+        self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height - 10, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
+
         // Detail View
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 45, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailTitle.frame = CGRectMake(xOrigin, 65, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailWhiteBackground.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 90, pageWidth, 140);
-        self.detailUserView.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 90, 185, 60);
+        self.detailUserView.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 95, 185, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 100, self.detailUsername.frame.size.height);
-        self.detailCommentView.frame = CGRectMake(xOrigin, 165, pageWidth - kShelbyInfoViewMargin * 2, 60);
+        self.detailCommentView.frame = CGRectMake(xOrigin, 155, pageWidth - kShelbyInfoViewMargin * 2, 60);
         self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, self.detailUserView.frame.origin.y + 10, 245, 40);
     } else {
         // Portrait
         // Summary View
-        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 84, 280, 120);
+
+        //XXX this should not be a constant size, should expand downward up to 3 lines
+        //      test should always remain at top
+        //XXX AND the avatar should be 10 pixels below bottom of text, no matter how many lines it is
+
+        //64 feels good at the top
+        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 64, 280, 120);
+        //XXX this user needs to come to the bottom of the summary title
+        self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
+
         // Detail View
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailTitle.frame = CGRectMake(xOrigin, 80, 280, 44);
@@ -96,10 +108,8 @@
     }
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
-    self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height + 10, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
  
     [self resizeCaptionLabel];
-    
 }
 
 
@@ -118,7 +128,7 @@
     
     // User Avatar
     // Request setup was taken from UIImage+AFNetworking. As we have to set a completion block so the detail avatar will be the same as the summary one. (Otherwise, we had to make 2 seperate calls)
-    NSURL *url = [NSURL URLWithString:videoFrame.creator.userImage];
+    NSURL *url = [videoFrame.creator avatarURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPShouldHandleCookies:NO];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -144,7 +154,7 @@
     self.detailViaNetwork.text = self.summaryViaNetwork.text;
     
     // Caption
-    NSString *captionText = [NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]];
+    NSString *captionText = [NSString stringWithFormat:@"%@", [videoFrame creatorsInitialCommentWithFallback:YES]];
     [self.detailCaption setText:captionText];
     [self resizeCaptionLabel];
     
@@ -170,11 +180,13 @@
     CGFloat textBasedHeight = [captionText sizeWithFont:[self.detailCaption font]
                                       constrainedToSize:maxCaptionSize
                                           lineBreakMode:NSLineBreakByWordWrapping].height;
-    NSInteger yOrigin = (self.detailCommentView.frame.size.height - kShelbyCaptionMargin - textBasedHeight) / 2;
     self.detailCaption.frame = CGRectMake(self.detailCaption.frame.origin.x,
-                                          yOrigin,
+                                          0,
                                           maxCaptionSize.width,
                                           textBasedHeight);
+
+    //tighting up the height of surrounding box as well
+    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, 80.0f + textBasedHeight);
 }
 
 /*

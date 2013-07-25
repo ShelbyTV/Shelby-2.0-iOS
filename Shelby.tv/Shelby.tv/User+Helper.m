@@ -44,13 +44,23 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     if (likesRollID) {
         user.likesRollID = likesRollID;
     }
-    
-    user.nickname = dict[@"nickname"];
-    user.name = [dict[@"name"] nilOrSelfWhenNotNull];
+
+    NSString *nick = dict[@"nickname"];
+    if (nick){
+        user.nickname = nick;
+    }
+    NSString *name = [dict[@"name"] nilOrSelfWhenNotNull];
+    if (name) {
+        user.name = name;
+    }
     
     NSString *token = dict[@"authentication_token"];
     if (token) {
         user.token = token;
+    }
+
+    if ([[dict allKeys] indexOfObject:@"has_shelby_avatar"] != NSNotFound) {
+        user.hasShelbyAvatar = dict[@"has_shelby_avatar"];
     }
     
     // Resetting all auths:
@@ -100,13 +110,12 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return user;
 }
 
-
-+(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc
++ (User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc
 {
     return [User currentAuthenticatedUserInContext:moc forceRefresh:NO];
 }
 
-+(User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc forceRefresh:(BOOL)forceRefresh
++ (User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc forceRefresh:(BOOL)forceRefresh
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityUser];
     request.fetchLimit = 1;
@@ -208,6 +217,15 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         return likesRoll.displayChannel;
     }
     return nil;
+}
+
+-(NSURL *)avatarURL
+{
+    if ([self.hasShelbyAvatar boolValue]) {
+        return [NSURL URLWithString:[NSString stringWithFormat:@"http://s3.amazonaws.com/shelby-gt-user-avatars/sq48x48/%@", self.userID]];
+    } else {
+        return [NSURL URLWithString:self.userImage];
+    }
 }
 
 @end

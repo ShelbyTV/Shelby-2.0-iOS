@@ -15,12 +15,12 @@
 
 - (void)navBarViewControllerWillExpand:(ShelbyNavBarViewController *)navBarVC;
 - (void)navBarViewControllerWillContract:(ShelbyNavBarViewController *)navBarVC;
-- (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC;
-- (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC;
-- (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC;
-- (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC;
-- (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC;
-- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC;
+- (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
+- (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
+- (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
+- (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
+- (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
+- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 
 @end
 
