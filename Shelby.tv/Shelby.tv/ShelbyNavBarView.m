@@ -101,8 +101,8 @@
             //focus on current row, hide rows that aren't current
             currentButton.userInteractionEnabled = YES;
             currentButton.alpha = 1.0;
-            [currentButton setTitleColor:kShelbyColorBlack forState:UIControlStateNormal];
-            currentButton.backgroundColor = [kShelbyColorWhite colorWithAlphaComponent:0.9];
+            [currentButton setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
+            currentButton.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
             NSMutableArray *allRowsButCurrent = [@[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton] mutableCopy];
             [allRowsButCurrent removeObject:_currentRow];
             for (UIButton *b in allRowsButCurrent) {
