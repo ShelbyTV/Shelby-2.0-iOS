@@ -295,7 +295,13 @@
 
 - (NSIndexPath *)indexPathForCurrentFocus
 {
-    return [[self.collectionView indexPathsForVisibleItems] lastObject];
+    // if our collection view hasn't yet moved to superview -- isn't on screen -- then it will
+    // return nil for -indexPahtsForVisibleItems: but we expect row 0.
+    NSIndexPath *idxPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
+    if (!idxPath && [self.deduplicatedEntries count] > 0) {
+        return [NSIndexPath indexPathForRow:0 inSection:0];
+    }
+    return idxPath;
 }
 
 - (id<ShelbyVideoContainer>)entityForCurrentFocus
