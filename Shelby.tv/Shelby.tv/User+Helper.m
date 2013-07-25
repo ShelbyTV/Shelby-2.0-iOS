@@ -44,9 +44,15 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     if (likesRollID) {
         user.likesRollID = likesRollID;
     }
-    
-    user.nickname = dict[@"nickname"];
-    user.name = [dict[@"name"] nilOrSelfWhenNotNull];
+
+    NSString *nick = dict[@"nickname"];
+    if (nick){
+        user.nickname = nick;
+    }
+    NSString *name = [dict[@"name"] nilOrSelfWhenNotNull];
+    if (name) {
+        user.name = name;
+    }
     
     NSString *token = dict[@"authentication_token"];
     if (token) {
