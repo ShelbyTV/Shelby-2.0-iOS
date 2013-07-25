@@ -239,6 +239,7 @@
             case ShelbyStreamBrowseViewDefault:
                 self.playButton.alpha = 1.0;
                 [self.parallaxView getBackgroundView].alpha = 1.0;
+                self.foregroundView.alpha = 1.0;
                 break;
             case ShelbyStreamBrowseViewForPlaybackWithOverlay:
                 self.playButton.alpha = 0.0;
