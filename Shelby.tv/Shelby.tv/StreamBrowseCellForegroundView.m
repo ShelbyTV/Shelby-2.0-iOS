@@ -162,19 +162,36 @@
 - (void)resizeViewsForContent
 {
     //padding adjustments for landscape vs portrait
-    CGFloat detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment;
+    CGFloat summaryUserPadding, detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        summaryUserPadding = 50;
         detailTitlePadding = 70;
         detailUserPadding = 0;
         detailCommentPadding = 60;
         detailWhiteBackgroundHeightAdjustment = 70;
     } else {
+        summaryUserPadding = 70;
         detailTitlePadding = 90;
         detailUserPadding = 5;
         detailCommentPadding = 70;
         detailWhiteBackgroundHeightAdjustment = 80;
     }
 
+
+    //-----------summary page---------------
+    //resize summary title
+    NSString *summaryTitleText = self.summaryTitle.text;
+    CGSize maxSummaryTitleSize = CGSizeMake(self.summaryTitle.frame.size.width, self.summaryTitle.frame.size.height);
+    CGFloat summaryTitleDesiredHeight = [summaryTitleText sizeWithFont:self.summaryTitle.font
+                                                     constrainedToSize:maxSummaryTitleSize
+                                                         lineBreakMode:self.summaryTitle.lineBreakMode].height;
+    self.summaryTitle.frame = CGRectMake(self.summaryTitle.frame.origin.x, self.summaryTitle.frame.origin.y, self.summaryTitle.frame.size.width, summaryTitleDesiredHeight);
+
+    //move the user view just below the title
+    self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, summaryTitleDesiredHeight + summaryUserPadding, self.summaryUserView.frame.size.width, self.summaryUserView.frame.size.height);
+
+
+    //-----------detail page---------------
     //resize detail title
     NSString *detailTitleText = self.detailTitle.text;
     CGSize maxDetailTitleSize = CGSizeMake(self.detailTitle.frame.size.width, 44);
@@ -204,14 +221,5 @@
     //tighting up the height of surrounding box as well
     self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, textBasedHeight + detailWhiteBackgroundHeightAdjustment);
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end
