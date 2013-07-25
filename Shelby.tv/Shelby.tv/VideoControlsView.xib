@@ -48,11 +48,11 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="256491566"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor" id="740565170">
+						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
+							<bytes key="NSWhite">MAA</bytes>
 						</object>
-						<float key="IBUIAlpha">0.30000001192092896</float>
+						<float key="IBUIAlpha">0.80000001192092896</float>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
@@ -68,7 +68,10 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIHighlightedTitleColor" ref="740565170"/>
+						<object class="NSColor" key="IBUIHighlightedTitleColor" id="740565170">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MQA</bytes>
+						</object>
 						<reference key="IBUINormalTitleColor" ref="740565170"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor" id="1053607376">
 							<int key="NSColorSpace">3</int>
@@ -189,9 +192,9 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">LIKE</string>
 						<reference key="IBUIHighlightedTitleColor" ref="740565170"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
+						<object class="NSColor" key="IBUINormalTitleColor" id="705543177">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC40MzUyOTQxMTc2IDAuNzQ1MDk4MDM5MiAwLjI3ODQzMTM3MjUAA</bytes>
+							<bytes key="NSRGB">MC4zMzMzMzMzMzMzIDAuMzMzMzMzMzMzMyAwLjMzMzMzMzMzMzMAA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="1053607376"/>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="290519973">
@@ -220,10 +223,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">SHARE</string>
 						<reference key="IBUIHighlightedTitleColor" ref="740565170"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC40MzUyOTQxMTc2IDAuNzQ1MDk4MDM5MiAwLjI3ODQzMTM3MjUAA</bytes>
-						</object>
+						<reference key="IBUINormalTitleColor" ref="705543177"/>
 						<reference key="IBUIFontDescription" ref="290519973"/>
 						<reference key="IBUIFont" ref="364601834"/>
 					</object>
@@ -240,10 +240,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">UNLIKE</string>
 						<reference key="IBUIHighlightedTitleColor" ref="740565170"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC40MzUyOTQxMTc2IDAuNzQ1MDk4MDM5MiAwLjI3ODQzMTM3MjUAA</bytes>
-						</object>
+						<reference key="IBUINormalTitleColor" ref="705543177"/>
 						<reference key="IBUIFontDescription" ref="290519973"/>
 						<reference key="IBUIFont" ref="364601834"/>
 					</object>
