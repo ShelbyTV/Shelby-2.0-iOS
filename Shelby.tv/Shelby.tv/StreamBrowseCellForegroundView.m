@@ -59,11 +59,6 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    //XXX Layout Test
-//    self.detailUsername.backgroundColor = [UIColor purpleColor];
-//    self.detailViaNetwork.backgroundColor = [UIColor orangeColor];
-//    self.detailCaption.backgroundColor = [UIColor brownColor];
-    //XXX Layout Test
 
     NSInteger pageWidth = self.frame.size.width / 2;
 //    NSInteger pageHeight = self.frame.size.height;
@@ -73,7 +68,6 @@
         // Landscape
         // Summary View
         self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 50, pageWidth - kShelbyInfoViewMargin * 2, 90);
-        //XXX this user needs to come to the bottom of the summary title
         self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height - 10, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
 
         // Detail View
@@ -87,14 +81,7 @@
     } else {
         // Portrait
         // Summary View
-
-        //XXX this should not be a constant size, should expand downward up to 3 lines
-        //      test should always remain at top
-        //XXX AND the avatar should be 10 pixels below bottom of text, no matter how many lines it is
-
-        //64 feels good at the top
         self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 64, 280, 120);
-        //XXX this user needs to come to the bottom of the summary title
         self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
 
         // Detail View
@@ -109,7 +96,7 @@
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
  
-    [self resizeCaptionLabel];
+    [self resizeViewsForContent];
 }
 
 
@@ -156,7 +143,7 @@
     // Caption
     NSString *captionText = [NSString stringWithFormat:@"%@", [videoFrame creatorsInitialCommentWithFallback:YES]];
     [self.detailCaption setText:captionText];
-    [self resizeCaptionLabel];
+    [self resizeViewsForContent];
     
     // Shares
     NSOrderedSet *shareFrames = videoFrame.duplicates;
@@ -172,8 +159,37 @@
     }
 }
 
-- (void)resizeCaptionLabel
+- (void)resizeViewsForContent
 {
+    //padding adjustments for landscape vs portrait
+    CGFloat detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        detailTitlePadding = 70;
+        detailUserPadding = 0;
+        detailCommentPadding = 60;
+        detailWhiteBackgroundHeightAdjustment = 70;
+    } else {
+        detailTitlePadding = 90;
+        detailUserPadding = 5;
+        detailCommentPadding = 70;
+        detailWhiteBackgroundHeightAdjustment = 80;
+    }
+
+    //resize detail title
+    NSString *detailTitleText = self.detailTitle.text;
+    CGSize maxDetailTitleSize = CGSizeMake(self.detailTitle.frame.size.width, 44);
+    CGFloat detailTitleDesiredHeight = [detailTitleText sizeWithFont:self.detailTitle.font
+                                                   constrainedToSize:maxDetailTitleSize
+                                                       lineBreakMode:self.detailTitle.lineBreakMode].height;
+    self.detailTitle.frame = CGRectMake(self.detailTitle.frame.origin.x, self.detailTitle.frame.origin.y, self.detailTitle.frame.size.width, detailTitleDesiredHeight);
+
+    //move the detail user view, caption holder, and white background up underneath the title
+    CGFloat yUnderDetailTitle = detailTitleDesiredHeight + detailTitlePadding;
+    self.detailUserView.frame = CGRectMake(self.detailUserView.frame.origin.x, yUnderDetailTitle + detailUserPadding, self.detailUserView.frame.size.width, self.detailUserView.frame.size.height);
+    self.detailCommentView.frame = CGRectMake(self.detailCommentView.frame.origin.x, yUnderDetailTitle + detailCommentPadding, self.detailCommentView.frame.size.width, self.detailCommentView.frame.size.height);
+    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, yUnderDetailTitle, self.detailWhiteBackground.frame.size.width, self.detailWhiteBackground.frame.size.height);
+
+    //resize detail caption
     NSString *captionText = self.detailCaption.text;
     
     CGSize maxCaptionSize = CGSizeMake(self.detailCommentView.frame.size.width - kShelbyCaptionMargin * 2, self.detailCommentView.frame.size.height - kShelbyCaptionMargin * 2);
@@ -186,7 +202,7 @@
                                           textBasedHeight);
 
     //tighting up the height of surrounding box as well
-    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, 80.0f + textBasedHeight);
+    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, textBasedHeight + detailWhiteBackgroundHeightAdjustment);
 }
 
 /*
