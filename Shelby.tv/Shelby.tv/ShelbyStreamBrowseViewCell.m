@@ -66,7 +66,6 @@
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
 
         [self setupOverlayImageView];
-        self.overlayImageView.frame = _thumbnailRegularView.frame;
         [_backgroundThumbnailsView addSubview:self.overlayImageView];
         
         //parallax for foreground and background (above)
@@ -119,6 +118,8 @@
     } else {
         self.overlayImageView.image = overlayImage;
     }
+
+    self.overlayImageView.frame = CGRectMake(-100, 0, _backgroundThumbnailsView.frame.size.width + 200, _backgroundThumbnailsView.frame.size.height);
 }
 
 - (void)resizeParallaxViews
