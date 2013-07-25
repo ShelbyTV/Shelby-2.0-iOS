@@ -154,7 +154,7 @@
     if (videoFrame.upvoters && [videoFrame.upvoters count] > 0) {
         for (User *upvote in videoFrame.upvoters) {
             // TODO: add avatar to view
-            DLog(@"Upvoted - %@", upvote.name);
+//            DLog(@"Upvoted - %@", upvote.name);
         }
     }
 }
