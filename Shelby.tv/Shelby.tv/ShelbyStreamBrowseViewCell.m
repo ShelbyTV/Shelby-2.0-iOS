@@ -58,10 +58,10 @@
         CGRect bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
         _backgroundThumbnailsView = [[UIView alloc] initWithFrame:bgFrame];
         _thumbnailRegularView = [[UIImageView alloc] initWithFrame:bgFrame];
-        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFit;
+        _thumbnailRegularView.contentMode = UIViewContentModeScaleAspectFill;
         [_backgroundThumbnailsView addSubview:_thumbnailRegularView];
         _thumbnailBlurredView = [[UIImageView alloc] initWithFrame:bgFrame];
-        _thumbnailBlurredView.contentMode = UIViewContentModeScaleAspectFit;
+        _thumbnailBlurredView.contentMode = UIViewContentModeScaleAspectFill;
         _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
 

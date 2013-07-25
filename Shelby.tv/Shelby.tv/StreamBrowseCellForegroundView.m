@@ -72,7 +72,10 @@
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         // Landscape
         // Summary View
-        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 60, pageWidth - kShelbyInfoViewMargin * 2, 90);
+        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 50, pageWidth - kShelbyInfoViewMargin * 2, 90);
+        //XXX this user needs to come to the bottom of the summary title
+        self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height - 10, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
+
         // Detail View
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 45, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailTitle.frame = CGRectMake(xOrigin, 65, pageWidth - kShelbyInfoViewMargin * 2, 22);
@@ -84,7 +87,16 @@
     } else {
         // Portrait
         // Summary View
-        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 84, 280, 120);
+
+        //XXX this should not be a constant size, should expand downward up to 3 lines
+        //      test should always remain at top
+        //XXX AND the avatar should be 10 pixels below bottom of text, no matter how many lines it is
+
+        //64 feels good at the top
+        self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 64, 280, 120);
+        //XXX this user needs to come to the bottom of the summary title
+        self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
+
         // Detail View
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailTitle.frame = CGRectMake(xOrigin, 80, 280, 44);
@@ -96,7 +108,6 @@
     }
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
-    self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height + 10, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
  
     [self resizeCaptionLabel];
     
@@ -144,7 +155,7 @@
     self.detailViaNetwork.text = self.summaryViaNetwork.text;
     
     // Caption
-    NSString *captionText = [NSString stringWithFormat:@"%@: %@", videoFrame.creator.nickname, [videoFrame creatorsInitialCommentWithFallback:YES]];
+    NSString *captionText = [NSString stringWithFormat:@"%@", [videoFrame creatorsInitialCommentWithFallback:YES]];
     [self.detailCaption setText:captionText];
     [self resizeCaptionLabel];
     
