@@ -284,12 +284,27 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.airPlayView addSubview:volumeView];
     
     for (UIView *view in volumeView.subviews) {
-        
         if ( [view isKindOfClass:[UIButton class]] ) {
-            
             self.airPlayButton = (UIButton *)view;
-            
+            [self.airPlayButton addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
+            [self adjustForAirplay:self.airPlayButton.alpha];
         }
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == self.airPlayButton) {
+        [self adjustForAirplay:self.airPlayButton.alpha];
+    }
+}
+
+- (void)adjustForAirplay:(CGFloat)airplayAlpha
+{
+    //TODO: adjust approrpately
+    if (airplayAlpha == 1) {
+        DLog(@"TODO: make room for air play");
+    } else {
+        DLog(@"TODO: take back room from airplay");
     }
 }
 
