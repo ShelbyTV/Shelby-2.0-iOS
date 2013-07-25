@@ -130,6 +130,12 @@
     return YES;
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    //after rotation, we're always showing a full page, controls should not be faded at all
+    [self fadeVideoControlsForOffset:CGPointMake(0, 0) frameHeight:self.view.frame.size.height];
+}
+
 // We assume these are all of our channels, in the correct order (which we cared about on old iPad design)
 - (void)setChannels:(NSArray *)channels
 {
