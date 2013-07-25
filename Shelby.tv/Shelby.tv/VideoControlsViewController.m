@@ -18,7 +18,7 @@
 @property (nonatomic, assign) BOOL currentlyScrubbing;
 @property (nonatomic, strong) NSArray *playbackControlViews;
 @property (nonatomic, strong) NSArray *actionsViews;
-
+@property (nonatomic, weak) IBOutlet UIView *separator;
 @end
 
 @implementation VideoControlsViewController
@@ -242,18 +242,21 @@
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             self.controlsView.overlay.hidden = YES;
             self.controlsView.nonPlaybackModeView.hidden = NO;
+            self.separator.hidden = YES;
             break;
         case VideoControlsDisplayActionsOnly:
             [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             self.controlsView.overlay.hidden = YES;
             self.controlsView.nonPlaybackModeView.hidden = NO;
+            self.separator.hidden = YES;
             break;
         case VideoControlsDisplayActionsAndPlaybackControls:
             [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
             [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
             self.controlsView.overlay.hidden = NO;
             self.controlsView.nonPlaybackModeView.hidden = YES;
+            self.separator.hidden = NO;
     }
 }
 
