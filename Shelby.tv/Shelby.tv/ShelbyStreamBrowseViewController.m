@@ -101,6 +101,7 @@
 
 - (void)setHasNoContent:(BOOL)hasNoContent
 {
+    _hasNoContent = hasNoContent;
     [self.browseViewDelegate shelbyStreamBrowseViewController:self hasNoContnet:hasNoContent];
 }
 
