@@ -87,26 +87,25 @@
         self.controlsView.frame = CGRectMake(0, height - HEIGHT_IN_LANDSCAPE, width, HEIGHT_IN_LANDSCAPE);
         
         // Like, Unlike & Share Buttons
-        self.controlsView.unlikeButton.frame = CGRectMake(15, 4, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
+        self.controlsView.unlikeButton.frame = CGRectMake(15, 2, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
         self.controlsView.likeButton.frame = self.controlsView.unlikeButton.frame;
-        self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, 4, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
+        self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, 2, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
 
         // Airplay
-        self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 8, 11, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
+        self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 8, 9, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
         
         // Duration Time Label
-        self.controlsView.durationLabel.frame = CGRectMake(self.controlsView.airPlayView.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8, 14, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);
+        self.controlsView.durationLabel.frame = CGRectMake(self.controlsView.airPlayView.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8, 11, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);
 
         // Play/Pause
-        self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 11, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
+        self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 7, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
         
         // Current Time Label
-        self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 14, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
+        self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 11, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
 
         // Scrubber
-        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5, 20, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 10, self.controlsView.bufferProgressView.frame.size.height);
+        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5 + self.controlsView.scrubheadButton.frame.size.width/4, 17, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 10 - self.controlsView.scrubheadButton.frame.size.width/4, self.controlsView.bufferProgressView.frame.size.height);
 
-  
         // Non playback mode view
         self.controlsView.nonPlaybackModeView.frame = CGRectMake(self.controlsView.unlikeButton.frame.size.width + 20, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
        
@@ -128,7 +127,7 @@
         self.controlsView.durationLabel.frame = CGRectMake(width - self.controlsView.durationLabel.frame.size.width - self.controlsView.airPlayView.frame.size.width, 14, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);   
      
         // Scrubber
-        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5, 20, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 10, self.controlsView.bufferProgressView.frame.size.height);
+        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5 + self.controlsView.scrubheadButton.frame.size.width/4, 20, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 10 - self.controlsView.scrubheadButton.frame.size.width/4, self.controlsView.bufferProgressView.frame.size.height);
         
         // Non playback mode view
         self.controlsView.nonPlaybackModeView.frame = CGRectMake(8, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);

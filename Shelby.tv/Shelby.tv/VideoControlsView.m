@@ -50,7 +50,7 @@
 - (void)positionScrubberForDelta:(CGFloat)bufferProgressRelativeDelta
 {
     CGFloat x = self.bufferProgressView.frame.origin.x + bufferProgressRelativeDelta - (self.scrubheadButton.frame.size.width/2.0);
-    self.scrubheadButton.frame = CGRectMake(x, self.scrubheadButton.frame.origin.y, self.scrubheadButton.frame.size.width, self.scrubheadButton.frame.size.height);
+    self.scrubheadButton.frame = CGRectMake(x, self.bufferProgressView.frame.origin.y - 11, self.scrubheadButton.frame.size.width, self.scrubheadButton.frame.size.height);
 }
 
 - (CGFloat)playbackTargetPercentForTouch:(UITouch *)touch
