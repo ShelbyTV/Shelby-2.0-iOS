@@ -8,6 +8,7 @@
 
 #import "VideoControlsViewController.h"
 #import "DashboardEntry+Helper.h"
+#import <MediaPlayer/MediaPlayer.h>
 #import "VideoControlsView.h"
 
 #define SCRUB_PCT_REQUIRED_BEFORE_SEEKING .02f
@@ -19,6 +20,7 @@
 @property (nonatomic, weak) VideoControlsView *controlsView;
 @property (nonatomic, assign) BOOL currentlyScrubbing;
 @property (nonatomic, strong) NSArray *playbackControlViews;
+@property (nonatomic) UIButton *airPlayButton;
 @property (nonatomic, strong) NSArray *actionsViews;
 @property (nonatomic, weak) IBOutlet UIView *separator;
 @end
@@ -55,6 +57,7 @@
                           self.controlsView.shareButton
                           ];
     [self updateViewForCurrentDisplayMode];
+    [self setupAirPlay];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,7 +84,9 @@
     BOOL goingToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && goingToLandscape) {
         return;
-    } else if (goingToLandscape) {
+    }
+
+   if (goingToLandscape) {
         NSInteger width = kShelbyFullscreenHeight;
         NSInteger height = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, height - HEIGHT_IN_LANDSCAPE, width, HEIGHT_IN_LANDSCAPE);
@@ -91,20 +96,17 @@
         self.controlsView.likeButton.frame = self.controlsView.unlikeButton.frame;
         self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, 2, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
 
-        // Airplay
-        self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 8, 9, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
+       // Play/Pause
+       self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 7, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
+       
+       // Current Time Label
+       self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 11, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
+       
+       // Airplay
+        self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 10, 10, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
         
-        // Duration Time Label
-        self.controlsView.durationLabel.frame = CGRectMake(self.controlsView.airPlayView.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8, 11, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);
-
-        // Play/Pause
-        self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 7, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
-        
-        // Current Time Label
-        self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 11, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
-
-        // Scrubber
-        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5 + self.controlsView.scrubheadButton.frame.size.width/4, 17, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 15 - self.controlsView.scrubheadButton.frame.size.width/4, self.controlsView.bufferProgressView.frame.size.height);
+        // Duration Time Label depends on whether airplay button is visible or not
+        [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:YES];
 
         // Non playback mode view
         self.controlsView.nonPlaybackModeView.frame = CGRectMake(self.controlsView.unlikeButton.frame.size.width + 20, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
@@ -120,15 +122,14 @@
       
         // Play/Pause & Airplay Buttons
         self.controlsView.largePlayButton.frame = CGRectMake(15, 11, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
-        self.controlsView.airPlayView.frame = CGRectMake(width - self.controlsView.airPlayView.frame.size.width, 11, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
+        self.controlsView.airPlayView.frame = CGRectMake(width - self.controlsView.airPlayView.frame.size.width - 7, 14, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
         
         // Time Labels
         self.controlsView.currentTimeLabel.frame = CGRectMake(45, 14, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
-        self.controlsView.durationLabel.frame = CGRectMake(width - self.controlsView.durationLabel.frame.size.width - self.controlsView.airPlayView.frame.size.width, 14, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);   
-     
-        // Scrubber
-        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5 + self.controlsView.scrubheadButton.frame.size.width/4, 20, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 15 - self.controlsView.scrubheadButton.frame.size.width/4, self.controlsView.bufferProgressView.frame.size.height);
         
+        // Duration Time Label depends on whether airplay button is visible or not
+        [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:NO];
+     
         // Non playback mode view
         self.controlsView.nonPlaybackModeView.frame = CGRectMake(8, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
     }
@@ -136,7 +137,44 @@
     // Overlay and seperator don't depend on orientation
     self.controlsView.overlay.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, self.controlsView.frame.size.height);
     self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
+}
+
+- (void)changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:(BOOL)landscapeOrientation
+{
+    BOOL airplayVisible = NO;
+    if (self.airPlayButton.alpha == 1) {
+        airplayVisible = YES;
+    }
     
+    if (landscapeOrientation) {
+        // Duration Time Label
+        NSInteger xOriginForDurationLabel = 0;
+        if (airplayVisible) {
+            xOriginForDurationLabel = self.controlsView.airPlayView.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8;
+        } else {
+            xOriginForDurationLabel = self.controlsView.airPlayView.frame.origin.x + self.controlsView.durationLabel.frame.size.width - self.controlsView.shareButton.frame.size.width - 8;
+        }
+
+        // Duration Label
+        self.controlsView.durationLabel.frame = CGRectMake(xOriginForDurationLabel, 11, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);
+
+        // Scrubber
+        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5 + self.controlsView.scrubheadButton.frame.size.width/4, 17, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 15 - self.controlsView.scrubheadButton.frame.size.width/4, self.controlsView.bufferProgressView.frame.size.height);
+    } else {
+        NSInteger width = kShelbyFullscreenWidth;
+        NSInteger xOriginForDurationLabel = 0;
+        if (airplayVisible) {
+            xOriginForDurationLabel = width - self.controlsView.durationLabel.frame.size.width - self.controlsView.airPlayView.frame.size.width;
+        } else {
+            xOriginForDurationLabel = width - self.controlsView.durationLabel.frame.size.width;
+        }
+        
+        // Duration Label
+        self.controlsView.durationLabel.frame = CGRectMake(xOriginForDurationLabel, 14, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);
+
+        // Scrubber
+        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5 + self.controlsView.scrubheadButton.frame.size.width/4, 20, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 15 - self.controlsView.scrubheadButton.frame.size.width/4, self.controlsView.bufferProgressView.frame.size.height);
+    }
 }
 
 - (void)setDisplayMode:(VideoControlsDisplayMode)displayMode
@@ -154,6 +192,49 @@
         [self updateViewForCurrentEntity];
     }
 }
+
+#pragma mark - Airplay Setup
+- (void)setupAirPlay
+{
+    // Instantiate AirPlay button for MPVolumeView
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.airPlayView.bounds];
+    [volumeView setShowsVolumeSlider:NO];
+    [volumeView setShowsRouteButton:YES];
+    [self.airPlayView addSubview:volumeView];
+    
+    for (UIView *view in volumeView.subviews) {
+        if ( [view isKindOfClass:[UIButton class]] ) {
+            self.airPlayButton = (UIButton *)view;
+            [self.airPlayButton addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
+            [self adjustForAirplay];
+        }
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == self.airPlayButton) {
+        [self adjustForAirplay];
+    }
+}
+
+
+
+
+- (void)adjustForAirplay
+{
+    BOOL airplayVisible = NO;
+    if (self.airPlayButton.alpha == 1) {
+        airplayVisible = YES;
+    }
+
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        // Duration Time Label
+        [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:YES];
+    } else {
+        [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:NO];
+    }
+}
+
 
 #pragma mark - XIB actions
 
