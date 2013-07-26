@@ -25,6 +25,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *nonPlaybackModePlayButton;
 @property (weak, nonatomic) IBOutlet UIButton *scrubheadButton;
 
+// Overlays
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIView *separatorView;
+
 //-- actions --
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UIButton *unlikeButton;
