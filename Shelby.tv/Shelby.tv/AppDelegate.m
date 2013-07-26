@@ -53,9 +53,9 @@
     // not yet re-implemented
 //    [self setupOfflineMode];
     
-    if (!DEVICE_IPAD) {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-    }
+//    if (!DEVICE_IPAD) {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
+//    }
     
     // Brain will set proper ViewController on window and makeKeyAndVisible during -applicationDidBecomeActive:
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

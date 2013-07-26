@@ -212,23 +212,23 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self.view addSubview:self.videoScrollView];
     }
 
-    if (DEVICE_IPAD) {
-        self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.videoEntities count], kShelbySPVideoHeight);
-        [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
+//    if (DEVICE_IPAD) {
+//        self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.videoEntities count], kShelbySPVideoHeight);
+//        [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
+//    } else {
+    CGSize contentSize;
+    NSInteger videoHeight = kShelbyFullscreenHeight;
+    if ([self isLandscapeOrientation]) {
+        videoHeight = kShelbyFullscreenWidth;
+        contentSize = CGSizeMake(kShelbyFullscreenHeight, [self.videoEntities count] * videoHeight);
     } else {
-        CGSize contentSize;
-        NSInteger videoHeight = kShelbyFullscreenHeight;
-        if ([self isLandscapeOrientation]) {
-            videoHeight = kShelbyFullscreenWidth;
-            contentSize = CGSizeMake(kShelbyFullscreenHeight, [self.videoEntities count] * videoHeight);
-        } else {
-            contentSize = CGSizeMake(kShelbyFullscreenWidth, [self.videoEntities count] * videoHeight);
-        }
-        
-        self.videoScrollView.contentSize = contentSize;
-        CGPoint offset = CGPointMake(0, (int)self.videoStartIndex * videoHeight);
-        [self.videoScrollView setContentOffset:offset animated:NO];
+        contentSize = CGSizeMake(kShelbyFullscreenWidth, [self.videoEntities count] * videoHeight);
     }
+    
+    self.videoScrollView.contentSize = contentSize;
+    CGPoint offset = CGPointMake(0, (int)self.videoStartIndex * videoHeight);
+    [self.videoScrollView setContentOffset:offset animated:NO];
+//    }
 
     //XXX LAYOUT TESTING
 //    self.videoScrollView.layer.borderColor = [UIColor redColor].CGColor;
@@ -244,17 +244,17 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         for (; index < count; index++) {
             Frame *videoEntry = self.videoEntities[index];
             CGRect viewframe = [self.videoScrollView frame];
-            if (DEVICE_IPAD) {
-                viewframe.origin.x = viewframe.size.width * index;
-                viewframe.origin.y = 0.0f;
-            } else {
-                NSInteger videoHeight = kShelbyFullscreenHeight;
-                if ([self isLandscapeOrientation]) {
-                    videoHeight = kShelbyFullscreenWidth;
-                }
-                viewframe.origin.y = videoHeight * index;
-                viewframe.origin.x = 0.0f;
+//            if (DEVICE_IPAD) {
+//                viewframe.origin.x = viewframe.size.width * index;
+//                viewframe.origin.y = 0.0f;
+//            } else {
+            NSInteger videoHeight = kShelbyFullscreenHeight;
+            if ([self isLandscapeOrientation]) {
+                videoHeight = kShelbyFullscreenWidth;
             }
+            viewframe.origin.y = videoHeight * index;
+            viewframe.origin.x = 0.0f;
+//            }
             SPVideoPlayer *player;
             if([videoEntry isKindOfClass:[DashboardEntry class]]){
                 player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:((DashboardEntry *)videoEntry).frame];
@@ -277,12 +277,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)setupGestures
 {
     //change channels (pan vertically)
-    if (DEVICE_IPAD) {
-        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-        panGesture.minimumNumberOfTouches = 1;
-        panGesture.maximumNumberOfTouches = 1;
-        [self.view addGestureRecognizer:panGesture];
-    }
+//    if (DEVICE_IPAD) {
+//        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+//        panGesture.minimumNumberOfTouches = 1;
+//        panGesture.maximumNumberOfTouches = 1;
+//        [self.view addGestureRecognizer:panGesture];
+//    }
     //change video (pan horizontallay)
     //handled by self.videoScrollView.panGestureRecognizer
     
@@ -470,24 +470,24 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)setupVideoPreloadStrategy
 {
     if (preloadStrategy == SPVideoReelPreloadStrategyNotSet) {
-        if (DEVICE_IPAD) {
-            if ([[UIScreen mainScreen] isRetinaDisplay]) {
-                //TODO: determine best preload strategy for iPad Retina
-                preloadStrategy = SPVideoReelPreloadNextThreeKeepPrevious;
-                DLog(@"Preload strategy: next 3, keep previous");
-            } else if ([DeviceUtilities isIpadMini1]) {
-                preloadStrategy = SPVideoReelPreloadNextOnly;
-                DLog(@"Preload strategy: next only");
-            } else {
-                //TODO: determine best preload strategy for iPad2,3
-                preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
-                DLog(@"Preload strategy: next 1, keep previous");
-            }
-        } else {
+//        if (DEVICE_IPAD) {
+//            if ([[UIScreen mainScreen] isRetinaDisplay]) {
+//                //TODO: determine best preload strategy for iPad Retina
+//                preloadStrategy = SPVideoReelPreloadNextThreeKeepPrevious;
+//                DLog(@"Preload strategy: next 3, keep previous");
+//            } else if ([DeviceUtilities isIpadMini1]) {
+//                preloadStrategy = SPVideoReelPreloadNextOnly;
+//                DLog(@"Preload strategy: next only");
+//            } else {
+//                //TODO: determine best preload strategy for iPad2,3
+//                preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
+//                DLog(@"Preload strategy: next 1, keep previous");
+//            }
+//        } else {
             //TODO: determine best preload strategy for array of iPhones
-            preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
-            DLog(@"iPhone Preload strategy: next 1, keep previous");
-        }
+        preloadStrategy = SPVideoReelPreloadNextKeepPrevious;
+        DLog(@"iPhone Preload strategy: next 1, keep previous");
+//        }
     }
 }
 
@@ -918,13 +918,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         CGFloat videoX = 0.0;
         CGFloat videoY = 0.0;
         
-        if (DEVICE_IPAD) {
-            videoX = idx * kShelbySPVideoWidth;
-            videoY = self.videoScrollView.contentOffset.y;
-        } else {
-            videoY = idx * kShelbySPVideoHeight;
-            videoX = self.videoScrollView.contentOffset.x;
-        }
+//        if (DEVICE_IPAD) {
+//            videoX = idx * kShelbySPVideoWidth;
+//            videoY = self.videoScrollView.contentOffset.y;
+//        } else {
+        videoY = idx * kShelbySPVideoHeight;
+        videoX = self.videoScrollView.contentOffset.x;
+//        }
         [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
         [self currentVideoShouldChangeToVideo:idx autoplay:YES];
         return YES;
@@ -943,13 +943,13 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     
     // Switch the indicator when more than 50% of the previous/next page is visible
     CGFloat scrollAmount = 0.0;
-    if (DEVICE_IPAD) {
-        CGFloat pageWidth = scrollView.frame.size.width;
-       scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
-    } else {
-        CGFloat pageHeight = scrollView.frame.size.height;
-        scrollAmount = (scrollView.contentOffset.y - pageHeight / 2) / pageHeight;
-    }
+//    if (DEVICE_IPAD) {
+//        CGFloat pageWidth = scrollView.frame.size.width;
+//       scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
+//    } else {
+    CGFloat pageHeight = scrollView.frame.size.height;
+    scrollAmount = (scrollView.contentOffset.y - pageHeight / 2) / pageHeight;
+//    }
     NSUInteger page = floor(scrollAmount) + 1;
     
 //    // Toggle playback on old and new SPVideoPlayer objects

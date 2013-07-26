@@ -84,4 +84,4 @@
 // Web URLs (ie. not to be used directly via JSON)
 #define kShelbyForgotPasswordURL                            @"http://api.shelby.tv/user/password/new"
 
-#define DEVICE_IPAD                                       (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//#define DEVICE_IPAD                                       (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)

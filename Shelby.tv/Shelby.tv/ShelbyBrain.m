@@ -83,11 +83,11 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     }
     
     NSString *rootViewControllerNibName = nil;
-    if (DEVICE_IPAD) {
-        rootViewControllerNibName = @"ShelbyHomeView";
-    } else {
-        rootViewControllerNibName = @"ShelbyHomeView-iPhone";
-    }
+//    if (DEVICE_IPAD) {
+//        rootViewControllerNibName = @"ShelbyHomeView";
+//    } else {
+    rootViewControllerNibName = @"ShelbyHomeView-iPhone";
+//    }
     self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
     self.mainWindow.rootViewController = self.homeVC;
     self.welcomeVC = nil;
@@ -820,15 +820,15 @@ typedef struct _ShelbyArrayMergeInstructions {
 - (void)goToDisplayChannel:(DisplayChannel *)displayChannel
 {
     if (displayChannel) {
-        if (DEVICE_IPAD && [displayChannel hasEntityAtIndex:0]) {
-            self.currentChannel = displayChannel;
-            [self.homeVC animateLaunchPlayerForChannel:displayChannel atIndex:0];
-            return;
-        } else {
-            self.currentChannel = displayChannel;
-            [self.homeVC focusOnChannel:displayChannel];
-            return;
-        }
+//        if (DEVICE_IPAD && [displayChannel hasEntityAtIndex:0]) {
+//            self.currentChannel = displayChannel;
+//            [self.homeVC animateLaunchPlayerForChannel:displayChannel atIndex:0];
+//            return;
+//        } else {
+        self.currentChannel = displayChannel;
+        [self.homeVC focusOnChannel:displayChannel];
+        return;
+//        }
     }
     
     //fell through, can't go to the channel...
@@ -882,7 +882,7 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 - (void)goToUsersSettings
 {
-    if (DEVICE_IPAD) {
+//    if (DEVICE_IPAD) {
 //        if(!self.settingsPopover) {
 //            SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithUser:self.currentUser];
 //
@@ -897,13 +897,13 @@ typedef struct _ShelbyArrayMergeInstructions {
 //        }
 //
 //        [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-    } else {
+//    } else {
         //XXX Temporary
         //TODO: Show a new settings view per Wireframes
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
-        actionSheet.destructiveButtonIndex = 2;
-        [actionSheet showInView:self.mainWindow.rootViewController.view];
-    }
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
+    actionSheet.destructiveButtonIndex = 2;
+    [actionSheet showInView:self.mainWindow.rootViewController.view];
+//    }
 }
 
 - (ShelbyBrowseTutorialMode)browseTutorialMode

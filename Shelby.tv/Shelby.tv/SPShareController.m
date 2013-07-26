@@ -126,11 +126,11 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     [self setupMaskView];
     
     NSString *shareNibName = nil;
-    if (DEVICE_IPAD) {
-        shareNibName = @"SPShareRollView";
-    } else {
-        shareNibName = @"SPShareRollView-iPhone";
-    }
+//    if (DEVICE_IPAD) {
+//        shareNibName = @"SPShareRollView";
+//    } else {
+    shareNibName = @"SPShareRollView-iPhone";
+//    }
     // Instantiate rollView
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:shareNibName owner:self options:nil];
     if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
@@ -140,11 +140,11 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     self.rollView = nib[0];
     
     NSString *containerBackground = nil;
-    if (DEVICE_IPAD) {
-        containerBackground = @"rollingContainer.png";
-    } else {
-        containerBackground = @"rollingContainer-iPhone.png";
-    }
+//    if (DEVICE_IPAD) {
+//        containerBackground = @"rollingContainer.png";
+//    } else {
+    containerBackground = @"rollingContainer-iPhone.png";
+//    }
     
     [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:containerBackground]]];
     
@@ -164,10 +164,10 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     
     CGFloat xOrigin = self.viewController.view.bounds.size.width/2.0f - _rollView.frame.size.width/2.0f;
     // This is the bottom of the video view in overlay view, so we don't go under it. TODO: when we redo all this, make the share view go ABOVE overlay view.
-    CGFloat yOrigin = 160;
-    if (!DEVICE_IPAD) {
-        yOrigin = 0;
-    }
+//    CGFloat yOrigin = 160;
+//    if (!DEVICE_IPAD) {
+    CGFloat yOrigin = yOrigin = 0;
+//    }
     
     [self.rollView setFrame:CGRectMake(xOrigin,
                                        self.viewController.view.bounds.size.height,
@@ -276,18 +276,18 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         }
     }];
 
-    if (DEVICE_IPAD) {
-        if ( ![self sharePopOverController] ) {
-            self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
-            [self.sharePopOverController setDelegate:self];
-            [self.sharePopOverController presentPopoverFromRect:self.rect
-                                                         inView:self.viewController.view
-                                       permittedArrowDirections:UIPopoverArrowDirectionDown
-                                                       animated:YES];
-        }
-    } else {
-        [self.viewController presentViewController:activityController animated:YES completion:nil];
-    }
+//    if (DEVICE_IPAD) {
+//        if ( ![self sharePopOverController] ) {
+//            self.sharePopOverController = [[UIPopoverController alloc] initWithContentViewController:activityController];
+//            [self.sharePopOverController setDelegate:self];
+//            [self.sharePopOverController presentPopoverFromRect:self.rect
+//                                                         inView:self.viewController.view
+//                                       permittedArrowDirections:UIPopoverArrowDirectionDown
+//                                                       animated:YES];
+//        }
+//    } else {
+    [self.viewController presentViewController:activityController animated:YES completion:nil];
+//    }
 }
 
 - (void)roll
