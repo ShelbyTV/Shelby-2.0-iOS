@@ -17,7 +17,7 @@
                                     <constraint firstAttribute="height" constant="21" type="user" id="8Ue-cQ-U7X"/>
                                     <constraint firstAttribute="width" constant="126" id="N93-Qg-Rfb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -34,7 +34,7 @@
                                     <constraint firstAttribute="height" constant="21" type="user" id="SoI-Ak-yOe"/>
                                     <constraint firstAttribute="width" constant="75" id="Zp3-9h-KDt"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
