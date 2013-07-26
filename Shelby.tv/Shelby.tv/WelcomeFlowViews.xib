@@ -44,7 +44,6 @@
 						<string key="NSFrame">{{20, 452}, {280, 66}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -60,14 +59,14 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUINumberOfLines">2</int>
 						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="398597184">
-							<string key="name">HelveticaNeue</string>
-							<string key="family">Helvetica Neue</string>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="208906206">
+							<string key="name">Avenir-Medium</string>
+							<string key="family">Avenir</string>
 							<int key="traits">0</int>
 							<double key="pointSize">24</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="936040788">
-							<string key="NSName">HelveticaNeue-Medium</string>
+						<object class="NSFont" key="IBUIFont" id="562143372">
+							<string key="NSName">Avenir-Medium</string>
 							<double key="NSSize">24</double>
 							<int key="NSfFlags">16</int>
 						</object>
@@ -103,7 +102,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="198294939">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUILabel" id="417789665">
@@ -111,6 +110,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 20}, {320, 38}}</string>
 						<reference key="NSSuperview" ref="198294939"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="14138281"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -123,8 +123,8 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="398597184"/>
-						<reference key="IBUIFont" ref="936040788"/>
+						<reference key="IBUIFontDescription" ref="208906206"/>
+						<reference key="IBUIFont" ref="562143372"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 					<object class="IBUILabel" id="14138281">
@@ -132,6 +132,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 52}, {280, 64}}</string>
 						<reference key="NSSuperview" ref="198294939"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -148,14 +149,14 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUINumberOfLines">2</int>
 						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="994872445">
-							<string key="name">HelveticaNeue</string>
-							<string key="family">Helvetica Neue</string>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="761956097">
+							<string key="name">Avenir-Medium</string>
+							<string key="family">Avenir</string>
 							<int key="traits">0</int>
 							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="266075479">
-							<string key="NSName">HelveticaNeue-Medium</string>
+						<object class="NSFont" key="IBUIFont" id="48715925">
+							<string key="NSName">Avenir-Medium</string>
 							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
 						</object>
@@ -164,6 +165,8 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 568}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="417789665"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<reference key="IBUIBackgroundColor" ref="458857665"/>
@@ -171,7 +174,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="752545545">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUILabel" id="547429800">
@@ -179,6 +182,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 20}, {280, 38}}</string>
 						<reference key="NSSuperview" ref="752545545"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="119758954"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -191,8 +195,8 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="398597184"/>
-						<reference key="IBUIFont" ref="936040788"/>
+						<reference key="IBUIFontDescription" ref="208906206"/>
+						<reference key="IBUIFont" ref="562143372"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 					<object class="IBUILabel" id="119758954">
@@ -200,6 +204,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 52}, {280, 64}}</string>
 						<reference key="NSSuperview" ref="752545545"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -212,13 +217,15 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUINumberOfLines">2</int>
 						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="994872445"/>
-						<reference key="IBUIFont" ref="266075479"/>
+						<reference key="IBUIFontDescription" ref="761956097"/>
+						<reference key="IBUIFont" ref="48715925"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 						<double key="preferredMaxLayoutWidth">280</double>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 568}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="547429800"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<reference key="IBUIBackgroundColor" ref="458857665"/>
@@ -235,7 +242,6 @@
 						<string key="NSFrame">{{20, 474}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="813246655"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -252,12 +258,14 @@
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">login-btn.png</string>
 						</object>
-						<object class="IBUIFontDescription" key="IBUIFontDescription">
-							<int key="type">2</int>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="830263834">
+							<string key="name">Avenir-Heavy</string>
+							<string key="family">Avenir</string>
+							<int key="traits">2</int>
 							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont">
-							<string key="NSName">Helvetica-Bold</string>
+						<object class="NSFont" key="IBUIFont" id="970004585">
+							<string key="NSName">Avenir-Heavy</string>
 							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
 						</object>
@@ -282,17 +290,8 @@
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">create-btn.png</string>
 						</object>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="572325944">
-							<string key="name">HelveticaNeue-Bold</string>
-							<string key="family">Helvetica Neue</string>
-							<int key="traits">2</int>
-							<double key="pointSize">18</double>
-						</object>
-						<object class="NSFont" key="IBUIFont" id="755009915">
-							<string key="NSName">HelveticaNeue-Bold</string>
-							<double key="NSSize">18</double>
-							<int key="NSfFlags">16</int>
-						</object>
+						<reference key="IBUIFontDescription" ref="830263834"/>
+						<reference key="IBUIFont" ref="970004585"/>
 					</object>
 					<object class="IBUIButton" id="934121422">
 						<reference key="NSNextResponder" ref="813246655"/>
@@ -311,8 +310,8 @@
 						<reference key="IBUINormalTitleColor" ref="115165620"/>
 						<reference key="IBUINormalTitleShadowColor" ref="860550845"/>
 						<reference key="IBUINormalBackgroundImage" ref="206648967"/>
-						<reference key="IBUIFontDescription" ref="572325944"/>
-						<reference key="IBUIFont" ref="755009915"/>
+						<reference key="IBUIFontDescription" ref="830263834"/>
+						<reference key="IBUIFont" ref="970004585"/>
 					</object>
 					<object class="IBUILabel" id="650543">
 						<reference key="NSNextResponder" ref="813246655"/>
@@ -333,13 +332,13 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUITextAlignment">1</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
-							<string key="name">HelveticaNeue-Bold</string>
-							<string key="family">Helvetica Neue</string>
+							<string key="name">Avenir-Heavy</string>
+							<string key="family">Avenir</string>
 							<int key="traits">2</int>
 							<double key="pointSize">24</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
-							<string key="NSName">HelveticaNeue-Bold</string>
+							<string key="NSName">Avenir-Heavy</string>
 							<double key="NSSize">24</double>
 							<int key="NSfFlags">16</int>
 						</object>
@@ -365,13 +364,13 @@
 						<int key="IBUINumberOfLines">2</int>
 						<int key="IBUITextAlignment">1</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
-							<string key="name">HelveticaNeue-Bold</string>
-							<string key="family">Helvetica Neue</string>
+							<string key="name">Avenir-Heavy</string>
+							<string key="family">Avenir</string>
 							<int key="traits">2</int>
 							<double key="pointSize">12</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
-							<string key="NSName">HelveticaNeue-Bold</string>
+							<string key="NSName">Avenir-Heavy</string>
 							<double key="NSSize">12</double>
 							<int key="NSfFlags">16</int>
 						</object>
@@ -413,7 +412,6 @@
 						<string key="NSFrameSize">{950, 568}</string>
 						<reference key="NSSuperview" ref="295369803"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -730,22 +728,6 @@
 								<reference key="containingView" ref="752545545"/>
 								<int key="scoringType">3</int>
 								<float key="scoringTypeFloat">9</float>
-								<int key="contentType">3</int>
-							</object>
-							<object class="IBNSLayoutConstraint" id="230614897">
-								<reference key="firstItem" ref="752545545"/>
-								<int key="firstAttribute">6</int>
-								<int key="relation">0</int>
-								<reference key="secondItem" ref="119758954"/>
-								<int key="secondAttribute">6</int>
-								<float key="multiplier">1</float>
-								<object class="IBNSLayoutSymbolicConstant" key="constant">
-									<double key="value">20</double>
-								</object>
-								<float key="priority">1000</float>
-								<reference key="containingView" ref="752545545"/>
-								<int key="scoringType">8</int>
-								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
 							<object class="IBNSLayoutConstraint" id="611545934">
@@ -1363,11 +1345,6 @@
 						<reference key="parent" ref="119758954"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">110</int>
-						<reference key="object" ref="230614897"/>
-						<reference key="parent" ref="752545545"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">111</int>
 						<reference key="object" ref="1029334599"/>
 						<reference key="parent" ref="752545545"/>
@@ -1552,22 +1529,6 @@
 						<int key="objectID">190</int>
 						<reference key="object" ref="644395896"/>
 						<array class="NSMutableArray" key="children">
-							<object class="IBNSLayoutConstraint" id="234158953">
-								<reference key="firstItem" ref="644395896"/>
-								<int key="firstAttribute">8</int>
-								<int key="relation">0</int>
-								<nil key="secondItem"/>
-								<int key="secondAttribute">0</int>
-								<float key="multiplier">1</float>
-								<object class="IBLayoutConstant" key="constant">
-									<double key="value">28</double>
-								</object>
-								<float key="priority">1000</float>
-								<reference key="containingView" ref="644395896"/>
-								<int key="scoringType">3</int>
-								<float key="scoringTypeFloat">9</float>
-								<int key="contentType">1</int>
-							</object>
 							<object class="IBNSLayoutConstraint" id="941367766">
 								<reference key="firstItem" ref="644395896"/>
 								<int key="firstAttribute">7</int>
@@ -1590,11 +1551,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">195</int>
 						<reference key="object" ref="941367766"/>
-						<reference key="parent" ref="644395896"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">196</int>
-						<reference key="object" ref="234158953"/>
 						<reference key="parent" ref="644395896"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -1634,7 +1590,6 @@
 				</array>
 				<boolean value="NO" key="105.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="106.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="110.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="111.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="112.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="113.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1661,7 +1616,6 @@
 					<reference ref="29097767"/>
 					<reference ref="698078804"/>
 					<reference ref="611545934"/>
-					<reference ref="230614897"/>
 					<reference ref="1029334599"/>
 					<reference ref="34688095"/>
 				</array>
@@ -1707,11 +1661,9 @@
 				<string key="190.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array class="NSMutableArray" key="190.IBViewMetadataConstraints">
 					<reference ref="941367766"/>
-					<reference ref="234158953"/>
 				</array>
 				<boolean value="NO" key="190.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="195.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="196.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="197.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="198.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="199.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1860,7 +1812,7 @@
 			<string key="bkgd-step2-568h@2x.png">{640, 1136}</string>
 			<string key="create-btn.png">{280, 100}</string>
 			<string key="login-btn.png">{280, 50}</string>
-			<string key="logo.png">{86, 26}</string>
+			<string key="logo.png">{99, 28}</string>
 		</dictionary>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
