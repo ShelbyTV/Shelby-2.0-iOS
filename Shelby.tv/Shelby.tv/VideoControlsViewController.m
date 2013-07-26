@@ -85,9 +85,6 @@
         NSInteger width = kShelbyFullscreenHeight;
         NSInteger height = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, height - HEIGHT_IN_LANDSCAPE, width, HEIGHT_IN_LANDSCAPE);
-        self.view.frame = self.controlsView.frame;
-        self.controlsView.backgroundView.frame = self.controlsView.frame;
-        self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
         
         // Like, Unlike & Share Buttons
         self.controlsView.unlikeButton.frame = CGRectMake(15, 4, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
@@ -116,8 +113,6 @@
     } else {
         NSInteger width = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, kShelbyFullscreenHeight - HEIGHT_IN_PORTRAIT, width, HEIGHT_IN_PORTRAIT);
-        self.controlsView.backgroundView.frame = self.controlsView.frame;
-        self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
 
         // Like, Unlike & Share Buttons
         self.controlsView.unlikeButton.frame = CGRectMake(15, 47, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
@@ -138,6 +133,11 @@
         // Non playback mode view
         self.controlsView.nonPlaybackModeView.frame = CGRectMake(8, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
     }
+   
+    // Overlay and seperator don't depend on orientation
+    self.controlsView.overlay.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, self.controlsView.frame.size.height);
+    self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
+    
 }
 
 - (void)setDisplayMode:(VideoControlsDisplayMode)displayMode
