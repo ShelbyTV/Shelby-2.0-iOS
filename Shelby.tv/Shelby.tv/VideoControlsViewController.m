@@ -89,31 +89,35 @@
    if (goingToLandscape) {
         NSInteger width = kShelbyFullscreenHeight;
         NSInteger height = kShelbyFullscreenWidth;
-        self.controlsView.frame = CGRectMake(0, height - HEIGHT_IN_LANDSCAPE, width, HEIGHT_IN_LANDSCAPE);
-        
+        self.controlsView.frame = CGRectMake(0, height - self.controlsView.frame.size.height, width, self.controlsView.frame.size.height);
+       self.controlsView.overlay.frame = CGRectMake(0, self.controlsView.frame.size.height - HEIGHT_IN_LANDSCAPE, self.controlsView.frame.size.width, HEIGHT_IN_LANDSCAPE);
+       self.controlsView.separatorView.frame = CGRectMake(0, self.controlsView.overlay.frame.origin.y, width, 1);
+       
         // Like, Unlike & Share Buttons
-        self.controlsView.unlikeButton.frame = CGRectMake(15, 2, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
+        self.controlsView.unlikeButton.frame = CGRectMake(15, 46, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
         self.controlsView.likeButton.frame = self.controlsView.unlikeButton.frame;
-        self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, 2, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
+        self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, self.controlsView.unlikeButton.frame.origin.y, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
 
        // Play/Pause
-       self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 7, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
+       self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 51, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
        
        // Current Time Label
-       self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 11, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
+       self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 55, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
        
        // Airplay
-        self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 10, 10, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
+        self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 10, 50, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
         
         // Duration Time Label depends on whether airplay button is visible or not
         [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:YES];
 
         // Non playback mode view
-        self.controlsView.nonPlaybackModeView.frame = CGRectMake(self.controlsView.unlikeButton.frame.size.width + 20, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
+        self.controlsView.nonPlaybackModeView.frame = CGRectMake(10, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
        
     } else {
         NSInteger width = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, kShelbyFullscreenHeight - HEIGHT_IN_PORTRAIT, width, HEIGHT_IN_PORTRAIT);
+        self.controlsView.overlay.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, self.controlsView.frame.size.height);
+        self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
 
         // Like, Unlike & Share Buttons
         self.controlsView.unlikeButton.frame = CGRectMake(15, 47, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
@@ -133,10 +137,6 @@
         // Non playback mode view
         self.controlsView.nonPlaybackModeView.frame = CGRectMake(8, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
     }
-   
-    // Overlay and seperator don't depend on orientation
-    self.controlsView.overlay.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, self.controlsView.frame.size.height);
-    self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
 }
 
 - (void)changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:(BOOL)landscapeOrientation
@@ -156,10 +156,10 @@
         }
 
         // Duration Label
-        self.controlsView.durationLabel.frame = CGRectMake(xOriginForDurationLabel, 11, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);
+        self.controlsView.durationLabel.frame = CGRectMake(xOriginForDurationLabel, 55, self.controlsView.durationLabel.frame.size.width, self.controlsView.durationLabel.frame.size.height);
 
         // Scrubber
-        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5 + self.controlsView.scrubheadButton.frame.size.width/4, 17, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 15 - self.controlsView.scrubheadButton.frame.size.width/4, self.controlsView.bufferProgressView.frame.size.height);
+        self.controlsView.bufferProgressView.frame = CGRectMake(self.controlsView.currentTimeLabel.frame.origin.x + self.controlsView.currentTimeLabel.frame.size.width + 5 + self.controlsView.scrubheadButton.frame.size.width/4, 61, self.controlsView.durationLabel.frame.origin.x - self.controlsView.currentTimeLabel.frame.size.width - self.controlsView.currentTimeLabel.frame.origin.x - 15 - self.controlsView.scrubheadButton.frame.size.width/4, self.controlsView.bufferProgressView.frame.size.height);
     } else {
         NSInteger width = kShelbyFullscreenWidth;
         NSInteger xOriginForDurationLabel = 0;

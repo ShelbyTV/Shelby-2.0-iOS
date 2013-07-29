@@ -30,8 +30,6 @@
 
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
 
-@property (nonatomic, strong) NSArray *landscapeConstraints;
-@property (nonatomic, strong) NSArray *portaitConstraints;
 
 #define OVERLAY_ANIMATION_DURATION 0.2
 #define NAV_BUTTON_FADE_TIME 0.1
@@ -106,15 +104,10 @@
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"controls":_videoControlsVC.view}]];
-    self.landscapeConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(44)]|"
-                                                                        options:0
-                                                                        metrics:nil
-                                                                          views:@{@"controls":_videoControlsVC.view}];
-    self.portaitConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(88)]|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controls(88)]|"
                                                                       options:0
                                                                       metrics:nil
-                                                                        views:@{@"controls":_videoControlsVC.view}];
-    [self.view addConstraints:self.portaitConstraints];
+                                                                        views:@{@"controls":_videoControlsVC.view}]];
     [self addChildViewController:_videoControlsVC];
     [_videoControlsVC didMoveToParentViewController:self];
 }
@@ -144,24 +137,6 @@
     [self fadeVideoControlsForOffset:CGPointMake(0, 0) frameHeight:self.view.frame.size.height];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    BOOL goingToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && goingToLandscape) {
-        return;
-    } else if (goingToLandscape) {
-        [self.view removeConstraints:self.portaitConstraints];
-        [self.view addConstraints:self.landscapeConstraints];
-        self.videoControlsVC.view.frame = CGRectMake(0, kShelbyFullscreenWidth - 44, kShelbyFullscreenHeight, 44);
-    } else {
-        [self.view removeConstraints:self.landscapeConstraints];
-        [self.view addConstraints:self.portaitConstraints];
-        self.videoControlsVC.view.frame = CGRectMake(0, kShelbyFullscreenHeight - 88, kShelbyFullscreenWidth, 88);
-    }
-    [self.view updateConstraints];
-}
 
 // We assume these are all of our channels, in the correct order (which we cared about on old iPad design)
 - (void)setChannels:(NSArray *)channels
