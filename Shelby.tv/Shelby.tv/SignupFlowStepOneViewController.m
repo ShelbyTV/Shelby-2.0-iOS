@@ -97,6 +97,7 @@
     [backButton setTitleColor:kShelbyColorMediumGray forState:UIControlStateNormal];
     [backButton setTitle:self.navigationItem.leftBarButtonItem.title forState:UIControlStateNormal];
     [backButton addTarget:self action:self.navigationItem.leftBarButtonItem.action forControlEvents:UIControlEventTouchUpInside];
+    [backButton.titleLabel setFont:kShelbyFontH3];
     
     return backButton;
 }
