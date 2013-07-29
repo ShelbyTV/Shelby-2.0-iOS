@@ -142,7 +142,6 @@
 						<string key="NSFrame">{{238, 537}, {67, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -357,7 +356,7 @@
 								<object class="IBLayoutConstant" key="constant">
 									<double key="value">50</double>
 								</object>
-								<float key="priority">1000</float>
+								<float key="priority">358</float>
 								<reference key="containingView" ref="191373211"/>
 								<int key="scoringType">9</int>
 								<float key="scoringTypeFloat">40</float>
@@ -405,7 +404,7 @@
 								<object class="IBLayoutConstant" key="constant">
 									<double key="value">130</double>
 								</object>
-								<float key="priority">1000</float>
+								<float key="priority">390</float>
 								<reference key="containingView" ref="191373211"/>
 								<int key="scoringType">9</int>
 								<float key="scoringTypeFloat">40</float>
