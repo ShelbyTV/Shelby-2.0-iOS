@@ -60,6 +60,13 @@
     [self setupAirPlay];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self adjustVideoControlsForLandscape:[[UIApplication sharedApplication] statusBarOrientation]];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -77,34 +84,27 @@
     }
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)adjustVideoControlsForLandscape:(UIInterfaceOrientation)landscapeOrientation
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    BOOL goingToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && goingToLandscape) {
-        return;
-    }
-
-   if (goingToLandscape) {
+    if (landscapeOrientation) {
         NSInteger width = kShelbyFullscreenHeight;
         NSInteger height = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, height - self.controlsView.frame.size.height, width, self.controlsView.frame.size.height);
-       self.controlsView.overlay.frame = CGRectMake(0, self.controlsView.frame.size.height - HEIGHT_IN_LANDSCAPE, self.controlsView.frame.size.width, HEIGHT_IN_LANDSCAPE);
-       self.controlsView.separatorView.frame = CGRectMake(0, self.controlsView.overlay.frame.origin.y, width, 1);
-       
+        self.controlsView.overlay.frame = CGRectMake(0, self.controlsView.frame.size.height - HEIGHT_IN_LANDSCAPE, self.controlsView.frame.size.width, HEIGHT_IN_LANDSCAPE);
+        self.controlsView.separatorView.frame = CGRectMake(0, self.controlsView.overlay.frame.origin.y, width, 1);
+
         // Like, Unlike & Share Buttons
         self.controlsView.unlikeButton.frame = CGRectMake(15, 46, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
         self.controlsView.likeButton.frame = self.controlsView.unlikeButton.frame;
         self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, self.controlsView.unlikeButton.frame.origin.y, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
+        
+        // Play/Pause
+        self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 51, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
+        
+        // Current Time Label
+        self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 55, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
 
-       // Play/Pause
-       self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 51, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
-       
-       // Current Time Label
-       self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 55, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
-       
-       // Airplay
+        // Airplay
         self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 10, 55, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
         
         // Duration Time Label depends on whether airplay button is visible or not
@@ -112,7 +112,6 @@
 
         // Non playback mode view
         self.controlsView.nonPlaybackModeView.frame = CGRectMake(10, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
-       
     } else {
         NSInteger width = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, kShelbyFullscreenHeight - HEIGHT_IN_PORTRAIT, width, HEIGHT_IN_PORTRAIT);
@@ -123,7 +122,7 @@
         self.controlsView.unlikeButton.frame = CGRectMake(15, 47, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
         self.controlsView.likeButton.frame = self.controlsView.unlikeButton.frame;
         self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, 47, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
-      
+        
         // Play/Pause & Airplay Buttons
         self.controlsView.largePlayButton.frame = CGRectMake(15, 11, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
         self.controlsView.airPlayView.frame = CGRectMake(width - self.controlsView.airPlayView.frame.size.width - 7, 14, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
@@ -133,10 +132,22 @@
         
         // Duration Time Label depends on whether airplay button is visible or not
         [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:NO];
-     
+        
         // Non playback mode view
         self.controlsView.nonPlaybackModeView.frame = CGRectMake(8, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
     }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    BOOL goingToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && goingToLandscape) {
+        return;
+    }
+
+    [self adjustVideoControlsForLandscape:goingToLandscape];
 }
 
 - (void)changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:(BOOL)landscapeOrientation
