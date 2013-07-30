@@ -341,7 +341,7 @@
 
 - (void)setDuration:(CMTime)duration
 {
-    if (CMTimeCompare(_duration, duration) !=0) {
+    if (CMTimeCompare(_duration, duration) != 0) {
         _duration = duration;
         self.controlsView.durationLabel.text = [self prettyStringForTime:duration];
     }
@@ -374,9 +374,8 @@
 
 - (void)resetVideoControlsToInitialConditions
 {
-    self.controlsView.currentTimeLabel.text = @"0:00";
-    self.controlsView.bufferProgressView.progress = 0.f;
-    [self.controlsView positionScrubheadForPercent:0.f];
+    self.currentTime = CMTimeMake(0, NSEC_PER_MSEC);
+    self.bufferedRange = CMTimeRangeMake(CMTimeMake(0, NSEC_PER_MSEC), CMTimeMake(0, NSEC_PER_MSEC));
 }
 
 - (void)updateViewForCurrentDisplayMode
