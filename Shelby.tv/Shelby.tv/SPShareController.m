@@ -14,6 +14,8 @@
 #import "ShelbyActivityItemProvider.h"
 #import "ShelbyAlertView.h"
 #import "ShelbyAPIClient.h"
+#import "ShelbyDataMediator.h"
+#import "ShelbyShareViewController.h"
 #import "ShelbyViewController.h"
 #import "SPShareRollView.h"
 #import "SPVideoReel.h"
@@ -33,8 +35,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 @property (nonatomic, strong) UIViewController *viewController;
 @property (nonatomic) SPShareRollView *rollView;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
-@property (assign, nonatomic) BOOL facebookConnected;
-@property (assign, nonatomic) BOOL twitterConnected;
 @property (strong, nonatomic) UIView *mask;
 
 @property (nonatomic, strong) SPShareCompletionHandler completionHandler;
@@ -55,35 +55,8 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     return self;
 }
 
-- (void)updateSocialButtons
-{
-    User *user = [User currentAuthenticatedUserInContext:self.videoFrame.managedObjectContext];
-    if (user) {
-        self.facebookConnected = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] && [[NSUserDefaults standardUserDefaults] boolForKey: kShelbyFacebookShareEnable] ? YES : NO;
-        self.twitterConnected = user.twitterNickname && [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyTwitterShareEnable] ? YES : NO;
-    } else {
-        self.facebookConnected = NO;
-        self.twitterConnected = NO;
-    }
-
-    self.rollView.facebookButton.selected = self.facebookConnected;
-    self.rollView.twitterButton.selected = self.twitterConnected;
-}
 
 #pragma mark - Setup Methods
-- (void)updateFacebookToggle
-{
-    if (self.rollView && self.rollView.facebookButton && [self.rollView.facebookButton isKindOfClass:[UIButton class]]) {
-        [self updateSocialButtons];
-    }
-}
-
-- (void)updateTwitterToggle
-{
-    if (self.rollView && self.rollView.twitterButton && [self.rollView.twitterButton isKindOfClass:[UIButton class]]) {
-        [self updateSocialButtons];
-    }
-}
 
 - (void)setupMaskView
 {
@@ -160,7 +133,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                                        }] start];
 
     // Set proper states for buttons
-    [self updateSocialButtons];
+//    [self updateSocialButtons];
     
     CGFloat xOrigin = self.viewController.view.bounds.size.width/2.0f - _rollView.frame.size.width/2.0f;
     // This is the bottom of the video view in overlay view, so we don't go under it. TODO: when we redo all this, make the share view go ABOVE overlay view.
@@ -190,14 +163,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                          [self.rollView.rollTextView becomeFirstResponder];
                      }];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                selector:@selector(updateFacebookToggle)
-                                                    name:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateTwitterToggle)
-                                                 name:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
-
 }
 
 - (void)hideRollView
@@ -225,38 +190,44 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     [self hideRollView];
 }
 
-- (IBAction)rollButtonAction:(id)sender
-{
-    [self roll];
-}
+//- (IBAction)rollButtonAction:(id)sender
+//{
+//    [self roll];
+//}
 
-- (IBAction)toggleSocialButtonStates:(id)sender
+- (void)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected
 {
-    if (sender == self.rollView.facebookButton || sender == self.rollView.twitterButton) {
-        BOOL facebookToggle = sender == self.rollView.facebookButton ? YES : NO;
-        
-        BOOL selectionToggle = ![sender isSelected];
-        [sender setSelected:selectionToggle];
-        
-        NSString *defaultsKey = facebookToggle ? kShelbyFacebookShareEnable : kShelbyTwitterShareEnable;
-        [[NSUserDefaults standardUserDefaults] setBool:selectionToggle forKey:defaultsKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+    NSString *defaultsKey = facebook ? kShelbyFacebookShareEnable : kShelbyTwitterShareEnable;
+    [[NSUserDefaults standardUserDefaults] setBool:selected forKey:defaultsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     
-        if (selectionToggle) {
-            if (facebookToggle) {
-                if (![[FacebookHandler sharedInstance] allowPublishActions]) {
-                    [self.delegate shareControllerRequestsFacebookPublishPermissions:self];
-                }
-            } else if (!self.twitterConnected) {
-                [self.delegate shareControllerRequestsTwitterPublishPermissions:self];
+    if (selected) {
+        if (facebook) {
+            if (![[FacebookHandler sharedInstance] allowPublishActions]) {
+                [self.delegate shareControllerRequestsFacebookPublishPermissions:self];
             }
+        } else {
+            [self.delegate shareControllerRequestsTwitterPublishPermissions:self];
         }
     }
 }
 
 #pragma mark - Action Methods (Private)
 - (void)shareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link
+{
+    User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+   
+    if (user) {
+        ShelbyShareViewController *shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:@"ShelbyShareView" bundle:nil];
+        [shelbyShare setupShareWith:frame link:link andShareController:self];
+        [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
+    } else {
+        [self shareOnSocialNetworks:frame message:message andLink:link];
+    }
+}
+
+- (void)shareOnSocialNetworks:(Frame *)frame message:(NSString *)message andLink:(NSString *)link
 {
     ShelbyActivityItemProvider *activity = [[ShelbyActivityItemProvider alloc] initWithShareText:message andShareLink:link];
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[activity] applicationActivities:nil];
@@ -290,12 +261,11 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 //    }
 }
 
-- (void)roll
+
+- (void)shelbyShareWithMessage:(NSString *)message withFacebook:(BOOL)shareOnFacebook andWithTwitter:(BOOL)shareOnTwitter
 {
     NSString *frameID = self.videoFrame.frameID;
     User *user = [User currentAuthenticatedUserInContext:self.videoFrame.managedObjectContext];
-    NSString *message = self.rollView.rollTextView.text;
-
     [ShelbyAPIClient rollFrame:frameID
                       onToRoll:user.publicRollID
                    withMessage:message
@@ -307,10 +277,10 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                               if (newFrameDict && newFrameDict[@"id"]) {
                                   NSString *newFrameID = newFrameDict[@"id"];
                                   NSMutableArray *destinations = [@[] mutableCopy];
-                                  if ([_rollView.twitterButton isSelected]) {
+                                  if (shareOnTwitter) {
                                       [destinations addObject:kShelbyShareDestinationTwitter];
                                   }
-                                  if ([_rollView.facebookButton isSelected]) {
+                                  if (shareOnFacebook) {
                                       [destinations addObject:kShelbyShareDestinationFacebook];
                                   }
                                   if ([destinations count]){

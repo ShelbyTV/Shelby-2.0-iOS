@@ -31,7 +31,9 @@ typedef void(^SPShareCompletionHandler)(BOOL completed);
 
 /// Action Methods
 - (IBAction)cancelButtonAction:(id)sender;
-- (IBAction)rollButtonAction:(id)sender;
-- (IBAction)toggleSocialButtonStates:(id)sender;
+//- (IBAction)rollButtonAction:(id)sender;
+- (IBAction)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected;
+
+- (void)shelbyShareWithMessage:(NSString *)message withFacebook:(BOOL)shareOnFacebook andWithTwitter:(BOOL)shareOnTwitter;
 
 @end
