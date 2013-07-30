@@ -430,7 +430,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         return;
     }
 
-    [self currentVideoShouldChangeToVideo:page autoplay:self.currentPlayer.isPlaying];
+    [self currentVideoShouldChangeToVideo:page autoplay:[self.currentPlayer shouldBePlaying]];
 }
 
 #pragma mark -  Update Methods (Private)

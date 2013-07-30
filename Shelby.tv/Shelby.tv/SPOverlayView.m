@@ -8,7 +8,6 @@
 
 #import "SPOverlayView.h"
 
-#import "AsynchronousFreeloader.h"
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 #import <QuartzCore/QuartzCore.h>
@@ -122,10 +121,11 @@
         self.primaryTextLabel.text = [frame creatorsInitialCommentWithFallback:YES];
         self.userTimestamp.text = frame.createdAt;
         self.nicknameLabel.text = frame.creator.nickname;
-        [AsynchronousFreeloader loadImageFromLink:frame.creator.userImage
-                                     forImageView:self.userImageView
-                                  withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
-                                   andContentMode:UIViewContentModeScaleAspectFit];
+        //TODO: if/when we use this view again, re-implement the following with AFNetworking
+//        [AsynchronousFreeloader loadImageFromLink:frame.creator.userImage
+//                                     forImageView:self.userImageView
+//                                  withPlaceholder:[UIImage imageNamed:@"infoPanelIconPlaceholder"]
+//                                   andContentMode:UIViewContentModeScaleAspectFit];
     });
 }
 
