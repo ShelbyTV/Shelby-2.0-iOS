@@ -741,12 +741,14 @@
             self.navBar.alpha = 0.0;
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
         }];
+        [self.videoReel beginScrubbing];
     } else {
         STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay, @"expected overlay not showing");
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             self.navBar.alpha = 1.0;
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
         }];
+        [self.videoReel endScrubbing];
     }
 }
 

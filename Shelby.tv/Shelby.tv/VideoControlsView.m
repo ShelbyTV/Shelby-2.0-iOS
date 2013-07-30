@@ -49,6 +49,9 @@
 
 - (void)positionScrubberForDelta:(CGFloat)bufferProgressRelativeDelta
 {
+    //cap delta within scrubber track width
+    bufferProgressRelativeDelta = fmaxf(0.f, fminf(self.bufferProgressView.frame.size.width, bufferProgressRelativeDelta));
+
     CGFloat x = self.bufferProgressView.frame.origin.x + bufferProgressRelativeDelta - (self.scrubheadButton.frame.size.width/2.0);
     self.scrubheadButton.frame = CGRectMake(x, self.bufferProgressView.frame.origin.y - 11, self.scrubheadButton.frame.size.width, self.scrubheadButton.frame.size.height);
 }
@@ -57,7 +60,7 @@
 {
     CGPoint bufferRelativePosition = [touch locationInView:self.bufferProgressView];
     CGFloat pct = bufferRelativePosition.x / self.bufferProgressView.frame.size.width;
-    return pct;
+    return fmaxf(0.f, fminf(1.f, pct));
 }
 
 @end

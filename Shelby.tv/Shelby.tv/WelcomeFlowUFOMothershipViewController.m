@@ -7,6 +7,7 @@
 //
 
 #import "WelcomeFlowUFOMothershipViewController.h"
+#import <AVFoundation/AVFoundation.h>
 #import "AHEasing/easing.h"
 #import "UIView+EasingFunctions/UIView+EasingFunctions.h"
 #import "WelcomeFlowUFOView.h"
@@ -18,8 +19,9 @@
 @interface WelcomeFlowUFOMothershipViewController () {
     NSArray *_ufos;
     NSArray *_ufosAboveMothership;
-    NSArray *_videoImages;
-    NSUInteger _curVideoImageIdx;
+    NSMutableArray *_videoPlayers;
+    NSMutableArray *_videoPlayerViews;
+    NSUInteger _curVideoPlayerIdx;
     NSTimer *_mothershipVideoDisplayTimer;
     BOOL _ufoReturnHomeLoopActive;
     NSUInteger _currentPage;
@@ -41,8 +43,9 @@
     if (self) {
         _ufoReturnHomeLoopActive = NO;
         _currentPage = 0;
-        _curVideoImageIdx = 0;
-        _videoImages = [self createVideoImages];
+        _curVideoPlayerIdx = 0;
+        _videoPlayers = [@[] mutableCopy];
+        _videoPlayerViews = [@[] mutableCopy];
     }
     return self;
 }
@@ -52,8 +55,10 @@
     [super viewDidLoad];
 
     self.mothershipView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"welcome-logo"]];
-    self.mothershipOverlay.layer.cornerRadius = 3.0;
+    self.mothershipView.layer.cornerRadius = 5.0;
+    self.mothershipView.layer.masksToBounds = YES;
     [self createUFOs];
+    [self createVideoPlayers];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -201,10 +206,32 @@
 - (void)mothershipChangeVideoOnDisplay
 {
     if (_ufoReturnHomeLoopActive) {
-        [UIView transitionWithView:self.mothershipVideoDisplay duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            self.mothershipVideoDisplay.image = [self nextVideoImage];
-        } completion:nil];
-        _mothershipVideoDisplayTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+        AVPlayer *curPlayer = _videoPlayers[_curVideoPlayerIdx];
+        UIView *curPlayerView = _videoPlayerViews[_curVideoPlayerIdx];
+        AVPlayer *nextPlayer = [self nextVideoPlayer]; //updates _curVideoPlayerIdx
+        UIView *nextPlayerView = _videoPlayerViews[_curVideoPlayerIdx];
+
+        nextPlayerView.frame = CGRectMake(0, nextPlayerView.frame.size.height, nextPlayerView.frame.size.width, nextPlayerView.frame.size.height);
+        //animate scroll up halfway
+        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+            curPlayerView.frame = CGRectMake(0, -curPlayerView.frame.size.height/2, curPlayerView.frame.size.width, curPlayerView.frame.size.height);
+            nextPlayerView.frame = CGRectMake(0, curPlayerView.frame.size.height/2, nextPlayerView.frame.size.width, nextPlayerView.frame.size.height);
+        } completion:^(BOOL finished) {
+
+            //swap playback when they're 50% way up
+            [curPlayer pause];
+            [nextPlayer play];
+
+            //animate scroll next half of the way
+            [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                curPlayerView.frame = CGRectMake(0, -curPlayerView.frame.size.height, curPlayerView.frame.size.width, curPlayerView.frame.size.height);
+                nextPlayerView.frame = CGRectMake(0, 0, nextPlayerView.frame.size.width, nextPlayerView.frame.size.height);
+            } completion:^(BOOL finished) {
+                [curPlayer seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_SEC)];
+            }];
+        }];
+
+        _mothershipVideoDisplayTimer = [NSTimer scheduledTimerWithTimeInterval:3.5
                                                                         target:self
                                                                       selector:@selector(mothershipChangeVideoOnDisplay)
                                                                       userInfo:nil
@@ -275,7 +302,7 @@
     CGFloat StackYDelta = 60;
 
     //the point within the mothership where UFO moves to bottom of stack to restart its journey home
-    CGFloat returnHomeLoopEndY = stackY - (3*StackYDelta);
+    CGFloat returnHomeLoopEndY = stackY - (2*StackYDelta);
     //the bottom of the stack where UFO should restarts its journey home
     //this has to account for number of UFOs minus distance they travel into mothership before restarting
     CGFloat returnHomeLoopStartY = stackY + (5*StackYDelta);
@@ -354,24 +381,48 @@
     return ufo;
 }
 
-- (NSArray *)createVideoImages
+- (void)createVideoPlayers
 {
-    return @[[UIImage imageNamed:@"welcome-ted-video"],
-             [UIImage imageNamed:@"welcome-buzzfeed-video"],
-             [UIImage imageNamed:@"welcome-facebook-video"],
-             [UIImage imageNamed:@"welcome-patagonia-video"],
-             [UIImage imageNamed:@"welcome-rsrv-video"],
-             [UIImage imageNamed:@"welcome-squid-video"],
-             [UIImage imageNamed:@"welcome-twitter-video"],
-             [UIImage imageNamed:@"welcome-vice-video"]];
+    [self createPlayerAndAddToViewWithVideo:@"buzzfeed"];
+    [self createPlayerAndAddToViewWithVideo:@"facebook"];
+    //TODO: add hungry here
+    [self createPlayerAndAddToViewWithVideo:@"patagonia"];
+    //TODO: add (in order) rsrv, laughing squid, TED
+    [self createPlayerAndAddToViewWithVideo:@"twitter"];
+    [self createPlayerAndAddToViewWithVideo:@"vice"];
+
+    //put the first one in position so initial animations are nice
+    UIView *initialPlayerView = _videoPlayerViews[_curVideoPlayerIdx];
+    initialPlayerView.frame = CGRectMake(0, 0, initialPlayerView.frame.size.width, initialPlayerView.frame.size.height);
 }
 
-- (UIImage *)nextVideoImage
+- (void)createPlayerAndAddToViewWithVideo:(NSString *)videoFileName
 {
-    if (++_curVideoImageIdx == [_videoImages count]){
-        _curVideoImageIdx = 0;
+    NSURL *vidURL = [[NSBundle mainBundle] URLForResource:videoFileName withExtension:@"m4v"];
+    
+    AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:vidURL options:nil];
+    AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
+    AVPlayer *player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+
+    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+    playerLayer.anchorPoint = CGPointMake(0, 0);
+    playerLayer.bounds = CGRectMake(0, 0, self.mothershipView.frame.size.width, self.mothershipView.frame.size.height);
+    //but animating layers is a pain, so i'm wrapping them in UIViews
+    UIView *playerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.mothershipView.frame.size.height, self.mothershipView.frame.size.width, self.mothershipView.frame.size.height)];
+    [playerView.layer addSublayer:playerLayer];
+
+    [self.mothershipVideoDisplay addSubview:playerView];
+
+    [_videoPlayers addObject:player];
+    [_videoPlayerViews addObject:playerView];
+}
+
+- (AVPlayer *)nextVideoPlayer
+{
+    if (++_curVideoPlayerIdx == [_videoPlayers count]) {
+        _curVideoPlayerIdx = 0;
     }
-    return _videoImages[_curVideoImageIdx];
+    return _videoPlayers[_curVideoPlayerIdx];
 }
 
 @end
