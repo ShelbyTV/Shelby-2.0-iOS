@@ -397,6 +397,16 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.currentPlayer play];
 }
 
+- (void)beginScrubbing
+{
+    [self.currentPlayer beginScrubbing];
+}
+
+- (void)endScrubbing
+{
+    [self.currentPlayer endScrubbing];
+}
+
 - (void)scrubCurrentPlayerTo:(CGFloat)percent
 {
     [self.currentPlayer scrubToPct:percent];

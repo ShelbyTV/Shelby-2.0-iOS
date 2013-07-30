@@ -274,11 +274,6 @@
     [self.delegate videoControls:self isScrubbing:YES];
 }
 
-/* We do scrubbing very specifically to create a nice experience...
- * 0) We do not start or stop playback
- * 1) While scrubbing, the current time label always reflects the current scrub position
- * 2) User has to move scrubhead 2% away from current actual playback time before we request video player seek
- */
 - (IBAction)scrubberDrag:(UIButton *)scrubHead forEvent:(UIEvent *)event {
     UITouch *scrubTouch = [[event touchesForView:self.controlsView.scrubheadButton] anyObject];
     //keep scrubber under finger
@@ -289,15 +284,9 @@
     scrubPct = fmaxf(0.0, fminf(1.0, scrubPct));
     CMTime scrubTime = CMTimeMultiplyByFloat64(self.duration, scrubPct);
 
-    //always update time label
+    //must update time label ourselves
     self.controlsView.currentTimeLabel.text = [self prettyStringForTime:scrubTime];
-
-    //update player, but not too frequently (only when user has scrubbed 2%)
-    CMTime diff = CMTimeSubtract(self.currentTime, scrubTime);
-    Float64 diffPct = CMTimeGetSeconds(diff) / CMTimeGetSeconds(self.duration);
-    if (fabsf(diffPct) > SCRUB_PCT_REQUIRED_BEFORE_SEEKING) {
-        [self.delegate videoControls:self scrubCurrentVideoTo:scrubPct];
-    }
+    [self.delegate videoControls:self scrubCurrentVideoTo:scrubPct];
 }
 
 - (IBAction)scrubberButtonTouchUp:(id)sender {

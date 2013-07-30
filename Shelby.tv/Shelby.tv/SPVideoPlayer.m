@@ -13,7 +13,9 @@
 #import "SPVideoExtractor.h"
 #import "SPVideoReel.h"
 
-@interface SPVideoPlayer ()
+@interface SPVideoPlayer () {
+    CGFloat _rateBeforeScrubbing;
+}
 
 @property (assign, nonatomic) CGRect viewBounds;
 @property (nonatomic) AVPlayerLayer *playerLayer;
@@ -51,6 +53,7 @@
     if (self) {
         _viewBounds = bounds;
         _videoFrame = videoFrame;
+        _rateBeforeScrubbing = 0.f;
     }
     
     return self;
@@ -302,6 +305,17 @@
     self.shouldAutoplay = NO;
     
     [self.videoPlayerDelegate videoPlaybackStatus:NO forPlayer:self];
+}
+
+- (void)beginScrubbing
+{
+    _rateBeforeScrubbing = self.player.rate;
+    self.player.rate = 0.f;
+}
+
+- (void)endScrubbing
+{
+    self.player.rate = _rateBeforeScrubbing;
 }
 
 - (void)scrubToPct:(CGFloat)scrubPct

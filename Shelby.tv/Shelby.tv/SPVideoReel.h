@@ -72,6 +72,8 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (BOOL)shouldCurrentPlayerBePlaying;
 - (void)pauseCurrentPlayer;
 - (void)playCurrentPlayer;
+- (void)beginScrubbing;
+- (void)endScrubbing;
 - (void)scrubCurrentPlayerTo:(CGFloat)percent;
 - (id<ShelbyVideoContainer>)getCurrentPlaybackEntity;
 
