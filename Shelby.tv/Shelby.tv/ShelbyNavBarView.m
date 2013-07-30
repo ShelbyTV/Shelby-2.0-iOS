@@ -161,11 +161,6 @@
         _loginButton.hidden = NO;
     }
 
-    //XXX Until Shelby Sharing is implemented...
-    _sharesRowHeight.constant = 0;
-    _sharesButton.hidden = YES;
-    //XXX
-    
     [self layoutIfNeeded];
 }
 
