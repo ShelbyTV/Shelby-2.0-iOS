@@ -18,7 +18,6 @@
 @property (nonatomic, strong) UIImageView *thumbnailRegularView;
 @property (nonatomic, strong) UIImageView *thumbnailBlurredView;
 @property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
-@property (nonatomic, strong) UIImageView *overlayImageView;
 @property (nonatomic, strong) UIButton *playButton;
 
 //reuse context for better performance
@@ -65,9 +64,6 @@
         _thumbnailBlurredView.alpha = 0.0;
         [_backgroundThumbnailsView addSubview:_thumbnailBlurredView];
 
-        [self setupOverlayImageView];
-        [_backgroundThumbnailsView addSubview:self.overlayImageView];
-        
         //parallax for foreground and background (above)
         _parallaxView = [[STVParallaxView alloc] initWithFrame:subviewFrame];
         _parallaxView.delegate = self;
@@ -98,29 +94,7 @@
     return self;
 }
 
-- (void)setupOverlayImageView
-{
-    NSString *imageName = nil;
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-        imageName = @"overlay-landscape.png";
-    } else {
-        if (kShelbyFullscreenHeight > 480) {
-            imageName = @"overlay-568h.png";
-        } else {
-            imageName = @"overlay.png";
-        }
-    }
 
-    UIImage *overlayImage = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
-    
-    if (!self.overlayImageView) {
-        self.overlayImageView = [[UIImageView alloc] initWithImage:overlayImage];
-    } else {
-        self.overlayImageView.image = overlayImage;
-    }
-
-    self.overlayImageView.frame = CGRectMake(-100, 0, _backgroundThumbnailsView.frame.size.width + 200, _backgroundThumbnailsView.frame.size.height);
-}
 
 - (void)resizeParallaxViews
 {
@@ -149,9 +123,6 @@
     [super layoutSubviews];
 
     [self resizeParallaxViews];
-
-    // Reset overlay image after rotation.
-    [self setupOverlayImageView];
 }
 
 - (void)prepareForReuse
