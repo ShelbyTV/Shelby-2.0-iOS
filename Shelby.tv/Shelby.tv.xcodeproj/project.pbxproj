@@ -258,7 +258,6 @@
 		1C81099916EE2CBF0030077C /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C81099B16EE2CBF0030077C /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
-		1C81099D16EE2CBF0030077C /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
 		1C8109A016EE2CBF0030077C /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
 		1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAD16E67365000567D4 /* AFImageRequestOperation.m */; };
@@ -365,7 +364,6 @@
 		1C810A4F16EE5EED0030077C /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C810A5116EE5EED0030077C /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
-		1C810A5316EE5EED0030077C /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
 		1C810A5616EE5EED0030077C /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
 		1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAD16E67365000567D4 /* AFImageRequestOperation.m */; };
@@ -941,7 +939,6 @@
 		8EB3B18C16AF68A5008587FD /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */; };
 		8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950521665BCF100E965E0 /* SPVideoPlayer.m */; };
 		8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
-		8EC65F7C16E4FD42009EC83D /* AsynchronousFreeloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */; };
 		8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		8EEED7A816800DAC00D9F4CD /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */; };
@@ -1653,8 +1650,6 @@
 		8EB950521665BCF100E965E0 /* SPVideoPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoPlayer.m; sourceTree = "<group>"; };
 		8EB950551665BD4000E965E0 /* SPVideoReel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPVideoReel.h; sourceTree = "<group>"; };
 		8EB950561665BD4000E965E0 /* SPVideoReel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoReel.m; sourceTree = "<group>"; };
-		8EC65F7316E4FD42009EC83D /* AsynchronousFreeloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousFreeloader.h; sourceTree = "<group>"; };
-		8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousFreeloader.m; sourceTree = "<group>"; };
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
 		8EEED7A516800DAC00D9F4CD /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
@@ -2620,7 +2615,6 @@
 				8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
-				8EC65F7216E4FD42009EC83D /* Asynchronous-Freeloader */,
 			);
 			name = Library;
 			path = Shelby.tv;
@@ -2674,16 +2668,6 @@
 			);
 			name = Categories;
 			sourceTree = "<group>";
-		};
-		8EC65F7216E4FD42009EC83D /* Asynchronous-Freeloader */ = {
-			isa = PBXGroup;
-			children = (
-				8EC65F7316E4FD42009EC83D /* AsynchronousFreeloader.h */,
-				8EC65F7416E4FD42009EC83D /* AsynchronousFreeloader.m */,
-			);
-			name = "Asynchronous-Freeloader";
-			path = "Library/Asynchronous-Freeloader";
-			sourceTree = SOURCE_ROOT;
 		};
 		8EEED7A416800DAC00D9F4CD /* Fonts */ = {
 			isa = PBXGroup;
@@ -3897,7 +3881,6 @@
 				1C81099916EE2CBF0030077C /* SPVideoDownloader.m in Sources */,
 				1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */,
 				1C81099B16EE2CBF0030077C /* UIImage+Scale.m in Sources */,
-				1C81099D16EE2CBF0030077C /* AsynchronousFreeloader.m in Sources */,
 				1C8109A016EE2CBF0030077C /* AFHTTPClient.m in Sources */,
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */,
@@ -4036,7 +4019,6 @@
 				1C810A4F16EE5EED0030077C /* SPVideoDownloader.m in Sources */,
 				1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */,
 				1C810A5116EE5EED0030077C /* UIImage+Scale.m in Sources */,
-				1C810A5316EE5EED0030077C /* AsynchronousFreeloader.m in Sources */,
 				1C810A5616EE5EED0030077C /* AFHTTPClient.m in Sources */,
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */,
@@ -4175,7 +4157,6 @@
 				8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */,
 				1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */,
 				1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */,
-				8EC65F7C16E4FD42009EC83D /* AsynchronousFreeloader.m in Sources */,
 				8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */,
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
 				8E01AFBD16E67365000567D4 /* AFImageRequestOperation.m in Sources */,
