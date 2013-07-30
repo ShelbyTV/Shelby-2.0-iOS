@@ -200,6 +200,7 @@
 {
     if (_currentEntity != currentEntity) {
         _currentEntity = currentEntity;
+        [self resetVideoControlsToInitialConditions];
         [self updateViewForCurrentEntity];
     }
 }
@@ -227,9 +228,6 @@
         [self adjustForAirplay];
     }
 }
-
-
-
 
 - (void)adjustForAirplay
 {
@@ -372,6 +370,13 @@
         self.controlsView.likeButton.hidden = isLiked;
         self.controlsView.unlikeButton.hidden = !isLiked;
     }
+}
+
+- (void)resetVideoControlsToInitialConditions
+{
+    self.controlsView.currentTimeLabel.text = @"0:00";
+    self.controlsView.bufferProgressView.progress = 0.f;
+    [self.controlsView positionScrubheadForPercent:0.f];
 }
 
 - (void)updateViewForCurrentDisplayMode
