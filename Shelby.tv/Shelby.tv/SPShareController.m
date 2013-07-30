@@ -94,107 +94,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     
 }
 
-- (void)showRollView
-{
-    [self setupMaskView];
-    
-    NSString *shareNibName = nil;
-//    if (DEVICE_IPAD) {
-//        shareNibName = @"SPShareRollView";
-//    } else {
-    shareNibName = @"SPShareRollView-iPhone";
-//    }
-    // Instantiate rollView
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:shareNibName owner:self options:nil];
-    if (![nib isKindOfClass:[NSArray class]] || [nib count] == 0 || ![nib[0] isKindOfClass:[UIView class]]) {
-        return;
-    }
-
-    self.rollView = nib[0];
-    
-    NSString *containerBackground = nil;
-//    if (DEVICE_IPAD) {
-//        containerBackground = @"rollingContainer.png";
-//    } else {
-    containerBackground = @"rollingContainer-iPhone.png";
-//    }
-    
-    [self.rollView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:containerBackground]]];
-    
-    // Set Thumbnail
-    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.videoFrame.video.thumbnailURL]];
-    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
-                                          imageProcessingBlock:nil
-                                                       success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                                           self.rollView.videoThumbnailView.image = image;
-                                                       }
-                                                       failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                                           //ignoring for now
-                                                       }] start];
-
-    // Set proper states for buttons
-//    [self updateSocialButtons];
-    
-    CGFloat xOrigin = self.viewController.view.bounds.size.width/2.0f - _rollView.frame.size.width/2.0f;
-    // This is the bottom of the video view in overlay view, so we don't go under it. TODO: when we redo all this, make the share view go ABOVE overlay view.
-//    CGFloat yOrigin = 160;
-//    if (!DEVICE_IPAD) {
-    CGFloat yOrigin = yOrigin = 0;
-//    }
-    
-    [self.rollView setFrame:CGRectMake(xOrigin,
-                                       self.viewController.view.bounds.size.height,
-                                       _rollView.frame.size.width,
-                                       _rollView.frame.size.height)];
-   
-    [self.viewController.view addSubview:self.rollView];
-    [self.viewController.view bringSubviewToFront:self.rollView];
-    
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         [self.mask setAlpha:0.7];
-                         [self.rollView setFrame:CGRectMake(xOrigin,
-                                                            yOrigin,
-                                                            _rollView.frame.size.width,
-                                                            _rollView.frame.size.height)];
-                         
-                     } completion:^(BOOL finished) {
-                         
-                         [self.rollView.rollTextView becomeFirstResponder];
-                     }];
-    
-}
-
-- (void)hideRollView
-{
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         
-                         CGFloat xOrigin = self.viewController.view.bounds.size.width/2.0f - _rollView.frame.size.width/2.0f;
-                         [self.mask setAlpha:0];
-                         [self.rollView setFrame:CGRectMake(xOrigin,
-                                                            self.viewController.view.bounds.size.height,
-                                                            _rollView.frame.size.width,
-                                                            _rollView.frame.size.height)];
-                         
-                     } completion:^(BOOL finished) {
-                         [self.mask removeFromSuperview];
-                         [self.rollView.rollTextView resignFirstResponder];
-                         [self.rollView removeFromSuperview]; 
-                     }];
-}
-
 #pragma mark - Action Methods (Public)
-- (IBAction)cancelButtonAction:(id)sender
-{
-    [self hideRollView];
-}
-
-//- (IBAction)rollButtonAction:(id)sender
-//{
-//    [self roll];
-//}
-
 - (void)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected
 {
     NSString *defaultsKey = facebook ? kShelbyFacebookShareEnable : kShelbyTwitterShareEnable;
@@ -223,26 +123,60 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         [shelbyShare setupShareWith:frame link:link andShareController:self];
         [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
     } else {
-        [self shareOnSocialNetworks:frame message:message andLink:link];
+        [self shareOnSocialNetworks:frame message:message andLink:link fromViewController:self.viewController];
     }
 }
 
-- (void)shareOnSocialNetworks:(Frame *)frame message:(NSString *)message andLink:(NSString *)link
+- (UIActivityViewController *)activityViewControllerForFrame:(Frame *)frame withMessage:(NSString *)message withLink:(NSString *)link excludeFacebookAndTwitter:(BOOL)exclude
 {
-    ShelbyActivityItemProvider *activity = [[ShelbyActivityItemProvider alloc] initWithShareText:message andShareLink:link];
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[activity] applicationActivities:nil];
-    activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     
     [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare
                                      withAction:kAnalyticsShareActionShareButton
                                       withLabel:[frame creatorsInitialCommentWithFallback:YES]];
+
+    ShelbyActivityItemProvider *activity = [[ShelbyActivityItemProvider alloc] initWithShareText:message andShareLink:link];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[activity] applicationActivities:nil];
+    
+    if (exclude) {
+        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard, UIActivityTypePostToFacebook, UIActivityTypePostToTwitter];
+    } else {
+        activityController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+    }
+    
+    return activityController;
+}
+
+
+- (void)nativeShareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController 
+{
+    UIActivityViewController *activityController = [self activityViewControllerForFrame:frame withMessage:message withLink:link excludeFacebookAndTwitter:YES];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
         if (self.completionHandler) {
             self.completionHandler(completed);
         }
         
-        if (completed && ![activityType isEqualToString:kShelbySPActivityTypeRoll]) {
+        if (completed) {
+            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
+            // KP KP: Need to dismiss viewController (ShelbyShareViewController. But not inside this method.
+        }
+    }];
+    
+    [viewController presentViewController:activityController animated:YES completion:nil];
+
+}
+
+
+- (void)shareOnSocialNetworks:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController
+{
+    UIActivityViewController *activityController = [self activityViewControllerForFrame:frame withMessage:message withLink:link excludeFacebookAndTwitter:NO];
+    
+    [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        if (self.completionHandler) {
+            self.completionHandler(completed);
+        }
+        
+        if (completed) {
             [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
         }
     }];
@@ -257,7 +191,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 //                                                       animated:YES];
 //        }
 //    } else {
-    [self.viewController presentViewController:activityController animated:YES completion:nil];
+    [viewController presentViewController:activityController animated:YES completion:nil];
 //    }
 }
 
@@ -301,8 +235,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                   [alert show];
                               });
                           }
-                         
-                          [self performSelectorOnMainThread:@selector(hideRollView) withObject:nil waitUntilDone:NO];
                       }];
 }
 
@@ -318,14 +250,14 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 }
 
 #pragma mark - UIPopoverControllerDelegate Methods
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-{
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         [self.mask setAlpha:0.0f];
-                     } completion:^(BOOL finished) {
-                         [self.mask removeFromSuperview];
-                     }];
-}
+//- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+//{
+//    [UIView animateWithDuration:0.5
+//                     animations:^{
+//                         [self.mask setAlpha:0.0f];
+//                     } completion:^(BOOL finished) {
+//                         [self.mask removeFromSuperview];
+//                     }];
+//}
 
 @end

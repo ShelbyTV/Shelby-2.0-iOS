@@ -104,6 +104,8 @@
 
 - (void)send:(id)sender
 {
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:kShelbySPActivityTypeRoll];
+
     [self.shareController shelbyShareWithMessage:self.message.text withFacebook:!self.facebookCheck.hidden andWithTwitter:!self.twitterCheck.hidden];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -113,7 +115,6 @@
 {
     self.facebookCheck.hidden = !self.facebookCheck.hidden;
     self.facebookButton.selected = !self.facebookCheck.hidden;
-    
     
     [self.shareController toggleSocialFacebookButton:YES selected:!self.facebookCheck.hidden];
 }
@@ -129,7 +130,7 @@
 
 - (IBAction)openDefaultShare:(id)sender
 {
-    
+    [self.shareController nativeShareWithFrame:self.frame message:self.message.text andLink:self.link fromViewController:self];
 }
 
 - (IBAction)cancel:(id)sender

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShelbyViewController.h"
 #import "SPShareController.h"
 
-@interface ShelbyShareViewController : UIViewController <UITextViewDelegate>
+@interface ShelbyShareViewController : ShelbyViewController <UITextViewDelegate>
 
 - (void)setupShareWith:(Frame *)frame
                   link:(NSString *)link
