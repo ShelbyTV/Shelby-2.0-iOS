@@ -64,7 +64,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self adjustVideoControlsForLandscape:[[UIApplication sharedApplication] statusBarOrientation]];
+    [self adjustVideoControlsForLandscape:UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,7 +84,7 @@
     }
 }
 
-- (void)adjustVideoControlsForLandscape:(UIInterfaceOrientation)landscapeOrientation
+- (void)adjustVideoControlsForLandscape:(BOOL)landscapeOrientation
 {
     if (landscapeOrientation) {
         NSInteger width = kShelbyFullscreenHeight;
