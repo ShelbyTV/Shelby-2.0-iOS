@@ -25,6 +25,9 @@
 NSString * const kShelbyFacebookShareEnable = @"kShelbyFacebookShareEnable";
 NSString * const kShelbyTwitterShareEnable  = @"kShelbyTwitterShareEnable";
 
+NSString * const kShelbyNativeShareDone = @"kShelbyNativeShareDone";
+NSString * const kShelbyNativeShareCancelled  = @"kShelbyNativeShareCancelled";
+
 NSString * const kShelbyShareDestinationTwitter = @"twitter";
 NSString * const kShelbyShareDestinationFacebook = @"facebook";
 
@@ -157,12 +160,14 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         
         if (completed) {
             [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
-            // KP KP: Need to dismiss viewController (ShelbyShareViewController. But not inside this method.
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNativeShareDone object:nil];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNativeShareCancelled object:nil];
         }
     }];
     
     [viewController presentViewController:activityController animated:YES completion:nil];
-
 }
 
 

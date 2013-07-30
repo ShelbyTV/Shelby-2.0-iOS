@@ -68,6 +68,13 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    // TODO: remove observers
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -130,7 +137,16 @@
 
 - (IBAction)openDefaultShare:(id)sender
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self.message selector:@selector(becomeFirstResponder) name:kShelbyNativeShareCancelled object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(close) name:kShelbyNativeShareDone object:nil];
+    
     [self.shareController nativeShareWithFrame:self.frame message:self.message.text andLink:self.link fromViewController:self];
+}
+
+// TODO: KP KP: do it in a nicer way. This is a TOTAL HACK
+- (void)close
+{
+    [self performSelector:@selector(cancel:) withObject:nil afterDelay:1.5];
 }
 
 - (IBAction)cancel:(id)sender

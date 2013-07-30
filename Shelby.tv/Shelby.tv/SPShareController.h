@@ -10,6 +10,8 @@
 
 extern NSString * const kShelbyFacebookShareEnable;
 extern NSString * const kShelbyTwitterShareEnable;
+extern NSString * const kShelbyNativeShareCancelled;
+extern NSString * const kShelbyNativeShareDone;
 
 typedef void(^SPShareCompletionHandler)(BOOL completed);
 
