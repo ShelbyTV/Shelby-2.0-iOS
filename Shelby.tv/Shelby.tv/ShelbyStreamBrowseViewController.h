@@ -34,6 +34,7 @@
 
 @interface ShelbyStreamBrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ShelbyStreamBrowseViewCellDelegate>
 
+@property (readonly, strong) NSArray *deduplicatedEntries;
 @property (readonly, strong) DisplayChannel *channel;
 // For interaction and data-model related stuff.
 @property (nonatomic, assign) id<ShelbyStreamBrowseManagementDelegate>browseManagementDelegate;
@@ -45,9 +46,14 @@
 
 - (void)setEntries:(NSArray *)entries
         forChannel:(DisplayChannel *)channel;
+//when appending entries, the collection view will be scrolled down accordingly
+//if you don't want that behavior, you can request that we maintain the current
+//focus.  This will have the effect of resetting our focus after
+//inserting the new cells.
 - (void)addEntries:(NSArray *)newChannelEntries
              toEnd:(BOOL)shouldAppend
-         ofChannel:(DisplayChannel *)channel;
+         ofChannel:(DisplayChannel *)channel
+maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus;
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel;
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel;
 

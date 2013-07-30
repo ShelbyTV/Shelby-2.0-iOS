@@ -23,7 +23,6 @@
     BOOL _ignorePullToRefresh;
 }
 @property (nonatomic, strong) NSArray *entries;
-@property (nonatomic, strong) NSArray *deduplicatedEntries;
 
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshSpinner;
@@ -127,6 +126,11 @@
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
+    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        //don't need to do anything if we didn't change! (this happens b/c upside phone isn't supported)
+        return;
+    }
+
     // Need collection view to reload our cells (b/c that's where we size them).
     // But must call this before -didRotate; -reloadData invalidates the view layout.  If we wait until
     // -didRotate, the collectionView is already resized but the cells aren't and iOS logs the glitch.
@@ -135,18 +139,15 @@
     //We track how our views are currently configured so we can adjust when moving to a parent VC that may be in
     //a different orientation than we were when we were last actively part of a parent VC
     _currentlyPresentedInterfaceOrientation = toInterfaceOrientation;
-    
-    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-        //don't need to do anything if we didn't change! (this happens b/c upside phone isn't supported)
-        return;
-    }
 
     CGPoint preRotationContentOffset = self.collectionView.contentOffset;
     NSUInteger preRotationScrollPage = preRotationContentOffset.y / self.view.frame.size.height;
     NSUInteger postRotationContentOffsetY = preRotationScrollPage * self.view.frame.size.width;
 
-    //our browseViewDelegate relies on our frame being correct when -viewDidScroll calls into it
-    //so we update contentOffset in -didRotateFromInterfaceOrientation: to make sure context is set up properly for delegate
+    //need to set content size (it's too small when going landscape -> portrait; contentOffset can't be set if post rotation Y > current height)
+    self.collectionView.contentSize = CGSizeMake(self.view.frame.size.height, self.view.frame.size.width * [self.deduplicatedEntries count]);
+    //our browseViewDelegate relies on our frame being correct when -viewDidScroll calls into it.
+    //We update contentOffset in -willRotateToInterfaceOrientation: to make sure context is set up properly for delegate
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, postRotationContentOffsetY)];
 }
 
@@ -192,36 +193,41 @@
 - (void)addEntries:(NSArray *)newChannelEntries
              toEnd:(BOOL)shouldAppend
          ofChannel:(DisplayChannel *)channel
+maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 
 {
     STVAssert(self.channel == channel, @"cannot add entries for a different channel");
     
     NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
+    id<ShelbyVideoContainer> focusedEntityBeforeUpdates = [self entityForCurrentFocus];
 
     if(shouldAppend){
         self.entries = [self.entries arrayByAddingObjectsFromArray:newChannelEntries];
-        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
-                                                                       toDedupedArray:self.deduplicatedEntries
-                                                                            didInsert:&indexPathsForInsert
-                                                                            didDelete:&indexPathsForDelete
-                                                                            didUpdate:&indexPathsForReload];
+        _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
+                                                                   toDedupedArray:self.deduplicatedEntries
+                                                                        didInsert:&indexPathsForInsert
+                                                                        didDelete:&indexPathsForDelete
+                                                                        didUpdate:&indexPathsForReload];
     } else {
         self.entries = [newChannelEntries arrayByAddingObjectsFromArray:self.entries];
-        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
-                                                                        toDedupedArray:self.deduplicatedEntries
-                                                                             didInsert:&indexPathsForInsert
-                                                                             didDelete:&indexPathsForDelete
-                                                                             didUpdate:&indexPathsForReload];
+        _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
+                                                                    toDedupedArray:self.deduplicatedEntries
+                                                                         didInsert:&indexPathsForInsert
+                                                                         didDelete:&indexPathsForDelete
+                                                                         didUpdate:&indexPathsForReload];
     }
-    
+
     // The index paths returned by DeduplicationUtility are relative to the original array.
-    // So we group them within beginUpdates ... endUpdates
+    // So we group them within performBatchUpdates:
     [self.collectionView performBatchUpdates:^{
         [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
         [self.collectionView deleteItemsAtIndexPaths:indexPathsForDelete];
         [self.collectionView reloadItemsAtIndexPaths:indexPathsForReload];
     } completion:^(BOOL finished) {
-        //nothing
+        if (shouldMaintainCurrentFocus) {
+            //scroll to the focus before updates
+            [self focusOnEntity:focusedEntityBeforeUpdates inChannel:channel];
+        }
     }];
     
     [self updateVisibilityOfNoContentView];

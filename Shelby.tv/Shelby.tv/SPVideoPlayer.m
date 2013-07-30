@@ -17,7 +17,7 @@
     CGFloat _rateBeforeScrubbing;
 }
 
-@property (assign, nonatomic) CGRect viewBounds;
+@property (assign, nonatomic) CGRect viewFrame;
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *videoLoadingIndicator;
 
@@ -47,11 +47,11 @@
 }
 
 #pragma mark - Initialization Methods
-- (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame
+- (id)initWithViewFrame:(CGRect)viewFrame videoFrame:(Frame *)videoFrame
 {
     self = [super init];
     if (self) {
-        _viewBounds = bounds;
+        _viewFrame = viewFrame;
         _videoFrame = videoFrame;
         _rateBeforeScrubbing = 0.f;
     }
@@ -64,7 +64,7 @@
 {
     [super viewDidLoad];
     
-    [self.view setFrame:self.viewBounds];
+    [self.view setFrame:self.viewFrame];
     self.isPlayable = NO;
     self.isPlaying = NO;
     self.shouldAutoplay = NO;
@@ -92,10 +92,17 @@
     return UIInterfaceOrientationMaskLandscape | UIInterfaceOrientationMaskPortrait;
 }
 
--(BOOL) shouldAutorotate {
+- (BOOL)shouldAutorotate {
     return YES;
 }
 
+- (void)setViewFrame:(CGRect)viewFrame
+{
+    if (!CGRectEqualToRect(_viewFrame, viewFrame)) {
+        _viewFrame = viewFrame;
+        self.view.frame = viewFrame;
+    }
+}
 
 - (void)setupPlayerForURL:(NSURL *)playerURL
 {

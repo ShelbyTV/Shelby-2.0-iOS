@@ -35,9 +35,12 @@
 @property (nonatomic, weak) id<SPVideoPlayerDelegate> videoPlayerDelegate;
 
 // Initialization
-- (id)initWithBounds:(CGRect)bounds withVideoFrame:(Frame *)videoFrame;
+- (id)initWithViewFrame:(CGRect)viewFrame videoFrame:(Frame *)videoFrame;
 
 - (void)resetPlayer;
+
+//you may move it later
+- (void)setViewFrame:(CGRect)viewFrame;
 
 // Does not load video
 - (void)warmVideoExtractionCache;
