@@ -72,7 +72,8 @@
 {
     [super viewWillDisappear:animated];
     
-    // TODO: remove observers
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.message];
 }
 
 - (void)viewDidAppear:(BOOL)animated
