@@ -156,14 +156,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         i++;
     }
 }
-- (void)setEntries:(NSArray *)entries
-{
-    NSUInteger oldCount = [self.videoEntities count];
-    self.videoEntities = [entries mutableCopy];
-    // do some setup
-    [self setupVideoScrollView];
-    [self setupVideoPlayersFromIndex:oldCount];
-}
 
 #pragma mark - Setup Methods
 - (void)setup
@@ -179,7 +171,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self setupVideoScrollView];
     [self setupGestures];
     
-    [self setupVideoPlayersFromIndex:0];
+    [self setupAllVideoPlayers];
     [self currentVideoShouldChangeToVideo:self.videoStartIndex autoplay:YES];
 }
 
@@ -236,41 +228,40 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     //XXX LAYOUT TESTING
 }
 
-//called via -setup via -viewDidLoad
-- (void)setupVideoPlayersFromIndex:(NSUInteger)index
+- (void)setupAllVideoPlayers
 {
-    NSUInteger count = [self.videoEntities count];
-    if (count && index < count) {
-        for (; index < count; index++) {
-            Frame *videoEntry = self.videoEntities[index];
-            CGRect viewframe = [self.videoScrollView frame];
-//            if (DEVICE_IPAD) {
-//                viewframe.origin.x = viewframe.size.width * index;
-//                viewframe.origin.y = 0.0f;
-//            } else {
-            NSInteger videoHeight = kShelbyFullscreenHeight;
-            if ([self isLandscapeOrientation]) {
-                videoHeight = kShelbyFullscreenWidth;
-            }
-            viewframe.origin.y = videoHeight * index;
-            viewframe.origin.x = 0.0f;
-//            }
-            SPVideoPlayer *player;
-            if([videoEntry isKindOfClass:[DashboardEntry class]]){
-                player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:((DashboardEntry *)videoEntry).frame];
-            } else if([videoEntry isKindOfClass:[Frame class]]){
-                player = [[SPVideoPlayer alloc] initWithBounds:viewframe withVideoFrame:((Frame *)videoEntry)];
-            } else {
-                STVAssert(false, @"expected videoEntry to be a DashboardEntry or Frame");
-            }
-            player.videoPlayerDelegate = self;
-            [self.videoPlayers addObject:player];
-            [player willMoveToParentViewController:self];
-            [self addChildViewController:player];
-            [self.videoScrollView addSubview:player.view];
-            [player didMoveToParentViewController:self];
-        }
+    for (NSUInteger i = 0; i < [self.videoEntities count]; i++) {
+        id<ShelbyVideoContainer> videoEntity = self.videoEntities[i];
+        [self createVideoPlayerForEntity:videoEntity atPosition:i];
     }
+}
+
+- (void)createVideoPlayerForEntity:(id<ShelbyVideoContainer>)entity atPosition:(NSUInteger)idx
+{
+    Frame *videoFrame = [Frame frameForEntity:entity];
+    SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithViewFrame:[self rectForPlayerAtPosition:idx]
+                                                          videoFrame:videoFrame];
+
+    player.videoPlayerDelegate = self;
+    [self.videoPlayers addObject:player];
+    [player willMoveToParentViewController:self];
+    [self addChildViewController:player];
+    [self.videoScrollView addSubview:player.view];
+    [player didMoveToParentViewController:self];
+}
+
+- (CGRect)rectForPlayerAtPosition:(NSUInteger)idx
+{
+    CGRect viewframe = [self.videoScrollView frame];
+
+    NSInteger videoHeight = kShelbyFullscreenHeight;
+    if ([self isLandscapeOrientation]) {
+        videoHeight = kShelbyFullscreenWidth;
+    }
+    viewframe.origin.y = videoHeight * idx;
+    viewframe.origin.x = 0.0f;
+
+    return viewframe;
 }
 
 
@@ -334,6 +325,38 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     return UIInterfaceOrientationIsLandscape(orientation);
+}
+
+// What am I trying to do here?
+// kill ALL the video players except the current one
+// and keep the current player in the correct spot...
+- (void)setDeduplicatedEntries:(NSArray *)deduplicatedEntries
+{
+    _videoEntities = [deduplicatedEntries mutableCopy];
+
+    SPVideoPlayer *curPlayer = self.currentPlayer;
+    NSMutableArray *oldNonCurrentPlayers = [self.videoPlayers mutableCopy];
+    [oldNonCurrentPlayers removeObject:curPlayer];
+
+    //out with the old
+    for (SPVideoPlayer *player in oldNonCurrentPlayers) {
+        [player resetPlayer];
+        [player removeFromParentViewController];
+    }
+
+    //in with the new
+    self.videoPlayers = [@[] mutableCopy];
+
+    for (NSUInteger i = 0; i < [deduplicatedEntries count]; i++) {
+        id<ShelbyVideoContainer>entity = deduplicatedEntries[i];
+        if (curPlayer.videoFrame == [Frame frameForEntity:entity]) {
+            //the current player matches the new frame, sweet, just use it here
+            [curPlayer setViewFrame:[self rectForPlayerAtPosition:i]];
+            self.currentVideoPlayingIndex = i;
+            curPlayer = nil;
+        }
+        [self createVideoPlayerForEntity:entity atPosition:i];
+    }
 }
 
 - (void)animatePlaybackState:(BOOL)videoPlaying
@@ -454,6 +477,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
         // Set the new current player to auto play and get it going...
         self.currentVideoPlayingIndex = position;
+        STVAssert([self.videoPlayers count] > self.currentVideoPlayingIndex, "@can't play a player we don't have");
         self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
         self.currentPlayer.shouldAutoplay = shouldAutoplay;
 
@@ -463,7 +487,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                                         previousPlayer:previousPlayer];
         [self warmURLExtractionCache];
 
-        [self.delegate didChangePlaybackToEntity:self.videoEntities[position] inChannel:self.channel];
+        STVAssert([Frame frameForEntity:self.videoEntities[self.currentVideoPlayingIndex]] == self.currentPlayer.videoFrame);
+        [self.delegate didChangePlaybackToEntity:self.videoEntities[self.currentVideoPlayingIndex] inChannel:self.channel];
     }
 }
 

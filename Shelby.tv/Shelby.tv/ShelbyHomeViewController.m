@@ -245,7 +245,6 @@
         self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC deduplicatedEntriesForChannel:channel][0];
     }
 //    }
-    [self setPlayerEntriesForChannel:channel];
 }
 
 - (ShelbyStreamBrowseViewController *)streamBrowseViewControllerForChannel:(DisplayChannel *)channel
@@ -269,19 +268,14 @@
 //    if (DEVICE_IPAD) {
 //        [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
 //    } else {
-    [[self streamBrowseViewControllerForChannel:channel] addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
-//    }
-    [self setPlayerEntriesForChannel:channel];
-}
+    BOOL playingThisChannel = (self.videoReel && self.videoReel.channel == channel);
 
-- (void)setPlayerEntriesForChannel:(DisplayChannel *)channel
-{
-    if (self.videoReel) {
-        NSArray *completeChannelEntries = [self.browseVC deduplicatedEntriesForChannel:channel];
-        DisplayChannel *channelInPlayer = self.videoReel.channel;
-        if ([channelInPlayer isEqual:channel]) {
-            [self.videoReel setEntries:completeChannelEntries];
-        }
+    ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
+    [sbvc addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel maintainingCurrentFocus:playingThisChannel];
+//    }
+
+    if (playingThisChannel) {
+        [self.videoReel setDeduplicatedEntries:sbvc.deduplicatedEntries];
     }
 }
 

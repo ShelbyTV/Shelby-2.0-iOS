@@ -23,7 +23,6 @@
     BOOL _ignorePullToRefresh;
 }
 @property (nonatomic, strong) NSArray *entries;
-@property (nonatomic, strong) NSArray *deduplicatedEntries;
 
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refreshSpinner;
@@ -192,36 +191,41 @@
 - (void)addEntries:(NSArray *)newChannelEntries
              toEnd:(BOOL)shouldAppend
          ofChannel:(DisplayChannel *)channel
+maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 
 {
     STVAssert(self.channel == channel, @"cannot add entries for a different channel");
     
     NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
+    id<ShelbyVideoContainer> focusedEntityBeforeUpdates = [self entityForCurrentFocus];
 
     if(shouldAppend){
         self.entries = [self.entries arrayByAddingObjectsFromArray:newChannelEntries];
-        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
-                                                                       toDedupedArray:self.deduplicatedEntries
-                                                                            didInsert:&indexPathsForInsert
-                                                                            didDelete:&indexPathsForDelete
-                                                                            didUpdate:&indexPathsForReload];
+        _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
+                                                                   toDedupedArray:self.deduplicatedEntries
+                                                                        didInsert:&indexPathsForInsert
+                                                                        didDelete:&indexPathsForDelete
+                                                                        didUpdate:&indexPathsForReload];
     } else {
         self.entries = [newChannelEntries arrayByAddingObjectsFromArray:self.entries];
-        self.deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
-                                                                        toDedupedArray:self.deduplicatedEntries
-                                                                             didInsert:&indexPathsForInsert
-                                                                             didDelete:&indexPathsForDelete
-                                                                             didUpdate:&indexPathsForReload];
+        _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
+                                                                    toDedupedArray:self.deduplicatedEntries
+                                                                         didInsert:&indexPathsForInsert
+                                                                         didDelete:&indexPathsForDelete
+                                                                         didUpdate:&indexPathsForReload];
     }
-    
+
     // The index paths returned by DeduplicationUtility are relative to the original array.
-    // So we group them within beginUpdates ... endUpdates
+    // So we group them within performBatchUpdates:
     [self.collectionView performBatchUpdates:^{
         [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
         [self.collectionView deleteItemsAtIndexPaths:indexPathsForDelete];
         [self.collectionView reloadItemsAtIndexPaths:indexPathsForReload];
     } completion:^(BOOL finished) {
-        //nothing
+        if (shouldMaintainCurrentFocus) {
+            //scroll to the focus before updates
+            [self focusOnEntity:focusedEntityBeforeUpdates inChannel:channel];
+        }
     }];
     
     [self updateVisibilityOfNoContentView];

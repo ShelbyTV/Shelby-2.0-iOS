@@ -59,8 +59,6 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
      andVideoEntities:(NSArray *)videoEntities
               atIndex:(NSUInteger)videoStartIndex;
 
-- (void)setEntries:(NSArray *)entries;
-
 - (void)shutdown;
 
 - (void)videoDoubleTapped;
@@ -76,6 +74,8 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)endScrubbing;
 - (void)scrubCurrentPlayerTo:(CGFloat)percent;
 - (id<ShelbyVideoContainer>)getCurrentPlaybackEntity;
+//for adding new entities
+- (void)setDeduplicatedEntries:(NSArray *)deduplicatedEntries;
 
 // using this to keep view in sync, not change playback
 - (void)scrollTo:(CGPoint)contentOffset;
