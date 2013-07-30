@@ -281,7 +281,6 @@
 
     //determine new desired playback percent/time
     CGFloat scrubPct = [self.controlsView playbackTargetPercentForTouch:scrubTouch];
-    scrubPct = fmaxf(0.0, fminf(1.0, scrubPct));
     CMTime scrubTime = CMTimeMultiplyByFloat64(self.duration, scrubPct);
 
     //must update time label ourselves
