@@ -153,14 +153,17 @@
 {
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
    if (user) {
-        self.facebookConnected = user.facebookName ? YES : NO;
+        self.facebookConnected = user.facebookNickname ? YES : NO;
         self.twitterConnected = user.twitterNickname ? YES : NO;
     } else {
         self.facebookConnected = NO;
         self.twitterConnected = NO;
     }
     
-    if (self.facebookConnected) {
+    BOOL defaultsFacebook = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyFacebookShareEnable];
+    BOOL defaultsTwitter = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyTwitterShareEnable];
+    
+    if (self.facebookConnected && defaultsFacebook) {
         self.facebookCheck.hidden = NO;
         self.facebookButton.selected = YES;
     } else {
@@ -168,7 +171,7 @@
         self.facebookButton.selected = NO;
     }
 
-    if (self.twitterConnected) {
+    if (self.twitterConnected && defaultsTwitter) {
         self.twitterCheck.hidden = NO;
         self.twitterButton.selected = YES;
     } else {

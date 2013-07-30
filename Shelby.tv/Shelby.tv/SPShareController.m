@@ -22,8 +22,8 @@
 #import "TwitterHandler.h"
 #import "User+Helper.h"
 
-#define kShelbyFacebookShareEnable  @"kShelbyFacebookShareEnable"
-#define kShelbyTwitterShareEnable   @"kShelbyTwitterShareEnable"
+NSString * const kShelbyFacebookShareEnable = @"kShelbyFacebookShareEnable";
+NSString * const kShelbyTwitterShareEnable  = @"kShelbyTwitterShareEnable";
 
 NSString * const kShelbyShareDestinationTwitter = @"twitter";
 NSString * const kShelbyShareDestinationFacebook = @"facebook";
@@ -100,7 +100,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     NSString *defaultsKey = facebook ? kShelbyFacebookShareEnable : kShelbyTwitterShareEnable;
     [[NSUserDefaults standardUserDefaults] setBool:selected forKey:defaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
     
     if (selected) {
         if (facebook) {

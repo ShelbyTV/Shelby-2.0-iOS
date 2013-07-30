@@ -8,6 +8,9 @@
 
 #import "Frame+Helper.h"
 
+extern NSString * const kShelbyFacebookShareEnable;
+extern NSString * const kShelbyTwitterShareEnable;
+
 typedef void(^SPShareCompletionHandler)(BOOL completed);
 
 @class SPShareController;
