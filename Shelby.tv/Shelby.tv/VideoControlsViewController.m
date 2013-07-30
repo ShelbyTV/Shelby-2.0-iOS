@@ -233,11 +233,6 @@
 
 - (void)adjustForAirplay
 {
-    BOOL airplayVisible = NO;
-    if (self.airPlayButton.alpha == 1) {
-        airplayVisible = YES;
-    }
-
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         // Duration Time Label
         [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:YES];

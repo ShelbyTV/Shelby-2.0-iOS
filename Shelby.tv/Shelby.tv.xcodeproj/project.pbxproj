@@ -44,6 +44,18 @@
 		1C304BF9171EFE4F00476277 /* SPChannelPeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF8171EFE4F00476277 /* SPChannelPeekView.m */; };
 		1C304BFA171EFE4F00476277 /* SPChannelPeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF8171EFE4F00476277 /* SPChannelPeekView.m */; };
 		1C304BFB171EFE4F00476277 /* SPChannelPeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF8171EFE4F00476277 /* SPChannelPeekView.m */; };
+		1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
+		1C309AB417A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
+		1C309AB517A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
+		1C309AB917A714B900D690A8 /* check-social.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB717A714B900D690A8 /* check-social.png */; };
+		1C309ABA17A714B900D690A8 /* check-social.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB717A714B900D690A8 /* check-social.png */; };
+		1C309ABB17A714B900D690A8 /* check-social.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB717A714B900D690A8 /* check-social.png */; };
+		1C309ABC17A714B900D690A8 /* check-social@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB817A714B900D690A8 /* check-social@2x.png */; };
+		1C309ABD17A714B900D690A8 /* check-social@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB817A714B900D690A8 /* check-social@2x.png */; };
+		1C309ABE17A714B900D690A8 /* check-social@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB817A714B900D690A8 /* check-social@2x.png */; };
+		1C309AC117A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
+		1C309AC217A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
+		1C309AC317A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -1277,6 +1289,11 @@
 		1C304BF3171EF0B000476277 /* SPChannelDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPChannelDisplay.m; sourceTree = "<group>"; };
 		1C304BF7171EFE4F00476277 /* SPChannelPeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChannelPeekView.h; sourceTree = "<group>"; };
 		1C304BF8171EFE4F00476277 /* SPChannelPeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPChannelPeekView.m; sourceTree = "<group>"; };
+		1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyShareView.xib; sourceTree = "<group>"; };
+		1C309AB717A714B900D690A8 /* check-social.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-social.png"; sourceTree = "<group>"; };
+		1C309AB817A714B900D690A8 /* check-social@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-social@2x.png"; sourceTree = "<group>"; };
+		1C309ABF17A7196800D690A8 /* ShelbyShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyShareViewController.h; sourceTree = "<group>"; };
+		1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyShareViewController.m; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1941,6 +1958,15 @@
 			name = FormViews;
 			sourceTree = "<group>";
 		};
+		1C309AB617A7149F00D690A8 /* Share Images */ = {
+			isa = PBXGroup;
+			children = (
+				1C309AB717A714B900D690A8 /* check-social.png */,
+				1C309AB817A714B900D690A8 /* check-social@2x.png */,
+			);
+			name = "Share Images";
+			sourceTree = "<group>";
+		};
 		1C6ACFD51721E0B20008DEC2 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
@@ -2116,6 +2142,7 @@
 				1C7B63C1178B0AC2000C1E84 /* SignupFlow.storyboard */,
 				1C7B63DD178B7B21000C1E84 /* SignupVideoTypeViewCell.xib */,
 				1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */,
+				1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */,
 				9188F230178C99F7002F342B /* ShelbyNavBarView.xib */,
 				91F168161797122200AF8A2E /* WelcomeFlow.storyboard */,
 				91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */,
@@ -2399,6 +2426,7 @@
 		8E32BF86167FA58400753723 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1C309AB617A7149F00D690A8 /* Share Images */,
 				1CD255C517A1DD0A0049FF30 /* Home */,
 				1C154E5517A071CD00C0B76B /* No Content Images */,
 				916F41C1179F06A9001D9DF7 /* Welcome Images */,
@@ -2804,6 +2832,8 @@
 				916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */,
 				916F41B31799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.h */,
 				916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */,
+				1C309ABF17A7196800D690A8 /* ShelbyShareViewController.h */,
+				1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -3300,6 +3330,9 @@
 				1C534E4117A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
 				1CD255C917A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CC17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
+				1C309AB417A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
+				1C309ABA17A714B900D690A8 /* check-social.png in Resources */,
+				1C309ABD17A714B900D690A8 /* check-social@2x.png in Resources */,
 				916F426517A73119001D9DF7 /* buzzfeed.m4v in Resources */,
 				916F426917A73CFE001D9DF7 /* facebook.m4v in Resources */,
 				916F426F17A74480001D9DF7 /* patagonia.m4v in Resources */,
@@ -3571,6 +3604,9 @@
 				1C534E4217A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
 				1CD255CA17A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CD17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
+				1C309AB517A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
+				1C309ABB17A714B900D690A8 /* check-social.png in Resources */,
+				1C309ABE17A714B900D690A8 /* check-social@2x.png in Resources */,
 				916F426617A73119001D9DF7 /* buzzfeed.m4v in Resources */,
 				916F426A17A73CFE001D9DF7 /* facebook.m4v in Resources */,
 				916F427017A74480001D9DF7 /* patagonia.m4v in Resources */,
@@ -3843,6 +3879,9 @@
 				1C534E4017A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
 				1CD255C817A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CB17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
+				1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
+				1C309AB917A714B900D690A8 /* check-social.png in Resources */,
+				1C309ABC17A714B900D690A8 /* check-social@2x.png in Resources */,
 				916F426417A73119001D9DF7 /* buzzfeed.m4v in Resources */,
 				916F426817A73CFE001D9DF7 /* facebook.m4v in Resources */,
 				916F426E17A74480001D9DF7 /* patagonia.m4v in Resources */,
@@ -3989,6 +4028,7 @@
 				916F41BF179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4617A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 				916F425D17A17716001D9DF7 /* User.m in Sources */,
+				1C309AC217A7196800D690A8 /* ShelbyShareViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4127,6 +4167,7 @@
 				916F41C0179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4717A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 				916F425E17A17716001D9DF7 /* User.m in Sources */,
+				1C309AC317A7196800D690A8 /* ShelbyShareViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4265,6 +4306,7 @@
 				916F41BE179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4517A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 				916F425C17A17716001D9DF7 /* User.m in Sources */,
+				1C309AC117A7196800D690A8 /* ShelbyShareViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

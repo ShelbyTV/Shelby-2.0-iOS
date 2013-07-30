@@ -8,6 +8,9 @@
 
 #import "Frame+Helper.h"
 
+extern NSString * const kShelbyFacebookShareEnable;
+extern NSString * const kShelbyTwitterShareEnable;
+
 typedef void(^SPShareCompletionHandler)(BOOL completed);
 
 @class SPShareController;
@@ -17,7 +20,7 @@ typedef void(^SPShareCompletionHandler)(BOOL completed);
 - (void)shareControllerRequestsTwitterPublishPermissions:(SPShareController *)shareController;
 @end
 
-@interface SPShareController : NSObject <UITextViewDelegate, UIPopoverControllerDelegate>
+@interface SPShareController : NSObject <UITextViewDelegate>
 
 @property (nonatomic, weak) id<SPShareControllerDelegate> delegate;
 
@@ -26,12 +29,9 @@ typedef void(^SPShareCompletionHandler)(BOOL completed);
 /// UI Methods
 - (void)shareWithCompletionHandler:(SPShareCompletionHandler)completionHandler;
 //DJS not sure when/why the following two are used, didn't touch them...
-- (void)showRollView;
-- (void)hideRollView;
 
-/// Action Methods
-- (IBAction)cancelButtonAction:(id)sender;
-- (IBAction)rollButtonAction:(id)sender;
-- (IBAction)toggleSocialButtonStates:(id)sender;
+- (void)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected;
 
+- (void)shelbyShareWithMessage:(NSString *)message withFacebook:(BOOL)shareOnFacebook andWithTwitter:(BOOL)shareOnTwitter;
+- (void)nativeShareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController;
 @end
