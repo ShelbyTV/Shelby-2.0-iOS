@@ -177,7 +177,7 @@
     [self updateSelectionIdentifierLocationToCurrentRow];
 }
 
-//to allow touch events to pass through the background
+//allow touch events to pass through the background when contracted, capture everything when expanded
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
     //slider's subviews, not stationary wrapper
@@ -186,6 +186,12 @@
             return YES;
         }
     }
+
+    //tap outside of expanded nav bar view
+    if (!self.currentRow) {
+        return YES;
+    }
+
     return NO;
 }
 

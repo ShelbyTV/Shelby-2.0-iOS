@@ -61,6 +61,12 @@
 //    
 //        [browseViewController didMoveToParentViewController:self];
 //    } else {
+    
+    /* Order of views:
+     * On top of everything, navBar.
+     * Just below navBar: videoControls.
+     * Everything else gets added below the video controls (ie. streamBrowseVC, videoReel)
+     */
     [self setupNavBarView];
     [self setupVideoControlsView];
     [self showNavBarButton];
@@ -97,7 +103,7 @@
     _videoControlsVC.delegate = self;
     [_videoControlsVC willMoveToParentViewController:self];
     [_videoControlsVC.view setFrame:CGRectMake(0, kShelbyFullscreenHeight - self.videoControlsVC.view.frame.size.height, _videoControlsVC.view.frame.size.width, _videoControlsVC.view.frame.size.height)];
-    [self.view insertSubview:_videoControlsVC.view aboveSubview:self.navBar];
+    [self.view insertSubview:_videoControlsVC.view belowSubview:self.navBar];
     _videoControlsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[controls]|"
                                                                       options:0
@@ -204,7 +210,7 @@
     [self.currentStreamBrowseVC willMoveToParentViewController:nil];
     [self addChildViewController:sbvc];
     
-    [self.view insertSubview:sbvc.view belowSubview:self.navBar];
+    [self.view insertSubview:sbvc.view belowSubview:self.videoControlsVC.view];
     sbvc.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0);
     
     if (self.currentStreamBrowseVC) {
