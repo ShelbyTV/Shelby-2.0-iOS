@@ -137,22 +137,29 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     return YES;
 }
 
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    //since we are subview, our view's frame is correctly set w/r/t orientation
-    NSInteger height = self.view.frame.size.height;
-    NSInteger width = self.view.frame.size.width;
-    
-    CGSize contentSize =  CGSizeMake(width, height * [self.videoPlayers count]);
-    CGPoint contentOffset = CGPointMake(0, height * self.currentVideoPlayingIndex);
-    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        //don't need to do anything if we didn't change! (this happens b/c upside phone isn't supported)
+        return;
+    }
+
+    NSInteger futureWidth = self.view.frame.size.height;
+    NSInteger futureHeight = self.view.frame.size.width;
+
+    CGSize contentSize =  CGSizeMake(futureWidth, futureHeight * [self.videoPlayers count]);
+    CGPoint contentOffset = CGPointMake(0, futureHeight * self.currentVideoPlayingIndex);
+
     self.videoScrollView.contentSize = contentSize;
     self.videoScrollView.contentOffset = contentOffset;
-    
+
+    //the bounds' of the SPVideoPlayers inside of the scroll view are automatically updated,
+    //but that doesn't change their position.  So let's put them into their new position for smooth animation
     NSInteger i = 0;
     for (SPVideoPlayer *player in self.videoPlayers) {
-        player.view.frame = CGRectMake(0, height * i, width, height);
+        player.view.frame = CGRectMake(0, futureHeight * i, player.view.frame.size.width, player.view.frame.size.height);
         i++;
     }
 }
@@ -238,11 +245,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)createVideoPlayerForEntity:(id<ShelbyVideoContainer>)entity atPosition:(NSUInteger)idx
 {
-    Frame *videoFrame = [Frame frameForEntity:entity];
-    SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithViewFrame:[self rectForPlayerAtPosition:idx]
-                                                          videoFrame:videoFrame];
-
+    SPVideoPlayer *player = [[SPVideoPlayer alloc] initWithVideoFrame:[Frame frameForEntity:entity]];
+    player.view.frame = [self rectForPlayerAtPosition:idx];
     player.videoPlayerDelegate = self;
+
     [self.videoPlayers addObject:player];
     [player willMoveToParentViewController:self];
     [self addChildViewController:player];
@@ -351,7 +357,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         id<ShelbyVideoContainer>entity = deduplicatedEntries[i];
         if (curPlayer.videoFrame == [Frame frameForEntity:entity]) {
             //the current player matches the new frame, sweet, just use it here
-            [curPlayer setViewFrame:[self rectForPlayerAtPosition:i]];
+            curPlayer.view.frame = [self rectForPlayerAtPosition:i];
             self.currentVideoPlayingIndex = i;
             curPlayer = nil;
         }
