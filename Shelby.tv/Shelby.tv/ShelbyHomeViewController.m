@@ -354,6 +354,11 @@
     } else {
         [self showNavBarButton];
     }
+    
+    // If there is SettingsVC, make sure the user is updated
+    if (_settingsVC) {
+        _settingsVC.user = currentUser;
+    }
 
     self.navBarVC.currentUser = currentUser;
 }

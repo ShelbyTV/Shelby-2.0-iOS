@@ -100,6 +100,12 @@
     }
 }
 
+- (void)setUser:(User *)user
+{
+    _user = user;
+    
+    [self.table reloadData];
+}
 
 #pragma mark - User Interaction Methods
 - (IBAction)goToMyLikes:(id)sender
@@ -222,9 +228,9 @@
     [self.table deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row == 1) {
-        [self connectoToTwitter:nil];
-    } else if (indexPath.row == 2) {
         [self connectoToFacebook:nil];
+    } else if (indexPath.row == 2) {
+        [self connectoToTwitter:nil];
     } else if (indexPath.row == 3) {
         [self logout:nil];
     } else if (indexPath.row == 4) {
