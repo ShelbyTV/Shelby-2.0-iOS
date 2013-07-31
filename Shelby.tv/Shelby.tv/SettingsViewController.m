@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *fullname;
 @property (weak, nonatomic) IBOutlet UITableView *table;
 
+@property (assign, nonatomic) BOOL facebookConnected;
+@property (assign, nonatomic) BOOL twitterConnected;
+
 /// User interaction methods
 - (IBAction)connectoToFacebook:(id)sender;
 - (IBAction)connectoToTwitter:(id)sender;
@@ -176,9 +179,12 @@
         cell.avatar.layer.cornerRadius = 5;
         cell.avatar.layer.masksToBounds = YES;
         [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:nil];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
         SettingsViewCell *cell = (SettingsViewCell *)[self.table dequeueReusableCellWithIdentifier:@"SettingsViewCell" forIndexPath:indexPath];
+ 
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
         cell.secondaryTitle.hidden = YES;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
@@ -188,8 +194,11 @@
                 cell.secondaryTitle.text = self.user.facebookNickname;
                 cell.secondaryTitle.hidden = NO;
                 cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                self.facebookConnected = YES;
             } else {
                 cell.mainTitle.text = @"Connect to Facebook";
+                self.facebookConnected = NO;
             }
         } else if (indexPath.row == 2) {
             if (self.user.twitterNickname) {
@@ -197,8 +206,11 @@
                 cell.secondaryTitle.text = self.user.twitterNickname;
                 cell.secondaryTitle.hidden = NO;
                 cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                self.twitterConnected= YES;
             } else {
                 cell.mainTitle.text = @"Connect to Twitter";
+                self.twitterConnected= NO;
             }
         } else if (indexPath.row == 3) {
             cell.mainTitle.text = @"Logout";
@@ -227,9 +239,9 @@
 {
     [self.table deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 1) {
+    if (indexPath.row == 1 && !self.facebookConnected) {
         [self connectoToFacebook:nil];
-    } else if (indexPath.row == 2) {
+    } else if (indexPath.row == 2 && !self.twitterConnected) {
         [self connectoToTwitter:nil];
     } else if (indexPath.row == 3) {
         [self logout:nil];
