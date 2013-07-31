@@ -844,30 +844,6 @@
     }];
 }
 
-#pragma mark - Beta Stuff
-- (IBAction)feedbackTapped:(UIButton *)sender {
-    if([MFMailComposeViewController canSendMail]){
-        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-        mailer.mailComposeDelegate = self;
-        [mailer setSubject:[NSString stringWithFormat:@"iPad Feedback (%@-%@, %@ v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]]];
-        [mailer setToRecipients:@[@"ipad@shelby.tv"]];
-        [mailer setMessageBody:@"Believe it or not, a human will read this!  :-]\n\nWe really appreciate your ideas and feedback.  Feel free to write anything you want and we'll follow up with you." isHTML:NO];
-        [self presentViewController:mailer animated:YES completion:nil];
-    } else {
-        [[[ShelbyAlertView alloc] initWithTitle:@"We'd Love to Hear from You!"
-                                        message:@"Please email your feedback to us: ipad@shelby.tv"
-                             dismissButtonTitle:@"Ok"
-                                 autodimissTime:0
-                                      onDismiss:nil]
-         show];
-    }
-}
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 #pragma mark - ShelbyNavBarDelegate
 
 - (void)navBarViewControllerWillExpand:(ShelbyNavBarViewController *)navBarVC

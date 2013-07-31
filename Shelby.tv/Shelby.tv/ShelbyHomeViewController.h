@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "BrowseViewController.h"
-#import <MessageUI/MessageUI.h>
 #import "SettingsViewController.h"
 #import "ShelbyNavBarViewController.h"
 #import "ShelbyStreamBrowseViewController.h"
@@ -29,7 +28,7 @@
 @end
 
 
-@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate>
+@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIAlertViewDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate>
 
 // We assume these are all of our channels, in the correct order
 @property (nonatomic, strong) NSArray *channels;

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import <MessageUI/MessageUI.h>
 
 @protocol SettingsViewDelegate <NSObject>
 - (void)logoutUser;
@@ -18,7 +19,7 @@
 - (void)launchMyLikes;
 @end
 
-@interface SettingsViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SettingsViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) User *user;
 @property (nonatomic, weak) id<SettingsViewDelegate> delegate;

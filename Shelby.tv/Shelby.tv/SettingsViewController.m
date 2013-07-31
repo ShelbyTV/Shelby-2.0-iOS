@@ -12,6 +12,7 @@
 #import "SettingsViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "UserDetailsCell.h"
+#import "ShelbyAlertView.h"
 #import "ShelbyDataMediator.h"
 
 @interface SettingsViewController ()
@@ -227,11 +228,36 @@
     } else if (indexPath.row == 3) {
         [self logout:nil];
     } else if (indexPath.row == 4) {
-        
+        [self openMailComposer];
     } else if (indexPath.row == 5) {
-        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=467849037"]];        
     }
 
     // TODO: once we have the viewcontroller in the right place, make sure you register observers and refresh table to see that user has FB/TW user and logged out... etc.
 }
+
+- (void)openMailComposer {
+    if([MFMailComposeViewController canSendMail]){
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        mailer.mailComposeDelegate = self;
+        [mailer setSubject:[NSString stringWithFormat:@"iPhone Feedback (%@-%@, %@ v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]]];
+        [mailer setToRecipients:@[@"ipad@shelby.tv"]];
+        [mailer setMessageBody:@"Believe it or not, a human will read this!  :-]\n\nWe really appreciate your ideas and feedback.  Feel free to write anything you want and we'll follow up with you." isHTML:NO];
+        [self presentViewController:mailer animated:YES completion:nil];
+    } else {
+        [[[ShelbyAlertView alloc] initWithTitle:@"We'd Love to Hear from You!"
+                                        message:@"Please email your feedback to us: ipad@shelby.tv"
+                             dismissButtonTitle:@"Ok"
+                                 autodimissTime:0
+                                      onDismiss:nil]
+         show];
+    }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 @end
