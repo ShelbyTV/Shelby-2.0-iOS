@@ -413,11 +413,15 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)pauseCurrentPlayer
 {
     [self.currentPlayer pause];
+    // allow display to sleep
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 - (void)playCurrentPlayer
 {
     [self.currentPlayer play];
+    // prevent display from sleeping while watching video
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 - (void)beginScrubbing

@@ -422,6 +422,9 @@
 
 - (void)prepareToShowVideoReel
 {
+    // prevent display from sleeping while watching video
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
 //    if (DEVICE_IPAD) {
 //        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 //    }
@@ -442,6 +445,9 @@
 //    if (DEVICE_IPAD) {
 //        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 //    }
+
+    // allow display to sleep
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 //DEPRECATED

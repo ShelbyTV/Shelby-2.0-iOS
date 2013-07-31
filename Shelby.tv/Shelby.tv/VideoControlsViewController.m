@@ -200,6 +200,7 @@
 {
     if (_currentEntity != currentEntity) {
         _currentEntity = currentEntity;
+        [self resetVideoControlsToInitialConditions];
         [self updateViewForCurrentEntity];
     }
 }
@@ -227,9 +228,6 @@
         [self adjustForAirplay];
     }
 }
-
-
-
 
 - (void)adjustForAirplay
 {
@@ -278,8 +276,8 @@
     CGFloat scrubPct = [self.controlsView playbackTargetPercentForTouch:scrubTouch];
     CMTime scrubTime = CMTimeMultiplyByFloat64(self.duration, scrubPct);
 
-    //must update time label ourselves
-    self.controlsView.currentTimeLabel.text = [self prettyStringForTime:scrubTime];
+    //updates cur time and countdown time
+    self.currentTime = scrubTime;
     [self.delegate videoControls:self scrubCurrentVideoTo:scrubPct];
 }
 
@@ -333,19 +331,17 @@
 {
     if (CMTimeCompare(_currentTime, time) != 0) {
         _currentTime = time;
-        //current time label reflects user touch point during scrubbing, even if playback continues
-        if (!self.currentlyScrubbing) {
-            self.controlsView.currentTimeLabel.text = [self prettyStringForTime:time];
-            [self updateScrubheadForCurrentTime];
-        }
+        self.controlsView.currentTimeLabel.text = [self prettyStringForTime:time];
+        self.controlsView.durationLabel.text = [NSString stringWithFormat:@"-%@", [self prettyStringForTime:(CMTimeSubtract(self.duration, self.currentTime))]];
+        [self updateScrubheadForCurrentTime];
     }
 }
 
 - (void)setDuration:(CMTime)duration
 {
-    if (CMTimeCompare(_duration, duration) !=0) {
+    if (CMTimeCompare(_duration, duration) != 0) {
         _duration = duration;
-        self.controlsView.durationLabel.text = [self prettyStringForTime:duration];
+        self.controlsView.durationLabel.text = [NSString stringWithFormat:@"-%@", [self prettyStringForTime:duration]];
     }
 }
 
@@ -372,6 +368,12 @@
         self.controlsView.likeButton.hidden = isLiked;
         self.controlsView.unlikeButton.hidden = !isLiked;
     }
+}
+
+- (void)resetVideoControlsToInitialConditions
+{
+    self.currentTime = CMTimeMake(0, NSEC_PER_MSEC);
+    self.bufferedRange = CMTimeRangeMake(CMTimeMake(0, NSEC_PER_MSEC), CMTimeMake(0, NSEC_PER_MSEC));
 }
 
 - (void)updateViewForCurrentDisplayMode

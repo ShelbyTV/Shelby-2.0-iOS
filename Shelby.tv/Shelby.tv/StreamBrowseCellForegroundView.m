@@ -33,6 +33,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *summaryUsername;
 @property (weak, nonatomic) IBOutlet UIView *summaryUserView;
 @property (weak, nonatomic) IBOutlet UILabel *summaryViaNetwork;
+
+//overlay below everything
+@property (nonatomic, strong) UIImageView *overlayImageView;
 @end
 
 @implementation StreamBrowseCellForegroundView
@@ -54,6 +57,9 @@
     self.detailUserAvatar.layer.masksToBounds = YES;
     self.summaryUserAvatar.layer.cornerRadius = 5;
     self.summaryUserAvatar.layer.masksToBounds = YES;
+
+    [self setupOverlayImageView];
+    [self insertSubview:self.overlayImageView atIndex:0];
 }
 
 - (void)layoutSubviews
@@ -97,6 +103,8 @@
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
  
     [self resizeViewsForContent];
+
+    [self setupOverlayImageView];
 }
 
 
@@ -220,6 +228,30 @@
 
     //tighting up the height of surrounding box as well
     self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, textBasedHeight + detailWhiteBackgroundHeightAdjustment);
+}
+
+- (void)setupOverlayImageView
+{
+    NSString *imageName = nil;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        imageName = @"overlay-landscape.png";
+    } else {
+        if (kShelbyFullscreenHeight > 480) {
+            imageName = @"overlay-568h.png";
+        } else {
+            imageName = @"overlay.png";
+        }
+    }
+
+    UIImage *overlayImage = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
+
+    if (!self.overlayImageView) {
+        self.overlayImageView = [[UIImageView alloc] initWithImage:overlayImage];
+    } else {
+        self.overlayImageView.image = overlayImage;
+    }
+
+    self.overlayImageView.frame = CGRectMake(-400, 0, self.frame.size.width + 800, self.frame.size.height);
 }
 
 @end

@@ -91,7 +91,6 @@
     [self.brain handleLocalNotificationReceived:notifcation];
 }
 
-
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [self.brain handleDidBecomeActive];
@@ -99,9 +98,6 @@
     // Enable Audio Play in Vibrate and Background Modes
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
-    
-    // prevent display from sleeping while watching video
-    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     [[FacebookHandler sharedInstance] handleDidBecomeActive];
 }
