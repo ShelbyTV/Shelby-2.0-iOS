@@ -9,12 +9,16 @@
 #import "SettingsViewController.h"
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
+#import "SettingsViewCell.h"
+#import "UIImageView+AFNetworking.h"
+#import "UserDetailsCell.h"
 #import "ShelbyDataMediator.h"
 
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *faceookButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @property (weak, nonatomic) IBOutlet UILabel *fullname;
+@property (weak, nonatomic) IBOutlet UITableView *table;
 
 /// User interaction methods
 - (IBAction)connectoToFacebook:(id)sender;
@@ -31,7 +35,12 @@
 
 - (id)initWithUser:(User *)user
 {
-    self = [super initWithNibName:@"SettingsView" bundle:nil];
+    return [self initWithUser:user andNibName:@"SettingsView"];
+}
+
+- (id)initWithUser:(User *)user andNibName:(NSString *)nibName
+{
+    self = [super initWithNibName:nibName bundle:nil];
     if (self) {
         _user = user;
     }
@@ -44,6 +53,11 @@
     // KP KP: TODO: Next line will crash in a Universal app.
     self.contentSizeForViewInPopover = CGSizeMake(332, 230);
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"settings_pane.png"]]];
+    
+    [self.table registerNib:[UINib nibWithNibName:@"UserDetailsViewCell" bundle:nil] forCellReuseIdentifier:@"UserDetailsViewCell"];
+    [self.table registerNib:[UINib nibWithNibName:@"SettingsViewCell" bundle:nil] forCellReuseIdentifier:@"SettingsViewCell"];
+    
+    [self.table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SettingsCell"];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -131,7 +145,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(logout)]) {
+        if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(logoutUser)]) {
             [self.delegate logoutUser];
         }
    
@@ -140,4 +154,84 @@
     }
 }
 
+#pragma mark - UITableViewDataSource Methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 6;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        UserDetailsCell *cell = (UserDetailsCell *)[self.table dequeueReusableCellWithIdentifier:@"UserDetailsViewCell" forIndexPath:indexPath];
+        cell.name.text = self.user.name;
+        cell.userName.text = self.user.nickname;
+        cell.avatar.layer.cornerRadius = 5;
+        cell.avatar.layer.masksToBounds = YES;
+        [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:nil];
+        return cell;
+    } else {
+        SettingsViewCell *cell = (SettingsViewCell *)[self.table dequeueReusableCellWithIdentifier:@"SettingsViewCell" forIndexPath:indexPath];
+        cell.secondaryTitle.hidden = YES;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        if (indexPath.row == 1) {
+            if (self.user.facebookNickname) {
+                cell.mainTitle.text = @"Facebook:";
+                cell.secondaryTitle.text = self.user.facebookNickname;
+                cell.secondaryTitle.hidden = NO;
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            } else {
+                cell.mainTitle.text = @"Connect to Facebook";
+            }
+        } else if (indexPath.row == 2) {
+            if (self.user.twitterNickname) {
+                cell.mainTitle.text = @"Twitter:";
+                cell.secondaryTitle.text = self.user.twitterNickname;
+                cell.secondaryTitle.hidden = NO;
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            } else {
+                cell.mainTitle.text = @"Connect to Twitter";
+            }
+        } else if (indexPath.row == 3) {
+            cell.mainTitle.text = @"Logout";
+        } else if (indexPath.row == 4) {
+            cell.mainTitle.text = @"Give us Feedback";
+        } else {
+            cell.mainTitle.text = @"Review us on App Store";
+        }
+        
+        return cell;
+    }
+}
+
+
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        return 88;
+    }
+    
+    return 45;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.table deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.row == 1) {
+        [self connectoToTwitter:nil];
+    } else if (indexPath.row == 2) {
+        [self connectoToFacebook:nil];
+    } else if (indexPath.row == 3) {
+        [self logout:nil];
+    } else if (indexPath.row == 4) {
+        
+    } else if (indexPath.row == 5) {
+        
+    }
+
+    // TODO: once we have the viewcontroller in the right place, make sure you register observers and refresh table to see that user has FB/TW user and logged out... etc.
+}
 @end

@@ -13,15 +13,17 @@
 - (void)logoutUser;
 - (void)connectToFacebook;
 - (void)connectToTwitter;
+@optional
 - (void)launchMyRoll;
 - (void)launchMyLikes;
 @end
 
-@interface SettingsViewController : UIViewController <UIAlertViewDelegate>
+@interface SettingsViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) User *user;
 @property (nonatomic, weak) id<SettingsViewDelegate> delegate;
 
 - (id)initWithUser:(User *)user;
+- (id)initWithUser:(User *)user andNibName:(NSString *)nibName;
 
 @end

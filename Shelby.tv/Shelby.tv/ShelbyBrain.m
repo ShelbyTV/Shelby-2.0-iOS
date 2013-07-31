@@ -11,6 +11,7 @@
 #import "DashboardEntry.h"
 #import "DisplayChannel+Helper.h"
 #import "ShelbyDVRController.h"
+#import "SettingsViewController.h"
 #import "Roll+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
@@ -764,6 +765,7 @@ typedef struct _ShelbyArrayMergeInstructions {
                                                  }];
 }
 
+// Some of these methods are also for SettingsViewDelefate
 #pragma mark - ShelbyHomeDelegate
 - (void)presentUserLogin
 {
@@ -900,9 +902,13 @@ typedef struct _ShelbyArrayMergeInstructions {
 //    } else {
         //XXX Temporary
         //TODO: Show a new settings view per Wireframes
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
-    actionSheet.destructiveButtonIndex = 2;
-    [actionSheet showInView:self.mainWindow.rootViewController.view];
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
+//    actionSheet.destructiveButtonIndex = 2;
+//    [actionSheet showInView:self.mainWindow.rootViewController.view];
+    
+    SettingsViewController *settingsVC = [[SettingsViewController alloc] initWithUser:self.homeVC.currentUser andNibName:@"SettingsView-iPhone"];
+    settingsVC.delegate = self;
+    [self.homeVC presentViewController:settingsVC animated:YES completion:nil];
 //    }
 }
 
