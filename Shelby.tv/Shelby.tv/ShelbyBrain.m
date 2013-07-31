@@ -889,36 +889,6 @@ typedef struct _ShelbyArrayMergeInstructions {
     [self.homeVC didNavigateToCommunityChannel];
 }
 
-- (void)goToUsersSettings
-{
-//    if (DEVICE_IPAD) {
-//        if(!self.settingsPopover) {
-//            SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithUser:self.currentUser];
-//
-//            _settingsPopover = [[UIPopoverController alloc] initWithContentViewController:settingsViewController];
-//            [self.settingsPopover setDelegate:self];
-//            [settingsViewController setDelegate:self];
-//        } else {
-//            SettingsViewController *settingsViewController = (SettingsViewController *)[self.settingsPopover contentViewController];
-//            if ([settingsViewController isKindOfClass:[SettingsViewController class]]) {
-//                settingsViewController.user = self.currentUser;
-//            }
-//        }
-//
-//        [self.settingsPopover presentPopoverFromRect:self.settingsView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-//    } else {
-        //XXX Temporary
-        //TODO: Show a new settings view per Wireframes
-//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect to Facebook", @"Connect to Twitter", @"Logout", nil];
-//    actionSheet.destructiveButtonIndex = 2;
-//    [actionSheet showInView:self.mainWindow.rootViewController.view];
-    
-    SettingsViewController *settingsVC = [[SettingsViewController alloc] initWithUser:self.homeVC.currentUser andNibName:@"SettingsView-iPhone"];
-    settingsVC.delegate = self;
-    [self.homeVC presentViewController:settingsVC animated:YES completion:nil];
-//    }
-}
-
 - (ShelbyBrowseTutorialMode)browseTutorialMode
 {
     return self.currentBrowseTutorialMode;

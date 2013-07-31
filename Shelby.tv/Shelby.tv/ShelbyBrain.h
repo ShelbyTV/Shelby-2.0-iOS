@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "BrowseViewController.h"
 #import "LoginViewController.h"
+#import "SettingsViewController.h"
 #import "ShelbyHomeViewController.h"
 #import "ShelbyStreamBrowseViewController.h"
 #import "SignupFlowNavigationViewController.h"

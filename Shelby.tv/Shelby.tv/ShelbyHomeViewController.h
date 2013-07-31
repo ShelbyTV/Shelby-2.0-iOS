@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BrowseViewController.h"
 #import <MessageUI/MessageUI.h>
-#import "SettingsViewController.h"
 #import "ShelbyNavBarViewController.h"
 #import "ShelbyStreamBrowseViewController.h"
 #import "SPShareController.h"
@@ -25,7 +24,6 @@
 - (void)goToUsersLikes;
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
-- (void)goToUsersSettings;
 @end
 
 

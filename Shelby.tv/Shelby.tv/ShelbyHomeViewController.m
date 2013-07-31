@@ -12,11 +12,14 @@
 #import "DisplayChannel.h"
 #import "ImageUtilities.h"
 #import "Roll+Helper.h"
+#import "SettingsViewController.h"
 #import "ShelbyAlertView.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 
-@interface ShelbyHomeViewController ()
+@interface ShelbyHomeViewController () {
+    SettingsViewController *_settingsVC;
+}
 @property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
 @property (nonatomic, weak) UIView *navBar;
 @property (nonatomic, strong) UIView *navBarButtonView;
@@ -576,21 +579,25 @@
 
 - (void)didNavigateToCommunityChannel
 {
+    [self dismissSettings];
     [self.navBarVC didNavigateToCommunityChannel];
 }
 
 - (void)didNavigateToUsersStream
 {
+    [self dismissSettings];
     [self.navBarVC didNavigateToUsersStream];
 }
 
 - (void)didNavigateToUsersLikes
 {
+    [self dismissSettings];
     [self.navBarVC didNavigateToUsersLikes];
 }
 
 - (void)didNavigateToUsersRoll
 {
+    [self dismissSettings];
     [self.navBarVC didNavigateToUsersShares];
 }
 
@@ -919,17 +926,53 @@
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     [self.videoReel pauseCurrentPlayer];
-    [self.masterDelegate goToUsersSettings];
-    //settings will be modal, nav hasn't actually changed...
-    [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
+    if (selectedNewRow) {
+        [self presentSettings];
+    } else {
+        //already showing settings, nothing to do
+    }
+
 }
 
 - (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
+    [self dismissSettings];
     [self.videoReel pauseCurrentPlayer];
     [self.masterDelegate presentUserLogin];
     //login is modal, nav hasn't actually changed...
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
+}
+
+- (void)presentSettings
+{
+    if (!_settingsVC) {
+        _settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser andNibName:@"SettingsView-iPhone"];
+        _settingsVC.delegate = self.masterDelegate;
+
+        [_settingsVC willMoveToParentViewController:self];
+        [self addChildViewController:_settingsVC];
+        [self.view insertSubview:_settingsVC.view belowSubview:self.navBar];
+        _settingsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[settings]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"settings":_settingsVC.view}]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[settings]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"settings":_settingsVC.view}]];
+        [_settingsVC didMoveToParentViewController:self];
+    }
+}
+
+- (void)dismissSettings
+{
+    if (_settingsVC) {
+        [_settingsVC willMoveToParentViewController:nil];
+        [_settingsVC.view removeFromSuperview];
+        [_settingsVC removeFromParentViewController];
+        _settingsVC = nil;
+    }
 }
 
 @end
