@@ -100,4 +100,9 @@
     [self.signupDelegate completeSignupUserWithName:name username:username password:password email:email avatar:avatar andRolls:rollsToFollow];
 }
 
+- (void)wantsLogin
+{
+    [self.signupDelegate signupFlowNavigationViewControllerWantsLogin:self];
+}
+
 @end

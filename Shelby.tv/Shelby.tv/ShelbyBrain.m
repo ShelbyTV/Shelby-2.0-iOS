@@ -764,6 +764,13 @@ typedef struct _ShelbyArrayMergeInstructions {
                                                  }];
 }
 
+- (void)signupFlowNavigationViewControllerWantsLogin:(SignupFlowNavigationViewController *)signupVC
+{
+    [self dismissSigupVCCompletion:^{
+        [self presentLoginVC];
+    }];
+}
+
 #pragma mark - ShelbyHomeDelegate
 - (void)presentUserLogin
 {
@@ -972,5 +979,7 @@ typedef struct _ShelbyArrayMergeInstructions {
         [self presentSignupVC];
     }];
 }
+
+//mirror method signupFlowNavigationViewControllerWantsLogin: implemented above
 
 @end

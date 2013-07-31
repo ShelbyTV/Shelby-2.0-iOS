@@ -121,6 +121,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)loginTapped:(UIButton *)sender {
+    //DS to KP: I'm not as familiar with iOS paradigms as you... why are we using parent like this, instead of explicity setting delegate?
+    UIViewController *parent = self.parentViewController;
+    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+        [(id<SignupFlowViewDelegate>)parent wantsLogin];
+    };
+}
+
 - (IBAction)gotoChooseVideoTypes:(id)sender
 {
     [self saveValueAndResignActiveTextField];
