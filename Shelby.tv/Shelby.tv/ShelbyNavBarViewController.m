@@ -116,4 +116,19 @@
     self.navBarView.currentRow = _lastSelectedRow;
 }
 
+// When the nav bar view is expanded, it returns YES for all touches on screen, but then doesn't handle the touch.
+// So the event bubbles up to here where we get to handle it.
+// In this case, we simply want to collapse the nav bar.
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    //don't care which kind of touches, we'll allow anything to collapse nav bar
+    if (!self.navBarView.currentRow) {
+        //collapse nav bar, swallow the event
+        [self returnSelectionToPreviousRow];
+    } else {
+        //pass the event up the chain
+        [super touchesEnded:touches withEvent:event];
+    }
+}
+
 @end

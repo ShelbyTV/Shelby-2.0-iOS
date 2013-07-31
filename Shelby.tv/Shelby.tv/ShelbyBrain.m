@@ -765,6 +765,13 @@ typedef struct _ShelbyArrayMergeInstructions {
                                                  }];
 }
 
+- (void)signupFlowNavigationViewControllerWantsLogin:(SignupFlowNavigationViewController *)signupVC
+{
+    [self dismissSigupVCCompletion:^{
+        [self presentLoginVC];
+    }];
+}
+
 // Some of these methods are also for SettingsViewDelefate
 #pragma mark - ShelbyHomeDelegate
 - (void)presentUserLogin
@@ -978,5 +985,7 @@ typedef struct _ShelbyArrayMergeInstructions {
         [self presentSignupVC];
     }];
 }
+
+//mirror method signupFlowNavigationViewControllerWantsLogin: implemented above
 
 @end

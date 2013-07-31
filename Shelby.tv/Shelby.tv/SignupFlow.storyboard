@@ -116,16 +116,48 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxD-FM-aTV" userLabel="login button">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Q6M-2b-H7c"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Already have an account?  ">
+                                                    <attributes>
+                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="Login">
+                                                    <attributes>
+                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
+                                                        <font key="NSOriginalFont" size="14" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                        <integer key="NSUnderline" value="1"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginTapped:" destination="sgp-ZG-jtU" eventType="touchUpInside" id="Xv4-Nb-3r4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="ZYL-g5-c1D" firstAttribute="leading" secondItem="DTd-Te-n9j" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="0Rz-gj-aip"/>
                                     <constraint firstItem="nwr-uj-CmF" firstAttribute="trailing" secondItem="o8p-gd-vjo" secondAttribute="trailing" type="default" id="2Aj-5W-fPE"/>
                                     <constraint firstAttribute="trailing" secondItem="ZYL-g5-c1D" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="8Sv-0P-QcO"/>
+                                    <constraint firstAttribute="trailing" secondItem="yxD-FM-aTV" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="980-Nw-HBH"/>
                                     <constraint firstItem="9nE-1k-IW2" firstAttribute="top" secondItem="DTd-Te-n9j" secondAttribute="top" constant="39" id="Suc-zH-NfU"/>
+                                    <constraint firstItem="yxD-FM-aTV" firstAttribute="leading" secondItem="DTd-Te-n9j" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="XlV-yx-CFB"/>
                                     <constraint firstItem="o8p-gd-vjo" firstAttribute="leading" secondItem="DTd-Te-n9j" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="dh0-E5-mqe"/>
                                     <constraint firstAttribute="trailing" secondItem="9nE-1k-IW2" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="epR-of-5Qz"/>
                                     <constraint firstItem="nwr-uj-CmF" firstAttribute="leading" secondItem="DTd-Te-n9j" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="l7U-cG-b2h"/>
+                                    <constraint firstItem="yxD-FM-aTV" firstAttribute="top" secondItem="ZYL-g5-c1D" secondAttribute="bottom" constant="11" type="user" id="oJX-1c-CPX"/>
                                     <constraint firstItem="ZYL-g5-c1D" firstAttribute="top" secondItem="DTd-Te-n9j" secondAttribute="top" constant="102" type="user" id="wpO-Gi-7XI"/>
                                     <constraint firstAttribute="height" priority="1" constant="150" type="user" id="wph-l1-VzQ"/>
                                     <constraint firstItem="o8p-gd-vjo" firstAttribute="top" secondItem="DTd-Te-n9j" secondAttribute="top" constant="14" id="xne-2Z-cO5"/>
@@ -141,7 +173,6 @@
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="top" relation="greaterThanOrEqual" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="260" type="user" id="AAd-OC-rKv"/>
                             <constraint firstItem="OyT-9q-MsU" firstAttribute="trailing" secondItem="pGl-nd-Jhs" secondAttribute="trailing" type="default" id="Afh-nl-4fF"/>
                             <constraint firstItem="M3R-Mq-Khr" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="76" id="DBd-2F-HuU"/>
-                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="OyT-9q-MsU" secondAttribute="centerX" type="default" id="DH0-78-GYo"/>
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="bottom" secondItem="pGl-nd-Jhs" secondAttribute="bottom" type="user" id="ICo-nL-zR2"/>
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="304" type="user" id="IsT-sh-tdf"/>
                             <constraint firstItem="2tk-Hq-yu9" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" constant="120" id="Ng2-Fj-PrS"/>
@@ -153,6 +184,7 @@
                             <constraint firstItem="I88-xl-uu2" firstAttribute="top" secondItem="M3R-Mq-Khr" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="fKW-jt-Byl"/>
                             <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="I88-xl-uu2" secondAttribute="centerX" type="default" id="fiE-yA-l9K"/>
                             <constraint firstItem="OyT-9q-MsU" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" type="default" id="gm1-vC-92f"/>
+                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="OyT-9q-MsU" secondAttribute="centerX" type="default" id="hAy-Kn-UIg"/>
                             <constraint firstItem="I88-xl-uu2" firstAttribute="centerX" secondItem="M3R-Mq-Khr" secondAttribute="centerX" type="default" id="mBM-1K-7gN"/>
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" type="default" id="sgf-kP-BIg"/>
                         </constraints>

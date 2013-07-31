@@ -17,7 +17,6 @@
     CGFloat _rateBeforeScrubbing;
 }
 
-@property (assign, nonatomic) CGRect viewFrame;
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) UIActivityIndicatorView *videoLoadingIndicator;
 
@@ -47,11 +46,10 @@
 }
 
 #pragma mark - Initialization Methods
-- (id)initWithViewFrame:(CGRect)viewFrame videoFrame:(Frame *)videoFrame
+- (id)initWithVideoFrame:(Frame *)videoFrame
 {
     self = [super init];
     if (self) {
-        _viewFrame = viewFrame;
         _videoFrame = videoFrame;
         _rateBeforeScrubbing = 0.f;
     }
@@ -64,27 +62,9 @@
 {
     [super viewDidLoad];
     
-    [self.view setFrame:self.viewFrame];
     self.isPlayable = NO;
     self.isPlaying = NO;
     self.shouldAutoplay = NO;
-
-    //XXX LAYOUT TESTING
-//    self.view.layer.borderColor = [UIColor blueColor].CGColor;
-//    self.view.layer.borderWidth = 7.0;
-    //XXX LAYOUT TESTING
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    CGRect frame = CGRectMake(0, 0 , self.view.frame.size.width, self.view.frame.size.height);
-    
-    self.playerLayer.bounds = frame;
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -96,12 +76,12 @@
     return YES;
 }
 
-- (void)setViewFrame:(CGRect)viewFrame
+- (void)viewDidLayoutSubviews
 {
-    if (!CGRectEqualToRect(_viewFrame, viewFrame)) {
-        _viewFrame = viewFrame;
-        self.view.frame = viewFrame;
-    }
+    //laying out subviews doesn't change bounds of sublayers...
+    //so we need to update bounds & position of AVPlayerLayer
+    self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    self.playerLayer.position = CGPointMake(self.view.frame.size.width/2.f, self.view.frame.size.height/2.f);
 }
 
 - (void)setupPlayerForURL:(NSURL *)playerURL
@@ -119,13 +99,9 @@
     
     // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-    self.playerLayer.anchorPoint = CGPointMake(0, 0);
+    //NB default anchorPoint is (0.5, 0.5)
     self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-
-    //XXX LAYOUT TESTING
-//    self.playerLayer.borderColor = [UIColor whiteColor].CGColor;
-//    self.playerLayer.borderWidth = 8.0;
-    //XXX LAYOUT TESTING
+    self.playerLayer.position = CGPointMake(self.view.frame.size.width/2.f, self.view.frame.size.height/2.f);
 
     [self.view.layer addSublayer:self.playerLayer];
     

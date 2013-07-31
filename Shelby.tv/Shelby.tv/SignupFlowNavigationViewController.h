@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SignupFlowViewController.h"
 
+@class SignupFlowNavigationViewController;
+
 @protocol SignupFlowNavigationViewDelegate <NSObject>
 // KP KP: TODO: take these protocol and make a new protocol out of it (SocialDelegate) and have both, settings and SignupFlow use it.
 - (void)connectToFacebook;
@@ -23,6 +25,7 @@
                              email:(NSString *)email
                             avatar:(UIImage *)image
                           andRolls:(NSArray *)rolls;
+- (void)signupFlowNavigationViewControllerWantsLogin:(SignupFlowNavigationViewController *)signupVC;
 @end
 
 
