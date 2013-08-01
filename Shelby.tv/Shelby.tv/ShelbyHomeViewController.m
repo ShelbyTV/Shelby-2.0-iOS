@@ -645,6 +645,8 @@
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
                 [self dismissVideoReel];
                 STVAssert(vc.viewMode == ShelbyStreamBrowseViewDefault, @"expected dismissVideoReel to update view mode");
+                self.navBar.alpha = 1.0;
+                self.videoControlsVC.view.alpha = 1.0;
             }];
         } else {
             //playing & changed videos: controls already updated, nothing to do
