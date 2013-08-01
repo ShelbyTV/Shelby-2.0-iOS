@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     nextButton.frame = [self nextButtonFrame];
     [nextButton setTitleColor:kShelbyColorLightGray forState:UIControlStateDisabled];
     [nextButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
-    [nextButton.titleLabel setFont:kShelbyFontH3];
+    [nextButton.titleLabel setFont:kShelbyFontH4Bold];
     [nextButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
     [nextButton setTitle:nextTitle forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nextButton];

@@ -193,12 +193,12 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Hello!" id="HNZ-7l-Jsh">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="y9e-oK-w8g">
+                        <barButtonItem key="leftBarButtonItem" title="CANCEL" id="y9e-oK-w8g">
                             <connections>
                                 <action selector="goBack:" destination="sgp-ZG-jtU" id="DXb-MP-q8K"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="QCD-S7-eJ7">
+                        <barButtonItem key="rightBarButtonItem" title="NEXT" id="QCD-S7-eJ7">
                             <connections>
                                 <action selector="gotoChooseVideoTypes:" destination="sgp-ZG-jtU" id="luP-jE-YY6"/>
                             </connections>
@@ -276,8 +276,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Video for You" id="J7I-2E-QMo">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="tCJ-aL-NNL"/>
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="dFb-RO-jbB">
+                        <barButtonItem key="leftBarButtonItem" title="BACK" id="tCJ-aL-NNL"/>
+                        <barButtonItem key="rightBarButtonItem" title="NEXT" id="dFb-RO-jbB">
                             <connections>
                                 <action selector="gotoSocialNetworks:" destination="dtY-NO-hRl" id="Inf-qd-T1B"/>
                             </connections>
@@ -408,8 +408,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Video from Friends" id="inz-d9-z8u">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="p6p-Iy-q22"/>
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="BQn-4z-VAh">
+                        <barButtonItem key="leftBarButtonItem" title="BACK" id="p6p-Iy-q22"/>
+                        <barButtonItem key="rightBarButtonItem" title="NEXT" id="BQn-4z-VAh">
                             <connections>
                                 <action selector="gotoMyAccount:" destination="tUF-cC-Ycq" id="UbC-zs-rE5"/>
                             </connections>
@@ -672,8 +672,8 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Thanks!" id="n1r-LP-Ce5">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="K0S-vp-OJB"/>
-                        <barButtonItem key="rightBarButtonItem" title="My Stream" id="dIT-4X-7Ww">
+                        <barButtonItem key="leftBarButtonItem" title="BACK" id="K0S-vp-OJB"/>
+                        <barButtonItem key="rightBarButtonItem" title="MY STREAM" id="dIT-4X-7Ww">
                             <connections>
                                 <action selector="signup:" destination="1I6-gt-YXr" id="PwK-Pd-Myr"/>
                             </connections>

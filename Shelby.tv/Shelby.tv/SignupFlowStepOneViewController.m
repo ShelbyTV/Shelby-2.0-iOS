@@ -94,10 +94,10 @@
 {
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     backButton.frame = CGRectMake(0.0f, 0.0f, 80.0f, 44.0f);
-    [backButton setTitleColor:kShelbyColorMediumGray forState:UIControlStateNormal];
+    [backButton setTitleColor:kShelbyColorLightGray forState:UIControlStateNormal];
     [backButton setTitle:self.navigationItem.leftBarButtonItem.title forState:UIControlStateNormal];
     [backButton addTarget:self action:self.navigationItem.leftBarButtonItem.action forControlEvents:UIControlEventTouchUpInside];
-    [backButton.titleLabel setFont:kShelbyFontH3];
+    [backButton.titleLabel setFont:kShelbyFontH4Bold];
     
     return backButton;
 }
