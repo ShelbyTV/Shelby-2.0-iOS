@@ -43,8 +43,8 @@
                                 <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="20"/>
                                 <state key="normal" title="ADD PHOTO">
-                                    <color key="titleColor" red="0.22745098039215686" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.43529411764705883" green="0.74509803921568629" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -175,15 +175,15 @@
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="bottom" secondItem="pGl-nd-Jhs" secondAttribute="bottom" type="user" id="ICo-nL-zR2"/>
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="304" type="user" id="IsT-sh-tdf"/>
                             <constraint firstItem="2tk-Hq-yu9" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" constant="120" id="Ng2-Fj-PrS"/>
-                            <constraint firstItem="2tk-Hq-yu9" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="133" id="Nub-9S-Avs"/>
-                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="155" id="ZHT-MK-U3w"/>
+                            <constraint firstItem="2tk-Hq-yu9" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="150" type="user" id="Nub-9S-Avs"/>
+                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="DTd-Te-n9j" secondAttribute="centerX" type="default" id="QZk-zq-2d8"/>
+                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="top" secondItem="pGl-nd-Jhs" secondAttribute="top" constant="170" type="user" id="ZHT-MK-U3w"/>
                             <constraint firstItem="OyT-9q-MsU" firstAttribute="bottom" secondItem="pGl-nd-Jhs" secondAttribute="bottom" type="default" id="ZRZ-pc-TNK"/>
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="trailing" secondItem="pGl-nd-Jhs" secondAttribute="trailing" type="default" id="cGz-m2-V9g"/>
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="bottom" secondItem="pGl-nd-Jhs" secondAttribute="bottom" type="user" id="eDi-Yc-KJx"/>
                             <constraint firstItem="I88-xl-uu2" firstAttribute="top" secondItem="M3R-Mq-Khr" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="fKW-jt-Byl"/>
                             <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="I88-xl-uu2" secondAttribute="centerX" type="default" id="fiE-yA-l9K"/>
                             <constraint firstItem="OyT-9q-MsU" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" type="default" id="gm1-vC-92f"/>
-                            <constraint firstItem="NKA-Et-Ijp" firstAttribute="centerX" secondItem="OyT-9q-MsU" secondAttribute="centerX" type="default" id="hAy-Kn-UIg"/>
                             <constraint firstItem="I88-xl-uu2" firstAttribute="centerX" secondItem="M3R-Mq-Khr" secondAttribute="centerX" type="default" id="mBM-1K-7gN"/>
                             <constraint firstItem="DTd-Te-n9j" firstAttribute="leading" secondItem="pGl-nd-Jhs" secondAttribute="leading" type="default" id="sgf-kP-BIg"/>
                         </constraints>
