@@ -398,7 +398,7 @@
 
 - (void)navBarButtonTapped
 {
-    [self.videoReel pauseCurrentPlayer];
+    [self dismissVideoReel];
     [self.masterDelegate presentUserSignup];
 }
 
@@ -457,6 +457,9 @@
     [self.videoReel.view removeFromSuperview];
     [self.videoReel removeFromParentViewController];
     self.videoReel = nil;
+
+    //video controls are different w/ and w/o videoReel
+    [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
     
     // The opposite of what we do in: launchPlayerSetup
 //    if (DEVICE_IPAD) {
@@ -642,8 +645,6 @@
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
                 [self dismissVideoReel];
                 STVAssert(vc.viewMode == ShelbyStreamBrowseViewDefault, @"expected dismissVideoReel to update view mode");
-                //updating video controls is affected by nil videoReel
-                [self updateVideoControlsForPage:vc.currentPage];
             }];
         } else {
             //playing & changed videos: controls already updated, nothing to do
@@ -909,7 +910,7 @@
 
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
-    [self.videoReel pauseCurrentPlayer];
+    [self dismissVideoReel];
     if (selectedNewRow) {
         [self presentSettings];
     } else {
@@ -921,7 +922,7 @@
 - (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     [self dismissSettings];
-    [self.videoReel pauseCurrentPlayer];
+    [self dismissVideoReel];
     [self.masterDelegate presentUserLogin];
     //login is modal, nav hasn't actually changed...
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
