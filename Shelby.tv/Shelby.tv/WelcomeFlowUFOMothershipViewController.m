@@ -385,9 +385,11 @@
 {
     [self createPlayerAndAddToViewWithVideo:@"buzzfeed"];
     [self createPlayerAndAddToViewWithVideo:@"facebook"];
-    //TODO: add hungry here
+    [self createPlayerAndAddToViewWithVideo:@"hungry"];
     [self createPlayerAndAddToViewWithVideo:@"patagonia"];
-    //TODO: add (in order) rsrv, laughing squid, TED
+    [self createPlayerAndAddToViewWithVideo:@"rsrv"];
+    [self createPlayerAndAddToViewWithVideo:@"laughingsquid"];
+    [self createPlayerAndAddToViewWithVideo:@"ted"];
     [self createPlayerAndAddToViewWithVideo:@"twitter"];
     [self createPlayerAndAddToViewWithVideo:@"vice"];
 
