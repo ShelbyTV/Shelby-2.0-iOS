@@ -534,10 +534,13 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 {
     
     BOOL likesChannel = NO;
+    BOOL sharesChannel = NO;
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     if (user) {
         if ([user.likesRollID isEqualToString:channel.roll.rollID]) {
             likesChannel = YES;
+        } else if ([user.publicRollID isEqualToString:channel.roll.rollID]) {
+            sharesChannel = YES;
         }
     } else if (self.offlineLikesChannel == channel) {
         likesChannel = YES;
@@ -547,6 +550,8 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     
     if (likesChannel) {
         return @"NoLikesView";
+    } else if (sharesChannel) {
+        return @"NoSharesView";
     } else {
         return nil;
     }

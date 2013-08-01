@@ -731,6 +731,15 @@
 		1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */; };
 		1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */; };
 		1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */; };
+		1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
+		1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
+		1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
+		1CDB0C3C17AACDD30031C2C9 /* circle-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3A17AACDD30031C2C9 /* circle-share.png */; };
+		1CDB0C3D17AACDD30031C2C9 /* circle-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3A17AACDD30031C2C9 /* circle-share.png */; };
+		1CDB0C3E17AACDD30031C2C9 /* circle-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3A17AACDD30031C2C9 /* circle-share.png */; };
+		1CDB0C3F17AACDD30031C2C9 /* circle-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */; };
+		1CDB0C4017AACDD30031C2C9 /* circle-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */; };
+		1CDB0C4117AACDD30031C2C9 /* circle-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */; };
 		1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
 		1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
 		1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
@@ -1503,6 +1512,9 @@
 		1CDB0C2817A991FE0031C2C9 /* SettingsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewCell.m; sourceTree = "<group>"; };
 		1CDB0C3117A992E10031C2C9 /* UserDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsCell.h; sourceTree = "<group>"; };
 		1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsCell.m; sourceTree = "<group>"; };
+		1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoSharesView.xib; sourceTree = "<group>"; };
+		1CDB0C3A17AACDD30031C2C9 /* circle-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle-share.png"; sourceTree = "<group>"; };
+		1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle-share@2x.png"; sourceTree = "<group>"; };
 		1CDBEE6B1794A31F002ECD76 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		1CDBEE6C1794A320002ECD76 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		1CDBEE701795EA20002ECD76 /* SignupFlowStepOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepOneViewController.h; sourceTree = "<group>"; };
@@ -1963,6 +1975,8 @@
 				1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */,
 				1C154E5817A071DF00C0B76B /* circle.png */,
 				1C154E5917A071DF00C0B76B /* circle@2x.png */,
+				1CDB0C3A17AACDD30031C2C9 /* circle-share.png */,
+				1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */,
 			);
 			name = "No Content Images";
 			sourceTree = "<group>";
@@ -2172,6 +2186,7 @@
 				916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */,
 				916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */,
 				1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */,
+				1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */,
 				1C154E5117A06EBA00C0B76B /* NoLikesView.xib */,
 				1CDB0C1F17A96CF90031C2C9 /* UserDetailsViewCell.xib */,
 				1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */,
@@ -3370,6 +3385,9 @@
 				1CDB0C1D17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2117A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2517A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
+				1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
+				1CDB0C3D17AACDD30031C2C9 /* circle-share.png in Resources */,
+				1CDB0C4017AACDD30031C2C9 /* circle-share@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3647,6 +3665,9 @@
 				1CDB0C1E17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2217A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2617A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
+				1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
+				1CDB0C3E17AACDD30031C2C9 /* circle-share.png in Resources */,
+				1CDB0C4117AACDD30031C2C9 /* circle-share@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3925,6 +3946,9 @@
 				1CDB0C1C17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2017A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2417A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
+				1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
+				1CDB0C3C17AACDD30031C2C9 /* circle-share.png in Resources */,
+				1CDB0C3F17AACDD30031C2C9 /* circle-share@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
