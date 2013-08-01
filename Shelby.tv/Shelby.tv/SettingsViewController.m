@@ -188,7 +188,9 @@
         cell.secondaryTitle.hidden = YES;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
+        cell.mainTitle.textColor = kShelbyColorMediumGray;
         if (indexPath.row == 1) {
+            cell.mainTitle.textColor = kShelbyColorFacebookBlue;
             if (self.user.facebookNickname) {
                 cell.mainTitle.text = @"Facebook:";
                 cell.secondaryTitle.text = self.user.facebookNickname;
@@ -201,9 +203,10 @@
                 self.facebookConnected = NO;
             }
         } else if (indexPath.row == 2) {
+            cell.mainTitle.textColor = kShelbyColorTwitterBlue;
             if (self.user.twitterNickname) {
                 cell.mainTitle.text = @"Twitter:";
-                cell.secondaryTitle.text = self.user.twitterNickname;
+                cell.secondaryTitle.text = [NSString stringWithFormat:@"@%@",self.user.twitterNickname];
                 cell.secondaryTitle.hidden = NO;
                 cell.accessoryType = UITableViewCellAccessoryNone;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -213,11 +216,11 @@
                 self.twitterConnected= NO;
             }
         } else if (indexPath.row == 3) {
-            cell.mainTitle.text = @"Logout";
-        } else if (indexPath.row == 4) {
             cell.mainTitle.text = @"Give us Feedback";
-        } else {
+        } else if (indexPath.row == 4) {
             cell.mainTitle.text = @"Review us on App Store";
+        } else if (indexPath.row == 5) {
+            cell.mainTitle.text = @"Logout";
         }
         
         return cell;
@@ -232,7 +235,7 @@
         return 88;
     }
     
-    return 45;
+    return 55;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -244,14 +247,12 @@
     } else if (indexPath.row == 2 && !self.twitterConnected) {
         [self connectoToTwitter:nil];
     } else if (indexPath.row == 3) {
-        [self logout:nil];
-    } else if (indexPath.row == 4) {
         [self openMailComposer];
+    } else if (indexPath.row == 4) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=467849037"]];
     } else if (indexPath.row == 5) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=467849037"]];        
+        [self logout:nil];
     }
-
-    // TODO: once we have the viewcontroller in the right place, make sure you register observers and refresh table to see that user has FB/TW user and logged out... etc.
 }
 
 - (void)openMailComposer {
