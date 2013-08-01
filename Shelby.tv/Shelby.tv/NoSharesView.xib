@@ -50,7 +50,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Looks like you don't have any shared videos.</string>
+						<string key="IBUIText">Looks like you haven't shared any videos.</string>
 						<object class="NSColor" key="IBUITextColor" id="36180073">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -86,7 +86,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">The more you share the better your videos will be.</string>
+						<string key="IBUIText">When you watch something interesting, let everyone know!</string>
 						<reference key="IBUITextColor" ref="36180073"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
