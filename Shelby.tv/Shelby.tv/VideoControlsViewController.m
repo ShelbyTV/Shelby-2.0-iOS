@@ -175,9 +175,9 @@
         NSInteger width = kShelbyFullscreenWidth;
         NSInteger xOriginForDurationLabel = 0;
         if (airplayVisible) {
-            xOriginForDurationLabel = width - self.controlsView.durationLabel.frame.size.width - self.controlsView.airPlayView.frame.size.width;
+            xOriginForDurationLabel = width - self.controlsView.durationLabel.frame.size.width - self.controlsView.airPlayView.frame.size.width - 30;
         } else {
-            xOriginForDurationLabel = width - self.controlsView.durationLabel.frame.size.width;
+            xOriginForDurationLabel = width - self.controlsView.durationLabel.frame.size.width - 15;
         }
         
         // Duration Label
