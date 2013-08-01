@@ -87,7 +87,7 @@
 
 - (NSInteger)yOffsetForEditMode
 {
-    return (kShelbyFullscreenHeight > 480) ? -100 : -200;
+    return (kShelbyFullscreenHeight > 480) ? -110 : -200;
 }
 
 - (UIView *)customLeftButtonView

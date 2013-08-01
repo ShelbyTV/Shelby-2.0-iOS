@@ -593,7 +593,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="******" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aQQ-99-V5c" customClass="STVTextField">
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" type="user" id="aZK-a3-Vbm"/>
+                                            <constraint firstAttribute="height" constant="38" type="user" id="aZK-a3-Vbm"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
@@ -604,7 +604,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kbV-f1-cUt" customClass="STVTextField">
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="uwT-Rd-cFF"/>
+                                            <constraint firstAttribute="height" constant="38" type="user" id="uwT-Rd-cFF"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
@@ -615,19 +615,19 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="aQQ-99-V5c" firstAttribute="top" secondItem="hZk-vv-Udq" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="2bb-dG-e9P"/>
                                     <constraint firstItem="kbV-f1-cUt" firstAttribute="baseline" secondItem="aQQ-99-V5c" secondAttribute="baseline" type="default" id="63v-eo-GXI"/>
                                     <constraint firstItem="hZk-vv-Udq" firstAttribute="leading" secondItem="up6-52-koR" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="GCm-rM-Suf"/>
                                     <constraint firstAttribute="height" priority="425" constant="156" type="user" id="Goo-rQ-XVQ"/>
                                     <constraint firstItem="aQQ-99-V5c" firstAttribute="leading" secondItem="up6-52-koR" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="chd-10-7E0"/>
-                                    <constraint firstItem="hZk-vv-Udq" firstAttribute="top" secondItem="kbV-f1-cUt" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="eEZ-y1-ECT"/>
+                                    <constraint firstItem="hZk-vv-Udq" firstAttribute="top" secondItem="kbV-f1-cUt" secondAttribute="bottom" constant="14" type="user" id="eEZ-y1-ECT"/>
                                     <constraint firstItem="hYg-U0-Ta4" firstAttribute="trailing" secondItem="hZk-vv-Udq" secondAttribute="trailing" type="default" id="hN6-TG-QEj"/>
                                     <constraint firstItem="kbV-f1-cUt" firstAttribute="leading" secondItem="up6-52-koR" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="izP-GW-W3g"/>
-                                    <constraint firstItem="kbV-f1-cUt" firstAttribute="top" secondItem="up6-52-koR" secondAttribute="top" constant="39" id="lf4-4e-dhg"/>
                                     <constraint firstItem="hYg-U0-Ta4" firstAttribute="leading" secondItem="up6-52-koR" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="o76-jG-LhQ"/>
-                                    <constraint firstItem="hYg-U0-Ta4" firstAttribute="top" secondItem="up6-52-koR" secondAttribute="top" constant="14" id="rLz-EF-flK"/>
+                                    <constraint firstItem="hYg-U0-Ta4" firstAttribute="top" secondItem="up6-52-koR" secondAttribute="top" constant="12" type="user" id="rLz-EF-flK"/>
+                                    <constraint firstItem="kbV-f1-cUt" firstAttribute="top" secondItem="hYg-U0-Ta4" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="s85-fd-Zz5"/>
                                     <constraint firstAttribute="trailing" secondItem="kbV-f1-cUt" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="soM-PL-dR5"/>
                                     <constraint firstAttribute="trailing" secondItem="aQQ-99-V5c" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="teh-XZ-f4g"/>
-                                    <constraint firstItem="aQQ-99-V5c" firstAttribute="top" secondItem="up6-52-koR" secondAttribute="top" constant="102" type="user" id="zj8-Z4-4fY"/>
                                 </constraints>
                             </view>
                         </subviews>

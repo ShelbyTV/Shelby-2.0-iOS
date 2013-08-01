@@ -82,7 +82,7 @@
 
 - (NSInteger)yOffsetForEditMode
 {
-    return (kShelbyFullscreenHeight > 480) ? -100 : -175;
+    return (kShelbyFullscreenHeight > 480) ? -125 : -215;
 }
 
 - (CGRect)nextButtonFrame
