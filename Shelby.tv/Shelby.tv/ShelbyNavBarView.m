@@ -31,6 +31,12 @@
 #define ALPHA_ANIMATION_TIME 0.25
 #define SELECTION_IDENTIFIER_ANIMATION_TIME 0.35
 
+#define EASING_FUNCTION BackEaseInOut
+//we "fake" the animation by doing it in two parts of duration FRAME_ANIMATION_TIME/2
+#define FAKE_EASING_DISTANCE 15.f
+#define EASING_FUNCTION_FIRST_HALF BackEaseOut
+#define EASING_FUNCTION_SECOND_HALF BackEaseOut
+
 @implementation ShelbyNavBarView
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -72,7 +78,7 @@
 - (void)didMoveToSuperview
 {
     //see bottom of file for animation notes
-    [self.slider setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
+    [self.slider setEasingFunction:EASING_FUNCTION forKeyPath:@"frame"];
     for (UIView *l in _separatorLines) {
         [l setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
     }
@@ -90,12 +96,31 @@
     UIButton *currentButton = (UIButton *)currentRow;
 
     if (_currentRow) {
-        //XXX kinda sucks when you select the top row... no animation
-        // one possibility would be to animate a little fake bounce...
-        [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
-            self.sliderY.constant = -(_currentRow.frame.origin.y);
-            [self layoutIfNeeded];
-        }];
+        if (_currentRow.frame.origin.y == 0.f) {
+            //"moving" from 0 to 0 doesn't exactly do much... so we need to fake our normal bounce
+            [UIView animateWithDuration:FRAME_ANIMATION_TIME/2.f animations:^{
+                //half way
+                [self.slider setEasingFunction:EASING_FUNCTION_FIRST_HALF forKeyPath:@"frame"];
+                self.sliderY.constant = -FAKE_EASING_DISTANCE;
+                [self layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:FRAME_ANIMATION_TIME/2.f animations:^{
+                    //other half
+                    [self.slider setEasingFunction:EASING_FUNCTION_SECOND_HALF forKeyPath:@"frame"];
+                    self.sliderY.constant = 0.f;
+                    [self layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    //reset easing function
+                    [self.slider setEasingFunction:EASING_FUNCTION forKeyPath:@"frame"];
+                }];
+            }];
+        } else {
+            //normal bounce
+            [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
+                self.sliderY.constant = -(_currentRow.frame.origin.y);
+                [self layoutIfNeeded];
+            }];
+        }
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
             //focus on current row, hide rows that aren't current
@@ -119,10 +144,30 @@
 
     } else {
         //show all rows
-        [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
-            self.sliderY.constant = 0;
-            [self layoutIfNeeded];
-        }];
+        if (self.sliderY.constant == 0.f) {
+            //"moving" from 0 to 0 doesn't exactly do much... so we need to fake our normal bounce
+            [UIView animateWithDuration:FRAME_ANIMATION_TIME/2.f animations:^{
+                //half way
+                [self.slider setEasingFunction:EASING_FUNCTION_FIRST_HALF forKeyPath:@"frame"];
+                self.sliderY.constant = FAKE_EASING_DISTANCE;
+                [self layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:FRAME_ANIMATION_TIME/2.f animations:^{
+                    //other half
+                    [self.slider setEasingFunction:EASING_FUNCTION_SECOND_HALF forKeyPath:@"frame"];
+                    self.sliderY.constant = 0.f;
+                    [self layoutIfNeeded];
+                } completion:^(BOOL finished) {
+                    //reset easing function
+                    [self.slider setEasingFunction:EASING_FUNCTION forKeyPath:@"frame"];
+                }];
+            }];
+        } else {
+            [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
+                self.sliderY.constant = 0;
+                [self layoutIfNeeded];
+            }];
+        }
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
             for (UIButton *b in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
