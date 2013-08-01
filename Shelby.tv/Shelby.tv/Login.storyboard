@@ -46,7 +46,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWR-yH-mC6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWR-yH-mC6">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="T81-xe-Dq6"/>
                                 </constraints>
@@ -57,6 +57,7 @@
                                             <attributes>
                                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                 <integer key="NSUnderline" value="1"/>
                                             </attributes>
                                         </fragment>
@@ -108,12 +109,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Welcome Back!" id="cdT-lF-m7k">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Rmc-IP-LqL">
+                        <barButtonItem key="leftBarButtonItem" title="CANCEL" id="Rmc-IP-LqL">
                             <connections>
                                 <action selector="cancelTapped:" destination="3Qm-VB-UtR" id="RqE-Sz-WdV"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Login" id="J4T-hH-tII">
+                        <barButtonItem key="rightBarButtonItem" title="LOGIN" id="J4T-hH-tII">
                             <connections>
                                 <action selector="loginTapped:" destination="3Qm-VB-UtR" id="Dsu-ZD-wQU"/>
                             </connections>

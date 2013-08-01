@@ -48,6 +48,7 @@
     [nextButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
     [nextButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
     [nextButton setTitle:nextTitle forState:UIControlStateNormal];
+    nextButton.titleLabel.font = kShelbyFontH4Bold;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nextButton];
     self.loginButton = self.navigationItem.rightBarButtonItem;
 
@@ -59,6 +60,7 @@
     [cancelButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
     [cancelButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
     [cancelButton setTitle:cancelTitle forState:UIControlStateNormal];
+    cancelButton.titleLabel.font = kShelbyFontH4Bold;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 }
 
