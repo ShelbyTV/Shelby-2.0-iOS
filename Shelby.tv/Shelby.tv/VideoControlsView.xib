@@ -190,7 +190,10 @@
 						<float key="IBUIAlpha">0.5</float>
 						<array key="IBUIGestureRecognizers" id="0"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUIProgressTintColor" ref="740565170"/>
+						<object class="NSColor" key="IBUIProgressTintColor" id="705543177">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4zMzMzMzMzMzMzIDAuMzMzMzMzMzMzMyAwLjMzMzMzMzMzMzMAA</bytes>
+						</object>
 						<reference key="IBUITrackTintColor" ref="560364252"/>
 					</object>
 					<object class="IBUIButton" id="655777474">
@@ -206,10 +209,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">LIKE</string>
 						<reference key="IBUIHighlightedTitleColor" ref="740565170"/>
-						<object class="NSColor" key="IBUINormalTitleColor" id="705543177">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4zMzMzMzMzMzMzIDAuMzMzMzMzMzMzMyAwLjMzMzMzMzMzMzMAA</bytes>
-						</object>
+						<reference key="IBUINormalTitleColor" ref="705543177"/>
 						<reference key="IBUINormalTitleShadowColor" ref="1053607376"/>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="290519973">
 							<string key="name">Avenir-Black</string>
@@ -878,20 +878,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">VideoControlsViewController</string>
 					<string key="superclassName">ShelbyViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="scrubberButtonTouchUp:">id</string>
-						<string key="shareTapped:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="scrubberButtonTouchUp:">
-							<string key="name">scrubberButtonTouchUp:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="shareTapped:">
-							<string key="name">shareTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">separator</string>
 						<string key="NS.object.0">UIView</string>
