@@ -152,8 +152,8 @@
 						<reference key="NSNextKeyView" ref="1029113159"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC42NjY2NjY2NjY3IDAuNjY2NjY2NjY2NyAwLjY2NjY2NjY2NjcAA</bytes>
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MC44OTc3MjQ2ODA3AA</bytes>
 						</object>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>
@@ -680,6 +680,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ShelbyAlertView</string>
 					<string key="superclassName">UIView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">cancelPressed:</string>
+						<string key="NS.object.0">UIButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">cancelPressed:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">cancelPressed:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="cancelButton">UIButton</string>
 						<string key="messageLabel">UILabel</string>
