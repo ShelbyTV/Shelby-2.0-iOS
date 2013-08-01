@@ -110,7 +110,7 @@
 					<object class="IBUIView" id="466991665">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{282, 14}, {31, 23}}</string>
+						<string key="NSFrame">{{273, 14}, {31, 23}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="655777474"/>
@@ -229,6 +229,7 @@
 						<string key="NSFrame">{{258, 47}, {47, 41}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -878,6 +879,50 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">VideoControlsViewController</string>
 					<string key="superclassName">ShelbyViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="largePlayButtonTapped:">id</string>
+						<string key="likeTapped:">id</string>
+						<string key="scrubTrackTapped:">id</string>
+						<string key="scrubberButtonTouchDown:">id</string>
+						<string key="scrubberButtonTouchUp:">id</string>
+						<string key="scrubberDrag:forEvent:">UIButton</string>
+						<string key="scrubberTouchUpOutside:">id</string>
+						<string key="unlikeTapped:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="largePlayButtonTapped:">
+							<string key="name">largePlayButtonTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="likeTapped:">
+							<string key="name">likeTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="scrubTrackTapped:">
+							<string key="name">scrubTrackTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="scrubberButtonTouchDown:">
+							<string key="name">scrubberButtonTouchDown:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="scrubberButtonTouchUp:">
+							<string key="name">scrubberButtonTouchUp:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="scrubberDrag:forEvent:">
+							<string key="name">scrubberDrag:forEvent:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBActionInfo" key="scrubberTouchUpOutside:">
+							<string key="name">scrubberTouchUpOutside:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="unlikeTapped:">
+							<string key="name">unlikeTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">separator</string>
 						<string key="NS.object.0">UIView</string>
