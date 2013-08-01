@@ -398,6 +398,7 @@
 
 - (void)navBarButtonTapped
 {
+    [self.videoReel pauseCurrentPlayer];
     [self.masterDelegate presentUserSignup];
 }
 
