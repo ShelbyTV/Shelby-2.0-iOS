@@ -85,15 +85,6 @@
     self.videoTitle.text = self.frame.video.title;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
--(BOOL) shouldAutorotate {
-    return YES;
-}
-
 
 - (void)didReceiveMemoryWarning
 {
