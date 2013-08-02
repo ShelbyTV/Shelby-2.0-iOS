@@ -92,9 +92,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                         [self shareWithFrame:videoFrameToShare
                                                      message:shareMessage
                                                      andLink:link];
-                                        if (completionHandler) {
-                                            completionHandler(!shortlinkDidFail);
-                                        }
                                     }];
     });
     
@@ -157,11 +154,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     UIActivityViewController *activityController = [self activityViewControllerForFrame:frame withMessage:message withLink:link excludeFacebookAndTwitter:YES];
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-        if (self.completionHandler) {
-            self.completionHandler(completed);
-        }
-        
-        if (completed) {
+         if (completed) {
             [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNativeShareDone object:nil];

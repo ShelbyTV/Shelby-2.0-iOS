@@ -78,6 +78,13 @@
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.videoControlsVC resetShareButton];
+}
+
 - (void)setupNavBarView
 {
     self.navBarVC = [[ShelbyNavBarViewController alloc] initWithNibName:@"ShelbyNavBarView" bundle:nil];
@@ -813,7 +820,7 @@
             [self.videoReel playCurrentPlayer];
         }
         
-        [self.videoControlsVC shareCompleted];
+        [self.videoControlsVC resetShareButton];
     }];
 }
 

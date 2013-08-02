@@ -311,7 +311,7 @@
     [self.delegate videoControlsShareCurrentVideo:self];
 }
 
-- (void)shareCompleted
+- (void)resetShareButton
 {
     [self.shareActivityIndicator removeFromSuperview];
     self.shareActivityIndicator = nil;
