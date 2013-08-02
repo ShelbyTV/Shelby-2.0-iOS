@@ -71,11 +71,14 @@
     //XXX LAYOUT TESTING
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     
     [self updateVisibilityOfNoContentView];
+    
+    //TODO:  KP KP: the reload might not be needed
+    [self.collectionView reloadData];
 }
 
 - (void)updateVisibilityOfNoContentView
