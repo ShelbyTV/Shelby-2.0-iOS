@@ -812,6 +812,8 @@
         if (shouldResume) {
             [self.videoReel playCurrentPlayer];
         }
+        
+        [self.videoControlsVC shareCompleted];
     }];
 }
 

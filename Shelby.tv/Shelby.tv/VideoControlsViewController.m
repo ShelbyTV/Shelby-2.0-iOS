@@ -23,6 +23,7 @@
 @property (nonatomic) UIButton *airPlayButton;
 @property (nonatomic, strong) NSArray *actionsViews;
 @property (nonatomic, weak) IBOutlet UIView *separator;
+@property (strong, nonatomic) UIActivityIndicatorView *shareActivityIndicator;
 @end
 
 @implementation VideoControlsViewController
@@ -302,7 +303,19 @@
 }
 
 - (IBAction)shareTapped:(id)sender {
+    _shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.shareActivityIndicator.frame = self.controlsView.shareButton.frame;
+    [self.shareActivityIndicator startAnimating];
+    [self.controlsView addSubview:self.shareActivityIndicator];
+    self.controlsView.shareButton.hidden = YES;
     [self.delegate videoControlsShareCurrentVideo:self];
+}
+
+- (void)shareCompleted
+{
+    [self.shareActivityIndicator removeFromSuperview];
+    self.shareActivityIndicator = nil;
+    self.controlsView.shareButton.hidden = NO;
 }
 
 #pragma mark - VideoPlaybackDelegate

@@ -92,6 +92,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                         [self shareWithFrame:videoFrameToShare
                                                      message:shareMessage
                                                      andLink:link];
+                                        if (completionHandler) {
+                                            completionHandler(!shortlinkDidFail);
+                                        }
                                     }];
     });
     
