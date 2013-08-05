@@ -55,7 +55,7 @@
 {
     [super viewDidLoad];
     // KP KP: TODO: Next line will crash in a Universal app.
-    self.contentSizeForViewInPopover = CGSizeMake(332, 230);
+//    self.contentSizeForViewInPopover = CGSizeMake(332, 230);
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"settings_pane.png"]]];
     
     [self.table registerNib:[UINib nibWithNibName:@"UserDetailsViewCell" bundle:nil] forCellReuseIdentifier:@"UserDetailsViewCell"];
