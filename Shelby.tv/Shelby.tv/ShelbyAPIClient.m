@@ -11,7 +11,6 @@
 #import "Frame+Helper.h"
 #import "ShelbyAlertView.h"
 #import "ShelbyDataMediator.h"
-#import "User+Helper.h"
 
 NSString * const kShelbyAPIBaseURL =                        @"https://api.shelby.tv/";
 
@@ -241,14 +240,12 @@ static AFHTTPClient *httpClient = nil;
 
 }
 
-// KP KP: TODO: this method is not getting called. Once we call it, make sure from what thread and get the correct moc.
-+ (void)putGoogleAnalyticsClientID:(NSString *)clientID
++ (void)putGoogleAnalyticsClientID:(NSString *)clientID forUser:(User *)user
 {
     if (!clientID || [clientID isEqualToString:@""]) {
         return;
     }
 
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
     NSDictionary *params = @{kShelbyAPIParamGAClientID: clientID,
                              kShelbyAPIParamAuthToken: user.token};
     NSURLRequest *request = [self requestWithMethod:PUT

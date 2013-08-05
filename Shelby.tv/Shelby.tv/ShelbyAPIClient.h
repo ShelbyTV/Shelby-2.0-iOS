@@ -7,6 +7,8 @@
 //
 
 #import "DashboardEntry+Helper.h"
+#import "User+Helper.h"
+
 extern NSString * const kShelbyAPIParamNickname;
 extern NSString * const kShelbyAPIParamEmail;
 extern NSString * const kShelbyAPIParamPassword;
@@ -40,7 +42,7 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
                   password:(NSString *)password
                   andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
-+ (void)putGoogleAnalyticsClientID:(NSString *)clientID;
++ (void)putGoogleAnalyticsClientID:(NSString *)clientID forUser:(User *)user;
 
 + (void)fetchUserForUserID:(NSString *)userID
                   andBlock:(shelby_api_request_complete_block_t)completionBlock;

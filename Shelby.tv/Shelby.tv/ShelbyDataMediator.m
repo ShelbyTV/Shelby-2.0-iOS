@@ -13,6 +13,7 @@
 #import "DashboardEntry+Helper.h"
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
+#import "GAI.h"
 #import "Roll+Helper.h"
 #import "ShelbyAPIClient.h"
 #import "TwitterHandler.h"
@@ -463,10 +464,9 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                 NSError *error;
                 [user.managedObjectContext save:&error];
                 STVAssert(!error, @"context save failed, put your DEBUG hat on...");
-                
                 [self.delegate loginUserDidComplete];
-                
                 [self syncLikes];
+                [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
                 return;
             }
         }
@@ -494,6 +494,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         [user.managedObjectContext save:&error];
         STVAssert(!error, @"context after saveUserFromJSON");
         [self syncLikes];
+        [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
         return;
     }
 }
