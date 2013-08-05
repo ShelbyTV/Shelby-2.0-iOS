@@ -132,9 +132,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 - (UIActivityViewController *)activityViewControllerForFrame:(Frame *)frame withMessage:(NSString *)message withLink:(NSString *)link excludeFacebookAndTwitter:(BOOL)exclude
 {
     
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare
-                                     withAction:kAnalyticsShareActionShareButton
-                                      withLabel:[frame creatorsInitialCommentWithFallback:YES]];
+//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare
+//                                     withAction:kAnalyticsShareActionShareButton
+//                                      withLabel:[frame creatorsInitialCommentWithFallback:YES]];
 
     ShelbyActivityItemProvider *activity = [[ShelbyActivityItemProvider alloc] initWithShareText:message andShareLink:link];
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[activity] applicationActivities:nil];
@@ -155,7 +155,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
          if (completed) {
-            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
+//            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNativeShareDone object:nil];
         } else {
@@ -176,9 +176,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
             self.completionHandler(completed);
         }
         
-        if (completed) {
-            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
-        }
+//        if (completed) {
+//            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
+//        }
     }];
 
 //    if (DEVICE_IPAD) {

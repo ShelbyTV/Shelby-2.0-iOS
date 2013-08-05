@@ -516,7 +516,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
         index = 0;
     }
     [self.homeVC playChannel:channel atIndex:index];
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
+//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
 }
 
 // Method below is delegate method of the SPVideoReelProtocol & ShelbyBrowseProtocol
@@ -568,7 +568,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
         [self userDidSwitchChannelForDirectionUp:up];
     }
     
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistVerticalSwipe withLabel:nil];
+//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistVerticalSwipe withLabel:nil];
 }
 
 - (void)userDidCloseChannelAtFrame:(Frame *)frame
@@ -581,7 +581,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     //we used to do this with an old animated dismiss... no longer
     [self.homeVC dismissVideoReel];
     
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionClosePlayerByPinch withLabel:nil];
+//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionClosePlayerByPinch withLabel:nil];
 
 }
 

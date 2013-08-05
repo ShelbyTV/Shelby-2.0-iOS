@@ -293,11 +293,11 @@
 
 - (void)toggleLikeOfFrame:(Frame *)shelbyFrame
 {
-    BOOL didLike = [shelbyFrame toggleLike];
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer
-                                     withAction:kAnalyticsVideoPlayerToggleLike
-                                      withLabel:(didLike ? @"Liked" : @"Unliked")];
-    
+    [shelbyFrame toggleLike];
+//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer
+//                                     withAction:kAnalyticsVideoPlayerToggleLike
+//                                      withLabel:(didLike ? @"Liked" : @"Unliked")];
+
     NSError *err;
     [shelbyFrame.managedObjectContext save:&err];
     STVAssert(!err, @"like save failed");

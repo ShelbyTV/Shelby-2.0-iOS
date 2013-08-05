@@ -403,7 +403,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
     [self.currentPlayer togglePlayback];
     
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionDoubleTap withLabel:nil];
+//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionDoubleTap withLabel:nil];
 }
 
 - (BOOL)isCurrentPlayerPlaying
@@ -444,7 +444,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     [self.currentPlayer scrubToPct:percent];
     
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerUserScrub withLabel:[NSString stringWithFormat:@"%2.2f%%", percent * 100]];
+//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerUserScrub withLabel:[NSString stringWithFormat:@"%2.2f%%", percent * 100]];
 }
 
 - (void)scrollTo:(CGPoint)contentOffset
@@ -1028,7 +1028,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 //    [self fetchOlderVideos:page];
 
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionSwipeHorizontal withLabel:self.title];
+//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionSwipeHorizontal withLabel:self.title];
 
 }
 

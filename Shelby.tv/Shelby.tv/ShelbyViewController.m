@@ -11,20 +11,7 @@
 
 #import "GAI.h"
 
-NSString * const kAnalyticsCategoryBrowse                            = @"Browse Metrics";
-NSString * const kAnalyticsBrowseActionLaunchPlaylistSingleTap       = @"Launch player by single tap";
-NSString * const kAnalyticsBrowseActionLaunchPlaylistVerticalSwipe   = @"Launch player by vertical swipe";
-NSString * const kAnalyticsBrowseActionClosePlayerByPinch            = @"Closed player by pinch";
-//NSString * const kAnalyticsCategorySession                           = @"Session Metrics";
-NSString * const kAnalyticsCategoryShare                             = @"Share Metrics";
-NSString * const kAnalyticsShareActionShareButton                    = @"User did tap share button";
-NSString * const kAnalyticsShareActionShareSuccess                   = @"User did successfully share";
-//NSString * const kAnalyticsShareActionRollSuccess                    = @"User did successfully roll video";
-NSString * const kAnalyticsCategoryVideoPlayer                       = @"Video Player Metrics";
-NSString * const kAnalyticsVideoPlayerActionSwipeHorizontal          = @"Swiped video player";
-NSString * const kAnalyticsVideoPlayerActionDoubleTap                = @"Playback toggled via double tap gesture";
-NSString * const kAnalyticsVideoPlayerToggleLike                     = @"User toggled Like";
-NSString * const kAnalyticsVideoPlayerUserScrub                      = @"User did scrub";
+// Google Analytics Constants
 //--Welcome--
 NSString * const kAnalyticsCategoryWelcome                              = @"Welcome Flow";
 NSString * const kAnalyticsWelcomeStart                                 = @"Start";
