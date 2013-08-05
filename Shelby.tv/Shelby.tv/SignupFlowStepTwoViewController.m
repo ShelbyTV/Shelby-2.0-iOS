@@ -57,6 +57,15 @@
     return @"2";
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [super prepareForSegue:segue sender:sender];
+    [SignupFlowViewController sendEventWithCategory:kAnalyticsCategorySignup
+                                         withAction:kAnalyticsSignupStep2Complete
+                                          withLabel:nil
+                                          withValue:@([self.selectedCellsTitlesArray count])];
+}
+
 - (IBAction)gotoSocialNetworks:(id)sender
 {
     [self performSegueWithIdentifier:@"SocialNetworks" sender:self];
@@ -119,11 +128,17 @@
 #pragma mark - UICollectionViewDelegate Methods
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [SignupFlowViewController sendEventWithCategory:kAnalyticsCategorySignup
+                                         withAction:kAnalyticsSignupSelectSourceToFollow
+                                          withLabel:nil];
     [self toggleCellSelectionForIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [SignupFlowViewController sendEventWithCategory:kAnalyticsCategorySignup
+                                         withAction:kAnalyticsSignupDeselectSourceToFollow
+                                          withLabel:nil];
     [self toggleCellSelectionForIndexPath:indexPath];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "SignupFlowNavigationViewController.h"
+#import "GAI.h"
 
 @interface SignupFlowNavigationViewController ()
 @property (nonatomic, strong) NSMutableDictionary *signupDictionary;
@@ -23,11 +24,13 @@
     return self;
 }
 
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[GAI sharedInstance].defaultTracker sendEventWithCategory:kAnalyticsCategorySignup
+                                                    withAction:kAnalyticsSignupStart
+                                                     withLabel:nil
+                                                     withValue:nil];
     
     // Create an empty Signup Dictionary
     self.signupDictionary = [@{} mutableCopy];
@@ -85,6 +88,11 @@
 
 - (void)completeSignup
 {
+    [[GAI sharedInstance].defaultTracker sendEventWithCategory:kAnalyticsCategorySignup
+                                                    withAction:kAnalyticsSignupFinish
+                                                     withLabel:nil
+                                                     withValue:nil];
+    
     NSString *name = self.signupDictionary[kShelbySignupNameKey];
     NSString *email = self.signupDictionary[kShelbySignupEmailKey];
     NSString *username = self.signupDictionary[kShelbySignupUsernameKey];

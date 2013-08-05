@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.trackedViewName = [NSString stringWithFormat:@"Signup Step %@", [self signupStepNumber]];
     }
     return self;
 }

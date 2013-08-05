@@ -31,6 +31,16 @@ NSString * const kAnalyticsWelcomeFinish                                = @"Fini
 NSString * const kAnalyticsWelcomeTapSignup                             = @"Tap Signup";
 NSString * const kAnalyticsWelcomeTapLogin                              = @"Tap Login";
 NSString * const kAnalyticsWelcomeTapPreview                            = @"Tap Preview";
+//--Signup--
+NSString * const kAnalyticsCategorySignup                               = @"Signup Flow";
+NSString * const kAnalyticsSignupStart                                  = @"Start";
+NSString * const kAnalyticsSignupFinish                                 = @"Finish";
+NSString * const kAnalyticsSignupStep1Complete                          = @"Step 1 Complete";
+NSString * const kAnalyticsSignupStep2Complete                          = @"Step 2 Complete";
+NSString * const kAnalyticsSignupStep3Complete                          = @"Step 3 Complete";
+NSString * const kAnalyticsSignupSelectSourceToFollow                   = @"Selected Source to Follow";
+NSString * const kAnalyticsSignupDeselectSourceToFollow                 = @"Deselected Source to Follow";
+NSString * const kAnalyticsSignupConnectAuth                            = @"Connected Auth";
 
 @interface ShelbyViewController ()
 
@@ -64,6 +74,18 @@ NSString * const kAnalyticsWelcomeTapPreview                            = @"Tap 
                     withLabel:(NSString *)label
 {
     BOOL queued = [[GAI sharedInstance].defaultTracker sendEventWithCategory:category withAction:action withLabel:label withValue:nil];
+
+    if (!queued) {
+        // TODO: Error?
+    }
+}
+
++ (void)sendEventWithCategory:(NSString *)category
+                   withAction:(NSString *)action
+                    withLabel:(NSString *)label
+                    withValue:(NSNumber *)value
+{
+    BOOL queued = [[GAI sharedInstance].defaultTracker sendEventWithCategory:category withAction:action withLabel:label withValue:value];
 
     if (!queued) {
         // TODO: Error?

@@ -37,14 +37,9 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        self.trackedViewName = @"Welcome Flow";
     }
     return self;
-}
-
-- (void)awakeFromNib
-{
-    self.trackedViewName = @"WelcomeFlow";
 }
 
 - (void)viewDidLoad

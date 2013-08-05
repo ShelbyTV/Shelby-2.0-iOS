@@ -53,7 +53,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [super prepareForSegue:segue sender:sender];
-    
+
+    [SignupFlowViewController sendEventWithCategory:kAnalyticsCategorySignup
+                                         withAction:kAnalyticsSignupStep1Complete
+                                          withLabel:nil];
+
     self.navigationItem.rightBarButtonItem = self.nextButton;
 }
 

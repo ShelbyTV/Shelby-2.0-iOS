@@ -75,9 +75,21 @@
     return @"3";
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [super prepareForSegue:segue sender:sender];
+    [SignupFlowViewController sendEventWithCategory:kAnalyticsCategorySignup
+                                         withAction:kAnalyticsSignupStep3Complete
+                                          withLabel:nil
+                                          withValue:[self numberOfAuthsConnected]];
+}
+
 // KP KP: TODO: commenting out because need to make sure user has an account - after we implement that, uncomemnt
 - (IBAction)connectoToFacebook:(id)sender
 {
+    [SignupFlowViewController sendEventWithCategory:kAnalyticsCategorySignup
+                                         withAction:kAnalyticsSignupConnectAuth
+                                          withLabel:nil];
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
         [parent performSelector:@selector(connectToFacebook)];
@@ -87,6 +99,9 @@
 // KP KP: TODO: commenting out because need to make sure user has an account - after we implement that, uncomemnt
 - (IBAction)connectoToTwitter:(id)sender
 {
+    [SignupFlowViewController sendEventWithCategory:kAnalyticsCategorySignup
+                                         withAction:kAnalyticsSignupConnectAuth
+                                          withLabel:nil];
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
         [parent performSelector:@selector(connectToTwitter)];
@@ -96,6 +111,18 @@
 - (IBAction)gotoMyAccount:(id)sender
 {
     [self performSegueWithIdentifier:@"MyAccount" sender:self];
+}
+
+- (NSNumber *)numberOfAuthsConnected
+{
+    NSUInteger numConnected = 0;
+    if (!self.twitterButton.enabled) {
+        numConnected++;
+    }
+    if (!self.facebookButton.enabled) {
+        numConnected++;
+    }
+    return @(numConnected);
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SignupUserInfoCell.h"
+#import "ShelbyViewController.h"
 #import "STVTextField.h"
 
 extern NSString * const kShelbySignupAvatarKey;
@@ -25,7 +26,7 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (void)wantsLogin;
 @end
 
-@interface SignupFlowViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, SignupUserInfoDelegate, UIActionSheetDelegate>
+@interface SignupFlowViewController : ShelbyViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, SignupUserInfoDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) UIImage *avatarImage;
 @property (nonatomic, strong) NSString *fullname;
