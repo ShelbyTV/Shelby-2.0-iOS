@@ -11,7 +11,6 @@
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 #import "ShelbyViewController.h"
-#import "StreamBrowseCellForegroundView.h"
 
 @interface ShelbyStreamBrowseViewCell()
 @property (nonatomic, strong) STVParallaxView *parallaxView;
@@ -53,6 +52,7 @@
         CGRect subviewFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight);
         _foregroundView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseCellForegroundView" owner:nil options:nil][0];
         _foregroundView.frame = CGRectMake(0, 0, _foregroundView.frame.size.width, subviewFrame.size.height);
+        _foregroundView.delegate = self;
 
         //parallax background - thumbnails are on top of each other in a parent view
         CGRect bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
@@ -265,6 +265,12 @@
                                      withAction:kAnalyticsUXSwipeCardParallax
                             withNicknameAsLabel:YES];
     [self.delegate browseViewCell:self parallaxDidChangeToPage:page];
+}
+
+#pragma mark - StreamBrowseCellForegroundDelegate
+- (void)streamBrowseCellForegroundViewTitleWasTapped
+{
+    [self.delegate browseViewCellTitleWasTapped:self];
 }
 
 @end

@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailCreatedAt;
 @property (weak, nonatomic) IBOutlet UIView *detailNetworkShares;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
+@property (weak, nonatomic) IBOutlet UIButton *detailTitleButton;
 @property (weak, nonatomic) IBOutlet UIImageView *detailUserAvatar;
 @property (weak, nonatomic) IBOutlet UILabel *detailUsername;
 @property (weak, nonatomic) IBOutlet UIView *detailUserView;
@@ -29,6 +30,7 @@
 
 // Summary View Outlets
 @property (weak, nonatomic) IBOutlet UILabel *summaryTitle;
+@property (weak, nonatomic) IBOutlet UIButton *summaryTitleButton;
 @property (nonatomic, weak) IBOutlet UIImageView *summaryUserAvatar;
 @property (weak, nonatomic) IBOutlet UILabel *summaryUsername;
 @property (weak, nonatomic) IBOutlet UIView *summaryUserView;
@@ -36,6 +38,8 @@
 
 //overlay below everything
 @property (nonatomic, strong) UIImageView *overlayImageView;
+
+- (IBAction)playVideoInCell:(id)sender;
 @end
 
 @implementation StreamBrowseCellForegroundView
@@ -102,6 +106,9 @@
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
  
+    self.summaryTitleButton.frame = self.summaryTitle.frame;
+    self.detailTitleButton.frame = self.detailTitle.frame;
+
     [self resizeViewsForContent];
 
     [self setupOverlayImageView];
@@ -252,6 +259,11 @@
     }
 
     self.overlayImageView.frame = CGRectMake(-400, 0, self.frame.size.width + 800, self.frame.size.height);
+}
+
+- (IBAction)playVideoInCell:(id)sender
+{
+    [self.delegate streamBrowseCellForegroundViewTitleWasTapped];
 }
 
 @end

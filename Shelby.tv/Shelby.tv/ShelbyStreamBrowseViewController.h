@@ -30,6 +30,7 @@
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer;
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didChangeToPage:(NSUInteger)page;
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc hasNoContnet:(BOOL)noContent;
+- (void)shelbyStreamBrowseViewControllerTitleTapped:(ShelbyStreamBrowseViewController *)vc;
 @end
 
 @interface ShelbyStreamBrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ShelbyStreamBrowseViewCellDelegate>

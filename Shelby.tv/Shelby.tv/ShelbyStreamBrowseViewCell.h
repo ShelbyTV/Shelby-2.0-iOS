@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ShelbyVideoContainer.h"
+#import "StreamBrowseCellForegroundView.h"
 #import "STVParallaxView.h"
 
 typedef NS_ENUM(NSUInteger, ShelbyStreamBrowseViewMode)
@@ -23,9 +24,10 @@ typedef NS_ENUM(NSUInteger, ShelbyStreamBrowseViewMode)
 - (void)browseViewCellParallaxDidChange:(ShelbyStreamBrowseViewCell *)cell;
 - (void)browseViewCell:(ShelbyStreamBrowseViewCell *)cell parallaxDidChangeToPage:(NSUInteger)page;
 - (void)browseViewCellPlayTapped:(ShelbyStreamBrowseViewCell *)cell;
+- (void)browseViewCellTitleWasTapped:(ShelbyStreamBrowseViewCell *)cell;
 @end
 
-@interface ShelbyStreamBrowseViewCell : UICollectionViewCell <STVParallaxViewDelegate>
+@interface ShelbyStreamBrowseViewCell : UICollectionViewCell <STVParallaxViewDelegate, StreamBrowseCellForegroundViewDelegate>
 
 //a Frame or DashboardEntry
 @property (nonatomic, strong) id<ShelbyVideoContainer> entry;

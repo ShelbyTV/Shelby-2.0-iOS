@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Frame+Helper.h"
 
+
+@protocol StreamBrowseCellForegroundViewDelegate <NSObject>
+- (void)streamBrowseCellForegroundViewTitleWasTapped;
+@end
+
+
 @interface StreamBrowseCellForegroundView : UIView
+@property (nonatomic, assign) id<StreamBrowseCellForegroundViewDelegate>delegate;
+
 - (void)setInfoForFrame:(Frame *)videoFrame;
 @end

@@ -714,6 +714,14 @@
     }
 }
 
+- (void)shelbyStreamBrowseViewControllerTitleTapped:(ShelbyStreamBrowseViewController *)vc
+{
+    // Ignore if video is playing.
+    if (!self.videoControlsVC.videoIsPlaying) {
+        [self playChannel:self.currentStreamBrowseVC.channel atIndex:[self.currentStreamBrowseVC indexPathForCurrentFocus].row];
+    }
+}
+
 - (void)launchMyRoll
 {
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersRoll)]) {

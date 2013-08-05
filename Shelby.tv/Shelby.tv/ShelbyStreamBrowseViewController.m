@@ -378,6 +378,11 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     [self.browseViewDelegate shelbyStreamBrowseViewController:self didChangeToPage:page];
 }
 
+- (void)browseViewCellTitleWasTapped:(ShelbyStreamBrowseViewCell *)cell
+{
+    [self.browseViewDelegate shelbyStreamBrowseViewControllerTitleTapped:self];
+}
+
 #pragma mark Pull To Refresh Helpers
 
 //pulled should be absolute value
