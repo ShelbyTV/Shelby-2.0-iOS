@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
+#import "ShelbyViewController.h"
 #import "StreamBrowseCellForegroundView.h"
 
 @interface ShelbyStreamBrowseViewCell()
@@ -260,6 +261,9 @@
 
 - (void)didScrollToPage:(NSUInteger)page
 {
+    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                     withAction:kAnalyticsUXSwipeCardParallax
+                            withNicknameAsLabel:YES];
     [self.delegate browseViewCell:self parallaxDidChangeToPage:page];
 }
 

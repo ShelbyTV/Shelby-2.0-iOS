@@ -40,12 +40,30 @@ extern NSString * const kAnalyticsSignupStep3Complete;
 extern NSString * const kAnalyticsSignupSelectSourceToFollow;
 extern NSString * const kAnalyticsSignupDeselectSourceToFollow;
 extern NSString * const kAnalyticsSignupConnectAuth;
+//--Primary UX--
+extern NSString * const kAnalyticsCategoryPrimaryUX;
+extern NSString * const kAnalyticsUXSwipeCardParallax;
+extern NSString * const kAnalyticsUXTapAirplay;
+extern NSString * const kAnalyticsUXTapCardPlayButton;
+extern NSString * const kAnalyticsUXVideoDidAutoadvance;
+extern NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode;
+extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying;
+extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePaused;
+extern NSString * const kAnalyticsUXLike;
+extern NSString * const kAnalyticsUXUnlike;
+extern NSString * const kAnalyticsUXShareStart;
+extern NSString * const kAnalyticsUXShareFinish;
+extern NSString * const kAnalyticsUXTapNavBar;
+extern NSString * const kAnalyticsUXTapNavBarButton;
 
 @interface ShelbyViewController : GAITrackedViewController
 
 + (void)sendEventWithCategory:(NSString *)category
                    withAction:(NSString *)action
                     withLabel:(NSString *)label;
++ (void)sendEventWithCategory:(NSString *)category
+                   withAction:(NSString *)action
+          withNicknameAsLabel:(BOOL)nicknameAsLabel;
 + (void)sendEventWithCategory:(NSString *)category
                    withAction:(NSString *)action
                     withLabel:(NSString *)label

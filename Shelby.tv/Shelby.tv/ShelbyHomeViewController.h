@@ -28,7 +28,7 @@
 @end
 
 
-@interface ShelbyHomeViewController : UIViewController <UIPopoverControllerDelegate, UIAlertViewDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate>
+@interface ShelbyHomeViewController : ShelbyViewController <UIPopoverControllerDelegate, UIAlertViewDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate>
 
 // We assume these are all of our channels, in the correct order
 @property (nonatomic, strong) NSArray *channels;

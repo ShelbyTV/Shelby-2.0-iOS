@@ -82,6 +82,10 @@
 
 - (IBAction)navTapped:(UIButton *)sender
 {
+    [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                           withAction:kAnalyticsUXTapNavBar
+                                  withNicknameAsLabel:YES];
+
     if (self.navBarView.currentRow){
         //we _had_ a current row selected, change to showing them all...
         [self.delegate navBarViewControllerWillExpand:self];

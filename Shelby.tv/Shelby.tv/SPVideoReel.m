@@ -877,7 +877,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 #pragma mark - SPVideoPlayerDelegete Methods
 
-- (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player{
+- (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player
+{
+    [SPVideoReel sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                            withAction:kAnalyticsUXVideoDidAutoadvance
+                   withNicknameAsLabel:YES];
     [self changeVideoInForwardDirection:YES];
 }
 

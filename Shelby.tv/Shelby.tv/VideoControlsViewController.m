@@ -209,6 +209,10 @@
 #pragma mark - Airplay Setup
 - (void)setupAirPlay
 {
+    [VideoControlsViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                            withAction:kAnalyticsUXTapAirplay
+                                   withNicknameAsLabel:YES];
+
     // Instantiate AirPlay button for MPVolumeView
     MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.airPlayView.bounds];
     [volumeView setShowsVolumeSlider:NO];
@@ -249,6 +253,9 @@
     } else {
         // If user just got into playback mode, hide nonPlaybackModeView
         if (sender == self.controlsView.nonPlaybackModePlayButton) {
+            [VideoControlsViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                    withAction:kAnalyticsUXTapCardPlayButton
+                                           withNicknameAsLabel:YES];
             self.controlsView.nonPlaybackModeView.hidden = YES;
             [self.controlsView sendSubviewToBack:self.controlsView.nonPlaybackModeView];
         }

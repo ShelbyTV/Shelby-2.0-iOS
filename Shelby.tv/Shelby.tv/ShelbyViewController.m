@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyViewController.h"
+#import "ShelbyDataMediator.h"
 
 #import "GAI.h"
 
@@ -41,6 +42,21 @@ NSString * const kAnalyticsSignupStep3Complete                          = @"Step
 NSString * const kAnalyticsSignupSelectSourceToFollow                   = @"Selected Source to Follow";
 NSString * const kAnalyticsSignupDeselectSourceToFollow                 = @"Deselected Source to Follow";
 NSString * const kAnalyticsSignupConnectAuth                            = @"Connected Auth";
+//--Primary UX--
+NSString * const kAnalyticsCategoryPrimaryUX                            = @"Primary UX";
+NSString * const kAnalyticsUXSwipeCardParallax                          = @"Swipe Card Parallax";
+NSString * const kAnalyticsUXTapAirplay                                 = @"Tap Airplay";
+NSString * const kAnalyticsUXTapCardPlayButton                          = @"Tap Card Play Button";
+NSString * const kAnalyticsUXVideoDidAutoadvance                        = @"Video Did Autoadvance";
+NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode      = @"Swipe Card to Change Video: Non-Playback";
+NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying  = @"Swipe Card to Chagne Video: Playback: Playing";
+NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePaused   = @"Swipe Card to Chagne Video: Playback: Paused";
+NSString * const kAnalyticsUXLike                                       = @"Like";
+NSString * const kAnalyticsUXUnlike                                     = @"Unlike";
+NSString * const kAnalyticsUXShareStart                                 = @"Share Start";
+NSString * const kAnalyticsUXShareFinish                                = @"Share Finish";
+NSString * const kAnalyticsUXTapNavBar                                  = @"Tap Nav Bar";
+NSString * const kAnalyticsUXTapNavBarButton                            = @"Tap Nav Bar Button";
 
 @interface ShelbyViewController ()
 
@@ -77,6 +93,28 @@ NSString * const kAnalyticsSignupConnectAuth                            = @"Conn
 
     if (!queued) {
         // TODO: Error?
+    }
+}
+
++ (void)sendEventWithCategory:(NSString *)category
+                   withAction:(NSString *)action
+          withNicknameAsLabel:(BOOL)nicknameAsLabel
+{
+    if (nicknameAsLabel) {
+        NSManagedObjectContext *moc = nil;
+        if ([NSThread isMainThread]) {
+            moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+        } else {
+            moc = [[ShelbyDataMediator sharedInstance] createPrivateQueueContext];
+        }
+        User *user = [User currentAuthenticatedUserInContext:moc];
+        if (user) {
+            [self sendEventWithCategory:category withAction:action withLabel:user.nickname];
+        } else {
+            [self sendEventWithCategory:category withAction:action withLabel:@"anonymous"];
+        }
+    } else {
+        [self sendEventWithCategory:category withAction:action withLabel:nil];
     }
 }
 

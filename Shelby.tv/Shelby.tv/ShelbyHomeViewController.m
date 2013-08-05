@@ -405,6 +405,9 @@
 
 - (void)navBarButtonTapped
 {
+    [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                         withAction:kAnalyticsUXTapNavBarButton
+                                withNicknameAsLabel:YES];
     [self dismissVideoReel];
     [self.masterDelegate presentUserSignup];
 }
@@ -655,8 +658,14 @@
                 self.navBar.alpha = 1.0;
                 self.videoControlsVC.view.alpha = 1.0;
             }];
+            [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                 withAction:kAnalyticsUXSwipeCardToChangeVideoPlaybackModePaused
+                                        withNicknameAsLabel:YES];
         } else {
-            //playing & changed videos: controls already updated, nothing to do
+            //playing & changed videos: controls already updated
+            [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                 withAction:kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying
+                                        withNicknameAsLabel:YES];
         }
     } else {
 //        if (DEVICE_IPAD) {
@@ -664,6 +673,9 @@
 //        } else {
             //on iPhone, we only show one stream, so current entity did change
         self.videoControlsVC.currentEntity = [vc entityForCurrentFocus];
+        [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                             withAction:kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode
+                                    withNicknameAsLabel:YES];
 //        }
     }
 }
@@ -784,6 +796,9 @@
 
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc
 {
+    [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                         withAction:kAnalyticsUXLike
+                                withNicknameAsLabel:YES];
     BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
     if (!didLike) {
         DLog(@"***ERROR*** Tried to Like, but action resulted in UNLIKE of the video");
@@ -792,28 +807,32 @@
 
 - (void)videoControlsUnlikeCurrentVideo:(VideoControlsViewController *)vcvc
 {
+    [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                         withAction:kAnalyticsUXUnlike
+                                withNicknameAsLabel:YES];
     BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
     if (didLike) {
         DLog(@"***ERROR*** Tried to unlike, but action resulted in LIKE of the video");
     }
 }
 
+//DEPRECATED
 - (BOOL)toggleLikeCurrentVideo:(id<ShelbyVideoContainer>)entity
 {
     Frame *currentFrame = [Frame frameForEntity:entity];
     BOOL didLike = [currentFrame toggleLike];
-    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer
-                                     withAction:kAnalyticsVideoPlayerToggleLike
-                                      withLabel:(didLike ? @"Liked" : @"Unliked")];
     return didLike;
 }
 
 - (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc
 {
+    [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                         withAction:kAnalyticsUXShareStart
+                                withNicknameAsLabel:YES];
     Frame *frame = [Frame frameForEntity:vcvc.currentEntity];
     SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:frame fromViewController:self atRect:CGRectZero];
     shareController.delegate = self;
-    BOOL shouldResume = self.videoReel.isCurrentPlayerPlaying;
+    BOOL shouldResume = [self.videoReel isCurrentPlayerPlaying];
     [self.videoReel pauseCurrentPlayer];
     [shareController shareWithCompletionHandler:^(BOOL completed) {
         if (shouldResume) {
@@ -821,6 +840,12 @@
         }
         
         [self.videoControlsVC resetShareButton];
+
+        if (completed) {
+            [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                 withAction:kAnalyticsUXShareFinish
+                                        withNicknameAsLabel:YES];
+        }
     }];
 }
 
