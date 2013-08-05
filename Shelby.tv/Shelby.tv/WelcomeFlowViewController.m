@@ -42,9 +42,17 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
     return self;
 }
 
+- (void)awakeFromNib
+{
+    self.trackedViewName = @"WelcomeFlow";
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [WelcomeFlowViewController sendEventWithCategory:kAnalyticsCategoryWelcome
+                                          withAction:kAnalyticsWelcomeStart
+                                           withLabel:nil];
 
     // 1) Parallax view: content
     //strong pointers are wired up to all the views in this xib, no need to retain this array
@@ -105,24 +113,36 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
 
 - (IBAction)signupWasTapped:(id)sender
 {
+    [WelcomeFlowViewController sendEventWithCategory:kAnalyticsCategoryWelcome
+                                          withAction:kAnalyticsWelcomeTapSignup
+                                           withLabel:nil];
     [self welcomeFlowComplete];
     [self.delegate welcomeFlowDidTapSignup:self];
 }
 
 - (IBAction)loginWasTapped:(id)sender
 {
+    [WelcomeFlowViewController sendEventWithCategory:kAnalyticsCategoryWelcome
+                                          withAction:kAnalyticsWelcomeTapLogin
+                                           withLabel:nil];
     [self welcomeFlowComplete];
     [self.delegate welcomeFlowDidTapLogin:self];
 }
 
 - (IBAction)previewWasTapped:(id)sender
 {
+    [WelcomeFlowViewController sendEventWithCategory:kAnalyticsCategoryWelcome
+                                          withAction:kAnalyticsWelcomeTapPreview
+                                           withLabel:nil];
     [self welcomeFlowComplete];
     [self.delegate welcomeFlowDidTapPreview:self];
 }
 
 - (void)welcomeFlowComplete
 {
+    [WelcomeFlowViewController sendEventWithCategory:kAnalyticsCategoryWelcome
+                                          withAction:kAnalyticsWelcomeFinish
+                                           withLabel:nil];
     [[NSUserDefaults standardUserDefaults] setInteger:ShelbyWelcomeFlowStatusComplete forKey:kShelbyWelcomeFlowStatusKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

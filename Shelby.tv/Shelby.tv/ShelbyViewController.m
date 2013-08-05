@@ -24,9 +24,13 @@ NSString * const kAnalyticsVideoPlayerActionSwipeHorizontal          = @"Swiped 
 NSString * const kAnalyticsVideoPlayerActionDoubleTap                = @"Playback toggled via double tap gesture";
 NSString * const kAnalyticsVideoPlayerToggleLike                     = @"User toggled Like";
 NSString * const kAnalyticsVideoPlayerUserScrub                      = @"User did scrub";
-
-
-
+//--Welcome--
+NSString * const kAnalyticsCategoryWelcome                              = @"Welcome Flow";
+NSString * const kAnalyticsWelcomeStart                                 = @"Start";
+NSString * const kAnalyticsWelcomeFinish                                = @"Finish";
+NSString * const kAnalyticsWelcomeTapSignup                             = @"Tap Signup";
+NSString * const kAnalyticsWelcomeTapLogin                              = @"Tap Login";
+NSString * const kAnalyticsWelcomeTapPreview                            = @"Tap Preview";
 
 @interface ShelbyViewController ()
 

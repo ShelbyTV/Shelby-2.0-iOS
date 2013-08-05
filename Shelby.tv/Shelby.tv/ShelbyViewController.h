@@ -23,6 +23,13 @@ extern NSString * const kAnalyticsVideoPlayerActionSwipeHorizontal;
 extern NSString * const kAnalyticsVideoPlayerActionDoubleTap;
 extern NSString * const kAnalyticsVideoPlayerToggleLike;
 extern NSString * const kAnalyticsVideoPlayerUserScrub;
+//--Welcome--
+extern NSString * const kAnalyticsCategoryWelcome;
+extern NSString * const kAnalyticsWelcomeStart;
+extern NSString * const kAnalyticsWelcomeFinish;
+extern NSString * const kAnalyticsWelcomeTapSignup;
+extern NSString * const kAnalyticsWelcomeTapLogin;
+extern NSString * const kAnalyticsWelcomeTapPreview;
 
 @interface ShelbyViewController : GAITrackedViewController
 
