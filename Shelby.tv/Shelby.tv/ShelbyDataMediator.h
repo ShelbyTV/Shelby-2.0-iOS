@@ -97,15 +97,25 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 - (BOOL)toggleLikeForFrame:(Frame *)frame;
 
 //do whatever it takes to get us to a clean state, guaranteed
--(void)nuclearCleanup;
+- (void)nuclearCleanup;
 
 //the single, shared context for use on the main thread
 //we're using Thread Confinement for CoreData concurrency
 //that is, each thread has it's own ManagedObjectContext, all sharing a single PersistentStoreCoordinator
--(NSManagedObjectContext *)mainThreadContext;
+- (NSManagedObjectContext *)mainThreadContext;
 
-// use this when operating on background threads
+// use the following to operate on a background thread
 // kick back to main thread where you can use mainThreadContext
--(NSManagedObjectContext *)createPrivateQueueContext;
+//
+// NB: The main thread and private queue contexts are already setup to listen
+// for changes in the other context and automatically merge them.
+//
+// According to http://www.objc.io/issue-2/common-background-practices.html
+// when you create a context with NSPrivateQueueConcurrencyType, you must perform all operations on the context
+// via the context's -performBlock or -performBlockAndWait to ensure the operation runs on the private thread (b/c the context itself
+// is managing it's own operation queue).
+- (void)privateContextPerformBlock:(void (^)(NSManagedObjectContext *privateMOC))block;
+- (void)privateContextPerformBlockAndWait:(void (^)(NSManagedObjectContext *privateMOC))block;
+
 
 @end

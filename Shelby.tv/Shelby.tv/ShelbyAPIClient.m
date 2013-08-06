@@ -72,13 +72,16 @@ static AFHTTPClient *httpClient = nil;
                       shouldAddAuth:(BOOL)addAuthIfUserIsLoggedIn
 {
     if (addAuthIfUserIsLoggedIn) {
-        NSManagedObjectContext *moc = nil;
+        User __block *user;
         if ([NSThread isMainThread]) {
-            moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+            NSManagedObjectContext *moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+            user = [User currentAuthenticatedUserInContext:moc];
         } else {
-            moc = [[ShelbyDataMediator sharedInstance] createPrivateQueueContext];
+            DLog(@"Shelby API grabbing user on background thread... i don't LOVE this :-/");
+            [[ShelbyDataMediator sharedInstance] privateContextPerformBlockAndWait:^(NSManagedObjectContext *privateMOC) {
+                user = [User currentAuthenticatedUserInContext:privateMOC];
+            }];
         }
-        User *user = [User currentAuthenticatedUserInContext:moc];
         if (user) {
             STVAssert(user.token, @"expected user to have token");
             NSMutableDictionary *queryWithAuth = queryParams ? [queryParams mutableCopy] : [NSMutableDictionary dictionaryWithCapacity:1];
@@ -142,7 +145,7 @@ static AFHTTPClient *httpClient = nil;
 + (void)putUserWithParams:(NSDictionary *)params
                  andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
 
     if (!user) {
         if (completionBlock) {
@@ -173,7 +176,7 @@ static AFHTTPClient *httpClient = nil;
 
 + (void)uploadUserAvatar:(UIImage *)avatar andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
 
     if (!user) {
         if (completionBlock) {

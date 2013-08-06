@@ -88,13 +88,16 @@ NSString * const kAnalyticsUXTapNavBarButton                            = @"Tap 
           withNicknameAsLabel:(BOOL)nicknameAsLabel
 {
     if (nicknameAsLabel) {
-        NSManagedObjectContext *moc = nil;
+        User __block *user;
         if ([NSThread isMainThread]) {
-            moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+            NSManagedObjectContext *moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+            user = [User currentAuthenticatedUserInContext:moc];
         } else {
-            moc = [[ShelbyDataMediator sharedInstance] createPrivateQueueContext];
+            DLog(@"ShelbyVC grabbing user on background thread... i don't LOVE this :-/");
+            [[ShelbyDataMediator sharedInstance] privateContextPerformBlockAndWait:^(NSManagedObjectContext *privateMOC) {
+                user = [User currentAuthenticatedUserInContext:privateMOC];
+            }];
         }
-        User *user = [User currentAuthenticatedUserInContext:moc];
         if (user) {
             [self sendEventWithCategory:category withAction:action withLabel:user.nickname];
         } else {

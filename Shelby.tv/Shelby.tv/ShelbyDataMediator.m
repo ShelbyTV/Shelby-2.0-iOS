@@ -31,6 +31,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSManagedObjectContext *mainThreadMOC;
+@property (nonatomic, strong) NSManagedObjectContext *privateContext;
 @end
 
 @implementation ShelbyDataMediator
@@ -46,69 +47,47 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     return sharedInstance;
 }
 
-/*
- * New pattern for using ManagedObjectContexts...
- *
- * After watching WWDC 2012 #214 and reading http://www.objc.io/issue-2/common-background-practices.html
- *
- * Internal to this class, we should...
- * 1) create, and hang on to, a permenent privateQueueContext
- * 2) have it register for change notifications and merge them into itself
- * 3) have the mainThread context register for change notifications and merge them into itself as well
- * 4) Re-work the API fetch->save->dispatch logic as follows...
- *      -initial fetch-
- *      1) CoreData-only initial fetching can just use the main thread, it's going to be fast
- *      -API fetch-
- *      1) do the fetch, then SAVE using a block from private queue
- *      2) send them to the UI on the main thread MoC like we're already doing
- *          ** make sure the main thread MoC got the notification before this runs **
- *
- *
- *
- * Externally, if anybody uses createPrivateQueueContext or mainThreadContext need to make sure....
- * 1) They are performing operations using block syntax.
- * 2) They don't hang on to the context
- *
- */
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _mainThreadMOC = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        _mainThreadMOC.persistentStoreCoordinator = [self persistentStoreCoordinator];
+        _mainThreadMOC.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+        _mainThreadMOC.undoManager = nil;
+
+        _privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        _privateContext.persistentStoreCoordinator = [self persistentStoreCoordinator];
+        _privateContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+        _privateContext.undoManager = nil;
+
+        //automatically merge changes back and forth between private and main contexts
+        [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_privateContext queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            [self.mainThreadMOC mergeChangesFromContextDidSaveNotification:note];
+        }];
+        [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_mainThreadMOC queue:nil usingBlock:^(NSNotification *note) {
+            [self.privateContext mergeChangesFromContextDidSaveNotification:note];
+        }];
+    }
+    return self;
+}
 
 - (void)fetchChannels
 {
-    // 1) go to CoreData and hit up the delegate on main thread
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray *cachedChannels = [DisplayChannel allChannelsInContext:[self createPrivateQueueContext]];
+    // 1) Send back anything we have cached (all on main thread)
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSArray *cachedChannels = [DisplayChannel allChannelsInContext:[self mainThreadMOC]];
         if(cachedChannels && [cachedChannels count]){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // 2) load those channels on main thread context
-                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[cachedChannels count]];
-                for (DisplayChannel *channel in cachedChannels) {
-                    DisplayChannel *mainThreadChannel = (DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID];
-                    [mainThreadDisplayChannels addObject:mainThreadChannel];
-                }
-                [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:YES];
-            });
+            [self.delegate fetchChannelsDidCompleteWith:cachedChannels fromCache:YES];
         }
     });
-    
-    
+
     //2) fetch remotely NB: AFNetworking returns us to the main thread
     [ShelbyAPIClient fetchChannelsWithBlock:^(id JSON, NSError *error) {
         if(JSON){
-            // 1) store this in core data (with a new context b/c we're on some background thread)
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSArray *channels = [self channelsForJSON:JSON inContext:[self createPrivateQueueContext]];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    // 2) load those channels on main thread context
-                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                    NSMutableArray *mainThreadDisplayChannels = [NSMutableArray arrayWithCapacity:[channels count]];
-                    for (DisplayChannel *channel in channels) {
-                        DisplayChannel *mainThreadChannel = (DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID];
-                        [mainThreadDisplayChannels addObject:mainThreadChannel];
-                    }
-                    [self.delegate fetchChannelsDidCompleteWith:mainThreadDisplayChannels fromCache:NO];
-                });
-            });
-            
+            // doing all on main thread, seems premature to optimize here
+            NSArray *channels = [self findOrCreateChannelsForJSON:JSON inContext:[self mainThreadMOC]];
+            [self.delegate fetchChannelsDidCompleteWith:channels fromCache:NO];
         } else {
             [self.delegate fetchChannelsDidCompleteWithError:error];
         }
@@ -283,58 +262,45 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                 sinceFrame:(Frame *)sinceFrame
 {
     if(!sinceFrame){
-        //1) go to CoreData and hit up the delegate on main thread
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
-            
-            Roll *privateContextRoll = (Roll *)[privateContext objectWithID:roll.objectID];
-            //djs TODO: delete cached Frames > 200
-            NSArray *cachedFrames = [Frame framesForRoll:privateContextRoll inContext:privateContext];
-            
-            if(cachedFrames && [cachedFrames count]){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    // 2) load those frames on main thread context
-                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                    NSMutableArray *mainThreadFrames = [self mainThreadFrames:cachedFrames];
-                    
-                    [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
-                                                                with:mainThreadFrames
-                                                           fromCache:YES];
-                });
-            }
-        });
+        //1) send back anything we have cached (all on main thread)
+        NSArray *cachedFrames = [Frame framesForRoll:roll inContext:roll.managedObjectContext];
+        if(cachedFrames && [cachedFrames count]){
+            //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+            [self.delegate fetchEntriesDidCompleteForChannel:channel
+                                                        with:cachedFrames
+                                                   fromCache:YES];
+        }
     }
-    
-    
+
     //2) fetch remotely NB: AFNetworking returns us to the main thread
     [ShelbyAPIClient fetchFramesForRollID:roll.rollID
                                sinceEntry:sinceFrame
                                 withBlock:^(id JSON, NSError *error) {
             if(JSON){
-                // 1) store this in core data (with a new context b/c we're on some background thread)
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
-                    DisplayChannel *privateContextChannel = (DisplayChannel *)[privateContext objectWithID:channel.objectID];
-                    Roll *privateContextRoll = (Roll *)[privateContext objectWithID:roll.objectID];
-                    NSArray *frames = [self framesForJSON:JSON withRoll:privateContextRoll inContext:privateContext];
+                // 1) store this in core data (with a new background context)
+                [self privateContextPerformBlock:^(NSManagedObjectContext *privateMOC) {
+                    DisplayChannel *privateContextChannel = (DisplayChannel *)[privateMOC objectWithID:channel.objectID];
+                    Roll *privateContextRoll = (Roll *)[privateMOC objectWithID:roll.objectID];
+                    NSArray *frames = [self findOrCreateFramesForJSON:JSON
+                                                             withRoll:privateContextRoll
+                                                            inContext:privateMOC];
                     privateContextChannel.roll.frame = [NSSet setWithArray:frames];
-                    
+
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        NSManagedObjectContext *mainMOC = [self mainThreadMOC];
                         NSMutableArray *results = [@[] mutableCopy];
                         //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                        //this is probably fairly slow
                         for (Frame *frame in frames) {
-                            Frame *mainThreadFrame = (Frame *)[[self mainThreadContext] objectWithID:frame.objectID];
+                            Frame *mainThreadFrame = (Frame *)[mainMOC objectWithID:frame.objectID];
                             [results addObject:mainThreadFrame];
                         }
-                        [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+                        [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[mainMOC objectWithID:channel.objectID]
                                                                     with:results
                                                                fromCache:NO];
                     });
-                });
-                
+                }];                
             } else {
-                [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+                [self.delegate fetchEntriesDidCompleteForChannel:channel
                                                        withError:error];
                 DLog(@"fetch error: %@", error);
             }
@@ -347,58 +313,47 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                             withAuthToken:(NSString *)authToken
 {
     if(!sinceDashboardEntry){
-        //1) go to CoreData and hit up the delegate on main thread
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
-
-            //djs TODO: delete cached DashboardEntries > 200
-            // could use relationship on dashboard, but instead using this helper to get dashboard entries in correct order
-            NSArray *cachedDashboardEntries = [DashboardEntry entriesForDashboard:(Dashboard *)[privateContext objectWithID:dashboard.objectID]
-                                                                        inContext:privateContext];
-            if(cachedDashboardEntries && [cachedDashboardEntries count]){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    // 2) load those dashboard entries on main thread context
-                    //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                    NSMutableArray *mainThreadDashboardEntries = [self mainThreadDashboardEntries:cachedDashboardEntries];
-                    
-                    [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
-                                                                with:mainThreadDashboardEntries
-                                                           fromCache:YES];
-                });
-            }
-        });
+        // 1) send back anything we have cached (all on main thread)
+        NSManagedObjectContext *mainMOC = [self mainThreadMOC];
+        // could use relationship on dashboard, but instead using this helper to get dashboard entries in correct order
+        NSArray *cachedDashboardEntries = [DashboardEntry entriesForDashboard:dashboard
+                                                                    inContext:mainMOC];
+        if(cachedDashboardEntries && [cachedDashboardEntries count]){
+            //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+            [self.delegate fetchEntriesDidCompleteForChannel:channel
+                                                        with:cachedDashboardEntries
+                                                   fromCache:YES];
+        }
     }
-    
-    
+
     //2) fetch remotely NB: AFNetworking returns us to the main thread
     [ShelbyAPIClient fetchDashboardEntriesForDashboardID:dashboard.dashboardID
                                               sinceEntry:sinceDashboardEntry
                                            withAuthToken:authToken
                                                 andBlock:^(id JSON, NSError *error) {
         if(JSON){            
-            // 1) store this in core data (with a new context b/c we're on some background thread)
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSManagedObjectContext *privateContext = [self createPrivateQueueContext];
-                Dashboard *privateContextDashboard = (Dashboard *)[privateContext objectWithID:dashboard.objectID];
-                NSArray *dashboardEntries = [self dashboardEntriesForJSON:JSON
-                                                            withDashboard:privateContextDashboard
-                                                                inContext:privateContext];
-                
+            // 1) store this in core data (in a new background context)
+            [self privateContextPerformBlock:^(NSManagedObjectContext *privateMOC) {
+                Dashboard *privateContextDashboard = (Dashboard *)[privateMOC objectWithID:dashboard.objectID];
+                NSArray *dashboardEntries = [self findOrCreateDashboardEntriesForJSON:JSON
+                                                                        withDashboard:privateContextDashboard
+                                                                            inContext:privateMOC];
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    NSManagedObjectContext *mainMOC = [self mainThreadMOC];
                     NSMutableArray *results = [@[] mutableCopy];
                     //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
-                    //this is probably fairly slow
                     for (DashboardEntry *dashboardEntry in dashboardEntries) {
-                        DashboardEntry *mainThreadDashboardEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:dashboardEntry.objectID];
+                        DashboardEntry *mainThreadDashboardEntry = (DashboardEntry *)[mainMOC objectWithID:dashboardEntry.objectID];
                         [results addObject:mainThreadDashboardEntry];
                     }
-                    [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+                    [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[mainMOC objectWithID:channel.objectID]
                                                                 with:results
                                                            fromCache:NO];
                 });
-            });
+            }];
+
         } else {
-            [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[[self mainThreadContext] objectWithID:channel.objectID]
+            [self.delegate fetchEntriesDidCompleteForChannel:channel
                                                    withError:error];
         }
     }];
@@ -581,7 +536,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                      rolls:(NSArray *)followRolls
                 completion:(void (^)(NSError *error))completion
 {
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
     STVAssert(user.token, @"expect user to have a valid token (so we can follow rolls)");
     for (NSString *rollID in followRolls) {
         [self followRoll:rollID withAuthToken:user.token];
@@ -665,7 +620,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 
 - (void)connectTwitterWithViewController:(UIViewController *)viewController
 {
-    User *user = [User currentAuthenticatedUserInContext:[self createPrivateQueueContext]];
+    User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
     NSString *token = nil;
     if (user) {
         token = user.token;
@@ -716,30 +671,21 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 - (NSManagedObjectContext *)mainThreadContext
 {
     STVAssert([NSThread isMainThread], @"must only use main thread context on main thread");
-    if(!self.mainThreadMOC){
-        self.mainThreadMOC = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        self.mainThreadMOC.persistentStoreCoordinator = [self persistentStoreCoordinator];
-        self.mainThreadMOC.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
-        self.mainThreadMOC.undoManager = nil;
-        //djs old CoreDataUtility set this, but I'm not going to.  Don't see a reason to keep this stuff around, let it be faulted in.
-        //self.mainThreadMOC.retainsRegisteredObjects = YES;
-    }
     return self.mainThreadMOC;
 }
 
-// XXX Are we using private MOCs properly?
-//
-// According to http://www.objc.io/issue-2/common-background-practices.html
-// when you create a context with NSPrivateQueueConcurrencyType, you must perform all operations on the context
-// via the context's -performBlock or -performBlockAndWait to ensure the operation runs on the private thread (b/c the context itself
-// is managing it's own operation queue).  Although this seems to be working fine, we're not doing that...
-- (NSManagedObjectContext *)createPrivateQueueContext
+- (void)privateContextPerformBlock:(void (^)(NSManagedObjectContext *privateMOC))block
 {
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    context.persistentStoreCoordinator = [self persistentStoreCoordinator];
-    context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
-    context.undoManager = nil;
-    return context;
+    [self.privateContext performBlock:^{
+        block(self.privateContext);
+    }];
+}
+
+- (void)privateContextPerformBlockAndWait:(void (^)(NSManagedObjectContext *privateMOC))block
+{
+    [self.privateContext performBlockAndWait:^{
+        block(self.privateContext);
+    }];
 }
 
 - (void)nuclearCleanup
@@ -760,32 +706,31 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 }
 
 #pragma mark - Parsing Helpers
-- (NSMutableArray *)mainThreadDashboardEntries:(NSArray *)backgroundThreadDashboardEntries
+- (NSMutableArray *)loadDashboardEntries:(NSArray *)fromContextDashboardEntries intoContext:(NSManagedObjectContext *)moc
 {
-    NSMutableArray *mainThreadDashboardEntries = [NSMutableArray arrayWithCapacity:[backgroundThreadDashboardEntries count]];
-    for (DashboardEntry *entry in backgroundThreadDashboardEntries) {
-        DashboardEntry *mainThreadEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:entry.objectID];
-        [mainThreadDashboardEntries addObject:mainThreadEntry];
+    NSMutableArray *intoContextDashboardEntries = [NSMutableArray arrayWithCapacity:[fromContextDashboardEntries count]];
+    for (DashboardEntry *entry in fromContextDashboardEntries) {
+        DashboardEntry *intoContextEntry = (DashboardEntry *)[[self mainThreadContext] objectWithID:entry.objectID];
+        [intoContextDashboardEntries addObject:intoContextEntry];
     }
 
-    return mainThreadDashboardEntries;
+    return intoContextDashboardEntries;
 }
 
-- (NSMutableArray *)mainThreadFrames:(NSArray *)backgroundThreadFrames
+- (NSMutableArray *)loadFrames:(NSArray *)fromContextFrames intoContext:(NSManagedObjectContext *)moc
 {
-    NSMutableArray *mainThreadFrames = [NSMutableArray arrayWithCapacity:[backgroundThreadFrames count]];
-    for (Frame *entry in backgroundThreadFrames) {
-        Frame *mainThreadEntry = (Frame *)[[self mainThreadContext] objectWithID:entry.objectID];
-        [mainThreadFrames addObject:mainThreadEntry];
+    NSMutableArray *intoContextFrames = [NSMutableArray arrayWithCapacity:[fromContextFrames count]];
+    for (Frame *entry in fromContextFrames) {
+        Frame *intoContextEntry = (Frame *)[moc objectWithID:entry.objectID];
+        [intoContextFrames addObject:intoContextEntry];
     }
     
-    return mainThreadFrames;
-    
+    return intoContextFrames;
 }
 
 //djs TODO: make constant strings externs
 //returns nil on error, otherwise array of DisplayChannel objects
-- (NSArray *)channelsForJSON:(id)JSON inContext:(NSManagedObjectContext *)context
+- (NSArray *)findOrCreateChannelsForJSON:(id)JSON inContext:(NSManagedObjectContext *)context
 {
     if(![JSON isKindOfClass:[NSDictionary class]]){
         return nil;
@@ -838,7 +783,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     return resultDisplayChannels;
 }
 
-- (NSArray *)framesForJSON:(id)JSON withRoll:(Roll *)roll inContext:(NSManagedObjectContext *)context
+- (NSArray *)findOrCreateFramesForJSON:(id)JSON withRoll:(Roll *)roll inContext:(NSManagedObjectContext *)context
 {
     if(![JSON isKindOfClass:[NSDictionary class]]){
         return nil;
@@ -876,7 +821,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     return resultDashboardEntries;
 }
 
-- (NSArray *)dashboardEntriesForJSON:(id)JSON withDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
+- (NSArray *)findOrCreateDashboardEntriesForJSON:(id)JSON withDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
 {
     if(![JSON isKindOfClass:[NSDictionary class]]){
         return nil;

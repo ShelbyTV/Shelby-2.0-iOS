@@ -103,7 +103,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 
 + (User *)updateUserWithTwitterUsername:(NSString *)username andTwitterID:(NSString *)twitterID
 {
-    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] createPrivateQueueContext]];
+    User *user = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     user.twitterNickname = username;
     user.twitterUID = twitterID;
     
