@@ -78,13 +78,6 @@
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self.videoControlsVC resetShareButton];
-}
-
 - (void)setupNavBarView
 {
     self.navBarVC = [[ShelbyNavBarViewController alloc] initWithNibName:@"ShelbyNavBarView" bundle:nil];
@@ -131,7 +124,6 @@
 {
     [super didReceiveMemoryWarning];
 }
-
 
 - (NSUInteger)supportedInterfaceOrientations
 {
@@ -216,9 +208,11 @@
         //not changing, nothing to do
         return;
     }
-    
-    sbvc.view.frame = self.view.frame;
-    
+
+    //our frame NEVER changes b/c we're the root view controller... we just get a 90 deg rotation transform
+    //but our bounds reflects this, so we use bounds to set frame on our children...
+    sbvc.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+
     [self.currentStreamBrowseVC willMoveToParentViewController:nil];
     [self addChildViewController:sbvc];
     

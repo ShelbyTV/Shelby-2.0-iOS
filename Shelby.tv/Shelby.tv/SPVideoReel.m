@@ -34,7 +34,9 @@
 
 #define kShelbyFirstTimeLikedAlert @"kShelbyFirstTimeLikedAlert"
 
-@interface SPVideoReel ()
+@interface SPVideoReel (){
+    UIInterfaceOrientation _currentlyPresentedInterfaceOrientation;
+}
 
 @property (nonatomic) UIScrollView *videoScrollView;
 //Array of DashboardEntry or Frame, technically: id<ShelbyVideoContainer>
@@ -87,6 +89,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     self = [super init];
     if (self) {
+        _currentlyPresentedInterfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
         _isShutdown = NO;
         _channel = channel;
         _videoEntities = [videoEntities mutableCopy];
@@ -110,6 +113,18 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 
     // Any setup stuff that *doesn't* rely on frame sizing can go here
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // Our parent sets our frame, which may be different than the last time we were on screen.
+    // If so, need to adjust the collection view appropriately (we can reuse our willRotate logic)
+    if ([[UIApplication sharedApplication] statusBarOrientation] != _currentlyPresentedInterfaceOrientation) {
+        _currentlyPresentedInterfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        NSInteger newWidth = self.view.frame.size.width;
+        NSInteger newHeight = self.view.frame.size.height;
+        [self adjustScrollViewForNewWidth:newWidth height:newHeight];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -141,45 +156,34 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
         //don't need to do anything if we didn't change! (this happens b/c upside phone isn't supported)
         return;
     }
 
-    NSInteger futureWidth = self.view.frame.size.height;
-    NSInteger futureHeight = self.view.frame.size.width;
+    _currentlyPresentedInterfaceOrientation = toInterfaceOrientation;
 
-    CGSize contentSize =  CGSizeMake(futureWidth, futureHeight * [self.videoPlayers count]);
-    CGPoint contentOffset = CGPointMake(0, futureHeight * self.currentVideoPlayingIndex);
-
-    self.videoScrollView.contentSize = contentSize;
-    self.videoScrollView.contentOffset = contentOffset;
-
-    //the bounds' of the SPVideoPlayers inside of the scroll view are automatically updated,
-    //but that doesn't change their position.  So let's put them into their new position for smooth animation
-    NSInteger i = 0;
-    for (SPVideoPlayer *player in self.videoPlayers) {
-        player.view.frame = CGRectMake(0, futureHeight * i, player.view.frame.size.width, player.view.frame.size.height);
-        i++;
-    }
+    NSInteger newWidth = self.view.frame.size.height;
+    NSInteger newHeight = self.view.frame.size.width;
+    [self adjustScrollViewForNewWidth:newWidth height:newHeight];
 }
 
 #pragma mark - Setup Methods
 - (void)setup
 {
-    [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
-    
     if ( !_videoPlayers ) {
-        self.videoPlayers = [@[] mutableCopy];
+        [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
+
+            self.videoPlayers = [@[] mutableCopy];
+        
+        [self setupVideoPreloadStrategy];
+        [self setupObservers];
+        [self setupVideoScrollView];
+        [self setupGestures];
+        
+        [self setupAllVideoPlayers];
+        [self currentVideoShouldChangeToVideo:self.videoStartIndex autoplay:YES];
     }
-    
-    [self setupVideoPreloadStrategy];
-    [self setupObservers];
-    [self setupVideoScrollView];
-    [self setupGestures];
-    
-    [self setupAllVideoPlayers];
-    [self currentVideoShouldChangeToVideo:self.videoStartIndex autoplay:YES];
 }
 
 - (void)setupObservers
@@ -217,7 +221,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 //    } else {
     CGSize contentSize;
     NSInteger videoHeight = kShelbyFullscreenHeight;
-    if ([self isLandscapeOrientation]) {
+    if (UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
         videoHeight = kShelbyFullscreenWidth;
         contentSize = CGSizeMake(kShelbyFullscreenHeight, [self.videoEntities count] * videoHeight);
     } else {
@@ -261,7 +265,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     CGRect viewframe = [self.videoScrollView frame];
 
     NSInteger videoHeight = kShelbyFullscreenHeight;
-    if ([self isLandscapeOrientation]) {
+    if (UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
         videoHeight = kShelbyFullscreenWidth;
     }
     viewframe.origin.y = videoHeight * idx;
@@ -270,6 +274,22 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     return viewframe;
 }
 
+- (void)adjustScrollViewForNewWidth:(CGFloat)newWidth height:(CGFloat)newHeight
+{
+    CGSize contentSize =  CGSizeMake(newWidth, newHeight * [self.videoPlayers count]);
+    CGPoint contentOffset = CGPointMake(0, newHeight * self.currentVideoPlayingIndex);
+
+    self.videoScrollView.contentSize = contentSize;
+    self.videoScrollView.contentOffset = contentOffset;
+
+    //the bounds' of the SPVideoPlayers inside of the scroll view are automatically updated,
+    //but that doesn't change their position.  So let's put them into their new position for smooth animation
+    NSInteger i = 0;
+    for (SPVideoPlayer *player in self.videoPlayers) {
+        player.view.frame = CGRectMake(0, newHeight * i, player.view.frame.size.width, player.view.frame.size.height);
+        i++;
+    }
+}
 
 - (void)setupGestures
 {
@@ -327,13 +347,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
-- (BOOL)isLandscapeOrientation
-{
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    return UIInterfaceOrientationIsLandscape(orientation);
-}
-
-// What am I trying to do here?
+// What am I trying to do here, you ask?
 // kill ALL the video players except the current one
 // and keep the current player in the correct spot...
 - (void)setDeduplicatedEntries:(NSArray *)deduplicatedEntries

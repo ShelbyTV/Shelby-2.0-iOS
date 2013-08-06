@@ -37,11 +37,6 @@
     self.navBarView.selectionIdentifier.layer.cornerRadius = 3.0;
 }
 
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self.navBarView didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
 - (void)setCurrentUser:(User *)currentUser
 {
     _currentUser = currentUser;

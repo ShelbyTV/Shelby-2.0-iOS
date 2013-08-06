@@ -25,8 +25,8 @@
 NSString * const kShelbyFacebookShareEnable = @"kShelbyFacebookShareEnable";
 NSString * const kShelbyTwitterShareEnable  = @"kShelbyTwitterShareEnable";
 
-NSString * const kShelbyNativeShareDone = @"kShelbyNativeShareDone";
-NSString * const kShelbyNativeShareCancelled  = @"kShelbyNativeShareCancelled";
+NSString * const kShelbyiOSNativeShareDone = @"kShelbyiOSNativeShareDone";
+NSString * const kShelbyiOSNativeShareCancelled  = @"kShelbyiOSNativeShareCancelled";
 
 NSString * const kShelbyShareDestinationTwitter = @"twitter";
 NSString * const kShelbyShareDestinationFacebook = @"facebook";
@@ -155,11 +155,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     
     [activityController setCompletionHandler:^(NSString *activityType, BOOL completed) {
          if (completed) {
-//            [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryShare withAction:kAnalyticsShareActionShareSuccess withLabel:activityType];
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNativeShareDone object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareDone object:nil];
         } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNativeShareCancelled object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyiOSNativeShareCancelled object:nil];
         }
     }];
     
@@ -223,6 +221,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                                       withMessage:message
                                                      andAuthToken:user.token];
                                   }
+                                  [self shareComplete:YES];
+                              } else {
+                                  [self shareComplete:NO];
                               }
                              
                           } else {
@@ -231,11 +232,20 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                                                                                          message:NSLocalizedString(@"ROLLING_FAIL_MESSAGE", nil)
                                                                               dismissButtonTitle:NSLocalizedString(@"ROLLING_FAIL_BUTTON", nil)
                                                                                   autodimissTime:0
-                                                                                       onDismiss:nil];
+                                                                                       onDismiss:^(BOOL didAutoDimiss) {
+                                                                                           [self shareComplete:NO];
+                                                                                       }];
                                   [alert show];
                               });
                           }
                       }];
+}
+
+- (void)shareComplete:(BOOL)didComplete
+{
+    if (self.completionHandler) {
+        self.completionHandler(didComplete);
+    }
 }
 
 #pragma mark - UITextViewDelegate Methods

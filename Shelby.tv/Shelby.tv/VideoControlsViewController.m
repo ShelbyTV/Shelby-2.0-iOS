@@ -68,6 +68,13 @@
     [self adjustVideoControlsForLandscape:UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])];
 }
 
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self updateScrubheadForCurrentTime];
+    [self updateBufferProgressForCurrentBufferedRange];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

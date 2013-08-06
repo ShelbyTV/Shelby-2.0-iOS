@@ -10,8 +10,8 @@
 
 extern NSString * const kShelbyFacebookShareEnable;
 extern NSString * const kShelbyTwitterShareEnable;
-extern NSString * const kShelbyNativeShareCancelled;
-extern NSString * const kShelbyNativeShareDone;
+extern NSString * const kShelbyiOSNativeShareCancelled;
+extern NSString * const kShelbyiOSNativeShareDone;
 
 typedef void(^SPShareCompletionHandler)(BOOL completed);
 
@@ -36,4 +36,8 @@ typedef void(^SPShareCompletionHandler)(BOOL completed);
 
 - (void)shelbyShareWithMessage:(NSString *)message withFacebook:(BOOL)shareOnFacebook andWithTwitter:(BOOL)shareOnTwitter;
 - (void)nativeShareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController;
+
+// Executes the completions handler.  Call when all is said and done.
+- (void)shareComplete:(BOOL)didComplete;
+
 @end

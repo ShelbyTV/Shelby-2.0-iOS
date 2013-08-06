@@ -482,7 +482,6 @@ static AFHTTPClient *httpClient = nil;
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         NSString *shortLink = [[JSON valueForKey:@"result"] valueForKey:@"short_link"];
-        DLog(@"Succeeded fetching short link for frame: %@", shortLink);
         if (completionBlock) {
             completionBlock(shortLink, NO);
         }

@@ -63,9 +63,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateTwitterToggle)
                                                  name:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
-    
-
-	// Do any additional setup after loading the view.
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -129,23 +126,38 @@
 
 - (IBAction)openDefaultShare:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self.message selector:@selector(becomeFirstResponder) name:kShelbyNativeShareCancelled object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(close) name:kShelbyNativeShareDone object:nil];
+    //listen for iOS native share activity sheet notices
+    [[NSNotificationCenter defaultCenter] addObserver:self.message
+                                             selector:@selector(becomeFirstResponder)
+                                                 name:kShelbyiOSNativeShareCancelled
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(iosNativeShareDone)
+                                                 name:kShelbyiOSNativeShareDone
+                                               object:nil];
     
     [self.shareController nativeShareWithFrame:self.frame message:self.videoTitle.text andLink:self.link fromViewController:self];
 }
 
-// TODO: KP KP: do it in a nicer way. This is a TOTAL HACK
-- (void)close
+- (void)iosNativeShareDone
 {
-    [self performSelector:@selector(cancel:) withObject:nil afterDelay:1.5];
+    //XXX we are waiting 1.5s for the iOS cancel animation to complete before dismissing ourselves
+    // TODO: KP KP: do it in a nicer way. This is a TOTAL HACK
+    double delayInSeconds = 1.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.shareController shareComplete:YES];
+        }];
+    });
 }
 
 - (IBAction)cancel:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.shareController shareComplete:NO];
+    }];
 }
-
 
 - (void)updateFacebookToggle
 {

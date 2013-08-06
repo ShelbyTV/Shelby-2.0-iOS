@@ -41,7 +41,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _currentlyPresentedInterfaceOrientation = UIInterfaceOrientationPortrait;
+        _currentlyPresentedInterfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
         _streamBrowseViewCells = [[NSMutableSet set] mutableCopy];
         _viewMode = ShelbyStreamBrowseViewDefault;
         _currentPage = 0;
@@ -76,9 +76,15 @@
     [super viewWillAppear:animated];
     
     [self updateVisibilityOfNoContentView];
-    
-    //TODO:  KP KP: the reload might not be needed
-    [self.collectionView reloadData];
+
+    // Our parent sets our frame, which may be different than the last time we were on screen.
+    // If so, need to adjust the collection view appropriately (we can reuse our willRotate logic)
+    if ([[UIApplication sharedApplication] statusBarOrientation] != _currentlyPresentedInterfaceOrientation) {
+        UIInterfaceOrientation oldOrientation = _currentlyPresentedInterfaceOrientation;
+        [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
+        self.collectionView.frame = self.view.frame;
+        [self didRotateFromInterfaceOrientation:oldOrientation];
+    }
 }
 
 - (void)updateVisibilityOfNoContentView
@@ -129,7 +135,7 @@
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-    if ([self isLandscapeOrientation] && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
         //don't need to do anything if we didn't change! (this happens b/c upside phone isn't supported)
         return;
     }
@@ -144,25 +150,14 @@
     _currentlyPresentedInterfaceOrientation = toInterfaceOrientation;
 
     CGPoint preRotationContentOffset = self.collectionView.contentOffset;
-    NSUInteger preRotationScrollPage = preRotationContentOffset.y / self.view.frame.size.height;
-    NSUInteger postRotationContentOffsetY = preRotationScrollPage * self.view.frame.size.width;
+    NSUInteger preRotationScrollPage = preRotationContentOffset.y / self.collectionView.frame.size.height;
+    NSUInteger postRotationContentOffsetY = preRotationScrollPage * self.collectionView.frame.size.width;
 
     //need to set content size (it's too small when going landscape -> portrait; contentOffset can't be set if post rotation Y > current height)
-    self.collectionView.contentSize = CGSizeMake(self.view.frame.size.height, self.view.frame.size.width * [self.deduplicatedEntries count]);
+    self.collectionView.contentSize = CGSizeMake(self.collectionView.frame.size.height, self.collectionView.frame.size.width * [self.deduplicatedEntries count]);
     //our browseViewDelegate relies on our frame being correct when -viewDidScroll calls into it.
     //We update contentOffset in -willRotateToInterfaceOrientation: to make sure context is set up properly for delegate
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, postRotationContentOffsetY)];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent
-{
-    //if my orientation is different from my parents, adjust myself
-    //NB: Assuming our frame was set correctly before this is called
-    if ([[UIApplication sharedApplication] statusBarOrientation] != _currentlyPresentedInterfaceOrientation) {
-        UIInterfaceOrientation oldOrientation = _currentlyPresentedInterfaceOrientation;
-        [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0];
-        [self didRotateFromInterfaceOrientation:oldOrientation];
-    }
 }
 
 #pragma mark - Setters & Getters
@@ -294,12 +289,6 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
             cell.viewMode = _viewMode;
         }
     }
-}
-
-- (BOOL)isLandscapeOrientation
-{
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    return UIInterfaceOrientationIsLandscape(orientation);
 }
 
 - (NSIndexPath *)indexPathForCurrentFocus
