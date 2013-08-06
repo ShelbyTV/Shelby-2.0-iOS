@@ -26,6 +26,6 @@ do { \
     if(!(expression)) { \
         NSString *__STVAssert_temp_string = [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __func__, __FILE__, __LINE__, [NSString stringWithFormat: @"" __VA_ARGS__]]; \
         NSLog(@"%@", __STVAssert_temp_string); \
-        abort(); \
+        raise(SIGABRT); \
     } \
 } while(0)
