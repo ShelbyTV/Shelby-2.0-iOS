@@ -24,7 +24,7 @@
 {
     self = [super init];
     if ( self ) {
-        self.delegate = delegate;
+        _delegate = delegate;
     }
     
     return self;
@@ -35,6 +35,21 @@
 {
     [super viewDidLoad];
     [self initializationOnLoad];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+            return;
+        } else {
+            [self setupWebViewFrameForOrientationLandscape:YES];
+        }
+    } else {
+        [self setupWebViewFrameForOrientationLandscape:NO];
+    }
 }
 
 #pragma mark - Private methods
@@ -48,14 +63,34 @@
                                                                            action:@selector(cancelAuthentication)];
     self.navigationItem.leftBarButtonItem = cancelBarButtonItem;
     
-    // Add webView to view hierarchy
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f,
                                                                0.0f,
-                                                               [UIScreen mainScreen].bounds.size.height,
-                                                               [UIScreen mainScreen].bounds.size.width)];
+                                                               kShelbyFullscreenWidth,
+                                                               kShelbyFullscreenHeight)];
+
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        [self setupWebViewFrameForOrientationLandscape:YES];
+    } else {
+        [self setupWebViewFrameForOrientationLandscape:NO];
+    }
+
     self.webView.delegate = self;
     
     [self.view addSubview:self.webView];
+}
+
+- (void)setupWebViewFrameForOrientationLandscape:(BOOL)landscapeOrientation
+{
+    NSInteger height, width;
+    if (landscapeOrientation) {
+        height = kShelbyFullscreenWidth;
+        width = kShelbyFullscreenHeight;
+    } else {
+        height = kShelbyFullscreenHeight;
+        width = kShelbyFullscreenWidth;
+    }
+    
+    self.webView.frame = CGRectMake(0.0f, 0.0f, width, height);
 }
 
 - (void)cancelAuthentication
