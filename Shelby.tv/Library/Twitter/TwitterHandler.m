@@ -408,22 +408,26 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     [self setTwitterID:ID];
                     [self setTwitterName:name];
                     
-                    User *user = [User updateUserWithTwitterUsername:name andTwitterID:ID];
-                    NSError *error;
-                    [user.managedObjectContext save:&error];
-                    STVAssert(!error, @"context save failed saving User after twitter login...");
-                    
-                    
-                    [self.delegate twitterConnectDidComplete];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterConnectCompleted object:nil];
-
-                    if (name) {
-                        [[NSUserDefaults standardUserDefaults] setObject:name forKey:kShelbyTwitterUsername];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                    }
-                    // Send Reverse Auth Access Token and Access Token Secret to Shelby for Token Swap
-                    [self sendReverseAuthAccessResultsToServer];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        User *user = [User updateUserWithTwitterUsername:name andTwitterID:ID];
+                        NSError *error;
+                        [user.managedObjectContext save:&error];
+                        STVAssert(!error, @"context save failed saving User after twitter login...");
+                        
+                        
+                        [self.delegate twitterConnectDidComplete];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterConnectCompleted object:nil];
+                        
+                        if (name) {
+                            [[NSUserDefaults standardUserDefaults] setObject:name forKey:kShelbyTwitterUsername];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                        }
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                            // Send Reverse Auth Access Token and Access Token Secret to Shelby for Token Swap
+                            [self sendReverseAuthAccessResultsToServer];
+                        });
+                    });
                     
                 } else {
                     // KP KP: TODO: change error message.s
