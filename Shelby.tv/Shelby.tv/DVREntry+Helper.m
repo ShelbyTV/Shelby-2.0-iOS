@@ -95,6 +95,7 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
         return self.dashboardEntry.frame;
     } else {
         STVAssert(NO, @"expected Frame or DashboardEntry");
+        return nil;
     }
 }
 
@@ -106,6 +107,7 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
         return self.dashboardEntry.frame.creator.nickname;
     } else {
         STVAssert(NO, @"expected Frame or DashboardEntry");
+        return nil;
     }
 }
 
