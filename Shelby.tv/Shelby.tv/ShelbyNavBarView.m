@@ -11,7 +11,10 @@
 #import "AHEasing/easing.h"
 
 @interface ShelbyNavBarView() {
+    NSArray *_orderedButtons;
     NSArray *_separatorLines;
+    UIImageView *_shadowView;
+    NSLayoutConstraint *_shadowY;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *slider;
@@ -52,9 +55,11 @@
 {
     [super awakeFromNib];
 
+    _orderedButtons = @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton];
+
     //the grey lines that show when nav is expanded
     NSMutableArray *lines = [[NSMutableArray alloc] init];
-    for (UIButton *b in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
+    for (UIButton *b in _orderedButtons) {
         UIView *hr = [[UIView alloc] init];
         [lines addObject:hr];
         hr.backgroundColor = [kShelbyColorGray colorWithAlphaComponent:0.3];
@@ -73,6 +78,21 @@
     _separatorLines = lines;
     [self showSeparatorLines:NO];
 
+    //shadow (we manually move this when the "bottom" changes)
+    _shadowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-shadow"]];
+    _shadowView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.slider addSubview:_shadowView];
+    [self.slider addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[shadow]|"
+                                                                 options:nil
+                                                                 metrics:nil
+                                                                   views:@{@"shadow":_shadowView}]];
+    _shadowY = [NSLayoutConstraint constraintWithItem:_shadowView
+                                            attribute:NSLayoutAttributeTop 
+                                            relatedBy:NSLayoutRelationEqual 
+                                               toItem:self attribute:NSLayoutAttributeTop 
+                                           multiplier:0.f 
+                                             constant:0];
+    [self.slider addConstraint:_shadowY];
 }
 
 - (void)didMoveToSuperview
@@ -128,7 +148,7 @@
             currentButton.alpha = 1.0;
             [currentButton setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
             currentButton.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
-            NSMutableArray *allRowsButCurrent = [@[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton] mutableCopy];
+            NSMutableArray *allRowsButCurrent = [_orderedButtons mutableCopy];
             [allRowsButCurrent removeObject:_currentRow];
             for (UIButton *b in allRowsButCurrent) {
                 b.alpha = 0.0;
@@ -141,6 +161,7 @@
         [UIView animateWithDuration:SELECTION_IDENTIFIER_ANIMATION_TIME animations:^{
             [self updateSelectionIdentifierLocationToCurrentRow];
         }];
+        [self repositionShadow];
 
     } else {
         //show all rows
@@ -170,7 +191,7 @@
         }
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
-            for (UIButton *b in @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton]) {
+            for (UIButton *b in _orderedButtons) {
                 b.alpha = 1.0;
                 b.backgroundColor = kShelbyColorWhite;
                 b.userInteractionEnabled = YES;
@@ -180,6 +201,7 @@
 
             [self showSeparatorLines:YES];
         }];
+        [self repositionShadow];
 
     }
 }
@@ -245,6 +267,23 @@
     for (UIView *l in _separatorLines) {
         l.alpha = (showLines ? 1.0 : 0.0);
     }
+}
+
+- (void)repositionShadow
+{
+    UIButton *lastbutton = [self lastVisibleButton];
+    _shadowY.constant = lastbutton.frame.origin.y + lastbutton.frame.size.height;
+}
+
+- (UIButton *)lastVisibleButton
+{
+    UIButton *b;
+    for (UIButton *button in _orderedButtons) {
+        if (!button.hidden && button.alpha == 1.0f) {
+            b = button;
+        }
+    }
+    return b;
 }
 
 /* Animation Notes

@@ -57,7 +57,10 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUINormalTitle">Stream</string>
-								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
+								<object class="NSColor" key="IBUIHighlightedTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwLjUwMTk2MDgxNCAwAA</bytes>
+								</object>
 								<object class="NSColor" key="IBUINormalTitleColor" id="560321153">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
@@ -93,7 +96,10 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUINormalTitle">Likes</string>
-								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
+								<object class="NSColor" key="IBUIHighlightedTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwLjUwMTk2MDgxNCAwAA</bytes>
+								</object>
 								<reference key="IBUINormalTitleColor" ref="560321153"/>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
 								<reference key="IBUIFontDescription" ref="108438195"/>
@@ -113,7 +119,10 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUINormalTitle">My Shares</string>
-								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
+								<object class="NSColor" key="IBUIHighlightedTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwLjUwMTk2MDgxNCAwAA</bytes>
+								</object>
 								<reference key="IBUINormalTitleColor" ref="560321153"/>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
 								<reference key="IBUIFontDescription" ref="108438195"/>
@@ -133,7 +142,10 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUINormalTitle">Community</string>
-								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
+								<object class="NSColor" key="IBUIHighlightedTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwLjUwMTk2MDgxNCAwAA</bytes>
+								</object>
 								<reference key="IBUINormalTitleColor" ref="560321153"/>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
 								<reference key="IBUIFontDescription" ref="108438195"/>
@@ -153,7 +165,10 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUINormalTitle">Settings</string>
-								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
+								<object class="NSColor" key="IBUIHighlightedTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwLjUwMTk2MDgxNCAwAA</bytes>
+								</object>
 								<object class="NSColor" key="IBUINormalTitleColor" id="639941271">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>
@@ -168,6 +183,7 @@
 								<string key="NSFrame">{{0, 221}, {320, 44}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="517900998"/>
 								<bool key="IBUIOpaque">NO</bool>
@@ -175,7 +191,10 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUINormalTitle">Login</string>
-								<reference key="IBUIHighlightedTitleColor" ref="517900998"/>
+								<object class="NSColor" key="IBUIHighlightedTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwLjUwMTk2MDgxNCAwAA</bytes>
+								</object>
 								<reference key="IBUINormalTitleColor" ref="639941271"/>
 								<reference key="IBUINormalTitleShadowColor" ref="113685532"/>
 								<reference key="IBUIFontDescription" ref="108438195"/>
@@ -1201,22 +1220,25 @@
 				</array>
 				<boolean value="NO" key="1.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="134.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<array class="NSMutableArray" key="134.IBViewMetadataConstraints">
 					<reference ref="401353822"/>
 				</array>
 				<boolean value="NO" key="134.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="147.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="0.0" key="147.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="147.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<array key="147.IBViewMetadataConstraints">
 					<reference ref="634899991"/>
 				</array>
 				<boolean value="NO" key="147.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="152.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="152.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<array class="NSMutableArray" key="152.IBViewMetadataConstraints">
 					<reference ref="316081472"/>
 				</array>
 				<boolean value="NO" key="152.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="157.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="157.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<array class="NSMutableArray" key="157.IBViewMetadataConstraints">
 					<reference ref="388020272"/>
 				</array>
@@ -1256,6 +1278,7 @@
 				<string key="639.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="656.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="659.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="659.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<array key="659.IBViewMetadataConstraints">
 					<reference ref="672207772"/>
 				</array>
@@ -1267,6 +1290,7 @@
 				<string key="669.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="670.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="683.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="683.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<array class="NSMutableArray" key="683.IBViewMetadataConstraints">
 					<reference ref="667945720"/>
 				</array>
