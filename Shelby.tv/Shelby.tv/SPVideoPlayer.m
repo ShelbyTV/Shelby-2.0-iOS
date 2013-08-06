@@ -9,12 +9,16 @@
 #import "SPVideoPlayer.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import "ShelbyAPIClient.h"
 #import "SPVideoDownloader.h"
 #import "SPVideoExtractor.h"
 #import "SPVideoReel.h"
 
+#define PLAYBACK_API_UPDATE_INTERVAL 15.f
+
 @interface SPVideoPlayer () {
     CGFloat _rateBeforeScrubbing;
+    CMTime _lastPlaybackUpdateIntervalEnd;
 }
 
 @property (nonatomic) AVPlayerLayer *playerLayer;
@@ -50,6 +54,7 @@
 {
     self = [super init];
     if (self) {
+        _lastPlaybackUpdateIntervalEnd = CMTimeMake(0, NSEC_PER_MSEC);
         _videoFrame = videoFrame;
         _rateBeforeScrubbing = 0.f;
     }
@@ -250,6 +255,8 @@
     [self.playerLayer removeFromSuperlayer];
     self.playerLayer = nil;
     self.player = nil;
+
+    _lastPlaybackUpdateIntervalEnd = CMTimeMake(0, NSEC_PER_MSEC);
 }
 
 #pragma mark - Video Playback Methods (Public)
@@ -304,13 +311,16 @@
 - (void)scrubToPct:(CGFloat)scrubPct
 {
     if (CMTIME_IS_VALID([self duration])) {
-        [self.player seekToTime:CMTimeMultiplyByFloat64([self duration], MAX(0.0,MIN(scrubPct,1.0)))];
+        CMTime seekTo = CMTimeMultiplyByFloat64([self duration], MAX(0.0,MIN(scrubPct,1.0)));
+        [self.player seekToTime:seekTo];
+        _lastPlaybackUpdateIntervalEnd = seekTo;
     }
 }
 
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
     if ( _player.currentItem == notification.object) {
+        [self sendWatchToAPIFrom:_lastPlaybackUpdateIntervalEnd to:self.duration complete:YES];
         [self.videoPlayerDelegate videoDidFinishPlayingForPlayer:self];
         [self scrubToPct:0.0];
     }
@@ -339,7 +349,6 @@
         NSArray *loadedTimeRanges = [self.player.currentItem loadedTimeRanges];
         CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
         [self.videoPlayerDelegate videoBufferedRange:timeRange forPlayer:self];
-        
     }
 }
 
@@ -351,6 +360,10 @@
         // -djs
     }
     [self.videoPlayerDelegate videoCurrentTime:time forPlayer:self];
+
+    if (CMTimeGetSeconds(CMTimeSubtract(time, _lastPlaybackUpdateIntervalEnd)) > PLAYBACK_API_UPDATE_INTERVAL) {
+        [self sendWatchToAPIFrom:_lastPlaybackUpdateIntervalEnd to:time complete:NO];
+    }
 }
 
 - (void)videoLoadingIndicatorShouldAnimate:(BOOL)animate
@@ -368,6 +381,17 @@
     } else {
         [self.videoLoadingIndicator stopAnimating];
     }
+}
+
+- (void)sendWatchToAPIFrom:(CMTime)fromTime to:(CMTime)toTime complete:(BOOL)complete
+{
+    NSInteger from = (NSInteger)CMTimeGetSeconds(fromTime);
+    NSInteger to = (NSInteger)CMTimeGetSeconds(toTime);
+    [ShelbyAPIClient postUserWatchedFrame:self.videoFrame.frameID
+                               completely:complete
+                                     from:[NSString stringWithFormat:@"%01d", from]
+                                       to:[NSString stringWithFormat:@"%01d", to]];
+    _lastPlaybackUpdateIntervalEnd = toTime;
 }
 
 @end

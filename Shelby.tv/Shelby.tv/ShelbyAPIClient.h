@@ -76,8 +76,13 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
              withAuthToken:(NSString *)authToken
                   andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
+//Authentication is not required for this route,
+//will be added automatically if user is logged in.
+//Send compeleteWatch YES and/or include from/to times.
 + (void)postUserWatchedFrame:(NSString *)frameID
-               withAuthToken:(NSString *)authToken;
+                  completely:(BOOL)completeWatch
+                        from:(NSString *)fromTimeInSeconds
+                          to:(NSString *)toTimeInSeconds;
 
 // NB: deleting frame == unliking
 + (void)deleteFrame:(NSString *)frameID

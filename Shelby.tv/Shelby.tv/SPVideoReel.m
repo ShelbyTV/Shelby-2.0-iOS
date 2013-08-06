@@ -457,8 +457,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)scrubCurrentPlayerTo:(CGFloat)percent
 {
     [self.currentPlayer scrubToPct:percent];
-    
-//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerUserScrub withLabel:[NSString stringWithFormat:@"%2.2f%%", percent * 100]];
 }
 
 - (void)scrollTo:(CGPoint)contentOffset

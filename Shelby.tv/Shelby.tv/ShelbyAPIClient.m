@@ -432,13 +432,25 @@ static AFHTTPClient *httpClient = nil;
 }
 
 + (void)postUserWatchedFrame:(NSString *)frameID
-               withAuthToken:(NSString *)authToken
+                  completely:(BOOL)completeWatch
+                        from:(NSString *)fromTimeInSeconds
+                          to:(NSString *)toTimeInSeconds
 {
-    NSDictionary *params = @{kShelbyAPIParamAuthToken: authToken};
+    NSMutableDictionary *params = [@{} mutableCopy];
+    if (completeWatch) {
+        params[@"complete"] = @"1";
+    } else {
+        STVAssert(fromTimeInSeconds && toTimeInSeconds, @"expected valid times for incomplete watch");
+    }
+    if (fromTimeInSeconds && toTimeInSeconds) {
+        params[@"start_time"] = fromTimeInSeconds;
+        params[@"end_time"] = toTimeInSeconds;
+    }
+
     NSURLRequest *request = [self requestWithMethod:POST
                                             forPath:[NSString stringWithFormat:kShelbyAPIPostFrameWatchedPath, frameID]
                                 withQueryParameters:params
-                                      shouldAddAuth:NO];
+                                      shouldAddAuth:YES];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         //do nothing
