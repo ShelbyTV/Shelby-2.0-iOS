@@ -964,17 +964,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     NSUInteger idx = self.currentVideoPlayingIndex + (forward ? 1 : -1);
     if (idx > 0 && idx < [self.videoEntities count]) {
-        CGFloat videoX = 0.0;
-        CGFloat videoY = 0.0;
-        
-//        if (DEVICE_IPAD) {
-//            videoX = idx * kShelbySPVideoWidth;
-//            videoY = self.videoScrollView.contentOffset.y;
-//        } else {
-        videoY = idx * kShelbySPVideoHeight;
-        videoX = self.videoScrollView.contentOffset.x;
-//        }
-        [self.videoScrollView setContentOffset:CGPointMake(videoX, videoY) animated:YES];
+        SPVideoPlayer *newVideoPlayer = self.videoPlayers[idx];
+        STVAssert(newVideoPlayer, @"expected a video player for all entities");
+        [self.videoScrollView setContentOffset:CGPointMake(newVideoPlayer.view.frame.origin.x, newVideoPlayer.view.frame.origin.y)
+                                      animated:YES];
         [self currentVideoShouldChangeToVideo:idx autoplay:YES];
         return YES;
     } else {
