@@ -15,8 +15,9 @@
 
 @implementation DashboardEntry
 
-@dynamic dashboardEntryID;
 @dynamic action;
+@dynamic dashboardEntryID;
+@dynamic sourceFrameCreatorNickname;
 @dynamic dashboard;
 @dynamic duplicateOf;
 @dynamic duplicates;

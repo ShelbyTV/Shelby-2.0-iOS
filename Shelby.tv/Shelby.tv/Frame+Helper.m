@@ -55,7 +55,10 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
         frame.creator = [User userForDictionary:creatorDict inContext:context];
     }
     if (mustHaveCreator && !frame.creator) {
-        [context deleteObject:frame];
+        //only delete if it's brand new, somebody else created this for good reason
+        if (frame.objectID.isTemporaryID) {
+            [context deleteObject:frame];
+        }
         return nil;
     }
     
@@ -143,6 +146,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
         currentFrame = (Frame *)entity;
     } else if ([entity isKindOfClass:[DashboardEntry class]]) {
         currentFrame = ((DashboardEntry *)entity).frame;
+        STVAssert(currentFrame, @"expected DashboardEntry to have a Frame");
     }
     STVAssert(currentFrame, @"expected entity to be a DashboardEntry or Frame");
     return currentFrame;

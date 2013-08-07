@@ -377,7 +377,9 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 //pulled should be absolute value
 - (void)pullToRefreshForOffset:(CGFloat)pulled
 {
-    if (_ignorePullToRefresh){ return; }
+    if (_ignorePullToRefresh || !self.channel.canFetchRemoteEntries){
+        return;
+    }
 
     if (pulled > REFRESH_PULL_THRESHOLD) {
         [self pullToRefreshStartRefreshing];

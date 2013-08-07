@@ -20,6 +20,7 @@
     <entity name="DashboardEntry" representedClassName="DashboardEntry" syncable="YES">
         <attribute name="action" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="dashboardEntryID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sourceFrameCreatorNickname" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="dashboard" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Dashboard" inverseName="dashboardEntry" inverseEntity="Dashboard" syncable="YES"/>
         <relationship name="duplicateOf" optional="YES" transient="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="duplicates" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="duplicates" optional="YES" transient="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DashboardEntry" inverseName="duplicateOf" inverseEntity="DashboardEntry" syncable="YES"/>
@@ -128,7 +129,7 @@
     <elements>
         <element name="Conversation" positionX="369" positionY="117" width="128" height="105"/>
         <element name="Dashboard" positionX="-198" positionY="341" width="128" height="178"/>
-        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="150"/>
+        <element name="DashboardEntry" positionX="72" positionY="402" width="128" height="165"/>
         <element name="DisplayChannel" positionX="-270" positionY="126" width="128" height="135"/>
         <element name="DVREntry" positionX="160" positionY="192" width="128" height="105"/>
         <element name="Frame" positionX="367" positionY="336" width="128" height="375"/>

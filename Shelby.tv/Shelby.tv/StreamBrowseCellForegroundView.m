@@ -7,6 +7,7 @@
 //
 
 #import "StreamBrowseCellForegroundView.h"
+#import "DashboardEntry+Helper.h"
 #import "Video+Helper.h"
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
@@ -27,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIView *detailUserView;
 @property (weak, nonatomic) IBOutlet UILabel *detailViaNetwork;
 @property (weak, nonatomic) IBOutlet UIView *detailWhiteBackground;
+@property (weak, nonatomic) IBOutlet UIView *detailRecommendationView;
+@property (weak, nonatomic) IBOutlet UILabel *detailRecommendationReasonLabel;
 
 // Summary View Outlets
 @property (weak, nonatomic) IBOutlet UILabel *summaryTitle;
@@ -35,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *summaryUsername;
 @property (weak, nonatomic) IBOutlet UIView *summaryUserView;
 @property (weak, nonatomic) IBOutlet UILabel *summaryViaNetwork;
+@property (weak, nonatomic) IBOutlet UIView *summaryRecommendationView;
 
 //overlay below everything
 @property (nonatomic, strong) UIImageView *overlayImageView;
@@ -79,6 +83,7 @@
         // Summary View
         self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 50, pageWidth - kShelbyInfoViewMargin * 2, 90);
         self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height - 10, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
+        self.summaryRecommendationView.frame = self.summaryUserView.frame;
 
         // Detail View
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 45, pageWidth - kShelbyInfoViewMargin * 2, 22);
@@ -88,11 +93,13 @@
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 100, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 155, pageWidth - kShelbyInfoViewMargin * 2, 60);
         self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, self.detailUserView.frame.origin.y + 10, 245, 40);
+        self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
     } else {
         // Portrait
         // Summary View
         self.summaryTitle.frame = CGRectMake(kShelbyInfoViewMargin, 64, 280, 120);
         self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, self.summaryTitle.frame.origin.y + self.summaryTitle.frame.size.height, self.summaryTitle.frame.size.width, self.summaryUserView.frame.size.height);
+        self.summaryRecommendationView.frame = self.summaryUserView.frame;
 
         // Detail View
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
@@ -102,6 +109,7 @@
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 215, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 195, pageWidth - kShelbyInfoViewMargin * 2, 100);
         self.detailNetworkShares.frame = CGRectMake(xOrigin, 305, 310, 40);
+        self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
     }
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
@@ -114,6 +122,23 @@
     [self setupOverlayImageView];
 }
 
+- (void)setInfoForDashboardEntry:(DashboardEntry *)dashboardEntry
+{
+    if (dashboardEntry && [dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
+        self.detailRecommendationReasonLabel.attributedText = [self recommendationStringFor:dashboardEntry];
+        self.summaryRecommendationView.hidden = NO;
+        self.detailRecommendationView.hidden = NO;
+        self.summaryUserView.hidden = YES;
+        self.detailUserView.hidden = YES;
+        self.detailCommentView.hidden = YES;
+    } else {
+        self.summaryRecommendationView.hidden = YES;
+        self.detailRecommendationView.hidden = YES;
+        self.summaryUserView.hidden = NO;
+        self.detailUserView.hidden = NO;
+        self.detailCommentView.hidden = NO;
+    }
+}
 
 - (void)setInfoForFrame:(Frame *)videoFrame
 {
@@ -202,8 +227,9 @@
                                                          lineBreakMode:self.summaryTitle.lineBreakMode].height;
     self.summaryTitle.frame = CGRectMake(self.summaryTitle.frame.origin.x, self.summaryTitle.frame.origin.y, self.summaryTitle.frame.size.width, summaryTitleDesiredHeight);
 
-    //move the user view just below the title
+    //move the user + recommendation views just below the title
     self.summaryUserView.frame = CGRectMake(self.summaryUserView.frame.origin.x, summaryTitleDesiredHeight + summaryUserPadding, self.summaryUserView.frame.size.width, self.summaryUserView.frame.size.height);
+    self.summaryRecommendationView.frame = self.summaryUserView.frame;
 
 
     //-----------detail page---------------
@@ -235,6 +261,9 @@
 
     //tighting up the height of surrounding box as well
     self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, textBasedHeight + detailWhiteBackgroundHeightAdjustment);
+
+    //recommendation view
+    self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
 }
 
 - (void)setupOverlayImageView
@@ -264,6 +293,19 @@
 - (IBAction)playVideoInCell:(id)sender
 {
     [self.delegate streamBrowseCellForegroundViewTitleWasTapped];
+}
+
+- (NSAttributedString *)recommendationStringFor:(DashboardEntry *)dashboardEntry
+{
+    NSString *recoBase = @"This video is shared by people like ";
+    NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
+    NSString *recoString = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
+    NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
+    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyFontH4Medium}
+                            range:[recoString rangeOfString:recoBase]];
+    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyFontH4Bold}
+                            range:[recoString rangeOfString:recoUsername]];
+    return recoAttributed;
 }
 
 @end

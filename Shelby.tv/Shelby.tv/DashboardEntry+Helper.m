@@ -7,9 +7,9 @@
 //
 
 #import "DashboardEntry+Helper.h"
-
 #import "Frame+Helper.h"
 #import "NSManagedObject+Helper.h"
+#import "NSObject+NullHelper.h"
 
 NSString * const kShelbyCoreDataEntityDashboardEntry = @"DashboardEntry";
 NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEntryID == %@";
@@ -40,10 +40,10 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
     if (action) {
         dashboardEntry.action = @([action intValue]);
         if ([dashboardEntry typeOfEntry] == DashboardEntryTypeEntertainmentGraphRecommendation) {
-            DLog(@"RECO A!");
+            //not yet implemented on backend
         }
         if ([dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
-            DLog(@"RECO B!");
+            dashboardEntry.sourceFrameCreatorNickname = [[dict valueForKeyPath:@"src_frame.creator.nickname"] nilOrSelfWhenNotNull];
         }
     }
 
@@ -54,12 +54,18 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
     }
     if (!dashboardEntry.frame) {
         //must have a frame
-        [context deleteObject:dashboardEntry];
+        if (dashboardEntry.objectID.isTemporaryID) {
+            [context deleteObject:dashboardEntry];
+        }
         return nil;
     } else if (!(dashboardEntry.frame.creator || [dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation)) {
         //frame must have a creator OR DashboardEntry must be a recommended type
-        [context deleteObject:dashboardEntry];
-        [context deleteObject:dashboardEntry.frame];
+        if (dashboardEntry.frame.objectID.isTemporaryID) {
+            [context deleteObject:dashboardEntry.frame];
+        }
+        if (dashboardEntry.objectID.isTemporaryID) {
+            [context deleteObject:dashboardEntry];
+        }
         return nil;
     }
 

@@ -18,5 +18,7 @@
 @interface StreamBrowseCellForegroundView : UIView
 @property (nonatomic, assign) id<StreamBrowseCellForegroundViewDelegate>delegate;
 
+- (void)setInfoForDashboardEntry:(DashboardEntry *)dashboardEntry;
 - (void)setInfoForFrame:(Frame *)videoFrame;
+
 @end

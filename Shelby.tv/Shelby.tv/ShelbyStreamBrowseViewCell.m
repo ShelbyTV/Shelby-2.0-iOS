@@ -12,7 +12,10 @@
 #import "Frame+Helper.h"
 #import "ShelbyViewController.h"
 
-@interface ShelbyStreamBrowseViewCell()
+@interface ShelbyStreamBrowseViewCell(){
+    UIImage *_placeholderThumbnail;
+    UIImage *_placeholderThumbnailBlurred;
+}
 @property (nonatomic, strong) STVParallaxView *parallaxView;
 @property (nonatomic, strong) UIView *backgroundThumbnailsView;
 @property (nonatomic, strong) UIImageView *thumbnailRegularView;
@@ -91,11 +94,11 @@
 //                                                                                 options:0
 //                                                                                 metrics:nil
 //                                                                                   views:@{@"play":_playButton}]];
+
+        [self initPlacerholderThumbnails];
     }
     return self;
 }
-
-
 
 - (void)resizeParallaxViews
 {
@@ -140,12 +143,14 @@
     _entry = entry;
     
     Frame *videoFrame = nil;
+    DashboardEntry *dashboardEntry = nil;
     if ([entry isKindOfClass:[DashboardEntry class]]) {
-        videoFrame = ((DashboardEntry *)entry).frame;
+        dashboardEntry = (DashboardEntry *)entry;
+        videoFrame = dashboardEntry.frame;
     } else if([entry isKindOfClass:[Frame class]]) {
         videoFrame = (Frame *)entry;
     } else {
-        STVAssert(false, @"Expected a DashboardEntry or Frame");
+        STVAssert(NO, @"Expected a DashboardEntry or Frame");
     }
 
     if (videoFrame && videoFrame.video) {
@@ -163,10 +168,17 @@
                                                                    }
                                                                }
                                                                failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                                                   //ignoring for now
+                                                                   if (self.entry == entry) {
+                                                                       [self displayPlaceholderThumbnails];
+                                                                   } else {
+                                                                       //cell has been reused, do nothing
+                                                                   }
                                                                }] start];
+        } else {
+            [self displayPlaceholderThumbnails];
         }
 
+        [self.foregroundView setInfoForDashboardEntry:dashboardEntry];
         [self.foregroundView setInfoForFrame:videoFrame];
     }
 }
@@ -194,6 +206,23 @@
             });
         });
     }
+}
+
+- (void)displayPlaceholderThumbnails
+{
+    self.thumbnailRegularView.image = _placeholderThumbnail;
+    self.thumbnailBlurredView.image = _placeholderThumbnailBlurred;
+}
+
+- (void)initPlacerholderThumbnails
+{
+    _placeholderThumbnail = [UIImage imageNamed:@"video-thumbnail-blank"];
+    [self.blurFilter setValue:[CIImage imageWithCGImage:_placeholderThumbnail.CGImage] forKey:@"inputImage"];
+    CIImage *result = [self.blurFilter valueForKey:@"outputImage"];
+    CGImageRef cgImage = [self.ciContext createCGImage:result fromRect:[result extent]];
+    _placeholderThumbnailBlurred = [UIImage imageWithCGImage:cgImage];
+    CFRelease(cgImage);
+    [self.blurFilter setValue:nil forKey:@"inputImage"];
 }
 
 - (void)matchParallaxOf:(ShelbyStreamBrowseViewCell *)cell

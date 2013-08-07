@@ -13,8 +13,9 @@
 
 @interface DashboardEntry : NSManagedObject
 
-@property (nonatomic, retain) NSString * dashboardEntryID;
 @property (nonatomic, retain) NSNumber * action;
+@property (nonatomic, retain) NSString * dashboardEntryID;
+@property (nonatomic, retain) NSString * sourceFrameCreatorNickname;
 @property (nonatomic, retain) Dashboard *dashboard;
 @property (nonatomic, retain) DashboardEntry *duplicateOf;
 @property (nonatomic, retain) NSOrderedSet *duplicates;

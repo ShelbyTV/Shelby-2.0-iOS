@@ -63,6 +63,7 @@
 #define kShelbyFontH3Bold                                   [UIFont fontWithName:@"Avenir-Black" size:18]
 #define kShelbyFontH3                                       [UIFont fontWithName:@"Avenir" size:18]
 #define kShelbyFontH4Bold                                   [UIFont fontWithName:@"Avenir-Black" size:14]
+#define kShelbyFontH4Medium                                 [UIFont fontWithName:@"Avenir-Medium" size:14]
 #define kShelbyFontH4                                       [UIFont fontWithName:@"Avenir" size:14]
 #define kShelbyFontH4Bold                                   [UIFont fontWithName:@"Avenir-Black" size:14]
 #define kShelbyFontH5Bold                                   [UIFont fontWithName:@"Avenir-Black" size:12]
