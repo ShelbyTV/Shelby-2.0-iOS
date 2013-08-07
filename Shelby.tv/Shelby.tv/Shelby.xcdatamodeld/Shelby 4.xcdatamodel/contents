@@ -55,7 +55,7 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="videoID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversation" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Conversation" inverseName="frame" inverseEntity="Conversation" syncable="YES"/>
-        <relationship name="creator" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="frames" inverseEntity="User" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="frames" inverseEntity="User" syncable="YES"/>
         <relationship name="dashboardEntry" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DashboardEntry" inverseName="frame" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="duplicateOf" optional="YES" transient="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="duplicates" inverseEntity="Frame" syncable="YES"/>
         <relationship name="duplicates" optional="YES" transient="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Frame" inverseName="duplicateOf" inverseEntity="Frame" syncable="YES"/>

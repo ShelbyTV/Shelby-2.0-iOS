@@ -36,30 +36,33 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
         dashboardEntry.dashboard = dashboard;
     }
 
-    //NB: intentionally not duplicating timestamp out of BSON id
-    NSDictionary *frameDict = dict[@"frame"];
-    if([frameDict isKindOfClass:[NSDictionary class]]){
-        dashboardEntry.frame = [Frame frameForDictionary:frameDict inContext:context];
-    }
-    if (!dashboardEntry.frame) {
-        [context deleteObject:dashboardEntry];
-        return nil;
-    }
     NSString *action = dict[@"action"];
     if (action) {
         dashboardEntry.action = @([action intValue]);
-//        DLog(@"action: %@/%@", action, dashboardEntry.action);
-//        if ([dashboardEntry typeOfEntry] == (DashboardEntryTypeVideoGraphRecommendation | DashboardEntryTypeEntertainmentGraphRecommendation)) {
-//            DLog(@"RECO!");
-//        }
-//        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeEntertainmentGraphRecommendation) {
-//            DLog(@"--RECO A!");
-//        }
-//        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
-//            DLog(@"--RECO B!");
-//        }
+        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeEntertainmentGraphRecommendation) {
+            DLog(@"RECO A!");
+        }
+        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
+            DLog(@"RECO B!");
+        }
     }
-    
+
+    //NB: intentionally not duplicating timestamp out of BSON id
+    NSDictionary *frameDict = dict[@"frame"];
+    if([frameDict isKindOfClass:[NSDictionary class]]){
+        dashboardEntry.frame = [Frame frameForDictionary:frameDict requireCreator:NO inContext:context];
+    }
+    if (!dashboardEntry.frame) {
+        //must have a frame
+        [context deleteObject:dashboardEntry];
+        return nil;
+    } else if (!(dashboardEntry.frame.creator || [dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation)) {
+        //frame must have a creator OR DashboardEntry must be a recommended type
+        [context deleteObject:dashboardEntry];
+        [context deleteObject:dashboardEntry.frame];
+        return nil;
+    }
+
     return dashboardEntry;
 }
 

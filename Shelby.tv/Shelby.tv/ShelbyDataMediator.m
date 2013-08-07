@@ -801,24 +801,24 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         return nil;
     }
 
-    NSMutableArray *resultDashboardEntries = [@[] mutableCopy];
+    NSMutableArray *resultFrames = [@[] mutableCopy];
     
     for (NSDictionary *frameDict in frames) {
         if(![frameDict isKindOfClass:[NSDictionary class]]){
             continue;
         }
         
-        Frame *entry = [Frame frameForDictionary:frameDict inContext:context];
+        Frame *entry = [Frame frameForDictionary:frameDict requireCreator:YES inContext:context];
  
         if (entry) {
-            [resultDashboardEntries addObject:entry];
+            [resultFrames addObject:entry];
         }
     }
     
     NSError *error;
     [context save:&error];
     STVAssert(!error, @"context save failed, in framesForJSON...");
-    return resultDashboardEntries;
+    return resultFrames;
 }
 
 - (NSArray *)findOrCreateDashboardEntriesForJSON:(id)JSON withDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
