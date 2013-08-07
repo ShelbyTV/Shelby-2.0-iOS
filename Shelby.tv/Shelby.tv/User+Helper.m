@@ -63,18 +63,19 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         user.hasShelbyAvatar = dict[@"has_shelby_avatar"];
     }
     
-    // Resetting all auths:
-    user.twitterNickname = nil;
-    user.twitterUID = nil;
-    user.facebookNickname = nil;
-    user.facebookName = nil;
-    user.facebookUID = nil;
-    user.tumblrNickname = nil;
-    user.tumblrUID = nil;
 
     //auths
     NSArray *authentications = dict[@"authentications"];
     if([authentications isKindOfClass:[NSArray class]]){
+        // Resetting old auths:
+        user.twitterNickname = nil;
+        user.twitterUID = nil;
+        user.facebookNickname = nil;
+        user.facebookName = nil;
+        user.facebookUID = nil;
+        user.tumblrNickname = nil;
+        user.tumblrUID = nil;
+
         for (NSDictionary *authDict in authentications) {
             NSString *provider = authDict[@"provider"];
             if([provider isEqualToString:@"twitter"]){
