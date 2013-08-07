@@ -63,6 +63,8 @@
                                                                            action:@selector(cancelAuthentication)];
     self.navigationItem.leftBarButtonItem = cancelBarButtonItem;
     
+    self.navigationItem.title = @"Authorize Twitter";
+    
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f,
                                                                0.0f,
                                                                kShelbyFullscreenWidth,
