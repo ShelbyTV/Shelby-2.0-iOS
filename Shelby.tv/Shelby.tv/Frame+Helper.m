@@ -27,7 +27,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
 @dynamic duplicateOf;
 @dynamic duplicates;
 
-+ (Frame *)frameForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
++ (Frame *)frameForDictionary:(NSDictionary *)dict requireCreator:(BOOL)mustHaveCreator inContext:(NSManagedObjectContext *)context
 {
     NSString *frameID = dict[@"id"];
     Frame *frame = [self fetchOneEntityNamed:kShelbyCoreDataEntityFrame
@@ -54,7 +54,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     if([creatorDict isKindOfClass:[NSDictionary class]]){
         frame.creator = [User userForDictionary:creatorDict inContext:context];
     }
-    if (!frame.creator) {
+    if (mustHaveCreator && !frame.creator) {
         [context deleteObject:frame];
         return nil;
     }

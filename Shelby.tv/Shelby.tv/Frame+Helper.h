@@ -14,6 +14,7 @@
 @interface Frame (Helper) <ShelbyModel, ShelbyDuplicateContainer, ShelbyVideoContainer>
 
 + (Frame *)frameForDictionary:(NSDictionary *)dict
+               requireCreator:(BOOL)mustHaveCreator
                     inContext:(NSManagedObjectContext *)context;
 
 //sorted in reverse-chron
