@@ -140,8 +140,10 @@
     _entry = entry;
     
     Frame *videoFrame = nil;
+    DashboardEntry *dashboardEntry = nil;
     if ([entry isKindOfClass:[DashboardEntry class]]) {
-        videoFrame = ((DashboardEntry *)entry).frame;
+        dashboardEntry = (DashboardEntry *)entry;
+        videoFrame = dashboardEntry.frame;
     } else if([entry isKindOfClass:[Frame class]]) {
         videoFrame = (Frame *)entry;
     } else {
@@ -167,6 +169,7 @@
                                                                }] start];
         }
 
+        [self.foregroundView setInfoForDashboardEntry:dashboardEntry];
         [self.foregroundView setInfoForFrame:videoFrame];
     }
 }
