@@ -22,6 +22,14 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    self.bufferProgressView.trackImage = [[UIImage imageNamed:@"scrub-track-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 2, 0, 2)
+                                                                                                        resizingMode:UIImageResizingModeStretch];
+    self.bufferProgressView.progressImage = [[UIImage imageNamed:@"scrub-track-progress"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 2, 0, 2)
+                                                                                                         resizingMode:UIImageResizingModeStretch];
+}
+
 //to allow touch events to pass through the background
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
@@ -53,7 +61,7 @@
     bufferProgressRelativeDelta = fmaxf(0.f, fminf(self.bufferProgressView.frame.size.width, bufferProgressRelativeDelta));
 
     CGFloat x = self.bufferProgressView.frame.origin.x + bufferProgressRelativeDelta - (self.scrubheadButton.frame.size.width/2.0);
-    self.scrubheadButton.frame = CGRectMake(x, self.bufferProgressView.frame.origin.y - 11, self.scrubheadButton.frame.size.width, self.scrubheadButton.frame.size.height);
+    self.scrubheadButton.frame = CGRectMake(x, self.bufferProgressView.frame.origin.y - 14, self.scrubheadButton.frame.size.width, self.scrubheadButton.frame.size.height);
 }
 
 - (CGFloat)playbackTargetPercentForTouch:(UITouch *)touch

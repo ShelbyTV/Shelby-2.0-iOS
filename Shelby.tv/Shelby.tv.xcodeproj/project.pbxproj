@@ -1033,9 +1033,6 @@
 		914FEA85175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
 		914FEA86175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
 		914FEA87175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
-		914FEA8A175E40C800903FEA /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA89175E40C800903FEA /* DashboardEntry.m */; };
-		914FEA8B175E40C800903FEA /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA89175E40C800903FEA /* DashboardEntry.m */; };
-		914FEA8C175E40C800903FEA /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA89175E40C800903FEA /* DashboardEntry.m */; };
 		91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
 		91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91649ECC1741B1A000A9265B /* DeduplicationUtility.m */; };
@@ -1213,6 +1210,21 @@
 		91B7DC4217B16447009ABF02 /* nav-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC3E17B16447009ABF02 /* nav-shadow@2x.png */; };
 		91B7DC4317B16447009ABF02 /* nav-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC3E17B16447009ABF02 /* nav-shadow@2x.png */; };
 		91B7DC4417B16447009ABF02 /* nav-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC3E17B16447009ABF02 /* nav-shadow@2x.png */; };
+		91B7DC4817B2967A009ABF02 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC4717B2967A009ABF02 /* DashboardEntry.m */; };
+		91B7DC4917B2967A009ABF02 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC4717B2967A009ABF02 /* DashboardEntry.m */; };
+		91B7DC4A17B2967A009ABF02 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC4717B2967A009ABF02 /* DashboardEntry.m */; };
+		91B7DC4F17B29D59009ABF02 /* scrub-track-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4B17B29D59009ABF02 /* scrub-track-background.png */; };
+		91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4B17B29D59009ABF02 /* scrub-track-background.png */; };
+		91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4B17B29D59009ABF02 /* scrub-track-background.png */; };
+		91B7DC5217B29D59009ABF02 /* scrub-track-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4C17B29D59009ABF02 /* scrub-track-background@2x.png */; };
+		91B7DC5317B29D59009ABF02 /* scrub-track-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4C17B29D59009ABF02 /* scrub-track-background@2x.png */; };
+		91B7DC5417B29D59009ABF02 /* scrub-track-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4C17B29D59009ABF02 /* scrub-track-background@2x.png */; };
+		91B7DC5517B29D59009ABF02 /* scrub-track-progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4D17B29D59009ABF02 /* scrub-track-progress.png */; };
+		91B7DC5617B29D59009ABF02 /* scrub-track-progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4D17B29D59009ABF02 /* scrub-track-progress.png */; };
+		91B7DC5717B29D59009ABF02 /* scrub-track-progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4D17B29D59009ABF02 /* scrub-track-progress.png */; };
+		91B7DC5817B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */; };
+		91B7DC5917B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */; };
+		91B7DC5A17B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */; };
 		91BEC890176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC891176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC892176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
@@ -1773,8 +1785,6 @@
 		914FEA7A175E3E6700903FEA /* DVREntry+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVREntry+Helper.m"; sourceTree = "<group>"; };
 		914FEA83175E40C600903FEA /* DVREntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVREntry.h; sourceTree = "<group>"; };
 		914FEA84175E40C600903FEA /* DVREntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVREntry.m; sourceTree = "<group>"; };
-		914FEA88175E40C800903FEA /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
-		914FEA89175E40C800903FEA /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContainer.h; sourceTree = "<group>"; };
 		91649ECB1741B1A000A9265B /* DeduplicationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeduplicationUtility.h; sourceTree = "<group>"; };
 		91649ECC1741B1A000A9265B /* DeduplicationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeduplicationUtility.m; sourceTree = "<group>"; };
@@ -1849,6 +1859,13 @@
 		91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVYouTubeExtractor.m; sourceTree = "<group>"; };
 		91B7DC3D17B16447009ABF02 /* nav-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-shadow.png"; sourceTree = "<group>"; };
 		91B7DC3E17B16447009ABF02 /* nav-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-shadow@2x.png"; sourceTree = "<group>"; };
+		91B7DC4517B29621009ABF02 /* Shelby 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shelby 4.xcdatamodel"; sourceTree = "<group>"; };
+		91B7DC4617B29679009ABF02 /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
+		91B7DC4717B2967A009ABF02 /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
+		91B7DC4B17B29D59009ABF02 /* scrub-track-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrub-track-background.png"; sourceTree = "<group>"; };
+		91B7DC4C17B29D59009ABF02 /* scrub-track-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrub-track-background@2x.png"; sourceTree = "<group>"; };
+		91B7DC4D17B29D59009ABF02 /* scrub-track-progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrub-track-progress.png"; sourceTree = "<group>"; };
+		91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrub-track-progress@2x.png"; sourceTree = "<group>"; };
 		91BEC88E176274BD00838197 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
 		91BEC88F176274BD00838197 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
 		91BEC8931762961400838197 /* DVRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DVRDatePicker.xib; sourceTree = "<group>"; };
@@ -2273,6 +2290,10 @@
 		1CDCA669179DCE190098C4E1 /* Player Images */ = {
 			isa = PBXGroup;
 			children = (
+				91B7DC4B17B29D59009ABF02 /* scrub-track-background.png */,
+				91B7DC4C17B29D59009ABF02 /* scrub-track-background@2x.png */,
+				91B7DC4D17B29D59009ABF02 /* scrub-track-progress.png */,
+				91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */,
 				1CDCA66C179DCE190098C4E1 /* pause.png */,
 				1CDCA66D179DCE190098C4E1 /* pause@2x.png */,
 				1CDCA66E179DCE190098C4E1 /* play.png */,
@@ -2344,8 +2365,6 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				914FEA88175E40C800903FEA /* DashboardEntry.h */,
-				914FEA89175E40C800903FEA /* DashboardEntry.m */,
 				914FEA83175E40C600903FEA /* DVREntry.h */,
 				914FEA84175E40C600903FEA /* DVREntry.m */,
 				91E5D461174E938100AD3746 /* Roll.h */,
@@ -2357,6 +2376,8 @@
 				916F425A17A17716001D9DF7 /* User.h */,
 				916F425B17A17716001D9DF7 /* User.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				91B7DC4617B29679009ABF02 /* DashboardEntry.h */,
+				91B7DC4717B2967A009ABF02 /* DashboardEntry.m */,
 				91D03F5A173314A0008131D2 /* Video.h */,
 				91D03F5B173314A0008131D2 /* Video.m */,
 				91D03F551733149F008131D2 /* Dashboard.h */,
@@ -3439,6 +3460,10 @@
 				91B7DC3517AACD79009ABF02 /* ted.m4v in Resources */,
 				91B7DC4017B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4317B16447009ABF02 /* nav-shadow@2x.png in Resources */,
+				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
+				91B7DC5317B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
+				91B7DC5617B29D59009ABF02 /* scrub-track-progress.png in Resources */,
+				91B7DC5917B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3725,6 +3750,10 @@
 				91B7DC3617AACD79009ABF02 /* ted.m4v in Resources */,
 				91B7DC4117B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4417B16447009ABF02 /* nav-shadow@2x.png in Resources */,
+				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
+				91B7DC5417B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
+				91B7DC5717B29D59009ABF02 /* scrub-track-progress.png in Resources */,
+				91B7DC5A17B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4012,6 +4041,10 @@
 				91B7DC3417AACD79009ABF02 /* ted.m4v in Resources */,
 				91B7DC3F17B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4217B16447009ABF02 /* nav-shadow@2x.png in Resources */,
+				91B7DC4F17B29D59009ABF02 /* scrub-track-background.png in Resources */,
+				91B7DC5217B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
+				91B7DC5517B29D59009ABF02 /* scrub-track-progress.png in Resources */,
+				91B7DC5817B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4121,7 +4154,6 @@
 				914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7C175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
-				914FEA8B175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
 				1CA191471774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
@@ -4157,6 +4189,7 @@
 				1CDB0C2A17A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
+				91B7DC4917B2967A009ABF02 /* DashboardEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4263,7 +4296,6 @@
 				914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7D175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
-				914FEA8C175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
 				1CA191481774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
@@ -4299,6 +4331,7 @@
 				1CDB0C2B17A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
+				91B7DC4A17B2967A009ABF02 /* DashboardEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4405,7 +4438,6 @@
 				914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7B175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
-				914FEA8A175E40C800903FEA /* DashboardEntry.m in Sources */,
 				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
 				1CA191461774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
@@ -4441,6 +4473,7 @@
 				1CDB0C2917A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
+				91B7DC4817B2967A009ABF02 /* DashboardEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4871,11 +4904,12 @@
 		8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				91B7DC4517B29621009ABF02 /* Shelby 4.xcdatamodel */,
 				914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */,
 				91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */,
 				8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */,
 			);
-			currentVersion = 914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */;
+			currentVersion = 91B7DC4517B29621009ABF02 /* Shelby 4.xcdatamodel */;
 			path = Shelby.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

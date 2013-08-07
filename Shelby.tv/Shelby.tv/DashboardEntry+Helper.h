@@ -11,6 +11,22 @@
 #import "ShelbyDuplicateContainer.h"
 #import "ShelbyVideoContainer.h"
 
+typedef NS_ENUM(NSInteger, DashboardEntryType){
+    DashboardEntryTypeSocialFrame,
+    DashboardEntryTypeBookmarkFrame,
+    DashboardEntryTypeInAppFrame,
+    DashboardEntryTypeGeniusFrame,
+    DashboardEntryTypeHashtagFrame,
+    DashboardEntryTypeEmailHookFrame,
+    DashboardEntryTypeCommunityFrame,
+    DashboardEntryTypeReRoll,
+    DashboardEntryTypeWatch,
+    DashboardEntryTypeComment,
+    DashboardEntryTypePrioritizedFrame,
+    DashboardEntryTypeVideoGraphRecommendation,
+    DashboardEntryTypeEntertainmentGraphRecommendation
+};
+
 @interface DashboardEntry (Helper) <ShelbyModel, ShelbyDuplicateContainer, ShelbyVideoContainer>
 
 + (DashboardEntry *)dashboardEntryForDictionary:(NSDictionary *)dict
@@ -21,5 +37,7 @@
                      inContext:(NSManagedObjectContext *)context;
 
 - (BOOL)isPlayable;
+
+- (DashboardEntryType)typeOfEntry;
 
 @end
