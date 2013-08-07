@@ -35,6 +35,8 @@
 
 #define OVERLAY_ANIMATION_DURATION 0.2
 #define NAV_BUTTON_FADE_TIME 0.1
+#define AUTOADVANCE_INFO_PEEK_DELAY 0.5
+#define AUTOADVANCE_INFO_PEEK_DURATION 5.0
 
 @end
 
@@ -592,6 +594,29 @@
     self.videoReel.airPlayView = self.videoControlsVC.airPlayView;
 }
 
+- (void)videoDidAutoadvance
+{
+    //peek basic video info
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(AUTOADVANCE_INFO_PEEK_DELAY * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION*3 animations:^{
+            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackPeeking;
+        }];
+    });
+
+    //and hide it
+    popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(AUTOADVANCE_INFO_PEEK_DURATION * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
+            [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+                self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+                self.navBar.alpha = 0.0;
+                self.videoControlsVC.view.alpha = 0.0;
+            }];
+        }
+    });
+}
+
 - (void)didNavigateToCommunityChannel
 {
     [self dismissSettings];
@@ -678,7 +703,7 @@
 {
     if (self.videoReel && self.currentStreamBrowseVC == browseVC) {
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-            if (browseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
+            if (browseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay || browseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
                 //show overlays
                 self.navBar.alpha = 1.0;
                 self.videoControlsVC.view.alpha = 1.0;
@@ -867,7 +892,7 @@
 
 - (void)fadeVideoControlsForOffset:(CGPoint)contentOffset frameHeight:(CGFloat)frameHeight
 {
-    if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
+    if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay || self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
         return;
     }
     

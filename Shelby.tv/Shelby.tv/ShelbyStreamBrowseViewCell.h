@@ -15,7 +15,8 @@ typedef NS_ENUM(NSUInteger, ShelbyStreamBrowseViewMode)
 {
     ShelbyStreamBrowseViewDefault,
     ShelbyStreamBrowseViewForPlaybackWithOverlay,
-    ShelbyStreamBrowseViewForPlaybackWithoutOverlay
+    ShelbyStreamBrowseViewForPlaybackWithoutOverlay,
+    ShelbyStreamBrowseViewForPlaybackPeeking
 };
 
 @class ShelbyStreamBrowseViewCell;

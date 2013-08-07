@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)userDidSwitchChannelForDirectionUp:(BOOL)up;
 - (void)userDidCloseChannelAtFrame:(Frame *)frame;
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up;
-- (void)videoDidFinishPlaying;
+- (void)videoDidAutoadvance;
 - (SPTutorialMode)tutorialModeForCurrentPlayer;
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 - (BOOL)canRoll;

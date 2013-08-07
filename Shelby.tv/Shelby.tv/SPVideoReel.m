@@ -894,7 +894,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [SPVideoReel sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                             withAction:kAnalyticsUXVideoDidAutoadvance
                    withNicknameAsLabel:YES];
-    [self changeVideoInForwardDirection:YES];
+    [self autoadvanceVideoInForwardDirection:YES];
 }
 
 - (void)videoDidStallForPlayer:(SPVideoPlayer *)player
@@ -961,18 +961,18 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                                                                  autodimissTime:3.0f
                                                                       onDismiss:^(BOOL didAutoDimiss) {
                                                                           if (self.currentPlayer == player) {
-                                                                              [self changeVideoInForwardDirection:YES];
+                                                                              [self autoadvanceVideoInForwardDirection:YES];
                                                                           }
                                                                           self.currentVideoAlertView = nil;
                                                                       }];
             [self.currentVideoAlertView show];
         } else {
-            [self changeVideoInForwardDirection:YES];
+            [self autoadvanceVideoInForwardDirection:YES];
         }
     }
 }
 
-- (BOOL)changeVideoInForwardDirection:(BOOL)forward
+- (BOOL)autoadvanceVideoInForwardDirection:(BOOL)forward
 {
     NSUInteger idx = self.currentVideoPlayingIndex + (forward ? 1 : -1);
     if (idx > 0 && idx < [self.videoEntities count]) {
@@ -981,6 +981,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self.videoScrollView setContentOffset:CGPointMake(newVideoPlayer.view.frame.origin.x, newVideoPlayer.view.frame.origin.y)
                                       animated:YES];
         [self currentVideoShouldChangeToVideo:idx autoplay:YES];
+        [self.delegate videoDidAutoadvance];
         return YES;
     } else {
         return NO;

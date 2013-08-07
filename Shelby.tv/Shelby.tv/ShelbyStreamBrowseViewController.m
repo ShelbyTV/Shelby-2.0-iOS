@@ -284,7 +284,6 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 {
     if (_viewMode != viewMode) {
         _viewMode = viewMode;
-        //XXX this is not the proper UX logic, just helpful during dev
         for (ShelbyStreamBrowseViewCell *cell in self.streamBrowseViewCells) {
             cell.viewMode = _viewMode;
         }

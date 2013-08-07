@@ -64,6 +64,8 @@
 - (void)didNavigateToUsersLikes;
 - (void)didNavigateToUsersRoll;
 
+- (void)videoDidAutoadvance;
+
 //DEPRECATED
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 //DEPRECATED

@@ -586,9 +586,9 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     return nil;
 }
 
-- (void)videoDidFinishPlaying
+- (void)videoDidAutoadvance
 {
-    // TODO
+    [self.homeVC videoDidAutoadvance];
 }
 
 - (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel

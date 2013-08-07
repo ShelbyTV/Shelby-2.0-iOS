@@ -251,6 +251,11 @@
                 self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 0.0;
+                break;
+            case ShelbyStreamBrowseViewForPlaybackPeeking:
+                self.playButton.alpha = 0.0;
+                [self.parallaxView getBackgroundView].alpha = 0.0;
+                self.foregroundView.alpha = 1.0;
         }
     }
 }
