@@ -13,7 +13,6 @@
 #import "ImageUtilities.h"
 #import "Roll+Helper.h"
 #import "SettingsViewController.h"
-#import "ShelbyAlertView.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 

@@ -10,7 +10,7 @@
 
 typedef void (^alert_dismiss_block_t)(BOOL didAutoDimiss);
 
-@interface ShelbyAlertView : UIView
+@interface ShelbyAlert : NSObject <UIAlertViewDelegate>
 
 - (id)initWithTitle:(NSString *)title
             message:(NSString *)message
@@ -18,8 +18,6 @@ typedef void (^alert_dismiss_block_t)(BOOL didAutoDimiss);
      autodimissTime:(NSTimeInterval)seconds
           onDismiss:(alert_dismiss_block_t)dismissBlock;
 
-- (void) show;
-- (void) showAnimatedFromView:(UIView *)view;
-- (void) dismiss;
-
+- (void)dismiss;
+- (void)show;
 @end

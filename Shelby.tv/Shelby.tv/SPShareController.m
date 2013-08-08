@@ -12,7 +12,7 @@
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
 #import "ShelbyActivityItemProvider.h"
-#import "ShelbyAlertView.h"
+#import "ShelbyAlert.h"
 #import "ShelbyAPIClient.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyShareViewController.h"
@@ -228,7 +228,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                              
                           } else {
                               dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                  ShelbyAlertView *alert = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"ROLLING_FAIL_TITLE", @"--Rolling Failed--")
+                                  ShelbyAlert *alert = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"ROLLING_FAIL_TITLE", @"--Rolling Failed--")
                                                                                          message:NSLocalizedString(@"ROLLING_FAIL_MESSAGE", nil)
                                                                               dismissButtonTitle:NSLocalizedString(@"ROLLING_FAIL_BUTTON", nil)
                                                                                   autodimissTime:0

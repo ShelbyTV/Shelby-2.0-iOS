@@ -12,7 +12,7 @@
 #import "SettingsViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "UserDetailsCell.h"
-#import "ShelbyAlertView.h"
+#import "ShelbyAlert.h"
 #import "ShelbyDataMediator.h"
 
 @interface SettingsViewController ()
@@ -264,7 +264,7 @@
         [mailer setMessageBody:@"Believe it or not, a human will read this!  :-]\n\nWe really appreciate your ideas and feedback.  Feel free to write anything you want and we'll follow up with you." isHTML:NO];
         [self presentViewController:mailer animated:YES completion:nil];
     } else {
-        [[[ShelbyAlertView alloc] initWithTitle:@"We'd Love to Hear from You!"
+        [[[ShelbyAlert alloc] initWithTitle:@"We'd Love to Hear from You!"
                                         message:@"Please email your feedback to us: iphone@shelby.tv"
                              dismissButtonTitle:@"Ok"
                                  autodimissTime:0

@@ -9,7 +9,7 @@
 #import "ShelbyAPIClient.h"
 #import "AFNetworking.h"
 #import "Frame+Helper.h"
-#import "ShelbyAlertView.h"
+#import "ShelbyAlert.h"
 #import "ShelbyDataMediator.h"
 
 NSString * const kShelbyAPIBaseURL =                        @"https://api.shelby.tv/";
@@ -604,7 +604,7 @@ toExternalDestinations:(NSArray *)destinations
             NSString *existingUserNickname = errorInfo[@"existing_other_user_nickname"];
             NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_TITLE", @"--Already Logged In--"), currentNickname];
             NSString *message = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_MESSAGE", nil), existingUserNickname];
-            ShelbyAlertView *alert = [[ShelbyAlertView alloc] initWithTitle:title
+            ShelbyAlert *alert = [[ShelbyAlert alloc] initWithTitle:title
                                                                     message:message
                                                          dismissButtonTitle:NSLocalizedString(@"ALREADY_LOGGED_IN_BUTTON", nil)
                                                              autodimissTime:0

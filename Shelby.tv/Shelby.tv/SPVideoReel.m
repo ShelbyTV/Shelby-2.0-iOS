@@ -16,7 +16,7 @@
 #import "GAI.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <QuartzCore/QuartzCore.h>
-#import "ShelbyAlertView.h"
+#import "ShelbyAlert.h"
 #import "SPChannelPeekView.h"
 #import "SPTutorialView.h"
 #import "SPVideoExtractor.h"
@@ -57,7 +57,7 @@
 @property (nonatomic, strong) NSDate *lastVideoStalledAlertTime;
 
 //allows us to dismiss alert view if video changes or we exit
-@property (nonatomic, strong) ShelbyAlertView *currentVideoAlertView;
+@property (nonatomic, strong) ShelbyAlert *currentVideoAlertView;
 
 // Make sure we let user roll immediately after they log in.
 @property (nonatomic) NSInvocation *invocationMethod;
@@ -905,7 +905,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             (self.lastVideoStalledAlertTime == nil || [self.lastVideoStalledAlertTime timeIntervalSinceNow] < VIDEO_STALLED_MIN_TIME_BETWEEN_ALERTS)) {
             [self.currentVideoAlertView dismiss];
             self.lastVideoStalledAlertTime = [NSDate date];
-            self.currentVideoAlertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
+            self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
                                                                         message:NSLocalizedString(@"PLAYBACK_STALLED_MESSAGE", nil)
                                                              dismissButtonTitle:NSLocalizedString(@"PLAYBACK_STALLED_BUTTON", nil)
                                                                  autodimissTime:6.0f
@@ -955,7 +955,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     if (self.currentPlayer == player) {
         if (self.tutorialMode == SPTutorialModeNone) {
             [self.currentVideoAlertView dismiss];
-            self.currentVideoAlertView = [[ShelbyAlertView alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
+            self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
                                                                         message:NSLocalizedString(@"EXTRACTION_FAIL_MESSAGE", nil)
                                                              dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_BUTTON", nil)
                                                                  autodimissTime:3.0f

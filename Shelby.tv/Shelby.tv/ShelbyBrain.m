@@ -15,7 +15,7 @@
 #import "Roll+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
-#import "ShelbyAlertView.h"
+#import "ShelbyAlert.h"
 #import "User+Helper.h"
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
@@ -470,7 +470,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
         errorMessage = @"Could not connect. Please try again later.";
     }
     
-    ShelbyAlertView *alertView = [[ShelbyAlertView alloc] initWithTitle:@"Error" message:errorMessage dismissButtonTitle:@"OK" autodimissTime:8 onDismiss:nil];
+    ShelbyAlert *alertView = [[ShelbyAlert alloc] initWithTitle:@"Error" message:errorMessage dismissButtonTitle:@"OK" autodimissTime:8 onDismiss:nil];
     [alertView show];
 }
 
@@ -835,7 +835,7 @@ typedef struct _ShelbyArrayMergeInstructions {
     } else {
         message = @"Problem loading channel.";
     }
-    ShelbyAlertView *alertView =  [[ShelbyAlertView alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
+    ShelbyAlert *alertView =  [[ShelbyAlert alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
     [alertView show];
 }
 

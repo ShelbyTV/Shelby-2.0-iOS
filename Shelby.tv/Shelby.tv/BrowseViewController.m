@@ -15,7 +15,6 @@
 #import "Frame+Helper.h"
 #import "ImageUtilities.h"
 #import "ShelbyBrowseTutorialView.h"
-#import "ShelbyAlertView.h"
 #import "ShelbyDataMediator.h"
 #import "SPChannelCell.h"
 #import "SPChannelCollectionView.h"
