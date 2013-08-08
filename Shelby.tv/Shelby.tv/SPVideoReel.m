@@ -36,6 +36,7 @@
 
 @interface SPVideoReel (){
     UIInterfaceOrientation _currentlyPresentedInterfaceOrientation;
+    CGPoint _autoadvanceTargetOffset;
 }
 
 @property (nonatomic) UIScrollView *videoScrollView;
@@ -978,64 +979,32 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     if (idx > 0 && idx < [self.videoEntities count]) {
         SPVideoPlayer *newVideoPlayer = self.videoPlayers[idx];
         STVAssert(newVideoPlayer, @"expected a video player for all entities");
-        [self.videoScrollView setContentOffset:CGPointMake(newVideoPlayer.view.frame.origin.x, newVideoPlayer.view.frame.origin.y)
-                                      animated:YES];
+        _autoadvanceTargetOffset = CGPointMake(newVideoPlayer.view.frame.origin.x, newVideoPlayer.view.frame.origin.y);
+        [self.videoScrollView setContentOffset:_autoadvanceTargetOffset animated:YES];
+        //when the above animation completes, scroll view will fire scrollViewDidEndScrollingAnimation: (below)
         [self currentVideoShouldChangeToVideo:idx autoplay:YES];
-        [self.delegate videoDidAutoadvance];
         return YES;
     } else {
         return NO;
     }
 }
 
-
 #pragma mark - UIScrollViewDelegate Methods
-//DEPRECATED
-//OLD UNUSED
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    //djs fix when we have our model and view controllers
-    
-    // Switch the indicator when more than 50% of the previous/next page is visible
-    CGFloat scrollAmount = 0.0;
-//    if (DEVICE_IPAD) {
-//        CGFloat pageWidth = scrollView.frame.size.width;
-//       scrollAmount = (scrollView.contentOffset.x - pageWidth / 2) / pageWidth;
-//    } else {
-    CGFloat pageHeight = scrollView.frame.size.height;
-    scrollAmount = (scrollView.contentOffset.y - pageHeight / 2) / pageHeight;
-//    }
-    NSUInteger page = floor(scrollAmount) + 1;
-    
-//    // Toggle playback on old and new SPVideoPlayer objects
-    if (page == self.currentVideoPlayingIndex) {
-        return;
+    //this is never called
+    //videoScrollView's content offset is set in two ways:
+    //1) manually, when the StreamBrowseView's contentOffset changes
+    //2) via setContentOffset:animated: which causes scrollViewDidEndScrollingAnimation: to fire
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    // -setContentOffset:animated:YES does not always finish at exact position requested...
+    if (!CGPointEqualToPoint(self.videoScrollView.contentOffset, _autoadvanceTargetOffset)) {
+        [self.videoScrollView setContentOffset:_autoadvanceTargetOffset animated:NO];
     }
-
-//    [self.videoPlayers makeObjectsPerformSelector:@selector(pause)];
-    
-    [self currentVideoShouldChangeToVideo:page autoplay:self.currentPlayer.isPlaying];
-    
-    NSInteger videosBeyond = [self.videoEntities count] - page;
-    if(videosBeyond == kShelbyPrefetchEntriesWhenNearEnd && self.channel.canFetchRemoteEntries){
-        //since id should come from raw entries, not de-duped entries
-        Frame *lastFrame = [[self videoEntities] lastObject];
-        if (lastFrame.duplicates && [lastFrame.duplicates count]) {
-            lastFrame = lastFrame.duplicates.lastObject;
-        }
-        [self.delegate loadMoreEntriesInChannel:self.channel
-                                     sinceEntry:lastFrame];
-    }
-    
-    if (self.tutorialMode == SPTutorialModeSwipeLeft) {
-        // Doesn't really matter which direction the user swiped - just indicate the user passed the 'SwipeLeft' tutorial
-        [self videoSwipedLeft];
-    }
-
-//    [self fetchOlderVideos:page];
-
-//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionSwipeHorizontal withLabel:self.title];
-
+    [self.delegate videoDidAutoadvance];
 }
 
 @end
