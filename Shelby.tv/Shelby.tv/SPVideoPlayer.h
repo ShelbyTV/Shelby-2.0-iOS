@@ -57,5 +57,6 @@
 - (void)beginScrubbing;
 - (void)endScrubbing;
 - (void)scrubToPct:(CGFloat)scrubPct;
+- (void)setAllowsExternalPlayback:(BOOL)allowExternalPlayback;
 
 @end

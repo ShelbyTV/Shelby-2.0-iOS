@@ -490,10 +490,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         // Pause current player if there is one
         SPVideoPlayer *previousPlayer = self.currentPlayer;
         self.currentPlayer = nil;
-        if (previousPlayer) {
-            previousPlayer.shouldAutoplay = NO;
-            [previousPlayer pause];
-        }
+        previousPlayer.shouldAutoplay = NO;
+        [previousPlayer pause];
         
         //remove any alert particular to current video
         [self.currentVideoAlertView dismiss];
@@ -504,6 +502,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
         self.currentPlayer.shouldAutoplay = shouldAutoplay;
 
+        [self.currentPlayer setAllowsExternalPlayback:YES];
         [self.currentPlayer prepareForStreamingPlayback];
         
         [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer

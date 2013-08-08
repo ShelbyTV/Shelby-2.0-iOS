@@ -206,6 +206,11 @@
             [self setupPlayerForURL:[NSURL URLWithString:videoURL]];
             if (self.shouldAutoplay) {
                 [self play];
+            } else {
+                //VideoReel may create multiple AVPlayers, but only the current one should be
+                //airplay enabled.  We opt-out and allow VideoReel to opt us back in when we
+                //become the active player.
+                [self setAllowsExternalPlayback:NO];
             }
 
             if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] && [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineModeEnabled]  ) {
@@ -392,6 +397,11 @@
                                      from:[NSString stringWithFormat:@"%01d", from]
                                        to:[NSString stringWithFormat:@"%01d", to]];
     _lastPlaybackUpdateIntervalEnd = toTime;
+}
+
+- (void)setAllowsExternalPlayback:(BOOL)allowExternalPlayback
+{
+    self.player.allowsExternalPlayback = allowExternalPlayback;
 }
 
 @end
