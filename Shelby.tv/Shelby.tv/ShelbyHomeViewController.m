@@ -601,22 +601,25 @@
 
 - (void)videoDidAutoadvance
 {
-    //peek basic video info (this is called exactly when the scroll animation to change videos ends)
-    [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION*3 animations:^{
-        self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackPeeking;
-    }];
+    if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
+        //peek basic video info (this is called exactly when the scroll animation to change videos ends)
+        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION*3 animations:^{
+            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackPeeking;
+        }];
 
-    //and hide it
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(AUTOADVANCE_INFO_PEEK_DURATION * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
-            [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-                self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
-                self.navBar.alpha = 0.0;
-                self.videoControlsVC.view.alpha = 0.0;
-            }];
-        }
-    });
+        //and hide it
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(AUTOADVANCE_INFO_PEEK_DURATION * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            //but make sure user didn't tap and go into regular overlay mode
+            if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
+                [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+                    self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+                    self.navBar.alpha = 0.0;
+                    self.videoControlsVC.view.alpha = 0.0;
+                }];
+            }
+        });
+    }
 }
 
 - (void)didNavigateToCommunityChannel
