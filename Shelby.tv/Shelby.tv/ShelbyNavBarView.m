@@ -15,6 +15,7 @@
     NSArray *_separatorLines;
     UIImageView *_shadowView;
     NSLayoutConstraint *_shadowY;
+    BOOL _firstLaunch;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *slider;
@@ -46,7 +47,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-
+        _firstLaunch = YES;
     }
     return self;
 }
@@ -115,6 +116,18 @@
     }
     UIButton *currentButton = (UIButton *)currentRow;
 
+    //pretty launch (no animation)
+    if (_firstLaunch) {
+        STVAssert(_currentRow, @"should have current row on first launch");
+         _firstLaunch = NO;
+        self.sliderY.constant = -(_currentRow.frame.origin.y);
+        [self layoutIfNeeded];
+        [self focusOnButton:currentButton];
+        [self updateSelectionIdentifierLocationToCurrentRow];
+        [self repositionShadow];
+        return;
+    }
+
     if (_currentRow) {
         if (_currentRow.frame.origin.y == 0.f) {
             //"moving" from 0 to 0 doesn't exactly do much... so we need to fake our normal bounce
@@ -143,19 +156,7 @@
         }
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
-            //focus on current row, hide rows that aren't current
-            currentButton.userInteractionEnabled = YES;
-            currentButton.alpha = 1.0;
-            [currentButton setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
-            currentButton.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
-            NSMutableArray *allRowsButCurrent = [_orderedButtons mutableCopy];
-            [allRowsButCurrent removeObject:_currentRow];
-            for (UIButton *b in allRowsButCurrent) {
-                b.alpha = 0.0;
-                b.userInteractionEnabled = NO;
-            }
-
-            [self showSeparatorLines:NO];
+            [self focusOnButton:currentButton];
         }];
 
         [UIView animateWithDuration:SELECTION_IDENTIFIER_ANIMATION_TIME animations:^{
@@ -287,6 +288,22 @@
         }
     }
     return b;
+}
+
+- (void)focusOnButton:(UIButton *)currentButton
+{
+    //focus on current row, hide rows that aren't current
+    currentButton.userInteractionEnabled = YES;
+    currentButton.alpha = 1.0;
+    [currentButton setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
+    currentButton.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
+    NSMutableArray *allRowsButCurrent = [_orderedButtons mutableCopy];
+    [allRowsButCurrent removeObject:_currentRow];
+    for (UIButton *b in allRowsButCurrent) {
+        b.alpha = 0.0;
+        b.userInteractionEnabled = NO;
+    }
+    [self showSeparatorLines:NO];
 }
 
 /* Animation Notes

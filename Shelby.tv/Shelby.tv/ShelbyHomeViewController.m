@@ -99,6 +99,13 @@
     [self.navBarVC didMoveToParentViewController:self];
 
     self.navBarVC.currentUser = self.currentUser;
+
+    //pre-navigate w/o animation for a prettier launch
+    if (self.currentUser) {
+        [self.navBarVC didNavigateToUsersStream];
+    } else {
+        [self.navBarVC didNavigateToCommunityChannel];
+    }
 }
 
 - (void)setupVideoControlsView
