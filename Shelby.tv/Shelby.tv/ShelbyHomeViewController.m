@@ -34,7 +34,6 @@
 
 #define OVERLAY_ANIMATION_DURATION 0.2
 #define NAV_BUTTON_FADE_TIME 0.1
-#define AUTOADVANCE_INFO_PEEK_DELAY 0.5
 #define AUTOADVANCE_INFO_PEEK_DURATION 5.0
 
 @end
@@ -99,6 +98,13 @@
     [self.navBarVC didMoveToParentViewController:self];
 
     self.navBarVC.currentUser = self.currentUser;
+
+    //pre-navigate w/o animation for a prettier launch
+    if (self.currentUser) {
+        [self.navBarVC didNavigateToUsersStream];
+    } else {
+        [self.navBarVC didNavigateToCommunityChannel];
+    }
 }
 
 - (void)setupVideoControlsView
@@ -595,16 +601,13 @@
 
 - (void)videoDidAutoadvance
 {
-    //peek basic video info
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(AUTOADVANCE_INFO_PEEK_DELAY * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION*3 animations:^{
-            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackPeeking;
-        }];
-    });
+    //peek basic video info (this is called exactly when the scroll animation to change videos ends)
+    [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION*3 animations:^{
+        self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackPeeking;
+    }];
 
     //and hide it
-    popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(AUTOADVANCE_INFO_PEEK_DURATION * NSEC_PER_SEC));
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(AUTOADVANCE_INFO_PEEK_DURATION * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{

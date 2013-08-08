@@ -162,6 +162,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeFlowStatus)
     [self.parallaxView scrollToPage:pageControl.currentPage];
     // I'd prefer to perform the following in a completion block, but parallaxView uses scrollView's
     // -setContentOffset:animated: and scrollView has no other API for this :[
+    //XXX There is API... via UIScrollViewDelegate's -scrollViewDidEndScrollingAnimation ... TODO: use it ;-]
     // * Here's some crazy shit: performSelector:withObject: wants an object, No Shit! But I want to send a primitive...
     // * This is a cool way to do just that using NSInvocation
     NSUInteger curPage = pageControl.currentPage;
