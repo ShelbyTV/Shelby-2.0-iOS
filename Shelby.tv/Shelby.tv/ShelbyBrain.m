@@ -54,7 +54,12 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 - (void)handleDidBecomeActive
 {
- 
+    [User sessionDidBecomeActive];
+}
+
+- (void)handleWillResignActive
+{
+    [User sessionDidPause];
 }
 
 - (void)handleDidFinishLaunching
@@ -231,6 +236,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self userWasUpdated];
+        [User sessionDidBecomeActive];
         [self dismissLoginVCCompletion:^{
             [self activateHomeViewController];
             [self fetchUserChannelsForceSwitchToUsersStream:YES];
@@ -775,6 +781,7 @@ typedef struct _ShelbyArrayMergeInstructions {
 
 - (void)logoutUser
 {
+    [User sessionDidPause];
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
 

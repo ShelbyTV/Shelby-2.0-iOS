@@ -34,6 +34,7 @@ NSString * const kShelbyAPIPostThirdPartyTokenPath =        @"v1/token";
 NSString * const kShelbyAPIPostSignupPath =                 @"v1/user";
 NSString * const PUT =     @"PUT";
 NSString * const kShelbyAPIPutUserPath =                    @"v1/user/%@";
+NSString * const kShelbyAPIPutUserSessionVisitPath =        @"v1/user/%@/visit";
 NSString * const kShelbyAPIPutUnplayableVideoPath =         @"v1/video/%@/unplayable";
 
 NSString * const kShelbyAPIParamAuthToken =                 @"auth_token";
@@ -171,6 +172,37 @@ static AFHTTPClient *httpClient = nil;
         }
     }];
     
+    [operation start];
+}
+
++ (void)putSessionVisitForUser:(User *)user
+                     withBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    STVAssert(user, @"must include user");
+    NSMutableDictionary *userParams = [@{@"platform":@"ios",
+                                       kShelbyAPIParamAuthToken: user.token} mutableCopy];
+
+    NSURLRequest *request = [self requestWithMethod:PUT
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPutUserSessionVisitPath, user.userID]
+                                withQueryParameters:userParams
+                                      shouldAddAuth:NO];
+
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        if (completionBlock) {
+            completionBlock(JSON, nil);
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if (JSON) { // Backend passing error
+            if (completionBlock) {
+                completionBlock(nil, JSON);
+            }
+        } else {
+            if (completionBlock) {
+                completionBlock(nil, error);
+            }
+        }
+    }];
+
     [operation start];
 }
 
