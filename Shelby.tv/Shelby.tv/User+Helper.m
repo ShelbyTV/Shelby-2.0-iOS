@@ -12,7 +12,10 @@
 #import "NSManagedObject+Helper.h"
 #import "NSObject+NullHelper.h"
 #import "Roll+Helper.h"
+#import "ShelbyAPIClient.h"
 #import "ShelbyDataMediator.h"
+
+#define ONE_HOUR_AGO -1*60*60
 
 NSString * const kShelbyCoreDataEntityUser = @"User";
 NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
@@ -227,6 +230,31 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     } else {
         return [NSURL URLWithString:self.userImage];
     }
+}
+
++ (void)sessionDidBecomeActive
+{
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if (currentUser) {
+        NSDate *sessionPausedAt = [[NSUserDefaults standardUserDefaults] objectForKey:[User userDefaultsSessionKeyFor:currentUser]];
+        if (!sessionPausedAt || [sessionPausedAt timeIntervalSinceNow] < ONE_HOUR_AGO) {
+            [ShelbyAPIClient putSessionVisitForUser:currentUser withBlock:nil];
+        }
+    }
+
+}
+
++ (void)sessionDidPause
+{
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if (currentUser) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:[User userDefaultsSessionKeyFor:currentUser]];
+    }
+}
+
++ (NSString *)userDefaultsSessionKeyFor:(User *)user
+{
+    return [NSString stringWithFormat:@"sessionPausedByUser:%@", user.userID];
 }
 
 @end

@@ -22,6 +22,10 @@
 + (User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc;
 + (User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc forceRefresh:(BOOL)forceRefresh;
 
+//intelligently track session count via API
++ (void)sessionDidBecomeActive;
++ (void)sessionDidPause;
+
 - (void)updateWithFacebookUser:(NSDictionary *)facebookUser;
 // KP KP: TODO: once we move twitter handler stuff to data mediator, we can pass a context. For now, we'll just ask for a private context.
 + (User *)updateUserWithTwitterUsername:(NSString *)username andTwitterID:(NSString *)twitterID;

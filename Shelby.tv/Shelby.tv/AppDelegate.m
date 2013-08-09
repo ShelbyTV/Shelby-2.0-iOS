@@ -104,7 +104,7 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-
+    [self.brain handleWillResignActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
