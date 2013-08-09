@@ -429,7 +429,7 @@
         [self addChildViewController:self.videoReel];
         [self.view insertSubview:self.videoReel.view belowSubview:self.currentStreamBrowseVC.view];
         [self.videoReel didMoveToParentViewController:self];
-        
+        self.videoReel.view.frame = self.currentStreamBrowseVC.view.frame;
         //entering playback: hide the overlays and update controls state
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             self.navBar.alpha = 0.0;
