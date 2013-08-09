@@ -62,9 +62,6 @@
 		1C4110D117306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
 		1C4110D217306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
 		1C4110D317306FA0009022EA /* SPChannelCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110D017306FA0009022EA /* SPChannelCollectionView.m */; };
-		1C4110DA17319002009022EA /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4110D917319002009022EA /* ShelbyHomeView.xib */; };
-		1C4110DB17319002009022EA /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4110D917319002009022EA /* ShelbyHomeView.xib */; };
-		1C4110DC17319002009022EA /* ShelbyHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C4110D917319002009022EA /* ShelbyHomeView.xib */; };
 		1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
 		1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
 		1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4110DE17319468009022EA /* ShelbyHomeViewController.m */; };
@@ -80,9 +77,6 @@
 		1C534E4517A179DE00B6B3D5 /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */; };
 		1C534E4617A179DE00B6B3D5 /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */; };
 		1C534E4717A179DE00B6B3D5 /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */; };
-		1C6ACFD21721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
-		1C6ACFD31721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
-		1C6ACFD41721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */; };
 		1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
 		1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
 		1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */; };
@@ -266,10 +260,8 @@
 		1C8109DD16EE2CBF0030077C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEA16A9B9FC006B1ABE /* Icon@2x.png */; };
 		1C8109DE16EE2CBF0030077C /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEB16A9B9FC006B1ABE /* iTunesArtwork */; };
 		1C8109DF16EE2CBF0030077C /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEC16A9B9FC006B1ABE /* iTunesArtwork@2x */; };
-		1C8109E016EE2CBF0030077C /* AuthorizationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */; };
 		1C8109E916EE2CBF0030077C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
 		1C8109EA16EE2CBF0030077C /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
-		1C8109F316EE2CBF0030077C /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
 		1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
 		1C810A2D16EE5EED0030077C /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
@@ -323,10 +315,8 @@
 		1C810A9316EE5EED0030077C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEA16A9B9FC006B1ABE /* Icon@2x.png */; };
 		1C810A9416EE5EED0030077C /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEB16A9B9FC006B1ABE /* iTunesArtwork */; };
 		1C810A9516EE5EED0030077C /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDEC16A9B9FC006B1ABE /* iTunesArtwork@2x */; };
-		1C810A9616EE5EED0030077C /* AuthorizationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */; };
 		1C810A9F16EE5EED0030077C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
 		1C810AA016EE5EED0030077C /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
-		1C810AA916EE5EED0030077C /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
 		1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
@@ -440,9 +430,6 @@
 		1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
 		1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
 		1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CACC0AE17287276007EDD65 /* SettingsViewController.m */; };
-		1CACC0B317287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
-		1CACC0B417287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
-		1CACC0B517287298007EDD65 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CACC0B217287298007EDD65 /* SettingsView.xib */; };
 		1CBF0925175CD21F001D471A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0920175CD21E001D471A /* Default-568h@2x.png */; };
 		1CBF0926175CD21F001D471A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0920175CD21E001D471A /* Default-568h@2x.png */; };
 		1CBF0927175CD21F001D471A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0920175CD21E001D471A /* Default-568h@2x.png */; };
@@ -462,7 +449,6 @@
 		1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
 		1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
 		1CC3387816CBDF2A00E58375 /* BrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CC3387716CBDF2A00E58375 /* BrowseViewController.m */; };
-		1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
 		1CC5763C178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
 		1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
 		1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */; };
@@ -752,7 +738,6 @@
 		8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
 		8E9FBD4B16C7139300731912 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4A16C7139300731912 /* LoginView.m */; };
-		8E9FBD4D16C713BB00731912 /* AuthorizationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */; };
 		8EAB0068171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EAB0069171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
 		8EAB006A171F27E20021DF31 /* SPVideoItemViewCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */; };
@@ -1121,7 +1106,6 @@
 		1C3D91341714C6CC00105839 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		1C4110CF17306FA0009022EA /* SPChannelCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChannelCollectionView.h; sourceTree = "<group>"; };
 		1C4110D017306FA0009022EA /* SPChannelCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPChannelCollectionView.m; sourceTree = "<group>"; };
-		1C4110D917319002009022EA /* ShelbyHomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyHomeView.xib; sourceTree = "<group>"; };
 		1C4110DD17319468009022EA /* ShelbyHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyHomeViewController.h; sourceTree = "<group>"; };
 		1C4110DE17319468009022EA /* ShelbyHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHomeViewController.m; sourceTree = "<group>"; };
 		1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape-568h.png"; sourceTree = "<group>"; };
@@ -1129,7 +1113,6 @@
 		1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-landscape@2x.png"; sourceTree = "<group>"; };
 		1C534E4317A179DE00B6B3D5 /* NoContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentViewController.h; sourceTree = "<group>"; };
 		1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentViewController.m; sourceTree = "<group>"; };
-		1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyBrowseTutorialView.xib; sourceTree = "<group>"; };
 		1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial.png"; sourceTree = "<group>"; };
 		1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial@2x.png"; sourceTree = "<group>"; };
 		1C6ACFE21721EA3F0008DEC2 /* doubletap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doubletap.png; sourceTree = "<group>"; };
@@ -1238,7 +1221,6 @@
 		1CA631D717386442004101B1 /* ShelbyHideBrowseAnimationViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyHideBrowseAnimationViews.m; sourceTree = "<group>"; };
 		1CACC0AD17287276007EDD65 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1CACC0AE17287276007EDD65 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		1CACC0B217287298007EDD65 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
 		1CBF0920175CD21E001D471A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		1CBF0921175CD21E001D471A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		1CBF0922175CD21F001D471A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -1247,7 +1229,6 @@
 		1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyHomeView-iPhone.xib"; sourceTree = "<group>"; };
 		1CC3387616CBDF2A00E58375 /* BrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseViewController.h; sourceTree = "<group>"; };
 		1CC3387716CBDF2A00E58375 /* BrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowseViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		1CC3387916CBE20800E58375 /* BrowseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseView.xib; sourceTree = "<group>"; };
 		1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupUserInfoViewCell.xib; sourceTree = "<group>"; };
 		1CC75ABE172AF2FC004805A5 /* connectedfacebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectedfacebook.png; sourceTree = "<group>"; };
 		1CC75ABF172AF2FC004805A5 /* connectedfacebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectedfacebook@2x.png"; sourceTree = "<group>"; };
@@ -1436,7 +1417,6 @@
 		8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shelby.xcdatamodel; sourceTree = "<group>"; };
 		8E9FBD4916C7139300731912 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		8E9FBD4A16C7139300731912 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
-		8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizationView.xib; sourceTree = "<group>"; };
 		8EAB0066171F27E20021DF31 /* SPVideoItemViewCellLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemViewCellLabel.h; sourceTree = "<group>"; };
 		8EAB0067171F27E20021DF31 /* SPVideoItemViewCellLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemViewCellLabel.m; sourceTree = "<group>"; };
 		8EB3B18B16AF68A5008587FD /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -2406,24 +2386,11 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		8EF5C350162F41B00075C35F /* Xibs */ = {
-			isa = PBXGroup;
-			children = (
-				8E9FBD4C16C713BB00731912 /* AuthorizationView.xib */,
-				1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */,
-				1CACC0B217287298007EDD65 /* SettingsView.xib */,
-				1CC3387916CBE20800E58375 /* BrowseView.xib */,
-				1C4110D917319002009022EA /* ShelbyHomeView.xib */,
-			);
-			name = Xibs;
-			sourceTree = "<group>";
-		};
 		8EF5C351162F41BA0075C35F /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				91A3626C1790684F00381218 /* Signup Views */,
 				1CCCB54916CEEC9800C8C216 /* Layouts */,
-				8EF5C350162F41B00075C35F /* Xibs */,
 				1CBF0934175CD69D001D471A /* Xib-iPhone */,
 				1C1D51ED16F22A8B00225B4E /* FormViews */,
 				8E41EF2C16B0742400C831A4 /* BigButton.h */,
@@ -2766,15 +2733,12 @@
 				1C8109DD16EE2CBF0030077C /* Icon@2x.png in Resources */,
 				1C8109DE16EE2CBF0030077C /* iTunesArtwork in Resources */,
 				1C8109DF16EE2CBF0030077C /* iTunesArtwork@2x in Resources */,
-				1C8109E016EE2CBF0030077C /* AuthorizationView.xib in Resources */,
 				1C8109E916EE2CBF0030077C /* Default-Landscape.png in Resources */,
 				1C8109EA16EE2CBF0030077C /* Default-Landscape@2x.png in Resources */,
-				1C8109F316EE2CBF0030077C /* BrowseView.xib in Resources */,
 				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024ED1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F61715E71500E8DE46 /* README in Resources */,
-				1C6ACFD31721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDC1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 				1C6ACFEB1721EA3F0008DEC2 /* doubletap.png in Resources */,
@@ -2785,7 +2749,6 @@
 				1C6ACFFA1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFD1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6AD0001721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
-				1CACC0B417287298007EDD65 /* SettingsView.xib in Resources */,
 				1CC75ADD172AF2FC004805A5 /* connectedfacebook.png in Resources */,
 				1CC75AE0172AF2FC004805A5 /* connectedfacebook@2x.png in Resources */,
 				1CC75AE3172AF2FC004805A5 /* connectfacebook.png in Resources */,
@@ -2806,7 +2769,6 @@
 				1CC75B28172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
 				1CC75B31172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B34172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
-				1C4110DB17319002009022EA /* ShelbyHomeView.xib in Resources */,
 				91FCC6A8174BF118004255F5 /* Localizable.strings in Resources */,
 				1CBF0926175CD21F001D471A /* Default-568h@2x.png in Resources */,
 				1CBF0929175CD21F001D471A /* Default.png in Resources */,
@@ -2978,15 +2940,12 @@
 				1C810A9316EE5EED0030077C /* Icon@2x.png in Resources */,
 				1C810A9416EE5EED0030077C /* iTunesArtwork in Resources */,
 				1C810A9516EE5EED0030077C /* iTunesArtwork@2x in Resources */,
-				1C810A9616EE5EED0030077C /* AuthorizationView.xib in Resources */,
 				1C810A9F16EE5EED0030077C /* Default-Landscape.png in Resources */,
 				1C810AA016EE5EED0030077C /* Default-Landscape@2x.png in Resources */,
-				1C810AA916EE5EED0030077C /* BrowseView.xib in Resources */,
 				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				8E7024EE1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F71715E71500E8DE46 /* README in Resources */,
-				1C6ACFD41721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDD1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 				1C6ACFEC1721EA3F0008DEC2 /* doubletap.png in Resources */,
@@ -2997,7 +2956,6 @@
 				1C6ACFFB1721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFE1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6AD0011721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
-				1CACC0B517287298007EDD65 /* SettingsView.xib in Resources */,
 				1CC75ADE172AF2FC004805A5 /* connectedfacebook.png in Resources */,
 				1CC75AE1172AF2FC004805A5 /* connectedfacebook@2x.png in Resources */,
 				1CC75AE4172AF2FC004805A5 /* connectfacebook.png in Resources */,
@@ -3018,7 +2976,6 @@
 				1CC75B29172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
 				1CC75B32172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B35172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
-				1C4110DC17319002009022EA /* ShelbyHomeView.xib in Resources */,
 				91FCC6A9174BF118004255F5 /* Localizable.strings in Resources */,
 				1CBF0927175CD21F001D471A /* Default-568h@2x.png in Resources */,
 				1CBF092A175CD21F001D471A /* Default.png in Resources */,
@@ -3190,16 +3147,13 @@
 				8E50CDF016A9B9FC006B1ABE /* Icon@2x.png in Resources */,
 				8E50CDF116A9B9FC006B1ABE /* iTunesArtwork in Resources */,
 				8E50CDF216A9B9FC006B1ABE /* iTunesArtwork@2x in Resources */,
-				8E9FBD4D16C713BB00731912 /* AuthorizationView.xib in Resources */,
 				8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */,
 				8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */,
-				1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */,
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FB16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024EC1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F51715E71500E8DE46 /* README in Resources */,
-				1C6ACFD21721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDB1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
 				1C6ACFEA1721EA3F0008DEC2 /* doubletap.png in Resources */,
@@ -3210,7 +3164,6 @@
 				1C6ACFF91721EA3F0008DEC2 /* swipeleft@2x.png in Resources */,
 				1C6ACFFC1721EA3F0008DEC2 /* swipeup.png in Resources */,
 				1C6ACFFF1721EA3F0008DEC2 /* swipeup@2x.png in Resources */,
-				1CACC0B317287298007EDD65 /* SettingsView.xib in Resources */,
 				1CC75ADC172AF2FC004805A5 /* connectedfacebook.png in Resources */,
 				1CC75ADF172AF2FC004805A5 /* connectedfacebook@2x.png in Resources */,
 				1CC75AE2172AF2FC004805A5 /* connectfacebook.png in Resources */,
@@ -3231,7 +3184,6 @@
 				1CC75B27172AF2FC004805A5 /* settings_pane@2x.png in Resources */,
 				1CC75B30172AF2FC004805A5 /* twitterconnected.png in Resources */,
 				1CC75B33172AF2FC004805A5 /* twitterconnected@2x.png in Resources */,
-				1C4110DA17319002009022EA /* ShelbyHomeView.xib in Resources */,
 				91FCC6A7174BF118004255F5 /* Localizable.strings in Resources */,
 				1CBF0925175CD21F001D471A /* Default-568h@2x.png in Resources */,
 				1CBF0928175CD21F001D471A /* Default.png in Resources */,
