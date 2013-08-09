@@ -223,7 +223,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 -(NSURL *)avatarURL
 {
     if ([self.hasShelbyAvatar boolValue]) {
-        return [NSURL URLWithString:[NSString stringWithFormat:@"http://s3.amazonaws.com/shelby-gt-user-avatars/sq48x48/%@", self.userID]];
+        return [NSURL URLWithString:[NSString stringWithFormat:@"http://s3.amazonaws.com/shelby-gt-user-avatars/sq192x192/%@", self.userID]];
     } else {
         return [NSURL URLWithString:self.userImage];
     }
