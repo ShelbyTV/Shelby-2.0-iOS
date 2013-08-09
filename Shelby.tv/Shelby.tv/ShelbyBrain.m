@@ -97,8 +97,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     self.homeVC.currentUser = currentUser;
     self.homeVC.masterDelegate = self;
 
-    // TODO: commenting out the call to setupDVR as we are not using it right now.
-//    [self setupDVR];
+    [self setupDVR];
   
     // If user is not logged in, fetch unsynced likes. (KP KP: We might want to still fetch/merge unsynced likes with Likes Roll for logged in user)
     if (!currentUser) {
