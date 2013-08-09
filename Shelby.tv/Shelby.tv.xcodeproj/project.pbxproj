@@ -29,15 +29,9 @@
 		1C1D51EA16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EB16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
 		1C1D51EC16F21E4200225B4E /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D51E916F21E4200225B4E /* FormView.m */; };
-		1C22E39E1718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */; };
-		1C22E39F1718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */; };
-		1C22E3A01718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */; };
 		1C22E3A81718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */; };
 		1C22E3A91718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */; };
 		1C22E3AA1718976B00A1CAEC /* SPVideoItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */; };
-		1C22E3BE171C79AB00A1CAEC /* SPChannelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E3BD171C79AA00A1CAEC /* SPChannelCell.xib */; };
-		1C22E3BF171C79AB00A1CAEC /* SPChannelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E3BD171C79AA00A1CAEC /* SPChannelCell.xib */; };
-		1C22E3C0171C79AB00A1CAEC /* SPChannelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C22E3BD171C79AA00A1CAEC /* SPChannelCell.xib */; };
 		1C304BF4171EF0B000476277 /* SPChannelDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF3171EF0B000476277 /* SPChannelDisplay.m */; };
 		1C304BF5171EF0B000476277 /* SPChannelDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF3171EF0B000476277 /* SPChannelDisplay.m */; };
 		1C304BF6171EF0B000476277 /* SPChannelDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C304BF3171EF0B000476277 /* SPChannelDisplay.m */; };
@@ -95,9 +89,6 @@
 		1C6ACFDB1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
 		1C6ACFDC1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
 		1C6ACFDD1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */; };
-		1C6ACFDF1721EA020008DEC2 /* SPTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */; };
-		1C6ACFE01721EA020008DEC2 /* SPTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */; };
-		1C6ACFE11721EA020008DEC2 /* SPTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */; };
 		1C6ACFEA1721EA3F0008DEC2 /* doubletap.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE21721EA3F0008DEC2 /* doubletap.png */; };
 		1C6ACFEB1721EA3F0008DEC2 /* doubletap.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE21721EA3F0008DEC2 /* doubletap.png */; };
 		1C6ACFEC1721EA3F0008DEC2 /* doubletap.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C6ACFE21721EA3F0008DEC2 /* doubletap.png */; };
@@ -269,7 +260,6 @@
 		1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209715162F3A60000A2DFD /* CoreGraphics.framework */; };
 		1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E20971A162F3A61000A2DFD /* InfoPlist.strings */; };
-		1C8109BD16EE2CBF0030077C /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		1C8109DA16EE2CBF0030077C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE716A9B9FC006B1ABE /* Icon-Small-50.png */; };
 		1C8109DB16EE2CBF0030077C /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE816A9B9FC006B1ABE /* Icon-Small-50@2x.png */; };
 		1C8109DC16EE2CBF0030077C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE916A9B9FC006B1ABE /* Icon.png */; };
@@ -280,7 +270,6 @@
 		1C8109E916EE2CBF0030077C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
 		1C8109EA16EE2CBF0030077C /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
 		1C8109F316EE2CBF0030077C /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
-		1C8109FF16EE2CBF0030077C /* SPShareRollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BEC16D576EC0019669F /* SPShareRollView.xib */; };
 		1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
 		1C810A2D16EE5EED0030077C /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
@@ -328,7 +317,6 @@
 		1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209715162F3A60000A2DFD /* CoreGraphics.framework */; };
 		1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E20971A162F3A61000A2DFD /* InfoPlist.strings */; };
-		1C810A7316EE5EED0030077C /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		1C810A9016EE5EED0030077C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE716A9B9FC006B1ABE /* Icon-Small-50.png */; };
 		1C810A9116EE5EED0030077C /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE816A9B9FC006B1ABE /* Icon-Small-50@2x.png */; };
 		1C810A9216EE5EED0030077C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE916A9B9FC006B1ABE /* Icon.png */; };
@@ -339,7 +327,6 @@
 		1C810A9F16EE5EED0030077C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
 		1C810AA016EE5EED0030077C /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
 		1C810AA916EE5EED0030077C /* BrowseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC3387916CBE20800E58375 /* BrowseView.xib */; };
-		1C810AB516EE5EED0030077C /* SPShareRollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BEC16D576EC0019669F /* SPShareRollView.xib */; };
 		1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
@@ -659,7 +646,6 @@
 		8E01AFC116E67365000567D4 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB616E67365000567D4 /* AFURLConnectionOperation.m */; };
 		8E01AFC216E67365000567D4 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFB816E67365000567D4 /* AFXMLRequestOperation.m */; };
 		8E01AFC316E67365000567D4 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */; };
-		8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E0357841666B86600C214D8 /* SPOverlayView.xib */; };
 		8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */; };
 		8E1B2E9B16700B1F00D2C0DC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */; };
 		8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B2EA416703BE500D2C0DC /* TopAlignedLabel.m */; };
@@ -775,7 +761,6 @@
 		8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB950561665BD4000E965E0 /* SPVideoReel.m */; };
 		8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
-		8EF03BED16D576EC0019669F /* SPShareRollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF03BEC16D576EC0019669F /* SPShareRollView.xib */; };
 		8EF03C6016D57C170019669F /* SPShareRollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EF03C5F16D57C170019669F /* SPShareRollView.m */; };
 		8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF5C35A162F42470075C35F /* AVFoundation.framework */; };
 		910933081743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
@@ -1119,10 +1104,8 @@
 		1C154E5917A071DF00C0B76B /* circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle@2x.png"; sourceTree = "<group>"; };
 		1C1D51E816F21E4200225B4E /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
 		1C1D51E916F21E4200225B4E /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
-		1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPVideoItemViewCell.xib; sourceTree = "<group>"; };
 		1C22E3A61718976A00A1CAEC /* SPVideoItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoItemViewCell.h; sourceTree = "<group>"; };
 		1C22E3A71718976B00A1CAEC /* SPVideoItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPVideoItemViewCell.m; sourceTree = "<group>"; };
-		1C22E3BD171C79AA00A1CAEC /* SPChannelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPChannelCell.xib; sourceTree = "<group>"; };
 		1C304BF2171EF0B000476277 /* SPChannelDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChannelDisplay.h; sourceTree = "<group>"; };
 		1C304BF3171EF0B000476277 /* SPChannelDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPChannelDisplay.m; sourceTree = "<group>"; };
 		1C304BF7171EFE4F00476277 /* SPChannelPeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChannelPeekView.h; sourceTree = "<group>"; };
@@ -1149,7 +1132,6 @@
 		1C6ACFD11721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyBrowseTutorialView.xib; sourceTree = "<group>"; };
 		1C6ACFD61721E0B20008DEC2 /* btn-tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial.png"; sourceTree = "<group>"; };
 		1C6ACFD71721E0B20008DEC2 /* btn-tutorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-tutorial@2x.png"; sourceTree = "<group>"; };
-		1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPTutorialView.xib; sourceTree = "<group>"; };
 		1C6ACFE21721EA3F0008DEC2 /* doubletap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doubletap.png; sourceTree = "<group>"; };
 		1C6ACFE31721EA3F0008DEC2 /* doubletap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doubletap@2x.png"; sourceTree = "<group>"; };
 		1C6ACFE41721EA3F0008DEC2 /* pinch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinch.png; sourceTree = "<group>"; };
@@ -1354,7 +1336,6 @@
 		8E01AFB816E67365000567D4 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		8E01AFB916E67365000567D4 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		8E01AFBA16E67365000567D4 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		8E0357841666B86600C214D8 /* SPOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPOverlayView.xib; sourceTree = "<group>"; };
 		8E0CFE1416C4C54E009620F9 /* UIScreen+Resolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Resolution.h"; sourceTree = "<group>"; };
 		8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Resolution.m"; sourceTree = "<group>"; };
 		8E1B2E9A16700B1F00D2C0DC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -1465,7 +1446,6 @@
 		8EB950561665BD4000E965E0 /* SPVideoReel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoReel.m; sourceTree = "<group>"; };
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
-		8EF03BEC16D576EC0019669F /* SPShareRollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPShareRollView.xib; sourceTree = "<group>"; };
 		8EF03C5E16D57C170019669F /* SPShareRollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPShareRollView.h; sourceTree = "<group>"; };
 		8EF03C5F16D57C170019669F /* SPShareRollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPShareRollView.m; sourceTree = "<group>"; };
 		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
@@ -2241,22 +2221,9 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		8E68A1CA16C0C4F70031C3D2 /* Xibs */ = {
-			isa = PBXGroup;
-			children = (
-				1C22E3BD171C79AA00A1CAEC /* SPChannelCell.xib */,
-				8E0357841666B86600C214D8 /* SPOverlayView.xib */,
-				8EF03BEC16D576EC0019669F /* SPShareRollView.xib */,
-				1C22E39D1718968900A1CAEC /* SPVideoItemViewCell.xib */,
-				1C6ACFDE1721EA020008DEC2 /* SPTutorialView.xib */,
-			);
-			name = Xibs;
-			sourceTree = "<group>";
-		};
 		8E68A1CB16C0C4FC0031C3D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8E68A1CA16C0C4F70031C3D2 /* Xibs */,
 				8E1F86DC172502A80004C1F1 /* SPChannelCell.h */,
 				8E1F86DD172502A80004C1F1 /* SPChannelCell.m */,
 				8E4C55751666A9F90019DD15 /* SPOverlayView.h */,
@@ -2793,7 +2760,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */,
-				1C8109BD16EE2CBF0030077C /* SPOverlayView.xib in Resources */,
 				1C8109DA16EE2CBF0030077C /* Icon-Small-50.png in Resources */,
 				1C8109DB16EE2CBF0030077C /* Icon-Small-50@2x.png in Resources */,
 				1C8109DC16EE2CBF0030077C /* Icon.png in Resources */,
@@ -2804,17 +2770,13 @@
 				1C8109E916EE2CBF0030077C /* Default-Landscape.png in Resources */,
 				1C8109EA16EE2CBF0030077C /* Default-Landscape@2x.png in Resources */,
 				1C8109F316EE2CBF0030077C /* BrowseView.xib in Resources */,
-				1C8109FF16EE2CBF0030077C /* SPShareRollView.xib in Resources */,
 				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024ED1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F61715E71500E8DE46 /* README in Resources */,
-				1C22E39F1718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */,
-				1C22E3BF171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1C6ACFD31721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFD91721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDC1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
-				1C6ACFE01721EA020008DEC2 /* SPTutorialView.xib in Resources */,
 				1C6ACFEB1721EA3F0008DEC2 /* doubletap.png in Resources */,
 				1C6ACFEE1721EA3F0008DEC2 /* doubletap@2x.png in Resources */,
 				1C6ACFF11721EA3F0008DEC2 /* pinch.png in Resources */,
@@ -3010,7 +2972,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */,
-				1C810A7316EE5EED0030077C /* SPOverlayView.xib in Resources */,
 				1C810A9016EE5EED0030077C /* Icon-Small-50.png in Resources */,
 				1C810A9116EE5EED0030077C /* Icon-Small-50@2x.png in Resources */,
 				1C810A9216EE5EED0030077C /* Icon.png in Resources */,
@@ -3021,17 +2982,13 @@
 				1C810A9F16EE5EED0030077C /* Default-Landscape.png in Resources */,
 				1C810AA016EE5EED0030077C /* Default-Landscape@2x.png in Resources */,
 				1C810AA916EE5EED0030077C /* BrowseView.xib in Resources */,
-				1C810AB516EE5EED0030077C /* SPShareRollView.xib in Resources */,
 				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				8E7024EE1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F71715E71500E8DE46 /* README in Resources */,
-				1C22E3A01718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */,
-				1C22E3C0171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1C6ACFD41721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFDA1721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDD1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
-				1C6ACFE11721EA020008DEC2 /* SPTutorialView.xib in Resources */,
 				1C6ACFEC1721EA3F0008DEC2 /* doubletap.png in Resources */,
 				1C6ACFEF1721EA3F0008DEC2 /* doubletap@2x.png in Resources */,
 				1C6ACFF21721EA3F0008DEC2 /* pinch.png in Resources */,
@@ -3227,7 +3184,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E20971C162F3A61000A2DFD /* InfoPlist.strings in Resources */,
-				8E0357851666B86600C214D8 /* SPOverlayView.xib in Resources */,
 				8E50CDED16A9B9FC006B1ABE /* Icon-Small-50.png in Resources */,
 				8E50CDEE16A9B9FC006B1ABE /* Icon-Small-50@2x.png in Resources */,
 				8E50CDEF16A9B9FC006B1ABE /* Icon.png in Resources */,
@@ -3238,18 +3194,14 @@
 				8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */,
 				8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */,
 				1CC3387A16CBE20800E58375 /* BrowseView.xib in Resources */,
-				8EF03BED16D576EC0019669F /* SPShareRollView.xib in Resources */,
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FB16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024EC1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F51715E71500E8DE46 /* README in Resources */,
-				1C22E39E1718968900A1CAEC /* SPVideoItemViewCell.xib in Resources */,
-				1C22E3BE171C79AB00A1CAEC /* SPChannelCell.xib in Resources */,
 				1C6ACFD21721DE5B0008DEC2 /* ShelbyBrowseTutorialView.xib in Resources */,
 				1C6ACFD81721E0B20008DEC2 /* btn-tutorial.png in Resources */,
 				1C6ACFDB1721E0B20008DEC2 /* btn-tutorial@2x.png in Resources */,
-				1C6ACFDF1721EA020008DEC2 /* SPTutorialView.xib in Resources */,
 				1C6ACFEA1721EA3F0008DEC2 /* doubletap.png in Resources */,
 				1C6ACFED1721EA3F0008DEC2 /* doubletap@2x.png in Resources */,
 				1C6ACFF01721EA3F0008DEC2 /* pinch.png in Resources */,
