@@ -51,6 +51,10 @@
 {
     [super viewDidLoad];
 
+    // Setting background color to avoid seeing the phone's background
+    self.view.backgroundColor = [UIColor blackColor];
+    
+
 //    if (DEVICE_IPAD) {
 //        BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
 //
