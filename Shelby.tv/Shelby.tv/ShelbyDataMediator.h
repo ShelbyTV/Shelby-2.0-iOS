@@ -62,7 +62,10 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 - (void)fetchAllUnsyncedLikes;
 - (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForRollID:(NSString *)rollID;
 - (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForDashboardID:(NSString *)dashboardID;
-- (void)fetchUpvoterUser:(NSString *)userID inContect:(NSManagedObjectContext *)context;
+//return user if cached, otherwise returns nil and calls completion block async after fetching user remotely
+- (User *)fetchUserWithID:(NSString *)userID
+                inContext:(NSManagedObjectContext *)context
+               completion:(void (^)(User *fetchedUser))completion;
 
 -(void)logoutCurrentUser;
 

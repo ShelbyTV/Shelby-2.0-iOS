@@ -25,10 +25,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 + (User *)userForDictionary:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {
     NSString *userID = dict[@"id"];
-    User *user = [self fetchOneEntityNamed:kShelbyCoreDataEntityUser
-                           withIDPredicate:kShelbyCoreDataEntityUserIDPredicate
-                                     andID:userID
-                                 inContext:context];
+    User *user = [User findUserWithID:userID inContext:context];
 
     if (!user) {
         user = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityUser
@@ -95,6 +92,16 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         }
     }
     
+    return user;
+}
+
++ (User *)findUserWithID:(NSString *)userID
+               inContext:(NSManagedObjectContext *)context
+{
+    User *user = [self fetchOneEntityNamed:kShelbyCoreDataEntityUser
+                           withIDPredicate:kShelbyCoreDataEntityUserIDPredicate
+                                     andID:userID
+                                 inContext:context];
     return user;
 }
 

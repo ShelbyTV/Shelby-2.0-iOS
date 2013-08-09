@@ -178,8 +178,7 @@
             [self displayPlaceholderThumbnails];
         }
 
-        [self.foregroundView setInfoForDashboardEntry:dashboardEntry];
-        [self.foregroundView setInfoForFrame:videoFrame];
+        [self.foregroundView setInfoForDashboardEntry:dashboardEntry frame:videoFrame];
     }
 }
 

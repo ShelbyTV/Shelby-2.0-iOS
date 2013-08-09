@@ -15,7 +15,12 @@
 #define kShelbyInfoViewMargin 15
 #define kShelbyCaptionMargin 4
 
-@interface  StreamBrowseCellForegroundView()
+@interface  StreamBrowseCellForegroundView() {
+    DashboardEntry *_dashboardEntry;
+    Frame *_videoFrame;
+    NSMutableOrderedSet *_likers;
+    NSMutableOrderedSet *_sharers;
+}
 // Detail View Outlets
 @property (weak, nonatomic) IBOutlet UILabel *detailCaption;
 @property (weak, nonatomic) IBOutlet UIView *detailCommentView;
@@ -122,40 +127,32 @@
     [self setupOverlayImageView];
 }
 
-- (void)setInfoForDashboardEntry:(DashboardEntry *)dashboardEntry
+- (void)setInfoForDashboardEntry:(DashboardEntry *)dashboardEntry frame:(Frame *)videoFrame
 {
-    if (dashboardEntry && [dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
-        self.detailRecommendationReasonLabel.attributedText = [self recommendationStringFor:dashboardEntry];
-        self.summaryRecommendationView.hidden = NO;
-        self.detailRecommendationView.hidden = NO;
-        self.summaryUserView.hidden = YES;
-        self.detailUserView.hidden = YES;
-        self.detailCommentView.hidden = YES;
-    } else {
-        self.summaryRecommendationView.hidden = YES;
-        self.detailRecommendationView.hidden = YES;
-        self.summaryUserView.hidden = NO;
-        self.detailUserView.hidden = NO;
-        self.detailCommentView.hidden = NO;
-    }
+    _dashboardEntry = dashboardEntry;
+    _videoFrame = videoFrame;
+
+    [self updateVisualsForRecommendation];
+    [self processLikersAndSharers];
+    [self updateStandardVisuals];
 }
 
-- (void)setInfoForFrame:(Frame *)videoFrame
+- (void)updateStandardVisuals
 {
     // createAt
-    self.detailCreatedAt.text = videoFrame.createdAt;
+    self.detailCreatedAt.text = _videoFrame.createdAt;
 
     //title
-    self.summaryTitle.text = videoFrame.video.title;
-    self.detailTitle.text = videoFrame.video.title;
+    self.summaryTitle.text = _videoFrame.video.title;
+    self.detailTitle.text = _videoFrame.video.title;
     
     // Username
-    self.summaryUsername.text = videoFrame.creator.nickname;
-    self.detailUsername.text = videoFrame.creator.nickname;
+    self.summaryUsername.text = _videoFrame.creator.nickname;
+    self.detailUsername.text = _videoFrame.creator.nickname;
     
     // User Avatar
     // Request setup was taken from UIImage+AFNetworking. As we have to set a completion block so the detail avatar will be the same as the summary one. (Otherwise, we had to make 2 seperate calls)
-    NSURL *url = [videoFrame.creator avatarURL];
+    NSURL *url = [_videoFrame.creator avatarURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPShouldHandleCookies:NO];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -172,7 +169,7 @@
     }];
     
     // Via Network
-    NSString *viaNetwork = [videoFrame originNetwork];
+    NSString *viaNetwork = [_videoFrame originNetwork];
     if (viaNetwork) {
         viaNetwork = [NSString stringWithFormat:@"via %@", viaNetwork];
     }
@@ -181,21 +178,18 @@
     self.detailViaNetwork.text = self.summaryViaNetwork.text;
     
     // Caption
-    NSString *captionText = [NSString stringWithFormat:@"%@", [videoFrame creatorsInitialCommentWithFallback:YES]];
+    NSString *captionText = [NSString stringWithFormat:@"%@", [_videoFrame creatorsInitialCommentWithFallback:YES]];
     [self.detailCaption setText:captionText];
     [self resizeViewsForContent];
     
-    // Shares
-    NSOrderedSet *shareFrames = videoFrame.duplicates;
-    if ([shareFrames count]) {
-        // TODO: show share frames
+    // TODO: sharers
+    for (User *sharer in _sharers) {
+        DLog(@"SHARED BY: %@", sharer.nickname);
     }
-    
-    if (videoFrame.upvoters && [videoFrame.upvoters count] > 0) {
-        for (User *upvote in videoFrame.upvoters) {
-            // TODO: add avatar to view
-//            DLog(@"Upvoted - %@", upvote.name);
-        }
+
+    // TODO: likers
+    for (User *liker in _likers) {
+        DLog(@"LIKE BY: %@", liker.nickname);
     }
 }
 
@@ -293,6 +287,60 @@
 - (IBAction)playVideoInCell:(id)sender
 {
     [self.delegate streamBrowseCellForegroundViewTitleWasTapped];
+}
+
+- (void)processLikersAndSharers
+{
+    //TODO XXX KILL BELOW
+    if (_dashboardEntry.duplicates && [_dashboardEntry.duplicates count]) {
+        DLog(@"--------- dupes for %@", _dashboardEntry.frame.video.title);
+    }
+    if ([_videoFrame.upvoters count]) {
+        DLog(@"___likes for %@", _videoFrame.video.title);
+    }
+    //TODO XXX KILL ABOVE
+
+    _likers = [NSMutableOrderedSet orderedSet];
+    for (User *liker in _videoFrame.upvoters) {
+        DLog(@"LIKED BY: %@", liker.nickname);
+        [_likers addObject:liker];
+    }
+
+    _sharers = [NSMutableOrderedSet orderedSet];
+    for (DashboardEntry *dupe in _dashboardEntry.duplicates) {
+        DLog(@"dupe found (%@/%@), posted by: %@", dupe.dashboardEntryID, dupe.frame.frameID, dupe.frame.creator.nickname);
+        Frame *dupeFrame = dupe.frame;
+        if (dupeFrame) {
+            [_sharers addObject:dupeFrame.creator];
+            for (User *liker in dupe.frame.upvoters) {
+                DLog(@"DUPE liked BY %@", liker.nickname);
+                [_likers addObject:liker];
+            }
+        }
+    }
+
+    //don't double-count primary sharer
+    [_sharers removeObject:_videoFrame.creator];
+}
+
+- (BOOL)updateVisualsForRecommendation
+{
+    if (_dashboardEntry && [_dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
+        self.detailRecommendationReasonLabel.attributedText = [self recommendationStringFor:_dashboardEntry];
+        self.summaryRecommendationView.hidden = NO;
+        self.detailRecommendationView.hidden = NO;
+        self.summaryUserView.hidden = YES;
+        self.detailUserView.hidden = YES;
+        self.detailCommentView.hidden = YES;
+        return YES;
+    } else {
+        self.summaryRecommendationView.hidden = YES;
+        self.detailRecommendationView.hidden = YES;
+        self.summaryUserView.hidden = NO;
+        self.detailUserView.hidden = NO;
+        self.detailCommentView.hidden = NO;
+        return NO;
+    }
 }
 
 - (NSAttributedString *)recommendationStringFor:(DashboardEntry *)dashboardEntry

@@ -63,9 +63,11 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 
         //automatically merge changes back and forth between private and main contexts
         [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_privateContext queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            DLog(@"merged changes private->main");
             [self.mainThreadMOC mergeChangesFromContextDidSaveNotification:note];
         }];
         [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_mainThreadMOC queue:nil usingBlock:^(NSNotification *note) {
+            DLog(@"main->private merged");
             [self.privateContext mergeChangesFromContextDidSaveNotification:note];
         }];
     }
@@ -138,13 +140,27 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 }
 
 
-- (void)fetchUpvoterUser:(NSString *)userID inContect:(NSManagedObjectContext *)context
+- (User *)fetchUserWithID:(NSString *)userID inContext:(NSManagedObjectContext *)context completion:(void (^)(User *fetchedUser))completion
 {
-    [ShelbyAPIClient fetchUserForUserID:userID andBlock:^(id JSON, NSError *error) {
-        if (JSON) {
-            [User userForDictionary:JSON inContext:context];
-        }
-    }];
+    STVAssert(completion, @"expected a completion block");
+    User *localUser = [User findUserWithID:userID inContext:context];
+    if (localUser) {
+        return localUser;
+    } else {
+
+        [ShelbyAPIClient fetchUserForUserID:userID andBlock:^(id JSON, NSError *error) {
+            if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSDictionary class]]) {
+                //we are now on main thread, but that may not be right for the context we were given
+                [context performBlock:^{
+                    User *fetchedUser = [User userForDictionary:JSON[@"result"] inContext:context];
+                    completion(fetchedUser);
+                }];
+            } else {
+                completion(nil);
+            }
+        }];
+        return nil;
+    }
 }
 
 - (void)likeFrame:(Frame *)frame forUser:(User *)user

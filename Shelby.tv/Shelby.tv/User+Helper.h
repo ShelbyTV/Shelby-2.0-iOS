@@ -17,6 +17,9 @@
 
 + (User *)userForDictionary:(NSDictionary *)dict
                     inContext:(NSManagedObjectContext *)context;
+// returns existing user with that ID or nil if one is not found
++ (User *)findUserWithID:(NSString *)userID
+               inContext:(NSManagedObjectContext *)context;
 
 //return the current, authenticated User, or nil if user isn't logged in
 + (User *)currentAuthenticatedUserInContext:(NSManagedObjectContext *)moc;

@@ -70,10 +70,16 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     NSArray *upvoters = dict[@"upvoters"];
     if ([upvoters isKindOfClass:[NSArray class]] && [upvoters count] > 0) {
         for (NSString *upvoterId in upvoters) {
-            NSDictionary *userDict = @{@"id": upvoterId};
-            User *upvoterUser = [User userForDictionary:userDict inContext:context];
-            if (upvoterUser) {
-                [frame addUpvotersObject:upvoterUser];
+            //returns User if they exist, otherwise fetches and return async
+            User *upvoter = [[ShelbyDataMediator sharedInstance] fetchUserWithID:upvoterId inContext:context completion:^(User *upvoteUser) {
+                Frame *localFrame = (Frame *)[context objectWithID:frame.objectID];
+                [localFrame addUpvotersObject:upvoteUser];
+                NSError *error;
+                [context save:&error];
+                STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+            }];
+            if (upvoter) {
+                [frame addUpvotersObject:upvoter];
             }
         }
     }
