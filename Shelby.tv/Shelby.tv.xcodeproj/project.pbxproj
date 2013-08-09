@@ -142,7 +142,6 @@
 		1C81097916EE2CBF0030077C /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		1C81097D16EE2CBF0030077C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E20971D162F3A61000A2DFD /* main.m */; };
 		1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E209721162F3A61000A2DFD /* AppDelegate.m */; };
-		1C81098016EE2CBF0030077C /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
@@ -195,7 +194,6 @@
 		1C810A2F16EE5EED0030077C /* SPVideoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7247A81665B4560008F439 /* SPVideoExtractor.m */; };
 		1C810A3316EE5EED0030077C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E20971D162F3A61000A2DFD /* main.m */; };
 		1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E209721162F3A61000A2DFD /* AppDelegate.m */; };
-		1C810A3616EE5EED0030077C /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
 		1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
@@ -246,9 +244,6 @@
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
-		1C8AB431175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
-		1C8AB432175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
-		1C8AB433175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */; };
 		1C8AB447175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB446175D57D3001D5853 /* SPShareRollView-iPhone.xib */; };
 		1C8AB448175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB446175D57D3001D5853 /* SPShareRollView-iPhone.xib */; };
 		1C8AB449175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB446175D57D3001D5853 /* SPShareRollView-iPhone.xib */; };
@@ -497,7 +492,6 @@
 		8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34A16C8959000DFC8A0 /* Default-Landscape.png */; };
 		8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3EA34B16C8959000DFC8A0 /* Default-Landscape@2x.png */; };
 		8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E41EF2D16B0742400C831A4 /* BigButton.m */; };
-		8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C55761666A9F90019DD15 /* SPOverlayView.m */; };
 		8E4F580B1635E05F0048585C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4F580A1635E05F0048585C /* CoreData.framework */; };
 		8E50CDED16A9B9FC006B1ABE /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE716A9B9FC006B1ABE /* Icon-Small-50.png */; };
 		8E50CDEE16A9B9FC006B1ABE /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E50CDE816A9B9FC006B1ABE /* Icon-Small-50@2x.png */; };
@@ -992,7 +986,6 @@
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
-		1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SPOverlayView-iPhone.xib"; sourceTree = "<group>"; };
 		1C8AB446175D57D3001D5853 /* SPShareRollView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SPShareRollView-iPhone.xib"; sourceTree = "<group>"; };
 		1C96DE9817975A0900D845DF /* nav-bkgd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bkgd.png"; sourceTree = "<group>"; };
 		1C96DE9917975A0900D845DF /* nav-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bkgd@2x.png"; sourceTree = "<group>"; };
@@ -1128,8 +1121,6 @@
 		8E41EF2C16B0742400C831A4 /* BigButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigButton.h; sourceTree = "<group>"; };
 		8E41EF2D16B0742400C831A4 /* BigButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigButton.m; sourceTree = "<group>"; };
 		8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAIConstants.h; sourceTree = "<group>"; };
-		8E4C55751666A9F90019DD15 /* SPOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPOverlayView.h; sourceTree = "<group>"; };
-		8E4C55761666A9F90019DD15 /* SPOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPOverlayView.m; sourceTree = "<group>"; };
 		8E4F580A1635E05F0048585C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		8E50CDE716A9B9FC006B1ABE /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = SOURCE_ROOT; };
 		8E50CDE816A9B9FC006B1ABE /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -1606,7 +1597,6 @@
 		1C8AB42F175CF1AB001D5853 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				1C8AB430175CF1E4001D5853 /* SPOverlayView-iPhone.xib */,
 				1C8AB446175D57D3001D5853 /* SPShareRollView-iPhone.xib */,
 			);
 			name = Xibs;
@@ -1910,8 +1900,6 @@
 		8E68A1CB16C0C4FC0031C3D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8E4C55751666A9F90019DD15 /* SPOverlayView.h */,
-				8E4C55761666A9F90019DD15 /* SPOverlayView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2435,7 +2423,6 @@
 				1CBF0932175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
-				1C8AB432175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
 				1C8AB448175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */,
 				1C7AC3C61760F8E1007339A1 /* like_for_table.png in Resources */,
 				1C7AC3C91760F8E1007339A1 /* like_for_table@2x.png in Resources */,
@@ -2600,7 +2587,6 @@
 				1CBF0933175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
-				1C8AB433175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
 				1C8AB449175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */,
 				1C7AC3C71760F8E1007339A1 /* like_for_table.png in Resources */,
 				1C7AC3CA1760F8E1007339A1 /* like_for_table@2x.png in Resources */,
@@ -2766,7 +2752,6 @@
 				1CBF0931175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
-				1C8AB431175CF1E4001D5853 /* SPOverlayView-iPhone.xib in Resources */,
 				1C8AB447175D57D3001D5853 /* SPShareRollView-iPhone.xib in Resources */,
 				1C7AC3C51760F8E1007339A1 /* like_for_table.png in Resources */,
 				1C7AC3C81760F8E1007339A1 /* like_for_table@2x.png in Resources */,
@@ -2919,7 +2904,6 @@
 				1C81097916EE2CBF0030077C /* SPVideoExtractor.m in Sources */,
 				1C81097D16EE2CBF0030077C /* main.m in Sources */,
 				1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */,
-				1C81098016EE2CBF0030077C /* SPOverlayView.m in Sources */,
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
 				1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
 				1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
@@ -3051,7 +3035,6 @@
 				1C810A2F16EE5EED0030077C /* SPVideoExtractor.m in Sources */,
 				1C810A3316EE5EED0030077C /* main.m in Sources */,
 				1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */,
-				1C810A3616EE5EED0030077C /* SPOverlayView.m in Sources */,
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
 				1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
 				1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
@@ -3183,7 +3166,6 @@
 				8EE50E9C1665B8EF00DF42B8 /* SPVideoExtractor.m in Sources */,
 				8E20971E162F3A61000A2DFD /* main.m in Sources */,
 				8E209722162F3A61000A2DFD /* AppDelegate.m in Sources */,
-				8E4C55771666A9F90019DD15 /* SPOverlayView.m in Sources */,
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
 				8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */,
 				8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */,
