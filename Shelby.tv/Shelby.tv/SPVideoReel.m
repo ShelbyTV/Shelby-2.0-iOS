@@ -17,8 +17,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <QuartzCore/QuartzCore.h>
 #import "ShelbyAlert.h"
-#import "SPChannelPeekView.h"
-#import "SPTutorialView.h"
 #import "SPVideoExtractor.h"
 #import "TwitterHandler.h"
 #import "TwitterHandler.h"
@@ -47,13 +45,10 @@
 @property (assign, nonatomic) NSUInteger *videoStartIndex;
 @property (assign, nonatomic) BOOL fetchingOlderVideos;
 @property (assign, nonatomic) BOOL loadingOlderVideos;
-@property (nonatomic) SPChannelPeekView *peelChannelView;
-@property (nonatomic) SPTutorialView *tutorialView;
 @property (nonatomic, strong) NSTimer *tutorialTimer;
 @property (nonatomic, assign) NSUInteger currentVideoPlayingIndex;
 @property (atomic, weak) SPVideoPlayer *currentPlayer;
 @property (nonatomic, strong) NSMutableArray *possiblyPlayablePlayers;
-@property (assign, nonatomic) SPTutorialMode tutorialMode;
 @property (nonatomic, assign) BOOL isShutdown;
 @property (nonatomic, strong) NSDate *lastVideoStalledAlertTime;
 
@@ -107,12 +102,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor blackColor]];
     
-    _peelChannelView = [[SPChannelPeekView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    
-    if ([self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)] && [self.delegate respondsToSelector:@selector(tutorialModeForCurrentPlayer)]) {
-        self.tutorialMode = [self.delegate tutorialModeForCurrentPlayer];
-    }
-
     // Any setup stuff that *doesn't* rely on frame sizing can go here
 }
 
@@ -136,12 +125,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     // We used to run it in -viewDidLoad but our frame wasn't yet updated (ie. for landscape)
     // In -viewDidAppear, our frame is sized correctly and -setup will pass that down the view chain
     [self setup];
-
-    if (self.tutorialMode == SPTutorialModeShow) {
-        self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showDoubleTapTutorial) userInfo:nil repeats:NO];
-     } else if (self.tutorialMode == SPTutorialModePinch) {
-         self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showPinchTutorial) userInfo:nil repeats:NO];
-    }
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -410,10 +393,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)togglePlayback:(UIGestureRecognizer *)recognizer
 {
-    if (self.tutorialMode == SPTutorialModeDoubleTap) {
-        [self videoDoubleTapped];
-    }
-    
     [self animatePlaybackState:self.currentPlayer.isPlaying];
 
     [self.currentPlayer togglePlayback];
@@ -642,250 +621,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
-#pragma mark - Gesutre Methods (Private)
-- (void)switchChannelWithDirectionUp:(BOOL)up
-{
-    if (self.tutorialView) {
-        [self.tutorialView setAlpha:0];
-    }
-    
-    if (self.delegate && [self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)]) {
-        [self.delegate userDidSwitchChannelForDirectionUp:up];
-    }
-}
-
-- (void)panView:(UIPanGestureRecognizer *)gestureRecognizer
-{
-    if (![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        return;
-    }
-    
-    SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    
-    NSInteger y = currentPlayer.view.frame.origin.y;
-    NSInteger x = currentPlayer.view.frame.origin.x;
-    CGPoint translation = [gestureRecognizer translationInView:self.view];
-    
-    BOOL peekUp = y >= 0 ? YES : NO;
-    DisplayChannel *dispalayChannel = nil;
-    if (self.delegate && [self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)]) {
-       dispalayChannel =  [self.delegate displayChannelForDirection:peekUp];
-    }
-
-    int peekHeight = peekUp ? y : -1 * y;
-    int yOriginForPeekView = peekUp ? 0 : 768 - peekHeight;
-    CGRect peekViewRect = peekViewRect = CGRectMake(0, yOriginForPeekView, kShelbySPVideoWidth, peekHeight);
-    
-    [self.peelChannelView setupWithChannelDisplay:dispalayChannel];
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
-        [self.view addSubview:self.peelChannelView];
-    }
-    
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-        currentPlayer.view.frame = CGRectMake(x, y + translation.y, currentPlayer.view.frame.size.width, currentPlayer.view.frame.size.height);
-        self.peelChannelView.frame = peekViewRect;
-        
-        [gestureRecognizer setTranslation:CGPointZero inView:self.view];
-    } else if ([gestureRecognizer state] == UIGestureRecognizerStateEnded) {
-        CGPoint velocity = [gestureRecognizer velocityInView:self.view];
-        NSInteger currentY = y + translation.y;
-        if (velocity.y < -200) {
-            if (-1 * currentY < kShelbySPVideoHeight / 11) {
-                [self animateUp:kShelbySPFastSpeed andSwitchChannel:NO];
-            } else {
-                [self animateUp:kShelbySPFastSpeed andSwitchChannel:YES];
-            }
-        } else if (velocity.y > 200) {
-            if (currentY < kShelbySPVideoHeight / 11) {
-                [self animateDown:kShelbySPFastSpeed andSwitchChannel:NO];
-            } else {
-                [self animateDown:kShelbySPFastSpeed andSwitchChannel:YES];
-            }
-        } else {
-            if (currentY > 0) {
-                if (currentY < 3 * kShelbySPVideoHeight / 4) {
-                    [self animateUp:kShelbySPSlowSpeed andSwitchChannel:NO];
-                } else {
-                    [self animateDown:kShelbySPSlowSpeed andSwitchChannel:YES];
-                }
-            } else if (-1 * currentY < 3 * kShelbySPVideoHeight / 4) {
-                [self animateDown:kShelbySPSlowSpeed andSwitchChannel:NO];
-            } else {
-                [self animateUp:kShelbySPSlowSpeed andSwitchChannel:YES];
-            }
-        }
-    }
-}
-
-- (void)animateDown:(float)speed andSwitchChannel:(BOOL)switchChannel
-{
-    SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    CGRect currentPlayerFrame = currentPlayer.view.frame;
-    
-    NSInteger finalyYPosition = switchChannel ? self.view.frame.size.height : 0;
-    CGRect peekViewFrame;
-    if (switchChannel) {
-        peekViewFrame = CGRectMake(0, 0, 1024, 768);
-    } else {
-        CGFloat finalyY = self.peelChannelView.frame.origin.y;
-        if (finalyY != 0) {
-            finalyY = 768;
-        }
-        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
-    }
-    
-    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-       [currentPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.peelChannelView setFrame:peekViewFrame];
-    } completion:^(BOOL finished) {
-        if (switchChannel) {
-            [self switchChannelWithDirectionUp:YES];
-        }
-        [self.peelChannelView removeFromSuperview];
-    }];
-}
-
-- (void)animateUp:(float)speed andSwitchChannel:(BOOL)switchChannel
-{
-    SPVideoPlayer *currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
-    CGRect currentPlayerFrame = currentPlayer.view.frame;
-    
-    NSInteger finalyYPosition = switchChannel ? -self.view.frame.size.height : 0;
-    CGRect peekViewFrame;
-    if (switchChannel) {
-        peekViewFrame = CGRectMake(0, 0, 1024, 768);
-    } else {
-        CGFloat finalyY = self.peelChannelView.frame.origin.y;
-        if (finalyY != 0) {
-            finalyY = 768;
-        }
-        peekViewFrame = CGRectMake(0, finalyY, 1024, 0);
-    }
-
-    [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-       [currentPlayer.view setFrame:CGRectMake(currentPlayerFrame.origin.x, finalyYPosition, currentPlayerFrame.size.width, currentPlayerFrame.size.height)];
-        [self.peelChannelView setFrame:peekViewFrame];
-    } completion:^(BOOL finished) {
-        if (switchChannel) {
-            [self switchChannelWithDirectionUp:NO];
-        }
-        [self.peelChannelView removeFromSuperview];
-    }];
-}
-
-- (void)pinchAction:(UIPinchGestureRecognizer *)gestureRecognizer
-{
-    if (![gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]]) {
-        return;
-    }
-    
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
-        if (self.delegate && [self.delegate conformsToProtocol:@protocol(SPVideoReelDelegate)]) {
-            [self.delegate userDidCloseChannelAtFrame:self.currentPlayer.videoFrame];
-        }
-    }
-}
-
-#pragma mark - Tutorial Methods
-- (BOOL)tutorialSetup
-{
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SPTutorialView" owner:self options:nil];
-    if ([nib isKindOfClass:[NSArray class]] && [nib count] != 0 && [nib[0] isKindOfClass:[UIView class]]) {
-        [self setTutorialView:nib[0]];
-        [self.tutorialView setAlpha:0];
-        [self.view addSubview:self.tutorialView];
-        [self.tutorialView setFrame:CGRectMake(kShelbySPVideoWidth / 2 - self.tutorialView.frame.size.width/2, self.view.frame.size.height / 2 - kShelbySPVideoHeight / 2 - 30, self.tutorialView.frame.size.width, self.tutorialView.frame.size.height)];
-        
-        [self.view bringSubviewToFront:self.tutorialView];
-        
-        [self.tutorialView.layer setCornerRadius:10];
-        [self.tutorialView.layer setMasksToBounds:YES];
-        self.tutorialView.layer.borderColor = kShelbyColorTutorialGreen.CGColor;
-        self.tutorialView.layer.borderWidth = 15;
-        
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (void)showDoubleTapTutorial
-{
-    if ([self tutorialSetup]) {
-        [self setTutorialMode:SPTutorialModeDoubleTap];
-        [self.tutorialView setupWithImage:@"doubletap.png"
-                                  andText:NSLocalizedString(@"TUTORIAL_DBLTAP_MESSAGE", @"2) Double Tap")];
-        [UIView animateWithDuration:0.2 animations:^{
-            [self.tutorialView setAlpha:0.9];
-        }];
-    }
-}
-
-- (void)videoDoubleTapped
-{
-    if (self.tutorialMode == SPTutorialModeDoubleTap) {
-        [UIView animateWithDuration:0.2 animations:^{
-            [self.tutorialView setAlpha:0];
-        } completion:^(BOOL finished) {
-            [self setTutorialMode:SPTutorialModeShow];
-            self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showSwipeLeftTutorial) userInfo:nil repeats:NO];
-        }];
-    }
-}
-
-- (void)videoSwipedLeft
-{
-    [UIView animateWithDuration:0.2 animations:^{
-        [self.tutorialView setAlpha:0];
-    } completion:^(BOOL finished) {
-        [self setTutorialMode:SPTutorialModeShow];
-        self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showSwipeUpTutorial) userInfo:nil repeats:NO];
-    }];
-}
-
-- (void)videoSwipedUp
-{
-    if (self.tutorialMode == SPTutorialModeSwipeUp) {
-        [UIView animateWithDuration:0.2 animations:^{
-            [self.tutorialView setAlpha:0];
-        } completion:^(BOOL finished) {
-            [self setTutorialMode:SPTutorialModeShow];
-            self.tutorialTimer = [NSTimer scheduledTimerWithTimeInterval:kShelbyTutorialIntervalBetweenTutorials target:self selector:@selector(showSwipeUpTutorial) userInfo:nil repeats:NO];
-        }];
-    }
-}
-
-- (void)showSwipeLeftTutorial
-{
-    [self setTutorialMode:SPTutorialModeSwipeLeft];
-    [self.tutorialView setupWithImage:@"swipeleft.png"
-                              andText:NSLocalizedString(@"TUTORIAL_SWPH_MESSAGE", @"3) Swipe left to change video")];
-    [UIView animateWithDuration:0.2 animations:^{
-        [self.tutorialView setAlpha:0.9];
-    }];
-}
-
-- (void)showSwipeUpTutorial
-{
-    [self setTutorialMode:SPTutorialModeSwipeUp];
-    [self.tutorialView setupWithImage:@"swipeup.png"
-                              andText:NSLocalizedString(@"TUTORIAL_SWPV_MESSAGE", @"4) Swipe up to change channel")];
-    [UIView animateWithDuration:0.2 animations:^{
-        [self.tutorialView setAlpha:0.9];
-    }];    
-}
-
-- (void)showPinchTutorial
-{
-    if ([self tutorialSetup]) {
-        [self.tutorialView setupWithImage:@"pinch.png"
-                                  andText:NSLocalizedString(@"TUTORIAL_PINCH_MESSAGE", @"5) Pinch to exit")];
-        [UIView animateWithDuration:0.2 animations:^{
-            [self.tutorialView setAlpha:0.9];
-        }];
-    }
-}
-
 
 #pragma mark - SPVideoPlayerDelegete Methods
 
@@ -901,8 +636,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     if (self.currentPlayer == player) {
         [player pause];
-        if (self.tutorialMode == SPTutorialModeNone &&
-            (self.lastVideoStalledAlertTime == nil || [self.lastVideoStalledAlertTime timeIntervalSinceNow] < VIDEO_STALLED_MIN_TIME_BETWEEN_ALERTS)) {
+        if (self.lastVideoStalledAlertTime == nil || [self.lastVideoStalledAlertTime timeIntervalSinceNow] < VIDEO_STALLED_MIN_TIME_BETWEEN_ALERTS) {
             [self.currentVideoAlertView dismiss];
             self.lastVideoStalledAlertTime = [NSDate date];
             self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
@@ -953,22 +687,18 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player
 {
     if (self.currentPlayer == player) {
-        if (self.tutorialMode == SPTutorialModeNone) {
-            [self.currentVideoAlertView dismiss];
-            self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
-                                                                        message:NSLocalizedString(@"EXTRACTION_FAIL_MESSAGE", nil)
-                                                             dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_BUTTON", nil)
-                                                                 autodimissTime:3.0f
-                                                                      onDismiss:^(BOOL didAutoDimiss) {
-                                                                          if (self.currentPlayer == player) {
-                                                                              [self autoadvanceVideoInForwardDirection:YES];
-                                                                          }
-                                                                          self.currentVideoAlertView = nil;
-                                                                      }];
-            [self.currentVideoAlertView show];
-        } else {
-            [self autoadvanceVideoInForwardDirection:YES];
-        }
+        [self.currentVideoAlertView dismiss];
+        self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
+                                                                message:NSLocalizedString(@"EXTRACTION_FAIL_MESSAGE", nil)
+                                                     dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_BUTTON", nil)
+                                                         autodimissTime:3.0f
+                                                              onDismiss:^(BOOL didAutoDimiss) {
+                                                                  if (self.currentPlayer == player) {
+                                                                      [self autoadvanceVideoInForwardDirection:YES];
+                                                                  }
+                                                                  self.currentVideoAlertView = nil;
+                                                              }];
+        [self.currentVideoAlertView show];
     }
 }
 

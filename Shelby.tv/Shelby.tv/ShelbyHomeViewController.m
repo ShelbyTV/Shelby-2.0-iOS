@@ -7,7 +7,6 @@
 //
 
 #import "ShelbyHomeViewController.h"
-#import "BrowseViewController.h"
 #import "DashboardEntry+Helper.h"
 #import "DisplayChannel.h"
 #import "ImageUtilities.h"
@@ -23,7 +22,6 @@
 @property (nonatomic, weak) UIView *navBar;
 @property (nonatomic, strong) UIView *navBarButtonView;
 
-@property (nonatomic, strong) BrowseViewController *browseVC;
 @property (nonatomic, strong) NSMutableArray *streamBrowseVCs;
 @property (nonatomic, strong) ShelbyStreamBrowseViewController *currentStreamBrowseVC;
 @property (nonatomic, strong) SPVideoReel *videoReel;
@@ -300,16 +298,12 @@
 
 - (void)fetchDidCompleteForChannel:(DisplayChannel *)channel
 {
-    [self.browseVC fetchDidCompleteForChannel:channel];
+    // This was used for BrowseViewController when we had channels
 }
 
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
 {
-    if (self.browseVC) {
-        return [self.browseVC entriesForChannel:channel];
-    } else {
-        return [[self streamBrowseViewControllerForChannel:channel] entriesForChannel:channel];
-    }
+    return [[self streamBrowseViewControllerForChannel:channel] entriesForChannel:channel];
 }
 
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel

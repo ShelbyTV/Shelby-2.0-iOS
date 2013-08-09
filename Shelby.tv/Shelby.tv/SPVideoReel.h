@@ -11,16 +11,6 @@
 #import "ShelbyViewController.h"
 #import "SPVideoPlayer.h"
 
-typedef NS_ENUM(NSUInteger, SPTutorialMode)
-{
-    SPTutorialModeNone,
-    SPTutorialModeShow,
-    SPTutorialModeDoubleTap,
-    SPTutorialModeSwipeLeft,
-    SPTutorialModeSwipeUp,
-    SPTutorialModePinch
-};
-
 @class SPVideoReel;
 
 @protocol SPVideoReelDelegate <NSObject>
@@ -28,7 +18,6 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
 - (void)userDidCloseChannelAtFrame:(Frame *)frame;
 - (DisplayChannel *)displayChannelForDirection:(BOOL)up;
 - (void)videoDidAutoadvance;
-- (SPTutorialMode)tutorialModeForCurrentPlayer;
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 - (BOOL)canRoll;
 - (void)userAskForFacebookPublishPermissions;
@@ -60,8 +49,6 @@ typedef NS_ENUM(NSUInteger, SPTutorialMode)
               atIndex:(NSUInteger)videoStartIndex;
 
 - (void)shutdown;
-
-- (void)videoDoubleTapped;
 
 //New API for use by playback control elements
 //current player is actually playing

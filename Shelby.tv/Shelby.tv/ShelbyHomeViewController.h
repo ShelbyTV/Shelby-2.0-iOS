@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BrowseViewController.h"
 #import <MessageUI/MessageUI.h>
 #import "SettingsViewController.h"
 #import "ShelbyNavBarViewController.h"
