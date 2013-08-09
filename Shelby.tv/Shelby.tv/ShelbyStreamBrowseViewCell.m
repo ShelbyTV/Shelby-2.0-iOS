@@ -194,9 +194,11 @@
         //OPTIMIZE: No need to run on every pixel of a huge image, just to make it blurry.
         //          Run the filter over a smaller image, see how much faster that gets.
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self.blurFilter setValue:[CIImage imageWithCGImage:image.CGImage] forKey:@"inputImage"];
+            CIImage *inputImage = [CIImage imageWithCGImage:image.CGImage];
+            [self.blurFilter setValue:inputImage forKey:@"inputImage"];
             CIImage *result = [self.blurFilter valueForKey:@"outputImage"];
-            CGImageRef cgImage = [self.ciContext createCGImage:result fromRect:[result extent]];
+            //use inputImage's size to account for gaussian blur shrinkage
+            CGImageRef cgImage = [self.ciContext createCGImage:result fromRect:[inputImage extent]];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIView transitionWithView:self.thumbnailBlurredView duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
                     self.thumbnailBlurredView.image = [UIImage imageWithCGImage:cgImage];
