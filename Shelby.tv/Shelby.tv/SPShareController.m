@@ -17,7 +17,6 @@
 #import "ShelbyDataMediator.h"
 #import "ShelbyShareViewController.h"
 #import "ShelbyViewController.h"
-#import "SPShareRollView.h"
 #import "SPVideoReel.h"
 #import "TwitterHandler.h"
 #import "User+Helper.h"
@@ -36,7 +35,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 @property (nonatomic, assign) CGRect rect;
 @property (nonatomic, strong) Frame *videoFrame;
 @property (nonatomic, strong) UIViewController *viewController;
-@property (nonatomic) SPShareRollView *rollView;
 @property (strong, nonatomic) UIPopoverController *sharePopOverController;
 @property (strong, nonatomic) UIView *mask;
 
@@ -247,27 +245,4 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         self.completionHandler(didComplete);
     }
 }
-
-#pragma mark - UITextViewDelegate Methods
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if ( [text isEqualToString:@"\n"] && [textView.text length] > 0 ) {
-        [self.rollView.rollTextView resignFirstResponder];
-        return NO;
-    }
-    
-    return YES;
-}
-
-#pragma mark - UIPopoverControllerDelegate Methods
-//- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-//{
-//    [UIView animateWithDuration:0.5
-//                     animations:^{
-//                         [self.mask setAlpha:0.0f];
-//                     } completion:^(BOOL finished) {
-//                         [self.mask removeFromSuperview];
-//                     }];
-//}
-
 @end

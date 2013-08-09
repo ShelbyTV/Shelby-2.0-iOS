@@ -37,9 +37,6 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 @property (nonatomic, strong) NSDate *channelsLoadedAt;
 @property (nonatomic, strong) DisplayChannel *currentChannel;
 
-@property (nonatomic, assign) SPTutorialMode currentPlayerTutorialMode;
-@property (nonatomic, assign) ShelbyBrowseTutorialMode currentBrowseTutorialMode;
-
 @property (nonatomic, strong) NSMutableArray *cachedFetchedChannels;
 @property (nonatomic, strong) NSMutableArray *remoteFetchedChannels;
 @property (nonatomic, strong) DisplayChannel *dvrChannel;
@@ -562,11 +559,6 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 
 - (void)userDidCloseChannelAtFrame:(Frame *)frame
 {
-    if (self.currentPlayerTutorialMode != SPTutorialModeNone) {
-        self.currentPlayerTutorialMode = SPTutorialModeNone;
-        self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeEnd;
-    }
-
     //we used to do this with an old animated dismiss... no longer
     [self.homeVC dismissVideoReel];
     
@@ -600,17 +592,6 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 - (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
     [self.homeVC focusOnEntity:entity inChannel:channel];
-}
-
-- (SPTutorialMode)tutorialModeForCurrentPlayer
-{
-    return self.currentPlayerTutorialMode;
-}
-
-- (void)userDidCompleteTutorial
-{
-    self.currentBrowseTutorialMode = ShelbyBrowseTutorialModeNone;
-    [self setTutorialCompleted];
 }
 
 - (BOOL)canRoll
@@ -882,11 +863,6 @@ typedef struct _ShelbyArrayMergeInstructions {
 {
     [self goToDisplayChannel:[self communityChannel]];
     [self.homeVC didNavigateToCommunityChannel];
-}
-
-- (ShelbyBrowseTutorialMode)browseTutorialMode
-{
-    return self.currentBrowseTutorialMode;
 }
 
 #pragma mark - UIActionSheetDelegate methods

@@ -22,7 +22,7 @@ typedef void(^SPShareCompletionHandler)(BOOL completed);
 - (void)shareControllerRequestsTwitterPublishPermissions:(SPShareController *)shareController;
 @end
 
-@interface SPShareController : NSObject <UITextViewDelegate>
+@interface SPShareController : NSObject
 
 @property (nonatomic, weak) id<SPShareControllerDelegate> delegate;
 
