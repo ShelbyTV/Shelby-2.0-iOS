@@ -16,16 +16,22 @@
 #define kShelbyCaptionMargin 4
 
 @interface  StreamBrowseCellForegroundView() {
-    DashboardEntry *_dashboardEntry;
-    Frame *_videoFrame;
     NSMutableOrderedSet *_likers;
     NSMutableOrderedSet *_sharers;
+    NSArray *_likerImageViews;
+    NSArray *_sharerImageViews;
 }
+//model
+@property (strong, nonatomic) DashboardEntry *dashboardEntry;
+@property (strong, nonatomic) Frame *videoFrame;
+
 // Detail View Outlets
 @property (weak, nonatomic) IBOutlet UILabel *detailCaption;
 @property (weak, nonatomic) IBOutlet UIView *detailCommentView;
 @property (weak, nonatomic) IBOutlet UILabel *detailCreatedAt;
-@property (weak, nonatomic) IBOutlet UIView *detailNetworkShares;
+@property (weak, nonatomic) IBOutlet UIView *detailLikersAndSharers;
+@property (weak, nonatomic) IBOutlet UIView *detailLikersSubview;
+@property (weak, nonatomic) IBOutlet UIView *detailSharersSubview;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
 @property (weak, nonatomic) IBOutlet UIButton *detailTitleButton;
 @property (weak, nonatomic) IBOutlet UIImageView *detailUserAvatar;
@@ -73,6 +79,34 @@
 
     [self setupOverlayImageView];
     [self insertSubview:self.overlayImageView atIndex:0];
+
+    [self setupLikersAndSharersSubviews];
+}
+
+- (void)setupLikersAndSharersSubviews
+{
+    NSMutableArray *likerViews = [@[] mutableCopy];
+    NSMutableArray *sharerViews = [@[] mutableCopy];
+    CGFloat likerX = 40.f, sharerX = 40.f;
+    CGFloat likerSharerHeight = 30.f;
+    UIImageView *likerImageView, *sharerImageView;
+    for (int i = 0; i < 6; i++) {
+        likerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(likerX, 5, likerSharerHeight, likerSharerHeight)];
+        [self.detailLikersSubview addSubview:likerImageView];
+        likerImageView.layer.cornerRadius = 3.0f;
+        likerImageView.layer.masksToBounds = YES;
+        [likerViews addObject:likerImageView];
+        likerX += likerSharerHeight + 10;
+        sharerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(sharerX, 5, likerSharerHeight, likerSharerHeight)];
+        [self.detailSharersSubview addSubview:sharerImageView];
+        sharerImageView.layer.cornerRadius = 3.0f;
+        sharerImageView.layer.masksToBounds = YES;
+        [sharerViews addObject:sharerImageView];
+        sharerX += likerSharerHeight + 10;
+    }
+
+    _likerImageViews = likerViews;
+    _sharerImageViews = sharerViews;
 }
 
 - (void)layoutSubviews
@@ -97,7 +131,6 @@
         self.detailUserView.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 95, 185, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 100, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 155, pageWidth - kShelbyInfoViewMargin * 2, 60);
-        self.detailNetworkShares.frame = CGRectMake(xOrigin + self.detailUserView.frame.size.width + kShelbyInfoViewMargin, self.detailUserView.frame.origin.y + 10, 245, 40);
         self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
     } else {
         // Portrait
@@ -113,7 +146,6 @@
         self.detailUserView.frame = CGRectMake(pageWidth, 135, 320, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 215, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 195, pageWidth - kShelbyInfoViewMargin * 2, 100);
-        self.detailNetworkShares.frame = CGRectMake(xOrigin, 305, 310, 40);
         self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
     }
     
@@ -162,12 +194,10 @@
     UIImage *defaultAvatar = [UIImage imageNamed:@"avatar-blank.png"];
     self.detailUserAvatar.image = defaultAvatar;
     [self.summaryUserAvatar setImageWithURLRequest:request placeholderImage:defaultAvatar success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        //XXX We may have been reused while this request was still out processing!
-        //TODO: Only update if videoFrame is still the same as when this kicked off
         weakSelf.summaryUserAvatar.image = image;
         weakSelf.detailUserAvatar.image = image;
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        //TODO: retry?
+        //ignore for now
     }];
     
     // Via Network
@@ -183,33 +213,53 @@
     NSString *captionText = [NSString stringWithFormat:@"%@", [_videoFrame creatorsInitialCommentWithFallback:YES]];
     [self.detailCaption setText:captionText];
     [self resizeViewsForContent];
-    
-    // TODO: sharers
-    for (User *sharer in _sharers) {
-        DLog(@"SHARED BY: %@", sharer.nickname);
+
+    // Sharers
+    for (UIImageView *iv in _sharerImageViews) {
+        iv.image = nil;
+    }
+    if ([_sharers count]) {
+        self.detailSharersSubview.hidden = NO;
+        for (NSUInteger i = 0; i < [_sharers count]; i++) {
+            User *sharer = _sharers[i];
+            [((UIImageView *)_sharerImageViews[i]) setImageWithURL:sharer.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
+        }
+    } else {
+        self.detailSharersSubview.hidden = YES;
     }
 
-    // TODO: likers
-    for (User *liker in _likers) {
-        DLog(@"LIKE BY: %@", liker.nickname);
+    // Likers
+    for (UIImageView *iv in _likerImageViews) {
+        iv.image = nil;
+    }
+    if ([_likers count]) {
+        self.detailLikersSubview.hidden = NO;
+        for (NSUInteger i = 0; i < [_likers count]; i++) {
+            User *liker = _likers[i];
+            [((UIImageView *)_likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
+        }
+    } else {
+        self.detailLikersSubview.hidden = YES;
     }
 }
 
 - (void)resizeViewsForContent
 {
     //padding adjustments for landscape vs portrait
-    CGFloat summaryUserPadding, detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment;
+    CGFloat summaryUserPadding, detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment, detailLikersAndSharersPadding;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         summaryUserPadding = 50;
         detailTitlePadding = 70;
         detailUserPadding = 0;
         detailCommentPadding = 60;
-        detailWhiteBackgroundHeightAdjustment = 70;
+        detailLikersAndSharersPadding = 0;
+        detailWhiteBackgroundHeightAdjustment = 65;
     } else {
         summaryUserPadding = 70;
         detailTitlePadding = 90;
         detailUserPadding = 5;
         detailCommentPadding = 70;
+        detailLikersAndSharersPadding = 10;
         detailWhiteBackgroundHeightAdjustment = 80;
     }
 
@@ -258,6 +308,11 @@
     //tighting up the height of surrounding box as well
     self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, textBasedHeight + detailWhiteBackgroundHeightAdjustment);
 
+    //update likers and sharers based on the white background box
+    self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y + self.detailWhiteBackground.frame.size.height + detailLikersAndSharersPadding, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
+    self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
+    self.detailSharersSubview.frame = CGRectMake(self.detailLikersAndSharers.frame.size.width/2.f, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
+
     //recommendation view
     self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
 }
@@ -293,29 +348,17 @@
 
 - (void)processLikersAndSharers
 {
-    //TODO XXX KILL BELOW
-    if (_dashboardEntry.duplicates && [_dashboardEntry.duplicates count]) {
-        DLog(@"--------- dupes for %@", _dashboardEntry.frame.video.title);
-    }
-    if ([_videoFrame.upvoters count]) {
-        DLog(@"_________ likes for %@", _videoFrame.video.title);
-    }
-    //TODO XXX KILL ABOVE
-
     _likers = [NSMutableOrderedSet orderedSet];
     for (User *liker in _videoFrame.upvoters) {
-        DLog(@"  orig liked BY: %@", liker.nickname);
         [_likers addObject:liker];
     }
 
     _sharers = [NSMutableOrderedSet orderedSet];
     for (DashboardEntry *dupe in _dashboardEntry.duplicates) {
-        DLog(@"DUPE of original: (%@/%@) found: (%@/%@) // posted by: %@", _dashboardEntry.dashboardEntryID, _videoFrame.frameID, dupe.dashboardEntryID, dupe.frame.frameID, dupe.frame.creator.nickname);
         Frame *dupeFrame = dupe.frame;
         if (dupeFrame) {
             [_sharers addObject:dupeFrame.creator];
             for (User *liker in dupe.frame.upvoters) {
-                DLog(@"    dupe liked BY %@", liker.nickname);
                 [_likers addObject:liker];
             }
         }
@@ -334,6 +377,7 @@
         self.summaryUserView.hidden = YES;
         self.detailUserView.hidden = YES;
         self.detailCommentView.hidden = YES;
+        self.detailLikersAndSharers.hidden = YES;
         return YES;
     } else {
         self.summaryRecommendationView.hidden = YES;
@@ -341,6 +385,7 @@
         self.summaryUserView.hidden = NO;
         self.detailUserView.hidden = NO;
         self.detailCommentView.hidden = NO;
+        self.detailLikersAndSharers.hidden = NO;
         return NO;
     }
 }

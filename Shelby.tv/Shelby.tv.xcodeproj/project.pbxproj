@@ -559,6 +559,18 @@
 		911ED32717B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911ED32017B2ECF0000FFBEB /* video-thumbnail-blank@2x.png */; };
 		911ED32817B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911ED32017B2ECF0000FFBEB /* video-thumbnail-blank@2x.png */; };
 		911ED32917B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911ED32017B2ECF0000FFBEB /* video-thumbnail-blank@2x.png */; };
+		912261D317B97F070092AF30 /* overlay-likers.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261CF17B97F070092AF30 /* overlay-likers.png */; };
+		912261D417B97F070092AF30 /* overlay-likers.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261CF17B97F070092AF30 /* overlay-likers.png */; };
+		912261D517B97F070092AF30 /* overlay-likers.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261CF17B97F070092AF30 /* overlay-likers.png */; };
+		912261D617B97F070092AF30 /* overlay-likers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D017B97F070092AF30 /* overlay-likers@2x.png */; };
+		912261D717B97F070092AF30 /* overlay-likers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D017B97F070092AF30 /* overlay-likers@2x.png */; };
+		912261D817B97F070092AF30 /* overlay-likers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D017B97F070092AF30 /* overlay-likers@2x.png */; };
+		912261D917B97F070092AF30 /* overlay-sharers.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D117B97F070092AF30 /* overlay-sharers.png */; };
+		912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D117B97F070092AF30 /* overlay-sharers.png */; };
+		912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D117B97F070092AF30 /* overlay-sharers.png */; };
+		912261DC17B97F070092AF30 /* overlay-sharers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D217B97F070092AF30 /* overlay-sharers@2x.png */; };
+		912261DD17B97F070092AF30 /* overlay-sharers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D217B97F070092AF30 /* overlay-sharers@2x.png */; };
+		912261DE17B97F070092AF30 /* overlay-sharers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D217B97F070092AF30 /* overlay-sharers@2x.png */; };
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
@@ -1140,6 +1152,10 @@
 		911ED31E17B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video-thumbnail-blank-568h@2x.png"; sourceTree = "<group>"; };
 		911ED31F17B2ECF0000FFBEB /* video-thumbnail-blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video-thumbnail-blank.png"; sourceTree = "<group>"; };
 		911ED32017B2ECF0000FFBEB /* video-thumbnail-blank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video-thumbnail-blank@2x.png"; sourceTree = "<group>"; };
+		912261CF17B97F070092AF30 /* overlay-likers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlay-likers.png"; sourceTree = "<group>"; };
+		912261D017B97F070092AF30 /* overlay-likers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlay-likers@2x.png"; sourceTree = "<group>"; };
+		912261D117B97F070092AF30 /* overlay-sharers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlay-sharers.png"; sourceTree = "<group>"; };
+		912261D217B97F070092AF30 /* overlay-sharers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlay-sharers@2x.png"; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
 		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
@@ -1482,6 +1498,10 @@
 		1C90E51F17849DF200E87CC0 /* Parallax View */ = {
 			isa = PBXGroup;
 			children = (
+				912261CF17B97F070092AF30 /* overlay-likers.png */,
+				912261D017B97F070092AF30 /* overlay-likers@2x.png */,
+				912261D117B97F070092AF30 /* overlay-sharers.png */,
+				912261D217B97F070092AF30 /* overlay-sharers@2x.png */,
 				911ED31E17B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png */,
 				911ED31F17B2ECF0000FFBEB /* video-thumbnail-blank.png */,
 				911ED32017B2ECF0000FFBEB /* video-thumbnail-blank@2x.png */,
@@ -2258,6 +2278,7 @@
 				1C8109DF16EE2CBF0030077C /* iTunesArtwork@2x in Resources */,
 				1C8109E916EE2CBF0030077C /* Default-Landscape.png in Resources */,
 				1C8109EA16EE2CBF0030077C /* Default-Landscape@2x.png in Resources */,
+				912261D717B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024ED1715E71500E8DE46 /* OATestServer.rb in Resources */,
@@ -2300,6 +2321,7 @@
 				1C96DEB617975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
 				1C96DEB917975D0900D845DF /* bkgd-step2.png in Resources */,
 				1C96DEBC17975D0900D845DF /* bkgd-step2@2x.png in Resources */,
+				912261D417B97F070092AF30 /* overlay-likers.png in Resources */,
 				1C96DEBF17975D0900D845DF /* bkgd-step3-568h@2x.png in Resources */,
 				1C96DEC217975D0900D845DF /* bkgd-step3.png in Resources */,
 				1C96DEC517975D0900D845DF /* bkgd-step3@2x.png in Resources */,
@@ -2377,6 +2399,7 @@
 				916F426917A73CFE001D9DF7 /* facebook.m4v in Resources */,
 				916F426F17A74480001D9DF7 /* patagonia.m4v in Resources */,
 				916F427217A74480001D9DF7 /* twitter.m4v in Resources */,
+				912261DD17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
 				916F427517A74480001D9DF7 /* vice.m4v in Resources */,
 				1CDB0C1D17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2117A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
@@ -2390,6 +2413,7 @@
 				91B7DC3517AACD79009ABF02 /* ted.m4v in Resources */,
 				91B7DC4017B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4317B16447009ABF02 /* nav-shadow@2x.png in Resources */,
+				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				91B7DC5317B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				91B7DC5617B29D59009ABF02 /* scrub-track-progress.png in Resources */,
@@ -2413,6 +2437,7 @@
 				1C810A9516EE5EED0030077C /* iTunesArtwork@2x in Resources */,
 				1C810A9F16EE5EED0030077C /* Default-Landscape.png in Resources */,
 				1C810AA016EE5EED0030077C /* Default-Landscape@2x.png in Resources */,
+				912261D817B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				8E7024EE1715E71500E8DE46 /* OATestServer.rb in Resources */,
@@ -2455,6 +2480,7 @@
 				1C96DEB717975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
 				1C96DEBA17975D0900D845DF /* bkgd-step2.png in Resources */,
 				1C96DEBD17975D0900D845DF /* bkgd-step2@2x.png in Resources */,
+				912261D517B97F070092AF30 /* overlay-likers.png in Resources */,
 				1C96DEC017975D0900D845DF /* bkgd-step3-568h@2x.png in Resources */,
 				1C96DEC317975D0900D845DF /* bkgd-step3.png in Resources */,
 				1C96DEC617975D0900D845DF /* bkgd-step3@2x.png in Resources */,
@@ -2532,6 +2558,7 @@
 				916F426A17A73CFE001D9DF7 /* facebook.m4v in Resources */,
 				916F427017A74480001D9DF7 /* patagonia.m4v in Resources */,
 				916F427317A74480001D9DF7 /* twitter.m4v in Resources */,
+				912261DE17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
 				916F427617A74480001D9DF7 /* vice.m4v in Resources */,
 				1CDB0C1E17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2217A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
@@ -2545,6 +2572,7 @@
 				91B7DC3617AACD79009ABF02 /* ted.m4v in Resources */,
 				91B7DC4117B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4417B16447009ABF02 /* nav-shadow@2x.png in Resources */,
+				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
 				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				91B7DC5417B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				91B7DC5717B29D59009ABF02 /* scrub-track-progress.png in Resources */,
@@ -2565,6 +2593,7 @@
 				8E50CDEF16A9B9FC006B1ABE /* Icon.png in Resources */,
 				8E50CDF016A9B9FC006B1ABE /* Icon@2x.png in Resources */,
 				8E50CDF116A9B9FC006B1ABE /* iTunesArtwork in Resources */,
+				912261D317B97F070092AF30 /* overlay-likers.png in Resources */,
 				8E50CDF216A9B9FC006B1ABE /* iTunesArtwork@2x in Resources */,
 				8E3EA34C16C8959000DFC8A0 /* Default-Landscape.png in Resources */,
 				8E3EA34D16C8959000DFC8A0 /* Default-Landscape@2x.png in Resources */,
@@ -2579,6 +2608,7 @@
 				1CBF092B175CD21F001D471A /* Default@2x.png in Resources */,
 				1CBF092E175CD21F001D471A /* Icon-iPad.png in Resources */,
 				1CBF0931175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
+				912261D917B97F070092AF30 /* overlay-sharers.png in Resources */,
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
 				91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */,
@@ -2657,6 +2687,8 @@
 				916F420C179F06F6001D9DF7 /* welcome-logo.png in Resources */,
 				916F420F179F06F6001D9DF7 /* welcome-logo@2x.png in Resources */,
 				916F4254179F1DB5001D9DF7 /* welcome-user-context.png in Resources */,
+				912261D617B97F070092AF30 /* overlay-likers@2x.png in Resources */,
+				912261DC17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
 				916F4257179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 				1CDCA68D179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA690179F317A0098C4E1 /* overlay.png in Resources */,
