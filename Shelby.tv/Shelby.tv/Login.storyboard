@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="QCZ-gW-p75">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.2" systemVersion="12E3067" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="QCZ-gW-p75">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
     </dependencies>
     <scenes>
         <!--Login View Controller - Welcome Back!-->
         <scene sceneID="iZ4-pX-FlA">
             <objects>
                 <viewController id="3Qm-VB-UtR" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zEc-WG-8pN"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vgs-ui-bPb"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SUL-Fv-Viv">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Username/Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kct-Co-1f7">
+                                <rect key="frame" x="20" y="60" width="126" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" type="user" id="8Ue-cQ-U7X"/>
+                                    <constraint firstAttribute="height" constant="21" id="8Ue-cQ-U7X"/>
                                     <constraint firstAttribute="width" constant="126" id="N93-Qg-Rfb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
@@ -22,16 +28,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X47-Nw-nxG" userLabel="username" customClass="STVTextField">
+                                <rect key="frame" x="20" y="81" width="280" height="38"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" type="user" id="4kP-Xk-ysg"/>
+                                    <constraint firstAttribute="height" constant="38" id="4kP-Xk-ysg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFZ-6R-ZhK">
+                                <rect key="frame" x="20" y="137" width="75" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" type="user" id="SoI-Ak-yOe"/>
+                                    <constraint firstAttribute="height" constant="21" id="SoI-Ak-yOe"/>
                                     <constraint firstAttribute="width" constant="75" id="Zp3-9h-KDt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
@@ -39,14 +47,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MNm-xq-Av8" userLabel="password" customClass="STVTextField">
+                                <rect key="frame" x="20" y="158" width="280" height="38"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" type="user" id="iEa-2j-qjC"/>
+                                    <constraint firstAttribute="height" constant="38" id="iEa-2j-qjC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWR-yH-mC6">
+                                <rect key="frame" x="20" y="218" width="280" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="T81-xe-Dq6"/>
                                 </constraints>
@@ -68,8 +78,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Hg-ip-j1e">
+                                <rect key="frame" x="158" y="126" width="142" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" type="user" id="C26-Dw-tzf"/>
+                                    <constraint firstAttribute="height" constant="44" id="C26-Dw-tzf"/>
                                     <constraint firstAttribute="width" constant="142" id="g9a-ze-BHz"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -91,21 +102,21 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="X47-Nw-nxG" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="4AG-Xu-rbn"/>
-                            <constraint firstItem="MNm-xq-Av8" firstAttribute="top" secondItem="YFZ-6R-ZhK" secondAttribute="bottom" type="user" id="4pC-2L-x3f"/>
-                            <constraint firstItem="YFZ-6R-ZhK" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="52d-KL-9u7"/>
-                            <constraint firstItem="MNm-xq-Av8" firstAttribute="top" secondItem="0Hg-ip-j1e" secondAttribute="bottom" constant="-12" type="user" id="Bs7-Z7-diT"/>
-                            <constraint firstItem="X47-Nw-nxG" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="GA5-r2-ZIk"/>
-                            <constraint firstItem="X47-Nw-nxG" firstAttribute="top" secondItem="kct-Co-1f7" secondAttribute="bottom" type="user" id="HJw-bI-bdc"/>
-                            <constraint firstAttribute="trailing" secondItem="0Hg-ip-j1e" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="M46-U3-OzA"/>
-                            <constraint firstItem="YWR-yH-mC6" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Rzw-mg-5tz"/>
-                            <constraint firstAttribute="trailing" secondItem="MNm-xq-Av8" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="ct9-Km-sMx"/>
-                            <constraint firstItem="MNm-xq-Av8" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="eVN-AC-m38"/>
-                            <constraint firstItem="YWR-yH-mC6" firstAttribute="top" secondItem="MNm-xq-Av8" secondAttribute="bottom" constant="22" type="user" id="grT-03-OYC"/>
-                            <constraint firstAttribute="trailing" secondItem="YWR-yH-mC6" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="hY3-Aj-8qn"/>
-                            <constraint firstItem="kct-Co-1f7" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="hb2-lH-rsX"/>
-                            <constraint firstItem="kct-Co-1f7" firstAttribute="top" secondItem="SUL-Fv-Viv" secondAttribute="top" constant="60" type="user" id="jSi-kp-HaR"/>
-                            <constraint firstItem="YFZ-6R-ZhK" firstAttribute="top" secondItem="X47-Nw-nxG" secondAttribute="bottom" constant="18" type="user" id="ngb-up-bqH"/>
+                            <constraint firstAttribute="trailing" secondItem="X47-Nw-nxG" secondAttribute="trailing" constant="20" symbolic="YES" id="4AG-Xu-rbn"/>
+                            <constraint firstItem="MNm-xq-Av8" firstAttribute="top" secondItem="YFZ-6R-ZhK" secondAttribute="bottom" id="4pC-2L-x3f"/>
+                            <constraint firstItem="YFZ-6R-ZhK" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" id="52d-KL-9u7"/>
+                            <constraint firstItem="MNm-xq-Av8" firstAttribute="top" secondItem="0Hg-ip-j1e" secondAttribute="bottom" constant="-12" id="Bs7-Z7-diT"/>
+                            <constraint firstItem="X47-Nw-nxG" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" id="GA5-r2-ZIk"/>
+                            <constraint firstItem="X47-Nw-nxG" firstAttribute="top" secondItem="kct-Co-1f7" secondAttribute="bottom" id="HJw-bI-bdc"/>
+                            <constraint firstAttribute="trailing" secondItem="0Hg-ip-j1e" secondAttribute="trailing" constant="20" symbolic="YES" id="M46-U3-OzA"/>
+                            <constraint firstItem="YWR-yH-mC6" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" id="Rzw-mg-5tz"/>
+                            <constraint firstAttribute="trailing" secondItem="MNm-xq-Av8" secondAttribute="trailing" constant="20" symbolic="YES" id="ct9-Km-sMx"/>
+                            <constraint firstItem="MNm-xq-Av8" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" id="eVN-AC-m38"/>
+                            <constraint firstItem="YWR-yH-mC6" firstAttribute="top" secondItem="MNm-xq-Av8" secondAttribute="bottom" constant="22" id="grT-03-OYC"/>
+                            <constraint firstAttribute="trailing" secondItem="YWR-yH-mC6" secondAttribute="trailing" constant="20" symbolic="YES" id="hY3-Aj-8qn"/>
+                            <constraint firstItem="kct-Co-1f7" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" id="hb2-lH-rsX"/>
+                            <constraint firstItem="kct-Co-1f7" firstAttribute="top" secondItem="SUL-Fv-Viv" secondAttribute="top" constant="60" id="jSi-kp-HaR"/>
+                            <constraint firstItem="YFZ-6R-ZhK" firstAttribute="top" secondItem="X47-Nw-nxG" secondAttribute="bottom" constant="18" id="ngb-up-bqH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Welcome Back!" id="cdT-lF-m7k">
@@ -153,33 +164,6 @@
             <point key="canvasLocation" x="293" y="127"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="GAITrackedViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
-        </class>
-        <class className="LoginNavigationViewController" superclassName="UINavigationController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginNavigationViewController.h"/>
-        </class>
-        <class className="LoginViewController" superclassName="ShelbyViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="cancelButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="loginButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="signupButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="usernameField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="STVTextField" superclassName="UITextField">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/STVTextField.h"/>
-        </class>
-        <class className="ShelbyViewController" superclassName="GAITrackedViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ShelbyViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
