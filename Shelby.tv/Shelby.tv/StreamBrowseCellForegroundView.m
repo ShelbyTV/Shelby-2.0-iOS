@@ -162,6 +162,8 @@
     UIImage *defaultAvatar = [UIImage imageNamed:@"avatar-blank.png"];
     self.detailUserAvatar.image = defaultAvatar;
     [self.summaryUserAvatar setImageWithURLRequest:request placeholderImage:defaultAvatar success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        //XXX We may have been reused while this request was still out processing!
+        //TODO: Only update if videoFrame is still the same as when this kicked off
         weakSelf.summaryUserAvatar.image = image;
         weakSelf.detailUserAvatar.image = image;
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
@@ -296,24 +298,24 @@
         DLog(@"--------- dupes for %@", _dashboardEntry.frame.video.title);
     }
     if ([_videoFrame.upvoters count]) {
-        DLog(@"___likes for %@", _videoFrame.video.title);
+        DLog(@"_________ likes for %@", _videoFrame.video.title);
     }
     //TODO XXX KILL ABOVE
 
     _likers = [NSMutableOrderedSet orderedSet];
     for (User *liker in _videoFrame.upvoters) {
-        DLog(@"LIKED BY: %@", liker.nickname);
+        DLog(@"  orig liked BY: %@", liker.nickname);
         [_likers addObject:liker];
     }
 
     _sharers = [NSMutableOrderedSet orderedSet];
     for (DashboardEntry *dupe in _dashboardEntry.duplicates) {
-        DLog(@"dupe found (%@/%@), posted by: %@", dupe.dashboardEntryID, dupe.frame.frameID, dupe.frame.creator.nickname);
+        DLog(@"DUPE of original: (%@/%@) found: (%@/%@) // posted by: %@", _dashboardEntry.dashboardEntryID, _videoFrame.frameID, dupe.dashboardEntryID, dupe.frame.frameID, dupe.frame.creator.nickname);
         Frame *dupeFrame = dupe.frame;
         if (dupeFrame) {
             [_sharers addObject:dupeFrame.creator];
             for (User *liker in dupe.frame.upvoters) {
-                DLog(@"DUPE liked BY %@", liker.nickname);
+                DLog(@"    dupe liked BY %@", liker.nickname);
                 [_likers addObject:liker];
             }
         }
