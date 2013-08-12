@@ -51,6 +51,10 @@
 {
     [super viewDidLoad];
 
+    // Setting background color to avoid seeing the phone's background
+    self.view.backgroundColor = [UIColor blackColor];
+    
+
 //    if (DEVICE_IPAD) {
 //        BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
 //
@@ -429,7 +433,7 @@
         [self addChildViewController:self.videoReel];
         [self.view insertSubview:self.videoReel.view belowSubview:self.currentStreamBrowseVC.view];
         [self.videoReel didMoveToParentViewController:self];
-        
+        self.videoReel.view.frame = self.currentStreamBrowseVC.view.frame;
         //entering playback: hide the overlays and update controls state
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             self.navBar.alpha = 0.0;

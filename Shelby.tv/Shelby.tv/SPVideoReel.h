@@ -7,7 +7,6 @@
 //
 
 #import "DisplayChannel+Helper.h"
-#import "AuthorizationViewController.h"
 #import "ShelbyViewController.h"
 #import "SPVideoPlayer.h"
 
