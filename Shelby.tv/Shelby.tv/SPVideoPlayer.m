@@ -123,6 +123,7 @@
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPLoadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
+    [self.player.currentItem addObserver:self forKeyPath:kShelbySPAVPlayerDuration options:NSKeyValueObservingOptionNew context:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(itemDidFinishPlaying:)
@@ -148,6 +149,7 @@
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
+    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPAVPlayerDuration];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemPlaybackStalledNotification object:nil];
@@ -354,6 +356,8 @@
         NSArray *loadedTimeRanges = [self.player.currentItem loadedTimeRanges];
         CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
         [self.videoPlayerDelegate videoBufferedRange:timeRange forPlayer:self];
+    } else if ([keyPath isEqualToString:kShelbySPAVPlayerDuration]) {
+        [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
     }
 }
 
