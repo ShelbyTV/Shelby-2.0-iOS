@@ -115,11 +115,11 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="31">
-                    <rect key="frame" x="20" y="474" width="146" height="44"/>
+                    <rect key="frame" x="20" y="474" width="280" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="183"/>
-                        <constraint firstAttribute="width" constant="146" id="200"/>
+                        <constraint firstAttribute="width" priority="391" constant="146" id="200"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="18"/>
                     <state key="normal" title="Test Drive Shelby" backgroundImage="login-btn.png">
@@ -152,11 +152,11 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="52">
-                    <rect key="frame" x="20" y="232" width="77" height="44"/>
+                    <rect key="frame" x="20" y="232" width="280" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="182"/>
-                        <constraint firstAttribute="width" constant="77" id="201"/>
+                        <constraint firstAttribute="width" priority="505" constant="77" id="201"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="18"/>
                     <state key="normal" title="Login" backgroundImage="login-btn.png">
