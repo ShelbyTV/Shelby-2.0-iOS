@@ -18,6 +18,7 @@
 @protocol STVParallaxViewDelegate <NSObject>
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView;
 - (void)didScrollToPage:(NSUInteger)page;
+@optional
 - (void)parallaxViewWillBeginDragging;
 @end
 
