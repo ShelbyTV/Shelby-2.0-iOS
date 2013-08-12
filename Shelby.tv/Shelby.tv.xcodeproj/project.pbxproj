@@ -64,33 +64,6 @@
 		1C534E4717A179DE00B6B3D5 /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */; };
 		1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */; };
 		1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */; };
-		1C7AC392175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
-		1C7AC393175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
-		1C7AC394175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */; };
-		1C7AC3C51760F8E1007339A1 /* like_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3BF1760F8E1007339A1 /* like_for_table.png */; };
-		1C7AC3C61760F8E1007339A1 /* like_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3BF1760F8E1007339A1 /* like_for_table.png */; };
-		1C7AC3C71760F8E1007339A1 /* like_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3BF1760F8E1007339A1 /* like_for_table.png */; };
-		1C7AC3C81760F8E1007339A1 /* like_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C01760F8E1007339A1 /* like_for_table@2x.png */; };
-		1C7AC3C91760F8E1007339A1 /* like_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C01760F8E1007339A1 /* like_for_table@2x.png */; };
-		1C7AC3CA1760F8E1007339A1 /* like_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C01760F8E1007339A1 /* like_for_table@2x.png */; };
-		1C7AC3D11760F8E1007339A1 /* share_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C31760F8E1007339A1 /* share_for_table.png */; };
-		1C7AC3D21760F8E1007339A1 /* share_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C31760F8E1007339A1 /* share_for_table.png */; };
-		1C7AC3D31760F8E1007339A1 /* share_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C31760F8E1007339A1 /* share_for_table.png */; };
-		1C7AC3D41760F8E1007339A1 /* share_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C41760F8E1007339A1 /* share_for_table@2x.png */; };
-		1C7AC3D51760F8E1007339A1 /* share_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C41760F8E1007339A1 /* share_for_table@2x.png */; };
-		1C7AC3D61760F8E1007339A1 /* share_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3C41760F8E1007339A1 /* share_for_table@2x.png */; };
-		1C7AC3DB17610FEB007339A1 /* dvr_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D717610FEB007339A1 /* dvr_for_table.png */; };
-		1C7AC3DC17610FEB007339A1 /* dvr_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D717610FEB007339A1 /* dvr_for_table.png */; };
-		1C7AC3DD17610FEB007339A1 /* dvr_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D717610FEB007339A1 /* dvr_for_table.png */; };
-		1C7AC3DE17610FEB007339A1 /* dvr_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D817610FEB007339A1 /* dvr_for_table@2x.png */; };
-		1C7AC3DF17610FEB007339A1 /* dvr_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D817610FEB007339A1 /* dvr_for_table@2x.png */; };
-		1C7AC3E017610FEB007339A1 /* dvr_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D817610FEB007339A1 /* dvr_for_table@2x.png */; };
-		1C7AC3E117610FEB007339A1 /* unlike_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D917610FEB007339A1 /* unlike_for_table.png */; };
-		1C7AC3E217610FEB007339A1 /* unlike_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D917610FEB007339A1 /* unlike_for_table.png */; };
-		1C7AC3E317610FEB007339A1 /* unlike_for_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3D917610FEB007339A1 /* unlike_for_table.png */; };
-		1C7AC3E417610FEB007339A1 /* unlike_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3DA17610FEB007339A1 /* unlike_for_table@2x.png */; };
-		1C7AC3E517610FEB007339A1 /* unlike_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3DA17610FEB007339A1 /* unlike_for_table@2x.png */; };
-		1C7AC3E617610FEB007339A1 /* unlike_for_table@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C7AC3DA17610FEB007339A1 /* unlike_for_table@2x.png */; };
 		1C7B63C2178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63C1178B0AC2000C1E84 /* SignupFlow.storyboard */; };
 		1C7B63C3178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63C1178B0AC2000C1E84 /* SignupFlow.storyboard */; };
 		1C7B63C4178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B63C1178B0AC2000C1E84 /* SignupFlow.storyboard */; };
@@ -921,16 +894,6 @@
 		1C72B8AF16DBF1FA008BA3AD /* ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtilities.m; sourceTree = "<group>"; };
 		1C72B8B616DD4290008BA3AD /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
 		1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
-		1C7AC390175E8869007339A1 /* MCSwipeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSwipeTableViewCell.h; sourceTree = "<group>"; };
-		1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSwipeTableViewCell.m; sourceTree = "<group>"; };
-		1C7AC3BF1760F8E1007339A1 /* like_for_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_for_table.png; sourceTree = "<group>"; };
-		1C7AC3C01760F8E1007339A1 /* like_for_table@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like_for_table@2x.png"; sourceTree = "<group>"; };
-		1C7AC3C31760F8E1007339A1 /* share_for_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_for_table.png; sourceTree = "<group>"; };
-		1C7AC3C41760F8E1007339A1 /* share_for_table@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_for_table@2x.png"; sourceTree = "<group>"; };
-		1C7AC3D717610FEB007339A1 /* dvr_for_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dvr_for_table.png; sourceTree = "<group>"; };
-		1C7AC3D817610FEB007339A1 /* dvr_for_table@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dvr_for_table@2x.png"; sourceTree = "<group>"; };
-		1C7AC3D917610FEB007339A1 /* unlike_for_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unlike_for_table.png; sourceTree = "<group>"; };
-		1C7AC3DA17610FEB007339A1 /* unlike_for_table@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unlike_for_table@2x.png"; sourceTree = "<group>"; };
 		1C7B63C1178B0AC2000C1E84 /* SignupFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignupFlow.storyboard; sourceTree = "<group>"; };
 		1C7B63C5178B15B5000C1E84 /* SignupFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowViewController.h; sourceTree = "<group>"; };
 		1C7B63C6178B15B5000C1E84 /* SignupFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupFlowViewController.m; sourceTree = "<group>"; };
@@ -1438,31 +1401,6 @@
 			name = "Share Images";
 			sourceTree = "<group>";
 		};
-		1C7AC38F175E8869007339A1 /* MCSwipeTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				1C7AC390175E8869007339A1 /* MCSwipeTableViewCell.h */,
-				1C7AC391175E8869007339A1 /* MCSwipeTableViewCell.m */,
-			);
-			name = MCSwipeTableViewCell;
-			path = Library/MCSwipeTableViewCell;
-			sourceTree = SOURCE_ROOT;
-		};
-		1C7AC3BE1760F8E1007339A1 /* Swipe Table */ = {
-			isa = PBXGroup;
-			children = (
-				1C7AC3D717610FEB007339A1 /* dvr_for_table.png */,
-				1C7AC3D817610FEB007339A1 /* dvr_for_table@2x.png */,
-				1C7AC3D917610FEB007339A1 /* unlike_for_table.png */,
-				1C7AC3DA17610FEB007339A1 /* unlike_for_table@2x.png */,
-				1C7AC3BF1760F8E1007339A1 /* like_for_table.png */,
-				1C7AC3C01760F8E1007339A1 /* like_for_table@2x.png */,
-				1C7AC3C31760F8E1007339A1 /* share_for_table.png */,
-				1C7AC3C41760F8E1007339A1 /* share_for_table@2x.png */,
-			);
-			path = "Swipe Table";
-			sourceTree = "<group>";
-		};
 		1C7B63CF178B5ED6000C1E84 /* Signup Flow */ = {
 			isa = PBXGroup;
 			children = (
@@ -1811,7 +1749,6 @@
 				1CDCA669179DCE190098C4E1 /* Player Images */,
 				1C90E51F17849DF200E87CC0 /* Parallax View */,
 				1C7B63CF178B5ED6000C1E84 /* Signup Flow */,
-				1C7AC3BE1760F8E1007339A1 /* Swipe Table */,
 				8E2FC87216C6F19D0022B58C /* Login & Signup Images */,
 			);
 			name = Assets;
@@ -1919,7 +1856,6 @@
 			children = (
 				91A36261178F296B00381218 /* AHEasing */,
 				91A3625B178F290300381218 /* UIView+EasingFunctions */,
-				1C7AC38F175E8869007339A1 /* MCSwipeTableViewCell */,
 				91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */,
 				91E5D4661757BA1F00AD3746 /* LBYouTubeView */,
 				8E70248C1715E71500E8DE46 /* OAuth Consumer */,
@@ -2334,14 +2270,6 @@
 				1CBF0932175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
-				1C7AC3C61760F8E1007339A1 /* like_for_table.png in Resources */,
-				1C7AC3C91760F8E1007339A1 /* like_for_table@2x.png in Resources */,
-				1C7AC3D21760F8E1007339A1 /* share_for_table.png in Resources */,
-				1C7AC3D51760F8E1007339A1 /* share_for_table@2x.png in Resources */,
-				1C7AC3DC17610FEB007339A1 /* dvr_for_table.png in Resources */,
-				1C7AC3DF17610FEB007339A1 /* dvr_for_table@2x.png in Resources */,
-				1C7AC3E217610FEB007339A1 /* unlike_for_table.png in Resources */,
-				1C7AC3E517610FEB007339A1 /* unlike_for_table@2x.png in Resources */,
 				91BEC8951762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA1914A1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE074A1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
@@ -2497,14 +2425,6 @@
 				1CBF0933175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
-				1C7AC3C71760F8E1007339A1 /* like_for_table.png in Resources */,
-				1C7AC3CA1760F8E1007339A1 /* like_for_table@2x.png in Resources */,
-				1C7AC3D31760F8E1007339A1 /* share_for_table.png in Resources */,
-				1C7AC3D61760F8E1007339A1 /* share_for_table@2x.png in Resources */,
-				1C7AC3DD17610FEB007339A1 /* dvr_for_table.png in Resources */,
-				1C7AC3E017610FEB007339A1 /* dvr_for_table@2x.png in Resources */,
-				1C7AC3E317610FEB007339A1 /* unlike_for_table.png in Resources */,
-				1C7AC3E617610FEB007339A1 /* unlike_for_table@2x.png in Resources */,
 				91BEC8961762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA1914B1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE074B1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
@@ -2661,14 +2581,6 @@
 				1CBF0931175CD21F001D471A /* Icon-iPad@2x.png in Resources */,
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
-				1C7AC3C51760F8E1007339A1 /* like_for_table.png in Resources */,
-				1C7AC3C81760F8E1007339A1 /* like_for_table@2x.png in Resources */,
-				1C7AC3D11760F8E1007339A1 /* share_for_table.png in Resources */,
-				1C7AC3D41760F8E1007339A1 /* share_for_table@2x.png in Resources */,
-				1C7AC3DB17610FEB007339A1 /* dvr_for_table.png in Resources */,
-				1C7AC3DE17610FEB007339A1 /* dvr_for_table@2x.png in Resources */,
-				1C7AC3E117610FEB007339A1 /* unlike_for_table.png in Resources */,
-				1C7AC3E417610FEB007339A1 /* unlike_for_table@2x.png in Resources */,
 				91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */,
 				1CA191491774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE07491779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
@@ -2883,7 +2795,6 @@
 				91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91D1C81B1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
-				1C7AC393175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */,
 				914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7C175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
@@ -3007,7 +2918,6 @@
 				91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91D1C81C1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
-				1C7AC394175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */,
 				914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7D175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
@@ -3131,7 +3041,6 @@
 				91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				91D1C81A1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
-				1C7AC392175E8869007339A1 /* MCSwipeTableViewCell.m in Sources */,
 				914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7B175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
