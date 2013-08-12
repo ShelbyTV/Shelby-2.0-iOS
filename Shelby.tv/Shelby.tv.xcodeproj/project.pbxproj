@@ -1488,13 +1488,6 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		1C8AB42E175CF1A0001D5853 /* Views-iPhone */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Views-iPhone";
-			sourceTree = "<group>";
-		};
 		1C90E51F17849DF200E87CC0 /* Parallax View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1905,7 +1898,6 @@
 		8E98F7B3165C2F750095E985 /* ShelbyPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				1C8AB42E175CF1A0001D5853 /* Views-iPhone */,
 				8E68A1CD16C0C5250031C3D2 /* Controllers */,
 				8E68A1CC16C0C51D0031C3D2 /* View Controllers */,
 				8E68A1CE16C0C52D0031C3D2 /* Constants */,

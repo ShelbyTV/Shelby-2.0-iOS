@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, ShelbyStreamBrowseViewMode)
 - (void)browseViewCellParallaxDidChange:(ShelbyStreamBrowseViewCell *)cell;
 - (void)browseViewCell:(ShelbyStreamBrowseViewCell *)cell parallaxDidChangeToPage:(NSUInteger)page;
 - (void)browseViewCellPlayTapped:(ShelbyStreamBrowseViewCell *)cell;
+- (void)browseViewCellTapped:(ShelbyStreamBrowseViewCell *)cell;
 - (void)browseViewCellTitleWasTapped:(ShelbyStreamBrowseViewCell *)cell;
 @end
 

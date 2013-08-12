@@ -302,6 +302,13 @@
     [self.delegate browseViewCell:self parallaxDidChangeToPage:page];
 }
 
+- (void)parallaxViewWillBeginDragging
+{
+    if (self.viewMode != ShelbyStreamBrowseViewForPlaybackWithOverlay) {
+        [self.delegate browseViewCellTapped:self];
+    }
+}
+
 #pragma mark - StreamBrowseCellForegroundDelegate
 - (void)streamBrowseCellForegroundViewTitleWasTapped
 {

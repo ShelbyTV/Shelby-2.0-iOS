@@ -360,6 +360,11 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     }
 }
 
+- (void)browseViewCellTapped:(ShelbyStreamBrowseViewCell *)cell
+{
+    [self. browseViewDelegate shelbyStreamBrowseViewController:self wasTapped:nil];
+}
+
 - (void)browseViewCell:(ShelbyStreamBrowseViewCell *)cell parallaxDidChangeToPage:(NSUInteger)page
 {
     self.currentPage = page;
