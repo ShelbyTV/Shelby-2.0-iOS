@@ -54,7 +54,7 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 + (void)markUnplayableVideo:(NSString *)videoID;
 
 // -- Channels
-+ (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
++ (void)fetchGlobalChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 + (void)fetchDashboardEntriesForDashboardID:(NSString *)dashboardID
                                  sinceEntry:(DashboardEntry *)sinceEntry

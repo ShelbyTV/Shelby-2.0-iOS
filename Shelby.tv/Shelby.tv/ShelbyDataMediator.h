@@ -22,8 +22,8 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>
 // channels
-- (void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached;
-- (void)fetchChannelsDidCompleteWithError:(NSError *)error;
+- (void)fetchGlobalChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached;
+- (void)fetchGlobalChannelsDidCompleteWithError:(NSError *)error;
 // channel entries
 - (void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                      with:(NSArray *)channelEntries fromCache:(BOOL)cached;
@@ -55,7 +55,7 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 +(ShelbyDataMediator *)sharedInstance;
 
 //fetching
-- (void)fetchChannels;
+- (void)fetchGlobalChannels;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 - (User *)fetchAuthenticatedUserOnMainThreadContext;
 - (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh;

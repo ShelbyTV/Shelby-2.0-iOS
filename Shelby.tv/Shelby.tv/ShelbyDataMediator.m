@@ -74,24 +74,18 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     return self;
 }
 
-- (void)fetchChannels
+- (void)fetchGlobalChannels
 {
-    // 1) Send back anything we have cached (all on main thread)
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSArray *cachedChannels = [DisplayChannel allChannelsInContext:[self mainThreadMOC]];
-        if(cachedChannels && [cachedChannels count]){
-            [self.delegate fetchChannelsDidCompleteWith:cachedChannels fromCache:YES];
-        }
-    });
+    //not sending back channels in cache b/c they're not all the "global" ones (ie. come from API, for all users)
 
     //2) fetch remotely NB: AFNetworking returns us to the main thread
-    [ShelbyAPIClient fetchChannelsWithBlock:^(id JSON, NSError *error) {
+    [ShelbyAPIClient fetchGlobalChannelsWithBlock:^(id JSON, NSError *error) {
         if(JSON){
             // doing all on main thread, seems premature to optimize here
             NSArray *channels = [self findOrCreateChannelsForJSON:JSON inContext:[self mainThreadMOC]];
-            [self.delegate fetchChannelsDidCompleteWith:channels fromCache:NO];
+            [self.delegate fetchGlobalChannelsDidCompleteWith:channels fromCache:NO];
         } else {
-            [self.delegate fetchChannelsDidCompleteWithError:error];
+            [self.delegate fetchGlobalChannelsDidCompleteWithError:error];
         }
     }];
 }

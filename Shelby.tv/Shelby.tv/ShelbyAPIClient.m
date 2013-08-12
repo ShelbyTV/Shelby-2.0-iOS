@@ -315,7 +315,7 @@ static AFHTTPClient *httpClient = nil;
 }
 
 #pragma mark - Channels
-+ (void)fetchChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
++ (void)fetchGlobalChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
 
     NSString *route = nil;

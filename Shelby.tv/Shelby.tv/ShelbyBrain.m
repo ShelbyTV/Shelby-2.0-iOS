@@ -67,6 +67,12 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
         [self activateWelcomeFlowViewController];
     } else {
         [self activateHomeViewController];
+        User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+        if (currentUser) {
+            [self fetchUserChannelsForceSwitchToUsersStream:YES];
+        } else {
+            [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
+        }
     }
     [self.mainWindow makeKeyAndVisible];
 }
@@ -100,19 +106,9 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     self.homeVC.masterDelegate = self;
 
     [self setupDVR];
-  
-    // If user is not logged in, fetch unsynced likes. (KP KP: We might want to still fetch/merge unsynced likes with Likes Roll for logged in user)
-    if (!currentUser) {
-        [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
-    } else {
-        [self fetchUserChannelsForceSwitchToUsersStream:NO];
-    }
-    
+
     if(!self.channelsLoadedAt || [self.channelsLoadedAt timeIntervalSinceNow] < kShelbyChannelsStaleTime){
-        if(!self.homeVC.channels){
-            [self.homeVC.channelsLoadingActivityIndicator startAnimating];
-        }
-        [[ShelbyDataMediator sharedInstance] fetchChannels];
+        [[ShelbyDataMediator sharedInstance] fetchGlobalChannels];
     }
 }
 
@@ -182,10 +178,9 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     }
 }
 
-- (void)populateChannels
+- (void)populateChannels:(NSArray *)channelsToPopulate
 {
-    NSMutableArray *allChannels = [self constructAllChannelsArray];
-    for (DisplayChannel *channel in allChannels){
+    for (DisplayChannel *channel in channelsToPopulate){
         [self populateChannel:channel withActivityIndicator:YES];
     }
 }
@@ -286,9 +281,9 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
     });
 }
 
--(void)fetchChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached
+-(void)fetchGlobalChannelsDidCompleteWith:(NSArray *)channels fromCache:(BOOL)cached
 {
-    //channels come from CoreData and API
+    //channels could come from CoreData, but right now come from API only
 
     if (cached) {
         self.cachedFetchedChannels = [channels mutableCopy];
@@ -309,12 +304,12 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
         //could populate channels w/ cached data only here, and then API request data in else block
     } else {
         [self.homeVC.channelsLoadingActivityIndicator stopAnimating];
-        [self populateChannels];
+        [self populateChannels:channels];
         self.channelsLoadedAt = [NSDate date];
     }
 }
 
--(void)fetchChannelsDidCompleteWithError:(NSError *)error
+-(void)fetchGlobalChannelsDidCompleteWithError:(NSError *)error
 {
     [self showErrorView:error];
     DLog(@"TODO: handle fetch channels did complete with error %@", error);
