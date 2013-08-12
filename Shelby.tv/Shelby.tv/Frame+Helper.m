@@ -72,11 +72,16 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
         for (NSString *upvoterId in upvoters) {
             //returns User if they exist, otherwise fetches and return async
             User *upvoter = [[ShelbyDataMediator sharedInstance] fetchUserWithID:upvoterId inContext:context completion:^(User *upvoteUser) {
-                Frame *localFrame = (Frame *)[context objectWithID:frame.objectID];
-                [localFrame addUpvotersObject:upvoteUser];
-                NSError *error;
-                [context save:&error];
-                STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+                if (upvoteUser) {
+                    Frame *localFrame = (Frame *)[context objectWithID:frame.objectID];
+                    [localFrame addUpvotersObject:upvoteUser];
+                    STVAssert(localFrame.upvoters, @"expected upvoters array to exist now");
+                    NSError *error;
+                    [context save:&error];
+                    STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+                } else {
+                    DLog(@"upvoteUser fetched failed for userID %@", upvoterId);
+                }
             }];
             if (upvoter) {
                 [frame addUpvotersObject:upvoter];
