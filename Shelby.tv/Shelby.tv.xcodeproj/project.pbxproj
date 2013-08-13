@@ -17,6 +17,12 @@
 		1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
+		1C0E527C17BACBA8008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
+		1C0E527E17BACBB1008D5D81 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527D17BACBB1008D5D81 /* StoreKit.framework */; };
+		1C0E527F17BACBBA008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
+		1C0E528017BACBC1008D5D81 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527D17BACBB1008D5D81 /* StoreKit.framework */; };
+		1C0E528117BACBCC008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
+		1C0E528217BACBDD008D5D81 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527D17BACBB1008D5D81 /* StoreKit.framework */; };
 		1C154E5217A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
 		1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
 		1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
@@ -898,6 +904,8 @@
 		1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyViewController.m; sourceTree = "<group>"; };
 		1C06C5C91743E5D9004E8E20 /* ShelbyBrowseTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrowseTutorialView.h; sourceTree = "<group>"; };
 		1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrowseTutorialView.m; sourceTree = "<group>"; };
+		1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1C0E527D17BACBB1008D5D81 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1C154E5117A06EBA00C0B76B /* NoLikesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoLikesView.xib; sourceTree = "<group>"; };
 		1C154E5817A071DF00C0B76B /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		1C154E5917A071DF00C0B76B /* circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle@2x.png"; sourceTree = "<group>"; };
@@ -1334,6 +1342,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C0E528017BACBC1008D5D81 /* StoreKit.framework in Frameworks */,
+				1C0E527F17BACBBA008D5D81 /* CFNetwork.framework in Frameworks */,
 				91CE0759177A418500024180 /* OpenGLES.framework in Frameworks */,
 				91CE0753177A37AC00024180 /* CoreImage.framework in Frameworks */,
 				91FCC6A1174A8F1F004255F5 /* MessageUI.framework in Frameworks */,
@@ -1362,6 +1372,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C0E528217BACBDD008D5D81 /* StoreKit.framework in Frameworks */,
+				1C0E528117BACBCC008D5D81 /* CFNetwork.framework in Frameworks */,
 				91CE0758177A417A00024180 /* OpenGLES.framework in Frameworks */,
 				91CE0752177A37A300024180 /* CoreImage.framework in Frameworks */,
 				91FCC6A2174A8F25004255F5 /* MessageUI.framework in Frameworks */,
@@ -1390,6 +1402,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C0E527E17BACBB1008D5D81 /* StoreKit.framework in Frameworks */,
+				1C0E527C17BACBA8008D5D81 /* CFNetwork.framework in Frameworks */,
 				91CE075A177A418B00024180 /* OpenGLES.framework in Frameworks */,
 				91CE0754177A37B200024180 /* CoreImage.framework in Frameworks */,
 				91FCC6A0174A8F14004255F5 /* MessageUI.framework in Frameworks */,
@@ -1734,6 +1748,8 @@
 		8E209710162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1C0E527D17BACBB1008D5D81 /* StoreKit.framework */,
+				1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */,
 				91CE0757177A417900024180 /* OpenGLES.framework */,
 				91CE0751177A37A200024180 /* CoreImage.framework */,
 				91FCC69F174A8F14004255F5 /* MessageUI.framework */,
