@@ -599,6 +599,11 @@
 
 - (void)videoDidAutoadvance
 {
+    [self doPeekAndHide];
+}
+
+- (void)doPeekAndHide
+{
     if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay) {
         //peek basic video info (this is called exactly when the scroll animation to change videos ends)
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION*3 animations:^{
@@ -685,6 +690,7 @@
                                         withNicknameAsLabel:YES];
         } else {
             //playing & changed videos: controls already updated
+            [self doPeekAndHide];
             [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                  withAction:kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying
                                         withNicknameAsLabel:YES];
