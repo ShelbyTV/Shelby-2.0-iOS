@@ -74,6 +74,11 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
             User *upvoter = [[ShelbyDataMediator sharedInstance] fetchUserWithID:upvoterId inContext:context completion:^(User *upvoteUser) {
                 if (upvoteUser) {
                     Frame *localFrame = (Frame *)[context objectWithID:frame.objectID];
+                    //frame should have been saved by now.  If not, it may have been deleted b/c it was
+                    //invalid (per business logic).  In which case, we should abort.
+                    if (localFrame.objectID.isTemporaryID) {
+                        return;
+                    }
                     [localFrame addUpvotersObject:upvoteUser];
                     STVAssert(localFrame.upvoters, @"expected upvoters array to exist now");
                     NSError *error;

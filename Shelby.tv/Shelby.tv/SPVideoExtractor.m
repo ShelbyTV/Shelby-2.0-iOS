@@ -75,15 +75,13 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue
 {
-    STVAssert(completionBlock, @"urlForVideo expects an extraction block");
-    
-    @synchronized(self){        
+    @synchronized(self){
         NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
         if(alreadyExtractedURL){
             if(completionBlock){
                 completionBlock(alreadyExtractedURL, NO);
             }
-        } else {
+        } else if (video && completionBlock) {
             NSDictionary *extractionDict = @{kSPVideoExtractorVideoKey: video,
                                              kSPVideoExtractorBlockKey: completionBlock};
             if(jumpQueue){
@@ -93,6 +91,9 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             }
             [self.highPriorityExtractionQueue addObject:extractionDict];
             [self scheduleNextExtraction];
+        } else {
+            STVAssert(completionBlock, @"urlForVideo expects an extraction block");
+            STVAssert(video, @"urlForVideo expects a video");
         }
     }
 }
@@ -568,7 +569,9 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         NSDictionary *previousExtraction = self.extractedURLCache[video.objectID];
         if([previousExtraction[kSPVideoExtractorExtractedAtKey] timeIntervalSinceNow] < EXTRACTED_URL_TTL_S){
             //expired
-            [self.extractedURLCache removeObjectForKey:video.objectID];
+            if (video.objectID) {
+                [self.extractedURLCache removeObjectForKey:video.objectID];
+            } 
             return nil;
         } else {
             return previousExtraction[kSPVideoExtractorExtractedURLStringKey];

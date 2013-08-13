@@ -178,7 +178,11 @@ static AFHTTPClient *httpClient = nil;
 + (void)putSessionVisitForUser:(User *)user
                      withBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    STVAssert(user, @"must include user");
+    if (!user) {
+        STVAssert(user, @"must include user");
+        return;
+    }
+
     NSMutableDictionary *userParams = [@{@"platform":@"ios",
                                        kShelbyAPIParamAuthToken: user.token} mutableCopy];
 
