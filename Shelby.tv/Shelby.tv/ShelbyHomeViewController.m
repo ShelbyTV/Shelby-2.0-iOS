@@ -1025,6 +1025,7 @@
             [self dismissVideoReel];
         }
         [self presentSettings];
+        [navBarVC didNavigateToSettings];
     } else {
         //already showing settings, nothing to do
     }
