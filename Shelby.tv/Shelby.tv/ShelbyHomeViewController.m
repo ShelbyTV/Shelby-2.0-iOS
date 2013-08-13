@@ -18,6 +18,7 @@
 
 @interface ShelbyHomeViewController () {
     SettingsViewController *_settingsVC;
+    UIViewController *_currentFullScreenVC;
 }
 @property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
 @property (nonatomic, weak) UIView *navBar;
@@ -177,6 +178,7 @@
                 sbvc.browseManagementDelegate = self.masterDelegate;
                 //we want to know about scroll events to keep SPVideoReel in sync, when applicable
                 sbvc.browseViewDelegate = self;
+                sbvc.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0);
             }
             [newStreamBrowseVCs addObject:sbvc];
         }
@@ -214,7 +216,7 @@
 //
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
     STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
-    if (self.currentStreamBrowseVC == sbvc) {
+    if (sbvc == _currentFullScreenVC) {
         //not changing, nothing to do
         return;
     }
@@ -223,25 +225,39 @@
     //but our bounds reflects this, so we use bounds to set frame on our children...
     sbvc.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
 
-    [self.currentStreamBrowseVC willMoveToParentViewController:nil];
-    [self addChildViewController:sbvc];
-    
-    [self.view insertSubview:sbvc.view belowSubview:self.videoControlsVC.view];
-    sbvc.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0);
-    
-    if (self.currentStreamBrowseVC) {
-        [self.currentStreamBrowseVC.view removeFromSuperview];
-        [self.currentStreamBrowseVC removeFromParentViewController];
-    }
-    [sbvc didMoveToParentViewController:self];
-    
-    self.currentStreamBrowseVC = sbvc;
-    //set current entity on video controls, if applicable
-    self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
-    
-    // If there is no content in Stream, don't show video controls
-    self.videoControlsVC.view.hidden = sbvc.hasNoContent;
-//    }
+    [self swapOutViewController:_currentFullScreenVC forViewController:sbvc completion:^(BOOL finished) {
+        self.currentStreamBrowseVC = sbvc;
+        self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
+        // If there is no content in Stream, don't show video controls
+        self.videoControlsVC.view.hidden = sbvc.hasNoContent;
+
+        [self dismissSettings];
+    }];
+}
+
+- (void)swapOutViewController:(UIViewController *)oldVC forViewController:(UIViewController *)newVC completion:(void (^)(BOOL finished))completion
+{
+    [oldVC willMoveToParentViewController:nil];
+    [self addChildViewController:newVC];
+    [self.view insertSubview:newVC.view belowSubview:self.videoControlsVC.view];
+
+    CGAffineTransform scaleAndTranslateIntoNav = CGAffineTransformConcat(CGAffineTransformMakeScale(.2f, .2f), CGAffineTransformMakeTranslation(0, -self.view.bounds.size.height));
+    newVC.view.transform = scaleAndTranslateIntoNav;
+    newVC.view.alpha = 1.f;
+    [UIView transitionWithView:self.view duration:0.5 options:(UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionCurveEaseOut) animations:^{
+        oldVC.view.transform = scaleAndTranslateIntoNav;
+        oldVC.view.alpha = 0.f;
+        newVC.view.transform = CGAffineTransformIdentity;
+        newVC.view.alpha = 1.f;
+
+    } completion:^(BOOL finished) {
+        [oldVC removeFromParentViewController];
+        [oldVC.view removeFromSuperview];
+        oldVC.view.transform = CGAffineTransformIdentity;
+        [newVC didMoveToParentViewController:self];
+        _currentFullScreenVC = newVC;
+        completion(finished);
+    }];
 }
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
@@ -628,25 +644,21 @@
 
 - (void)didNavigateToCommunityChannel
 {
-    [self dismissSettings];
     [self.navBarVC didNavigateToCommunityChannel];
 }
 
 - (void)didNavigateToUsersStream
 {
-    [self dismissSettings];
     [self.navBarVC didNavigateToUsersStream];
 }
 
 - (void)didNavigateToUsersLikes
 {
-    [self dismissSettings];
     [self.navBarVC didNavigateToUsersLikes];
 }
 
 - (void)didNavigateToUsersRoll
 {
-    [self dismissSettings];
     [self.navBarVC didNavigateToUsersShares];
 }
 
@@ -1008,8 +1020,10 @@
 
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
-    [self dismissVideoReel];
     if (selectedNewRow) {
+        if (self.videoReel) {
+            [self dismissVideoReel];
+        }
         [self presentSettings];
     } else {
         //already showing settings, nothing to do
@@ -1019,7 +1033,6 @@
 
 - (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
-    [self dismissSettings];
     [self dismissVideoReel];
     [self.masterDelegate presentUserLogin];
     //login is modal, nav hasn't actually changed...
@@ -1031,20 +1044,19 @@
     if (!_settingsVC) {
         _settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser andNibName:@"SettingsView-iPhone"];
         _settingsVC.delegate = self.masterDelegate;
+        [self swapOutViewController:_currentFullScreenVC forViewController:_settingsVC completion:^(BOOL finished) {
+            _settingsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[settings]|"
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:@{@"settings":_settingsVC.view}]];
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[settings]|"
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:@{@"settings":_settingsVC.view}]];
 
-        [_settingsVC willMoveToParentViewController:self];
-        [self addChildViewController:_settingsVC];
-        [self.view insertSubview:_settingsVC.view belowSubview:self.navBar];
-        _settingsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[settings]|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:@{@"settings":_settingsVC.view}]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[settings]|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:@{@"settings":_settingsVC.view}]];
-        [_settingsVC didMoveToParentViewController:self];
+            self.videoControlsVC.view.hidden = YES;
+        }];
     }
 }
 
