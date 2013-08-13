@@ -249,7 +249,7 @@
     } else if (indexPath.row == 3) {
         [self openMailComposer];
     } else if (indexPath.row == 4) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=467849037"]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", SHELBY_APP_ID]]];
     } else if (indexPath.row == 5) {
         [self logout:nil];
     }

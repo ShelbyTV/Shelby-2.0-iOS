@@ -37,6 +37,7 @@
 #import "Appirater.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
 #include <netinet/in.h>
+#import "ShelbyAlert.h"
 
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -172,7 +173,7 @@ static BOOL _modalOpen = false;
 														 message:APPIRATER_MESSAGE
 														delegate:self
 											   cancelButtonTitle:APPIRATER_CANCEL_BUTTON
-											   otherButtonTitles:APPIRATER_RATE_BUTTON, APPIRATER_RATE_LATER, nil];
+											   otherButtonTitles:APPIRATER_RATE_BUTTON, APPITATER_SEND_FEEDBACK,  APPIRATER_RATE_LATER, nil];
 	self.ratingAlert = alertView;
     [alertView show];
 
@@ -500,17 +501,44 @@ static BOOL _modalOpen = false;
 			}
 			break;
 		}
-		case 2:
+        case 2:
+		case 3:
 			// remind them later
 			[userDefaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:kAppiraterReminderRequestDate];
 			[userDefaults synchronize];
 			if(delegate && [delegate respondsToSelector:@selector(appiraterDidOptToRemindLater:)]){
 				[delegate appiraterDidOptToRemindLater:self];
 			}
+
+            // If send_feedback also show an email dialog
+            if (buttonIndex == 2) {
+                [Appirater openMailComposer];
+            }
 			break;
 		default:
 			break;
 	}
+}
+
++ (void)openMailComposer
+{
+    if([MFMailComposeViewController canSendMail]){
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+        mailer.mailComposeDelegate = self.sharedInstance;
+        [mailer setSubject:[NSString stringWithFormat:@"iPhone Feedback (%@-%@, %@ v%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]]];
+        [mailer setToRecipients:@[@"iphone@shelby.tv"]];
+        [mailer setMessageBody:@"Believe it or not, a human will read this!  :-]\n\nWe really appreciate your ideas and feedback.  Feel free to write anything you want and we'll follow up with you." isHTML:NO];
+        [[self getRootViewController] presentViewController:mailer animated:_usesAnimation completion:^{
+			[self setModalOpen:YES];
+        }];
+    } else {
+        [[[ShelbyAlert alloc] initWithTitle:@"We'd Love to Hear from You!"
+                                    message:@"Please email your feedback to us: iphone@shelby.tv"
+                         dismissButtonTitle:@"Ok"
+                             autodimissTime:0
+                                  onDismiss:nil]
+         show];
+    }
 }
 
 //Delegate call from the StoreKit view.
@@ -538,4 +566,11 @@ static BOOL _modalOpen = false;
 	}
 }
 
+
+#pragma mark - MFMailComposeViewControllerDelegate
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [Appirater setModalOpen:NO];
+    [controller dismissViewControllerAnimated:_usesAnimation completion:nil];
+}
 @end

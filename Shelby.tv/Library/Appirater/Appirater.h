@@ -36,6 +36,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AppiraterDelegate.h"
+#import <MessageUI/MessageUI.h>
 #import <StoreKit/StoreKit.h>
 
 extern NSString *const kAppiraterFirstUseDate;
@@ -60,14 +61,19 @@ extern NSString *const kAppiraterReminderRequestDate;
  This is the message your users will see once they've passed the day+launches
  threshold.
  */
-#define APPIRATER_LOCALIZED_MESSAGE     NSLocalizedStringFromTable(@"If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!", @"AppiraterLocalizable", nil)
+#define APPIRATER_LOCALIZED_MESSAGE     NSLocalizedStringFromTable(@"Please rate us on the App Store!  If not, we'd really appreciate honest and direct feedback.", @"AppiraterLocalizable", nil)
 #define APPIRATER_MESSAGE				[NSString stringWithFormat:APPIRATER_LOCALIZED_MESSAGE, APPIRATER_APP_NAME]
 
 /*
  This is the title of the message alert that users will see.
  */
-#define APPIRATER_LOCALIZED_MESSAGE_TITLE   NSLocalizedStringFromTable(@"Rate %@", @"AppiraterLocalizable", nil)
-#define APPIRATER_MESSAGE_TITLE             [NSString stringWithFormat:APPIRATER_LOCALIZED_MESSAGE_TITLE, APPIRATER_APP_NAME]
+#define APPIRATER_LOCALIZED_MESSAGE_TITLE   NSLocalizedStringFromTable(@"Rate on the App Store", @"AppiraterLocalizable", nil)
+#define APPIRATER_MESSAGE_TITLE             @"Enjoying Shelby?"
+
+/* 
+ The text of the button that opens mail to send feedback
+ */
+#define APPITATER_SEND_FEEDBACK         NSLocalizedStringFromTable(@"Send feedback", @"AppiraterLocalizable", nil)
 
 /*
  The text of the button that rejects reviewing the app.
@@ -85,7 +91,7 @@ extern NSString *const kAppiraterReminderRequestDate;
  */
 #define APPIRATER_RATE_LATER			NSLocalizedStringFromTable(@"Remind me later", @"AppiraterLocalizable", nil)
 
-@interface Appirater : NSObject <UIAlertViewDelegate, SKStoreProductViewControllerDelegate> {
+@interface Appirater : NSObject <UIAlertViewDelegate, SKStoreProductViewControllerDelegate, MFMailComposeViewControllerDelegate> {
 
 	UIAlertView		*ratingAlert;
 }
