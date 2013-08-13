@@ -170,22 +170,31 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     NSDictionary *streamDict = [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"Stream" displayColor:kShelbyColorMyStreamColorString];
     if (streamDict) {
         DisplayChannel *myStreamChannel = [DisplayChannel channelForDashboardDictionary:streamDict withOrder:0 inContext:moc];
-        STVAssert(myStreamChannel, @"failed to create stream channel for user");
-        [channels addObject:myStreamChannel];
+        if (myStreamChannel) {
+            [channels addObject:myStreamChannel];
+        } else {
+            STVAssert(myStreamChannel, @"failed to create stream channel for user");
+        }
     }
     
     NSDictionary *rollDict = [User dictionaryForUserChannel:loggedInUser.publicRollID withIDKey:@"id" displayTitle:@"My Shares" displayColor:kShelbyColorMyRollColorString];
     if (streamDict) {
         DisplayChannel *myRollChannel = [DisplayChannel channelForRollDictionary:rollDict withOrder:1 inContext:moc];
-        STVAssert(myRollChannel, @"failed to create roll channel for user");
-        [channels addObject:myRollChannel];
+        if (myRollChannel) {
+            [channels addObject:myRollChannel];
+        } else {
+            STVAssert(myRollChannel, @"failed to create roll channel for user");
+        }
     }
 
     NSDictionary *likeDict = [User dictionaryForUserChannel:loggedInUser.likesRollID withIDKey:@"id"  displayTitle:@"My Likes" displayColor:kShelbyColorLikesRedString];
     if (likeDict) {
         DisplayChannel *myLikesChannel = [DisplayChannel channelForRollDictionary:likeDict withOrder:1 inContext:moc];
-        STVAssert(myLikesChannel, @"failed to create likes channel for user");
-        [channels addObject:myLikesChannel];
+        if (myLikesChannel) {
+            [channels addObject:myLikesChannel];            
+        } else {
+            STVAssert(myLikesChannel, @"failed to create likes channel for user");
+        }
     }
     
     NSError *error;
