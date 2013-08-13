@@ -51,25 +51,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 {
     self = [super init];
     if (self) {
-        _mainThreadMOC = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        _mainThreadMOC.persistentStoreCoordinator = [self persistentStoreCoordinator];
-        _mainThreadMOC.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
-        _mainThreadMOC.undoManager = nil;
-
-        _privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _privateContext.persistentStoreCoordinator = [self persistentStoreCoordinator];
-        _privateContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
-        _privateContext.undoManager = nil;
-
-        //automatically merge changes back and forth between private and main contexts
-        [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_privateContext queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            DLog(@"merged changes private->main");
-            [self.mainThreadMOC mergeChangesFromContextDidSaveNotification:note];
-        }];
-        [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_mainThreadMOC queue:nil usingBlock:^(NSNotification *note) {
-            DLog(@"main->private merged");
-            [self.privateContext mergeChangesFromContextDidSaveNotification:note];
-        }];
+        [self initMOCs];
     }
     return self;
 }
@@ -681,11 +663,13 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 - (NSManagedObjectContext *)mainThreadContext
 {
     STVAssert([NSThread isMainThread], @"must only use main thread context on main thread");
+    STVAssert(self.mainThreadMOC, @"we should probably get one of those :-P");
     return self.mainThreadMOC;
 }
 
 - (void)privateContextPerformBlock:(void (^)(NSManagedObjectContext *privateMOC))block
 {
+    STVAssert(self.privateContext, @"we should probalby get one of those :-P");
     [self.privateContext performBlock:^{
         block(self.privateContext);
     }];
@@ -693,6 +677,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 
 - (void)privateContextPerformBlockAndWait:(void (^)(NSManagedObjectContext *privateMOC))block
 {
+    STVAssert(self.privateContext, @"we should probalby get one of those :-P");
     [self.privateContext performBlockAndWait:^{
         block(self.privateContext);
     }];
@@ -700,7 +685,9 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 
 - (void)nuclearCleanup
 {
+    DLog(@"Destroying ManagedObjectContexts & PersistentStoreCoordinator");
     self.mainThreadMOC = nil;
+    self.privateContext = nil;
     self.persistentStoreCoordinator = nil;
     
     DLog(@"Deleting Persistent Store Backing File");
@@ -709,10 +696,33 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:@"Shelby.tv.sqlite"];
     [fileManager removeItemAtURL:storeURL error:nil];
     
-    DLog(@"Recreating Persistent Store Coordinator");
-    [self persistentStoreCoordinator];
+    DLog(@"Recreating PersistentStoreCoordinator & ManagedObjectContexts");
+    [self initMOCs];
     
     [self cleanupSession];
+}
+
+- (void)initMOCs
+{
+    _mainThreadMOC = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    _mainThreadMOC.persistentStoreCoordinator = [self persistentStoreCoordinator];
+    _mainThreadMOC.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+    _mainThreadMOC.undoManager = nil;
+
+    _privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    _privateContext.persistentStoreCoordinator = [self persistentStoreCoordinator];
+    _privateContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+    _privateContext.undoManager = nil;
+
+    //automatically merge changes back and forth between private and main contexts
+    [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_privateContext queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        DLog(@"merged changes private->main");
+        [self.mainThreadMOC mergeChangesFromContextDidSaveNotification:note];
+    }];
+    [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_mainThreadMOC queue:nil usingBlock:^(NSNotification *note) {
+        DLog(@"main->private merged");
+        [self.privateContext mergeChangesFromContextDidSaveNotification:note];
+    }];
 }
 
 #pragma mark - Parsing Helpers
