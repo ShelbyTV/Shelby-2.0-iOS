@@ -107,6 +107,7 @@
             STVAssert(NO, @"unhandled nav row");
         }
 
+        _lastSelectedRow = sender;
     }
 }
 

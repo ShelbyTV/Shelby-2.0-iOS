@@ -60,6 +60,8 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus;
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
 
+- (void)scrollToTop;
+
 - (void)refreshActivityIndicatorShouldAnimate:(BOOL)shouldAnimate;
 
 - (NSIndexPath *)indexPathForCurrentFocus;

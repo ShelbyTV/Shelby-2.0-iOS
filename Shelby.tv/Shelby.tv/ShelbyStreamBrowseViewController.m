@@ -160,6 +160,13 @@
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, postRotationContentOffsetY)];
 }
 
+- (void)scrollToTop
+{
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                atScrollPosition:UICollectionViewScrollPositionTop
+                                        animated:YES];
+}
+
 #pragma mark - Setters & Getters
 - (void)setEntries:(NSArray *)entries
         forChannel:(DisplayChannel *)channel

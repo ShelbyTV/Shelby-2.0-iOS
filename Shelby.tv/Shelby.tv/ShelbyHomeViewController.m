@@ -946,38 +946,55 @@
 
 - (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
-    if (selectedNewRow && self.videoReel) {
-        [self dismissVideoReel];
+    if (selectedNewRow) {
+        if (self.videoReel) {
+            [self dismissVideoReel];
+        }
         [self updateVideoControlsForPage:0];
+        [self launchMyStream];
+    } else {
+        [self.currentStreamBrowseVC scrollToTop];
     }
-    [self launchMyStream];
+
 }
 
 - (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
-    if (selectedNewRow && self.videoReel) {
-        [self dismissVideoReel];
+    if (selectedNewRow) {
+        if (self.videoReel) {
+            [self dismissVideoReel];
+        }
         [self updateVideoControlsForPage:0];
+        [self launchMyLikes];
+    } else {
+        [self.currentStreamBrowseVC scrollToTop];
     }
-    [self launchMyLikes];
 }
 
 - (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
-    if (selectedNewRow && self.videoReel) {
-        [self dismissVideoReel];
+    if (selectedNewRow) {
+        if (self.videoReel) {
+            [self dismissVideoReel];
+        }
         [self updateVideoControlsForPage:0];
+        [self launchMyRoll];
+    } else {
+        [self.currentStreamBrowseVC scrollToTop];
     }
-    [self launchMyRoll];
 }
 
 - (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
-    if (selectedNewRow && self.videoReel) {
-        [self dismissVideoReel];
+    if (selectedNewRow) {
+        if (self.videoReel) {
+            [self dismissVideoReel];
+        }
         [self updateVideoControlsForPage:0];
+        [self launchCommunityChannel];
+    } else {
+        [self.currentStreamBrowseVC scrollToTop];
     }
-    [self launchCommunityChannel];
 }
 
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
