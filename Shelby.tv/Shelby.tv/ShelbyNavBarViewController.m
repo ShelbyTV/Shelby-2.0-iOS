@@ -80,7 +80,7 @@
     if (self.navBarView.settingsButton != self.navBarView.currentRow) {
         self.navBarView.currentRow = self.navBarView.settingsButton;
     }
-    _lastSelectedRow = self.navBarView.sharesButton;
+    _lastSelectedRow = self.navBarView.settingsButton;
 }
 
 - (IBAction)navTapped:(UIButton *)sender

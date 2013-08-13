@@ -1045,6 +1045,8 @@
     if (!_settingsVC) {
         _settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser andNibName:@"SettingsView-iPhone"];
         _settingsVC.delegate = self.masterDelegate;
+        //this gets overriden by autolayout, just using it to set starting point for transition
+        _settingsVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         [self swapOutViewController:_currentFullScreenVC forViewController:_settingsVC completion:^(BOOL finished) {
             _settingsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
             [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[settings]|"
