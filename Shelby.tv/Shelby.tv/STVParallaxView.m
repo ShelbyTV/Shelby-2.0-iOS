@@ -142,7 +142,9 @@
 #pragma mark - UIScrollViewDelegate (only of _foregroundScroller)
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self.delegate parallaxViewWillBeginDragging];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(parallaxViewWillBeginDragging)]) {
+        [self.delegate parallaxViewWillBeginDragging];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
