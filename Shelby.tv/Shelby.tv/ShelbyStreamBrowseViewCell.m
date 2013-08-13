@@ -29,11 +29,11 @@
 @end
 
 //configure parallax configuration
-#define PARALLAX_RATIO_PORTRAIT 0.4
+#define PARALLAX_RATIO_PORTRAIT 0.2
 #define PARALLAX_BG_WIDTH_PORTRAIT (kShelbyFullscreenWidth*(1+PARALLAX_RATIO_PORTRAIT))
 #define PARALLAX_BG_HEIGHT_PORTRAIT kShelbyFullscreenHeight
 #define PARALLAX_RATIO_LANDSCAPE 0.1
-#define PARALLAX_BG_WIDTH_LANDSCAPE kShelbyFullscreenHeight
+#define PARALLAX_BG_WIDTH_LANDSCAPE (kShelbyFullscreenHeight*(1+PARALLAX_RATIO_LANDSCAPE))
 #define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth
 
 #define BLUR_RADIUS 4.0
@@ -188,24 +188,26 @@
         //regular background
         self.thumbnailRegularView.image = image;
 
+        //XXX No longer using blurred background in iOS6 or 7
+        //      but leaving this code here until that decision has time to sink in (ds 8/13/13)
         //blurred background
         // The one thing that seems slow is blurring very high resolution images...
         //OPTIMIZE: No need to run on every pixel of a huge image, just to make it blurry.
         //          Run the filter over a smaller image, see how much faster that gets.
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            CIImage *inputImage = [CIImage imageWithCGImage:image.CGImage];
-            [self.blurFilter setValue:inputImage forKey:@"inputImage"];
-            CIImage *result = [self.blurFilter valueForKey:@"outputImage"];
-            //use inputImage's size to account for gaussian blur shrinkage
-            CGImageRef cgImage = [self.ciContext createCGImage:result fromRect:[inputImage extent]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [UIView transitionWithView:self.thumbnailBlurredView duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-                    self.thumbnailBlurredView.image = [UIImage imageWithCGImage:cgImage];
-                } completion:nil];
-                CFRelease(cgImage);
-                [self.blurFilter setValue:nil forKey:@"inputImage"];
-            });
-        });
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            CIImage *inputImage = [CIImage imageWithCGImage:image.CGImage];
+//            [self.blurFilter setValue:inputImage forKey:@"inputImage"];
+//            CIImage *result = [self.blurFilter valueForKey:@"outputImage"];
+//            //use inputImage's size to account for gaussian blur shrinkage
+//            CGImageRef cgImage = [self.ciContext createCGImage:result fromRect:[inputImage extent]];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [UIView transitionWithView:self.thumbnailBlurredView duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+//                    self.thumbnailBlurredView.image = [UIImage imageWithCGImage:cgImage];
+//                } completion:nil];
+//                CFRelease(cgImage);
+//                [self.blurFilter setValue:nil forKey:@"inputImage"];
+//            });
+//        });
     }
 }
 
@@ -287,9 +289,10 @@
 
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
 {
-    CGFloat alpha = parallaxView.foregroundContentOffset.x / self.frame.size.width;
-    self.thumbnailBlurredView.alpha = alpha;
-    self.thumbnailRegularView.alpha = 1.0f-(alpha*alpha);
+    //XXX no longer using blurred background, temporarily leaving this code (ds 8/13/13)
+//    CGFloat alpha = parallaxView.foregroundContentOffset.x / self.frame.size.width;
+//    self.thumbnailBlurredView.alpha = alpha;
+//    self.thumbnailRegularView.alpha = 1.0f-(alpha*alpha);
 
     [self.delegate browseViewCellParallaxDidChange:self];
 }

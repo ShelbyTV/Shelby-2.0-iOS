@@ -12,4 +12,6 @@
 
 + (NSString *)platform;
 + (BOOL)isIpadMini1;
++ (BOOL)isGTEiOS7;
+
 @end

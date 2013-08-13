@@ -83,10 +83,9 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <view alpha="0.5" contentMode="scaleToFill" id="560" userLabel="WhiteBackground">
+                <view contentMode="scaleToFill" id="560" userLabel="WhiteBackground">
                     <rect key="frame" x="320" y="130" width="320" height="200"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="256" userLabel="Detail User View">
                     <rect key="frame" x="320" y="135" width="320" height="60"/>

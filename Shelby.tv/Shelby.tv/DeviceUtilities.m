@@ -31,4 +31,21 @@
     
     return NO;
 }
+
++ (BOOL)isGTEiOS7
+{
+    static BOOL gte7 = NO;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *reqSysVer = @"7.0";
+        NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+        if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending){
+            gte7 = TRUE;
+        }
+    });
+
+    return gte7;
+}
+
 @end

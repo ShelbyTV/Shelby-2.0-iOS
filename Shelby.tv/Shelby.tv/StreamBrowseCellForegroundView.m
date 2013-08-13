@@ -81,6 +81,11 @@
     [self insertSubview:self.overlayImageView atIndex:0];
 
     [self setupLikersAndSharersSubviews];
+
+    //white layer with alpha for iOS6 & 7
+    //the toolbar blur hack isn't great, it's just doing a static image swaparoo
+    self.detailWhiteBackground.alpha = 0.75;
+    self.detailWhiteBackground.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setupLikersAndSharersSubviews
