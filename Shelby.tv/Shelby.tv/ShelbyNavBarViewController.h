@@ -35,6 +35,7 @@
 - (void)didNavigateToUsersStream;
 - (void)didNavigateToUsersLikes;
 - (void)didNavigateToUsersShares;
+- (void)didNavigateToSettings;
 
 - (void)returnSelectionToPreviousRow;
 

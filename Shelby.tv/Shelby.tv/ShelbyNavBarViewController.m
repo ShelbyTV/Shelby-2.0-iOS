@@ -75,6 +75,14 @@
     _lastSelectedRow = self.navBarView.sharesButton;
 }
 
+- (void)didNavigateToSettings
+{
+    if (self.navBarView.settingsButton != self.navBarView.currentRow) {
+        self.navBarView.currentRow = self.navBarView.settingsButton;
+    }
+    _lastSelectedRow = self.navBarView.sharesButton;
+}
+
 - (IBAction)navTapped:(UIButton *)sender
 {
     [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
@@ -106,8 +114,6 @@
         } else {
             STVAssert(NO, @"unhandled nav row");
         }
-
-        _lastSelectedRow = sender;
     }
 }
 
