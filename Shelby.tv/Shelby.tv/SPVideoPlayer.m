@@ -354,8 +354,11 @@
         
     } else if ([keyPath isEqualToString:kShelbySPLoadedTimeRanges]) {
         NSArray *loadedTimeRanges = [self.player.currentItem loadedTimeRanges];
-        CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
-        [self.videoPlayerDelegate videoBufferedRange:timeRange forPlayer:self];
+        if (loadedTimeRanges && [loadedTimeRanges count]) {
+            CMTimeRange timeRange = [loadedTimeRanges[0] CMTimeRangeValue];
+            [self.videoPlayerDelegate videoBufferedRange:timeRange forPlayer:self];
+        }
+        
     } else if ([keyPath isEqualToString:kShelbySPAVPlayerDuration]) {
         [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
     }
