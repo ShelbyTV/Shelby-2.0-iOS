@@ -10,6 +10,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <HockeySDK/HockeySDK.h>
+#import "Appirater.h"
 #import "FacebookHandler.h"
 #import "GAI.h"
 #import "ShelbyBrain.h"
@@ -50,6 +51,8 @@
     // Crash reporting and user monitoring analytics
     [self setupAnalytics];
     
+    [self setupAppirater];
+    
     // not yet re-implemented
 //    [self setupOfflineMode];
     
@@ -72,8 +75,17 @@
     [self setupAppAppearanceProxies];
 
     [self.brain handleDidFinishLaunching];
+    
+    // Appirater
+    [Appirater appLaunched:YES];
 
     return YES;
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    // Appirater
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notifcation {
@@ -145,6 +157,18 @@
         DLog(@"Due to crash in last session, destroying Core Data backing file...");
         [[ShelbyDataMediator sharedInstance] nuclearCleanup];
     }
+}
+
+- (void)setupAppirater
+{
+    // Appirater
+    [Appirater setAppId:SHELBY_APP_ID];
+    [Appirater setDaysUntilPrompt:5];
+    [Appirater setUsesUntilPrompt:10];
+    //significant events are: share (any kind), like
+    [Appirater setSignificantEventsUntilPrompt:10];
+    [Appirater setTimeBeforeReminding:3];
+    [Appirater setDebug:NO];
 }
 
 - (void)setupAnalytics

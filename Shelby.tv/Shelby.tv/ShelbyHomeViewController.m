@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyHomeViewController.h"
+#import "Appirater.h"
 #import "DashboardEntry+Helper.h"
 #import "DisplayChannel.h"
 #import "ImageUtilities.h"
@@ -832,9 +833,13 @@
 
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc
 {
+    // GA
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                          withAction:kAnalyticsUXLike
                                 withNicknameAsLabel:YES];
+    // Appirater Event
+    [Appirater userDidSignificantEvent:YES];
+    
     BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
     if (!didLike) {
         DLog(@"***ERROR*** Tried to Like, but action resulted in UNLIKE of the video");
@@ -878,9 +883,13 @@
         [self.videoControlsVC resetShareButton];
 
         if (completed) {
+            // GA
             [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                  withAction:kAnalyticsUXShareFinish
                                         withNicknameAsLabel:YES];
+            
+            // Appirater Event
+            [Appirater userDidSignificantEvent:YES];
         }
     }];
 }
