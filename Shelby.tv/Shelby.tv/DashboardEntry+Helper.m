@@ -75,6 +75,7 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
 + (NSArray *)entriesForDashboard:(Dashboard *)dashboard inContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityDashboardEntry];
+    request.fetchBatchSize = 10;
     NSPredicate *entriesInDashboard = [NSPredicate predicateWithFormat:@"dashboard == %@", dashboard];
     request.predicate = entriesInDashboard;
     //Mongo IDs are prefixed with timestamp, so this gives us reverse-chron

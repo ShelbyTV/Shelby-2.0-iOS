@@ -101,6 +101,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
                  inContext:(NSManagedObjectContext *)moc
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:kShelbyCoreDataEntityFrame];
+    request.fetchBatchSize = 10;
     NSPredicate *framesInRoll = [NSPredicate predicateWithFormat:@"rollID == %@ && clientUnliked == NO", roll];
     request.predicate = framesInRoll;
     //Mongo IDs are prefixed with timestamp, so this gives us reverse-chron
