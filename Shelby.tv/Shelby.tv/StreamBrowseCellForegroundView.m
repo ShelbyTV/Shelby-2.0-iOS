@@ -134,7 +134,7 @@
         self.detailTitle.frame = CGRectMake(xOrigin, 65, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailWhiteBackground.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 90, pageWidth, 140);
         self.detailUserView.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 95, 185, 60);
-        self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 100, self.detailUsername.frame.size.height);
+        self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 200, self.detailUsername.frame.size.height);
         self.detailCommentView.frame = CGRectMake(xOrigin, 155, pageWidth - kShelbyInfoViewMargin * 2, 60);
         self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
     } else {
@@ -252,6 +252,7 @@
 {
     //padding adjustments for landscape vs portrait
     CGFloat summaryUserPadding, detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment, detailLikersAndSharersPadding;
+    NSInteger detailTitleHeight;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         summaryUserPadding = 50;
         detailTitlePadding = 70;
@@ -259,6 +260,7 @@
         detailCommentPadding = 60;
         detailLikersAndSharersPadding = 0;
         detailWhiteBackgroundHeightAdjustment = 65;
+        detailTitleHeight = 22;
     } else {
         summaryUserPadding = 70;
         detailTitlePadding = 90;
@@ -266,6 +268,7 @@
         detailCommentPadding = 70;
         detailLikersAndSharersPadding = 10;
         detailWhiteBackgroundHeightAdjustment = 80;
+        detailTitleHeight = 44;
     }
 
 
@@ -286,7 +289,7 @@
     //-----------detail page---------------
     //resize detail title
     NSString *detailTitleText = self.detailTitle.text;
-    CGSize maxDetailTitleSize = CGSizeMake(self.detailTitle.frame.size.width, 44);
+    CGSize maxDetailTitleSize = CGSizeMake(self.detailTitle.frame.size.width, detailTitleHeight);
     CGFloat detailTitleDesiredHeight = [detailTitleText sizeWithFont:self.detailTitle.font
                                                    constrainedToSize:maxDetailTitleSize
                                                        lineBreakMode:self.detailTitle.lineBreakMode].height;
