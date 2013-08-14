@@ -13,6 +13,7 @@
 #import "Messages+Helper.h"
 #import "NSManagedObject+Helper.h"
 #import "Roll+Helper.h"
+#import "ShelbyAnalyticsClient.h"
 #import "ShelbyDataMediator.h"
 #import "User+Helper.h"
 #import "Video+Helper.h"
@@ -81,9 +82,14 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
                     }
                     [localFrame addUpvotersObject:upvoteUser];
                     STVAssert(localFrame.upvoters, @"expected upvoters array to exist now");
-                    NSError *error;
-                    [context save:&error];
-                    STVDebugAssert(!error, @"context save failed, put your DEBUG hat on...");
+                    NSError *err;
+                    [context save:&err];
+                    STVDebugAssert(!err, @"context save failed, put your DEBUG hat on...");
+                    if (err) {
+                        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                                              action:kAnalyticsIssueContextSaveError
+                                                               label:[NSString stringWithFormat:@"-[frameForDictionary:requireCreator:inContext:] error: %@", err]];
+                    }
                 } else {
                     DLog(@"upvoteUser fetched failed for userID %@", upvoterId);
                 }
@@ -111,6 +117,11 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     NSError *err;
     NSArray *results = [moc executeFetchRequest:request error:&err];
     STVDebugAssert(!err, @"couldn't fetch frames on roll!");
+    if (err) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueContextSaveError
+                                               label:[NSString stringWithFormat:@"-[framesForRoll:inContext:] error: %@", err]];
+    }
     return results;
 }
 

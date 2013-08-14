@@ -12,6 +12,7 @@
 #import "NSManagedObject+Helper.h"
 #import "NSObject+NullHelper.h"
 #import "Roll+Helper.h"
+#import "ShelbyAnalyticsClient.h"
 #import "ShelbyAPIClient.h"
 #import "ShelbyDataMediator.h"
 
@@ -197,10 +198,15 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         }
     }
     
-    NSError *error;
-    [moc save:&error];
-    STVDebugAssert(!error, @"context save saving user channels...");
-    
+    NSError *err;
+    [moc save:&err];
+    STVDebugAssert(!err, @"context save saving user channels...");
+    if (err) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueContextSaveError
+                                               label:[NSString stringWithFormat:@"-[channelsForUserInContext:] error: %@", err]];
+    }
+
     return channels;
 }
 

@@ -13,6 +13,7 @@
 #import "OAuthConsumer.h"
 #import <Social/Social.h>
 #import "ShelbyDataMediator.h"
+#import "ShelbyAnalyticsClient.h"
 #import "ShelbyAPIClient.h"
 #import "User+Helper.h"
 
@@ -410,9 +411,14 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         User *user = [User updateUserWithTwitterUsername:name andTwitterID:ID];
-                        NSError *error;
-                        [user.managedObjectContext save:&error];
-                        STVDebugAssert(!error, @"context save failed saving User after twitter login...");
+                        NSError *err;
+                        [user.managedObjectContext save:&err];
+                        STVDebugAssert(!err, @"context save failed saving User after twitter login...");
+                        if (err) {
+                            [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                                                  action:kAnalyticsIssueContextSaveError
+                                                                   label:[NSString stringWithFormat:@"-[getReverseAuthAccessToken:] error: %@", err]];
+                        }
                         
                         [self.delegate twitterConnectDidComplete];
                         

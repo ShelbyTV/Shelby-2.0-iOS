@@ -592,6 +592,9 @@
 		912261DC17B97F070092AF30 /* overlay-sharers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D217B97F070092AF30 /* overlay-sharers@2x.png */; };
 		912261DD17B97F070092AF30 /* overlay-sharers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D217B97F070092AF30 /* overlay-sharers@2x.png */; };
 		912261DE17B97F070092AF30 /* overlay-sharers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 912261D217B97F070092AF30 /* overlay-sharers@2x.png */; };
+		912261E117BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */; };
+		912261E217BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */; };
+		912261E317BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */; };
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
@@ -1186,6 +1189,8 @@
 		912261D017B97F070092AF30 /* overlay-likers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlay-likers@2x.png"; sourceTree = "<group>"; };
 		912261D117B97F070092AF30 /* overlay-sharers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlay-sharers.png"; sourceTree = "<group>"; };
 		912261D217B97F070092AF30 /* overlay-sharers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlay-sharers@2x.png"; sourceTree = "<group>"; };
+		912261DF17BC05C30092AF30 /* ShelbyAnalyticsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAnalyticsClient.h; sourceTree = "<group>"; };
+		912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAnalyticsClient.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
 		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
@@ -2096,6 +2101,8 @@
 				8E888987166FB0B40040D28D /* ShelbyAPIClient.m */,
 				914FEA65175E365000903FEA /* ShelbyDVRController.h */,
 				914FEA66175E365000903FEA /* ShelbyDVRController.m */,
+				912261DF17BC05C30092AF30 /* ShelbyAnalyticsClient.h */,
+				912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2889,6 +2896,7 @@
 				8E7024F01715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F31715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024F91715E71500E8DE46 /* TwitterHandler.m in Sources */,
+				912261E217BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */,
 				1C3D91271714C00100105839 /* FacebookHandler.m in Sources */,
 				1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
@@ -3013,6 +3021,7 @@
 				8E7024F11715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F41715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024FA1715E71500E8DE46 /* TwitterHandler.m in Sources */,
+				912261E317BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */,
 				1C3D91281714C00100105839 /* FacebookHandler.m in Sources */,
 				1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
@@ -3137,6 +3146,7 @@
 				8E7024EF1715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F21715E71500E8DE46 /* OATokenManager.m in Sources */,
 				8E7024F81715E71500E8DE46 /* TwitterHandler.m in Sources */,
+				912261E117BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */,
 				1C3D91261714C00100105839 /* FacebookHandler.m in Sources */,
 				1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
