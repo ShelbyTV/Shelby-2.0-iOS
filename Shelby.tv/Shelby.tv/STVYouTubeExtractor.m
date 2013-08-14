@@ -106,6 +106,9 @@ static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (_isCancelled) {
+            return;
+        }
         //TODO: GA - Google Analytics report this
         [self.delegate stvYouTubeExtractor:self failedExtractingYouTubeURLWithError:error];
     }];
