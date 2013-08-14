@@ -199,7 +199,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     
     NSError *error;
     [moc save:&error];
-    STVAssert(!error, @"context save saving user channels...");
+    STVDebugAssert(!error, @"context save saving user channels...");
     
     return channels;
 }

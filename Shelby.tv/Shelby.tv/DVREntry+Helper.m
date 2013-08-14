@@ -62,7 +62,7 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
     
     NSError *err;
     NSArray *results = [moc executeFetchRequest:request error:&err];
-    STVAssert(!err, @"couldn't fetch DVR Entries");
+    STVDebugAssert(!err, @"couldn't fetch DVR Entries");
     return results;
 }
 
@@ -78,7 +78,7 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
     
     NSError *err;
     NSArray *results = [moc executeFetchRequest:request error:&err];
-    STVAssert(!err, @"couldn't fetch DVR Entries");
+    STVDebugAssert(!err, @"couldn't fetch DVR Entries");
     return results;
 }
 

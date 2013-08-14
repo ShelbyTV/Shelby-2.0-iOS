@@ -412,8 +412,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                         User *user = [User updateUserWithTwitterUsername:name andTwitterID:ID];
                         NSError *error;
                         [user.managedObjectContext save:&error];
-                        STVAssert(!error, @"context save failed saving User after twitter login...");
-                        
+                        STVDebugAssert(!error, @"context save failed saving User after twitter login...");
                         
                         [self.delegate twitterConnectDidComplete];
                         

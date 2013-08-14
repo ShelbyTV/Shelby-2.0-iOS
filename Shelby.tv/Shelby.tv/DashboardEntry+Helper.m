@@ -84,7 +84,7 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
     
     NSError *err;
     NSArray *results = [context executeFetchRequest:request error:&err];
-    STVAssert(!err, @"couldn't fetch dashboard entries!");
+    STVDebugAssert(!err, @"couldn't fetch dashboard entries!");
     return results;
 }
 

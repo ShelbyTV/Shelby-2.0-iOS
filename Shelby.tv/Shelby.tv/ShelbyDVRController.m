@@ -34,7 +34,7 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
     //save now b/c objectID is temporary until saved, and we use it the in notifications userInfo
     NSError *err;
     [moc save:&err];
-    STVAssert(!err, @"failed to save DVREntry in context");
+    STVDebugAssert(!err, @"failed to save DVREntry in context");
     
     //upate notifications for the previous remind time
     if (originalRemindAt) {
@@ -57,7 +57,7 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
     [moc deleteObject:dvrEntry];
     NSError *err;
     [moc save:&err];
-    STVAssert(!err, @"failed to save context when removing DVREntry %@", dvrEntry);
+    STVDebugAssert(!err, @"failed to save context when removing DVREntry %@", dvrEntry);
     
     //update notifications at the original remind time
     [self removeLocalNotificationsAt:dvrEntry.remindAt];

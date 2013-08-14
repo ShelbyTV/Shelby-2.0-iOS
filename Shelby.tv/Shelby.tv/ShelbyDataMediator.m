@@ -151,7 +151,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             
             NSError *error;
             [frame.managedObjectContext save:&error];
-            STVAssert(!error, @"context save failed, in toggleLikeForFrame when liking (in block)...");
+            STVDebugAssert(!error, @"context save failed, in toggleLikeForFrame when liking (in block)...");
         } else {
             DLog(@"Failed to like!  DEBUG this %@", error);
         }
@@ -165,7 +165,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         if (JSON) {
             NSError *error;
             [frame.managedObjectContext save:&error];
-            STVAssert(!error, @"context save failed, in toggleLikeForFrame when deleting (in block)...");
+            STVDebugAssert(!error, @"context save failed, in toggleLikeForFrame when deleting (in block)...");
             
             //djs
             //TODO: need to smartly update the Browse View b/c the unliked frame is still in there :(
@@ -191,7 +191,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     
     NSError *error;
     [frame.managedObjectContext save:&error];
-    STVAssert(!error, @"context save failed, in toggleLikeForFrame...");
+    STVDebugAssert(!error, @"context save failed, in toggleLikeForFrame...");
 }
 
 //when login is enabled, this needs to be re-thought...
@@ -396,7 +396,10 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     
     NSError *error;
     [[self mainThreadContext] save:&error];
-    STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+    STVDebugAssert(!error, @"context save failed, put your DEBUG hat on...");
+    if (error) {
+        [self nuclearCleanup];
+    }
 }
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
@@ -410,7 +413,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                 User *user = [User userForDictionary:result inContext:context];
                 NSError *error;
                 [user.managedObjectContext save:&error];
-                STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+                STVDebugAssert(!error, @"context save failed, put your DEBUG hat on...");
                 [self.delegate loginUserDidComplete];
                 [self syncLikes];
                 [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
@@ -439,7 +442,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         User *user = [User userForDictionary:result inContext:context];
         NSError *error;
         [user.managedObjectContext save:&error];
-        STVAssert(!error, @"context after saveUserFromJSON");
+        STVDebugAssert(!error, @"context after saveUserFromJSON");
         [self syncLikes];
         [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
         return;
@@ -588,7 +591,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                                                 [user updateWithFacebookUser:facebookUser];
                                                 NSError *error;
                                                 [user.managedObjectContext save:&error];
-                                                STVAssert(!error, @"context save failed saving User after facebook login...");
+                                                STVDebugAssert(!error, @"context save failed saving User after facebook login...");
                                                
                                                 [self.delegate facebookConnectDidComplete];
                                                
@@ -799,7 +802,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     
     NSError *error;
     [context save:&error];
-    STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+    STVDebugAssert(!error, @"context save failed, put your DEBUG hat on...");
     return resultDisplayChannels;
 }
 
@@ -837,7 +840,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     
     NSError *error;
     [context save:&error];
-    STVAssert(!error, @"context save failed, in framesForJSON...");
+    STVDebugAssert(!error, @"context save failed, in framesForJSON...");
     return resultFrames;
 }
 
@@ -870,7 +873,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     
     NSError *error;
     [context save:&error];
-    STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+    STVDebugAssert(!error, @"context save failed, put your DEBUG hat on...");
     return resultDashboardEntries;
 }
 

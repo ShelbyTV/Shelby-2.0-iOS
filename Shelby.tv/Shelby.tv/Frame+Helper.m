@@ -83,7 +83,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
                     STVAssert(localFrame.upvoters, @"expected upvoters array to exist now");
                     NSError *error;
                     [context save:&error];
-                    STVAssert(!error, @"context save failed, put your DEBUG hat on...");
+                    STVDebugAssert(!error, @"context save failed, put your DEBUG hat on...");
                 } else {
                     DLog(@"upvoteUser fetched failed for userID %@", upvoterId);
                 }
@@ -110,7 +110,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     
     NSError *err;
     NSArray *results = [moc executeFetchRequest:request error:&err];
-    STVAssert(!err, @"couldn't fetch frames on roll!");
+    STVDebugAssert(!err, @"couldn't fetch frames on roll!");
     return results;
 }
 
