@@ -111,7 +111,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         }
         [self fetchDashboardEntriesForDashboard:channel.dashboard inChannel:channel sinceDashboardEntry:(DashboardEntry *)entry withAuthToken:authToken];
     } else {
-        STVAssert(false, @"asked to fetch entries in channel with bad parameters");
+        STVAssert(NO, @"asked to fetch entries in channel with bad parameters");
     }
 }
 
@@ -197,7 +197,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 //when login is enabled, this needs to be re-thought...
 - (BOOL)toggleLikeForFrame:(Frame *)frame
 {
-    STVAssert(frame.managedObjectContext == [self mainThreadContext], @"toggleLike expected frame from main context");
+    STVDebugAssert(frame.managedObjectContext == [self mainThreadContext], @"frame expected on main context (b/c action is from there)");
     
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
     
@@ -214,7 +214,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         } else {
             //Do Unlike
             Frame *likedFrame = [user likedFrameWithVideoOfFrame:frame];
-            STVAssert(likedFrame, @"expected liked frame");
+            STVDebugAssert(likedFrame, @"expected liked frame");
  
             [self unlikeFrame:frame forUser:user];
             

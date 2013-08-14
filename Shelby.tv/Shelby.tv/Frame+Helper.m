@@ -158,6 +158,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
 
 + (Frame *)frameForEntity:(id<ShelbyVideoContainer>)entity
 {
+    STVAssert(entity, @"entity cannot be nil");
     Frame *currentFrame;
     if ([entity isKindOfClass:[Frame class]]) {
         currentFrame = (Frame *)entity;

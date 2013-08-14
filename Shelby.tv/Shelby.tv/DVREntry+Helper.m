@@ -21,6 +21,7 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
 + (DVREntry *)dvrEntryFor:(id<ShelbyVideoContainer>)frameOrDashboardEntry
                 inContext:(NSManagedObjectContext *)moc
 {
+    STVAssert(frameOrDashboardEntry, @"cannot be nil");
     DVREntry *entry;
     Frame *frame;
     DashboardEntry *dbe;
@@ -95,7 +96,6 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
         return self.dashboardEntry.frame;
     } else {
         STVAssert(NO, @"expected Frame or DashboardEntry");
-        return nil;
     }
 }
 
@@ -107,7 +107,6 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
         return self.dashboardEntry.frame.creator.nickname;
     } else {
         STVAssert(NO, @"expected Frame or DashboardEntry");
-        return nil;
     }
 }
 
@@ -118,9 +117,7 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
     } else if (self.dashboardEntry) {
         return self.dashboardEntry.isPlayable;
     } else {
-        //you could make that argument that we should assert here
-        //but this is technically correct:
-        return NO;
+        STVAssert(NO, @"expected Frame or DashboardEntry");
     }
 }
 

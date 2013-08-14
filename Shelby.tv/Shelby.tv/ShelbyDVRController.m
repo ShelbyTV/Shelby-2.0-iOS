@@ -22,6 +22,7 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
 - (void)setDVRFor:(id<ShelbyVideoContainer>)frameOrDashboardEntry
        toRemindAt:(NSDate *)date
 {
+    //should really use +[Frame frameForEntity:]
     STVAssert(([frameOrDashboardEntry isKindOfClass:[Frame class]] ||
                [frameOrDashboardEntry isKindOfClass:[DashboardEntry class]]), @"expected Frame or DashboardEntry");
     
@@ -48,12 +49,13 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
 
 - (void)removeFromDVR:(id<ShelbyVideoContainer>)frameOrDashboardEntry
 {
+    //should really use +[Frame frameForEntity:]
     STVAssert(([frameOrDashboardEntry isKindOfClass:[Frame class]] ||
                [frameOrDashboardEntry isKindOfClass:[DashboardEntry class]]), @"expected Frame or DashboardEntry");
 
     NSManagedObjectContext *moc = [(NSManagedObject *)frameOrDashboardEntry managedObjectContext];
     DVREntry *dvrEntry = [DVREntry dvrEntryFor:frameOrDashboardEntry inContext:moc];
-    STVAssert(dvrEntry, @"could not find DVREntry for %@", frameOrDashboardEntry);
+    STVDebugAssert(dvrEntry, @"could not find DVREntry for %@", frameOrDashboardEntry);
     [moc deleteObject:dvrEntry];
     NSError *err;
     [moc save:&err];
@@ -125,8 +127,7 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
 {
     NSArray *dvrEntries = [DVREntry allAt:date orderedLIFO:YES inContext:moc];
     if (!dvrEntries || [dvrEntries count] == 0) {
-        STVAssert(NO, @"expected dvr entries");
-        return @"your friends."; //a fallback if we ever decide not to assert
+        return @"your friends.";
         
     } else if ([dvrEntries count] == 1) {
         return [NSString stringWithFormat:@"%@.", [dvrEntries[0] entityCreatorsNickname]];

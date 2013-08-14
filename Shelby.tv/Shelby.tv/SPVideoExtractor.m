@@ -75,13 +75,16 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)URLForVideo:(Video *)video usingBlock:(extraction_complete_block)completionBlock highPriority:(BOOL)jumpQueue
 {
+    STVAssert(completionBlock, @"urlForVideo expects an extraction block");
+    STVAssert(video, @"urlForVideo expects a video");
+
     @synchronized(self){
         NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
         if(alreadyExtractedURL){
             if(completionBlock){
                 completionBlock(alreadyExtractedURL, NO);
             }
-        } else if (video && completionBlock) {
+        } else {
             NSDictionary *extractionDict = @{kSPVideoExtractorVideoKey: video,
                                              kSPVideoExtractorBlockKey: completionBlock};
             if(jumpQueue){
@@ -91,9 +94,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             }
             [self.highPriorityExtractionQueue addObject:extractionDict];
             [self scheduleNextExtraction];
-        } else {
-            STVAssert(completionBlock, @"urlForVideo expects an extraction block");
-            STVAssert(video, @"urlForVideo expects a video");
         }
     }
 }
@@ -423,7 +423,8 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 #pragma mark - Helpers for All Extractor
 
-- (void)processExtractedURL:(NSURL *)videoURL{
+- (void)processExtractedURL:(NSURL *)videoURL
+{
     @synchronized(self) {
         STVAssert(self.currentlyExtracting, @"expected to be extracting something!");
         STVAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
@@ -569,9 +570,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         NSDictionary *previousExtraction = self.extractedURLCache[video.objectID];
         if([previousExtraction[kSPVideoExtractorExtractedAtKey] timeIntervalSinceNow] < EXTRACTED_URL_TTL_S){
             //expired
-            if (video.objectID) {
-                [self.extractedURLCache removeObjectForKey:video.objectID];
-            } 
+            [self.extractedURLCache removeObjectForKey:video.objectID];
             return nil;
         } else {
             return previousExtraction[kSPVideoExtractorExtractedURLStringKey];

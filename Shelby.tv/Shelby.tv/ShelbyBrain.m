@@ -320,7 +320,7 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
                                     with:(NSArray *)channelEntries
                                fromCache:(BOOL)cached
 {
-    STVAssert([NSThread isMainThread], @"expecting to be called on main thread");
+    STVDebugAssert([NSThread isMainThread], @"expecting to be called on main thread");
     
     //the choke point where unplayable videos may not pass
     NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
