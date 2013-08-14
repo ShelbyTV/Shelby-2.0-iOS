@@ -45,6 +45,8 @@ NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
 @property (nonatomic, strong) ShelbyDVRController *dvrController;
 
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
+
+@property (nonatomic, strong) ShelbyAlert *currentAlertView;
 @end
 
 @implementation ShelbyBrain
@@ -818,8 +820,8 @@ typedef struct _ShelbyArrayMergeInstructions {
     } else {
         message = @"Problem loading channel.";
     }
-    ShelbyAlert *alertView =  [[ShelbyAlert alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
-    [alertView show];
+    self.currentAlertView =  [[ShelbyAlert alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
+    [self.currentAlertView show];
 }
 
 - (void)goToUsersLikes

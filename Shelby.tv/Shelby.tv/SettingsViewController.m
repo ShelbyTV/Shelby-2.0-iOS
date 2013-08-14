@@ -264,12 +264,8 @@
         [mailer setMessageBody:@"Believe it or not, a human will read this!  :-]\n\nWe really appreciate your ideas and feedback.  Feel free to write anything you want and we'll follow up with you." isHTML:NO];
         [self presentViewController:mailer animated:YES completion:nil];
     } else {
-        [[[ShelbyAlert alloc] initWithTitle:@"We'd Love to Hear from You!"
-                                        message:@"Please email your feedback to us: iphone@shelby.tv"
-                             dismissButtonTitle:@"Ok"
-                                 autodimissTime:0
-                                      onDismiss:nil]
-         show];
+        UIAlertView *alertView =  [[UIAlertView alloc] initWithTitle:@"We'd Love to Hear from You!" message:@"Please email your feedback to us: iphone@shelby.tv" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
     }
 }
 

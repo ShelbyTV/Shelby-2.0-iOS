@@ -532,12 +532,8 @@ static BOOL _modalOpen = false;
 			[self setModalOpen:YES];
         }];
     } else {
-        [[[ShelbyAlert alloc] initWithTitle:@"We'd Love to Hear from You!"
-                                    message:@"Please email your feedback to us: iphone@shelby.tv"
-                         dismissButtonTitle:@"Ok"
-                             autodimissTime:0
-                                  onDismiss:nil]
-         show];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"We'd Love to Hear from You!" message:@"Please email your feedback to us: iphone@shelby.tv" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
     }
 }
 

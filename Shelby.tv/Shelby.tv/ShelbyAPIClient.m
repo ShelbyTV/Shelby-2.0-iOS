@@ -637,11 +637,7 @@ toExternalDestinations:(NSArray *)destinations
             NSString *existingUserNickname = errorInfo[@"existing_other_user_nickname"];
             NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_TITLE", @"--Already Logged In--"), currentNickname];
             NSString *message = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_MESSAGE", nil), existingUserNickname];
-            ShelbyAlert *alert = [[ShelbyAlert alloc] initWithTitle:title
-                                                                    message:message
-                                                         dismissButtonTitle:NSLocalizedString(@"ALREADY_LOGGED_IN_BUTTON", nil)
-                                                             autodimissTime:0
-                                                                  onDismiss:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"ALREADY_LOGGED_IN_BUTTON", nil) otherButtonTitles:nil];
             [alert show];
         }
         if (completionBlock) {
