@@ -10,6 +10,7 @@
 #import "Frame+Helper.h"
 #import "NSManagedObject+Helper.h"
 #import "NSObject+NullHelper.h"
+#import "ShelbyAnalyticsClient.h"
 
 NSString * const kShelbyCoreDataEntityDashboardEntry = @"DashboardEntry";
 NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEntryID == %@";
@@ -85,6 +86,11 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
     NSError *err;
     NSArray *results = [context executeFetchRequest:request error:&err];
     STVDebugAssert(!err, @"couldn't fetch dashboard entries!");
+    if (err) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueContextSaveError
+                                               label:[NSString stringWithFormat:@"-[entriesForDashboard:inContext:] error: %@", err]];
+    }
     return results;
 }
 

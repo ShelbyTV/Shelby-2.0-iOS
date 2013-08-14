@@ -10,6 +10,7 @@
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 #import "NSManagedObject+Helper.h"
+#import "ShelbyAnalyticsClient.h"
 #import "User+Helper.h"
 
 NSString * const kShelbyCoreDataEntityDVREntry = @"DVREntry";
@@ -64,6 +65,11 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
     NSError *err;
     NSArray *results = [moc executeFetchRequest:request error:&err];
     STVDebugAssert(!err, @"couldn't fetch DVR Entries");
+    if (err) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueContextSaveError
+                                               label:[NSString stringWithFormat:@"-[allCurrentOrderedLIFO:inContext:] error: %@", err]];
+    }
     return results;
 }
 
@@ -80,6 +86,11 @@ NSString * const kShelbyCoreDataEntityDVREntryWithDashboardEntryIDPredicate = @"
     NSError *err;
     NSArray *results = [moc executeFetchRequest:request error:&err];
     STVDebugAssert(!err, @"couldn't fetch DVR Entries");
+    if (err) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueContextSaveError
+                                               label:[NSString stringWithFormat:@"-[allAt:orderedLIFO:inContext:] error: %@", err]];
+    }
     return results;
 }
 

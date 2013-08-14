@@ -13,6 +13,7 @@
 #import "User+Helper.h"
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
+#import "ShelbyAnalyticsClient.h"
 
 NSString * const NOTIFICATION_OBJECT_ID_KEY = @"objectID";
 NSString * const NOTIFICATION_DATE_KEY = @"date";
@@ -36,7 +37,12 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
     NSError *err;
     [moc save:&err];
     STVDebugAssert(!err, @"failed to save DVREntry in context");
-    
+    if (err) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueContextSaveError
+                                               label:[NSString stringWithFormat:@"-[setDVRFor:toRemindAt] error: %@", err]];
+    }
+
     //upate notifications for the previous remind time
     if (originalRemindAt) {
         [self removeLocalNotificationsAt:originalRemindAt];
@@ -60,7 +66,12 @@ NSString * const NOTIFICATION_DATE_KEY = @"date";
     NSError *err;
     [moc save:&err];
     STVDebugAssert(!err, @"failed to save context when removing DVREntry %@", dvrEntry);
-    
+    if (err) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueContextSaveError
+                                               label:[NSString stringWithFormat:@"-[removeFromDVR:] error: %@", err]];
+    }
+
     //update notifications at the original remind time
     [self removeLocalNotificationsAt:dvrEntry.remindAt];
     [self createLocalNotificationsAt:dvrEntry.remindAt inContext:dvrEntry.managedObjectContext];
