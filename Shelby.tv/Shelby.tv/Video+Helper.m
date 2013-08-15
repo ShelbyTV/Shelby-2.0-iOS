@@ -86,4 +86,13 @@ NSString * const kShelbyCoreDataEntityVideoIDPredicate = @"videoID == %@";
     return self;
 }
 
+- (NSURL *)maxResThumbnailURL
+{
+    if ([self.providerName isEqualToString:@"youtube"]) {
+        return [NSURL URLWithString:[NSString stringWithFormat:@"http://img.youtube.com/vi/%@/maxresdefault.jpg", self.providerID]];
+    } else {
+        return [NSURL URLWithString:self.thumbnailURL];
+    }
+}
+
 @end

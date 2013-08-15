@@ -11,6 +11,7 @@
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 #import "ShelbyViewController.h"
+#import "Video+Helper.h"
 
 @interface ShelbyStreamBrowseViewCell(){
     UIImage *_placeholderThumbnail;
@@ -29,9 +30,9 @@
 @end
 
 //configure parallax configuration
-#define PARALLAX_RATIO_PORTRAIT 0.2
-#define PARALLAX_BG_WIDTH_PORTRAIT (kShelbyFullscreenWidth*(1+PARALLAX_RATIO_PORTRAIT))
-#define PARALLAX_BG_HEIGHT_PORTRAIT kShelbyFullscreenHeight
+#define PARALLAX_RATIO_PORTRAIT 0.75
+#define PARALLAX_BG_WIDTH_PORTRAIT kShelbyFullscreenWidth*0.8
+#define PARALLAX_BG_HEIGHT_PORTRAIT kShelbyFullscreenHeight*1.2
 #define PARALLAX_RATIO_LANDSCAPE 0.1
 #define PARALLAX_BG_WIDTH_LANDSCAPE (kShelbyFullscreenHeight*(1+PARALLAX_RATIO_LANDSCAPE))
 #define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth
@@ -108,7 +109,7 @@
         fullScreenFrame = CGRectMake(0, 0, kShelbyFullscreenHeight, kShelbyFullscreenWidth);
         _parallaxView.parallaxRatio = PARALLAX_RATIO_LANDSCAPE;
     } else {
-        bgFrame = CGRectMake(0, 0, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
+        bgFrame = CGRectMake(0, -20, PARALLAX_BG_WIDTH_PORTRAIT, PARALLAX_BG_HEIGHT_PORTRAIT);
         fullScreenFrame = CGRectMake(0, 0, kShelbyFullscreenWidth, kShelbyFullscreenHeight);
         _parallaxView.parallaxRatio = PARALLAX_RATIO_PORTRAIT;
     }
@@ -157,29 +158,55 @@
         Video *video = videoFrame.video;
         //images
         if (video && video.thumbnailURL) {
-            NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:video.thumbnailURL]];
-            [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
-                                                  imageProcessingBlock:nil
-                                                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                                                   if (self.entry == entry) {
-                                                                       [self setupImagesWith:image];
-                                                                   } else {
-                                                                       //cell has been reused, do nothing
-                                                                   }
-                                                               }
-                                                               failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                                                   if (self.entry == entry) {
-                                                                       [self displayPlaceholderThumbnails];
-                                                                   } else {
-                                                                       //cell has been reused, do nothing
-                                                                   }
-                                                               }] start];
+            [self tryMaxResThumbnailURLForEntry:entry withVide0:video];
         } else {
             [self displayPlaceholderThumbnails];
         }
 
         [self.foregroundView setInfoForDashboardEntry:dashboardEntry frame:videoFrame];
     }
+}
+
+- (void)tryMaxResThumbnailURLForEntry:(id<ShelbyVideoContainer>)entry withVide0:(Video *)video
+{
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[video maxResThumbnailURL]];
+    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
+                                          imageProcessingBlock:nil
+                                                       success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                           if (self.entry == entry) {
+                                                               [self setupImagesWith:image];
+                                                           } else {
+                                                               //cell has been reused, do nothing
+                                                           }
+                                                       }
+                                                       failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                           if (self.entry == entry) {
+                                                               [self tryNormalThumbnailURLForEntry:entry withVideo:video];
+                                                           } else {
+                                                               //cell has been reused, do nothing
+                                                           }
+                                                       }] start];
+}
+
+- (void)tryNormalThumbnailURLForEntry:(id<ShelbyVideoContainer>)entry withVideo:(Video *)video
+{
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:video.thumbnailURL]];
+    [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
+                                          imageProcessingBlock:nil
+                                                       success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                           if (self.entry == entry) {
+                                                               [self setupImagesWith:image];
+                                                           } else {
+                                                               //cell has been reused, do nothing
+                                                           }
+                                                       }
+                                                       failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                           if (self.entry == entry) {
+                                                               [self displayPlaceholderThumbnails];
+                                                           } else {
+                                                               //cell has been reused, do nothing
+                                                           }
+                                                       }] start];
 }
 
 - (void)setupImagesWith:(UIImage *)image
