@@ -8,6 +8,7 @@
 
 #import "StreamBrowseCellForegroundView.h"
 #import "DashboardEntry+Helper.h"
+#import "DeviceUtilities.h"
 #import "Video+Helper.h"
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
@@ -86,6 +87,14 @@
     //the toolbar blur hack isn't great, it's just doing a static image swaparoo
     self.detailWhiteBackground.alpha = 0.75;
     self.detailWhiteBackground.backgroundColor = [UIColor whiteColor];
+
+    if ([DeviceUtilities isGTEiOS7]) {
+        //a horizontal motion effect doesn't play very nicely w/ the parallax sliding, so we just do vertical
+        UIInterpolatingMotionEffect *motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+        motionEffect.minimumRelativeValue = kShelbyMotionForegroundYMin;
+        motionEffect.maximumRelativeValue = kShelbyMotionForegroundYMax;
+        [self addMotionEffect:motionEffect];
+    }
 }
 
 - (void)setupLikersAndSharersSubviews
