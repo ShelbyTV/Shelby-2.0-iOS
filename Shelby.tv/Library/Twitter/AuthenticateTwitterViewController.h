@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OAuthConsumer.h"
 
 @protocol AuthenticateTwitterDelegate <NSObject>
 - (void)authenticationRequestDidReturnPin:(NSString*)pin;
@@ -16,6 +17,7 @@
 @interface AuthenticateTwitterViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong, nonatomic) UIWebView *webView;
+@property (nonatomic) OAToken *twitterRequestToken;
 
 - (id)initWithDelegate:(id<AuthenticateTwitterDelegate>)delegate;
 
