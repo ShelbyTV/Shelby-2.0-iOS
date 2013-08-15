@@ -45,10 +45,10 @@
         if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
             return;
         } else {
-            [self setupWebViewFrameForOrientationLandscape:YES];
+            self.webView.frame = [self frameForWebViewForOrientationLandscape:YES];
         }
     } else {
-        [self setupWebViewFrameForOrientationLandscape:NO];
+        self.webView.frame = [self frameForWebViewForOrientationLandscape:NO];
     }
 }
 
@@ -65,23 +65,33 @@
     
     self.navigationItem.title = @"Authorize Twitter";
     
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f,
-                                                               0.0f,
-                                                               kShelbyFullscreenWidth,
-                                                               kShelbyFullscreenHeight)];
-
+    CGRect frameForWebView;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-        [self setupWebViewFrameForOrientationLandscape:YES];
+        frameForWebView = [self frameForWebViewForOrientationLandscape:YES];
     } else {
-        [self setupWebViewFrameForOrientationLandscape:NO];
+        frameForWebView = [self frameForWebViewForOrientationLandscape:NO];
     }
 
+    self.webView = [[UIWebView alloc] initWithFrame:frameForWebView];
     self.webView.delegate = self;
-    
     [self.view addSubview:self.webView];
+    
+    NSURL *authorizeUrl = [NSURL URLWithString:@"https://api.twitter.com/oauth/authenticate"];
+    OAMutableURLRequest* authorizeRequest = [[OAMutableURLRequest alloc] initWithURL:authorizeUrl
+                                                                            consumer:nil
+                                                                               token:nil
+                                                                               realm:nil
+                                                                   signatureProvider:nil];
+    // Create request for accessToken
+    NSString *requestTokenKey = self.twitterRequestToken.key;
+    OARequestParameter *tokenParam = [[OARequestParameter alloc] initWithName:@"oauth_token" value:requestTokenKey];
+    OARequestParameter *loginParam = [[OARequestParameter alloc] initWithName:@"force_login" value:@"false"];
+    [authorizeRequest setParameters:[NSArray arrayWithObjects:tokenParam, loginParam, nil]];
+    
+    [self.webView loadRequest:authorizeRequest];
 }
 
-- (void)setupWebViewFrameForOrientationLandscape:(BOOL)landscapeOrientation
+- (CGRect)frameForWebViewForOrientationLandscape:(BOOL)landscapeOrientation
 {
     NSInteger height, width;
     if (landscapeOrientation) {
@@ -92,7 +102,7 @@
         width = kShelbyFullscreenWidth;
     }
     
-    self.webView.frame = CGRectMake(0.0f, 0.0f, width, height);
+    return CGRectMake(0.0f, 0.0f, width, height);
 }
 
 - (void)cancelAuthentication

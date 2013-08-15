@@ -12,6 +12,7 @@
 #import "AuthenticateTwitterViewController.h"
 #import "OAuthConsumer.h"
 #import <Social/Social.h>
+#import "DeviceUtilities.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyAnalyticsClient.h"
 #import "ShelbyAPIClient.h"
@@ -85,7 +86,29 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 - (void)authenticateWithViewController:(UIViewController *)viewController withDelegate:(id<TwitterHandlerDelegate>)delegate andAuthToken:(NSString *)authToken
 {
     [self setViewController:viewController];
-    [self checkForExistingTwitterAccounts];
+    
+    // Get all stored twitterAccounts
+    self.twitterAccountStore = [[ACAccountStore alloc] init];
+    ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    self.twitterAccount = [[ACAccount alloc] initWithAccountType:twitterType];
+ 
+    // In iOS7 you have to request access to twitter account store. Even if there are no twitter accounts in Settings
+    if ([DeviceUtilities isGTEiOS7]) {
+        [self.twitterAccountStore requestAccessToAccountsWithType:twitterType options:nil completion:^(BOOL granted, NSError *error) {
+            if (granted) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self checkForExistingTwitterAccounts];
+               });
+            } else {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"To connect Twitter, go to Settings -> Privacy -> Twitter and turn Shelby ON" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alertView show];
+            }
+        }];
+    } else {
+        [self checkForExistingTwitterAccounts];
+        
+    }
+
     _delegate = delegate;
     _shelbyToken = authToken;
 }
@@ -99,23 +122,16 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
         self.twitterAccount = nil;
     }
     
-    // Get all stored twitterAccounts
-    self.twitterAccountStore = [[ACAccountStore alloc] init];
     ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    self.twitterAccount = [[ACAccount alloc] initWithAccountType:twitterType];
     
     NSArray *accounts = [NSArray arrayWithArray:[self.twitterAccountStore accountsWithAccountType:twitterType]];
     
     if (0 == [accounts count]) {
-        
-       [self getRequestToken];
-    
+        [self getRequestToken];
     } else {
-        
         [self.twitterAccountStore requestAccessToAccountsWithType:twitterType options:nil completion:^(BOOL granted, NSError *error) {
             
             if ( granted && !error ) {
-                
                 NSArray *accounts = [NSArray arrayWithArray:[self.twitterAccountStore accountsWithAccountType:twitterType]];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -224,24 +240,14 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 - (void)authenticateTwitterAccount
 {
     
-    NSURL *authorizeUrl = [NSURL URLWithString:@"https://api.twitter.com/oauth/authenticate"];
-    OAMutableURLRequest* authorizeRequest = [[OAMutableURLRequest alloc] initWithURL:authorizeUrl
-                                                                            consumer:nil 
-                                                                               token:nil
-                                                                               realm:nil
-                                                                   signatureProvider:nil];
-    // Create request for accessToken
-    NSString *requestTokenKey = self.twitterRequestToken.key;
-    OARequestParameter *tokenParam = [[OARequestParameter alloc] initWithName:@"oauth_token" value:requestTokenKey];
-    OARequestParameter *loginParam = [[OARequestParameter alloc] initWithName:@"force_login" value:@"false"];
-    [authorizeRequest setParameters:[NSArray arrayWithObjects:tokenParam, loginParam, nil]];
     
     // Load ViewController (that has webView)
     AuthenticateTwitterViewController *authenticateTwitterViewController = [[AuthenticateTwitterViewController alloc] initWithDelegate:self];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:authenticateTwitterViewController];
 
+    authenticateTwitterViewController.twitterRequestToken = self.twitterRequestToken;
+    authenticateTwitterViewController.webView.backgroundColor = [UIColor redColor];
     [self.viewController presentViewController:navigationController animated:YES completion:nil];
-    [authenticateTwitterViewController.webView loadRequest:authorizeRequest];
     
 }
 
