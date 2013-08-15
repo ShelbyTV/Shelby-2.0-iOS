@@ -7,6 +7,7 @@
 //
 
 #import "VideoControlsView.h"
+#import "DeviceUtilities.h"
 
 @interface VideoControlsView()
 
@@ -28,6 +29,14 @@
                                                                                                         resizingMode:UIImageResizingModeStretch];
     self.bufferProgressView.progressImage = [[UIImage imageNamed:@"scrub-track-progress"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 2, 0, 2)
                                                                                                          resizingMode:UIImageResizingModeStretch];
+
+    if ([DeviceUtilities isGTEiOS7]) {
+        //a horizontal motion effect doesn't play very nicely w/ the parallax sliding, so we just do vertical
+        UIInterpolatingMotionEffect *motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+        motionEffect.minimumRelativeValue = kShelbyMotionForegroundYMin;
+        motionEffect.maximumRelativeValue = kShelbyMotionForegroundYMax;
+        [self addMotionEffect:motionEffect];
+    }
 }
 
 //to allow touch events to pass through the background
