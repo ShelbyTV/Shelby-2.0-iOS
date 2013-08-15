@@ -347,7 +347,8 @@
         }
     }
 
-    UIImage *overlayImage = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
+    UIImage *overlayImage = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsMake(1, 0, 1, 0)
+                                                                           resizingMode:UIImageResizingModeStretch];
 
     if (!self.overlayImageView) {
         self.overlayImageView = [[UIImageView alloc] initWithImage:overlayImage];
@@ -355,7 +356,8 @@
         self.overlayImageView.image = overlayImage;
     }
 
-    self.overlayImageView.frame = CGRectMake(-400, 0, self.frame.size.width + 800, self.frame.size.height);
+    //extend the overlay on top and bottom to account for motion effects
+    self.overlayImageView.frame = CGRectMake(-400, [kShelbyMotionForegroundYMin floatValue], self.frame.size.width + 800, self.frame.size.height + [kShelbyMotionForegroundYMax floatValue] + (-[kShelbyMotionForegroundYMin floatValue]));
 }
 
 - (IBAction)playVideoInCell:(id)sender
