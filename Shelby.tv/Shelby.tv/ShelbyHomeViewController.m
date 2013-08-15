@@ -906,6 +906,12 @@
     }];
 }
 
+- (void)scrollToTopOfCurrentStreamBrowseVC
+{
+    [self.currentStreamBrowseVC scrollToTop];
+    [self dismissVideoReel];
+}
+
 #pragma mark - SPShareControllerDelegate
 
 - (void)shareControllerRequestsFacebookPublishPermissions:(SPShareController *)shareController
@@ -974,7 +980,7 @@
         [self updateVideoControlsForPage:0];
         [self launchMyStream];
     } else {
-        [self.currentStreamBrowseVC scrollToTop];
+        [self scrollToTopOfCurrentStreamBrowseVC];
     }
 
 }
@@ -988,7 +994,7 @@
         [self updateVideoControlsForPage:0];
         [self launchMyLikes];
     } else {
-        [self.currentStreamBrowseVC scrollToTop];
+        [self scrollToTopOfCurrentStreamBrowseVC];
     }
 }
 
@@ -1001,7 +1007,7 @@
         [self updateVideoControlsForPage:0];
         [self launchMyRoll];
     } else {
-        [self.currentStreamBrowseVC scrollToTop];
+        [self scrollToTopOfCurrentStreamBrowseVC];
     }
 }
 
@@ -1014,7 +1020,7 @@
         [self updateVideoControlsForPage:0];
         [self launchCommunityChannel];
     } else {
-        [self.currentStreamBrowseVC scrollToTop];
+        [self scrollToTopOfCurrentStreamBrowseVC];
     }
 }
 
