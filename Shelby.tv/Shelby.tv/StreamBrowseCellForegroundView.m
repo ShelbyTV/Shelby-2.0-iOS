@@ -413,9 +413,9 @@
     NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
     NSString *recoString = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
     NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
-    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyFontH4Medium}
+    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2}
                             range:[recoString rangeOfString:recoBase]];
-    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyFontH4Bold}
+    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2Bold}
                             range:[recoString rangeOfString:recoUsername]];
     return recoAttributed;
 }

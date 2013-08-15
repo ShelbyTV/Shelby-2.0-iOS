@@ -68,6 +68,10 @@
 #define kShelbyFontH4Bold                                   [UIFont fontWithName:@"Avenir-Black" size:14]
 #define kShelbyFontH5Bold                                   [UIFont fontWithName:@"Avenir-Black" size:12]
 #define kShelbyFontH6Bold                                   [UIFont fontWithName:@"Avenir-Black" size:9]
+#define kShelbyBodyFont1                                    [UIFont fontWithName:@"HelveticaNeue" size:17]
+#define kShelbyBodyFont1Bold                                [UIFont fontWithName:@"HelveticaNeue-Medium" size:17]
+#define kShelbyBodyFont2                                    [UIFont fontWithName:@"HelveticaNeue" size:14]
+#define kShelbyBodyFont2Bold                                [UIFont fontWithName:@"HelveticaNeue-Medium" size:14]
 
 /// Facebook
 #define kShelbyFacebookToken                                @"facebookToken"
