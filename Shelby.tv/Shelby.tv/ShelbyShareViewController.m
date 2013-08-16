@@ -54,8 +54,6 @@
 {
     [super viewDidLoad];
     
-    [self updateSocialButtons];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateFacebookToggle)
                                                  name:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
@@ -63,14 +61,24 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateTwitterToggle)
                                                  name:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateTwitterToggle)
+                                                 name:kShelbyNotificationTwitterConnectCompleted object:nil];
+    
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+-(void)dealloc
 {
-    [super viewWillDisappear:animated];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.message];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self updateSocialButtons];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -161,12 +169,16 @@
 
 - (void)updateFacebookToggle
 {
-    [self updateSocialButtons];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateSocialButtons];
+    });
 }
 
 - (void)updateTwitterToggle
 {
-    [self updateSocialButtons];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateSocialButtons];
+    });
 }
 
 - (void)updateSocialButtons

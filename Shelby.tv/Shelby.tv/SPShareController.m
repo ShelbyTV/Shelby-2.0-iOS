@@ -103,12 +103,14 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     [[NSUserDefaults standardUserDefaults] setBool:selected forKey:defaultsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    
     if (selected) {
-        if (facebook) {
+        if (facebook && !currentUser.facebookNickname) {
             if (![[FacebookHandler sharedInstance] allowPublishActions]) {
                 [self.delegate shareControllerRequestsFacebookPublishPermissions:self];
             }
-        } else {
+        } else if (!currentUser.twitterNickname) {
             [self.delegate shareControllerRequestsTwitterPublishPermissions:self];
         }
     }

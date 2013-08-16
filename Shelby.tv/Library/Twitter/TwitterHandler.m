@@ -100,8 +100,12 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                     [self checkForExistingTwitterAccounts];
                });
             } else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"To connect Twitter, go to Settings -> Privacy -> Twitter and turn Shelby ON" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alertView show];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"To connect Twitter, go to Settings -> Privacy -> Twitter and turn Shelby ON" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alertView show];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
+                });
             }
         }];
     } else {
