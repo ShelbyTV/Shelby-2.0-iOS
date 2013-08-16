@@ -162,9 +162,7 @@
 
 - (void)scrollToTop
 {
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-                                atScrollPosition:UICollectionViewScrollPositionTop
-                                        animated:YES];
+    [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 100, 100) animated:YES];
 }
 
 #pragma mark - Setters & Getters
