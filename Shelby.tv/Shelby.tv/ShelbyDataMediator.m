@@ -755,11 +755,9 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 
     //automatically merge changes back and forth between private and main contexts
     [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_privateContext queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        DLog(@"merged changes private->main");
         [self.mainThreadMOC mergeChangesFromContextDidSaveNotification:note];
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_mainThreadMOC queue:nil usingBlock:^(NSNotification *note) {
-        DLog(@"main->private merged");
         [self.privateContext mergeChangesFromContextDidSaveNotification:note];
     }];
 }
