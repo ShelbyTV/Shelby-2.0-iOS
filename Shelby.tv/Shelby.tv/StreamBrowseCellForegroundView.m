@@ -103,6 +103,9 @@
                        context:(void *)context
 {
     [self processLikersAndSharers];
+    
+    [self updateSharersFrame];
+    
     [self updateLikersAndSharersVisuals];
 }
 
@@ -242,6 +245,26 @@
 
     [self updateLikersAndSharersVisuals];
 
+    [self updateSharersFrame];
+
+}
+
+- (void)updateSharersFrame
+{
+    NSInteger originX = self.detailSharersSubview.frame.origin.x;
+    if ([self.videoFrame.upvoters count] > 0) {
+        if (self.detailLikersSubview.frame.origin.x == self.detailSharersSubview.frame.origin.x) {
+            originX = self.detailLikersAndSharers.frame.size.width/2.f;
+        }
+    } else if (self.detailLikersSubview.frame.origin.x != self.detailSharersSubview.frame.origin.x) {
+        originX = self.detailLikersSubview.frame.origin.x;
+    }
+
+    if (originX != self.detailSharersSubview.frame.origin.x) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.detailSharersSubview.frame = CGRectMake(originX, self.detailSharersSubview.frame.origin.y, self.detailSharersSubview.frame.size.width, self.detailSharersSubview.frame.size.height);
+        }];
+    }
 }
 
 - (void)updateLikersAndSharersVisuals
@@ -346,8 +369,11 @@
     //update likers and sharers based on the white background box
     self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y + self.detailWhiteBackground.frame.size.height + detailLikersAndSharersPadding, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
     self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
-    self.detailSharersSubview.frame = CGRectMake(self.detailLikersAndSharers.frame.size.width/2.f, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
-
+    if ([self.videoFrame.upvoters count] > 0) {
+        self.detailSharersSubview.frame = CGRectMake(self.detailLikersAndSharers.frame.size.width/2.f, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
+    } else {
+        self.detailSharersSubview.frame = self.detailLikersSubview.frame;
+    }
     //recommendation view
     self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
 }
