@@ -97,6 +97,16 @@
     }
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    [self processLikersAndSharers];
+    [self updateLikersAndSharersVisuals];
+}
+
+    
 - (void)setupLikersAndSharersSubviews
 {
     NSMutableArray *likerViews = [@[] mutableCopy];
@@ -181,6 +191,8 @@
     [self updateVisualsForRecommendation];
     [self processLikersAndSharers];
     [self updateStandardVisuals];
+    
+    [self.videoFrame addObserver:self forKeyPath:@"upvoters" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)updateStandardVisuals
@@ -228,6 +240,12 @@
     [self.detailCaption setText:captionText];
     [self resizeViewsForContent];
 
+    [self updateLikersAndSharersVisuals];
+
+}
+
+- (void)updateLikersAndSharersVisuals
+{
     // Sharers
     for (UIImageView *iv in _sharerImageViews) {
         iv.image = nil;

@@ -223,6 +223,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             
             //represent liked state until the API call succeeds
             frame.clientUnsyncedLike = @1;
+            [frame addUpvotersObject:user];
             frame.clientLikedAt = [NSDate date];
             
             return YES;
@@ -236,6 +237,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             
             //represnt unliked state assuming the API call succeeds
             frame.clientUnsyncedLike = @0;
+            [frame removeUpvotersObject:user];
             frame.clientLikedAt = nil;
             likedFrame.clientUnliked = @1;
             return NO;
