@@ -69,6 +69,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [self.videoFrame removeObserver:self forKeyPath:@"upvoters"];
+}
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -188,6 +193,9 @@
 
 - (void)setInfoForDashboardEntry:(DashboardEntry *)dashboardEntry frame:(Frame *)videoFrame
 {
+    // Making sure we don't have an onbserver pointing at a dangling object
+    [self.videoFrame removeObserver:self forKeyPath:@"upvoters"];
+
     _dashboardEntry = dashboardEntry;
     _videoFrame = videoFrame;
 
