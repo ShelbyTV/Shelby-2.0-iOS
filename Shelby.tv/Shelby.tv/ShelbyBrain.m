@@ -22,7 +22,7 @@
 #define kShelbyTutorialMode @"kShelbyTutorialMode"
 
 NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
-NSString * const kShelbyCommunityChannelID = @"515d83ecb415cc0d1a025bfe";
+NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 
 @interface ShelbyBrain()
 
