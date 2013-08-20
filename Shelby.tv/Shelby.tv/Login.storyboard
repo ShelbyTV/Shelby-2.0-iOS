@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.2" systemVersion="12E3067" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="QCZ-gW-p75">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.2" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="QCZ-gW-p75">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
@@ -14,9 +14,31 @@
                         <viewControllerLayoutGuide type="bottom" id="Vgs-ui-bPb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SUL-Fv-Viv">
-                        <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Hg-ip-j1e">
+                                <rect key="frame" x="190" y="126" width="110" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="C26-Dw-tzf"/>
+                                    <constraint firstAttribute="width" constant="110" id="g9a-ze-BHz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="forgot password">
+                                            <attributes>
+                                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <font key="NSFont" size="14" name="Avenir-Medium"/>
+                                                <integer key="NSUnderline" value="1"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <connections>
+                                    <action selector="forgotPasswordTapped:" destination="3Qm-VB-UtR" eventType="touchUpInside" id="cY6-sr-iJb"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Username/Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kct-Co-1f7">
                                 <rect key="frame" x="20" y="60" width="126" height="21"/>
                                 <constraints>
@@ -55,48 +77,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWR-yH-mC6">
-                                <rect key="frame" x="20" y="218" width="280" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YWR-yH-mC6">
+                                <rect key="frame" x="20" y="208" width="280" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="T81-xe-Dq6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="I don't have an account yet">
-                                            <attributes>
-                                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                <integer key="NSUnderline" value="1"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                <state key="normal" title="I don't have a Shelby account" backgroundImage="login-btn.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="signupTapped:" destination="3Qm-VB-UtR" eventType="touchUpInside" id="PjF-Lk-Ni8"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Hg-ip-j1e">
-                                <rect key="frame" x="158" y="126" width="142" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="C26-Dw-tzf"/>
-                                    <constraint firstAttribute="width" constant="142" id="g9a-ze-BHz"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="forgot password">
-                                            <attributes>
-                                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
-                                                <integer key="NSUnderline" value="1"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                </state>
-                                <connections>
-                                    <action selector="forgotPasswordTapped:" destination="3Qm-VB-UtR" eventType="touchUpInside" id="cY6-sr-iJb"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -112,11 +103,11 @@
                             <constraint firstItem="YWR-yH-mC6" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" id="Rzw-mg-5tz"/>
                             <constraint firstAttribute="trailing" secondItem="MNm-xq-Av8" secondAttribute="trailing" constant="20" symbolic="YES" id="ct9-Km-sMx"/>
                             <constraint firstItem="MNm-xq-Av8" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" id="eVN-AC-m38"/>
-                            <constraint firstItem="YWR-yH-mC6" firstAttribute="top" secondItem="MNm-xq-Av8" secondAttribute="bottom" constant="22" id="grT-03-OYC"/>
                             <constraint firstAttribute="trailing" secondItem="YWR-yH-mC6" secondAttribute="trailing" constant="20" symbolic="YES" id="hY3-Aj-8qn"/>
                             <constraint firstItem="kct-Co-1f7" firstAttribute="leading" secondItem="SUL-Fv-Viv" secondAttribute="leading" constant="20" symbolic="YES" id="hb2-lH-rsX"/>
                             <constraint firstItem="kct-Co-1f7" firstAttribute="top" secondItem="SUL-Fv-Viv" secondAttribute="top" constant="60" id="jSi-kp-HaR"/>
                             <constraint firstItem="YFZ-6R-ZhK" firstAttribute="top" secondItem="X47-Nw-nxG" secondAttribute="bottom" constant="18" id="ngb-up-bqH"/>
+                            <constraint firstItem="Vgs-ui-bPb" firstAttribute="top" secondItem="YWR-yH-mC6" secondAttribute="bottom" constant="228" id="w5a-UQ-ogt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Welcome Back!" id="cdT-lF-m7k">
@@ -164,9 +155,12 @@
             <point key="canvasLocation" x="293" y="127"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="login-btn.png" width="280" height="50"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

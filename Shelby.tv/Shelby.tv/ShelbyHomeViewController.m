@@ -401,7 +401,7 @@
         self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 86, 44)];
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
         [login setFrame:CGRectMake(6, 0, 80, 44)];
-        [login setTitle:@"SIGN UP" forState:UIControlStateNormal];
+        [login setTitle:@"LOG IN" forState:UIControlStateNormal];
         [[login titleLabel] setFont:kShelbyFontH4Bold];
         [login setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
         [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -425,7 +425,7 @@
                                          withAction:kAnalyticsUXTapNavBarButton
                                 withNicknameAsLabel:YES];
     [self dismissVideoReel];
-    [self.masterDelegate presentUserSignup];
+    [self.masterDelegate presentUserLogin];
 }
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
@@ -1038,11 +1038,11 @@
 
 }
 
-- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
+- (void)navBarViewControllerSignupWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     [self dismissVideoReel];
-    [self.masterDelegate presentUserLogin];
-    //login is modal, nav hasn't actually changed...
+    [self.masterDelegate presentUserSignup];
+    //presentation is modal, nav hasn't actually changed...
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
 }
 

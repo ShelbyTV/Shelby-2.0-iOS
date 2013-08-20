@@ -52,7 +52,7 @@
 {
     [super awakeFromNib];
 
-    _orderedButtons = @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _loginButton];
+    _orderedButtons = @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _signupButton];
 
     //the grey lines that show when nav is expanded
     NSMutableArray *lines = [[NSMutableArray alloc] init];
@@ -172,7 +172,7 @@
         _settingsRowHeight.constant = 44;
         _settingsButton.hidden = NO;
         _loginRowHeight.constant = 0;
-        _loginButton.hidden = YES;
+        _signupButton.hidden = YES;
     } else {
         _streamRowHeight.constant = 0;
         _streamButton.hidden = YES;
@@ -181,7 +181,7 @@
         _settingsRowHeight.constant = 0;
         _settingsButton.hidden = YES;
         _loginRowHeight.constant = 44;
-        _loginButton.hidden = NO;
+        _signupButton.hidden = NO;
     }
 
     [self layoutIfNeeded];
