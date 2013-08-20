@@ -77,6 +77,9 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+
+    self.summaryTitle.font = kShelbyFontH2;
+    self.detailTitle.font = kShelbyFontH4Bold;
     
     self.detailUserAvatar.layer.cornerRadius = 5;
     self.detailUserAvatar.layer.masksToBounds = YES;

@@ -691,6 +691,21 @@
 		9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
 		9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
 		9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
+		9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */; };
+		9192ED0317C3EA3D00294440 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */; };
+		9192ED0417C3EA3D00294440 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */; };
+		9192ED0517C3EA3D00294440 /* Ubuntu-C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFE17C3EA3D00294440 /* Ubuntu-C.ttf */; };
+		9192ED0617C3EA3D00294440 /* Ubuntu-C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFE17C3EA3D00294440 /* Ubuntu-C.ttf */; };
+		9192ED0717C3EA3D00294440 /* Ubuntu-C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFE17C3EA3D00294440 /* Ubuntu-C.ttf */; };
+		9192ED0817C3EA3D00294440 /* Ubuntu-L.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFF17C3EA3D00294440 /* Ubuntu-L.ttf */; };
+		9192ED0917C3EA3D00294440 /* Ubuntu-L.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFF17C3EA3D00294440 /* Ubuntu-L.ttf */; };
+		9192ED0A17C3EA3D00294440 /* Ubuntu-L.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFF17C3EA3D00294440 /* Ubuntu-L.ttf */; };
+		9192ED0B17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ED0017C3EA3D00294440 /* Ubuntu-M.ttf */; };
+		9192ED0C17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ED0017C3EA3D00294440 /* Ubuntu-M.ttf */; };
+		9192ED0D17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ED0017C3EA3D00294440 /* Ubuntu-M.ttf */; };
+		9192ED0E17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ED0117C3EA3D00294440 /* Ubuntu-R.ttf */; };
+		9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ED0117C3EA3D00294440 /* Ubuntu-R.ttf */; };
+		9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ED0117C3EA3D00294440 /* Ubuntu-R.ttf */; };
 		91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3625D178F290300381218 /* UIView+EasingFunctions.m */; };
 		91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3625D178F290300381218 /* UIView+EasingFunctions.m */; };
 		91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A3625D178F290300381218 /* UIView+EasingFunctions.m */; };
@@ -1205,6 +1220,11 @@
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
 		9188F239178CBA3C002F342B /* ShelbyNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarView.h; sourceTree = "<group>"; };
 		9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarView.m; sourceTree = "<group>"; };
+		9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
+		9192ECFE17C3EA3D00294440 /* Ubuntu-C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-C.ttf"; sourceTree = "<group>"; };
+		9192ECFF17C3EA3D00294440 /* Ubuntu-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-L.ttf"; sourceTree = "<group>"; };
+		9192ED0017C3EA3D00294440 /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
+		9192ED0117C3EA3D00294440 /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
 		91A3625C178F290300381218 /* UIView+EasingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+EasingFunctions.h"; sourceTree = "<group>"; };
 		91A3625D178F290300381218 /* UIView+EasingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+EasingFunctions.m"; sourceTree = "<group>"; };
 		91A36262178F296B00381218 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
@@ -1752,6 +1772,7 @@
 		8E32BF86167FA58400753723 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				9192ECFC17C3EA1000294440 /* Fonts */,
 				91B7DC3C17B1642A009ABF02 /* Nav Bar */,
 				1C309AB617A7149F00D690A8 /* Share Images */,
 				1CD255C517A1DD0A0049FF30 /* Home */,
@@ -2093,6 +2114,18 @@
 			name = "Welcome Images";
 			sourceTree = "<group>";
 		};
+		9192ECFC17C3EA1000294440 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */,
+				9192ECFE17C3EA3D00294440 /* Ubuntu-C.ttf */,
+				9192ECFF17C3EA3D00294440 /* Ubuntu-L.ttf */,
+				9192ED0017C3EA3D00294440 /* Ubuntu-M.ttf */,
+				9192ED0117C3EA3D00294440 /* Ubuntu-R.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		91A3625B178F290300381218 /* UIView+EasingFunctions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2333,9 +2366,11 @@
 				1C96DEB617975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
 				1C96DEB917975D0900D845DF /* bkgd-step2.png in Resources */,
 				1C96DEBC17975D0900D845DF /* bkgd-step2@2x.png in Resources */,
+				9192ED0617C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				912261D417B97F070092AF30 /* overlay-likers.png in Resources */,
 				1C56F13D17BABD8C00EE9206 /* Appirater.podspec in Resources */,
 				1C96DEBF17975D0900D845DF /* bkgd-step3-568h@2x.png in Resources */,
+				9192ED0C17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */,
 				1C96DEC217975D0900D845DF /* bkgd-step3.png in Resources */,
 				1C96DEC517975D0900D845DF /* bkgd-step3@2x.png in Resources */,
 				1C96DEC817975D0900D845DF /* bkgd-step4-568h@2x.png in Resources */,
@@ -2363,6 +2398,7 @@
 				916F41D5179F06CA001D9DF7 /* welcome-buzzfeed.png in Resources */,
 				916F41D8179F06CA001D9DF7 /* welcome-buzzfeed@2x.png in Resources */,
 				916F41DB179F06CA001D9DF7 /* welcome-facebook.png in Resources */,
+				9192ED0317C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				916F41DE179F06CA001D9DF7 /* welcome-facebook@2x.png in Resources */,
 				916F41E1179F06CA001D9DF7 /* welcome-hungry.png in Resources */,
 				916F41E4179F06CA001D9DF7 /* welcome-hungry@2x.png in Resources */,
@@ -2386,6 +2422,7 @@
 				1CDCA691179F317A0098C4E1 /* overlay.png in Resources */,
 				1CDCA694179F317A0098C4E1 /* overlay@2x.png in Resources */,
 				1CDCA699179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
+				9192ED0917C3EA3D00294440 /* Ubuntu-L.ttf in Resources */,
 				1CDCA69C179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				1CDCA6A1179F3FB80098C4E1 /* play-standard.png in Resources */,
 				1C56F13717BABD8C00EE9206 /* .gitignore in Resources */,
@@ -2394,6 +2431,7 @@
 				1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CDCA6B5179F44760098C4E1 /* create-btn.png in Resources */,
 				1CDCA6B8179F44760098C4E1 /* create-btn@2x.png in Resources */,
+				9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				1CDCA6BB179F44760098C4E1 /* login-btn.png in Resources */,
 				1CDCA6BE179F44760098C4E1 /* login-btn@2x.png in Resources */,
 				1CDCA6C1179F44760098C4E1 /* logo.png in Resources */,
@@ -2484,9 +2522,11 @@
 				1C96DEB717975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
 				1C96DEBA17975D0900D845DF /* bkgd-step2.png in Resources */,
 				1C96DEBD17975D0900D845DF /* bkgd-step2@2x.png in Resources */,
+				9192ED0717C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				912261D517B97F070092AF30 /* overlay-likers.png in Resources */,
 				1C56F13E17BABD8C00EE9206 /* Appirater.podspec in Resources */,
 				1C96DEC017975D0900D845DF /* bkgd-step3-568h@2x.png in Resources */,
+				9192ED0D17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */,
 				1C96DEC317975D0900D845DF /* bkgd-step3.png in Resources */,
 				1C96DEC617975D0900D845DF /* bkgd-step3@2x.png in Resources */,
 				1C96DEC917975D0900D845DF /* bkgd-step4-568h@2x.png in Resources */,
@@ -2514,6 +2554,7 @@
 				916F41D6179F06CA001D9DF7 /* welcome-buzzfeed.png in Resources */,
 				916F41D9179F06CA001D9DF7 /* welcome-buzzfeed@2x.png in Resources */,
 				916F41DC179F06CA001D9DF7 /* welcome-facebook.png in Resources */,
+				9192ED0417C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				916F41DF179F06CA001D9DF7 /* welcome-facebook@2x.png in Resources */,
 				916F41E2179F06CA001D9DF7 /* welcome-hungry.png in Resources */,
 				916F41E5179F06CA001D9DF7 /* welcome-hungry@2x.png in Resources */,
@@ -2537,6 +2578,7 @@
 				1CDCA692179F317A0098C4E1 /* overlay.png in Resources */,
 				1CDCA695179F317A0098C4E1 /* overlay@2x.png in Resources */,
 				1CDCA69A179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
+				9192ED0A17C3EA3D00294440 /* Ubuntu-L.ttf in Resources */,
 				1CDCA69D179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				1CDCA6A2179F3FB80098C4E1 /* play-standard.png in Resources */,
 				1C56F13817BABD8C00EE9206 /* .gitignore in Resources */,
@@ -2545,6 +2587,7 @@
 				1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CDCA6B6179F44760098C4E1 /* create-btn.png in Resources */,
 				1CDCA6B9179F44760098C4E1 /* create-btn@2x.png in Resources */,
+				9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				1CDCA6BC179F44760098C4E1 /* login-btn.png in Resources */,
 				1CDCA6BF179F44760098C4E1 /* login-btn@2x.png in Resources */,
 				1CDCA6C2179F44760098C4E1 /* logo.png in Resources */,
@@ -2618,6 +2661,7 @@
 				1C7B63F3178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
 				1CC5763C178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 				9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
+				9192ED0817C3EA3D00294440 /* Ubuntu-L.ttf in Resources */,
 				91A362821790822D00381218 /* buzzfeed.png in Resources */,
 				91A362851790822D00381218 /* gopro.png in Resources */,
 				91A362881790822D00381218 /* gq.png in Resources */,
@@ -2689,6 +2733,8 @@
 				916F4257179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 				1CDCA68D179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA690179F317A0098C4E1 /* overlay.png in Resources */,
+				9192ED0E17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
+				9192ED0B17C3EA3D00294440 /* Ubuntu-M.ttf in Resources */,
 				1CDCA693179F317A0098C4E1 /* overlay@2x.png in Resources */,
 				1CDCA698179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
 				1CDCA69B179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
@@ -2705,6 +2751,7 @@
 				1C154E5217A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C154E6017A071DF00C0B76B /* circle.png in Resources */,
 				1C154E6317A071DF00C0B76B /* circle@2x.png in Resources */,
+				9192ED0517C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				1C534E3A17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3D17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
 				1C534E4017A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
@@ -2736,6 +2783,7 @@
 				91B7DC5217B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				91B7DC5517B29D59009ABF02 /* scrub-track-progress.png in Resources */,
 				91B7DC5817B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
+				9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				911ED32117B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
 				911ED32417B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
 				911ED32717B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */,

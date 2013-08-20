@@ -20,6 +20,8 @@
 // Segue
 - (IBAction)gotoMyAccount:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+
 @end
 
 @implementation SignupFlowStepThreeViewController
@@ -41,6 +43,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSocialButtons) name:kShelbyNotificationTwitterConnectCompleted object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSocialButtons) name:kShelbyNotificationFacebookConnectCompleted object:nil];
     }
+
+    self.subtitleLabel.font = kShelbyFontH2;
 }
 
 - (void)viewDidAppear:(BOOL)animated

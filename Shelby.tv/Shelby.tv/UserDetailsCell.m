@@ -21,6 +21,13 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    self.name.font = kShelbyFontH3;
+    self.userName.font = kShelbyFontH4Medium;
+    self.email.font = kShelbyFontH4Medium;
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];

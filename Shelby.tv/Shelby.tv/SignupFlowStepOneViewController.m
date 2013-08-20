@@ -17,6 +17,9 @@
 
 // Segue
 - (IBAction)gotoChooseVideoTypes:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @end
 
 @implementation SignupFlowStepOneViewController
@@ -35,6 +38,9 @@
     [super viewDidLoad];
 
     self.nextButton.enabled = NO;
+
+    self.titleLabel.font = kShelbyFontH2;
+    self.subtitleLabel.font = kShelbyFontH4Medium;
 }
 
 - (void)viewWillAppear:(BOOL)animated

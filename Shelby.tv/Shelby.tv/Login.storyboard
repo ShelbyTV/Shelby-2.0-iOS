@@ -29,7 +29,8 @@
                                         <fragment content="forgot password">
                                             <attributes>
                                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <font key="NSFont" size="14" name="Avenir-Medium"/>
+                                                <font key="NSFont" size="14" name="HelveticaNeue-Medium"/>
+                                                <font key="NSOriginalFont" size="14" name="HelveticaNeue-Medium"/>
                                                 <integer key="NSUnderline" value="1"/>
                                             </attributes>
                                         </fragment>
@@ -45,7 +46,7 @@
                                     <constraint firstAttribute="height" constant="21" id="8Ue-cQ-U7X"/>
                                     <constraint firstAttribute="width" constant="126" id="N93-Qg-Rfb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -64,7 +65,7 @@
                                     <constraint firstAttribute="height" constant="21" id="SoI-Ak-yOe"/>
                                     <constraint firstAttribute="width" constant="75" id="Zp3-9h-KDt"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -82,7 +83,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="T81-xe-Dq6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <state key="normal" title="I don't have a Shelby account" backgroundImage="login-btn.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
