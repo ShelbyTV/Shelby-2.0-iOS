@@ -721,22 +721,22 @@
     }
 }
 
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)browseVC cellParallaxDidChange:(ShelbyStreamBrowseViewCell *)cell
+{
+    if (self.currentStreamBrowseVC == browseVC && self.videoReel) {
+        [self showPlaybackOverlayForCurrentBrowseViewController];
+    }
+}
+
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)browseVC wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    if (self.videoReel && self.currentStreamBrowseVC == browseVC) {
-        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-            if (browseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay || browseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
-                //show overlays
-                self.navBar.alpha = 1.0;
-                self.videoControlsVC.view.alpha = 1.0;
-                browseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
-            } else {
-                //hide overlays
-                self.navBar.alpha = 0.0;
-                self.videoControlsVC.view.alpha = 0.0;
-                browseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
-            }
-        }];
+    if (self.currentStreamBrowseVC == browseVC) {
+        if (self.videoReel) {
+            [self togglePlaybackOverlayForCurrentBrowseViewController];
+        } else {
+            STVAssert(browseVC.viewMode == ShelbyStreamBrowseViewDefault, @"should be in play mode w/o video reel");
+            [self playChannel:browseVC.channel atIndex:[browseVC indexPathForCurrentFocus].row];
+        }
     }
 }
 
@@ -956,6 +956,33 @@
                 self.videoControlsVC.displayMode = VideoControlsDisplayActionsOnly;
             }
         }
+    }];
+}
+
+- (void)togglePlaybackOverlayForCurrentBrowseViewController
+{
+    if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay || self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
+        [self showPlaybackOverlayForCurrentBrowseViewController];
+    } else {
+        [self hidePlaybackOverlayForCurrentBrowseViewController];
+    }
+}
+
+- (void)showPlaybackOverlayForCurrentBrowseViewController
+{
+    [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+        self.navBar.alpha = 1.0;
+        self.videoControlsVC.view.alpha = 1.0;
+        self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
+    }];
+}
+
+- (void)hidePlaybackOverlayForCurrentBrowseViewController
+{
+    [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+        self.navBar.alpha = 0.0;
+        self.videoControlsVC.view.alpha = 0.0;
+        self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
     }];
 }
 

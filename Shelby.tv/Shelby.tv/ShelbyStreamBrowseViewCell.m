@@ -334,9 +334,7 @@
 
 - (void)parallaxViewWillBeginDragging
 {
-    if (self.viewMode != ShelbyStreamBrowseViewForPlaybackWithOverlay) {
-        [self.delegate browseViewCellTapped:self];
-    }
+    //do nothing
 }
 
 #pragma mark - StreamBrowseCellForegroundDelegate

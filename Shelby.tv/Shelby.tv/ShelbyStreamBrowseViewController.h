@@ -28,6 +28,7 @@
 - (void)shelbyStreamBrowseViewControllerDidEndDecelerating:(ShelbyStreamBrowseViewController *)vc;
 //indicates a single, 1 touch tap that waits for all panning to fail
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc wasTapped:(UITapGestureRecognizer *)tapGestureRecognizer;
+- (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc cellParallaxDidChange:(ShelbyStreamBrowseViewCell *)cell;
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc didChangeToPage:(NSUInteger)page;
 - (void)shelbyStreamBrowseViewController:(ShelbyStreamBrowseViewController *)vc hasNoContnet:(BOOL)noContent;
 - (void)shelbyStreamBrowseViewControllerTitleTapped:(ShelbyStreamBrowseViewController *)vc;

@@ -356,18 +356,14 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     _lastCellWithParallaxUpdate = cell;
     // if only 1 cell is visible on screen at a time, the following line is unnecessary
     [self.streamBrowseViewCells makeObjectsPerformSelector:@selector(matchParallaxOf:) withObject:cell];
+
+    [self.browseViewDelegate shelbyStreamBrowseViewController:self cellParallaxDidChange:cell];
 }
 
 - (void)browseViewCellPlayTapped:(ShelbyStreamBrowseViewCell *)cell
 {
-    if ([self.browseManagementDelegate respondsToSelector:@selector(userPressedChannel:atItem:)]) {
-        [self.browseManagementDelegate userPressedChannel:self.channel atItem:cell.entry];
-    }
-}
-
-- (void)browseViewCellTapped:(ShelbyStreamBrowseViewCell *)cell
-{
-    [self. browseViewDelegate shelbyStreamBrowseViewController:self wasTapped:nil];
+    STVAssert([self.browseManagementDelegate respondsToSelector:@selector(userPressedChannel:atItem:)], @"non optional delegate method");
+    [self.browseManagementDelegate userPressedChannel:self.channel atItem:cell.entry];
 }
 
 - (void)browseViewCell:(ShelbyStreamBrowseViewCell *)cell parallaxDidChangeToPage:(NSUInteger)page
