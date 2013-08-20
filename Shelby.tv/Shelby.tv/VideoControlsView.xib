@@ -128,6 +128,45 @@
                         <action selector="scrubberTouchUpOutside:" destination="-1" eventType="touchUpOutside" id="383"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bib-7M-uDj" userLabel="(nonplayback) - LIKE">
+                    <rect key="frame" x="56" y="55" width="48" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-8" minY="-1" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="LIKE" image="overlay-likers.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="likeTapped:" destination="-1" eventType="touchUpInside" id="Gpl-OI-yNr"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="azI-N0-3Fz" userLabel="(nonplayback) - SHARE">
+                    <rect key="frame" x="209" y="55" width="64" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-8" minY="-1" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="SHARE" image="overlay-sharers.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="shareTapped:" destination="-1" eventType="touchUpInside" id="FwJ-qe-emG"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IGu-tb-j5j" userLabel="(nonplayback) - UNLIKE">
+                    <rect key="frame" x="45" y="55" width="70" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-8" minY="-1" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="UNLIKE" image="overlay-likers.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="unlikeTapped:" destination="-1" eventType="touchUpInside" id="DfW-xb-efc"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -137,6 +176,9 @@
                 <outlet property="currentTimeLabel" destination="37" id="63"/>
                 <outlet property="durationLabel" destination="40" id="64"/>
                 <outlet property="likeButton" destination="70" id="79"/>
+                <outlet property="nonplaybackLikeButton" destination="bib-7M-uDj" id="kIm-w3-MlY"/>
+                <outlet property="nonplaybackShareButton" destination="azI-N0-3Fz" id="XMw-qR-DjZ"/>
+                <outlet property="nonplaybackUnlikeButton" destination="IGu-tb-j5j" id="GUS-ij-09T"/>
                 <outlet property="overlay" destination="406" id="417"/>
                 <outlet property="playPauseButton" destination="3" id="gIp-j9-YrG"/>
                 <outlet property="scrubheadButton" destination="339" id="390"/>
@@ -152,6 +194,8 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
+        <image name="overlay-likers.png" width="17" height="16"/>
+        <image name="overlay-sharers.png" width="17" height="18"/>
         <image name="pause.png" width="14" height="16"/>
         <image name="scrubber.png" width="32" height="32"/>
     </resources>

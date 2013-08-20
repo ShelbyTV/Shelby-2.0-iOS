@@ -21,7 +21,8 @@
 @property (nonatomic, assign) BOOL currentlyScrubbing;
 @property (nonatomic, strong) NSArray *playbackControlViews;
 @property (nonatomic) UIButton *airPlayButton;
-@property (nonatomic, strong) NSArray *actionsViews;
+@property (nonatomic, strong) NSArray *playbackActionViews;
+@property (nonatomic, strong) NSArray *nonplaybackActionViews;
 @property (nonatomic, weak) IBOutlet UIView *separator;
 @property (strong, nonatomic) UIActivityIndicatorView *shareActivityIndicator;
 @end
@@ -53,10 +54,13 @@
                                   self.controlsView.bufferProgressView,
                                   self.controlsView.scrubheadButton
                                   ];
-    self.actionsViews = @[self.controlsView.likeButton,
-                          self.controlsView.unlikeButton,
-                          self.controlsView.shareButton
-                          ];
+    self.playbackActionViews = @[self.controlsView.likeButton,
+                                 self.controlsView.unlikeButton,
+                                 self.controlsView.shareButton
+                                 ];
+    self.nonplaybackActionViews = @[self.controlsView.nonplaybackLikeButton,
+                                    self.controlsView.nonplaybackUnlikeButton,
+                                    self.controlsView.nonplaybackShareButton];
     [self updateViewForCurrentDisplayMode];
     [self setupAirPlay];
 }
@@ -94,8 +98,9 @@
 
 - (void)adjustVideoControlsForLandscape:(BOOL)landscapeOrientation
 {
+    NSInteger width;
     if (landscapeOrientation) {
-        NSInteger width = kShelbyFullscreenHeight;
+        width = kShelbyFullscreenHeight;
         NSInteger height = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, height - self.controlsView.frame.size.height, width, self.controlsView.frame.size.height);
         self.controlsView.overlay.frame = CGRectMake(0, self.controlsView.frame.size.height - HEIGHT_IN_LANDSCAPE, self.controlsView.frame.size.width, HEIGHT_IN_LANDSCAPE);
@@ -119,7 +124,7 @@
         [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:YES];
 
     } else {
-        NSInteger width = kShelbyFullscreenWidth;
+        width = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, kShelbyFullscreenHeight - HEIGHT_IN_PORTRAIT, width, HEIGHT_IN_PORTRAIT);
         self.controlsView.overlay.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, self.controlsView.frame.size.height);
         self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
@@ -139,6 +144,14 @@
         // Duration Time Label depends on whether airplay button is visible or not
         [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:NO];
     }
+
+    // nonplayback actions
+    CGFloat leftButtonWidth = width / 2.0f;
+    CGFloat buttonHeight = 44.f;
+    CGFloat buttonY = self.controlsView.frame.size.height - buttonHeight;
+    self.controlsView.nonplaybackLikeButton.frame = CGRectMake(0, buttonY, leftButtonWidth, buttonHeight);
+    self.controlsView.nonplaybackUnlikeButton.frame = self.controlsView.nonplaybackLikeButton.frame;
+    self.controlsView.nonplaybackShareButton.frame = CGRectMake(leftButtonWidth+1, buttonY, leftButtonWidth-1, buttonHeight);
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -381,7 +394,9 @@
     if (self.currentEntity){
         BOOL isLiked = [[Frame frameForEntity:self.currentEntity] videoIsLiked];
         self.controlsView.likeButton.hidden = isLiked;
+        self.controlsView.nonplaybackLikeButton.hidden = isLiked;
         self.controlsView.unlikeButton.hidden = !isLiked;
+        self.controlsView.nonplaybackUnlikeButton.hidden = !isLiked;
     }
 }
 
@@ -397,19 +412,22 @@
     //    the outside world may use self.view to adjust our alpha wholistically
     switch (_displayMode) {
         case VideoControlsDisplayDefault:
-            [self setActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setNonplaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             self.controlsView.overlay.hidden = YES;
             self.separator.hidden = YES;
             break;
         case VideoControlsDisplayActionsOnly:
-            [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setNonplaybackActionViewsAlpha:0.75 userInteractionEnabled:YES];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             self.controlsView.overlay.hidden = YES;
             self.separator.hidden = YES;
             break;
         case VideoControlsDisplayActionsAndPlaybackControls:
-            [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setPlaybackActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setNonplaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
             [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
             self.controlsView.overlay.hidden = NO;
             self.separator.hidden = NO;
@@ -424,9 +442,17 @@
     }
 }
 
-- (void)setActionViewsAlpha:(CGFloat)a userInteractionEnabled:(BOOL)interactionEnabled
+- (void)setPlaybackActionViewsAlpha:(CGFloat)a userInteractionEnabled:(BOOL)interactionEnabled
 {
-    for (UIView *v in self.actionsViews) {
+    for (UIView *v in self.playbackActionViews) {
+        v.alpha = a;
+        v.userInteractionEnabled = interactionEnabled;
+    }
+}
+
+- (void)setNonplaybackActionViewsAlpha:(CGFloat)a userInteractionEnabled:(BOOL)interactionEnabled
+{
+    for (UIView *v in self.nonplaybackActionViews) {
         v.alpha = a;
         v.userInteractionEnabled = interactionEnabled;
     }

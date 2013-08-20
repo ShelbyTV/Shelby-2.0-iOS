@@ -37,6 +37,11 @@
         motionEffect.maximumRelativeValue = kShelbyMotionForegroundYMax;
         [self addMotionEffect:motionEffect];
     }
+
+    for (UIButton *b in @[self.nonplaybackLikeButton, self.nonplaybackUnlikeButton, self.nonplaybackShareButton]) {
+        b.backgroundColor = [UIColor blackColor];
+        //alpha is set in -[VideoControlsViewController updateViewForCurrentDisplayMode]
+    }
 }
 
 //to allow touch events to pass through the background

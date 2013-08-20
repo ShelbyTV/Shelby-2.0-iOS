@@ -90,7 +90,7 @@
 
     //white layer with alpha for iOS6 & 7
     //the toolbar blur hack isn't great, it's just doing a static image swaparoo
-    self.detailWhiteBackground.alpha = 0.75;
+    self.detailWhiteBackground.alpha = 0.85;
     self.detailWhiteBackground.backgroundColor = [UIColor whiteColor];
 
     if ([DeviceUtilities isGTEiOS7]) {
