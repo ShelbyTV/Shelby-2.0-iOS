@@ -24,6 +24,11 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    self.nameCopyLabel.font = kShelbyFontH3;
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

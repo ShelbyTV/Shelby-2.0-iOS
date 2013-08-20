@@ -41,6 +41,8 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Ubuntu-C.ttf</string>
+		<string>Ubuntu-L.ttf</string>
 		<string>Ubuntu-R.ttf</string>
 		<string>Ubuntu-B.ttf</string>
 		<string>Ubuntu-M.ttf</string>

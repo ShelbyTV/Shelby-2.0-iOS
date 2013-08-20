@@ -54,6 +54,10 @@
 
     _orderedButtons = @[_streamButton, _likesButton, _sharesButton, _communityButton, _settingsButton, _signupButton];
 
+    for (UIButton *b in _orderedButtons) {
+        b.titleLabel.font = kShelbyFontH3;
+    }
+
     //the grey lines that show when nav is expanded
     NSMutableArray *lines = [[NSMutableArray alloc] init];
     for (UIButton *b in _orderedButtons) {
