@@ -178,7 +178,7 @@
         cell.userName.text = self.user.nickname;
         cell.avatar.layer.cornerRadius = 5;
         cell.avatar.layer.masksToBounds = YES;
-        [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:nil];
+        [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:[UIImage imageNamed:@"settings-default-avatar"]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
