@@ -290,11 +290,6 @@
     }
 }
 
-- (void)playButtonTapped:(id)sender
-{
-    [self.delegate browseViewCellPlayTapped:self];
-}
-
 + (void)cacheEntry:(id<ShelbyVideoContainer>)entry
 {
     /* Networking code will cache requests for us, so all we have to do is make the request.

@@ -360,12 +360,6 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     [self.browseViewDelegate shelbyStreamBrowseViewController:self cellParallaxDidChange:cell];
 }
 
-- (void)browseViewCellPlayTapped:(ShelbyStreamBrowseViewCell *)cell
-{
-    STVAssert([self.browseManagementDelegate respondsToSelector:@selector(userPressedChannel:atItem:)], @"non optional delegate method");
-    [self.browseManagementDelegate userPressedChannel:self.channel atItem:cell.entry];
-}
-
 - (void)browseViewCell:(ShelbyStreamBrowseViewCell *)cell parallaxDidChangeToPage:(NSUInteger)page
 {
     self.currentPage = page;
