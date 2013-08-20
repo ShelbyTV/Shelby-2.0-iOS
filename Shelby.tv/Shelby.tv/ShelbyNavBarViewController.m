@@ -109,8 +109,8 @@
             [self.delegate navBarViewControllerCommunityWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else if (sender == self.navBarView.settingsButton) {
             [self.delegate navBarViewControllerSettingsWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
-        } else if (sender == self.navBarView.loginButton) {
-            [self.delegate navBarViewControllerLoginWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+        } else if (sender == self.navBarView.signupButton) {
+            [self.delegate navBarViewControllerSignupWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else {
             STVAssert(NO, @"unhandled nav row");
         }

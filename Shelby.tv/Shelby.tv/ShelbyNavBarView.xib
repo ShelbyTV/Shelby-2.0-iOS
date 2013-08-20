@@ -122,7 +122,7 @@
                                 <constraint firstAttribute="height" constant="44" id="667"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                            <state key="normal" title="Login">
+                            <state key="normal" title="Sign up for Shelby">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -180,7 +180,6 @@
             <connections>
                 <outlet property="communityButton" destination="157" id="458"/>
                 <outlet property="likesButton" destination="134" id="460"/>
-                <outlet property="loginButton" destination="659" id="676"/>
                 <outlet property="loginRowHeight" destination="667" id="680"/>
                 <outlet property="selectionIdentifier" destination="179" id="462"/>
                 <outlet property="selectionIdentifierX" destination="396" id="463"/>
@@ -189,6 +188,7 @@
                 <outlet property="settingsRowHeight" destination="695" id="697"/>
                 <outlet property="sharesButton" destination="152" id="468"/>
                 <outlet property="sharesRowHeight" destination="656" id="678"/>
+                <outlet property="signupButton" destination="659" id="zck-kd-1kc"/>
                 <outlet property="slider" destination="1" id="471"/>
                 <outlet property="sliderY" destination="528" id="547"/>
                 <outlet property="streamButton" destination="147" id="473"/>
