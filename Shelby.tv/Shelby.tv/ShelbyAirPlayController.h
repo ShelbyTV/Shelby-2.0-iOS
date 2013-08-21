@@ -8,14 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "SPVideoPlayer.h"
+#import "VideoControlsViewController.h"
 
 @protocol ShelbyAirPlayControllerDelegate;
 
-@interface ShelbyAirPlayController : NSObject
+@interface ShelbyAirPlayController : NSObject <SPVideoPlayerDelegate>
 @property (nonatomic, weak) id<ShelbyAirPlayControllerDelegate> delegate;
+@property (nonatomic, weak) VideoControlsViewController *videoControlsVC;
 
 - (BOOL)isAirPlayActive;
 - (void)playEntity:(id<ShelbyVideoContainer>)entity;
+- (void)pauseCurrentPlayer;
+- (void)beginScrubbing;
+- (void)scrubCurrentPlayerTo:(CGFloat)percent;
+- (void)endScrubbing;
 @end
 
 @protocol ShelbyAirPlayControllerDelegate <NSObject>

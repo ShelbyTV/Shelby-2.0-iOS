@@ -267,6 +267,7 @@
     if (_viewMode != viewMode) {
         _viewMode = viewMode;
         switch (_viewMode) {
+            case ShelbyStreamBrowseViewForAirplay:
             case ShelbyStreamBrowseViewDefault:
                 self.playButton.alpha = 1.0;
                 [self.parallaxView getBackgroundView].alpha = 1.0;
@@ -286,6 +287,7 @@
                 self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 1.0;
+                break;
         }
     }
 }
