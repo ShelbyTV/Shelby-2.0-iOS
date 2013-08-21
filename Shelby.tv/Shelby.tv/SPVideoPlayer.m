@@ -113,6 +113,9 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
         [self addAllObservers];
 
+        //TODO: for second screen (aka mirroring) need the following line
+        //self.player.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
         //NB default anchorPoint is (0.5, 0.5)
