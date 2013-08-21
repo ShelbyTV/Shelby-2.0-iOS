@@ -16,6 +16,10 @@
 
 #define PLAYBACK_API_UPDATE_INTERVAL 15.f
 
+NSString * const kShelbySPVideoExternalPlaybackActiveKey = @"externalPlaybackActive";
+NSString * const kShelbySPVideoAirplayDidBegin = @"spAirplayDidBegin";
+NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
+
 @interface SPVideoPlayer () {
     CGFloat _rateBeforeScrubbing;
     CMTime _lastPlaybackUpdateIntervalEnd;
@@ -99,19 +103,27 @@
     // Setup player and observers
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
-    self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-    [self addAllObservers];
-    
-    // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
-    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-    //NB default anchorPoint is (0.5, 0.5)
-    self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    self.playerLayer.position = CGPointMake(self.view.frame.size.width/2.f, self.view.frame.size.height/2.f);
+    if (self.player) {
+        //reuse player
+        self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
+        [self.player replaceCurrentItemWithPlayerItem:playerItem];
 
-    [self.view.layer addSublayer:self.playerLayer];
-    
-    if(CMTIME_IS_VALID(self.lastPlayheadPosition)){
-        [self.player seekToTime:self.lastPlayheadPosition];
+    } else {
+        //new player
+        self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+        [self addAllObservers];
+
+        // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
+        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+        //NB default anchorPoint is (0.5, 0.5)
+        self.playerLayer.bounds = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        self.playerLayer.position = CGPointMake(self.view.frame.size.width/2.f, self.view.frame.size.height/2.f);
+
+        [self.view.layer addSublayer:self.playerLayer];
+
+        if(CMTIME_IS_VALID(self.lastPlayheadPosition)){
+            [self.player seekToTime:self.lastPlayheadPosition];
+        }
     }
     
     self.isPlayable = YES;
@@ -141,6 +153,9 @@
                                                                    usingBlock:^(CMTime time) {
                                                                        [weakSelf currentTimeUpdated:time];
                                                                    }];
+
+    //air play
+    [self.player addObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)removeAllObservers
@@ -156,6 +171,8 @@
     
     [self.player removeTimeObserver:self.playerTimeObserver];
     self.playerTimeObserver = nil;
+
+    [self.player removeObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey];
 }
 
 - (CMTime)elapsedTime
@@ -184,7 +201,9 @@
 {
     self.canBecomePlayable = YES;
 
-    if(self.isPlayable){
+    //if we are in external playback mode, a single player gets reused
+    //otherwise, we may have been warmed up and don't need to extract
+    if(!self.player.isExternalPlaybackActive && self.isPlayable){
         if (self.shouldAutoplay) {
             [self play];
         }
@@ -250,20 +269,22 @@
 
 - (void)resetPlayer
 {
-    // Keep these three lines first to prevent messages being sent to zombies
-    self.canBecomePlayable = NO; //must be reset by -prepareFor...Playback methods
-    self.shouldAutoplay = NO;
-    [self removeAllObservers];
-    
-    [self pause];
-    self.lastPlayheadPosition = [self elapsedTime];
-    self.isPlayable = NO;
-    
-    [self.playerLayer removeFromSuperlayer];
-    self.playerLayer = nil;
-    self.player = nil;
+    if (!self.player.isExternalPlaybackActive) {
+        // Keep these three lines first to prevent messages being sent to zombies
+        self.canBecomePlayable = NO; //must be reset by -prepareFor...Playback methods
+        self.shouldAutoplay = NO;
+        [self removeAllObservers];
 
-    _lastPlaybackUpdateIntervalEnd = CMTimeMake(0, NSEC_PER_MSEC);
+        [self pause];
+        self.lastPlayheadPosition = [self elapsedTime];
+        self.isPlayable = NO;
+
+        [self.playerLayer removeFromSuperlayer];
+        self.playerLayer = nil;
+        self.player = nil;
+
+        _lastPlaybackUpdateIntervalEnd = CMTimeMake(0, NSEC_PER_MSEC);
+    }
 }
 
 #pragma mark - Video Playback Methods (Public)
@@ -342,6 +363,15 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    if (self.player == object && [keyPath isEqualToString:@"externalPlaybackActive"]) {
+        if (self.player.externalPlaybackActive) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoAirplayDidBegin object:self];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoAirplayDidEnd object:self];
+        }
+        return;
+    }
+
     // do we get notifications that we don't want?  It seems somebody thought we did...
     if (![self.player currentItem] || object != [_player currentItem]) {
         return;
@@ -361,6 +391,7 @@
         
     } else if ([keyPath isEqualToString:kShelbySPAVPlayerDuration]) {
         [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
+
     }
 }
 

@@ -31,6 +31,8 @@
 
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
 
+@property (nonatomic, strong) ShelbyAirPlayController *airPlayController;
+
 
 #define OVERLAY_ANIMATION_DURATION 0.2
 #define NAV_BUTTON_FADE_TIME 0.1
@@ -44,7 +46,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _airPlayController = [[ShelbyAirPlayController alloc] init];
+        _airPlayController.delegate = self;
     }
     return self;
 }
@@ -430,7 +433,13 @@
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    if (self.videoReel) {
+    if ([self.airPlayController isAirPlayActive]) {
+        //play back on second screen!
+        NSArray *channelEntities = [self deduplicatedEntriesForChannel:channel];
+        STVAssert([channelEntities count] > (NSUInteger)index, @"expected a valid index");
+        [self.airPlayController playEntity:channelEntities[index]];
+
+    } else if (self.videoReel) {
         STVAssert(self.videoReel.channel == channel, @"videoReel should have been shutdown or changed when channel was changed");
 //        if (DEVICE_IPAD) {
 //            //TODO
@@ -922,6 +931,30 @@
 - (void)shareControllerRequestsTwitterPublishPermissions:(SPShareController *)shareController
 {
     [self.masterDelegate userAskForTwitterPublishPermissions];
+}
+
+#pragma mark - ShelbyAirPlayControllerDelegate
+
+- (void)airPlayControllerDidBeginAirPlay:(ShelbyAirPlayController *)airPlayController
+{
+    DLog(@"TODO - change view mode");
+
+    //NB: current SPVideoPlayer has a new owner: _airPlayController
+    //TODO: change view mode to airplay
+
+    if (self.videoReel) {
+        //NB: current SPVideoPlayer will not reset itself b/c it's in external playback mode
+        [self dismissVideoReel];
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    }
+}
+
+- (void)airPlayControllerDidEndAirPlay:(ShelbyAirPlayController *)airPlayController
+{
+    DLog(@"TODO - reset on end of airplay");
+
+    //NB: _airPlayController handles shutdown of SPVideoPlayer
+    //TODO: change view mode to default
 }
 
 #pragma mark - View Helpers
