@@ -381,12 +381,9 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
     ACAccountType *twitterType = [self.twitterAccountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     [self.twitterAccountStore requestAccessToAccountsWithType:twitterType options:nil completion:^(BOOL granted, NSError *error) {
         if ( granted && !error ) {
-            
             [reverseAuthAccessTokenRequest setAccount:self.twitterAccount];
             [reverseAuthAccessTokenRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-                
                 if ( responseData ) {
-                    
                     // Get results string (e.g., Access Token, Access Token Secret, Twitter Handle)
                     NSString *reverseAuthAccessResults = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
                     
@@ -443,17 +440,13 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                             [self sendReverseAuthAccessResultsToServer];
                         });
                     });
-                    
                 } else {
                     // KP KP: TODO: change error message.s
-                    [self.delegate twitterConnectDidCompleteWithError:@"Error Setting Twitter account. Please try again later."];
+                    [self.delegate twitterConnectDidCompleteWithError:@"Error setting Twitter account. Please try again later."];
                     DLog(@"%@", error);
-                    
                 }
-
             }];
         }
-        
     }];
 }
 
