@@ -30,11 +30,21 @@
 #   define STVDebugAssert(expression, ...)
 #endif
 
-#define STVAssert(expression, ...) \
-do { \
-    if(!(expression)) { \
-        NSString *__STVAssert_temp_string = [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __func__, __FILE__, __LINE__, [NSString stringWithFormat: @"" __VA_ARGS__]]; \
-        NSLog(@"%@", __STVAssert_temp_string); \
-        abort(); \
-    } \
-} while(0)
+#ifdef DEBUG
+#   define STVAssert(expression, ...) \
+        do { \
+            if(!(expression)) { \
+                NSString *__STVAssert_temp_string = [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __func__, __FILE__, __LINE__, [NSString stringWithFormat: @"" __VA_ARGS__]]; \
+                NSLog(@"%@", __STVAssert_temp_string); \
+                abort(); \
+            } \
+        } while(0)
+#else
+#   define STVAssert(expression, ...) \
+        do { \
+            if(!(expression)) { \
+            NSString *__STVAssert_temp_string = [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __func__, __FILE__, __LINE__, [NSString stringWithFormat: @"" __VA_ARGS__]]; \
+            @throw([NSException exceptionWithName:@"STVAssertException" reason:[NSString stringWithFormat:@"%@", __STVAssert_temp_string] userInfo:nil]); \
+            } \
+        } while(0)
+#endif
