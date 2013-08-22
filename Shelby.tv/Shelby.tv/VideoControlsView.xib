@@ -16,12 +16,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <subviews>
-                <view userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleToFill" id="406">
+                <view userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" id="406" userLabel="overlay">
                     <rect key="frame" x="-2" y="0.0" width="320" height="88"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <view alpha="0.5" contentMode="scaleToFill" id="558">
+                <view alpha="0.5" contentMode="scaleToFill" id="558" userLabel="separator">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>

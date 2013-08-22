@@ -115,6 +115,10 @@
     self.currentFrame = self.videoPlayer.videoFrame;
 
     STVAssert(self.videoPlayer.videoFrame == [Frame frameForEntity:self.videoControlsVC.currentEntity], @"player and controls should have same frame");
+
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                          action:kAnalyticsUXAirplayBegin
+                                 nicknameAsLabel:YES];
 }
 
 - (void)airplayDidEnd:(NSNotification *)note
@@ -123,6 +127,10 @@
     self.videoPlayer = nil;
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     [self.delegate airPlayControllerDidEndAirPlay:self];
+
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                          action:kAnalyticsUXAirplayEnd
+                                 nicknameAsLabel:YES];
 }
 
 - (BOOL)isAirPlayActive
