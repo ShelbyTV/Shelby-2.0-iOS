@@ -18,6 +18,9 @@
 //allows us to dismiss alert view if video changes or we exit
 @property (nonatomic, strong) ShelbyAlert *currentVideoAlertView;
 @property (nonatomic, strong) NSDate *lastVideoStalledAlertTime;
+
+// External screen for mirroring
+@property (nonatomic, strong) UIWindow *secondWindow;
 @end
 
 //only show the stalled alert view if it hasn't shown in this much time
@@ -30,8 +33,7 @@
 {
     self = [super init];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(airplayDidBegin:) name:kShelbySPVideoAirplayDidBegin object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(airplayDidEnd:) name:kShelbySPVideoAirplayDidEnd object:nil];
+        [self setup];
     }
     return self;
 }
@@ -39,6 +41,67 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setup
+{
+    // General AirPlay observers
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(airplayDidBegin:) name:kShelbySPVideoAirplayDidBegin object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(airplayDidEnd:) name:kShelbySPVideoAirplayDidEnd object:nil];
+    
+    // Mirroring setup.
+    [self setUpScreenConnectionNotificationHandlers];
+    [self checkForExistingScreenAndInitializeIfPresent];
+}
+
+- (void)initializeSecondScreen:(UIScreen *)screen
+{
+    if (!self.secondWindow) {
+        self.secondWindow = [[UIWindow alloc] initWithFrame:screen.bounds];
+        self.secondWindow.screen = screen;
+        self.secondWindow.hidden = NO;
+        
+        UIView *externalView = [[UIView alloc] initWithFrame:screen.bounds];
+        
+        // Center Shelby Logo on External Screen
+        UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
+        NSInteger logoHeight = logo.frame.size.height;
+        NSInteger logoWidth = logo.frame.size.width;
+        logo.frame = CGRectMake(screen.bounds.size.width/2 - logoWidth/2 , screen.bounds.size.height/2 - logoHeight/2, logoWidth, logoHeight);
+        [externalView addSubview:logo];
+        
+        [self.secondWindow addSubview:externalView];
+    }
+}
+
+- (void)checkForExistingScreenAndInitializeIfPresent
+{
+    if ([[UIScreen screens] count] > 1) {
+        UIScreen *secondScreen = [[UIScreen screens] objectAtIndex:1];
+        [self initializeSecondScreen:secondScreen];
+    }
+}
+
+- (void)setUpScreenConnectionNotificationHandlers
+{
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(handleScreenDidConnectNotification:)
+                   name:UIScreenDidConnectNotification object:nil];
+    [center addObserver:self selector:@selector(handleScreenDidDisconnectNotification:)
+                   name:UIScreenDidDisconnectNotification object:nil];
+}
+
+- (void)handleScreenDidConnectNotification:(NSNotification*)aNotification
+{
+    UIScreen *newScreen = [aNotification object];
+    [self initializeSecondScreen:newScreen];
+}
+
+
+- (void)handleScreenDidDisconnectNotification:(NSNotification*)aNotification
+{
+    self.secondWindow.hidden = YES;
+    self.secondWindow = nil;
 }
 
 - (void)airplayDidBegin:(NSNotification *)note

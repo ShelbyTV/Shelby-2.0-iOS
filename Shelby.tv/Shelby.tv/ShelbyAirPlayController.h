@@ -23,6 +23,8 @@
 - (void)beginScrubbing;
 - (void)scrubCurrentPlayerTo:(CGFloat)percent;
 - (void)endScrubbing;
+
+- (void)checkForExistingScreenAndInitializeIfPresent;
 @end
 
 @protocol ShelbyAirPlayControllerDelegate <NSObject>

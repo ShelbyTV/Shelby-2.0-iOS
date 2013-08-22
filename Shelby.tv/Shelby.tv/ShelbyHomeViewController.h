@@ -66,6 +66,8 @@
 
 - (void)videoDidAutoadvance;
 
+- (void)handleDidBecomeActive;
+
 //DEPRECATED
 - (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
 //DEPRECATED

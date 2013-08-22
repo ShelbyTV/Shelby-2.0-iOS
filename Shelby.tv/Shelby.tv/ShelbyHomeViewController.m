@@ -85,6 +85,11 @@
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
 
+- (void)handleDidBecomeActive
+{
+    [self.airPlayController checkForExistingScreenAndInitializeIfPresent];
+}
+
 - (void)setupNavBarView
 {
     self.navBarVC = [[ShelbyNavBarViewController alloc] initWithNibName:@"ShelbyNavBarView" bundle:nil];
