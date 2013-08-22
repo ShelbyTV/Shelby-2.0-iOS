@@ -35,6 +35,7 @@ extern NSString * const kAnalyticsUXVideoDidAutoadvance;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePaused;
+extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModeAirPlay;
 extern NSString * const kAnalyticsUXLike;
 extern NSString * const kAnalyticsUXUnlike;
 extern NSString * const kAnalyticsUXShareStart;

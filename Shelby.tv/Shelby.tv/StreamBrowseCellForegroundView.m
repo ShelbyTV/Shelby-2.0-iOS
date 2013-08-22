@@ -300,7 +300,7 @@
     }
     if ([_likers count]) {
         self.detailLikersSubview.hidden = NO;
-        for (NSUInteger i = 0; i < [_likers count]; i++) {
+        for (NSUInteger i = 0; i < MIN([_likers count],[_likerImageViews count]); i++) {
             User *liker = _likers[i];
             [((UIImageView *)_likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
         }

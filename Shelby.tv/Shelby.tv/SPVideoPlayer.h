@@ -11,6 +11,9 @@
 #import <CoreMedia/CoreMedia.h>
 #import "ShelbyViewController.h"
 
+extern NSString * const kShelbySPVideoAirplayDidBegin;
+extern NSString * const kShelbySPVideoAirplayDidEnd;
+
 @class SPVideoPlayer;
 
 @protocol SPVideoPlayerDelegate <NSObject>

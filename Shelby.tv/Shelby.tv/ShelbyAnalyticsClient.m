@@ -37,6 +37,7 @@ NSString * const kAnalyticsUXVideoDidAutoadvance                        = @"Vide
 NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode      = @"Swipe Card to Change Video: Non-Playback";
 NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying  = @"Swipe Card to Chagne Video: Playback: Playing";
 NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePaused   = @"Swipe Card to Chagne Video: Playback: Paused";
+NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModeAirPlay  = @"Swipe Card to Chagne Video: Playback: AirPlay";
 NSString * const kAnalyticsUXLike                                       = @"Like";
 NSString * const kAnalyticsUXUnlike                                     = @"Unlike";
 NSString * const kAnalyticsUXShareStart                                 = @"Share Start";

@@ -31,6 +31,8 @@
 
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
 
+@property (nonatomic, strong) ShelbyAirPlayController *airPlayController;
+
 
 #define OVERLAY_ANIMATION_DURATION 0.2
 #define NAV_BUTTON_FADE_TIME 0.1
@@ -44,7 +46,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _airPlayController = [[ShelbyAirPlayController alloc] init];
+        _airPlayController.delegate = self;
     }
     return self;
 }
@@ -129,6 +132,9 @@
                                                                         views:@{@"controls":_videoControlsVC.view}]];
     [self addChildViewController:_videoControlsVC];
     [_videoControlsVC didMoveToParentViewController:self];
+
+    //if and when airPlayController takes control (from SPVideoReel), it will update video controls w/ current state of SPVideoPlayer
+    self.airPlayController.videoControlsVC = _videoControlsVC;
 }
 
 - (void)didReceiveMemoryWarning
@@ -227,9 +233,15 @@
 
     [self swapOutViewController:_currentFullScreenVC forViewController:sbvc completion:^(BOOL finished) {
         self.currentStreamBrowseVC = sbvc;
-        self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
-        // If there is no content in Stream, don't show video controls
-        self.videoControlsVC.view.hidden = sbvc.hasNoContent;
+
+        if (!self.airPlayController.isAirPlayActive) {
+            self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
+            // If there is no content in Stream, don't show video controls
+            self.videoControlsVC.view.hidden = sbvc.hasNoContent;
+        } else {
+            // airplay mode
+            // video controls represent airplay video when in airplay mode, don't touch 'em
+        }
 
         [self dismissSettings];
     }];
@@ -266,7 +278,9 @@
         //When we implement new iPad interface, may want to update our persistent stream view here
 //    } else {
     [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel];
-    self.videoControlsVC.currentEntity = entity;
+    if (!self.airPlayController.isAirPlayActive) {
+        self.videoControlsVC.currentEntity = entity;
+    }
 //    }
 }
 
@@ -278,7 +292,7 @@
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
     STVAssert(sbvc, @"expected to set entries for a VC we have");
     [sbvc setEntries:channelEntries forChannel:channel];
-    if (!self.videoControlsVC.currentEntity && self.currentStreamBrowseVC.channel == channel && [channelEntries count]) {
+    if (!self.airPlayController.isAirPlayActive && !self.videoControlsVC.currentEntity && self.currentStreamBrowseVC.channel == channel && [channelEntries count]) {
         //we're bootstrapping, update the video controls for the 0th entity
         self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC deduplicatedEntriesForChannel:channel][0];
     }
@@ -430,7 +444,14 @@
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
-    if (self.videoReel) {
+    if ([self.airPlayController isAirPlayActive]) {
+        //play back on second screen!
+        NSArray *channelEntities = [self deduplicatedEntriesForChannel:channel];
+        STVAssert([channelEntities count] > (NSUInteger)index, @"expected a valid index");
+        [self.airPlayController playEntity:channelEntities[index]];
+        [self showAirPlayViewMode:YES];
+
+    } else if (self.videoReel) {
         STVAssert(self.videoReel.channel == channel, @"videoReel should have been shutdown or changed when channel was changed");
 //        if (DEVICE_IPAD) {
 //            //TODO
@@ -475,7 +496,9 @@
 
 - (void)dismissVideoReel
 {
-    [self.videoReel pauseCurrentPlayer];
+    if (!self.airPlayController.isAirPlayActive){
+        [self.videoReel pauseCurrentPlayer];
+    }
     
     [self streamBrowseViewControllerForChannel:self.videoReel.channel].viewMode = ShelbyStreamBrowseViewDefault;
     
@@ -708,6 +731,12 @@
                                                  withAction:kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying
                                         withNicknameAsLabel:YES];
         }
+    } else if (self.airPlayController.isAirPlayActive) {
+        //not changing video controls current entity
+        [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                             withAction:kAnalyticsUXSwipeCardToChangeVideoPlaybackModeAirPlay
+                                    withNicknameAsLabel:YES];
+
     } else {
 //        if (DEVICE_IPAD) {
 //            //TODO: do video controls care about this?
@@ -810,16 +839,22 @@
 
 - (void)videoControlsPlayVideoWithCurrentFocus:(VideoControlsViewController *)vcvc
 {
+    //XXX
+    //TODO: the following assert does get tripped in airplay...
+    //but the new video cards (w/o "largeplaybutton") will alter the logic and that's how/when we should fix things...
+    STVAssert(!self.airPlayController.isAirPlayActive, @"don't think we should get this when in airplay mode... RIGHT?");
     [self playChannel:self.currentStreamBrowseVC.channel atIndex:[self.currentStreamBrowseVC indexPathForCurrentFocus].row];
 }
 
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc
 {
+    [self.airPlayController pauseCurrentPlayer];
     [self.videoReel pauseCurrentPlayer];
 }
 
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct
 {
+    [self.airPlayController scrubCurrentPlayerTo:pct];
     [self.videoReel scrubCurrentPlayerTo:pct];
 }
 
@@ -827,19 +862,27 @@
 {
     //when scrubbing, hide the overlay so we can see (put it back when we're done scrubbing)
     if (isScrubbing) {
-        STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithOverlay, @"expected overlay to be showing");
-        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-            self.navBar.alpha = 0.0;
-            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
-        }];
-        [self.videoReel beginScrubbing];
+        if (self.airPlayController.isAirPlayActive) {
+            [self.airPlayController beginScrubbing];
+        } else {
+            STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithOverlay, @"expected overlay to be showing");
+            [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+                self.navBar.alpha = 0.0;
+                self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
+            }];
+            [self.videoReel beginScrubbing];
+        }
     } else {
-        STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay, @"expected overlay not showing");
-        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-            self.navBar.alpha = 1.0;
-            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
-        }];
-        [self.videoReel endScrubbing];
+        if (self.airPlayController.isAirPlayActive) {
+            [self.airPlayController endScrubbing];
+        } else {
+            STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay, @"expected overlay not showing");
+            [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+                self.navBar.alpha = 1.0;
+                self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
+            }];
+            [self.videoReel endScrubbing];
+        }
     }
 }
 
@@ -924,11 +967,63 @@
     [self.masterDelegate userAskForTwitterPublishPermissions];
 }
 
+#pragma mark - ShelbyAirPlayControllerDelegate
+
+- (void)airPlayControllerDidBeginAirPlay:(ShelbyAirPlayController *)airPlayController
+{
+    // current SPVideoPlayer has a new owner: _airPlayController
+    if (self.videoReel) {
+        // current SPVideoPlayer will not reset itself b/c it's in external playback mode
+        [self dismissVideoReel];
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    }
+
+    [self showAirPlayViewMode:YES];
+}
+
+- (void)airPlayControllerDidEndAirPlay:(ShelbyAirPlayController *)airPlayController
+{
+    //NB: _airPlayController handles shutdown of SPVideoPlayer
+    [self showAirPlayViewMode:NO];
+}
+
 #pragma mark - View Helpers
+
+- (void)showAirPlayViewMode:(BOOL)airplayMode
+{
+    if (airplayMode) {
+        if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForAirplay) {
+            return;
+        }
+        //enter airplay mode
+        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForAirplay;
+            self.videoControlsVC.view.alpha = 1.f;
+            self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
+            //TODO: jsut tell video controls "airPlayMode:YES"
+            self.videoControlsVC.view.backgroundColor = [UIColor blueColor];
+        }];
+
+    } else {
+        //exit airplay mode
+        STVDebugAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForAirplay, @"shouldn't exit airplay when not in airplay");
+        [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+            self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewDefault;
+            //TODO: jsut tell video controls "airPlayMode:NO"
+            self.videoControlsVC.view.backgroundColor = [UIColor blackColor];
+        }];
+        [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
+    }
+}
 
 - (void)fadeVideoControlsForOffset:(CGPoint)contentOffset frameHeight:(CGFloat)frameHeight
 {
-    if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay || self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking) {
+    //video controls stay constant when in airplay mode
+    if (self.airPlayController.isAirPlayActive) {
+        return;
+    }
+
+    if (self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay || self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackPeeking || self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForAirplay) {
         return;
     }
     
@@ -943,6 +1038,11 @@
 
 - (void)updateVideoControlsForPage:(NSUInteger)page
 {
+    //video controls stay constant when in airplay mode
+    if (self.airPlayController.isAirPlayActive) {
+        return;
+    }
+
     [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
         if (self.videoReel) {
             //playback, summary or detail page

@@ -553,6 +553,9 @@
 		912261E117BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */; };
 		912261E217BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */; };
 		912261E317BC05C30092AF30 /* ShelbyAnalyticsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */; };
+		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
+		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
+		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
@@ -1156,6 +1159,8 @@
 		912261D217B97F070092AF30 /* overlay-sharers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "overlay-sharers@2x.png"; sourceTree = "<group>"; };
 		912261DF17BC05C30092AF30 /* ShelbyAnalyticsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAnalyticsClient.h; sourceTree = "<group>"; };
 		912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAnalyticsClient.m; sourceTree = "<group>"; };
+		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
+		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
 		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
@@ -2056,6 +2061,8 @@
 				914FEA66175E365000903FEA /* ShelbyDVRController.m */,
 				912261DF17BC05C30092AF30 /* ShelbyAnalyticsClient.h */,
 				912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */,
+				9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */,
+				9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2819,6 +2826,7 @@
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */,
 				1C8109A316EE2CBF0030077C /* AFJSONRequestOperation.m in Sources */,
+				9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */,
 				1C8109A416EE2CBF0030077C /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1C8109A516EE2CBF0030077C /* AFPropertyListRequestOperation.m in Sources */,
 				1C8109A616EE2CBF0030077C /* AFURLConnectionOperation.m in Sources */,
@@ -2944,6 +2952,7 @@
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */,
 				1C810A5916EE5EED0030077C /* AFJSONRequestOperation.m in Sources */,
+				9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */,
 				1C810A5A16EE5EED0030077C /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1C810A5B16EE5EED0030077C /* AFPropertyListRequestOperation.m in Sources */,
 				1C810A5C16EE5EED0030077C /* AFURLConnectionOperation.m in Sources */,
@@ -3069,6 +3078,7 @@
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
 				8E01AFBD16E67365000567D4 /* AFImageRequestOperation.m in Sources */,
 				8E01AFBE16E67365000567D4 /* AFJSONRequestOperation.m in Sources */,
+				9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */,
 				8E01AFBF16E67365000567D4 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				8E01AFC016E67365000567D4 /* AFPropertyListRequestOperation.m in Sources */,
 				8E01AFC116E67365000567D4 /* AFURLConnectionOperation.m in Sources */,
