@@ -267,7 +267,7 @@
     if (self.videoIsPlaying) {
         [self.delegate videoControlsPauseCurrentVideo:self];
     } else {
-        [self.delegate videoControlsPlayVideoWithCurrentFocus:self];
+        [self.delegate videoControlsPlayCurrentVideo:self];
     }
 }
 

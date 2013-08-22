@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 
 @protocol VideoControlsDelegate <NSObject>
 
-- (void)videoControlsPlayVideoWithCurrentFocus:(VideoControlsViewController *)vcvc;
+- (void)videoControlsPlayCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct;
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc;

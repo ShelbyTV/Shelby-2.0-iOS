@@ -104,17 +104,21 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     if (self.player) {
+        STVAssert(self.player.isExternalPlaybackActive, @"only expecting reuse w/ airplay");
+        //remove old player item observers before changing the player item (and observing the new player item)
+        [self removePlayerItemObservers];
         //reuse player
         self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
+        [self addPlayerItemObservers];
 
     } else {
         //new player
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
         [self addAllObservers];
 
-        //TODO: for second screen (aka mirroring) need the following line
-        //self.player.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+        //mirroring and non mirroring, maintain connection
+        self.player.usesExternalPlaybackWhileExternalScreenIsActive = YES;
 
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
@@ -134,21 +138,8 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
 - (void)addAllObservers
 {
-    // Observe keypaths for buffer states on AVPlayerItem
-    [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
-    [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
-    [self.player.currentItem addObserver:self forKeyPath:kShelbySPLoadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
-    [self.player.currentItem addObserver:self forKeyPath:kShelbySPAVPlayerDuration options:NSKeyValueObservingOptionNew context:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(itemDidFinishPlaying:)
-                                                 name:AVPlayerItemDidPlayToEndTimeNotification
-                                               object:self.player.currentItem];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(itemPlaybackStalled:)
-                                                 name:AVPlayerItemPlaybackStalledNotification
-                                               object:self.player.currentItem];
-    
+    [self addPlayerItemObservers];
+
     //the only way to observe current time changes
     __weak SPVideoPlayer *weakSelf = self;
     self.playerTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.25f, NSEC_PER_MSEC)
@@ -161,21 +152,48 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     [self.player addObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey options:NSKeyValueObservingOptionNew context:nil];
 }
 
+- (void)addPlayerItemObservers
+{
+    // Observe keypaths for buffer states on AVPlayerItem
+    [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
+    [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
+    [self.player.currentItem addObserver:self forKeyPath:kShelbySPLoadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
+    [self.player.currentItem addObserver:self forKeyPath:kShelbySPAVPlayerDuration options:NSKeyValueObservingOptionNew context:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemDidFinishPlaying:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:self.player.currentItem];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(itemPlaybackStalled:)
+                                                 name:AVPlayerItemPlaybackStalledNotification
+                                               object:self.player.currentItem];
+}
+
 - (void)removeAllObservers
 {
     STVAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
-    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
-    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
-    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
-    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPAVPlayerDuration];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemPlaybackStalledNotification object:nil];
+    [self removePlayerItemObservers];
     
     [self.player removeTimeObserver:self.playerTimeObserver];
     self.playerTimeObserver = nil;
 
     [self.player removeObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey];
+}
+
+- (void)removePlayerItemObservers
+{
+    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
+    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
+    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
+    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPAVPlayerDuration];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:AVPlayerItemDidPlayToEndTimeNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:AVPlayerItemPlaybackStalledNotification
+                                                  object:nil];
 }
 
 - (CMTime)elapsedTime

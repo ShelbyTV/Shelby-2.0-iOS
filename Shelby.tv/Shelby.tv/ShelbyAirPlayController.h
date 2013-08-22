@@ -19,6 +19,7 @@
 - (BOOL)isAirPlayActive;
 - (void)playEntity:(id<ShelbyVideoContainer>)entity;
 - (void)pauseCurrentPlayer;
+- (void)playCurrentPlayer;
 - (void)beginScrubbing;
 - (void)scrubCurrentPlayerTo:(CGFloat)percent;
 - (void)endScrubbing;

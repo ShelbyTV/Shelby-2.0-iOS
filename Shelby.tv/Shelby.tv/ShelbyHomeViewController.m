@@ -763,7 +763,7 @@
         if (self.videoReel) {
             [self togglePlaybackOverlayForCurrentBrowseViewController];
         } else {
-            STVAssert(browseVC.viewMode == ShelbyStreamBrowseViewDefault, @"should be in play mode w/o video reel");
+            STVAssert(browseVC.viewMode == ShelbyStreamBrowseViewDefault || browseVC.viewMode == ShelbyStreamBrowseViewForAirplay, @"should be in play mode w/o video reel");
             [self playChannel:browseVC.channel atIndex:[browseVC indexPathForCurrentFocus].row];
         }
     }
@@ -837,13 +837,10 @@
 
 #pragma mark - VideoControlsDelegate
 
-- (void)videoControlsPlayVideoWithCurrentFocus:(VideoControlsViewController *)vcvc
+- (void)videoControlsPlayCurrentVideo:(VideoControlsViewController *)vcvc
 {
-    //XXX
-    //TODO: the following assert does get tripped in airplay...
-    //but the new video cards (w/o "largeplaybutton") will alter the logic and that's how/when we should fix things...
-    STVAssert(!self.airPlayController.isAirPlayActive, @"don't think we should get this when in airplay mode... RIGHT?");
-    [self playChannel:self.currentStreamBrowseVC.channel atIndex:[self.currentStreamBrowseVC indexPathForCurrentFocus].row];
+    [self.airPlayController playCurrentPlayer];
+    [self.videoReel playCurrentPlayer];
 }
 
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc

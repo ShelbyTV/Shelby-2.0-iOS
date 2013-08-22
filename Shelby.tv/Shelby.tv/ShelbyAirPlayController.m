@@ -12,6 +12,7 @@
 #import "SPVideoPlayer.h"
 
 @interface ShelbyAirPlayController()
+@property (nonatomic, strong) Frame *currentFrame;
 //set via "airplay active" notification
 @property (nonatomic, strong) SPVideoPlayer *videoPlayer;
 //allows us to dismiss alert view if video changes or we exit
@@ -42,11 +43,15 @@
 
 - (void)airplayDidBegin:(NSNotification *)note
 {
+    STVAssert(!self.videoPlayer, @"air play sets our player (or somebody else does, later)");
     STVAssert(note.object && [note.object isKindOfClass:[SPVideoPlayer class]], @"notification object should be SPVideoPlayer, was %@", note.object);
     self.videoPlayer = note.object;
     self.videoPlayer.videoPlayerDelegate = self;
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     [self.delegate airPlayControllerDidBeginAirPlay:self];
+    self.currentFrame = self.videoPlayer.videoFrame;
+
+    STVAssert(self.videoPlayer.videoFrame == [Frame frameForEntity:self.videoControlsVC.currentEntity], @"player and controls should have same frame");
 }
 
 - (void)airplayDidEnd:(NSNotification *)note
@@ -64,25 +69,36 @@
 
 - (void)playEntity:(id<ShelbyVideoContainer>)entity
 {
-    if (self.videoPlayer) {
-        //tell current player to change video
-        self.videoPlayer.videoFrame = [Frame frameForEntity:entity];
-        self.videoPlayer.shouldAutoplay = YES;
-        [self.videoPlayer prepareForStreamingPlayback];
+    Frame *newFrame = [Frame frameForEntity:entity];
+    if (newFrame != self.currentFrame) {
+        self.currentFrame = newFrame;
 
-    } else {
-        //create a new player, playing at selected entity
-        //NB: we don't need to set the frame b/c the underlying AVPlayer uses external playback mode
-        self.videoPlayer = [[SPVideoPlayer alloc] initWithVideoFrame:[Frame frameForEntity:entity]];
-        self.videoPlayer.videoPlayerDelegate = self;
-        self.videoPlayer.shouldAutoplay = YES;
-        [self.videoPlayer prepareForStreamingPlayback];
+        if (self.videoPlayer) {
+            //tell current player to change video
+            self.videoPlayer.videoFrame = newFrame;
+            self.videoPlayer.shouldAutoplay = YES;
+            [self.videoPlayer prepareForStreamingPlayback];
+            self.videoControlsVC.currentEntity = entity;
+
+        } else {
+            //create a new player, playing at selected entity
+            //NB: we don't need to set the frame b/c the underlying AVPlayer uses external playback mode
+            self.videoPlayer = [[SPVideoPlayer alloc] initWithVideoFrame:newFrame];
+            self.videoPlayer.videoPlayerDelegate = self;
+            self.videoPlayer.shouldAutoplay = YES;
+            [self.videoPlayer prepareForStreamingPlayback];
+        }
     }
 }
 
 - (void)pauseCurrentPlayer
 {
     [self.videoPlayer pause];
+}
+
+- (void)playCurrentPlayer
+{
+    [self.videoPlayer play];
 }
 
 - (void)beginScrubbing
