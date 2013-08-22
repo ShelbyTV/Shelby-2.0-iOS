@@ -30,6 +30,8 @@ extern NSString * const kAnalyticsSignupConnectAuth;
 extern NSString * const kAnalyticsCategoryPrimaryUX;
 extern NSString * const kAnalyticsUXSwipeCardParallax;
 extern NSString * const kAnalyticsUXTapAirplay;
+extern NSString * const kAnalyticsUXAirplayBegin;
+extern NSString * const kAnalyticsUXAirplayEnd;
 extern NSString * const kAnalyticsUXTapCardPlayButton;
 extern NSString * const kAnalyticsUXVideoDidAutoadvance;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode;
