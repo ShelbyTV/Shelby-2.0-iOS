@@ -18,6 +18,9 @@
 @interface StreamBrowseCellForegroundView : UIView
 @property (nonatomic, assign) id<StreamBrowseCellForegroundViewDelegate>delegate;
 
+// Summary play button is visible depending on what mode it's in.
+@property (weak, nonatomic) IBOutlet UIImageView *summaryPlayImageView;
+
 - (void)setInfoForDashboardEntry:(DashboardEntry *)dashboardEntry frame:(Frame *)videoFrame;
 
 @end

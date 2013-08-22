@@ -184,6 +184,8 @@
         self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
     }
     
+    self.summaryPlayImageView.frame = CGRectMake(self.frame.size.width/4 - self.summaryPlayImageView.frame.size.width/2, self.frame.size.height/2 - self.summaryPlayImageView.frame.size.height/2, self.summaryPlayImageView.frame.size.width, self.summaryPlayImageView.frame.size.height);
+    
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
  
     self.summaryTitleButton.frame = self.summaryTitle.frame;
