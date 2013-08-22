@@ -435,7 +435,7 @@
         case VideoControlsDisplayForAirPlay:
             self.separator.backgroundColor = [UIColor whiteColor];
             self.separator.alpha =1.f;
-            self.controlsView.overlay.backgroundColor = [UIColor blueColor];
+            self.controlsView.overlay.backgroundColor = kShelbyColorAirPlayBlue;
             self.controlsView.overlay.alpha = 1.f;
             //AirPlay shows all controls, same as next case:
         case VideoControlsDisplayActionsAndPlaybackControls:
