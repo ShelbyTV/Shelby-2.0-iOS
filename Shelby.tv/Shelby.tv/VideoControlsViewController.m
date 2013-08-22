@@ -410,6 +410,13 @@
 {
     //NB: self.view is part of our plublic API, so bear in mind that anybody from
     //    the outside world may use self.view to adjust our alpha wholistically
+
+    //normal background (will be overriden when in airplay)
+    self.separator.backgroundColor = [UIColor grayColor];
+    self.separator.alpha =0.5;
+    self.controlsView.overlay.backgroundColor = [UIColor blackColor];
+    self.controlsView.overlay.alpha = 0.8;
+
     switch (_displayMode) {
         case VideoControlsDisplayDefault:
             [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
@@ -425,6 +432,12 @@
             self.controlsView.overlay.hidden = YES;
             self.separator.hidden = YES;
             break;
+        case VideoControlsDisplayForAirPlay:
+            self.separator.backgroundColor = [UIColor whiteColor];
+            self.separator.alpha =1.f;
+            self.controlsView.overlay.backgroundColor = [UIColor blueColor];
+            self.controlsView.overlay.alpha = 1.f;
+            //AirPlay shows all controls, same as next case:
         case VideoControlsDisplayActionsAndPlaybackControls:
             [self setPlaybackActionViewsAlpha:1.0 userInteractionEnabled:YES];
             [self setNonplaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];

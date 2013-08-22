@@ -996,9 +996,7 @@
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForAirplay;
             self.videoControlsVC.view.alpha = 1.f;
-            self.videoControlsVC.displayMode = VideoControlsDisplayActionsAndPlaybackControls;
-            //TODO: jsut tell video controls "airPlayMode:YES"
-            self.videoControlsVC.view.backgroundColor = [UIColor blueColor];
+            self.videoControlsVC.displayMode = VideoControlsDisplayForAirPlay;
         }];
 
     } else {
@@ -1006,8 +1004,6 @@
         STVDebugAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForAirplay, @"shouldn't exit airplay when not in airplay");
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewDefault;
-            //TODO: jsut tell video controls "airPlayMode:NO"
-            self.videoControlsVC.view.backgroundColor = [UIColor blackColor];
         }];
         [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
     }
