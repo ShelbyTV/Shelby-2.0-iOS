@@ -16,8 +16,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Looks like you haven't shared any videos." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="222" translatesAutoresizingMaskIntoConstraints="NO" id="22">
-                    <rect key="frame" x="49" y="65" width="222" height="165"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Looks like you haven't shared any videos." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="22">
+                    <rect key="frame" x="20" y="65" width="280" height="165"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="165" id="23"/>
@@ -85,6 +85,8 @@
                 <constraint firstAttribute="trailing" secondItem="29" secondAttribute="trailing" constant="8" id="50"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="29" secondAttribute="trailing" constant="8" id="51"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="29" secondAttribute="bottom" constant="1" id="52"/>
+                <constraint firstAttribute="trailing" secondItem="22" secondAttribute="trailing" constant="20" id="aJV-bh-i2V"/>
+                <constraint firstItem="22" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" id="dcm-Qc-TJ7"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

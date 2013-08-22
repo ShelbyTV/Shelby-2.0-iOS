@@ -477,7 +477,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
         // Set the new current player to auto play and get it going...
         self.currentVideoPlayingIndex = position;
-        STVAssert([self.videoPlayers count] > self.currentVideoPlayingIndex, "@can't play a player we don't have");
+        STVAssert([self.videoPlayers count] > self.currentVideoPlayingIndex, @"can't play player[%i], we only have %i players. Previous player? %@", self.currentVideoPlayingIndex, [self.videoPlayers count], (previousPlayer?@"YES":@"NO"));
         self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
         self.currentPlayer.shouldAutoplay = shouldAutoplay;
 

@@ -54,6 +54,7 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 - (void)handleDidBecomeActive
 {
     [User sessionDidBecomeActive];
+    [self.homeVC handleDidBecomeActive];
 }
 
 - (void)handleWillResignActive
