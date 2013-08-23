@@ -11,6 +11,7 @@
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 #import "ShelbyViewController.h"
+#import "SPVideoPlayer.h"
 #import "Video+Helper.h"
 
 @interface ShelbyStreamBrowseViewCell(){
@@ -97,8 +98,15 @@
 //                                                                                   views:@{@"play":_playButton}]];
 
         [self initPlacerholderThumbnails];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayingChanged:) name:kShelbySPVideoPlayerCurrentPlayingVideoChanged object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kShelbySPVideoPlayerCurrentPlayingVideoChanged];
 }
 
 - (void)resizeParallaxViews
@@ -164,6 +172,7 @@
         }
 
         [self.foregroundView setInfoForDashboardEntry:dashboardEntry frame:videoFrame];
+        [self setupPlayImageForVideo];
     }
 }
 
@@ -267,32 +276,53 @@
     if (_viewMode != viewMode) {
         _viewMode = viewMode;
         switch (_viewMode) {
+            case ShelbyStreamBrowseViewForAirplay:
             case ShelbyStreamBrowseViewDefault:
                 self.playButton.alpha = 1.0;
                 [self.parallaxView getBackgroundView].alpha = 1.0;
                 self.foregroundView.alpha = 1.0;
+                self.foregroundView.summaryPlayImageView.hidden = NO;
                 break;
             case ShelbyStreamBrowseViewForPlaybackWithOverlay:
                 self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 1.0;
+                self.foregroundView.summaryPlayImageView.hidden = YES;
                 break;
             case ShelbyStreamBrowseViewForPlaybackWithoutOverlay:
                 self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 0.0;
+                self.foregroundView.summaryPlayImageView.hidden = YES;
                 break;
             case ShelbyStreamBrowseViewForPlaybackPeeking:
                 self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 1.0;
+                self.foregroundView.summaryPlayImageView.hidden = YES;
+                break;
         }
     }
 }
 
-- (void)playButtonTapped:(id)sender
+
+- (void)setupPlayImageForVideo
 {
-    [self.delegate browseViewCellPlayTapped:self];
+    if (self.viewMode == ShelbyStreamBrowseViewForAirplay) {
+        if ([SPVideoPlayer currentPlayingVideo] == [self.entry containedVideo]) {
+            // TODO: set "playing now" image
+            self.foregroundView.summaryPlayImageView.image = nil;
+        } else {
+            self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-airplay.png"];
+        }
+    } else {
+        self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-all.png"];
+    }
+}
+
+- (void)videoPlayingChanged:(NSNotification *)notification
+{
+    [self setupPlayImageForVideo];
 }
 
 + (void)cacheEntry:(id<ShelbyVideoContainer>)entry
@@ -334,15 +364,14 @@
 
 - (void)parallaxViewWillBeginDragging
 {
-    if (self.viewMode != ShelbyStreamBrowseViewForPlaybackWithOverlay) {
-        [self.delegate browseViewCellTapped:self];
-    }
+    //do nothing
 }
 
 #pragma mark - StreamBrowseCellForegroundDelegate
 - (void)streamBrowseCellForegroundViewTitleWasTapped
 {
     [self.delegate browseViewCellTitleWasTapped:self];
+    [self setupPlayImageForVideo];
 }
 
 @end

@@ -48,6 +48,7 @@
 #define kShelbyColorGreen                                   [UIColor colorWithHex:@"6fbe47" andAlpha:1.0f]
 #define kShelbyColorTwitterBlue                             [UIColor colorWithHex:@"2ba9e1" andAlpha:1.0f]
 #define kShelbyColorFacebookBlue                            [UIColor colorWithHex:@"3b5998" andAlpha:1.0f]
+#define kShelbyColorAirPlayBlue                             [UIColor colorWithHex:@"2484E8" andAlpha:1.0f]
 
 
 

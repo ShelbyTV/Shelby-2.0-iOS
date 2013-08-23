@@ -38,13 +38,18 @@
         [self addMotionEffect:motionEffect];
     }
 
+    for (UIButton *b in @[self.nonplaybackLikeButton, self.nonplaybackUnlikeButton, self.nonplaybackShareButton]) {
+        b.backgroundColor = [UIColor blackColor];
+        //alpha is set in -[VideoControlsViewController updateViewForCurrentDisplayMode]
+    }
+
     [self setFont];
 }
 
 - (void)setFont
 {
     //buttons get title font (labels remain body copy)
-    for (UIButton *b in @[self.likeButton, self.unlikeButton, self.shareButton]) {
+    for (UIButton *b in @[self.likeButton, self.unlikeButton, self.shareButton, self.nonplaybackLikeButton, self.nonplaybackUnlikeButton, self.nonplaybackShareButton]) {
         b.titleLabel.font = kShelbyFontH4Bold;
     }
 }

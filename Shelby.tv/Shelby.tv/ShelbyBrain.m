@@ -54,6 +54,7 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 - (void)handleDidBecomeActive
 {
     [User sessionDidBecomeActive];
+    [self.homeVC handleDidBecomeActive];
 }
 
 - (void)handleWillResignActive
@@ -475,32 +476,6 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 }
 
 #pragma mark - ShelbyStreamBrowseManagementDelegate Methods
-- (void)userPressedChannel:(DisplayChannel *)channel atItem:(id)item
-{
-    // KP KP: TODO: prevent animated twice here and NOT in ShelbyHome. ---> same goes to Close animation
-    NSArray *entriesForChannel = [self.homeVC entriesForChannel:channel];
-    if (!entriesForChannel || ![entriesForChannel count]) {
-        self.postFetchInvocationForChannel = nil;
-        NSMethodSignature *channelPressed = [ShelbyBrain instanceMethodSignatureForSelector:@selector(userPressedChannel:atItem:)];
-        NSInvocation *channelPressedInvocation = [NSInvocation invocationWithMethodSignature:channelPressed];
-        [channelPressedInvocation setTarget:self];
-        [channelPressedInvocation setSelector:@selector(userPressedChannel:atItem:)];
-        [channelPressedInvocation setArgument:&channel atIndex:2];
-        [channelPressedInvocation setArgument:&item atIndex:3];
-        self.postFetchInvocationForChannel = @{[channel objectID] : channelPressedInvocation};
-        return;
-    }
-    
-    self.currentChannel = channel;
-    
-    NSInteger index = [self.homeVC indexOfDisplayedEntry:item inChannel:channel];
-    if (index == NSNotFound) {
-        // KP KP: TODO: what is the channel have no videos at all? Deal with that case
-        index = 0;
-    }
-    [self.homeVC playChannel:channel atIndex:index];
-//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryBrowse withAction:kAnalyticsBrowseActionLaunchPlaylistSingleTap withLabel:channel.displayTitle];
-}
 
 // Method below is delegate method of the SPVideoReelProtocol & ShelbyBrowseProtocol
 - (void)loadMoreEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry

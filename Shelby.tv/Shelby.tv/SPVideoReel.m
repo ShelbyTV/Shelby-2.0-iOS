@@ -90,7 +90,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         _channel = channel;
         _videoEntities = [videoEntities mutableCopy];
         _videoStartIndex = videoStartIndex;
-        _currentVideoPlayingIndex = -1;
+        _currentVideoPlayingIndex = videoStartIndex;
     }
 
     return self;
@@ -470,6 +470,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         SPVideoPlayer *previousPlayer = self.currentPlayer;
         self.currentPlayer = nil;
         previousPlayer.shouldAutoplay = NO;
+        [previousPlayer setAllowsExternalPlayback:NO];
         [previousPlayer pause];
         
         //remove any alert particular to current video
@@ -480,9 +481,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         STVAssert([self.videoPlayers count] > self.currentVideoPlayingIndex, @"can't play player[%i], we only have %i players. Previous player? %@", self.currentVideoPlayingIndex, [self.videoPlayers count], (previousPlayer?@"YES":@"NO"));
         self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
         self.currentPlayer.shouldAutoplay = shouldAutoplay;
-
-        [self.currentPlayer setAllowsExternalPlayback:YES];
         [self.currentPlayer prepareForStreamingPlayback];
+        //NB: player will setAllowsEternalPlayback:YES when it starts playing
         
         [self manageLoadedVideoPlayersForCurrentPlayer:self.currentPlayer
                                         previousPlayer:previousPlayer];
@@ -629,6 +629,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [SPVideoReel sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                             withAction:kAnalyticsUXVideoDidAutoadvance
                    withNicknameAsLabel:YES];
+    [player scrubToPct:0.f];
     [self autoadvanceVideoInForwardDirection:YES];
 }
 

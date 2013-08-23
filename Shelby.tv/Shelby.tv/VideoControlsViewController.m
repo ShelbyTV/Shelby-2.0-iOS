@@ -21,7 +21,8 @@
 @property (nonatomic, assign) BOOL currentlyScrubbing;
 @property (nonatomic, strong) NSArray *playbackControlViews;
 @property (nonatomic) UIButton *airPlayButton;
-@property (nonatomic, strong) NSArray *actionsViews;
+@property (nonatomic, strong) NSArray *playbackActionViews;
+@property (nonatomic, strong) NSArray *nonplaybackActionViews;
 @property (nonatomic, weak) IBOutlet UIView *separator;
 @property (strong, nonatomic) UIActivityIndicatorView *shareActivityIndicator;
 @end
@@ -47,16 +48,19 @@
     _airPlayView = _controlsView.airPlayView;
 
     self.playbackControlViews = @[self.controlsView.airPlayView,
-                                  self.controlsView.largePlayButton,
+                                  self.controlsView.playPauseButton,
                                   self.controlsView.currentTimeLabel,
                                   self.controlsView.durationLabel,
                                   self.controlsView.bufferProgressView,
                                   self.controlsView.scrubheadButton
                                   ];
-    self.actionsViews = @[self.controlsView.likeButton,
-                          self.controlsView.unlikeButton,
-                          self.controlsView.shareButton
-                          ];
+    self.playbackActionViews = @[self.controlsView.likeButton,
+                                 self.controlsView.unlikeButton,
+                                 self.controlsView.shareButton
+                                 ];
+    self.nonplaybackActionViews = @[self.controlsView.nonplaybackLikeButton,
+                                    self.controlsView.nonplaybackUnlikeButton,
+                                    self.controlsView.nonplaybackShareButton];
     [self updateViewForCurrentDisplayMode];
     [self setupAirPlay];
 }
@@ -94,8 +98,9 @@
 
 - (void)adjustVideoControlsForLandscape:(BOOL)landscapeOrientation
 {
+    NSInteger width;
     if (landscapeOrientation) {
-        NSInteger width = kShelbyFullscreenHeight;
+        width = kShelbyFullscreenHeight;
         NSInteger height = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, height - self.controlsView.frame.size.height, width, self.controlsView.frame.size.height);
         self.controlsView.overlay.frame = CGRectMake(0, self.controlsView.frame.size.height - HEIGHT_IN_LANDSCAPE, self.controlsView.frame.size.width, HEIGHT_IN_LANDSCAPE);
@@ -107,10 +112,10 @@
         self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, self.controlsView.unlikeButton.frame.origin.y, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
         
         // Play/Pause
-        self.controlsView.largePlayButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 51, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
+        self.controlsView.playPauseButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 51, self.controlsView.playPauseButton.frame.size.width, self.controlsView.playPauseButton.frame.size.height);
         
         // Current Time Label
-        self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.largePlayButton.frame.origin.x + self.controlsView.largePlayButton.frame.size.width + 2, 55, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
+        self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.playPauseButton.frame.origin.x + self.controlsView.playPauseButton.frame.size.width + 2, 55, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
 
         // Airplay
         self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 20, 55, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
@@ -118,10 +123,8 @@
         // Duration Time Label depends on whether airplay button is visible or not
         [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:YES];
 
-        // Non playback mode view
-        self.controlsView.nonPlaybackModeView.frame = CGRectMake(10, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
     } else {
-        NSInteger width = kShelbyFullscreenWidth;
+        width = kShelbyFullscreenWidth;
         self.controlsView.frame = CGRectMake(0, kShelbyFullscreenHeight - HEIGHT_IN_PORTRAIT, width, HEIGHT_IN_PORTRAIT);
         self.controlsView.overlay.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, self.controlsView.frame.size.height);
         self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
@@ -132,7 +135,7 @@
         self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, 47, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
         
         // Play/Pause & Airplay Buttons
-        self.controlsView.largePlayButton.frame = CGRectMake(15, 11, self.controlsView.largePlayButton.frame.size.width, self.controlsView.largePlayButton.frame.size.height);
+        self.controlsView.playPauseButton.frame = CGRectMake(15, 11, self.controlsView.playPauseButton.frame.size.width, self.controlsView.playPauseButton.frame.size.height);
         self.controlsView.airPlayView.frame = CGRectMake(width - self.controlsView.airPlayView.frame.size.width - 15, 14, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
         
         // Time Labels
@@ -140,10 +143,15 @@
         
         // Duration Time Label depends on whether airplay button is visible or not
         [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:NO];
-        
-        // Non playback mode view
-        self.controlsView.nonPlaybackModeView.frame = CGRectMake(8, 4, self.controlsView.nonPlaybackModeView.frame.size.width, self.controlsView.shareButton.frame.size.height);
     }
+
+    // nonplayback actions
+    CGFloat leftButtonWidth = width / 2.0f;
+    CGFloat buttonHeight = 44.f;
+    CGFloat buttonY = self.controlsView.frame.size.height - buttonHeight;
+    self.controlsView.nonplaybackLikeButton.frame = CGRectMake(0, buttonY, leftButtonWidth, buttonHeight);
+    self.controlsView.nonplaybackUnlikeButton.frame = self.controlsView.nonplaybackLikeButton.frame;
+    self.controlsView.nonplaybackShareButton.frame = CGRectMake(leftButtonWidth+1, buttonY, leftButtonWidth-1, buttonHeight);
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -254,19 +262,12 @@
 
 #pragma mark - XIB actions
 
-- (IBAction)largePlayButtonTapped:(id)sender {
+- (IBAction)playPauseButtonTapped:(id)sender
+{
     if (self.videoIsPlaying) {
         [self.delegate videoControlsPauseCurrentVideo:self];
     } else {
-        // If user just got into playback mode, hide nonPlaybackModeView
-        if (sender == self.controlsView.nonPlaybackModePlayButton) {
-            [VideoControlsViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
-                                                    withAction:kAnalyticsUXTapCardPlayButton
-                                           withNicknameAsLabel:YES];
-            self.controlsView.nonPlaybackModeView.hidden = YES;
-            [self.controlsView sendSubviewToBack:self.controlsView.nonPlaybackModeView];
-        }
-        [self.delegate videoControlsPlayVideoWithCurrentFocus:self];
+        [self.delegate videoControlsPlayCurrentVideo:self];
     }
 }
 
@@ -339,9 +340,9 @@
     if (_videoIsPlaying != videoIsPlaying) {
         _videoIsPlaying = videoIsPlaying;
         if (_videoIsPlaying) {
-            [self.controlsView.largePlayButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+            [self.controlsView.playPauseButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
         } else {
-            [self.controlsView.largePlayButton setImage:[UIImage imageNamed:@"play-standard.png"] forState:UIControlStateNormal];
+            [self.controlsView.playPauseButton setImage:[UIImage imageNamed:@"play-standard.png"] forState:UIControlStateNormal];
         }
     }
 }
@@ -393,7 +394,9 @@
     if (self.currentEntity){
         BOOL isLiked = [[Frame frameForEntity:self.currentEntity] videoIsLiked];
         self.controlsView.likeButton.hidden = isLiked;
+        self.controlsView.nonplaybackLikeButton.hidden = isLiked;
         self.controlsView.unlikeButton.hidden = !isLiked;
+        self.controlsView.nonplaybackUnlikeButton.hidden = !isLiked;
     }
 }
 
@@ -407,26 +410,39 @@
 {
     //NB: self.view is part of our plublic API, so bear in mind that anybody from
     //    the outside world may use self.view to adjust our alpha wholistically
+
+    //normal background (will be overriden when in airplay)
+    self.separator.backgroundColor = [UIColor grayColor];
+    self.separator.alpha =0.5;
+    self.controlsView.overlay.backgroundColor = [UIColor blackColor];
+    self.controlsView.overlay.alpha = 0.8;
+
     switch (_displayMode) {
         case VideoControlsDisplayDefault:
-            [self setActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setNonplaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             self.controlsView.overlay.hidden = YES;
-            self.controlsView.nonPlaybackModeView.hidden = NO;
             self.separator.hidden = YES;
             break;
         case VideoControlsDisplayActionsOnly:
-            [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setNonplaybackActionViewsAlpha:0.75 userInteractionEnabled:YES];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             self.controlsView.overlay.hidden = YES;
-            self.controlsView.nonPlaybackModeView.hidden = NO;
             self.separator.hidden = YES;
             break;
+        case VideoControlsDisplayForAirPlay:
+            self.separator.backgroundColor = [UIColor whiteColor];
+            self.separator.alpha =1.f;
+            self.controlsView.overlay.backgroundColor = kShelbyColorAirPlayBlue;
+            self.controlsView.overlay.alpha = 1.f;
+            //AirPlay shows all controls, same as next case:
         case VideoControlsDisplayActionsAndPlaybackControls:
-            [self setActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setPlaybackActionViewsAlpha:1.0 userInteractionEnabled:YES];
+            [self setNonplaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
             [self setPlaybackControlViewsAlpha:1.0 userInteractionEnabled:YES];
             self.controlsView.overlay.hidden = NO;
-            self.controlsView.nonPlaybackModeView.hidden = YES;
             self.separator.hidden = NO;
     }
 }
@@ -439,9 +455,17 @@
     }
 }
 
-- (void)setActionViewsAlpha:(CGFloat)a userInteractionEnabled:(BOOL)interactionEnabled
+- (void)setPlaybackActionViewsAlpha:(CGFloat)a userInteractionEnabled:(BOOL)interactionEnabled
 {
-    for (UIView *v in self.actionsViews) {
+    for (UIView *v in self.playbackActionViews) {
+        v.alpha = a;
+        v.userInteractionEnabled = interactionEnabled;
+    }
+}
+
+- (void)setNonplaybackActionViewsAlpha:(CGFloat)a userInteractionEnabled:(BOOL)interactionEnabled
+{
+    for (UIView *v in self.nonplaybackActionViews) {
         v.alpha = a;
         v.userInteractionEnabled = interactionEnabled;
     }

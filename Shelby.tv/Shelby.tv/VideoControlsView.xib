@@ -16,12 +16,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
             <subviews>
-                <view userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleToFill" id="406">
+                <view userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" id="406" userLabel="overlay">
                     <rect key="frame" x="-2" y="0.0" width="320" height="88"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <view alpha="0.5" contentMode="scaleToFill" id="558">
+                <view alpha="0.5" contentMode="scaleToFill" id="558" userLabel="separator">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
@@ -38,7 +38,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="largePlayButtonTapped:" destination="-1" eventType="touchUpInside" id="8"/>
+                        <action selector="playPauseButtonTapped:" destination="-1" eventType="touchUpInside" id="PER-eI-7QN"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" id="9" userLabel="airPlayView">
@@ -128,39 +128,45 @@
                         <action selector="scrubberTouchUpOutside:" destination="-1" eventType="touchUpOutside" id="383"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" id="441" userLabel="NonPlayModeView">
-                    <rect key="frame" x="8" y="4" width="89" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bib-7M-uDj" userLabel="(nonplayback) - LIKE">
+                    <rect key="frame" x="56" y="55" width="48" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="play.png" id="531">
-                            <rect key="frame" x="5" y="5" width="29" height="29"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="PLAY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="459">
-                            <rect key="frame" x="42" y="9" width="47" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="447" userLabel="PlayButton">
-                            <rect key="frame" x="0.0" y="0.0" width="95" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                            <state key="normal">
-                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="highlighted">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="largePlayButtonTapped:" destination="-1" eventType="touchUpInside" id="468"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="LIKE" image="overlay-likers.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="likeTapped:" destination="-1" eventType="touchUpInside" id="Gpl-OI-yNr"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="azI-N0-3Fz" userLabel="(nonplayback) - SHARE">
+                    <rect key="frame" x="209" y="55" width="64" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="SHARE" image="overlay-sharers.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="shareTapped:" destination="-1" eventType="touchUpInside" id="FwJ-qe-emG"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IGu-tb-j5j" userLabel="(nonplayback) - UNLIKE">
+                    <rect key="frame" x="45" y="55" width="70" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="UNLIKE" image="overlay-likers.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="unlikeTapped:" destination="-1" eventType="touchUpInside" id="DfW-xb-efc"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -169,11 +175,12 @@
                 <outlet property="bufferProgressView" destination="48" id="65"/>
                 <outlet property="currentTimeLabel" destination="37" id="63"/>
                 <outlet property="durationLabel" destination="40" id="64"/>
-                <outlet property="largePlayButton" destination="3" id="62"/>
                 <outlet property="likeButton" destination="70" id="79"/>
-                <outlet property="nonPlaybackModePlayButton" destination="447" id="480"/>
-                <outlet property="nonPlaybackModeView" destination="441" id="479"/>
+                <outlet property="nonplaybackLikeButton" destination="bib-7M-uDj" id="kIm-w3-MlY"/>
+                <outlet property="nonplaybackShareButton" destination="azI-N0-3Fz" id="XMw-qR-DjZ"/>
+                <outlet property="nonplaybackUnlikeButton" destination="IGu-tb-j5j" id="GUS-ij-09T"/>
                 <outlet property="overlay" destination="406" id="417"/>
+                <outlet property="playPauseButton" destination="3" id="gIp-j9-YrG"/>
                 <outlet property="scrubheadButton" destination="339" id="390"/>
                 <outlet property="separatorView" destination="558" id="572"/>
                 <outlet property="shareButton" destination="73" id="80"/>
@@ -187,8 +194,9 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
+        <image name="overlay-likers.png" width="17" height="16"/>
+        <image name="overlay-sharers.png" width="17" height="18"/>
         <image name="pause.png" width="14" height="16"/>
-        <image name="play.png" width="29" height="28"/>
         <image name="scrubber.png" width="32" height="32"/>
     </resources>
 </document>

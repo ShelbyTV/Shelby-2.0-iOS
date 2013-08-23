@@ -17,14 +17,16 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
     //just the lower bar of action buttons is shown
     VideoControlsDisplayActionsOnly,
     //upper playback controls and lower action bar are shown
-    VideoControlsDisplayActionsAndPlaybackControls
+    VideoControlsDisplayActionsAndPlaybackControls,
+    //VideoControlsDisplayActionsAndPlaybackControls + alterations for AirPlay
+    VideoControlsDisplayForAirPlay
 };
 
 @class VideoControlsViewController;
 
 @protocol VideoControlsDelegate <NSObject>
 
-- (void)videoControlsPlayVideoWithCurrentFocus:(VideoControlsViewController *)vcvc;
+- (void)videoControlsPlayCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct;
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc;
