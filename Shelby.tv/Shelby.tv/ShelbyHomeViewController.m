@@ -1030,6 +1030,7 @@
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForAirplay;
             self.videoControlsVC.view.alpha = 1.f;
             self.videoControlsVC.displayMode = VideoControlsDisplayForAirPlay;
+            self.navBar.alpha = 1.0;
         }];
 
     } else {
