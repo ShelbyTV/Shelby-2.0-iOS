@@ -11,6 +11,7 @@
 #import "DashboardEntry+Helper.h"
 #import "Frame+Helper.h"
 #import "ShelbyViewController.h"
+#import "SPVideoPlayer.h"
 #import "Video+Helper.h"
 
 @interface ShelbyStreamBrowseViewCell(){
@@ -97,8 +98,15 @@
 //                                                                                   views:@{@"play":_playButton}]];
 
         [self initPlacerholderThumbnails];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayingChanged:) name:kShelbySPVideoPlayerCurrentPlayingVideoChanged object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kShelbySPVideoPlayerCurrentPlayingVideoChanged];
 }
 
 - (void)resizeParallaxViews
@@ -164,6 +172,7 @@
         }
 
         [self.foregroundView setInfoForDashboardEntry:dashboardEntry frame:videoFrame];
+        [self setupPlayImageForVideo];
     }
 }
 
@@ -296,6 +305,26 @@
     }
 }
 
+
+- (void)setupPlayImageForVideo
+{
+    if (self.viewMode == ShelbyStreamBrowseViewForAirplay) {
+        if ([SPVideoPlayer currentPlayingVideo] == [self.entry containedVideo]) {
+            // TODO: set "playing now" image
+            self.foregroundView.summaryPlayImageView.image = nil;
+        } else {
+            self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-airplay.png"];
+        }
+    } else {
+        self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-all.png"];
+    }
+}
+
+- (void)videoPlayingChanged:(NSNotification *)notification
+{
+    [self setupPlayImageForVideo];
+}
+
 + (void)cacheEntry:(id<ShelbyVideoContainer>)entry
 {
     /* Networking code will cache requests for us, so all we have to do is make the request.
@@ -342,6 +371,7 @@
 - (void)streamBrowseCellForegroundViewTitleWasTapped
 {
     [self.delegate browseViewCellTitleWasTapped:self];
+    [self setupPlayImageForVideo];
 }
 
 @end

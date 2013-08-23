@@ -16,10 +16,14 @@
 
 #define PLAYBACK_API_UPDATE_INTERVAL 15.f
 
+static Frame *currentPlayingVideoFrame;
+
 NSString * const kShelbySPVideoExternalPlaybackActiveKey = @"externalPlaybackActive";
 NSString * const kShelbySPVideoCurrentItemKey = @"currentItem";
 NSString * const kShelbySPVideoAirplayDidBegin = @"spAirplayDidBegin";
 NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
+NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVideoPlayerCurrentPlayingVideoChanged";
+
 
 @interface SPVideoPlayer () {
     CGFloat _rateBeforeScrubbing;
@@ -65,6 +69,11 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     }
     
     return self;
+}
+
++ (Video *)currentPlayingVideo
+{
+    return [currentPlayingVideoFrame video];
 }
 
 #pragma mark - View Lifecycle Methods
@@ -354,12 +363,15 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
 - (void)play
 {
+    currentPlayingVideoFrame = self.videoFrame;
     self.player.allowsExternalPlayback = YES;
     [self.player play];
     self.isPlaying = YES;
     
     [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
     [self.videoPlayerDelegate videoPlaybackStatus:YES forPlayer:self];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoPlayerCurrentPlayingVideoChanged object:nil];
 }
 
 - (void)pause
