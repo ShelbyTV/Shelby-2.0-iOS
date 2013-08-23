@@ -407,10 +407,9 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
     STVAssert(_player.currentItem == notification.object, @"should only get notified for our player item");
-    if (self.isPlaying) {
+    if (self.isPlaying && self.player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
         //actionAtItemEnd is set to "pause" when we create player.  track that:
         self.isPlaying = NO;
-        DLog(@"---NEXT--AUTOADVANCE--itemDidFinishPlaying player: %@, playerItem: %@, playerStatus: %ld", _player, _player.currentItem, (long)_player.status);
         [self sendWatchToAPIFrom:_lastPlaybackUpdateIntervalEnd to:self.duration complete:YES];
         [self.videoPlayerDelegate videoDidFinishPlayingForPlayer:self];
     }
