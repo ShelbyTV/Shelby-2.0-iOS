@@ -169,14 +169,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 {
     [self addPlayerItemObservers];
 
-    //the only way to observe current time changes
-    __weak SPVideoPlayer *weakSelf = self;
-    self.playerTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.25f, NSEC_PER_MSEC)
-                                                                        queue:NULL
-                                                                   usingBlock:^(CMTime time) {
-                                                                       [weakSelf currentTimeUpdated:time];
-                                                                   }];
-
     //air play
     [self.player addObserver:self
                   forKeyPath:kShelbySPVideoExternalPlaybackActiveKey
@@ -190,6 +182,16 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)addPlayerItemObservers
 {
+    //the only way to observe current time changes
+    //NB: important to change this when playerItem changes
+    __weak SPVideoPlayer *weakSelf = self;
+    self.playerTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.25f, NSEC_PER_MSEC)
+                                                                        queue:NULL
+                                                                   usingBlock:^(CMTime time) {
+                                                                       [weakSelf currentTimeUpdated:time];
+                                                                   }];
+
+
     // Observe keypaths for buffer states on AVPlayerItem
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
@@ -213,9 +215,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         return;
     }
     [self removePlayerItemObservers];
-    
-    [self.player removeTimeObserver:self.playerTimeObserver];
-    self.playerTimeObserver = nil;
 
     [self.player removeObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey];
     [self.player removeObserver:self forKeyPath:kShelbySPVideoCurrentItemKey];
@@ -223,6 +222,10 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)removePlayerItemObservers
 {
+    //NB: this is technically observing player, but needs to sync w/ playerItem
+    [self.player removeTimeObserver:self.playerTimeObserver];
+    self.playerTimeObserver = nil;
+
     STVAssert(self.player.currentItem, @"expected a current item on the player... wtf?");
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
