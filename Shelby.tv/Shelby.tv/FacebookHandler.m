@@ -57,7 +57,7 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 #pragma mark - Facebook state (Public)
 - (NSString *)facebookAppID
 {
-    return [FBSession defaultAppID];
+    return [FBSettings defaultAppID];
 }
 
 - (NSString *)facebookToken
@@ -143,6 +143,8 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 - (void)handleDidBecomeActive
 {
     [[FBSession activeSession] handleDidBecomeActive];
+    // TODO: KP KP: 
+//    [FBAppEvents activateApp];
 }
 
 @end
