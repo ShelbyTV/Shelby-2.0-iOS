@@ -107,9 +107,11 @@
 - (void)airplayDidBegin:(NSNotification *)note
 {
     STVAssert(!self.videoPlayer, @"air play sets our player (or somebody else does, later)");
-    STVAssert(note.object && [note.object isKindOfClass:[SPVideoPlayer class]], @"notification object should be SPVideoPlayer, was %@", note.object);
-    self.videoPlayer = note.object;
-    self.videoPlayer.videoPlayerDelegate = self;
+    SPVideoPlayer *notedPlayer = (SPVideoPlayer *)note.object;
+    STVAssert(notedPlayer && [notedPlayer isKindOfClass:[SPVideoPlayer class]], @"notification object should be SPVideoPlayer, was %@", notedPlayer);
+    STVDebugAssert(notedPlayer.videoFrame == [Frame frameForEntity:self.videoControlsVC.currentEntity], @"wrong player on init of airplay, controls have:%@, player has:%@", [Frame frameForEntity:self.videoControlsVC.currentEntity].video.title, notedPlayer.videoFrame.video.title);
+    
+    self.videoPlayer = notedPlayer;
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     [self.delegate airPlayControllerDidBeginAirPlay:self];
     self.currentFrame = self.videoPlayer.videoFrame;
@@ -155,11 +157,16 @@
             //create a new player, playing at selected entity
             //NB: we don't need to set the frame b/c the underlying AVPlayer uses external playback mode
             self.videoPlayer = [[SPVideoPlayer alloc] initWithVideoFrame:newFrame];
-            self.videoPlayer.videoPlayerDelegate = self;
             self.videoPlayer.shouldAutoplay = YES;
             [self.videoPlayer prepareForStreamingPlayback];
         }
     }
+}
+
+- (void)setVideoPlayer:(SPVideoPlayer *)videoPlayer
+{
+    _videoPlayer = videoPlayer;
+    _videoPlayer.videoPlayerDelegate = self;
 }
 
 - (void)pauseCurrentPlayer
@@ -189,7 +196,16 @@
 
 - (void)autoadvanceVideoInForwardDirection
 {
-    //TODO: tell home VC we need to autoadvance
+    //TODO: request autoplay via [self.delegate airPlayControllerShouldAutoadvance:self];
+    DLog(@"xxx would have REQUESTed AUTOADVANCE here xxx");
+    //XXX this is still just a test, not sure it's a fix
+    // need to get stuff working, then remove this and test more
+    //XXX hacky... but if it works... it works.  BTFO.
+//    double delayInSeconds = 0.5;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        [self.delegate airPlayControllerShouldAutoadvance:self];
+//    });
 }
 
 #pragma mark - SPVideoPlayerDelegate

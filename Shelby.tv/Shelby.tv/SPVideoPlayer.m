@@ -17,6 +17,7 @@
 #define PLAYBACK_API_UPDATE_INTERVAL 15.f
 
 NSString * const kShelbySPVideoExternalPlaybackActiveKey = @"externalPlaybackActive";
+NSString * const kShelbySPVideoCurrentItemKey = @"currentItem";
 NSString * const kShelbySPVideoAirplayDidBegin = @"spAirplayDidBegin";
 NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
@@ -99,26 +100,34 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
         // we were reset and never asked to prepareFor...Playback, so don't load a player or do any of that
         return;
     }
+
+    if (self.player) {
+        //remove old player item observers before changing the player item (and observing the new player item)
+        [self removePlayerItemObservers];
+    }
     
     // Setup player and observers
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     if (self.player) {
         STVAssert(self.player.isExternalPlaybackActive, @"only expecting reuse w/ airplay");
-        //remove old player item observers before changing the player item (and observing the new player item)
-        [self removePlayerItemObservers];
         //reuse player
         self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
-        [self addPlayerItemObservers];
+        //replacement happens asynchronously.
+        //we add observers via KVO on self.player.currentItem and autoplay then
 
     } else {
         //new player
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+        //VideoReel may create multiple AVPlayers, but only the currently playing one should be
+        //airplay enabled (we update that in -[play]).
+        self.player.allowsExternalPlayback = NO;
         [self addAllObservers];
 
-        //mirroring and non mirroring, maintain connection
+        //to maintain connection as best as possible w/ AirPlay (mirroring or not)
         self.player.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+        self.player.actionAtItemEnd = AVPlayerActionAtItemEndPause;
 
         // Redraw AVPlayer object for placement in UIScrollView on SPVideoReel
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
@@ -136,6 +145,17 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
     self.isPlayable = YES;
 }
 
+- (void)playerItemReplaced
+{
+    DLog(@"Player Item Replaced allows?%@  uses?%@ status?%ld", self.player.allowsExternalPlayback ? @"YES":@"NO", self.player.usesExternalPlaybackWhileExternalScreenIsActive ? @"YES":@"NO", (long)_player.status);
+    [self addPlayerItemObservers];
+    if (self.shouldAutoplay) {
+        DLog(@"AUTOPLAYING, rate is: %f", self.player.rate);
+        [self play];
+        DLog(@"did autoplay, rate is: %f", self.player.rate);
+    }
+}
+
 - (void)addAllObservers
 {
     [self addPlayerItemObservers];
@@ -149,7 +169,14 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
                                                                    }];
 
     //air play
-    [self.player addObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey options:NSKeyValueObservingOptionNew context:nil];
+    [self.player addObserver:self
+                  forKeyPath:kShelbySPVideoExternalPlaybackActiveKey
+                     options:NSKeyValueObservingOptionNew
+                     context:nil];
+    [self.player addObserver:self
+                  forKeyPath:kShelbySPVideoCurrentItemKey
+                     options:NSKeyValueObservingOptionNew
+                     context:nil];
 }
 
 - (void)addPlayerItemObservers
@@ -173,16 +200,21 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 - (void)removeAllObservers
 {
     STVAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
+    if (!self.player) {
+        return;
+    }
     [self removePlayerItemObservers];
     
     [self.player removeTimeObserver:self.playerTimeObserver];
     self.playerTimeObserver = nil;
 
     [self.player removeObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey];
+    [self.player removeObserver:self forKeyPath:kShelbySPVideoCurrentItemKey];
 }
 
 - (void)removePlayerItemObservers
 {
+    STVAssert(self.player.currentItem, @"expected a current item on the player... wtf?");
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
@@ -245,20 +277,16 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
         }
         
         if (videoURL) {
+            BOOL hadExistingPlayer = (self.player != nil);
             [self setupPlayerForURL:[NSURL URLWithString:videoURL]];
-            if (self.shouldAutoplay) {
-                [self play];
+            if (hadExistingPlayer) {
+                //don't play until async item replacement happens, see -[playerItemReplaced]
             } else {
-                //VideoReel may create multiple AVPlayers, but only the current one should be
-                //airplay enabled.  We opt-out and allow VideoReel to opt us back in when we
-                //become the active player.
-                [self setAllowsExternalPlayback:NO];
+                if (self.shouldAutoplay) {
+                    [self play];
+                }
             }
 
-            if ( [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultUserIsAdmin] && [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyDefaultOfflineModeEnabled]  ) {
-                //djs TODO: this shouldn't go thru app delegate... WTF... create a new fucking manager to handle this
-                //[self.appDelegate downloadVideo:video];
-            }
         } else if (wasError) {
             if(self.shouldAutoplay){
                 [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
@@ -326,8 +354,7 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
 - (void)play
 {
-    //djs TODO: should this all be done on the main thread???
-    //b/c of how this gets called, it's not necessarily on main thread
+    self.player.allowsExternalPlayback = YES;
     [self.player play];
     self.isPlaying = YES;
     
@@ -368,10 +395,13 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
-    if ( _player.currentItem == notification.object) {
+    STVAssert(_player.currentItem == notification.object, @"should only get notified for our player item");
+    if (self.isPlaying) {
+        //actionAtItemEnd is set to "pause" when we create player.  track that:
+        self.isPlaying = NO;
+        DLog(@"---NEXT--AUTOADVANCE--itemDidFinishPlaying player: %@, playerItem: %@, playerStatus: %ld", _player, _player.currentItem, (long)_player.status);
         [self sendWatchToAPIFrom:_lastPlaybackUpdateIntervalEnd to:self.duration complete:YES];
         [self.videoPlayerDelegate videoDidFinishPlayingForPlayer:self];
-        [self scrubToPct:0.0];
     }
 }
 
@@ -384,11 +414,19 @@ NSString * const kShelbySPVideoAirplayDidEnd = @"spAirplayDidEnd";
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (self.player == object && [keyPath isEqualToString:@"externalPlaybackActive"]) {
-        if (self.player.externalPlaybackActive) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoAirplayDidBegin object:self];
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoAirplayDidEnd object:self];
+    if (self.player == object) {
+        if ([keyPath isEqualToString:kShelbySPVideoExternalPlaybackActiveKey]) {
+            STVAssert(self.player.allowsExternalPlayback, @"very confused...");
+            if (self.player.externalPlaybackActive) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoAirplayDidBegin object:self];
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoAirplayDidEnd object:self];
+            }
+        } else if ([keyPath isEqualToString:kShelbySPVideoCurrentItemKey]) {
+            //item replacement not guaranteed to be called on same thread that registered for KVO
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self playerItemReplaced];
+            });
         }
         return;
     }

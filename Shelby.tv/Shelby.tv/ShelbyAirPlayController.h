@@ -30,4 +30,5 @@
 @protocol ShelbyAirPlayControllerDelegate <NSObject>
 - (void)airPlayControllerDidBeginAirPlay:(ShelbyAirPlayController *)airPlayController;
 - (void)airPlayControllerDidEndAirPlay:(ShelbyAirPlayController *)airPlayController;
+- (void)airPlayControllerShouldAutoadvance:(ShelbyAirPlayController *)airPlayController;
 @end

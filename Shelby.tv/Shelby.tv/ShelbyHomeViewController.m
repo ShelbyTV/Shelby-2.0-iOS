@@ -32,6 +32,9 @@
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
 
 @property (nonatomic, strong) ShelbyAirPlayController *airPlayController;
+//tracking current channel and index (currently used w/ airPlayController only, for autoadvance)
+@property (nonatomic, strong) DisplayChannel *currentlyPlayingChannel;
+@property (nonatomic, assign) NSInteger currentlyPlayingIndexInChannel;
 
 
 #define OVERLAY_ANIMATION_DURATION 0.2
@@ -454,6 +457,9 @@
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
+    self.currentlyPlayingChannel = channel;
+    self.currentlyPlayingIndexInChannel = index;
+
     if ([self.airPlayController isAirPlayActive]) {
         //play back on second screen!
         NSArray *channelEntities = [self deduplicatedEntriesForChannel:channel];
@@ -994,6 +1000,21 @@
 {
     //NB: _airPlayController handles shutdown of SPVideoPlayer
     [self showAirPlayViewMode:NO];
+}
+
+- (void)airPlayControllerShouldAutoadvance:(ShelbyAirPlayController *)airPlayController
+{
+    DLog(@"HomeVC autoadvancing...");
+    NSArray *channelEntities = [self deduplicatedEntriesForChannel:self.currentlyPlayingChannel];
+    if ([channelEntities count] > (NSUInteger)self.currentlyPlayingIndexInChannel+1) {
+        [self playChannel:self.currentlyPlayingChannel atIndex:self.currentlyPlayingIndexInChannel+1];
+        //self.currentlyPlayingIndexInChannel is now ++
+    }
+
+    //fetch more if we're now on the last video in the channel
+    if ([channelEntities count] <= (NSUInteger)self.currentlyPlayingIndexInChannel+1) {
+        [self.masterDelegate loadMoreEntriesInChannel:self.currentlyPlayingChannel sinceEntry:[channelEntities lastObject]];
+    }
 }
 
 #pragma mark - View Helpers
