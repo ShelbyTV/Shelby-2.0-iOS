@@ -114,7 +114,7 @@
     [self.delegate airPlayControllerDidBeginAirPlay:self];
     self.currentFrame = self.videoPlayer.videoFrame;
 
-    STVAssert(self.videoPlayer.videoFrame == [Frame frameForEntity:self.videoControlsVC.currentEntity], @"player and controls should have same frame");
+    STVAssert(self.videoPlayer.videoFrame == [Frame frameForEntity:self.videoControlsVC.currentEntity], @"player frame (%@) should be same as controls frame (%@)", self.videoPlayer.videoFrame, [Frame frameForEntity:self.videoControlsVC.currentEntity]);
 
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                           action:kAnalyticsUXAirplayBegin
