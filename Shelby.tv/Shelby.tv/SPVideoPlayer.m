@@ -129,9 +129,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     } else {
         //new player
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-        //VideoReel may create multiple AVPlayers, but only the currently playing one should be
-        //airplay enabled (we update that in -[play]).
-        self.player.allowsExternalPlayback = NO;
         [self addAllObservers];
 
         //to maintain connection as best as possible w/ AirPlay (mirroring or not)
@@ -367,7 +364,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 - (void)play
 {
     currentPlayingVideoFrame = self.videoFrame;
-    self.player.allowsExternalPlayback = YES;
     [self.player play];
     self.isPlaying = YES;
     
@@ -431,7 +427,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 {
     if (self.player == object) {
         if ([keyPath isEqualToString:kShelbySPVideoExternalPlaybackActiveKey]) {
-            STVAssert(self.player.allowsExternalPlayback, @"very confused...");
             if (self.player.externalPlaybackActive) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoAirplayDidBegin object:self];
             } else {
@@ -509,11 +504,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
                                      from:[NSString stringWithFormat:@"%01d", from]
                                        to:[NSString stringWithFormat:@"%01d", to]];
     _lastPlaybackUpdateIntervalEnd = toTime;
-}
-
-- (void)setAllowsExternalPlayback:(BOOL)allowExternalPlayback
-{
-    self.player.allowsExternalPlayback = allowExternalPlayback;
 }
 
 @end
