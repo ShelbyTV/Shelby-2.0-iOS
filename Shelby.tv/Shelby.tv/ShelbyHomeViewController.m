@@ -329,6 +329,11 @@
 
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
     [sbvc addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel maintainingCurrentFocus:playingThisChannel];
+
+    if (self.currentStreamBrowseVC == sbvc) {
+        self.videoControlsVC.currentEntity = [sbvc entityForCurrentFocus];
+    }
+
 //    }
 
     if (playingThisChannel) {
@@ -467,6 +472,8 @@
     } else {
         [self prepareToShowVideoReel];
         [self initializeVideoReelWithChannel:channel atIndex:index];
+
+        STVAssert([self.videoReel getCurrentPlaybackEntity] == self.videoControlsVC.currentEntity, @"reel entity (%@) should be same as controls entity (%@)", [self.videoReel getCurrentPlaybackEntity], self.videoControlsVC.currentEntity);
 
 //        if (DEVICE_IPAD) {
 //            //TODO
