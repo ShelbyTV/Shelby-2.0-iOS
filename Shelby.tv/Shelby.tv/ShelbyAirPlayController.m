@@ -200,16 +200,7 @@
 
 - (void)autoadvanceVideoInForwardDirection
 {
-    //TODO: request autoplay via [self.delegate airPlayControllerShouldAutoadvance:self];
-    DLog(@"xxx would have REQUESTed AUTOADVANCE here xxx");
-    //XXX this is still just a test, not sure it's a fix
-    // need to get stuff working, then remove this and test more
-    //XXX hacky... but if it works... it works.  BTFO.
-//    double delayInSeconds = 0.5;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        [self.delegate airPlayControllerShouldAutoadvance:self];
-//    });
+    [self.delegate airPlayControllerShouldAutoadvance:self];
 }
 
 #pragma mark - SPVideoPlayerDelegate
