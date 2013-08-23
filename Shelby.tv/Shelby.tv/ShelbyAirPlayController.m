@@ -109,14 +109,18 @@
     STVAssert(!self.videoPlayer, @"air play sets our player (or somebody else does, later)");
     SPVideoPlayer *notedPlayer = (SPVideoPlayer *)note.object;
     STVAssert(notedPlayer && [notedPlayer isKindOfClass:[SPVideoPlayer class]], @"notification object should be SPVideoPlayer, was %@", notedPlayer);
-    STVDebugAssert(notedPlayer.videoFrame == [Frame frameForEntity:self.videoControlsVC.currentEntity], @"wrong player on init of airplay, controls have:%@, player has:%@", [Frame frameForEntity:self.videoControlsVC.currentEntity].video.title, notedPlayer.videoFrame.video.title);
-    
+
+    if (notedPlayer.videoFrame != [Frame frameForEntity:self.videoControlsVC.currentEntity]) {
+        // *why* do we get a notification from the wrong player?  no idea.  but we handle it...
+        DLog(@"Wrong player on init of airplay, controls have:%@, player has:%@", [Frame frameForEntity:self.videoControlsVC.currentEntity].video.title, notedPlayer.videoFrame.video.title);
+        self.videoPlayer = notedPlayer;
+        [self playEntity:self.videoControlsVC.currentEntity];
+    }
+
     self.videoPlayer = notedPlayer;
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     [self.delegate airPlayControllerDidBeginAirPlay:self];
     self.currentFrame = self.videoPlayer.videoFrame;
-
-    STVAssert(self.videoPlayer.videoFrame == [Frame frameForEntity:self.videoControlsVC.currentEntity], @"player frame (%@) should be same as controls frame (%@)", self.videoPlayer.videoFrame, [Frame frameForEntity:self.videoControlsVC.currentEntity]);
 
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                           action:kAnalyticsUXAirplayBegin

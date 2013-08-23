@@ -470,7 +470,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         SPVideoPlayer *previousPlayer = self.currentPlayer;
         self.currentPlayer = nil;
         previousPlayer.shouldAutoplay = NO;
-        [previousPlayer setAllowsExternalPlayback:NO];
         [previousPlayer pause];
         
         //remove any alert particular to current video

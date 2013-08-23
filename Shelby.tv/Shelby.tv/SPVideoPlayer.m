@@ -129,9 +129,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     } else {
         //new player
         self.player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-        //VideoReel may create multiple AVPlayers, but only the currently playing one should be
-        //airplay enabled (we update that in -[play]).
-        self.player.allowsExternalPlayback = NO;
         [self addAllObservers];
 
         //to maintain connection as best as possible w/ AirPlay (mirroring or not)
@@ -169,14 +166,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 {
     [self addPlayerItemObservers];
 
-    //the only way to observe current time changes
-    __weak SPVideoPlayer *weakSelf = self;
-    self.playerTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.25f, NSEC_PER_MSEC)
-                                                                        queue:NULL
-                                                                   usingBlock:^(CMTime time) {
-                                                                       [weakSelf currentTimeUpdated:time];
-                                                                   }];
-
     //air play
     [self.player addObserver:self
                   forKeyPath:kShelbySPVideoExternalPlaybackActiveKey
@@ -190,6 +179,16 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)addPlayerItemObservers
 {
+    //the only way to observe current time changes
+    //NB: important to change this when playerItem changes
+    __weak SPVideoPlayer *weakSelf = self;
+    self.playerTimeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.25f, NSEC_PER_MSEC)
+                                                                        queue:NULL
+                                                                   usingBlock:^(CMTime time) {
+                                                                       [weakSelf currentTimeUpdated:time];
+                                                                   }];
+
+
     // Observe keypaths for buffer states on AVPlayerItem
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
@@ -213,9 +212,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         return;
     }
     [self removePlayerItemObservers];
-    
-    [self.player removeTimeObserver:self.playerTimeObserver];
-    self.playerTimeObserver = nil;
 
     [self.player removeObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey];
     [self.player removeObserver:self forKeyPath:kShelbySPVideoCurrentItemKey];
@@ -223,6 +219,10 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)removePlayerItemObservers
 {
+    //NB: this is technically observing player, but needs to sync w/ playerItem
+    [self.player removeTimeObserver:self.playerTimeObserver];
+    self.playerTimeObserver = nil;
+
     STVAssert(self.player.currentItem, @"expected a current item on the player... wtf?");
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
     [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
@@ -364,7 +364,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 - (void)play
 {
     currentPlayingVideoFrame = self.videoFrame;
-    self.player.allowsExternalPlayback = YES;
     [self.player play];
     self.isPlaying = YES;
     
@@ -428,7 +427,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 {
     if (self.player == object) {
         if ([keyPath isEqualToString:kShelbySPVideoExternalPlaybackActiveKey]) {
-            STVAssert(self.player.allowsExternalPlayback, @"very confused...");
             if (self.player.externalPlaybackActive) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySPVideoAirplayDidBegin object:self];
             } else {
@@ -506,11 +504,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
                                      from:[NSString stringWithFormat:@"%01d", from]
                                        to:[NSString stringWithFormat:@"%01d", to]];
     _lastPlaybackUpdateIntervalEnd = toTime;
-}
-
-- (void)setAllowsExternalPlayback:(BOOL)allowExternalPlayback
-{
-    self.player.allowsExternalPlayback = allowExternalPlayback;
 }
 
 @end
