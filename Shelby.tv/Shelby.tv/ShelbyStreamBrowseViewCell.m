@@ -272,21 +272,25 @@
                 self.playButton.alpha = 1.0;
                 [self.parallaxView getBackgroundView].alpha = 1.0;
                 self.foregroundView.alpha = 1.0;
+                self.foregroundView.summaryPlayImageView.hidden = NO;
                 break;
             case ShelbyStreamBrowseViewForPlaybackWithOverlay:
                 self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 1.0;
+                self.foregroundView.summaryPlayImageView.hidden = YES;
                 break;
             case ShelbyStreamBrowseViewForPlaybackWithoutOverlay:
                 self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 0.0;
+                self.foregroundView.summaryPlayImageView.hidden = YES;
                 break;
             case ShelbyStreamBrowseViewForPlaybackPeeking:
                 self.playButton.alpha = 0.0;
                 [self.parallaxView getBackgroundView].alpha = 0.0;
                 self.foregroundView.alpha = 1.0;
+                self.foregroundView.summaryPlayImageView.hidden = YES;
                 break;
         }
     }

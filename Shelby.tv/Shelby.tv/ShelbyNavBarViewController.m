@@ -120,6 +120,7 @@
 - (void)returnSelectionToPreviousRow
 {
     self.navBarView.currentRow = _lastSelectedRow;
+    [self.delegate navBarViewControllerWillContract:self];
 }
 
 // When the nav bar view is expanded, it returns YES for all touches on screen, but then doesn't handle the touch.
