@@ -374,4 +374,9 @@
     [self setupPlayImageForVideo];
 }
 
+- (void)inviteFacebookFriendsWasTapped
+{
+    [self.delegate inviteFacebookFriendsWasTapped:self];
+}
+
 @end

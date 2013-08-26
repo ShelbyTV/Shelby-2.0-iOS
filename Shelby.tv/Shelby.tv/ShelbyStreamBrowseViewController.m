@@ -371,6 +371,11 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     [self.browseViewDelegate shelbyStreamBrowseViewControllerTitleTapped:self];
 }
 
+- (void)inviteFacebookFriendsWasTapped:(ShelbyStreamBrowseViewCell *)cell
+{
+    [self.browseViewDelegate inviteFacebookFriendsWasTapped:self];
+}
+
 #pragma mark Pull To Refresh Helpers
 
 //pulled should be absolute value

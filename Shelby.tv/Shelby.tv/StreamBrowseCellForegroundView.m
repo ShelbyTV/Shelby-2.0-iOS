@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailCaption;
 @property (weak, nonatomic) IBOutlet UIView *detailCommentView;
 @property (weak, nonatomic) IBOutlet UILabel *detailCreatedAt;
+@property (weak, nonatomic) IBOutlet UIButton *detailInviteFacebookFriends;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersAndSharers;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersSubview;
 @property (weak, nonatomic) IBOutlet UIView *detailSharersSubview;
@@ -56,6 +57,7 @@
 @property (nonatomic, strong) UIImageView *overlayImageView;
 
 - (IBAction)playVideoInCell:(id)sender;
+- (IBAction)sendFacebookRequest:(id)sender;
 @end
 
 @implementation StreamBrowseCellForegroundView
@@ -188,6 +190,7 @@
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
  
+    self.detailInviteFacebookFriends.frame = CGRectMake(self.detailViaNetwork.frame.origin.x + 100, self.detailInviteFacebookFriends.frame.origin.y, self.detailInviteFacebookFriends.frame.size.width, self.detailInviteFacebookFriends.frame.size.height);
     self.summaryTitleButton.frame = self.summaryTitle.frame;
     self.detailTitleButton.frame = self.detailTitle.frame;
 
@@ -250,6 +253,13 @@
     
     self.summaryViaNetwork.text = viaNetwork;
     self.detailViaNetwork.text = self.summaryViaNetwork.text;
+    
+    // If Via Network is "via Facebook" show the Facebook Invite Button.
+    if ([[self.detailViaNetwork.text lowercaseString] isEqualToString:@"via facebook"]) {
+        self.detailInviteFacebookFriends.hidden = NO;
+    } else {
+        self.detailInviteFacebookFriends.hidden = YES;
+    }
     
     // Caption
     NSString *captionText = [NSString stringWithFormat:@"%@", [_videoFrame creatorsInitialCommentWithFallback:YES]];
@@ -420,6 +430,11 @@
 - (IBAction)playVideoInCell:(id)sender
 {
     [self.delegate streamBrowseCellForegroundViewTitleWasTapped];
+}
+
+- (IBAction)sendFacebookRequest:(id)sender
+{
+    [self.delegate inviteFacebookFriendsWasTapped];
 }
 
 - (void)processLikersAndSharers

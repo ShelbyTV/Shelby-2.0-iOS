@@ -810,6 +810,12 @@
     }
 }
 
+
+- (void)inviteFacebookFriendsWasTapped:(ShelbyStreamBrowseViewController *)vc
+{
+    [self.masterDelegate inviteFacebookFriendsWasTapped];
+}
+
 - (void)launchMyRoll
 {
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersRoll)]) {

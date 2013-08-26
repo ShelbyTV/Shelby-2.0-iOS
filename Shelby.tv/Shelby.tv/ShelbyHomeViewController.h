@@ -25,6 +25,7 @@
 - (void)goToUsersLikes;
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
+- (void)inviteFacebookFriendsWasTapped;
 @end
 
 
