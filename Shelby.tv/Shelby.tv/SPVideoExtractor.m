@@ -7,7 +7,7 @@
 //
 
 #import "SPVideoExtractor.h"
-
+#import "ShelbyAnalyticsClient.h"
 #import "AppDelegate.h"
 #import "Video.h"
 
@@ -313,6 +313,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)stvYouTube:(Video *)video
 {
+    STVAssert(video, @"must have a video to extract");
     //TODO - set Quality based on device (iPad vs iPhone)
     self.stvYTExtractor = [[STVYouTubeExtractor alloc] initWithID:video.providerID quality:STVYouTubeVideoQualityMedium];
     self.stvYTExtractor.delegate = self;
@@ -405,9 +406,15 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 - (void)youTubeExtractor:(LBYouTubeExtractor *)extractor failedExtractingYouTubeURLWithError:(NSError *)error
 {
     //falling back to our extractor
-    //TODO: GA - send event to google analytics
-    [self destroyCurrentExtractor];
-    [self stvYouTube:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
+    @synchronized(self) {
+        STVAssert(self.currentlyExtracting[kSPVideoExtractorVideoKey], @"expected currently extracting to have video, but it looks like %@", self.currentlyExtracting);
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueYTExtractionFallback
+                                               nicknameAsLabel:YES];
+        [self destroyCurrentExtractor];
+        STVAssert(self.currentlyExtracting[kSPVideoExtractorVideoKey], @"expected currently extracting to still have video, but it looks like %@", self.currentlyExtracting);
+        [self stvYouTube:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
+    }
 }
 
 #pragma mark - Vimeo Extraction Results

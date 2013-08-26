@@ -35,6 +35,8 @@ static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video
 
 - (id)initWithID:(NSString *)videoID quality:(STVYouTubeVideoQuality)quality
 {
+    STVAssert(videoID, @"invalid to initialize without videoID");
+    
     self = [super init];
     if (self) {
         _isCancelled = NO;
