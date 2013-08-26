@@ -241,6 +241,7 @@ static AFHTTPClient *httpClient = nil;
                   password:(NSString *)password
                   andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
+    STVAssert(email && password, @"required arguments email and password cannot be nil");
     NSDictionary *loginParams = @{kShelbyAPIParamLoginEmail: email,
                                   kShelbyAPIParamLoginPassword: password};
     NSURLRequest *request = [self requestWithMethod:POST forPath:kShelbyAPIPostLoginPath withQueryParameters:loginParams shouldAddAuth:NO];
