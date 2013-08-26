@@ -106,7 +106,7 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:kShelbySPVideoPlayerCurrentPlayingVideoChanged];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)resizeParallaxViews
