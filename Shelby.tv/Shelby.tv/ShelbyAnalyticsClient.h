@@ -47,6 +47,7 @@ extern NSString * const kAnalyticsUXTapNavBarButton;
 //--App Issues--
 extern NSString * const kAnalyticsCategoryIssues;
 extern NSString * const kAnalyticsIssueContextSaveError;
+extern NSString * const kAnalyticsIssueYTExtractionFallback;
 
 @interface ShelbyAnalyticsClient : NSObject
 

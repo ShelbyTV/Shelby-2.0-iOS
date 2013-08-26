@@ -49,6 +49,7 @@ NSString * const kAnalyticsUXTapNavBarButton                            = @"Tap 
 //--App Issues--
 NSString * const kAnalyticsCategoryIssues                               = @"App Issues";
 NSString * const kAnalyticsIssueContextSaveError                        = @"Context Save Error";
+NSString * const kAnalyticsIssueYTExtractionFallback                    = @"Fallback to STVYouTubeExtractor";
 
 @implementation ShelbyAnalyticsClient
 
