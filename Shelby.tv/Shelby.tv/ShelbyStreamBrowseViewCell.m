@@ -100,6 +100,8 @@
         [self initPlacerholderThumbnails];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayingChanged:) name:kShelbySPVideoPlayerCurrentPlayingVideoChanged object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForVideo) name:kShelbySPVideoAirplayDidBegin object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForVideo) name:kShelbySPVideoAirplayDidEnd object:nil];
     }
     return self;
 }
