@@ -855,6 +855,7 @@
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewDefault;
         }];
+        self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
         [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
     }
 }
