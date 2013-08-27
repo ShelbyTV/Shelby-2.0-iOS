@@ -62,19 +62,6 @@
     // Setting background color to avoid seeing the phone's background
     self.view.backgroundColor = [UIColor blackColor];
     
-
-//    if (DEVICE_IPAD) {
-//        BrowseViewController *browseViewController = [[BrowseViewController alloc] initWithNibName:@"BrowseView" bundle:nil];
-//
-//        [self setBrowseVC:browseViewController];
-//        [self addChildViewController:browseViewController];
-//        [browseViewController.view setFrame:CGRectMake(0, 44, browseViewController.view.frame.size.width, browseViewController.view.frame.size.height)];
-//
-//        [self.view addSubview:browseViewController.view];
-//    
-//        [browseViewController didMoveToParentViewController:self];
-//    } else {
-    
     /* Order of views:
      * On top of everything, navBar.
      * Just below navBar: videoControls.
@@ -83,7 +70,6 @@
     [self setupNavBarView];
     [self setupVideoControlsView];
     [self showNavBarButton];
-//    }
     
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
 }
@@ -152,11 +138,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-//    if (DEVICE_IPAD) {
-//        return UIInterfaceOrientationMaskLandscape;
-//    } else {
     return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
-//    }
 }
 
 -(BOOL) shouldAutorotate {
@@ -176,12 +158,8 @@
 - (void)setChannels:(NSArray *)channels
 {
     if (![channels isEqualToArray:_channels]) {
-        //DLog(@"Replacing ALL Channels... %@ --becomes--> %@", _channels, channels);
         _channels = channels;
-//        if (DEVICE_IPAD) {
-//            self.browseVC.channels = channels;
-//            
-//        } else {
+
         //find or create new ShelbyStreamBrowseViewControllers for this array of channels
         NSMutableArray *newStreamBrowseVCs = [@[] mutableCopy];
         for (DisplayChannel *ch in channels) {
@@ -198,7 +176,6 @@
         }
         
         _streamBrowseVCs = newStreamBrowseVCs;
-//        }
     }
 }
 
@@ -207,9 +184,7 @@
     NSMutableArray *lessChannels = [_channels mutableCopy];
     [lessChannels removeObject:channel];
     _channels = lessChannels;
-//    if (DEVICE_IPAD) {
-//        self.browseVC.channels = _channels;
-//    } else {
+
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
     if (sbvc) {
         if (sbvc.view.superview) {
@@ -218,16 +193,11 @@
         }
         [_streamBrowseVCs removeObject:sbvc];
     }
-//    }
 }
 
 //assumes navigation is otherwise correctly set
 - (void)focusOnChannel:(DisplayChannel *)channel
 {
-//    if (DEVICE_IPAD) {
-//        //do nothing
-//    } else {
-//
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
     STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
     if (sbvc == _currentFullScreenVC) {
@@ -282,21 +252,14 @@
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
-//    if (DEVICE_IPAD) {
-        //When we implement new iPad interface, may want to update our persistent stream view here
-//    } else {
     [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel];
     if (!self.airPlayController.isAirPlayActive) {
         self.videoControlsVC.currentEntity = entity;
     }
-//    }
 }
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-//    if (DEVICE_IPAD) {
-//        [self.browseVC setEntries:channelEntries forChannel:channel];
-//    } else {
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
     STVAssert(sbvc, @"expected to set entries for a VC we have");
     [sbvc setEntries:channelEntries forChannel:channel];
@@ -304,7 +267,6 @@
         //we're bootstrapping, update the video controls for the 0th entity
         self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC deduplicatedEntriesForChannel:channel][0];
     }
-//    }
 }
 
 - (ShelbyStreamBrowseViewController *)streamBrowseViewControllerForChannel:(DisplayChannel *)channel
@@ -325,22 +287,19 @@
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
-//    if (DEVICE_IPAD) {
-//        [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
-//    } else {
-    BOOL playingThisChannel = (self.videoReel && self.videoReel.channel == channel);
+    @synchronized(self) {
+        BOOL playingThisChannel = (self.videoReel && self.videoReel.channel == channel);
 
-    ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
-    [sbvc addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel maintainingCurrentFocus:playingThisChannel];
+        ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
+        [sbvc addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel maintainingCurrentFocus:playingThisChannel];
 
-    if (self.currentStreamBrowseVC == sbvc) {
-        self.videoControlsVC.currentEntity = [sbvc entityForCurrentFocus];
-    }
+        if (self.currentStreamBrowseVC == sbvc) {
+            self.videoControlsVC.currentEntity = [sbvc entityForCurrentFocus];
+        }
 
-//    }
-
-    if (playingThisChannel) {
-        [self.videoReel setDeduplicatedEntries:sbvc.deduplicatedEntries];
+        if (playingThisChannel) {
+            [self.videoReel setDeduplicatedEntries:sbvc.deduplicatedEntries];
+        }
     }
 }
 
@@ -356,42 +315,26 @@
 
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
 {
-//    if (DEVICE_IPAD) {
-//        return [self.browseVC deduplicatedEntriesForChannel:channel];
-//    } else {
     return [[self streamBrowseViewControllerForChannel:channel] deduplicatedEntriesForChannel:channel];
-//    }
 }
 
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
 {
-//    if (DEVICE_IPAD) {
-//        [self.browseVC refreshActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
-//    } else {
     [[self streamBrowseViewControllerForChannel:channel] refreshActivityIndicatorShouldAnimate:shouldAnimate];
-//    }
 }
 
 - (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
 {
-//    if (DEVICE_IPAD) {
-//        [self.browseVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:shouldAnimate];
-//    } else {
-        // not currently showing a loadMore activity indicator
-        //[[self streamBrowseViewControllerForChannel:channel] loadMoreActivityIndicatorShouldAnimate:shouldAnimate];
-//    }
+    //not used on iphone
 }
 
 - (void)setMasterDelegate:(id)masterDelegate
 {
     _masterDelegate = masterDelegate;
-//    if (DEVICE_IPAD) {
-//        self.browseVC.browseDelegate = masterDelegate;
-//    } else {
+
     for (ShelbyStreamBrowseViewController *sbvc in self.streamBrowseVCs) {
         sbvc.browseManagementDelegate = masterDelegate;
     }
-//    }
 }
 
 - (void)setCurrentUser:(User *)currentUser
@@ -469,22 +412,14 @@
 
     } else if (self.videoReel) {
         STVAssert(self.videoReel.channel == channel, @"videoReel should have been shutdown or changed when channel was changed");
-//        if (DEVICE_IPAD) {
-//            //TODO
-//            DLog(@"TODO: handle resume video reel for iPad");
-//        } else {
         [self.videoReel playCurrentPlayer];
-//        }
+
     } else {
         [self prepareToShowVideoReel];
         [self initializeVideoReelWithChannel:channel atIndex:index];
 
         STVAssert([self.videoReel getCurrentPlaybackEntity] == self.videoControlsVC.currentEntity, @"reel entity (%@) should be same as controls entity (%@)", [self.videoReel getCurrentPlaybackEntity], self.videoControlsVC.currentEntity);
 
-//        if (DEVICE_IPAD) {
-//            //TODO
-//            DLog(@"TODO: handle play channel for iPad");
-//        } else {
         [self.videoReel willMoveToParentViewController:self];
         [self addChildViewController:self.videoReel];
         [self.view insertSubview:self.videoReel.view belowSubview:self.currentStreamBrowseVC.view];
@@ -498,7 +433,6 @@
         } completion:^(BOOL finished) {
             [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
         }];
-//        }
     }
 }
 
@@ -506,10 +440,6 @@
 {
     // prevent display from sleeping while watching video
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-    
-//    if (DEVICE_IPAD) {
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-//    }
 }
 
 - (void)dismissVideoReel
@@ -527,121 +457,12 @@
 
     //video controls are different w/ and w/o videoReel
     [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
-    
-    // The opposite of what we do in: launchPlayerSetup
-//    if (DEVICE_IPAD) {
-//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-//    }
 
     // allow display to sleep
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
-//DEPRECATED
-- (void)animateLaunchPlayerForChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
-{
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    
-    [self initializeVideoReelWithChannel:channel atIndex:index];
-    [self animateOpenChannels:channel];
-}
-
-//DEPRECATED
-- (void)animateDismissPlayerForChannel:(DisplayChannel *)channel atFrame:(Frame *)videoFrame
-{
-    [self animateCloseChannels:channel atFrame:videoFrame];
-}
-
-
 #pragma mark - ShelbyHome Private methods
-
-//DEPRECATED
-- (void)animateOpenChannels:(DisplayChannel *)channel 
-{
-//    if (self.animationInProgress) {
-//        return;
-//    } else {
-//        [self setAnimationInProgress:YES];
-//    }
-//    
-//    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForOpeningChannel:channel];
-//    
-//    CGFloat topBarHeight = self.topBar.frame.size.height;
-//    animationViews.topView.frame = CGRectMake(animationViews.topView.frame.origin.x, animationViews.topView.frame.origin.y + topBarHeight, animationViews.topView.frame.size.width, animationViews.topView.frame.size.height);
-//    animationViews.centerView.frame = CGRectMake(animationViews.centerView.frame.origin.x, animationViews.centerView.frame.origin.y + topBarHeight, animationViews.centerView.frame.size.width, animationViews.centerView.frame.size.height);
-//    animationViews.bottomView.frame = CGRectMake(animationViews.bottomView.frame.origin.x, animationViews.bottomView.frame.origin.y + topBarHeight, animationViews.bottomView.frame.size.width, animationViews.bottomView.frame.size.height);
-//    
-//    
-//    [self.videoReel.view addSubview:animationViews.centerView];
-//    [self.videoReel.view addSubview:animationViews.bottomView];
-//    [self.videoReel.view addSubview:animationViews.topView];
-//
-//    [self prepareToShowVideoReel];
-//    
-//    [self presentViewController:self.videoReel animated:NO completion:^{
-//        [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//            [animationViews.centerView setFrame:animationViews.finalCenterFrame];
-//            [animationViews.centerView setAlpha:0];
-//            [animationViews.topView setFrame:animationViews.finalTopFrame];
-//            [animationViews.bottomView setFrame:animationViews.finalBottomFrame];
-//        } completion:^(BOOL finished) {
-//            [animationViews.centerView removeFromSuperview];
-//            [animationViews.bottomView removeFromSuperview];
-//            [animationViews.topView removeFromSuperview];
-//            
-//            // KP KP: TODO: send a message to brain that it can start accepting new events
-//            [self setAnimationInProgress:NO];
-//        }];
-//    }];
-}
-
-//DEPRECATED
-- (void)animateCloseChannels:(DisplayChannel *)channel atFrame:(Frame *)frame
-{
-//    if (self.animationInProgress) {
-//        return;
-//    } else {
-//        [self setAnimationInProgress:YES];
-//    }
-//
-//    [self.browseVC highlightFrame:frame atChannel:channel];
-//    
-//    ShelbyHideBrowseAnimationViews *animationViews = [self.browseVC animationViewForClosingChannel:channel];
-// 
-//    [self.videoReel.view addSubview:animationViews.centerView];
-//    [self.videoReel.view addSubview:animationViews.bottomView];
-//    [self.videoReel.view addSubview:animationViews.topView];
-//    
-//    [self.videoReel.view bringSubviewToFront:animationViews.centerView];
-//    [self.videoReel.view bringSubviewToFront:animationViews.bottomView];
-//    [self.videoReel.view bringSubviewToFront:animationViews.topView];
-//    
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarStyleBlackTranslucent];
-//    [animationViews.centerView setAlpha:0];
-//    
-//    CGFloat topBarHeight = self.topBar.frame.size.height;
-//    CGRect finalTopFrame = CGRectMake(animationViews.finalTopFrame.origin.x, animationViews.finalTopFrame.origin.y + topBarHeight, animationViews.finalTopFrame.size.width, animationViews.finalTopFrame.size.height);
-//    CGRect finalCenterFrame = CGRectMake(animationViews.finalCenterFrame.origin.x, animationViews.finalCenterFrame.origin.y + topBarHeight, animationViews.finalCenterFrame.size.width, animationViews.finalCenterFrame.size.height);
-//    CGRect finalBottomFrame = CGRectMake(animationViews.finalBottomFrame.origin.x, animationViews.finalBottomFrame.origin.y + topBarHeight, animationViews.finalBottomFrame.size.width, animationViews.finalBottomFrame.size.height);
-//    
-//    [self.topBar setAlpha:0];
-//
-//    [UIView animateWithDuration:0.45 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//        [animationViews.centerView setFrame:finalCenterFrame];
-//        [animationViews.centerView setAlpha:1];
-//        [animationViews.topView setFrame:finalTopFrame];
-//        [animationViews.bottomView setFrame:finalBottomFrame];
-//    } completion:^(BOOL finished) {
-//        [self.videoReel dismissViewControllerAnimated:NO completion:^{
-//            [UIView animateWithDuration:0.5 animations:^{
-//                [self.topBar setAlpha:1];
-//            }];
-//            [self.videoReel shutdown];
-//            self.videoReel = nil;
-//        }];
-//        [self setAnimationInProgress:NO];
-//    }];
-}
 
 - (void)initializeVideoReelWithChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
 {
@@ -756,15 +577,11 @@
                                     withNicknameAsLabel:YES];
 
     } else {
-//        if (DEVICE_IPAD) {
-//            //TODO: do video controls care about this?
-//        } else {
-            //on iPhone, we only show one stream, so current entity did change
+        //on iPhone, we only show one stream, so current entity did change
         self.videoControlsVC.currentEntity = [vc entityForCurrentFocus];
         [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                              withAction:kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode
                                     withNicknameAsLabel:YES];
-//        }
     }
 }
 
@@ -927,7 +744,6 @@
     }
 }
 
-//DEPRECATED
 - (BOOL)toggleLikeCurrentVideo:(id<ShelbyVideoContainer>)entity
 {
     Frame *currentFrame = [Frame frameForEntity:entity];
@@ -1004,7 +820,6 @@
 
 - (void)airPlayControllerShouldAutoadvance:(ShelbyAirPlayController *)airPlayController
 {
-    DLog(@"HomeVC autoadvancing...");
     NSArray *channelEntities = [self deduplicatedEntriesForChannel:self.currentlyPlayingChannel];
     if ([channelEntities count] > (NSUInteger)self.currentlyPlayingIndexInChannel+1) {
         [self playChannel:self.currentlyPlayingChannel atIndex:self.currentlyPlayingIndexInChannel+1];

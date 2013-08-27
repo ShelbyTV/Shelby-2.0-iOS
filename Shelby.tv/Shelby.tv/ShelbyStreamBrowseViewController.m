@@ -64,11 +64,6 @@
     tap.numberOfTouchesRequired = 1;
     [tap requireGestureRecognizerToFail:self.collectionView.panGestureRecognizer];
     [self.collectionView addGestureRecognizer:tap];
-
-    //XXX LAYOUT TESTING
-//    self.view.layer.borderColor = [UIColor greenColor].CGColor;
-//    self.view.layer.borderWidth = 2.0;
-    //XXX LAYOUT TESTING
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -169,28 +164,34 @@
 - (void)setEntries:(NSArray *)entries
         forChannel:(DisplayChannel *)channel
 {
-    _channel = channel;
-    if (entries) {
-        _entries = entries;
-        _deduplicatedEntries = [DeduplicationUtility deduplicatedCopy:entries];
-    } else {
-        _entries = @[];
-        _deduplicatedEntries = @[];
-    }
-    
-    [self.collectionView reloadData];
+    @synchronized(self) {
+        _channel = channel;
+        if (entries) {
+            _entries = entries;
+            _deduplicatedEntries = [DeduplicationUtility deduplicatedCopy:entries];
+        } else {
+            _entries = @[];
+            _deduplicatedEntries = @[];
+        }
+        
+        [self.collectionView reloadData];
 
-    [self updateVisibilityOfNoContentView];
+        [self updateVisibilityOfNoContentView];
+    }
 }
 
 - (NSArray *)entriesForChannel:(DisplayChannel *)channel
 {
-    return self.entries;
+    @synchronized(self) {
+        return self.entries;
+    }
 }
 
 - (NSArray *)deduplicatedEntriesForChannel:(DisplayChannel *)channel
 {
-    return self.deduplicatedEntries;
+    @synchronized(self) {
+        return self.deduplicatedEntries;
+    }
 }
 
 - (void)addEntries:(NSArray *)newChannelEntries
@@ -200,46 +201,50 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 
 {
     STVAssert(self.channel == channel, @"cannot add entries for a different channel");
-    
-    NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
-    id<ShelbyVideoContainer> focusedEntityBeforeUpdates = [self entityForCurrentFocus];
 
-    if(shouldAppend){
-        self.entries = [self.entries arrayByAddingObjectsFromArray:newChannelEntries];
-        _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
-                                                                   toDedupedArray:self.deduplicatedEntries
-                                                                        didInsert:&indexPathsForInsert
-                                                                        didDelete:&indexPathsForDelete
-                                                                        didUpdate:&indexPathsForReload];
-    } else {
-        self.entries = [newChannelEntries arrayByAddingObjectsFromArray:self.entries];
-        _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
-                                                                    toDedupedArray:self.deduplicatedEntries
-                                                                         didInsert:&indexPathsForInsert
-                                                                         didDelete:&indexPathsForDelete
-                                                                         didUpdate:&indexPathsForReload];
-    }
+    @synchronized(self) {
+        NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
+        id<ShelbyVideoContainer> focusedEntityBeforeUpdates = [self entityForCurrentFocus];
 
-    // The index paths returned by DeduplicationUtility are relative to the original array.
-    // So we group them within performBatchUpdates:
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
-        [self.collectionView deleteItemsAtIndexPaths:indexPathsForDelete];
-        [self.collectionView reloadItemsAtIndexPaths:indexPathsForReload];
-    } completion:^(BOOL finished) {
-        if (shouldMaintainCurrentFocus) {
-            //scroll to the focus before updates
-            [self focusOnEntity:focusedEntityBeforeUpdates inChannel:channel];
+        if(shouldAppend){
+            self.entries = [self.entries arrayByAddingObjectsFromArray:newChannelEntries];
+            _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
+                                                                       toDedupedArray:self.deduplicatedEntries
+                                                                            didInsert:&indexPathsForInsert
+                                                                            didDelete:&indexPathsForDelete
+                                                                            didUpdate:&indexPathsForReload];
+        } else {
+            self.entries = [newChannelEntries arrayByAddingObjectsFromArray:self.entries];
+            _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
+                                                                        toDedupedArray:self.deduplicatedEntries
+                                                                             didInsert:&indexPathsForInsert
+                                                                             didDelete:&indexPathsForDelete
+                                                                             didUpdate:&indexPathsForReload];
         }
-    }];
-    
-    [self updateVisibilityOfNoContentView];
+
+        // The index paths returned by DeduplicationUtility are relative to the original array.
+        // So we group them within performBatchUpdates:
+        [self.collectionView performBatchUpdates:^{
+            [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
+            [self.collectionView deleteItemsAtIndexPaths:indexPathsForDelete];
+            [self.collectionView reloadItemsAtIndexPaths:indexPathsForReload];
+        } completion:^(BOOL finished) {
+            if (shouldMaintainCurrentFocus) {
+                //scroll to the focus before updates
+                [self focusOnEntity:focusedEntityBeforeUpdates inChannel:channel];
+            }
+        }];
+        
+        [self updateVisibilityOfNoContentView];
+    }
 }
 
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return [self.deduplicatedEntries count];
+    @synchronized(self) {
+        return [self.deduplicatedEntries count];
+    }
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
@@ -249,40 +254,44 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ShelbyStreamBrowseViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell" forIndexPath:indexPath];
-    [self.streamBrowseViewCells addObject:cell];
-    cell.delegate = self;
-    cell.viewMode = self.viewMode;
-    cell.entry = self.deduplicatedEntries[indexPath.row];
+    @synchronized(self) {
+        ShelbyStreamBrowseViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"ShelbyStreamBrowseViewCell" forIndexPath:indexPath];
+        [self.streamBrowseViewCells addObject:cell];
+        cell.delegate = self;
+        cell.viewMode = self.viewMode;
+        cell.entry = self.deduplicatedEntries[indexPath.row];
 
-    [cell matchParallaxOf:self.lastCellWithParallaxUpdate];
+        [cell matchParallaxOf:self.lastCellWithParallaxUpdate];
 
-    //load more data
-    NSInteger cellsBeyond = [self.deduplicatedEntries count] - [indexPath row];
-    if(cellsBeyond == kShelbyPrefetchEntriesWhenNearEnd && self.channel.canFetchRemoteEntries){
-        //since id should come from raw entries, not de-duped entries
-        [self.browseManagementDelegate loadMoreEntriesInChannel:self.channel
-                                                     sinceEntry:[self.entries lastObject]];
+        //load more data
+        NSInteger cellsBeyond = [self.deduplicatedEntries count] - [indexPath row];
+        if(cellsBeyond == kShelbyPrefetchEntriesWhenNearEnd && self.channel.canFetchRemoteEntries){
+            //since id should come from raw entries, not de-duped entries
+            [self.browseManagementDelegate loadMoreEntriesInChannel:self.channel
+                                                         sinceEntry:[self.entries lastObject]];
+        }
+
+        //prefetch next couple of cells
+        NSRange prefetchRange;
+        prefetchRange.location = indexPath.row + 1;
+        //length may be zero, which will result in empty array
+        prefetchRange.length = MIN(MAX_CELLS_TO_PREFETCH, [self.deduplicatedEntries count] - indexPath.row - 1);
+        for (id<ShelbyVideoContainer> svc in [self.deduplicatedEntries subarrayWithRange:prefetchRange]) {
+            [ShelbyStreamBrowseViewCell cacheEntry:svc];
+        }
+
+        return cell;
     }
-
-    //prefetch next couple of cells
-    NSRange prefetchRange;
-    prefetchRange.location = indexPath.row + 1;
-    //length may be zero, which will result in empty array
-    prefetchRange.length = MIN(MAX_CELLS_TO_PREFETCH, [self.deduplicatedEntries count] - indexPath.row - 1);
-    for (id<ShelbyVideoContainer> svc in [self.deduplicatedEntries subarrayWithRange:prefetchRange]) {
-        [ShelbyStreamBrowseViewCell cacheEntry:svc];
-    }
-
-    return cell;
 }
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
-    STVAssert(channel == self.channel, @"expected our channel");
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.deduplicatedEntries indexOfObject:entity] inSection:0];
-    STVAssert(indexPath.row != NSNotFound, @"expected to find the entity");
-    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+    @synchronized(self) {
+        STVAssert(channel == self.channel, @"expected our channel");
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.deduplicatedEntries indexOfObject:entity] inSection:0];
+        STVAssert(indexPath.row != NSNotFound, @"expected to find the entity");
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+    }
 }
 
 - (void)setViewMode:(ShelbyStreamBrowseViewMode)viewMode
@@ -297,22 +306,26 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 
 - (NSIndexPath *)indexPathForCurrentFocus
 {
-    // if our collection view hasn't yet moved to superview -- isn't on screen -- then it will
-    // return nil for -indexPahtsForVisibleItems: but we expect row 0.
-    NSIndexPath *idxPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.collectionView.frame.size.width/2.f, self.collectionView.contentOffset.y + self.collectionView.frame.size.height/2.f)];
-    if (!idxPath && [self.deduplicatedEntries count] > 0) {
-        return [NSIndexPath indexPathForRow:0 inSection:0];
+    @synchronized(self) {
+        // if our collection view hasn't yet moved to superview -- isn't on screen -- then it will
+        // return nil for -indexPahtsForVisibleItems: but we expect row 0.
+        NSIndexPath *idxPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.collectionView.frame.size.width/2.f, self.collectionView.contentOffset.y + self.collectionView.frame.size.height/2.f)];
+        if (!idxPath && [self.deduplicatedEntries count] > 0) {
+            return [NSIndexPath indexPathForRow:0 inSection:0];
+        }
+        return idxPath;
     }
-    return idxPath;
 }
 
 - (id<ShelbyVideoContainer>)entityForCurrentFocus
 {
-    NSIndexPath *path = [self indexPathForCurrentFocus];
-    if (path) {
-        return self.deduplicatedEntries[path.row];
-    } else {
-        return nil;
+    @synchronized(self) {
+        NSIndexPath *path = [self indexPathForCurrentFocus];
+        if (path) {
+            return self.deduplicatedEntries[path.row];
+        } else {
+            return nil;
+        }
     }
 }
 
