@@ -325,22 +325,19 @@
 
 - (void)addEntries:(NSArray *)newChannelEntries toEnd:(BOOL)shouldAppend ofChannel:(DisplayChannel *)channel
 {
-//    if (DEVICE_IPAD) {
-//        [self.browseVC addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel];
-//    } else {
-    BOOL playingThisChannel = (self.videoReel && self.videoReel.channel == channel);
+    @synchronized(self) {
+        BOOL playingThisChannel = (self.videoReel && self.videoReel.channel == channel);
 
-    ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
-    [sbvc addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel maintainingCurrentFocus:playingThisChannel];
+        ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
+        [sbvc addEntries:newChannelEntries toEnd:shouldAppend ofChannel:channel maintainingCurrentFocus:playingThisChannel];
 
-    if (self.currentStreamBrowseVC == sbvc) {
-        self.videoControlsVC.currentEntity = [sbvc entityForCurrentFocus];
-    }
+        if (self.currentStreamBrowseVC == sbvc) {
+            self.videoControlsVC.currentEntity = [sbvc entityForCurrentFocus];
+        }
 
-//    }
-
-    if (playingThisChannel) {
-        [self.videoReel setDeduplicatedEntries:sbvc.deduplicatedEntries];
+        if (playingThisChannel) {
+            [self.videoReel setDeduplicatedEntries:sbvc.deduplicatedEntries];
+        }
     }
 }
 
