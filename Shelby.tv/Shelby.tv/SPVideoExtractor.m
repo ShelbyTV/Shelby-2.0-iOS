@@ -152,12 +152,16 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     @synchronized(self){
         [[NSNotificationCenter defaultCenter] removeObserver:self];
 
+        [self.startNextExtractionTimer invalidate];
+        self.startNextExtractionTimer = nil;
+        [self.currentExtractionTimeoutTimer invalidate];
+        self.currentExtractionTimeoutTimer = nil;
+
         //fail current extraction
         if(self.currentlyExtracting){
             extraction_complete_block currentCompletionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
             [self destroyWebView];
-            [self destroyYTExtractor];
-            [self destroyVimeoExtractor];
+            [self destroyCurrentExtractor];
             self.currentlyExtracting = nil;
             if(currentCompletionBlock){
                 currentCompletionBlock(nil, NO);
@@ -165,11 +169,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         } else {
             STVAssert(self.webView == nil, @"should not have a web view w/o currently Extracting");
         }
-        
-        [self.startNextExtractionTimer invalidate];
-        self.startNextExtractionTimer = nil;
-        [self.currentExtractionTimeoutTimer invalidate];
-        self.currentExtractionTimeoutTimer = nil;
     }
 }
 
@@ -443,8 +442,8 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         if(completionBlock){
             completionBlock(extractedURL, NO);
         }
-        self.currentlyExtracting = nil;
         [self destroyCurrentExtractor];
+        self.currentlyExtracting = nil;
 
         [self scheduleNextExtraction];
     }
@@ -460,8 +459,9 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         if(completionBlock){
             completionBlock(nil, YES);
         }
-        self.currentlyExtracting = nil;
         [self destroyCurrentExtractor];
+        self.currentlyExtracting = nil;
+
 
         [self scheduleNextExtraction];
     }
@@ -541,21 +541,23 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 //WebView (non YT) extraction timeouts
 - (void)extractionTimedOut:(NSTimer *)timer
 {
-    //prevent possible async timing issue
-    if(self.currentlyExtracting && self.currentlyExtracting == timer.userInfo){
-        self.currentExtractionTimeoutTimer = nil;
-        
-        [self destroyWebView];
-        
-        extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
-        if(completionBlock){
-            completionBlock(nil, YES);
-        }
-        self.currentlyExtracting = nil;
+    @synchronized(self) {
+        //prevent possible async timing issue
+        if(self.currentlyExtracting && self.currentlyExtracting == timer.userInfo){
+            self.currentExtractionTimeoutTimer = nil;
+            
+            extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
+            [self destroyWebView];
+            [self destroyCurrentExtractor];
+            self.currentlyExtracting = nil;
+            if(completionBlock){
+                completionBlock(nil, YES);
+            }
 
-        [self scheduleNextExtraction];
-    } else {
-        DLog(@"Extraction TIMED OUT, but not the *current* extraction.  current: %@, timed out: %@", self.currentlyExtracting, timer.userInfo);
+            [self scheduleNextExtraction];
+        } else {
+            DLog(@"Extraction TIMED OUT, but not the *current* extraction.  current: %@, timed out: %@", self.currentlyExtracting, timer.userInfo);
+        }
     }
 }
 

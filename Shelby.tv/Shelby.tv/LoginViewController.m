@@ -80,6 +80,11 @@
 }
 
 - (IBAction)loginTapped:(UIBarButtonItem *)sender {
+    if (![self.usernameField.text length] || ![self.passwordField.text length]) {
+        [self loginFailed:@"Please enter your username (or email address) and password."];
+        return;
+    }
+
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     spinner.frame = CGRectMake(10, 10, 50, 44);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
