@@ -306,6 +306,24 @@
 		1CD255CB17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C717A1DD170049FF30 /* top-nav-bkgd@2x.png */; };
 		1CD255CC17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C717A1DD170049FF30 /* top-nav-bkgd@2x.png */; };
 		1CD255CD17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C717A1DD170049FF30 /* top-nav-bkgd@2x.png */; };
+		1CD8111217CCF6C0002FD84B /* play-airplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110C17CCF6C0002FD84B /* play-airplay.png */; };
+		1CD8111317CCF6C0002FD84B /* play-airplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110C17CCF6C0002FD84B /* play-airplay.png */; };
+		1CD8111417CCF6C0002FD84B /* play-airplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110C17CCF6C0002FD84B /* play-airplay.png */; };
+		1CD8111517CCF6C0002FD84B /* play-airplay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110D17CCF6C0002FD84B /* play-airplay@2x.png */; };
+		1CD8111617CCF6C0002FD84B /* play-airplay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110D17CCF6C0002FD84B /* play-airplay@2x.png */; };
+		1CD8111717CCF6C0002FD84B /* play-airplay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110D17CCF6C0002FD84B /* play-airplay@2x.png */; };
+		1CD8111817CCF6C0002FD84B /* play-all.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110E17CCF6C0002FD84B /* play-all.png */; };
+		1CD8111917CCF6C0002FD84B /* play-all.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110E17CCF6C0002FD84B /* play-all.png */; };
+		1CD8111A17CCF6C0002FD84B /* play-all.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110E17CCF6C0002FD84B /* play-all.png */; };
+		1CD8111B17CCF6C0002FD84B /* play-all@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110F17CCF6C0002FD84B /* play-all@2x.png */; };
+		1CD8111C17CCF6C0002FD84B /* play-all@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110F17CCF6C0002FD84B /* play-all@2x.png */; };
+		1CD8111D17CCF6C0002FD84B /* play-all@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8110F17CCF6C0002FD84B /* play-all@2x.png */; };
+		1CD8111E17CCF6C0002FD84B /* play-current.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111017CCF6C0002FD84B /* play-current.png */; };
+		1CD8111F17CCF6C0002FD84B /* play-current.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111017CCF6C0002FD84B /* play-current.png */; };
+		1CD8112017CCF6C0002FD84B /* play-current.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111017CCF6C0002FD84B /* play-current.png */; };
+		1CD8112117CCF6C0002FD84B /* play-current@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111117CCF6C0002FD84B /* play-current@2x.png */; };
+		1CD8112217CCF6C0002FD84B /* play-current@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111117CCF6C0002FD84B /* play-current@2x.png */; };
+		1CD8112317CCF6C0002FD84B /* play-current@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111117CCF6C0002FD84B /* play-current@2x.png */; };
 		1CDB0C1C17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */; };
 		1CDB0C1D17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */; };
 		1CDB0C1E17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */; };
@@ -986,6 +1004,12 @@
 		1CCCB55116D2A33600C8C216 /* PageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PageControl.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-nav-bkgd.png"; sourceTree = "<group>"; };
 		1CD255C717A1DD170049FF30 /* top-nav-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-nav-bkgd@2x.png"; sourceTree = "<group>"; };
+		1CD8110C17CCF6C0002FD84B /* play-airplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-airplay.png"; path = "../play-airplay.png"; sourceTree = "<group>"; };
+		1CD8110D17CCF6C0002FD84B /* play-airplay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-airplay@2x.png"; path = "../play-airplay@2x.png"; sourceTree = "<group>"; };
+		1CD8110E17CCF6C0002FD84B /* play-all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-all.png"; path = "../play-all.png"; sourceTree = "<group>"; };
+		1CD8110F17CCF6C0002FD84B /* play-all@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-all@2x.png"; path = "../play-all@2x.png"; sourceTree = "<group>"; };
+		1CD8111017CCF6C0002FD84B /* play-current.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-current.png"; path = "../play-current.png"; sourceTree = "<group>"; };
+		1CD8111117CCF6C0002FD84B /* play-current@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-current@2x.png"; path = "../play-current@2x.png"; sourceTree = "<group>"; };
 		1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SettingsView-iPhone.xib"; sourceTree = "<group>"; };
 		1CDB0C1F17A96CF90031C2C9 /* UserDetailsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailsViewCell.xib; sourceTree = "<group>"; };
 		1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewCell.xib; sourceTree = "<group>"; };
@@ -1600,6 +1624,12 @@
 				1CDCA66F179DCE190098C4E1 /* play@2x.png */,
 				1CDCA69E179F3FB80098C4E1 /* play-standard.png */,
 				1CDCA69F179F3FB80098C4E1 /* play-standard@2x.png */,
+				1CD8110C17CCF6C0002FD84B /* play-airplay.png */,
+				1CD8110D17CCF6C0002FD84B /* play-airplay@2x.png */,
+				1CD8110E17CCF6C0002FD84B /* play-all.png */,
+				1CD8110F17CCF6C0002FD84B /* play-all@2x.png */,
+				1CD8111017CCF6C0002FD84B /* play-current.png */,
+				1CD8111117CCF6C0002FD84B /* play-current@2x.png */,
 				1CDCA670179DCE190098C4E1 /* scrubber.png */,
 				1CDCA671179DCE190098C4E1 /* scrubber@2x.png */,
 			);
@@ -2333,6 +2363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */,
+				1CD8111F17CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14917BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				912261D717B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
@@ -2359,6 +2390,7 @@
 				91A362861790822D00381218 /* gopro.png in Resources */,
 				91A362891790822D00381218 /* gq.png in Resources */,
 				91A3628C1790822D00381218 /* nytimes.png in Resources */,
+				1CD8111917CCF6C0002FD84B /* play-all.png in Resources */,
 				91A3628F1790822D00381218 /* onion.png in Resources */,
 				91A362921790822D00381218 /* pitchfork.png in Resources */,
 				91A362951790822D00381218 /* ted.png in Resources */,
@@ -2372,6 +2404,7 @@
 				1C96DEB317975D0900D845DF /* bkgd-step1@2x.png in Resources */,
 				1C96DEB617975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
 				1C96DEB917975D0900D845DF /* bkgd-step2.png in Resources */,
+				1CD8111C17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				1C96DEBC17975D0900D845DF /* bkgd-step2@2x.png in Resources */,
 				9192ED0617C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				912261D417B97F070092AF30 /* overlay-likers.png in Resources */,
@@ -2394,11 +2427,13 @@
 				91F168181797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
 				91F168221797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
 				91F16826179840FF00AF8A2E /* Login.storyboard in Resources */,
+				1CD8111317CCF6C0002FD84B /* play-airplay.png in Resources */,
 				916F41AC1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */,
 				916F41BA1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */,
 				1CDCA679179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67C179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA67F179DCE190098C4E1 /* play.png in Resources */,
+				1CD8112217CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1CDCA682179DCE190098C4E1 /* play@2x.png in Resources */,
 				1CDCA685179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CDCA688179DCE190098C4E1 /* scrubber@2x.png in Resources */,
@@ -2432,6 +2467,7 @@
 				9192ED0917C3EA3D00294440 /* Ubuntu-L.ttf in Resources */,
 				1CDCA69C179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				1CDCA6A1179F3FB80098C4E1 /* play-standard.png in Resources */,
+				1CD8111617CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
 				1C56F13717BABD8C00EE9206 /* .gitignore in Resources */,
 				1CDCA6A4179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CDCA6A9179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
@@ -2489,6 +2525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */,
+				1CD8112017CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14A17BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				912261D817B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
@@ -2515,6 +2552,7 @@
 				91A362871790822D00381218 /* gopro.png in Resources */,
 				91A3628A1790822D00381218 /* gq.png in Resources */,
 				91A3628D1790822D00381218 /* nytimes.png in Resources */,
+				1CD8111A17CCF6C0002FD84B /* play-all.png in Resources */,
 				91A362901790822D00381218 /* onion.png in Resources */,
 				91A362931790822D00381218 /* pitchfork.png in Resources */,
 				91A362961790822D00381218 /* ted.png in Resources */,
@@ -2528,6 +2566,7 @@
 				1C96DEB417975D0900D845DF /* bkgd-step1@2x.png in Resources */,
 				1C96DEB717975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
 				1C96DEBA17975D0900D845DF /* bkgd-step2.png in Resources */,
+				1CD8111D17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				1C96DEBD17975D0900D845DF /* bkgd-step2@2x.png in Resources */,
 				9192ED0717C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				912261D517B97F070092AF30 /* overlay-likers.png in Resources */,
@@ -2550,11 +2589,13 @@
 				91F168191797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
 				91F168231797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
 				91F16827179840FF00AF8A2E /* Login.storyboard in Resources */,
+				1CD8111417CCF6C0002FD84B /* play-airplay.png in Resources */,
 				916F41AD1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */,
 				916F41BB1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */,
 				1CDCA67A179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67D179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA680179DCE190098C4E1 /* play.png in Resources */,
+				1CD8112317CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1CDCA683179DCE190098C4E1 /* play@2x.png in Resources */,
 				1CDCA686179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CDCA689179DCE190098C4E1 /* scrubber@2x.png in Resources */,
@@ -2588,6 +2629,7 @@
 				9192ED0A17C3EA3D00294440 /* Ubuntu-L.ttf in Resources */,
 				1CDCA69D179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				1CDCA6A2179F3FB80098C4E1 /* play-standard.png in Resources */,
+				1CD8111717CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
 				1C56F13817BABD8C00EE9206 /* .gitignore in Resources */,
 				1CDCA6A5179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CDCA6AA179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
@@ -2652,6 +2694,7 @@
 				8E7024EC1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F51715E71500E8DE46 /* README in Resources */,
 				91FCC6A7174BF118004255F5 /* Localizable.strings in Resources */,
+				1CD8111217CCF6C0002FD84B /* play-airplay.png in Resources */,
 				1C56F13C17BABD8C00EE9206 /* Appirater.podspec in Resources */,
 				912261D917B97F070092AF30 /* overlay-sharers.png in Resources */,
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
@@ -2672,6 +2715,7 @@
 				91A362821790822D00381218 /* buzzfeed.png in Resources */,
 				91A362851790822D00381218 /* gopro.png in Resources */,
 				91A362881790822D00381218 /* gq.png in Resources */,
+				1CD8111517CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
 				91A3628B1790822D00381218 /* nytimes.png in Resources */,
 				91A3628E1790822D00381218 /* onion.png in Resources */,
 				91A362911790822D00381218 /* pitchfork.png in Resources */,
@@ -2688,9 +2732,11 @@
 				1C96DEB517975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
 				1C96DEB817975D0900D845DF /* bkgd-step2.png in Resources */,
 				1C96DEBB17975D0900D845DF /* bkgd-step2@2x.png in Resources */,
+				1CD8111E17CCF6C0002FD84B /* play-current.png in Resources */,
 				1C96DEBE17975D0900D845DF /* bkgd-step3-568h@2x.png in Resources */,
 				1C96DEC117975D0900D845DF /* bkgd-step3.png in Resources */,
 				1C96DEC417975D0900D845DF /* bkgd-step3@2x.png in Resources */,
+				1CD8112117CCF6C0002FD84B /* play-current@2x.png in Resources */,
 				1C96DEC717975D0900D845DF /* bkgd-step4-568h@2x.png in Resources */,
 				1C96DECA17975D0900D845DF /* bkgd-step4.png in Resources */,
 				1C96DECD17975D0900D845DF /* bkgd-step4@2x.png in Resources */,
@@ -2774,6 +2820,7 @@
 				916F426E17A74480001D9DF7 /* patagonia.m4v in Resources */,
 				916F427117A74480001D9DF7 /* twitter.m4v in Resources */,
 				916F427417A74480001D9DF7 /* vice.m4v in Resources */,
+				1CD8111B17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				1CDB0C1C17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2017A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2417A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
@@ -2788,6 +2835,7 @@
 				91B7DC4217B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				91B7DC4F17B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				91B7DC5217B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
+				1CD8111817CCF6C0002FD84B /* play-all.png in Resources */,
 				91B7DC5517B29D59009ABF02 /* scrub-track-progress.png in Resources */,
 				91B7DC5817B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 				9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,

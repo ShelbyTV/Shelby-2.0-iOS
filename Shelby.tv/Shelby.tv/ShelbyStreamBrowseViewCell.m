@@ -311,7 +311,7 @@
     if (self.viewMode == ShelbyStreamBrowseViewForAirplay) {
         if ([SPVideoPlayer currentPlayingVideo] == [self.entry containedVideo]) {
             // TODO: set "playing now" image
-            self.foregroundView.summaryPlayImageView.image = nil;
+            self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-current.png"];
         } else {
             self.foregroundView.summaryPlayImageView.image = [UIImage imageNamed:@"play-airplay.png"];
         }

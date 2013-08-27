@@ -211,8 +211,8 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play-all" id="3cT-IQ-PRJ">
-                    <rect key="frame" x="15" y="361" width="94" height="94"/>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play-all" id="3cT-IQ-PRJ">
+                    <rect key="frame" x="15" y="361" width="210" height="94"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
@@ -249,6 +249,6 @@
         <image name="avatar-blank.png" width="40" height="40"/>
         <image name="overlay-likers.png" width="17" height="16"/>
         <image name="overlay-sharers.png" width="17" height="18"/>
-        <image name="play-all" width="94" height="94"/>
+        <image name="play-all" width="96" height="96"/>
     </resources>
 </document>
