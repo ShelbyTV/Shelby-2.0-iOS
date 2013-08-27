@@ -64,11 +64,6 @@
     tap.numberOfTouchesRequired = 1;
     [tap requireGestureRecognizerToFail:self.collectionView.panGestureRecognizer];
     [self.collectionView addGestureRecognizer:tap];
-
-    //XXX LAYOUT TESTING
-//    self.view.layer.borderColor = [UIColor greenColor].CGColor;
-//    self.view.layer.borderWidth = 2.0;
-    //XXX LAYOUT TESTING
 }
 
 - (void)viewWillAppear:(BOOL)animated
