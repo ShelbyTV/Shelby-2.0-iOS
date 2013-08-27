@@ -64,7 +64,7 @@
         UIView *externalView = [[UIView alloc] initWithFrame:screen.bounds];
         
         // Center Shelby Logo on External Screen
-        UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
+        UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo-tv.png"]];
         NSInteger logoHeight = logo.frame.size.height;
         NSInteger logoWidth = logo.frame.size.width;
         logo.frame = CGRectMake(screen.bounds.size.width/2 - logoWidth/2 , screen.bounds.size.height/2 - logoHeight/2, logoWidth, logoHeight);

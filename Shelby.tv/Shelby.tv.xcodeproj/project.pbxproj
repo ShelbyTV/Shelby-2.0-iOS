@@ -324,6 +324,9 @@
 		1CD8112117CCF6C0002FD84B /* play-current@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111117CCF6C0002FD84B /* play-current@2x.png */; };
 		1CD8112217CCF6C0002FD84B /* play-current@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111117CCF6C0002FD84B /* play-current@2x.png */; };
 		1CD8112317CCF6C0002FD84B /* play-current@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8111117CCF6C0002FD84B /* play-current@2x.png */; };
+		1CD8112517CCFCDF002FD84B /* logo-tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8112417CCFCDF002FD84B /* logo-tv.png */; };
+		1CD8112617CCFCDF002FD84B /* logo-tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8112417CCFCDF002FD84B /* logo-tv.png */; };
+		1CD8112717CCFCDF002FD84B /* logo-tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD8112417CCFCDF002FD84B /* logo-tv.png */; };
 		1CDB0C1C17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */; };
 		1CDB0C1D17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */; };
 		1CDB0C1E17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */; };
@@ -1010,6 +1013,7 @@
 		1CD8110F17CCF6C0002FD84B /* play-all@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-all@2x.png"; path = "../play-all@2x.png"; sourceTree = "<group>"; };
 		1CD8111017CCF6C0002FD84B /* play-current.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-current.png"; path = "../play-current.png"; sourceTree = "<group>"; };
 		1CD8111117CCF6C0002FD84B /* play-current@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-current@2x.png"; path = "../play-current@2x.png"; sourceTree = "<group>"; };
+		1CD8112417CCFCDF002FD84B /* logo-tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo-tv.png"; path = "../logo-tv.png"; sourceTree = "<group>"; };
 		1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SettingsView-iPhone.xib"; sourceTree = "<group>"; };
 		1CDB0C1F17A96CF90031C2C9 /* UserDetailsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailsViewCell.xib; sourceTree = "<group>"; };
 		1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewCell.xib; sourceTree = "<group>"; };
@@ -1632,6 +1636,7 @@
 				1CD8111117CCF6C0002FD84B /* play-current@2x.png */,
 				1CDCA670179DCE190098C4E1 /* scrubber.png */,
 				1CDCA671179DCE190098C4E1 /* scrubber@2x.png */,
+				1CD8112417CCFCDF002FD84B /* logo-tv.png */,
 			);
 			path = "Player Images";
 			sourceTree = "<group>";
@@ -2484,6 +2489,7 @@
 				1C154E6417A071DF00C0B76B /* circle@2x.png in Resources */,
 				1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3E17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
+				1CD8112617CCFCDF002FD84B /* logo-tv.png in Resources */,
 				1C534E4117A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
 				1CD255C917A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CC17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
@@ -2646,6 +2652,7 @@
 				1C154E6517A071DF00C0B76B /* circle@2x.png in Resources */,
 				1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3F17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
+				1CD8112717CCFCDF002FD84B /* logo-tv.png in Resources */,
 				1C534E4217A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
 				1CD255CA17A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CD17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
@@ -2817,6 +2824,7 @@
 				916F426417A73119001D9DF7 /* buzzfeed.m4v in Resources */,
 				916F426817A73CFE001D9DF7 /* facebook.m4v in Resources */,
 				1C56F14217BABD8C00EE9206 /* README.md in Resources */,
+				1CD8112517CCFCDF002FD84B /* logo-tv.png in Resources */,
 				916F426E17A74480001D9DF7 /* patagonia.m4v in Resources */,
 				916F427117A74480001D9DF7 /* twitter.m4v in Resources */,
 				916F427417A74480001D9DF7 /* vice.m4v in Resources */,
