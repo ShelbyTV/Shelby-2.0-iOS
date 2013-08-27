@@ -390,6 +390,15 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
     [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
 }
 
+- (void)removeFrame:(Frame *)frame fromChannel:(DisplayChannel *)channel
+{
+    NSArray *channelEntries = [self.homeVC entriesForChannel:channel];
+    STVAssert(channelEntries && [channelEntries[0] isKindOfClass:[Frame class]], @"can't remove frame from channel that doesn't have frames");
+    NSMutableArray *newChannelEntries = [channelEntries mutableCopy];
+    [newChannelEntries removeObject:frame];
+    [self.homeVC setEntries:newChannelEntries forChannel:channel];
+}
+
 // 100% of the logic of channel ordering.
 // HomeVC just takes the array it's given, assuming it's in the correct order.
 - (NSMutableArray *)constructAllChannelsArray

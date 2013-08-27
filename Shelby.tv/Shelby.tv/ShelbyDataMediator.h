@@ -11,6 +11,8 @@
 #import "DisplayChannel+Helper.h"
 #import "User+Helper.h"
 
+@class Frame;
+
 extern NSString * const kShelbyOfflineLikesID;
 extern NSString * const kShelbyNotificationFacebookConnectCompleted;
 extern NSString * const kShelbyNotificationTwitterConnectCompleted;
@@ -31,6 +33,8 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
                                 withError:(NSError *)error;
 - (void)fetchOfflineLikesDidCompleteForChannel:(DisplayChannel *)channel
                                           with:(NSArray *)channelEntries;
+- (void)removeFrame:(Frame *)frame
+        fromChannel:(DisplayChannel *)channel;
 
 // User
 - (void)userWasUpdated;
