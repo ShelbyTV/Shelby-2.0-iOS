@@ -207,8 +207,7 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 - (void)handleDidBecomeActive
 {
     [[FBSession activeSession] handleDidBecomeActive];
-    // TODO: KP KP: 
-//    [FBAppEvents activateApp];
+    [FBAppEvents activateApp];
 }
 
 @end
