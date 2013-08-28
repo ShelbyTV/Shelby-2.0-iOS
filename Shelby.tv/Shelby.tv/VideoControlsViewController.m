@@ -319,10 +319,18 @@
 
 - (IBAction)shareTapped:(id)sender {
     _shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    self.shareActivityIndicator.frame = self.controlsView.shareButton.frame;
+    if (self.displayMode == VideoControlsDisplayActionsOnly) {
+        //non playback
+        self.shareActivityIndicator.frame = self.controlsView.nonplaybackShareButton.frame;
+        self.controlsView.nonplaybackShareButton.enabled = NO;
+    } else {
+        //playback
+        self.shareActivityIndicator.frame = self.controlsView.shareButton.frame;
+        self.controlsView.shareButton.hidden = YES;
+    }
+
     [self.shareActivityIndicator startAnimating];
     [self.controlsView addSubview:self.shareActivityIndicator];
-    self.controlsView.shareButton.hidden = YES;
     [self.delegate videoControlsShareCurrentVideo:self];
 }
 
@@ -330,7 +338,13 @@
 {
     [self.shareActivityIndicator removeFromSuperview];
     self.shareActivityIndicator = nil;
-    self.controlsView.shareButton.hidden = NO;
+    if (self.displayMode == VideoControlsDisplayActionsOnly) {
+        //non playback
+        self.controlsView.nonplaybackShareButton.enabled = YES;
+    } else {
+        //playback
+        self.controlsView.shareButton.hidden = NO;
+    }
 }
 
 #pragma mark - VideoPlaybackDelegate

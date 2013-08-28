@@ -223,11 +223,14 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     [self.player removeTimeObserver:self.playerTimeObserver];
     self.playerTimeObserver = nil;
 
-    STVAssert(self.player.currentItem, @"expected a current item on the player... wtf?");
-    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
-    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
-    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
-    [self.player.currentItem removeObserver:self forKeyPath:kShelbySPAVPlayerDuration];
+    if (self.player.currentItem) {
+        [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
+        [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
+        [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
+        [self.player.currentItem removeObserver:self forKeyPath:kShelbySPAVPlayerDuration];
+    } else {
+        DLog(@"Player has no currentItem during remove observers.  Harmless unless frequent.");
+    }
 
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:AVPlayerItemDidPlayToEndTimeNotification

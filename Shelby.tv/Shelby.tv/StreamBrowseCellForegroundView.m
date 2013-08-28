@@ -298,7 +298,7 @@
     }
     if ([_sharers count]) {
         self.detailSharersSubview.hidden = NO;
-        for (NSUInteger i = 0; i < [_sharers count]; i++) {
+        for (NSUInteger i = 0; i < MIN([_sharers count], [_sharerImageViews count]); i++) {
             User *sharer = _sharers[i];
             [((UIImageView *)_sharerImageViews[i]) setImageWithURL:sharer.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
         }
@@ -312,7 +312,7 @@
     }
     if ([_likers count]) {
         self.detailLikersSubview.hidden = NO;
-        for (NSUInteger i = 0; i < MIN([_likers count],[_likerImageViews count]); i++) {
+        for (NSUInteger i = 0; i < MIN([_likers count], [_likerImageViews count]); i++) {
             User *liker = _likers[i];
             [((UIImageView *)_likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
         }
@@ -392,7 +392,7 @@
     //update likers and sharers based on the white background box
     self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y + self.detailWhiteBackground.frame.size.height + detailLikersAndSharersPadding, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
     self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
-    if ([self.videoFrame.upvoters count] > 0) {
+    if ([_likers count] > 0) {
         self.detailSharersSubview.frame = CGRectMake(self.detailLikersAndSharers.frame.size.width/2.f, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
     } else {
         self.detailSharersSubview.frame = self.detailLikersSubview.frame;

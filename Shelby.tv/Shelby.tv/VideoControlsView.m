@@ -43,6 +43,9 @@
         //alpha is set in -[VideoControlsViewController updateViewForCurrentDisplayMode]
     }
 
+    //not sure why this isn't working...
+    [self.nonplaybackShareButton setImage:nil forState:UIControlStateDisabled];
+
     [self setFont];
 }
 

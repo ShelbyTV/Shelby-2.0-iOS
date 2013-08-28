@@ -147,7 +147,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         if (JSON) { // success
             frame.clientUnsyncedLike = @0;
             frame.clientLikedAt = nil;
-            //API is NOT returning the liked frame, so...
+            //API is NOT returning the liked frame, but we need it when deleting, so...
             [self fetchEntriesInChannel:[user displayChannelForLikesRoll] sinceEntry:nil];
             
             NSError *err;
@@ -169,18 +169,13 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 {
     [ShelbyAPIClient deleteFrame:frame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
         if (JSON) {
+            [self.delegate removeFrame:frame fromChannel:[user displayChannelForLikesRoll]];
+
+            [frame.managedObjectContext deleteObject:frame];
             NSError *err;
             [frame.managedObjectContext save:&err];
-            STVDebugAssert(!err, @"context save failed, in toggleLikeForFrame when deleting (in block)...");
-            if (err) {
-                [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
-                                                      action:kAnalyticsIssueContextSaveError
-                                                       label:[NSString stringWithFormat:@"-[unlikeFrame:forUser:] error: %@", err]];
-            }
-            
-            //djs
-            //TODO: need to smartly update the Browse View b/c the unliked frame is still in there :(
-            //... until next launch
+            STVDebugAssert(!error, @"context save failed, in unlikeFrame block...");
+
         } else {
             DLog(@"Failed to delete liked frame, DEBUG this %@", error);
         }
@@ -210,7 +205,6 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     }
 }
 
-//when login is enabled, this needs to be re-thought...
 - (BOOL)toggleLikeForFrame:(Frame *)frame
 {
     STVDebugAssert(frame.managedObjectContext == [self mainThreadContext], @"frame expected on main context (b/c action is from there)");
@@ -225,7 +219,11 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             frame.clientUnsyncedLike = @1;
             [frame addUpvotersObject:user];
             frame.clientLikedAt = [NSDate date];
-            
+
+            NSError *err;
+            [frame.managedObjectContext save:&err];
+            STVDebugAssert(!err, @"context save failed, in toggleLikeForFrame...");
+
             return YES;
             
         } else {
@@ -233,13 +231,18 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             Frame *likedFrame = [user likedFrameWithVideoOfFrame:frame];
             STVDebugAssert(likedFrame, @"expected liked frame");
  
-            [self unlikeFrame:frame forUser:user];
+            [self unlikeFrame:likedFrame forUser:user];
             
             //represnt unliked state assuming the API call succeeds
             frame.clientUnsyncedLike = @0;
             [frame removeUpvotersObject:user];
             frame.clientLikedAt = nil;
             likedFrame.clientUnliked = @1;
+
+            NSError *err;
+            [frame.managedObjectContext save:&err];
+            STVDebugAssert(!err, @"context save failed, in toggleLikeForFrame...");
+
             return NO;
         }
         

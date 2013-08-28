@@ -263,9 +263,10 @@
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
     STVAssert(sbvc, @"expected to set entries for a VC we have");
     [sbvc setEntries:channelEntries forChannel:channel];
-    if (!self.airPlayController.isAirPlayActive && !self.videoControlsVC.currentEntity && self.currentStreamBrowseVC.channel == channel && [channelEntries count]) {
-        //we're bootstrapping, update the video controls for the 0th entity
-        self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC deduplicatedEntriesForChannel:channel][0];
+    if (!self.airPlayController.isAirPlayActive && self.currentStreamBrowseVC.channel == channel && [channelEntries count]) {
+        //if you unlike the video you're playing in likes channel, we exit the player to keep things in sync
+        [self dismissVideoReel];
+        self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
     }
 }
 
@@ -860,6 +861,7 @@
         [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
             self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewDefault;
         }];
+        self.videoControlsVC.currentEntity = [self.currentStreamBrowseVC entityForCurrentFocus];
         [self updateVideoControlsForPage:self.currentStreamBrowseVC.currentPage];
     }
 }
