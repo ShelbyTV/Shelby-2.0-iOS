@@ -27,7 +27,7 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 @interface ShelbyBrain()
 
 //our two primary view controllers
-@property (strong, nonatomic) WelcomeFlowViewController *welcomeVC;
+@property (strong, nonatomic) WelcomeViewController *welcomeVC;
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
 
 //login and signup view controllers
@@ -66,8 +66,8 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 {
     [ShelbyDataMediator sharedInstance].delegate = self;
     
-    if (![WelcomeFlowViewController isWelcomeComplete]) {
-        [self activateWelcomeFlowViewController];
+    if (![WelcomeViewController isWelcomeComplete]) {
+        [self activateWelcomeViewController];
     } else {
         [self activateHomeViewController];
         User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
@@ -80,9 +80,9 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
     [self.mainWindow makeKeyAndVisible];
 }
 
-- (void)activateWelcomeFlowViewController
+- (void)activateWelcomeViewController
 {
-    UIStoryboard *welcomeStoryboard = [UIStoryboard storyboardWithName:@"WelcomeFlow" bundle:nil];
+    UIStoryboard *welcomeStoryboard = [UIStoryboard storyboardWithName:@"Welcome" bundle:nil];
     self.welcomeVC = [welcomeStoryboard instantiateInitialViewController];
     self.welcomeVC.delegate = self;
     self.mainWindow.rootViewController = self.welcomeVC;
@@ -872,19 +872,19 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-# pragma mark - WelcomeFlowDelegate
+# pragma mark - WelcomeDelegate
 
-- (void)welcomeFlowDidTapSignup:(WelcomeFlowViewController *)welcomeFlowVC
+- (void)welcomeDidTapSignup:(WelcomeViewController *)welcomeVC
 {
     [self presentSignupVC];
 }
 
-- (void)welcomeFlowDidTapLogin:(WelcomeFlowViewController *)welcomeFlowVC
+- (void)welcomeDidTapLogin:(WelcomeViewController *)welcomeVC
 {
     [self presentLoginVC];
 }
 
-- (void)welcomeFlowDidTapPreview:(WelcomeFlowViewController *)welcomeFlowVC
+- (void)welcomeDidTapPreview:(WelcomeViewController *)welcomeVC
 {
     [self activateHomeViewController];
 }
