@@ -22,16 +22,11 @@
 
 @implementation WelcomeScrollHolderView
 
-- (id)initWithFrame:(CGRect)frame
+- (void)awakeFromNib
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self addSubview:[[NSBundle mainBundle] loadNibNamed:@"WelcomeScrollHolderView" owner:self options:nil][0]];
-        self.titleLabel.font = kShelbyFontH2;
-        [self initScroller];
-        [self showTip:0];
-    }
-    return self;
+    self.titleLabel.font = kShelbyFontH2;
+    [self initScroller];
+    [self showTip:0];
 }
 
 - (void)initScroller
@@ -57,7 +52,7 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self showTip:0];
+    [self showTip:999];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -85,16 +80,19 @@
     }
 
     switch (tipIdx) {
+        case 0:
+            self.titleLabel.text = @"Discover & enjoy the best video.";
+            break;
         case 1:
-            //TODO: change title
+            self.titleLabel.text = @"Your perfect video stream.";
             self.tip1.hidden = NO;
             break;
         case 2:
-            //TODO: change title
+            self.titleLabel.text = @"Shelby gets to know you.";
             self.tip2.hidden = NO;
             break;
         case 3:
-            //TODO: change title
+            self.titleLabel.text = @"Shelby is powered by friends.";
             self.tip3.hidden = NO;
             break;
         default:

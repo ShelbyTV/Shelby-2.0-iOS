@@ -7,6 +7,7 @@
 //
 
 #import "WelcomeViewController.h"
+#import "WelcomeLoginView.h"
 #import "WelcomeScrollHolderView.h"
 
 NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
@@ -18,8 +19,9 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 };
 
 @interface WelcomeViewController ()
-@property (nonatomic, strong) WelcomeScrollHolderView *welcomeScrollHolderView;
 @property (weak, nonatomic) IBOutlet UIScrollView *welcomeScrollScroller;
+@property (nonatomic, strong) WelcomeLoginView *welcomeLoginView;
+@property (nonatomic, strong) WelcomeScrollHolderView *welcomeScrollHolderView;
 @end
 
 @implementation WelcomeViewController
@@ -43,16 +45,19 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
                                       withAction:kAnalyticsWelcomeStart
                                        withLabel:nil];
 
-    //TODO: add the login view at the lowest level (hooked up to my actions)
-
-    //add the scorller view above the login view
-    self.welcomeScrollHolderView = [[WelcomeScrollHolderView alloc] initWithFrame:self.view.bounds];
+    //add the scroller view above the login view
+    self.welcomeScrollHolderView = [[NSBundle mainBundle] loadNibNamed:@"WelcomeScrollHolderView" owner:self options:nil][0];
+    self.welcomeLoginView.frame = self.view.bounds;
     self.welcomeScrollHolderView.scrollViewDelegate = self;
     //adding the scroller within our own proramatic scroller (used to slide it out of the way)
     self.welcomeScrollScroller.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height*2);
     self.welcomeScrollScroller.scrollEnabled = NO;
     [self.welcomeScrollScroller addSubview:self.welcomeScrollHolderView];
 
+    //add the login view at bottom of scroller
+    self.welcomeLoginView = [[NSBundle mainBundle] loadNibNamed:@"WelcomeLoginView" owner:self options:nil][0];
+    self.welcomeLoginView.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
+    [self.welcomeScrollScroller addSubview:self.welcomeLoginView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,16 +72,15 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 
 + (bool)isWelcomeComplete
 {
-    return NO;
     //XXX
+    return NO;
+    //TODO: uncomment the following
 //    return [[NSUserDefaults standardUserDefaults] integerForKey:kShelbyWelcomeStatusKey] == ShelbyWelcomeStatusComplete;
 }
 
-// -- old IBActions ---
-// these may come from a sub view now...
+#pragma mark - WelcomeLoginView's IBActions
 
-- (IBAction)signupWasTapped:(id)sender
-{
+- (IBAction)createAccountTapped:(id)sender {
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapSignup
                                        withLabel:nil];
@@ -84,8 +88,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
     [self.delegate welcomeDidTapSignup:self];
 }
 
-- (IBAction)loginWasTapped:(id)sender
-{
+- (IBAction)loginTapped:(id)sender {
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapLogin
                                        withLabel:nil];
@@ -93,14 +96,15 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
     [self.delegate welcomeDidTapLogin:self];
 }
 
-- (IBAction)previewWasTapped:(id)sender
-{
+- (IBAction)previewTapped:(id)sender {
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapPreview
                                        withLabel:nil];
     [self welcomeComplete];
     [self.delegate welcomeDidTapPreview:self];
 }
+
+#pragma mark - Helpers
 
 - (void)welcomeComplete
 {

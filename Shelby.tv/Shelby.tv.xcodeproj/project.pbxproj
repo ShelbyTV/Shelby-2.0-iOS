@@ -405,24 +405,6 @@
 		1CDCA6AB179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6A7179F3FFA0098C4E1 /* avatar-blank@2x.png */; };
 		1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6A7179F3FFA0098C4E1 /* avatar-blank@2x.png */; };
 		1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6A7179F3FFA0098C4E1 /* avatar-blank@2x.png */; };
-		1CDCA6B4179F44760098C4E1 /* create-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AE179F44760098C4E1 /* create-btn.png */; };
-		1CDCA6B5179F44760098C4E1 /* create-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AE179F44760098C4E1 /* create-btn.png */; };
-		1CDCA6B6179F44760098C4E1 /* create-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AE179F44760098C4E1 /* create-btn.png */; };
-		1CDCA6B7179F44760098C4E1 /* create-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */; };
-		1CDCA6B8179F44760098C4E1 /* create-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */; };
-		1CDCA6B9179F44760098C4E1 /* create-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */; };
-		1CDCA6BA179F44760098C4E1 /* login-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B0179F44760098C4E1 /* login-btn.png */; };
-		1CDCA6BB179F44760098C4E1 /* login-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B0179F44760098C4E1 /* login-btn.png */; };
-		1CDCA6BC179F44760098C4E1 /* login-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B0179F44760098C4E1 /* login-btn.png */; };
-		1CDCA6BD179F44760098C4E1 /* login-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */; };
-		1CDCA6BE179F44760098C4E1 /* login-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */; };
-		1CDCA6BF179F44760098C4E1 /* login-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */; };
-		1CDCA6C0179F44760098C4E1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B2179F44760098C4E1 /* logo.png */; };
-		1CDCA6C1179F44760098C4E1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B2179F44760098C4E1 /* logo.png */; };
-		1CDCA6C2179F44760098C4E1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B2179F44760098C4E1 /* logo.png */; };
-		1CDCA6C3179F44760098C4E1 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B3179F44760098C4E1 /* logo@2x.png */; };
-		1CDCA6C4179F44760098C4E1 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B3179F44760098C4E1 /* logo@2x.png */; };
-		1CDCA6C5179F44760098C4E1 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B3179F44760098C4E1 /* logo@2x.png */; };
 		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
@@ -577,6 +559,12 @@
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
+		913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
+		913D854917CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
+		913D854A17CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
+		913D854D17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */; };
+		913D854E17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */; };
+		913D854F17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */; };
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
@@ -946,12 +934,6 @@
 		1CDCA69F179F3FB80098C4E1 /* play-standard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-standard@2x.png"; sourceTree = "<group>"; };
 		1CDCA6A6179F3FFA0098C4E1 /* avatar-blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-blank.png"; sourceTree = "<group>"; };
 		1CDCA6A7179F3FFA0098C4E1 /* avatar-blank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-blank@2x.png"; sourceTree = "<group>"; };
-		1CDCA6AE179F44760098C4E1 /* create-btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create-btn.png"; sourceTree = "<group>"; };
-		1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create-btn@2x.png"; sourceTree = "<group>"; };
-		1CDCA6B0179F44760098C4E1 /* login-btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-btn.png"; sourceTree = "<group>"; };
-		1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-btn@2x.png"; sourceTree = "<group>"; };
-		1CDCA6B2179F44760098C4E1 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		1CDCA6B3179F44760098C4E1 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
 		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
@@ -1091,6 +1073,9 @@
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
+		913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeLoginView.xib; sourceTree = "<group>"; };
+		913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeLoginView.h; sourceTree = "<group>"; };
+		913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeLoginView.m; sourceTree = "<group>"; };
 		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
 		9140530D174D055700E18A6B /* NSObject+NullHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NullHelper.m"; sourceTree = "<group>"; };
@@ -1467,6 +1452,7 @@
 				1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */,
 				9178C9D517CE398400913256 /* Welcome.storyboard */,
 				9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */,
+				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -1890,6 +1876,8 @@
 				1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */,
 				9178C9E117CE3B8600913256 /* WelcomeScrollHolderView.h */,
 				9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */,
+				913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */,
+				913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1979,12 +1967,6 @@
 			isa = PBXGroup;
 			children = (
 				91B7DC2717AACD79009ABF02 /* hungry.m4v */,
-				1CDCA6AE179F44760098C4E1 /* create-btn.png */,
-				1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */,
-				1CDCA6B0179F44760098C4E1 /* login-btn.png */,
-				1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */,
-				1CDCA6B2179F44760098C4E1 /* logo.png */,
-				1CDCA6B3179F44760098C4E1 /* logo@2x.png */,
 			);
 			name = "Welcome Images";
 			sourceTree = "<group>";
@@ -2286,13 +2268,7 @@
 				1CDCA6A9179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
 				9178C9D717CE398400913256 /* Welcome.storyboard in Resources */,
 				1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
-				1CDCA6B5179F44760098C4E1 /* create-btn.png in Resources */,
-				1CDCA6B8179F44760098C4E1 /* create-btn@2x.png in Resources */,
 				9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
-				1CDCA6BB179F44760098C4E1 /* login-btn.png in Resources */,
-				1CDCA6BE179F44760098C4E1 /* login-btn@2x.png in Resources */,
-				1CDCA6C1179F44760098C4E1 /* logo.png in Resources */,
-				1CDCA6C4179F44760098C4E1 /* logo@2x.png in Resources */,
 				1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C154E6117A071DF00C0B76B /* circle.png in Resources */,
 				1C154E6417A071DF00C0B76B /* circle@2x.png in Resources */,
@@ -2304,6 +2280,7 @@
 				1CD255CC17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB417A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
 				1C309ABA17A714B900D690A8 /* check-social.png in Resources */,
+				913D854917CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
 				1C309ABD17A714B900D690A8 /* check-social@2x.png in Resources */,
 				915CDA8317BE9A18003C3A38 /* Images.xcassets in Resources */,
 				912261DD17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
@@ -2417,13 +2394,7 @@
 				1CDCA6AA179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
 				9178C9D817CE398400913256 /* Welcome.storyboard in Resources */,
 				1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
-				1CDCA6B6179F44760098C4E1 /* create-btn.png in Resources */,
-				1CDCA6B9179F44760098C4E1 /* create-btn@2x.png in Resources */,
 				9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
-				1CDCA6BC179F44760098C4E1 /* login-btn.png in Resources */,
-				1CDCA6BF179F44760098C4E1 /* login-btn@2x.png in Resources */,
-				1CDCA6C2179F44760098C4E1 /* logo.png in Resources */,
-				1CDCA6C5179F44760098C4E1 /* logo@2x.png in Resources */,
 				1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C154E6217A071DF00C0B76B /* circle.png in Resources */,
 				1C154E6517A071DF00C0B76B /* circle@2x.png in Resources */,
@@ -2435,6 +2406,7 @@
 				1CD255CD17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB517A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
 				1C309ABB17A714B900D690A8 /* check-social.png in Resources */,
+				913D854A17CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
 				1C309ABE17A714B900D690A8 /* check-social@2x.png in Resources */,
 				915CDA8417BE9A19003C3A38 /* Images.xcassets in Resources */,
 				912261DE17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
@@ -2497,6 +2469,7 @@
 				91A362911790822D00381218 /* pitchfork.png in Resources */,
 				91A362941790822D00381218 /* ted.png in Resources */,
 				91A362971790822D00381218 /* vice.png in Resources */,
+				913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
 				91A3629A1790822D00381218 /* vogue.png in Resources */,
 				91A3629D1790822D00381218 /* wired.png in Resources */,
 				1C96DE9A17975A0900D845DF /* nav-bkgd.png in Resources */,
@@ -2546,13 +2519,7 @@
 				1CDCA6A3179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CDCA6A8179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
 				1CDCA6AB179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
-				1CDCA6B4179F44760098C4E1 /* create-btn.png in Resources */,
-				1CDCA6B7179F44760098C4E1 /* create-btn@2x.png in Resources */,
-				1CDCA6BA179F44760098C4E1 /* login-btn.png in Resources */,
-				1CDCA6BD179F44760098C4E1 /* login-btn@2x.png in Resources */,
-				1CDCA6C0179F44760098C4E1 /* logo.png in Resources */,
 				9178C9DE17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
-				1CDCA6C3179F44760098C4E1 /* logo@2x.png in Resources */,
 				1C154E5217A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C154E6017A071DF00C0B76B /* circle.png in Resources */,
 				1C154E6317A071DF00C0B76B /* circle@2x.png in Resources */,
@@ -2630,6 +2597,7 @@
 				8E7024BD1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C01715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C31715E71500E8DE46 /* NSURL+Base.m in Sources */,
+				913D854E17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C61715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024C91715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CC1715E71500E8DE46 /* sha1.c in Sources */,
@@ -2755,6 +2723,7 @@
 				8E7024BE1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C11715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C41715E71500E8DE46 /* NSURL+Base.m in Sources */,
+				913D854F17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C71715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024CA1715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CD1715E71500E8DE46 /* sha1.c in Sources */,
@@ -2880,6 +2849,7 @@
 				8E7024BC1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024BF1715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C21715E71500E8DE46 /* NSURL+Base.m in Sources */,
+				913D854D17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C51715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024C81715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CB1715E71500E8DE46 /* sha1.c in Sources */,
