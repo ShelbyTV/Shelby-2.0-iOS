@@ -9,6 +9,7 @@
 #import "FacebookHandler.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "ShelbyAPIClient.h"
+#import "ShelbyAnalyticsClient.h"
 #import "User.h"
 
 NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNotificationFacebookAuthorizationCompleted";
@@ -134,6 +135,69 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 }
 
 
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
+}
+
+- (void)openAppRequestDialog
+{
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryAppInvite action:kAnalyticsAppInviteFacebookOpened label:nil];
+    
+    [FBWebDialogs
+     presentRequestsDialogModallyWithSession:[FBSession activeSession]
+     message:@"Check out Shelby" // TODO: KP KP: Write a better message
+     title:nil
+     parameters:nil
+     handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+         if (error) {
+             // Error launching the dialog or sending the request.
+             DLog(@"Error sending request.");
+         } else {
+             if (result == FBWebDialogResultDialogNotCompleted) {
+                 // User clicked the "x" icon
+                 [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryAppInvite action:kAnalyticsAppInviteFacebookCancelled label:nil];
+             } else {
+                 // Handle the send request callback
+                 NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                 if (![urlParams valueForKey:@"request"]) {
+                     // User clicked the Cancel button
+                     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryAppInvite action:kAnalyticsAppInviteFacebookCancelled label:nil];
+                 } else {
+                     // User clicked the Send button
+                     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryAppInvite action:kAnalyticsAppInviteFacebookSent label:nil];
+                 }
+             }
+         }
+     }];
+}
+
+- (void)sendAppRequest
+{
+    if (![[FBSession activeSession] isOpen]) {
+        [FBSession openActiveSessionWithReadPermissions:@[@"email", @"read_stream"]
+                                           allowLoginUI:YES
+                                      completionHandler:^(FBSession *session,
+                                                          FBSessionState status,
+                                                          NSError *error)
+        {
+            // No need to check for errors. If there are errors, the user will be presented with a WebView to log in.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self openAppRequestDialog];
+            });
+        }];
+    } else {
+        [self openAppRequestDialog];
+    }
+}
+
 #pragma mark - Methods to support App Delegate
 - (BOOL)handleOpenURL:(NSURL *)url
 {
@@ -143,8 +207,7 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 - (void)handleDidBecomeActive
 {
     [[FBSession activeSession] handleDidBecomeActive];
-    // TODO: KP KP: 
-//    [FBAppEvents activateApp];
+    [FBAppEvents activateApp];
 }
 
 @end

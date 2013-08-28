@@ -32,6 +32,9 @@ extern NSString * const kShelbyNotificationFacebookAuthorizationCompleted;
 - (BOOL)handleOpenURL:(NSURL *)url;
 - (void)handleDidBecomeActive;
 
+// Send requests
+- (void)sendAppRequest;
+
 /// Cleanup
 - (void)facebookCleanup;
 @end

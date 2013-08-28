@@ -108,6 +108,18 @@
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Hom-Aq-NA5">
+                            <rect key="frame" x="175" y="25" width="142" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                            <state key="normal" title="Invite Facebook Friends">
+                                <color key="titleColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="sendFacebookRequest:" destination="1" eventType="touchUpInside" id="bOk-RD-fDe"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
@@ -222,6 +234,7 @@
                 <outlet property="detailCaption" destination="496" id="502"/>
                 <outlet property="detailCommentView" destination="336" id="418"/>
                 <outlet property="detailCreatedAt" destination="562" id="563"/>
+                <outlet property="detailInviteFacebookFriends" destination="Hom-Aq-NA5" id="0Gt-3r-itF"/>
                 <outlet property="detailLikersAndSharers" destination="373" id="hrp-ld-Bnu"/>
                 <outlet property="detailLikersSubview" destination="6tj-lo-aHn" id="RQJ-C0-ehU"/>
                 <outlet property="detailRecommendationReasonLabel" destination="579" id="581"/>

@@ -602,6 +602,11 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     [self openFacebookSessionWithAllowLoginUI:allowLoginUI andAskPublishPermissions:NO];
 }
 
+- (void)inviteFacebookFriends
+{
+    [[FacebookHandler sharedInstance] sendAppRequest];
+}
+
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI andAskPublishPermissions:(BOOL)askForPublishPermission
 {
     [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES

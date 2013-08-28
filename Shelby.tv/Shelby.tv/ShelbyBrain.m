@@ -754,6 +754,11 @@ typedef struct _ShelbyArrayMergeInstructions {
     [[ShelbyDataMediator sharedInstance] openFacebookSessionWithAllowLoginUI:YES];
 }
 
+- (void)inviteFacebookFriendsWasTapped
+{
+    [[ShelbyDataMediator sharedInstance] inviteFacebookFriends];
+}
+
 - (void)connectToTwitter
 {
     //get topmost visible view
