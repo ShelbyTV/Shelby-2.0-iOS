@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyHomeViewController.h"
+#import "ActionVisualizerViewController.h"
 #import "Appirater.h"
 #import "DashboardEntry+Helper.h"
 #import "DisplayChannel.h"
@@ -731,6 +732,17 @@
     BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
     if (!didLike) {
         DLog(@"***ERROR*** Tried to Like, but action resulted in UNLIKE of the video");
+    } else {
+        // TODO: need to add to the view correctly (willmove, addsubview.. etc)
+        ActionVisualizerViewController *actionVisualizerVC = [[ActionVisualizerViewController alloc] init];
+        [self.view addSubview:actionVisualizerVC.view];
+        [actionVisualizerVC startAnimationWithCompletionBlock:^(BOOL complete) {
+            [UIView animateWithDuration:1.2 animations:^{
+                actionVisualizerVC.view.alpha = 0.99;
+            } completion:^(BOOL finished) {
+                [actionVisualizerVC.view removeFromSuperview];
+            }];
+        }];
     }
 }
 

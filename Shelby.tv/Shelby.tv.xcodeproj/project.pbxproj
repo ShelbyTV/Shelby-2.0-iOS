@@ -41,6 +41,27 @@
 		1C309AC117A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
 		1C309AC217A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
 		1C309AC317A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
+		1C3719C317CE82E900BE781D /* ActionVisualizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719C217CE82E900BE781D /* ActionVisualizerViewController.m */; };
+		1C3719C417CE82E900BE781D /* ActionVisualizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719C217CE82E900BE781D /* ActionVisualizerViewController.m */; };
+		1C3719C517CE82E900BE781D /* ActionVisualizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719C217CE82E900BE781D /* ActionVisualizerViewController.m */; };
+		1C3719C817CE839700BE781D /* HeartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719C717CE839700BE781D /* HeartView.m */; };
+		1C3719C917CE839700BE781D /* HeartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719C717CE839700BE781D /* HeartView.m */; };
+		1C3719CA17CE839700BE781D /* HeartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719C717CE839700BE781D /* HeartView.m */; };
+		1C3719D017CE860B00BE781D /* heart-dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CC17CE860B00BE781D /* heart-dot.png */; };
+		1C3719D117CE860B00BE781D /* heart-dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CC17CE860B00BE781D /* heart-dot.png */; };
+		1C3719D217CE860B00BE781D /* heart-dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CC17CE860B00BE781D /* heart-dot.png */; };
+		1C3719D317CE860B00BE781D /* heart-dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CD17CE860B00BE781D /* heart-dot@2x.png */; };
+		1C3719D417CE860B00BE781D /* heart-dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CD17CE860B00BE781D /* heart-dot@2x.png */; };
+		1C3719D517CE860B00BE781D /* heart-dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CD17CE860B00BE781D /* heart-dot@2x.png */; };
+		1C3719D617CE860B00BE781D /* heart-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CE17CE860B00BE781D /* heart-large.png */; };
+		1C3719D717CE860B00BE781D /* heart-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CE17CE860B00BE781D /* heart-large.png */; };
+		1C3719D817CE860B00BE781D /* heart-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CE17CE860B00BE781D /* heart-large.png */; };
+		1C3719D917CE860B00BE781D /* heart-large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CF17CE860B00BE781D /* heart-large@2x.png */; };
+		1C3719DA17CE860B00BE781D /* heart-large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CF17CE860B00BE781D /* heart-large@2x.png */; };
+		1C3719DB17CE860B00BE781D /* heart-large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C3719CF17CE860B00BE781D /* heart-large@2x.png */; };
+		1C3719DE17CE86B900BE781D /* PointObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719DD17CE86B900BE781D /* PointObject.m */; };
+		1C3719DF17CE86B900BE781D /* PointObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719DD17CE86B900BE781D /* PointObject.m */; };
+		1C3719E017CE86B900BE781D /* PointObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3719DD17CE86B900BE781D /* PointObject.m */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -919,6 +940,16 @@
 		1C309AB817A714B900D690A8 /* check-social@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-social@2x.png"; sourceTree = "<group>"; };
 		1C309ABF17A7196800D690A8 /* ShelbyShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyShareViewController.h; sourceTree = "<group>"; };
 		1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyShareViewController.m; sourceTree = "<group>"; };
+		1C3719C117CE82E900BE781D /* ActionVisualizerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionVisualizerViewController.h; sourceTree = "<group>"; };
+		1C3719C217CE82E900BE781D /* ActionVisualizerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionVisualizerViewController.m; sourceTree = "<group>"; };
+		1C3719C617CE839700BE781D /* HeartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartView.h; sourceTree = "<group>"; };
+		1C3719C717CE839700BE781D /* HeartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartView.m; sourceTree = "<group>"; };
+		1C3719CC17CE860B00BE781D /* heart-dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-dot.png"; sourceTree = "<group>"; };
+		1C3719CD17CE860B00BE781D /* heart-dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-dot@2x.png"; sourceTree = "<group>"; };
+		1C3719CE17CE860B00BE781D /* heart-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-large.png"; sourceTree = "<group>"; };
+		1C3719CF17CE860B00BE781D /* heart-large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-large@2x.png"; sourceTree = "<group>"; };
+		1C3719DC17CE86B900BE781D /* PointObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointObject.h; sourceTree = "<group>"; };
+		1C3719DD17CE86B900BE781D /* PointObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointObject.m; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1463,6 +1494,17 @@
 			name = "Share Images";
 			sourceTree = "<group>";
 		};
+		1C3719CB17CE860100BE781D /* Shape Animation */ = {
+			isa = PBXGroup;
+			children = (
+				1C3719CC17CE860B00BE781D /* heart-dot.png */,
+				1C3719CD17CE860B00BE781D /* heart-dot@2x.png */,
+				1C3719CE17CE860B00BE781D /* heart-large.png */,
+				1C3719CF17CE860B00BE781D /* heart-large@2x.png */,
+			);
+			name = "Shape Animation";
+			sourceTree = "<group>";
+		};
 		1C56F11417BABD8C00EE9206 /* Appirater */ = {
 			isa = PBXGroup;
 			children = (
@@ -1812,6 +1854,7 @@
 		8E32BF86167FA58400753723 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1C3719CB17CE860100BE781D /* Shape Animation */,
 				9192ECFC17C3EA1000294440 /* Fonts */,
 				91B7DC3C17B1642A009ABF02 /* Nav Bar */,
 				1C309AB617A7149F00D690A8 /* Share Images */,
@@ -1993,6 +2036,8 @@
 				1CBF0934175CD69D001D471A /* Xib-iPhone */,
 				8E41EF2C16B0742400C831A4 /* BigButton.h */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
+				1C3719C617CE839700BE781D /* HeartView.h */,
+				1C3719C717CE839700BE781D /* HeartView.m */,
 				1CCCB55016D2A33500C8C216 /* PageControl.h */,
 				1CCCB55116D2A33600C8C216 /* PageControl.m */,
 				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
@@ -2032,6 +2077,8 @@
 		8EF5C352162F41BF0075C35F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1C3719C117CE82E900BE781D /* ActionVisualizerViewController.h */,
+				1C3719C217CE82E900BE781D /* ActionVisualizerViewController.m */,
 				9188F234178C9A1E002F342B /* ShelbyNavBarViewController.h */,
 				9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */,
 				9119AB71178211D5001C9190 /* VideoControlsViewController.h */,
@@ -2081,6 +2128,8 @@
 				91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */,
 				91D03EFA1731AB40008131D2 /* ShelbyBrain.h */,
 				91D03EFB1731AB40008131D2 /* ShelbyBrain.m */,
+				1C3719DC17CE86B900BE781D /* PointObject.h */,
+				1C3719DD17CE86B900BE781D /* PointObject.m */,
 				1CC77A4E174AA48700AD7F05 /* ShelbyActivityItemProvider.h */,
 				1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */,
 			);
@@ -2367,6 +2416,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C3719D717CE860B00BE781D /* heart-large.png in Resources */,
 				1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */,
 				1CD8111F17CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14917BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
@@ -2425,6 +2475,7 @@
 				1C96DEEB1797689900D845DF /* facebook-fill@2x.png in Resources */,
 				1C96DEEE1797689900D845DF /* facebook.png in Resources */,
 				1C96DEF11797689900D845DF /* facebook@2x.png in Resources */,
+				1C3719DA17CE860B00BE781D /* heart-large@2x.png in Resources */,
 				1C96DEF41797689900D845DF /* twitter-fill.png in Resources */,
 				1C96DEF71797689900D845DF /* twitter-fill@2x.png in Resources */,
 				1C96DEFA1797689900D845DF /* twitter.png in Resources */,
@@ -2458,6 +2509,7 @@
 				916F41F9179F06CA001D9DF7 /* welcome-ted.png in Resources */,
 				916F41FC179F06CA001D9DF7 /* welcome-ted@2x.png in Resources */,
 				916F41FF179F06CA001D9DF7 /* welcome-twitter.png in Resources */,
+				1C3719D417CE860B00BE781D /* heart-dot@2x.png in Resources */,
 				916F4202179F06CA001D9DF7 /* welcome-twitter@2x.png in Resources */,
 				916F4205179F06CA001D9DF7 /* welcome-vice.png in Resources */,
 				916F4208179F06CA001D9DF7 /* welcome-vice@2x.png in Resources */,
@@ -2507,6 +2559,7 @@
 				1CDB0C2117A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2517A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
+				1C3719D117CE860B00BE781D /* heart-dot.png in Resources */,
 				1CDB0C3D17AACDD30031C2C9 /* circle-share.png in Resources */,
 				1CDB0C4017AACDD30031C2C9 /* circle-share@2x.png in Resources */,
 				91B7DC2C17AACD79009ABF02 /* hungry.m4v in Resources */,
@@ -2530,6 +2583,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C3719D817CE860B00BE781D /* heart-large.png in Resources */,
 				1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */,
 				1CD8112017CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14A17BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
@@ -2588,6 +2642,7 @@
 				1C96DEEC1797689900D845DF /* facebook-fill@2x.png in Resources */,
 				1C96DEEF1797689900D845DF /* facebook.png in Resources */,
 				1C96DEF21797689900D845DF /* facebook@2x.png in Resources */,
+				1C3719DB17CE860B00BE781D /* heart-large@2x.png in Resources */,
 				1C96DEF51797689900D845DF /* twitter-fill.png in Resources */,
 				1C96DEF81797689900D845DF /* twitter-fill@2x.png in Resources */,
 				1C96DEFB1797689900D845DF /* twitter.png in Resources */,
@@ -2621,6 +2676,7 @@
 				916F41FA179F06CA001D9DF7 /* welcome-ted.png in Resources */,
 				916F41FD179F06CA001D9DF7 /* welcome-ted@2x.png in Resources */,
 				916F4200179F06CA001D9DF7 /* welcome-twitter.png in Resources */,
+				1C3719D517CE860B00BE781D /* heart-dot@2x.png in Resources */,
 				916F4203179F06CA001D9DF7 /* welcome-twitter@2x.png in Resources */,
 				916F4206179F06CA001D9DF7 /* welcome-vice.png in Resources */,
 				916F4209179F06CA001D9DF7 /* welcome-vice@2x.png in Resources */,
@@ -2670,6 +2726,7 @@
 				1CDB0C2217A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2617A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
+				1C3719D217CE860B00BE781D /* heart-dot.png in Resources */,
 				1CDB0C3E17AACDD30031C2C9 /* circle-share.png in Resources */,
 				1CDB0C4117AACDD30031C2C9 /* circle-share@2x.png in Resources */,
 				91B7DC2D17AACD79009ABF02 /* hungry.m4v in Resources */,
@@ -2739,6 +2796,7 @@
 				1C96DEB517975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
 				1C96DEB817975D0900D845DF /* bkgd-step2.png in Resources */,
 				1C96DEBB17975D0900D845DF /* bkgd-step2@2x.png in Resources */,
+				1C3719D617CE860B00BE781D /* heart-large.png in Resources */,
 				1CD8111E17CCF6C0002FD84B /* play-current.png in Resources */,
 				1C96DEBE17975D0900D845DF /* bkgd-step3-568h@2x.png in Resources */,
 				1C96DEC117975D0900D845DF /* bkgd-step3.png in Resources */,
@@ -2753,6 +2811,7 @@
 				1C96DEF01797689900D845DF /* facebook@2x.png in Resources */,
 				1C96DEF31797689900D845DF /* twitter-fill.png in Resources */,
 				1C96DEF61797689900D845DF /* twitter-fill@2x.png in Resources */,
+				1C3719D317CE860B00BE781D /* heart-dot@2x.png in Resources */,
 				1C96DEF91797689900D845DF /* twitter.png in Resources */,
 				1C96DEFC1797689900D845DF /* twitter@2x.png in Resources */,
 				91F168171797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
@@ -2790,6 +2849,7 @@
 				916F4254179F1DB5001D9DF7 /* welcome-user-context.png in Resources */,
 				912261D617B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				912261DC17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
+				1C3719D917CE860B00BE781D /* heart-large@2x.png in Resources */,
 				916F4257179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 				1CDCA68D179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA690179F317A0098C4E1 /* overlay.png in Resources */,
@@ -2803,6 +2863,7 @@
 				1CDCA6A8179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
 				1CDCA6AB179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				1CDCA6B4179F44760098C4E1 /* create-btn.png in Resources */,
+				1C3719D017CE860B00BE781D /* heart-dot.png in Resources */,
 				1CDCA6B7179F44760098C4E1 /* create-btn@2x.png in Resources */,
 				1CDCA6BA179F44760098C4E1 /* login-btn.png in Resources */,
 				1CDCA6BD179F44760098C4E1 /* login-btn@2x.png in Resources */,
@@ -2892,6 +2953,7 @@
 				8E7024BA1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BD1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C01715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
+				1C3719C917CE839700BE781D /* HeartView.m in Sources */,
 				8E7024C31715E71500E8DE46 /* NSURL+Base.m in Sources */,
 				8E7024C61715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024C91715E71500E8DE46 /* hmac.c in Sources */,
@@ -2932,6 +2994,7 @@
 				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlert.m in Sources */,
+				1C3719DF17CE86B900BE781D /* PointObject.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
@@ -2952,6 +3015,7 @@
 				1C7B63C8178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1C7B63CD178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E4178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				1C3719C417CE82E900BE781D /* ActionVisualizerViewController.m in Sources */,
 				1C56F13A17BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
@@ -3018,6 +3082,7 @@
 				8E7024BB1715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BE1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C11715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
+				1C3719CA17CE839700BE781D /* HeartView.m in Sources */,
 				8E7024C41715E71500E8DE46 /* NSURL+Base.m in Sources */,
 				8E7024C71715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024CA1715E71500E8DE46 /* hmac.c in Sources */,
@@ -3058,6 +3123,7 @@
 				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */,
+				1C3719E017CE86B900BE781D /* PointObject.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
@@ -3078,6 +3144,7 @@
 				1C7B63C9178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1C7B63CE178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E5178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				1C3719C517CE82E900BE781D /* ActionVisualizerViewController.m in Sources */,
 				1C56F13B17BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
@@ -3144,6 +3211,7 @@
 				8E7024B91715E71500E8DE46 /* AuthenticateTwitterViewController.m in Sources */,
 				8E7024BC1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024BF1715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
+				1C3719C817CE839700BE781D /* HeartView.m in Sources */,
 				8E7024C21715E71500E8DE46 /* NSURL+Base.m in Sources */,
 				8E7024C51715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024C81715E71500E8DE46 /* hmac.c in Sources */,
@@ -3184,6 +3252,7 @@
 				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlert.m in Sources */,
+				1C3719DE17CE86B900BE781D /* PointObject.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
@@ -3204,6 +3273,7 @@
 				1C7B63C7178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1C7B63CC178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E3178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
+				1C3719C317CE82E900BE781D /* ActionVisualizerViewController.m in Sources */,
 				1C56F13917BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
