@@ -81,6 +81,9 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 - (void)openFacebookSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (void)connectTwitterWithViewController:(UIViewController *)viewController;
 
+// Facebook Invite
+- (void)inviteFacebookFriends;
+
 - (void)updateUserName:(NSString *)name
               nickname:(NSString *)nickname
               password:(NSString *)password
