@@ -11,20 +11,26 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="welcome-logo" translatesAutoresizingMaskIntoConstraints="NO" id="MqN-IA-4nh">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-logo" translatesAutoresizingMaskIntoConstraints="NO" id="MqN-IA-4nh">
                     <rect key="frame" x="111" y="20" width="99" height="28"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Make Shelby yours." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pli-eh-kxF">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make Shelby yours." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pli-eh-kxF">
                     <rect key="frame" x="20" y="73" width="280" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="o97-4u-6BJ"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rma-46-MgZ" userLabel="create account button">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rma-46-MgZ" userLabel="create account button">
                     <rect key="frame" x="20" y="143" width="280" height="88"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="88" id="C5o-I6-eJo"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="Create an Account" backgroundImage="welcome-create-accont-btn-bg">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -33,7 +39,7 @@
                         <action selector="createAccountTapped:" destination="-1" eventType="touchUpInside" id="dpp-v0-Bie"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z2F-DD-VYf" userLabel="login button">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z2F-DD-VYf" userLabel="login button">
                     <rect key="frame" x="20" y="284" width="280" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -44,7 +50,7 @@
                         <action selector="loginTapped:" destination="-1" eventType="touchUpInside" id="Kfh-4v-LfP"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVe-IF-CZ6" userLabel="test drive button">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVe-IF-CZ6" userLabel="test drive button">
                     <rect key="frame" x="20" y="380" width="280" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -57,6 +63,22 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="rma-46-MgZ" firstAttribute="top" secondItem="Pli-eh-kxF" secondAttribute="bottom" constant="26" id="16A-86-k3Y"/>
+                <constraint firstItem="GVe-IF-CZ6" firstAttribute="top" secondItem="z2F-DD-VYf" secondAttribute="bottom" constant="46" id="5Y1-G7-CKb"/>
+                <constraint firstItem="GVe-IF-CZ6" firstAttribute="trailing" secondItem="z2F-DD-VYf" secondAttribute="trailing" id="Al9-Ld-h0O"/>
+                <constraint firstItem="MqN-IA-4nh" firstAttribute="centerX" secondItem="z2F-DD-VYf" secondAttribute="centerX" id="DLs-aa-0gY"/>
+                <constraint firstItem="z2F-DD-VYf" firstAttribute="leading" secondItem="rma-46-MgZ" secondAttribute="leading" id="Iby-5t-t48"/>
+                <constraint firstItem="z2F-DD-VYf" firstAttribute="top" secondItem="rma-46-MgZ" secondAttribute="bottom" constant="53" id="NQN-Mj-lFh"/>
+                <constraint firstItem="Pli-eh-kxF" firstAttribute="top" secondItem="MqN-IA-4nh" secondAttribute="bottom" constant="25" id="Qqu-YC-pTI"/>
+                <constraint firstItem="Pli-eh-kxF" firstAttribute="leading" secondItem="rma-46-MgZ" secondAttribute="leading" id="UYb-rN-8FT"/>
+                <constraint firstItem="Pli-eh-kxF" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="iRW-yO-d2U"/>
+                <constraint firstItem="MqN-IA-4nh" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="kMT-pP-gWL"/>
+                <constraint firstItem="z2F-DD-VYf" firstAttribute="trailing" secondItem="rma-46-MgZ" secondAttribute="trailing" id="p7P-Nm-3jO"/>
+                <constraint firstItem="z2F-DD-VYf" firstAttribute="leading" secondItem="GVe-IF-CZ6" secondAttribute="leading" id="wVL-ug-fq8"/>
+                <constraint firstItem="rma-46-MgZ" firstAttribute="trailing" secondItem="Pli-eh-kxF" secondAttribute="trailing" id="x5N-Zv-Ho9"/>
+                <constraint firstAttribute="trailing" secondItem="Pli-eh-kxF" secondAttribute="trailing" constant="20" symbolic="YES" id="yRV-0m-pMI"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <connections>
