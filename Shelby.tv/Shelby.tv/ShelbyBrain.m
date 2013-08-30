@@ -24,6 +24,8 @@
 NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 
+NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
+
 @interface ShelbyBrain()
 
 //our two primary view controllers
@@ -53,12 +55,19 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 
 - (void)handleDidBecomeActive
 {
+    NSDate *lastActiveDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastActiveDate];
+    if (lastActiveDate && [lastActiveDate isKindOfClass:[NSDate class]] && [lastActiveDate timeIntervalSinceNow] < kShelbyChannelsStaleTime) {
+        [self.homeVC dismissVideoReel];
+    }
     [User sessionDidBecomeActive];
     [self.homeVC handleDidBecomeActive];
 }
 
 - (void)handleWillResignActive
 {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyLastActiveDate];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     [User sessionDidPause];
 }
 

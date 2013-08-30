@@ -445,6 +445,10 @@
 
 - (void)dismissVideoReel
 {
+    if (!self.videoReel) {
+        return;
+    }
+    
     if (!self.airPlayController.isAirPlayActive){
         [self.videoReel pauseCurrentPlayer];
     }
