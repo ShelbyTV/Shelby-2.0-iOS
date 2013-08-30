@@ -68,6 +68,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyLastActiveDate];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
+    [self.homeVC handleWillResignActive];
     [User sessionDidPause];
 }
 

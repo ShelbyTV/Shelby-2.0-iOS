@@ -79,6 +79,11 @@
     [self.airPlayController checkForExistingScreenAndInitializeIfPresent];
 }
 
+- (void)handleWillResignActive
+{
+    [self pauseCurrentVideo];
+}
+
 - (void)setupNavBarView
 {
     self.navBarVC = [[ShelbyNavBarViewController alloc] initWithNibName:@"ShelbyNavBarView" bundle:nil];
@@ -681,6 +686,12 @@
     }
 }
 
+- (void)pauseCurrentVideo
+{
+    [self.airPlayController pauseCurrentPlayer];
+    [self.videoReel pauseCurrentPlayer];
+}
+
 #pragma mark - VideoControlsDelegate
 
 - (void)videoControlsPlayCurrentVideo:(VideoControlsViewController *)vcvc
@@ -691,8 +702,7 @@
 
 - (void)videoControlsPauseCurrentVideo:(VideoControlsViewController *)vcvc
 {
-    [self.airPlayController pauseCurrentPlayer];
-    [self.videoReel pauseCurrentPlayer];
+    [self pauseCurrentVideo];
 }
 
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct

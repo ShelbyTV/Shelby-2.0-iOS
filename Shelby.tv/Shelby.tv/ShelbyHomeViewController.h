@@ -68,5 +68,5 @@
 - (void)videoDidAutoadvance;
 
 - (void)handleDidBecomeActive;
-
+- (void)handleWillResignActive;
 @end
