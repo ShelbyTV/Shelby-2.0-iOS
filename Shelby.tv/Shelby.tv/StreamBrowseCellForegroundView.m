@@ -483,15 +483,24 @@
 
 - (NSAttributedString *)recommendationStringFor:(DashboardEntry *)dashboardEntry
 {
-    NSString *recoBase = @"This video is shared by people like ";
-    NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
-    NSString *recoString = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
-    NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
-    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2}
-                            range:[recoString rangeOfString:recoBase]];
-    [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2Bold}
-                            range:[recoString rangeOfString:recoUsername]];
-    return recoAttributed;
+    if (dashboardEntry.sourceFrameCreatorNickname) {
+        NSString *recoBase = @"This video is shared by people like ";
+        NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
+        NSString *recoString = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
+        NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
+        [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2}
+                                range:[recoString rangeOfString:recoBase]];
+        [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2Bold}
+                                range:[recoString rangeOfString:recoUsername]];
+        return recoAttributed;
+
+    } else {
+        NSString *recoString = @"We thought you'd like to see this";
+        NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
+        [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2}
+                                range:[recoString rangeOfString:recoString]];
+        return recoAttributed;
+    }
 }
 
 @end
