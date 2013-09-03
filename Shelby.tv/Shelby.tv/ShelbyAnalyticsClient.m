@@ -56,6 +56,7 @@ NSString * const kAnalyticsAppInviteFacebookSent                        = @"Face
 NSString * const kAnalyticsCategoryIssues                               = @"App Issues";
 NSString * const kAnalyticsIssueContextSaveError                        = @"Context Save Error";
 NSString * const kAnalyticsIssueYTExtractionFallback                    = @"Fallback to STVYouTubeExtractor";
+NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Video missing providerID";
 
 @implementation ShelbyAnalyticsClient
 
