@@ -322,11 +322,6 @@
 
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
 {
-    //XXX no longer using blurred background, temporarily leaving this code (ds 8/13/13)
-//    CGFloat alpha = parallaxView.foregroundContentOffset.x / self.frame.size.width;
-//    self.thumbnailBlurredView.alpha = alpha;
-//    self.thumbnailRegularView.alpha = 1.0f-(alpha*alpha);
-
     [self.delegate browseViewCellParallaxDidChange:self];
 }
 
