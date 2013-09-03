@@ -16,7 +16,6 @@
 
 @interface ShelbyStreamBrowseViewCell(){
     UIImage *_placeholderThumbnail;
-    UIImage *_placeholderThumbnailBlurred;
 }
 @property (nonatomic, strong) STVParallaxView *parallaxView;
 @property (nonatomic, strong) UIView *backgroundThumbnailsView;
@@ -24,10 +23,6 @@
 @property (nonatomic, strong) UIImageView *thumbnailBlurredView;
 @property (nonatomic, strong) StreamBrowseCellForegroundView *foregroundView;
 @property (nonatomic, strong) UIButton *playButton;
-
-//reuse context for better performance
-@property (nonatomic, strong) CIContext *ciContext;
-@property (nonatomic, strong) CIFilter *blurFilter;
 @end
 
 //configure parallax configuration
@@ -38,8 +33,6 @@
 #define PARALLAX_BG_WIDTH_LANDSCAPE (kShelbyFullscreenHeight*(1+PARALLAX_RATIO_LANDSCAPE))
 #define PARALLAX_BG_HEIGHT_LANDSCAPE kShelbyFullscreenWidth
 
-#define BLUR_RADIUS 4.0
-
 @implementation ShelbyStreamBrowseViewCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -47,11 +40,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         _viewMode = ShelbyStreamBrowseViewDefault;
-
-        //CoreImage stuff to do blurring
-        _ciContext = [CIContext contextWithOptions:nil];
-        _blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-        [_blurFilter setValue:@(BLUR_RADIUS) forKey:@"inputRadius"];
 
         //parallax foreground
         CGRect subviewFrame = CGRectMake(0, 0, frame.size.width, kShelbyFullscreenHeight);
@@ -96,8 +84,6 @@
 //                                                                                 options:0
 //                                                                                 metrics:nil
 //                                                                                   views:@{@"play":_playButton}]];
-
-        [self initPlacerholderThumbnails];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayingChanged:) name:kShelbySPVideoPlayerCurrentPlayingVideoChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupPlayImageForVideo) name:kShelbySPVideoAirplayDidBegin object:nil];
@@ -252,18 +238,6 @@
 - (void)displayPlaceholderThumbnails
 {
     self.thumbnailRegularView.image = _placeholderThumbnail;
-    self.thumbnailBlurredView.image = _placeholderThumbnailBlurred;
-}
-
-- (void)initPlacerholderThumbnails
-{
-    _placeholderThumbnail = [UIImage imageNamed:@"video-thumbnail-blank"];
-    [self.blurFilter setValue:[CIImage imageWithCGImage:_placeholderThumbnail.CGImage] forKey:@"inputImage"];
-    CIImage *result = [self.blurFilter valueForKey:@"outputImage"];
-    CGImageRef cgImage = [self.ciContext createCGImage:result fromRect:[result extent]];
-    _placeholderThumbnailBlurred = [UIImage imageWithCGImage:cgImage];
-    CFRelease(cgImage);
-    [self.blurFilter setValue:nil forKey:@"inputImage"];
 }
 
 - (void)matchParallaxOf:(ShelbyStreamBrowseViewCell *)cell
