@@ -275,7 +275,7 @@
 - (void)updateSharersFrame
 {
     NSInteger originX = self.detailSharersSubview.frame.origin.x;
-    if ([self.videoFrame.upvoters count] > 0) {
+    if ([_likers count] > 0) {
         if (self.detailLikersSubview.frame.origin.x == self.detailSharersSubview.frame.origin.x) {
             originX = self.detailLikersAndSharers.frame.size.width/2.f;
         }
