@@ -106,7 +106,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
     User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     
     if (selected) {
-        if (facebook && !currentUser.facebookNickname) {
+        if (facebook) {
             if (![[FacebookHandler sharedInstance] allowPublishActions]) {
                 [self.delegate shareControllerRequestsFacebookPublishPermissions:self];
             }
