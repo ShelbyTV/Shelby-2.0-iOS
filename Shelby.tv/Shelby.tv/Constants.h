@@ -98,3 +98,6 @@
 //motion
 #define kShelbyMotionForegroundYMin                         @-20.f
 #define kShelbyMotionForegroundYMax                         @20.f
+
+//timing
+#define kShelbyStreamRefreshForRecommendationsDelay         10.0

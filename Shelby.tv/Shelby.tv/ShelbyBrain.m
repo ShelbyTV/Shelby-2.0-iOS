@@ -62,6 +62,9 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     }
     [User sessionDidBecomeActive];
     [self.homeVC handleDidBecomeActive];
+
+    //see method comments for explanation
+    [self refreshUsersStreamAfterDelay];
 }
 
 - (void)handleWillResignActive
@@ -189,6 +192,27 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     NSArray *userChannels = [User channelsForUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     for (DisplayChannel *channel in userChannels) {
         [self populateChannel:channel withActivityIndicator:YES];
+    }
+}
+
+// The backend is dynamically adding "old recommendations" into a user's stream, triggered by a fetch.
+// So that these will be seen by the user (without them having to manually refresh), we refresh the stream after a delay.
+// If a rec comes in (ie. a few frames older than the newest one on the user's dashboard) it will be
+// inserted at the correct location by our views.
+//
+// Canonical use case: app becomes active (is lauched, and all channels are fetched like normal),
+// a rec has been (is) generated on backend, we refresh stream behind the scenes, users scrolls, user sees rec.
+- (void)refreshUsersStreamAfterDelay
+{
+    if ([self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO]) {
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShelbyStreamRefreshForRecommendationsDelay * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+            if (user) {
+                DisplayChannel *usersStreamChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:user.userID];
+                [self populateChannel:usersStreamChannel withActivityIndicator:NO];
+            }
+        });
     }
 }
 
