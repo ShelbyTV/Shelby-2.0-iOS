@@ -10,7 +10,6 @@
 
 @interface ShelbyNavBarView : UIView
 
-@property (weak, nonatomic) IBOutlet UIView *selectionIdentifier;
 @property (weak, nonatomic) IBOutlet UIButton *streamButton;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIButton *sharesButton;

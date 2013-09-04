@@ -26,14 +26,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsRowHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginRowHeight;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierX;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionIdentifierY;
-
 @end
 
 #define FRAME_ANIMATION_TIME 0.4
 #define ALPHA_ANIMATION_TIME 0.3
-#define SELECTION_IDENTIFIER_ANIMATION_TIME 0.3
 
 #define EASING_FUNCTION QuinticEaseInOut
 
@@ -103,8 +99,6 @@
     for (UIView *l in _separatorLines) {
         [l setEasingFunction:BackEaseInOut forKeyPath:@"frame"];
     }
-    //setting userInteractionEnabled in XIB having no effect...
-    self.selectionIdentifier.userInteractionEnabled = NO;
 }
 
 - (void)setCurrentRow:(UIView *)currentRow
@@ -123,7 +117,6 @@
         self.sliderY.constant = -(_currentRow.frame.origin.y);
         [self layoutIfNeeded];
         [self focusOnButton:currentButton];
-        [self updateSelectionIdentifierLocationToCurrentRow];
         [self repositionShadow];
         return;
     }
@@ -138,9 +131,6 @@
             [self focusOnButton:currentButton];
         }];
 
-        [UIView animateWithDuration:SELECTION_IDENTIFIER_ANIMATION_TIME animations:^{
-            [self updateSelectionIdentifierLocationToCurrentRow];
-        }];
         [self repositionShadow];
 
     } else {
@@ -191,20 +181,9 @@
     [self layoutIfNeeded];
 }
 
-- (void)updateSelectionIdentifierLocationToCurrentRow
-{
-    if (_currentRow) {
-        UIButton *button = (UIButton *)_currentRow;
-        _selectionIdentifierX.constant = button.titleLabel.frame.origin.x  + button.titleLabel.frame.size.width + 5;
-        _selectionIdentifierY.constant = _currentRow.frame.origin.y + 18;
-        [self layoutIfNeeded];
-    }
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    [self updateSelectionIdentifierLocationToCurrentRow];
 }
 
 //allow touch events to pass through the background when contracted, capture everything when expanded
