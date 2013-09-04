@@ -32,9 +32,6 @@
     [super viewDidLoad];
 
     self.navBarView = (ShelbyNavBarView *)self.view;
-
-    self.navBarView.selectionIdentifier.backgroundColor = kShelbyColorGreen;
-    self.navBarView.selectionIdentifier.layer.cornerRadius = 3.0;
 }
 
 - (void)setCurrentUser:(User *)currentUser

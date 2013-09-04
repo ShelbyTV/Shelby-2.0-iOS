@@ -373,6 +373,12 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
             [self.homeVC addEntries:mergeUtil.actuallyNewEntities toEnd:mergeUtil.actuallyNewEntitiesShouldBeAppended ofChannel:channel];
             if(!mergeUtil.actuallyNewEntitiesShouldBeAppended){
                 [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:mergeUtil.actuallyNewEntities[0]];
+
+                //if there's a gap between prepended entities and existing entities, fetch again to fill that gap
+                if (mergeUtil.gapAfterNewEntitiesBeforeExistingEntities) {
+                    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel
+                                                                    sinceEntry:[mergeUtil.actuallyNewEntities lastObject]];
+                }
             }
         } else {
             //full subset, nothing to add

@@ -27,5 +27,6 @@
 //use these properties to access the results of the merge computation
 @property (readonly) NSArray *actuallyNewEntities;
 @property (readonly) BOOL actuallyNewEntitiesShouldBeAppended;
+@property (readonly) BOOL gapAfterNewEntitiesBeforeExistingEntities;
 
 @end

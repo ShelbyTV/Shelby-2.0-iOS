@@ -257,7 +257,7 @@
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
-    [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel];
+    [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel animated:YES];
     if (!self.airPlayController.isAirPlayActive) {
         self.videoControlsVC.currentEntity = entity;
     }
@@ -374,12 +374,13 @@
             self.navBarButtonView.alpha = 1.0;
         }];
     } else if (!self.currentUser) {
-        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 86, 44)];
+        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 84, 44)];
         UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
-        [login setFrame:CGRectMake(6, 0, 80, 44)];
-        [login setTitle:@"LOG IN" forState:UIControlStateNormal];
+        [login setFrame:CGRectMake(4, 4, 80, 36)];
+        [login setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+        [login setTitle:@"LOGIN" forState:UIControlStateNormal];
         [[login titleLabel] setFont:kShelbyFontH4Bold];
-        [login setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
+        [login setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
         [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.navBarButtonView addSubview:login];
         
