@@ -185,7 +185,7 @@
 {
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
    if (user) {
-        self.facebookConnected = user.facebookNickname ? YES : NO;
+        self.facebookConnected = user.facebookNickname && [[FacebookHandler sharedInstance] allowPublishActions] ? YES : NO;
         self.twitterConnected = user.twitterNickname ? YES : NO;
     } else {
         self.facebookConnected = NO;

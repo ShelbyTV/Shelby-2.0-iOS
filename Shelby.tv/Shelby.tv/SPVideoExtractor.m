@@ -77,6 +77,9 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 {
     STVAssert(completionBlock, @"urlForVideo expects an extraction block");
     STVAssert(video, @"urlForVideo expects a video");
+    if (!video.providerID) {
+        DLog(@"*** Video without providerID... will gracefully fail immediately.  *** (%@)", video);
+    }
 
     @synchronized(self){
         NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
@@ -220,6 +223,17 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 return;
                 
             } else {
+                if (!video.providerID) {
+                    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                                          action:kAnalyticsIssueVideoMissingProviderID
+                                                           label:[NSString stringWithFormat:@"videoID: %@", video.videoID]];
+                    [self processFailedExtractionWithError:[NSError errorWithDomain:@"SPVideoExtractor"
+                                                                               code:-1
+                                                                           userInfo:@{@"video": video,
+                                                                                      @"reason": @"missing providerID"}]];
+                    return;
+                }
+
                 //perform actual extraction
                 if ([video.providerName isEqualToString:@"youtube"]) {
                     //the LBYouTube extractor parses a regular webpage, which seems to work better for more videos

@@ -12,6 +12,7 @@
 #import "DisplayChannel+Helper.h"
 #import "ShelbyDVRController.h"
 #import "SettingsViewController.h"
+#import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
 #import "ShelbyModel.h"
 #import "SPVideoExtractor.h"
@@ -23,6 +24,8 @@
 
 NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
+
+NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 
 @interface ShelbyBrain()
 
@@ -53,12 +56,23 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 
 - (void)handleDidBecomeActive
 {
+    NSDate *lastActiveDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastActiveDate];
+    if (lastActiveDate && [lastActiveDate isKindOfClass:[NSDate class]] && [lastActiveDate timeIntervalSinceNow] < kShelbyChannelsStaleTime) {
+        [self.homeVC dismissVideoReel];
+    }
     [User sessionDidBecomeActive];
     [self.homeVC handleDidBecomeActive];
+
+    //see method comments for explanation
+    [self refreshUsersStreamAfterDelay];
 }
 
 - (void)handleWillResignActive
 {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyLastActiveDate];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [self.homeVC handleWillResignActive];
     [User sessionDidPause];
 }
 
@@ -178,6 +192,27 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
     NSArray *userChannels = [User channelsForUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     for (DisplayChannel *channel in userChannels) {
         [self populateChannel:channel withActivityIndicator:YES];
+    }
+}
+
+// The backend is dynamically adding "old recommendations" into a user's stream, triggered by a fetch.
+// So that these will be seen by the user (without them having to manually refresh), we refresh the stream after a delay.
+// If a rec comes in (ie. a few frames older than the newest one on the user's dashboard) it will be
+// inserted at the correct location by our views.
+//
+// Canonical use case: app becomes active (is lauched, and all channels are fetched like normal),
+// a rec has been (is) generated on backend, we refresh stream behind the scenes, users scrolls, user sees rec.
+- (void)refreshUsersStreamAfterDelay
+{
+    if ([self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO]) {
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShelbyStreamRefreshForRecommendationsDelay * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+            if (user) {
+                DisplayChannel *usersStreamChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:user.userID];
+                [self populateChannel:usersStreamChannel withActivityIndicator:NO];
+            }
+        });
     }
 }
 
@@ -333,12 +368,11 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
     
     NSArray *curEntries = [self.homeVC entriesForChannel:channel];
     if(curEntries && [curEntries count] && [channelEntries count]){
-        ShelbyArrayMergeInstructions mergeInstructions = [self instructionsToMerge:channelEntries into:curEntries];
-        if(mergeInstructions.shouldMerge){
-            NSArray *newChannelEntries = [channelEntries subarrayWithRange:mergeInstructions.range];
-            [self.homeVC addEntries:newChannelEntries toEnd:mergeInstructions.append ofChannel:channel];
-            if(!mergeInstructions.append){
-                [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:newChannelEntries[0]];
+        ShelbyModelArrayUtility *mergeUtil = [ShelbyModelArrayUtility determineHowToMergePossiblyNew:channelEntries intoExisting:curEntries];
+        if([mergeUtil.actuallyNewEntities count]){
+            [self.homeVC addEntries:mergeUtil.actuallyNewEntities toEnd:mergeUtil.actuallyNewEntitiesShouldBeAppended ofChannel:channel];
+            if(!mergeUtil.actuallyNewEntitiesShouldBeAppended){
+                [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:mergeUtil.actuallyNewEntities[0]];
             }
         } else {
             //full subset, nothing to add
@@ -591,89 +625,6 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 }
 
 #pragma mark - Helpers
-
-typedef struct _ShelbyArrayMergeInstructions {
-    bool shouldMerge;
-    bool append;
-    NSRange range;
-} ShelbyArrayMergeInstructions;
-
-#define NEWER_THAN_INTO_ARRAY NSNotFound
-
-//NB: objects in array must repond to selector shelbyID
-- (ShelbyArrayMergeInstructions)instructionsToMerge:(NSArray *)newArray into:(NSArray *)curArray
-{
-    ShelbyArrayMergeInstructions instructions;
-    
-    NSUInteger firstEntryIndex = [curArray indexOfObject:newArray[0]];
-    NSUInteger lastEntryIndex = [curArray indexOfObject:[newArray lastObject]];
-    if(firstEntryIndex == NSNotFound){
-        //shelbyID is a MongoID which starts with timestamp
-        if([[newArray[0] shelbyID] compare:[curArray[0] shelbyID]] == NSOrderedDescending){
-            //first new element > first old element
-            firstEntryIndex = NEWER_THAN_INTO_ARRAY;
-        } else {
-            firstEntryIndex = [curArray count];
-        }
-    }
-    if(lastEntryIndex == NSNotFound){
-        if([[[curArray lastObject] shelbyID] compare:[[newArray lastObject] shelbyID]] == NSOrderedDescending){
-            //last old element > last new element
-            lastEntryIndex = [curArray count];
-        } else {
-            lastEntryIndex = NEWER_THAN_INTO_ARRAY;
-        }
-        
-    }
-    
-    if(firstEntryIndex == NEWER_THAN_INTO_ARRAY){
-        if(lastEntryIndex == NEWER_THAN_INTO_ARRAY){
-            //full prepend
-            instructions.shouldMerge = YES;
-            instructions.append = NO;
-            instructions.range = NSMakeRange(0, [newArray count]);
-        } else {
-            //partial prepend
-            instructions.shouldMerge = YES;
-            instructions.append = NO;
-            NSUInteger overlapIdx = [self indexOfFirstCommonObjectFromFront:YES of:curArray into:newArray];
-            instructions.range = NSMakeRange(0, overlapIdx);
-        }
-    } else if(firstEntryIndex == [curArray count]){
-        //full append
-        instructions.shouldMerge = YES;
-        instructions.append = YES;
-        instructions.range = NSMakeRange(0, [newArray count]);
-    } else if(lastEntryIndex < [curArray count]){
-        //complete subset
-        instructions.shouldMerge = NO;
-    } else {
-        //partial append
-        instructions.shouldMerge = YES;
-        instructions.append = YES;
-        NSUInteger overlapIdx = [self indexOfFirstCommonObjectFromFront:NO of:curArray into:newArray];
-        instructions.range = NSMakeRange(overlapIdx+1, [newArray count]-(overlapIdx+1));
-    }
-    
-    return instructions;
-}
-
-//we know there is overlap, but it's possible that curArray[0] or [curArray lastObject] is not in newArray
-//so, we try those first, then keep moving deeper into array
-- (NSUInteger)indexOfFirstCommonObjectFromFront:(BOOL)front of:(NSArray *)curArray into:(NSArray *)newArray
-{
-    NSUInteger idx = NSNotFound;
-    NSEnumerator *curArrayEnumerator = front ? [curArray objectEnumerator] : [curArray reverseObjectEnumerator];
-    for (id obj in curArrayEnumerator) {
-        idx = [newArray indexOfObject:obj];
-        if(idx != NSNotFound){
-            return idx;
-        }
-    }
-
-    //din't find an overlap, allow for all of newArray to be returned
-    return (front ? [newArray count] : -1);
-}
 
 - (void)setCurrentUser:(User *)user
 {

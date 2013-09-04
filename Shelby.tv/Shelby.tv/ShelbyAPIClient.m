@@ -43,6 +43,7 @@ NSString * const kShelbyAPIParamChannelsSegment =           @"segment";
 NSString * const kShelbyAPIParamDestinationArray =          @"destination";
 NSString * const kShelbyAPIParamFrameId =                   @"frame_id";
 NSString * const kShelbyAPIParamGAClientID =                @"google_analytics_client_id";
+NSString * const kShelbyAPIParamLimit =                     @"limit";
 NSString * const kShelbyAPIParamLoginEmail =                @"email";
 NSString * const kShelbyAPIParamLoginPassword =             @"password";
 NSString * const kShelbyAPIParamOAuthProviderName =         @"provider_name";
@@ -52,6 +53,7 @@ NSString * const kShelbyAPIParamOAuthSecret =               @"secret";
 NSString * const kShelbyAPIParamSinceId =                   @"since_id";
 NSString * const kShelbyAPIParamSkip =                      @"skip";
 NSString * const kShelbyAPIParamText =                      @"text";
+NSString * const kShelbyAPIParamTriggerRecommendations =    @"trigger_recs";
 NSString * const kShelbyAPIParamNickname =                  @"nickname";
 NSString * const kShelbyAPIParamEmail =                     @"primary_email";
 NSString * const kShelbyAPIParamPassword =                  @"password";
@@ -351,7 +353,8 @@ static AFHTTPClient *httpClient = nil;
                               withAuthToken:(NSString *)authToken
                                    andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    NSMutableDictionary *params = [@{} mutableCopy];
+    NSMutableDictionary *params = [@{kShelbyAPIParamLimit: @"50",
+                                     kShelbyAPIParamTriggerRecommendations: @"true" } mutableCopy];
     if (sinceEntry) {
         params[kShelbyAPIParamSinceId] = sinceEntry.dashboardEntryID;
     }

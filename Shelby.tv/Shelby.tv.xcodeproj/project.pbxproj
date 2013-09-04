@@ -676,6 +676,9 @@
 		91A3629D1790822D00381218 /* wired.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362811790822D00381218 /* wired.png */; };
 		91A3629E1790822D00381218 /* wired.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362811790822D00381218 /* wired.png */; };
 		91A3629F1790822D00381218 /* wired.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362811790822D00381218 /* wired.png */; };
+		91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
+		91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
+		91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91B7DC2B17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
 		91B7DC2C17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
 		91B7DC2D17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
@@ -1133,6 +1136,8 @@
 		91A3627F1790822D00381218 /* vice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vice.png; sourceTree = "<group>"; };
 		91A362801790822D00381218 /* vogue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vogue.png; sourceTree = "<group>"; };
 		91A362811790822D00381218 /* wired.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wired.png; sourceTree = "<group>"; };
+		91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModelArrayUtility.h; sourceTree = "<group>"; };
+		91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyModelArrayUtility.m; sourceTree = "<group>"; };
 		91B7DC2717AACD79009ABF02 /* hungry.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hungry.m4v; sourceTree = "<group>"; };
 		91B7DC3717AC0C8A009ABF02 /* STVYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVYouTubeExtractor.h; sourceTree = "<group>"; };
 		91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVYouTubeExtractor.m; sourceTree = "<group>"; };
@@ -1405,6 +1410,8 @@
 				8E7024B81715E71500E8DE46 /* TwitterHandler.m */,
 				91B7DC3717AC0C8A009ABF02 /* STVYouTubeExtractor.h */,
 				91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */,
+				91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */,
+				91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2662,6 +2669,7 @@
 				1C56F13A17BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
+				91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
 				91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
@@ -2788,6 +2796,7 @@
 				1C56F13B17BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
+				91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
 				91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
@@ -2914,6 +2923,7 @@
 				1C56F13917BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
+				91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
 				91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,

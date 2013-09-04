@@ -29,13 +29,16 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
                                                withIDPredicate:kShelbyCoreDataEntityDashboardEntryIDPredicate
                                                          andID:dashboardEntryID
                                                      inContext:context];
-    
-    if (!dashboardEntry) {
-        dashboardEntry = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDashboardEntry
-                                                       inManagedObjectContext:context];
-        dashboardEntry.dashboardEntryID = dashboardEntryID;
-        dashboardEntry.dashboard = dashboard;
+
+    if (dashboardEntry) {
+        //don't trigger managed object update
+        return dashboardEntry;
     }
+
+    dashboardEntry = [NSEntityDescription insertNewObjectForEntityForName:kShelbyCoreDataEntityDashboardEntry
+                                                   inManagedObjectContext:context];
+    dashboardEntry.dashboardEntryID = dashboardEntryID;
+    dashboardEntry.dashboard = dashboard;
 
     NSString *action = dict[@"action"];
     if (action) {

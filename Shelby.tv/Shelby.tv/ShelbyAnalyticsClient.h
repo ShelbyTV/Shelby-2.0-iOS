@@ -53,6 +53,7 @@ extern NSString * const kAnalyticsAppInviteFacebookSent;
 extern NSString * const kAnalyticsCategoryIssues;
 extern NSString * const kAnalyticsIssueContextSaveError;
 extern NSString * const kAnalyticsIssueYTExtractionFallback;
+extern NSString * const kAnalyticsIssueVideoMissingProviderID;
 
 @interface ShelbyAnalyticsClient : NSObject
 

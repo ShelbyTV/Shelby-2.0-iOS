@@ -501,7 +501,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 
     
     if ( buttonIndex < accountsCount ) {
-        
+        self.twitterAccount = accounts[buttonIndex];
         [self getReverseAuthRequestToken];
         
     } else {
