@@ -257,7 +257,7 @@
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
-    [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel];
+    [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel animated:YES];
     if (!self.airPlayController.isAirPlayActive) {
         self.videoControlsVC.currentEntity = entity;
     }

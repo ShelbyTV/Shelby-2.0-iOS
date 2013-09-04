@@ -224,16 +224,16 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 
         // The index paths returned by DeduplicationUtility are relative to the original array.
         // So we group them within performBatchUpdates:
-        [self.collectionView performBatchUpdates:^{
-            [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
-            [self.collectionView deleteItemsAtIndexPaths:indexPathsForDelete];
-            [self.collectionView reloadItemsAtIndexPaths:indexPathsForReload];
-        } completion:^(BOOL finished) {
-            if (shouldMaintainCurrentFocus) {
-                //scroll to the focus before updates
-                [self focusOnEntity:focusedEntityBeforeUpdates inChannel:channel];
-            }
-        }];
+        if (shouldMaintainCurrentFocus) {
+            [self.collectionView reloadData];
+            [self focusOnEntity:focusedEntityBeforeUpdates inChannel:channel animated:NO];
+        } else {
+            [self.collectionView performBatchUpdates:^{
+                [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
+                [self.collectionView deleteItemsAtIndexPaths:indexPathsForDelete];
+                [self.collectionView reloadItemsAtIndexPaths:indexPathsForReload];
+            } completion:nil];
+        }
         
         [self updateVisibilityOfNoContentView];
     }
@@ -284,13 +284,13 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     }
 }
 
-- (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
+- (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel animated:(BOOL)animated
 {
     @synchronized(self) {
         STVAssert(channel == self.channel, @"expected our channel");
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.deduplicatedEntries indexOfObject:entity] inSection:0];
         STVAssert(indexPath.row != NSNotFound, @"expected to find the entity");
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
     }
 }
 
