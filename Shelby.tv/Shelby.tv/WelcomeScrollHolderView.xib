@@ -12,41 +12,41 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="ob2-I3-xjt">
-                    <rect key="frame" x="20" y="138" width="280" height="420"/>
+                    <rect key="frame" x="20" y="81" width="280" height="387"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="420" id="ccW-cq-mYn"/>
+                        <constraint firstAttribute="height" constant="387" id="7sc-y9-64a"/>
                     </constraints>
                 </scrollView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover &amp; enjoy the best video." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="5UI-S6-Scj">
-                    <rect key="frame" x="20" y="20" width="280" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover &amp; enjoy the best video." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="5UI-S6-Scj">
+                    <rect key="frame" x="20" y="15" width="280" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="welcome-page-1-tip" translatesAutoresizingMaskIntoConstraints="NO" id="OB9-Zf-Xrd" userLabel="tip1">
-                    <rect key="frame" x="149" y="205" width="171" height="157"/>
+                    <rect key="frame" x="149" y="160" width="171" height="157"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="welcome-page-2-tip" translatesAutoresizingMaskIntoConstraints="NO" id="nJH-2N-A3i" userLabel="tip2">
-                    <rect key="frame" x="149" y="205" width="171" height="140"/>
+                    <rect key="frame" x="149" y="160" width="171" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="welcome-page-3b-tip" translatesAutoresizingMaskIntoConstraints="NO" id="XTk-05-3iZ" userLabel="tip3">
-                    <rect key="frame" x="149" y="205" width="171" height="120"/>
+                    <rect key="frame" x="149" y="160" width="171" height="120"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.97436701642335766" green="1" blue="0.97878649635036497" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="5UI-S6-Scj" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="4U2-ZT-eia"/>
-                <constraint firstAttribute="trailing" secondItem="ob2-I3-xjt" secondAttribute="trailing" constant="20" id="HQR-b4-jmO"/>
-                <constraint firstItem="ob2-I3-xjt" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="JDM-v1-SUS"/>
-                <constraint firstItem="5UI-S6-Scj" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="gwb-4j-LNB"/>
-                <constraint firstAttribute="bottom" secondItem="ob2-I3-xjt" secondAttribute="bottom" constant="10" id="lKf-tb-yYN"/>
-                <constraint firstAttribute="trailing" secondItem="5UI-S6-Scj" secondAttribute="trailing" constant="20" id="lwN-ie-Qhh"/>
+                <constraint firstItem="ob2-I3-xjt" firstAttribute="leading" secondItem="5UI-S6-Scj" secondAttribute="leading" id="1f0-pd-5mD"/>
+                <constraint firstItem="ob2-I3-xjt" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="Jug-ej-grX"/>
+                <constraint firstItem="ob2-I3-xjt" firstAttribute="top" secondItem="5UI-S6-Scj" secondAttribute="bottom" constant="37" id="NAa-Sb-YgY"/>
+                <constraint firstAttribute="trailing" secondItem="ob2-I3-xjt" secondAttribute="trailing" constant="20" symbolic="YES" id="O7m-8Z-Pre"/>
+                <constraint firstItem="ob2-I3-xjt" firstAttribute="trailing" secondItem="5UI-S6-Scj" secondAttribute="trailing" id="T7x-Fv-KPT"/>
+                <constraint firstItem="5UI-S6-Scj" firstAttribute="top" secondItem="1" secondAttribute="top" constant="15" id="X8h-II-9ec"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <connections>

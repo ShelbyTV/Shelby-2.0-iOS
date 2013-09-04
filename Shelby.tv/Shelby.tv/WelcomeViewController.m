@@ -44,14 +44,14 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeStart
                                        withLabel:nil];
+    //adding the scroller within our own proramatic scroller (used to slide it out of the way)
+    self.welcomeScrollScroller.frame = self.view.bounds;
+    self.welcomeScrollScroller.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height*2);
 
     //add the scroller view above the login view
     self.welcomeScrollHolderView = [[NSBundle mainBundle] loadNibNamed:@"WelcomeScrollHolderView" owner:self options:nil][0];
     self.welcomeScrollHolderView.frame = self.view.bounds;
     self.welcomeScrollHolderView.scrollViewDelegate = self;
-    //adding the scroller within our own proramatic scroller (used to slide it out of the way)
-    self.welcomeScrollScroller.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height*2);
-    self.welcomeScrollScroller.frame = self.view.frame;
     self.welcomeScrollScroller.scrollEnabled = NO;
     [self.welcomeScrollScroller addSubview:self.welcomeScrollHolderView];
 
