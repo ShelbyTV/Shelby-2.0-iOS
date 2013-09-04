@@ -16,6 +16,7 @@
 //external API with results of computation
 @property (nonatomic, strong) NSArray *actuallyNewEntities;
 @property (nonatomic, assign) BOOL newEntitiesShouldBeAppended;
+@property (nonatomic, assign) BOOL gapAfterNewEntitiesBeforeExistingEntities;
 @end
 
 @implementation ShelbyModelArrayUtility
@@ -32,6 +33,9 @@
 
 - (void)determineWhatsActuallyNew
 {
+    //gap can only possibly be true in non-trival merge (and then only in one case as described below)
+    self.gapAfterNewEntitiesBeforeExistingEntities = NO;
+
     //no new entries
     if ([self.possiblyNewEntities count] == 0) {
         self.actuallyNewEntities = @[];
@@ -59,6 +63,8 @@
     for (id<ShelbyModel> entity in self.actuallyNewEntities) {
         if ([[entity shelbyID] compare:lastKnownShelbyID] == NSOrderedDescending) {
             self.newEntitiesShouldBeAppended = NO;
+            //if all entities are new & there's no overlap with existing entities, there is a gap between them
+            self.gapAfterNewEntitiesBeforeExistingEntities = ([self.actuallyNewEntities count] == [self.possiblyNewEntities count]);
             return;
         }
     }
