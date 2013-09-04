@@ -118,35 +118,28 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 }
 
 #pragma mark - UIScrollViewDelegate
+//NB: these are custom "delgate-of-the-delegate" callbacks for self.welcomeScrollHolderView.scrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat overPull = scrollView.contentOffset.y - (scrollView.contentSize.height - scrollView.bounds.size.height);
-    DLog(@"offsetY: %f, sizeH:%f, overpull:%f", scrollView.contentOffset.y, scrollView.contentSize.height, overPull);
     if (overPull > 0) {
         self.welcomeScrollScroller.contentOffset = CGPointMake(0, self.welcomeScrollScroller.contentOffset.y + overPull);
         scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y - overPull);
     }
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    //this works decently
-    //XXX i'm sure i'm not using velocity correctly, but this works well enought that i'm moving on (for now) -ds
-    DLog(@"velocity: %@, offset: %@", NSStringFromCGPoint(velocity), NSStringFromCGPoint(*targetContentOffset));
-    DLog(@"offsetY: %f, needed:%f", self.welcomeScrollScroller.contentOffset.y, (self.welcomeScrollScroller.bounds.size.height/2.f)/velocity.y);
-
-    if (self.welcomeScrollScroller.contentOffset.y > fabsf((self.welcomeScrollScroller.bounds.size.height/2.f)/velocity.y)) {
-        DLog(@"SCROLL AWAY!");
+    BOOL aboveMinimum = self.welcomeScrollScroller.contentOffset.y > (self.welcomeScrollScroller.bounds.size.height / 4.f);
+    if (aboveMinimum) {
         //we could use velocity to better
         [self.welcomeScrollScroller setContentOffset:CGPointMake(0, self.welcomeScrollScroller.bounds.size.height) animated:YES];
         self.welcomeScrollScroller.scrollEnabled = YES;
     } else {
-        DLog(@"FAIL and FALL back DOWN");
         [self.welcomeScrollScroller setContentOffset:CGPointMake(0, 0) animated:YES];
         self.welcomeScrollScroller.scrollEnabled = NO;
     }
-
 }
 
 @end

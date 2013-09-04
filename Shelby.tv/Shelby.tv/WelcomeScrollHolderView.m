@@ -52,11 +52,16 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self showTip:999];
+    if (scrollView.contentOffset.y < (scrollView.contentSize.height-scrollView.bounds.size.height)) {
+        [self showTip:999];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (scrollView.contentOffset.y < (scrollView.contentSize.height-scrollView.bounds.size.height)) {
+        [self showTip:999];
+    }
     [self.scrollViewDelegate scrollViewDidScroll:scrollView];
 }
 
@@ -66,9 +71,9 @@
     [self showTip:page];
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self.scrollViewDelegate scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
+    [self.scrollViewDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
 }
 
 #pragma mark - View Helpers
