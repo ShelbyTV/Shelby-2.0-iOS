@@ -220,6 +220,11 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return self.facebookNickname != nil;
 }
 
+- (BOOL)isNonShelbyFacebookUser
+{
+    return [self.userType isEqualToNumber:@1] && self.facebookNickname != nil;
+}
+
 - (BOOL)hasLikedVideoOfFrame:(Frame *)frame
 {
     return !![self likedFrameWithVideoOfFrame:frame];
