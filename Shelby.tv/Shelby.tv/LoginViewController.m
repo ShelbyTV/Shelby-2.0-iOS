@@ -10,11 +10,13 @@
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *loginButton;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (strong, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
-
+@property (weak, nonatomic) IBOutlet UIButton *loginWithFacebookButton;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 @end
 
 @implementation LoginViewController
@@ -35,26 +37,9 @@
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
 
-    [self.usernameField becomeFirstResponder];
-
-    //non-IB view customizations
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bkgd-step1.png"]];
-
-    // Next Button
-    NSString *nextTitle = self.navigationItem.rightBarButtonItem.title;
-    SEL selector = self.navigationItem.rightBarButtonItem.action;
-    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    nextButton.frame = CGRectMake(0, 0, 60, 44);
-    [nextButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
-    [nextButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
-    [nextButton setTitle:nextTitle forState:UIControlStateNormal];
-    nextButton.titleLabel.font = kShelbyFontH4Bold;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:nextButton];
-    self.loginButton = self.navigationItem.rightBarButtonItem;
-
     // Cancel Button
     NSString *cancelTitle = self.navigationItem.leftBarButtonItem.title;
-    selector = self.navigationItem.leftBarButtonItem.action;
+    SEL selector = self.navigationItem.leftBarButtonItem.action;
     UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelButton.frame = CGRectMake(0, 0, 60, 44);
     [cancelButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
@@ -62,6 +47,35 @@
     [cancelButton setTitle:cancelTitle forState:UIControlStateNormal];
     cancelButton.titleLabel.font = kShelbyFontH4Bold;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+
+    //title font
+    self.titleLabel.font = kShelbyFontH1Bold;
+
+    //text field backgrounds
+    UIImage *textFieldBackground = [[UIImage imageNamed:@"textfield-outline-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+    [self.usernameField setBackground:textFieldBackground];
+    [self.passwordField setBackground:textFieldBackground];
+
+    //button backgrounds
+    [self.loginButton setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    [self.loginWithFacebookButton setBackgroundImage:[[UIImage imageNamed:@"facebook-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    UIImage *secondaryButtonBackground = [[UIImage imageNamed:@"secondary-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+    [self.forgotPasswordButton setBackgroundImage:secondaryButtonBackground forState:UIControlStateNormal];
+    [self.signupButton setBackgroundImage:secondaryButtonBackground forState:UIControlStateNormal];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,20 +89,24 @@
     return NO;
 }
 
+- (IBAction)backgroundTapped:(id)sender {
+    for (UIView *subview in self.view.subviews) {
+        [subview resignFirstResponder];
+    }
+}
+
 - (IBAction)cancelTapped:(UIBarButtonItem *)sender {
     [self.delegate loginViewControllerDidCancel:self];
 }
 
-- (IBAction)loginTapped:(UIBarButtonItem *)sender {
+- (IBAction)loginTapped:(id)sender {
     if (![self.usernameField.text length] || ![self.passwordField.text length]) {
         [self loginFailed:@"Please enter your username (or email address) and password."];
         return;
     }
 
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.frame = CGRectMake(10, 10, 50, 44);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
-    [spinner startAnimating];
+    self.loginButton.enabled = NO;
+
     [self.delegate loginViewController:self loginWithUsername:self.usernameField.text password:self.passwordField.text];
 }
 
@@ -114,7 +132,8 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    self.navigationItem.rightBarButtonItem = self.loginButton;
+    self.loginButton.enabled = YES;
+    
     self.passwordField.text = @"";
     [self.passwordField becomeFirstResponder];
 }
@@ -129,6 +148,32 @@
         [self loginTapped:nil];
     }
     return YES;
+}
+
+#pragma mark - Keyboard Notification Handlers
+
+- (void)keyboardWillShow:(NSNotification *)note
+{
+    if (kShelbyFullscreenHeight <= 480) {
+        NSDictionary *info = note.userInfo;
+        double animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+        [UIView animateWithDuration:animationDuration animations:^{
+            self.view.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
+        }];
+    }
+}
+
+- (void)keyboardWillHide:(NSNotification *)note
+{
+    if (kShelbyFullscreenHeight <= 480) {
+        NSDictionary *info = note.userInfo;
+        double animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+        [UIView animateWithDuration:animationDuration animations:^{
+            self.view.center = CGPointMake(self.view.center.x, self.view.center.y + 100);
+        }];
+    }
 }
 
 @end
