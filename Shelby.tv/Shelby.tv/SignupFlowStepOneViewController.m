@@ -15,6 +15,8 @@
 
 - (IBAction)goBack:(id)sender;
 
+- (IBAction)signupWithFacebook:(id)sender;
+
 // Segue
 - (IBAction)gotoChooseVideoTypes:(id)sender;
 
@@ -131,6 +133,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)signupWithFacebook:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:  ) name:kShelbyNotificationFacebookConnectCompleted object:nil];
+    // TODO: send GA event
+    UIViewController *parent = self.parentViewController;
+    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+        [parent performSelector:@selector(connectToFacebook)];
+    }
+}
+
 - (IBAction)loginTapped:(UIButton *)sender {
     //DS to KP: I'm not as familiar with iOS paradigms as you... why are we using parent like this, instead of explicity setting delegate?
     UIViewController *parent = self.parentViewController;
@@ -147,6 +159,37 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Add Your Picture" message:@"Don't be anonymous, let other people see your picture" delegate:self cancelButtonTitle:@"Not Now" otherButtonTitles:@"Choose", nil];
         [alertView show];
     } else {
+        [self startSignupUser];
+    }
+}
+- (void)signupWithFacebookCompleted:(NSNotification *)notification
+{
+    NSDictionary *facebookUser = [notification object];
+    if ([facebookUser isKindOfClass:[NSDictionary class]]) {
+        NSString *firstName = facebookUser[@"first_name"];
+        NSString *lastName = facebookUser[@"last_name"];
+        NSString *userName = nil;
+        if (firstName && lastName) {
+            userName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+        } else if (firstName) {
+            userName = firstName;
+        } else if (lastName) {
+            userName = lastName;
+        } else {
+            // DEAL WITH ERROR TODO: KP KP
+        }
+        
+        if (userName) {
+            self.nameField.text = userName;
+        }
+        
+        NSString *email = facebookUser[@"email"];
+        if (email) {
+            self.email.text = email;
+        } else {
+            // DEAL WITH ERROR TODO: KP KP
+        }
+        
         [self startSignupUser];
     }
 }
