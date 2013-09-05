@@ -23,12 +23,6 @@
 		1C154E5217A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
 		1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
 		1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
-		1C154E6017A071DF00C0B76B /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5817A071DF00C0B76B /* circle.png */; };
-		1C154E6117A071DF00C0B76B /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5817A071DF00C0B76B /* circle.png */; };
-		1C154E6217A071DF00C0B76B /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5817A071DF00C0B76B /* circle.png */; };
-		1C154E6317A071DF00C0B76B /* circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5917A071DF00C0B76B /* circle@2x.png */; };
-		1C154E6417A071DF00C0B76B /* circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5917A071DF00C0B76B /* circle@2x.png */; };
-		1C154E6517A071DF00C0B76B /* circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5917A071DF00C0B76B /* circle@2x.png */; };
 		1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
 		1C309AB417A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
 		1C309AB517A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
@@ -345,12 +339,6 @@
 		1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
 		1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
 		1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
-		1CDB0C3C17AACDD30031C2C9 /* circle-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3A17AACDD30031C2C9 /* circle-share.png */; };
-		1CDB0C3D17AACDD30031C2C9 /* circle-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3A17AACDD30031C2C9 /* circle-share.png */; };
-		1CDB0C3E17AACDD30031C2C9 /* circle-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3A17AACDD30031C2C9 /* circle-share.png */; };
-		1CDB0C3F17AACDD30031C2C9 /* circle-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */; };
-		1CDB0C4017AACDD30031C2C9 /* circle-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */; };
-		1CDB0C4117AACDD30031C2C9 /* circle-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */; };
 		1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
 		1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
 		1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
@@ -804,8 +792,6 @@
 		1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrowseTutorialView.m; sourceTree = "<group>"; };
 		1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1C154E5117A06EBA00C0B76B /* NoLikesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoLikesView.xib; sourceTree = "<group>"; };
-		1C154E5817A071DF00C0B76B /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
-		1C154E5917A071DF00C0B76B /* circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle@2x.png"; sourceTree = "<group>"; };
 		1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyShareView.xib; sourceTree = "<group>"; };
 		1C309AB717A714B900D690A8 /* check-social.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-social.png"; sourceTree = "<group>"; };
 		1C309AB817A714B900D690A8 /* check-social@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-social@2x.png"; sourceTree = "<group>"; };
@@ -914,8 +900,6 @@
 		1CDB0C3117A992E10031C2C9 /* UserDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsCell.h; sourceTree = "<group>"; };
 		1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsCell.m; sourceTree = "<group>"; };
 		1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoSharesView.xib; sourceTree = "<group>"; };
-		1CDB0C3A17AACDD30031C2C9 /* circle-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle-share.png"; sourceTree = "<group>"; };
-		1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle-share@2x.png"; sourceTree = "<group>"; };
 		1CDBEE6B1794A31F002ECD76 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		1CDBEE6C1794A320002ECD76 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		1CDBEE701795EA20002ECD76 /* SignupFlowStepOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepOneViewController.h; sourceTree = "<group>"; };
@@ -1303,10 +1287,6 @@
 				1C534E3717A1792700B6B3D5 /* bkgd-landscape-568h.png */,
 				1C534E3817A1792700B6B3D5 /* bkgd-landscape.png */,
 				1C534E3917A1792700B6B3D5 /* bkgd-landscape@2x.png */,
-				1C154E5817A071DF00C0B76B /* circle.png */,
-				1C154E5917A071DF00C0B76B /* circle@2x.png */,
-				1CDB0C3A17AACDD30031C2C9 /* circle-share.png */,
-				1CDB0C3B17AACDD30031C2C9 /* circle-share@2x.png */,
 			);
 			name = "No Content Images";
 			sourceTree = "<group>";
@@ -2277,8 +2257,6 @@
 				1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */,
-				1C154E6117A071DF00C0B76B /* circle.png in Resources */,
-				1C154E6417A071DF00C0B76B /* circle@2x.png in Resources */,
 				1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3E17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
 				1CD8112617CCFCDF002FD84B /* logo-tv.png in Resources */,
@@ -2295,8 +2273,6 @@
 				1CDB0C2117A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2517A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
-				1CDB0C3D17AACDD30031C2C9 /* circle-share.png in Resources */,
-				1CDB0C4017AACDD30031C2C9 /* circle-share@2x.png in Resources */,
 				91B7DC2C17AACD79009ABF02 /* hungry.m4v in Resources */,
 				91B7DC4017B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4317B16447009ABF02 /* nav-shadow@2x.png in Resources */,
@@ -2403,8 +2379,6 @@
 				1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
 				1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */,
-				1C154E6217A071DF00C0B76B /* circle.png in Resources */,
-				1C154E6517A071DF00C0B76B /* circle@2x.png in Resources */,
 				1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3F17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
 				1CD8112717CCFCDF002FD84B /* logo-tv.png in Resources */,
@@ -2421,8 +2395,6 @@
 				1CDB0C2217A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2617A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
-				1CDB0C3E17AACDD30031C2C9 /* circle-share.png in Resources */,
-				1CDB0C4117AACDD30031C2C9 /* circle-share@2x.png in Resources */,
 				91B7DC2D17AACD79009ABF02 /* hungry.m4v in Resources */,
 				91B7DC4117B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4417B16447009ABF02 /* nav-shadow@2x.png in Resources */,
@@ -2528,8 +2500,6 @@
 				1CDCA6AB179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
 				9178C9DE17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C154E5217A06EBB00C0B76B /* NoLikesView.xib in Resources */,
-				1C154E6017A071DF00C0B76B /* circle.png in Resources */,
-				1C154E6317A071DF00C0B76B /* circle@2x.png in Resources */,
 				9192ED0517C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				1C534E3A17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3D17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
@@ -2547,8 +2517,6 @@
 				1CDB0C2017A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2417A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
-				1CDB0C3C17AACDD30031C2C9 /* circle-share.png in Resources */,
-				1CDB0C3F17AACDD30031C2C9 /* circle-share@2x.png in Resources */,
 				91B7DC2B17AACD79009ABF02 /* hungry.m4v in Resources */,
 				91B7DC3F17B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4217B16447009ABF02 /* nav-shadow@2x.png in Resources */,

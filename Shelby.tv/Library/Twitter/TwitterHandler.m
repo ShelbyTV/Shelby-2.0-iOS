@@ -505,7 +505,7 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
         [self getReverseAuthRequestToken];
         
     } else {
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
     }
     
 }

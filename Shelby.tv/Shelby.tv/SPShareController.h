@@ -32,7 +32,8 @@ typedef void(^SPShareCompletionHandler)(BOOL completed);
 - (void)shareWithCompletionHandler:(SPShareCompletionHandler)completionHandler;
 //DJS not sure when/why the following two are used, didn't touch them...
 
-- (void)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected;
+// Return YES whether toggle was successfull. And NO if more permissions needs to be granted.
+- (BOOL)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected;
 
 - (void)shelbyShareWithMessage:(NSString *)message withFacebook:(BOOL)shareOnFacebook andWithTwitter:(BOOL)shareOnTwitter;
 - (void)nativeShareWithFrame:(Frame *)frame message:(NSString *)message andLink:(NSString *)link fromViewController:(UIViewController *)viewController;

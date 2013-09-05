@@ -190,7 +190,7 @@
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
  
-    self.detailInviteFacebookFriends.frame = CGRectMake(self.detailViaNetwork.frame.origin.x + 100, self.detailInviteFacebookFriends.frame.origin.y, self.detailInviteFacebookFriends.frame.size.width, self.detailInviteFacebookFriends.frame.size.height);
+    self.detailInviteFacebookFriends.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailInviteFacebookFriends.frame.origin.y, self.detailInviteFacebookFriends.frame.size.width, self.detailInviteFacebookFriends.frame.size.height);
     self.summaryTitleButton.frame = self.summaryTitle.frame;
     self.detailTitleButton.frame = self.detailTitle.frame;
 
@@ -254,11 +254,13 @@
     self.summaryViaNetwork.text = viaNetwork;
     self.detailViaNetwork.text = self.summaryViaNetwork.text;
     
-    // If Via Network is "via Facebook" show the Facebook Invite Button.
-    if ([[self.detailViaNetwork.text lowercaseString] isEqualToString:@"via facebook"]) {
+    // If the creator is not a shelby user but is a facebook user, show invite
+    if ([self.dashboardEntry.frame.creator isNonShelbyFacebookUser]) {
         self.detailInviteFacebookFriends.hidden = NO;
+        self.detailViaNetwork.hidden = YES;
     } else {
         self.detailInviteFacebookFriends.hidden = YES;
+        self.detailViaNetwork.hidden = NO;
     }
     
     // Caption

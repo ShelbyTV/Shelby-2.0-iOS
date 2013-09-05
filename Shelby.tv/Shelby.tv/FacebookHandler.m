@@ -13,6 +13,9 @@
 #import "User.h"
 
 NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNotificationFacebookAuthorizationCompleted";
+NSString * const kShelbyNotificationFacebookAuthorizationCompletedWithError = @"kShelbyNotificationFacebookAuthorizationCompletedWithError";
+
+NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kShelbyNotificationFacebookPublishAuthorizationCompleted";
 
 @interface FacebookHandler()
 @property (nonatomic, assign) BOOL allowPublishActions;
@@ -88,7 +91,12 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
             
             if (status == FBSessionStateClosedLoginFailed) {
                 completionBlock(nil, nil, @"Go to Settings -> Privacy -> Facebook and turn Shelby ON");
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
             }
+        } else if(status == FBSessionStateClosed) {
+            [self facebookCleanup];
+            completionBlock(nil, nil, @"There was an error connecting to Facebook. Please try again.");
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
         } else {
             // If status is OpenTokenExtended - we had a session - no need to change a thing - just call the completion block to let the delegate know facebookSessionDidComplete
             if (status == FBSessionStateOpenTokenExtended) {
@@ -104,9 +112,8 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
                     }
                 }];
             }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
         }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
      }];
 }
 
@@ -126,11 +133,13 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
 {
     [[FBSession activeSession]
      requestNewPublishPermissions:@[@"publish_stream", @"publish_actions"] defaultAudience:FBSessionDefaultAudienceFriends completionHandler:^(FBSession *session, NSError *error) {
-         if (!error) {
+         if (error) {
              // KP KP: TODO: show an alert dialog if there are errors asking user to approver FB?
+             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
+         } else {
+             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookPublishAuthorizationCompleted object:nil];
          }
          
-         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
      }];
 }
 

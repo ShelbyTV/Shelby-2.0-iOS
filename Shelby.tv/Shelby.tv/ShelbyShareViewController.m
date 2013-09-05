@@ -56,8 +56,10 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateFacebookToggle)
-                                                 name:kShelbyNotificationFacebookAuthorizationCompleted object:nil];
-    
+                                                 name:kShelbyNotificationFacebookPublishAuthorizationCompleted object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateFacebookToggle)
+                                                 name:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateTwitterToggle)
                                                  name:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
@@ -119,8 +121,13 @@
 {
     self.facebookCheck.hidden = !self.facebookCheck.hidden;
     self.facebookButton.selected = !self.facebookCheck.hidden;
+    self.facebookButton.enabled = !self.facebookButton.selected;
     
-    [self.shareController toggleSocialFacebookButton:YES selected:!self.facebookCheck.hidden];
+    BOOL waitingForPermissionsNotNeeded = [self.shareController toggleSocialFacebookButton:YES selected:!self.facebookCheck.hidden];
+    
+    if (waitingForPermissionsNotNeeded) {
+        self.facebookButton.enabled = YES;
+    }
 }
 
 
@@ -128,8 +135,12 @@
 {
     self.twitterCheck.hidden = !self.twitterCheck.hidden;
     self.twitterButton.selected = !self.twitterCheck.hidden;
+    self.twitterButton.enabled = !self.twitterButton.selected;
     
-    [self.shareController toggleSocialFacebookButton:NO selected:!self.twitterCheck.hidden];
+    BOOL waitingForPermissionsNotNeeded = [self.shareController toggleSocialFacebookButton:NO selected:!self.twitterCheck.hidden];
+    if (waitingForPermissionsNotNeeded) {
+        self.twitterButton.enabled = YES;
+    }
 }
 
 - (IBAction)openDefaultShare:(id)sender
@@ -170,6 +181,7 @@
 - (void)updateFacebookToggle
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        self.facebookButton.enabled = YES;
         [self updateSocialButtons];
     });
 }
@@ -177,6 +189,7 @@
 - (void)updateTwitterToggle
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        self.twitterButton.enabled = YES;
         [self updateSocialButtons];
     });
 }
