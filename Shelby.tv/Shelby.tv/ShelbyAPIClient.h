@@ -107,6 +107,14 @@ toExternalDestinations:(NSArray *)destinations
        withMessage:(NSString *)message
       andAuthToken:(NSString *)authToken;
 
++ (void)LoginWithFacebookAccountID:(NSString *)accountID
+                        oauthToken:(NSString *)token
+                          andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
++ (void)signupWithFacebookAccountID:(NSString *)accountID
+                         oauthToken:(NSString *)token
+                           andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 // -- OAuth
 + (void)postThirdPartyToken:(NSString *)provider
               withAccountID:(NSString *)accountID

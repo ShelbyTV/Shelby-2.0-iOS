@@ -95,6 +95,9 @@
                                 <state key="normal" title="Login with Facebook">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginWithFacebook:" destination="3Qm-VB-UtR" eventType="touchUpInside" id="UeW-ww-mhj"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hg-ip-j1e">
                                 <rect key="frame" x="20" y="470" width="133" height="44"/>

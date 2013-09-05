@@ -74,6 +74,7 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 -(void)logoutCurrentUser;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
+- (void)loginUserFacebook;
 
 - (void)syncLikes; // Syncs unsycs likes after user logs in
 

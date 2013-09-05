@@ -870,6 +870,11 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     }];
 }
 
+- (void)loginWithFacebook:(LoginViewController *)loginVC
+{
+    [[ShelbyDataMediator sharedInstance] loginUserFacebook];
+}
+
 //mirror method signupFlowNavigationViewControllerWantsLogin: implemented above
 
 @end
