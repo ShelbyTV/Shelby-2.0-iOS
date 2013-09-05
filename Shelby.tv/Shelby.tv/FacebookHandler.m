@@ -89,6 +89,9 @@ NSString * const kShelbyNotificationFacebookAuthorizationCompleted = @"kShelbyNo
             if (status == FBSessionStateClosedLoginFailed) {
                 completionBlock(nil, nil, @"Go to Settings -> Privacy -> Facebook and turn Shelby ON");
             }
+        } else if(status == FBSessionStateClosed) {
+            [self facebookCleanup];
+            completionBlock(nil, nil, @"There was an error connecting to Facebook. Please try again.");
         } else {
             // If status is OpenTokenExtended - we had a session - no need to change a thing - just call the completion block to let the delegate know facebookSessionDidComplete
             if (status == FBSessionStateOpenTokenExtended) {
