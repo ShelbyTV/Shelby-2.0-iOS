@@ -11,7 +11,8 @@
 typedef void (^shelby_facebook_request_complete_block_t)(NSDictionary *facebookUser, NSString *facebookToken, NSString *errorMessage);
 
 extern NSString * const kShelbyNotificationFacebookAuthorizationCompleted;
-
+extern NSString * const kShelbyNotificationFacebookAuthorizationCompletedWithError;
+extern NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted;
 
 @interface FacebookHandler : NSObject
 

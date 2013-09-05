@@ -97,7 +97,8 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 }
 
 #pragma mark - Action Methods (Public)
-- (void)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected
+// Return YES whether toggle was successfull. And NO if more permissions needs to be granted.
+- (BOOL)toggleSocialFacebookButton:(BOOL)facebook selected:(BOOL)selected
 {
     NSString *defaultsKey = facebook ? kShelbyFacebookShareEnable : kShelbyTwitterShareEnable;
     [[NSUserDefaults standardUserDefaults] setBool:selected forKey:defaultsKey];
@@ -109,11 +110,15 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
         if (facebook) {
             if (![[FacebookHandler sharedInstance] allowPublishActions]) {
                 [self.delegate shareControllerRequestsFacebookPublishPermissions:self];
+                return NO;
             }
         } else if (!currentUser.twitterNickname) {
             [self.delegate shareControllerRequestsTwitterPublishPermissions:self];
+            return NO;
         }
     }
+    
+    return YES;
 }
 
 #pragma mark - Action Methods (Private)
