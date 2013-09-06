@@ -112,7 +112,7 @@
 
     //pretty launch (no animation)
     if (_firstLaunch) {
-        STVAssert(_currentRow, @"should have current row on first launch");
+        STVDebugAssert(_currentRow, @"should have current row on first launch");
          _firstLaunch = NO;
         self.sliderY.constant = -(_currentRow.frame.origin.y);
         [self layoutIfNeeded];

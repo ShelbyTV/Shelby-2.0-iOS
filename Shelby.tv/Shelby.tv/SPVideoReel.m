@@ -304,7 +304,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.view addGestureRecognizer:togglePlaybackGesuture];
     
     //update scroll view to better interact with the above gesure recognizers
-    STVAssert(self.videoScrollView && self.videoScrollView.panGestureRecognizer, @"scroll view should be initialized");
+    STVDebugAssert(self.videoScrollView && self.videoScrollView.panGestureRecognizer, @"scroll view should be initialized");
     self.videoScrollView.panGestureRecognizer.minimumNumberOfTouches = 1;
     self.videoScrollView.panGestureRecognizer.maximumNumberOfTouches = 1;
     self.videoScrollView.pinchGestureRecognizer.enabled = NO;
@@ -312,7 +312,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)shutdown
 {
-    STVAssert(!self.isShutdown, @"shoult not already be shutdown");
+    STVDebugAssert(!self.isShutdown, @"shoult not already be shutdown");
     self.isShutdown = YES;
     
     [[SPVideoExtractor sharedInstance] cancelAllExtractions];
@@ -477,7 +477,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
         // Set the new current player to auto play and get it going...
         self.currentVideoPlayingIndex = position;
-        STVAssert([self.videoPlayers count] > self.currentVideoPlayingIndex, @"can't play player[%i], we only have %i players. Previous player? %@", self.currentVideoPlayingIndex, [self.videoPlayers count], (previousPlayer?@"YES":@"NO"));
+        if (self.currentVideoPlayingIndex > [self.videoPlayers count]) {
+            STVDebugAssert([self.videoPlayers count] > self.currentVideoPlayingIndex, @"can't play player[%i], we only have %i players. Previous player? %@", self.currentVideoPlayingIndex, [self.videoPlayers count], (previousPlayer?@"YES":@"NO"));
+            return;
+        }
+
         self.currentPlayer = self.videoPlayers[self.currentVideoPlayingIndex];
         self.currentPlayer.shouldAutoplay = shouldAutoplay;
         [self.currentPlayer prepareForStreamingPlayback];
@@ -487,7 +491,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                                         previousPlayer:previousPlayer];
         [self warmURLExtractionCache];
 
-        STVAssert([Frame frameForEntity:self.videoEntities[self.currentVideoPlayingIndex]] == self.currentPlayer.videoFrame);
+        STVDebugAssert([Frame frameForEntity:self.videoEntities[self.currentVideoPlayingIndex]] == self.currentPlayer.videoFrame);
         [self.delegate didChangePlaybackToEntity:self.videoEntities[self.currentVideoPlayingIndex] inChannel:self.channel];
     }
 }

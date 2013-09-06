@@ -119,7 +119,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     if (self.player) {
-        STVAssert(self.player.isExternalPlaybackActive, @"only expecting reuse w/ airplay");
+        STVDebugAssert(self.player.isExternalPlaybackActive, @"only expecting reuse w/ airplay");
         //reuse player
         self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
@@ -207,7 +207,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)removeAllObservers
 {
-    STVAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
+    STVDebugAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
     if (!self.player) {
         return;
     }
@@ -409,7 +409,11 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)itemDidFinishPlaying:(NSNotification *)notification
 {
-    STVAssert(_player.currentItem == notification.object, @"should only get notified for our player item");
+    if (_player.currentItem != notification.object) {
+        STVDebugAssert(_player.currentItem == notification.object, @"should only get notified for our player item");
+        return;
+    }
+
     if (self.isPlaying && self.player.currentItem.status == AVPlayerItemStatusReadyToPlay) {
         //actionAtItemEnd is set to "pause" when we create player.  track that:
         self.isPlaying = NO;
