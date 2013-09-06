@@ -727,6 +727,11 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:topViewController];
 }
 
+- (void)signupWithFacebook
+{
+    [[ShelbyDataMediator sharedInstance] createUserWithFacebook];
+}
+
 - (void)goToRollForID:(NSString *)rollID
 {
     STVAssert(rollID, @"expects valid rollID");

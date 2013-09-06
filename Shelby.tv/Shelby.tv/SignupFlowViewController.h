@@ -24,11 +24,14 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (void)signupUser;
 - (void)completeSignup;
 - (void)wantsLogin;
+- (void)signupWithFacebook;
 @end
 
 @interface SignupFlowViewController : ShelbyViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, SignupUserInfoDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) UIImage *avatarImage;
+@property (nonatomic, weak) IBOutlet UIImageView *avatar;
+@property (nonatomic, assign) BOOL facebookSignup;
 @property (nonatomic, strong) NSString *fullname;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *nextButton;  // We don't want to lose reference to nextButton.
 @property (nonatomic, strong) NSMutableArray *selectedCellsTitlesArray;

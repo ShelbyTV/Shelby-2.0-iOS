@@ -28,7 +28,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 };
 
 @interface SignupFlowViewController ()
-@property (nonatomic, weak) IBOutlet UIImageView *avatar;
 @property (weak, nonatomic) IBOutlet UIButton *chooseAvatarButton;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 

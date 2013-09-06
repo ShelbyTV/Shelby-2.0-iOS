@@ -8,6 +8,7 @@
 
 #import "SignupFlowStepOneViewController.h"
 #import "ShelbyDataMediator.h"
+#import "UIImageView+AFNetworking.h"
 
 
 @interface SignupFlowStepOneViewController ()
@@ -66,6 +67,9 @@
                                          withAction:kAnalyticsSignupStep1Complete
                                           withLabel:nil];
 
+    SignupFlowViewController *stepTwo = [segue destinationViewController];
+    stepTwo.facebookSignup = self.facebookSignup;
+    
     self.navigationItem.rightBarButtonItem = self.nextButton;
 }
 
@@ -135,11 +139,11 @@
 
 - (IBAction)signupWithFacebook:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:  ) name:kShelbyNotificationFacebookConnectCompleted object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
     // TODO: send GA event
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
-        [parent performSelector:@selector(connectToFacebook)];
+        [parent performSelector:@selector(signupWithFacebook)];
     }
 }
 
@@ -164,34 +168,25 @@
 }
 - (void)signupWithFacebookCompleted:(NSNotification *)notification
 {
-    NSDictionary *facebookUser = [notification object];
-    if ([facebookUser isKindOfClass:[NSDictionary class]]) {
-        NSString *firstName = facebookUser[@"first_name"];
-        NSString *lastName = facebookUser[@"last_name"];
-        NSString *userName = nil;
-        if (firstName && lastName) {
-            userName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-        } else if (firstName) {
-            userName = firstName;
-        } else if (lastName) {
-            userName = lastName;
-        } else {
-            // DEAL WITH ERROR TODO: KP KP
+    dispatch_async(dispatch_get_main_queue(), ^{
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+         self.signupDictionary[kShelbySignupNameKey] = user.name;
+        self.signupDictionary[kShelbySignupUsernameKey] = user.facebookNickname;
+        // User might not have an email account. (in the case that the email account was used to signup with another user.
+        if (user.email) {
+            self.signupDictionary[kShelbySignupEmailKey] = user.email;
         }
-        
-        if (userName) {
-            self.nameField.text = userName;
-        }
-        
-        NSString *email = facebookUser[@"email"];
-        if (email) {
-            self.email.text = email;
-        } else {
-            // DEAL WITH ERROR TODO: KP KP
-        }
-        
-        [self startSignupUser];
-    }
+        self.facebookSignup = YES;
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[user avatarURL]];
+        __weak SignupFlowStepOneViewController *weakself = self;
+        [self.avatar setImageWithURLRequest:request placeholderImage:self.avatar.image success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            weakself.signupDictionary[kShelbySignupAvatarKey] = image;
+            [weakself signupSuccess];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // No big deal, continue signup without user's avatar.
+            [weakself signupSuccess];
+        }];
+    });
 }
 
 - (void)startSignupUser
@@ -262,7 +257,7 @@
 - (void)userSignupDidSucceed:(NSNotification *)notification
 {
     [self removeObserversForSignup:YES];
-    
+    self.facebookSignup = NO;
     [self signupSuccess];
 }
 

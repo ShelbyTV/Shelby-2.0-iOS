@@ -2,7 +2,7 @@
 //  User.m
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 7/25/13.
+//  Created by Keren on 9/6/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @dynamic facebookName;
 @dynamic facebookNickname;
 @dynamic facebookUID;
+@dynamic hasShelbyAvatar;
 @dynamic likesRollID;
 @dynamic name;
 @dynamic nickname;
@@ -28,7 +29,7 @@
 @dynamic userID;
 @dynamic userImage;
 @dynamic userType;
-@dynamic hasShelbyAvatar;
+@dynamic email;
 @dynamic frames;
 @dynamic upvoted;
 

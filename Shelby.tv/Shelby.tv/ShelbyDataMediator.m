@@ -487,24 +487,50 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     }
 }
 
+- (void)handleCreateUserWithJSON:(id)JSON andError:(NSError *)error
+{
+    if (JSON) {
+        [self saveUserFromJSON:JSON];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
+    } else {
+        NSString *errorMessage = nil;
+        if ([error isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *JSONError = (NSDictionary *)error;
+            errorMessage = JSONError[@"message"];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
+        
+    }
+}
+
 - (void)createUserWithName:(NSString *)name andEmail:(NSString *)email
 {
-    __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient postSignupWithName:name email:email andBlock:^(id JSON, NSError *error) {
-        if (JSON) {
-            [weakSelf saveUserFromJSON:JSON];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
-        } else {
-            NSString *errorMessage = nil;
-            if ([error isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *JSONError = (NSDictionary *)error;
-                errorMessage = JSONError[@"message"];
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
-            
-        }
+        [self handleCreateUserWithJSON:JSON andError:error];
     }];
 }
+
+- (void)createUserWithFacebook
+{
+    [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
+                                          andAskPublishPermission:NO
+                                                        withBlock:^(NSDictionary *facebookUser,
+                                                                    NSString *facebookToken,
+                                                                    NSString *errorMessage)
+     {
+         if (facebookUser) {
+             [ShelbyAPIClient signupWithFacebookAccountID:facebookUser[@"id"]
+                                              oauthToken:facebookToken
+                                                andBlock:^(id JSON, NSError *error)
+              {
+                  [self handleCreateUserWithJSON:JSON andError:error];
+              }];
+         } else {
+             [self.delegate loginUserDidCompleteWithError:@"Go to Settings -> Privacy -> Facebook and turn Shelby ON"];
+         }
+     }];
+}
+
 
 - (void)updateUserName:(NSString *)name
               nickname:(NSString *)nickname
