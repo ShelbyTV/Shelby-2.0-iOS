@@ -375,14 +375,14 @@
         }];
     } else if (!self.currentUser) {
         self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 84, 44)];
-        UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
-        [login setFrame:CGRectMake(4, 4, 80, 36)];
-        [login setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
-        [login setTitle:@"LOGIN" forState:UIControlStateNormal];
-        [[login titleLabel] setFont:kShelbyFontH4Bold];
-        [login setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
-        [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        [self.navBarButtonView addSubview:login];
+        UIButton *signup = [UIButton buttonWithType:UIButtonTypeCustom];
+        [signup setFrame:CGRectMake(4, 4, 80, 36)];
+        [signup setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+        [signup setTitle:@"SIGN UP" forState:UIControlStateNormal];
+        [[signup titleLabel] setFont:kShelbyFontH4Bold];
+        [signup setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
+        [signup addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        [self.navBarButtonView addSubview:signup];
         
         [self.navBar addSubview:self.navBarButtonView];
         [self.navBarButtonView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin];
@@ -402,7 +402,7 @@
                                          withAction:kAnalyticsUXTapNavBarButton
                                 withNicknameAsLabel:YES];
     [self dismissVideoReel];
-    [self.masterDelegate presentUserLogin];
+    [self.masterDelegate presentUserSignup];
 }
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
@@ -1034,6 +1034,14 @@
 {
     [self dismissVideoReel];
     [self.masterDelegate presentUserSignup];
+    //presentation is modal, nav hasn't actually changed...
+    [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
+}
+
+- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
+{
+    [self dismissVideoReel];
+    [self.masterDelegate presentUserLogin];
     //presentation is modal, nav hasn't actually changed...
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
 }
