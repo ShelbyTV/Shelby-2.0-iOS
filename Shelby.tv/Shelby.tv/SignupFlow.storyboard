@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.2" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="HVS-2w-55O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4504" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="HVS-2w-55O">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3734.1"/>
     </dependencies>
     <scenes>
         <!--Signup Flow Navigation View Controller-->
@@ -60,20 +60,19 @@
                                     <action selector="assignAvatar:" destination="sgp-ZG-jtU" eventType="touchUpInside" id="0ip-Lx-I99"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Shelby is personal." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3R-Mq-Khr">
-                                <rect key="frame" x="55" y="76" width="210" height="25"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Shelby is community" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3R-Mq-Khr">
+                                <rect key="frame" x="49" y="76" width="223" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="210" id="QXW-XC-bMe"/>
+                                    <constraint firstAttribute="width" constant="223" id="QXW-XC-bMe"/>
                                     <constraint firstAttribute="height" constant="25" id="SaL-oi-Dbd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We'd like to know who you are..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I88-xl-uu2">
-                                <rect key="frame" x="40" y="109" width="240" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Let your friends know who you are" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I88-xl-uu2">
+                                <rect key="frame" x="34" y="109" width="253" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="Wxj-85-N2X"/>
+                                    <constraint firstAttribute="width" constant="253" id="Wxj-85-N2X"/>
                                     <constraint firstAttribute="height" constant="21" id="zLt-PZ-JOs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
@@ -111,23 +110,22 @@
                                             <outlet property="delegate" destination="sgp-ZG-jtU" id="br7-LB-lNZ"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8p-gd-vjo">
-                                        <rect key="frame" x="20" y="10" width="42" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Real Name (you can pick username later)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8p-gd-vjo">
+                                        <rect key="frame" x="20" y="10" width="280" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Vdd-aA-7RV"/>
-                                            <constraint firstAttribute="width" constant="42" id="bzL-Tb-HxI"/>
+                                            <constraint firstAttribute="width" constant="280" id="bzL-Tb-HxI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwr-uj-CmF">
-                                        <rect key="frame" x="20" y="81" width="42" height="21"/>
+                                        <rect key="frame" x="20" y="81" width="280" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="pdo-vr-QVw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxD-FM-aTV" userLabel="login button">
@@ -181,7 +179,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="OyT-9q-MsU" firstAttribute="top" secondItem="DTd-Te-n9j" secondAttribute="top" id="2nX-YW-T5R"/>
@@ -760,6 +758,8 @@
         <image name="facebook.png" width="290" height="44"/>
         <image name="twitter-fill.png" width="290" height="44"/>
         <image name="twitter.png" width="290" height="44"/>
+        <image name="user_default_avatar.png" width="82" height="82"/>
+        <image name="user_default_avatar.png" width="82" height="82"/>
         <image name="user_default_avatar.png" width="82" height="82"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
