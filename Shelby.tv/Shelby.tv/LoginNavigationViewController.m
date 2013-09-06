@@ -26,10 +26,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    //NB: see AppDelegate for appearance proxy setup
-    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"top-nav-bkgd"] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationBar setTitleTextAttributes:@{UITextAttributeTextColor: [UIColor whiteColor]}];
 }
 
 - (NSUInteger)supportedInterfaceOrientations

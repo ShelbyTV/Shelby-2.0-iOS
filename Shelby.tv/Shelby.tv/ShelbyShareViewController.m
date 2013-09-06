@@ -16,6 +16,8 @@
 @property (assign, nonatomic) BOOL facebookConnected;
 @property (assign, nonatomic) BOOL twitterConnected;
 
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+
 @property (nonatomic, weak) IBOutlet UIImageView *facebookCheck;
 @property (nonatomic, weak) IBOutlet UIImageView *twitterCheck;
 
@@ -67,7 +69,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateTwitterToggle)
                                                  name:kShelbyNotificationTwitterConnectCompleted object:nil];
-    
+
+    //style the "header"
+    [self.headerView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd"]]];
+    [self.sendButton setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
 }
 
 -(void)dealloc
