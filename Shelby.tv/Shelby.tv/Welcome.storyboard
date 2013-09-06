@@ -24,6 +24,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="welcomeScrollScroller" destination="Bj0-KA-mRd" id="K0a-x5-8JU"/>
                     </connections>
