@@ -122,7 +122,7 @@
                                 <constraint firstAttribute="height" constant="44" id="667"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                            <state key="normal" title="Sign up for Shelby">
+                            <state key="normal" title="Login">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>

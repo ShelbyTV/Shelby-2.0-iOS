@@ -107,7 +107,8 @@
         } else if (sender == self.navBarView.settingsButton) {
             [self.delegate navBarViewControllerSettingsWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else if (sender == self.navBarView.signupButton) {
-            [self.delegate navBarViewControllerSignupWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            //not changing nav or ivar, "signupButton" is now used for login... deal with it
+            [self.delegate navBarViewControllerLoginWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
         } else {
             STVAssert(NO, @"unhandled nav row");
         }

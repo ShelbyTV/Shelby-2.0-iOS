@@ -396,24 +396,6 @@
 		1CDCA6AB179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6A7179F3FFA0098C4E1 /* avatar-blank@2x.png */; };
 		1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6A7179F3FFA0098C4E1 /* avatar-blank@2x.png */; };
 		1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6A7179F3FFA0098C4E1 /* avatar-blank@2x.png */; };
-		1CDCA6B4179F44760098C4E1 /* create-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AE179F44760098C4E1 /* create-btn.png */; };
-		1CDCA6B5179F44760098C4E1 /* create-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AE179F44760098C4E1 /* create-btn.png */; };
-		1CDCA6B6179F44760098C4E1 /* create-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AE179F44760098C4E1 /* create-btn.png */; };
-		1CDCA6B7179F44760098C4E1 /* create-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */; };
-		1CDCA6B8179F44760098C4E1 /* create-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */; };
-		1CDCA6B9179F44760098C4E1 /* create-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */; };
-		1CDCA6BA179F44760098C4E1 /* login-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B0179F44760098C4E1 /* login-btn.png */; };
-		1CDCA6BB179F44760098C4E1 /* login-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B0179F44760098C4E1 /* login-btn.png */; };
-		1CDCA6BC179F44760098C4E1 /* login-btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B0179F44760098C4E1 /* login-btn.png */; };
-		1CDCA6BD179F44760098C4E1 /* login-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */; };
-		1CDCA6BE179F44760098C4E1 /* login-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */; };
-		1CDCA6BF179F44760098C4E1 /* login-btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */; };
-		1CDCA6C0179F44760098C4E1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B2179F44760098C4E1 /* logo.png */; };
-		1CDCA6C1179F44760098C4E1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B2179F44760098C4E1 /* logo.png */; };
-		1CDCA6C2179F44760098C4E1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B2179F44760098C4E1 /* logo.png */; };
-		1CDCA6C3179F44760098C4E1 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B3179F44760098C4E1 /* logo@2x.png */; };
-		1CDCA6C4179F44760098C4E1 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B3179F44760098C4E1 /* logo@2x.png */; };
-		1CDCA6C5179F44760098C4E1 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDCA6B3179F44760098C4E1 /* logo@2x.png */; };
 		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
@@ -568,6 +550,12 @@
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
+		913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
+		913D854917CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
+		913D854A17CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
+		913D854D17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */; };
+		913D854E17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */; };
+		913D854F17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */; };
 		9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
 		91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9140530D174D055700E18A6B /* NSObject+NullHelper.m */; };
@@ -598,102 +586,24 @@
 		916F41A71798B450001D9DF7 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */; };
 		916F41A81798B450001D9DF7 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */; };
 		916F41A91798B450001D9DF7 /* LoginNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */; };
-		916F41AB1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */; };
-		916F41AC1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */; };
-		916F41AD1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */; };
-		916F41B01799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */; };
-		916F41B11799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */; };
-		916F41B21799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */; };
-		916F41B51799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */; };
-		916F41B61799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */; };
-		916F41B71799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */; };
-		916F41B91799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */; };
-		916F41BA1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */; };
-		916F41BB1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */ = {isa = PBXBuildFile; fileRef = 916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */; };
 		916F41BE179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41BD179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m */; };
 		916F41BF179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41BD179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m */; };
 		916F41C0179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F41BD179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m */; };
-		916F41D4179F06CA001D9DF7 /* welcome-buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C2179F06CA001D9DF7 /* welcome-buzzfeed.png */; };
-		916F41D5179F06CA001D9DF7 /* welcome-buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C2179F06CA001D9DF7 /* welcome-buzzfeed.png */; };
-		916F41D6179F06CA001D9DF7 /* welcome-buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C2179F06CA001D9DF7 /* welcome-buzzfeed.png */; };
-		916F41D7179F06CA001D9DF7 /* welcome-buzzfeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C3179F06CA001D9DF7 /* welcome-buzzfeed@2x.png */; };
-		916F41D8179F06CA001D9DF7 /* welcome-buzzfeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C3179F06CA001D9DF7 /* welcome-buzzfeed@2x.png */; };
-		916F41D9179F06CA001D9DF7 /* welcome-buzzfeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C3179F06CA001D9DF7 /* welcome-buzzfeed@2x.png */; };
-		916F41DA179F06CA001D9DF7 /* welcome-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C4179F06CA001D9DF7 /* welcome-facebook.png */; };
-		916F41DB179F06CA001D9DF7 /* welcome-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C4179F06CA001D9DF7 /* welcome-facebook.png */; };
-		916F41DC179F06CA001D9DF7 /* welcome-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C4179F06CA001D9DF7 /* welcome-facebook.png */; };
-		916F41DD179F06CA001D9DF7 /* welcome-facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C5179F06CA001D9DF7 /* welcome-facebook@2x.png */; };
-		916F41DE179F06CA001D9DF7 /* welcome-facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C5179F06CA001D9DF7 /* welcome-facebook@2x.png */; };
-		916F41DF179F06CA001D9DF7 /* welcome-facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C5179F06CA001D9DF7 /* welcome-facebook@2x.png */; };
-		916F41E0179F06CA001D9DF7 /* welcome-hungry.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C6179F06CA001D9DF7 /* welcome-hungry.png */; };
-		916F41E1179F06CA001D9DF7 /* welcome-hungry.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C6179F06CA001D9DF7 /* welcome-hungry.png */; };
-		916F41E2179F06CA001D9DF7 /* welcome-hungry.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C6179F06CA001D9DF7 /* welcome-hungry.png */; };
-		916F41E3179F06CA001D9DF7 /* welcome-hungry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C7179F06CA001D9DF7 /* welcome-hungry@2x.png */; };
-		916F41E4179F06CA001D9DF7 /* welcome-hungry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C7179F06CA001D9DF7 /* welcome-hungry@2x.png */; };
-		916F41E5179F06CA001D9DF7 /* welcome-hungry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C7179F06CA001D9DF7 /* welcome-hungry@2x.png */; };
-		916F41E6179F06CA001D9DF7 /* welcome-patagonia.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C8179F06CA001D9DF7 /* welcome-patagonia.png */; };
-		916F41E7179F06CA001D9DF7 /* welcome-patagonia.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C8179F06CA001D9DF7 /* welcome-patagonia.png */; };
-		916F41E8179F06CA001D9DF7 /* welcome-patagonia.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C8179F06CA001D9DF7 /* welcome-patagonia.png */; };
-		916F41E9179F06CA001D9DF7 /* welcome-patagonia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C9179F06CA001D9DF7 /* welcome-patagonia@2x.png */; };
-		916F41EA179F06CA001D9DF7 /* welcome-patagonia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C9179F06CA001D9DF7 /* welcome-patagonia@2x.png */; };
-		916F41EB179F06CA001D9DF7 /* welcome-patagonia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41C9179F06CA001D9DF7 /* welcome-patagonia@2x.png */; };
-		916F41EC179F06CA001D9DF7 /* welcome-rsrv.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CA179F06CA001D9DF7 /* welcome-rsrv.png */; };
-		916F41ED179F06CA001D9DF7 /* welcome-rsrv.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CA179F06CA001D9DF7 /* welcome-rsrv.png */; };
-		916F41EE179F06CA001D9DF7 /* welcome-rsrv.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CA179F06CA001D9DF7 /* welcome-rsrv.png */; };
-		916F41EF179F06CA001D9DF7 /* welcome-rsrv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CB179F06CA001D9DF7 /* welcome-rsrv@2x.png */; };
-		916F41F0179F06CA001D9DF7 /* welcome-rsrv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CB179F06CA001D9DF7 /* welcome-rsrv@2x.png */; };
-		916F41F1179F06CA001D9DF7 /* welcome-rsrv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CB179F06CA001D9DF7 /* welcome-rsrv@2x.png */; };
-		916F41F2179F06CA001D9DF7 /* welcome-squid.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CC179F06CA001D9DF7 /* welcome-squid.png */; };
-		916F41F3179F06CA001D9DF7 /* welcome-squid.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CC179F06CA001D9DF7 /* welcome-squid.png */; };
-		916F41F4179F06CA001D9DF7 /* welcome-squid.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CC179F06CA001D9DF7 /* welcome-squid.png */; };
-		916F41F5179F06CA001D9DF7 /* welcome-squid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CD179F06CA001D9DF7 /* welcome-squid@2x.png */; };
-		916F41F6179F06CA001D9DF7 /* welcome-squid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CD179F06CA001D9DF7 /* welcome-squid@2x.png */; };
-		916F41F7179F06CA001D9DF7 /* welcome-squid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CD179F06CA001D9DF7 /* welcome-squid@2x.png */; };
-		916F41F8179F06CA001D9DF7 /* welcome-ted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CE179F06CA001D9DF7 /* welcome-ted.png */; };
-		916F41F9179F06CA001D9DF7 /* welcome-ted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CE179F06CA001D9DF7 /* welcome-ted.png */; };
-		916F41FA179F06CA001D9DF7 /* welcome-ted.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CE179F06CA001D9DF7 /* welcome-ted.png */; };
-		916F41FB179F06CA001D9DF7 /* welcome-ted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CF179F06CA001D9DF7 /* welcome-ted@2x.png */; };
-		916F41FC179F06CA001D9DF7 /* welcome-ted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CF179F06CA001D9DF7 /* welcome-ted@2x.png */; };
-		916F41FD179F06CA001D9DF7 /* welcome-ted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41CF179F06CA001D9DF7 /* welcome-ted@2x.png */; };
-		916F41FE179F06CA001D9DF7 /* welcome-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D0179F06CA001D9DF7 /* welcome-twitter.png */; };
-		916F41FF179F06CA001D9DF7 /* welcome-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D0179F06CA001D9DF7 /* welcome-twitter.png */; };
-		916F4200179F06CA001D9DF7 /* welcome-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D0179F06CA001D9DF7 /* welcome-twitter.png */; };
-		916F4201179F06CA001D9DF7 /* welcome-twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D1179F06CA001D9DF7 /* welcome-twitter@2x.png */; };
-		916F4202179F06CA001D9DF7 /* welcome-twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D1179F06CA001D9DF7 /* welcome-twitter@2x.png */; };
-		916F4203179F06CA001D9DF7 /* welcome-twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D1179F06CA001D9DF7 /* welcome-twitter@2x.png */; };
-		916F4204179F06CA001D9DF7 /* welcome-vice.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D2179F06CA001D9DF7 /* welcome-vice.png */; };
-		916F4205179F06CA001D9DF7 /* welcome-vice.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D2179F06CA001D9DF7 /* welcome-vice.png */; };
-		916F4206179F06CA001D9DF7 /* welcome-vice.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D2179F06CA001D9DF7 /* welcome-vice.png */; };
-		916F4207179F06CA001D9DF7 /* welcome-vice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D3179F06CA001D9DF7 /* welcome-vice@2x.png */; };
-		916F4208179F06CA001D9DF7 /* welcome-vice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D3179F06CA001D9DF7 /* welcome-vice@2x.png */; };
-		916F4209179F06CA001D9DF7 /* welcome-vice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F41D3179F06CA001D9DF7 /* welcome-vice@2x.png */; };
-		916F420C179F06F6001D9DF7 /* welcome-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F420A179F06F6001D9DF7 /* welcome-logo.png */; };
-		916F420D179F06F6001D9DF7 /* welcome-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F420A179F06F6001D9DF7 /* welcome-logo.png */; };
-		916F420E179F06F6001D9DF7 /* welcome-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F420A179F06F6001D9DF7 /* welcome-logo.png */; };
-		916F420F179F06F6001D9DF7 /* welcome-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F420B179F06F6001D9DF7 /* welcome-logo@2x.png */; };
-		916F4210179F06F6001D9DF7 /* welcome-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F420B179F06F6001D9DF7 /* welcome-logo@2x.png */; };
-		916F4211179F06F6001D9DF7 /* welcome-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F420B179F06F6001D9DF7 /* welcome-logo@2x.png */; };
-		916F4254179F1DB5001D9DF7 /* welcome-user-context.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4252179F1DB5001D9DF7 /* welcome-user-context.png */; };
-		916F4255179F1DB5001D9DF7 /* welcome-user-context.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4252179F1DB5001D9DF7 /* welcome-user-context.png */; };
-		916F4256179F1DB5001D9DF7 /* welcome-user-context.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4252179F1DB5001D9DF7 /* welcome-user-context.png */; };
-		916F4257179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */; };
-		916F4258179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */; };
-		916F4259179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */; };
-		916F426417A73119001D9DF7 /* buzzfeed.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426317A73119001D9DF7 /* buzzfeed.m4v */; };
-		916F426517A73119001D9DF7 /* buzzfeed.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426317A73119001D9DF7 /* buzzfeed.m4v */; };
-		916F426617A73119001D9DF7 /* buzzfeed.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426317A73119001D9DF7 /* buzzfeed.m4v */; };
-		916F426817A73CFE001D9DF7 /* facebook.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426717A73CFE001D9DF7 /* facebook.m4v */; };
-		916F426917A73CFE001D9DF7 /* facebook.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426717A73CFE001D9DF7 /* facebook.m4v */; };
-		916F426A17A73CFE001D9DF7 /* facebook.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426717A73CFE001D9DF7 /* facebook.m4v */; };
-		916F426E17A74480001D9DF7 /* patagonia.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426B17A7447F001D9DF7 /* patagonia.m4v */; };
-		916F426F17A74480001D9DF7 /* patagonia.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426B17A7447F001D9DF7 /* patagonia.m4v */; };
-		916F427017A74480001D9DF7 /* patagonia.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426B17A7447F001D9DF7 /* patagonia.m4v */; };
-		916F427117A74480001D9DF7 /* twitter.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426C17A7447F001D9DF7 /* twitter.m4v */; };
-		916F427217A74480001D9DF7 /* twitter.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426C17A7447F001D9DF7 /* twitter.m4v */; };
-		916F427317A74480001D9DF7 /* twitter.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426C17A7447F001D9DF7 /* twitter.m4v */; };
-		916F427417A74480001D9DF7 /* vice.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426D17A74480001D9DF7 /* vice.m4v */; };
-		916F427517A74480001D9DF7 /* vice.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426D17A74480001D9DF7 /* vice.m4v */; };
-		916F427617A74480001D9DF7 /* vice.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 916F426D17A74480001D9DF7 /* vice.m4v */; };
+		916F425C17A17716001D9DF7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F425B17A17716001D9DF7 /* User.m */; };
+		916F425D17A17716001D9DF7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F425B17A17716001D9DF7 /* User.m */; };
+		916F425E17A17716001D9DF7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 916F425B17A17716001D9DF7 /* User.m */; };
+		9178C9D217CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
+		9178C9D317CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
+		9178C9D417CE375000913256 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9D117CE375000913256 /* WelcomeViewController.m */; };
+		9178C9D617CE398400913256 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9D517CE398400913256 /* Welcome.storyboard */; };
+		9178C9D717CE398400913256 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9D517CE398400913256 /* Welcome.storyboard */; };
+		9178C9D817CE398400913256 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9D517CE398400913256 /* Welcome.storyboard */; };
+		9178C9DE17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */; };
+		9178C9DF17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */; };
+		9178C9E017CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */; };
+		9178C9E317CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
+		9178C9E417CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
+		9178C9E517CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
 		9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
@@ -763,15 +673,6 @@
 		91B7DC2B17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
 		91B7DC2C17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
 		91B7DC2D17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
-		91B7DC2E17AACD79009ABF02 /* laughingsquid.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2817AACD79009ABF02 /* laughingsquid.m4v */; };
-		91B7DC2F17AACD79009ABF02 /* laughingsquid.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2817AACD79009ABF02 /* laughingsquid.m4v */; };
-		91B7DC3017AACD79009ABF02 /* laughingsquid.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2817AACD79009ABF02 /* laughingsquid.m4v */; };
-		91B7DC3117AACD79009ABF02 /* rsrv.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2917AACD79009ABF02 /* rsrv.m4v */; };
-		91B7DC3217AACD79009ABF02 /* rsrv.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2917AACD79009ABF02 /* rsrv.m4v */; };
-		91B7DC3317AACD79009ABF02 /* rsrv.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2917AACD79009ABF02 /* rsrv.m4v */; };
-		91B7DC3417AACD79009ABF02 /* ted.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2A17AACD79009ABF02 /* ted.m4v */; };
-		91B7DC3517AACD79009ABF02 /* ted.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2A17AACD79009ABF02 /* ted.m4v */; };
-		91B7DC3617AACD79009ABF02 /* ted.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2A17AACD79009ABF02 /* ted.m4v */; };
 		91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
 		91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
 		91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
@@ -871,15 +772,6 @@
 		91F0CC051730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 		91F0CC061730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
 		91F0CC071730154E008B5B34 /* User+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F0CC041730154E008B5B34 /* User+Helper.m */; };
-		91F168171797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
-		91F168181797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
-		91F168191797122200AF8A2E /* WelcomeFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F168161797122200AF8A2E /* WelcomeFlow.storyboard */; };
-		91F1681D17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
-		91F1681E17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
-		91F1681F17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */; };
-		91F168211797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */; };
-		91F168221797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */; };
-		91F168231797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */; };
 		91F16825179840FF00AF8A2E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F16824179840FF00AF8A2E /* Login.storyboard */; };
 		91F16826179840FF00AF8A2E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F16824179840FF00AF8A2E /* Login.storyboard */; };
 		91F16827179840FF00AF8A2E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F16824179840FF00AF8A2E /* Login.storyboard */; };
@@ -1034,12 +926,6 @@
 		1CDCA69F179F3FB80098C4E1 /* play-standard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-standard@2x.png"; sourceTree = "<group>"; };
 		1CDCA6A6179F3FFA0098C4E1 /* avatar-blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-blank.png"; sourceTree = "<group>"; };
 		1CDCA6A7179F3FFA0098C4E1 /* avatar-blank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-blank@2x.png"; sourceTree = "<group>"; };
-		1CDCA6AE179F44760098C4E1 /* create-btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create-btn.png"; sourceTree = "<group>"; };
-		1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "create-btn@2x.png"; sourceTree = "<group>"; };
-		1CDCA6B0179F44760098C4E1 /* login-btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-btn.png"; sourceTree = "<group>"; };
-		1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-btn@2x.png"; sourceTree = "<group>"; };
-		1CDCA6B2179F44760098C4E1 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		1CDCA6B3179F44760098C4E1 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
 		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
@@ -1179,6 +1065,9 @@
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
+		913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeLoginView.xib; sourceTree = "<group>"; };
+		913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeLoginView.h; sourceTree = "<group>"; };
+		913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeLoginView.m; sourceTree = "<group>"; };
 		914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 3.xcdatamodel"; sourceTree = "<group>"; };
 		9140530C174D055700E18A6B /* NSObject+NullHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NullHelper.h"; sourceTree = "<group>"; };
 		9140530D174D055700E18A6B /* NSObject+NullHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NullHelper.m"; sourceTree = "<group>"; };
@@ -1200,41 +1089,16 @@
 		916F41A11798A795001D9DF7 /* STVTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVTextField.m; sourceTree = "<group>"; };
 		916F41A51798B450001D9DF7 /* LoginNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNavigationViewController.h; sourceTree = "<group>"; };
 		916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNavigationViewController.m; sourceTree = "<group>"; };
-		916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeFlowUFO.xib; sourceTree = "<group>"; };
-		916F41AE1799C063001D9DF7 /* WelcomeFlowUFOView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeFlowUFOView.h; sourceTree = "<group>"; };
-		916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeFlowUFOView.m; sourceTree = "<group>"; };
-		916F41B31799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeFlowUFOMothershipViewController.h; sourceTree = "<group>"; };
-		916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeFlowUFOMothershipViewController.m; sourceTree = "<group>"; };
-		916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeFlowMothership.xib; sourceTree = "<group>"; };
 		916F41BC179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PerformSelectorWithPrimitive.h"; sourceTree = "<group>"; };
 		916F41BD179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PerformSelectorWithPrimitive.m"; sourceTree = "<group>"; };
-		916F41C2179F06CA001D9DF7 /* welcome-buzzfeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-buzzfeed.png"; sourceTree = "<group>"; };
-		916F41C3179F06CA001D9DF7 /* welcome-buzzfeed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-buzzfeed@2x.png"; sourceTree = "<group>"; };
-		916F41C4179F06CA001D9DF7 /* welcome-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-facebook.png"; sourceTree = "<group>"; };
-		916F41C5179F06CA001D9DF7 /* welcome-facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-facebook@2x.png"; sourceTree = "<group>"; };
-		916F41C6179F06CA001D9DF7 /* welcome-hungry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-hungry.png"; sourceTree = "<group>"; };
-		916F41C7179F06CA001D9DF7 /* welcome-hungry@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-hungry@2x.png"; sourceTree = "<group>"; };
-		916F41C8179F06CA001D9DF7 /* welcome-patagonia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-patagonia.png"; sourceTree = "<group>"; };
-		916F41C9179F06CA001D9DF7 /* welcome-patagonia@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-patagonia@2x.png"; sourceTree = "<group>"; };
-		916F41CA179F06CA001D9DF7 /* welcome-rsrv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-rsrv.png"; sourceTree = "<group>"; };
-		916F41CB179F06CA001D9DF7 /* welcome-rsrv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-rsrv@2x.png"; sourceTree = "<group>"; };
-		916F41CC179F06CA001D9DF7 /* welcome-squid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-squid.png"; sourceTree = "<group>"; };
-		916F41CD179F06CA001D9DF7 /* welcome-squid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-squid@2x.png"; sourceTree = "<group>"; };
-		916F41CE179F06CA001D9DF7 /* welcome-ted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-ted.png"; sourceTree = "<group>"; };
-		916F41CF179F06CA001D9DF7 /* welcome-ted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-ted@2x.png"; sourceTree = "<group>"; };
-		916F41D0179F06CA001D9DF7 /* welcome-twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-twitter.png"; sourceTree = "<group>"; };
-		916F41D1179F06CA001D9DF7 /* welcome-twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-twitter@2x.png"; sourceTree = "<group>"; };
-		916F41D2179F06CA001D9DF7 /* welcome-vice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-vice.png"; sourceTree = "<group>"; };
-		916F41D3179F06CA001D9DF7 /* welcome-vice@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-vice@2x.png"; sourceTree = "<group>"; };
-		916F420A179F06F6001D9DF7 /* welcome-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-logo.png"; sourceTree = "<group>"; };
-		916F420B179F06F6001D9DF7 /* welcome-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-logo@2x.png"; sourceTree = "<group>"; };
-		916F4252179F1DB5001D9DF7 /* welcome-user-context.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-user-context.png"; sourceTree = "<group>"; };
-		916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-user-context@2x.png"; sourceTree = "<group>"; };
-		916F426317A73119001D9DF7 /* buzzfeed.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = buzzfeed.m4v; sourceTree = "<group>"; };
-		916F426717A73CFE001D9DF7 /* facebook.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = facebook.m4v; sourceTree = "<group>"; };
-		916F426B17A7447F001D9DF7 /* patagonia.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = patagonia.m4v; sourceTree = "<group>"; };
-		916F426C17A7447F001D9DF7 /* twitter.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = twitter.m4v; sourceTree = "<group>"; };
-		916F426D17A74480001D9DF7 /* vice.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = vice.m4v; sourceTree = "<group>"; };
+		916F425A17A17716001D9DF7 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		916F425B17A17716001D9DF7 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		9178C9D017CE375000913256 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
+		9178C9D117CE375000913256 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
+		9178C9D517CE398400913256 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
+		9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeScrollHolderView.xib; sourceTree = "<group>"; };
+		9178C9E117CE3B8600913256 /* WelcomeScrollHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeScrollHolderView.h; sourceTree = "<group>"; };
+		9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeScrollHolderView.m; sourceTree = "<group>"; };
 		9188F230178C99F7002F342B /* ShelbyNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNavBarView.xib; sourceTree = "<group>"; };
 		9188F234178C9A1E002F342B /* ShelbyNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarViewController.h; sourceTree = "<group>"; };
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
@@ -1264,9 +1128,6 @@
 		91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModelArrayUtility.h; sourceTree = "<group>"; };
 		91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyModelArrayUtility.m; sourceTree = "<group>"; };
 		91B7DC2717AACD79009ABF02 /* hungry.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hungry.m4v; sourceTree = "<group>"; };
-		91B7DC2817AACD79009ABF02 /* laughingsquid.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = laughingsquid.m4v; sourceTree = "<group>"; };
-		91B7DC2917AACD79009ABF02 /* rsrv.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = rsrv.m4v; sourceTree = "<group>"; };
-		91B7DC2A17AACD79009ABF02 /* ted.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = ted.m4v; sourceTree = "<group>"; };
 		91B7DC3717AC0C8A009ABF02 /* STVYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVYouTubeExtractor.h; sourceTree = "<group>"; };
 		91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVYouTubeExtractor.m; sourceTree = "<group>"; };
 		91B7DC3D17B16447009ABF02 /* nav-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-shadow.png"; sourceTree = "<group>"; };
@@ -1325,10 +1186,6 @@
 		91F0CBFF172EEF96008B5B34 /* ShelbyDataMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyDataMediator.m; sourceTree = "<group>"; };
 		91F0CC031730154E008B5B34 /* User+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Helper.h"; sourceTree = "<group>"; };
 		91F0CC041730154E008B5B34 /* User+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Helper.m"; sourceTree = "<group>"; };
-		91F168161797122200AF8A2E /* WelcomeFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeFlow.storyboard; sourceTree = "<group>"; };
-		91F1681B17971A2C00AF8A2E /* WelcomeFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeFlowViewController.h; sourceTree = "<group>"; };
-		91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeFlowViewController.m; sourceTree = "<group>"; };
-		91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeFlowViews.xib; sourceTree = "<group>"; };
 		91F16824179840FF00AF8A2E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		91F168281798422F00AF8A2E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		91F168291798422F00AF8A2E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -1579,16 +1436,15 @@
 				1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */,
 				1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */,
 				9188F230178C99F7002F342B /* ShelbyNavBarView.xib */,
-				91F168161797122200AF8A2E /* WelcomeFlow.storyboard */,
-				91F168201797341E00AF8A2E /* WelcomeFlowViews.xib */,
 				91F16824179840FF00AF8A2E /* Login.storyboard */,
-				916F41AA1799C01C001D9DF7 /* WelcomeFlowUFO.xib */,
-				916F41B81799C1CE001D9DF7 /* WelcomeFlowMothership.xib */,
 				1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */,
 				1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */,
 				1C154E5117A06EBA00C0B76B /* NoLikesView.xib */,
 				1CDB0C1F17A96CF90031C2C9 /* UserDetailsViewCell.xib */,
 				1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */,
+				9178C9D517CE398400913256 /* Welcome.storyboard */,
+				9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */,
+				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -2004,14 +1860,16 @@
 				9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */,
 				916F41A01798A795001D9DF7 /* STVTextField.h */,
 				916F41A11798A795001D9DF7 /* STVTextField.m */,
-				916F41AE1799C063001D9DF7 /* WelcomeFlowUFOView.h */,
-				916F41AF1799C063001D9DF7 /* WelcomeFlowUFOView.m */,
 				1C534E4317A179DE00B6B3D5 /* NoContentViewController.h */,
 				1C534E4417A179DE00B6B3D5 /* NoContentViewController.m */,
 				1CDB0C2717A991FE0031C2C9 /* SettingsViewCell.h */,
 				1CDB0C2817A991FE0031C2C9 /* SettingsViewCell.m */,
 				1CDB0C3117A992E10031C2C9 /* UserDetailsCell.h */,
 				1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */,
+				9178C9E117CE3B8600913256 /* WelcomeScrollHolderView.h */,
+				9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */,
+				913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */,
+				913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2045,16 +1903,14 @@
 				1C96DEDB17975EF800D845DF /* SignupFlowStepFourViewController.m */,
 				1C7B63CA178B33B1000C1E84 /* SignupFlowNavigationViewController.h */,
 				1C7B63CB178B33B1000C1E84 /* SignupFlowNavigationViewController.m */,
-				91F1681B17971A2C00AF8A2E /* WelcomeFlowViewController.h */,
-				91F1681C17971A2C00AF8A2E /* WelcomeFlowViewController.m */,
 				91F168281798422F00AF8A2E /* LoginViewController.h */,
 				91F168291798422F00AF8A2E /* LoginViewController.m */,
 				916F41A51798B450001D9DF7 /* LoginNavigationViewController.h */,
 				916F41A61798B450001D9DF7 /* LoginNavigationViewController.m */,
-				916F41B31799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.h */,
-				916F41B41799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m */,
 				1C309ABF17A7196800D690A8 /* ShelbyShareViewController.h */,
 				1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */,
+				9178C9D017CE375000913256 /* WelcomeViewController.h */,
+				9178C9D117CE375000913256 /* WelcomeViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2103,42 +1959,6 @@
 			isa = PBXGroup;
 			children = (
 				91B7DC2717AACD79009ABF02 /* hungry.m4v */,
-				91B7DC2817AACD79009ABF02 /* laughingsquid.m4v */,
-				91B7DC2917AACD79009ABF02 /* rsrv.m4v */,
-				91B7DC2A17AACD79009ABF02 /* ted.m4v */,
-				916F426B17A7447F001D9DF7 /* patagonia.m4v */,
-				916F426C17A7447F001D9DF7 /* twitter.m4v */,
-				916F426D17A74480001D9DF7 /* vice.m4v */,
-				916F426717A73CFE001D9DF7 /* facebook.m4v */,
-				916F426317A73119001D9DF7 /* buzzfeed.m4v */,
-				916F4252179F1DB5001D9DF7 /* welcome-user-context.png */,
-				916F4253179F1DB5001D9DF7 /* welcome-user-context@2x.png */,
-				916F420A179F06F6001D9DF7 /* welcome-logo.png */,
-				916F420B179F06F6001D9DF7 /* welcome-logo@2x.png */,
-				916F41C2179F06CA001D9DF7 /* welcome-buzzfeed.png */,
-				916F41C3179F06CA001D9DF7 /* welcome-buzzfeed@2x.png */,
-				916F41C4179F06CA001D9DF7 /* welcome-facebook.png */,
-				916F41C5179F06CA001D9DF7 /* welcome-facebook@2x.png */,
-				916F41C6179F06CA001D9DF7 /* welcome-hungry.png */,
-				916F41C7179F06CA001D9DF7 /* welcome-hungry@2x.png */,
-				916F41C8179F06CA001D9DF7 /* welcome-patagonia.png */,
-				916F41C9179F06CA001D9DF7 /* welcome-patagonia@2x.png */,
-				916F41CA179F06CA001D9DF7 /* welcome-rsrv.png */,
-				916F41CB179F06CA001D9DF7 /* welcome-rsrv@2x.png */,
-				916F41CC179F06CA001D9DF7 /* welcome-squid.png */,
-				916F41CD179F06CA001D9DF7 /* welcome-squid@2x.png */,
-				916F41CE179F06CA001D9DF7 /* welcome-ted.png */,
-				916F41CF179F06CA001D9DF7 /* welcome-ted@2x.png */,
-				916F41D0179F06CA001D9DF7 /* welcome-twitter.png */,
-				916F41D1179F06CA001D9DF7 /* welcome-twitter@2x.png */,
-				916F41D2179F06CA001D9DF7 /* welcome-vice.png */,
-				916F41D3179F06CA001D9DF7 /* welcome-vice@2x.png */,
-				1CDCA6AE179F44760098C4E1 /* create-btn.png */,
-				1CDCA6AF179F44760098C4E1 /* create-btn@2x.png */,
-				1CDCA6B0179F44760098C4E1 /* login-btn.png */,
-				1CDCA6B1179F44760098C4E1 /* login-btn@2x.png */,
-				1CDCA6B2179F44760098C4E1 /* logo.png */,
-				1CDCA6B3179F44760098C4E1 /* logo@2x.png */,
 			);
 			name = "Welcome Images";
 			sourceTree = "<group>";
@@ -2374,6 +2194,7 @@
 				1C7B63D6178B5ED6000C1E84 /* user_default_avatar@2x.png in Resources */,
 				1C7B63DF178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C56F14317BABD8C00EE9206 /* README.md in Resources */,
+				9178C9DF17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F1178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
 				1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
@@ -2416,12 +2237,8 @@
 				1C96DEF71797689900D845DF /* twitter-fill@2x.png in Resources */,
 				1C96DEFA1797689900D845DF /* twitter.png in Resources */,
 				1C96DEFD1797689900D845DF /* twitter@2x.png in Resources */,
-				91F168181797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
-				91F168221797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
 				91F16826179840FF00AF8A2E /* Login.storyboard in Resources */,
 				1CD8111317CCF6C0002FD84B /* play-airplay.png in Resources */,
-				916F41AC1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */,
-				916F41BA1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */,
 				1CDCA679179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67C179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA67F179DCE190098C4E1 /* play.png in Resources */,
@@ -2429,29 +2246,7 @@
 				1CDCA682179DCE190098C4E1 /* play@2x.png in Resources */,
 				1CDCA685179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CDCA688179DCE190098C4E1 /* scrubber@2x.png in Resources */,
-				916F41D5179F06CA001D9DF7 /* welcome-buzzfeed.png in Resources */,
-				916F41D8179F06CA001D9DF7 /* welcome-buzzfeed@2x.png in Resources */,
-				916F41DB179F06CA001D9DF7 /* welcome-facebook.png in Resources */,
 				9192ED0317C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
-				916F41DE179F06CA001D9DF7 /* welcome-facebook@2x.png in Resources */,
-				916F41E1179F06CA001D9DF7 /* welcome-hungry.png in Resources */,
-				916F41E4179F06CA001D9DF7 /* welcome-hungry@2x.png in Resources */,
-				916F41E7179F06CA001D9DF7 /* welcome-patagonia.png in Resources */,
-				916F41EA179F06CA001D9DF7 /* welcome-patagonia@2x.png in Resources */,
-				916F41ED179F06CA001D9DF7 /* welcome-rsrv.png in Resources */,
-				916F41F0179F06CA001D9DF7 /* welcome-rsrv@2x.png in Resources */,
-				916F41F3179F06CA001D9DF7 /* welcome-squid.png in Resources */,
-				916F41F6179F06CA001D9DF7 /* welcome-squid@2x.png in Resources */,
-				916F41F9179F06CA001D9DF7 /* welcome-ted.png in Resources */,
-				916F41FC179F06CA001D9DF7 /* welcome-ted@2x.png in Resources */,
-				916F41FF179F06CA001D9DF7 /* welcome-twitter.png in Resources */,
-				916F4202179F06CA001D9DF7 /* welcome-twitter@2x.png in Resources */,
-				916F4205179F06CA001D9DF7 /* welcome-vice.png in Resources */,
-				916F4208179F06CA001D9DF7 /* welcome-vice@2x.png in Resources */,
-				916F420D179F06F6001D9DF7 /* welcome-logo.png in Resources */,
-				916F4210179F06F6001D9DF7 /* welcome-logo@2x.png in Resources */,
-				916F4255179F1DB5001D9DF7 /* welcome-user-context.png in Resources */,
-				916F4258179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 				1CDCA68E179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA691179F317A0098C4E1 /* overlay.png in Resources */,
 				1CDCA694179F317A0098C4E1 /* overlay@2x.png in Resources */,
@@ -2463,14 +2258,9 @@
 				1C56F13717BABD8C00EE9206 /* .gitignore in Resources */,
 				1CDCA6A4179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CDCA6A9179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
+				9178C9D717CE398400913256 /* Welcome.storyboard in Resources */,
 				1CDCA6AC179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
-				1CDCA6B5179F44760098C4E1 /* create-btn.png in Resources */,
-				1CDCA6B8179F44760098C4E1 /* create-btn@2x.png in Resources */,
 				9192ED0F17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
-				1CDCA6BB179F44760098C4E1 /* login-btn.png in Resources */,
-				1CDCA6BE179F44760098C4E1 /* login-btn@2x.png in Resources */,
-				1CDCA6C1179F44760098C4E1 /* logo.png in Resources */,
-				1CDCA6C4179F44760098C4E1 /* logo@2x.png in Resources */,
 				1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3E17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
@@ -2480,22 +2270,15 @@
 				1CD255CC17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB417A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
 				1C309ABA17A714B900D690A8 /* check-social.png in Resources */,
+				913D854917CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
 				1C309ABD17A714B900D690A8 /* check-social@2x.png in Resources */,
-				916F426517A73119001D9DF7 /* buzzfeed.m4v in Resources */,
-				916F426917A73CFE001D9DF7 /* facebook.m4v in Resources */,
-				916F426F17A74480001D9DF7 /* patagonia.m4v in Resources */,
-				916F427217A74480001D9DF7 /* twitter.m4v in Resources */,
 				915CDA8317BE9A18003C3A38 /* Images.xcassets in Resources */,
 				912261DD17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
-				916F427517A74480001D9DF7 /* vice.m4v in Resources */,
 				1CDB0C1D17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2117A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2517A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
 				91B7DC2C17AACD79009ABF02 /* hungry.m4v in Resources */,
-				91B7DC2F17AACD79009ABF02 /* laughingsquid.m4v in Resources */,
-				91B7DC3217AACD79009ABF02 /* rsrv.m4v in Resources */,
-				91B7DC3517AACD79009ABF02 /* ted.m4v in Resources */,
 				91B7DC4017B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4317B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
@@ -2533,6 +2316,7 @@
 				1C7B63D7178B5ED6000C1E84 /* user_default_avatar@2x.png in Resources */,
 				1C7B63E0178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C56F14417BABD8C00EE9206 /* README.md in Resources */,
+				9178C9E017CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F2178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
 				1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
@@ -2575,12 +2359,8 @@
 				1C96DEF81797689900D845DF /* twitter-fill@2x.png in Resources */,
 				1C96DEFB1797689900D845DF /* twitter.png in Resources */,
 				1C96DEFE1797689900D845DF /* twitter@2x.png in Resources */,
-				91F168191797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
-				91F168231797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
 				91F16827179840FF00AF8A2E /* Login.storyboard in Resources */,
 				1CD8111417CCF6C0002FD84B /* play-airplay.png in Resources */,
-				916F41AD1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */,
-				916F41BB1799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */,
 				1CDCA67A179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67D179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA680179DCE190098C4E1 /* play.png in Resources */,
@@ -2588,29 +2368,7 @@
 				1CDCA683179DCE190098C4E1 /* play@2x.png in Resources */,
 				1CDCA686179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CDCA689179DCE190098C4E1 /* scrubber@2x.png in Resources */,
-				916F41D6179F06CA001D9DF7 /* welcome-buzzfeed.png in Resources */,
-				916F41D9179F06CA001D9DF7 /* welcome-buzzfeed@2x.png in Resources */,
-				916F41DC179F06CA001D9DF7 /* welcome-facebook.png in Resources */,
 				9192ED0417C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
-				916F41DF179F06CA001D9DF7 /* welcome-facebook@2x.png in Resources */,
-				916F41E2179F06CA001D9DF7 /* welcome-hungry.png in Resources */,
-				916F41E5179F06CA001D9DF7 /* welcome-hungry@2x.png in Resources */,
-				916F41E8179F06CA001D9DF7 /* welcome-patagonia.png in Resources */,
-				916F41EB179F06CA001D9DF7 /* welcome-patagonia@2x.png in Resources */,
-				916F41EE179F06CA001D9DF7 /* welcome-rsrv.png in Resources */,
-				916F41F1179F06CA001D9DF7 /* welcome-rsrv@2x.png in Resources */,
-				916F41F4179F06CA001D9DF7 /* welcome-squid.png in Resources */,
-				916F41F7179F06CA001D9DF7 /* welcome-squid@2x.png in Resources */,
-				916F41FA179F06CA001D9DF7 /* welcome-ted.png in Resources */,
-				916F41FD179F06CA001D9DF7 /* welcome-ted@2x.png in Resources */,
-				916F4200179F06CA001D9DF7 /* welcome-twitter.png in Resources */,
-				916F4203179F06CA001D9DF7 /* welcome-twitter@2x.png in Resources */,
-				916F4206179F06CA001D9DF7 /* welcome-vice.png in Resources */,
-				916F4209179F06CA001D9DF7 /* welcome-vice@2x.png in Resources */,
-				916F420E179F06F6001D9DF7 /* welcome-logo.png in Resources */,
-				916F4211179F06F6001D9DF7 /* welcome-logo@2x.png in Resources */,
-				916F4256179F1DB5001D9DF7 /* welcome-user-context.png in Resources */,
-				916F4259179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 				1CDCA68F179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA692179F317A0098C4E1 /* overlay.png in Resources */,
 				1CDCA695179F317A0098C4E1 /* overlay@2x.png in Resources */,
@@ -2622,14 +2380,9 @@
 				1C56F13817BABD8C00EE9206 /* .gitignore in Resources */,
 				1CDCA6A5179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CDCA6AA179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
+				9178C9D817CE398400913256 /* Welcome.storyboard in Resources */,
 				1CDCA6AD179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
-				1CDCA6B6179F44760098C4E1 /* create-btn.png in Resources */,
-				1CDCA6B9179F44760098C4E1 /* create-btn@2x.png in Resources */,
 				9192ED1017C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
-				1CDCA6BC179F44760098C4E1 /* login-btn.png in Resources */,
-				1CDCA6BF179F44760098C4E1 /* login-btn@2x.png in Resources */,
-				1CDCA6C2179F44760098C4E1 /* logo.png in Resources */,
-				1CDCA6C5179F44760098C4E1 /* logo@2x.png in Resources */,
 				1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3F17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
@@ -2639,22 +2392,15 @@
 				1CD255CD17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB517A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
 				1C309ABB17A714B900D690A8 /* check-social.png in Resources */,
+				913D854A17CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
 				1C309ABE17A714B900D690A8 /* check-social@2x.png in Resources */,
-				916F426617A73119001D9DF7 /* buzzfeed.m4v in Resources */,
-				916F426A17A73CFE001D9DF7 /* facebook.m4v in Resources */,
-				916F427017A74480001D9DF7 /* patagonia.m4v in Resources */,
-				916F427317A74480001D9DF7 /* twitter.m4v in Resources */,
 				915CDA8417BE9A19003C3A38 /* Images.xcassets in Resources */,
 				912261DE17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
-				916F427617A74480001D9DF7 /* vice.m4v in Resources */,
 				1CDB0C1E17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2217A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2617A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
 				91B7DC2D17AACD79009ABF02 /* hungry.m4v in Resources */,
-				91B7DC3017AACD79009ABF02 /* laughingsquid.m4v in Resources */,
-				91B7DC3317AACD79009ABF02 /* rsrv.m4v in Resources */,
-				91B7DC3617AACD79009ABF02 /* ted.m4v in Resources */,
 				91B7DC4117B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4417B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
@@ -2707,12 +2453,14 @@
 				91A362911790822D00381218 /* pitchfork.png in Resources */,
 				91A362941790822D00381218 /* ted.png in Resources */,
 				91A362971790822D00381218 /* vice.png in Resources */,
+				913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
 				91A3629A1790822D00381218 /* vogue.png in Resources */,
 				91A3629D1790822D00381218 /* wired.png in Resources */,
 				1C96DE9A17975A0900D845DF /* nav-bkgd.png in Resources */,
 				1C96DE9D17975A0900D845DF /* nav-bkgd@2x.png in Resources */,
 				1C96DEAC17975D0900D845DF /* bkgd-step1-568h@2x.png in Resources */,
 				1C96DEAF17975D0900D845DF /* bkgd-step1.png in Resources */,
+				9178C9D617CE398400913256 /* Welcome.storyboard in Resources */,
 				915CDA7B17BE8FC7003C3A38 /* Images.xcassets in Resources */,
 				1C96DEB217975D0900D845DF /* bkgd-step1@2x.png in Resources */,
 				1C96DEB517975D0900D845DF /* bkgd-step2-568h@2x.png in Resources */,
@@ -2734,42 +2482,16 @@
 				1C96DEF61797689900D845DF /* twitter-fill@2x.png in Resources */,
 				1C96DEF91797689900D845DF /* twitter.png in Resources */,
 				1C96DEFC1797689900D845DF /* twitter@2x.png in Resources */,
-				91F168171797122200AF8A2E /* WelcomeFlow.storyboard in Resources */,
-				91F168211797341E00AF8A2E /* WelcomeFlowViews.xib in Resources */,
 				91F16825179840FF00AF8A2E /* Login.storyboard in Resources */,
-				916F41AB1799C01C001D9DF7 /* WelcomeFlowUFO.xib in Resources */,
-				916F41B91799C1CE001D9DF7 /* WelcomeFlowMothership.xib in Resources */,
 				1CDCA678179DCE190098C4E1 /* pause.png in Resources */,
 				1CDCA67B179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA67E179DCE190098C4E1 /* play.png in Resources */,
 				1CDCA681179DCE190098C4E1 /* play@2x.png in Resources */,
 				1CDCA684179DCE190098C4E1 /* scrubber.png in Resources */,
 				1CDCA687179DCE190098C4E1 /* scrubber@2x.png in Resources */,
-				916F41D4179F06CA001D9DF7 /* welcome-buzzfeed.png in Resources */,
-				916F41D7179F06CA001D9DF7 /* welcome-buzzfeed@2x.png in Resources */,
-				916F41DA179F06CA001D9DF7 /* welcome-facebook.png in Resources */,
-				916F41DD179F06CA001D9DF7 /* welcome-facebook@2x.png in Resources */,
-				916F41E0179F06CA001D9DF7 /* welcome-hungry.png in Resources */,
-				916F41E3179F06CA001D9DF7 /* welcome-hungry@2x.png in Resources */,
-				916F41E6179F06CA001D9DF7 /* welcome-patagonia.png in Resources */,
-				916F41E9179F06CA001D9DF7 /* welcome-patagonia@2x.png in Resources */,
-				916F41EC179F06CA001D9DF7 /* welcome-rsrv.png in Resources */,
-				916F41EF179F06CA001D9DF7 /* welcome-rsrv@2x.png in Resources */,
-				916F41F2179F06CA001D9DF7 /* welcome-squid.png in Resources */,
-				916F41F5179F06CA001D9DF7 /* welcome-squid@2x.png in Resources */,
-				916F41F8179F06CA001D9DF7 /* welcome-ted.png in Resources */,
 				1C56F13617BABD8C00EE9206 /* .gitignore in Resources */,
-				916F41FB179F06CA001D9DF7 /* welcome-ted@2x.png in Resources */,
-				916F41FE179F06CA001D9DF7 /* welcome-twitter.png in Resources */,
-				916F4201179F06CA001D9DF7 /* welcome-twitter@2x.png in Resources */,
-				916F4204179F06CA001D9DF7 /* welcome-vice.png in Resources */,
-				916F4207179F06CA001D9DF7 /* welcome-vice@2x.png in Resources */,
-				916F420C179F06F6001D9DF7 /* welcome-logo.png in Resources */,
-				916F420F179F06F6001D9DF7 /* welcome-logo@2x.png in Resources */,
-				916F4254179F1DB5001D9DF7 /* welcome-user-context.png in Resources */,
 				912261D617B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				912261DC17B97F070092AF30 /* overlay-sharers@2x.png in Resources */,
-				916F4257179F1DB5001D9DF7 /* welcome-user-context@2x.png in Resources */,
 				1CDCA68D179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA690179F317A0098C4E1 /* overlay.png in Resources */,
 				9192ED0E17C3EA3D00294440 /* Ubuntu-R.ttf in Resources */,
@@ -2781,12 +2503,7 @@
 				1CDCA6A3179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
 				1CDCA6A8179F3FFB0098C4E1 /* avatar-blank.png in Resources */,
 				1CDCA6AB179F3FFB0098C4E1 /* avatar-blank@2x.png in Resources */,
-				1CDCA6B4179F44760098C4E1 /* create-btn.png in Resources */,
-				1CDCA6B7179F44760098C4E1 /* create-btn@2x.png in Resources */,
-				1CDCA6BA179F44760098C4E1 /* login-btn.png in Resources */,
-				1CDCA6BD179F44760098C4E1 /* login-btn@2x.png in Resources */,
-				1CDCA6C0179F44760098C4E1 /* logo.png in Resources */,
-				1CDCA6C3179F44760098C4E1 /* logo@2x.png in Resources */,
+				9178C9DE17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C154E5217A06EBB00C0B76B /* NoLikesView.xib in Resources */,
 				9192ED0517C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				1C534E3A17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
@@ -2798,22 +2515,14 @@
 				1C56F14817BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				1C309AB917A714B900D690A8 /* check-social.png in Resources */,
 				1C309ABC17A714B900D690A8 /* check-social@2x.png in Resources */,
-				916F426417A73119001D9DF7 /* buzzfeed.m4v in Resources */,
-				916F426817A73CFE001D9DF7 /* facebook.m4v in Resources */,
 				1C56F14217BABD8C00EE9206 /* README.md in Resources */,
 				1CD8112517CCFCDF002FD84B /* logo-tv.png in Resources */,
-				916F426E17A74480001D9DF7 /* patagonia.m4v in Resources */,
-				916F427117A74480001D9DF7 /* twitter.m4v in Resources */,
-				916F427417A74480001D9DF7 /* vice.m4v in Resources */,
 				1CD8111B17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				1CDB0C1C17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2017A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2417A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
 				91B7DC2B17AACD79009ABF02 /* hungry.m4v in Resources */,
-				91B7DC2E17AACD79009ABF02 /* laughingsquid.m4v in Resources */,
-				91B7DC3117AACD79009ABF02 /* rsrv.m4v in Resources */,
-				91B7DC3417AACD79009ABF02 /* ted.m4v in Resources */,
 				91B7DC3F17B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4217B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				91B7DC4F17B29D59009ABF02 /* scrub-track-background.png in Resources */,
@@ -2868,6 +2577,7 @@
 				8E7024BD1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C01715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C31715E71500E8DE46 /* NSURL+Base.m in Sources */,
+				913D854E17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C61715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024C91715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CC1715E71500E8DE46 /* sha1.c in Sources */,
@@ -2906,12 +2616,14 @@
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
+				9178C9D317CE375000913256 /* WelcomeViewController.m in Sources */,
 				910933091743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				1CC77A51174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9140530F174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D464174E938100AD3746 /* Roll.m in Sources */,
 				91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
+				9178C9E417CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				91D1C81B1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */,
@@ -2942,12 +2654,9 @@
 				1C96DED317975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
 				1C96DED817975EE200D845DF /* SignupFlowStepThreeViewController.m in Sources */,
 				1C96DEDD17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
-				91F1681E17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 				91F1682B1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A31798A795001D9DF7 /* STVTextField.m in Sources */,
 				916F41A81798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
-				916F41B11799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
-				916F41B61799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 				916F41BF179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4617A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 				1C309AC217A7196800D690A8 /* ShelbyShareViewController.m in Sources */,
@@ -2995,6 +2704,7 @@
 				8E7024BE1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024C11715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C41715E71500E8DE46 /* NSURL+Base.m in Sources */,
+				913D854F17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C71715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024CA1715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CD1715E71500E8DE46 /* sha1.c in Sources */,
@@ -3033,12 +2743,14 @@
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
+				9178C9D417CE375000913256 /* WelcomeViewController.m in Sources */,
 				9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				1CC77A52174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				91405310174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D465174E938100AD3746 /* Roll.m in Sources */,
 				91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
+				9178C9E517CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				91D1C81C1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */,
@@ -3069,12 +2781,9 @@
 				1C96DED417975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
 				1C96DED917975EE200D845DF /* SignupFlowStepThreeViewController.m in Sources */,
 				1C96DEDE17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
-				91F1681F17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 				91F1682C1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A41798A795001D9DF7 /* STVTextField.m in Sources */,
 				916F41A91798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
-				916F41B21799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
-				916F41B71799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 				916F41C0179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4717A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 				1C309AC317A7196800D690A8 /* ShelbyShareViewController.m in Sources */,
@@ -3122,6 +2831,7 @@
 				8E7024BC1715E71500E8DE46 /* NSMutableURLRequest+Parameters.m in Sources */,
 				8E7024BF1715E71500E8DE46 /* NSString+URLEncoding.m in Sources */,
 				8E7024C21715E71500E8DE46 /* NSURL+Base.m in Sources */,
+				913D854D17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C51715E71500E8DE46 /* Base64Transcoder.c in Sources */,
 				8E7024C81715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CB1715E71500E8DE46 /* sha1.c in Sources */,
@@ -3160,12 +2870,14 @@
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
+				9178C9D217CE375000913256 /* WelcomeViewController.m in Sources */,
 				910933081743E47F00AC038E /* ShelbyAlert.m in Sources */,
 				1CC77A50174AA48700AD7F05 /* ShelbyActivityItemProvider.m in Sources */,
 				9140530E174D055700E18A6B /* NSObject+NullHelper.m in Sources */,
 				91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */,
 				91E5D463174E938100AD3746 /* Roll.m in Sources */,
 				91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
+				9178C9E317CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
 				91D1C81A1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */,
@@ -3196,12 +2908,9 @@
 				1C96DED217975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
 				1C96DED717975EE200D845DF /* SignupFlowStepThreeViewController.m in Sources */,
 				1C96DEDC17975EF800D845DF /* SignupFlowStepFourViewController.m in Sources */,
-				91F1681D17971A2C00AF8A2E /* WelcomeFlowViewController.m in Sources */,
 				91F1682A1798422F00AF8A2E /* LoginViewController.m in Sources */,
 				916F41A21798A795001D9DF7 /* STVTextField.m in Sources */,
 				916F41A71798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
-				916F41B01799C063001D9DF7 /* WelcomeFlowUFOView.m in Sources */,
-				916F41B51799C115001D9DF7 /* WelcomeFlowUFOMothershipViewController.m in Sources */,
 				916F41BE179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4517A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
 				1C309AC117A7196800D690A8 /* ShelbyShareViewController.m in Sources */,

@@ -204,8 +204,8 @@
 - (void)focusOnChannel:(DisplayChannel *)channel
 {
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
-    STVAssert(sbvc, @"should not be asked to focus on a channel we don't have");
-    if (sbvc == _currentFullScreenVC) {
+    if (!sbvc || sbvc == _currentFullScreenVC) {
+        STVDebugAssert(sbvc, @"should not be asked to focus on a channel we don't have");
         //not changing, nothing to do
         return;
     }
@@ -266,7 +266,11 @@
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
-    STVAssert(sbvc, @"expected to set entries for a VC we have");
+    if (!sbvc) {
+        STVDebugAssert(sbvc, @"expected to set entries for a VC we have");
+        return;
+    }
+    
     [sbvc setEntries:channelEntries forChannel:channel];
     if (!self.airPlayController.isAirPlayActive && self.currentStreamBrowseVC.channel == channel && [channelEntries count]) {
         //if you unlike the video you're playing in likes channel, we exit the player to keep things in sync
@@ -375,14 +379,14 @@
         }];
     } else if (!self.currentUser) {
         self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 84, 44)];
-        UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
-        [login setFrame:CGRectMake(4, 4, 80, 36)];
-        [login setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
-        [login setTitle:@"LOGIN" forState:UIControlStateNormal];
-        [[login titleLabel] setFont:kShelbyFontH4Bold];
-        [login setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
-        [login addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        [self.navBarButtonView addSubview:login];
+        UIButton *signup = [UIButton buttonWithType:UIButtonTypeCustom];
+        [signup setFrame:CGRectMake(4, 4, 80, 36)];
+        [signup setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+        [signup setTitle:@"SIGN UP" forState:UIControlStateNormal];
+        [[signup titleLabel] setFont:kShelbyFontH4Bold];
+        [signup setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
+        [signup addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        [self.navBarButtonView addSubview:signup];
         
         [self.navBar addSubview:self.navBarButtonView];
         [self.navBarButtonView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin];
@@ -402,7 +406,7 @@
                                          withAction:kAnalyticsUXTapNavBarButton
                                 withNicknameAsLabel:YES];
     [self dismissVideoReel];
-    [self.masterDelegate presentUserLogin];
+    [self.masterDelegate presentUserSignup];
 }
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index
@@ -413,19 +417,25 @@
     if ([self.airPlayController isAirPlayActive]) {
         //play back on second screen!
         NSArray *channelEntities = [self deduplicatedEntriesForChannel:channel];
-        STVAssert([channelEntities count] > (NSUInteger)index, @"expected a valid index");
+        if ((NSUInteger)index > [channelEntities count]) {
+            STVDebugAssert([channelEntities count] > (NSUInteger)index, @"expected a valid index");
+            return;
+        }
         [self.airPlayController playEntity:channelEntities[index]];
         [self showAirPlayViewMode:YES];
 
     } else if (self.videoReel) {
-        STVAssert(self.videoReel.channel == channel, @"videoReel should have been shutdown or changed when channel was changed");
+        if (self.videoReel.channel != channel) {
+            STVDebugAssert(self.videoReel.channel == channel, @"videoReel should have been shutdown or changed when channel was changed");
+            return;
+        }
         [self.videoReel playCurrentPlayer];
 
     } else {
         [self prepareToShowVideoReel];
         [self initializeVideoReelWithChannel:channel atIndex:index];
 
-        STVAssert([self.videoReel getCurrentPlaybackEntity] == self.videoControlsVC.currentEntity, @"reel entity (%@) should be same as controls entity (%@)", [self.videoReel getCurrentPlaybackEntity], self.videoControlsVC.currentEntity);
+        STVDebugAssert([self.videoReel getCurrentPlaybackEntity] == self.videoControlsVC.currentEntity, @"reel entity (%@) should be same as controls entity (%@)", [self.videoReel getCurrentPlaybackEntity], self.videoControlsVC.currentEntity);
 
         [self.videoReel willMoveToParentViewController:self];
         [self addChildViewController:self.videoReel];
@@ -564,10 +574,10 @@
 
         if (!videoShouldHaveBeenPlaying && currentPlaybackEntity != previousPlaybackEntity) {
             //user paused & changed videos: transition to default view mode (from playback view mode)
-            STVAssert(vc.viewMode != ShelbyStreamBrowseViewDefault, @"expected a playback mode, since we have a video reel");
+            STVDebugAssert(vc.viewMode != ShelbyStreamBrowseViewDefault, @"expected a playback mode, since we have a video reel");
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
                 [self dismissVideoReel];
-                STVAssert(vc.viewMode == ShelbyStreamBrowseViewDefault, @"expected dismissVideoReel to update view mode");
+                STVDebugAssert(vc.viewMode == ShelbyStreamBrowseViewDefault, @"expected dismissVideoReel to update view mode");
                 self.navBar.alpha = 1.0;
                 self.videoControlsVC.view.alpha = 1.0;
             }];
@@ -609,7 +619,7 @@
         if (self.videoReel) {
             [self togglePlaybackOverlayForCurrentBrowseViewController];
         } else {
-            STVAssert(browseVC.viewMode == ShelbyStreamBrowseViewDefault || browseVC.viewMode == ShelbyStreamBrowseViewForAirplay, @"should be in play mode w/o video reel");
+            STVDebugAssert(browseVC.viewMode == ShelbyStreamBrowseViewDefault || browseVC.viewMode == ShelbyStreamBrowseViewForAirplay, @"should be in play mode w/o video reel");
             [self playChannel:browseVC.channel atIndex:[browseVC indexPathForCurrentFocus].row];
         }
     }
@@ -719,7 +729,7 @@
         if (self.airPlayController.isAirPlayActive) {
             [self.airPlayController beginScrubbing];
         } else {
-            STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithOverlay, @"expected overlay to be showing");
+            STVDebugAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithOverlay, @"expected overlay to be showing");
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
                 self.navBar.alpha = 0.0;
                 self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithoutOverlay;
@@ -730,7 +740,7 @@
         if (self.airPlayController.isAirPlayActive) {
             [self.airPlayController endScrubbing];
         } else {
-            STVAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay, @"expected overlay not showing");
+            STVDebugAssert(self.currentStreamBrowseVC.viewMode == ShelbyStreamBrowseViewForPlaybackWithoutOverlay, @"expected overlay not showing");
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
                 self.navBar.alpha = 1.0;
                 self.currentStreamBrowseVC.viewMode = ShelbyStreamBrowseViewForPlaybackWithOverlay;
@@ -1034,6 +1044,14 @@
 {
     [self dismissVideoReel];
     [self.masterDelegate presentUserSignup];
+    //presentation is modal, nav hasn't actually changed...
+    [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
+}
+
+- (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
+{
+    [self dismissVideoReel];
+    [self.masterDelegate presentUserLogin];
     //presentation is modal, nav hasn't actually changed...
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
 }

@@ -113,7 +113,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)warmCacheForVideoContainer:(id<ShelbyVideoContainer>)videoContainer
 {
-    STVAssert([videoContainer conformsToProtocol:@protocol(ShelbyVideoContainer)], @"warm cache for entity expected a video container");
     [self warmCacheForVideo:[videoContainer containedVideo]];
 }
 
@@ -170,7 +169,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 currentCompletionBlock(nil, NO);
             }
         } else {
-            STVAssert(self.webView == nil, @"should not have a web view w/o currently Extracting");
+            STVDebugAssert(self.webView == nil, @"should not have a web view w/o currently Extracting");
         }
     }
 }
@@ -205,7 +204,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         NSDictionary *nextExtraction = [self nextItemForExtraction];
         
         if (nextExtraction) {
-            STVAssert(self.webView == nil, @"webview should be nil");
+            STVDebugAssert(self.webView == nil, @"webview should be nil");
             
             self.currentlyExtracting = nextExtraction;
             Video *video = self.currentlyExtracting[kSPVideoExtractorVideoKey];
@@ -245,19 +244,20 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 
                 } else if ([video.providerName isEqualToString:@"dailymotion"]) {
                     //WebView based extraction...
-                    STVAssert(!self.webView, @"should not have a web view already");
+                    STVDebugAssert(!self.webView, @"should not have a web view already");
                     [self createWebView];
                     
                     [self loadDailyMotionVideo:video];
                     
-                    STVAssert(self.currentExtractionTimeoutTimer == nil, @"shouldn't have a current extraction timeout timer");
+                    STVDebugAssert(self.currentExtractionTimeoutTimer == nil, @"shouldn't have a current extraction timeout timer");
                     self.currentExtractionTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f
                                                                                           target:self
                                                                                         selector:@selector(extractionTimedOut:)
                                                                                         userInfo:self.currentlyExtracting
                                                                                          repeats:NO];
                 } else {
-                    STVAssert(NO, @"Invalid video provider");
+                    STVDebugAssert(NO, @"Invalid video provider");
+                    [self cancelCurrentExtraction];
                 }
             }
         } else {
@@ -283,7 +283,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    STVAssert(self.webView == webView, @"we should only have one web view at a time");
+    STVDebugAssert(self.webView == webView, @"we should only have one web view at a time");
     self.currentWebViewDidStartLoading = YES;
 }
 
@@ -425,7 +425,6 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                                               action:kAnalyticsIssueYTExtractionFallback
                                                nicknameAsLabel:YES];
         [self destroyCurrentExtractor];
-        STVAssert(self.currentlyExtracting[kSPVideoExtractorVideoKey], @"expected currently extracting to still have video, but it looks like %@", self.currentlyExtracting);
         [self stvYouTube:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
     }
 }
@@ -446,8 +445,11 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 - (void)processExtractedURL:(NSURL *)videoURL
 {
     @synchronized(self) {
-        STVAssert(self.currentlyExtracting, @"expected to be extracting something!");
-        STVAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
+        if (!self.currentlyExtracting) {
+            STVDebugAssert(self.currentlyExtracting, @"expected to be extracting something!");
+            return;
+        }
+        STVDebugAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
 
         NSString *extractedURL = [videoURL absoluteString];
 
@@ -466,8 +468,11 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 - (void)processFailedExtractionWithError:(NSError *)error
 {
     @synchronized(self) {
-        STVAssert(self.currentlyExtracting, @"expected to be extracting something!");
-        STVAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
+        if (!self.currentlyExtracting) {
+            STVDebugAssert(self.currentlyExtracting, @"expected to be extracting something!");
+            return;
+        }
+        STVDebugAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
 
         extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
         if(completionBlock){
