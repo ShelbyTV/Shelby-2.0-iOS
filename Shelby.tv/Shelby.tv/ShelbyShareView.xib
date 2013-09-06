@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="facebookButton" destination="99" id="192"/>
                 <outlet property="facebookCheck" destination="128" id="186"/>
+                <outlet property="headerView" destination="3" id="fIg-s5-Cxr"/>
                 <outlet property="message" destination="78" id="189"/>
                 <outlet property="sendButton" destination="18" id="196"/>
                 <outlet property="twitterButton" destination="92" id="191"/>
@@ -34,18 +35,19 @@
                                 <constraint firstAttribute="height" constant="21" id="17"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18">
-                            <rect key="frame" x="260" y="1" width="45" height="44"/>
+                            <rect key="frame" x="245" y="2" width="72" height="39"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="45" id="54"/>
+                                <constraint firstAttribute="width" constant="72" id="54"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="4" maxX="0.0" maxY="0.0"/>
                             <state key="normal" title="SEND">
-                                <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="disabled" title="SEND">
@@ -66,8 +68,9 @@
                                 <constraint firstAttribute="height" constant="44" id="330"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
                             <state key="normal" title="CANCEL">
-                                <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="highlighted">
@@ -78,15 +81,15 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="22" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="15" id="29"/>
                         <constraint firstAttribute="height" constant="44" id="172"/>
-                        <constraint firstItem="18" firstAttribute="bottom" secondItem="22" secondAttribute="bottom" id="331"/>
+                        <constraint firstItem="18" firstAttribute="bottom" secondItem="22" secondAttribute="bottom" constant="-4" id="331"/>
                         <constraint firstItem="13" firstAttribute="centerY" secondItem="3" secondAttribute="centerY" id="334"/>
                         <constraint firstItem="22" firstAttribute="top" secondItem="3" secondAttribute="top" constant="1" id="342"/>
-                        <constraint firstItem="22" firstAttribute="top" secondItem="18" secondAttribute="top" id="343"/>
-                        <constraint firstAttribute="trailing" secondItem="18" secondAttribute="trailing" constant="15" id="349"/>
+                        <constraint firstItem="22" firstAttribute="top" secondItem="18" secondAttribute="top" constant="-1" id="343"/>
+                        <constraint firstAttribute="trailing" secondItem="18" secondAttribute="trailing" constant="3" id="349"/>
                         <constraint firstAttribute="centerX" secondItem="13" secondAttribute="centerX" id="353"/>
                     </constraints>
                 </view>
