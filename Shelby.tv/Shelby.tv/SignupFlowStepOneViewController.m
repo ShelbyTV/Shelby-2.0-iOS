@@ -195,7 +195,7 @@
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
         // Change Right Button with Activity Indicator
-        UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [activity startAnimating];
         activity.frame = CGRectMake(10, 10, 50, 44);
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];

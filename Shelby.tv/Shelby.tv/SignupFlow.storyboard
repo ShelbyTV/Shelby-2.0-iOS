@@ -347,7 +347,7 @@
                                     <action selector="assignAvatar:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="J7r-zc-9uM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="We’ll find the best videos your friends are sharing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="255" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT" userLabel="subtitle">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We’ll find the best videos your friends are sharing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="255" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT" userLabel="subtitle">
                                 <rect key="frame" x="32" y="141" width="255" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="6IK-fO-sHn"/>
