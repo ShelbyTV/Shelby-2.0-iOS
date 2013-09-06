@@ -35,6 +35,10 @@
 
     self.collectionView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
     self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0);
+    
+    if (self.facebookSignup) {
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

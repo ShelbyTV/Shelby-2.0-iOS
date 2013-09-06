@@ -38,6 +38,7 @@ NSString * const kShelbyAPIPutUserSessionVisitPath =        @"v1/user/%@/visit";
 NSString * const kShelbyAPIPutUnplayableVideoPath =         @"v1/video/%@/unplayable";
 
 NSString * const kShelbyAPIParamAuthToken =                 @"auth_token";
+NSString * const kShelbyAPIParamAuthTokenAction =           @"action";
 NSString * const kShelbyAPIParamChannelsSegment =           @"segment";
 //when value for this key is an array of N items, this param is turned into "destination[]" and listed N times
 NSString * const kShelbyAPIParamDestinationArray =          @"destination";
@@ -602,6 +603,40 @@ toExternalDestinations:(NSArray *)destinations
     [operation start];
 }
 
++ (void)LoginWithFacebookAccountID:(NSString *)accountID
+                        oauthToken:(NSString *)token
+                          andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    if (!accountID || !token) {
+        return;
+    }
+    
+    NSDictionary *params = @{kShelbyAPIParamOAuthProviderName: @"facebook",
+                             kShelbyAPIParamOAuthUid: accountID,
+                             kShelbyAPIParamOAuthToken: token,
+                             kShelbyAPIParamAuthTokenAction : @"login"};
+    
+    [ShelbyAPIClient postThirdPartyTokenWithDictionary:params andBlock:completionBlock];
+
+}
+
++ (void)signupWithFacebookAccountID:(NSString *)accountID
+                         oauthToken:(NSString *)token
+                           andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    if (!accountID || !token) {
+        return;
+    }
+    
+    NSDictionary *params = @{kShelbyAPIParamOAuthProviderName: @"facebook",
+                             kShelbyAPIParamOAuthUid: accountID,
+                             kShelbyAPIParamOAuthToken: token,
+                             kShelbyAPIParamAuthTokenAction : @"signup"};
+    
+    [ShelbyAPIClient postThirdPartyTokenWithDictionary:params andBlock:completionBlock];
+    
+}
+
 #pragma mark - OAuth
 + (void)postThirdPartyToken:(NSString *)provider
               withAccountID:(NSString *)accountID
@@ -617,12 +652,21 @@ toExternalDestinations:(NSArray *)destinations
     NSDictionary *params = @{kShelbyAPIParamOAuthProviderName: provider,
                              kShelbyAPIParamOAuthUid: accountID,
                              kShelbyAPIParamOAuthToken: token,
-                             kShelbyAPIParamAuthToken: authToken};
+                             kShelbyAPIParamAuthToken: authToken,
+                             kShelbyAPIParamAuthTokenAction : @"connect" };
     if (secret) {
         NSMutableDictionary *mutableParams = [params mutableCopy];
         mutableParams[kShelbyAPIParamOAuthSecret] = secret;
         params = mutableParams;
     }
+    
+    [ShelbyAPIClient postThirdPartyTokenWithDictionary:params andBlock:completionBlock];
+}
+
+// This is a private method. Should only be called from this class. Not from the outside.s
++ (void)postThirdPartyTokenWithDictionary:(NSDictionary *)params
+                                 andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
     NSURLRequest *request = [self requestWithMethod:POST
                                             forPath:kShelbyAPIPostThirdPartyTokenPath
                                 withQueryParameters:params

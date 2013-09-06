@@ -14,6 +14,7 @@
 - (void)loginViewControllerDidCancel:(LoginViewController *)loginVC;
 - (void)loginViewController:(LoginViewController *)loginVC loginWithUsername:(NSString *)usernameOrEmail password:(NSString *)password;
 - (void)loginViewControllerWantsSignup:(LoginViewController *)loginVC;
+- (void)loginWithFacebook:(LoginViewController *)loginVC;
 @end
 
 @interface LoginViewController : ShelbyViewController <UITextFieldDelegate>

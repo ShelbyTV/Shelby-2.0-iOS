@@ -110,6 +110,11 @@
     [self.delegate loginViewController:self loginWithUsername:self.usernameField.text password:self.passwordField.text];
 }
 
+- (IBAction)loginWithFacebook:(id)sender
+{
+    [self.delegate loginWithFacebook:self];
+}
+
 - (IBAction)signupTapped:(id)sender {
     [self.delegate loginViewControllerWantsSignup:self];
 }

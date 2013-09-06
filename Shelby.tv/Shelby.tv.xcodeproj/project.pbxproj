@@ -197,6 +197,9 @@
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
+		1C9369AD17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
+		1C9369AE17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
+		1C9369AF17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
 		1C96DE9A17975A0900D845DF /* nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9817975A0900D845DF /* nav-bkgd.png */; };
 		1C96DE9B17975A0900D845DF /* nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9817975A0900D845DF /* nav-bkgd.png */; };
 		1C96DE9C17975A0900D845DF /* nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C96DE9817975A0900D845DF /* nav-bkgd.png */; };
@@ -845,6 +848,8 @@
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
+		1C9369AB17DA58E600AC2132 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		1C9369AC17DA58E600AC2132 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1C96DE9817975A0900D845DF /* nav-bkgd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bkgd.png"; sourceTree = "<group>"; };
 		1C96DE9917975A0900D845DF /* nav-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bkgd@2x.png"; sourceTree = "<group>"; };
 		1C96DEA017975D0800D845DF /* bkgd-step1-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bkgd-step1-568h@2x.png"; sourceTree = "<group>"; };
@@ -1522,11 +1527,11 @@
 				91BEC88F176274BD00838197 /* DisplayChannel.m */,
 				1CDBEE6B1794A31F002ECD76 /* Frame.h */,
 				1CDBEE6C1794A320002ECD76 /* Frame.m */,
-				916F425A17A17716001D9DF7 /* User.h */,
-				916F425B17A17716001D9DF7 /* User.m */,
 				911ED31917B2CC2F000FFBEB /* DashboardEntry.h */,
 				911ED31A17B2CC2F000FFBEB /* DashboardEntry.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				1C9369AB17DA58E600AC2132 /* User.h */,
+				1C9369AC17DA58E600AC2132 /* User.m */,
 				91D03F5A173314A0008131D2 /* Video.h */,
 				91D03F5B173314A0008131D2 /* Video.m */,
 				91D03F551733149F008131D2 /* Dashboard.h */,
@@ -2629,6 +2634,7 @@
 				91D1C81B1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */,
+				1C9369AE17DA58E600AC2132 /* User.m in Sources */,
 				914FEA7C175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
@@ -2661,7 +2667,6 @@
 				916F41A81798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
 				916F41BF179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4617A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
-				916F425D17A17716001D9DF7 /* User.m in Sources */,
 				1C309AC217A7196800D690A8 /* ShelbyShareViewController.m in Sources */,
 				1CDB0C2A17A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */,
@@ -2757,6 +2762,7 @@
 				91D1C81C1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */,
+				1C9369AF17DA58E600AC2132 /* User.m in Sources */,
 				914FEA7D175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
@@ -2789,7 +2795,6 @@
 				916F41A91798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
 				916F41C0179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4717A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
-				916F425E17A17716001D9DF7 /* User.m in Sources */,
 				1C309AC317A7196800D690A8 /* ShelbyShareViewController.m in Sources */,
 				1CDB0C2B17A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */,
@@ -2885,6 +2890,7 @@
 				91D1C81A1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */,
+				1C9369AD17DA58E600AC2132 /* User.m in Sources */,
 				914FEA7B175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
@@ -2917,7 +2923,6 @@
 				916F41A71798B450001D9DF7 /* LoginNavigationViewController.m in Sources */,
 				916F41BE179B22CF001D9DF7 /* NSObject+PerformSelectorWithPrimitive.m in Sources */,
 				1C534E4517A179DE00B6B3D5 /* NoContentViewController.m in Sources */,
-				916F425C17A17716001D9DF7 /* User.m in Sources */,
 				1C309AC117A7196800D690A8 /* ShelbyShareViewController.m in Sources */,
 				1CDB0C2917A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */,

@@ -429,38 +429,42 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
 {
     [ShelbyAPIClient loginUserWithEmail:email password:password andBlock:^(id JSON, NSError *error) {
-  
-        if (JSON) {
-            NSManagedObjectContext *context = [self mainThreadContext];
-            NSDictionary *result = JSON[@"result"];
-            if ([result isKindOfClass:[NSDictionary class]]) {
-                User *user = [User userForDictionary:result inContext:context];
-                NSError *err;
-                [user.managedObjectContext save:&err];
-                STVDebugAssert(!err, @"context save failed, put your DEBUG hat on...");
-                if (err) {
-                    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
-                                                          action:kAnalyticsIssueContextSaveError
-                                                           label:[NSString stringWithFormat:@"-[loginUserWithEmail:password:] error: %@", err]];
-                }
-                [self.delegate loginUserDidComplete];
-                [self syncLikes];
-                [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
-                return;
-            }
-        }
-
-        NSString *errorMessage = nil;
-        // Error code -1009 - no connection
-        // Error code -1001 - timeout
-        if ([error code] == -1009 || [error code] == -1001) {
-            errorMessage = @"Please make sure you are connected to the Internet";
-        } else {
-            errorMessage = @"Please make sure you've entered your login credientials correctly.";
-        }
-        
-        [self.delegate loginUserDidCompleteWithError:errorMessage];
+        [self handleUserLoginWithJSON:JSON andError:error];
     }];
+}
+
+- (void)handleUserLoginWithJSON:(id)JSON andError:(NSError *)error
+{
+    if (JSON) {
+        NSManagedObjectContext *context = [self mainThreadContext];
+        NSDictionary *result = JSON[@"result"];
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            User *user = [User userForDictionary:result inContext:context];
+            NSError *err;
+            [user.managedObjectContext save:&err];
+            STVDebugAssert(!err, @"context save failed, put your DEBUG hat on...");
+            if (err) {
+                [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                                      action:kAnalyticsIssueContextSaveError
+                                                       label:[NSString stringWithFormat:@"-[loginUserWithEmail:password:] error: %@", err]];
+            }
+            [self.delegate loginUserDidComplete];
+            [self syncLikes];
+            [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
+            return;
+        }
+    }
+    
+    NSString *errorMessage = nil;
+    // Error code -1009 - no connection
+    // Error code -1001 - timeout
+    if ([error code] == -1009 || [error code] == -1001) {
+        errorMessage = @"Please make sure you are connected to the Internet";
+    } else {
+        errorMessage = @"Please make sure you've entered your login credientials correctly.";
+    }
+    
+    [self.delegate loginUserDidCompleteWithError:errorMessage];
 }
 
 - (void)saveUserFromJSON:(id)JSON
@@ -483,24 +487,50 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     }
 }
 
+- (void)handleCreateUserWithJSON:(id)JSON andError:(NSError *)error
+{
+    if (JSON) {
+        [self saveUserFromJSON:JSON];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
+    } else {
+        NSString *errorMessage = nil;
+        if ([error isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *JSONError = (NSDictionary *)error;
+            errorMessage = JSONError[@"message"];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
+        
+    }
+}
+
 - (void)createUserWithName:(NSString *)name andEmail:(NSString *)email
 {
-    __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient postSignupWithName:name email:email andBlock:^(id JSON, NSError *error) {
-        if (JSON) {
-            [weakSelf saveUserFromJSON:JSON];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
-        } else {
-            NSString *errorMessage = nil;
-            if ([error isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *JSONError = (NSDictionary *)error;
-                errorMessage = JSONError[@"message"];
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
-            
-        }
+        [self handleCreateUserWithJSON:JSON andError:error];
     }];
 }
+
+- (void)createUserWithFacebook
+{
+    [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
+                                          andAskPublishPermission:NO
+                                                        withBlock:^(NSDictionary *facebookUser,
+                                                                    NSString *facebookToken,
+                                                                    NSString *errorMessage)
+     {
+         if (facebookUser) {
+             [ShelbyAPIClient signupWithFacebookAccountID:facebookUser[@"id"]
+                                              oauthToken:facebookToken
+                                                andBlock:^(id JSON, NSError *error)
+              {
+                  [self handleCreateUserWithJSON:JSON andError:error];
+              }];
+         } else {
+             [self.delegate loginUserDidCompleteWithError:@"Go to Settings -> Privacy -> Facebook and turn Shelby ON"];
+         }
+     }];
+}
+
 
 - (void)updateUserName:(NSString *)name
               nickname:(NSString *)nickname
@@ -592,6 +622,27 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     }];
 }
 
+- (void)loginUserFacebook
+{
+    [[FacebookHandler sharedInstance] openSessionWithAllowLoginUI:YES
+                                          andAskPublishPermission:NO
+                                                        withBlock:^(NSDictionary *facebookUser,
+                                                                    NSString *facebookToken,
+                                                                    NSString *errorMessage)
+    {
+        if (facebookUser) {
+            [ShelbyAPIClient LoginWithFacebookAccountID:facebookUser[@"id"]
+                                             oauthToken:facebookToken
+                                               andBlock:^(id JSON, NSError *error)
+            {
+                [self handleUserLoginWithJSON:JSON andError:error];
+            }];
+        } else {
+            [self.delegate loginUserDidCompleteWithError:@"Go to Settings -> Privacy -> Facebook and turn Shelby ON"];
+        }
+    }];
+}
+
 - (void)userAskForFacebookPublishPermissions
 {
     [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];
@@ -618,37 +669,41 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         if (facebookUser) {
             NSManagedObjectContext *context = [self mainThreadContext];
             user = [User currentAuthenticatedUserInContext:context];
-            //try adding token to the user
-            [ShelbyAPIClient postThirdPartyToken:@"facebook"
-                                   withAccountID:facebookUser[@"id"]
-                                      oauthToken:facebookToken
-                                     oauthSecret:nil
-                                 shelbyAuthToken:user.token
-                                        andBlock:^(id JSON, NSError *error) {
-                                            if(!error){
-                                                //user updated by API
-                                                [user updateWithFacebookUser:facebookUser];
-                                                NSError *err;
-                                                [user.managedObjectContext save:&err];
-                                                STVDebugAssert(!err, @"context save failed saving User after facebook login...");
-                                                if (err) {
-                                                    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
-                                                                                          action:kAnalyticsIssueContextSaveError
-                                                                                           label:[NSString stringWithFormat:@"-[openFacebookSessionWithAllowLoginUI:andAskPublishPermissions:] error: %@", err]];
+            if (user) {
+                //try adding token to the user
+                [ShelbyAPIClient postThirdPartyToken:@"facebook"
+                                       withAccountID:facebookUser[@"id"]
+                                          oauthToken:facebookToken
+                                         oauthSecret:nil
+                                     shelbyAuthToken:user.token
+                                            andBlock:^(id JSON, NSError *error) {
+                                                if(!error){
+                                                    //user updated by API
+                                                    [user updateWithFacebookUser:facebookUser];
+                                                    NSError *err;
+                                                    [user.managedObjectContext save:&err];
+                                                    STVDebugAssert(!err, @"context save failed saving User after facebook login...");
+                                                    if (err) {
+                                                        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                                                                              action:kAnalyticsIssueContextSaveError
+                                                                                               label:[NSString stringWithFormat:@"-[openFacebookSessionWithAllowLoginUI:andAskPublishPermissions:] error: %@", err]];
+                                                    }
+                                                    
+                                                    [self.delegate facebookConnectDidComplete];
+                                                    
+                                                    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookConnectCompleted object:nil];
+                                                    
+                                                    if (askForPublishPermission) {
+                                                        [[FacebookHandler sharedInstance] askForPublishPermissions];
+                                                    }
+                                                } else {
+                                                    //did NOT add this auth to the current user
+                                                    [self.delegate facebookConnectDidCompleteWithError:nil];
                                                 }
-                                               
-                                                [self.delegate facebookConnectDidComplete];
-                                               
-                                                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookConnectCompleted object:nil];
-
-                                                if (askForPublishPermission) {
-                                                    [[FacebookHandler sharedInstance] askForPublishPermissions];
-                                                }
-                                            } else {
-                                                //did NOT add this auth to the current user
-                                                [self.delegate facebookConnectDidCompleteWithError:nil];
-                                            }
-                                        }];
+                                            }];
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookConnectCompleted object:facebookUser];
+            }
         } else if (facebookToken) {
             [self.delegate facebookConnectDidComplete];
         } else if (errorMessage) {

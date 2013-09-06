@@ -74,6 +74,7 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 -(void)logoutCurrentUser;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
+- (void)loginUserFacebook;
 
 - (void)syncLikes; // Syncs unsycs likes after user logs in
 
@@ -94,6 +95,7 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 // Signup process ONLY
 - (void)createUserWithName:(NSString *)name
                   andEmail:(NSString *)email;
+- (void)createUserWithFacebook;
 - (void)updateUserWithName:(NSString *)name
                   nickname:(NSString *)nickname
                   password:(NSString *)password

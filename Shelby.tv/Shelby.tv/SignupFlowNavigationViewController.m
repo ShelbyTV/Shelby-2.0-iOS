@@ -68,6 +68,11 @@
     [self.signupDelegate connectToTwitter];
 }
 
+- (void)signupWithFacebook
+{
+    [self.signupDelegate signupWithFacebook];
+}
+
 - (void)signupUser
 {
     NSString *name = self.signupDictionary[kShelbySignupNameKey];

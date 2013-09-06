@@ -727,6 +727,11 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     [[ShelbyDataMediator sharedInstance] connectTwitterWithViewController:topViewController];
 }
 
+- (void)signupWithFacebook
+{
+    [[ShelbyDataMediator sharedInstance] createUserWithFacebook];
+}
+
 - (void)goToRollForID:(NSString *)rollID
 {
     STVAssert(rollID, @"expects valid rollID");
@@ -868,6 +873,11 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     [self dismissLoginVCCompletion:^{
         [self presentSignupVC];
     }];
+}
+
+- (void)loginWithFacebook:(LoginViewController *)loginVC
+{
+    [[ShelbyDataMediator sharedInstance] loginUserFacebook];
 }
 
 //mirror method signupFlowNavigationViewControllerWantsLogin: implemented above

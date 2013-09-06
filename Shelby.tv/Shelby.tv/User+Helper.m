@@ -55,6 +55,11 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         user.name = name;
     }
     
+    NSString *email = [dict[@"primary_email"] nilOrSelfWhenNotNull];
+    if (email) {
+        user.email = email;
+    }
+    
     NSString *token = dict[@"authentication_token"];
     if (token) {
         user.token = token;

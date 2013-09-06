@@ -8,12 +8,15 @@
 
 #import "SignupFlowStepOneViewController.h"
 #import "ShelbyDataMediator.h"
+#import "UIImageView+AFNetworking.h"
 
 
 @interface SignupFlowStepOneViewController ()
 - (IBAction)unwindSegueToStepOne:(UIStoryboardSegue *)segue;
 
 - (IBAction)goBack:(id)sender;
+
+- (IBAction)signupWithFacebook:(id)sender;
 
 // Segue
 - (IBAction)gotoChooseVideoTypes:(id)sender;
@@ -64,6 +67,9 @@
                                          withAction:kAnalyticsSignupStep1Complete
                                           withLabel:nil];
 
+    SignupFlowViewController *stepTwo = [segue destinationViewController];
+    stepTwo.facebookSignup = self.facebookSignup;
+    
     self.navigationItem.rightBarButtonItem = self.nextButton;
 }
 
@@ -131,6 +137,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)signupWithFacebook:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    // TODO: send GA event
+    UIViewController *parent = self.parentViewController;
+    if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+        [parent performSelector:@selector(signupWithFacebook)];
+    }
+}
+
 - (IBAction)loginTapped:(UIButton *)sender {
     //DS to KP: I'm not as familiar with iOS paradigms as you... why are we using parent like this, instead of explicity setting delegate?
     UIViewController *parent = self.parentViewController;
@@ -149,6 +165,28 @@
     } else {
         [self startSignupUser];
     }
+}
+- (void)signupWithFacebookCompleted:(NSNotification *)notification
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+         self.signupDictionary[kShelbySignupNameKey] = user.name;
+        self.signupDictionary[kShelbySignupUsernameKey] = user.facebookNickname;
+        // User might not have an email account. (in the case that the email account was used to signup with another user.
+        if (user.email) {
+            self.signupDictionary[kShelbySignupEmailKey] = user.email;
+        }
+        self.facebookSignup = YES;
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[user avatarURL]];
+        __weak SignupFlowStepOneViewController *weakself = self;
+        [self.avatar setImageWithURLRequest:request placeholderImage:self.avatar.image success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+            weakself.signupDictionary[kShelbySignupAvatarKey] = image;
+            [weakself signupSuccess];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // No big deal, continue signup without user's avatar.
+            [weakself signupSuccess];
+        }];
+    });
 }
 
 - (void)startSignupUser
@@ -219,7 +257,7 @@
 - (void)userSignupDidSucceed:(NSNotification *)notification
 {
     [self removeObserversForSignup:YES];
-    
+    self.facebookSignup = NO;
     [self signupSuccess];
 }
 
