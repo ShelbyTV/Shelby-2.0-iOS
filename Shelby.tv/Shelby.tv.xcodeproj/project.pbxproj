@@ -601,6 +601,9 @@
 		9178C9E317CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
 		9178C9E417CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
 		9178C9E517CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
+		9184FE5517DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
+		9184FE5617DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
+		9184FE5717DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
 		9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
 		9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9188F230178C99F7002F342B /* ShelbyNavBarView.xib */; };
@@ -1094,6 +1097,8 @@
 		9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeScrollHolderView.xib; sourceTree = "<group>"; };
 		9178C9E117CE3B8600913256 /* WelcomeScrollHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeScrollHolderView.h; sourceTree = "<group>"; };
 		9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeScrollHolderView.m; sourceTree = "<group>"; };
+		9184FE5317DA5757006E23E4 /* UITextViewWithPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextViewWithPlaceholder.h; sourceTree = "<group>"; };
+		9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextViewWithPlaceholder.m; sourceTree = "<group>"; };
 		9188F230178C99F7002F342B /* ShelbyNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNavBarView.xib; sourceTree = "<group>"; };
 		9188F234178C9A1E002F342B /* ShelbyNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarViewController.h; sourceTree = "<group>"; };
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
@@ -1865,6 +1870,8 @@
 				9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */,
 				913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */,
 				913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */,
+				9184FE5317DA5757006E23E4 /* UITextViewWithPlaceholder.h */,
+				9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2626,6 +2633,7 @@
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
+				9184FE5617DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191471774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191541774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
@@ -2753,6 +2761,7 @@
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
+				9184FE5717DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191481774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191551774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
@@ -2880,6 +2889,7 @@
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
+				9184FE5517DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191461774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CA191531774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
