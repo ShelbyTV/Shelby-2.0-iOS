@@ -158,11 +158,31 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </scrollView>
+                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-up" translatesAutoresizingMaskIntoConstraints="NO" id="KQj-IJ-3ft" userLabel="scroll up">
+                            <rect key="frame" x="162" y="70" width="50" height="92"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="J50-uq-XRm"/>
+                                <constraint firstAttribute="height" constant="92" id="ags-1N-Shj"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-left" translatesAutoresizingMaskIntoConstraints="NO" id="B3Z-df-b1w" userLabel="swipe left">
+                            <rect key="frame" x="154" y="58" width="67" height="73"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="67" id="gVS-zt-1SP"/>
+                                <constraint firstAttribute="height" constant="73" id="xeW-u8-kOO"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="190" id="39K-8S-6im"/>
+                        <constraint firstItem="B3Z-df-b1w" firstAttribute="leading" secondItem="Ymo-2X-Pfn" secondAttribute="leading" constant="154" id="4mq-ix-RJq"/>
+                        <constraint firstItem="KQj-IJ-3ft" firstAttribute="leading" secondItem="Ymo-2X-Pfn" secondAttribute="leading" constant="162" id="8Fa-FN-G5E"/>
                         <constraint firstAttribute="width" constant="375" id="A97-jl-uPr"/>
+                        <constraint firstItem="KQj-IJ-3ft" firstAttribute="top" secondItem="Ymo-2X-Pfn" secondAttribute="top" constant="70" id="QqY-Ky-J8v"/>
+                        <constraint firstItem="B3Z-df-b1w" firstAttribute="top" secondItem="Ymo-2X-Pfn" secondAttribute="top" constant="58" id="q0N-A3-xsB"/>
                     </constraints>
                 </view>
             </subviews>
@@ -180,7 +200,9 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <connections>
                 <outlet property="phoneView" destination="Ymo-2X-Pfn" id="nxb-zY-Wv7"/>
+                <outlet property="scrollUpImage" destination="KQj-IJ-3ft" id="yai-OR-cF3"/>
                 <outlet property="scrollView" destination="ob2-I3-xjt" id="Ysx-1S-3kn"/>
+                <outlet property="swipeLeftImage" destination="B3Z-df-b1w" id="V32-SD-teZ"/>
                 <outlet property="tipLabel" destination="dFP-0u-qS2" id="4Gv-Uv-eQ4"/>
                 <outlet property="titleLabel" destination="5UI-S6-Scj" id="gDl-Fl-W51"/>
                 <outletCollection property="tipIconsP1" destination="5d4-Cp-VcD" id="Njq-YF-MCX"/>
@@ -203,5 +225,7 @@
         <image name="welcome-icon-twitter" width="40" height="40"/>
         <image name="welcome-icon-vimeo" width="40" height="40"/>
         <image name="welcome-icon-youtube" width="42" height="42"/>
+        <image name="welcome-swipe-left" width="67" height="73"/>
+        <image name="welcome-swipe-up" width="50" height="92"/>
     </resources>
 </document>

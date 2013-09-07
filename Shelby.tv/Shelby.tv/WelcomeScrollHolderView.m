@@ -20,12 +20,16 @@
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP2;
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP3;
 
+@property (weak, nonatomic) IBOutlet UIImageView *scrollUpImage;
+@property (weak, nonatomic) IBOutlet UIImageView *swipeLeftImage;
 @end
 
 #define PAGES_IN_SCROLL_VIEW 4
 
 @implementation WelcomeScrollHolderView{
     MPMoviePlayerController *_player;
+    NSTimer *_scrollUpTimer;
+    NSTimer *_swipeLeftTimer;
 }
 
 - (void)awakeFromNib
@@ -92,7 +96,7 @@
 }
 
 
-#pragma mark - View Helpers
+#pragma mark - Tip Management
 
 - (void)showTip:(NSUInteger)tipIdx
 {
@@ -104,6 +108,7 @@
             for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, self.tipIconsP3]) {
                 [self setViews:tipCollection alpha:0.f];
             }
+            [self resetScrollUpHelper:6.0];
             break;
         case 1:
             [self zoomInOnPhone];
@@ -113,6 +118,7 @@
                 [self setViews:tipCollection alpha:0.f];
             }
             [self setViews:self.tipIconsP1 alpha:1.f];
+            [self resetScrollUpHelper:12.0];
             break;
         case 2:
             [self zoomInOnPhone];
@@ -122,6 +128,7 @@
                 [self setViews:tipCollection alpha:0.f];
             }
             [self setViews:self.tipIconsP2 alpha:1.f];
+            [self resetScrollUpHelper:12.0];
             break;
         case 3:
             [self zoomInOnPhone];
@@ -131,6 +138,7 @@
                 [self setViews:tipCollection alpha:0.f];
             }
             [self setViews:self.tipIconsP3 alpha:1.f];
+            [self cancelScrollUpHelper];
             break;
         default:
             break;
@@ -165,6 +173,8 @@
     }];
 }
 
+#pragma mark - View Creation
+
 - (UIView *)pageForImageNamed:(NSString *)imageName atIndex:(NSUInteger)idx
 {
     CGRect scrollPageBounds = self.scrollView.bounds;
@@ -186,6 +196,8 @@
     [_player play];
 }
 
+#pragma mark - View Zooming
+
 - (void)zoomOutOnPhone
 {
     CGFloat s = .83;
@@ -204,6 +216,35 @@
     } completion:^(BOOL finished) {
         //
     }];
+}
+
+#pragma mark - Timers for Scroll Images
+
+- (void)showScrollUpHelper
+{
+    _scrollUpTimer = nil;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.scrollUpImage.alpha = 1.f;
+    }];
+}
+
+- (void)cancelScrollUpHelper
+{
+    [_scrollUpTimer invalidate];
+    _scrollUpTimer = nil;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.scrollUpImage.alpha = 0.f;
+    }];
+}
+
+- (void)resetScrollUpHelper:(NSTimeInterval)t
+{
+    [self cancelScrollUpHelper];
+    _scrollUpTimer = [NSTimer scheduledTimerWithTimeInterval:t
+                                                      target:self
+                                                    selector:@selector(showScrollUpHelper)
+                                                    userInfo:nil
+                                                     repeats:NO];
 }
 
 @end
