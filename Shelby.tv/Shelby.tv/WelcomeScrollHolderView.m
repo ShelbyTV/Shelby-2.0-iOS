@@ -10,22 +10,34 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface WelcomeScrollHolderView() {
-    MPMoviePlayerController *_player;
-}
+@interface WelcomeScrollHolderView()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (weak, nonatomic) IBOutlet UIView *phoneView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP1;
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP2;
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP3;
+
 @end
 
 #define PAGES_IN_SCROLL_VIEW 4
 
-@implementation WelcomeScrollHolderView
+@implementation WelcomeScrollHolderView{
+    MPMoviePlayerController *_player;
+}
 
 - (void)awakeFromNib
 {
+    //init tip icons w/o animation
+    self.tipLabel.text = nil;
+    for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, self.tipIconsP3]) {
+        for (UIView *view in tipCollection) {
+            view.alpha = 0.f;
+        }
+    }
+
     self.titleLabel.font = kShelbyFontH2;
     [self initScroller];
     [self showTip:0];
@@ -87,27 +99,70 @@
     switch (tipIdx) {
         case 0:
             [self zoomOutOnPhone];
-            self.titleLabel.text = @"Shelby brings you 15 minutes of video everyday.";
-            self.tipLabel.text = @"";
+            [self changeTitleText:@"Bringing you 15 minutes of video everyday."
+                          tipText:@""];
+            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, self.tipIconsP3]) {
+                [self setViews:tipCollection alpha:0.f];
+            }
             break;
         case 1:
             [self zoomInOnPhone];
-            self.titleLabel.text = @"...from your favorite people and places.";
-            self.tipLabel.text = @"Shelby users share great new video all day long";
+            [self changeTitleText:@"...from your favorite people and places."
+                          tipText:@"Shelby users share great new video all day long"];
+            for (NSArray *tipCollection in @[self.tipIconsP2, self.tipIconsP3]) {
+                [self setViews:tipCollection alpha:0.f];
+            }
+            [self setViews:self.tipIconsP1 alpha:1.f];
             break;
         case 2:
             [self zoomInOnPhone];
-            self.titleLabel.text = @"It's like a TV channel personalized for you.";
-            self.tipLabel.text = @"Like and share videos to get better recommendations.";
+            [self changeTitleText:@"It's like a TV channel personalized for you."
+                          tipText:@"Like and share videos to get better recommendations."];
+            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP3]) {
+                [self setViews:tipCollection alpha:0.f];
+            }
+            [self setViews:self.tipIconsP2 alpha:1.f];
             break;
         case 3:
             [self zoomInOnPhone];
-            self.titleLabel.text = @"...a TV channel powered by your friends.";
-            self.tipLabel.text = @"Swipe left to see what your friend said.";
+            [self changeTitleText:@"...a TV channel powered by your friends."
+                          tipText:@"Swipe left to see what your friend said."];
+            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2]) {
+                [self setViews:tipCollection alpha:0.f];
+            }
+            [self setViews:self.tipIconsP3 alpha:1.f];
             break;
         default:
             break;
     }
+}
+
+- (void)changeTitleText:(NSString *)newTitle tipText:(NSString *)newTip
+{
+    if ([self.titleLabel.text isEqualToString:newTitle]) {
+        return;
+    }
+
+    [UIView animateWithDuration:0.2 animations:^{
+        self.titleLabel.alpha = 0.f;
+        self.tipLabel.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        self.titleLabel.text = newTitle;
+        self.tipLabel.text = newTip;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.titleLabel.alpha = 1.f;
+            self.tipLabel.alpha = 1.f;
+        }];
+    }];
+}
+
+- (void)setViews:(NSArray *)viewsArray alpha:(CGFloat)alpha
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        for (UIView *view in viewsArray) {
+            view.alpha = alpha;
+        }
+    }];
 }
 
 - (UIView *)pageForImageNamed:(NSString *)imageName atIndex:(NSUInteger)idx
