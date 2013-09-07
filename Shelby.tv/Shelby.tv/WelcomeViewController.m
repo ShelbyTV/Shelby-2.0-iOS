@@ -24,7 +24,9 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 @property (nonatomic, strong) WelcomeScrollHolderView *welcomeScrollHolderView;
 @end
 
-@implementation WelcomeViewController
+@implementation WelcomeViewController {
+    NSDate *_phoneScrollingStartedAt;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -122,7 +124,12 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 }
 
 #pragma mark - UIScrollViewDelegate
-//NB: these are custom "delgate-of-the-delegate" callbacks for self.welcomeScrollHolderView.scrollViewDelegate
+//NB: these are custom "delegate-of-the-delegate" callbacks for self.welcomeScrollHolderView.scrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    _phoneScrollingStartedAt = [NSDate date];
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -138,8 +145,12 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    BOOL aboveMinimum = self.welcomeScrollScroller.contentOffset.y > (self.welcomeScrollScroller.bounds.size.height / 4.f);
-    if (aboveMinimum) {
+    NSTimeInterval dragTime = -[_phoneScrollingStartedAt timeIntervalSinceNow];
+    CGFloat dragDistance = self.welcomeScrollScroller.contentOffset.y;
+    CGFloat dragVelocity = dragDistance/dragTime;
+    BOOL pulledFastEnough = dragVelocity > 900;
+    BOOL pulledFarEnough = self.welcomeScrollScroller.contentOffset.y > (self.welcomeScrollScroller.bounds.size.height / 4.f);
+    if (pulledFastEnough || pulledFarEnough) {
         [self.welcomeScrollScroller setContentOffset:CGPointMake(0, self.welcomeScrollScroller.bounds.size.height) animated:YES];
         self.welcomeScrollScroller.scrollEnabled = YES;
     } else {

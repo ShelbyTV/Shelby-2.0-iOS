@@ -77,6 +77,7 @@
     if (scrollView.contentOffset.y < (scrollView.contentSize.height-scrollView.bounds.size.height)) {
         [self showTip:999];
     }
+    [self.scrollViewDelegate scrollViewWillBeginDragging:scrollView];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -97,7 +98,6 @@
     NSInteger page = scrollView.contentOffset.y / scrollView.bounds.size.height;
     [self showTip:page];
 }
-
 
 #pragma mark - STVParallaxViewDelegate
 
