@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STVParallaxView.h"
 
-@interface WelcomeScrollHolderView : UIView<UIScrollViewDelegate>
+@interface WelcomeScrollHolderView : UIView<UIScrollViewDelegate, STVParallaxViewDelegate>
 
 //NB: we are only passing a subset of delegate callbacks
 @property (weak, nonatomic) id<UIScrollViewDelegate>scrollViewDelegate;
