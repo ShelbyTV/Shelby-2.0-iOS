@@ -82,6 +82,10 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 
 #pragma mark - WelcomeLoginView's IBActions
 
+- (IBAction)signupWithFacebookTapped:(id)sender {
+    //TODO
+}
+
 - (IBAction)createAccountTapped:(id)sender {
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapSignup

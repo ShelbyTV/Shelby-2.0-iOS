@@ -173,7 +173,7 @@
                         <constraint firstAttribute="height" constant="92" id="ags-1N-Shj"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-left" translatesAutoresizingMaskIntoConstraints="NO" id="B3Z-df-b1w" userLabel="swipe left">
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-left" translatesAutoresizingMaskIntoConstraints="NO" id="B3Z-df-b1w" userLabel="swipe left">
                     <rect key="frame" x="126" y="288" width="67" height="73"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
