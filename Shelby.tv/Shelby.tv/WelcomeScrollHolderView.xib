@@ -158,39 +158,39 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </scrollView>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-up" translatesAutoresizingMaskIntoConstraints="NO" id="KQj-IJ-3ft" userLabel="scroll up">
-                            <rect key="frame" x="162" y="70" width="50" height="92"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="50" id="J50-uq-XRm"/>
-                                <constraint firstAttribute="height" constant="92" id="ags-1N-Shj"/>
-                            </constraints>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-left" translatesAutoresizingMaskIntoConstraints="NO" id="B3Z-df-b1w" userLabel="swipe left">
-                            <rect key="frame" x="154" y="58" width="67" height="73"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="67" id="gVS-zt-1SP"/>
-                                <constraint firstAttribute="height" constant="73" id="xeW-u8-kOO"/>
-                            </constraints>
-                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="190" id="39K-8S-6im"/>
-                        <constraint firstItem="B3Z-df-b1w" firstAttribute="leading" secondItem="Ymo-2X-Pfn" secondAttribute="leading" constant="154" id="4mq-ix-RJq"/>
-                        <constraint firstItem="KQj-IJ-3ft" firstAttribute="leading" secondItem="Ymo-2X-Pfn" secondAttribute="leading" constant="162" id="8Fa-FN-G5E"/>
                         <constraint firstAttribute="width" constant="375" id="A97-jl-uPr"/>
-                        <constraint firstItem="KQj-IJ-3ft" firstAttribute="top" secondItem="Ymo-2X-Pfn" secondAttribute="top" constant="70" id="QqY-Ky-J8v"/>
-                        <constraint firstItem="B3Z-df-b1w" firstAttribute="top" secondItem="Ymo-2X-Pfn" secondAttribute="top" constant="58" id="q0N-A3-xsB"/>
                     </constraints>
                 </view>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-up" translatesAutoresizingMaskIntoConstraints="NO" id="KQj-IJ-3ft" userLabel="scroll up">
+                    <rect key="frame" x="135" y="278" width="50" height="92"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="J50-uq-XRm"/>
+                        <constraint firstAttribute="height" constant="92" id="ags-1N-Shj"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-left" translatesAutoresizingMaskIntoConstraints="NO" id="B3Z-df-b1w" userLabel="swipe left">
+                    <rect key="frame" x="126" y="288" width="67" height="73"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="67" id="gVS-zt-1SP"/>
+                        <constraint firstAttribute="height" constant="73" id="xeW-u8-kOO"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="centerX" secondItem="B3Z-df-b1w" secondAttribute="centerX" id="7hb-Ed-jqB"/>
                 <constraint firstAttribute="bottom" secondItem="eSh-Og-UGs" secondAttribute="bottom" constant="10" id="8Eg-su-T4B"/>
                 <constraint firstAttribute="centerX" secondItem="UFf-01-Fbu" secondAttribute="centerX" id="Crx-aG-mzH"/>
+                <constraint firstAttribute="centerY" secondItem="B3Z-df-b1w" secondAttribute="centerY" constant="-40" id="HYE-UU-lV3"/>
                 <constraint firstAttribute="trailing" secondItem="eSh-Og-UGs" secondAttribute="trailing" constant="10" id="RZm-Yy-I7q"/>
+                <constraint firstAttribute="centerY" secondItem="KQj-IJ-3ft" secondAttribute="centerY" constant="-40" id="aYO-dt-PsK"/>
+                <constraint firstAttribute="centerX" secondItem="KQj-IJ-3ft" secondAttribute="centerX" id="auk-BO-A2W"/>
                 <constraint firstAttribute="centerX" secondItem="Ymo-2X-Pfn" secondAttribute="centerX" constant="1.5" id="fFt-vF-GKK"/>
                 <constraint firstItem="eSh-Og-UGs" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="10" id="hUD-wC-TJU"/>
                 <constraint firstAttribute="centerY" secondItem="Ymo-2X-Pfn" secondAttribute="centerY" constant="-33" id="qGn-w0-lv2"/>

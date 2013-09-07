@@ -118,7 +118,7 @@
                 [self setViews:tipCollection alpha:0.f];
             }
             [self setViews:self.tipIconsP1 alpha:1.f];
-            [self resetScrollUpHelper:12.0];
+            [self resetScrollUpHelper:6.0];
             break;
         case 2:
             [self zoomInOnPhone];
