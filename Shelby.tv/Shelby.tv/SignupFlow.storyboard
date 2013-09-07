@@ -32,7 +32,7 @@
                         <viewControllerLayoutGuide type="bottom" id="3LJ-7Z-fVN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pGl-nd-Jhs">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2tk-Hq-yu9">
@@ -60,20 +60,19 @@
                                     <action selector="assignAvatar:" destination="sgp-ZG-jtU" eventType="touchUpInside" id="0ip-Lx-I99"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Shelby is personal." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3R-Mq-Khr">
-                                <rect key="frame" x="55" y="76" width="210" height="25"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Shelby is community" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3R-Mq-Khr">
+                                <rect key="frame" x="49" y="76" width="223" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="210" id="QXW-XC-bMe"/>
+                                    <constraint firstAttribute="width" constant="223" id="QXW-XC-bMe"/>
                                     <constraint firstAttribute="height" constant="25" id="SaL-oi-Dbd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We'd like to know who you are..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I88-xl-uu2">
-                                <rect key="frame" x="40" y="109" width="240" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Let your friends know who you are" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I88-xl-uu2">
+                                <rect key="frame" x="34" y="109" width="253" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="Wxj-85-N2X"/>
+                                    <constraint firstAttribute="width" constant="253" id="Wxj-85-N2X"/>
                                     <constraint firstAttribute="height" constant="21" id="zLt-PZ-JOs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
@@ -81,11 +80,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OyT-9q-MsU">
-                                <rect key="frame" x="0.0" y="304" width="320" height="264"/>
+                                <rect key="frame" x="0.0" y="304" width="320" height="176"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DTd-Te-n9j">
-                                <rect key="frame" x="0.0" y="304" width="320" height="264"/>
+                                <rect key="frame" x="0.0" y="304" width="320" height="176"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="sample@email.com" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZYL-g5-c1D" customClass="STVTextField">
                                         <rect key="frame" x="20" y="106" width="280" height="38"/>
@@ -111,23 +110,22 @@
                                             <outlet property="delegate" destination="sgp-ZG-jtU" id="br7-LB-lNZ"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8p-gd-vjo">
-                                        <rect key="frame" x="20" y="10" width="42" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Real Name (you can pick username later)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8p-gd-vjo">
+                                        <rect key="frame" x="20" y="10" width="280" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Vdd-aA-7RV"/>
-                                            <constraint firstAttribute="width" constant="42" id="bzL-Tb-HxI"/>
+                                            <constraint firstAttribute="width" constant="280" id="bzL-Tb-HxI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwr-uj-CmF">
-                                        <rect key="frame" x="20" y="81" width="42" height="21"/>
+                                        <rect key="frame" x="20" y="81" width="280" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="pdo-vr-QVw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxD-FM-aTV" userLabel="login button">
@@ -181,7 +179,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="OyT-9q-MsU" firstAttribute="top" secondItem="DTd-Te-n9j" secondAttribute="top" id="2nX-YW-T5R"/>
@@ -239,7 +237,7 @@
             </objects>
             <point key="canvasLocation" x="341" y="-171"/>
         </scene>
-        <!--Signup Flow Step Two View Controller - Video for You-->
+        <!--Signup Flow Step Two View Controller - Add Video-->
         <scene sceneID="peO-1Y-aPw">
             <objects>
                 <viewController id="dtY-NO-hRl" customClass="SignupFlowStepTwoViewController" sceneMemberID="viewController">
@@ -248,11 +246,11 @@
                         <viewControllerLayoutGuide type="bottom" id="oe7-qa-Ulp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Grh-fn-liE">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bSO-ew-ZPB">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="exu-mU-PdX">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -297,7 +295,7 @@
                             <constraint firstItem="bSO-ew-ZPB" firstAttribute="bottom" secondItem="Grh-fn-liE" secondAttribute="bottom" id="ye7-ZH-euI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Video for You" id="J7I-2E-QMo">
+                    <navigationItem key="navigationItem" title="Add Video" id="J7I-2E-QMo">
                         <barButtonItem key="leftBarButtonItem" title="BACK" id="tCJ-aL-NNL"/>
                         <barButtonItem key="rightBarButtonItem" title="NEXT" id="dFb-RO-jbB">
                             <connections>
@@ -316,7 +314,7 @@
             </objects>
             <point key="canvasLocation" x="732" y="-171"/>
         </scene>
-        <!--Signup Flow Step Three View Controller - Video from Friends-->
+        <!--Signup Flow Step Three View Controller - Add Friends' Video-->
         <scene sceneID="bP7-YO-hjo">
             <objects>
                 <viewController id="tUF-cC-Ycq" customClass="SignupFlowStepThreeViewController" sceneMemberID="viewController">
@@ -325,7 +323,7 @@
                         <viewControllerLayoutGuide type="bottom" id="WV6-Qt-lRR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lOZ-yG-UMD">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="VEZ-cK-rZH">
@@ -349,8 +347,8 @@
                                     <action selector="assignAvatar:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="J7r-zc-9uM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You might be surprised by the videos your friends share ;-)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="256" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT" userLabel="subtitle">
-                                <rect key="frame" x="32" y="142" width="256" height="90"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We’ll find the best videos your friends are sharing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="255" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT" userLabel="subtitle">
+                                <rect key="frame" x="32" y="141" width="255" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="6IK-fO-sHn"/>
                                 </constraints>
@@ -359,7 +357,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NlN-4t-7g7">
-                                <rect key="frame" x="15" y="440" width="290" height="44"/>
+                                <rect key="frame" x="15" y="352" width="290" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="cPt-kg-P7F"/>
@@ -375,7 +373,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tce-ZC-snW">
-                                <rect key="frame" x="15" y="389" width="290" height="44"/>
+                                <rect key="frame" x="15" y="301" width="290" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="87U-wd-803"/>
@@ -390,28 +388,28 @@
                                     <action selector="connectoToFacebook:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="RIg-B8-5FG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Add friends' videos to your stream." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="285" translatesAutoresizingMaskIntoConstraints="NO" id="ZfI-nn-4CG">
-                                <rect key="frame" x="20" y="347" width="285" height="34"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Add videos shared by friends." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="285" translatesAutoresizingMaskIntoConstraints="NO" id="ZfI-nn-4CG">
+                                <rect key="frame" x="20" y="259" width="285" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="fmc-RE-0Me"/>
                                     <constraint firstAttribute="width" constant="285" id="vvi-vo-bEV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We never spam." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zch-CB-dJt">
-                                <rect key="frame" x="63" y="526" width="195" height="22"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We won’t post or share anything without your permission." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zch-CB-dJt">
+                                <rect key="frame" x="1" y="438" width="319" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="195" id="Lmh-hj-1xj"/>
+                                    <constraint firstAttribute="width" constant="319" id="Lmh-hj-1xj"/>
                                     <constraint firstAttribute="height" constant="22" id="kFz-c9-ITH"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                 <color key="textColor" red="0.67843137249999996" green="0.67843137249999996" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="zch-CB-dJt" firstAttribute="centerX" secondItem="NlN-4t-7g7" secondAttribute="centerX" id="5qA-Ge-HSw"/>
                             <constraint firstItem="Tce-ZC-snW" firstAttribute="trailing" secondItem="ZfI-nn-4CG" secondAttribute="trailing" id="8RS-PI-iIK"/>
@@ -427,13 +425,13 @@
                             <constraint firstAttribute="bottom" secondItem="zch-CB-dJt" secondAttribute="bottom" constant="20" id="gKf-Vi-ZaY"/>
                             <constraint firstItem="Tce-ZC-snW" firstAttribute="top" secondItem="ZfI-nn-4CG" secondAttribute="bottom" constant="8" symbolic="YES" id="hky-4B-0vN"/>
                             <constraint firstItem="ofg-zc-5dU" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="73" id="kVt-34-weh"/>
-                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="142" id="lZw-I0-eZn"/>
+                            <constraint firstItem="SSJ-0W-AXT" firstAttribute="top" secondItem="lOZ-yG-UMD" secondAttribute="top" constant="141" id="lZw-I0-eZn"/>
                             <constraint firstItem="ZfI-nn-4CG" firstAttribute="leading" secondItem="lOZ-yG-UMD" secondAttribute="leading" constant="20" symbolic="YES" id="pu7-1N-Fm9"/>
                             <constraint firstItem="ofg-zc-5dU" firstAttribute="trailing" secondItem="VEZ-cK-rZH" secondAttribute="trailing" id="uKB-B7-eiV"/>
                             <constraint firstAttribute="bottom" secondItem="Tce-ZC-snW" secondAttribute="bottom" constant="135" id="zPJ-DT-yKR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Video from Friends" id="inz-d9-z8u">
+                    <navigationItem key="navigationItem" title="Add Friends' Video" id="inz-d9-z8u">
                         <barButtonItem key="leftBarButtonItem" title="BACK" id="p6p-Iy-q22"/>
                         <barButtonItem key="rightBarButtonItem" title="NEXT" id="BQn-4z-VAh">
                             <connections>
@@ -453,7 +451,7 @@
             </objects>
             <point key="canvasLocation" x="1113" y="-171"/>
         </scene>
-        <!--Signup Flow Step Four View Controller - Thanks!-->
+        <!--Signup Flow Step Four View Controller - Last Step!-->
         <scene sceneID="k8P-xK-euL">
             <objects>
                 <viewController id="1I6-gt-YXr" customClass="SignupFlowStepFourViewController" sceneMemberID="viewController">
@@ -462,7 +460,7 @@
                         <viewControllerLayoutGuide type="bottom" id="iqf-aC-OsL"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="IO9-hj-Ipx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Okb-5n-y4Z">
@@ -549,27 +547,17 @@
                                     <constraint firstItem="1vh-3N-ke5" firstAttribute="trailing" secondItem="yX5-8h-SLO" secondAttribute="trailing" id="lqB-7U-fIz"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="A few last things," textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jPc-su-JnQ">
-                                <rect key="frame" x="47" y="147" width="120" height="50"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We’re building your stream" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nQa-fx-j5X">
+                                <rect key="frame" x="18" y="65" width="283" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="JuS-aj-CF9"/>
-                                    <constraint firstAttribute="width" constant="120" id="irr-D5-San"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Your stream is filling up!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nQa-fx-j5X">
-                                <rect key="frame" x="29" y="65" width="261" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="261" id="3ze-9s-MuN"/>
+                                    <constraint firstAttribute="width" constant="283" id="3ze-9s-MuN"/>
                                     <constraint firstAttribute="height" constant="28" id="bTU-fP-gOW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="23"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="lle-Rp-YEg">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lle-Rp-YEg">
                                 <rect key="frame" x="101" y="103" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Adding videos..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Dp-a3-sZK">
@@ -579,27 +567,17 @@
                                     <constraint firstAttribute="width" constant="100" id="krm-Gt-QkK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="then it's time to" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBw-nl-v2Z">
-                                <rect key="frame" x="168" y="162" width="101" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Video you share from Shelby will live at http://shelby.tv/your_username" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="241" translatesAutoresizingMaskIntoConstraints="NO" id="uSo-R0-zYG">
+                                <rect key="frame" x="43" y="144" width="241" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="06F-dY-Ztp"/>
-                                    <constraint firstAttribute="width" constant="101" id="JOy-As-HgD"/>
+                                    <constraint firstAttribute="width" constant="241" id="bAN-x8-Ucw"/>
+                                    <constraint firstAttribute="height" constant="40" id="tah-ND-MeF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="watch the video in your stream." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSo-R0-zYG">
-                                <rect key="frame" x="60" y="178" width="199" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="199" id="bAN-x8-Ucw"/>
-                                    <constraint firstAttribute="height" constant="21" id="tah-ND-MeF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DvA-F4-1Pg" customClass="BlinkingLabel">
@@ -613,14 +591,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLn-8w-VXC">
-                                <rect key="frame" x="0.0" y="304" width="319" height="264"/>
+                                <rect key="frame" x="0.0" y="304" width="319" height="176"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="386" constant="156" id="HHc-f8-gtZ"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="up6-52-koR">
-                                <rect key="frame" x="0.0" y="304" width="319" height="264"/>
+                                <rect key="frame" x="0.0" y="304" width="319" height="176"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYg-U0-Ta4">
                                         <rect key="frame" x="20" y="12" width="100" height="21"/>
@@ -629,7 +607,7 @@
                                             <constraint firstAttribute="width" constant="100" id="alP-Nl-LCA"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZk-vv-Udq">
@@ -638,7 +616,7 @@
                                             <constraint firstAttribute="height" constant="21" id="FhM-Y9-QJv"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="******" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aQQ-99-V5c" customClass="STVTextField">
@@ -684,14 +662,13 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="7Dp-a3-sZK" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="129" id="27X-6m-f58"/>
                             <constraint firstItem="Okb-5n-y4Z" firstAttribute="centerX" secondItem="up6-52-koR" secondAttribute="centerX" id="6LS-9t-hX5"/>
                             <constraint firstItem="up6-52-koR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="304" id="BAv-Nr-yA8"/>
                             <constraint firstItem="7Dp-a3-sZK" firstAttribute="leading" secondItem="lle-Rp-YEg" secondAttribute="trailing" constant="8" symbolic="YES" id="DDB-bX-nu0"/>
-                            <constraint firstItem="jPc-su-JnQ" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="47" id="F6S-0L-Hl2"/>
                             <constraint firstItem="up6-52-koR" firstAttribute="trailing" secondItem="iLn-8w-VXC" secondAttribute="trailing" id="LaN-Oy-j0P"/>
                             <constraint firstItem="lle-Rp-YEg" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="103" id="Mdg-cz-dQO"/>
                             <constraint firstItem="DvA-F4-1Pg" firstAttribute="top" secondItem="7Dp-a3-sZK" secondAttribute="bottom" constant="8" symbolic="YES" id="MyA-S1-H7c"/>
@@ -701,7 +678,6 @@
                             <constraint firstItem="up6-52-koR" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="304" id="Rby-hv-nVf"/>
                             <constraint firstItem="Okb-5n-y4Z" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="20" symbolic="YES" id="SWb-q7-KGa"/>
                             <constraint firstItem="IGz-wX-mXs" firstAttribute="trailing" secondItem="Okb-5n-y4Z" secondAttribute="trailing" id="Se2-Oi-QVO"/>
-                            <constraint firstItem="jPc-su-JnQ" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="147" id="Uai-KC-DK3"/>
                             <constraint firstItem="DvA-F4-1Pg" firstAttribute="centerX" secondItem="IGz-wX-mXs" secondAttribute="centerX" id="VV5-uq-DH3"/>
                             <constraint firstItem="DvA-F4-1Pg" firstAttribute="centerX" secondItem="nQa-fx-j5X" secondAttribute="centerX" id="Wg7-DV-H8E"/>
                             <constraint firstItem="Okb-5n-y4Z" firstAttribute="bottom" secondItem="IGz-wX-mXs" secondAttribute="bottom" id="Yj0-Dq-HOs"/>
@@ -710,22 +686,20 @@
                             <constraint firstItem="iLn-8w-VXC" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="304" id="coI-jI-mhg"/>
                             <constraint firstItem="iLn-8w-VXC" firstAttribute="bottom" secondItem="IO9-hj-Ipx" secondAttribute="bottom" id="dCY-09-r41"/>
                             <constraint firstItem="Okb-5n-y4Z" firstAttribute="top" secondItem="IGz-wX-mXs" secondAttribute="top" id="gJn-iM-1hP"/>
-                            <constraint firstItem="jPc-su-JnQ" firstAttribute="centerY" secondItem="SBw-nl-v2Z" secondAttribute="centerY" id="gmn-Wu-996"/>
                             <constraint firstAttribute="trailing" secondItem="iLn-8w-VXC" secondAttribute="trailing" constant="1" id="hGf-mU-IV0"/>
-                            <constraint firstAttribute="bottom" secondItem="IGz-wX-mXs" secondAttribute="bottom" priority="212" constant="176" id="jwO-Cj-Ieq"/>
+                            <constraint firstAttribute="bottom" secondItem="IGz-wX-mXs" secondAttribute="bottom" priority="212" constant="208" id="jwO-Cj-Ieq"/>
                             <constraint firstItem="up6-52-koR" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" id="kGB-i2-oWb"/>
-                            <constraint firstItem="uSo-R0-zYG" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="178" id="o85-Te-5RI"/>
+                            <constraint firstItem="uSo-R0-zYG" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="143.5" id="o85-Te-5RI"/>
                             <constraint firstItem="IGz-wX-mXs" firstAttribute="leading" secondItem="IO9-hj-Ipx" secondAttribute="leading" constant="20" symbolic="YES" id="oJQ-Yl-2LG"/>
-                            <constraint firstAttribute="trailing" secondItem="SBw-nl-v2Z" secondAttribute="trailing" constant="51" id="q2p-GJ-yvN"/>
-                            <constraint firstItem="DvA-F4-1Pg" firstAttribute="centerX" secondItem="uSo-R0-zYG" secondAttribute="centerX" id="tek-w0-gk7"/>
+                            <constraint firstItem="DvA-F4-1Pg" firstAttribute="centerX" secondItem="uSo-R0-zYG" secondAttribute="centerX" constant="-3.5" id="tek-w0-gk7"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="qLZ-X5-ybO" appends="YES" id="Qn6-12-2F3"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Thanks!" id="n1r-LP-Ce5">
+                    <navigationItem key="navigationItem" title="Last Step!" id="n1r-LP-Ce5">
                         <barButtonItem key="leftBarButtonItem" title="BACK" id="K0S-vp-OJB"/>
-                        <barButtonItem key="rightBarButtonItem" title="MY STREAM" id="dIT-4X-7Ww">
+                        <barButtonItem key="rightBarButtonItem" title="FINISH" id="dIT-4X-7Ww">
                             <connections>
                                 <action selector="signup:" destination="1I6-gt-YXr" id="PwK-Pd-Myr"/>
                             </connections>
@@ -761,10 +735,12 @@
         <image name="twitter-fill.png" width="290" height="44"/>
         <image name="twitter.png" width="290" height="44"/>
         <image name="user_default_avatar.png" width="82" height="82"/>
+        <image name="user_default_avatar.png" width="82" height="82"/>
+        <image name="user_default_avatar.png" width="82" height="82"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

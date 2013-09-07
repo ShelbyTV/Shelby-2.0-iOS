@@ -87,15 +87,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         self.avatar.layer.masksToBounds = YES;
     }
     
-    // Background Image
-    NSString *imageNameSuffix = nil;
-    if (kShelbyFullscreenHeight > 480) {
-        imageNameSuffix = @"-568h";
-    } else {
-        imageNameSuffix = @"";
-    }
-    
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"bkgd-step%@%@.png", [self signupStepNumber], imageNameSuffix]]];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
