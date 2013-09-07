@@ -68,16 +68,17 @@
     [self.scrollViewDelegate scrollViewDidScroll:scrollView];
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.scrollViewDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+}
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSInteger page = scrollView.contentOffset.y / scrollView.bounds.size.height;
     [self showTip:page];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [self.scrollViewDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
-}
 
 #pragma mark - View Helpers
 

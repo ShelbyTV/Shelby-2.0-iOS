@@ -122,10 +122,13 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat overPull = scrollView.contentOffset.y - (scrollView.contentSize.height - scrollView.bounds.size.height);
-    if (overPull > 0) {
-        self.welcomeScrollScroller.contentOffset = CGPointMake(0, self.welcomeScrollScroller.contentOffset.y + overPull);
-        scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y - overPull);
+    if (scrollView.tracking) {
+        //only want overpull to affect outter when scrolling is due to USER action
+        CGFloat overPull = scrollView.contentOffset.y - (scrollView.contentSize.height - scrollView.bounds.size.height);
+        if (overPull > 0) {
+            self.welcomeScrollScroller.contentOffset = CGPointMake(0, self.welcomeScrollScroller.contentOffset.y + overPull);
+            scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y - overPull);
+        }
     }
 }
 
@@ -133,7 +136,6 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 {
     BOOL aboveMinimum = self.welcomeScrollScroller.contentOffset.y > (self.welcomeScrollScroller.bounds.size.height / 4.f);
     if (aboveMinimum) {
-        //we could use velocity to better
         [self.welcomeScrollScroller setContentOffset:CGPointMake(0, self.welcomeScrollScroller.bounds.size.height) animated:YES];
         self.welcomeScrollScroller.scrollEnabled = YES;
     } else {
