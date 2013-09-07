@@ -11,9 +11,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="welcome-h-logo" translatesAutoresizingMaskIntoConstraints="NO" id="MqN-IA-4nh">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-h-logo" translatesAutoresizingMaskIntoConstraints="NO" id="MqN-IA-4nh">
                     <rect key="frame" x="111" y="20" width="99" height="28"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="99" id="QWG-EA-oaR"/>
+                        <constraint firstAttribute="height" constant="28" id="apq-jH-1MR"/>
+                    </constraints>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Make Shelby yours." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pli-eh-kxF">
                     <rect key="frame" x="20" y="73" width="280" height="44"/>
@@ -56,7 +60,11 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.89838047450000003" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.92454559948979598" green="0.92454559948979598" blue="0.92454559948979598" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="MqN-IA-4nh" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="OtT-lQ-A8N"/>
+                <constraint firstAttribute="centerX" secondItem="MqN-IA-4nh" secondAttribute="centerX" id="hiZ-Li-uOU"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <connections>
@@ -67,6 +75,7 @@
     <resources>
         <image name="welcome-create-accont-btn-bg" width="280" height="100"/>
         <image name="welcome-h-logo" width="119" height="34"/>
+        <image name="welcome-login-btn-bg" width="280" height="50"/>
         <image name="welcome-login-btn-bg" width="280" height="50"/>
     </resources>
 </document>

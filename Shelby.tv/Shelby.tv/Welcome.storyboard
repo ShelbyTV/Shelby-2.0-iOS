@@ -17,12 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bj0-KA-mRd">
+                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bj0-KA-mRd">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bj0-KA-mRd" firstAttribute="leading" secondItem="gtp-cr-qjS" secondAttribute="leading" id="3sF-xs-zfn"/>
+                            <constraint firstAttribute="trailing" secondItem="Bj0-KA-mRd" secondAttribute="trailing" id="UHK-nK-85G"/>
+                            <constraint firstItem="Bj0-KA-mRd" firstAttribute="top" secondItem="r8o-pY-gBU" secondAttribute="bottom" id="VbI-B6-pP5"/>
+                            <constraint firstItem="IF5-QV-oaI" firstAttribute="top" secondItem="Bj0-KA-mRd" secondAttribute="bottom" id="oAN-qm-ith"/>
+                        </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
