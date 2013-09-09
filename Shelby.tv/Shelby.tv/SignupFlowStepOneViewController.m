@@ -21,6 +21,7 @@
 // Segue
 - (IBAction)gotoChooseVideoTypes:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *signupWithFacebookButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @end
@@ -44,6 +45,8 @@
 
     self.titleLabel.font = kShelbyFontH2;
     self.subtitleLabel.font = kShelbyFontH4Medium;
+    
+    [self.signupWithFacebookButton setBackgroundImage:[[UIImage imageNamed:@"facebook-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -139,6 +142,14 @@
 
 - (IBAction)signupWithFacebook:(id)sender
 {
+    UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [activity startAnimating];
+    activity.frame = CGRectMake(10, 10, 50, 44);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
+    
+    self.navigationItem.leftBarButtonItem.enabled = NO;
+
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
     // TODO: send GA event
     UIViewController *parent = self.parentViewController;

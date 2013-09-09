@@ -49,6 +49,7 @@
                                 <state key="disabled" title="Facebook Connected!"/>
                                 <connections>
                                     <action selector="connectoToFacebook:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="wJh-XH-nPz"/>
+                                    <action selector="signupWithFacebook:" destination="sgp-ZG-jtU" eventType="touchUpInside" id="tQO-NP-FSA"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="user_default_avatar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2tk-Hq-yu9">
@@ -256,6 +257,7 @@
                         <outlet property="email" destination="ZYL-g5-c1D" id="qbH-eX-x2R"/>
                         <outlet property="nameField" destination="9nE-1k-IW2" id="1be-bI-HPa"/>
                         <outlet property="nextButton" destination="QCD-S7-eJ7" id="njw-DH-noa"/>
+                        <outlet property="signupWithFacebookButton" destination="qkh-97-17H" id="OOI-nu-mHr"/>
                         <outlet property="subtitleLabel" destination="I88-xl-uu2" id="QN2-4x-TqX"/>
                         <outlet property="titleLabel" destination="M3R-Mq-Khr" id="TVg-GA-mne"/>
                         <segue destination="dtY-NO-hRl" kind="push" identifier="ChooseVideos" id="A4V-Ow-igg"/>
@@ -767,8 +769,6 @@
     <resources>
         <image name="facebook.png" width="290" height="44"/>
         <image name="twitter.png" width="290" height="44"/>
-        <image name="user_default_avatar.png" width="82" height="82"/>
-        <image name="user_default_avatar.png" width="82" height="82"/>
         <image name="user_default_avatar.png" width="82" height="82"/>
     </resources>
     <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
