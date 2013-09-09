@@ -166,19 +166,19 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-up" translatesAutoresizingMaskIntoConstraints="NO" id="KQj-IJ-3ft" userLabel="scroll up">
-                    <rect key="frame" x="135" y="278" width="50" height="92"/>
+                    <rect key="frame" x="130" y="273" width="60" height="102"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="J50-uq-XRm"/>
-                        <constraint firstAttribute="height" constant="92" id="ags-1N-Shj"/>
+                        <constraint firstAttribute="width" constant="60" id="J50-uq-XRm"/>
+                        <constraint firstAttribute="height" constant="102" id="ags-1N-Shj"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-left" translatesAutoresizingMaskIntoConstraints="NO" id="B3Z-df-b1w" userLabel="swipe left">
-                    <rect key="frame" x="126" y="288" width="67" height="73"/>
+                    <rect key="frame" x="123" y="284" width="73" height="80"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="67" id="gVS-zt-1SP"/>
-                        <constraint firstAttribute="height" constant="73" id="xeW-u8-kOO"/>
+                        <constraint firstAttribute="width" constant="73" id="gVS-zt-1SP"/>
+                        <constraint firstAttribute="height" constant="80" id="xeW-u8-kOO"/>
                     </constraints>
                 </imageView>
             </subviews>
@@ -224,7 +224,7 @@
         <image name="welcome-icon-twitter" width="40" height="40"/>
         <image name="welcome-icon-vimeo" width="40" height="40"/>
         <image name="welcome-icon-youtube" width="42" height="42"/>
-        <image name="welcome-swipe-left" width="67" height="73"/>
-        <image name="welcome-swipe-up" width="50" height="92"/>
+        <image name="welcome-swipe-left" width="73" height="80"/>
+        <image name="welcome-swipe-up" width="60" height="102"/>
     </resources>
 </document>

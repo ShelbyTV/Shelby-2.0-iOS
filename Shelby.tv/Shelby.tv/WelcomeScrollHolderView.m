@@ -48,6 +48,12 @@
     [self showTip:0];
 }
 
+- (void)dealloc
+{
+    [self cancelScrollUpHelper];
+    [self cancelSwipeLeftHelper];
+}
+
 - (void)initScroller
 {
     self.scrollView.delegate = self;
@@ -111,11 +117,11 @@
     switch (page) {
         case 0:
             [self cancelScrollUpHelper];
-            [self resetSwipeLeftHelper:1];
+            [self resetSwipeLeftHelper:.5];
             break;
         case 1:
             [self cancelSwipeLeftHelper];
-            [self resetScrollUpHelper:1];
+            [self resetScrollUpHelper:1.5];
             break;
         default:
             break;
@@ -273,21 +279,25 @@
 
 #pragma mark - Timers for Scroll Images
 
+#define BREATHE_TIME 1.3
+
 - (void)showScrollUpHelper
 {
     _scrollUpTimer = nil;
-    [UIView animateWithDuration:0.2 animations:^{
+    self.scrollUpImage.alpha = 0.f;
+    self.scrollUpImage.hidden = NO;
+
+    UIViewAnimationOptions options = UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationOptionCurveEaseOut;
+    [UIView animateWithDuration:BREATHE_TIME delay:0 options:options animations:^{
         self.scrollUpImage.alpha = 1.f;
-    }];
+    } completion:nil];
 }
 
 - (void)cancelScrollUpHelper
 {
     [_scrollUpTimer invalidate];
     _scrollUpTimer = nil;
-    [UIView animateWithDuration:0.2 animations:^{
-        self.scrollUpImage.alpha = 0.f;
-    }];
+    self.scrollUpImage.hidden = YES;
 }
 
 - (void)resetScrollUpHelper:(NSTimeInterval)t
@@ -303,18 +313,20 @@
 - (void)showSwipeLeftHelper
 {
     _swipeLeftTimer = nil;
-    [UIView animateWithDuration:0.2 animations:^{
+    self.swipeLeftImage.alpha = 0.f;
+    self.swipeLeftImage.hidden = NO;
+
+    UIViewAnimationOptions options = UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse | UIViewAnimationOptionCurveEaseOut;
+    [UIView animateWithDuration:BREATHE_TIME delay:0 options:options animations:^{
         self.swipeLeftImage.alpha = 1.f;
-    }];
+    } completion:nil];
 }
 
 - (void)cancelSwipeLeftHelper
 {
     [_swipeLeftTimer invalidate];
     _swipeLeftTimer = nil;
-    [UIView animateWithDuration:0.2 animations:^{
-        self.swipeLeftImage.alpha = 0.f;
-    }];
+    self.swipeLeftImage.hidden = YES;
 }
 
 - (void)resetSwipeLeftHelper:(NSTimeInterval)t
