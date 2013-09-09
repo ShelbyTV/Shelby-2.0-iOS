@@ -30,6 +30,9 @@
 
 - (void)updateAppearance
 {
+    UIImage *textFieldBackground = [[UIImage imageNamed:@"textfield-outline-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
+    [self setBackground:textFieldBackground];
+
     self.layer.cornerRadius = 2.0;
     self.borderStyle = UITextBorderStyleNone;
 }
