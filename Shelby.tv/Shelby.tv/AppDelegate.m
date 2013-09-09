@@ -13,6 +13,7 @@
 #import "Appirater.h"
 #import "FacebookHandler.h"
 #import "GAI.h"
+#import "LocalyticsSession.h"
 #import "ShelbyBrain.h"
 
 #ifdef SHELBY_ENTERPRISE
@@ -24,6 +25,8 @@
     #define HOCKEY_LIVE                     @"67c862299d06ff9d891434abb89da906"  // Live
     #define GOOGLE_ANALYTICS_ID             @"UA-21191360-12"
 #endif
+
+#define LOCALYTICS_APP_KEY                  @"44581e91bd028aa1fed9703-cc9a5e9c-1963-11e3-9391-009c5fda0a25"
 
 @interface AppDelegate(HockeyProtocols) <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
 @end
@@ -86,6 +89,9 @@
 {
     // Appirater
     [Appirater appEnteredForeground:YES];
+
+    [[LocalyticsSession shared] resume];
+    [[LocalyticsSession shared] upload];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notifcation {
@@ -112,16 +118,29 @@
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
     [[FacebookHandler sharedInstance] handleDidBecomeActive];
+
+    [[LocalyticsSession shared] resume];
+    [[LocalyticsSession shared] upload];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [[LocalyticsSession shared] close];
+    [[LocalyticsSession shared] upload];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     [self.brain handleWillResignActive];
+
+    [[LocalyticsSession shared] close];
+    [[LocalyticsSession shared] upload];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-
+    [[LocalyticsSession shared] close];
+    [[LocalyticsSession shared] upload];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -183,6 +202,8 @@
     // Making sure there are no updates in the target we use for dev & app store release
     [[BITHockeyManager sharedHockeyManager] setDisableUpdateManager:YES];
 #endif
+
+    [[LocalyticsSession shared] startSession:LOCALYTICS_APP_KEY];
 }
 
 #pragma mark - BITUpdateManagerDelegate
