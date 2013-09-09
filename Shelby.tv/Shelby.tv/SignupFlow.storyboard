@@ -740,6 +740,7 @@
         <image name="twitter.png" width="290" height="44"/>
         <image name="user_default_avatar.png" width="82" height="82"/>
     </resources>
+    <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

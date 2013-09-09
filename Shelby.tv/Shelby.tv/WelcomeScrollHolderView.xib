@@ -183,6 +183,7 @@
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="B3Z-df-b1w" secondAttribute="centerX" id="7hb-Ed-jqB"/>
                 <constraint firstAttribute="bottom" secondItem="eSh-Og-UGs" secondAttribute="bottom" constant="10" id="8Eg-su-T4B"/>

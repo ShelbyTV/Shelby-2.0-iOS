@@ -77,6 +77,7 @@
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="8" firstAttribute="top" secondItem="1" secondAttribute="top" priority="614" constant="240" id="37"/>
                 <constraint firstItem="3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1" secondAttribute="top" constant="55" id="39"/>
