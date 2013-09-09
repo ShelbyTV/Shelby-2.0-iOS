@@ -67,6 +67,7 @@
                                     <constraint firstAttribute="height" constant="25" id="SaL-oi-Dbd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="24"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Let your friends know who you are" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I88-xl-uu2">
@@ -92,6 +93,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="Qx9-W0-Nli"/>
                                         </constraints>
+                                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                         <connections>
@@ -104,6 +106,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="Dfd-6u-hg4"/>
                                         </constraints>
+                                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                         <connections>
@@ -117,6 +120,7 @@
                                             <constraint firstAttribute="width" constant="280" id="bzL-Tb-HxI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwr-uj-CmF">
@@ -125,7 +129,7 @@
                                             <constraint firstAttribute="height" constant="21" id="pdo-vr-QVw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxD-FM-aTV" userLabel="login button">
@@ -348,7 +352,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="We’ll find the best videos your friends are sharing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="255" translatesAutoresizingMaskIntoConstraints="NO" id="SSJ-0W-AXT" userLabel="subtitle">
-                                <rect key="frame" x="32" y="141" width="255" height="90"/>
+                                <rect key="frame" x="33" y="141" width="255" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="6IK-fO-sHn"/>
                                 </constraints>
@@ -363,11 +367,11 @@
                                     <constraint firstAttribute="height" constant="44" id="cPt-kg-P7F"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="         Add Twitter Videos" backgroundImage="twitter.png">
+                                <state key="normal" title="Add Twitter Videos" backgroundImage="twitter.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="disabled" title="Twitter Connected!" backgroundImage="twitter-fill.png"/>
+                                <state key="disabled" title="Twitter Connected!"/>
                                 <connections>
                                     <action selector="connectoToTwitter:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="qD9-yi-Pqg"/>
                                 </connections>
@@ -379,11 +383,11 @@
                                     <constraint firstAttribute="height" constant="44" id="87U-wd-803"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="          Add Facebook Videos" backgroundImage="facebook.png">
+                                <state key="normal" title="Add Facebook Videos" backgroundImage="facebook.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="disabled" title="Facebook Connected!" backgroundImage="facebook-fill.png"/>
+                                <state key="disabled" title="Facebook Connected!"/>
                                 <connections>
                                     <action selector="connectoToFacebook:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="RIg-B8-5FG"/>
                                 </connections>
@@ -625,6 +629,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="aZK-a3-Vbm"/>
                                         </constraints>
+                                        <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                         <connections>
@@ -637,6 +642,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="uwT-Rd-cFF"/>
                                         </constraints>
+                                        <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                         <connections>
@@ -730,9 +736,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="facebook-fill.png" width="290" height="44"/>
         <image name="facebook.png" width="290" height="44"/>
-        <image name="twitter-fill.png" width="290" height="44"/>
         <image name="twitter.png" width="290" height="44"/>
         <image name="user_default_avatar.png" width="82" height="82"/>
         <image name="user_default_avatar.png" width="82" height="82"/>

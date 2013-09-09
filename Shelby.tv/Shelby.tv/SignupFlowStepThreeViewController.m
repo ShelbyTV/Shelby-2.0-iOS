@@ -43,6 +43,12 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSocialButtons) name:kShelbyNotificationTwitterConnectCompleted object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSocialButtons) name:kShelbyNotificationFacebookConnectCompleted object:nil];
     }
+    
+    [self.facebookButton setBackgroundImage:[[UIImage imageNamed:@"facebook-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    [self.twitterButton setBackgroundImage:[[UIImage imageNamed:@"twitter-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    [self.facebookButton setBackgroundImage:[[UIImage imageNamed:@"button-off"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateDisabled];
+    [self.twitterButton setBackgroundImage:[[UIImage imageNamed:@"button-off"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateDisabled];
+
 
     self.subtitleLabel.font = kShelbyFontH2;
 }
