@@ -250,6 +250,33 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 - (void)shareComplete:(BOOL)didComplete
 {
     if (self.completionHandler) {
+        // TODO: KP KP: can refactor this into a method in an animation class. So we don't do the same thing in here and in liking.
+        if (didComplete) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"share-large"]];
+                NSInteger imageHeight = imageView.frame.size.height;
+                NSInteger imageWidth = imageView.frame.size.width;
+                NSInteger viewHeight = self.viewController.view.frame.size.height;
+                NSInteger viewWidth = self.viewController.view.frame.size.width;
+                imageView.frame = CGRectMake(viewWidth/2 - imageWidth/4, viewHeight/2 - imageHeight/4, imageWidth/2, imageHeight/2);
+                [self.viewController.view addSubview:imageView];
+                [UIView animateWithDuration:0.1 animations:^{
+                    imageView.frame = CGRectMake(viewWidth/2 - imageWidth/2, viewHeight/2 - imageHeight/2, imageWidth, imageHeight);
+                } completion:^(BOOL finished) {
+                    [UIView animateWithDuration:0.3 animations:^{
+                        imageView.alpha = 0.99;
+                    } completion:^(BOOL finished) {
+                        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationCurveEaseIn animations:^{
+                            imageView.frame = CGRectMake(viewWidth/2 - imageWidth/4, viewHeight/2 - imageHeight/4, imageWidth/2, imageHeight/2);
+                            imageView.alpha = 0;
+                        } completion:^(BOOL finished) {
+                            [imageView removeFromSuperview];
+                        }];
+                    }];
+                }];
+            });
+        }
+
         self.completionHandler(didComplete);
     }
 }

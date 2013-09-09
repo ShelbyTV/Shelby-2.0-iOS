@@ -762,6 +762,31 @@
     BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
     if (!didLike) {
         DLog(@"***ERROR*** Tried to Like, but action resulted in UNLIKE of the video");
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart-large"]];
+            NSInteger imageHeight = imageView.frame.size.height;
+            NSInteger imageWidth = imageView.frame.size.width;
+            NSInteger viewHeight = self.currentStreamBrowseVC.view.frame.size.height;
+            NSInteger viewWidth = self.currentStreamBrowseVC.view.frame.size.width;
+            imageView.frame = CGRectMake(viewWidth/2 - imageWidth/4, viewHeight/2 - imageHeight/4, imageWidth/2, imageHeight/2);
+            [self.currentStreamBrowseVC.view addSubview:imageView];
+            [UIView animateWithDuration:0.1 animations:^{
+                imageView.frame = CGRectMake(viewWidth/2 - imageWidth/2, viewHeight/2 - imageHeight/2, imageWidth, imageHeight);
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    imageView.alpha = 0.99;
+                } completion:^(BOOL finished) {
+                    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationCurveEaseIn animations:^{
+                        imageView.frame = CGRectMake(viewWidth/2 - imageWidth/4, viewHeight/2 - imageHeight/4, imageWidth/2, imageHeight/2);
+                        imageView.alpha = 0;
+                    } completion:^(BOOL finished) {
+                        [imageView removeFromSuperview];
+                    }];
+                }];
+            }];
+        });
     }
 }
 
