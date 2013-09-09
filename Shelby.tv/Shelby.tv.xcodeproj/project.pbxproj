@@ -517,6 +517,21 @@
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
+		9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
+		9137187117DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
+		9137187217DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
+		9137187317DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */; };
+		9137187417DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */; };
+		9137187517DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */; };
+		9137187617DE94F00021A99B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9137186D17DE94EF0021A99B /* LICENSE */; };
+		9137187717DE94F00021A99B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9137186D17DE94EF0021A99B /* LICENSE */; };
+		9137187817DE94F00021A99B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9137186D17DE94EF0021A99B /* LICENSE */; };
+		9137187A17DE950E0021A99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187917DE950E0021A99B /* libz.dylib */; };
+		9137187C17DE95140021A99B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187B17DE95140021A99B /* libsqlite3.dylib */; };
+		9137187D17DE951A0021A99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187917DE950E0021A99B /* libz.dylib */; };
+		9137187E17DE95200021A99B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187B17DE95140021A99B /* libsqlite3.dylib */; };
+		9137187F17DE95260021A99B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187917DE950E0021A99B /* libz.dylib */; };
+		9137188017DE952B0021A99B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137187B17DE95140021A99B /* libsqlite3.dylib */; };
 		913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
 		913D854917CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
 		913D854A17CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */; };
@@ -1021,6 +1036,13 @@
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
+		9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iOSa_2.18.5.version; sourceTree = "<group>"; };
+		9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLocalyticsAMP.a; sourceTree = "<group>"; };
+		9137186D17DE94EF0021A99B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		9137186E17DE94EF0021A99B /* LocalyticsAmpSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsAmpSession.h; sourceTree = "<group>"; };
+		9137186F17DE94EF0021A99B /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsSession.h; sourceTree = "<group>"; };
+		9137187917DE950E0021A99B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		9137187B17DE95140021A99B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeLoginView.xib; sourceTree = "<group>"; };
 		913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeLoginView.h; sourceTree = "<group>"; };
 		913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeLoginView.m; sourceTree = "<group>"; };
@@ -1154,6 +1176,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9137187E17DE95200021A99B /* libsqlite3.dylib in Frameworks */,
+				9137187D17DE951A0021A99B /* libz.dylib in Frameworks */,
 				915CDA8117BE96E4003C3A38 /* StoreKit.framework in Frameworks */,
 				1C0E527F17BACBBA008D5D81 /* CFNetwork.framework in Frameworks */,
 				91CE0759177A418500024180 /* OpenGLES.framework in Frameworks */,
@@ -1175,6 +1199,7 @@
 				1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */,
 				1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
+				9137187417DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 				8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 				1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
@@ -1184,6 +1209,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9137188017DE952B0021A99B /* libsqlite3.dylib in Frameworks */,
+				9137187F17DE95260021A99B /* libz.dylib in Frameworks */,
 				915CDA8217BE96EB003C3A38 /* StoreKit.framework in Frameworks */,
 				1C0E528117BACBCC008D5D81 /* CFNetwork.framework in Frameworks */,
 				91CE0758177A417A00024180 /* OpenGLES.framework in Frameworks */,
@@ -1205,6 +1232,7 @@
 				1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */,
 				1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
+				9137187517DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 				8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 				1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
@@ -1214,6 +1242,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9137187C17DE95140021A99B /* libsqlite3.dylib in Frameworks */,
+				9137187A17DE950E0021A99B /* libz.dylib in Frameworks */,
 				915CDA8017BE96D9003C3A38 /* StoreKit.framework in Frameworks */,
 				1C0E527C17BACBA8008D5D81 /* CFNetwork.framework in Frameworks */,
 				91CE075A177A418B00024180 /* OpenGLES.framework in Frameworks */,
@@ -1236,6 +1266,7 @@
 				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
 				8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */,
+				9137187317DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1533,6 +1564,8 @@
 		8E209710162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9137187B17DE95140021A99B /* libsqlite3.dylib */,
+				9137187917DE950E0021A99B /* libz.dylib */,
 				915CDA7E17BE9690003C3A38 /* StoreKit.framework */,
 				1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */,
 				91CE0757177A417900024180 /* OpenGLES.framework */,
@@ -1714,13 +1747,14 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9137186A17DE94EF0021A99B /* Localytics */,
 				1C56F11417BABD8C00EE9206 /* Appirater */,
 				91A36261178F296B00381218 /* AHEasing */,
 				91A3625B178F290300381218 /* UIView+EasingFunctions */,
 				91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */,
 				91E5D4661757BA1F00AD3746 /* LBYouTubeView */,
 				8E70248C1715E71500E8DE46 /* OAuth Consumer */,
-				8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */,
+				8E87C5A816F38C2D00AC93C0 /* GoogleAnalyticsSDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
 			);
@@ -1728,7 +1762,7 @@
 			path = Shelby.tv;
 			sourceTree = "<group>";
 		};
-		8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */ = {
+		8E87C5A816F38C2D00AC93C0 /* GoogleAnalyticsSDK */ = {
 			isa = PBXGroup;
 			children = (
 				8E87C5A916F38C2D00AC93C0 /* GAI.h */,
@@ -1739,8 +1773,8 @@
 				8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */,
 				8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */,
 			);
-			name = "Google Analytics SDK";
-			path = "Library/Google Analytics SDK";
+			name = GoogleAnalyticsSDK;
+			path = Library/GoogleAnalyticsSDK;
 			sourceTree = SOURCE_ROOT;
 		};
 		8E98F7B3165C2F750095E985 /* ShelbyPlayer */ = {
@@ -1901,6 +1935,19 @@
 			);
 			name = Constants;
 			sourceTree = "<group>";
+		};
+		9137186A17DE94EF0021A99B /* Localytics */ = {
+			isa = PBXGroup;
+			children = (
+				9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */,
+				9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */,
+				9137186D17DE94EF0021A99B /* LICENSE */,
+				9137186E17DE94EF0021A99B /* LocalyticsAmpSession.h */,
+				9137186F17DE94EF0021A99B /* LocalyticsSession.h */,
+			);
+			name = Localytics;
+			path = Library/Localytics;
+			sourceTree = SOURCE_ROOT;
 		};
 		916F41C1179F06A9001D9DF7 /* Welcome Images */ = {
 			isa = PBXGroup;
@@ -2122,6 +2169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C8109BC16EE2CBF0030077C /* InfoPlist.strings in Resources */,
+				9137187717DE94F00021A99B /* LICENSE in Resources */,
 				1CD8111F17CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14917BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				912261D717B97F070092AF30 /* overlay-likers@2x.png in Resources */,
@@ -2149,6 +2197,7 @@
 				91A362831790822D00381218 /* buzzfeed.png in Resources */,
 				91A362861790822D00381218 /* gopro.png in Resources */,
 				91A362891790822D00381218 /* gq.png in Resources */,
+				9137187117DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				91A3628C1790822D00381218 /* nytimes.png in Resources */,
 				1CD8111917CCF6C0002FD84B /* play-all.png in Resources */,
 				91A3628F1790822D00381218 /* onion.png in Resources */,
@@ -2233,6 +2282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */,
+				9137187817DE94F00021A99B /* LICENSE in Resources */,
 				1CD8112017CCF6C0002FD84B /* play-current.png in Resources */,
 				1C56F14A17BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				912261D817B97F070092AF30 /* overlay-likers@2x.png in Resources */,
@@ -2260,6 +2310,7 @@
 				91A362841790822D00381218 /* buzzfeed.png in Resources */,
 				91A362871790822D00381218 /* gopro.png in Resources */,
 				91A3628A1790822D00381218 /* gq.png in Resources */,
+				9137187217DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				91A3628D1790822D00381218 /* nytimes.png in Resources */,
 				1CD8111A17CCF6C0002FD84B /* play-all.png in Resources */,
 				91A362901790822D00381218 /* onion.png in Resources */,
@@ -2345,6 +2396,7 @@
 			files = (
 				8E20971C162F3A61000A2DFD /* InfoPlist.strings in Resources */,
 				912261D317B97F070092AF30 /* overlay-likers.png in Resources */,
+				9137187617DE94F00021A99B /* LICENSE in Resources */,
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FB16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
@@ -2379,6 +2431,7 @@
 				91A3628B1790822D00381218 /* nytimes.png in Resources */,
 				91A3628E1790822D00381218 /* onion.png in Resources */,
 				91A362911790822D00381218 /* pitchfork.png in Resources */,
+				9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				91A362941790822D00381218 /* ted.png in Resources */,
 				91A362971790822D00381218 /* vice.png in Resources */,
 				913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
@@ -2893,7 +2946,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
+					"$(SRCROOT)/Library/Localytics",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2944,7 +2998,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
+					"$(SRCROOT)/Library/Localytics",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2990,7 +3045,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
+					"$(SRCROOT)/Library/Localytics",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3037,7 +3093,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
+					"$(SRCROOT)/Library/Localytics",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3162,7 +3219,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
+					"$(SRCROOT)/Library/Localytics",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3213,7 +3271,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
+					"$(SRCROOT)/Library/Localytics",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
