@@ -89,7 +89,7 @@
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="22" secondAttribute="bottom" priority="390" constant="130" id="11"/>
                 <constraint firstItem="7" firstAttribute="top" secondItem="3" secondAttribute="top" priority="614" constant="240" id="12"/>
                 <constraint firstAttribute="centerX" secondItem="7" secondAttribute="centerX" id="13"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="7" secondAttribute="bottom" priority="358" constant="50" id="14"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="7" secondAttribute="bottom" priority="767" constant="50" id="14"/>
                 <constraint firstAttribute="bottom" secondItem="29" secondAttribute="bottom" constant="-5" id="49"/>
                 <constraint firstAttribute="trailing" secondItem="29" secondAttribute="trailing" constant="41" id="50"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="29" secondAttribute="trailing" constant="8" id="51"/>

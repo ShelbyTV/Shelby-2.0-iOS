@@ -59,7 +59,7 @@
     if (UIInterfaceOrientationIsLandscape(orientation)) {
         imageName = [NSString stringWithFormat:@"bkgd-landscape%@.png", largeIphoneImage];
     } else {
-        imageName = [NSString stringWithFormat:@"bkgd-step1%@.png", largeIphoneImage];;
+        imageName = [NSString stringWithFormat:@"no-content-bkgd%@.png", largeIphoneImage];;
     }
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:imageName]];
