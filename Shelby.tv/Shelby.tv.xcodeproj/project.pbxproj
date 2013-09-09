@@ -1705,7 +1705,7 @@
 				91E5D46C1757C89F00AD3746 /* YTVimeoExtractor */,
 				91E5D4661757BA1F00AD3746 /* LBYouTubeView */,
 				8E70248C1715E71500E8DE46 /* OAuth Consumer */,
-				8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */,
+				8E87C5A816F38C2D00AC93C0 /* GoogleAnalyticsSDK */,
 				1C81095E16EE21230030077C /* HockeySDK.embeddedframework */,
 				8E01AFA716E67365000567D4 /* AFNetworking */,
 			);
@@ -1713,7 +1713,7 @@
 			path = Shelby.tv;
 			sourceTree = "<group>";
 		};
-		8E87C5A816F38C2D00AC93C0 /* Google Analytics SDK */ = {
+		8E87C5A816F38C2D00AC93C0 /* GoogleAnalyticsSDK */ = {
 			isa = PBXGroup;
 			children = (
 				8E87C5A916F38C2D00AC93C0 /* GAI.h */,
@@ -1724,8 +1724,8 @@
 				8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */,
 				8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */,
 			);
-			name = "Google Analytics SDK";
-			path = "Library/Google Analytics SDK";
+			name = GoogleAnalyticsSDK;
+			path = "Library/GoogleAnalyticsSDK";
 			sourceTree = SOURCE_ROOT;
 		};
 		8E98F7B3165C2F750095E985 /* ShelbyPlayer */ = {
@@ -2869,7 +2869,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2920,7 +2920,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2966,7 +2966,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3013,7 +3013,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3138,7 +3138,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3189,7 +3189,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Library/Google Analytics SDK\"",
+					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
