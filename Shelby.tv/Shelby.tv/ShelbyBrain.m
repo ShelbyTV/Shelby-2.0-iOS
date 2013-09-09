@@ -62,6 +62,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     }
     [User sessionDidBecomeActive];
     [self.homeVC handleDidBecomeActive];
+    
+    [self.signupFlowVC handleDidBecomeActive];
 
     //see method comments for explanation
     [self refreshUsersStreamAfterDelay];
@@ -844,6 +846,17 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 - (void)welcomeDidTapSignup:(WelcomeViewController *)welcomeVC
 {
     [self presentSignupVC];
+}
+
+- (void)welcomeDidTapSignupWithFacebook:(WelcomeViewController *)welcomeVC
+{
+    UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow" bundle:nil];
+    self.signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard instantiateInitialViewController];
+    self.signupFlowVC.signupDelegate = self;
+    
+    [self.mainWindow.rootViewController presentViewController:self.signupFlowVC animated:YES completion:^{
+        [self.signupFlowVC startWithFacebookSignup];
+    }];
 }
 
 - (void)welcomeDidTapLogin:(WelcomeViewController *)welcomeVC

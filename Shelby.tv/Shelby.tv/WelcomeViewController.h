@@ -22,4 +22,5 @@
 - (void)welcomeDidTapPreview:(WelcomeViewController *)welcomeVC;
 - (void)welcomeDidTapLogin:(WelcomeViewController *)welcomeVC;
 - (void)welcomeDidTapSignup:(WelcomeViewController *)welcomeVC;
+- (void)welcomeDidTapSignupWithFacebook:(WelcomeViewController *)welcomeVC;
 @end

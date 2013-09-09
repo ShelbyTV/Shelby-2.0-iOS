@@ -33,4 +33,7 @@
 @interface SignupFlowNavigationViewController : UINavigationController <SignupFlowViewDelegate>
 
 @property (nonatomic, weak) id<SignupFlowNavigationViewDelegate> signupDelegate;
+
+- (void)startWithFacebookSignup;
+- (void)handleDidBecomeActive;
 @end

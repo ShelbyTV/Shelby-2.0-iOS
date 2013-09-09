@@ -62,6 +62,13 @@
     self.email.text = self.signupDictionary[kShelbySignupEmailKey];
 }
 
+- (void)handleDidBecomeActive
+{
+    [self viewEnabled:YES];
+    
+    self.navigationItem.rightBarButtonItem = self.nextButton;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [super prepareForSegue:segue sender:sender];
@@ -74,6 +81,18 @@
     stepTwo.facebookSignup = self.facebookSignup;
     
     self.navigationItem.rightBarButtonItem = self.nextButton;
+}
+
+- (void)addObserversForSignup:(BOOL)signupNotifications
+{
+    if (signupNotifications) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidSucceed:) name:kShelbyNotificationUserUpdateDidSucceed object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidFail:) name:kShelbyNotificationUserUpdateDidFail object:nil];
+    }
 }
 
 - (void)removeObserversForSignup:(BOOL)signupNotifications
@@ -130,6 +149,12 @@
     }];
 }
 
+
+- (void)startWithFacebookSignup
+{
+    [self signupWithFacebook:nil];
+}
+
 - (IBAction)goBack:(id)sender
 {
     if ([[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext]) {
@@ -142,6 +167,8 @@
 
 - (IBAction)signupWithFacebook:(id)sender
 {
+    [self viewEnabled:NO];
+    
     UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [activity startAnimating];
     activity.frame = CGRectMake(10, 10, 50, 44);
@@ -149,8 +176,8 @@
     
     self.navigationItem.leftBarButtonItem.enabled = NO;
 
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    [self addObserversForSignup:YES];
+
     // TODO: send GA event
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
@@ -159,6 +186,8 @@
 }
 
 - (IBAction)loginTapped:(UIButton *)sender {
+    [self viewEnabled:NO];
+    
     //DS to KP: I'm not as familiar with iOS paradigms as you... why are we using parent like this, instead of explicity setting delegate?
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
@@ -216,16 +245,11 @@
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         // If user exists, just update the values. Otherwise, create new user
         if (user) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidSucceed:) name:kShelbyNotificationUserUpdateDidSucceed object:nil];
-            
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidFail:) name:kShelbyNotificationUserUpdateDidFail object:nil];
+            [self addObserversForSignup:NO];
             
             [parent performSelector:@selector(updateSignupUser)];
         } else {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
-            
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
-            
+            [self addObserversForSignup:YES];
 
             [parent performSelector:@selector(signupUser)];
         }
@@ -234,6 +258,8 @@
 
 - (void)signupSuccess
 {
+    [self viewEnabled:YES];
+    
     [self performSegueWithIdentifier:@"ChooseVideos" sender:self];
     self.navigationItem.rightBarButtonItem = self.nextButton;
     self.navigationItem.leftBarButtonItem.enabled = YES;
@@ -241,6 +267,8 @@
 
 - (void)signupErrorWithErrorMessage:(NSString *)errorMessage
 {
+    [self viewEnabled:YES];
+    
     if (!errorMessage || ![errorMessage isKindOfClass:[NSString class]] || [errorMessage isEqualToString:@""]) {
         errorMessage = @"There was a problem. Please try again later.";
     }
@@ -256,6 +284,12 @@
     self.navigationItem.rightBarButtonItem = self.nextButton;
     self.navigationItem.leftBarButtonItem.enabled = YES;
 
+}
+
+- (void)viewEnabled:(BOOL)enabled
+{
+    self.view.userInteractionEnabled = enabled;
+    self.view.alpha = enabled ? 1.0 : 0.8;
 }
 
 - (void)userSignupDidFail:(NSNotification *)notification

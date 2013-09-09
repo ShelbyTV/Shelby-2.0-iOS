@@ -300,6 +300,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     return backButton;
 }
 
+- (void)handleDidBecomeActive
+{
+    // To be implemented in subclass if needed.
+}
+
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {

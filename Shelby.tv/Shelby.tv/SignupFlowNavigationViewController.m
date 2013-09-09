@@ -7,6 +7,7 @@
 //
 
 #import "SignupFlowNavigationViewController.h"
+#import "SignupFlowStepOneViewController.h"
 #import "GAI.h"
 
 @interface SignupFlowNavigationViewController ()
@@ -41,6 +42,19 @@
 
     //NB: see AppDelegate for appearance proxy setup
     self.navigationBar.translucent = YES;
+}
+
+- (void)handleDidBecomeActive
+{
+    SignupFlowViewController *signupVC = (SignupFlowViewController *)[self topViewController];
+    [signupVC handleDidBecomeActive];
+}
+
+- (void)startWithFacebookSignup
+{
+    SignupFlowStepOneViewController *stepOne = (SignupFlowStepOneViewController *)self.viewControllers[0];
+    STVAssert([stepOne isKindOfClass:[SignupFlowStepOneViewController class]], @"First signup controller must be step one.");
+    [stepOne startWithFacebookSignup];
 }
 
 - (void)didReceiveMemoryWarning

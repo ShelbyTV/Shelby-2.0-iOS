@@ -526,7 +526,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                   [self handleCreateUserWithJSON:JSON andError:error];
               }];
          } else {
-             [self.delegate loginUserDidCompleteWithError:@"Go to Settings -> Privacy -> Facebook and turn Shelby ON"];
+             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
          }
      }];
 }

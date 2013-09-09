@@ -10,4 +10,5 @@
 
 @interface SignupFlowStepOneViewController : SignupFlowViewController <UIAlertViewDelegate>
 
+- (void)startWithFacebookSignup;
 @end

@@ -84,8 +84,10 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 
 #pragma mark - WelcomeLoginView's IBActions
 
-- (IBAction)signupWithFacebookTapped:(id)sender {
-    //TODO
+- (IBAction)signupWithFacebookTapped:(id)sender
+{
+    [self welcomeComplete];
+    [self.delegate welcomeDidTapSignupWithFacebook:self];
 }
 
 - (IBAction)createAccountTapped:(id)sender {
