@@ -74,7 +74,12 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
     nextButton.frame = [self nextButtonFrame];
     [nextButton setTitleColor:kShelbyColorLightGray forState:UIControlStateDisabled];
-    [nextButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
+    [nextButton setTitleColor:kShelbyColorWhite
+                     forState:UIControlStateNormal];
+    
+    nextButton.frame = CGRectMake(250, 15, 60, 30);
+    [nextButton setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    [nextButton setBackgroundImage:[[UIImage imageNamed:@"button-off"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateDisabled];
     [nextButton.titleLabel setFont:kShelbyFontH4Bold];
     [nextButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
     [nextButton setTitle:nextTitle forState:UIControlStateNormal];

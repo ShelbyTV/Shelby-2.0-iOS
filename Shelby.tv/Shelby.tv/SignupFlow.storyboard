@@ -585,13 +585,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DvA-F4-1Pg" customClass="BlinkingLabel">
-                                <rect key="frame" x="100" y="130" width="120" height="21"/>
+                                <rect key="frame" x="100" y="120" width="120" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="ep6-gf-03D"/>
                                     <constraint firstAttribute="width" constant="120" id="f5Z-cr-3vY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLn-8w-VXC">
@@ -677,7 +677,7 @@
                             <constraint firstItem="7Dp-a3-sZK" firstAttribute="leading" secondItem="lle-Rp-YEg" secondAttribute="trailing" constant="8" symbolic="YES" id="DDB-bX-nu0"/>
                             <constraint firstItem="up6-52-koR" firstAttribute="trailing" secondItem="iLn-8w-VXC" secondAttribute="trailing" id="LaN-Oy-j0P"/>
                             <constraint firstItem="lle-Rp-YEg" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="103" id="Mdg-cz-dQO"/>
-                            <constraint firstItem="DvA-F4-1Pg" firstAttribute="top" secondItem="7Dp-a3-sZK" secondAttribute="bottom" constant="8" symbolic="YES" id="MyA-S1-H7c"/>
+                            <constraint firstItem="DvA-F4-1Pg" firstAttribute="top" secondItem="7Dp-a3-sZK" secondAttribute="bottom" constant="-2" id="MyA-S1-H7c"/>
                             <constraint firstItem="up6-52-koR" firstAttribute="bottom" secondItem="IO9-hj-Ipx" secondAttribute="bottom" id="OpW-Qh-YJp"/>
                             <constraint firstItem="7Dp-a3-sZK" firstAttribute="top" secondItem="nQa-fx-j5X" secondAttribute="bottom" constant="8" symbolic="YES" id="Qea-LX-sm3"/>
                             <constraint firstItem="Okb-5n-y4Z" firstAttribute="top" secondItem="IO9-hj-Ipx" secondAttribute="top" constant="220" id="Rbo-A6-bYc"/>
@@ -738,8 +738,6 @@
     <resources>
         <image name="facebook.png" width="290" height="44"/>
         <image name="twitter.png" width="290" height="44"/>
-        <image name="user_default_avatar.png" width="82" height="82"/>
-        <image name="user_default_avatar.png" width="82" height="82"/>
         <image name="user_default_avatar.png" width="82" height="82"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
