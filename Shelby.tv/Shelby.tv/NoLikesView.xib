@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoContentViewController">
             <connections>
                 <outlet property="imageToAnimate" destination="41" id="121"/>
+                <outlet property="noContentTitle" destination="3" id="z31-N2-qIF"/>
                 <outlet property="view" destination="1" id="119"/>
             </connections>
         </placeholder>
