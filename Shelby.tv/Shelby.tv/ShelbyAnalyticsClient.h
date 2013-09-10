@@ -17,6 +17,10 @@ extern NSString * const kAnalyticsWelcomeTapSignup;
 extern NSString * const kAnalyticsWelcomeTapSignupWithFacebook;
 extern NSString * const kAnalyticsWelcomeTapLogin;
 extern NSString * const kAnalyticsWelcomeTapPreview;
+//--Login--
+extern NSString * const kAnalyticsCategoryLogin;
+extern NSString * const kAnalyticsLoginWithEmail;
+extern NSString * const kAnalyticsLoginWithFacebook;
 //--Signup--
 extern NSString * const kAnalyticsCategorySignup;
 extern NSString * const kAnalyticsSignupStart;

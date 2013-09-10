@@ -105,6 +105,10 @@
         return;
     }
 
+    [LoginViewController sendEventWithCategory:kAnalyticsCategoryLogin
+                                      withAction:kAnalyticsLoginWithEmail
+                                       withLabel:nil];
+
     self.loginButton.enabled = NO;
 
     [self.delegate loginViewController:self loginWithUsername:self.usernameField.text password:self.passwordField.text];
@@ -112,6 +116,10 @@
 
 - (IBAction)loginWithFacebook:(id)sender
 {
+    [LoginViewController sendEventWithCategory:kAnalyticsCategoryLogin
+                                    withAction:kAnalyticsLoginWithFacebook
+                                     withLabel:nil];
+
     [self.delegate loginWithFacebook:self];
 }
 
