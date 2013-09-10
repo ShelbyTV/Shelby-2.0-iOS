@@ -179,6 +179,9 @@
     }
 
     [self layoutIfNeeded];
+    if (_currentRow) {
+        self.currentRow = _currentRow;
+    }
 }
 
 - (void)layoutSubviews
