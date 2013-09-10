@@ -55,12 +55,14 @@ NSString * const kAnalyticsUXTapNavBarRowLogin                          = @"Tap 
 NSString * const kAnalyticsUXTapNavBarRowSettings                       = @"Tap Nav Bar - Settings";
 NSString * const kAnalyticsUXTapNavBarRowShares                         = @"Tap Nav Bar - Shares";
 NSString * const kAnalyticsUXTapNavBarRowStream                         = @"Tap Nav Bar - Stream";
-//--Facebook App Invite--
+//--App Invite--
 NSString * const kAnalyticsCategoryAppInvite                            = @"App Invite";
 NSString * const kAnalyticsAppInviteFacebookOpened                      = @"Facebook App Invite: Opened";
 NSString * const kAnalyticsAppInviteFacebookCancelled                   = @"Facebook App Invite: Cancelled";
 NSString * const kAnalyticsAppInviteFacebookSent                        = @"Facebook App Invite: Sent";
-
+//--App Events of Interest--
+NSString * const kAnalyticsCategoryAppEventOfInterest                   = @"Interesting App Event";
+NSString * const kAnalyticsAppEventLoadMoreReturnedEmpty                = @"Load More Returned Empty";
 //--App Issues--
 NSString * const kAnalyticsCategoryIssues                               = @"App Issues";
 NSString * const kAnalyticsIssueContextSaveError                        = @"Context Save Error";

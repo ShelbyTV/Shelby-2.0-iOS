@@ -53,12 +53,14 @@ extern NSString * const kAnalyticsUXTapNavBarRowLogin;
 extern NSString * const kAnalyticsUXTapNavBarRowSettings;
 extern NSString * const kAnalyticsUXTapNavBarRowShares;
 extern NSString * const kAnalyticsUXTapNavBarRowStream;
-
 //--Facebook App Invite--
 extern NSString * const kAnalyticsCategoryAppInvite;
 extern NSString * const kAnalyticsAppInviteFacebookOpened;
 extern NSString * const kAnalyticsAppInviteFacebookCancelled;
 extern NSString * const kAnalyticsAppInviteFacebookSent;
+//--App Events of Interest--
+extern NSString * const kAnalyticsCategoryAppEventOfInterest;
+extern NSString * const kAnalyticsAppEventLoadMoreReturnedEmpty;
 //--App Issues--
 extern NSString * const kAnalyticsCategoryIssues;
 extern NSString * const kAnalyticsIssueContextSaveError;

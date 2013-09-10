@@ -359,9 +359,16 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
                         DashboardEntry *mainThreadDashboardEntry = (DashboardEntry *)[mainMOC objectWithID:dashboardEntry.objectID];
                         [results addObject:mainThreadDashboardEntry];
                     }
-                    [self.delegate fetchEntriesDidCompleteForChannel:(DisplayChannel *)[mainMOC objectWithID:channel.objectID]
+                    DisplayChannel *mainThreadChannel = (DisplayChannel *)[mainMOC objectWithID:channel.objectID];
+                    [self.delegate fetchEntriesDidCompleteForChannel:mainThreadChannel
                                                                 with:results
                                                            fromCache:NO];
+
+                    if (sinceDashboardEntry && [results count] == 0) {
+                        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryAppEventOfInterest
+                                                              action:kAnalyticsAppEventLoadMoreReturnedEmpty
+                                                               label:[mainThreadChannel displayTitle]];
+                    }
                 });
             }];
 
