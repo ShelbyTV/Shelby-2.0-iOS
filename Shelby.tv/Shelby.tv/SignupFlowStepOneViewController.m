@@ -178,7 +178,10 @@
 
     [self addObserversForSignup:YES];
 
-    // TODO: send GA event
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup
+                                          action:kAnalyticsSignupWithFacebookStart
+                                           label:nil];
+
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
         [parent performSelector:@selector(signupWithFacebook)];
@@ -208,9 +211,13 @@
 }
 - (void)signupWithFacebookCompleted:(NSNotification *)notification
 {
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup
+                                          action:kAnalyticsSignupWithFacebookInitialSuccess
+                                           label:nil];
+
     dispatch_async(dispatch_get_main_queue(), ^{
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
-         self.signupDictionary[kShelbySignupNameKey] = user.name;
+        self.signupDictionary[kShelbySignupNameKey] = user.name;
         self.signupDictionary[kShelbySignupUsernameKey] = user.facebookNickname;
         // User might not have an email account. (in the case that the email account was used to signup with another user.
         if (user.email) {

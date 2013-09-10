@@ -20,6 +20,8 @@ extern NSString * const kAnalyticsWelcomeTapPreview;
 extern NSString * const kAnalyticsCategorySignup;
 extern NSString * const kAnalyticsSignupStart;
 extern NSString * const kAnalyticsSignupFinish;
+extern NSString * const kAnalyticsSignupWithFacebookStart;
+extern NSString * const kAnalyticsSignupWithFacebookInitialSuccess;
 extern NSString * const kAnalyticsSignupStep1Complete;
 extern NSString * const kAnalyticsSignupStep2Complete;
 extern NSString * const kAnalyticsSignupStep3Complete;
