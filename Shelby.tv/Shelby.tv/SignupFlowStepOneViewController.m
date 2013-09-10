@@ -83,10 +83,14 @@
     self.navigationItem.rightBarButtonItem = self.nextButton;
 }
 
-- (void)addObserversForSignup:(BOOL)signupNotifications
+- (void)addObserversForSignup:(BOOL)signupNotifications withEmail:(BOOL)withEmail
 {
     if (signupNotifications) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+        if (withEmail) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidSucceed:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+        } else {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+        }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
     } else {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userUpdateDidSucceed:) name:kShelbyNotificationUserUpdateDidSucceed object:nil];
@@ -176,7 +180,7 @@
     
     self.navigationItem.leftBarButtonItem.enabled = NO;
 
-    [self addObserversForSignup:YES];
+    [self addObserversForSignup:YES withEmail:NO];
 
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup
                                           action:kAnalyticsSignupWithFacebookStart
@@ -252,11 +256,11 @@
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         // If user exists, just update the values. Otherwise, create new user
         if (user) {
-            [self addObserversForSignup:NO];
+            [self addObserversForSignup:NO withEmail:NO];
             
             [parent performSelector:@selector(updateSignupUser)];
         } else {
-            [self addObserversForSignup:YES];
+            [self addObserversForSignup:YES withEmail:YES];
 
             [parent performSelector:@selector(signupUser)];
         }
