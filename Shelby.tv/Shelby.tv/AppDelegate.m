@@ -26,7 +26,11 @@
     #define GOOGLE_ANALYTICS_ID             @"UA-21191360-12"
 #endif
 
-#define LOCALYTICS_APP_KEY                  @"44581e91bd028aa1fed9703-cc9a5e9c-1963-11e3-9391-009c5fda0a25"
+#ifdef DEBUG
+    #define LOCALYTICS_APP_KEY                  @"75bd1ca75d1d486581f93e1-1b905298-1a23-11e3-8e98-005cf8cbabd8"
+#else
+    #define LOCALYTICS_APP_KEY                  @"44581e91bd028aa1fed9703-cc9a5e9c-1963-11e3-9391-009c5fda0a25"
+#endif
 
 @interface AppDelegate(HockeyProtocols) <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
 @end
