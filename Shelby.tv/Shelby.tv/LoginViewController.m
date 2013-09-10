@@ -89,6 +89,12 @@
     return NO;
 }
 
+- (void)viewEnabled:(BOOL)enabled
+{
+    self.view.userInteractionEnabled = enabled;
+    self.view.alpha = enabled ? 1.0 : 0.8;
+}
+
 - (IBAction)backgroundTapped:(id)sender {
     for (UIView *subview in self.view.subviews) {
         [subview resignFirstResponder];
@@ -109,6 +115,7 @@
                                       withAction:kAnalyticsLoginWithEmail
                                        withLabel:nil];
 
+    [self viewEnabled:NO];
     self.loginButton.enabled = NO;
 
     [self.delegate loginViewController:self loginWithUsername:self.usernameField.text password:self.passwordField.text];
@@ -120,6 +127,7 @@
                                     withAction:kAnalyticsLoginWithFacebook
                                      withLabel:nil];
 
+    [self viewEnabled:NO];
     [self.delegate loginWithFacebook:self];
 }
 
@@ -139,6 +147,7 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil, nil];
     [alertView show];
+    [self viewEnabled:YES];
 }
 
 #pragma mark - UIAlertViewDelegate Methods
