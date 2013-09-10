@@ -16,6 +16,7 @@ NSString * const kAnalyticsCategoryWelcome                              = @"Welc
 NSString * const kAnalyticsWelcomeStart                                 = @"Start";
 NSString * const kAnalyticsWelcomeFinish                                = @"Finish";
 NSString * const kAnalyticsWelcomeTapSignup                             = @"Tap Signup";
+NSString * const kAnalyticsWelcomeTapSignupWithFacebook                 = @"Tap Signup With Facebook";
 NSString * const kAnalyticsWelcomeTapLogin                              = @"Tap Login";
 NSString * const kAnalyticsWelcomeTapPreview                            = @"Tap Preview";
 //--Signup--

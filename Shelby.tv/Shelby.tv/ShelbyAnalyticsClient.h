@@ -14,6 +14,7 @@ extern NSString * const kAnalyticsCategoryWelcome;
 extern NSString * const kAnalyticsWelcomeStart;
 extern NSString * const kAnalyticsWelcomeFinish;
 extern NSString * const kAnalyticsWelcomeTapSignup;
+extern NSString * const kAnalyticsWelcomeTapSignupWithFacebook;
 extern NSString * const kAnalyticsWelcomeTapLogin;
 extern NSString * const kAnalyticsWelcomeTapPreview;
 //--Signup--

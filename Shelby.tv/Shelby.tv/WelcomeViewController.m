@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 @end
 
 @implementation WelcomeViewController {
-    NSDate *_phoneScrollingStartedAt;
+    NSDate *_phoneScrollingStartedAt, *_viewLoadedAt;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -46,6 +46,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeStart
                                        withLabel:nil];
+    _viewLoadedAt = [NSDate date];
 
     //setup the scroller that holds everything
     self.welcomeScrollScroller.frame = self.view.bounds;
@@ -83,6 +84,10 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 
 - (IBAction)signupWithFacebookTapped:(id)sender
 {
+    [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
+                                      withAction:kAnalyticsWelcomeTapSignupWithFacebook
+                                       withLabel:[self welcomeDuration]];
+
     [self welcomeComplete];
     [self.delegate welcomeDidTapSignupWithFacebook:self];
 }
@@ -90,7 +95,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 - (IBAction)createAccountTapped:(id)sender {
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapSignup
-                                       withLabel:nil];
+                                       withLabel:[self welcomeDuration]];
     [self welcomeComplete];
     [self.delegate welcomeDidTapSignup:self];
 }
@@ -98,7 +103,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 - (IBAction)loginTapped:(id)sender {
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapLogin
-                                       withLabel:nil];
+                                       withLabel:[self welcomeDuration]];
     [self welcomeComplete];
     [self.delegate welcomeDidTapLogin:self];
 }
@@ -106,7 +111,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 - (IBAction)previewTapped:(id)sender {
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapPreview
-                                       withLabel:nil];
+                                       withLabel:[self welcomeDuration]];
     [self welcomeComplete];
     [self.delegate welcomeDidTapPreview:self];
 }
@@ -117,9 +122,14 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 {
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeFinish
-                                       withLabel:nil];
+                                       withLabel:[self welcomeDuration]];
     [[NSUserDefaults standardUserDefaults] setInteger:ShelbyWelcomeStatusComplete forKey:kShelbyWelcomeStatusKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)welcomeDuration
+{
+    return [NSString stringWithFormat:@"%f", -[_viewLoadedAt timeIntervalSinceNow]];
 }
 
 #pragma mark - UIScrollViewDelegate
