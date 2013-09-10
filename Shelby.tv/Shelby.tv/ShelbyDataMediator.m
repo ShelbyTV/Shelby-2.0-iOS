@@ -939,8 +939,8 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         if(![frameDict isKindOfClass:[NSDictionary class]]){
             continue;
         }
-        
-        Frame *entry = [Frame frameForDictionary:frameDict requireCreator:YES inContext:context];
+
+        Frame *entry = [Frame frameForDictionary:frameDict requireCreator:NO inContext:context];
  
         if (entry) {
             [resultFrames addObject:entry];

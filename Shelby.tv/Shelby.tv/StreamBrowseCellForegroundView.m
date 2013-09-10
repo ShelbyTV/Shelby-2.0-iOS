@@ -461,25 +461,36 @@
     [_sharers removeObject:_videoFrame.creator];
 }
 
-- (BOOL)updateVisualsForRecommendation
+- (void)updateVisualsForRecommendation
 {
     if (_dashboardEntry && [_dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
+        //dashboard entry recommendation
         self.detailRecommendationReasonLabel.attributedText = [self recommendationStringFor:_dashboardEntry];
         self.summaryRecommendationView.hidden = NO;
         self.detailRecommendationView.hidden = NO;
         self.summaryUserView.hidden = YES;
+        self.detailWhiteBackground.hidden = NO;
         self.detailUserView.hidden = YES;
         self.detailCommentView.hidden = YES;
         self.detailLikersAndSharers.hidden = YES;
-        return YES;
+    } else if (!_dashboardEntry && !_videoFrame.creator) {
+        //frame without a creator (ie. you liked a recommended video)
+        self.summaryRecommendationView.hidden = YES;
+        self.detailRecommendationView.hidden = YES;
+        self.summaryUserView.hidden = YES;
+        self.detailWhiteBackground.hidden = YES;
+        self.detailUserView.hidden = YES;
+        self.detailCommentView.hidden = YES;
+        self.detailLikersAndSharers.hidden = NO;
     } else {
+        //regular dashboard entry or frame with creator
         self.summaryRecommendationView.hidden = YES;
         self.detailRecommendationView.hidden = YES;
         self.summaryUserView.hidden = NO;
+        self.detailWhiteBackground.hidden = NO;
         self.detailUserView.hidden = NO;
         self.detailCommentView.hidden = NO;
         self.detailLikersAndSharers.hidden = NO;
-        return NO;
     }
 }
 
