@@ -522,8 +522,10 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
         errorMessage = @"Could not connect. Please try again later.";
     }
     
-    ShelbyAlert *alertView = [[ShelbyAlert alloc] initWithTitle:@"Error" message:errorMessage dismissButtonTitle:@"OK" autodimissTime:8 onDismiss:nil];
-    [alertView show];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        ShelbyAlert *alertView = [[ShelbyAlert alloc] initWithTitle:@"Error" message:errorMessage dismissButtonTitle:@"OK" autodimissTime:8 onDismiss:nil];
+        [alertView show];
+    });
 }
 
 #pragma mark - ShelbyStreamBrowseManagementDelegate Methods
@@ -773,8 +775,10 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     } else {
         message = @"Problem loading channel.";
     }
-    self.currentAlertView =  [[ShelbyAlert alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
-    [self.currentAlertView show];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.currentAlertView =  [[ShelbyAlert alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
+        [self.currentAlertView show];
+    });
 }
 
 - (void)goToUsersLikes

@@ -318,7 +318,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [[SPVideoExtractor sharedInstance] cancelAllExtractions];
     
     //remove any alert particular to current video
-    [self.currentVideoAlertView dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.currentVideoAlertView dismiss];
+    });
     
     //resetting all possibly playable players (including current player) will pause and free memory of AVPlayer
     //not entirely true: if the player has an extraction pending, that block holds a reference to the player
@@ -473,7 +475,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [previousPlayer pause];
         
         //remove any alert particular to current video
-        [self.currentVideoAlertView dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.currentVideoAlertView dismiss];
+        });
 
         // Set the new current player to auto play and get it going...
         self.currentVideoPlayingIndex = position;
@@ -641,16 +645,18 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     if (self.currentPlayer == player) {
         [player pause];
         if (self.lastVideoStalledAlertTime == nil || [self.lastVideoStalledAlertTime timeIntervalSinceNow] < VIDEO_STALLED_MIN_TIME_BETWEEN_ALERTS) {
-            [self.currentVideoAlertView dismiss];
-            self.lastVideoStalledAlertTime = [NSDate date];
-            self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.currentVideoAlertView dismiss];
+                self.lastVideoStalledAlertTime = [NSDate date];
+                self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"PLAYBACK_STALLED_TITLE", @"--Playback Stalled--")
                                                                         message:NSLocalizedString(@"PLAYBACK_STALLED_MESSAGE", nil)
                                                              dismissButtonTitle:NSLocalizedString(@"PLAYBACK_STALLED_BUTTON", nil)
                                                                  autodimissTime:6.0f
                                                                       onDismiss:^(BOOL didAutoDimiss) {
                                                                           self.currentVideoAlertView = nil;
                                                                       }];
-            [self.currentVideoAlertView show];
+                [self.currentVideoAlertView show];
+            });
         }
     }
 }
@@ -691,18 +697,20 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)videoExtractionFailForAutoplayPlayer:(SPVideoPlayer *)player
 {
     if (self.currentPlayer == player) {
-        [self.currentVideoAlertView dismiss];
-        self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
-                                                                message:NSLocalizedString(@"EXTRACTION_FAIL_MESSAGE", nil)
-                                                     dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_BUTTON", nil)
-                                                         autodimissTime:3.0f
-                                                              onDismiss:^(BOOL didAutoDimiss) {
-                                                                  if (self.currentPlayer == player) {
-                                                                      [self autoadvanceVideoInForwardDirection:YES];
-                                                                  }
-                                                                  self.currentVideoAlertView = nil;
-                                                              }];
-        [self.currentVideoAlertView show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.currentVideoAlertView dismiss];
+            self.currentVideoAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"EXTRACTION_FAIL_TITLE", @"--Extraction Fail--")
+                                                                    message:NSLocalizedString(@"EXTRACTION_FAIL_MESSAGE", nil)
+                                                         dismissButtonTitle:NSLocalizedString(@"EXTRACTION_FAIL_BUTTON", nil)
+                                                             autodimissTime:3.0f
+                                                                  onDismiss:^(BOOL didAutoDimiss) {
+                                                                      if (self.currentPlayer == player) {
+                                                                          [self autoadvanceVideoInForwardDirection:YES];
+                                                                      }
+                                                                      self.currentVideoAlertView = nil;
+                                                                  }];
+            [self.currentVideoAlertView show];
+        });
     }
 }
 
