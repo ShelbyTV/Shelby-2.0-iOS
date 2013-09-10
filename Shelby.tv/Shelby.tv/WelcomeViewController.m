@@ -76,10 +76,7 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 
 + (bool)isWelcomeComplete
 {
-    //XXX
-    return NO;
-    //TODO: uncomment the following
-//    return [[NSUserDefaults standardUserDefaults] integerForKey:kShelbyWelcomeStatusKey] == ShelbyWelcomeStatusComplete;
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kShelbyWelcomeStatusKey] == ShelbyWelcomeStatusComplete;
 }
 
 #pragma mark - WelcomeLoginView's IBActions
