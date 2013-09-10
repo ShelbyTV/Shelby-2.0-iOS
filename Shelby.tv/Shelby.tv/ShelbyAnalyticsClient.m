@@ -46,6 +46,12 @@ NSString * const kAnalyticsUXShareStart                                 = @"Shar
 NSString * const kAnalyticsUXShareFinish                                = @"Share Finish";
 NSString * const kAnalyticsUXTapNavBar                                  = @"Tap Nav Bar";
 NSString * const kAnalyticsUXTapNavBarButton                            = @"Tap Nav Bar Button";
+NSString * const kAnalyticsUXTapNavBarRowFeatured                       = @"Tap Nav Bar - Featured";
+NSString * const kAnalyticsUXTapNavBarRowLikes                          = @"Tap Nav Bar - Likes";
+NSString * const kAnalyticsUXTapNavBarRowLogin                          = @"Tap Nav Bar - Login";
+NSString * const kAnalyticsUXTapNavBarRowSettings                       = @"Tap Nav Bar - Settings";
+NSString * const kAnalyticsUXTapNavBarRowShares                         = @"Tap Nav Bar - Shares";
+NSString * const kAnalyticsUXTapNavBarRowStream                         = @"Tap Nav Bar - Stream";
 //--Facebook App Invite--
 NSString * const kAnalyticsCategoryAppInvite                            = @"App Invite";
 NSString * const kAnalyticsAppInviteFacebookOpened                      = @"Facebook App Invite: Opened";

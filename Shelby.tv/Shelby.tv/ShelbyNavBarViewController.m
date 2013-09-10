@@ -98,17 +98,35 @@
 
         if (sender == self.navBarView.streamButton) {
             [self.delegate navBarViewControllerStreamWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                   withAction:kAnalyticsUXTapNavBarRowStream
+                                          withNicknameAsLabel:YES];
         } else if (sender == self.navBarView.likesButton) {
             [self.delegate navBarViewControllerLikesWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                   withAction:kAnalyticsUXTapNavBarRowLikes
+                                          withNicknameAsLabel:YES];
         } else if (sender == self.navBarView.sharesButton) {
             [self.delegate navBarViewControllerSharesWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                   withAction:kAnalyticsUXTapNavBarRowShares
+                                          withNicknameAsLabel:YES];
         } else if (sender == self.navBarView.communityButton) {
             [self.delegate navBarViewControllerCommunityWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                   withAction:kAnalyticsUXTapNavBarRowFeatured
+                                          withNicknameAsLabel:YES];
         } else if (sender == self.navBarView.settingsButton) {
             [self.delegate navBarViewControllerSettingsWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                   withAction:kAnalyticsUXTapNavBarRowSettings
+                                          withNicknameAsLabel:YES];
         } else if (sender == self.navBarView.signupButton) {
             //not changing nav or ivar, "signupButton" is now used for login... deal with it
             [self.delegate navBarViewControllerLoginWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                   withAction:kAnalyticsUXTapNavBarRowLogin
+                                          withNicknameAsLabel:YES];
         } else {
             STVAssert(NO, @"unhandled nav row");
         }

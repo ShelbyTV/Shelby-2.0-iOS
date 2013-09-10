@@ -44,6 +44,13 @@ extern NSString * const kAnalyticsUXShareStart;
 extern NSString * const kAnalyticsUXShareFinish;
 extern NSString * const kAnalyticsUXTapNavBar;
 extern NSString * const kAnalyticsUXTapNavBarButton;
+extern NSString * const kAnalyticsUXTapNavBarRowFeatured;
+extern NSString * const kAnalyticsUXTapNavBarRowLikes;
+extern NSString * const kAnalyticsUXTapNavBarRowLogin;
+extern NSString * const kAnalyticsUXTapNavBarRowSettings;
+extern NSString * const kAnalyticsUXTapNavBarRowShares;
+extern NSString * const kAnalyticsUXTapNavBarRowStream;
+
 //--Facebook App Invite--
 extern NSString * const kAnalyticsCategoryAppInvite;
 extern NSString * const kAnalyticsAppInviteFacebookOpened;
