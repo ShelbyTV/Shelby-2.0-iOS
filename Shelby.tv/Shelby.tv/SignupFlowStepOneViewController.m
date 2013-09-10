@@ -245,6 +245,7 @@
 
     UIViewController *parent = self.parentViewController;
     if ([parent conformsToProtocol:@protocol(SignupFlowViewDelegate)]) {
+        [self viewEnabled:NO];
         // Change Right Button with Activity Indicator
         UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [activity startAnimating];
