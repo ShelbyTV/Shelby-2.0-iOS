@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSArray *existingEntities;
 //external API with results of computation
 @property (nonatomic, strong) NSArray *actuallyNewEntities;
-@property (nonatomic, assign) BOOL newEntitiesShouldBeAppended;
+@property (nonatomic, assign) BOOL actuallyNewEntitiesShouldBeAppended;
 @property (nonatomic, assign) BOOL gapAfterNewEntitiesBeforeExistingEntities;
 @end
 
@@ -45,7 +45,7 @@
     //only new entries
     if ([self.existingEntities count] == 0) {
         self.actuallyNewEntities = self.possiblyNewEntities;
-        self.newEntitiesShouldBeAppended = NO;
+        self.actuallyNewEntitiesShouldBeAppended = NO;
         return;
     }
 
@@ -57,12 +57,12 @@
         return;
     }
 
-    // 2) if we have any new entities with an ID > last exisitng entity ID, that's a pre-pend
+    // 2) if we have any new entities with an ID > smallest exisitng entity ID, that's a pre-pend
     //    (IDs start with timestamp, so newer entries have a bigger ID)
-    NSString *lastKnownShelbyID = [[self.existingEntities lastObject] shelbyID];
+    NSString *leastExistingEntityShelbyID = [self leastShelbyIDIn:self.existingEntities];
     for (id<ShelbyModel> entity in self.actuallyNewEntities) {
-        if ([[entity shelbyID] compare:lastKnownShelbyID] == NSOrderedDescending) {
-            self.newEntitiesShouldBeAppended = NO;
+        if ([[entity shelbyID] compare:leastExistingEntityShelbyID] == NSOrderedDescending) {
+            self.actuallyNewEntitiesShouldBeAppended = NO;
             //if all entities are new & there's no overlap with existing entities, there is a gap between them
             self.gapAfterNewEntitiesBeforeExistingEntities = ([self.actuallyNewEntities count] == [self.possiblyNewEntities count]);
             return;
@@ -70,7 +70,7 @@
     }
 
     // 3) must be an append
-    self.newEntitiesShouldBeAppended = YES;
+    self.actuallyNewEntitiesShouldBeAppended = YES;
 }
 
 - (NSArray *)orderedElementsOf:(NSArray *)arr1 notFoundIn:(NSArray *)arr2
@@ -83,6 +83,17 @@
         }
     }
     return result;
+}
+
+- (NSString *)leastShelbyIDIn:(NSArray *)arr
+{
+    NSString *leastID;
+    for (id<ShelbyModel> entity in arr) {
+        if (!leastID || [[entity shelbyID] compare:leastID] == NSOrderedAscending) {
+            leastID = [entity shelbyID];
+        }
+    }
+    return leastID;
 }
 
 @end
