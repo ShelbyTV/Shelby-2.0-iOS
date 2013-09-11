@@ -92,7 +92,7 @@
                                     <constraint firstAttribute="width" constant="280" id="sWR-1S-ooO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
-                                <inset key="imageEdgeInsets" minX="-100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="-50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="Login with Facebook" image="facebook-button-icon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>

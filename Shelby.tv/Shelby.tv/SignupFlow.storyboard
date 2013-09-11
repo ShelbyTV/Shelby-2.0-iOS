@@ -127,7 +127,7 @@
                                     <constraint firstAttribute="height" constant="44" id="M5W-dW-n9Q"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                <inset key="imageEdgeInsets" minX="-100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="-50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="Sign up with Facebook" image="facebook-button-icon">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -384,14 +384,14 @@
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NlN-4t-7g7">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NlN-4t-7g7">
                                 <rect key="frame" x="16" y="352" width="289" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="cPt-kg-P7F"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                <inset key="imageEdgeInsets" minX="-120" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="-70" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="Add Twitter Videos" image="twitter-button-icon">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -401,14 +401,14 @@
                                     <action selector="connectoToTwitter:" destination="tUF-cC-Ycq" eventType="touchUpInside" id="qD9-yi-Pqg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tce-ZC-snW">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tce-ZC-snW">
                                 <rect key="frame" x="16" y="301" width="289" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="87U-wd-803"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                <inset key="imageEdgeInsets" minX="-100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="-50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="Add Facebook Videos" image="facebook-button-icon">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -762,7 +762,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="facebook-button-icon" width="9" height="18"/>
         <image name="facebook-button-icon" width="9" height="18"/>
         <image name="twitter-button-icon" width="20" height="17"/>
         <image name="user_default_avatar.png" width="82" height="82"/>
