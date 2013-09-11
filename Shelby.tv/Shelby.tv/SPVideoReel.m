@@ -177,10 +177,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         [self.view addSubview:self.videoScrollView];
     }
 
-//    if (DEVICE_IPAD) {
-//        self.videoScrollView.contentSize = CGSizeMake(kShelbySPVideoWidth * [self.videoEntities count], kShelbySPVideoHeight);
-//        [self.videoScrollView setContentOffset:CGPointMake(kShelbySPVideoWidth * (int)self.videoStartIndex, 0) animated:YES];
-//    } else {
     CGSize contentSize;
     NSInteger videoHeight = kShelbyFullscreenHeight;
     if (UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
@@ -193,12 +189,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     self.videoScrollView.contentSize = contentSize;
     CGPoint offset = CGPointMake(0, (int)self.videoStartIndex * videoHeight);
     [self.videoScrollView setContentOffset:offset animated:NO];
-//    }
-
-    //XXX LAYOUT TESTING
-//    self.videoScrollView.layer.borderColor = [UIColor redColor].CGColor;
-//    self.videoScrollView.layer.borderWidth = 4.0;
-    //XXX LAYOUT TESTING
 }
 
 - (void)setupAllVideoPlayers
