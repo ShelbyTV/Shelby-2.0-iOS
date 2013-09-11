@@ -252,9 +252,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         //not logged in
         BOOL shouldBeLiked = ![frame.clientUnsyncedLike boolValue];
         [self toggleUnsyncedLikeForFrame:frame];
-        
-        //djs TODO: I don't like that we're fetching all unsynced likes here
-        //we should just signal the addition/removal of a single frame
+
         [self fetchAllUnsyncedLikes];
         
         return shouldBeLiked;
@@ -740,7 +738,6 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     return _managedObjectModel;
 }
 
-// TODO: this should perform lightweight migrations
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
     if ( _persistentStoreCoordinator ) {
@@ -752,13 +749,13 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:@"Shelby.tv.sqlite"];
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
-    //djs TODO: handle this gracefully...
+
+    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @(YES),
+                              NSInferMappingModelAutomaticallyOption: @(YES)};
     //djs NB: IF you crash when updating CoreData, next run you can get an EXC_BAD_ACCESS on the following line
-    if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error] )
+    if ( ![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error] )
     {
         // Delete datastore if there's a conflict. User can re-login to repopulate the datastore.
-        //djs TODO: perform lightweight migration when possible
         [fileManager removeItemAtURL:storeURL error:nil];
         
         // Retry
