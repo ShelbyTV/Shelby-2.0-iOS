@@ -35,7 +35,9 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 @property (nonatomic, strong) NSManagedObjectContext *privateContext;
 @end
 
-@implementation ShelbyDataMediator
+@implementation ShelbyDataMediator {
+    id _mainContextObserver, _privateContextObserver;
+}
 
 + (ShelbyDataMediator *)sharedInstance
 {
@@ -795,7 +797,13 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
 - (void)nuclearCleanup
 {
     DLog(@"Destroying ManagedObjectContexts & PersistentStoreCoordinator");
+    if (_mainContextObserver) {
+        [[NSNotificationCenter defaultCenter] removeObserver:_mainContextObserver];
+    }
     self.mainThreadMOC = nil;
+    if (_privateContextObserver) {
+        [[NSNotificationCenter defaultCenter] removeObserver:_privateContextObserver];
+    }
     self.privateContext = nil;
     self.persistentStoreCoordinator = nil;
     
@@ -824,10 +832,10 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
     _privateContext.undoManager = nil;
 
     //automatically merge changes back and forth between private and main contexts
-    [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_privateContext queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+    _privateContextObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_privateContext queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.mainThreadMOC mergeChangesFromContextDidSaveNotification:note];
     }];
-    [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_mainThreadMOC queue:nil usingBlock:^(NSNotification *note) {
+    _mainContextObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:_mainThreadMOC queue:nil usingBlock:^(NSNotification *note) {
         [self.privateContext mergeChangesFromContextDidSaveNotification:note];
     }];
 }
