@@ -82,7 +82,7 @@ NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Vide
     BOOL queued = [[GAI sharedInstance].defaultTracker sendEventWithCategory:category withAction:action withLabel:label withValue:nil];
 
     if (!queued) {
-        // TODO: Retry? Error?
+        // dropping, could retry if important
     }
 }
 
@@ -119,7 +119,7 @@ NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Vide
     BOOL queued = [[GAI sharedInstance].defaultTracker sendEventWithCategory:category withAction:action withLabel:label withValue:value];
 
     if (!queued) {
-        // TODO: Retry? Error?
+        // dropping, could retry if important
     }
 }
 

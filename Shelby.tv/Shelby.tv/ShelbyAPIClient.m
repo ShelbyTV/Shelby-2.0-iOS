@@ -446,7 +446,6 @@ static AFHTTPClient *httpClient = nil;
     [operation start];
 }
 
-// TODO: deal with sync likes after user logs in.
 + (void)postUserLikedFrame:(NSString *)frameID
              withAuthToken:(NSString *)authToken
                   andBlock:(shelby_api_request_complete_block_t)completionBlock

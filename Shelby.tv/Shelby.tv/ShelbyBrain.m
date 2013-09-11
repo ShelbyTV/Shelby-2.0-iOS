@@ -352,7 +352,6 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 -(void)fetchGlobalChannelsDidCompleteWithError:(NSError *)error
 {
     [self showErrorView:error];
-    DLog(@"TODO: handle fetch channels did complete with error %@", error);
 }
 
 //channelEntries filled with ShelbyModel (specifically, a DashboardEntry or Frame)

@@ -146,7 +146,6 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
 - (BOOL)canRoll
 {
     if (self.roll) {
-        // TODO: instead of fetching the user, maybe ShelbyDataM should hold on to a logged in user.
         User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
         if (currentUser && [currentUser.publicRollID isEqualToString:self.roll.rollID]) {
             return NO;
