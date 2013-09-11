@@ -819,19 +819,6 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     [self.homeVC didNavigateToCommunityChannel];
 }
 
-#pragma mark - UIActionSheetDelegate methods
-//XXX Temporary until we show a proper settings view per Wireframes
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        [self connectToFacebook];
-    } else if (buttonIndex == 1) {
-        [self connectToTwitter];
-    } else if (buttonIndex == 2) {
-        [self logoutUser];
-    }
-}
-
 #pragma mark - Tutorial Mode
 - (NSDate *)tutorialCompleted
 {
