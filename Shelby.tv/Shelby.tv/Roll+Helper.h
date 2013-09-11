@@ -16,9 +16,7 @@
 + (Roll *)rollForDictionary:(NSDictionary *)rollDict
                       inContext:(NSManagedObjectContext *)context;
 
-//*** OFFLINE LIKES ROLL***
-//XXX TODO: rename this
-+ (Roll *)fetchLikesRollInContext:(NSManagedObjectContext *)context;
++ (Roll *)fetchOfflineLikesRollInContext:(NSManagedObjectContext *)context;
 
 + (Roll *)rollWithID:(NSString *)rollID inContext:(NSManagedObjectContext *)context;
 

@@ -53,7 +53,7 @@ NSString * const kShelbyCoreDataEntityRollIDPredicate = @"rollID == %@";
     return roll;
 }
 
-+ (Roll *)fetchLikesRollInContext:(NSManagedObjectContext *)context
++ (Roll *)fetchOfflineLikesRollInContext:(NSManagedObjectContext *)context
 {
     NSString *rollID = kShelbyOfflineLikesID;
     Roll *roll = [self fetchOneEntityNamed:kShelbyCoreDataEntityRoll
