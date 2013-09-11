@@ -206,21 +206,12 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
         NSMutableArray *indexPathsForInsert, *indexPathsForDelete, *indexPathsForReload;
         id<ShelbyVideoContainer> focusedEntityBeforeUpdates = [self entityForCurrentFocus];
 
-        if(shouldAppend){
-            self.entries = [self.entries arrayByAddingObjectsFromArray:newChannelEntries];
-            _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByAppending:newChannelEntries
-                                                                       toDedupedArray:self.deduplicatedEntries
-                                                                            didInsert:&indexPathsForInsert
-                                                                            didDelete:&indexPathsForDelete
-                                                                            didUpdate:&indexPathsForReload];
-        } else {
-            self.entries = [newChannelEntries arrayByAddingObjectsFromArray:self.entries];
-            _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByPrepending:newChannelEntries
-                                                                        toDedupedArray:self.deduplicatedEntries
-                                                                             didInsert:&indexPathsForInsert
-                                                                             didDelete:&indexPathsForDelete
-                                                                             didUpdate:&indexPathsForReload];
-        }
+        self.entries = [DeduplicationUtility combineAndSort:newChannelEntries with:self.entries];
+        _deduplicatedEntries = [DeduplicationUtility deduplicatedArrayByMerging:newChannelEntries
+                                                                    intoDeduped:self.deduplicatedEntries
+                                                                      didInsert:&indexPathsForInsert
+                                                                      didDelete:&indexPathsForDelete
+                                                                      didUpdate:&indexPathsForReload];
 
         // The index paths returned by DeduplicationUtility are relative to the original array.
         // So we group them within performBatchUpdates:
