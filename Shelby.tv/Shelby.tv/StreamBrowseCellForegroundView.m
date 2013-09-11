@@ -201,7 +201,7 @@
 
 - (void)setInfoForDashboardEntry:(DashboardEntry *)dashboardEntry frame:(Frame *)videoFrame
 {
-    // Making sure we don't have an onbserver pointing at a dangling object
+    // Making sure we don't have an observer pointing at a dangling object
     [self.videoFrame removeObserver:self forKeyPath:@"upvoters"];
 
     _dashboardEntry = dashboardEntry;
@@ -211,7 +211,7 @@
     [self processLikersAndSharers];
     [self updateStandardVisuals];
     
-    [self.videoFrame addObserver:self forKeyPath:@"upvoters" options:NSKeyValueObservingOptionNew context:NULL];
+    [self.videoFrame addObserver:self forKeyPath:@"upvoters" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)updateStandardVisuals

@@ -208,9 +208,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 - (void)removeAllObservers
 {
     STVDebugAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
-    if (!self.player) {
-        return;
-    }
+
     [self removePlayerItemObservers];
 
     [self.player removeObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey];
@@ -219,7 +217,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)removePlayerItemObservers
 {
-    //NB: this is technically observing player, but needs to sync w/ playerItem
+    //NB: this is technically observing player, but needs to be in sync w/ playerItem
     [self.player removeTimeObserver:self.playerTimeObserver];
     self.playerTimeObserver = nil;
 
@@ -228,16 +226,9 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
         [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
         [self.player.currentItem removeObserver:self forKeyPath:kShelbySPAVPlayerDuration];
-    } else {
-        DLog(@"Player has no currentItem during remove observers.  Harmless unless frequent.");
     }
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:AVPlayerItemDidPlayToEndTimeNotification
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:AVPlayerItemPlaybackStalledNotification
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (CMTime)elapsedTime
