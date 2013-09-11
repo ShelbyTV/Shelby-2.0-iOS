@@ -314,12 +314,13 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 {
     if (errorMessage){
         dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                message:errorMessage 
-                                                               delegate:nil 
-                                                      cancelButtonTitle:@"OK" 
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            [self.currentAlertView dismiss];
+            self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
+                                                               message:errorMessage
+                                                    dismissButtonTitle:@"OK"
+                                                        autodimissTime:0
+                                                             onDismiss:nil];
+            [self.currentAlertView show];
         });
     }
 }
@@ -334,12 +335,13 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 - (void)twitterConnectDidCompleteWithError:(NSString *)errorMessage
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:errorMessage 
-                                                           delegate:nil 
-                                                  cancelButtonTitle:@"OK" 
-                                                  otherButtonTitles:nil];
-        [alertView show];
+        [self.currentAlertView dismiss];
+        self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
+                                                           message:errorMessage
+                                                dismissButtonTitle:@"OK"
+                                                    autodimissTime:0
+                                                         onDismiss:nil];
+        [self.currentAlertView show];
     });
 }
 
@@ -544,8 +546,13 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        ShelbyAlert *alertView = [[ShelbyAlert alloc] initWithTitle:@"Error" message:errorMessage dismissButtonTitle:@"OK" autodimissTime:8 onDismiss:nil];
-        [alertView show];
+        [self.currentAlertView dismiss];
+        self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
+                                                           message:errorMessage
+                                                dismissButtonTitle:@"OK"
+                                                    autodimissTime:8
+                                                         onDismiss:nil];
+        [self.currentAlertView show];
     });
 }
 
@@ -798,7 +805,12 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
         message = @"Problem loading channel.";
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.currentAlertView =  [[ShelbyAlert alloc] initWithTitle:@"Error" message:message dismissButtonTitle:@"OK" autodimissTime:3.0 onDismiss:nil];
+        [self.currentAlertView dismiss];
+        self.currentAlertView =  [[ShelbyAlert alloc] initWithTitle:@"Error"
+                                                            message:message
+                                                 dismissButtonTitle:@"OK"
+                                                     autodimissTime:3.0
+                                                          onDismiss:nil];
         [self.currentAlertView show];
     });
 }
