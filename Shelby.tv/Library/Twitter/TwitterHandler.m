@@ -18,10 +18,6 @@
 #import "ShelbyAPIClient.h"
 #import "User+Helper.h"
 
-//djs XXX do we need AFNEtworking in here?  Should probably just do all via API
-#import "AFNetworking.h"
-//djs XXX
-
 NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNotificationTwitterAuthorizationCompleted";
 
 @interface TwitterHandler () <AuthenticateTwitterDelegate>
@@ -465,14 +461,8 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 
 - (void)tokenSwapWasSuccessfulForUser:(NSDictionary *)userDictionary
 {
-    // Store user Dictionary in Core Data
-    //djs XXX TODO
-//    CoreDataUtility *dataUtility = [[CoreDataUtility alloc] initWithRequestType:DataRequestType_Fetch];
-//    [dataUtility storeUser:userDictionary];
-    
     // Post token-swap notification to listeners
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
-    
 }
 
 // Cleanup
