@@ -450,7 +450,9 @@
     for (DashboardEntry *dupe in _dashboardEntry.duplicates) {
         Frame *dupeFrame = dupe.frame;
         if (dupeFrame) {
-            [_sharers addObject:dupeFrame.creator];
+            if (dupeFrame.creator) {
+                [_sharers addObject:dupeFrame.creator];
+            }
             for (User *liker in dupe.frame.upvoters) {
                 [_likers addObject:liker];
             }
