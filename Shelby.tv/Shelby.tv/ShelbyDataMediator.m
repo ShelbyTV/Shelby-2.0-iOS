@@ -232,10 +232,8 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             //Do Unlike
             Frame *likedFrame = [user likedFrameWithVideoOfFrame:frame];
             STVDebugAssert(likedFrame, @"expected liked frame");
- 
-            [self unlikeFrame:likedFrame forUser:user];
             
-            //represnt unliked state assuming the API call succeeds
+            //represnt unliked state assuming the API call will succeed
             frame.clientUnsyncedLike = @0;
             [frame removeUpvotersObject:user];
             frame.clientLikedAt = nil;
@@ -244,6 +242,8 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             NSError *err;
             [frame.managedObjectContext save:&err];
             STVDebugAssert(!err, @"context save failed, in toggleLikeForFrame...");
+
+            [self unlikeFrame:likedFrame forUser:user];
 
             return NO;
         }
