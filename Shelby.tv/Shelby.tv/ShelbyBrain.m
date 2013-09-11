@@ -90,6 +90,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     if ([WelcomeViewController isWelcomeComplete] &&
          (![[ShelbyDataMediator sharedInstance] hasUserLoggedIn] && [SignupFlowViewController signupStatus] == ShelbySignupStatusStarted)) {
         [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusUnstarted];
+        [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
+        [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
         [[ShelbyDataMediator sharedInstance] nuclearCleanup];
     }
     
