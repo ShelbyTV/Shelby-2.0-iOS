@@ -288,9 +288,12 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 {
     @synchronized(self) {
         STVDebugAssert(channel == self.channel, @"expected our channel");
+        while ([entity respondsToSelector:@selector(duplicateOf)] && ((id<ShelbyDuplicateContainer>)entity).duplicateOf) {
+            entity = ((id<ShelbyDuplicateContainer>)entity).duplicateOf;
+        }
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.deduplicatedEntries indexOfObject:entity] inSection:0];
         if (indexPath.row == NSNotFound) {
-            STVDebugAssert(indexPath.row != NSNotFound, @"expected to find the entity");
+            STVDebugAssert(indexPath.row != NSNotFound, @"expected to find the entity, or its dupe parent");
             return;
         }
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
