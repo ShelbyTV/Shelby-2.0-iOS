@@ -72,12 +72,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 @implementation SPVideoReel
 
-#pragma mark - Memory Management
-- (void)dealloc
-{
-    [self removeObservers];
-}
-
 #pragma mark - Initialization
 - (id) initWithChannel:(DisplayChannel *)channel
       andVideoEntities:(NSArray *)videoEntities
@@ -161,28 +155,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
             self.videoPlayers = [@[] mutableCopy];
         
         [self setupVideoPreloadStrategy];
-        [self setupObservers];
         [self setupVideoScrollView];
         [self setupGestures];
         
         [self setupAllVideoPlayers];
         [self currentVideoShouldChangeToVideo:self.videoStartIndex autoplay:YES];
     }
-}
-
-- (void)setupObservers
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(dataSourceShouldUpdateFromWeb:)
-                                                 name:kShelbySPUserDidScrollToUpdate
-                                               object:nil];
-}
-
-- (void)removeObservers
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kShelbySPUserDidScrollToUpdate
-                                                  object:nil];
 }
 
 - (void)setupVideoScrollView

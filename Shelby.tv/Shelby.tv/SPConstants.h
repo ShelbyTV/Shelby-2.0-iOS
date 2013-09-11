@@ -21,9 +21,9 @@
 /// Notification
 //djs using blocks now,
 //#define kShelbySPVideoExtracted                 @"SP Video Extracted"
-#define kShelbySPUserDidScrollToUpdate          @"SP User Did Scroll To Update"
+//#define kShelbySPUserDidScrollToUpdate          @"SP User Did Scroll To Update"
 //#define kShelbySPLoadVideoAfterUnplayableVideo  @"SP Load Video After Unplayable Video"
-#define kShelbySPUserDidSwipeToNextVideo        @"SP User Did Swipe To Next Video"
+//#define kShelbySPUserDidSwipeToNextVideo        @"SP User Did Swipe To Next Video"
 
 /// SPVideoPlayer
 #define kShelbySPVideoBufferLikelyToKeepUp      @"playbackLikelyToKeepUp"
