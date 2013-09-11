@@ -619,36 +619,6 @@
 		91A36269178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
 		91A3626A178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
 		91A3626B178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
-		91A362821790822D00381218 /* buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362781790822D00381218 /* buzzfeed.png */; };
-		91A362831790822D00381218 /* buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362781790822D00381218 /* buzzfeed.png */; };
-		91A362841790822D00381218 /* buzzfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362781790822D00381218 /* buzzfeed.png */; };
-		91A362851790822D00381218 /* gopro.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362791790822D00381218 /* gopro.png */; };
-		91A362861790822D00381218 /* gopro.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362791790822D00381218 /* gopro.png */; };
-		91A362871790822D00381218 /* gopro.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362791790822D00381218 /* gopro.png */; };
-		91A362881790822D00381218 /* gq.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627A1790822D00381218 /* gq.png */; };
-		91A362891790822D00381218 /* gq.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627A1790822D00381218 /* gq.png */; };
-		91A3628A1790822D00381218 /* gq.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627A1790822D00381218 /* gq.png */; };
-		91A3628B1790822D00381218 /* nytimes.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627B1790822D00381218 /* nytimes.png */; };
-		91A3628C1790822D00381218 /* nytimes.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627B1790822D00381218 /* nytimes.png */; };
-		91A3628D1790822D00381218 /* nytimes.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627B1790822D00381218 /* nytimes.png */; };
-		91A3628E1790822D00381218 /* onion.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627C1790822D00381218 /* onion.png */; };
-		91A3628F1790822D00381218 /* onion.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627C1790822D00381218 /* onion.png */; };
-		91A362901790822D00381218 /* onion.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627C1790822D00381218 /* onion.png */; };
-		91A362911790822D00381218 /* pitchfork.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627D1790822D00381218 /* pitchfork.png */; };
-		91A362921790822D00381218 /* pitchfork.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627D1790822D00381218 /* pitchfork.png */; };
-		91A362931790822D00381218 /* pitchfork.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627D1790822D00381218 /* pitchfork.png */; };
-		91A362941790822D00381218 /* ted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627E1790822D00381218 /* ted.png */; };
-		91A362951790822D00381218 /* ted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627E1790822D00381218 /* ted.png */; };
-		91A362961790822D00381218 /* ted.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627E1790822D00381218 /* ted.png */; };
-		91A362971790822D00381218 /* vice.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627F1790822D00381218 /* vice.png */; };
-		91A362981790822D00381218 /* vice.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627F1790822D00381218 /* vice.png */; };
-		91A362991790822D00381218 /* vice.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A3627F1790822D00381218 /* vice.png */; };
-		91A3629A1790822D00381218 /* vogue.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362801790822D00381218 /* vogue.png */; };
-		91A3629B1790822D00381218 /* vogue.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362801790822D00381218 /* vogue.png */; };
-		91A3629C1790822D00381218 /* vogue.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362801790822D00381218 /* vogue.png */; };
-		91A3629D1790822D00381218 /* wired.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362811790822D00381218 /* wired.png */; };
-		91A3629E1790822D00381218 /* wired.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362811790822D00381218 /* wired.png */; };
-		91A3629F1790822D00381218 /* wired.png in Resources */ = {isa = PBXBuildFile; fileRef = 91A362811790822D00381218 /* wired.png */; };
 		91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
@@ -1093,16 +1063,6 @@
 		91A36263178F296B00381218 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
 		91A36264178F296B00381218 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = easing.c; sourceTree = "<group>"; };
 		91A36265178F296B00381218 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easing.h; sourceTree = "<group>"; };
-		91A362781790822D00381218 /* buzzfeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buzzfeed.png; sourceTree = "<group>"; };
-		91A362791790822D00381218 /* gopro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gopro.png; sourceTree = "<group>"; };
-		91A3627A1790822D00381218 /* gq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gq.png; sourceTree = "<group>"; };
-		91A3627B1790822D00381218 /* nytimes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nytimes.png; sourceTree = "<group>"; };
-		91A3627C1790822D00381218 /* onion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = onion.png; sourceTree = "<group>"; };
-		91A3627D1790822D00381218 /* pitchfork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pitchfork.png; sourceTree = "<group>"; };
-		91A3627E1790822D00381218 /* ted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ted.png; sourceTree = "<group>"; };
-		91A3627F1790822D00381218 /* vice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vice.png; sourceTree = "<group>"; };
-		91A362801790822D00381218 /* vogue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vogue.png; sourceTree = "<group>"; };
-		91A362811790822D00381218 /* wired.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wired.png; sourceTree = "<group>"; };
 		91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModelArrayUtility.h; sourceTree = "<group>"; };
 		91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyModelArrayUtility.m; sourceTree = "<group>"; };
 		91B7DC2717AACD79009ABF02 /* hungry.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hungry.m4v; sourceTree = "<group>"; };
@@ -1622,14 +1582,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8E2FC87216C6F19D0022B58C /* Login & Signup Images */ = {
-			isa = PBXGroup;
-			children = (
-				91A362771790822D00381218 /* Logo Images */,
-			);
-			path = "Login & Signup Images";
-			sourceTree = "<group>";
-		};
 		8E32BF86167FA58400753723 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -1642,7 +1594,6 @@
 				1CDCA669179DCE190098C4E1 /* Player Images */,
 				1C90E51F17849DF200E87CC0 /* Parallax View */,
 				1C7B63CF178B5ED6000C1E84 /* Signup Flow */,
-				8E2FC87216C6F19D0022B58C /* Login & Signup Images */,
 			);
 			name = Assets;
 			path = ../Assets;
@@ -2000,23 +1951,6 @@
 			name = "Signup Views";
 			sourceTree = "<group>";
 		};
-		91A362771790822D00381218 /* Logo Images */ = {
-			isa = PBXGroup;
-			children = (
-				91A362781790822D00381218 /* buzzfeed.png */,
-				91A362791790822D00381218 /* gopro.png */,
-				91A3627A1790822D00381218 /* gq.png */,
-				91A3627B1790822D00381218 /* nytimes.png */,
-				91A3627C1790822D00381218 /* onion.png */,
-				91A3627D1790822D00381218 /* pitchfork.png */,
-				91A3627E1790822D00381218 /* ted.png */,
-				91A3627F1790822D00381218 /* vice.png */,
-				91A362801790822D00381218 /* vogue.png */,
-				91A362811790822D00381218 /* wired.png */,
-			);
-			path = "Logo Images";
-			sourceTree = "<group>";
-		};
 		91B7DC3C17B1642A009ABF02 /* Nav Bar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2194,18 +2128,8 @@
 				1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
 				1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 				9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
-				91A362831790822D00381218 /* buzzfeed.png in Resources */,
-				91A362861790822D00381218 /* gopro.png in Resources */,
-				91A362891790822D00381218 /* gq.png in Resources */,
 				9137187117DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
-				91A3628C1790822D00381218 /* nytimes.png in Resources */,
 				1CD8111917CCF6C0002FD84B /* play-all.png in Resources */,
-				91A3628F1790822D00381218 /* onion.png in Resources */,
-				91A362921790822D00381218 /* pitchfork.png in Resources */,
-				91A362951790822D00381218 /* ted.png in Resources */,
-				91A362981790822D00381218 /* vice.png in Resources */,
-				91A3629B1790822D00381218 /* vogue.png in Resources */,
-				91A3629E1790822D00381218 /* wired.png in Resources */,
 				1CD8111C17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				9192ED0617C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				912261D417B97F070092AF30 /* overlay-likers.png in Resources */,
@@ -2307,18 +2231,8 @@
 				1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
 				1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 				9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
-				91A362841790822D00381218 /* buzzfeed.png in Resources */,
-				91A362871790822D00381218 /* gopro.png in Resources */,
-				91A3628A1790822D00381218 /* gq.png in Resources */,
 				9137187217DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
-				91A3628D1790822D00381218 /* nytimes.png in Resources */,
 				1CD8111A17CCF6C0002FD84B /* play-all.png in Resources */,
-				91A362901790822D00381218 /* onion.png in Resources */,
-				91A362931790822D00381218 /* pitchfork.png in Resources */,
-				91A362961790822D00381218 /* ted.png in Resources */,
-				91A362991790822D00381218 /* vice.png in Resources */,
-				91A3629C1790822D00381218 /* vogue.png in Resources */,
-				91A3629F1790822D00381218 /* wired.png in Resources */,
 				1CD8111D17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				9192ED0717C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
 				912261D517B97F070092AF30 /* overlay-likers.png in Resources */,
@@ -2423,20 +2337,10 @@
 				1CC5763C178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 				9188F231178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 				9192ED0817C3EA3D00294440 /* Ubuntu-L.ttf in Resources */,
-				91A362821790822D00381218 /* buzzfeed.png in Resources */,
-				91A362851790822D00381218 /* gopro.png in Resources */,
 				1CE5584F17DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
-				91A362881790822D00381218 /* gq.png in Resources */,
 				1CD8111517CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
-				91A3628B1790822D00381218 /* nytimes.png in Resources */,
-				91A3628E1790822D00381218 /* onion.png in Resources */,
-				91A362911790822D00381218 /* pitchfork.png in Resources */,
 				9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
-				91A362941790822D00381218 /* ted.png in Resources */,
-				91A362971790822D00381218 /* vice.png in Resources */,
 				913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
-				91A3629A1790822D00381218 /* vogue.png in Resources */,
-				91A3629D1790822D00381218 /* wired.png in Resources */,
 				9178C9D617CE398400913256 /* Welcome.storyboard in Resources */,
 				915CDA7B17BE8FC7003C3A38 /* Images.xcassets in Resources */,
 				1CE5586217DE73CA00C18A30 /* share-large@2x.png in Resources */,
