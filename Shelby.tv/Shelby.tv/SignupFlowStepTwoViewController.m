@@ -150,7 +150,7 @@
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     if (section == 1) {
-        return 10;
+        return 34;
     }
     
     return 1;
@@ -188,41 +188,137 @@
         rollID = @"4f9577c488ba6b15ec0084c7";
         image = [UIImage imageNamed:@"buzzfeed"];
     } else if (indexPath.row == 1) {
-        title = @"GoPro";
-        rollID = @"4f91700d88ba6b2aab000fba";
-        image = [UIImage imageNamed:@"gopro"];
+        title = @"VICE";
+        rollID = @"4f907a9b9a725b46010005c7";
+        image = [UIImage imageNamed:@"vice"];
     } else if (indexPath.row == 2) {
-        title = @"GQ";
-        rollID = @"519bac7cb415cc01910000af";
-        image = [UIImage imageNamed:@"gq"];
+        title = @"Creators Project";
+        rollID = @"4fbbc4211c1cf42b91002eac";
+        image = [UIImage imageNamed:@"creatorsproject"];
     } else if (indexPath.row == 3) {
-        title = @"The New York Times";
-        rollID = @"50522466b415cc5b81002080";
-        image = [UIImage imageNamed:@"nytimes"];
+        title = @"Blank on Blank";
+        rollID = @"4fa41c4f88ba6b0d4e00130f";
+        image = [UIImage imageNamed:@"blankonblank"];
     } else if (indexPath.row == 4) {
+        title = @"The Daily What";
+        rollID = @"4fa28d849a725b79c9000228";
+        image = [UIImage imageNamed:@"thedailywhat"];
+    } else if (indexPath.row == 5) {
         title = @"The Onion";
         rollID = @"4fc532169a725b2999000354";
-        image = [UIImage imageNamed:@"onion"];
-    } else if (indexPath.row == 5) {
-        title = @"PitchFork";
-        rollID = @"4fa41cfa88ba6b0dcf001a65";
-        image = [UIImage imageNamed:@"pitchfork"];
+        image = [UIImage imageNamed:@"theonion"];
     } else if (indexPath.row == 6) {
         title = @"TED";
         rollID = @"4fa054ff88ba6b09c8000e93";
         image = [UIImage imageNamed:@"ted"];
     } else if (indexPath.row == 7) {
-        title = @"Vice";
-        rollID = @"4f907a9b9a725b46010005c7";
-        image = [UIImage imageNamed:@"vice"];
+        title = @"iamOTHER";
+        rollID = @"519baa7eb415cc0191000007";
+        image = [UIImage imageNamed:@"iamother"];
     } else if (indexPath.row == 8) {
+        title = @"Life+Times";
+        rollID = @"519bab29b415cc0191000077";
+        image = [UIImage imageNamed:@"lifetimes"];
+    } else if (indexPath.row == 9) {
+        title = @"Reserve Channel";
+        rollID = @"5005b00e9a725b0e150178fa";
+        image = [UIImage imageNamed:@"reservechannel"];
+    } else if (indexPath.row == 10) {
+        title = @"Jamie Oliver's Food Tube";
+        rollID = @"4f9d9c1a88ba6b56aa00150f";
+        image = [UIImage imageNamed:@"jamieoliversfoodtube"];
+    } else if (indexPath.row == 11) {
+        title = @"New York Times";
+        rollID = @"50522466b415cc5b81002080";
+        image = [UIImage imageNamed:@"newyorktimes"];
+    } else if (indexPath.row == 12) {
+        title = @"GQ";
+        rollID = @"519bac7cb415cc01910000af";
+        image = [UIImage imageNamed:@"gq"];
+    } else if (indexPath.row == 13) {
         title = @"Vogue";
         rollID = @"4fa062869a725b0c2c0010fc";
         image = [UIImage imageNamed:@"vogue"];
-    } else if (indexPath.row == 9) {
+    } else if (indexPath.row == 14) {
+        title = @"Pitchfork";
+        rollID = @"4fa3e6309a725b3689001792";
+        image = [UIImage imageNamed:@"pitchfork"];
+    } else if (indexPath.row == 15) {
+        title = @"Above Average";
+        rollID = @"50951b06b415cc567800aa16";
+        image = [UIImage imageNamed:@"aboveaverage"];
+    } else if (indexPath.row == 16) {
+        title = @"Grantland";
+        rollID = @"519bada3b415cc01910000e5";
+        image = [UIImage imageNamed:@"grantland"];
+    } else if (indexPath.row == 17) {
+        title = @"IGN";
+        rollID = @"4f987a5e9a725b032b002f13";
+        image = [UIImage imageNamed:@"ign"];
+    } else if (indexPath.row == 18) {
+        title = @"GoPro";
+        rollID = @"4f91700d88ba6b2aab000fba";
+        image = [UIImage imageNamed:@"gopro"];
+    } else if (indexPath.row == 19) {
+        title = @"Red Bull";
+        rollID = @"4fb413bb9a725b650900195a";
+        image = [UIImage imageNamed:@"redbull"];
+    } else if (indexPath.row == 20) {
+        title = @"NetworkA";
+        rollID = @"4f987e9188ba6b58500122da";
+        image = [UIImage imageNamed:@"networka"];
+    } else if (indexPath.row == 21) {
+        title = @"RIDE";
+        rollID = @"4f9ee11b9a725b6605001713";
+        image = [UIImage imageNamed:@"ride"];
+    } else if (indexPath.row == 22) {
+        title = @"Drive";
+        rollID = @"4f99e5069a725b1c7501c038";
+        image = [UIImage imageNamed:@"drive"];
+    } else if (indexPath.row == 23) {
+        title = @"Teton Gravity Research";
+        rollID = @"512d1f15b415cc5d8c0001cf";
+        image = [UIImage imageNamed:@"tetongravityresearch"];
+    } else if (indexPath.row == 24) {
+        title = @"PBS Idea Channel";
+        rollID = @"4faabca99a725b5cd50026a2";
+        image = [UIImage imageNamed:@"pbsideachannel"];
+    } else if (indexPath.row == 25) {
         title = @"Wired";
         rollID = @"4f9a08909a725b43ad00f798";
         image = [UIImage imageNamed:@"wired"];
+    } else if (indexPath.row == 26) {
+        title = @"The Verge";
+        rollID = @"4fa1591f88ba6b78da0008b7";
+        image = [UIImage imageNamed:@"theverge"];
+    } else if (indexPath.row == 27) {
+        title = @"Crash Course";
+        rollID = @"4f95f29f88ba6b72c2004aed";
+        image = [UIImage imageNamed:@"crashcourse"];
+    } else if (indexPath.row == 28) {
+        title = @"Sci Show";
+        rollID = @"4f9731be88ba6b5309025c59";
+        image = [UIImage imageNamed:@"scishow"];
+    } else if (indexPath.row == 29) {
+        title = @"THNKR";
+        rollID = @"4fc8f77f88ba6b0881000995";
+        image = [UIImage imageNamed:@"thnkr"];
+    } else if (indexPath.row == 30) {
+        title = @"Sesame Street";
+        rollID = @"4fa2931f88ba6b68b6000ba9";
+        image = [UIImage imageNamed:@"sesamestreet"];
+    } else if (indexPath.row == 31) {
+        title = @"Khan Academy";
+        rollID = @"4fa39bd89a725b1f920008f3";
+        image = [UIImage imageNamed:@"khanacademy"];
+    } else if (indexPath.row == 32) {
+        title = @"College Humor";
+        rollID = @"4f9009d9b415cc466a000466";
+        image = [UIImage imageNamed:@"collegehumor"];
+    } else if (indexPath.row == 33) {
+        title = @"Smart History";
+        rollID = @"4fb6344d9a725b2d6a0011b0";
+        image = [UIImage imageNamed:@"smarthistory"];
     }
 
     cell.title.text = title;
