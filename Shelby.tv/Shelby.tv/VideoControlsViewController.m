@@ -224,10 +224,6 @@
 #pragma mark - Airplay Setup
 - (void)setupAirPlay
 {
-    [VideoControlsViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
-                                            withAction:kAnalyticsUXTapAirplay
-                                   withNicknameAsLabel:YES];
-
     // Instantiate AirPlay button for MPVolumeView
     MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.airPlayView.bounds];
     [volumeView setShowsVolumeSlider:NO];

@@ -106,6 +106,10 @@
 
 - (void)airplayDidBegin:(NSNotification *)note
 {
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                          action:kAnalyticsUXTapAirplay
+                                 nicknameAsLabel:YES];
+
     STVAssert(!self.videoPlayer, @"air play sets our player (or somebody else does, later)");
     SPVideoPlayer *notedPlayer = (SPVideoPlayer *)note.object;
     STVAssert(notedPlayer && [notedPlayer isKindOfClass:[SPVideoPlayer class]], @"notification object should be SPVideoPlayer, was %@", notedPlayer);
