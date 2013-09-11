@@ -23,25 +23,16 @@
 
 + (NSArray *)deduplicatedCopy:(NSArray *)entries;
 
-//  All index paths are relative to the original, baseArray
-//
-//  You should therefore use performBathUpdates:completion: to apply these udpates.
-+ (NSArray *)deduplicatedArrayByAppending:(NSArray *)newEntries
-                           toDedupedArray:(NSArray *)baseArray
-                                didInsert:(NSArray **)insertedIndexPaths
-                                didDelete:(NSArray **)deletedIndexPaths
-                                didUpdate:(NSArray **)updatedIndexPaths;
++ (NSArray *)combineAndSort:(NSArray *)arr1 with:(NSArray *)arr2;
 
-//  All index paths are relative to the original, baseArray.
+//  All index paths are relative to the original, dedupedBaseEntries array.
 //
-//  deletedIndexPaths indicate entities that have been subsumed as
-//  duplicate-children of a newly prepended entity.
-//
-//  You should therefore use performBathUpdates:completion: to apply these udpates.
-+ (NSArray *)deduplicatedArrayByPrepending:(NSArray *)newEntries
-                            toDedupedArray:(NSArray *)baseArray
-                                 didInsert:(NSArray **)insertedIndexPaths
-                                 didDelete:(NSArray **)deletedIndexPaths
-                                 didUpdate:(NSArray **)updatedIndexPaths;
+//  You should therefore use performBatchUpdates:completion: to apply these updates
+//  animated.  Or just use -reloadData and ignore them.
++ (NSArray *)deduplicatedArrayByMerging:(NSArray *)flatNewEntries
+                            intoDeduped:(NSArray *)dedupedBaseEntries
+                              didInsert:(NSArray **)insertedIndexPaths
+                              didDelete:(NSArray **)deletedIndexPaths
+                              didUpdate:(NSArray **)updatedIndexPaths;
 
 @end
