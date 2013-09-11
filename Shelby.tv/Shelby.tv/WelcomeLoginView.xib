@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4504" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3734.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WelcomeViewController"/>
@@ -39,9 +39,12 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="62" id="4Yc-1w-xK8"/>
+                                <constraint firstAttribute="width" constant="281" id="7cS-RH-pMX"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="Lib-vK-4rC"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                            <state key="normal" title="Sign up with Facebook">
+                            <inset key="imageEdgeInsets" minX="-100" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Sign up with Facebook" image="facebook-button-icon">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -94,14 +97,18 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="Nyb-7c-ITc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="h0C-bc-EWh" secondAttribute="leading" constant="20" id="BOP-iV-4gt"/>
                         <constraint firstItem="rma-46-MgZ" firstAttribute="top" secondItem="Nyb-7c-ITc" secondAttribute="bottom" constant="5" id="CXn-zG-MbE"/>
                         <constraint firstItem="z2F-DD-VYf" firstAttribute="top" secondItem="rma-46-MgZ" secondAttribute="bottom" constant="36" id="Hoh-67-M3n"/>
+                        <constraint firstAttribute="trailing" secondItem="Nyb-7c-ITc" secondAttribute="trailing" constant="19" id="IAI-7D-Vtv"/>
                         <constraint firstItem="Nyb-7c-ITc" firstAttribute="leading" secondItem="h0C-bc-EWh" secondAttribute="leading" constant="20" id="P1n-0h-ckf"/>
                         <constraint firstItem="Nyb-7c-ITc" firstAttribute="top" secondItem="h0C-bc-EWh" secondAttribute="top" constant="20" id="TAd-Gx-xqY"/>
                         <constraint firstAttribute="centerX" secondItem="rma-46-MgZ" secondAttribute="centerX" id="TEQ-b4-A7H"/>
                         <constraint firstAttribute="centerX" secondItem="z2F-DD-VYf" secondAttribute="centerX" id="XoQ-lO-3f0"/>
+                        <constraint firstItem="Nyb-7c-ITc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="h0C-bc-EWh" secondAttribute="top" constant="20" id="tbI-Zl-alY"/>
                         <constraint firstAttribute="height" constant="203" id="u0O-8a-lJC"/>
                         <constraint firstAttribute="centerX" secondItem="Nyb-7c-ITc" secondAttribute="centerX" id="uUb-kU-dDP"/>
+                        <constraint firstItem="rma-46-MgZ" firstAttribute="top" secondItem="Nyb-7c-ITc" secondAttribute="bottom" constant="5" id="w26-1H-WZB"/>
                     </constraints>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try Shelby without an account..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYc-Gu-df3">
@@ -159,6 +166,7 @@
         </view>
     </objects>
     <resources>
+        <image name="facebook-button-icon" width="9" height="18"/>
         <image name="welcome-h-logo" width="119" height="34"/>
     </resources>
 </document>
