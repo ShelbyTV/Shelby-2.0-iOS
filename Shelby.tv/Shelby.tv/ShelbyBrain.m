@@ -15,6 +15,7 @@
 #import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
 #import "ShelbyModel.h"
+#import "SignupFlowViewController.h"
 #import "SPVideoExtractor.h"
 #import "ShelbyAlert.h"
 #import "User+Helper.h"
@@ -81,6 +82,16 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 - (void)handleDidFinishLaunching
 {
     [ShelbyDataMediator sharedInstance].delegate = self;
+
+    // This needs to be done before we decide what VC to activate
+    // If welcome screen is completed and user started the signup screen and never logged in.
+    // We should not reset Welcome screen in the case where user didn't even open signup, because maybe they just went for perview app.
+    // Odd case is, user finished welcome, going to preview, then hit signup, kill the app... and now next time they open, we will take them to welcome again.
+    if ([WelcomeViewController isWelcomeComplete] &&
+         (![[ShelbyDataMediator sharedInstance] hasUserLoggedIn] && [SignupFlowViewController signupStatus] == ShelbySignupStatusStarted)) {
+        [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusUnstarted];
+        [[ShelbyDataMediator sharedInstance] nuclearCleanup];
+    }
     
     if (![WelcomeViewController isWelcomeComplete]) {
         [self activateWelcomeViewController];
@@ -147,6 +158,11 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     self.loginVC.delegate = self;
 
     [self.mainWindow.rootViewController presentViewController:loginNav animated:YES completion:nil];
+    
+    // When user goes to login, reset signup status.
+    if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
+        [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
+    }
 }
 
 - (void)dismissLoginVCCompletion:(void (^)(void))completion
@@ -269,6 +285,12 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
         [self userWasUpdated];
         [User sessionDidBecomeActive];
         [self dismissLoginVCCompletion:^{
+            if (![WelcomeViewController isWelcomeComplete]) {
+                // This is for the case where user does the following:
+                // Installs the app, go thru welcome, hit signup and kill the app.
+                // User reopens the app, go thru welcome again, but now logs in (as it was actually an existing user.) In this case, We want to make sure that the welcome flag is set correctly.
+                [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
+            }
             [self activateHomeViewController];
             [self fetchUserChannelsForceSwitchToUsersStream:YES];
         }];
@@ -641,6 +663,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     
     if (user) {
         [[ShelbyDataMediator sharedInstance] syncLikes];
+        [[ShelbyDataMediator sharedInstance] userLoggedIn];
     }
 }
 
@@ -835,6 +858,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 
 - (void)welcomeDidTapSignup:(WelcomeViewController *)welcomeVC
 {
+    [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
+
     [self presentSignupVC];
 }
 
@@ -845,17 +870,25 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     self.signupFlowVC.signupDelegate = self;
     
     [self.mainWindow.rootViewController presentViewController:self.signupFlowVC animated:YES completion:^{
+        [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
         [self.signupFlowVC startWithFacebookSignup];
     }];
 }
 
 - (void)welcomeDidTapLogin:(WelcomeViewController *)welcomeVC
 {
+    [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
+
     [self presentLoginVC];
 }
 
 - (void)welcomeDidTapPreview:(WelcomeViewController *)welcomeVC
 {
+    [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
+    // When a user goes to preview, we want to make sure that if he ever started the signup process and stopped in the middle, we reset that. To make sure we don't reset the welcome screen and open it again.
+    if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
+        [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
+    }
     [self activateHomeViewController];
 }
 

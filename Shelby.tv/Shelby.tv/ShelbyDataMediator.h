@@ -20,6 +20,7 @@ extern NSString * const kShelbyNotificationUserSignupDidSucceed;
 extern NSString * const kShelbyNotificationUserSignupDidFail;
 extern NSString * const kShelbyNotificationUserUpdateDidSucceed;
 extern NSString * const kShelbyNotificationUserUpdateDidFail;
+extern NSString * const kShelbyUserHasLoggedInKey;
 
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>
@@ -75,6 +76,8 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
 - (void)loginUserFacebook;
+- (BOOL)hasUserLoggedIn;
+- (void)userLoggedIn;
 
 - (void)syncLikes; // Syncs unsycs likes after user logs in
 

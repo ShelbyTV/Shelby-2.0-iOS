@@ -12,12 +12,6 @@
 
 NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
 
-typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
-{
-    ShelbyWelcomeStatusUnstarted, // 0
-    ShelbyWelcomeStatusComplete
-};
-
 @interface WelcomeViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *welcomeScrollScroller;
 @property (nonatomic, strong) WelcomeLoginView *welcomeLoginView;
@@ -75,9 +69,20 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
     return NO;
 }
 
-+ (bool)isWelcomeComplete
++ (BOOL)isWelcomeComplete
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kShelbyWelcomeStatusKey] == ShelbyWelcomeStatusComplete;
+}
+
+// This is called from the delegate and not from the welcomeComplete method.
+// That is because we want to reset Signup Started values, if user:
+// Go thru welcome, hit signup, kill the app
+// Open the app, go thru welcome again and now hit Preview app.
+// We want to make sure that next time they don't get welcome reset.
++ (void)setWelcomeScreenComplete:(ShelbyWelcomeStatus)welcomeStatus
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:welcomeStatus forKey:kShelbyWelcomeStatusKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - WelcomeLoginView's IBActions
@@ -123,8 +128,6 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeFinish
                                        withLabel:[self welcomeDuration]];
-    [[NSUserDefaults standardUserDefaults] setInteger:ShelbyWelcomeStatusComplete forKey:kShelbyWelcomeStatusKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)welcomeDuration

@@ -47,6 +47,8 @@
     self.subtitleLabel.font = kShelbyFontH4Medium;
     
     [self.signupWithFacebookButton setBackgroundImage:[[UIImage imageNamed:@"facebook-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    
+    [SignupFlowViewController setSignupStatus:ShelbySignupStatusStarted];
 }
 
 - (void)viewWillAppear:(BOOL)animated

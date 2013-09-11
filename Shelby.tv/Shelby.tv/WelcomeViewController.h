@@ -8,13 +8,20 @@
 
 #import "ShelbyViewController.h"
 
+typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
+{
+    ShelbyWelcomeStatusUnstarted, // 0
+    ShelbyWelcomeStatusComplete
+};
+
 @protocol WelcomeViewDelegate;
 
 @interface WelcomeViewController : ShelbyViewController <UIScrollViewDelegate>
 
 @property (nonatomic, weak) id<WelcomeViewDelegate>delegate;
 
-+ (bool)isWelcomeComplete;
++ (BOOL)isWelcomeComplete;
++ (void)setWelcomeScreenComplete:(ShelbyWelcomeStatus)welcomeStatus;
 
 @end
 

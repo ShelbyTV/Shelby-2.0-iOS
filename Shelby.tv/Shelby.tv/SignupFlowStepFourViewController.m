@@ -143,6 +143,7 @@
 - (void)userSignupDidSucceed:(NSNotification *)notification
 {
     [self removeObservers];
+    [SignupFlowViewController setSignupStatus:ShelbySignupStatusComplete];
     
     self.navigationItem.rightBarButtonItem = self.nextButton;
     self.navigationItem.leftBarButtonItem.enabled = YES;

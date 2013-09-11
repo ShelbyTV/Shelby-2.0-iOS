@@ -13,6 +13,7 @@
 #import "ImageUtilities.h"
 #import "Roll+Helper.h"
 #import "SettingsViewController.h"
+#import "ShelbyDataMediator.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 
@@ -382,7 +383,13 @@
         UIButton *signup = [UIButton buttonWithType:UIButtonTypeCustom];
         [signup setFrame:CGRectMake(4, 4, 80, 36)];
         [signup setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
-        [signup setTitle:@"SIGN UP" forState:UIControlStateNormal];
+        
+        // Once user has logged in to the app, don't show them the Sign Up button.
+        if ([[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
+            [signup setTitle:@"LOGIN" forState:UIControlStateNormal];
+        } else {
+            [signup setTitle:@"SIGN UP" forState:UIControlStateNormal];
+        }
         [[signup titleLabel] setFont:kShelbyFontH4Bold];
         [signup setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
         [signup addTarget:self action:@selector(navBarButtonTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -406,7 +413,11 @@
                                          withAction:kAnalyticsUXTapNavBarButton
                                 withNicknameAsLabel:YES];
     [self dismissVideoReel];
-    [self.masterDelegate presentUserSignup];
+    if ([[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
+        [self.masterDelegate presentUserLogin];
+    } else {
+        [self.masterDelegate presentUserSignup];
+    }
 }
 
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index

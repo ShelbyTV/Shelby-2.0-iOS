@@ -27,6 +27,7 @@ NSString * const kShelbyNotificationUserSignupDidSucceed = @"kShelbyNotification
 NSString * const kShelbyNotificationUserSignupDidFail = @"kShelbyNotificationUserSignupDidFail";
 NSString * const kShelbyNotificationUserUpdateDidSucceed = @"kShelbyNotificationUserUpdateDidSucceed";
 NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUserUpdateDidFail";
+NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 
 @interface ShelbyDataMediator()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -447,6 +448,7 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         NSDictionary *result = JSON[@"result"];
         if ([result isKindOfClass:[NSDictionary class]]) {
             User *user = [User userForDictionary:result inContext:context];
+            [self userLoggedIn];
             NSError *err;
             [user.managedObjectContext save:&err];
             STVDebugAssert(!err, @"context save failed, put your DEBUG hat on...");
@@ -568,11 +570,9 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
         return;
     }
 
-    //DS - You don't need a weak self here.  There's no retain cycle; self doesn't own the block.
-    __weak ShelbyDataMediator *weakSelf = self;
     [ShelbyAPIClient putUserWithParams:params andBlock:^(id JSON, NSError *error) {
         if (JSON) {
-            [weakSelf saveUserFromJSON:JSON];
+            [self saveUserFromJSON:JSON];
             [self.delegate userWasUpdated];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidSucceed object:nil];
             if (avatar) {
@@ -648,6 +648,19 @@ NSString * const kShelbyNotificationUserUpdateDidFail = @"kShelbyNotificationUse
             [self.delegate loginUserDidCompleteWithError:@"Go to Settings -> Privacy -> Facebook and turn Shelby ON"];
         }
     }];
+}
+
+- (BOOL)hasUserLoggedIn
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyUserHasLoggedInKey] == YES;
+}
+
+- (void)userLoggedIn
+{
+    if (![self hasUserLoggedIn]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyUserHasLoggedInKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }   
 }
 
 - (void)userAskForFacebookPublishPermissions

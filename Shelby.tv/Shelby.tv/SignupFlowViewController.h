@@ -18,6 +18,15 @@ extern NSString * const kShelbySignupPasswordKey;
 extern NSString * const kShelbySignupUsernameKey;
 extern NSString * const kShelbySignupVideoTypesKey;
 
+extern NSString * const kShelbySignupStatusKey;
+
+typedef NS_ENUM(NSInteger, ShelbySignupStatus)
+{
+    ShelbySignupStatusUnstarted, // 0
+    ShelbySignupStatusStarted,
+    ShelbySignupStatusComplete
+};
+
 @protocol SignupFlowViewDelegate <NSObject>
 - (void)connectToFacebook;
 - (void)connectToTwitter;
@@ -51,4 +60,7 @@ extern NSString * const kShelbySignupVideoTypesKey;
 - (CGRect)nextButtonFrame;
 - (UIView *)customLeftButtonView;
 - (void)handleDidBecomeActive;
+
++ (NSInteger)signupStatus;
++ (void)setSignupStatus:(ShelbySignupStatus)status;
 @end

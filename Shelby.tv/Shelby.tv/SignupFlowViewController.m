@@ -18,7 +18,7 @@ NSString * const kShelbySignupNameKey            = @"SignupName";
 NSString * const kShelbySignupPasswordKey        = @"SignupPassword";
 NSString * const kShelbySignupUsernameKey        = @"SignupUsername";
 NSString * const kShelbySignupVideoTypesKey      = @"SignupVideoTypes";
-
+NSString * const kShelbySignupStatusKey = @"signup_status";
 
 typedef NS_ENUM(NSInteger, TextFieldTag) {
     TextFieldTagName,
@@ -304,6 +304,18 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 {
     // To be implemented in subclass if needed.
 }
+
++ (NSInteger)signupStatus
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kShelbySignupStatusKey];
+}
+
++ (void)setSignupStatus:(ShelbySignupStatus)status
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:status forKey:kShelbySignupStatusKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 #pragma mark - UITextFieldDelegate Methods
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
