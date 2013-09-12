@@ -7,6 +7,7 @@
 //
 
 #import "SignupFlowNavigationViewController.h"
+#import "DeviceUtilities.h"
 #import "SignupFlowStepOneViewController.h"
 #import "GAI.h"
 
@@ -41,7 +42,12 @@
     rootVC.signupDictionary = self.signupDictionary;
 
     //NB: see AppDelegate for appearance proxy setup
-    self.navigationBar.translucent = YES;
+    if ([DeviceUtilities isGTEiOS7]) {
+        self.navigationBar.translucent = YES;
+    } else {
+        self.navigationBar.translucent = NO;
+        self.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    }
 }
 
 - (void)handleDidBecomeActive

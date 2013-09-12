@@ -32,9 +32,6 @@
 
     self.nextButton.enabled = NO;
     self.videoTypes.backgroundColor = self.view.backgroundColor;
-
-    self.collectionView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
-    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0);
     
     if (self.facebookSignup) {
         self.navigationItem.leftBarButtonItem.enabled = NO;
