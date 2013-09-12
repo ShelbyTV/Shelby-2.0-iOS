@@ -152,7 +152,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     if ( !_videoPlayers ) {
         [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
 
-            self.videoPlayers = [@[] mutableCopy];
+        self.videoPlayers = [@[] mutableCopy];
         
         [self setupVideoPreloadStrategy];
         [self setupVideoScrollView];
@@ -449,7 +449,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
         // Set the new current player to auto play and get it going...
         self.currentVideoPlayingIndex = position;
-        if (self.currentVideoPlayingIndex > [self.videoPlayers count]) {
+        if (self.currentVideoPlayingIndex >= [self.videoPlayers count]) {
             STVDebugAssert([self.videoPlayers count] > self.currentVideoPlayingIndex, @"can't play player[%i], we only have %i players. Previous player? %@", self.currentVideoPlayingIndex, [self.videoPlayers count], (previousPlayer?@"YES":@"NO"));
             return;
         }
