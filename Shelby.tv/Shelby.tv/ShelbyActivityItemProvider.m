@@ -35,18 +35,26 @@
 - (id)activityViewController:(UIActivityViewController *)activityViewController
          itemForActivityType:(NSString *)activityType
 {
-    // KP KP: TODO: once we have the different share text per service do something... 
     NSString *text = nil;
     if ([activityType isEqualToString:UIActivityTypePostToTwitter]) {
-        text = [NSString stringWithFormat:@"This video just blew my mind %@ via @Shelby TV", self.shareLink];
+        text = [NSString stringWithFormat:@"Check it out: %@ via @Shelby TV", self.shareLink];
     } else if ([activityType isEqualToString:UIActivityTypeMail]) {
-        text = [NSString stringWithFormat:@"I just watched \"%@\".\n\nCheck out this awesome video: %@\n\nAnd one last thing, watch video you'll love on Shelby TV. http://www.shelby.tv", self.shareText, self.shareLink];
+        text = [NSString stringWithFormat:@"Thought you'd be interested in \"%@\".\n\nCheck it out: %@\n\n\n--\nTry Shelby, it's like a TV channel personalized for you: http://shelby.tv", self.shareText, self.shareLink];
     } else {  // SMS and everything else
-        text = [NSString stringWithFormat:@"This video just blew my mind %@ via Shelby TV", self.shareLink];
+        text = [NSString stringWithFormat:@"Check it out: %@ via Shelby TV", self.shareLink];
     }
     
     return text;
 }
+
+- (NSString *)activityViewController:(UIActivityViewController *)activityViewController subjectForActivityType:(NSString *)activityType
+{
+    if ([activityType isEqualToString:UIActivityTypeMail]) {
+        return [NSString stringWithFormat:@"video: %@", self.shareText];
+    }
+    return nil;
+}
+
 - (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController
 {
     return @"";
