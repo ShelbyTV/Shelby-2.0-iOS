@@ -463,8 +463,6 @@
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
 		8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
 		8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
-		8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
-		8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
 		8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
@@ -583,6 +581,9 @@
 		9178C9E317CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
 		9178C9E417CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
 		9178C9E517CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */; };
+		9182A1D917E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
+		9182A1DA17E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
+		9182A1DB17E2247500C629FA /* libIntercom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182A1D817E2247500C629FA /* libIntercom.a */; };
 		9184FE5517DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
 		9184FE5617DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
 		9184FE5717DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */; };
@@ -1045,6 +1046,8 @@
 		9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeScrollHolderView.xib; sourceTree = "<group>"; };
 		9178C9E117CE3B8600913256 /* WelcomeScrollHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeScrollHolderView.h; sourceTree = "<group>"; };
 		9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeScrollHolderView.m; sourceTree = "<group>"; };
+		9182A1D717E2247500C629FA /* Intercom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Intercom.h; sourceTree = "<group>"; };
+		9182A1D817E2247500C629FA /* libIntercom.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIntercom.a; sourceTree = "<group>"; };
 		9184FE5317DA5757006E23E4 /* UITextViewWithPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextViewWithPlaceholder.h; sourceTree = "<group>"; };
 		9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextViewWithPlaceholder.m; sourceTree = "<group>"; };
 		9188F230178C99F7002F342B /* ShelbyNavBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNavBarView.xib; sourceTree = "<group>"; };
@@ -1158,9 +1161,9 @@
 				1C8109B716EE2CBF0030077C /* Foundation.framework in Frameworks */,
 				1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */,
 				1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */,
+				9182A1DA17E2247500C629FA /* libIntercom.a in Frameworks */,
 				8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				9137187417DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
-				8E87C5B416F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 				1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1191,7 +1194,7 @@
 				1C810A6D16EE5EED0030077C /* Foundation.framework in Frameworks */,
 				1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */,
 				1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */,
-				8E87C5B216F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
+				9182A1DB17E2247500C629FA /* libIntercom.a in Frameworks */,
 				9137187517DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 				8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 				1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */,
@@ -1224,9 +1227,10 @@
 				8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */,
 				8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */,
 				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
+				9182A1D917E2247500C629FA /* libIntercom.a in Frameworks */,
+				9137187317DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 				8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */,
-				9137187317DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1698,6 +1702,7 @@
 		8E82EDF11631C7770044D97E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9182A1D617E2247500C629FA /* Intercom */,
 				9137186A17DE94EF0021A99B /* Localytics */,
 				1C56F11417BABD8C00EE9206 /* Appirater */,
 				91A36261178F296B00381218 /* AHEasing */,
@@ -1907,6 +1912,16 @@
 			);
 			name = "Welcome Images";
 			sourceTree = "<group>";
+		};
+		9182A1D617E2247500C629FA /* Intercom */ = {
+			isa = PBXGroup;
+			children = (
+				9182A1D717E2247500C629FA /* Intercom.h */,
+				9182A1D817E2247500C629FA /* libIntercom.a */,
+			);
+			name = Intercom;
+			path = Library/Intercom;
+			sourceTree = SOURCE_ROOT;
 		};
 		9192ECFC17C3EA1000294440 /* Fonts */ = {
 			isa = PBXGroup;
@@ -2853,6 +2868,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
+					"$(SRCROOT)/Library/Intercom",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2869,6 +2885,8 @@
 					"-framework",
 					UIKit,
 					"-lsqlite3.0",
+					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_NAME = "Shelby.tv Beta";
 				PROVISIONING_PROFILE = "";
@@ -2905,6 +2923,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
+					"$(SRCROOT)/Library/Intercom",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2921,6 +2940,8 @@
 					"-framework",
 					UIKit,
 					"-lsqlite3.0",
+					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_NAME = "Shelby.tv Beta";
 				PROVISIONING_PROFILE = "";
@@ -2952,6 +2973,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
+					"$(SRCROOT)/Library/Intercom",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2968,6 +2990,8 @@
 					"-framework",
 					UIKit,
 					"-lsqlite3.0",
+					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "Shelby.tv Nightly";
 				PROVISIONING_PROFILE = "";
@@ -3000,6 +3024,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
+					"$(SRCROOT)/Library/Intercom",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3016,6 +3041,8 @@
 					"-framework",
 					UIKit,
 					"-lsqlite3.0",
+					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "Shelby.tv Nightly";
 				PROVISIONING_PROFILE = "";
@@ -3126,6 +3153,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
+					"$(SRCROOT)/Library/Intercom",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3142,6 +3170,8 @@
 					"-framework",
 					UIKit,
 					"-lsqlite3.0",
+					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3178,6 +3208,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
+					"$(SRCROOT)/Library/Intercom",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3194,6 +3225,8 @@
 					"-framework",
 					UIKit,
 					"-lsqlite3.0",
+					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

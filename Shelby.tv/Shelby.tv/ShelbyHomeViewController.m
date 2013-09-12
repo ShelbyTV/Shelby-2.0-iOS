@@ -428,7 +428,7 @@
     if ([self.airPlayController isAirPlayActive]) {
         //play back on second screen!
         NSArray *channelEntities = [self deduplicatedEntriesForChannel:channel];
-        if ((NSUInteger)index > [channelEntities count]) {
+        if ((NSUInteger)index >= [channelEntities count]) {
             STVDebugAssert([channelEntities count] > (NSUInteger)index, @"expected a valid index");
             return;
         }

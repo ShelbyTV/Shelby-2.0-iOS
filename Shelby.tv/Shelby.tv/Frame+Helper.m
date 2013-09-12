@@ -186,7 +186,16 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     if(self.conversation && [self.conversation.messages count] > 0){
         // Grab only messages from the creator, use the oldest
         NSPredicate *creatorNickPredicate = [NSPredicate predicateWithFormat:@"nickname == %@", self.creator.nickname];
-        NSSet *messagesFromCreator = [self.conversation.messages filteredSetUsingPredicate:creatorNickPredicate];
+        NSSet * messagesFromCreator = [self.conversation.messages filteredSetUsingPredicate:creatorNickPredicate];
+        if ([messagesFromCreator count] == 0 && self.creator.twitterNickname) {
+            creatorNickPredicate = [NSPredicate predicateWithFormat:@"nickname == %@", self.creator.twitterNickname];
+            messagesFromCreator = [self.conversation.messages filteredSetUsingPredicate:creatorNickPredicate];
+        }
+        if ([messagesFromCreator count] == 0 && self.creator.facebookNickname) {
+            creatorNickPredicate = [NSPredicate predicateWithFormat:@"nickname == %@", self.creator.facebookNickname];
+            messagesFromCreator = [self.conversation.messages filteredSetUsingPredicate:creatorNickPredicate];
+        }
+
         if([messagesFromCreator count] > 0){
             NSSortDescriptor *createdAt = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:YES];
             NSArray *sortedMessagesFromCreator = [messagesFromCreator sortedArrayUsingDescriptors:@[createdAt]];
