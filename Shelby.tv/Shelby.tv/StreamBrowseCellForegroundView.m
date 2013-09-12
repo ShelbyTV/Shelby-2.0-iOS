@@ -9,6 +9,7 @@
 #import "StreamBrowseCellForegroundView.h"
 #import "DashboardEntry+Helper.h"
 #import "DeviceUtilities.h"
+#import "NSDate+Extension.h"
 #import "Video+Helper.h"
 #import "UIImageView+AFNetworking.h"
 #import "User+Helper.h"
@@ -217,7 +218,12 @@
 - (void)updateStandardVisuals
 {
     // createAt
-    self.detailCreatedAt.text = _videoFrame.createdAt;
+    if (_dashboardEntry) {
+        self.detailCreatedAt.text = [[NSDate dateFromBSONObjectID:_dashboardEntry.shelbyID] prettyRelativeTime];
+    } else {
+        self.detailCreatedAt.text = [[NSDate dateFromBSONObjectID:_videoFrame.shelbyID] prettyRelativeTime];
+    }
+
 
     //title
     self.summaryTitle.text = _videoFrame.video.title;

@@ -110,7 +110,7 @@
 		1C81097D16EE2CBF0030077C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E20971D162F3A61000A2DFD /* main.m */; };
 		1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E209721162F3A61000A2DFD /* AppDelegate.m */; };
 		1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
-		1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
+		1C81098316EE2CBF0030077C /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		1C81098616EE2CBF0030077C /* BigButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E41EF2D16B0742400C831A4 /* BigButton.m */; };
 		1C81098716EE2CBF0030077C /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
@@ -152,7 +152,7 @@
 		1C810A3316EE5EED0030077C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E20971D162F3A61000A2DFD /* main.m */; };
 		1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E209721162F3A61000A2DFD /* AppDelegate.m */; };
 		1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
-		1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
+		1C810A3916EE5EED0030077C /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */; };
 		1C810A3C16EE5EED0030077C /* BigButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E41EF2D16B0742400C831A4 /* BigButton.m */; };
 		1C810A3D16EE5EED0030077C /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
@@ -360,7 +360,7 @@
 		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
-		8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */; };
+		8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
 		8E01AFBD16E67365000567D4 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAD16E67365000567D4 /* AFImageRequestOperation.m */; };
@@ -860,8 +860,8 @@
 		1CE5586617DE87B200C18A30 /* no-content-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-content-bkgd@2x.png"; sourceTree = "<group>"; };
 		1CE5586D17DE883C00C18A30 /* no-content-bkgd-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-content-bkgd-568h@2x.png"; sourceTree = "<group>"; };
 		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
-		8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromBSONObjectID.h"; sourceTree = "<group>"; };
-		8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromBSONObjectID.m"; sourceTree = "<group>"; };
+		8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
+		8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		8E01AFA816E67365000567D4 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		8E01AFA916E67365000567D4 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		8E01AFAA16E67365000567D4 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -1737,8 +1737,8 @@
 				1C72B8B716DD4290008BA3AD /* UIImage+Scale.m */,
 				8E0CFE1416C4C54E009620F9 /* UIScreen+Resolution.h */,
 				8E0CFE1516C4C54E009620F9 /* UIScreen+Resolution.m */,
-				8E0132D916A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.h */,
-				8E0132DA16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m */,
+				8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */,
+				8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */,
 				8E3DCC8016E8F6F5000AF8A2 /* NSString+HMAC.h */,
 				8E3DCC8116E8F6F5000AF8A2 /* NSString+HMAC.m */,
 				9140530C174D055700E18A6B /* NSObject+NullHelper.h */,
@@ -2120,7 +2120,6 @@
 				1CD8111917CCF6C0002FD84B /* play-all.png in Resources */,
 				1CD8111C17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				9192ED0617C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
-				1CEB637517DFAD67007D0601 /* twitter-button-icon@2x.png in Resources */,
 				912261D417B97F070092AF30 /* overlay-likers.png in Resources */,
 				1CE5585D17DE73CA00C18A30 /* heart-large@2x.png in Resources */,
 				1C56F13D17BABD8C00EE9206 /* Appirater.podspec in Resources */,
@@ -2128,7 +2127,6 @@
 				91F16826179840FF00AF8A2E /* Login.storyboard in Resources */,
 				1CD8111317CCF6C0002FD84B /* play-airplay.png in Resources */,
 				1CDCA679179DCE190098C4E1 /* pause.png in Resources */,
-				1CEB637217DFAD67007D0601 /* twitter-button-icon.png in Resources */,
 				1CDCA67C179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA67F179DCE190098C4E1 /* play.png in Resources */,
 				1CD8112217CCF6C0002FD84B /* play-current@2x.png in Resources */,
@@ -2223,7 +2221,6 @@
 				1CD8111A17CCF6C0002FD84B /* play-all.png in Resources */,
 				1CD8111D17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				9192ED0717C3EA3D00294440 /* Ubuntu-C.ttf in Resources */,
-				1CEB637617DFAD67007D0601 /* twitter-button-icon@2x.png in Resources */,
 				912261D517B97F070092AF30 /* overlay-likers.png in Resources */,
 				1CE5585E17DE73CA00C18A30 /* heart-large@2x.png in Resources */,
 				1C56F13E17BABD8C00EE9206 /* Appirater.podspec in Resources */,
@@ -2231,7 +2228,6 @@
 				91F16827179840FF00AF8A2E /* Login.storyboard in Resources */,
 				1CD8111417CCF6C0002FD84B /* play-airplay.png in Resources */,
 				1CDCA67A179DCE190098C4E1 /* pause.png in Resources */,
-				1CEB637317DFAD67007D0601 /* twitter-button-icon.png in Resources */,
 				1CDCA67D179DCE190098C4E1 /* pause@2x.png in Resources */,
 				1CDCA680179DCE190098C4E1 /* play.png in Resources */,
 				1CD8112317CCF6C0002FD84B /* play-current@2x.png in Resources */,
@@ -2411,7 +2407,7 @@
 				1C81097D16EE2CBF0030077C /* main.m in Sources */,
 				1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */,
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
-				1C81098316EE2CBF0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
+				1C81098316EE2CBF0030077C /* NSDate+Extension.m in Sources */,
 				1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				1C81098616EE2CBF0030077C /* BigButton.m in Sources */,
 				1C81098716EE2CBF0030077C /* Shelby.xcdatamodeld in Sources */,
@@ -2539,7 +2535,7 @@
 				1C810A3316EE5EED0030077C /* main.m in Sources */,
 				1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */,
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
-				1C810A3916EE5EED0030077C /* NSDate+DateFromBSONObjectID.m in Sources */,
+				1C810A3916EE5EED0030077C /* NSDate+Extension.m in Sources */,
 				1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				1C810A3C16EE5EED0030077C /* BigButton.m in Sources */,
 				1C810A3D16EE5EED0030077C /* Shelby.xcdatamodeld in Sources */,
@@ -2667,7 +2663,7 @@
 				8E20971E162F3A61000A2DFD /* main.m in Sources */,
 				8E209722162F3A61000A2DFD /* AppDelegate.m in Sources */,
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
-				8E0132DB16A7CC9C00195D9A /* NSDate+DateFromBSONObjectID.m in Sources */,
+				8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */,
 				8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */,
 				8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */,
