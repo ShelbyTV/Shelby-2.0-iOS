@@ -164,8 +164,10 @@ static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video
         }
 
         [_streamMaps addObject:streamMapsDict];
-        //_streamMaps is an array of dictionaries with important keys like "quality", "type" and "url"
     }
+
+    [self normalizeStreamMaps];
+    //_streamMaps is now an array of dictionaries with important keys like "quality", "type", "url" and "sig"
 
     return YES;
 }
@@ -206,6 +208,16 @@ static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video
         _cpnChars =  @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", @"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"-", @"_"];
     }
     return [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@", _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)], _cpnChars[arc4random_uniform(64)]];
+}
+
+- (void)normalizeStreamMaps
+{
+    for (NSMutableDictionary *streamMap in _streamMaps) {
+        //have seen stream map having key "s" instead of "sig"
+        if (!streamMap[@"sig"] && streamMap[@"s"]) {
+            streamMap[@"sig"] = streamMap[@"s"];
+        }
+    }
 }
 
 @end
