@@ -87,12 +87,16 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     // If welcome screen is completed and user started the signup screen and never logged in.
     // We should not reset Welcome screen in the case where user didn't even open signup, because maybe they just went for perview app.
     // Odd case is, user finished welcome, going to preview, then hit signup, kill the app... and now next time they open, we will take them to welcome again.
-    if ([WelcomeViewController isWelcomeComplete] &&
-         (![[ShelbyDataMediator sharedInstance] hasUserLoggedIn] && [SignupFlowViewController signupStatus] == ShelbySignupStatusStarted)) {
-        [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusUnstarted];
-        [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
-        [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
-        [[ShelbyDataMediator sharedInstance] nuclearCleanup];
+    if ([WelcomeViewController isWelcomeComplete]) {
+        if ([SignupFlowViewController signupStatus] == ShelbySignupStatusStarted) {
+            // Cleanup cache, logout user to prevent funcky case when a user that logged-in in the past tries to go thru signup but kills the app in the middle
+            [SignupFlowViewController setSignupStatus:ShelbySignupStatusUnstarted];
+            [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
+         if (![[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
+             [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusUnstarted];
+             [[ShelbyDataMediator sharedInstance] nuclearCleanup];
+            }
+        }
     }
     
     if (![WelcomeViewController isWelcomeComplete]) {
