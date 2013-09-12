@@ -16,6 +16,7 @@
 @property (nonatomic, weak) IBOutlet BlinkingLabel *blinkingLabel;
 @property (nonatomic, weak) IBOutlet UILabel *emailLabel;
 @property (nonatomic, weak) IBOutlet UIView *backgroundViewForUserInfo;
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 - (IBAction)signup:(id)sender;
 
@@ -39,6 +40,8 @@
     self.nextButton.enabled = NO;
     self.backgroundViewForUserInfo.layer.cornerRadius = 5;
     self.backgroundViewForUserInfo.layer.masksToBounds = YES;
+    
+    self.subtitleLabel.font = kShelbyFontH2;
 }
 
 - (void)viewWillAppear:(BOOL)animated
