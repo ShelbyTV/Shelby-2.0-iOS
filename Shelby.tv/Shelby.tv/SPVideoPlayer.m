@@ -10,6 +10,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "ShelbyAPIClient.h"
+#import "ShelbyErrorUtility.h"
 #import "SPVideoDownloader.h"
 #import "SPVideoExtractor.h"
 #import "SPVideoReel.h"
@@ -269,7 +270,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     [self videoLoadingIndicatorShouldAnimate:YES];
     
     //no retain cycle b/c the block's owner (SPVideoExtractor) is not self
-    [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL, BOOL wasError) {
+    [[SPVideoExtractor sharedInstance] URLForVideo:self.videoFrame.video usingBlock:^(NSString *videoURL, NSError *error) {
         if (!self.canBecomePlayable) {
             //Zombie discussion
             // This video player was reset (and observers removed) while we were waiting
@@ -290,9 +291,11 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
                 }
             }
 
-        } else if (wasError) {
-            if(self.shouldAutoplay){
-                [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
+        } else if (error) {
+            if ([ShelbyErrorUtility isConnectionError:error]) {
+                // Do nothing. No Internet Connection
+            } else if(self.shouldAutoplay){
+                 [self.videoPlayerDelegate videoExtractionFailForAutoplayPlayer:self];
             } else {
                 /* will try extraction again when we become the current player */
             }

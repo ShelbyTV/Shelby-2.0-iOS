@@ -13,7 +13,9 @@
 #import "ImageUtilities.h"
 #import "Roll+Helper.h"
 #import "SettingsViewController.h"
+#import "ShelbyAlert.h"
 #import "ShelbyDataMediator.h"
+#import "ShelbyErrorUtility.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 
@@ -36,7 +38,7 @@
 //tracking current channel and index (currently used w/ airPlayController only, for autoadvance)
 @property (nonatomic, strong) DisplayChannel *currentlyPlayingChannel;
 @property (nonatomic, assign) NSInteger currentlyPlayingIndexInChannel;
-
+@property (nonatomic, strong) ShelbyAlert *currentAlertView;
 
 #define OVERLAY_ANIMATION_DURATION 0.2
 #define NAV_BUTTON_FADE_TIME 0.1
@@ -73,6 +75,15 @@
     [self showNavBarButton];
     
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(noInternetConnection:)
+                                                 name:kShelbyNoInternetConnectionNotification object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)handleDidBecomeActive
@@ -555,6 +566,29 @@
 {
     [self.navBarVC didNavigateToUsersShares];
 }
+
+- (void)noInternetConnection:(NSNotification *)notification
+{
+    if (!self.videoReel) {
+        return;
+    }
+    
+    [self dismissVideoReel];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!self.currentAlertView) {
+            self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
+                                                               message:@"Please make sure you are connected to the Internet."
+                                                    dismissButtonTitle:@"OK"
+                                                        autodimissTime:8
+                                                             onDismiss:^(BOOL didAutoDimiss) {
+                                                                 self.currentAlertView = nil;
+                                                             }];
+            [self.currentAlertView show];
+        }
+    });
+}
+
 
 #pragma mark - ShelbyStreamBrowseViewDelegate
 

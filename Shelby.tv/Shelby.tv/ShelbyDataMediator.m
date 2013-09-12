@@ -18,6 +18,7 @@
 #import "Roll+Helper.h"
 #import "ShelbyAnalyticsClient.h"
 #import "ShelbyAPIClient.h"
+#import "ShelbyErrorUtility.h"
 #import "TwitterHandler.h"
 #import "User+Helper.h"
 
@@ -72,6 +73,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             NSArray *channels = [self findOrCreateChannelsForJSON:JSON inContext:[self mainThreadMOC]];
             [self.delegate fetchGlobalChannelsDidCompleteWith:channels fromCache:NO];
         } else {
+            [self postNotificationForError:error];
+            
             [self.delegate fetchGlobalChannelsDidCompleteWithError:error];
         }
     }];
@@ -315,6 +318,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                     });
                 }];                
             } else {
+                [self postNotificationForError:error];
+                
                 [self.delegate fetchEntriesDidCompleteForChannel:channel
                                                        withError:error];
                 DLog(@"fetch error: %@", error);
@@ -375,6 +380,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             }];
 
         } else {
+            [self postNotificationForError:error];
+
             [self.delegate fetchEntriesDidCompleteForChannel:channel
                                                    withError:error];
         }
@@ -470,9 +477,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }
     
     NSString *errorMessage = nil;
-    // Error code -1009 - no connection
-    // Error code -1001 - timeout
-    if ([error code] == -1009 || [error code] == -1001) {
+    if ([ShelbyErrorUtility isConnectionError:error]) {
         errorMessage = @"Please make sure you are connected to the Internet";
     } else {
         errorMessage = @"Please make sure you've entered your login credientials correctly.";
@@ -755,6 +760,14 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }
     [[TwitterHandler sharedInstance] authenticateWithViewController:viewController withDelegate:self.delegate andAuthToken:token];
 }
+
+- (void)postNotificationForError:(NSError *)error
+{
+    if ([ShelbyErrorUtility isConnectionError:error]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNoInternetConnectionNotification object:nil];
+    }
+}
+
 
 - (NSManagedObjectModel *)managedObjectModel
 {

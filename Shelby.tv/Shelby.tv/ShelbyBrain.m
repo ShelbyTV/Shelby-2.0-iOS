@@ -11,6 +11,7 @@
 #import "DashboardEntry.h"
 #import "DisplayChannel+Helper.h"
 #import "ShelbyDVRController.h"
+#import "ShelbyErrorUtility.h"
 #import "SettingsViewController.h"
 #import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
@@ -545,7 +546,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 - (void)showErrorView:(NSError *)error
 {
     NSString *errorMessage = nil;
-    if (error && (error.code == 1009 || error.code == 1001)) {
+    if ([ShelbyErrorUtility isConnectionError:error]) {
         errorMessage = @"Please make sure you are connected to the Internet.";
     } else {
         errorMessage = @"Could not connect. Please try again later.";

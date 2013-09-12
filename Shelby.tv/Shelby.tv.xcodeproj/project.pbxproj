@@ -231,6 +231,9 @@
 		1CCE4C4F17E226F700F0BF5A /* user_default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CCE4C4B17E226F700F0BF5A /* user_default_avatar@2x.png */; };
 		1CCE4C5017E226F700F0BF5A /* user_default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CCE4C4B17E226F700F0BF5A /* user_default_avatar@2x.png */; };
 		1CCE4C5117E226F700F0BF5A /* user_default_avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CCE4C4B17E226F700F0BF5A /* user_default_avatar@2x.png */; };
+		1CCE4C5417E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
+		1CCE4C5517E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
+		1CCE4C5617E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
 		1CD255C817A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
 		1CD255C917A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
 		1CD255CA17A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
@@ -819,6 +822,8 @@
 		1CCCB55116D2A33600C8C216 /* PageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PageControl.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1CCE4C4A17E226F700F0BF5A /* user_default_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user_default_avatar.png; path = ../user_default_avatar.png; sourceTree = "<group>"; };
 		1CCE4C4B17E226F700F0BF5A /* user_default_avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_default_avatar@2x.png"; path = "../user_default_avatar@2x.png"; sourceTree = "<group>"; };
+		1CCE4C5217E258DE00F0BF5A /* ShelbyErrorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyErrorUtility.h; sourceTree = "<group>"; };
+		1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyErrorUtility.m; sourceTree = "<group>"; };
 		1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-nav-bkgd.png"; sourceTree = "<group>"; };
 		1CD255C717A1DD170049FF30 /* top-nav-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-nav-bkgd@2x.png"; sourceTree = "<group>"; };
 		1CD8110C17CCF6C0002FD84B /* play-airplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-airplay.png"; path = "../play-airplay.png"; sourceTree = "<group>"; };
@@ -1331,6 +1336,8 @@
 				8E7024B81715E71500E8DE46 /* TwitterHandler.m */,
 				91B7DC3717AC0C8A009ABF02 /* STVYouTubeExtractor.h */,
 				91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */,
+				1CCE4C5217E258DE00F0BF5A /* ShelbyErrorUtility.h */,
+				1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */,
 				91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */,
 				91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */,
 			);
@@ -2521,6 +2528,7 @@
 				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
 				9184FE5617DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191471774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
+				1CCE4C5517E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
 				1CA191541774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				9119AB74178211D6001C9190 /* VideoControlsViewController.m in Sources */,
@@ -2649,6 +2657,7 @@
 				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
 				9184FE5717DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191481774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
+				1CCE4C5617E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
 				1CA191551774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				9119AB75178211D6001C9190 /* VideoControlsViewController.m in Sources */,
@@ -2777,6 +2786,7 @@
 				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
 				9184FE5517DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191461774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
+				1CCE4C5417E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
 				1CA191531774DE360039358B /* ShelbyStreamBrowseViewCell.m in Sources */,
 				91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				9119AB73178211D6001C9190 /* VideoControlsViewController.m in Sources */,

@@ -14,7 +14,7 @@
 
 @class Video;
 
-typedef void (^extraction_complete_block)(NSString *videoURL, BOOL wasError);
+typedef void (^extraction_complete_block)(NSString *videoURL, NSError *error);
 
 @interface SPVideoExtractor : NSObject <UIWebViewDelegate, LBYouTubeExtractorDelegate, YTVimeoExtractorDelegate, STVYouTubeExtractorDelegate>
 

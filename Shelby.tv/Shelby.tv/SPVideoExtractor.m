@@ -8,6 +8,7 @@
 
 #import "SPVideoExtractor.h"
 #import "ShelbyAnalyticsClient.h"
+#import "ShelbyErrorUtility.h"
 #import "AppDelegate.h"
 #import "Video.h"
 
@@ -85,7 +86,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         NSString *alreadyExtractedURL = [self getCachedURLForVideo:video];
         if(alreadyExtractedURL){
             if(completionBlock){
-                completionBlock(alreadyExtractedURL, NO);
+                completionBlock(alreadyExtractedURL, nil);
             }
         } else {
             NSDictionary *extractionDict = @{kSPVideoExtractorVideoKey: video,
@@ -139,7 +140,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         for (NSDictionary *queuedExtraction in self.highPriorityExtractionQueue) {
             extraction_complete_block completionBlock = queuedExtraction[kSPVideoExtractorBlockKey];
             if(completionBlock){
-                completionBlock(nil, NO);
+                completionBlock(nil, nil);
             }
         }
         [self.highPriorityExtractionQueue removeAllObjects];
@@ -166,7 +167,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             [self destroyCurrentExtractor];
             self.currentlyExtracting = nil;
             if(currentCompletionBlock){
-                currentCompletionBlock(nil, NO);
+                currentCompletionBlock(nil, nil);
             }
         } else {
             STVDebugAssert(self.webView == nil, @"should not have a web view w/o currently Extracting");
@@ -215,7 +216,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                 //already extracted while it was waiting
                 extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
                 if(completionBlock){
-                    completionBlock(alreadyExtractedURL, NO);
+                    completionBlock(alreadyExtractedURL, nil);
                 }
                 self.currentlyExtracting = nil;
                 [self scheduleNextExtraction];
@@ -456,7 +457,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
         extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
         if(completionBlock){
-            completionBlock(extractedURL, NO);
+            completionBlock(extractedURL, nil);
         }
         [self destroyCurrentExtractor];
         self.currentlyExtracting = nil;
@@ -475,8 +476,11 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
         STVDebugAssert(!self.currentExtractionTimeoutTimer, @"shouldn't have extraction timeout timer");
 
         extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
-        if(completionBlock){
-            completionBlock(nil, YES);
+        if (completionBlock) {
+            if ([ShelbyErrorUtility isConnectionError:error]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNoInternetConnectionNotification object:nil];
+            }
+            completionBlock(nil, error);
         }
         [self destroyCurrentExtractor];
         self.currentlyExtracting = nil;
@@ -546,7 +550,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                     [self cacheExtractedURL:extractedURL forVideo:self.currentlyExtracting[kSPVideoExtractorVideoKey]];
                     extraction_complete_block completionBlock = self.currentlyExtracting[kSPVideoExtractorBlockKey];
                     if(completionBlock){
-                        completionBlock(extractedURL, NO);
+                        completionBlock(extractedURL, nil);
                     }
                     self.currentlyExtracting = nil;
 
@@ -570,7 +574,9 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
             [self destroyCurrentExtractor];
             self.currentlyExtracting = nil;
             if(completionBlock){
-                completionBlock(nil, YES);
+                completionBlock(nil, [NSError errorWithDomain:@"SPVideoExtractor"
+                                                         code:-1
+                                                     userInfo:@{@"reason": @"timed out"}]);
             }
 
             [self scheduleNextExtraction];
