@@ -13,6 +13,7 @@
 #import "Appirater.h"
 #import "FacebookHandler.h"
 #import "GAI.h"
+#import "Intercom.h"
 #import "LocalyticsSession.h"
 #import "ShelbyBrain.h"
 
@@ -27,10 +28,13 @@
 #endif
 
 #ifdef DEBUG
-    #define LOCALYTICS_APP_KEY                  @"75bd1ca75d1d486581f93e1-1b905298-1a23-11e3-8e98-005cf8cbabd8"
+    #define LOCALYTICS_APP_KEY              @"75bd1ca75d1d486581f93e1-1b905298-1a23-11e3-8e98-005cf8cbabd8"
 #else
-    #define LOCALYTICS_APP_KEY                  @"44581e91bd028aa1fed9703-cc9a5e9c-1963-11e3-9391-009c5fda0a25"
+    #define LOCALYTICS_APP_KEY              @"44581e91bd028aa1fed9703-cc9a5e9c-1963-11e3-9391-009c5fda0a25"
 #endif
+
+#define INTERCOM_APP_KEY                    @"ios-fd543f22c20067637c172cd626d957e5abe6c95f"
+#define INTERCOM_APP_ID                     @"aeb096feb787399ac1cf3985f891d0e13aa47571"
 
 @interface AppDelegate(HockeyProtocols) <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
 @end
@@ -196,18 +200,24 @@
 
 - (void)setupAnalytics
 {
+    /*** Google Analytics ***/
     [GAI sharedInstance].trackUncaughtExceptions = YES; // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].dispatchInterval = 20;         // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].debug = NO;                    // Optional: set to YES for extra debugging information.
     self.googleTracker = [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_ID];
     self.googleTracker.sessionStart = YES;    
-    
+
+    /*** Hockey ***/
 #ifdef SHELBY_APPSTORE
     // Making sure there are no updates in the target we use for dev & app store release
     [[BITHockeyManager sharedHockeyManager] setDisableUpdateManager:YES];
 #endif
 
+    /*** Localytics ***/
     [[LocalyticsSession shared] startSession:LOCALYTICS_APP_KEY];
+
+    /*** Intercom.io ***/
+    [Intercom setApiKey:INTERCOM_APP_KEY forAppId:INTERCOM_APP_ID];
 }
 
 #pragma mark - BITUpdateManagerDelegate

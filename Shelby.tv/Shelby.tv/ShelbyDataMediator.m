@@ -14,6 +14,7 @@
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
 #import "GAI.h"
+#import "Intercom.h"
 #import "Roll+Helper.h"
 #import "ShelbyAnalyticsClient.h"
 #import "ShelbyAPIClient.h"
@@ -422,6 +423,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     user.token = nil;
     [self cleanupSession];
     [self clearAllCookies];
+    [Intercom endSession];
     
     NSError *err;
     [[self mainThreadContext] save:&err];
@@ -448,6 +450,9 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         NSDictionary *result = JSON[@"result"];
         if ([result isKindOfClass:[NSDictionary class]]) {
             User *user = [User userForDictionary:result inContext:context];
+            [User sessionDidBecomeActive];
+            [Intercom beginSessionForUserWithUserId:user.userID andEmail:user.email];
+            [Intercom updateAttributes:@{@"ios" : @1}];
             [self userLoggedIn];
             NSError *err;
             [user.managedObjectContext save:&err];
@@ -476,7 +481,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     [self.delegate loginUserDidCompleteWithError:errorMessage];
 }
 
-- (void)saveUserFromJSON:(id)JSON
+- (User *)saveUserFromJSON:(id)JSON
 {
     NSManagedObjectContext *context = [self mainThreadContext];
     NSDictionary *result = JSON[@"result"];
@@ -492,15 +497,24 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         }
         [self syncLikes];
         [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
-        return;
+        return user;
     }
+    return nil;
 }
 
 - (void)handleCreateUserWithJSON:(id)JSON andError:(NSError *)error
 {
     if (JSON) {
-        [self saveUserFromJSON:JSON];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed object:nil];
+        User *newUser = [self saveUserFromJSON:JSON];
+        if (newUser) {
+            [Intercom beginSessionForUserWithUserId:newUser.userID andEmail:newUser.email];
+            [Intercom updateAttributes:@{@"ios" : @1}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed
+                                                                object:nil];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail
+                                                                object:@"failed to create user from JSON response"];
+        }
     } else {
         NSString *errorMessage = nil;
         if ([error isKindOfClass:[NSDictionary class]]) {
