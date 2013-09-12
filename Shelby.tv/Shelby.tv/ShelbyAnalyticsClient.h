@@ -69,6 +69,7 @@ extern NSString * const kAnalyticsAppEventLoadMoreReturnedEmpty;
 extern NSString * const kAnalyticsCategoryIssues;
 extern NSString * const kAnalyticsIssueContextSaveError;
 extern NSString * const kAnalyticsIssueYTExtractionFallback;
+extern NSString * const kAnalyticsIssueSTVExtractorFail;
 extern NSString * const kAnalyticsIssueVideoMissingProviderID;
 
 @interface ShelbyAnalyticsClient : NSObject

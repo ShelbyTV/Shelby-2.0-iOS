@@ -71,6 +71,7 @@ NSString * const kAnalyticsAppEventLoadMoreReturnedEmpty                = @"Load
 NSString * const kAnalyticsCategoryIssues                               = @"App Issues";
 NSString * const kAnalyticsIssueContextSaveError                        = @"Context Save Error";
 NSString * const kAnalyticsIssueYTExtractionFallback                    = @"Fallback to STVYouTubeExtractor";
+NSString * const kAnalyticsIssueSTVExtractorFail                        = @"STVYouTubeExtractor Fail";
 NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Video missing providerID";
 
 @implementation ShelbyAnalyticsClient

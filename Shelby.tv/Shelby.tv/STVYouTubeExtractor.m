@@ -8,6 +8,7 @@
 
 #import "STVYouTubeExtractor.h"
 #import "AFNetworking.h"
+#import "ShelbyAnalyticsClient.h"
 
 static NSString* const kUserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3";
 
@@ -100,10 +101,15 @@ static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video
             if (urlFound) {
                 [self.delegate stvYouTubeExtractor:self didSuccessfullyExtractYouTubeURL:urlFound];
             } else {
-                //TODO: GA - Google Analytics report this
+                [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                                      action:kAnalyticsIssueSTVExtractorFail
+                                                       label:[NSString stringWithFormat:@"url not found, raw string: %@", rawString]];
                 [self.delegate stvYouTubeExtractor:self failedExtractingYouTubeURLWithError:nil];
             }
         } else {
+            [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                                  action:kAnalyticsIssueSTVExtractorFail
+                                                   label:[NSString stringWithFormat:@"bad raw string: %@", rawString]];
             [self.delegate stvYouTubeExtractor:self failedExtractingYouTubeURLWithError:nil];
         }
         
@@ -111,7 +117,9 @@ static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video
         if (_isCancelled) {
             return;
         }
-        //TODO: GA - Google Analytics report this
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryIssues
+                                              action:kAnalyticsIssueSTVExtractorFail
+                                               label:[NSString stringWithFormat:@"Network op fail, error: %@", error]];
         [self.delegate stvYouTubeExtractor:self failedExtractingYouTubeURLWithError:error];
     }];
     [op start];
