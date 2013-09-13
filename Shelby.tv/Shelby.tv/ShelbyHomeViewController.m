@@ -443,7 +443,8 @@
             STVDebugAssert([channelEntities count] > (NSUInteger)index, @"expected a valid index");
             return;
         }
-        [self.airPlayController playEntity:channelEntities[index]];
+        // KP KP DS: TODO: There should be a notification that the AV player is ready for a new video. Ideally, that what we would listen to in SPVideoPlayer. SPVideoPlayer, will only start playing to air play, after knowing AV player is ready. Home should not have to care about this and should send the playEntity immediately.
+        [self.airPlayController performSelector:@selector(playEntity:) withObject:channelEntities[index] afterDelay:2];
         [self showAirPlayViewMode:YES];
 
     } else if (self.videoReel) {
