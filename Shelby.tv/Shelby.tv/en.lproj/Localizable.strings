@@ -45,7 +45,7 @@
 
 // --Already Logged In--
 "ALREADY_LOGGED_IN_TITLE" = "Logged in as '%@'";
-"ALREADY_LOGGED_IN_MESSAGE" = "You're already logged in.  If you would like to log in as '%@' instead, log out first.";
+"ALREADY_LOGGED_IN_MESSAGE" = "The account you are trying to use is already connected to a Shelby account (%@). Please email support@shelby.tv";
 "ALREADY_LOGGED_IN_BUTTON" = "Ok";
 
 // --Rolling Failed--

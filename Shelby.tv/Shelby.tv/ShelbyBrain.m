@@ -342,6 +342,9 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 - (void)twitterConnectDidCompleteWithError:(NSString *)errorMessage
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        // Need to setCurrentUser again, in case there was an error and the user was removed.
+        [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
+
         [self.currentAlertView dismiss];
         self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
                                                            message:errorMessage

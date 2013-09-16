@@ -483,6 +483,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     NSString *errorMessage = nil;
     if ([ShelbyErrorUtility isConnectionError:error]) {
         errorMessage = @"Please make sure you are connected to the Internet";
+    } else if ([error.domain isEqualToString:@"ShelbyAPIClient"] && error.code == 403001) {
+        // This is an error message when a user tries to login with a FB/TW account. But that FB/TW account does not belong to a Shelby user.
+        errorMessage = @"Shelby login not found. Try a different login, or Sign Up to create an account.";
+    } else if ([error.domain isEqualToString:@"ShelbyAPIClient"] && error.code == 403002) {
+        NSDictionary *errorInfo = error.userInfo;
+        errorMessage = [self errorMessageForExistingAccountWithErrorDictionary:errorInfo];
     } else {
         errorMessage = @"Please make sure you've entered your login credientials correctly.";
     }
@@ -666,6 +672,10 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                andBlock:^(id JSON, NSError *error)
             {
                 [self handleUserLoginWithJSON:JSON andError:error];
+                if (error) {
+                    // If there was a problem login with FB - clean FB session 
+                    [self cleanupSession];
+                }
             }];
         } else {
             [self.delegate loginUserDidCompleteWithError:@"Go to Settings -> Privacy -> Facebook and turn Shelby ON"];
@@ -740,8 +750,15 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                         [[FacebookHandler sharedInstance] askForPublishPermissions];
                                                     }
                                                 } else {
+                                                    NSString *errorMessage = nil;
+                                                    if ([error.domain isEqualToString:@"ShelbyAPIClient"] && error.code == 403002) {
+                                                        NSDictionary *errorInfo = error.userInfo;
+                                                        errorMessage = [self errorMessageForExistingAccountWithErrorDictionary:errorInfo];
+                                                    }
                                                     //did NOT add this auth to the current user
-                                                    [self.delegate facebookConnectDidCompleteWithError:nil];
+                                                    [self.delegate facebookConnectDidCompleteWithError:errorMessage];
+                                                    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
+                                                    [self cleanupSession];
                                                 }
                                             }];
             } else {
@@ -772,6 +789,13 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }
 }
 
+
+// This is an error message when a user tries to login with a FB/TW account. But that FB/TW account does not belong to a Shelby user.
+- (NSString *)errorMessageForExistingAccountWithErrorDictionary:(NSDictionary *)errorInfo
+{
+    NSString *existingUserNickname = errorInfo[@"existing_other_user_nickname"];
+    return [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_MESSAGE", nil), existingUserNickname];
+}
 
 - (NSManagedObjectModel *)managedObjectModel
 {

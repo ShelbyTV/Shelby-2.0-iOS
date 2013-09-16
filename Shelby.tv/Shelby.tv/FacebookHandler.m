@@ -19,6 +19,7 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
 
 @interface FacebookHandler()
 @property (nonatomic, assign) BOOL allowPublishActions;
+@property (nonatomic, assign) BOOL facebookCleanupInProgress;
 
 // Helper methods
 - (NSArray *)facebookPermissions;
@@ -48,8 +49,11 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
 - (void)facebookCleanup
 {
     if ([[FBSession activeSession] isOpen]) {
+        // If we manually initialize cleanup, we don't want to send error message to user
+        self.facebookCleanupInProgress = YES;
         [[FBSession activeSession] closeAndClearTokenInformation];
         [FBSession setActiveSession:nil];
+        self.facebookCleanupInProgress = NO;
     }
 }
 
@@ -94,6 +98,10 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];
             }
         } else if(status == FBSessionStateClosed) {
+            if (self.facebookCleanupInProgress) {
+                // If we manually initialize cleanup, we don't want to send error message to user
+                return;
+            }
             [self facebookCleanup];
             completionBlock(nil, nil, @"There was an error connecting to Facebook. Please try again.");
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationFacebookAuthorizationCompletedWithError object:nil];

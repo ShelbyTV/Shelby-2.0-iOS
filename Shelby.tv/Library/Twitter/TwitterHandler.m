@@ -454,9 +454,22 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                              oauthSecret:self.twitterReverseAuthSecret
                          shelbyAuthToken:self.shelbyToken
                                 andBlock:^(id JSON, NSError *error) {
-                                    //TODO: Twitter ought to care about the results of this
-                                    //  can't just assume it will work
-                                }];
+                                    // TODO: could it be a different error?
+                                    if (error && [error.domain isEqualToString:@"ShelbyAPIClient"] && error.code == 403002) {
+                                        NSDictionary *errorInfo = error.userInfo;
+                                        NSString *errorMessage = [[ShelbyDataMediator sharedInstance] errorMessageForExistingAccountWithErrorDictionary:errorInfo];
+                                        
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            User *user = [User updateUserWithTwitterUsername:nil andTwitterID:nil];
+                                            NSError *err;
+                                            [user.managedObjectContext save:&err];
+                                            STVDebugAssert(!err, @"context save failed saving User after twitter login...");
+                                        
+                                            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
+                                            [self.delegate twitterConnectDidCompleteWithError:errorMessage];
+                                        });
+                                    }
+                                 }];
 }
 
 - (void)tokenSwapWasSuccessfulForUser:(NSDictionary *)userDictionary

@@ -38,7 +38,7 @@ NSString * const kShelbyAPIPutUserSessionVisitPath =        @"v1/user/%@/visit";
 NSString * const kShelbyAPIPutUnplayableVideoPath =         @"v1/video/%@/unplayable";
 
 NSString * const kShelbyAPIParamAuthToken =                 @"auth_token";
-NSString * const kShelbyAPIParamAuthTokenAction =           @"action";
+NSString * const kShelbyAPIParamAuthTokenAction =           @"intention";
 NSString * const kShelbyAPIParamChannelsSegment =           @"segment";
 //when value for this key is an array of N items, this param is turned into "destination[]" and listed N times
 NSString * const kShelbyAPIParamDestinationArray =          @"destination";
@@ -680,15 +680,17 @@ toExternalDestinations:(NSArray *)destinations
         if ([response statusCode] == 403) {
             //403 == tried to connect an existing user
             NSDictionary *errorInfo = JSON[@"message"];
-            NSString *currentNickname = errorInfo[@"current_user_nickname"];
-            NSString *existingUserNickname = errorInfo[@"existing_other_user_nickname"];
-            NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_TITLE", @"--Already Logged In--"), currentNickname];
-            NSString *message = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_LOGGED_IN_MESSAGE", nil), existingUserNickname];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"ALREADY_LOGGED_IN_BUTTON", nil) otherButtonTitles:nil];
-            [alert show];
+            if ([errorInfo isKindOfClass:[NSDictionary class]]) {
+                NSString *errorCode = errorInfo[@"error_code"];
+                if ([errorCode intValue] == 403001) {
+                    error = [NSError errorWithDomain:@"ShelbyAPIClient" code:403001 userInfo:errorInfo];
+                } else {
+                    error = [NSError errorWithDomain:@"ShelbyAPIClient" code:403002 userInfo:errorInfo];
+                }
+            }
         }
         if (completionBlock) {
-            completionBlock(JSON, error);
+            completionBlock(nil, error);
         }
     }];
     

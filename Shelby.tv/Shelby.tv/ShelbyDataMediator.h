@@ -95,6 +95,9 @@ extern NSString * const kShelbyUserHasLoggedInKey;
                 avatar:(UIImage *)avatar
             completion:(void (^)(NSError *error))completion;
 
+// Making this method public because TwitterHandler is still not fully coming thru ShelbyDataMediator. So we want to give it access to get the error message just like the ShelbyDataMediator will get it when it is a FB error
+- (NSString *)errorMessageForExistingAccountWithErrorDictionary:(NSDictionary *)errorInfo;
+
 // Signup process ONLY
 - (void)createUserWithName:(NSString *)name
                   andEmail:(NSString *)email;
