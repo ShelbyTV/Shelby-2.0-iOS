@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+// Localytics Constants
+extern NSString * const kLocalyticsWatchVideo;
+extern NSString * const kLocalyticsLikeVideo;
+extern NSString * const kLocalyticsShareComplete;
+extern NSString * const kLocalyticsStartSignup;
+extern NSString * const kLocalyticsFinishSignup;
+
 // Google Analytics Constants
 //--Welcome--
 extern NSString * const kAnalyticsCategoryWelcome;
@@ -74,6 +81,10 @@ extern NSString * const kAnalyticsIssueVideoMissingProviderID;
 
 @interface ShelbyAnalyticsClient : NSObject
 
+//Localytics
++ (void)sendLocalyticsEvent:(NSString *)eventTag;
+
+//Google Analytics
 + (void)sendEventWithCategory:(NSString *)category
                        action:(NSString *)action
                         label:(NSString *)label;
