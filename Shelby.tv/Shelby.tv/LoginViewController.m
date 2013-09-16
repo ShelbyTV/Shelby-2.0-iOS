@@ -141,13 +141,15 @@
 
 - (void)loginFailed:(NSString *)errorMessage
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
-                                                        message:errorMessage
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil, nil];
-    [alertView show];
-    [self viewEnabled:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Login Error"
+                                                            message:errorMessage
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+        [alertView show];
+        [self viewEnabled:YES];
+    });
 }
 
 #pragma mark - UIAlertViewDelegate Methods
