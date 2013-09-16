@@ -798,10 +798,9 @@
 
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc
 {
-    // GA
-    [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
-                                         withAction:kAnalyticsUXLike
-                                withNicknameAsLabel:YES];
+    // Analytics
+    [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX withAction:kAnalyticsUXLike withNicknameAsLabel:YES];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsLikeVideo];
     // Appirater Event
     [Appirater userDidSignificantEvent:YES];
     
@@ -872,10 +871,11 @@
         [self.videoControlsVC resetShareButton];
 
         if (completed) {
-            // GA
+            // Analytics
             [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                  withAction:kAnalyticsUXShareFinish
                                         withNicknameAsLabel:YES];
+            [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsShareComplete];
             
             // Appirater Event
             [Appirater userDidSignificantEvent:YES];

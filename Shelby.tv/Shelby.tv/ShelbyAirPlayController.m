@@ -213,6 +213,7 @@
 {
     [self autoadvanceVideoInForwardDirection];
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX action:kAnalyticsUXVideoDidAutoadvance nicknameAsLabel:YES];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsWatchVideo];
 }
 
 - (void)videoDidStallForPlayer:(SPVideoPlayer *)player

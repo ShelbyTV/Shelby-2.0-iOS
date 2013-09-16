@@ -8,7 +8,15 @@
 
 #import "ShelbyAnalyticsClient.h"
 #import "GAI.h"
+#import "LocalyticsSession.h"
 #import "ShelbyDataMediator.h"
+
+// Localytics Constants
+NSString * const kLocalyticsWatchVideo                                  = @"watch";
+NSString * const kLocalyticsLikeVideo                                   = @"like";
+NSString * const kLocalyticsShareComplete                               = @"share_complete";
+NSString * const kLocalyticsStartSignup                                 = @"start_signup";
+NSString * const kLocalyticsFinishSignup                                = @"finish_signup";
 
 // Google Analytics Constants
 //--Welcome--
@@ -76,6 +84,13 @@ NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Vide
 
 @implementation ShelbyAnalyticsClient
 
+//Localytics
++ (void)sendLocalyticsEvent:(id)eventTag
+{
+    [[LocalyticsSession shared] tagEvent:eventTag];
+}
+
+//Google Analtyics
 + (void)sendEventWithCategory:(NSString *)category
                        action:(NSString *)action
                         label:(NSString *)label

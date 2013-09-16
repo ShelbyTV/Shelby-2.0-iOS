@@ -33,6 +33,7 @@
                                                     withAction:kAnalyticsSignupStart
                                                      withLabel:nil
                                                      withValue:nil];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsStartSignup];
     
     // Create an empty Signup Dictionary
     self.signupDictionary = [@{} mutableCopy];
@@ -117,6 +118,7 @@
                                                     withAction:kAnalyticsSignupFinish
                                                      withLabel:nil
                                                      withValue:nil];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFinishSignup];
     
     NSString *name = self.signupDictionary[kShelbySignupNameKey];
     NSString *email = self.signupDictionary[kShelbySignupEmailKey];

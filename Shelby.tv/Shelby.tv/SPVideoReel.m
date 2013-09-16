@@ -601,9 +601,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)videoDidFinishPlayingForPlayer:(SPVideoPlayer *)player
 {
-    [SPVideoReel sendEventWithCategory:kAnalyticsCategoryPrimaryUX
-                            withAction:kAnalyticsUXVideoDidAutoadvance
-                   withNicknameAsLabel:YES];
+    [SPVideoReel sendEventWithCategory:kAnalyticsCategoryPrimaryUX withAction:kAnalyticsUXVideoDidAutoadvance withNicknameAsLabel:YES];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsWatchVideo];
     [player scrubToPct:0.f];
     [self autoadvanceVideoInForwardDirection:YES];
 }
