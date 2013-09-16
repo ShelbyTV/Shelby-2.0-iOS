@@ -308,6 +308,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                         NSManagedObjectContext *mainMOC = [self mainThreadMOC];
                         NSMutableArray *results = [@[] mutableCopy];
                         //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                        //OPTIMIZE: this makes N calls to the DB, could use an 'IN' predicate to do it in one call:
+                        //[NSPredicate predicateWithFormat:@"identifier IN %@", identifiersOfRelatedObjects];
                         for (Frame *frame in frames) {
                             Frame *mainThreadFrame = (Frame *)[mainMOC objectWithID:frame.objectID];
                             [results addObject:mainThreadFrame];
@@ -362,6 +364,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                     NSManagedObjectContext *mainMOC = [self mainThreadMOC];
                     NSMutableArray *results = [@[] mutableCopy];
                     //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                    //OPTIMIZE: this makes N calls to the DB, could use an 'IN' predicate to do it in one call:
+                    //[NSPredicate predicateWithFormat:@"identifier IN %@", identifiersOfRelatedObjects];
                     for (DashboardEntry *dashboardEntry in dashboardEntries) {
                         DashboardEntry *mainThreadDashboardEntry = (DashboardEntry *)[mainMOC objectWithID:dashboardEntry.objectID];
                         [results addObject:mainThreadDashboardEntry];
