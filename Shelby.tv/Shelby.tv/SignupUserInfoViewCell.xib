@@ -32,7 +32,7 @@
                             <action selector="assignAvatar:" destination="3" eventType="touchUpInside" id="36"/>
                         </connections>
                     </button>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="&lt;name>, let's start your stream off right." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="243" translatesAutoresizingMaskIntoConstraints="NO" id="18" userLabel="Name">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Follow the best of web video" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" preferredMaxLayoutWidth="243" translatesAutoresizingMaskIntoConstraints="NO" id="18" userLabel="Name">
                         <rect key="frame" x="45" y="85" width="243" height="60"/>
                         <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
