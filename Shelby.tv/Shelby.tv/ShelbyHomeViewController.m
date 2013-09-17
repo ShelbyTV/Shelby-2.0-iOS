@@ -484,6 +484,7 @@
 
 - (void)dismissVideoReel
 {
+    STVDebugAssert([NSThread isMainThread], @"expecting to be called on main thread");
     if (!self.videoReel) {
         return;
     }
@@ -621,9 +622,9 @@
         if (!videoShouldHaveBeenPlaying && currentPlaybackEntity != previousPlaybackEntity) {
             //user paused & changed videos: transition to default view mode (from playback view mode)
             STVDebugAssert(vc.viewMode != ShelbyStreamBrowseViewDefault, @"expected a playback mode, since we have a video reel");
+            [self dismissVideoReel];
+            STVDebugAssert(vc.viewMode == ShelbyStreamBrowseViewDefault, @"expected dismissVideoReel to update view mode");
             [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
-                [self dismissVideoReel];
-                STVDebugAssert(vc.viewMode == ShelbyStreamBrowseViewDefault, @"expected dismissVideoReel to update view mode");
                 self.navBar.alpha = 1.0;
                 self.videoControlsVC.view.alpha = 1.0;
             }];
