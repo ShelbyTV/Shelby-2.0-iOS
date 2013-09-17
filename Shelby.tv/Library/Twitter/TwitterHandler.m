@@ -142,9 +142,6 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                         [self userHasOneStoredTwitterAccount];
                     } else { // Multiple stored Twitter accounts
                         DLog(@"User has multiple stored accounts");
-                        // KP KP TODO:
-                        // Commented out because the method 'getReverseAuthAccessToken:' doens't finish it's APi request
-//                        [self userHasMultipleStoredTwitterAccounts];
                         [self userHasMultipleStoredTwitterAccounts];
                     }
                     
@@ -460,11 +457,8 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
                                         NSString *errorMessage = [[ShelbyDataMediator sharedInstance] errorMessageForExistingAccountWithErrorDictionary:errorInfo];
                                         
                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                            User *user = [User updateUserWithTwitterUsername:nil andTwitterID:nil];
-                                            NSError *err;
-                                            [user.managedObjectContext save:&err];
-                                            STVDebugAssert(!err, @"context save failed saving User after twitter login...");
-                                        
+                                            [self twitterCleanup];
+                                            
                                             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationTwitterAuthorizationCompleted object:nil];
                                             [self.delegate twitterConnectDidCompleteWithError:errorMessage];
                                         });
@@ -481,7 +475,12 @@ NSString * const kShelbyNotificationTwitterAuthorizationCompleted = @"kShelbyNot
 // Cleanup
 - (void)twitterCleanup
 {
-
+    dispatch_async(dispatch_get_main_queue(), ^{
+        User *user = [User updateUserWithTwitterUsername:nil andTwitterID:nil];
+        NSError *err;
+        [user.managedObjectContext save:&err];
+        STVDebugAssert(!err, @"context save failed saving User after twitter login...");
+    });
 }
 
 #pragma mark - AuthenticateTwitterDelegate Methods
