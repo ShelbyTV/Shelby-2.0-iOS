@@ -324,6 +324,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)resetPlayer
 {
+    STVDebugAssert([NSThread isMainThread], @"expecting to be called on main thread");
     if (!self.player.isExternalPlaybackActive) {
         // Keep these three lines first to prevent messages being sent to zombies
         self.canBecomePlayable = NO; //must be reset by -prepareFor...Playback methods
