@@ -78,6 +78,8 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
             andAskPublishPermission:(BOOL)askForPublishPermission
                           withBlock:(shelby_facebook_request_complete_block_t)completionBlock
 {
+    // KP KP TODO: this needs to be refactored. Was fine when its purpose was more limited. But now, when it is dealing with login/signup/connect it is getting out of control.
+    
     if ([[FBSession activeSession] isOpen]) {
         if (askForPublishPermission) {
             [self askForPublishPermissions];
@@ -116,6 +118,7 @@ NSString * const kShelbyNotificationFacebookPublishAuthorizationCompleted = @"kS
                         completionBlock(user, [self facebookToken], nil);
                         
                     } else {
+                        [self facebookCleanup];
                         // error? could not fetch user.
                     }
                 }];

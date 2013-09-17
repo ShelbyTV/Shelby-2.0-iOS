@@ -532,9 +532,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         }
     } else {
         NSString *errorMessage = nil;
+        // Not sure why error would be type dictionary...
         if ([error isKindOfClass:[NSDictionary class]]) {
             NSDictionary *JSONError = (NSDictionary *)error;
             errorMessage = JSONError[@"message"];
+        } else if ([error isKindOfClass:[NSError class]] && [error.domain isEqualToString:@"ShelbyAPIClient"] && error.code == 403004) {
+            errorMessage = @"You already have a Shelby account. Please login with Facebook.";
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];
         
@@ -562,6 +565,10 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                 andBlock:^(id JSON, NSError *error)
               {
                   [self handleCreateUserWithJSON:JSON andError:error];
+                  if (error) {
+                      // If there was a problem signup with FB - clean FB session
+                      [self cleanupSession];
+                  }
               }];
          } else {
              [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidFail object:errorMessage];

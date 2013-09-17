@@ -681,9 +681,11 @@ toExternalDestinations:(NSArray *)destinations
             //403 == tried to connect an existing user
             NSDictionary *errorInfo = JSON[@"message"];
             if ([errorInfo isKindOfClass:[NSDictionary class]]) {
-                NSString *errorCode = errorInfo[@"error_code"];
-                if ([errorCode intValue] == 403001) {
-                    error = [NSError errorWithDomain:@"ShelbyAPIClient" code:403001 userInfo:errorInfo];
+                NSInteger errorCode = [errorInfo[@"error_code"] intValue];
+                if (errorCode == 403001) {
+                    error = [NSError errorWithDomain:@"ShelbyAPIClient" code:errorCode userInfo:errorInfo];
+                } else if (errorCode == 403004) {
+                    error = [NSError errorWithDomain:@"ShelbyAPIClient" code:errorCode userInfo:errorInfo];
                 } else {
                     error = [NSError errorWithDomain:@"ShelbyAPIClient" code:403002 userInfo:errorInfo];
                 }
