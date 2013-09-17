@@ -886,6 +886,9 @@
 - (void)scrollToTopOfCurrentStreamBrowseVC
 {
     [self.currentStreamBrowseVC scrollToTop];
+    if ([self.currentStreamBrowseVC.deduplicatedEntries count]) {
+        self.videoControlsVC.currentEntity = self.currentStreamBrowseVC.deduplicatedEntries[0];
+    }
     [self dismissVideoReel];
 }
 
