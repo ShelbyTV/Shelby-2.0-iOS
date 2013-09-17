@@ -245,32 +245,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)setupGestures
 {
-    //change channels (pan vertically)
-//    if (DEVICE_IPAD) {
-//        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-//        panGesture.minimumNumberOfTouches = 1;
-//        panGesture.maximumNumberOfTouches = 1;
-//        [self.view addGestureRecognizer:panGesture];
-//    }
-    //change video (pan horizontallay)
-    //handled by self.videoScrollView.panGestureRecognizer
-    
-    //exit (pinch)
-    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
-    [self.view addGestureRecognizer:pinchGesture];
-    
-    // Making sure the pan gesture of the scrollView waits for Pinch to fail
-    NSArray *scrollViewGestures = self.videoScrollView.gestureRecognizers;
-    for (UIGestureRecognizer *gesture in scrollViewGestures) {
-        if ([gesture isKindOfClass:[UIPanGestureRecognizer class]]) {
-            [gesture requireGestureRecognizerToFail:pinchGesture];
-        }
-    }
-    //play/pause (double tap)
-    UITapGestureRecognizer *togglePlaybackGesuture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(togglePlayback:)];
-    [togglePlaybackGesuture setNumberOfTapsRequired:2];
-    [self.view addGestureRecognizer:togglePlaybackGesuture];
-    
     //update scroll view to better interact with the above gesure recognizers
     STVDebugAssert(self.videoScrollView && self.videoScrollView.panGestureRecognizer, @"scroll view should be initialized");
     self.videoScrollView.panGestureRecognizer.minimumNumberOfTouches = 1;
@@ -411,12 +385,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)scrollTo:(CGPoint)contentOffset
 {
+    STVAssert([NSThread isMainThread], @"expecting to be called on main thread");
     //update view only
     self.videoScrollView.contentOffset = contentOffset;
 }
 
 - (void)endDecelerating
 {
+    STVAssert([NSThread isMainThread], @"expecting to be called on main thread");
     //possibly change to a new video
     CGFloat pageHeight = self.videoScrollView.frame.size.height;
     NSUInteger page = self.videoScrollView.contentOffset.y / pageHeight;
@@ -683,6 +659,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (BOOL)autoadvanceVideoInForwardDirection:(BOOL)forward
 {
+    STVAssert([NSThread isMainThread], @"expecting to be called on main thread");
     NSUInteger idx = self.currentVideoPlayingIndex + (forward ? 1 : -1);
     if (idx > 0 && idx < [self.videoEntities count]) {
         SPVideoPlayer *newVideoPlayer = self.videoPlayers[idx];
@@ -708,6 +685,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
+    STVAssert([NSThread isMainThread], @"expecting to be called on main thread");
     // -setContentOffset:animated:YES does not always finish at exact position requested...
     if (!CGPointEqualToPoint(self.videoScrollView.contentOffset, _autoadvanceTargetOffset)) {
         [self.videoScrollView setContentOffset:_autoadvanceTargetOffset animated:NO];
