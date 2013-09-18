@@ -227,6 +227,7 @@
     _player.view.frame = [self frameForIndex:idx];
     _player.repeatMode = MPMovieRepeatModeOne;
     _player.controlStyle = MPMovieControlStyleNone;
+    _player.allowsAirPlay = NO;
     [_player play];
 }
 
