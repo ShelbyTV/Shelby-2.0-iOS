@@ -8,6 +8,8 @@
 
 #import "ShelbyAnalyticsClient.h"
 #import "GAI.h"
+#import "GAITracker.h"
+#import "GAIDictionaryBuilder.h"
 #import "LocalyticsSession.h"
 #import "ShelbyDataMediator.h"
 
@@ -95,11 +97,8 @@ NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Vide
                        action:(NSString *)action
                         label:(NSString *)label
 {
-    BOOL queued = [[GAI sharedInstance].defaultTracker sendEventWithCategory:category withAction:action withLabel:label withValue:nil];
-
-    if (!queued) {
-        // dropping, could retry if important
-    }
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:category action:action label:label value:nil] build]];
 }
 
 + (void)sendEventWithCategory:(NSString *)category
@@ -132,11 +131,8 @@ NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Vide
                         label:(NSString *)label
                         value:(NSNumber *)value
 {
-    BOOL queued = [[GAI sharedInstance].defaultTracker sendEventWithCategory:category withAction:action withLabel:label withValue:value];
-
-    if (!queued) {
-        // dropping, could retry if important
-    }
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:category action:action label:label value:value] build]];
 }
 
 @end

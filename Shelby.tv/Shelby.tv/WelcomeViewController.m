@@ -35,7 +35,7 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
 {
     [super viewDidLoad];
 
-    self.trackedViewName = @"Welcome v2";
+    self.screenName = @"Welcome v2";
 
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeStart

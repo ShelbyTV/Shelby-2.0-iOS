@@ -150,7 +150,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)setup
 {
     if ( !_videoPlayers ) {
-        [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
+        self.screenName = [NSString stringWithFormat:@"Playlist - %@", _groupTitle];
 
         self.videoPlayers = [@[] mutableCopy];
         
