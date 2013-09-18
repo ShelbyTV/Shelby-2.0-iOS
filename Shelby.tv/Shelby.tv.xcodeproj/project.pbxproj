@@ -976,10 +976,6 @@
 		8E87C5A916F38C2D00AC93C0 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		8E87C5AA16F38C2D00AC93C0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
 		8E87C5AB16F38C2D00AC93C0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		8E87C5AC16F38C2D00AC93C0 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
-		8E87C5AD16F38C2D00AC93C0 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
-		8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
-		8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
 		8E91173016DC288600719F9B /* SPVideoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoDownloader.h; sourceTree = "<group>"; };
@@ -1739,10 +1735,6 @@
 				1CCE4C5817EA521400F0BF5A /* GAIFields.h */,
 				1CCE4C5917EA521400F0BF5A /* GAILogger.h */,
 				1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */,
-				8E87C5AC16F38C2D00AC93C0 /* GAITransaction.h */,
-				8E87C5AD16F38C2D00AC93C0 /* GAITransactionItem.h */,
-				8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */,
-				8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */,
 			);
 			name = GoogleAnalyticsSDK;
 			path = Library/GoogleAnalyticsSDK;
