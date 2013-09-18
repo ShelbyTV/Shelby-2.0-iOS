@@ -31,6 +31,7 @@
     NSTimer *_scrollUpTimer, *_swipeLeftTimer;
     STVParallaxView *_parallaxView;
     UIView *_parallaxFg, *_parallaxBg;
+    NSInteger _curScrollPage, _curParallaxPage;
 }
 
 - (void)awakeFromNib
@@ -46,6 +47,8 @@
     self.titleLabel.font = kShelbyFontH2;
     [self initScroller];
     [self showTip:0];
+    _curScrollPage = 0;
+    _curParallaxPage = 0;
 }
 
 - (void)dealloc
@@ -102,6 +105,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSInteger page = scrollView.contentOffset.y / scrollView.bounds.size.height;
+    _curScrollPage = page;
     [self showTip:page];
 }
 
@@ -114,6 +118,7 @@
 
 - (void)didScrollToPage:(NSUInteger)page
 {
+    _curParallaxPage = page;
     switch (page) {
         case 0:
             [self cancelScrollUpHelper];
@@ -275,6 +280,43 @@
     } completion:^(BOOL finished) {
         //
     }];
+}
+
+#pragma mark - Tap Gesture on background
+
+- (IBAction)tapOnBackground:(UITapGestureRecognizer *)sender {
+    if (_curScrollPage < 3) {
+        [self bounceScrollerUp];
+    } else {
+        if (_curParallaxPage == 0) {
+            [self bounceParallaxLeft];
+        } else {
+            [self bounceScrollerUp];
+        }
+    }
+}
+
+- (void)bounceScrollerUp
+{
+    CGFloat startingOffsetY = self.scrollView.contentOffset.y;
+    [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.scrollView.contentOffset = CGPointMake(0, startingOffsetY + 50);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, startingOffsetY-10);
+        } completion:^(BOOL finished) {
+            [self.scrollView setContentOffset:CGPointMake(0, startingOffsetY) animated:YES];
+        }];
+
+    }];
+}
+
+- (void)bounceParallaxLeft
+{
+    //ideally we could actually bounce, but STVParllaxView doesn't support arbitrary contentOffset
+    //and i'm not trying to make any big changes right now
+    [_parallaxView scrollToPage:1];
+    [self didScrollToPage:1];
 }
 
 #pragma mark - Timers for Scroll Images
