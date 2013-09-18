@@ -92,7 +92,15 @@
 - (void)viewEnabled:(BOOL)enabled
 {
     self.view.userInteractionEnabled = enabled;
-    self.view.alpha = enabled ? 1.0 : 0.8;
+    
+    if (enabled) {
+        self.navigationItem.rightBarButtonItem = nil;
+    } else {
+        UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [activity startAnimating];
+        activity.frame = CGRectMake(10, 10, 50, 44);
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
+    }
 }
 
 - (IBAction)backgroundTapped:(id)sender {
