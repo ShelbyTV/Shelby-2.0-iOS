@@ -2879,7 +2879,6 @@
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
 					"$(SRCROOT)/Library/Intercom",
-					"/Users/keren/Documents/Shelby-2.0-iOS/Shelby.tv/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2935,7 +2934,6 @@
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
 					"$(SRCROOT)/Library/Intercom",
-					"/Users/keren/Documents/Shelby-2.0-iOS/Shelby.tv/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2986,7 +2984,6 @@
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
 					"$(SRCROOT)/Library/Intercom",
-					"/Users/keren/Documents/Shelby-2.0-iOS/Shelby.tv/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3038,7 +3035,6 @@
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
 					"$(SRCROOT)/Library/Intercom",
-					"/Users/keren/Documents/Shelby-2.0-iOS/Shelby.tv/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3168,7 +3164,6 @@
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
 					"$(SRCROOT)/Library/Intercom",
-					"/Users/keren/Documents/Shelby-2.0-iOS/Shelby.tv/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -3224,7 +3219,6 @@
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
 					"$(SRCROOT)/Library/Localytics",
 					"$(SRCROOT)/Library/Intercom",
-					"/Users/keren/Documents/Shelby-2.0-iOS/Shelby.tv/Library/GoogleAnalyticsSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
