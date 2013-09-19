@@ -47,6 +47,10 @@
 		<string>Ubuntu-B.ttf</string>
 		<string>Ubuntu-M.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

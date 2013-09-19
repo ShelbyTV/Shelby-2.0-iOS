@@ -72,6 +72,8 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
 //    }
     
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
     // Brain will set proper ViewController on window and makeKeyAndVisible during -applicationDidBecomeActive:
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.brain = [[ShelbyBrain alloc] init];
@@ -116,6 +118,13 @@
     }
 
 }
+
+
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler(UIBackgroundFetchResultNoData);
+}
+
 
 - (void)fireLocalNotification:(UILocalNotification *)notifcation
 {

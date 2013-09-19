@@ -2066,9 +2066,26 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Shelby TV, Inc.";
 				TargetAttributes = {
+					1C81097316EE2CBF0030077C = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+					1C810A2916EE5EED0030077C = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					8E20970C162F3A60000A2DFD = {
 						DevelopmentTeam = LW43DGNSVS;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.InAppPurchase = {
 								enabled = 0;
 							};
