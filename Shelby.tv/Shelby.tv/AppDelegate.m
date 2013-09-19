@@ -91,7 +91,6 @@
     // Appirater
     [Appirater appLaunched:YES];
     
-    // KP KP: TODO: Is that what we want?
     // https://developers.google.com/analytics/devguides/collection/ios/v3/sessions#managing
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAISessionControl value:@"start"];
@@ -156,7 +155,6 @@
     [[LocalyticsSession shared] close];
     [[LocalyticsSession shared] upload];
 
-    // KP KP: TODO: Is that what we want?
     // https://developers.google.com/analytics/devguides/collection/ios/v3/sessions#managing
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAISessionControl value:@"end"];
@@ -214,7 +212,11 @@
     /*** Google Analytics ***/
     [GAI sharedInstance].trackUncaughtExceptions = YES; // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].dispatchInterval = 20;         // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+#ifdef SHELBY_APPSTORE
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
+#else
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelWarning];
+#endif
     self.googleTracker = [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_ID];
     
     /*** Hockey ***/
