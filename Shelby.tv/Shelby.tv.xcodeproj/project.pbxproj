@@ -2904,6 +2904,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2961,6 +2962,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -3199,6 +3201,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3256,6 +3259,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
