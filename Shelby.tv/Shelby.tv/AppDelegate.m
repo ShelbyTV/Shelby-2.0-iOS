@@ -13,6 +13,7 @@
 #import "Appirater.h"
 #import "FacebookHandler.h"
 #import "GAI.h"
+#import "GAIFields.h"
 #import "Intercom.h"
 #import "LocalyticsSession.h"
 #import "ShelbyBrain.h"
@@ -89,6 +90,10 @@
     
     // Appirater
     [Appirater appLaunched:YES];
+    
+    // https://developers.google.com/analytics/devguides/collection/ios/v3/sessions#managing
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAISessionControl value:@"start"];
 
     return YES;
 }
@@ -149,6 +154,10 @@
 {
     [[LocalyticsSession shared] close];
     [[LocalyticsSession shared] upload];
+
+    // https://developers.google.com/analytics/devguides/collection/ios/v3/sessions#managing
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAISessionControl value:@"end"];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -203,10 +212,13 @@
     /*** Google Analytics ***/
     [GAI sharedInstance].trackUncaughtExceptions = YES; // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].dispatchInterval = 20;         // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-    [GAI sharedInstance].debug = NO;                    // Optional: set to YES for extra debugging information.
+#ifdef SHELBY_APPSTORE
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];
+#else
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelWarning];
+#endif
     self.googleTracker = [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_ID];
-    self.googleTracker.sessionStart = YES;    
-
+    
     /*** Hockey ***/
 #ifdef SHELBY_APPSTORE
     // Making sure there are no updates in the target we use for dev & app store release

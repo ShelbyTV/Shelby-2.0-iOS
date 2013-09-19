@@ -42,7 +42,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.trackedViewName = [NSString stringWithFormat:@"Signup Step %@", [self signupStepNumber]];
     }
     return self;
 }
@@ -50,6 +49,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.screenName = [NSString stringWithFormat:@"Signup Step %@", [self signupStepNumber]];
+
 	// Do any additional setup after loading the view.
     
     // Assign Tags to TextFields - So we can differentiate them.

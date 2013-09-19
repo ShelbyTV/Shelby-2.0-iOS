@@ -14,6 +14,7 @@
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
 #import "GAI.h"
+#import "GAIFields.h"
 #import "Intercom.h"
 #import "Roll+Helper.h"
 #import "ShelbyAnalyticsClient.h"
@@ -475,7 +476,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             }
             [self.delegate loginUserDidComplete];
             [self syncLikes];
-            [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [ShelbyAPIClient putGoogleAnalyticsClientID:[tracker get:kGAIClientId] forUser:user];
             return;
         }
     }
@@ -511,7 +513,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                    label:[NSString stringWithFormat:@"-[saveUserFromJSON:] error: %@", err]];
         }
         [self syncLikes];
-        [ShelbyAPIClient putGoogleAnalyticsClientID:[GAI sharedInstance].defaultTracker.clientId forUser:user];
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [ShelbyAPIClient putGoogleAnalyticsClientID:[tracker get:kGAIClientId]  forUser:user];
         return user;
     }
     return nil;

@@ -9,7 +9,7 @@
 #import "SignupFlowNavigationViewController.h"
 #import "DeviceUtilities.h"
 #import "SignupFlowStepOneViewController.h"
-#import "GAI.h"
+#import "ShelbyAnalyticsClient.h"
 
 @interface SignupFlowNavigationViewController ()
 @property (nonatomic, strong) NSMutableDictionary *signupDictionary;
@@ -29,10 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[GAI sharedInstance].defaultTracker sendEventWithCategory:kAnalyticsCategorySignup
-                                                    withAction:kAnalyticsSignupStart
-                                                     withLabel:nil
-                                                     withValue:nil];
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup action:kAnalyticsSignupStart label:nil];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsStartSignup];
     
     // Create an empty Signup Dictionary
@@ -114,10 +111,7 @@
 
 - (void)completeSignup
 {
-    [[GAI sharedInstance].defaultTracker sendEventWithCategory:kAnalyticsCategorySignup
-                                                    withAction:kAnalyticsSignupFinish
-                                                     withLabel:nil
-                                                     withValue:nil];
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup action:kAnalyticsSignupFinish label:nil];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFinishSignup];
     
     NSString *name = self.signupDictionary[kShelbySignupNameKey];
