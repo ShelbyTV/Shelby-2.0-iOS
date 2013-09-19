@@ -135,7 +135,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     NSUInteger capacity;
     if (response.expectedContentLength != NSURLResponseUnknownLength)
-        capacity = response.expectedContentLength;
+        capacity = (NSUInteger)response.expectedContentLength;
     else
         capacity = 0;
     
