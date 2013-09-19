@@ -13,6 +13,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "UserDetailsCell.h"
 #import "ShelbyAlert.h"
+#import "ShelbyAnalyticsClient.h"
 #import "ShelbyDataMediator.h"
 
 @interface SettingsViewController ()
@@ -66,6 +67,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+
+    [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenSettings];
+
     [self refreshSocialButtonStatus];
     
     // KP KP: TODO: need to store user full name in CoreData

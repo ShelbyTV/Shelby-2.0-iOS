@@ -9,6 +9,7 @@
 #import "WelcomeScrollHolderView.h"
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "ShelbyAnalyticsClient.h"
 
 @interface WelcomeScrollHolderView()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -118,10 +119,12 @@
         case 0:
             [self cancelScrollUpHelper];
             [self resetSwipeLeftHelper:.5];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA4l];
             break;
         case 1:
             [self cancelSwipeLeftHelper];
             [self resetScrollUpHelper:1.5];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA4r];
             break;
         default:
             break;
@@ -142,6 +145,7 @@
             }
             [self resetScrollUpHelper:4.0];
             [self cancelSwipeLeftHelper];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA1];
             break;
         case 1:
             [self zoomInOnPhone];
@@ -153,6 +157,7 @@
             [self setViews:self.tipIconsP1 alpha:1.f];
             [self resetScrollUpHelper:4.0];
             [self cancelSwipeLeftHelper];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA2];
             break;
         case 2:
             [self zoomInOnPhone];
@@ -164,6 +169,7 @@
             [self setViews:self.tipIconsP2 alpha:1.f];
             [self resetScrollUpHelper:5.0];
             [self cancelSwipeLeftHelper];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA3];
             break;
         case 3:
             [self zoomInOnPhone];
@@ -174,8 +180,8 @@
             }
             [self setViews:self.tipIconsP3 alpha:1.f];
             [_parallaxView scrollToPage:0];
-            [self cancelScrollUpHelper];
-            [self resetSwipeLeftHelper:1];
+            [self didScrollToPage:0];
+            //see didScrollToPage for continued view tracking
             break;
         default:
             break;

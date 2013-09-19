@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+// Shared Constants
+//--Screens--
+extern NSString * const kAnalyticsScreenWelcomeA1;
+extern NSString * const kAnalyticsScreenWelcomeA2;
+extern NSString * const kAnalyticsScreenWelcomeA3;
+extern NSString * const kAnalyticsScreenWelcomeA4l;
+extern NSString * const kAnalyticsScreenWelcomeA4r;
+extern NSString * const kAnalyticsScreenWelcomeB;
+extern NSString * const kAnalyticsScreenLogin;
+/* created dynamically: signup, browse, videoReel */
+extern NSString * const kAnalyticsScreenSettings;
+extern NSString * const kAnalyticsScreenShelbyShare;
+
 // Localytics Constants
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsLikeVideo;
@@ -80,6 +93,9 @@ extern NSString * const kAnalyticsIssueSTVExtractorFail;
 extern NSString * const kAnalyticsIssueVideoMissingProviderID;
 
 @interface ShelbyAnalyticsClient : NSObject
+
+//Shared
++ (void)trackScreen:(NSString *)screenName;
 
 //Localytics
 + (void)sendLocalyticsEvent:(NSString *)eventTag;
