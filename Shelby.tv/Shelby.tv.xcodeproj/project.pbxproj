@@ -3011,6 +3011,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
+				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3063,6 +3064,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
+				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
