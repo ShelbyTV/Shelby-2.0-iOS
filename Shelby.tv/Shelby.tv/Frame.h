@@ -2,7 +2,7 @@
 //  Frame.h
 //  Shelby.tv
 //
-//  Created by Keren on 7/15/13.
+//  Created by Daniel Spinosa on 9/19/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -22,10 +22,10 @@
 @property (nonatomic, retain) NSString * creatorID;
 @property (nonatomic, retain) NSString * frameID;
 @property (nonatomic, retain) NSNumber * isStoredForLoggedOutUser;
+@property (nonatomic, retain) NSString * originatorNickname;
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * videoID;
-@property (nonatomic, retain) NSString * originatorNickname;
 @property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, retain) User *creator;
 @property (nonatomic, retain) NSSet *dashboardEntry;
