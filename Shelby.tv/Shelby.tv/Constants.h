@@ -7,7 +7,6 @@
 //
 
 #import "GAIConstants.h"
-#import "Structures.h"
 #import "SPConstants.h"
 #import "UIColor+ColorWithHexAndAlpha.h"
 

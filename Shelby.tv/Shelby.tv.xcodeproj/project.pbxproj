@@ -986,7 +986,6 @@
 		8EB950561665BD4000E965E0 /* SPVideoReel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoReel.m; sourceTree = "<group>"; };
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
-		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		910933061743E47F00AC038E /* ShelbyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlert.h; sourceTree = "<group>"; };
@@ -1894,7 +1893,6 @@
 			isa = PBXGroup;
 			children = (
 				8EF5C35C162F431B0075C35F /* Constants.h */,
-				8EF092361662A325008EE1DD /* Structures.h */,
 				8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */,
 			);
 			name = Constants;
