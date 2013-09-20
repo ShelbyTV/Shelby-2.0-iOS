@@ -629,6 +629,12 @@
 		91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
+		91AEFE1217ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */; };
+		91AEFE1317ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */; };
+		91AEFE1417ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */; };
+		91AEFE1717ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
+		91AEFE1817ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
+		91AEFE1917ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
 		91B7DC2B17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
 		91B7DC2C17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
 		91B7DC2D17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
@@ -1074,6 +1080,9 @@
 		91A36265178F296B00381218 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easing.h; sourceTree = "<group>"; };
 		91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModelArrayUtility.h; sourceTree = "<group>"; };
 		91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyModelArrayUtility.m; sourceTree = "<group>"; };
+		91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamBrowseGestureHintView.xib; sourceTree = "<group>"; };
+		91AEFE1517ECF3D500B2598B /* StreamBrowseGestureHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBrowseGestureHintView.h; sourceTree = "<group>"; };
+		91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBrowseGestureHintView.m; sourceTree = "<group>"; };
 		91B7DC2717AACD79009ABF02 /* hungry.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hungry.m4v; sourceTree = "<group>"; };
 		91B7DC3717AC0C8A009ABF02 /* STVYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVYouTubeExtractor.h; sourceTree = "<group>"; };
 		91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVYouTubeExtractor.m; sourceTree = "<group>"; };
@@ -1392,6 +1401,7 @@
 				9178C9D517CE398400913256 /* Welcome.storyboard */,
 				9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */,
 				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
+				91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -1814,6 +1824,8 @@
 				913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */,
 				9184FE5317DA5757006E23E4 /* UITextViewWithPlaceholder.h */,
 				9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */,
+				91AEFE1517ECF3D500B2598B /* StreamBrowseGestureHintView.h */,
+				91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2167,6 +2179,7 @@
 				1CE5586F17DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1CDCA688179DCE190098C4E1 /* scrubber@2x.png in Resources */,
 				9192ED0317C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
+				91AEFE1317ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */,
 				1CE5584017DE1E1300C18A30 /* button-off.png in Resources */,
 				1CDCA68E179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA691179F317A0098C4E1 /* overlay.png in Resources */,
@@ -2270,6 +2283,7 @@
 				1CE5587017DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1CDCA689179DCE190098C4E1 /* scrubber@2x.png in Resources */,
 				9192ED0417C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
+				91AEFE1417ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */,
 				1CE5584117DE1E1300C18A30 /* button-off.png in Resources */,
 				1CDCA68F179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA692179F317A0098C4E1 /* overlay.png in Resources */,
@@ -2425,6 +2439,7 @@
 				9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				911ED32117B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
 				911ED32417B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
+				91AEFE1217ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */,
 				911ED32717B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */,
 				1CE5585C17DE73CA00C18A30 /* heart-large@2x.png in Resources */,
 			);
@@ -2541,6 +2556,7 @@
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91AEFE1817ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626A178F296B00381218 /* easing.c in Sources */,
@@ -2670,6 +2686,7 @@
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91AEFE1917ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626B178F296B00381218 /* easing.c in Sources */,
@@ -2799,6 +2816,7 @@
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91AEFE1717ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A36269178F296B00381218 /* easing.c in Sources */,

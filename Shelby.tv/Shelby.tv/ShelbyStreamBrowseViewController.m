@@ -17,6 +17,8 @@
 #define REFRESH_PULL_THRESHOLD 50
 #define MAX_CELLS_TO_PREFETCH (NSUInteger)2
 
+NSString * const kShelbyBrowseViewGestureInitiationComplete = @"browse_gesture_init_completed";
+
 @interface ShelbyStreamBrowseViewController (){
     UIInterfaceOrientation _currentlyPresentedInterfaceOrientation;
     BOOL _isRefreshing;
@@ -35,7 +37,9 @@
 @property (nonatomic, assign) BOOL hasNoContent;
 @end
 
-@implementation ShelbyStreamBrowseViewController
+@implementation ShelbyStreamBrowseViewController {
+    UIView *_browseGestureHintView;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,6 +91,12 @@
     [super viewDidAppear:animated];
 
     [ShelbyAnalyticsClient trackScreen:[NSString stringWithFormat:@"Browse - %@", self.channel.displayTitle]];
+
+    if ([self shouldShowGestureHint] && !self.noContentVC) {
+        [self showGestureHintView];
+    } else {
+        [self removeGestureHintView];
+    }
 }
 
 - (void)updateVisibilityOfNoContentView
@@ -116,6 +126,10 @@
 {
     _hasNoContent = hasNoContent;
     [self.browseViewDelegate shelbyStreamBrowseViewController:self hasNoContnet:hasNoContent];
+
+    if (!_hasNoContent && [self shouldShowGestureHint]) {
+        [self showGestureHintView];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -343,6 +357,8 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     if (scrollView.contentOffset.y < 0) {
         [self pullToRefreshForOffset:-(scrollView.contentOffset.y)];
     }
+
+    [self userDidScrollOrSwipe];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -375,6 +391,8 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     [self.streamBrowseViewCells makeObjectsPerformSelector:@selector(matchParallaxOf:) withObject:cell];
 
     [self.browseViewDelegate shelbyStreamBrowseViewController:self cellParallaxDidChange:cell];
+
+    [self userDidScrollOrSwipe];
 }
 
 - (void)browseViewCell:(ShelbyStreamBrowseViewCell *)cell parallaxDidChangeToPage:(NSUInteger)page
@@ -439,6 +457,43 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     if (!shouldAnimate) {
         [self pullToRefreshDoneRefreshing];
     }
+}
+
+#pragma mark - Gesture Hint Methods
+
+- (BOOL)shouldShowGestureHint
+{
+    BOOL initiationComplete = [[NSUserDefaults standardUserDefaults] boolForKey:kShelbyBrowseViewGestureInitiationComplete];
+    return !initiationComplete;
+}
+
+- (void)userDidScrollOrSwipe
+{
+    if (_browseGestureHintView) {
+        [self removeGestureHintView];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShelbyBrowseViewGestureInitiationComplete];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (void)showGestureHintView
+{
+    if (!_browseGestureHintView) {
+        _browseGestureHintView = [[NSBundle mainBundle] loadNibNamed:@"StreamBrowseGestureHintView" owner:self options:nil][0];
+        _browseGestureHintView.center = self.view.center;
+        _browseGestureHintView.layer.cornerRadius = 5.0;
+        [self.view addSubview:_browseGestureHintView];
+    }
+}
+
+- (void)removeGestureHintView
+{
+    [UIView animateWithDuration:.1 animations:^{
+        _browseGestureHintView.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        [_browseGestureHintView removeFromSuperview];
+        _browseGestureHintView = nil;
+    }];
 }
 
 @end
