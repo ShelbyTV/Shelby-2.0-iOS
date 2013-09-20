@@ -35,8 +35,6 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
 {
     [super viewDidLoad];
 
-    self.trackedViewName = @"Welcome v2";
-
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeStart
                                        withLabel:nil];
@@ -165,6 +163,7 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
     if (pulledFastEnough || pulledFarEnough) {
         [self.welcomeScrollScroller setContentOffset:CGPointMake(0, self.welcomeScrollScroller.bounds.size.height) animated:YES];
         self.welcomeScrollScroller.scrollEnabled = YES;
+        [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeB];
     } else {
         [self.welcomeScrollScroller setContentOffset:CGPointMake(0, 0) animated:YES];
         self.welcomeScrollScroller.scrollEnabled = NO;

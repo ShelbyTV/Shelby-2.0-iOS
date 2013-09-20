@@ -115,6 +115,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     [super viewDidAppear:animated];
 
+    [ShelbyAnalyticsClient trackScreen:[NSString stringWithFormat:@"Video Reel - %@", self.channel.displayTitle]];
+
     // -setup relies on our frame to correctly size the video players...
     // We used to run it in -viewDidLoad but our frame wasn't yet updated (ie. for landscape)
     // In -viewDidAppear, our frame is sized correctly and -setup will pass that down the view chain
@@ -150,8 +152,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 - (void)setup
 {
     if ( !_videoPlayers ) {
-        [self setTrackedViewName:[NSString stringWithFormat:@"Playlist - %@", _groupTitle]];
-
         self.videoPlayers = [@[] mutableCopy];
         
         [self setupVideoPreloadStrategy];

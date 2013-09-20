@@ -69,7 +69,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self updateVisibilityOfNoContentView];
 
     // Our parent sets our frame, which may be different than the last time we were on screen.
@@ -80,6 +80,13 @@
         self.collectionView.frame = self.view.frame;
         [self didRotateFromInterfaceOrientation:oldOrientation];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [ShelbyAnalyticsClient trackScreen:[NSString stringWithFormat:@"Browse - %@", self.channel.displayTitle]];
 }
 
 - (void)updateVisibilityOfNoContentView

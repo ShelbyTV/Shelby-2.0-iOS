@@ -91,6 +91,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenShelbyShare];
     
     [self.message becomeFirstResponder];
     

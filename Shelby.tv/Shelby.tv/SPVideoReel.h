@@ -40,8 +40,6 @@
 @property (nonatomic, weak) UIView *airPlayView;
 @property (nonatomic, strong) DisplayChannel *channel;
 @property (nonatomic) UIButton *airPlayButton;
-@property (assign, nonatomic) GroupType groupType;
-@property (copy, nonatomic) NSString *groupTitle;
 
 - (id)initWithChannel:(DisplayChannel *)channel
      andVideoEntities:(NSArray *)videoEntities

@@ -234,6 +234,9 @@
 		1CCE4C5417E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
 		1CCE4C5517E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
 		1CCE4C5617E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */; };
+		1CCE4C5B17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */; };
+		1CCE4C5C17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */; };
+		1CCE4C5D17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */; };
 		1CD255C817A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
 		1CD255C917A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
 		1CD255CA17A1DD170049FF30 /* top-nav-bkgd.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */; };
@@ -279,9 +282,6 @@
 		1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
 		1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
 		1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
-		1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
-		1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
-		1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE6C1794A320002ECD76 /* Frame.m */; };
 		1CDBEE721795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowStepOneViewController.m */; };
 		1CDBEE731795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowStepOneViewController.m */; };
 		1CDBEE741795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDBEE711795EA21002ECD76 /* SignupFlowStepOneViewController.m */; };
@@ -464,9 +464,6 @@
 		8E7C341A16D58252007494DF /* SPShareController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7C341916D58252007494DF /* SPShareController.m */; };
 		8E82EE101631C7AC0044D97E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE0F1631C7AC0044D97E /* SystemConfiguration.framework */; };
 		8E82EE121631C7B90044D97E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E82EE111631C7B90044D97E /* MobileCoreServices.framework */; };
-		8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
-		8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */; };
-		8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */; };
 		8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E888987166FB0B40040D28D /* ShelbyAPIClient.m */; };
 		8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E91173116DC288600719F9B /* SPVideoDownloader.m */; };
 		8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */; };
@@ -554,6 +551,12 @@
 		914FEA85175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
 		914FEA86175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
 		914FEA87175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
+		915ACBC117EB52D900FA3EFF /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC017EB52D900FA3EFF /* Frame.m */; };
+		915ACBC217EB52D900FA3EFF /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC017EB52D900FA3EFF /* Frame.m */; };
+		915ACBC317EB52D900FA3EFF /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC017EB52D900FA3EFF /* Frame.m */; };
+		915ACBC617EB52DE00FA3EFF /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC517EB52DE00FA3EFF /* Conversation.m */; };
+		915ACBC717EB52DE00FA3EFF /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC517EB52DE00FA3EFF /* Conversation.m */; };
+		915ACBC817EB52DE00FA3EFF /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC517EB52DE00FA3EFF /* Conversation.m */; };
 		915CDA7B17BE8FC7003C3A38 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915CDA7A17BE8FC7003C3A38 /* Images.xcassets */; };
 		915CDA8017BE96D9003C3A38 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915CDA7E17BE9690003C3A38 /* StoreKit.framework */; };
 		915CDA8117BE96E4003C3A38 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915CDA7E17BE9690003C3A38 /* StoreKit.framework */; };
@@ -686,9 +689,6 @@
 		91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */; };
 		91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */; };
 		91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */; };
-		91D03F4317331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
-		91D03F4417331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
-		91D03F4517331499008131D2 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F4217331499008131D2 /* Conversation.m */; };
 		91D03F521733149F008131D2 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F511733149E008131D2 /* Messages.m */; };
 		91D03F531733149F008131D2 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F511733149E008131D2 /* Messages.m */; };
 		91D03F541733149F008131D2 /* Messages.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F511733149E008131D2 /* Messages.m */; };
@@ -824,6 +824,10 @@
 		1CCE4C4B17E226F700F0BF5A /* user_default_avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_default_avatar@2x.png"; path = "../user_default_avatar@2x.png"; sourceTree = "<group>"; };
 		1CCE4C5217E258DE00F0BF5A /* ShelbyErrorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyErrorUtility.h; sourceTree = "<group>"; };
 		1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyErrorUtility.m; sourceTree = "<group>"; };
+		1CCE4C5717EA520400F0BF5A /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		1CCE4C5817EA521400F0BF5A /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		1CCE4C5917EA521400F0BF5A /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-nav-bkgd.png"; sourceTree = "<group>"; };
 		1CD255C717A1DD170049FF30 /* top-nav-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top-nav-bkgd@2x.png"; sourceTree = "<group>"; };
 		1CD8110C17CCF6C0002FD84B /* play-airplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-airplay.png"; path = "../play-airplay.png"; sourceTree = "<group>"; };
@@ -841,8 +845,6 @@
 		1CDB0C3117A992E10031C2C9 /* UserDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsCell.h; sourceTree = "<group>"; };
 		1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsCell.m; sourceTree = "<group>"; };
 		1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoSharesView.xib; sourceTree = "<group>"; };
-		1CDBEE6B1794A31F002ECD76 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		1CDBEE6C1794A320002ECD76 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		1CDBEE701795EA20002ECD76 /* SignupFlowStepOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepOneViewController.h; sourceTree = "<group>"; };
 		1CDBEE711795EA21002ECD76 /* SignupFlowStepOneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupFlowStepOneViewController.m; sourceTree = "<group>"; };
 		1CDBEE751795EF8D002ECD76 /* BlinkingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlinkingLabel.h; sourceTree = "<group>"; };
@@ -972,10 +974,6 @@
 		8E87C5A916F38C2D00AC93C0 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		8E87C5AA16F38C2D00AC93C0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
 		8E87C5AB16F38C2D00AC93C0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		8E87C5AC16F38C2D00AC93C0 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
-		8E87C5AD16F38C2D00AC93C0 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
-		8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
-		8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		8E888986166FB0B40040D28D /* ShelbyAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAPIClient.h; sourceTree = "<group>"; };
 		8E888987166FB0B40040D28D /* ShelbyAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClient.m; sourceTree = "<group>"; };
 		8E91173016DC288600719F9B /* SPVideoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPVideoDownloader.h; sourceTree = "<group>"; };
@@ -988,7 +986,6 @@
 		8EB950561665BD4000E965E0 /* SPVideoReel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoReel.m; sourceTree = "<group>"; };
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
-		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		910933061743E47F00AC038E /* ShelbyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlert.h; sourceTree = "<group>"; };
@@ -1033,6 +1030,10 @@
 		914FEA7A175E3E6700903FEA /* DVREntry+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVREntry+Helper.m"; sourceTree = "<group>"; };
 		914FEA83175E40C600903FEA /* DVREntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVREntry.h; sourceTree = "<group>"; };
 		914FEA84175E40C600903FEA /* DVREntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVREntry.m; sourceTree = "<group>"; };
+		915ACBBF17EB52D900FA3EFF /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		915ACBC017EB52D900FA3EFF /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		915ACBC417EB52DE00FA3EFF /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
+		915ACBC517EB52DE00FA3EFF /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		915CDA7A17BE8FC7003C3A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Shelby.tv/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		915CDA7E17BE9690003C3A38 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		91649ECA173D4D4900A9265B /* ShelbyVideoContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoContainer.h; sourceTree = "<group>"; };
@@ -1104,8 +1105,6 @@
 		91D03F1F1732BC97008131D2 /* Dashboard+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Dashboard+Helper.m"; sourceTree = "<group>"; };
 		91D03F2817330BD9008131D2 /* DashboardEntry+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DashboardEntry+Helper.h"; sourceTree = "<group>"; };
 		91D03F2917330BD9008131D2 /* DashboardEntry+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DashboardEntry+Helper.m"; sourceTree = "<group>"; };
-		91D03F4117331498008131D2 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
-		91D03F4217331499008131D2 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		91D03F501733149E008131D2 /* Messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messages.h; sourceTree = "<group>"; };
 		91D03F511733149E008131D2 /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
 		91D03F551733149F008131D2 /* Dashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dashboard.h; sourceTree = "<group>"; };
@@ -1135,6 +1134,7 @@
 		91F16824179840FF00AF8A2E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		91F168281798422F00AF8A2E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		91F168291798422F00AF8A2E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		91F4243217EB503600264C90 /* Shelby 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 5.xcdatamodel"; sourceTree = "<group>"; };
 		91FCC69F174A8F14004255F5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1164,10 +1164,10 @@
 				1C8109B516EE2CBF0030077C /* AVFoundation.framework in Frameworks */,
 				1C8109B616EE2CBF0030077C /* UIKit.framework in Frameworks */,
 				1C8109B716EE2CBF0030077C /* Foundation.framework in Frameworks */,
+				1CCE4C5C17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */,
 				1C8109B816EE2CBF0030077C /* CoreGraphics.framework in Frameworks */,
 				1C8109BA16EE2CBF0030077C /* HockeySDK.framework in Frameworks */,
 				9182A1DA17E2247500C629FA /* libIntercom.a in Frameworks */,
-				8E87C5B116F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				9137187417DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
 				1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
@@ -1197,11 +1197,11 @@
 				1C810A6B16EE5EED0030077C /* AVFoundation.framework in Frameworks */,
 				1C810A6C16EE5EED0030077C /* UIKit.framework in Frameworks */,
 				1C810A6D16EE5EED0030077C /* Foundation.framework in Frameworks */,
+				1CCE4C5D17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */,
 				1C810A6E16EE5EED0030077C /* CoreGraphics.framework in Frameworks */,
 				1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */,
 				9182A1DB17E2247500C629FA /* libIntercom.a in Frameworks */,
 				9137187517DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
-				8E87C5B516F38C2D00AC93C0 /* libGoogleAnalytics_debug.a in Frameworks */,
 				1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1230,11 +1230,11 @@
 				8EF5C35B162F42470075C35F /* AVFoundation.framework in Frameworks */,
 				8E209712162F3A60000A2DFD /* UIKit.framework in Frameworks */,
 				8E209714162F3A60000A2DFD /* Foundation.framework in Frameworks */,
+				1CCE4C5B17EA521500F0BF5A /* libGoogleAnalyticsServices.a in Frameworks */,
 				8E209716162F3A60000A2DFD /* CoreGraphics.framework in Frameworks */,
 				1C81096316EE21230030077C /* HockeySDK.framework in Frameworks */,
 				9182A1D917E2247500C629FA /* libIntercom.a in Frameworks */,
 				9137187317DE94EF0021A99B /* libLocalyticsAMP.a in Frameworks */,
-				8E87C5B016F38C2D00AC93C0 /* libGoogleAnalytics.a in Frameworks */,
 				1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1467,11 +1467,13 @@
 				91E5D462174E938100AD3746 /* Roll.m */,
 				91BEC88E176274BD00838197 /* DisplayChannel.h */,
 				91BEC88F176274BD00838197 /* DisplayChannel.m */,
-				1CDBEE6B1794A31F002ECD76 /* Frame.h */,
-				1CDBEE6C1794A320002ECD76 /* Frame.m */,
 				911ED31917B2CC2F000FFBEB /* DashboardEntry.h */,
 				911ED31A17B2CC2F000FFBEB /* DashboardEntry.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				915ACBBF17EB52D900FA3EFF /* Frame.h */,
+				915ACBC017EB52D900FA3EFF /* Frame.m */,
+				915ACBC417EB52DE00FA3EFF /* Conversation.h */,
+				915ACBC517EB52DE00FA3EFF /* Conversation.m */,
 				1C9369AB17DA58E600AC2132 /* User.h */,
 				1C9369AC17DA58E600AC2132 /* User.m */,
 				91D03F5A173314A0008131D2 /* Video.h */,
@@ -1480,8 +1482,6 @@
 				91D03F561733149F008131D2 /* Dashboard.m */,
 				91D03F501733149E008131D2 /* Messages.h */,
 				91D03F511733149E008131D2 /* Messages.m */,
-				91D03F4117331498008131D2 /* Conversation.h */,
-				91D03F4217331499008131D2 /* Conversation.m */,
 				91F0CBF91729DB5B008B5B34 /* Frame+Helper.h */,
 				91F0CBFA1729DB5B008B5B34 /* Frame+Helper.m */,
 				91F0CC031730154E008B5B34 /* User+Helper.h */,
@@ -1731,10 +1731,10 @@
 				8E87C5A916F38C2D00AC93C0 /* GAI.h */,
 				8E87C5AA16F38C2D00AC93C0 /* GAITrackedViewController.h */,
 				8E87C5AB16F38C2D00AC93C0 /* GAITracker.h */,
-				8E87C5AC16F38C2D00AC93C0 /* GAITransaction.h */,
-				8E87C5AD16F38C2D00AC93C0 /* GAITransactionItem.h */,
-				8E87C5AE16F38C2D00AC93C0 /* libGoogleAnalytics.a */,
-				8E87C5AF16F38C2D00AC93C0 /* libGoogleAnalytics_debug.a */,
+				1CCE4C5717EA520400F0BF5A /* GAIDictionaryBuilder.h */,
+				1CCE4C5817EA521400F0BF5A /* GAIFields.h */,
+				1CCE4C5917EA521400F0BF5A /* GAILogger.h */,
+				1CCE4C5A17EA521500F0BF5A /* libGoogleAnalyticsServices.a */,
 			);
 			name = GoogleAnalyticsSDK;
 			path = Library/GoogleAnalyticsSDK;
@@ -1893,7 +1893,6 @@
 			isa = PBXGroup;
 			children = (
 				8EF5C35C162F431B0075C35F /* Constants.h */,
-				8EF092361662A325008EE1DD /* Structures.h */,
 				8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */,
 			);
 			name = Constants;
@@ -2500,13 +2499,13 @@
 				91D03F211732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
-				91D03F4417331499008131D2 /* Conversation.m in Sources */,
 				91D03F531733149F008131D2 /* Messages.m in Sources */,
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F5D173314A0008131D2 /* Video.m in Sources */,
 				91D03F67173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F76173321AD008131D2 /* Messages+Helper.m in Sources */,
+				915ACBC717EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
@@ -2537,6 +2536,7 @@
 				1C7B63CD178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E4178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
 				1C56F13A17BABD8C00EE9206 /* Appirater.m in Sources */,
+				915ACBC217EB52D900FA3EFF /* Frame.m in Sources */,
 				1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
@@ -2544,7 +2544,6 @@
 				91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626A178F296B00381218 /* easing.c in Sources */,
-				1CDBEE6E1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE731795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
 				1CDBEE781795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 				1C96DED317975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
@@ -2629,13 +2628,13 @@
 				91D03F221732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
-				91D03F4517331499008131D2 /* Conversation.m in Sources */,
 				91D03F541733149F008131D2 /* Messages.m in Sources */,
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F5E173314A0008131D2 /* Video.m in Sources */,
 				91D03F68173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F77173321AD008131D2 /* Messages+Helper.m in Sources */,
+				915ACBC817EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
@@ -2666,6 +2665,7 @@
 				1C7B63CE178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E5178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
 				1C56F13B17BABD8C00EE9206 /* Appirater.m in Sources */,
+				915ACBC317EB52D900FA3EFF /* Frame.m in Sources */,
 				1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
@@ -2673,7 +2673,6 @@
 				91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626B178F296B00381218 /* easing.c in Sources */,
-				1CDBEE6F1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE741795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
 				1CDBEE791795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 				1C96DED417975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
@@ -2758,13 +2757,13 @@
 				91D03F201732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
-				91D03F4317331499008131D2 /* Conversation.m in Sources */,
 				91D03F521733149F008131D2 /* Messages.m in Sources */,
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F5C173314A0008131D2 /* Video.m in Sources */,
 				91D03F66173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F75173321AD008131D2 /* Messages+Helper.m in Sources */,
+				915ACBC617EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
@@ -2795,6 +2794,7 @@
 				1C7B63CC178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E3178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
 				1C56F13917BABD8C00EE9206 /* Appirater.m in Sources */,
+				915ACBC117EB52D900FA3EFF /* Frame.m in Sources */,
 				1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
@@ -2802,7 +2802,6 @@
 				91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A36269178F296B00381218 /* easing.c in Sources */,
-				1CDBEE6D1794A320002ECD76 /* Frame.m in Sources */,
 				1CDBEE721795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
 				1CDBEE771795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 				1C96DED217975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
@@ -2901,6 +2900,7 @@
 				PRODUCT_NAME = "Shelby.tv Beta";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2956,6 +2956,7 @@
 				PRODUCT_NAME = "Shelby.tv Beta";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -3006,6 +3007,7 @@
 				PRODUCT_NAME = "Shelby.tv Nightly";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -3057,6 +3059,7 @@
 				PRODUCT_NAME = "Shelby.tv Nightly";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -3186,6 +3189,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -3241,6 +3245,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -3291,12 +3296,13 @@
 		8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				91F4243217EB503600264C90 /* Shelby 5.xcdatamodel */,
 				91B7DC4517B29621009ABF02 /* Shelby 4.xcdatamodel */,
 				914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */,
 				91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */,
 				8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */,
 			);
-			currentVersion = 91B7DC4517B29621009ABF02 /* Shelby 4.xcdatamodel */;
+			currentVersion = 91F4243217EB503600264C90 /* Shelby 5.xcdatamodel */;
 			path = Shelby.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
