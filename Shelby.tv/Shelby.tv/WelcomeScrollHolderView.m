@@ -165,7 +165,8 @@
             [self zoomInOnPhone];
             [self changeTitleText:@"...from your favorite people and places."
                           tipText:@"Shelby users share great new video all day long"];
-            for (NSArray *tipCollection in @[self.tipIconsP2, self.tipIconsP3]) {
+            //NB: not hiding tip 3
+            for (NSArray *tipCollection in @[self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
             [self setViews:self.tipIconsP1 alpha:1.f];
@@ -175,12 +176,15 @@
             break;
         case 2:
             [self zoomInOnPhone];
+            //NB: using copy from Page 3
             [self changeTitleText:@"It's like a TV channel personalized for you."
-                          tipText:@"Like and share videos to get better recommendations."];
-            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP3]) {
+                          tipText:@"...powered by your friends."];
+            //NB: not hiding tip3
+            for (NSArray *tipCollection in @[self.tipIconsP1/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
-            [self setViews:self.tipIconsP2 alpha:1.f];
+            //NB: using tips from Page 3
+            [self setViews:self.tipIconsP3 alpha:1.f];
             [self resetScrollUpHelper:5.0];
             [self cancelSwipeLeftHelper];
             [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA3];
