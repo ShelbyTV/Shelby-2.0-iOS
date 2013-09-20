@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *swipeLeftImage;
 @end
 
-#define PAGES_IN_SCROLL_VIEW 4
+#define PAGES_IN_SCROLL_VIEW 3
 
 @implementation WelcomeScrollHolderView{
     MPMoviePlayerController *_player;
@@ -32,6 +32,7 @@
     STVParallaxView *_parallaxView;
     UIView *_parallaxFg, *_parallaxBg;
     NSInteger _curScrollPage, _curParallaxPage;
+    BOOL _isBouncingScroller;
 }
 
 - (void)awakeFromNib
@@ -49,6 +50,7 @@
     [self showTip:0];
     _curScrollPage = 0;
     _curParallaxPage = 0;
+    _isBouncingScroller = NO;
 }
 
 - (void)dealloc
@@ -72,10 +74,15 @@
     UIView *page2 = [self pageForImageNamed:@"welcome-h-p2" atIndex:2];
     [self.scrollView addSubview:page2];
 
+    /* 
+     * Not Using Page 3 (with left/right swiping) for now
+     *
     //page 3 has swipeable summary/detail
     [self initParallaxViewAtIndex:3];
     UIView *page3a = _parallaxView;
     [self.scrollView addSubview:page3a];
+     */
+
     self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width, self.scrollView.bounds.size.height * PAGES_IN_SCROLL_VIEW);
 }
 
@@ -111,11 +118,13 @@
 
 #pragma mark - STVParallaxViewDelegate
 
+/* PAGE 3 UNUSED */
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
 {
     //ignore
 }
 
+/* PAGE 3 UNUSED */
 - (void)didScrollToPage:(NSUInteger)page
 {
     _curParallaxPage = page;
@@ -170,7 +179,7 @@
             [self resetScrollUpHelper:5.0];
             [self cancelSwipeLeftHelper];
             break;
-        case 3:
+        case 3: /* PAGE 3 UNUSED */
             [self zoomInOnPhone];
             [self changeTitleText:@"...a TV channel powered by your friends."
                           tipText:@"Swipe left to see what your friend said."];
@@ -235,6 +244,7 @@
     [_player play];
 }
 
+/* PAGE 3 UNUSED */
 - (void)initParallaxViewAtIndex:(NSUInteger)idx
 {
     _parallaxView = [[STVParallaxView alloc] initWithFrame:[self frameForIndex:idx]];
@@ -298,19 +308,27 @@
 
 - (void)bounceScrollerUp
 {
-    CGFloat startingOffsetY = self.scrollView.contentOffset.y;
-    [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.scrollView.contentOffset = CGPointMake(0, startingOffsetY + 50);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.scrollView.contentOffset = CGPointMake(0, startingOffsetY-10);
+    if (!_isBouncingScroller) {
+        _isBouncingScroller = YES;
+        CGFloat startingOffsetY = self.scrollView.contentOffset.y;
+        [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, startingOffsetY + 50);
         } completion:^(BOOL finished) {
-            [self.scrollView setContentOffset:CGPointMake(0, startingOffsetY) animated:YES];
-        }];
+            [UIView animateWithDuration:.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.scrollView.contentOffset = CGPointMake(0, startingOffsetY-10);
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:.2 animations:^{
+                    self.scrollView.contentOffset = CGPointMake(0, startingOffsetY);
+                } completion:^(BOOL finished) {
+                    _isBouncingScroller = NO;
+                }];
+            }];
 
-    }];
+        }];
+    }
 }
 
+/* PAGE 3 UNUSED */
 - (void)bounceParallaxLeft
 {
     //ideally we could actually bounce, but STVParllaxView doesn't support arbitrary contentOffset
@@ -352,6 +370,7 @@
                                                      repeats:NO];
 }
 
+/* PAGE 3 UNUSED */
 - (void)showSwipeLeftHelper
 {
     _swipeLeftTimer = nil;
@@ -364,6 +383,7 @@
     } completion:nil];
 }
 
+/* PAGE 3 UNUSED */
 - (void)cancelSwipeLeftHelper
 {
     [_swipeLeftTimer invalidate];
@@ -371,6 +391,7 @@
     self.swipeLeftImage.hidden = YES;
 }
 
+/* PAGE 3 UNUSED */
 - (void)resetSwipeLeftHelper:(NSTimeInterval)t
 {
     [self cancelSwipeLeftHelper];
