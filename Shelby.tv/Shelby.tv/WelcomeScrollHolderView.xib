@@ -166,7 +166,7 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-swipe-up" translatesAutoresizingMaskIntoConstraints="NO" id="KQj-IJ-3ft" userLabel="scroll up">
-                    <rect key="frame" x="130" y="273" width="60" height="102"/>
+                    <rect key="frame" x="220" y="273" width="60" height="102"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="J50-uq-XRm"/>
@@ -192,7 +192,7 @@
                 <constraint firstAttribute="centerY" secondItem="B3Z-df-b1w" secondAttribute="centerY" constant="-40" id="HYE-UU-lV3"/>
                 <constraint firstAttribute="trailing" secondItem="eSh-Og-UGs" secondAttribute="trailing" constant="10" id="RZm-Yy-I7q"/>
                 <constraint firstAttribute="centerY" secondItem="KQj-IJ-3ft" secondAttribute="centerY" constant="-40" id="aYO-dt-PsK"/>
-                <constraint firstAttribute="centerX" secondItem="KQj-IJ-3ft" secondAttribute="centerX" id="auk-BO-A2W"/>
+                <constraint firstAttribute="centerX" secondItem="KQj-IJ-3ft" secondAttribute="centerX" constant="-90" id="auk-BO-A2W"/>
                 <constraint firstAttribute="centerX" secondItem="Ymo-2X-Pfn" secondAttribute="centerX" id="fFt-vF-GKK" userLabel="Center X Alignment  - scroll holder view - phone view"/>
                 <constraint firstItem="eSh-Og-UGs" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="10" id="hUD-wC-TJU"/>
                 <constraint firstAttribute="centerY" secondItem="Ymo-2X-Pfn" secondAttribute="centerY" constant="-33" id="qGn-w0-lv2"/>
@@ -229,10 +229,11 @@
         <image name="welcome-icon-fb" width="40" height="40"/>
         <image name="welcome-icon-heart" width="40" height="40"/>
         <image name="welcome-icon-plus" width="40" height="40"/>
+        <image name="welcome-icon-plus" width="40" height="40"/>
         <image name="welcome-icon-twitter" width="40" height="40"/>
         <image name="welcome-icon-vimeo" width="40" height="40"/>
         <image name="welcome-icon-youtube" width="42" height="42"/>
         <image name="welcome-swipe-left" width="73" height="80"/>
-        <image name="welcome-swipe-up" width="60" height="102"/>
+        <image name="welcome-swipe-up" width="64" height="104"/>
     </resources>
 </document>
