@@ -110,9 +110,9 @@
                                           action:kAnalyticsUXTapAirplay
                                  nicknameAsLabel:YES];
 
-    STVAssert(!self.videoPlayer, @"air play sets our player (or somebody else does, later)");
     SPVideoPlayer *notedPlayer = (SPVideoPlayer *)note.object;
     STVAssert(notedPlayer && [notedPlayer isKindOfClass:[SPVideoPlayer class]], @"notification object should be SPVideoPlayer, was %@", notedPlayer);
+    STVDebugAssert(!self.videoPlayer, @"Shouldn't already have a videoPlayer.  Current player's video:%@ / new player's video:%@ / controls' video: %@", self.videoPlayer.videoFrame.video.title, notedPlayer.videoFrame.video.title, [Frame frameForEntity:self.videoControlsVC.currentEntity].video.title);
 
     if (notedPlayer.videoFrame != [Frame frameForEntity:self.videoControlsVC.currentEntity]) {
         // *why* do we get a notification from the wrong player?  no idea.  but we handle it...
