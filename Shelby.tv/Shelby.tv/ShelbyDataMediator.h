@@ -22,6 +22,8 @@ extern NSString * const kShelbyNotificationUserUpdateDidSucceed;
 extern NSString * const kShelbyNotificationUserUpdateDidFail;
 extern NSString * const kShelbyUserHasLoggedInKey;
 
+typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayChannel, NSArray *entries);
+
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>
 // channels
@@ -62,6 +64,7 @@ extern NSString * const kShelbyUserHasLoggedInKey;
 //fetching
 - (void)fetchGlobalChannels;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
+- (void)fetchEntriesInChannel:(DisplayChannel *)channel withCompletionHandler:(shelby_data_mediator_complete_block_t)completionHandler;
 - (User *)fetchAuthenticatedUserOnMainThreadContext;
 - (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh;
 - (void)fetchAllUnsyncedLikes;

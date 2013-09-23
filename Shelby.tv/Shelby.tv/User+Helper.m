@@ -163,6 +163,30 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return @{idKey : channelID, @"display_channel_color" : displayColor, @"display_description" :displayTitle, @"display_title" : displayTitle};
 }
 
++ (NSDictionary *)streamDictionaryForMyStream:(User *)loggedInUser
+{
+    if (!loggedInUser) {
+        return nil;
+    } else {
+        return [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"Stream" displayColor:kShelbyColorMyStreamColorString];
+    }
+}
+
+
++ (DisplayChannel *)displayChannelForMyStream:(User *)loggedInUser withStreamDictionary:(NSDictionary *)streamDict inContext:(NSManagedObjectContext *)moc
+{
+    if (!loggedInUser) {
+        return nil;
+    }
+    
+    DisplayChannel *myStreamChannel = nil;
+    if (streamDict) {
+        myStreamChannel = [DisplayChannel channelForDashboardDictionary:streamDict withOrder:0 inContext:moc];
+    }
+    
+    return myStreamChannel;
+}
+
 // The array returned here corresponds to the defines in the header
 + (NSMutableArray *)channelsForUserInContext:(NSManagedObjectContext *)moc
 {
@@ -173,9 +197,9 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     
     NSMutableArray *channels = [@[] mutableCopy];
 
-    NSDictionary *streamDict = [User dictionaryForUserChannel:loggedInUser.userID withIDKey:@"user_id" displayTitle:@"Stream" displayColor:kShelbyColorMyStreamColorString];
+    NSDictionary *streamDict = [User streamDictionaryForMyStream:loggedInUser];
     if (streamDict) {
-        DisplayChannel *myStreamChannel = [DisplayChannel channelForDashboardDictionary:streamDict withOrder:0 inContext:moc];
+        DisplayChannel *myStreamChannel = [User displayChannelForMyStream:loggedInUser withStreamDictionary:streamDict inContext:moc];
         if (myStreamChannel) {
             [channels addObject:myStreamChannel];
         } else {
@@ -253,6 +277,15 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         return likesRoll.displayChannel;
     }
     return nil;
+}
+
+- (DisplayChannel *)displayChannelForMyStream
+{
+    NSManagedObjectContext *moc = [[ShelbyDataMediator sharedInstance] mainThreadContext];
+    User *loggedInUser = [User currentAuthenticatedUserInContext:moc];
+    return [User displayChannelForMyStream:loggedInUser
+                      withStreamDictionary:[User streamDictionaryForMyStream:loggedInUser]
+                                 inContext:moc];
 }
 
 -(NSURL *)avatarURL

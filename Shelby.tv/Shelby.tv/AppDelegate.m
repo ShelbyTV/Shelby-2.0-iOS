@@ -122,7 +122,7 @@
 
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    completionHandler(UIBackgroundFetchResultNoData);
+    [self.brain performBackgroundFetchWithCompletionHandler:completionHandler];
 }
 
 

@@ -9,6 +9,7 @@
 #import "ShelbyBrain.h"
 #import "Dashboard+Helper.h"
 #import "DashboardEntry.h"
+#import "DashboardEntry+Helper.h"
 #import "DisplayChannel+Helper.h"
 #import "ShelbyDVRController.h"
 #import "ShelbyErrorUtility.h"
@@ -206,6 +207,33 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     [self goToDVR];
 }
 
+- (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    if (currentUser) {
+        DisplayChannel *myStream = [currentUser displayChannelForMyStream];
+        Dashboard *dashboard = myStream.dashboard;
+        NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:myStream withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
+
+            NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
+                return [entry isPlayable];
+            }];
+            entries = [entries filteredArrayUsingPredicate:onlyPlayableVideos];
+
+            if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
+                completionHandler(UIBackgroundFetchResultNewData);
+            } else {
+                completionHandler(UIBackgroundFetchResultNoData);
+            }
+        }];
+    } else {
+        // TODO: KP KP: Fetch Featured channel for non logged in users
+        
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
+}
+
 - (void)fetchUserChannelsForceSwitchToUsersStream:(BOOL)forceUsersStream
 {
     NSArray *allChannels = [self constructAllChannelsArray];
@@ -388,6 +416,28 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     [self showErrorView:error];
 }
 
+- (BOOL)mergeCurrentChannelEntries:(NSArray *)curEntries forChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries
+{
+    ShelbyModelArrayUtility *mergeUtil = [ShelbyModelArrayUtility determineHowToMergePossiblyNew:channelEntries intoExisting:curEntries];
+    if ([mergeUtil.actuallyNewEntities count]) {
+        [self.homeVC addEntries:mergeUtil.actuallyNewEntities toEnd:mergeUtil.actuallyNewEntitiesShouldBeAppended ofChannel:channel];
+        if (!mergeUtil.actuallyNewEntitiesShouldBeAppended) {
+            [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:mergeUtil.actuallyNewEntities[0]];
+            
+            //if there's a gap between prepended entities and existing entities, fetch again to fill that gap
+            if (mergeUtil.gapAfterNewEntitiesBeforeExistingEntities) {
+                [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel
+                                                                sinceEntry:[mergeUtil.actuallyNewEntities lastObject]];
+            }
+            return YES;
+        }
+    } else {
+        //full subset, nothing to add
+    }
+    
+    return NO;
+}
+
 //channelEntries filled with ShelbyModel (specifically, a DashboardEntry or Frame)
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                     with:(NSArray *)channelEntries
@@ -403,21 +453,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     
     NSArray *curEntries = [self.homeVC entriesForChannel:channel];
     if(curEntries && [curEntries count] && [channelEntries count]){
-        ShelbyModelArrayUtility *mergeUtil = [ShelbyModelArrayUtility determineHowToMergePossiblyNew:channelEntries intoExisting:curEntries];
-        if([mergeUtil.actuallyNewEntities count]){
-            [self.homeVC addEntries:mergeUtil.actuallyNewEntities toEnd:mergeUtil.actuallyNewEntitiesShouldBeAppended ofChannel:channel];
-            if(!mergeUtil.actuallyNewEntitiesShouldBeAppended){
-                [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:mergeUtil.actuallyNewEntities[0]];
-
-                //if there's a gap between prepended entities and existing entities, fetch again to fill that gap
-                if (mergeUtil.gapAfterNewEntitiesBeforeExistingEntities) {
-                    [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel
-                                                                    sinceEntry:[mergeUtil.actuallyNewEntities lastObject]];
-                }
-            }
-        } else {
-            //full subset, nothing to add
-        }
+        [self mergeCurrentChannelEntries:curEntries forChannel:channel withChannelEntries:channelEntries];
     } else {
         // Don't update entries if we have zero entries in cache
         if ([channelEntries count] != 0 || !cached) {

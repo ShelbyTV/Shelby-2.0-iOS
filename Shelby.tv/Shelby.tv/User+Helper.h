@@ -44,6 +44,7 @@
 - (Frame *)likedFrameWithVideoOfFrame:(Frame *)frame;
 
 - (DisplayChannel *)displayChannelForLikesRoll;
+- (DisplayChannel *)displayChannelForMyStream;
 
 - (NSURL *)avatarURL;
 

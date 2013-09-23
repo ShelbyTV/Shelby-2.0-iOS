@@ -27,5 +27,6 @@
 - (void)handleWillResignActive;
 - (void)handleDidFinishLaunching;
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification;
+- (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
 @end

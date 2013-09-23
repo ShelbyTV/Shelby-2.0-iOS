@@ -124,6 +124,49 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }
 }
 
+// KP KP: TODO: might want to refactor it with the other fetchEntriesInChannel method
+- (void)fetchEntriesInChannel:(DisplayChannel *)channel withCompletionHandler:(shelby_data_mediator_complete_block_t)completionHandler
+{
+    User *currentUser = [self fetchAuthenticatedUserOnMainThreadContext];
+    NSString *authToken = nil;
+    if (currentUser) {
+        authToken = currentUser.token;
+    }
+
+    Dashboard *dashboard = channel.dashboard;
+    [ShelbyAPIClient fetchDashboardEntriesForDashboardID:channel.dashboard.dashboardID
+                                              sinceEntry:nil
+                                           withAuthToken:authToken
+                                                andBlock:^(id JSON, NSError *error) {
+                                                    if(JSON){
+                                                        // 1) store this in core data (in a new background context)
+                                                        [self privateContextPerformBlock:^(NSManagedObjectContext *privateMOC) {
+                                                            Dashboard *privateContextDashboard = (Dashboard *)[privateMOC objectWithID:dashboard.objectID];
+                                                            NSArray *dashboardEntries = [self findOrCreateDashboardEntriesForJSON:JSON
+                                                                                                                    withDashboard:privateContextDashboard
+                                                                                                                        inContext:privateMOC];
+                                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                                NSManagedObjectContext *mainMOC = [self mainThreadMOC];
+                                                                NSMutableArray *results = [@[] mutableCopy];
+                                                                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                                                                //OPTIMIZE: this makes N calls to the DB, could use an 'IN' predicate to do it in one call:
+                                                                //[NSPredicate predicateWithFormat:@"identifier IN %@", identifiersOfRelatedObjects];
+                                                                for (DashboardEntry *dashboardEntry in dashboardEntries) {
+                                                                    DashboardEntry *mainThreadDashboardEntry = (DashboardEntry *)[mainMOC objectWithID:dashboardEntry.objectID];
+                                                                    [results addObject:mainThreadDashboardEntry];
+                                                                }
+                                                                DisplayChannel *mainThreadChannel = (DisplayChannel *)[mainMOC objectWithID:channel.objectID];
+                                                                completionHandler(mainThreadChannel, results);
+                                                                
+                                                            });
+                                                        }];
+                                                        
+                                                    } else {
+                                                        completionHandler(nil, nil);
+                                                    }
+                                                }];
+}
+
 
 - (User *)fetchUserWithID:(NSString *)userID inContext:(NSManagedObjectContext *)context completion:(void (^)(User *fetchedUser))completion
 {
