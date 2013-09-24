@@ -147,7 +147,7 @@
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     if (section == 1) {
-        return 34;
+        return 43;
     }
     
     return 1;
@@ -316,6 +316,42 @@
         title = @"Smart History";
         rollID = @"4fb6344d9a725b2d6a0011b0";
         image = [UIImage imageNamed:@"smarthistory"];
+    } else if (indexPath.row == 34) {
+        title = @"MTV";
+        rollID = @"4fa0a50a88ba6b448f000dd4";
+        image = [UIImage imageNamed:@"mtv"];
+    } else if (indexPath.row == 35) {
+        title = @"VH1";
+        rollID = @"4f907d3f9a725b45e50009ad";
+        image = [UIImage imageNamed:@"vh1"];
+    } else if (indexPath.row == 36) {
+        title = @"SpikeTV";
+        rollID = @"4f957feb88ba6b17c100e88c";
+        image = [UIImage imageNamed:@"spiketv"];
+    } else if (indexPath.row == 37) {
+        title = @"Comedy Central";
+        rollID = @"4f95c8ec88ba6b4d7e0138e9";
+        image = [UIImage imageNamed:@"comedycentral"];
+    } else if (indexPath.row == 38) {
+        title = @"Machinima";
+        rollID = @"52419d90b415cc3493000007";
+        image = [UIImage imageNamed:@"machinima"];
+    } else if (indexPath.row == 39) {
+        title = @"EpicMealTime";
+        rollID = @"4f92e08f9a725b23ec001068";
+        image = [UIImage imageNamed:@"epicmealtime"];
+    } else if (indexPath.row == 40) {
+        title = @"Nova Online";
+        rollID = @"512d1e55b415cc5d8c00013f";
+        image = [UIImage imageNamed:@"novaonline"];
+    } else if (indexPath.row == 41) {
+        title = @"Pategonia";
+        rollID = @"4f95f25488ba6b70ed0080e3";
+        image = [UIImage imageNamed:@"patagonia"];
+    } else if (indexPath.row == 42) {
+        title = @"Glamour";
+        rollID = @"4fc64bfd9a725b24af0014db";
+        image = [UIImage imageNamed:@"glamour"];
     }
 
     cell.title.text = title;
