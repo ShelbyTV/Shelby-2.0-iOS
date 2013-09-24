@@ -209,6 +209,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 
 - (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    // TODO: KP KP: refactor the completion blocks in the if &else
+
     User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     if (currentUser) {
         DisplayChannel *myStream = [currentUser displayChannelForMyStream];
@@ -228,9 +230,25 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
             }
         }];
     } else {
-        // TODO: KP KP: Fetch Featured channel for non logged in users
-        
-        completionHandler(UIBackgroundFetchResultNoData);
+        DisplayChannel *featuredChannel = [DisplayChannel fetchChannelWithDashboardID:kShelbyCommunityChannelID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        if (featuredChannel) {
+            Dashboard *dashboard = featuredChannel.dashboard;
+            NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:featuredChannel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
+                NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
+                    return [entry isPlayable];
+                }];
+                entries = [entries filteredArrayUsingPredicate:onlyPlayableVideos];
+                
+                if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
+                    completionHandler(UIBackgroundFetchResultNewData);
+                } else {
+                    completionHandler(UIBackgroundFetchResultNoData);
+                }
+            }];
+        } else {
+            completionHandler(UIBackgroundFetchResultNoData);
+        }
     }
 }
 
