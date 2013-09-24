@@ -19,7 +19,7 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP1;
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP2;
-@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP3;
+//@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP3;
 
 @property (weak, nonatomic) IBOutlet UIImageView *scrollUpImage;
 @property (weak, nonatomic) IBOutlet UIImageView *swipeLeftImage;
@@ -40,7 +40,7 @@
 {
     //init tip icons w/o animation
     self.tipLabel.text = nil;
-    for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, self.tipIconsP3]) {
+    for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, /*self.tipIconsP3*/]) {
         for (UIView *view in tipCollection) {
             view.alpha = 0.f;
         }
@@ -65,7 +65,7 @@
     self.scrollView.delegate = self;
 
     //page 0 is movie
-    [self initPlayerWithMovie:@"hungry" atIndex:0];
+    [self initPlayerWithMovie:@"welcome-1" atIndex:0];
     [self.scrollView addSubview:_player.view];
     [_player play];
 
@@ -152,9 +152,9 @@
     switch (tipIdx) {
         case 0:
             [self zoomOutOnPhone];
-            [self changeTitleText:@"Bringing you 15 minutes of video everyday."
+            [self changeTitleText:@"Recommending new videos for you every day."
                           tipText:@""];
-            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, self.tipIconsP3]) {
+            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
             [self resetScrollUpHelper:4.0];
@@ -163,9 +163,8 @@
             break;
         case 1:
             [self zoomInOnPhone];
-            [self changeTitleText:@"...from your favorite people and places."
-                          tipText:@"Shelby users share great new video all day long"];
-            //NB: not hiding tip 3
+            [self changeTitleText:@"Your favorite creators, friends, and networks."
+                          tipText:@""];
             for (NSArray *tipCollection in @[self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
@@ -176,15 +175,12 @@
             break;
         case 2:
             [self zoomInOnPhone];
-            //NB: using copy from Page 3
             [self changeTitleText:@"It's like a TV channel personalized for you."
-                          tipText:@"...powered by your friends."];
-            //NB: not hiding tip3
+                          tipText:@"And your recommendations get better the more you share and like."];
             for (NSArray *tipCollection in @[self.tipIconsP1/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
-            //NB: using tips from Page 3
-            [self setViews:self.tipIconsP3 alpha:1.f];
+            [self setViews:self.tipIconsP2 alpha:1.f];
             [self resetScrollUpHelper:5.0];
             [self cancelSwipeLeftHelper];
             [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA3];
@@ -196,7 +192,7 @@
             for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2]) {
                 [self setViews:tipCollection alpha:0.f];
             }
-            [self setViews:self.tipIconsP3 alpha:1.f];
+            /*[self setViews:self.tipIconsP3 alpha:1.f];*/
             [_parallaxView scrollToPage:0];
             [self didScrollToPage:0];
             //see didScrollToPage for continued view tracking
@@ -245,7 +241,7 @@
 
 - (void)initPlayerWithMovie:(NSString *)movieName atIndex:(NSUInteger)idx
 {
-    NSURL *vidURL = [[NSBundle mainBundle] URLForResource:movieName withExtension:@"m4v"];
+    NSURL *vidURL = [[NSBundle mainBundle] URLForResource:movieName withExtension:@"mov"];
 
     _player = [[MPMoviePlayerController alloc] initWithContentURL:vidURL];
     _player.view.frame = [self frameForIndex:idx];

@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "welcome-screen2.png"
+      "filename" : "onboarding-2.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "welcome-screen2@2x.png"
+      "filename" : "onboarding-2@2x.png"
     }
   ],
   "info" : {

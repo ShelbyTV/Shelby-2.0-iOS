@@ -23,7 +23,7 @@
                     <rect key="frame" x="10" y="95" width="300" height="463"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bringing you 15 minutes of video everyday." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="5UI-S6-Scj" userLabel="title label">
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reccommending new videos for you every day." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="5UI-S6-Scj" userLabel="title label">
                             <rect key="frame" x="10" y="15" width="280" height="67"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
@@ -33,7 +33,7 @@
                             <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shelby users share great new video all day long." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="dFP-0u-qS2" userLabel="tip label">
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="And your reccommendations get better the more you share and like." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="dFP-0u-qS2" userLabel="tip label">
                             <rect key="frame" x="20" y="359" width="260" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
@@ -48,7 +48,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-youtube" translatesAutoresizingMaskIntoConstraints="NO" id="5d4-Cp-VcD" userLabel="p1 youtube">
-                                    <rect key="frame" x="90" y="0.0" width="40" height="40"/>
+                                    <rect key="frame" x="30" y="0.0" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="4hA-uS-HET"/>
@@ -56,11 +56,27 @@
                                     </constraints>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-vimeo" translatesAutoresizingMaskIntoConstraints="NO" id="eLl-vp-HCW" userLabel="p1 vimeo">
-                                    <rect key="frame" x="150" y="0.0" width="40" height="40"/>
+                                    <rect key="frame" x="90" y="0.0" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="aHW-kX-jb9"/>
                                         <constraint firstAttribute="height" constant="40" id="gg0-Tg-cUI"/>
+                                    </constraints>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-fb" translatesAutoresizingMaskIntoConstraints="NO" id="9jg-Ni-MdS" userLabel="p1 fb">
+                                    <rect key="frame" x="150" y="0.0" width="40" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="Qcf-24-RhD"/>
+                                        <constraint firstAttribute="height" constant="40" id="uTP-ZR-pP3"/>
+                                    </constraints>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-twitter" translatesAutoresizingMaskIntoConstraints="NO" id="SKC-oG-bCn" userLabel="p1 twitter">
+                                    <rect key="frame" x="210" y="0.0" width="40" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="QxI-DL-cyj"/>
+                                        <constraint firstAttribute="height" constant="40" id="qGz-LY-xtU"/>
                                     </constraints>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-heart" translatesAutoresizingMaskIntoConstraints="NO" id="jL4-jM-ybv" userLabel="p2 heart">
@@ -79,44 +95,18 @@
                                         <constraint firstAttribute="height" constant="40" id="Y6q-yX-pMa"/>
                                     </constraints>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-fb" translatesAutoresizingMaskIntoConstraints="NO" id="9jg-Ni-MdS" userLabel="p3 fb">
-                                    <rect key="frame" x="60" y="0.0" width="40" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="Qcf-24-RhD"/>
-                                        <constraint firstAttribute="height" constant="40" id="uTP-ZR-pP3"/>
-                                    </constraints>
-                                </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-twitter" translatesAutoresizingMaskIntoConstraints="NO" id="SKC-oG-bCn" userLabel="p3 twitter">
-                                    <rect key="frame" x="120" y="0.0" width="40" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="QxI-DL-cyj"/>
-                                        <constraint firstAttribute="height" constant="40" id="qGz-LY-xtU"/>
-                                    </constraints>
-                                </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-plus" translatesAutoresizingMaskIntoConstraints="NO" id="xJu-gl-20G" userLabel="p3 plus">
-                                    <rect key="frame" x="180" y="0.0" width="40" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="AuB-Ah-Y7E"/>
-                                        <constraint firstAttribute="width" constant="40" id="Zgn-Qx-rsI"/>
-                                    </constraints>
-                                </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="D2r-wC-GkA"/>
-                                <constraint firstItem="SKC-oG-bCn" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="120" id="FuW-p4-sk2"/>
+                                <constraint firstItem="SKC-oG-bCn" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="210" id="FuW-p4-sk2"/>
                                 <constraint firstItem="9jg-Ni-MdS" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="GIa-lp-OHH"/>
-                                <constraint firstItem="eLl-vp-HCW" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="J46-cY-YwS"/>
+                                <constraint firstItem="eLl-vp-HCW" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="J46-cY-YwS"/>
                                 <constraint firstAttribute="bottom" secondItem="imc-gC-ful" secondAttribute="bottom" id="Kbf-UT-bcG"/>
-                                <constraint firstItem="xJu-gl-20G" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="OIP-Tg-CXh"/>
-                                <constraint firstItem="xJu-gl-20G" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="180" id="Sh9-WU-w4q"/>
                                 <constraint firstAttribute="trailing" secondItem="imc-gC-ful" secondAttribute="trailing" constant="90" id="YFE-UW-yKz"/>
-                                <constraint firstAttribute="trailing" secondItem="5d4-Cp-VcD" secondAttribute="trailing" constant="150" id="crQ-E3-FQz"/>
+                                <constraint firstAttribute="trailing" secondItem="5d4-Cp-VcD" secondAttribute="trailing" constant="210" id="crQ-E3-FQz"/>
                                 <constraint firstItem="eLl-vp-HCW" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="cty-qv-aC7"/>
-                                <constraint firstItem="9jg-Ni-MdS" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="60" id="hRd-g1-ZQR"/>
+                                <constraint firstItem="9jg-Ni-MdS" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="hRd-g1-ZQR"/>
                                 <constraint firstItem="jL4-jM-ybv" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="i1a-yN-1jf"/>
                                 <constraint firstItem="5d4-Cp-VcD" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="iJg-pd-ufV"/>
                                 <constraint firstItem="SKC-oG-bCn" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="jQr-pS-bef"/>
@@ -124,9 +114,9 @@
                                 <constraint firstAttribute="bottom" secondItem="5d4-Cp-VcD" secondAttribute="bottom" id="lrM-LS-eP6"/>
                                 <constraint firstItem="imc-gC-ful" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="lx2-Sh-wMn"/>
                                 <constraint firstAttribute="bottom" secondItem="eLl-vp-HCW" secondAttribute="bottom" id="nKX-SL-6wa"/>
-                                <constraint firstItem="5d4-Cp-VcD" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="onp-vZ-PAV"/>
+                                <constraint firstItem="5d4-Cp-VcD" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="30" id="onp-vZ-PAV"/>
                                 <constraint firstItem="jL4-jM-ybv" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="pHT-OD-fd9"/>
-                                <constraint firstAttribute="trailing" secondItem="eLl-vp-HCW" secondAttribute="trailing" constant="90" id="qOg-ay-y9E"/>
+                                <constraint firstAttribute="trailing" secondItem="eLl-vp-HCW" secondAttribute="trailing" constant="150" id="qOg-ay-y9E"/>
                                 <constraint firstItem="imc-gC-ful" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="uey-hB-ZB0"/>
                                 <constraint firstAttribute="trailing" secondItem="jL4-jM-ybv" secondAttribute="trailing" constant="150" id="zUR-DL-fBb"/>
                             </constraints>
@@ -211,10 +201,9 @@
                 <outletCollection property="tipIconsP1" destination="eLl-vp-HCW" id="8bs-NY-Xqa"/>
                 <outletCollection property="tipIconsP2" destination="jL4-jM-ybv" id="Ffi-GO-jfQ"/>
                 <outletCollection property="tipIconsP2" destination="imc-gC-ful" id="95D-md-rge"/>
-                <outletCollection property="tipIconsP3" destination="9jg-Ni-MdS" id="wua-7B-WWL"/>
-                <outletCollection property="tipIconsP3" destination="SKC-oG-bCn" id="aqC-mI-UVf"/>
-                <outletCollection property="tipIconsP3" destination="xJu-gl-20G" id="ACE-AD-bTi"/>
                 <outletCollection property="gestureRecognizers" destination="VV4-TT-DEx" appends="YES" id="Mfz-LK-YYg"/>
+                <outletCollection property="tipIconsP1" destination="SKC-oG-bCn" id="HHe-YB-gRi"/>
+                <outletCollection property="tipIconsP1" destination="9jg-Ni-MdS" id="Jax-8g-p2I"/>
             </connections>
         </view>
         <tapGestureRecognizer id="VV4-TT-DEx">
@@ -228,7 +217,6 @@
         <image name="welcome-h-logo" width="119" height="34"/>
         <image name="welcome-icon-fb" width="40" height="40"/>
         <image name="welcome-icon-heart" width="40" height="40"/>
-        <image name="welcome-icon-plus" width="40" height="40"/>
         <image name="welcome-icon-plus" width="40" height="40"/>
         <image name="welcome-icon-twitter" width="40" height="40"/>
         <image name="welcome-icon-vimeo" width="40" height="40"/>
