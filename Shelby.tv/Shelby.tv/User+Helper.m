@@ -255,6 +255,15 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return nil;
 }
 
+- (DisplayChannel *)displayChannelForSharesRoll
+{
+    Roll *sharesRoll = [Roll rollWithID:self.publicRollID inContext:self.managedObjectContext];
+    if (sharesRoll) {
+        return sharesRoll.displayChannel;
+    }
+    return nil;
+}
+
 -(NSURL *)avatarURL
 {
     if ([self.hasShelbyAvatar boolValue]) {
