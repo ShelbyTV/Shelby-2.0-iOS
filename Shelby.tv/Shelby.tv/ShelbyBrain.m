@@ -209,14 +209,21 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 
 - (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    // TODO: KP KP: refactor the completion blocks in the if &else
-
     User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    DisplayChannel *channel = nil;
     if (currentUser) {
-        DisplayChannel *myStream = [currentUser displayChannelForMyStream];
-        Dashboard *dashboard = myStream.dashboard;
+        channel = [currentUser displayChannelForMyStream];
+    } else {
+        channel = [DisplayChannel fetchChannelWithDashboardID:kShelbyCommunityChannelID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    }
+    
+    Dashboard *dashboard = nil;
+    if (channel) {
+        dashboard = channel.dashboard;
+
         NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:myStream withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
+
+        [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
 
             NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
                 return [entry isPlayable];
@@ -230,25 +237,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
             }
         }];
     } else {
-        DisplayChannel *featuredChannel = [DisplayChannel fetchChannelWithDashboardID:kShelbyCommunityChannelID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        if (featuredChannel) {
-            Dashboard *dashboard = featuredChannel.dashboard;
-            NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-            [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:featuredChannel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
-                NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
-                    return [entry isPlayable];
-                }];
-                entries = [entries filteredArrayUsingPredicate:onlyPlayableVideos];
-                
-                if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
-                    completionHandler(UIBackgroundFetchResultNewData);
-                } else {
-                    completionHandler(UIBackgroundFetchResultNoData);
-                }
-            }];
-        } else {
-            completionHandler(UIBackgroundFetchResultNoData);
-        }
+        completionHandler(UIBackgroundFetchResultNoData);
     }
 }
 
