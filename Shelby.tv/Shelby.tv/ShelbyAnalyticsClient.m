@@ -8,10 +8,24 @@
 
 #import "ShelbyAnalyticsClient.h"
 #import "GAI.h"
-#import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "GAITracker.h"
 #import "LocalyticsSession.h"
 #import "ShelbyDataMediator.h"
+
+// Shared Constants
+//--Screens--
+NSString * const kAnalyticsScreenWelcomeA1                              = @"Welcome A1";
+NSString * const kAnalyticsScreenWelcomeA2                              = @"Welcome A2";
+NSString * const kAnalyticsScreenWelcomeA3                              = @"Welcome A3";
+NSString * const kAnalyticsScreenWelcomeA4l                             = @"Welcome A4-left";
+NSString * const kAnalyticsScreenWelcomeA4r                             = @"Welcome A4-right";
+NSString * const kAnalyticsScreenWelcomeB                               = @"Welcome B";
+NSString * const kAnalyticsScreenLogin                                  = @"Login";
+/* created dynamically: signup, browse, videoReel */
+NSString * const kAnalyticsScreenSettings                               = @"Settings";
+NSString * const kAnalyticsScreenShelbyShare                            = @"Shelby Share";
 
 // Localytics Constants
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
@@ -85,6 +99,17 @@ NSString * const kAnalyticsIssueSTVExtractorFail                        = @"STVY
 NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Video missing providerID";
 
 @implementation ShelbyAnalyticsClient
+
+//Shared
++ (void)trackScreen:(NSString *)screenName
+{
+    //centralizing view tracking by going manual in GA (instead of implicit view tracking via self.screenName)
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:screenName];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+
+    [[LocalyticsSession shared] tagScreen:screenName];
+}
 
 //Localytics
 + (void)sendLocalyticsEvent:(id)eventTag

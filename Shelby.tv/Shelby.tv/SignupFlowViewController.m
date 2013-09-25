@@ -49,8 +49,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.screenName = [NSString stringWithFormat:@"Signup Step %@", [self signupStepNumber]];
 
 	// Do any additional setup after loading the view.
     
@@ -126,6 +124,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    [ShelbyAnalyticsClient trackScreen:[NSString stringWithFormat:@"Signup Step %@", [self signupStepNumber]]];
 }
 
 - (NSString *)signupStepNumber

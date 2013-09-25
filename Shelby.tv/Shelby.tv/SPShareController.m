@@ -204,13 +204,17 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 {
     NSString *frameID = self.videoFrame.frameID;
     User *user = [User currentAuthenticatedUserInContext:self.videoFrame.managedObjectContext];
+    //TODO: this should go through the ShelbyDataMediator
     [ShelbyAPIClient rollFrame:frameID
                       onToRoll:user.publicRollID
                    withMessage:message
                      authToken:user.token
                       andBlock:^(id JSON, NSError *error) {
                           if (!error) {
-                              // share that freshly rolled frame!
+                              // 1. Update My Shares (locally)
+                              [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:[user displayChannelForSharesRoll] sinceEntry:nil];
+
+                              // 2. share that freshly rolled frame!
                               NSDictionary *newFrameDict = JSON[@"result"];
                               if (newFrameDict && newFrameDict[@"id"]) {
                                   NSString *newFrameID = newFrameDict[@"id"];

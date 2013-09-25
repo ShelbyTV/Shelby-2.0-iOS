@@ -629,9 +629,15 @@
 		91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
-		91B7DC2B17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
-		91B7DC2C17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
-		91B7DC2D17AACD79009ABF02 /* hungry.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC2717AACD79009ABF02 /* hungry.m4v */; };
+		91AEFE1217ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */; };
+		91AEFE1317ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */; };
+		91AEFE1417ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */; };
+		91AEFE1717ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
+		91AEFE1817ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
+		91AEFE1917ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */; };
+		91AEFE2117F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
+		91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
+		91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 91AEFE2017F126D000B2598B /* welcome-1.mov */; };
 		91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
 		91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
 		91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */; };
@@ -986,7 +992,6 @@
 		8EB950561665BD4000E965E0 /* SPVideoReel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPVideoReel.m; sourceTree = "<group>"; };
 		8ED3159116AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorWithHexAndAlpha.h"; sourceTree = "<group>"; };
 		8ED3159216AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorWithHexAndAlpha.m"; sourceTree = "<group>"; };
-		8EF092361662A325008EE1DD /* Structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Structures.h; sourceTree = "<group>"; };
 		8EF5C35A162F42470075C35F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		910933061743E47F00AC038E /* ShelbyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlert.h; sourceTree = "<group>"; };
@@ -1075,7 +1080,10 @@
 		91A36265178F296B00381218 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easing.h; sourceTree = "<group>"; };
 		91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModelArrayUtility.h; sourceTree = "<group>"; };
 		91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyModelArrayUtility.m; sourceTree = "<group>"; };
-		91B7DC2717AACD79009ABF02 /* hungry.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hungry.m4v; sourceTree = "<group>"; };
+		91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamBrowseGestureHintView.xib; sourceTree = "<group>"; };
+		91AEFE1517ECF3D500B2598B /* StreamBrowseGestureHintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBrowseGestureHintView.h; sourceTree = "<group>"; };
+		91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBrowseGestureHintView.m; sourceTree = "<group>"; };
+		91AEFE2017F126D000B2598B /* welcome-1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "welcome-1.mov"; sourceTree = "<group>"; };
 		91B7DC3717AC0C8A009ABF02 /* STVYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVYouTubeExtractor.h; sourceTree = "<group>"; };
 		91B7DC3817AC0C8A009ABF02 /* STVYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVYouTubeExtractor.m; sourceTree = "<group>"; };
 		91B7DC3D17B16447009ABF02 /* nav-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-shadow.png"; sourceTree = "<group>"; };
@@ -1393,6 +1401,7 @@
 				9178C9D517CE398400913256 /* Welcome.storyboard */,
 				9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */,
 				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
+				91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */,
 			);
 			name = "Xib-iPhone";
 			sourceTree = "<group>";
@@ -1602,7 +1611,7 @@
 				1C309AB617A7149F00D690A8 /* Share Images */,
 				1CD255C517A1DD0A0049FF30 /* Home */,
 				1C154E5517A071CD00C0B76B /* No Content Images */,
-				916F41C1179F06A9001D9DF7 /* Welcome Images */,
+				916F41C1179F06A9001D9DF7 /* Welcome Videos */,
 				1CDCA669179DCE190098C4E1 /* Player Images */,
 				1C90E51F17849DF200E87CC0 /* Parallax View */,
 				1C7B63CF178B5ED6000C1E84 /* Signup Flow */,
@@ -1815,6 +1824,8 @@
 				913D854C17CEAB0200A6C534 /* WelcomeLoginView.m */,
 				9184FE5317DA5757006E23E4 /* UITextViewWithPlaceholder.h */,
 				9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */,
+				91AEFE1517ECF3D500B2598B /* StreamBrowseGestureHintView.h */,
+				91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1894,7 +1905,6 @@
 			isa = PBXGroup;
 			children = (
 				8EF5C35C162F431B0075C35F /* Constants.h */,
-				8EF092361662A325008EE1DD /* Structures.h */,
 				8E47A1DC16F766F300DF9CC5 /* GAIConstants.h */,
 			);
 			name = Constants;
@@ -1913,12 +1923,12 @@
 			path = Library/Localytics;
 			sourceTree = SOURCE_ROOT;
 		};
-		916F41C1179F06A9001D9DF7 /* Welcome Images */ = {
+		916F41C1179F06A9001D9DF7 /* Welcome Videos */ = {
 			isa = PBXGroup;
 			children = (
-				91B7DC2717AACD79009ABF02 /* hungry.m4v */,
+				91AEFE2017F126D000B2598B /* welcome-1.mov */,
 			);
-			name = "Welcome Images";
+			name = "Welcome Videos";
 			sourceTree = "<group>";
 		};
 		9182A1D617E2247500C629FA /* Intercom */ = {
@@ -2186,6 +2196,7 @@
 				1CE5586F17DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1CDCA688179DCE190098C4E1 /* scrubber@2x.png in Resources */,
 				9192ED0317C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
+				91AEFE1317ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */,
 				1CE5584017DE1E1300C18A30 /* button-off.png in Resources */,
 				1CDCA68E179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA691179F317A0098C4E1 /* overlay.png in Resources */,
@@ -2221,11 +2232,11 @@
 				1CDB0C2117A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2517A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
-				91B7DC2C17AACD79009ABF02 /* hungry.m4v in Resources */,
 				91B7DC4017B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4317B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				1CE5584317DE1E1300C18A30 /* button-off@2x.png in Resources */,
 				912261DA17B97F070092AF30 /* overlay-sharers.png in Resources */,
+				91AEFE2217F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5017B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585A17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585017DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
@@ -2289,6 +2300,7 @@
 				1CE5587017DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1CDCA689179DCE190098C4E1 /* scrubber@2x.png in Resources */,
 				9192ED0417C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
+				91AEFE1417ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */,
 				1CE5584117DE1E1300C18A30 /* button-off.png in Resources */,
 				1CDCA68F179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA692179F317A0098C4E1 /* overlay.png in Resources */,
@@ -2324,11 +2336,11 @@
 				1CDB0C2217A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2617A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
-				91B7DC2D17AACD79009ABF02 /* hungry.m4v in Resources */,
 				91B7DC4117B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4417B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				1CE5584417DE1E1300C18A30 /* button-off@2x.png in Resources */,
 				912261DB17B97F070092AF30 /* overlay-sharers.png in Resources */,
+				91AEFE2317F126D000B2598B /* welcome-1.mov in Resources */,
 				91B7DC5117B29D59009ABF02 /* scrub-track-background.png in Resources */,
 				1CE5585B17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585117DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
@@ -2349,6 +2361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E20971C162F3A61000A2DFD /* InfoPlist.strings in Resources */,
+				91AEFE2117F126D000B2598B /* welcome-1.mov in Resources */,
 				912261D317B97F070092AF30 /* overlay-likers.png in Resources */,
 				9137187617DE94F00021A99B /* LICENSE in Resources */,
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
@@ -2433,7 +2446,6 @@
 				1CDB0C2017A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2417A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
 				1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
-				91B7DC2B17AACD79009ABF02 /* hungry.m4v in Resources */,
 				91B7DC3F17B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4217B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				91B7DC4F17B29D59009ABF02 /* scrub-track-background.png in Resources */,
@@ -2444,6 +2456,7 @@
 				9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				911ED32117B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
 				911ED32417B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
+				91AEFE1217ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */,
 				911ED32717B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */,
 				1CE5585C17DE73CA00C18A30 /* heart-large@2x.png in Resources */,
 			);
@@ -2560,6 +2573,7 @@
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91AEFE1817ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626A178F296B00381218 /* easing.c in Sources */,
@@ -2689,6 +2703,7 @@
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91AEFE1917ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626B178F296B00381218 /* easing.c in Sources */,
@@ -2818,6 +2833,7 @@
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
 				9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */,
+				91AEFE1717ECF3D500B2598B /* StreamBrowseGestureHintView.m in Sources */,
 				91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A36269178F296B00381218 /* easing.c in Sources */,
@@ -3091,7 +3107,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};

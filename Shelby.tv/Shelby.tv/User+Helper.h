@@ -45,6 +45,7 @@
 
 - (DisplayChannel *)displayChannelForLikesRoll;
 - (DisplayChannel *)displayChannelForMyStream;
+- (DisplayChannel *)displayChannelForSharesRoll;
 
 - (NSURL *)avatarURL;
 

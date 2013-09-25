@@ -9,6 +9,7 @@
 #import "WelcomeScrollHolderView.h"
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "ShelbyAnalyticsClient.h"
 
 @interface WelcomeScrollHolderView()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -18,26 +19,28 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP1;
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP2;
-@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP3;
+//@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP3;
 
 @property (weak, nonatomic) IBOutlet UIImageView *scrollUpImage;
 @property (weak, nonatomic) IBOutlet UIImageView *swipeLeftImage;
 @end
 
-#define PAGES_IN_SCROLL_VIEW 4
+#define PAGES_IN_SCROLL_VIEW 3
 
 @implementation WelcomeScrollHolderView{
     MPMoviePlayerController *_player;
     NSTimer *_scrollUpTimer, *_swipeLeftTimer;
     STVParallaxView *_parallaxView;
     UIView *_parallaxFg, *_parallaxBg;
+    NSInteger _curScrollPage, _curParallaxPage;
+    BOOL _isBouncingScroller;
 }
 
 - (void)awakeFromNib
 {
     //init tip icons w/o animation
     self.tipLabel.text = nil;
-    for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, self.tipIconsP3]) {
+    for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, /*self.tipIconsP3*/]) {
         for (UIView *view in tipCollection) {
             view.alpha = 0.f;
         }
@@ -46,6 +49,9 @@
     self.titleLabel.font = kShelbyFontH2;
     [self initScroller];
     [self showTip:0];
+    _curScrollPage = 0;
+    _curParallaxPage = 0;
+    _isBouncingScroller = NO;
 }
 
 - (void)dealloc
@@ -59,7 +65,7 @@
     self.scrollView.delegate = self;
 
     //page 0 is movie
-    [self initPlayerWithMovie:@"hungry" atIndex:0];
+    [self initPlayerWithMovie:@"welcome-1" atIndex:0];
     [self.scrollView addSubview:_player.view];
     [_player play];
 
@@ -69,10 +75,15 @@
     UIView *page2 = [self pageForImageNamed:@"welcome-h-p2" atIndex:2];
     [self.scrollView addSubview:page2];
 
+    /* 
+     * Not Using Page 3 (with left/right swiping) for now
+     *
     //page 3 has swipeable summary/detail
     [self initParallaxViewAtIndex:3];
     UIView *page3a = _parallaxView;
     [self.scrollView addSubview:page3a];
+     */
+
     self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width, self.scrollView.bounds.size.height * PAGES_IN_SCROLL_VIEW);
 }
 
@@ -102,26 +113,32 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSInteger page = scrollView.contentOffset.y / scrollView.bounds.size.height;
+    _curScrollPage = page;
     [self showTip:page];
 }
 
 #pragma mark - STVParallaxViewDelegate
 
+/* PAGE 3 UNUSED */
 - (void)parallaxDidChange:(STVParallaxView *)parallaxView
 {
     //ignore
 }
 
+/* PAGE 3 UNUSED */
 - (void)didScrollToPage:(NSUInteger)page
 {
+    _curParallaxPage = page;
     switch (page) {
         case 0:
             [self cancelScrollUpHelper];
             [self resetSwipeLeftHelper:.5];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA4l];
             break;
         case 1:
             [self cancelSwipeLeftHelper];
             [self resetScrollUpHelper:1.5];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA4r];
             break;
         default:
             break;
@@ -135,47 +152,50 @@
     switch (tipIdx) {
         case 0:
             [self zoomOutOnPhone];
-            [self changeTitleText:@"Bringing you 15 minutes of video everyday."
+            [self changeTitleText:@"Recommending new videos for you every day."
                           tipText:@""];
-            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, self.tipIconsP3]) {
+            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
             [self resetScrollUpHelper:4.0];
             [self cancelSwipeLeftHelper];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA1];
             break;
         case 1:
             [self zoomInOnPhone];
-            [self changeTitleText:@"...from your favorite people and places."
-                          tipText:@"Shelby users share great new video all day long"];
-            for (NSArray *tipCollection in @[self.tipIconsP2, self.tipIconsP3]) {
+            [self changeTitleText:@"Your favorite creators, friends, and networks."
+                          tipText:@""];
+            for (NSArray *tipCollection in @[self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
             [self setViews:self.tipIconsP1 alpha:1.f];
             [self resetScrollUpHelper:4.0];
             [self cancelSwipeLeftHelper];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA2];
             break;
         case 2:
             [self zoomInOnPhone];
             [self changeTitleText:@"It's like a TV channel personalized for you."
-                          tipText:@"Like and share videos to get better recommendations."];
-            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP3]) {
+                          tipText:@"And your recommendations get better the more you share and like."];
+            for (NSArray *tipCollection in @[self.tipIconsP1/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
             [self setViews:self.tipIconsP2 alpha:1.f];
             [self resetScrollUpHelper:5.0];
             [self cancelSwipeLeftHelper];
+            [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA3];
             break;
-        case 3:
+        case 3: /* PAGE 3 UNUSED */
             [self zoomInOnPhone];
             [self changeTitleText:@"...a TV channel powered by your friends."
                           tipText:@"Swipe left to see what your friend said."];
             for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2]) {
                 [self setViews:tipCollection alpha:0.f];
             }
-            [self setViews:self.tipIconsP3 alpha:1.f];
+            /*[self setViews:self.tipIconsP3 alpha:1.f];*/
             [_parallaxView scrollToPage:0];
-            [self cancelScrollUpHelper];
-            [self resetSwipeLeftHelper:1];
+            [self didScrollToPage:0];
+            //see didScrollToPage for continued view tracking
             break;
         default:
             break;
@@ -221,7 +241,7 @@
 
 - (void)initPlayerWithMovie:(NSString *)movieName atIndex:(NSUInteger)idx
 {
-    NSURL *vidURL = [[NSBundle mainBundle] URLForResource:movieName withExtension:@"m4v"];
+    NSURL *vidURL = [[NSBundle mainBundle] URLForResource:movieName withExtension:@"mov"];
 
     _player = [[MPMoviePlayerController alloc] initWithContentURL:vidURL];
     _player.view.frame = [self frameForIndex:idx];
@@ -231,6 +251,7 @@
     [_player play];
 }
 
+/* PAGE 3 UNUSED */
 - (void)initParallaxViewAtIndex:(NSUInteger)idx
 {
     _parallaxView = [[STVParallaxView alloc] initWithFrame:[self frameForIndex:idx]];
@@ -278,6 +299,51 @@
     }];
 }
 
+#pragma mark - Tap Gesture on background
+
+- (IBAction)tapOnBackground:(UITapGestureRecognizer *)sender {
+    if (_curScrollPage < 3) {
+        [self bounceScrollerUp];
+    } else {
+        if (_curParallaxPage == 0) {
+            [self bounceParallaxLeft];
+        } else {
+            [self bounceScrollerUp];
+        }
+    }
+}
+
+- (void)bounceScrollerUp
+{
+    if (!_isBouncingScroller) {
+        _isBouncingScroller = YES;
+        CGFloat startingOffsetY = self.scrollView.contentOffset.y;
+        [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.scrollView.contentOffset = CGPointMake(0, startingOffsetY + 50);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.scrollView.contentOffset = CGPointMake(0, startingOffsetY-10);
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:.2 animations:^{
+                    self.scrollView.contentOffset = CGPointMake(0, startingOffsetY);
+                } completion:^(BOOL finished) {
+                    _isBouncingScroller = NO;
+                }];
+            }];
+
+        }];
+    }
+}
+
+/* PAGE 3 UNUSED */
+- (void)bounceParallaxLeft
+{
+    //ideally we could actually bounce, but STVParllaxView doesn't support arbitrary contentOffset
+    //and i'm not trying to make any big changes right now
+    [_parallaxView scrollToPage:1];
+    [self didScrollToPage:1];
+}
+
 #pragma mark - Timers for Scroll Images
 
 #define BREATHE_TIME 1.3
@@ -311,6 +377,7 @@
                                                      repeats:NO];
 }
 
+/* PAGE 3 UNUSED */
 - (void)showSwipeLeftHelper
 {
     _swipeLeftTimer = nil;
@@ -323,6 +390,7 @@
     } completion:nil];
 }
 
+/* PAGE 3 UNUSED */
 - (void)cancelSwipeLeftHelper
 {
     [_swipeLeftTimer invalidate];
@@ -330,6 +398,7 @@
     self.swipeLeftImage.hidden = YES;
 }
 
+/* PAGE 3 UNUSED */
 - (void)resetSwipeLeftHelper:(NSTimeInterval)t
 {
     [self cancelSwipeLeftHelper];
