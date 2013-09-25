@@ -231,7 +231,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
             entries = [entries filteredArrayUsingPredicate:onlyPlayableVideos];
 
             if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
-                completionHandler(UIBackgroundFetchResultNewData);
+                [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
             } else {
                 completionHandler(UIBackgroundFetchResultNoData);
             }
@@ -239,6 +239,11 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     } else {
         completionHandler(UIBackgroundFetchResultNoData);
     }
+}
+
+- (void)callCompletionBlock:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)fetchUserChannelsForceSwitchToUsersStream:(BOOL)forceUsersStream
