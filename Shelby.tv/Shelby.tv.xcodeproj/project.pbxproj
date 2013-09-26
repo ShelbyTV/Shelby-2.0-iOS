@@ -187,6 +187,9 @@
 		1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E20971A162F3A61000A2DFD /* InfoPlist.strings */; };
 		1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
+		1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
+		1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
+		1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
@@ -802,6 +805,8 @@
 		1C81096916EE22AD0030077C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1C810A2716EE2CBF0030077C /* Shelby.tv Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C810ADD16EE5EED0030077C /* Shelby.tv Nightly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv Nightly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C836DD217F49F4400A2BBEF /* ShelbyNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNotificationManager.h; sourceTree = "<group>"; };
+		1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNotificationManager.m; sourceTree = "<group>"; };
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
@@ -1882,6 +1887,8 @@
 				91D03EFB1731AB40008131D2 /* ShelbyBrain.m */,
 				1CC77A4E174AA48700AD7F05 /* ShelbyActivityItemProvider.h */,
 				1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */,
+				1C836DD217F49F4400A2BBEF /* ShelbyNotificationManager.h */,
+				1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2592,6 +2599,7 @@
 				1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				911ED31C17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
+				1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2722,6 +2730,7 @@
 				1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				911ED31D17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
+				1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2852,6 +2861,7 @@
 				1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				911ED31B17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
+				1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

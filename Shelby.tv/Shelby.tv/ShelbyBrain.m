@@ -17,6 +17,7 @@
 #import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
 #import "ShelbyModel.h"
+#import "ShelbyNotificationManager.h"
 #import "SignupFlowViewController.h"
 #import "SPVideoExtractor.h"
 #import "ShelbyAlert.h"
@@ -204,7 +205,14 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification
 {
-    [self goToDVR];
+    User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    if (currentUser) {
+        [self goToUsersStream];
+    } else {
+        [self goToCommunityChannel];
+    }
+    
+    [[ShelbyNotificationManager sharedInstance] localNotificationFired:notification];
 }
 
 - (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
