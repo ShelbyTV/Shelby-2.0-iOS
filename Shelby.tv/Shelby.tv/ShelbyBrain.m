@@ -243,6 +243,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 
 - (void)callCompletionBlock:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    STVDebugAssert(completionHandler, @"Completion Handler in background fetch should not be nil");
+    
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
