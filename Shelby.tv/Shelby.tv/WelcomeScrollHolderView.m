@@ -152,7 +152,7 @@
     switch (tipIdx) {
         case 0:
             [self zoomOutOnPhone];
-            [self changeTitleText:@"Recommending new videos for you every day."
+            [self changeTitleText:@"Discovering new videos for you every day."
                           tipText:@""];
             for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
@@ -163,7 +163,7 @@
             break;
         case 1:
             [self zoomInOnPhone];
-            [self changeTitleText:@"Your favorite creators, friends, and networks."
+            [self changeTitleText:@"...powered by your favorite places."
                           tipText:@""];
             for (NSArray *tipCollection in @[self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
@@ -175,8 +175,8 @@
             break;
         case 2:
             [self zoomInOnPhone];
-            [self changeTitleText:@"It's like a TV channel personalized for you."
-                          tipText:@"And your recommendations get better the more you share and like."];
+            [self changeTitleText:@"Like a video channel personalized for you."
+                          tipText:@"And it gets to know your tastes the more you Share and Like."];
             for (NSArray *tipCollection in @[self.tipIconsP1/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f];
             }
