@@ -175,7 +175,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
         currentFrame = (Frame *)entity;
     } else if ([entity isKindOfClass:[DashboardEntry class]]) {
         currentFrame = ((DashboardEntry *)entity).frame;
-        STVAssert(currentFrame, @"expected DashboardEntry to have a Frame");
+        STVAssert(currentFrame, @"expected DashboardEntry (%@) to have a Frame", ((DashboardEntry *)entity).dashboardEntryID);
     }
     STVAssert(currentFrame, @"expected entity to be a DashboardEntry or Frame");
     return currentFrame;
