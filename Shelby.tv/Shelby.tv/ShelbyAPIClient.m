@@ -61,6 +61,7 @@ NSString * const kShelbyAPIParamPassword =                  @"password";
 NSString * const kShelbyAPIParamPasswordConfirmation =      @"password_confirmation";
 NSString * const kShelbyAPIParamName =                      @"name";
 NSString * const kShelbyAPIParamAvatar =                    @"avatar";
+NSString * const kShelbyAPIMultivariateTests =              @"v1/client_configuration/multivariate_tests";
 
 @implementation ShelbyAPIClient
 
@@ -297,6 +298,24 @@ static AFHTTPClient *httpClient = nil;
         // Do nothing
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         DLog(@"%@", error);
+    }];
+    
+    [operation start];
+}
+
+#pragma mark - ABTest
++ (void)fetchABTestWithBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:kShelbyAPIMultivariateTests
+                                withQueryParameters:nil
+                                      shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
     }];
     
     [operation start];

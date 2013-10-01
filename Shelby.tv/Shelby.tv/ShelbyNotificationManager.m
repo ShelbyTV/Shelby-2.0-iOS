@@ -7,6 +7,11 @@
 //
 
 #import "ShelbyNotificationManager.h"
+#import "ShelbyABTestManager.h"
+
+@interface ShelbyNotificationManager()
+@property (nonatomic, strong) NSDictionary *defaultsDictionary;
+@end
 
 @implementation ShelbyNotificationManager
 
@@ -16,6 +21,7 @@
     static dispatch_once_t modelToken = 0;
     dispatch_once(&modelToken, ^{
         sharedInstance = [[super allocWithZone:NULL] init];
+        sharedInstance.defaultsDictionary = [[ShelbyABTestManager sharedInstance] dictionaryForTest:kShelbyABTestNotification];
     });
     
     return sharedInstance;
@@ -27,14 +33,48 @@
 }
 
 
+- (NSDate *)notificateionDateWithDay:(NSInteger)day andTime:(NSInteger)time
+{
+    NSDate *today = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [gregorian setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+    [gregorian setLocale:[NSLocale currentLocale]];
+    
+    NSDateComponents *nowComponents = [gregorian components:NSCalendarUnitYear | kCFCalendarUnitWeekOfYear | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:today];
+    
+    NSInteger hour = time / 100;
+    NSInteger minute = time % 100;
+    NSInteger addWeek = 0;
+
+    if (nowComponents.weekday > day) {
+        addWeek = 1;
+    } else if (nowComponents.weekday == day && nowComponents.hour >= hour) {
+        addWeek = 1;
+    }
+    nowComponents.weekday = day;
+    
+    nowComponents.weekOfYear = (([nowComponents weekOfYear] + addWeek) % 52); //Next week if needed
+    if (nowComponents.weekOfYear == 1) {
+        nowComponents.year = nowComponents.year + 1;
+    }
+    nowComponents.hour = hour;
+    nowComponents.minute = minute;
+    nowComponents.second =  0;
+    
+    return [gregorian dateFromComponents:nowComponents];
+
+}
+
 - (void)scheduleNotificationForVideos:(NSArray *)videos
 {
     [self cancelAllNotifications];
     
     // Now schedule new notification
 
+    NSDictionary *testDictionary = [[ShelbyABTestManager sharedInstance] dictionaryForTest:kShelbyABTestNotification];
+    
     // Figure out date - obviously not the line below. But a specific date & time
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:600];
+    NSDate *date = [self notificateionDateWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] andTime:[testDictionary[kShelbyABTestNotificationTime] integerValue]];
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = date;

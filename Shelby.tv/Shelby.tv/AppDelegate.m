@@ -17,6 +17,7 @@
 #import "Intercom.h"
 #import "LocalyticsSession.h"
 #import "ShelbyBrain.h"
+#import "ShelbyABTestManager.h"
 
 #ifdef SHELBY_ENTERPRISE
     #define HOCKEY_BETA                     @"73f0add2df47cdb17bedfbfe35f9e279"
@@ -81,6 +82,7 @@
 
     // Handle launching from a notification
     UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    application.applicationIconBadgeNumber = 0;
     if (notification) {
         application.applicationIconBadgeNumber = 0;
         [self fireLocalNotification:notification];
@@ -90,6 +92,11 @@
 
     [self.brain handleDidFinishLaunching];
     
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setWeekday:2]; // Monday
+    [components setHour:10];
+    
+    [ShelbyABTestManager sharedInstance];
     // Appirater
     [Appirater appLaunched:YES];
     

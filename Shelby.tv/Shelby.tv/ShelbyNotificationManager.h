@@ -10,7 +10,7 @@
 
 @interface ShelbyNotificationManager : NSObject
 
-+(ShelbyNotificationManager *)sharedInstance;
++ (ShelbyNotificationManager *)sharedInstance;
 
 - (void)scheduleNotificationForVideos:(NSArray *)videos;
 - (void)localNotificationFired:(UILocalNotification *)localNotification;

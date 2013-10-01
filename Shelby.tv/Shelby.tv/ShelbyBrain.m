@@ -254,6 +254,9 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     STVDebugAssert(completionHandler, @"Completion Handler in background fetch should not be nil");
     
     completionHandler(UIBackgroundFetchResultNewData);
+    
+    // KP KP: TODO: Pass in array or videos or maybe construct the message and send it over (instead videos)
+    [[ShelbyNotificationManager sharedInstance] scheduleNotificationForVideos:nil];
 }
 
 - (void)fetchUserChannelsForceSwitchToUsersStream:(BOOL)forceUsersStream

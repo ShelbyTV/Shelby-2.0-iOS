@@ -190,6 +190,9 @@
 		1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
 		1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
 		1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
+		1C836DD917F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */; };
+		1C836DDA17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */; };
+		1C836DDB17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
@@ -807,6 +810,8 @@
 		1C810ADD16EE5EED0030077C /* Shelby.tv Nightly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv Nightly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C836DD217F49F4400A2BBEF /* ShelbyNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNotificationManager.h; sourceTree = "<group>"; };
 		1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNotificationManager.m; sourceTree = "<group>"; };
+		1C836DD717F9C7A500A2BBEF /* ShelbyABTestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyABTestManager.h; sourceTree = "<group>"; };
+		1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyABTestManager.m; sourceTree = "<group>"; };
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
@@ -1889,6 +1894,8 @@
 				1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */,
 				1C836DD217F49F4400A2BBEF /* ShelbyNotificationManager.h */,
 				1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */,
+				1C836DD717F9C7A500A2BBEF /* ShelbyABTestManager.h */,
+				1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2564,6 +2571,7 @@
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
+				1C836DDA17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5617DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191471774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CCE4C5517E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
@@ -2695,6 +2703,7 @@
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
+				1C836DDB17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5717DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191481774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CCE4C5617E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
@@ -2826,6 +2835,7 @@
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
+				1C836DD917F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5517DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191461774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CCE4C5417E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
