@@ -40,28 +40,35 @@
     [gregorian setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     [gregorian setLocale:[NSLocale currentLocale]];
     
-    NSDateComponents *nowComponents = [gregorian components:NSCalendarUnitYear | kCFCalendarUnitWeekOfYear | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:today];
-    
+    NSDateComponents *todayComp = [gregorian components:NSCalendarUnitYear |NSCalendarUnitWeekday| NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:today];
+
     NSInteger hour = time / 100;
     NSInteger minute = time % 100;
-    NSInteger addWeek = 0;
+    
+    // Using the deltaDayComponent figure out how many days ahead the next notification should be
+    NSDateComponents *deltaDayComponent = [[NSDateComponents alloc] init];
+    NSInteger numberOfDays = day - todayComp.weekday;
+    if (numberOfDays < 0) {
+        numberOfDays = 7 + numberOfDays;
+    } else if (numberOfDays == 0) {
+        // If today is the same day we want the notification, check if hour has passed. And if it has, schedule for today next week.
+        if (hour <= todayComp.hour) {
+            numberOfDays += 7;
+        }
+    }
+    
+    deltaDayComponent.day = numberOfDays;
+    
+    // notificationDate is the day we should notifiy the user, now set the correct hour and minute
+    NSDate *notificationDate = [[NSCalendar currentCalendar] dateByAddingComponents:deltaDayComponent toDate:today options:0];
 
-    if (nowComponents.weekday > day) {
-        addWeek = 1;
-    } else if (nowComponents.weekday == day && nowComponents.hour >= hour) {
-        addWeek = 1;
-    }
-    nowComponents.weekday = day;
+    NSDateComponents *notificationDateComponent = [gregorian components:NSCalendarUnitYear |NSCalendarUnitMonth | NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:notificationDate];
+    notificationDateComponent.hour = hour;
+    notificationDateComponent.minute = minute;
+    notificationDateComponent.second =  0;
     
-    nowComponents.weekOfYear = (([nowComponents weekOfYear] + addWeek) % 52); //Next week if needed
-    if (nowComponents.weekOfYear == 1) {
-        nowComponents.year = nowComponents.year + 1;
-    }
-    nowComponents.hour = hour;
-    nowComponents.minute = minute;
-    nowComponents.second =  0;
-    
-    return [gregorian dateFromComponents:nowComponents];
+    // Send the new date - after setting the correct hour, minute in the notificationDate
+    return [gregorian dateFromComponents:notificationDateComponent];
 
 }
 
