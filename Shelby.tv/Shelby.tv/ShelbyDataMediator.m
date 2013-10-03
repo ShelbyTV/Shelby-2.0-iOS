@@ -464,7 +464,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             User *user = [User userForDictionary:result inContext:context];
             [User sessionDidBecomeActive];
             [Intercom beginSessionForUserWithUserId:user.userID andEmail:user.email];
-            [Intercom updateAttributes:@{@"ios" : @1}];
+            [Intercom updateAttributes:@{@"ios" : @1,
+                                         @"name" : user.name}];
             [self userLoggedIn];
             NSError *err;
             [user.managedObjectContext save:&err];
@@ -526,7 +527,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         User *newUser = [self saveUserFromJSON:JSON];
         if (newUser) {
             [Intercom beginSessionForUserWithUserId:newUser.userID andEmail:newUser.email];
-            [Intercom updateAttributes:@{@"ios" : @1}];
+            [Intercom updateAttributes:@{@"ios" : @1,
+                                         @"name" : newUser.name}];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed
                                                                 object:nil];
         } else {
