@@ -31,6 +31,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 
 NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
+NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
 
 @interface ShelbyBrain()
 
@@ -77,6 +78,15 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 - (void)handleWillResignActive
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyLastActiveDate];
+
+    DisplayChannel *mainChannel = [self getMainChannel];
+    NSArray *entries = [self.homeVC entriesForChannel:mainChannel];
+    // Save last video seen by user.
+    if (entries && [entries count] > 0) {
+        NSString *lastVideoID = ((DashboardEntry *)entries[0]).frame.video.videoID;
+        [[NSUserDefaults standardUserDefaults] setObject:lastVideoID forKey:kShelbyLastVideoSeen];
+    }
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     [self.homeVC handleWillResignActive];
@@ -216,7 +226,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     [[ShelbyNotificationManager sharedInstance] localNotificationFired:notification];
 }
 
-- (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+// Return the main channel for the user - Featured for logged out, MyStream for logged in
+- (DisplayChannel *)getMainChannel
 {
     User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     DisplayChannel *channel = nil;
@@ -225,6 +236,13 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     } else {
         channel = [DisplayChannel fetchChannelWithDashboardID:kShelbyCommunityChannelID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     }
+
+    return channel;
+}
+
+- (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    DisplayChannel *channel = [self getMainChannel];
     
     Dashboard *dashboard = nil;
     if (channel) {
@@ -239,9 +257,51 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
             }];
             entries = [entries filteredArrayUsingPredicate:onlyPlayableVideos];
 
+            NSDictionary *testDictionary = [[ShelbyABTestManager sharedInstance] dictionaryForTest:kShelbyABTestNotification];
+            NSString *notificationMessage = nil;
+            if ([testDictionary isKindOfClass:[NSDictionary class]]) {
+                NSString *bucketName = testDictionary[@"name"];
+                // If Bucket A/C - See if there are more than 3 new videos and take name/nickname from users for notification. If there are no 3 new videos & in Bucket A/C then, don't add notification
+                if ([bucketName isEqualToString:@"A"] || [bucketName isEqualToString:@"C"]) {
+                    NSMutableSet *nicknames = [[NSMutableSet alloc] init];
+                    NSString *lastVideoID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastVideoSeen];
+                    // Counter is just to make sure we look at the latest 20 videos.
+                    NSInteger counter = 0;
+                    for (DashboardEntry *dashboard in entries) {
+                        if (counter > 20 || [lastVideoID isEqualToString:dashboard.frame.video.videoID]) {
+                            break;
+                        }
+                        NSString *name = dashboard.frame.creator.name;
+                        if (!name) {
+                            name = dashboard.frame.creator.nickname;
+                        }
+
+                        if (name) {
+                            [nicknames addObject:name];
+                        }
+                        
+                        counter++;
+                    }
+                    if ([nicknames count] > 2) {
+                        NSArray *nicknamesArray = [nicknames allObjects];
+                        // TODO: KP KP: We might want to randomly select 3 names
+                        notificationMessage = [NSString stringWithFormat:testDictionary[@"message"], nicknamesArray[0], nicknamesArray[1], nicknamesArray[2]];
+                    }
+                } else {
+                    notificationMessage = testDictionary[@"message"];
+                }
+            }
+            
+
             if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
                 [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
-            } else {
+
+                // If there is a notification message - schedule notification
+                if (notificationMessage) {
+                    [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:@"message"];
+                }
+
+             } else {
                 completionHandler(UIBackgroundFetchResultNoData);
             }
         }];
@@ -255,13 +315,6 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     STVDebugAssert(completionHandler, @"Completion Handler in background fetch should not be nil");
     
     completionHandler(UIBackgroundFetchResultNewData);
-    
-    NSDictionary *testDictionary = [[ShelbyABTestManager sharedInstance] dictionaryForTest:kShelbyABTestNotification];
-    if ([testDictionary isKindOfClass:[NSDictionary class]]) {
-//        NSString *bucketName = testDictionary[@"name"];
-        [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:@"message"];
-        // TODO: KP KP: replace message with: testDictionary[kShelbyABTestNotificationMessage]
-    }
 }
 
 - (void)fetchUserChannelsForceSwitchToUsersStream:(BOOL)forceUsersStream
@@ -500,6 +553,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
         [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
         [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
+    
     
     if (self.postFetchInvocationForChannel && [channel objectID] && self.postFetchInvocationForChannel[channel.objectID]) {
         [self.postFetchInvocationForChannel[channel.objectID] invoke];
