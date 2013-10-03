@@ -17,5 +17,7 @@ extern NSString * const kShelbyABTestNotificationMessage;
 @interface ShelbyABTestManager : NSObject
 
 + (ShelbyABTestManager *)sharedInstance;
+
+- (void)startABTestManager;
 - (NSDictionary *)dictionaryForTest:(NSString *)testName;
 @end

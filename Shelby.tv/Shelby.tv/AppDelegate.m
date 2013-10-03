@@ -96,7 +96,7 @@
     [components setWeekday:2]; // Monday
     [components setHour:10];
     
-    [ShelbyABTestManager sharedInstance];
+    [[ShelbyABTestManager sharedInstance] startABTestManager];
     // Appirater
     [Appirater appLaunched:YES];
     

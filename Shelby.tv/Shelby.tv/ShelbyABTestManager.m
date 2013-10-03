@@ -28,14 +28,17 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
     static dispatch_once_t modelToken = 0;
     dispatch_once(&modelToken, ^{
         sharedInstance = [[super allocWithZone:NULL] init];
-        
-        // Adding all supported tests
-        sharedInstance.supportedTest = @{kShelbyABTestNotification : [sharedInstance notificationDictionaryWithName:@"Default" day:@"2" time:@"8" andMessage:@"hi"]};
-        
-        [sharedInstance fetchABTests];
     });
     
     return sharedInstance;
+}
+
+- (void)startABTestManager
+{
+    // Adding all supported tests
+    self.supportedTest = @{kShelbyABTestNotification : [self notificationDictionaryWithName:@"Default" day:@"2" time:@"8" andMessage:@"hi"]};
+    
+    [self fetchABTests];
 }
 
 - (void)fetchABTests
