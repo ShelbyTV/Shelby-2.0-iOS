@@ -33,6 +33,8 @@ NSString * const kLocalyticsLikeVideo                                   = @"like
 NSString * const kLocalyticsShareComplete                               = @"share_complete";
 NSString * const kLocalyticsStartSignup                                 = @"start_signup";
 NSString * const kLocalyticsFinishSignup                                = @"finish_signup";
+NSString * const kLocalyticsDidLogin                                    = @"did_login";
+NSString * const kLocalyticsDidPreview                                  = @"did_preview";
 
 // Google Analytics Constants
 //--Welcome--

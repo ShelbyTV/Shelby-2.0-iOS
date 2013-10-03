@@ -115,6 +115,7 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapPreview
                                        withLabel:[self welcomeDuration]];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidPreview];
     [self welcomeComplete];
     [self.delegate welcomeDidTapPreview:self];
 }
