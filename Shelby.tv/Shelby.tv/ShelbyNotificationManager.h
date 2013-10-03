@@ -12,6 +12,6 @@
 
 + (ShelbyNotificationManager *)sharedInstance;
 
-- (void)scheduleNotificationForVideos:(NSArray *)videos;
+- (void)scheduleNotificationWithDay:(NSInteger)day time:(NSInteger)time andMessage:(NSString *)message;
 - (void)localNotificationFired:(UILocalNotification *)localNotification;
 @end

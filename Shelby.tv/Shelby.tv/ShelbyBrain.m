@@ -16,6 +16,7 @@
 #import "SettingsViewController.h"
 #import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
+#import "ShelbyABTestManager.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
 #import "SignupFlowViewController.h"
@@ -255,8 +256,12 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     
     completionHandler(UIBackgroundFetchResultNewData);
     
-    // KP KP: TODO: Pass in array or videos or maybe construct the message and send it over (instead videos)
-    [[ShelbyNotificationManager sharedInstance] scheduleNotificationForVideos:nil];
+    NSDictionary *testDictionary = [[ShelbyABTestManager sharedInstance] dictionaryForTest:kShelbyABTestNotification];
+    if ([testDictionary isKindOfClass:[NSDictionary class]]) {
+//        NSString *bucketName = testDictionary[@"name"];
+        [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:@"message"];
+        // TODO: KP KP: replace message with: testDictionary[kShelbyABTestNotificationMessage]
+    }
 }
 
 - (void)fetchUserChannelsForceSwitchToUsersStream:(BOOL)forceUsersStream
