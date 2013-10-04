@@ -83,7 +83,7 @@
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
     
     localNotification.alertBody = message;
-    localNotification.alertAction = NSLocalizedString(@"Watch Video", nil);
+    localNotification.alertAction = NSLocalizedString(@"Watch Videos", nil);
     
     localNotification.soundName = UILocalNotificationDefaultSoundName;
     localNotification.applicationIconBadgeNumber = 1;

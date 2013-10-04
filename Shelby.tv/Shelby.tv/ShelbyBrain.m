@@ -298,7 +298,7 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
 
                 // If there is a notification message - schedule notification
                 if (notificationMessage) {
-                    [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:@"message"];
+                    [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:notificationMessage];
                 }
 
              } else {
