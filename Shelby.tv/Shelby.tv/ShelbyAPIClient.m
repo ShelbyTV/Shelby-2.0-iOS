@@ -9,7 +9,6 @@
 #import "ShelbyAPIClient.h"
 #import "AFNetworking.h"
 #import "Frame+Helper.h"
-#import "ShelbyAlert.h"
 #import "ShelbyDataMediator.h"
 
 NSString * const kShelbyAPIBaseURL =                        @"https://api.shelby.tv/";

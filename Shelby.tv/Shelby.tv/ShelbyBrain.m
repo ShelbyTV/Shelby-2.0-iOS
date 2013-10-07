@@ -21,7 +21,6 @@
 #import "ShelbyNotificationManager.h"
 #import "SignupFlowViewController.h"
 #import "SPVideoExtractor.h"
-#import "ShelbyAlert.h"
 #import "User+Helper.h"
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
@@ -55,7 +54,7 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
 
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 
-@property (nonatomic, strong) ShelbyAlert *currentAlertView;
+@property (nonatomic, strong) UIAlertView *currentAlertView;
 @end
 
 @implementation ShelbyBrain
@@ -248,7 +247,7 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
     if (channel) {
         dashboard = channel.dashboard;
 
-        NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        __block NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
 
         [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
 
@@ -292,17 +291,24 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
                 }
             }
             
-
-            if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
-                [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
-
-                // If there is a notification message - schedule notification
-                if (notificationMessage) {
-                    [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:notificationMessage];
-                }
-
-             } else {
+            if (!entries) {
                 completionHandler(UIBackgroundFetchResultNoData);
+            } else {
+                if (!curEntries) {
+                    curEntries = @[];
+                }
+                
+                if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
+                    [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
+                    
+                    // If there is a notification message - schedule notification
+                    if (notificationMessage) {
+                        [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:@"message"];
+                    }
+                    
+                } else {
+                    completionHandler(UIBackgroundFetchResultNoData);
+                }
             }
         }];
     } else {
@@ -432,12 +438,8 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
 {
     if (errorMessage){
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.currentAlertView dismiss];
-            self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
-                                                               message:errorMessage
-                                                    dismissButtonTitle:@"OK"
-                                                        autodimissTime:0
-                                                             onDismiss:nil];
+            [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
+            self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [self.currentAlertView show];
         });
     }
@@ -456,12 +458,8 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
         // Need to setCurrentUser again, in case there was an error and the user was removed.
         [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
 
-        [self.currentAlertView dismiss];
-        self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
-                                                           message:errorMessage
-                                                dismissButtonTitle:@"OK"
-                                                    autodimissTime:0
-                                                         onDismiss:nil];
+        [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
+        self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [self.currentAlertView show];
     });
 }
@@ -676,12 +674,8 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentAlertView dismiss];
-        self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
-                                                           message:errorMessage
-                                                dismissButtonTitle:@"OK"
-                                                    autodimissTime:8
-                                                         onDismiss:nil];
+        [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
+        self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [self.currentAlertView show];
     });
 }
@@ -935,14 +929,10 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
         message = @"Problem loading channel.";
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentAlertView dismiss];
-        self.currentAlertView =  [[ShelbyAlert alloc] initWithTitle:@"Error"
-                                                            message:message
-                                                 dismissButtonTitle:@"OK"
-                                                     autodimissTime:3.0
-                                                          onDismiss:nil];
+        [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
+        self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [self.currentAlertView show];
-    });
+   });
 }
 
 - (void)goToUsersLikes
