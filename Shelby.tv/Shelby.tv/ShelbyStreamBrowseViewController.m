@@ -239,6 +239,8 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
         if (shouldMaintainCurrentFocus) {
             [self.collectionView reloadData];
             [self focusOnEntity:focusedEntityBeforeUpdates inChannel:channel animated:NO];
+        } else if (!_isRefreshing) {
+            [self.collectionView reloadData];
         } else {
             [self.collectionView performBatchUpdates:^{
                 [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
