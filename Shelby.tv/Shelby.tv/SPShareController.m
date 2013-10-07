@@ -12,7 +12,6 @@
 #import "FacebookHandler.h"
 #import "Frame+Helper.h"
 #import "ShelbyActivityItemProvider.h"
-#import "ShelbyAlert.h"
 #import "ShelbyAPIClient.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyShareViewController.h"
@@ -40,7 +39,6 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 
 @property (nonatomic, strong) SPShareCompletionHandler completionHandler;
 
-@property (nonatomic, strong) ShelbyAlert *currentAlertView;
 @end
 
 @implementation SPShareController
@@ -238,14 +236,9 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
                              
                           } else {
                               dispatch_async(dispatch_get_main_queue(), ^{
-                                  self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:NSLocalizedString(@"ROLLING_FAIL_TITLE", @"--Rolling Failed--")
-                                                                                  message:NSLocalizedString(@"ROLLING_FAIL_MESSAGE", nil)
-                                                                       dismissButtonTitle:NSLocalizedString(@"ROLLING_FAIL_BUTTON", nil)
-                                                                           autodimissTime:0
-                                                                                onDismiss:^(BOOL didAutoDimiss) {
-                                                                                    [self shareComplete:NO];
-                                                                                }];
-                                  [self.currentAlertView show];
+                                  UIAlertView *currentAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ROLLING_FAIL_TITLE", @"--Rolling Failed--") message:NSLocalizedString(@"ROLLING_FAIL_MESSAGE", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"ROLLING_FAIL_BUTTON", nil) otherButtonTitles:nil];
+                                  [currentAlertView show];
+                                  [self shareComplete:NO];
                               });
                           }
                       }];
