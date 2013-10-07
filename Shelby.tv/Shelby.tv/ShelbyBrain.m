@@ -248,7 +248,7 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
     if (channel) {
         dashboard = channel.dashboard;
 
-        NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        __block NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
 
         [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
 
@@ -292,17 +292,24 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
                 }
             }
             
-
-            if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
-                [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
-
-                // If there is a notification message - schedule notification
-                if (notificationMessage) {
-                    [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:@"message"];
-                }
-
-             } else {
+            if (!entries) {
                 completionHandler(UIBackgroundFetchResultNoData);
+            } else {
+                if (!curEntries) {
+                    curEntries = @[];
+                }
+                
+                if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
+                    [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
+                    
+                    // If there is a notification message - schedule notification
+                    if (notificationMessage) {
+                        [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:@"message"];
+                    }
+                    
+                } else {
+                    completionHandler(UIBackgroundFetchResultNoData);
+                }
             }
         }];
     } else {
