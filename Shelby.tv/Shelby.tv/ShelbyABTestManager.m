@@ -8,6 +8,7 @@
 
 #import "ShelbyABTestManager.h"
 #import "ShelbyAPIClient.h"
+#import "ShelbyAnalyticsClient.h"
 
 NSString * const kShelbyABTestBucketName = @"name";
 NSString * const kShelbyABTestBucketActive = @"active";
@@ -120,16 +121,21 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
                 NSArray *buckets = test[@"buckets"];
 
                 NSDictionary *currentActiveTest = [self dictionaryForTest:testName];
+                NSString *selectedBucket = nil;
                 if (currentActiveTest && [self isTestStillActive:currentActiveTest[kShelbyABTestBucketName] availableTests:buckets]) {
                     // Test still active, use defaults
-                    continue;
+                    selectedBucket = currentActiveTest[kShelbyABTestBucketName];
                 } else {
                     NSDictionary *bucketValue = [self pickABucket:buckets];
                     if (!bucketValue) {
                         bucketValue = [self defaultDictionaryForTest:testName];
                     }
-                    
+                    selectedBucket = bucketValue[kShelbyABTestBucketName];
                     [self setTestName:testName withDictionary:bucketValue];
+                }
+
+                if ([testName isEqualToString:kAnalyticsABTestRetention]) {
+                    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryABTest action:kAnalyticsABTestRetention label:selectedBucket];
                 }
             }
         }
