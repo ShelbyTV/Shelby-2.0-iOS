@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <HockeySDK/HockeySDK.h>
 #import "Appirater.h"
+#import "DeviceUtilities.h"
 #import "FacebookHandler.h"
 #import "GAI.h"
 #import "GAIFields.h"
@@ -73,8 +74,9 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
 //    }
     
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-    
+    if ([DeviceUtilities isGTEiOS7]) {
+        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    }
     // Brain will set proper ViewController on window and makeKeyAndVisible during -applicationDidBecomeActive:
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.brain = [[ShelbyBrain alloc] init];
