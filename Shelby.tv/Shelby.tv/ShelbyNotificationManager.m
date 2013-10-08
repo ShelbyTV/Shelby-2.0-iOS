@@ -30,14 +30,14 @@
 }
 
 
-- (NSDate *)notificateionDateWithDay:(NSInteger)day andTime:(NSInteger)time
+- (NSDate *)notificationDateWithDay:(NSInteger)day andTime:(NSInteger)time
 {
     NSDate *today = [NSDate date];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     [gregorian setTimeZone:[NSTimeZone systemTimeZone]];
     [gregorian setLocale:[NSLocale currentLocale]];
     
-    NSDateComponents *todayComp = [gregorian components:NSCalendarUnitYear |NSCalendarUnitWeekday| NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:today];
+    NSDateComponents *todayComp = [gregorian components:NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:today];
 
     NSInteger hour = time / 100;
     NSInteger minute = time % 100;
@@ -49,7 +49,7 @@
         numberOfDays = 7 + numberOfDays;
     } else if (numberOfDays == 0) {
         // If today is the same day we want the notification, check if hour has passed. And if it has, schedule for today next week.
-        if (hour <= todayComp.hour) {
+        if (hour < todayComp.hour) {
             numberOfDays += 7;
         }
     }
@@ -59,13 +59,12 @@
     // notificationDate is the day we should notifiy the user, now set the correct hour and minute
     NSDate *notificationDate = [[NSCalendar currentCalendar] dateByAddingComponents:deltaDayComponent toDate:today options:0];
 
-    NSDateComponents *notificationDateComponent = [gregorian components:NSCalendarUnitYear |NSCalendarUnitMonth | NSCalendarUnitDay| NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:notificationDate];
+    NSDateComponents *notificationDateComponent = [[NSCalendar currentCalendar] components:NSCalendarUnitYear |NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute fromDate:notificationDate];
     notificationDateComponent.hour = hour;
     notificationDateComponent.minute = minute;
-    notificationDateComponent.second =  0;
     
     // Send the new date - after setting the correct hour, minute in the notificationDate
-    return [gregorian dateFromComponents:notificationDateComponent];
+    return [[NSCalendar currentCalendar] dateFromComponents:notificationDateComponent];
 
 }
 
@@ -75,8 +74,7 @@
     
     // Now schedule new notification
 
-    // Figure out date - obviously not the line below. But a specific date & time
-    NSDate *date = [self notificateionDateWithDay:day andTime:time];
+    NSDate *date = [self notificationDateWithDay:day andTime:time];
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = date;
@@ -86,11 +84,11 @@
     localNotification.alertAction = NSLocalizedString(@"Watch Videos", nil);
     
     localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.applicationIconBadgeNumber = 1;
+    localNotification.applicationIconBadgeNumber = 0;
     
     // Figure out what the dict should be.
-    NSDictionary *infoDictionary = @{@"local_notification_key": @"local_notification"};
-    localNotification.userInfo = infoDictionary;
+//    NSDictionary *infoDictionary = @{@"local_notification_key": @"local_notification"};
+//    localNotification.userInfo = infoDictionary;
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }

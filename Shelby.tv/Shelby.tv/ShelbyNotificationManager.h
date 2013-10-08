@@ -12,6 +12,10 @@
 
 + (ShelbyNotificationManager *)sharedInstance;
 
+
+// This method cancels ALL notifications when called
 - (void)scheduleNotificationWithDay:(NSInteger)day time:(NSInteger)time andMessage:(NSString *)message;
+
+// This is for future smart-notification analysis 
 - (void)localNotificationFired:(UILocalNotification *)localNotification;
 @end

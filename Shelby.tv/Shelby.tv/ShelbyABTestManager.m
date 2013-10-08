@@ -37,7 +37,9 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
 - (void)startABTestManager
 {
     // Adding all supported tests
-    self.supportedTest = @{kShelbyABTestNotification : [self notificationDictionaryWithName:@"Default" day:@"2" time:@"8" andMessage:@"hi"]};
+    // TODO: KP KP: choose one of the buckets and manually set as defaults
+    // If we change this message to not require 3 nicknames, make sure to modify this: performBackgroundFetchWithCompletionHandler
+    self.supportedTest = @{kShelbyABTestNotification : [self notificationDictionaryWithName:@"Default" day:@"1" time:@"1000" andMessage:@"Yes! Video from %@, %@, %@ and more!"]};
     
     [self fetchABTests];
 }
@@ -48,19 +50,19 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
         if (!JSON || error) {
             [self setDefaultValuesForAllTests];
         } else {
-            [self setupTestWithJSON:JSON];
+            [self setupTestsWithJSON:JSON];
         }
     }];
 }
 
-- (NSDictionary *)dictionaryForTest:(NSString *)testName
+- (NSDictionary *)activeBucketForTest:(NSString *)testName
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:testName];
 }
 
 - (void)setDefaultValuesForAllTests
 {
-    [self setTestName:kShelbyABTestNotification withDictionary:[self defaultDictionaryForTest:kShelbyABTestNotification]];
+    [self setActiveBucket:[self defaultBucketForTest:kShelbyABTestNotification] forTestName:kShelbyABTestNotification];
 }
 
 - (NSDictionary *)notificationDictionaryWithName:(NSString *)name day:(NSString *)day time:(NSString *)time andMessage:(NSString *)message
@@ -76,12 +78,12 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
     return [self.supportedTest objectForKey:testName] == nil ? NO : YES;
 }
 
-- (NSDictionary *)defaultDictionaryForTest:(NSString *)testName
+- (NSDictionary *)defaultBucketForTest:(NSString *)testName
 {
     return [self.supportedTest objectForKey:testName];
 }
 
-- (void)setTestName:(NSString *)name withDictionary:(NSDictionary *)dictionary
+- (void)setActiveBucket:(NSDictionary *)dictionary forTestName:(NSString *)name
 {
     if ([name isEqualToString:kShelbyABTestNotification]) {
         NSDictionary *defaultValues = self.supportedTest[kShelbyABTestNotification];
@@ -102,12 +104,12 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
     }
 }
 
-- (void)setupTestWithJSON:(id)JSON
+- (void)setupTestsWithJSON:(id)JSON
 {
     if ([JSON isKindOfClass:[NSDictionary class]]) {
         NSArray *tests = JSON[@"result"];
         if (!tests || ![tests isKindOfClass:[NSArray class]]) {
-            [self setTestName:kShelbyABTestNotification withDictionary:[self defaultDictionaryForTest:kShelbyABTestNotification]];
+            [self setDefaultValuesForAllTests];
             return;
         }
         
@@ -120,30 +122,28 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
 
                 NSArray *buckets = test[@"buckets"];
 
-                NSDictionary *currentActiveTest = [self dictionaryForTest:testName];
-                NSString *selectedBucket = nil;
-                if (currentActiveTest && [self isTestStillActive:currentActiveTest[kShelbyABTestBucketName] availableTests:buckets]) {
-                    // Test still active, use defaults
-                    selectedBucket = currentActiveTest[kShelbyABTestBucketName];
+                NSDictionary *currentActiveBucketForTest = [self activeBucketForTest:testName];
+                NSString *selectedBucketName = nil;
+                if (currentActiveBucketForTest && [self isBucketStillActive:currentActiveBucketForTest[kShelbyABTestBucketName] availableBuckets:buckets]) {
+                    // Test still active, use currently active
+                    selectedBucketName = currentActiveBucketForTest[kShelbyABTestBucketName];
                 } else {
                     NSDictionary *bucketValue = [self pickABucket:buckets];
                     if (!bucketValue) {
-                        bucketValue = [self defaultDictionaryForTest:testName];
+                        bucketValue = [self defaultBucketForTest:testName];
                     }
-                    selectedBucket = bucketValue[kShelbyABTestBucketName];
-                    [self setTestName:testName withDictionary:bucketValue];
+                    selectedBucketName = bucketValue[kShelbyABTestBucketName];
+                    [self setActiveBucket:bucketValue forTestName:testName];
                 }
 
-                if ([testName isEqualToString:kAnalyticsABTestRetention]) {
-                    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryABTest action:kAnalyticsABTestRetention label:selectedBucket];
-                }
+                [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryABTest action:testName label:selectedBucketName];
             }
         }
     }
 }
                     
         
-- (BOOL)isTestStillActive:(NSString *)bucketName availableTests:(NSArray *)buckets
+- (BOOL)isBucketStillActive:(NSString *)bucketName availableBuckets:(NSArray *)buckets
 {
     if (buckets && [buckets isKindOfClass:[NSArray class]]) {
         for (NSDictionary *bucket in buckets) {

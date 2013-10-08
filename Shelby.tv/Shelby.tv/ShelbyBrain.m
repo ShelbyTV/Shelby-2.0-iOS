@@ -30,7 +30,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 
 NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
-NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
+NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen";
 
 @interface ShelbyBrain()
 
@@ -82,8 +82,8 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
     NSArray *entries = [self.homeVC entriesForChannel:mainChannel];
     // Save last video seen by user.
     if (entries && [entries count] > 0) {
-        NSString *lastVideoID = ((DashboardEntry *)entries[0]).frame.video.videoID;
-        [[NSUserDefaults standardUserDefaults] setObject:lastVideoID forKey:kShelbyLastVideoSeen];
+        NSString *lastDahsboardEntryID = ((DashboardEntry *)entries[0]).dashboardEntryID;
+        [[NSUserDefaults standardUserDefaults] setObject:lastDahsboardEntryID forKey:kShelbyLastDashboardEntrySeen];
     }
 
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -256,18 +256,18 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
             }];
             entries = [entries filteredArrayUsingPredicate:onlyPlayableVideos];
 
-            NSDictionary *testDictionary = [[ShelbyABTestManager sharedInstance] dictionaryForTest:kShelbyABTestNotification];
+            NSDictionary *testDictionary = [[ShelbyABTestManager sharedInstance] activeBucketForTest:kShelbyABTestNotification];
             NSString *notificationMessage = nil;
             if ([testDictionary isKindOfClass:[NSDictionary class]]) {
                 NSString *bucketName = testDictionary[@"name"];
                 // If Bucket A/C - See if there are more than 3 new videos and take name/nickname from users for notification. If there are no 3 new videos & in Bucket A/C then, don't add notification
-                if ([bucketName isEqualToString:@"A"] || [bucketName isEqualToString:@"C"]) {
+                if ([bucketName isEqualToString:@"A"] || [bucketName isEqualToString:@"C"] || [bucketName isEqualToString:@"Default"]) {
                     NSMutableSet *nicknames = [[NSMutableSet alloc] init];
-                    NSString *lastVideoID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastVideoSeen];
+                    NSString *lastDashboardEntryID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastDashboardEntrySeen];
                     // Counter is just to make sure we look at the latest 20 videos.
                     NSInteger counter = 0;
                     for (DashboardEntry *dashboard in entries) {
-                        if (counter > 20 || [lastVideoID isEqualToString:dashboard.frame.video.videoID]) {
+                        if (counter > 20 || [lastDashboardEntryID isEqualToString:dashboard.dashboardEntryID]) {
                             break;
                         }
                         NSString *name = dashboard.frame.creator.name;
@@ -299,11 +299,12 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
                 }
                 
                 if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
+                    // Give some time for thumbnails to load in view - a little hackish
                     [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
                     
                     // If there is a notification message - schedule notification
                     if (notificationMessage) {
-                        [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:@"message"];
+                        [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:notificationMessage];
                     }
                     
                 } else {
@@ -316,6 +317,7 @@ NSString *const kShelbyLastVideoSeen = @"kShelbyLastVideoInStream";
     }
 }
 
+// Should only be called from performBackgroundFetchWithCompletionHandler method
 - (void)callCompletionBlock:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     STVDebugAssert(completionHandler, @"Completion Handler in background fetch should not be nil");

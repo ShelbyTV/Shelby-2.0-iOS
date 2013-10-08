@@ -19,5 +19,5 @@ extern NSString * const kShelbyABTestNotificationMessage;
 + (ShelbyABTestManager *)sharedInstance;
 
 - (void)startABTestManager;
-- (NSDictionary *)dictionaryForTest:(NSString *)testName;
+- (NSDictionary *)activeBucketForTest:(NSString *)testName;
 @end

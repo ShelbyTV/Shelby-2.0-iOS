@@ -162,7 +162,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                                         }];
                                                         
                                                     } else {
-                                                        completionHandler(nil, nil);
+                                                        completionHandler(channel, nil);
                                                     }
                                                 }];
 }
