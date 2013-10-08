@@ -99,6 +99,10 @@
     [components setHour:10];
     
     [[ShelbyABTestManager sharedInstance] startABTestManager];
+    
+    // Reseting time zome on App Launch. To get new time zone in case user changed time zone. (This is used for notifications)
+    [NSTimeZone resetSystemTimeZone];
+
     // Appirater
     [Appirater appLaunched:YES];
     

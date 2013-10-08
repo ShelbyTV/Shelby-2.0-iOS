@@ -34,7 +34,7 @@
 {
     NSDate *today = [NSDate date];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    [gregorian setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+    [gregorian setTimeZone:[NSTimeZone systemTimeZone]];
     [gregorian setLocale:[NSLocale currentLocale]];
     
     NSDateComponents *todayComp = [gregorian components:NSCalendarUnitYear |NSCalendarUnitWeekday| NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:today];
