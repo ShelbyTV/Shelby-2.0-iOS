@@ -236,11 +236,9 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 
         // The index paths returned by DeduplicationUtility are relative to the original array.
         // So we group them within performBatchUpdates:
-        if (shouldMaintainCurrentFocus) {
+        if (shouldMaintainCurrentFocus || !_isRefreshing) {
             [self.collectionView reloadData];
             [self focusOnEntity:focusedEntityBeforeUpdates inChannel:channel animated:NO];
-        } else if (!_isRefreshing) {
-            [self.collectionView reloadData];
         } else {
             [self.collectionView performBatchUpdates:^{
                 [self.collectionView insertItemsAtIndexPaths:indexPathsForInsert];
