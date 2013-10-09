@@ -23,7 +23,7 @@
                     <rect key="frame" x="10" y="95" width="300" height="463"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reccommending new videos for you every day." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="5UI-S6-Scj" userLabel="title label">
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discovering new videos for you every day." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="5UI-S6-Scj" userLabel="title label">
                             <rect key="frame" x="10" y="15" width="280" height="67"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
@@ -80,7 +80,7 @@
                                     </constraints>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-heart" translatesAutoresizingMaskIntoConstraints="NO" id="jL4-jM-ybv" userLabel="p2 heart">
-                                    <rect key="frame" x="90" y="0.0" width="40" height="40"/>
+                                    <rect key="frame" x="150" y="0.0" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="ShT-06-gq9"/>
@@ -88,7 +88,7 @@
                                     </constraints>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-plus" translatesAutoresizingMaskIntoConstraints="NO" id="imc-gC-ful" userLabel="p2 plus">
-                                    <rect key="frame" x="150" y="0.0" width="40" height="40"/>
+                                    <rect key="frame" x="90" y="0.0" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="DYp-06-3GX"/>
@@ -103,7 +103,7 @@
                                 <constraint firstItem="9jg-Ni-MdS" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="GIa-lp-OHH"/>
                                 <constraint firstItem="eLl-vp-HCW" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="J46-cY-YwS"/>
                                 <constraint firstAttribute="bottom" secondItem="imc-gC-ful" secondAttribute="bottom" id="Kbf-UT-bcG"/>
-                                <constraint firstAttribute="trailing" secondItem="imc-gC-ful" secondAttribute="trailing" constant="90" id="YFE-UW-yKz"/>
+                                <constraint firstAttribute="trailing" secondItem="imc-gC-ful" secondAttribute="trailing" constant="150" id="YFE-UW-yKz"/>
                                 <constraint firstAttribute="trailing" secondItem="5d4-Cp-VcD" secondAttribute="trailing" constant="210" id="crQ-E3-FQz"/>
                                 <constraint firstItem="eLl-vp-HCW" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="cty-qv-aC7"/>
                                 <constraint firstItem="9jg-Ni-MdS" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="hRd-g1-ZQR"/>
@@ -115,10 +115,10 @@
                                 <constraint firstItem="imc-gC-ful" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="lx2-Sh-wMn"/>
                                 <constraint firstAttribute="bottom" secondItem="eLl-vp-HCW" secondAttribute="bottom" id="nKX-SL-6wa"/>
                                 <constraint firstItem="5d4-Cp-VcD" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="30" id="onp-vZ-PAV"/>
-                                <constraint firstItem="jL4-jM-ybv" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="pHT-OD-fd9"/>
+                                <constraint firstItem="jL4-jM-ybv" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="pHT-OD-fd9"/>
                                 <constraint firstAttribute="trailing" secondItem="eLl-vp-HCW" secondAttribute="trailing" constant="150" id="qOg-ay-y9E"/>
-                                <constraint firstItem="imc-gC-ful" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="uey-hB-ZB0"/>
-                                <constraint firstAttribute="trailing" secondItem="jL4-jM-ybv" secondAttribute="trailing" constant="150" id="zUR-DL-fBb"/>
+                                <constraint firstItem="imc-gC-ful" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="uey-hB-ZB0"/>
+                                <constraint firstAttribute="trailing" secondItem="jL4-jM-ybv" secondAttribute="trailing" constant="90" id="zUR-DL-fBb"/>
                             </constraints>
                         </view>
                     </subviews>

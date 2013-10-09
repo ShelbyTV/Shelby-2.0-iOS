@@ -99,6 +99,14 @@
     self.videoTitle.text = self.frame.video.title;
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscape | UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL) shouldAutorotate {
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -162,6 +170,7 @@
                                                  name:kShelbyiOSNativeShareDone
                                                object:nil];
     
+    [self.message resignFirstResponder];
     [self.shareController nativeShareWithFrame:self.frame message:self.videoTitle.text andLink:self.link fromViewController:self];
 }
 

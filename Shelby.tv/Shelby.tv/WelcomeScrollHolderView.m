@@ -147,40 +147,46 @@
 
 #pragma mark - Tip Management
 
+#define HIDE_DURATION 0.3
+#define HIDE_DELAY 0.0
+#define TITLE_SHOW_DURATION 0.5
+#define TIP_SHOW_DURATION 1.5
+#define TIP_SHOW_DELAY 1.5
+
 - (void)showTip:(NSUInteger)tipIdx
 {
     switch (tipIdx) {
         case 0:
             [self zoomOutOnPhone];
-            [self changeTitleText:@"Recommending new videos for you every day."
+            [self changeTitleText:@"Discovering new videos for you every day."
                           tipText:@""];
             for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2/*, self.tipIconsP3*/]) {
-                [self setViews:tipCollection alpha:0.f];
+                [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
             }
-            [self resetScrollUpHelper:4.0];
+            [self resetScrollUpHelper:2.0];
             [self cancelSwipeLeftHelper];
             [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA1];
             break;
         case 1:
             [self zoomInOnPhone];
-            [self changeTitleText:@"Your favorite creators, friends, and networks."
+            [self changeTitleText:@"...powered by your favorite places."
                           tipText:@""];
             for (NSArray *tipCollection in @[self.tipIconsP2/*, self.tipIconsP3*/]) {
-                [self setViews:tipCollection alpha:0.f];
+                [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
             }
-            [self setViews:self.tipIconsP1 alpha:1.f];
+            [self setViews:self.tipIconsP1 alpha:1.f duration:TIP_SHOW_DURATION delay:TIP_SHOW_DELAY];
             [self resetScrollUpHelper:4.0];
             [self cancelSwipeLeftHelper];
             [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA2];
             break;
         case 2:
             [self zoomInOnPhone];
-            [self changeTitleText:@"It's like a TV channel personalized for you."
-                          tipText:@"And your recommendations get better the more you share and like."];
+            [self changeTitleText:@"Like a video channel personalized for you."
+                          tipText:@"And it gets to know your tastes the more you Share and Like."];
             for (NSArray *tipCollection in @[self.tipIconsP1/*, self.tipIconsP3*/]) {
-                [self setViews:tipCollection alpha:0.f];
+                [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
             }
-            [self setViews:self.tipIconsP2 alpha:1.f];
+            [self setViews:self.tipIconsP2 alpha:1.f duration:TIP_SHOW_DURATION delay:TIP_SHOW_DELAY];
             [self resetScrollUpHelper:5.0];
             [self cancelSwipeLeftHelper];
             [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA3];
@@ -190,7 +196,7 @@
             [self changeTitleText:@"...a TV channel powered by your friends."
                           tipText:@"Swipe left to see what your friend said."];
             for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2]) {
-                [self setViews:tipCollection alpha:0.f];
+                [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
             }
             /*[self setViews:self.tipIconsP3 alpha:1.f];*/
             [_parallaxView scrollToPage:0];
@@ -208,26 +214,30 @@
         return;
     }
 
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:HIDE_DURATION animations:^{
         self.titleLabel.alpha = 0.f;
         self.tipLabel.alpha = 0.f;
     } completion:^(BOOL finished) {
         self.titleLabel.text = newTitle;
         self.tipLabel.text = newTip;
-        [UIView animateWithDuration:0.5 animations:^{
+
+        //show title and tip at different speeds
+        [UIView animateWithDuration:TITLE_SHOW_DURATION animations:^{
             self.titleLabel.alpha = 1.f;
-            self.tipLabel.alpha = 1.f;
         }];
+        [UIView animateWithDuration:TIP_SHOW_DURATION delay:TIP_SHOW_DELAY options:(UIViewAnimationCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState) animations:^{
+            self.tipLabel.alpha = 1.f;
+        } completion:nil];
     }];
 }
 
-- (void)setViews:(NSArray *)viewsArray alpha:(CGFloat)alpha
+- (void)setViews:(NSArray *)viewsArray alpha:(CGFloat)alpha duration:(NSTimeInterval)duration delay:(NSTimeInterval)delay
 {
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:duration delay:delay options:(UIViewAnimationCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState) animations:^{
         for (UIView *view in viewsArray) {
             view.alpha = alpha;
         }
-    }];
+    } completion:nil];
 }
 
 #pragma mark - View Creation

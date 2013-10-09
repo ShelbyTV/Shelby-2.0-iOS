@@ -27,6 +27,8 @@ extern NSString * const kLocalyticsLikeVideo;
 extern NSString * const kLocalyticsShareComplete;
 extern NSString * const kLocalyticsStartSignup;
 extern NSString * const kLocalyticsFinishSignup;
+extern NSString * const kLocalyticsDidLogin;
+extern NSString * const kLocalyticsDidPreview;
 
 // Google Analytics Constants
 //--Welcome--

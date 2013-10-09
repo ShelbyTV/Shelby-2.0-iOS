@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsRowHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginRowHeight;
 
+@property (strong, nonatomic) UIImageView *carrot;
 @end
 
 #define FRAME_ANIMATION_TIME 0.4
@@ -90,6 +91,8 @@
                                            multiplier:0.f 
                                              constant:0];
     [self.slider addConstraint:_shadowY];
+    
+    self.carrot = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"carrot"]];
 }
 
 - (void)didMoveToSuperview
@@ -138,6 +141,9 @@
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
             self.sliderY.constant = 0;
             [self layoutIfNeeded];
+            self.carrot.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self.carrot removeFromSuperview];
         }];
 
         [UIView animateWithDuration:ALPHA_ANIMATION_TIME animations:^{
@@ -245,6 +251,14 @@
         b.userInteractionEnabled = NO;
     }
     [self showSeparatorLines:NO];
+    
+    [currentButton addSubview:self.carrot];
+    self.carrot.alpha = 1;
+    [currentButton bringSubviewToFront:currentButton];
+    NSString *title = currentButton.titleLabel.text;
+    CGSize textSize = [title sizeWithFont:currentButton.titleLabel.font];
+    
+    self.carrot.frame = CGRectMake(self.currentRow.frame.size.width/2 + textSize.width/2 + 10 , 19, 10, 5);
 }
 
 /* Animation Notes
