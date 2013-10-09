@@ -126,7 +126,7 @@ NSString * const kShelbyShareDestinationFacebook = @"facebook";
 {
     User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
    
-    if (user) {
+    if (user && ![user.userID isEqualToString:frame.creator.userID]) {
         ShelbyShareViewController *shelbyShare = [[ShelbyShareViewController alloc] initWithNibName:@"ShelbyShareView" bundle:nil];
         [shelbyShare setupShareWith:frame link:link andShareController:self];
         [self.viewController presentViewController:shelbyShare animated:YES completion:nil];
