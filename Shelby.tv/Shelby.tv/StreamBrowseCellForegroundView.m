@@ -386,13 +386,14 @@
     NSString *captionText = self.detailCaption.text;
     
     CGSize maxCaptionSize = CGSizeMake(self.detailCommentView.frame.size.width - kShelbyCaptionMargin * 2, self.detailCommentView.frame.size.height - kShelbyCaptionMargin * 2);
+    //TODO: -sizeWithFont: is deprecated in iOS 7, should be using -boundingRectWithSize:options:attributes:context:
     CGFloat textBasedHeight = [captionText sizeWithFont:[self.detailCaption font]
                                       constrainedToSize:maxCaptionSize
                                           lineBreakMode:NSLineBreakByWordWrapping].height;
     self.detailCaption.frame = CGRectMake(self.detailCaption.frame.origin.x,
                                           0,
                                           maxCaptionSize.width,
-                                          textBasedHeight);
+                                          ceil(textBasedHeight));
 
     //tighting up the height of surrounding box as well
     self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, textBasedHeight + detailWhiteBackgroundHeightAdjustment);

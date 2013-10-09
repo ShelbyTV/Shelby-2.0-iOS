@@ -331,6 +331,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 - (void)loginUserDidComplete
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidLogin];
         [self userWasUpdated];
         [User sessionDidBecomeActive];
         [self dismissLoginVCCompletion:^{
