@@ -63,7 +63,7 @@ static void *kExpectedStatus_Key = "kExpectedStatus_Key";
     self.notified = YES;
 }
 
-#pragma nark - Object Association Helpers -
+#pragma mark - Object Association Helpers -
 
 - (void) setAssociatedObject:(id)anObject key:(void*)key
 {
