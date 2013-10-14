@@ -194,6 +194,12 @@
 		1C9369AD17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
 		1C9369AE17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
 		1C9369AF17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
+		1C942578180BEDAE005E3517 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C942577180BEDAE005E3517 /* XCTest.framework */; };
+		1C942579180BEDAE005E3517 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
+		1C94257A180BEDAE005E3517 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
+		1C942580180BEDAE005E3517 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1C94257E180BEDAE005E3517 /* InfoPlist.strings */; };
+		1C94258A180BF221005E3517 /* ShelbyAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C942589180BF221005E3517 /* ShelbyAPIClientTests.m */; };
+		1C94258D180BF837005E3517 /* XCTestCase+AsyncTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C94258C180BF837005E3517 /* XCTestCase+AsyncTesting.m */; };
 		1C96DED217975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */; };
 		1C96DED317975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */; };
 		1C96DED417975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */; };
@@ -748,6 +754,16 @@
 		91FCC6A9174BF118004255F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91FCC6AB174BF118004255F5 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1C942584180BEDAE005E3517 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E209704162F3A60000A2DFD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C810A2916EE5EED0030077C;
+			remoteInfo = "Shelby.tv Nightly";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Enterprise-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Nightly-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -807,6 +823,14 @@
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
 		1C9369AB17DA58E600AC2132 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		1C9369AC17DA58E600AC2132 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		1C942576180BEDAE005E3517 /* Shelby.tv Nightly Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shelby.tv Nightly Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C942577180BEDAE005E3517 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		1C94257D180BEDAE005E3517 /* Shelby.tv Nightly Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Shelby.tv Nightly Tests-Info.plist"; sourceTree = "<group>"; };
+		1C94257F180BEDAE005E3517 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1C942583180BEDAE005E3517 /* Shelby.tv Nightly Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Shelby.tv Nightly Tests-Prefix.pch"; sourceTree = "<group>"; };
+		1C942589180BF221005E3517 /* ShelbyAPIClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClientTests.m; sourceTree = "<group>"; };
+		1C94258B180BF837005E3517 /* XCTestCase+AsyncTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+AsyncTesting.h"; sourceTree = "<group>"; };
+		1C94258C180BF837005E3517 /* XCTestCase+AsyncTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+AsyncTesting.m"; sourceTree = "<group>"; };
 		1C96DED017975EC100D845DF /* SignupFlowStepTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepTwoViewController.h; sourceTree = "<group>"; };
 		1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupFlowStepTwoViewController.m; sourceTree = "<group>"; };
 		1C96DED517975EE200D845DF /* SignupFlowStepThreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepThreeViewController.h; sourceTree = "<group>"; };
@@ -1215,6 +1239,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1C942573180BEDAE005E3517 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C942578180BEDAE005E3517 /* XCTest.framework in Frameworks */,
+				1C94257A180BEDAE005E3517 /* UIKit.framework in Frameworks */,
+				1C942579180BEDAE005E3517 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E20970A162F3A60000A2DFD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1378,6 +1412,27 @@
 			path = "Parallax View";
 			sourceTree = "<group>";
 		};
+		1C94257B180BEDAE005E3517 /* Shelby.tv Nightly Tests */ = {
+			isa = PBXGroup;
+			children = (
+				1C94258B180BF837005E3517 /* XCTestCase+AsyncTesting.h */,
+				1C94258C180BF837005E3517 /* XCTestCase+AsyncTesting.m */,
+				1C942589180BF221005E3517 /* ShelbyAPIClientTests.m */,
+				1C94257C180BEDAE005E3517 /* Supporting Files */,
+			);
+			path = "Shelby.tv Nightly Tests";
+			sourceTree = "<group>";
+		};
+		1C94257C180BEDAE005E3517 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1C94257D180BEDAE005E3517 /* Shelby.tv Nightly Tests-Info.plist */,
+				1C94257E180BEDAE005E3517 /* InfoPlist.strings */,
+				1C942583180BEDAE005E3517 /* Shelby.tv Nightly Tests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		1CBF0934175CD69D001D471A /* Xib-iPhone */ = {
 			isa = PBXGroup;
 			children = (
@@ -1527,6 +1582,7 @@
 				8E209717162F3A61000A2DFD /* Shelby.tv */,
 				8E82EDF11631C7770044D97E /* Library */,
 				8E32BF86167FA58400753723 /* Assets */,
+				1C94257B180BEDAE005E3517 /* Shelby.tv Nightly Tests */,
 				8E209710162F3A60000A2DFD /* Frameworks */,
 				8E20970E162F3A60000A2DFD /* Products */,
 			);
@@ -1538,6 +1594,7 @@
 				8E20970D162F3A60000A2DFD /* Shelby.tv.app */,
 				1C810A2716EE2CBF0030077C /* Shelby.tv Beta.app */,
 				1C810ADD16EE5EED0030077C /* Shelby.tv Nightly.app */,
+				1C942576180BEDAE005E3517 /* Shelby.tv Nightly Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1567,6 +1624,7 @@
 				8E209713162F3A60000A2DFD /* Foundation.framework */,
 				8E209715162F3A60000A2DFD /* CoreGraphics.framework */,
 				8E4F580A1635E05F0048585C /* CoreData.framework */,
+				1C942577180BEDAE005E3517 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2050,6 +2108,24 @@
 			productReference = 1C810ADD16EE5EED0030077C /* Shelby.tv Nightly.app */;
 			productType = "com.apple.product-type.application";
 		};
+		1C942575180BEDAE005E3517 /* Shelby.tv Nightly Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C942588180BEDAE005E3517 /* Build configuration list for PBXNativeTarget "Shelby.tv Nightly Tests" */;
+			buildPhases = (
+				1C942572180BEDAE005E3517 /* Sources */,
+				1C942573180BEDAE005E3517 /* Frameworks */,
+				1C942574180BEDAE005E3517 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1C942585180BEDAE005E3517 /* PBXTargetDependency */,
+			);
+			name = "Shelby.tv Nightly Tests";
+			productName = "Shelby.tv Nightly Tests";
+			productReference = 1C942576180BEDAE005E3517 /* Shelby.tv Nightly Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8E20970C162F3A60000A2DFD /* Shelby.tv */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E20973F162F3A61000A2DFD /* Build configuration list for PBXNativeTarget "Shelby.tv" */;
@@ -2089,6 +2165,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					1C942575180BEDAE005E3517 = {
+						TestTargetID = 1C810A2916EE5EED0030077C;
 					};
 					8E20970C162F3A60000A2DFD = {
 						DevelopmentTeam = LW43DGNSVS;
@@ -2143,6 +2222,7 @@
 				8E20970C162F3A60000A2DFD /* Shelby.tv */,
 				1C81097316EE2CBF0030077C /* Shelby.tv Enterprise */,
 				1C810A2916EE5EED0030077C /* Shelby.tv Nightly */,
+				1C942575180BEDAE005E3517 /* Shelby.tv Nightly Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -2353,6 +2433,14 @@
 				911ED32617B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
 				1CE5586917DE87B200C18A30 /* no-content-bkgd.png in Resources */,
 				911ED32917B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C942574180BEDAE005E3517 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C942580180BEDAE005E3517 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2725,6 +2813,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1C942572180BEDAE005E3517 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C94258A180BF221005E3517 /* ShelbyAPIClientTests.m in Sources */,
+				1C94258D180BF837005E3517 /* XCTestCase+AsyncTesting.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E209709162F3A60000A2DFD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2857,6 +2954,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		1C942585180BEDAE005E3517 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1C810A2916EE5EED0030077C /* Shelby.tv Nightly */;
+			targetProxy = 1C942584180BEDAE005E3517 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		1C56F14617BABFD500EE9206 /* AppiraterLocalizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -2864,6 +2969,14 @@
 				1C56F14717BABFD500EE9206 /* en */,
 			);
 			name = AppiraterLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		1C94257E180BEDAE005E3517 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1C94257F180BEDAE005E3517 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		8E20971A162F3A61000A2DFD /* InfoPlist.strings */ = {
@@ -3113,6 +3226,73 @@
 			};
 			name = Release;
 		};
+		1C942586180BEDAE005E3517 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Shelby.tv Nightly.app/Shelby.tv Nightly";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Shelby.tv Nightly Tests/Shelby.tv Nightly Tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "Shelby.tv Nightly Tests/Shelby.tv Nightly Tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		1C942587180BEDAE005E3517 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Shelby.tv Nightly.app/Shelby.tv Nightly";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Shelby.tv Nightly Tests/Shelby.tv Nightly Tests-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "Shelby.tv Nightly Tests/Shelby.tv Nightly Tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		8E20973D162F3A61000A2DFD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C81096116EE21230030077C /* HockeySDK.xcconfig */;
@@ -3324,6 +3504,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		1C942588180BEDAE005E3517 /* Build configuration list for PBXNativeTarget "Shelby.tv Nightly Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C942586180BEDAE005E3517 /* Debug */,
+				1C942587180BEDAE005E3517 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		8E209707162F3A60000A2DFD /* Build configuration list for PBXProject "Shelby.tv" */ = {
 			isa = XCConfigurationList;
