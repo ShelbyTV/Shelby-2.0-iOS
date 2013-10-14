@@ -487,6 +487,10 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         self.videoLoadingIndicator = [[UIActivityIndicatorView alloc] initWithFrame:modifiedFrame];
         self.videoLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
         self.videoLoadingIndicator.hidesWhenStopped = YES;
+        self.videoLoadingIndicator.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                                       UIViewAutoresizingFlexibleRightMargin |
+                                                       UIViewAutoresizingFlexibleTopMargin |
+                                                       UIViewAutoresizingFlexibleBottomMargin);
         [self.view addSubview:self.videoLoadingIndicator];
     }
     if(animate){
