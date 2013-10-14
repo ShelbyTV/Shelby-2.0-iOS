@@ -74,4 +74,33 @@
     [self waitForStatus:XCTAsyncTestCaseStatusSucceeded timeout:10];
 }
 
+- (void)testFetchUserForNilUserID
+{
+    [ShelbyAPIClient fetchUserForUserID:nil andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [self notify:XCTAsyncTestCaseStatusFailed];
+        } else {
+            XCTAssertNotNil(error, @"Error should not be nil");
+            
+            [self notify:XCTAsyncTestCaseStatusFailed];
+        }
+    }];
+    
+    [self waitForTimeout:10];
+}
+
+- (void)testFetchUserForUserID
+{
+    [ShelbyAPIClient fetchUserForUserID:@"martha" andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [self notify:XCTAsyncTestCaseStatusSucceeded];
+        } else {
+            XCTAssertNotNil(error, @"Error should not be nil");
+            
+            [self notify:XCTAsyncTestCaseStatusFailed];
+        }
+    }];
+    
+    [self waitForStatus:XCTAsyncTestCaseStatusSucceeded timeout:10];
+}
 @end
