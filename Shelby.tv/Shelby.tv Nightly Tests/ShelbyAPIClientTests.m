@@ -42,9 +42,36 @@
         }
     }];
     
+    [self waitForStatus:XCTAsyncTestCaseStatusSucceeded timeout:10];
+}
+
+- (void)testLoginUser
+{
+    [ShelbyAPIClient loginUserWithEmail:@"martha" password:@"kerenios" andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [self notify:XCTAsyncTestCaseStatusSucceeded];
+        } else {
+            XCTAssertNotNil(error, @"Error should not be nil");
+            
+            [self notify:XCTAsyncTestCaseStatusFailed];
+        }
+    }];
+    [self waitForStatus:XCTAsyncTestCaseStatusSucceeded timeout:10];
+}
+
+- (void)testLoginUserWrongCredentials
+{
+    [ShelbyAPIClient loginUserWithEmail:@"maxwell" password:@"keren" andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [self notify:XCTAsyncTestCaseStatusFailed];
+        } else {
+            XCTAssertNotNil(error, @"Error should not be nil");
+            
+            [self notify:XCTAsyncTestCaseStatusSucceeded];
+        }
+    }];
     
     [self waitForStatus:XCTAsyncTestCaseStatusSucceeded timeout:10];
-    
 }
 
 @end
