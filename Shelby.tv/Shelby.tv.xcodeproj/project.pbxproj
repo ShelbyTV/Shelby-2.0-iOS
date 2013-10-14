@@ -187,6 +187,12 @@
 		1C810A7016EE5EED0030077C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C81095F16EE21230030077C /* HockeySDK.framework */; };
 		1C810A7216EE5EED0030077C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E20971A162F3A61000A2DFD /* InfoPlist.strings */; };
 		1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1C81096216EE21230030077C /* HockeySDKResources.bundle */; };
+		1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
+		1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
+		1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */; };
+		1C836DD917F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */; };
+		1C836DDA17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */; };
+		1C836DDB17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */; };
 		1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */; };
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
@@ -818,6 +824,10 @@
 		1C81096916EE22AD0030077C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1C810A2716EE2CBF0030077C /* Shelby.tv Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C810ADD16EE5EED0030077C /* Shelby.tv Nightly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shelby.tv Nightly.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C836DD217F49F4400A2BBEF /* ShelbyNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNotificationManager.h; sourceTree = "<group>"; };
+		1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNotificationManager.m; sourceTree = "<group>"; };
+		1C836DD717F9C7A500A2BBEF /* ShelbyABTestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyABTestManager.h; sourceTree = "<group>"; };
+		1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyABTestManager.m; sourceTree = "<group>"; };
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
@@ -1940,6 +1950,10 @@
 				91D03EFB1731AB40008131D2 /* ShelbyBrain.m */,
 				1CC77A4E174AA48700AD7F05 /* ShelbyActivityItemProvider.h */,
 				1CC77A4F174AA48700AD7F05 /* ShelbyActivityItemProvider.m */,
+				1C836DD217F49F4400A2BBEF /* ShelbyNotificationManager.h */,
+				1C836DD317F49F4400A2BBEF /* ShelbyNotificationManager.m */,
+				1C836DD717F9C7A500A2BBEF /* ShelbyABTestManager.h */,
+				1C836DD817F9C7A500A2BBEF /* ShelbyABTestManager.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2645,6 +2659,7 @@
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
+				1C836DDA17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5617DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191471774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CCE4C5517E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
@@ -2680,6 +2695,7 @@
 				1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				911ED31C17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
+				1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2775,6 +2791,7 @@
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
+				1C836DDB17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5717DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191481774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CCE4C5617E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
@@ -2810,6 +2827,7 @@
 				1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				911ED31D17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
+				1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2914,6 +2932,7 @@
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
+				1C836DD917F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5517DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
 				1CA191461774DD450039358B /* ShelbyStreamBrowseViewController.m in Sources */,
 				1CCE4C5417E258DE00F0BF5A /* ShelbyErrorUtility.m in Sources */,
@@ -2949,6 +2968,7 @@
 				1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
 				911ED31B17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
+				1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3119,7 +3139,7 @@
 		1C810ADB16EE5EED0030077C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -3174,7 +3194,7 @@
 		1C810ADC16EE5EED0030077C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -3220,7 +3240,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 armv7s";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};

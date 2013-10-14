@@ -11,12 +11,14 @@
 #import <AVFoundation/AVFoundation.h>
 #import <HockeySDK/HockeySDK.h>
 #import "Appirater.h"
+#import "DeviceUtilities.h"
 #import "FacebookHandler.h"
 #import "GAI.h"
 #import "GAIFields.h"
 #import "Intercom.h"
 #import "LocalyticsSession.h"
 #import "ShelbyBrain.h"
+#import "ShelbyABTestManager.h"
 
 #ifdef SHELBY_ENTERPRISE
     #define HOCKEY_BETA                     @"73f0add2df47cdb17bedfbfe35f9e279"
@@ -72,8 +74,9 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
 //    }
     
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-    
+    if ([DeviceUtilities isGTEiOS7]) {
+        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    }
     // Brain will set proper ViewController on window and makeKeyAndVisible during -applicationDidBecomeActive:
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.brain = [[ShelbyBrain alloc] init];
@@ -81,6 +84,7 @@
 
     // Handle launching from a notification
     UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    application.applicationIconBadgeNumber = 0;
     if (notification) {
         application.applicationIconBadgeNumber = 0;
         [self fireLocalNotification:notification];
@@ -90,6 +94,15 @@
 
     [self.brain handleDidFinishLaunching];
     
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setWeekday:2]; // Monday
+    [components setHour:10];
+    
+    [[ShelbyABTestManager sharedInstance] startABTestManager];
+    
+    // Reseting time zome on App Launch. To get new time zone in case user changed time zone. (This is used for notifications)
+    [NSTimeZone resetSystemTimeZone];
+
     // Appirater
     [Appirater appLaunched:YES];
     

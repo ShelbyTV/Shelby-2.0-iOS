@@ -12,7 +12,6 @@
 #import "SettingsViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "UserDetailsCell.h"
-#import "ShelbyAlert.h"
 #import "ShelbyAnalyticsClient.h"
 #import "ShelbyDataMediator.h"
 

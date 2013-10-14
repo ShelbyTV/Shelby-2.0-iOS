@@ -16,10 +16,11 @@
 #import "SettingsViewController.h"
 #import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
+#import "ShelbyABTestManager.h"
 #import "ShelbyModel.h"
+#import "ShelbyNotificationManager.h"
 #import "SignupFlowViewController.h"
 #import "SPVideoExtractor.h"
-#import "ShelbyAlert.h"
 #import "User+Helper.h"
 
 #define kShelbyChannelsStaleTime -600 //10 minutes
@@ -29,6 +30,7 @@ NSString * const kShelbyDVRDisplayChannelID = @"dvrDisplayChannel";
 NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 
 NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
+NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen";
 
 @interface ShelbyBrain()
 
@@ -52,7 +54,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 
-@property (nonatomic, strong) ShelbyAlert *currentAlertView;
+@property (nonatomic, strong) UIAlertView *currentAlertView;
 @end
 
 @implementation ShelbyBrain
@@ -75,6 +77,15 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 - (void)handleWillResignActive
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyLastActiveDate];
+
+    DisplayChannel *mainChannel = [self getMainChannel];
+    NSArray *entries = [self.homeVC entriesForChannel:mainChannel];
+    // Save last video seen by user.
+    if (entries && [entries count] > 0) {
+        NSString *lastDahsboardEntryID = ((DashboardEntry *)entries[0]).dashboardEntryID;
+        [[NSUserDefaults standardUserDefaults] setObject:lastDahsboardEntryID forKey:kShelbyLastDashboardEntrySeen];
+    }
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     [self.homeVC handleWillResignActive];
@@ -204,10 +215,18 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification
 {
-    [self goToDVR];
+    User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+    if (currentUser) {
+        [self goToUsersStream];
+    } else {
+        [self goToCommunityChannel];
+    }
+    
+    [[ShelbyNotificationManager sharedInstance] localNotificationFired:notification];
 }
 
-- (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+// Return the main channel for the user - Featured for logged out, MyStream for logged in
+- (DisplayChannel *)getMainChannel
 {
     User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     DisplayChannel *channel = nil;
@@ -216,12 +235,19 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     } else {
         channel = [DisplayChannel fetchChannelWithDashboardID:kShelbyCommunityChannelID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
     }
+
+    return channel;
+}
+
+- (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    DisplayChannel *channel = [self getMainChannel];
     
     Dashboard *dashboard = nil;
     if (channel) {
         dashboard = channel.dashboard;
 
-        NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        __block NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
 
         [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
 
@@ -230,10 +256,60 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
             }];
             entries = [entries filteredArrayUsingPredicate:onlyPlayableVideos];
 
-            if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
-                [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
-            } else {
+            NSDictionary *testDictionary = [[ShelbyABTestManager sharedInstance] activeBucketForTest:kShelbyABTestNotification];
+            NSString *notificationMessage = nil;
+            if ([testDictionary isKindOfClass:[NSDictionary class]]) {
+                NSString *bucketName = testDictionary[@"name"];
+                // If Bucket A/C - See if there are more than 3 new videos and take name/nickname from users for notification. If there are no 3 new videos & in Bucket A/C then, don't add notification
+                if ([bucketName isEqualToString:@"A"] || [bucketName isEqualToString:@"C"] || [bucketName isEqualToString:@"Default"]) {
+                    NSMutableSet *nicknames = [[NSMutableSet alloc] init];
+                    NSString *lastDashboardEntryID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastDashboardEntrySeen];
+                    // Counter is just to make sure we look at the latest 20 videos.
+                    NSInteger counter = 0;
+                    for (DashboardEntry *dashboard in entries) {
+                        if (counter > 20 || [lastDashboardEntryID isEqualToString:dashboard.dashboardEntryID]) {
+                            break;
+                        }
+                        NSString *name = dashboard.frame.creator.name;
+                        if (!name) {
+                            name = dashboard.frame.creator.nickname;
+                        }
+
+                        if (name) {
+                            [nicknames addObject:name];
+                        }
+                        
+                        counter++;
+                    }
+                    if ([nicknames count] > 2) {
+                        NSArray *nicknamesArray = [nicknames allObjects];
+                        // TODO: KP KP: We might want to randomly select 3 names
+                        notificationMessage = [NSString stringWithFormat:testDictionary[@"message"], nicknamesArray[0], nicknamesArray[1], nicknamesArray[2]];
+                    }
+                } else {
+                    notificationMessage = testDictionary[@"message"];
+                }
+            }
+            
+            if (!entries) {
                 completionHandler(UIBackgroundFetchResultNoData);
+            } else {
+                if (!curEntries) {
+                    curEntries = @[];
+                }
+                
+                if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
+                    // Give some time for thumbnails to load in view - a little hackish
+                    [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
+                    
+                    // If there is a notification message - schedule notification
+                    if (notificationMessage) {
+                        [[ShelbyNotificationManager sharedInstance] scheduleNotificationWithDay:[testDictionary[kShelbyABTestNotificationDay] integerValue] time:[testDictionary[kShelbyABTestNotificationTime] integerValue] andMessage:notificationMessage];
+                    }
+                    
+                } else {
+                    completionHandler(UIBackgroundFetchResultNoData);
+                }
             }
         }];
     } else {
@@ -241,6 +317,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     }
 }
 
+// Should only be called from performBackgroundFetchWithCompletionHandler method
 - (void)callCompletionBlock:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     STVDebugAssert(completionHandler, @"Completion Handler in background fetch should not be nil");
@@ -364,12 +441,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 {
     if (errorMessage){
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.currentAlertView dismiss];
-            self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
-                                                               message:errorMessage
-                                                    dismissButtonTitle:@"OK"
-                                                        autodimissTime:0
-                                                             onDismiss:nil];
+            [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
+            self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [self.currentAlertView show];
         });
     }
@@ -388,12 +461,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
         // Need to setCurrentUser again, in case there was an error and the user was removed.
         [self setCurrentUser:[self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES]];
 
-        [self.currentAlertView dismiss];
-        self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
-                                                           message:errorMessage
-                                                dismissButtonTitle:@"OK"
-                                                    autodimissTime:0
-                                                         onDismiss:nil];
+        [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
+        self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [self.currentAlertView show];
     });
 }
@@ -485,6 +554,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
         [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
         [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
+    
     
     if (self.postFetchInvocationForChannel && [channel objectID] && self.postFetchInvocationForChannel[channel.objectID]) {
         [self.postFetchInvocationForChannel[channel.objectID] invoke];
@@ -607,12 +677,8 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentAlertView dismiss];
-        self.currentAlertView = [[ShelbyAlert alloc] initWithTitle:@"Error"
-                                                           message:errorMessage
-                                                dismissButtonTitle:@"OK"
-                                                    autodimissTime:8
-                                                         onDismiss:nil];
+        [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
+        self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [self.currentAlertView show];
     });
 }
@@ -866,14 +932,10 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
         message = @"Problem loading channel.";
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentAlertView dismiss];
-        self.currentAlertView =  [[ShelbyAlert alloc] initWithTitle:@"Error"
-                                                            message:message
-                                                 dismissButtonTitle:@"OK"
-                                                     autodimissTime:3.0
-                                                          onDismiss:nil];
+        [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
+        self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [self.currentAlertView show];
-    });
+   });
 }
 
 - (void)goToUsersLikes
