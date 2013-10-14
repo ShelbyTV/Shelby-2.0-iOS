@@ -30,6 +30,30 @@
 }
 
 
+// To be used for the Nightly build
+- (NSDate *)notificationDateForDebug
+{
+    NSDate *today = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [gregorian setTimeZone:[NSTimeZone systemTimeZone]];
+    [gregorian setLocale:[NSLocale currentLocale]];
+    
+    NSDateComponents *todayComp = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute  fromDate:today];
+    
+    // If current time is after 9pm, or before 9am set notification for 9am tomorrow. Otherwise, set notification for 9pm tonite
+    if (todayComp.hour >= 21) {
+        todayComp.day = todayComp.day + 1;
+        todayComp.hour = 9;
+    } else if (todayComp.hour < 9) {
+        todayComp.hour = 9;        
+    } else {
+        todayComp.hour = 21;
+    }
+
+    todayComp.minute = 00;
+    return [[NSCalendar currentCalendar] dateFromComponents:todayComp];
+}
+
 - (NSDate *)notificationDateWithDay:(NSInteger)day andTime:(NSInteger)time
 {
     NSDate *today = [NSDate date];
@@ -73,8 +97,12 @@
     [self cancelAllNotifications];
     
     // Now schedule new notification
-
+    // KP KP: TODO: remove notificationDateForDebug before submission.
+#ifdef SHELBY_NIGHTLY
+    NSDate *date = [self notificationDateForDebug];
+#else
     NSDate *date = [self notificationDateWithDay:day andTime:time];
+#endif
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = date;
