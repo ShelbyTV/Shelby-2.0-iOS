@@ -3153,6 +3153,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					SHELBY_NIGHTLY,
+					"$(inherited)",
+				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Nightly-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -3208,6 +3213,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Shelby.tv/Shelby.tv-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"CONFIGURATION_$(CONFIGURATION)",
+					SHELBY_NIGHTLY,
+				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Nightly-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
