@@ -204,7 +204,7 @@
 		1C942579180BEDAE005E3517 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209713162F3A60000A2DFD /* Foundation.framework */; };
 		1C94257A180BEDAE005E3517 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E209711162F3A60000A2DFD /* UIKit.framework */; };
 		1C942580180BEDAE005E3517 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1C94257E180BEDAE005E3517 /* InfoPlist.strings */; };
-		1C94258A180BF221005E3517 /* ShelbyAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C942589180BF221005E3517 /* ShelbyAPIClientTests.m */; };
+		1C94258A180BF221005E3517 /* ShelbyAPIClientNoAuthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C942589180BF221005E3517 /* ShelbyAPIClientNoAuthTests.m */; };
 		1C94258D180BF837005E3517 /* XCTestCase+AsyncTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C94258C180BF837005E3517 /* XCTestCase+AsyncTesting.m */; };
 		1C96DED217975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */; };
 		1C96DED317975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */; };
@@ -838,7 +838,7 @@
 		1C94257D180BEDAE005E3517 /* Shelby.tv Nightly Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Shelby.tv Nightly Tests-Info.plist"; sourceTree = "<group>"; };
 		1C94257F180BEDAE005E3517 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1C942583180BEDAE005E3517 /* Shelby.tv Nightly Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Shelby.tv Nightly Tests-Prefix.pch"; sourceTree = "<group>"; };
-		1C942589180BF221005E3517 /* ShelbyAPIClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClientTests.m; sourceTree = "<group>"; };
+		1C942589180BF221005E3517 /* ShelbyAPIClientNoAuthTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAPIClientNoAuthTests.m; sourceTree = "<group>"; };
 		1C94258B180BF837005E3517 /* XCTestCase+AsyncTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+AsyncTesting.h"; sourceTree = "<group>"; };
 		1C94258C180BF837005E3517 /* XCTestCase+AsyncTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+AsyncTesting.m"; sourceTree = "<group>"; };
 		1C96DED017975EC100D845DF /* SignupFlowStepTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepTwoViewController.h; sourceTree = "<group>"; };
@@ -1427,7 +1427,7 @@
 			children = (
 				1C94258B180BF837005E3517 /* XCTestCase+AsyncTesting.h */,
 				1C94258C180BF837005E3517 /* XCTestCase+AsyncTesting.m */,
-				1C942589180BF221005E3517 /* ShelbyAPIClientTests.m */,
+				1C942589180BF221005E3517 /* ShelbyAPIClientNoAuthTests.m */,
 				1C94257C180BEDAE005E3517 /* Supporting Files */,
 			);
 			path = "Shelby.tv Nightly Tests";
@@ -2835,7 +2835,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C94258A180BF221005E3517 /* ShelbyAPIClientTests.m in Sources */,
+				1C94258A180BF221005E3517 /* ShelbyAPIClientNoAuthTests.m in Sources */,
 				1C94258D180BF837005E3517 /* XCTestCase+AsyncTesting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3542,6 +3542,7 @@
 				1C942587180BEDAE005E3517 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8E209707162F3A60000A2DFD /* Build configuration list for PBXProject "Shelby.tv" */ = {
 			isa = XCConfigurationList;

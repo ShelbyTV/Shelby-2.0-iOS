@@ -78,7 +78,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kShelbyLastActiveDate];
 
-    DisplayChannel *mainChannel = [self getMainChannel];
+    DisplayChannel *mainChannel = [ShelbyBrain getMainChannel];
     NSArray *entries = [self.homeVC entriesForChannel:mainChannel];
     // Save last video seen by user.
     if (entries && [entries count] > 0) {
@@ -226,7 +226,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 }
 
 // Return the main channel for the user - Featured for logged out, MyStream for logged in
-- (DisplayChannel *)getMainChannel
++ (DisplayChannel *)getMainChannel
 {
     User *currentUser = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
     DisplayChannel *channel = nil;
@@ -241,7 +241,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 
 - (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    DisplayChannel *channel = [self getMainChannel];
+    DisplayChannel *channel = [ShelbyBrain getMainChannel];
     
     Dashboard *dashboard = nil;
     if (channel) {

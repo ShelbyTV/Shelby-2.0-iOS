@@ -29,4 +29,7 @@
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification;
 - (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
+
+// Made public and a class method so we could use in testing
++ (DisplayChannel *)getMainChannel;
 @end

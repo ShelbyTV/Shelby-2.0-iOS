@@ -7,16 +7,19 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "Dashboard.h"
+#import "DashboardEntry+Helper.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyAPIClient.h"
+#import "ShelbyBrain.h"
 #import "XCTestCase+AsyncTesting.h"
 
 
-@interface ShelbyAPIClientTests : XCTestCase
+@interface ShelbyAPIClientNoAuthTests : XCTestCase
 
 @end
 
-@implementation ShelbyAPIClientTests
+@implementation ShelbyAPIClientNoAuthTests
 
 - (void)setUp
 {
@@ -28,6 +31,8 @@
 {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    
+    [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
 }
 
 - (void)testFetchGlobalChannels
@@ -101,6 +106,41 @@
         }
     }];
     
+    [self waitForStatus:XCTAsyncTestCaseStatusSucceeded timeout:10];
+}
+
+- (void)testFetchABTest
+{
+    [ShelbyAPIClient fetchABTestWithBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [self notify:XCTAsyncTestCaseStatusSucceeded];
+        } else {
+            XCTAssertNotNil(error, @"Error should not be nil");
+            
+            [self notify:XCTAsyncTestCaseStatusFailed];
+        }
+    }];
+    
+    [self waitForStatus:XCTAsyncTestCaseStatusSucceeded timeout:10];
+}
+
+- (void)testFetchDashboardEntries
+{
+    DisplayChannel *channel = [ShelbyBrain  getMainChannel];
+    
+    XCTAssertNotNil(channel, @"Channel should not be nil");
+    Dashboard *dashboard = channel.dashboard;
+        
+    [ShelbyAPIClient fetchDashboardEntriesForDashboardID:dashboard.dashboardID sinceEntry:nil withAuthToken:nil andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [self notify:XCTAsyncTestCaseStatusSucceeded];
+        } else {
+            XCTAssertNotNil(error, @"Error should not be nil");
+            
+            [self notify:XCTAsyncTestCaseStatusFailed];
+        }
+    }];
+
     [self waitForStatus:XCTAsyncTestCaseStatusSucceeded timeout:10];
 }
 @end
