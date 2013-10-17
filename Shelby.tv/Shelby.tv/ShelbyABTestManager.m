@@ -39,7 +39,7 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
     // Adding all supported tests
     // TODO: KP KP: choose one of the buckets and manually set as defaults
     // If we change this message to not require 3 nicknames, make sure to modify this: performBackgroundFetchWithCompletionHandler
-    self.supportedTest = @{kShelbyABTestNotification : [self notificationDictionaryWithName:@"Default" day:@"1" time:@"1000" andMessage:@"Yes! Video from %@, %@, %@ and more!"]};
+    self.supportedTest = @{kShelbyABTestNotification : [self notificationDictionaryWithName:@"Default" day:@"1" time:@"1000" andMessage:@"Yes! Videos from %@, %@, %@ and more!"]};
     
     [self fetchABTests];
 }

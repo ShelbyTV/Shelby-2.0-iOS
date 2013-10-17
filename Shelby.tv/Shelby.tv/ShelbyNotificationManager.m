@@ -98,11 +98,11 @@
     
     // Now schedule new notification
     // KP KP: TODO: remove notificationDateForDebug before submission.
-#ifdef SHELBY_NIGHTLY
-    NSDate *date = [self notificationDateForDebug];
-#else
+//#ifdef SHELBY_NIGHTLY
+//    NSDate *date = [self notificationDateForDebug];
+//#else
     NSDate *date = [self notificationDateWithDay:day andTime:time];
-#endif
+//#endif
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = date;

@@ -260,8 +260,11 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
             NSString *notificationMessage = nil;
             if ([testDictionary isKindOfClass:[NSDictionary class]]) {
                 NSString *bucketName = testDictionary[@"name"];
-                // If Bucket A/C - See if there are more than 3 new videos and take name/nickname from users for notification. If there are no 3 new videos & in Bucket A/C then, don't add notification
-                if ([bucketName isEqualToString:@"A"] || [bucketName isEqualToString:@"C"] || [bucketName isEqualToString:@"Default"]) {
+                // If Bucket A/C - See if there are more than 3 new videos and take name/nickname from users for notification. If there are no 3 new videos & in Bucket A/C/E/G/I/K then, don't add notification
+                if ([bucketName isEqualToString:@"A"] || [bucketName isEqualToString:@"C"] ||
+                    [bucketName isEqualToString:@"E"] || [bucketName isEqualToString:@"G"] ||
+                    [bucketName isEqualToString:@"I"] || [bucketName isEqualToString:@"K"] ||
+                    [bucketName isEqualToString:@"Default"]) {
                     NSMutableSet *nicknames = [[NSMutableSet alloc] init];
                     NSString *lastDashboardEntryID = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastDashboardEntrySeen];
                     // Counter is just to make sure we look at the latest 20 videos.
