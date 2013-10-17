@@ -93,6 +93,10 @@ extern NSString * const kAnalyticsIssueContextSaveError;
 extern NSString * const kAnalyticsIssueYTExtractionFallback;
 extern NSString * const kAnalyticsIssueSTVExtractorFail;
 extern NSString * const kAnalyticsIssueVideoMissingProviderID;
+//--AB Tests--
+extern NSString * const kAnalyticsCategoryABTest;
+extern NSString * const kAnalyticsABTestRetention;
+
 
 @interface ShelbyAnalyticsClient : NSObject
 
