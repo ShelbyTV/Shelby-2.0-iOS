@@ -23,6 +23,7 @@ extern NSString * const kShelbyNotificationUserUpdateDidFail;
 extern NSString * const kShelbyUserHasLoggedInKey;
 
 typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayChannel, NSArray *entries);
+typedef void (^shelby_data_mediator_success_complete_block_t)(id data);
 
 //NB: delegate methods always called on the main thread
 @protocol ShelbyDataMediatorProtocol <NSObject>
@@ -78,6 +79,7 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 -(void)logoutCurrentUser;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password withCompletionHandler:(shelby_data_mediator_success_complete_block_t)completionHandler;
 - (void)loginUserFacebook;
 - (BOOL)hasUserLoggedIn;
 - (void)userLoggedIn;

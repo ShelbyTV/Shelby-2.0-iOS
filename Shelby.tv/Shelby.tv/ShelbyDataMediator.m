@@ -491,11 +491,21 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }
 }
 
-- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
+;
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password withCompletionHandler:(shelby_data_mediator_success_complete_block_t)completionHandler
 {
     [ShelbyAPIClient loginUserWithEmail:email password:password andBlock:^(id JSON, NSError *error) {
         [self handleUserLoginWithJSON:JSON andError:error];
+        if (completionHandler) {
+            User *currentUser = [User currentAuthenticatedUserInContext:self.mainThreadContext];
+            completionHandler(currentUser);
+        }
     }];
+}
+
+- (void)loginUserWithEmail:(NSString *)email password:(NSString *)password
+{
+    [self loginUserWithEmail:email password:password withCompletionHandler:nil];
 }
 
 - (void)handleUserLoginWithJSON:(id)JSON andError:(NSError *)error
