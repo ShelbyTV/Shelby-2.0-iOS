@@ -141,8 +141,17 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
         }
     }
 }
-                    
-        
+
+- (BOOL)isBucketActiveInDictionary:(NSDictionary *)bucket
+{
+    NSInteger active = 0;
+    if ([bucket[kShelbyABTestBucketActive] respondsToSelector:@selector(intValue)]) {
+        active = [bucket[kShelbyABTestBucketActive] intValue];
+    }
+    
+    return active ? YES : NO;
+}
+
 - (BOOL)isBucketStillActive:(NSString *)bucketName availableBuckets:(NSArray *)buckets
 {
     if (buckets && [buckets isKindOfClass:[NSArray class]]) {
@@ -152,9 +161,7 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
             }
             
             if ([bucket[kShelbyABTestBucketName] isEqualToString:bucketName]) {
-                if (bucket[kShelbyABTestBucketActive]) {
-                    return YES;
-                }
+                return [self isBucketActiveInDictionary:bucket];
             }
         }
     }
@@ -175,7 +182,7 @@ NSString * const kShelbyABTestNotificationMessage = @"message";
             continue;
         }
         
-        if (!bucket[@"active"]) {
+        if (![self isBucketActiveInDictionary:bucket]) {
             continue;
         }
         
