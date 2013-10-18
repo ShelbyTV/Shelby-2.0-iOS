@@ -72,6 +72,8 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 
     //see method comments for explanation
     [self refreshUsersStreamAfterDelay];
+    
+    [[ShelbyNotificationManager sharedInstance] cancelAllNotifications];
 }
 
 - (void)handleWillResignActive
