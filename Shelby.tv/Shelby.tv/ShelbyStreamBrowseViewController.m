@@ -301,6 +301,10 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     @synchronized(self) {
         STVDebugAssert(channel == self.channel, @"expected our channel");
         while ([entity respondsToSelector:@selector(duplicateOf)] && ((id<ShelbyDuplicateContainer>)entity).duplicateOf) {
+            if (((id<ShelbyDuplicateContainer>)entity).duplicateOf == entity) {
+                DLog(@"***avoiding infinite loop where entity is a duplicate of itself*** %@", entity);
+                break;
+            }
             entity = ((id<ShelbyDuplicateContainer>)entity).duplicateOf;
         }
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.deduplicatedEntries indexOfObject:entity] inSection:0];

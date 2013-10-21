@@ -95,9 +95,12 @@
                   toParent:(id<ShelbyDuplicateContainer>)dupeParent
        flatteningHierarchy:(BOOL)flatten
 {
+    //TODO: figure out how an entity can be set as a duplicate of itself and fix that.
+    STVDebugAssert(dupeChild != dupeParent, @"BUG: dupeChild == dupeParent: %@", dupeParent);
     dupeChild.duplicateOf = dupeParent;
     if(flatten && dupeChild.duplicates && [dupeChild.duplicates count]){
         for (id<ShelbyDuplicateContainer> child in dupeChild.duplicates) {
+            STVDebugAssert(child != dupeParent, @"BUG: child == dupeParent: %@", dupeParent);
             child.duplicateOf = dupeParent;
         }
     }
