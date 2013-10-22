@@ -682,9 +682,10 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentAlertView dismissWithClickedButtonIndex:0 animated:YES];
-        self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [self.currentAlertView show];
+        if (!self.currentAlertView) {
+            self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [self.currentAlertView show];
+        }
     });
 }
 
