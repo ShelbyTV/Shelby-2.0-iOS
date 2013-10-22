@@ -218,6 +218,8 @@
     ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:channel];
     if (!sbvc || sbvc == _currentFullScreenVC) {
         STVDebugAssert(sbvc, @"should not be asked to focus on a channel we don't have");
+        //XXX NB: If there is no internet connection, a channel (ie. featured) may not have been loaded
+        //        but that channel is still in the nav bar and can still be selected.  This is how we get here.
         //not changing, nothing to do
         return;
     }
@@ -576,6 +578,10 @@
     }
     
     [self dismissVideoReel];
+    [UIView animateWithDuration:OVERLAY_ANIMATION_DURATION animations:^{
+        self.navBar.alpha = 1.0;
+        self.videoControlsVC.view.alpha = 1.0;
+    }];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if (!self.currentAlertView) {
