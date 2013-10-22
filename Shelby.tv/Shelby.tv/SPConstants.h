@@ -30,6 +30,7 @@
 #define kShelbySPVideoBufferEmpty               @"playbackBufferEmpty"
 #define kShelbySPLoadedTimeRanges               @"loadedTimeRanges"
 #define kShelbySPAVPlayerDuration               @"duration"
+#define kShelbySPAVPlayerStatus                 @"status"
 
 /// SPVideoReel
 #define kShelbySPCurrentVideo                   @"SP Current Video"

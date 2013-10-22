@@ -110,11 +110,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         // we were reset and never asked to prepareFor...Playback, so don't load a player or do any of that
         return;
     }
-
-    if (self.player) {
-        //remove old player item observers before changing the player item (and observing the new player item)
-        [self removePlayerItemObservers];
-    }
     
     // Setup player and observers
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
@@ -125,7 +120,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
         //replacement happens asynchronously.
-        //we add observers via KVO on self.player.currentItem and autoplay then
+        //we remove/add observers via KVO on self.player.currentItem and autoplay then
 
     } else {
         //new player
@@ -152,14 +147,19 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     self.isPlayable = YES;
 }
 
-- (void)playerItemReplaced
+- (void)playerItemReplacedWith:(AVPlayerItem *)newPlayerItem
 {
-    DLog(@"Player Item Replaced allows?%@  uses?%@ status?%ld", self.player.allowsExternalPlayback ? @"YES":@"NO", self.player.usesExternalPlaybackWhileExternalScreenIsActive ? @"YES":@"NO", (long)_player.status);
-    [self addPlayerItemObservers];
-    if (self.shouldAutoplay) {
-        DLog(@"AUTOPLAYING, rate is: %f", self.player.rate);
-        [self play];
-        DLog(@"did autoplay, rate is: %f", self.player.rate);
+    if ((id)newPlayerItem != [NSNull null]) {
+        [self addPlayerItemObservers];
+        if (self.shouldAutoplay) {
+            [self play];
+        }
+    } else {
+        DLog(@"Player Item replaced with nothing (%@)", newPlayerItem);
+        //this happens if we hand a cached URL to the player and it can't get the video.
+        //XXX so far this seems to be the correct thing to do
+        //    (ie. haven't seen the NSNull replacement except when you have no connection)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNoInternetConnectionNotification object:nil];
     }
 }
 
@@ -174,7 +174,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
                      context:nil];
     [self.player addObserver:self
                   forKeyPath:kShelbySPVideoCurrentItemKey
-                     options:NSKeyValueObservingOptionNew
+                     options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew)
                      context:nil];
 }
 
@@ -195,6 +195,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPLoadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
     [self.player.currentItem addObserver:self forKeyPath:kShelbySPAVPlayerDuration options:NSKeyValueObservingOptionNew context:nil];
+    [self.player.currentItem addObserver:self forKeyPath:kShelbySPAVPlayerStatus options:NSKeyValueObservingOptionNew context:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(itemDidFinishPlaying:)
@@ -210,23 +211,24 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 {
     STVDebugAssert(!self.isPlayable || self.player, @"SPVideoPlayer should not be playable w/o a player");
 
-    [self removePlayerItemObservers];
+    [self removePlayerItemObservers:self.player.currentItem];
 
     [self.player removeObserver:self forKeyPath:kShelbySPVideoExternalPlaybackActiveKey];
     [self.player removeObserver:self forKeyPath:kShelbySPVideoCurrentItemKey];
 }
 
-- (void)removePlayerItemObservers
+- (void)removePlayerItemObservers:(AVPlayerItem *)playerItem
 {
     //NB: this is technically observing player, but needs to be in sync w/ playerItem
     [self.player removeTimeObserver:self.playerTimeObserver];
     self.playerTimeObserver = nil;
 
-    if (self.player.currentItem) {
-        [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
-        [self.player.currentItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
-        [self.player.currentItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
-        [self.player.currentItem removeObserver:self forKeyPath:kShelbySPAVPlayerDuration];
+    if (playerItem) {
+        [playerItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
+        [playerItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
+        [playerItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
+        [playerItem removeObserver:self forKeyPath:kShelbySPAVPlayerDuration];
+        [playerItem removeObserver:self forKeyPath:kShelbySPAVPlayerStatus];
     }
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -435,9 +437,16 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
             }
         } else if ([keyPath isEqualToString:kShelbySPVideoCurrentItemKey]) {
             //item replacement not guaranteed to be called on same thread that registered for KVO
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self playerItemReplaced];
-            });
+            if (change[NSKeyValueChangeOldKey]) {
+                [self performSelectorOnMainThread:@selector(removePlayerItemObservers:)
+                                       withObject:change[NSKeyValueChangeOldKey]
+                                    waitUntilDone:YES];
+            }
+            if (change[NSKeyValueChangeNewKey]) {
+                [self performSelectorOnMainThread:@selector(playerItemReplacedWith:)
+                                       withObject:change[NSKeyValueChangeNewKey]
+                                    waitUntilDone:YES];
+            }
         }
         return;
     }
@@ -462,6 +471,12 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     } else if ([keyPath isEqualToString:kShelbySPAVPlayerDuration]) {
         [self.videoPlayerDelegate videoDuration:[self duration] forPlayer:self];
 
+    } else if ([keyPath isEqualToString:kShelbySPAVPlayerStatus]) {
+        if ([change[NSKeyValueChangeNewKey]  isEqual:@(AVPlayerItemStatusFailed)]) {
+            //XXX so far this seems to be the correct thing to do
+            //    (ie. haven't seen Fail unless you have no connection)
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNoInternetConnectionNotification object:nil];
+        }
     }
 }
 
