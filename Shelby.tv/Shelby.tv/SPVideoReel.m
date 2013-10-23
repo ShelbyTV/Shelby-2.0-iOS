@@ -256,13 +256,21 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     STVDebugAssert(!self.isShutdown, @"shoult not already be shutdown");
     self.isShutdown = YES;
-    
+
+    //UIScrollView seems to have a problem with its delegate...
+    //given: delegate (self) is dealloc'd just after -setContentOffset:animated:YES
+    //issue: -respondsToSelector: is sent to zombied delegate (self)
+    //theory: the animation completion block has a dangling pointer
+    //        (even if normal UIScrollView delegate is weak and thereby set to nil)
+    //TODO: DS create an example project, confirm, file RADAR
+    //
+    //at any rate, the following fixes the zombie crash we were seeing
+    self.videoScrollView.delegate = nil;
+
     [[SPVideoExtractor sharedInstance] cancelAllExtractions];
     
     //remove any alert particular to current video
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentVideoAlertView dismiss];
-    });
+    [self.currentVideoAlertView performSelectorOnMainThread:@selector(dismiss) withObject:nil waitUntilDone:YES];
     
     //resetting all possibly playable players (including current player) will pause and free memory of AVPlayer
     //not entirely true: if the player has an extraction pending, that block holds a reference to the player
