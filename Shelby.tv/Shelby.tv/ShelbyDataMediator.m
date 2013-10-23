@@ -660,8 +660,12 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             [self.delegate userWasUpdated];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserUpdateDidSucceed object:nil];
             if (avatar) {
-                //start async user avatar upload
-                [ShelbyAPIClient uploadUserAvatar:avatar andBlock:nil];
+                [ShelbyAPIClient uploadUserAvatar:avatar andBlock:^(id JSON, NSError *error) {
+                    if (JSON) {
+                        [self saveUserFromJSON:JSON];
+                        [self.delegate userWasUpdated];
+                    }
+                }];
             }
 
         } else {

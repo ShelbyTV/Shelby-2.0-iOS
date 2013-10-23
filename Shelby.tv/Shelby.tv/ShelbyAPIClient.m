@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "Frame+Helper.h"
 #import "ShelbyDataMediator.h"
+#import "UIImage+Scale.h"
 
 NSString * const kShelbyAPIBaseURL =                        @"https://api.shelby.tv/";
 
@@ -222,7 +223,16 @@ static AFHTTPClient *httpClient = nil;
     }
     NSDictionary *params = @{kShelbyAPIParamAuthToken: user.token};
 
-    NSData *imageData = UIImagePNGRepresentation(avatar);
+    if (avatar.size.width > 512) {
+        CGFloat scaleFactor = 512.f/avatar.size.width;
+        CGSize newAvatarSize = CGSizeMake(roundf(scaleFactor * avatar.size.width), roundf(scaleFactor * avatar.size.height));
+        avatar = [avatar scaleToSize:newAvatarSize];
+    }
+    NSData *imageData = UIImageJPEGRepresentation(avatar, 0.8);
+    if ([imageData length] > 1000000) {
+        imageData = UIImageJPEGRepresentation(avatar, 0.4);
+    }
+
     NSURLRequest *request = [httpClient multipartFormRequestWithMethod:PUT path:[NSString stringWithFormat:kShelbyAPIPutUserPath, user.userID] parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:imageData name:kShelbyAPIParamAvatar fileName:@"ios_avatar.png" mimeType:@"image/png"];
     }];
