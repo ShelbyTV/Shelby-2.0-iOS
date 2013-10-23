@@ -69,10 +69,8 @@
     
     // not yet re-implemented
 //    [self setupOfflineMode];
-    
-//    if (!DEVICE_IPAD) {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarStyleBlackTranslucent];
-//    }
+
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     if ([DeviceUtilities isGTEiOS7]) {
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];

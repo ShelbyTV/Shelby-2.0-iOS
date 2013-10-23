@@ -266,6 +266,12 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    //because iOS 7.0.3 UIImagePickerController (w/ photo album source time) doesn't respect UIViewControllerBasedStatusBarAppearance in plist
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
 - (void)animateCloseEditing
 {
     //move up so user can see our text fields
