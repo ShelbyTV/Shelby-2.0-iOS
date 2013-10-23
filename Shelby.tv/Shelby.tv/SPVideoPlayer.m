@@ -115,7 +115,13 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
     AVURLAsset *playerAsset = [AVURLAsset URLAssetWithURL:playerURL options:nil];
     AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithAsset:playerAsset];
     if (self.player) {
-        STVDebugAssert(self.player.isExternalPlaybackActive, @"only expecting reuse w/ airplay");
+        if (!self.player.isExternalPlaybackActive) {
+            //Timing edge cases can get us here, even when not in AirPlay mode
+            //This is okay so long as we're setting the same URL as we already set in the player
+            STVDebugAssert([((AVURLAsset *)self.player.currentItem.asset).URL isEqual:playerAsset.URL], @"expected same URL");
+            return;
+        }
+
         //reuse player
         self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
