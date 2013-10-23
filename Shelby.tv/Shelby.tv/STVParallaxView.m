@@ -43,6 +43,13 @@
     return self;
 }
 
+- (void)dealloc
+{
+    // b/c scroll views have zombie issues
+    self.foregroundScroller.delegate = nil;
+    self.backgroundScroller.delegate = nil;
+}
+
 - (void)insertViewBelowForeground:(UIView *)view
 {
     [self insertSubview:view belowSubview:_foregroundScroller];

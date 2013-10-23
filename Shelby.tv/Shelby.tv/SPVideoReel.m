@@ -252,6 +252,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     self.videoScrollView.pinchGestureRecognizer.enabled = NO;
 }
 
+- (void)dealloc
+{
+    // b/c scroll views have zombie issues
+    self.videoScrollView.delegate = nil;
+}
+
 - (void)shutdown
 {
     STVDebugAssert(!self.isShutdown, @"shoult not already be shutdown");

@@ -58,6 +58,9 @@
 {
     [self cancelScrollUpHelper];
     [self cancelSwipeLeftHelper];
+
+    // b/c scroll views have zombie issues
+    self.scrollView.delegate = nil;
 }
 
 - (void)initScroller
