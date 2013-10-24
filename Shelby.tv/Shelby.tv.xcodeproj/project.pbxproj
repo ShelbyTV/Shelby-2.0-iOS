@@ -632,6 +632,9 @@
 		91A36269178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
 		91A3626A178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
 		91A3626B178F296B00381218 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 91A36264178F296B00381218 /* easing.c */; };
+		91AA342518194A2B00B8F558 /* STVVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AA342418194A2B00B8F558 /* STVVimeoExtractor.m */; };
+		91AA342618194A2B00B8F558 /* STVVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AA342418194A2B00B8F558 /* STVVimeoExtractor.m */; };
+		91AA342718194A2B00B8F558 /* STVVimeoExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AA342418194A2B00B8F558 /* STVVimeoExtractor.m */; };
 		91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
 		91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */; };
@@ -1088,6 +1091,8 @@
 		91A36263178F296B00381218 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
 		91A36264178F296B00381218 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = easing.c; sourceTree = "<group>"; };
 		91A36265178F296B00381218 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easing.h; sourceTree = "<group>"; };
+		91AA342318194A2B00B8F558 /* STVVimeoExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVVimeoExtractor.h; sourceTree = "<group>"; };
+		91AA342418194A2B00B8F558 /* STVVimeoExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVVimeoExtractor.m; sourceTree = "<group>"; };
 		91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModelArrayUtility.h; sourceTree = "<group>"; };
 		91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyModelArrayUtility.m; sourceTree = "<group>"; };
 		91AEFE1117ECF0BD00B2598B /* StreamBrowseGestureHintView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamBrowseGestureHintView.xib; sourceTree = "<group>"; };
@@ -1359,6 +1364,8 @@
 				1CCE4C5317E258DE00F0BF5A /* ShelbyErrorUtility.m */,
 				91AE605B17D64B1D009D6013 /* ShelbyModelArrayUtility.h */,
 				91AE605C17D64B1D009D6013 /* ShelbyModelArrayUtility.m */,
+				91AA342318194A2B00B8F558 /* STVVimeoExtractor.h */,
+				91AA342418194A2B00B8F558 /* STVVimeoExtractor.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2502,6 +2509,7 @@
 				1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */,
 				1C81099B16EE2CBF0030077C /* UIImage+Scale.m in Sources */,
 				1C8109A016EE2CBF0030077C /* AFHTTPClient.m in Sources */,
+				91AA342618194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */,
 				1C8109A316EE2CBF0030077C /* AFJSONRequestOperation.m in Sources */,
@@ -2634,6 +2642,7 @@
 				1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */,
 				1C810A5116EE5EED0030077C /* UIImage+Scale.m in Sources */,
 				1C810A5616EE5EED0030077C /* AFHTTPClient.m in Sources */,
+				91AA342718194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
 				1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */,
 				1C810A5916EE5EED0030077C /* AFJSONRequestOperation.m in Sources */,
@@ -2766,6 +2775,7 @@
 				1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */,
 				1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */,
 				8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */,
+				91AA342518194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
 				8E01AFBD16E67365000567D4 /* AFImageRequestOperation.m in Sources */,
 				8E01AFBE16E67365000567D4 /* AFJSONRequestOperation.m in Sources */,

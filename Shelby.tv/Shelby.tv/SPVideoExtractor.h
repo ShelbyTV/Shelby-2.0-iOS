@@ -9,6 +9,7 @@
 
 #import "LBYouTubeExtractor.h"
 #import "ShelbyVideoContainer.h"
+#import "STVVimeoExtractor.h"
 #import "STVYouTubeExtractor.h"
 #import "YTVimeoExtractor.h"
 
@@ -16,7 +17,7 @@
 
 typedef void (^extraction_complete_block)(NSString *videoURL, NSError *error);
 
-@interface SPVideoExtractor : NSObject <UIWebViewDelegate, LBYouTubeExtractorDelegate, YTVimeoExtractorDelegate, STVYouTubeExtractorDelegate>
+@interface SPVideoExtractor : NSObject <UIWebViewDelegate, LBYouTubeExtractorDelegate, YTVimeoExtractorDelegate, STVYouTubeExtractorDelegate, STVVimeoExtractorDelegate>
 
 /// Singleton Methods
 + (SPVideoExtractor *)sharedInstance;

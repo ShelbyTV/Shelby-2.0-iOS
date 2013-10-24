@@ -98,6 +98,7 @@ NSString * const kAnalyticsCategoryIssues                               = @"App 
 NSString * const kAnalyticsIssueContextSaveError                        = @"Context Save Error";
 NSString * const kAnalyticsIssueYTExtractionFallback                    = @"Fallback to STVYouTubeExtractor";
 NSString * const kAnalyticsIssueSTVExtractorFail                        = @"STVYouTubeExtractor Fail";
+NSString * const kAnalyticsIssueSTVVimeoExtractorFail                   = @"STVVimeoExtractor Fail";
 NSString * const kAnalyticsIssueVideoMissingProviderID                  = @"Video missing providerID";
 //--AB Tests--
 NSString * const kAnalyticsCategoryABTest                               = @"AB Test";

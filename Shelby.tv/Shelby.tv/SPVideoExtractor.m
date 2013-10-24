@@ -15,6 +15,7 @@
 @interface SPVideoExtractor () <UIWebViewDelegate>
 
 //non web-view extractions
+@property (nonatomic, strong) STVVimeoExtractor *stvVimeoExtractor;
 @property (nonatomic, strong) STVYouTubeExtractor *stvYTExtractor;
 @property (nonatomic, strong) LBYouTubeExtractor *ytExtractor;
 @property (nonatomic, strong) YTVimeoExtractor *vimeoExtractor;
@@ -241,7 +242,10 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
                     [self lbYouTube:video];
                     
                 } else if ([video.providerName isEqualToString:@"vimeo"]) {
-                    [self ytVimeo:video];
+                    //the YTVimeoExtractor has stopped working.
+                    //[self ytVimeo:video];
+                    //Just using our in house extractor
+                    [self stvVimeoVideo:video];
                 
                 } else if ([video.providerName isEqualToString:@"dailymotion"]) {
                     //WebView based extraction...
@@ -304,6 +308,13 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
 }
 
+- (void)destroySTVVimeoExtractor
+{
+    [self.stvVimeoExtractor stopExtracting];
+    self.stvVimeoExtractor.delegate = nil;
+    self.stvVimeoExtractor = nil;
+}
+
 - (void)destroySTVYTExtractor
 {
     [self.stvYTExtractor stopExtracting];
@@ -323,6 +334,15 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     //has no cancel
     self.vimeoExtractor.delegate = nil;
     self.vimeoExtractor = nil;
+}
+
+- (void)stvVimeoVideo:(Video *)video
+{
+    STVAssert(video, @"must have a video to extract");
+    //HLS allows client to select proper quality, and our extractor will fallback if HLS isn't available
+    self.stvVimeoExtractor = [[STVVimeoExtractor alloc] initWithID:video.providerID quality:STVVimeoVideoQualityHLS];
+    self.stvVimeoExtractor.delegate = self;
+    [self.stvVimeoExtractor startExtracting];
 }
 
 - (void)stvYouTube:(Video *)video
@@ -391,6 +411,18 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.window addSubview:_webView];
     [self.webView loadHTMLString:dailymotionRequestString baseURL:[NSURL URLWithString:@"http://shelby.tv"]];
+}
+
+#pragma mark - STVVimeoExtractorDelegate
+
+- (void)stvVimeoExtractor:(STVVimeoExtractor *)extractor didSuccessfullyExtractVimeoURL:(NSURL *)videoURL
+{
+    [self processExtractedURL:videoURL];
+}
+
+- (void)stvVimeoExtractor:(STVVimeoExtractor *)extractor failedExtractingVimeoURLWithError:(NSError *)error
+{
+    [self processFailedExtractionWithError:error];
 }
 
 #pragma mark - STVYouTubeExtractorDelegate
@@ -492,6 +524,7 @@ NSString * const kSPVideoExtractorExtractedAtKey = @"extractedAt";
 
 - (void)destroyCurrentExtractor
 {
+    [self destroySTVVimeoExtractor];
     [self destroySTVYTExtractor];
     [self destroyYTExtractor];
     [self destroyVimeoExtractor];
