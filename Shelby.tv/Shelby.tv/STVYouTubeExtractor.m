@@ -12,9 +12,8 @@
 
 static NSString* const kUserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3";
 
-static NSString * const kBaseYouTubeURL = @"http://www.youtube.com";
-static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
 static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video_info";
+static NSString * const kRefererURL = @"http://www.youtube.com/watch?v=%@";
 
 @interface STVYouTubeExtractor () {
     AFHTTPClient *_httpClient;
@@ -61,7 +60,7 @@ static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video
                 _qualityString = @"small";
         }
         _streamMaps = [@[] mutableCopy];
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseYouTubeURL]];
+        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kYouTubeRequestURL]];
         [_httpClient setDefaultHeader:@"referer" value:[NSString stringWithFormat:kRefererURL, _videoID]];
     }
     return self;
@@ -86,7 +85,7 @@ static NSString * const kYouTubeRequestURL = @"https://www.youtube.com/get_video
                                   @"c": @"web",
                                   @"cver": @"html5"};
     NSURLRequest *req = [_httpClient requestWithMethod:@"GET"
-                                                  path:kYouTubeRequestURL
+                                                  path:nil
                                             parameters:queryParams];
 
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:req];
