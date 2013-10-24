@@ -92,7 +92,7 @@
 
 //#define DEVICE_IPAD                                       (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 
-#define SHELBY_APP_ID                                        @"467849037"
+#define SHELBY_APP_ID                                        @"732244981"
 
 //motion
 #define kShelbyMotionForegroundYMin                         @-20.f
