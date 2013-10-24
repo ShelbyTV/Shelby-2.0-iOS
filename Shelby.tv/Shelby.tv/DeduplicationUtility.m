@@ -99,7 +99,9 @@
     STVDebugAssert(dupeChild != dupeParent, @"BUG: dupeChild == dupeParent: %@", dupeParent);
     dupeChild.duplicateOf = dupeParent;
     if(flatten && dupeChild.duplicates && [dupeChild.duplicates count]){
-        for (id<ShelbyDuplicateContainer> child in dupeChild.duplicates) {
+        NSArray *duplicatesArray = [[dupeChild.duplicates array] copy];
+        for (NSUInteger i = 0; i < [duplicatesArray count]; i++) {
+            id<ShelbyDuplicateContainer> child = duplicatesArray[i];
             STVDebugAssert(child != dupeParent, @"BUG: child == dupeParent: %@", dupeParent);
             child.duplicateOf = dupeParent;
         }
