@@ -129,7 +129,8 @@ static AFHTTPClient *httpClient = nil;
     NSDictionary *userParams = @{@"user": @{@"name": name,
                                             @"nickname": nickname,
                                             @"password": password,
-                                            @"primary_email": email}};
+                                            @"primary_email": email},
+                                 @"client_identifier" : @"iOS_iPhone"};
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
 
@@ -141,9 +142,8 @@ static AFHTTPClient *httpClient = nil;
 //    NSString *clientID = (DEVICE_IPAD ? @"iOS_iPad" : @"iOS_iPhone");
     NSDictionary *userParams = @{@"user": @{@"name": name,
                                             @"primary_email": email},
-                                            @"generate_temporary_nickname_and_password" : @"1",
-                                            @"client_identifier" : @"iOS_iPhone"};
-
+                                 @"generate_temporary_nickname_and_password" : @"1",
+                                 @"client_identifier" : @"iOS_iPhone"};
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
 
