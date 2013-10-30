@@ -43,11 +43,16 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
     NSString *action = dict[@"action"];
     if (action) {
         dashboardEntry.action = @([action intValue]);
-        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeEntertainmentGraphRecommendation) {
-            //not yet implemented on backend
-        }
-        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
-            dashboardEntry.sourceFrameCreatorNickname = [[dict valueForKeyPath:@"src_frame.creator.nickname"] nilOrSelfWhenNotNull];
+        DashboardEntryType dbeType = [dashboardEntry typeOfEntry];
+        switch (dbeType) {
+            case DashboardEntryTypeVideoGraphRecommendation:
+                dashboardEntry.sourceFrameCreatorNickname = [[dict valueForKeyPath:@"src_frame.creator.nickname"] nilOrSelfWhenNotNull];
+                break;
+            case DashboardEntryTypeMortarRecommendation:
+                dashboardEntry.sourceVideoTitle = [[dict valueForKeyPath:@"src_video.title"] nilOrSelfWhenNotNull];
+                break;
+            default:
+                break;
         }
     }
 
@@ -62,15 +67,19 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
             [context deleteObject:dashboardEntry];
         }
         return nil;
-    } else if (!(dashboardEntry.frame.creator || [dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation)) {
-        //frame must have a creator OR DashboardEntry must be a recommended type
-        if (dashboardEntry.frame.objectID.isTemporaryID) {
-            [context deleteObject:dashboardEntry.frame];
+    } else if (!dashboardEntry.frame.creator){
+        //frame must have a creator, or dashboard entry must be a (supported) recommendation
+        DashboardEntryType dbeType = [dashboardEntry typeOfEntry];
+        if (dbeType != DashboardEntryTypeVideoGraphRecommendation &&
+            dbeType != DashboardEntryTypeMortarRecommendation) {
+            if (dashboardEntry.frame.objectID.isTemporaryID) {
+                [context deleteObject:dashboardEntry.frame];
+            }
+            if (dashboardEntry.objectID.isTemporaryID) {
+                [context deleteObject:dashboardEntry];
+            }
+            return nil;
         }
-        if (dashboardEntry.objectID.isTemporaryID) {
-            [context deleteObject:dashboardEntry];
-        }
-        return nil;
     }
 
     return dashboardEntry;
@@ -136,6 +145,10 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
             return DashboardEntryTypeVideoGraphRecommendation;
         case 32:
             return DashboardEntryTypeEntertainmentGraphRecommendation;
+        case 33:
+            return DashboardEntryTypeMortarRecommendation;
+        case 34:
+            return DashboardEntryTypeChannelRecommendation;
         default:
             return DashboardEntryTypeSocialFrame;
     }

@@ -491,9 +491,6 @@
 		9119AB7817821A5C001C9190 /* VideoControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB7717821A5C001C9190 /* VideoControlsView.m */; };
 		9119AB7917821A5C001C9190 /* VideoControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB7717821A5C001C9190 /* VideoControlsView.m */; };
 		9119AB7A17821A5C001C9190 /* VideoControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9119AB7717821A5C001C9190 /* VideoControlsView.m */; };
-		911ED31B17B2CC2F000FFBEB /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 911ED31A17B2CC2F000FFBEB /* DashboardEntry.m */; };
-		911ED31C17B2CC2F000FFBEB /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 911ED31A17B2CC2F000FFBEB /* DashboardEntry.m */; };
-		911ED31D17B2CC2F000FFBEB /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 911ED31A17B2CC2F000FFBEB /* DashboardEntry.m */; };
 		911ED32117B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911ED31E17B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png */; };
 		911ED32217B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911ED31E17B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png */; };
 		911ED32317B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911ED31E17B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png */; };
@@ -521,6 +518,9 @@
 		9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
 		9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */; };
+		912AECA7182060F500395281 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 912AECA6182060F500395281 /* DashboardEntry.m */; };
+		912AECA8182060F500395281 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 912AECA6182060F500395281 /* DashboardEntry.m */; };
+		912AECA9182060F500395281 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 912AECA6182060F500395281 /* DashboardEntry.m */; };
 		9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
 		9137187117DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
 		9137187217DE94EF0021A99B /* iOSa_2.18.5.version in Resources */ = {isa = PBXBuildFile; fileRef = 9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */; };
@@ -1014,8 +1014,6 @@
 		9119AB72178211D6001C9190 /* VideoControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoControlsViewController.m; sourceTree = "<group>"; };
 		9119AB7617821A5C001C9190 /* VideoControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoControlsView.h; sourceTree = "<group>"; };
 		9119AB7717821A5C001C9190 /* VideoControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoControlsView.m; sourceTree = "<group>"; };
-		911ED31917B2CC2F000FFBEB /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
-		911ED31A17B2CC2F000FFBEB /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		911ED31E17B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video-thumbnail-blank-568h@2x.png"; sourceTree = "<group>"; };
 		911ED31F17B2ECF0000FFBEB /* video-thumbnail-blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video-thumbnail-blank.png"; sourceTree = "<group>"; };
 		911ED32017B2ECF0000FFBEB /* video-thumbnail-blank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video-thumbnail-blank@2x.png"; sourceTree = "<group>"; };
@@ -1027,6 +1025,8 @@
 		912261E017BC05C30092AF30 /* ShelbyAnalyticsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAnalyticsClient.m; sourceTree = "<group>"; };
 		9125AACB17C55525007CD95F /* ShelbyAirPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAirPlayController.h; sourceTree = "<group>"; };
 		9125AACC17C55525007CD95F /* ShelbyAirPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAirPlayController.m; sourceTree = "<group>"; };
+		912AECA5182060F500395281 /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
+		912AECA6182060F500395281 /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
 		9135400E173937BB00093CA7 /* ShelbyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyModel.h; sourceTree = "<group>"; };
 		9137186B17DE94EF0021A99B /* iOSa_2.18.5.version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iOSa_2.18.5.version; sourceTree = "<group>"; };
 		9137186C17DE94EF0021A99B /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLocalyticsAMP.a; sourceTree = "<group>"; };
@@ -1043,6 +1043,7 @@
 		9140530D174D055700E18A6B /* NSObject+NullHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NullHelper.m"; sourceTree = "<group>"; };
 		91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Helper.h"; sourceTree = "<group>"; };
 		91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Helper.m"; sourceTree = "<group>"; };
+		9143A77618205F8900C9689F /* Shelby 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 6.xcdatamodel"; sourceTree = "<group>"; };
 		914FEA65175E365000903FEA /* ShelbyDVRController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDVRController.h; sourceTree = "<group>"; };
 		914FEA66175E365000903FEA /* ShelbyDVRController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyDVRController.m; sourceTree = "<group>"; };
 		914FEA79175E3E6700903FEA /* DVREntry+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVREntry+Helper.h"; sourceTree = "<group>"; };
@@ -1494,8 +1495,8 @@
 				91E5D462174E938100AD3746 /* Roll.m */,
 				91BEC88E176274BD00838197 /* DisplayChannel.h */,
 				91BEC88F176274BD00838197 /* DisplayChannel.m */,
-				911ED31917B2CC2F000FFBEB /* DashboardEntry.h */,
-				911ED31A17B2CC2F000FFBEB /* DashboardEntry.m */,
+				912AECA5182060F500395281 /* DashboardEntry.h */,
+				912AECA6182060F500395281 /* DashboardEntry.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
 				915ACBBF17EB52D900FA3EFF /* Frame.h */,
 				915ACBC017EB52D900FA3EFF /* Frame.m */,
@@ -2500,6 +2501,7 @@
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
 				1C81098316EE2CBF0030077C /* NSDate+Extension.m in Sources */,
 				1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
+				912AECA8182060F500395281 /* DashboardEntry.m in Sources */,
 				1C81098616EE2CBF0030077C /* BigButton.m in Sources */,
 				1C81098716EE2CBF0030077C /* Shelby.xcdatamodeld in Sources */,
 				1C81098916EE2CBF0030077C /* UIScreen+Resolution.m in Sources */,
@@ -2615,7 +2617,6 @@
 				1CDB0C2A17A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3A17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
-				911ED31C17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
 				1C836DD517F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2633,6 +2634,7 @@
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
 				1C810A3916EE5EED0030077C /* NSDate+Extension.m in Sources */,
 				1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
+				912AECA9182060F500395281 /* DashboardEntry.m in Sources */,
 				1C810A3C16EE5EED0030077C /* BigButton.m in Sources */,
 				1C810A3D16EE5EED0030077C /* Shelby.xcdatamodeld in Sources */,
 				1C810A3F16EE5EED0030077C /* UIScreen+Resolution.m in Sources */,
@@ -2748,7 +2750,6 @@
 				1CDB0C2B17A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3B17AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
-				911ED31D17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
 				1C836DD617F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2766,6 +2767,7 @@
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
 				8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */,
 				8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */,
+				912AECA7182060F500395281 /* DashboardEntry.m in Sources */,
 				8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */,
 				8E9182DE16B8921C00F2BDCF /* Shelby.xcdatamodeld in Sources */,
 				8E0CFE1616C4C54E009620F9 /* UIScreen+Resolution.m in Sources */,
@@ -2881,7 +2883,6 @@
 				1CDB0C2917A991FE0031C2C9 /* SettingsViewCell.m in Sources */,
 				1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */,
 				91B7DC3917AC0C8A009ABF02 /* STVYouTubeExtractor.m in Sources */,
-				911ED31B17B2CC2F000FFBEB /* DashboardEntry.m in Sources */,
 				1C836DD417F49F4400A2BBEF /* ShelbyNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3390,13 +3391,14 @@
 		8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9143A77618205F8900C9689F /* Shelby 6.xcdatamodel */,
 				91F4243217EB503600264C90 /* Shelby 5.xcdatamodel */,
 				91B7DC4517B29621009ABF02 /* Shelby 4.xcdatamodel */,
 				914052F7174C40F300E18A6B /* Shelby 3.xcdatamodel */,
 				91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */,
 				8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */,
 			);
-			currentVersion = 91F4243217EB503600264C90 /* Shelby 5.xcdatamodel */;
+			currentVersion = 9143A77618205F8900C9689F /* Shelby 6.xcdatamodel */;
 			path = Shelby.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

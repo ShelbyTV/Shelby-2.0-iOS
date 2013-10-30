@@ -2,7 +2,7 @@
 //  DashboardEntry.h
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 8/7/13.
+//  Created by Daniel Spinosa on 10/29/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSNumber * action;
 @property (nonatomic, retain) NSString * dashboardEntryID;
 @property (nonatomic, retain) NSString * sourceFrameCreatorNickname;
+@property (nonatomic, retain) NSString * sourceVideoTitle;
 @property (nonatomic, retain) Dashboard *dashboard;
 @property (nonatomic, retain) DashboardEntry *duplicateOf;
 @property (nonatomic, retain) NSOrderedSet *duplicates;

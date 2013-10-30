@@ -13,6 +13,8 @@
 #import "UIImage+Scale.h"
 
 NSString * const kShelbyAPIBaseURL =                        @"https://api.shelby.tv/";
+//live API: "https://api.shelby.tv/"
+//staging API: "http://api.staging.shelby.tv/"
 
 NSString * const DELETE =  @"DELETE";
 NSString * const kShelbyAPIDeleteFramePath =                @"v1/frame/%@";
@@ -55,6 +57,7 @@ NSString * const kShelbyAPIParamSinceId =                   @"since_id";
 NSString * const kShelbyAPIParamSkip =                      @"skip";
 NSString * const kShelbyAPIParamText =                      @"text";
 NSString * const kShelbyAPIParamTriggerRecommendations =    @"trigger_recs";
+NSString * const kShelbyAPIParamRecommendationsVersion =    @"recs_version";
 NSString * const kShelbyAPIParamNickname =                  @"nickname";
 NSString * const kShelbyAPIParamEmail =                     @"primary_email";
 NSString * const kShelbyAPIParamPassword =                  @"password";
@@ -383,7 +386,8 @@ static AFHTTPClient *httpClient = nil;
                                    andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     NSMutableDictionary *params = [@{kShelbyAPIParamLimit: @"50",
-                                     kShelbyAPIParamTriggerRecommendations: @"true" } mutableCopy];
+                                     kShelbyAPIParamTriggerRecommendations: @"true",
+                                     kShelbyAPIParamRecommendationsVersion: @"2"} mutableCopy];
     if (sinceEntry) {
         params[kShelbyAPIParamSinceId] = sinceEntry.dashboardEntryID;
     }

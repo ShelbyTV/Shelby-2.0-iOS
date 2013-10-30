@@ -24,7 +24,9 @@ typedef NS_ENUM(NSInteger, DashboardEntryType){
     DashboardEntryTypeComment,
     DashboardEntryTypePrioritizedFrame,
     DashboardEntryTypeVideoGraphRecommendation,
-    DashboardEntryTypeEntertainmentGraphRecommendation
+    DashboardEntryTypeEntertainmentGraphRecommendation,
+    DashboardEntryTypeMortarRecommendation,
+    DashboardEntryTypeChannelRecommendation
 };
 
 @interface DashboardEntry (Helper) <ShelbyModel, ShelbyDuplicateContainer, ShelbyVideoContainer>

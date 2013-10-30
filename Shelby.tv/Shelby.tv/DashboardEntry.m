@@ -2,7 +2,7 @@
 //  DashboardEntry.m
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 8/7/13.
+//  Created by Daniel Spinosa on 10/29/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -18,6 +18,7 @@
 @dynamic action;
 @dynamic dashboardEntryID;
 @dynamic sourceFrameCreatorNickname;
+@dynamic sourceVideoTitle;
 @dynamic dashboard;
 @dynamic duplicateOf;
 @dynamic duplicates;

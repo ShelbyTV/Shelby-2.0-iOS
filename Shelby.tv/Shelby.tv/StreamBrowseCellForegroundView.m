@@ -472,17 +472,22 @@
 
 - (void)updateVisualsForRecommendation
 {
-    if (_dashboardEntry && [_dashboardEntry typeOfEntry] == DashboardEntryTypeVideoGraphRecommendation) {
-        //dashboard entry recommendation
-        self.detailRecommendationReasonLabel.attributedText = [self recommendationStringFor:_dashboardEntry];
-        self.summaryRecommendationView.hidden = NO;
-        self.detailRecommendationView.hidden = NO;
-        self.summaryUserView.hidden = YES;
-        self.detailWhiteBackground.hidden = NO;
-        self.detailUserView.hidden = YES;
-        self.detailCommentView.hidden = YES;
-        self.detailLikersAndSharers.hidden = YES;
-    } else if (!_dashboardEntry && !_videoFrame.creator) {
+    if (_dashboardEntry) {
+        DashboardEntryType dbeType = [_dashboardEntry typeOfEntry];
+        if(dbeType == DashboardEntryTypeVideoGraphRecommendation ||
+           dbeType == DashboardEntryTypeMortarRecommendation) {
+            //dashboard entry recommendation
+            self.detailRecommendationReasonLabel.attributedText = [self recommendationStringFor:_dashboardEntry];
+            self.summaryRecommendationView.hidden = NO;
+            self.detailRecommendationView.hidden = NO;
+            self.summaryUserView.hidden = YES;
+            self.detailWhiteBackground.hidden = NO;
+            self.detailUserView.hidden = YES;
+            self.detailCommentView.hidden = YES;
+            self.detailLikersAndSharers.hidden = YES;
+            return;
+        }
+    } else if (!_videoFrame.creator) {
         //frame without a creator (ie. you liked a recommended video)
         self.summaryRecommendationView.hidden = YES;
         self.detailRecommendationView.hidden = YES;
@@ -491,16 +496,17 @@
         self.detailUserView.hidden = YES;
         self.detailCommentView.hidden = YES;
         self.detailLikersAndSharers.hidden = NO;
-    } else {
-        //regular dashboard entry or frame with creator
-        self.summaryRecommendationView.hidden = YES;
-        self.detailRecommendationView.hidden = YES;
-        self.summaryUserView.hidden = NO;
-        self.detailWhiteBackground.hidden = NO;
-        self.detailUserView.hidden = NO;
-        self.detailCommentView.hidden = NO;
-        self.detailLikersAndSharers.hidden = NO;
+        return;
     }
+
+    //fall back to regular dashboard entry or frame with creator
+    self.summaryRecommendationView.hidden = YES;
+    self.detailRecommendationView.hidden = YES;
+    self.summaryUserView.hidden = NO;
+    self.detailWhiteBackground.hidden = NO;
+    self.detailUserView.hidden = NO;
+    self.detailCommentView.hidden = NO;
+    self.detailLikersAndSharers.hidden = NO;
 }
 
 - (NSAttributedString *)recommendationStringFor:(DashboardEntry *)dashboardEntry
@@ -515,7 +521,12 @@
         [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2Bold}
                                 range:[recoString rangeOfString:recoUsername]];
         return recoAttributed;
-
+    } else if (dashboardEntry.sourceVideoTitle) {
+        NSString *recoString = [NSString stringWithFormat:@"Because you shared \"%@\"", dashboardEntry.sourceVideoTitle];
+        NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
+        [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2}
+                                range:[recoString rangeOfString:recoString]];
+        return recoAttributed;
     } else {
         NSString *recoString = @"We thought you'd like to see this";
         NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
