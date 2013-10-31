@@ -42,6 +42,8 @@ NSString * const kShelbyAPIPutUnplayableVideoPath =         @"v1/video/%@/unplay
 NSString * const kShelbyAPIParamAuthToken =                 @"auth_token";
 NSString * const kShelbyAPIParamAuthTokenAction =           @"intention";
 NSString * const kShelbyAPIParamChannelsSegment =           @"segment";
+NSString * const kShelbyAPIParamClientIdentifierKey =       @"client_identifier";
+NSString * const kShelbyAPIParamClientIdentifierValue =     @"iOS_iPhone";
 //when value for this key is an array of N items, this param is turned into "destination[]" and listed N times
 NSString * const kShelbyAPIParamDestinationArray =          @"destination";
 NSString * const kShelbyAPIParamFrameId =                   @"frame_id";
@@ -133,7 +135,7 @@ static AFHTTPClient *httpClient = nil;
                                             @"nickname": nickname,
                                             @"password": password,
                                             @"primary_email": email},
-                                 @"client_identifier" : @"iOS_iPhone"};
+                                 kShelbyAPIParamClientIdentifierKey : kShelbyAPIParamClientIdentifierValue};
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
 
@@ -146,7 +148,7 @@ static AFHTTPClient *httpClient = nil;
     NSDictionary *userParams = @{@"user": @{@"name": name,
                                             @"primary_email": email},
                                  @"generate_temporary_nickname_and_password" : @"1",
-                                 @"client_identifier" : @"iOS_iPhone"};
+                                 kShelbyAPIParamClientIdentifierKey : kShelbyAPIParamClientIdentifierValue};
     [ShelbyAPIClient postSignupWithUserParams:userParams andBlock:completionBlock];
 }
 
@@ -662,7 +664,8 @@ toExternalDestinations:(NSArray *)destinations
     NSDictionary *params = @{kShelbyAPIParamOAuthProviderName: @"facebook",
                              kShelbyAPIParamOAuthUid: accountID,
                              kShelbyAPIParamOAuthToken: token,
-                             kShelbyAPIParamAuthTokenAction : @"signup"};
+                             kShelbyAPIParamAuthTokenAction : @"signup",
+                             kShelbyAPIParamClientIdentifierKey : kShelbyAPIParamClientIdentifierValue};
     
     [ShelbyAPIClient postThirdPartyTokenWithDictionary:params andBlock:completionBlock];
     
