@@ -8,6 +8,9 @@
 
 #import "SignupFlowStepTwoViewController.h"
 #import "SignupVideoTypeViewCell.h"
+#import "ShelbyDataMediator.h"
+#import "User+Helper.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface SignupFlowStepTwoViewController ()
 // Initiate Segues
@@ -34,7 +37,19 @@
     self.videoTypes.backgroundColor = self.view.backgroundColor;
     
     if (self.facebookSignup) {
+        if (!self.signupDictionary) {
+            self.signupDictionary = [@{} mutableCopy];
+        }
         self.navigationItem.leftBarButtonItem.enabled = NO;
+        User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:YES];
+        
+        self.signupDictionary[kShelbySignupNameKey] = user.name;
+        self.signupDictionary[kShelbySignupUsernameKey] = user.facebookNickname;
+        // User might not have an email account. (in the case that the email account was used to signup with another user.
+        if (user.email) {
+            self.signupDictionary[kShelbySignupEmailKey] = user.email;
+        }
+        self.facebookSignup = YES;
     }
 }
 
@@ -170,6 +185,18 @@
             cell.avatar.image = self.avatarImage;
             cell.avatar.layer.masksToBounds = YES;
             cell.avatar.layer.cornerRadius = 5;
+        } else {
+            User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
+            
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[user avatarURL]];
+            __weak SignupFlowStepTwoViewController *weakself = self;
+            [cell.avatar setImageWithURLRequest:request placeholderImage:self.avatar.image success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                weakself.signupDictionary[kShelbySignupAvatarKey] = image;
+                cell.avatar.image = image;
+                self.avatarImage = image;
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                // No big deal, continue signup without user's avatar.
+            }];
         }
         cell.name = self.fullname;
         cell.delegate = self;

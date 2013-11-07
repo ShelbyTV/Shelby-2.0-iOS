@@ -8,11 +8,9 @@
 
 #import "SignupFlowNavigationViewController.h"
 #import "DeviceUtilities.h"
-#import "SignupFlowStepOneViewController.h"
 #import "ShelbyAnalyticsClient.h"
 
 @interface SignupFlowNavigationViewController ()
-@property (nonatomic, strong) NSMutableDictionary *signupDictionary;
 @end
 
 
@@ -52,13 +50,6 @@
 {
     SignupFlowViewController *signupVC = (SignupFlowViewController *)[self topViewController];
     [signupVC handleDidBecomeActive];
-}
-
-- (void)startWithFacebookSignup
-{
-    SignupFlowStepOneViewController *stepOne = (SignupFlowStepOneViewController *)self.viewControllers[0];
-    STVAssert([stepOne isKindOfClass:[SignupFlowStepOneViewController class]], @"First signup controller must be step one.");
-    [stepOne startWithFacebookSignup];
 }
 
 - (void)didReceiveMemoryWarning
@@ -111,6 +102,9 @@
 
 - (void)completeSignup
 {
+    SignupFlowViewController *rootVC = (SignupFlowViewController *)self.topViewController;
+    self.signupDictionary = rootVC.signupDictionary;
+    
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup action:kAnalyticsSignupFinish label:nil];
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFinishSignup];
     
@@ -132,6 +126,16 @@
 - (void)wantsLogin
 {
     [self.signupDelegate signupFlowNavigationViewControllerWantsLogin:self];
+}
+
+- (void)setSignupDelegate:(id<SignupFlowNavigationViewDelegate>)signupDelegate
+{
+    _signupDelegate = signupDelegate;
+    
+    // Making sure we don't have a delegate without a valid signupDictionary
+    if (!self.signupDictionary) {
+        self.signupDictionary = [@{} mutableCopy];
+    }
 }
 
 @end

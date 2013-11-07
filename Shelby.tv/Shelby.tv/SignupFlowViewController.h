@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, ShelbySignupStatus)
 @property (nonatomic, strong) NSString *fullname;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *nextButton;  // We don't want to lose reference to nextButton.
 @property (nonatomic, strong) NSMutableArray *selectedCellsTitlesArray;
-@property (nonatomic, weak) NSMutableDictionary *signupDictionary;
+@property (nonatomic, strong) NSMutableDictionary *signupDictionary;
 @property (nonatomic, weak) IBOutlet UICollectionView *videoTypes;
 
 // Might want to move textfields to corresponding VC, but for now, leaving all TextFields here for now.

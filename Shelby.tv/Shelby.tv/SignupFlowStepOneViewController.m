@@ -156,6 +156,16 @@
 }
 
 
+- (void)signupWithFacebookCompletedSkipStepOne
+{
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup
+                                          action:kAnalyticsSignupWithFacebookInitialSuccess
+                                           label:nil];
+    
+    self.facebookSignup = YES;
+    [self cleanupAfterSignupWithFacebook];
+}
+
 - (void)startWithFacebookSignup
 {
     [self signupWithFacebook:nil];
@@ -215,8 +225,16 @@
         [self startSignupUser];
     }
 }
+
+- (void)cleanupAfterSignupWithFacebook
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
+}
 - (void)signupWithFacebookCompleted:(NSNotification *)notification
 {
+    [self cleanupAfterSignupWithFacebook];
+    
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup
                                           action:kAnalyticsSignupWithFacebookInitialSuccess
                                            label:nil];

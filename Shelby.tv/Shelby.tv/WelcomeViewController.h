@@ -30,4 +30,5 @@ typedef NS_ENUM(NSInteger, ShelbyWelcomeStatus)
 - (void)welcomeDidTapLogin:(WelcomeViewController *)welcomeVC;
 - (void)welcomeDidTapSignup:(WelcomeViewController *)welcomeVC;
 - (void)welcomeDidTapSignupWithFacebook:(WelcomeViewController *)welcomeVC;
+- (void)welcomeDidCompleteSignupWithFacebook:(WelcomeViewController *)welcomeVC;
 @end

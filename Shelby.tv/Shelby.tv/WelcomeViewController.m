@@ -7,6 +7,7 @@
 //
 
 #import "WelcomeViewController.h"
+#import "ShelbyDataMediator.h"
 #import "WelcomeLoginView.h"
 #import "WelcomeScrollHolderView.h"
 
@@ -87,6 +88,10 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
 
 - (IBAction)signupWithFacebookTapped:(id)sender
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(signupWithFacebookCompleted:) name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignupDidFail:) name:kShelbyNotificationUserSignupDidFail object:nil];
+
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeTapSignupWithFacebook
                                        withLabel:[self welcomeDuration]];
@@ -118,6 +123,39 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
     [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidPreview];
     [self welcomeComplete];
     [self.delegate welcomeDidTapPreview:self];
+}
+
+
+- (void)removeObserversForSignup
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidSucceed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyNotificationUserSignupDidFail object:nil];
+}
+
+- (void)signupWithFacebookCompleted:(NSNotification *)notification
+{
+    [self removeObserversForSignup];
+    [self.delegate welcomeDidCompleteSignupWithFacebook:self];
+}
+
+- (void)userSignupDidFail:(NSNotification *)notification
+{
+    [self removeObserversForSignup];
+
+    NSString *errorMessage = notification.object;
+    
+    if (!errorMessage || ![errorMessage isKindOfClass:[NSString class]] || [errorMessage isEqualToString:@""]) {
+        errorMessage = @"There was a problem. Please try again later.";
+    }
+    
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:errorMessage
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
+
 }
 
 #pragma mark - Helpers

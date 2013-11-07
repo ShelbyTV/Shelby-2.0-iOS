@@ -19,6 +19,7 @@
 #import "ShelbyABTestManager.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
+#import "SignupFlowStepOneViewController.h"
 #import "SignupFlowViewController.h"
 #import "SPVideoExtractor.h"
 #import "User+Helper.h"
@@ -1006,13 +1007,19 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 
 - (void)welcomeDidTapSignupWithFacebook:(WelcomeViewController *)welcomeVC
 {
+    [self signupWithFacebook];
+}
+
+- (void)welcomeDidCompleteSignupWithFacebook:(WelcomeViewController *)welcomeVC
+{
     UIStoryboard *signupFlowStoryboard = [UIStoryboard storyboardWithName:@"SignupFlow" bundle:nil];
     self.signupFlowVC = (SignupFlowNavigationViewController *)[signupFlowStoryboard instantiateInitialViewController];
     self.signupFlowVC.signupDelegate = self;
+    [((SignupFlowStepOneViewController *)self.signupFlowVC.topViewController) signupWithFacebookCompletedSkipStepOne];
     
+    [self.signupFlowVC.topViewController performSegueWithIdentifier:@"ChooseVideos" sender:self.signupFlowVC];
     [self.mainWindow.rootViewController presentViewController:self.signupFlowVC animated:YES completion:^{
         [WelcomeViewController setWelcomeScreenComplete:ShelbyWelcomeStatusComplete];
-        [self.signupFlowVC startWithFacebookSignup];
     }];
 }
 
