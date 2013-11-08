@@ -158,6 +158,7 @@
 
 - (void)signupWithFacebookCompletedSkipStepOne
 {
+    [SignupFlowViewController setSignupStatus:ShelbySignupStatusStarted];
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategorySignup
                                           action:kAnalyticsSignupWithFacebookInitialSuccess
                                            label:nil];
