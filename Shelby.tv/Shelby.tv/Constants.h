@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Shelby TV. All rights reserved.
 //
 
-#import "GAIConstants.h"
-#import "SPConstants.h"
 #import "UIColor+ColorWithHexAndAlpha.h"
 
 /// Misc.
