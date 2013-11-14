@@ -14,6 +14,7 @@
 		1C0E527C17BACBA8008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E527F17BACBBA008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E528117BACBCC008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
+		1C2FB61C183556720044CB38 /* DeviceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C2FB61B183556720044CB38 /* DeviceUtilities.m */; };
 		1C3D91371714C6DB00105839 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91331714C6CC00105839 /* Accounts.framework */; };
 		1C3D91381714C6DB00105839 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91341714C6CC00105839 /* AdSupport.framework */; };
 		1C3D91391714C6E100105839 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3D91331714C6CC00105839 /* Accounts.framework */; };
@@ -239,6 +240,8 @@
 		1C0025F916F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Enterprise-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1C0025FA16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shelby.tv Nightly-Info.plist"; sourceTree = SOURCE_ROOT; };
 		1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1C2FB61A183556720044CB38 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
+		1C2FB61B183556720044CB38 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		1C3D91341714C6CC00105839 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		1C56F11517BABD8C00EE9206 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -603,6 +606,8 @@
 				1CD5349918318AE200CF8BCD /* Main.storyboard */,
 				1CD5349618318ACD00CF8BCD /* ViewController.h */,
 				1CD5349718318ACD00CF8BCD /* ViewController.m */,
+				1C2FB61A183556720044CB38 /* DeviceUtilities.h */,
+				1C2FB61B183556720044CB38 /* DeviceUtilities.m */,
 				8EAAEE58163A286B00AEF100 /* Categories */,
 				915CDA7A17BE8FC7003C3A38 /* Images.xcassets */,
 				8E209718162F3A61000A2DFD /* Supporting Files */,
@@ -1015,6 +1020,7 @@
 				1C8109A316EE2CBF0030077C /* AFJSONRequestOperation.m in Sources */,
 				1C8109A416EE2CBF0030077C /* AFNetworkActivityIndicatorManager.m in Sources */,
 				1C8109A516EE2CBF0030077C /* AFPropertyListRequestOperation.m in Sources */,
+				1C2FB61C183556720044CB38 /* DeviceUtilities.m in Sources */,
 				1C8109A616EE2CBF0030077C /* AFURLConnectionOperation.m in Sources */,
 				1C8109A716EE2CBF0030077C /* AFXMLRequestOperation.m in Sources */,
 				1C8109A816EE2CBF0030077C /* UIImageView+AFNetworking.m in Sources */,

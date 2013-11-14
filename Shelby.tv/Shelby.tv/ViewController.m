@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "UIColor+ColorWithHexAndAlpha.h"
+#import "DeviceUtilities.h"
 
 @interface ViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *getShelby;
@@ -39,7 +40,7 @@
 
 - (IBAction)downloadApp:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.apple.com/us/app/appName/id732244981?mt=8"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", SHELBY_APP_ID]]];
 }
 
 @end
