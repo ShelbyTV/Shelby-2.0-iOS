@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "TwitterHandler.h"
 #import "FacebookHandler.h"
+#import "DeviceUtilities.h"
 #import "SettingsViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "UserDetailsCell.h"
@@ -253,7 +254,11 @@
     } else if (indexPath.row == 3) {
         [self openMailComposer];
     } else if (indexPath.row == 4) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", SHELBY_APP_ID]]];
+        if ([DeviceUtilities isGTEiOS7]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", SHELBY_APP_ID]]];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", SHELBY_APP_ID]]];
+        }
     } else if (indexPath.row == 5) {
         [self logout:nil];
     }
