@@ -835,12 +835,14 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
                                                      avatar:avatar
                                                       rolls:rolls
                                                  completion:^(NSError *error) {
-                                                     [self dismissSigupVCCompletion:^{
-                                                         //if we came from welcomeVC, switch over to homeVC (call is idempotent)
-                                                         [self activateHomeViewController];
-                                                         //make sure we're showing updated stream (whether we came from welcome or home)
-                                                         [self fetchUserChannelsForceSwitchToUsersStream:YES];
-                                                     }];
+                                                     if (!error) {
+                                                         [self dismissSigupVCCompletion:^{
+                                                             //if we came from welcomeVC, switch over to homeVC (call is idempotent)
+                                                             [self activateHomeViewController];
+                                                             //make sure we're showing updated stream (whether we came from welcome or home)
+                                                             [self fetchUserChannelsForceSwitchToUsersStream:YES];
+                                                         }];
+                                                     }
                                                  }];
 }
 
