@@ -223,8 +223,12 @@
 
     dispatch_async(dispatch_get_main_queue(), ^{
         User *user = [[ShelbyDataMediator sharedInstance] fetchAuthenticatedUserOnMainThreadContext];
-        self.signupDictionary[kShelbySignupNameKey] = user.name;
-        self.signupDictionary[kShelbySignupUsernameKey] = user.facebookNickname;
+        if (user.name) {
+            self.signupDictionary[kShelbySignupNameKey] = user.name;
+        }
+        if (user.facebookNickname) {
+            self.signupDictionary[kShelbySignupUsernameKey] = user.facebookNickname;
+        }
         // User might not have an email account. (in the case that the email account was used to signup with another user.
         if (user.email) {
             self.signupDictionary[kShelbySignupEmailKey] = user.email;
@@ -233,7 +237,9 @@
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[user avatarURL]];
         __weak SignupFlowStepOneViewController *weakself = self;
         [self.avatar setImageWithURLRequest:request placeholderImage:self.avatar.image success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            weakself.signupDictionary[kShelbySignupAvatarKey] = image;
+            if (image) {
+                weakself.signupDictionary[kShelbySignupAvatarKey] = image;
+            }
             [weakself signupSuccess];
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
             // No big deal, continue signup without user's avatar.
