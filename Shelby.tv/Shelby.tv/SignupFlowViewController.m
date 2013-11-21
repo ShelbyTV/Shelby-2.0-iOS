@@ -231,7 +231,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     } else if (textField.tag == TextFieldTagUsername) {
         self.username.text = value;
         self.signupDictionary[kShelbySignupUsernameKey] = value;
-    } else if (textField.tag == TextFieldTagPassword) {
+    } else if (textField.tag == TextFieldTagPassword && value) {
+        // When a textfield is empty, textfield.text will return "". But for a password field, it returns nil. So need to make sure value is not nil.
         self.password.text = value;
         self.signupDictionary[kShelbySignupPasswordKey] = value;
     }
