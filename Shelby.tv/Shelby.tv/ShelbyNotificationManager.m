@@ -73,7 +73,10 @@
         numberOfDays = 7 + numberOfDays;
     } else if (numberOfDays == 0) {
         // If today is the same day we want the notification, check if hour has passed. And if it has, schedule for today next week.
+        // Else if today is the same day we want the notification, and it is the same hour we want to schedule, check if the minute have passed. And if it has, schedule for today next week.
         if (hour < todayComp.hour) {
+            numberOfDays += 7;
+        } else if (hour == todayComp.hour && minute < todayComp.minute) {
             numberOfDays += 7;
         }
     }
