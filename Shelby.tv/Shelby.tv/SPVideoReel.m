@@ -513,36 +513,32 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     SPVideoPlayer *additionalPlayer;
     
     //progressively build up playerToKeep
+    // The lack "breaks" in the switch statement is intentional.
     switch (preloadStrategy) {
         case SPVideoReelPreloadNextThreeKeepPrevious:
             additionalPlayer = [self preloadPlayerAtIndex:self.currentVideoPlayingIndex+3];
             if(additionalPlayer) {
                 [playersToKeep addObject:additionalPlayer];
             }
-            break;
         case SPVideoReelPreloadNextTwoKeepPrevious:
             additionalPlayer = [self preloadPlayerAtIndex:self.currentVideoPlayingIndex+2];
             if(additionalPlayer) {
                 [playersToKeep addObject:additionalPlayer];
             }
-            break;
         case SPVideoReelPreloadNextKeepPrevious:
             if(previousPlayer) {
                 [playersToKeep addObject:previousPlayer];
             }
-            break;
         case SPVideoReelPreloadNextOnly:
             additionalPlayer = [self preloadPlayerAtIndex:self.currentVideoPlayingIndex+1];
             if(additionalPlayer) {
                 [playersToKeep addObject:additionalPlayer];
             }
-            break;
         case SPVideoReelPreloadNone:
         case SPVideoReelPreloadStrategyNotSet:
             if (currentPlayer) {
                 [playersToKeep addObject:currentPlayer];
             }
-            break;
     }
     
     //reset players not on keep list
