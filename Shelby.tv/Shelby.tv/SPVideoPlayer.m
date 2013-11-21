@@ -124,9 +124,10 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
         //reuse player
         self.lastPlayheadPosition = CMTimeMake(0, NSEC_PER_MSEC);
+        [self removePlayerItemObservers:self.player.currentItem];
         [self.player replaceCurrentItemWithPlayerItem:playerItem];
         //replacement happens asynchronously.
-        //we remove/add observers via KVO on self.player.currentItem and autoplay then
+        //we add observers via KVO on self.player.currentItem and autoplay then
 
     } else {
         //new player
@@ -226,8 +227,10 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 - (void)removePlayerItemObservers:(AVPlayerItem *)playerItem
 {
     //NB: this is technically observing player, but needs to be in sync w/ playerItem
-    [self.player removeTimeObserver:self.playerTimeObserver];
-    self.playerTimeObserver = nil;
+    if (self.playerTimeObserver) {
+        [self.player removeTimeObserver:self.playerTimeObserver];
+        self.playerTimeObserver = nil;
+    }
 
     if (playerItem) {
         [playerItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
@@ -443,12 +446,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
             }
         } else if ([keyPath isEqualToString:kShelbySPVideoCurrentItemKey]) {
             //item replacement not guaranteed to be called on same thread that registered for KVO
-            if (change[NSKeyValueChangeOldKey]) {
-                [self performSelectorOnMainThread:@selector(removePlayerItemObservers:)
-                                       withObject:change[NSKeyValueChangeOldKey]
-                                    waitUntilDone:YES];
-            }
-            if (change[NSKeyValueChangeNewKey]) {
+             if (change[NSKeyValueChangeNewKey]) {
                 [self performSelectorOnMainThread:@selector(playerItemReplacedWith:)
                                        withObject:change[NSKeyValueChangeNewKey]
                                     waitUntilDone:YES];
@@ -488,11 +486,6 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
 
 - (void)currentTimeUpdated:(CMTime)time
 {
-    if(!self.isPlaying){
-        // This will happen a few times immediatley after pause, but that's innocuous.
-        // This is not a reliable way to detect/prevent issues like double-playback.
-        // -djs
-    }
     [self.videoPlayerDelegate videoCurrentTime:time forPlayer:self];
 
     if (CMTimeGetSeconds(CMTimeSubtract(time, _lastPlaybackUpdateIntervalEnd)) > PLAYBACK_API_UPDATE_INTERVAL) {
