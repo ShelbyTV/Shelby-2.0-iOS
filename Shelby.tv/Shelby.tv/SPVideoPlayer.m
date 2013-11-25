@@ -232,7 +232,7 @@ NSString * const kShelbySPVideoPlayerCurrentPlayingVideoChanged = @"kShelbySPVid
         self.playerTimeObserver = nil;
     }
 
-    if (playerItem) {
+    if (playerItem && (id)playerItem != [NSNull null]) {
         [playerItem removeObserver:self forKeyPath:kShelbySPVideoBufferEmpty];
         [playerItem removeObserver:self forKeyPath:kShelbySPVideoBufferLikelyToKeepUp];
         [playerItem removeObserver:self forKeyPath:kShelbySPLoadedTimeRanges];
