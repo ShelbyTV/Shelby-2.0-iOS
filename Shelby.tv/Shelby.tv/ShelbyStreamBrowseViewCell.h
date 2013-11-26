@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, ShelbyStreamBrowseViewMode)
 - (void)browseViewCell:(ShelbyStreamBrowseViewCell *)cell parallaxDidChangeToPage:(NSUInteger)page;
 - (void)browseViewCellTitleWasTapped:(ShelbyStreamBrowseViewCell *)cell;
 - (void)inviteFacebookFriendsWasTapped:(ShelbyStreamBrowseViewCell *)cell;
+- (void)userProfileWasTapped:(ShelbyStreamBrowseViewCell *)cell withUserID:(NSString *)userID;
 @end
 
 @interface ShelbyStreamBrowseViewCell : UICollectionViewCell <STVParallaxViewDelegate, StreamBrowseCellForegroundViewDelegate>

@@ -330,4 +330,9 @@
     [self.delegate inviteFacebookFriendsWasTapped:self];
 }
 
+- (void)userProfileWasTapped:(NSString *)userID
+{
+    [self.delegate userProfileWasTapped:self withUserID:userID];
+}
+
 @end

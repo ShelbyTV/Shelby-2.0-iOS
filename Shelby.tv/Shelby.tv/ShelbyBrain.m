@@ -884,6 +884,11 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
     [[ShelbyDataMediator sharedInstance] inviteFacebookFriends];
 }
 
+- (void)userProfileWasTapped:(NSString *)userID
+{
+    // TODO: KP KP
+}
+
 - (void)connectToTwitter
 {
     //get topmost visible view

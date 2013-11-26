@@ -26,6 +26,7 @@
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
 - (void)inviteFacebookFriendsWasTapped;
+- (void)userProfileWasTapped:(NSString *)userID;
 @end
 
 

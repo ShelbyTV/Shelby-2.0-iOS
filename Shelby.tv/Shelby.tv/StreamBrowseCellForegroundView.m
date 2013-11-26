@@ -54,11 +54,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *summaryViaNetwork;
 @property (weak, nonatomic) IBOutlet UIView *summaryRecommendationView;
 
+@property (nonatomic, strong) NSString *userID;
+
 //overlay below everything
 @property (nonatomic, strong) UIImageView *overlayImageView;
 
 - (IBAction)playVideoInCell:(id)sender;
 - (IBAction)sendFacebookRequest:(id)sender;
+- (IBAction)goToUserProfile:(id)sender;
 @end
 
 @implementation StreamBrowseCellForegroundView
@@ -232,6 +235,9 @@
     // Username
     self.summaryUsername.text = _videoFrame.creator.nickname;
     self.detailUsername.text = _videoFrame.creator.nickname;
+    
+    // User ID
+    self.userID = _videoFrame.creator.userID;
     
     // User Avatar
     // Request setup was taken from UIImage+AFNetworking. As we have to set a completion block so the detail avatar will be the same as the summary one. (Otherwise, we had to make 2 seperate calls)
@@ -444,6 +450,11 @@
 - (IBAction)sendFacebookRequest:(id)sender
 {
     [self.delegate inviteFacebookFriendsWasTapped];
+}
+
+- (IBAction)goToUserProfile:(id)sender
+{
+    [self.delegate userProfileWasTapped:self.userID];
 }
 
 - (void)processLikersAndSharers

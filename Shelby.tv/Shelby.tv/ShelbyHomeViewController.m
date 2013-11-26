@@ -707,6 +707,11 @@
     [self.masterDelegate inviteFacebookFriendsWasTapped];
 }
 
+- (void)userProfileWasTapped:(ShelbyStreamBrowseViewController *)vc withUserID:(NSString *)userID
+{
+    [self.masterDelegate userProfileWasTapped:userID];
+}
+
 - (void)launchMyRoll
 {
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersRoll)]) {
