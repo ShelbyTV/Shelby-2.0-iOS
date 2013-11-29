@@ -22,9 +22,17 @@
     [self.view addSubview:self.navBar];
     self.navBar.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
+    UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.frame.size.width-100, 24)];
+    username.textAlignment = NSTextAlignmentCenter;
+    username.text = self.currentUser.nickname;
+    username.backgroundColor = [UIColor clearColor];
+    username.textColor = kShelbyColorGray;
+    
+    [self.navBar addSubview:username];
+    
     // Close Button
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    closeButton.frame = CGRectMake(10, 10, 40, 34);
+    closeButton.frame = CGRectMake(10, 5, 40, 34);
     [closeButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
     [closeButton addTarget:self action:@selector(dismissUserProfile) forControlEvents:UIControlEventTouchUpInside];
     [closeButton setTitle:@"Close" forState:UIControlStateNormal];
