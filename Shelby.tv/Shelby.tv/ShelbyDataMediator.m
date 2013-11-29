@@ -168,6 +168,44 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 }
 
 
+// KP KP: TODO: might want to refactor it with the other fetchEntriesInChannel method
+- (void)fetchFramesInChannel:(DisplayChannel *)channel withCompletionHandler:(shelby_data_mediator_complete_block_t)completionHandler
+{
+    Roll *roll = channel.roll;
+    [ShelbyAPIClient fetchFramesForRollID:roll.rollID sinceEntry:nil
+                                withBlock:^(id JSON, NSError *error) {
+                                    if(JSON){
+                                        // 1) store this in core data (with a new background context)
+                                        [self privateContextPerformBlock:^(NSManagedObjectContext *privateMOC) {
+                                            DisplayChannel *privateContextChannel = (DisplayChannel *)[privateMOC objectWithID:channel.objectID];
+                                            Roll *privateContextRoll = (Roll *)[privateMOC objectWithID:roll.objectID];
+                                            NSArray *frames = [self findOrCreateFramesForJSON:JSON
+                                                                                     withRoll:privateContextRoll
+                                                                                    inContext:privateMOC];
+                                            privateContextChannel.roll.frame = [NSSet setWithArray:frames];
+                                            
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                NSManagedObjectContext *mainMOC = [self mainThreadMOC];
+                                                NSMutableArray *results = [@[] mutableCopy];
+                                                //OPTIMIZE: we can actually pre-fetch / fault all of these objects in, we know we need them
+                                                //OPTIMIZE: this makes N calls to the DB, could use an 'IN' predicate to do it in one call:
+                                                //[NSPredicate predicateWithFormat:@"identifier IN %@", identifiersOfRelatedObjects];
+                                                for (Frame *frame in frames) {
+                                                    Frame *mainThreadFrame = (Frame *)[mainMOC objectWithID:frame.objectID];
+                                                    [results addObject:mainThreadFrame];
+                                                }
+                                                DisplayChannel *mainThreadChannel = (DisplayChannel *)[mainMOC objectWithID:channel.objectID];
+                                                completionHandler(mainThreadChannel, results);
+                                            });
+                                        }];                
+                                        
+                                    } else {
+                                        completionHandler(channel, nil);
+                                    }
+                                }];
+}
+
+
 - (User *)fetchUserWithID:(NSString *)userID inContext:(NSManagedObjectContext *)context completion:(void (^)(User *fetchedUser))completion
 {
     STVAssert(completion, @"expected a completion block");
@@ -175,21 +213,29 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     if (localUser) {
         return localUser;
     } else {
-
-        [ShelbyAPIClient fetchUserForUserID:userID andBlock:^(id JSON, NSError *error) {
-            if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSDictionary class]]) {
-                //we are now on main thread, but that may not be right for the context we were given
-                [context performBlock:^{
-                    User *fetchedUser = [User userForDictionary:JSON[@"result"] inContext:context];
-                    completion(fetchedUser);
-                }];
-            } else {
-                completion(nil);
-            }
-        }];
-        return nil;
+        return [self forceFetchUserWithID:userID inContext:context completion:completion];
     }
 }
+
+// TODO: KP KP: Can we cache these? and not force fetch everytime?
+- (User *)forceFetchUserWithID:(NSString *)userID
+                     inContext:(NSManagedObjectContext *)context
+                    completion:(void (^)(User *fetchedUser))completion
+{
+    [ShelbyAPIClient fetchUserForUserID:userID andBlock:^(id JSON, NSError *error) {
+        if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSDictionary class]]) {
+            //we are now on main thread, but that may not be right for the context we were given
+            [context performBlock:^{
+                User *fetchedUser = [User userForDictionary:JSON[@"result"] inContext:context];
+                completion(fetchedUser);
+            }];
+        } else {
+            completion(nil);
+        }
+    }];
+    return nil;
+}
+
 
 - (void)likeFrame:(Frame *)frame forUser:(User *)user
 {

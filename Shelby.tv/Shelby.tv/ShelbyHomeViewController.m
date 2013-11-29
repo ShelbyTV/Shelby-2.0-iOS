@@ -24,7 +24,7 @@
     UIViewController *_currentFullScreenVC;
 }
 @property (nonatomic, strong) ShelbyNavBarViewController *navBarVC;
-@property (nonatomic, weak) UIView *navBar;
+
 @property (nonatomic, strong) UIView *navBarButtonView;
 
 @property (nonatomic, strong) NSMutableArray *streamBrowseVCs;
@@ -244,6 +244,11 @@
     }];
 }
 
+- (CGFloat)swapAnimationTime
+{
+    return 0.5;
+}
+
 - (void)swapOutViewController:(UIViewController *)oldVC forViewController:(UIViewController *)newVC completion:(void (^)(BOOL finished))completion
 {
     [oldVC willMoveToParentViewController:nil];
@@ -253,7 +258,7 @@
     CGAffineTransform scaleAndTranslateIntoNav = CGAffineTransformConcat(CGAffineTransformMakeScale(.2f, .2f), CGAffineTransformMakeTranslation(0, -self.view.bounds.size.height));
     newVC.view.transform = scaleAndTranslateIntoNav;
     newVC.view.alpha = 1.f;
-    [UIView transitionWithView:self.view duration:0.5 options:(UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionCurveEaseOut) animations:^{
+    [UIView transitionWithView:self.view duration:[self swapAnimationTime] options:(UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionCurveEaseOut) animations:^{
         oldVC.view.transform = scaleAndTranslateIntoNav;
         oldVC.view.alpha = 0.f;
         newVC.view.transform = CGAffineTransformIdentity;

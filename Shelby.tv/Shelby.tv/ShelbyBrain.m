@@ -19,6 +19,7 @@
 #import "ShelbyABTestManager.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
+#import "ShelbyUserProfileViewController.h"
 #import "SignupFlowViewController.h"
 #import "SPVideoExtractor.h"
 #import "User+Helper.h"
@@ -886,7 +887,33 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 
 - (void)userProfileWasTapped:(NSString *)userID
 {
-    // TODO: KP KP
+    [[ShelbyDataMediator sharedInstance] forceFetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {
+        
+        DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedUser.publicRollID];
+        
+        if (!rollChannel) {
+            rollChannel = [DisplayChannel channelForTransientEntriesWithID:fetchedUser.publicRollID title:fetchedUser.nickname inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            Roll *userRoll = [Roll rollForDictionary:@{@"id" : fetchedUser.publicRollID} inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            rollChannel.roll = userRoll;
+        }
+        [[ShelbyDataMediator sharedInstance] fetchFramesInChannel:rollChannel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
+            ShelbyUserProfileViewController *userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
+            
+            userProfileVC.masterDelegate = self;
+            userProfileVC.channels = @[rollChannel];
+            userProfileVC.currentUser = fetchedUser;
+            
+            UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+            while ([topViewController presentedViewController]) {
+                topViewController = [topViewController presentedViewController];
+            }
+            
+            [topViewController presentViewController:userProfileVC animated:YES completion:^{
+                [userProfileVC setEntries:entries forChannel:displayChannel];
+                [userProfileVC focusOnChannel:displayChannel];
+            }];
+        }];
+    }];
 }
 
 - (void)connectToTwitter

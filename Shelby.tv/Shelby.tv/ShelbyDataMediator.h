@@ -65,6 +65,8 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 - (void)fetchGlobalChannels;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel sinceEntry:(NSManagedObject *)entry;
 - (void)fetchEntriesInChannel:(DisplayChannel *)channel withCompletionHandler:(shelby_data_mediator_complete_block_t)completionHandler;
+- (void)fetchFramesInChannel:(DisplayChannel *)channel withCompletionHandler:(shelby_data_mediator_complete_block_t)completionHandler
+;
 - (User *)fetchAuthenticatedUserOnMainThreadContext;
 - (User *)fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:(BOOL)forceRefresh;
 - (void)fetchAllUnsyncedLikes;
@@ -74,6 +76,9 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 - (User *)fetchUserWithID:(NSString *)userID
                 inContext:(NSManagedObjectContext *)context
                completion:(void (^)(User *fetchedUser))completion;
+- (User *)forceFetchUserWithID:(NSString *)userID
+                     inContext:(NSManagedObjectContext *)context
+                    completion:(void (^)(User *fetchedUser))completion;
 
 -(void)logoutCurrentUser;
 

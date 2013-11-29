@@ -38,6 +38,7 @@
 @property (nonatomic, weak) id masterDelegate;
 @property (strong, nonatomic) User *currentUser;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *channelsLoadingActivityIndicator;
+@property (nonatomic, strong) UIView *navBar;
 
 - (NSInteger)indexOfDisplayedEntry:(id)entry inChannel:(DisplayChannel *)channel;
 
@@ -70,4 +71,8 @@
 
 - (void)handleDidBecomeActive;
 - (void)handleWillResignActive;
+
+// Methods to Override
+- (CGFloat)swapAnimationTime;
+- (void)setupNavBarView;
 @end
