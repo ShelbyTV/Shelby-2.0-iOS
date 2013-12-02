@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "ShelbyHomeViewController.h"
 
+@protocol ShelbyUserProfileDelegate <NSObject>
+- (void)followUser:(NSString *)publicRollID;
+@end
+
 @interface ShelbyUserProfileViewController : ShelbyHomeViewController
 
 @end

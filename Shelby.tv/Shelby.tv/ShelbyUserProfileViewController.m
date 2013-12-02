@@ -43,12 +43,27 @@
     [closeButton setTitle:@"Close" forState:UIControlStateNormal];
     closeButton.titleLabel.font = kShelbyFontH4Bold;
     [self.navBar addSubview:closeButton];
+    
+    // Follow Button
+    UIButton *followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    followButton.frame = CGRectMake(250, 5, 60, 34);
+    [followButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
+    [followButton addTarget:self action:@selector(followUserProfile) forControlEvents:UIControlEventTouchUpInside];
+    [followButton setTitle:@"Follow" forState:UIControlStateNormal];
+    followButton.titleLabel.font = kShelbyFontH4Bold;
+    [self.navBar addSubview:followButton];
+    
 }
 
 - (void)dismissUserProfile
 {
     [self dismissVideoReel];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)followUserProfile
+{
+    [self.masterDelegate followUser:self.currentUser.publicRollID];
 }
 
 - (void)setCurrentUser:(User *)currentUser

@@ -855,6 +855,12 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 }
 
 // Some of these methods are also for SettingsViewDelefate
+#pragma mark - ShelbyUserProfileDelegate
+- (void)followUser:(NSString *)publicRollID
+{
+    [[ShelbyDataMediator sharedInstance] followRoll:publicRollID];
+}
+
 #pragma mark - ShelbyHomeDelegate
 - (void)presentUserLogin
 {

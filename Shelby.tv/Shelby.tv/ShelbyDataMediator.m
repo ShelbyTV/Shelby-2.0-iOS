@@ -750,6 +750,15 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
               completion:completion];
 }
 
+- (void)followRoll:(NSString *)rollID
+{
+    User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
+    STVAssert(user.token, @"expect user to have a valid token (so we can follow rolls)");
+    
+    [self followRoll:rollID withAuthToken:user.token];
+    
+}
+
 - (void)followRoll:(NSString *)rollID withAuthToken:(NSString *)authToken
 {
     STVAssert(rollID && authToken, @"Expected rollID & authToken");
