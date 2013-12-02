@@ -430,7 +430,7 @@
     switch (_displayMode) {
         case VideoControlsDisplayDefault:
             [self setPlaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
-            [self setNonplaybackActionViewsAlpha:0.0 userInteractionEnabled:NO];
+            [self setNonplaybackActionViewsAlpha:0.75 userInteractionEnabled:NO];
             [self setPlaybackControlViewsAlpha:0.0 userInteractionEnabled:NO];
             self.controlsView.overlay.hidden = YES;
             self.separator.hidden = YES;
