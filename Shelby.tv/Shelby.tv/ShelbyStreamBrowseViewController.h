@@ -66,6 +66,8 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus;
 
 - (void)refreshActivityIndicatorShouldAnimate:(BOOL)shouldAnimate;
 
+- (NSInteger)sectionForVideoCards;
+
 - (NSIndexPath *)indexPathForCurrentFocus;
 - (id<ShelbyVideoContainer>)entityForCurrentFocus;
 

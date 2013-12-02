@@ -72,7 +72,9 @@
 - (void)handleDidBecomeActive;
 - (void)handleWillResignActive;
 
-// Methods to Override
+// Methods to Override by subclass
 - (CGFloat)swapAnimationTime;
 - (void)setupNavBarView;
+- (ShelbyStreamBrowseViewController *)initializeStreamBrowseViewController;
+- (ShelbyStreamBrowseViewController *)streamBrowseViewControllerForChannel:(DisplayChannel *)channel;
 @end

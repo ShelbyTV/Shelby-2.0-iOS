@@ -7,6 +7,11 @@
 //
 
 #import "ShelbyUserProfileViewController.h"
+#import "ShelbyUserStreamBrowseViewController.h"
+
+@interface ShelbyUserProfileViewController()
+@property (nonatomic, strong) ShelbyUserStreamBrowseViewController *currentBrowseVC;
+@end
 
 @implementation ShelbyUserProfileViewController
 
@@ -44,6 +49,27 @@
 {
     [self dismissVideoReel];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)setCurrentUser:(User *)currentUser
+{
+    [super setCurrentUser:currentUser];
+    
+    self.currentBrowseVC.currentUser = currentUser;
+}
+
+- (ShelbyStreamBrowseViewController *)initializeStreamBrowseViewController
+{
+    self.currentBrowseVC = [[ShelbyUserStreamBrowseViewController alloc] initWithNibName:@"ShelbyStreamBrowseView" bundle:nil];
+    self.currentBrowseVC.currentUser = self.currentUser;
+    
+    
+    return self.currentBrowseVC;
+}
+
+- (ShelbyStreamBrowseViewController *)streamBrowseViewControllerForChannel:(DisplayChannel *)channel
+{
+    return self.currentBrowseVC;
 }
 
 @end

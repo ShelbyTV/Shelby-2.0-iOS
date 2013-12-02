@@ -910,6 +910,8 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
             
             [topViewController presentViewController:userProfileVC animated:YES completion:^{
                 [userProfileVC setEntries:entries forChannel:displayChannel];
+                // KP KP: Setting the user was done for the case where we have 2 sections. No harm in leaving it here for now
+                [userProfileVC setCurrentUser:fetchedUser];
                 [userProfileVC focusOnChannel:displayChannel];
             }];
         }];

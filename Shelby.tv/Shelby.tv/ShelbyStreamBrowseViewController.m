@@ -326,6 +326,11 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
     }
 }
 
+- (NSInteger)sectionForVideoCards
+{
+    return 0;
+}
+
 - (NSIndexPath *)indexPathForCurrentFocus
 {
     @synchronized(self) {
@@ -333,7 +338,7 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
         // return nil for -indexPahtsForVisibleItems: but we expect row 0.
         NSIndexPath *idxPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.collectionView.frame.size.width/2.f, self.collectionView.contentOffset.y + self.collectionView.frame.size.height/2.f)];
         if (!idxPath && [self.deduplicatedEntries count] > 0) {
-            return [NSIndexPath indexPathForRow:0 inSection:0];
+            return [NSIndexPath indexPathForRow:0 inSection:[self sectionForVideoCards]];
         }
         return idxPath;
     }

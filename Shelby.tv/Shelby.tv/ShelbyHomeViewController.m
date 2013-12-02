@@ -171,6 +171,11 @@
 }
 
 
+- (ShelbyStreamBrowseViewController *)initializeStreamBrowseViewController
+{
+    return [[ShelbyStreamBrowseViewController alloc] initWithNibName:@"ShelbyStreamBrowseView" bundle:nil];
+}
+
 // We assume these are all of our channels, in the correct order (which we cared about on old iPad design)
 - (void)setChannels:(NSArray *)channels
 {
@@ -182,7 +187,7 @@
         for (DisplayChannel *ch in channels) {
             ShelbyStreamBrowseViewController *sbvc = [self streamBrowseViewControllerForChannel:ch];
             if (!sbvc) {
-                sbvc = [[ShelbyStreamBrowseViewController alloc] initWithNibName:@"ShelbyStreamBrowseView" bundle:nil];
+                sbvc = [self initializeStreamBrowseViewController];
                 [sbvc setEntries:nil forChannel:ch];
                 sbvc.browseManagementDelegate = self.masterDelegate;
                 //we want to know about scroll events to keep SPVideoReel in sync, when applicable
