@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 - (void)videoControls:(VideoControlsViewController *)vcvc scrubCurrentVideoTo:(CGFloat)pct;
 - (void)videoControlsLikeCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControlsUnlikeCurrentVideo:(VideoControlsViewController *)vcvc;
-- (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc;
+//- (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc;
 - (void)videoControls:(VideoControlsViewController *)vcvc isScrubbing:(BOOL)isScrubbing;
 
 @end
@@ -52,5 +52,5 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 @property (nonatomic, assign) CMTime currentTime;
 @property (nonatomic, assign) CMTime duration;
 
-- (void)resetShareButton;
+//- (void)resetShareButton;
 @end

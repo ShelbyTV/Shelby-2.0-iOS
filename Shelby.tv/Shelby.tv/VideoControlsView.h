@@ -26,12 +26,10 @@
 //-- action buttons --
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UIButton *unlikeButton;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 
 //-- nonplayback action buttons --
 @property (weak, nonatomic) IBOutlet UIButton *nonplaybackLikeButton;
 @property (weak, nonatomic) IBOutlet UIButton *nonplaybackUnlikeButton;
-@property (weak, nonatomic) IBOutlet UIButton *nonplaybackShareButton;
 
 
 //---overlay

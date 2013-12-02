@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4504" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3734.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoControlsViewController">
@@ -73,8 +73,8 @@
                         <outletCollection property="gestureRecognizers" destination="66" appends="YES" id="67"/>
                     </connections>
                 </progressView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="70">
-                    <rect key="frame" x="15" y="47" width="55" height="41"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="70">
+                    <rect key="frame" x="15" y="47" width="57" height="41"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
                     <state key="normal" title="LIKE">
@@ -87,20 +87,8 @@
                         <action selector="likeTapped:" destination="-1" eventType="touchUpInside" id="77"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="73">
-                    <rect key="frame" x="258" y="47" width="47" height="41"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
-                    <state key="normal" title="SHARE"/>
-                    <state key="highlighted">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="shareTapped:" destination="-1" eventType="touchUpInside" id="78"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="81">
-                    <rect key="frame" x="15" y="47" width="55" height="41"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="81">
+                    <rect key="frame" x="15" y="47" width="57" height="41"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
                     <state key="normal" title="UNLIKE"/>
@@ -130,7 +118,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bib-7M-uDj" userLabel="(nonplayback) - LIKE">
-                    <rect key="frame" x="56" y="55" width="48" height="20"/>
+                    <rect key="frame" x="56" y="55" width="220" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
                     <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -142,25 +130,8 @@
                         <action selector="likeTapped:" destination="-1" eventType="touchUpInside" id="Gpl-OI-yNr"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="azI-N0-3Fz" userLabel="(nonplayback) - SHARE">
-                    <rect key="frame" x="209" y="55" width="64" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
-                    <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" title="SHARE" image="overlay-sharers.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="disabled">
-                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="shareTapped:" destination="-1" eventType="touchUpInside" id="FwJ-qe-emG"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IGu-tb-j5j" userLabel="(nonplayback) - UNLIKE">
-                    <rect key="frame" x="45" y="55" width="70" height="20"/>
+                    <rect key="frame" x="56" y="55" width="220" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="14"/>
                     <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -182,13 +153,11 @@
                 <outlet property="durationLabel" destination="40" id="64"/>
                 <outlet property="likeButton" destination="70" id="79"/>
                 <outlet property="nonplaybackLikeButton" destination="bib-7M-uDj" id="kIm-w3-MlY"/>
-                <outlet property="nonplaybackShareButton" destination="azI-N0-3Fz" id="XMw-qR-DjZ"/>
                 <outlet property="nonplaybackUnlikeButton" destination="IGu-tb-j5j" id="GUS-ij-09T"/>
                 <outlet property="overlay" destination="406" id="417"/>
                 <outlet property="playPauseButton" destination="3" id="gIp-j9-YrG"/>
                 <outlet property="scrubheadButton" destination="339" id="390"/>
                 <outlet property="separatorView" destination="558" id="572"/>
-                <outlet property="shareButton" destination="73" id="80"/>
                 <outlet property="unlikeButton" destination="81" id="86"/>
             </connections>
         </view>
@@ -200,7 +169,6 @@
     </objects>
     <resources>
         <image name="overlay-likers.png" width="17" height="16"/>
-        <image name="overlay-sharers.png" width="17" height="18"/>
         <image name="pause.png" width="14" height="16"/>
         <image name="scrubber.png" width="32" height="32"/>
     </resources>

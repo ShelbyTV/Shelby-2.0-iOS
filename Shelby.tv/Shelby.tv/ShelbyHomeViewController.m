@@ -890,7 +890,8 @@
             [self.videoReel playCurrentPlayer];
         }
         
-        [self.videoControlsVC resetShareButton];
+        // KP KP: Share is no longer in video controls
+//        [self.videoControlsVC resetShareButton];
 
         if (completed) {
             // Analytics

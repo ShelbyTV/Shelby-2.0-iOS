@@ -56,11 +56,9 @@
                                   ];
     self.playbackActionViews = @[self.controlsView.likeButton,
                                  self.controlsView.unlikeButton,
-                                 self.controlsView.shareButton
                                  ];
     self.nonplaybackActionViews = @[self.controlsView.nonplaybackLikeButton,
-                                    self.controlsView.nonplaybackUnlikeButton,
-                                    self.controlsView.nonplaybackShareButton];
+                                    self.controlsView.nonplaybackUnlikeButton];
     [self updateViewForCurrentDisplayMode];
     [self setupAirPlay];
 }
@@ -107,9 +105,8 @@
         self.controlsView.separatorView.frame = CGRectMake(0, self.controlsView.overlay.frame.origin.y, width, 1);
 
         // Like, Unlike & Share Buttons
-        self.controlsView.unlikeButton.frame = CGRectMake(15, 46, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
+        self.controlsView.unlikeButton.frame = CGRectMake(15, 46, 57, self.controlsView.unlikeButton.frame.size.height);
         self.controlsView.likeButton.frame = self.controlsView.unlikeButton.frame;
-        self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, self.controlsView.unlikeButton.frame.origin.y, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
         
         // Play/Pause
         self.controlsView.playPauseButton.frame = CGRectMake(self.controlsView.unlikeButton.frame.origin.x + self.controlsView.unlikeButton.frame.size.width + 7, 51, self.controlsView.playPauseButton.frame.size.width, self.controlsView.playPauseButton.frame.size.height);
@@ -118,7 +115,7 @@
         self.controlsView.currentTimeLabel.frame = CGRectMake(self.controlsView.playPauseButton.frame.origin.x + self.controlsView.playPauseButton.frame.size.width + 2, 55, self.controlsView.currentTimeLabel.frame.size.width, self.controlsView.currentTimeLabel.frame.size.height);
 
         // Airplay
-        self.controlsView.airPlayView.frame = CGRectMake(self.controlsView.shareButton.frame.origin.x - self.controlsView.airPlayView.frame.size.width - 20, 55, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
+        self.controlsView.airPlayView.frame = CGRectMake(width -15 - self.controlsView.airPlayView.frame.size.width - 20, 55, self.controlsView.airPlayView.frame.size.width, self.controlsView.airPlayView.frame.size.height);
         
         // Duration Time Label depends on whether airplay button is visible or not
         [self changeLayoutDepandentUponVisibleAirplayWithOrientationLandscape:YES];
@@ -130,9 +127,8 @@
         self.controlsView.separatorView.frame = CGRectMake(0, 0, self.controlsView.frame.size.width, 1);
 
         // Like, Unlike & Share Buttons
-        self.controlsView.unlikeButton.frame = CGRectMake(15, 47, self.controlsView.unlikeButton.frame.size.width, self.controlsView.unlikeButton.frame.size.height);
+        self.controlsView.unlikeButton.frame = CGRectMake(15, 47, 290, self.controlsView.unlikeButton.frame.size.height);
         self.controlsView.likeButton.frame = self.controlsView.unlikeButton.frame;
-        self.controlsView.shareButton.frame = CGRectMake(width - 15 - self.controlsView.shareButton.frame.size.width, 47, self.controlsView.shareButton.frame.size.width, self.controlsView.shareButton.frame.size.height);
         
         // Play/Pause & Airplay Buttons
         self.controlsView.playPauseButton.frame = CGRectMake(15, 11, self.controlsView.playPauseButton.frame.size.width, self.controlsView.playPauseButton.frame.size.height);
@@ -146,12 +142,10 @@
     }
 
     // nonplayback actions
-    CGFloat leftButtonWidth = width / 2.0f;
     CGFloat buttonHeight = 44.f;
     CGFloat buttonY = self.controlsView.frame.size.height - buttonHeight;
-    self.controlsView.nonplaybackLikeButton.frame = CGRectMake(0, buttonY, leftButtonWidth, buttonHeight);
+    self.controlsView.nonplaybackLikeButton.frame = CGRectMake(0, buttonY, width, buttonHeight);
     self.controlsView.nonplaybackUnlikeButton.frame = self.controlsView.nonplaybackLikeButton.frame;
-    self.controlsView.nonplaybackShareButton.frame = CGRectMake(leftButtonWidth+1, buttonY, leftButtonWidth-1, buttonHeight);
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -179,7 +173,7 @@
         if (airplayVisible) {
             xOriginForDurationLabel = self.controlsView.airPlayView.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8;
         } else {
-            xOriginForDurationLabel = self.controlsView.shareButton.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8;
+//            xOriginForDurationLabel = self.controlsView.shareButton.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8;
         }
 
         // Duration Label
@@ -313,35 +307,36 @@
     [self updateViewForCurrentEntity];
 }
 
-- (IBAction)shareTapped:(id)sender {
-    _shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    if (self.displayMode == VideoControlsDisplayActionsOnly) {
-        //non playback
-        self.shareActivityIndicator.frame = self.controlsView.nonplaybackShareButton.frame;
-        self.controlsView.nonplaybackShareButton.enabled = NO;
-    } else {
-        //playback
-        self.shareActivityIndicator.frame = self.controlsView.shareButton.frame;
-        self.controlsView.shareButton.hidden = YES;
-    }
-
-    [self.shareActivityIndicator startAnimating];
-    [self.controlsView addSubview:self.shareActivityIndicator];
-    [self.delegate videoControlsShareCurrentVideo:self];
-}
-
-- (void)resetShareButton
-{
-    [self.shareActivityIndicator removeFromSuperview];
-    self.shareActivityIndicator = nil;
-    if (self.displayMode == VideoControlsDisplayActionsOnly) {
-        //non playback
-        self.controlsView.nonplaybackShareButton.enabled = YES;
-    } else {
-        //playback
-        self.controlsView.shareButton.hidden = NO;
-    }
-}
+// KP KP: For now just commentting so I could refer to it.
+//- (IBAction)shareTapped:(id)sender {
+//    _shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+//    if (self.displayMode == VideoControlsDisplayActionsOnly) {
+//        //non playback
+//        self.shareActivityIndicator.frame = self.controlsView.nonplaybackShareButton.frame;
+//        self.controlsView.nonplaybackShareButton.enabled = NO;
+//    } else {
+//        //playback
+//        self.shareActivityIndicator.frame = self.controlsView.shareButton.frame;
+//        self.controlsView.shareButton.hidden = YES;
+//    }
+//
+//    [self.shareActivityIndicator startAnimating];
+//    [self.controlsView addSubview:self.shareActivityIndicator];
+//    [self.delegate videoControlsShareCurrentVideo:self];
+//}
+//
+//- (void)resetShareButton
+//{
+//    [self.shareActivityIndicator removeFromSuperview];
+//    self.shareActivityIndicator = nil;
+//    if (self.displayMode == VideoControlsDisplayActionsOnly) {
+//        //non playback
+//        self.controlsView.nonplaybackShareButton.enabled = YES;
+//    } else {
+//        //playback
+//        self.controlsView.shareButton.hidden = NO;
+//    }
+//}
 
 #pragma mark - VideoPlaybackDelegate
 
