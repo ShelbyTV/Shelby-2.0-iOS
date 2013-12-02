@@ -171,7 +171,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" id="6tj-lo-aHn" userLabel="likers subview">
-                            <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="40"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overlay-likers.png" id="dgz-Xc-tgU">
@@ -180,16 +180,16 @@
                                 </imageView>
                             </subviews>
                         </view>
-                        <view clipsSubviews="YES" contentMode="scaleToFill" id="SNg-WT-42A" userLabel="sharers subview">
-                            <rect key="frame" x="160" y="0.0" width="160" height="40"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qr3-Sv-rRb">
+                            <rect key="frame" x="266" y="5" width="46" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overlay-sharers.png" id="ZiP-c2-w87">
-                                    <rect key="frame" x="15" y="11" width="17" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </imageView>
-                            </subviews>
-                        </view>
+                            <state key="normal" title="Share">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="shareVideo:" destination="1" eventType="touchUpInside" id="Efa-sd-MJU"/>
+                            </connections>
+                        </button>
                     </subviews>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="createdAt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="562">
@@ -270,7 +270,6 @@
                 <outlet property="detailLikersSubview" destination="6tj-lo-aHn" id="RQJ-C0-ehU"/>
                 <outlet property="detailRecommendationReasonLabel" destination="579" id="581"/>
                 <outlet property="detailRecommendationView" destination="574" id="575"/>
-                <outlet property="detailSharersSubview" destination="SNg-WT-42A" id="oaC-HO-buc"/>
                 <outlet property="detailTitle" destination="246" id="281"/>
                 <outlet property="detailTitleButton" destination="565" id="566"/>
                 <outlet property="detailUserAvatar" destination="268" id="282"/>
@@ -278,6 +277,7 @@
                 <outlet property="detailUsername" destination="257" id="283"/>
                 <outlet property="detailViaNetwork" destination="258" id="284"/>
                 <outlet property="detailWhiteBackground" destination="560" id="561"/>
+                <outlet property="shareButton" destination="qr3-Sv-rRb" id="WA3-62-eBZ"/>
                 <outlet property="summaryPlayImageView" destination="3cT-IQ-PRJ" id="vVu-2x-aj1"/>
                 <outlet property="summaryRecommendationView" destination="572" id="573"/>
                 <outlet property="summaryTitle" destination="3" id="50"/>
@@ -291,9 +291,7 @@
     </objects>
     <resources>
         <image name="avatar-blank.png" width="40" height="40"/>
-        <image name="avatar-blank.png" width="40" height="40"/>
         <image name="overlay-likers.png" width="17" height="16"/>
-        <image name="overlay-sharers.png" width="17" height="18"/>
         <image name="play-all" width="96" height="96"/>
     </resources>
 </document>

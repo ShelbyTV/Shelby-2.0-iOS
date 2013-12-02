@@ -390,6 +390,10 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 }
 
 #pragma mark - ShelbyStreamBrowseViewCellDelegate
+- (void)shareVideo:(ShelbyStreamBrowseViewCell *)cell
+{
+    [self.browseViewDelegate shareCurrentVideo:cell.entry];
+}
 
 - (void)browseViewCellParallaxDidChange:(ShelbyStreamBrowseViewCell *)cell
 {

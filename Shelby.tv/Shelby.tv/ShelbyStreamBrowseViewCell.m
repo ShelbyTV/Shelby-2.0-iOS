@@ -325,6 +325,11 @@
     [self setupPlayImageForVideo];
 }
 
+- (void)shareVideoWasTapped
+{
+    [self.delegate shareVideo:self];
+}
+
 - (void)inviteFacebookFriendsWasTapped
 {
     [self.delegate inviteFacebookFriendsWasTapped:self];

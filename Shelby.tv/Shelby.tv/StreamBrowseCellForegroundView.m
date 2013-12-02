@@ -32,9 +32,9 @@
 @property (weak, nonatomic) IBOutlet UIView *detailCommentView;
 @property (weak, nonatomic) IBOutlet UILabel *detailCreatedAt;
 @property (weak, nonatomic) IBOutlet UIButton *detailInviteFacebookFriends;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersAndSharers;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersSubview;
-@property (weak, nonatomic) IBOutlet UIView *detailSharersSubview;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
 @property (weak, nonatomic) IBOutlet UIButton *detailTitleButton;
 @property (weak, nonatomic) IBOutlet UIImageView *detailUserAvatar;
@@ -62,6 +62,7 @@
 - (IBAction)playVideoInCell:(id)sender;
 - (IBAction)sendFacebookRequest:(id)sender;
 - (IBAction)goToUserProfile:(id)sender;
+- (IBAction)shareVideo:(id)sender;
 @end
 
 @implementation StreamBrowseCellForegroundView
@@ -118,8 +119,6 @@
 {
     [self processLikersAndSharers];
     
-    [self updateSharersFrame];
-    
     [self updateLikersAndSharersVisuals];
 }
 
@@ -128,9 +127,9 @@
 {
     NSMutableArray *likerViews = [@[] mutableCopy];
     NSMutableArray *sharerViews = [@[] mutableCopy];
-    CGFloat likerX = 40.f, sharerX = 40.f;
+    CGFloat likerX = 40.f;
     CGFloat likerSharerHeight = 30.f;
-    UIImageView *likerImageView, *sharerImageView;
+    UIImageView *likerImageView;
     for (int i = 0; i < 6; i++) {
         likerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(likerX, 5, likerSharerHeight, likerSharerHeight)];
         [self.detailLikersSubview addSubview:likerImageView];
@@ -138,12 +137,6 @@
         likerImageView.layer.masksToBounds = YES;
         [likerViews addObject:likerImageView];
         likerX += likerSharerHeight + 10;
-        sharerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(sharerX, 5, likerSharerHeight, likerSharerHeight)];
-        [self.detailSharersSubview addSubview:sharerImageView];
-        sharerImageView.layer.cornerRadius = 3.0f;
-        sharerImageView.layer.masksToBounds = YES;
-        [sharerViews addObject:sharerImageView];
-        sharerX += likerSharerHeight + 10;
     }
 
     _likerImageViews = likerViews;
@@ -193,13 +186,14 @@
     self.summaryPlayImageView.frame = CGRectMake(self.frame.size.width/4 - self.summaryPlayImageView.frame.size.width/2, self.frame.size.height/2 - self.summaryPlayImageView.frame.size.height/2, self.summaryPlayImageView.frame.size.width, self.summaryPlayImageView.frame.size.height);
     
     self.detailViaNetwork.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailViaNetwork.frame.origin.y, self.detailUsername.frame.size.width, self.detailViaNetwork.frame.size.height);
- 
+
     self.detailInviteFacebookFriends.frame = CGRectMake(self.detailViaNetwork.frame.origin.x, self.detailInviteFacebookFriends.frame.origin.y, self.detailInviteFacebookFriends.frame.size.width, self.detailInviteFacebookFriends.frame.size.height);
     self.summaryTitleButton.frame = self.summaryTitle.frame;
     self.detailTitleButton.frame = self.detailTitle.frame;
 
     [self resizeViewsForContent];
-
+    self.shareButton.frame = CGRectMake(self.detailLikersAndSharers.frame.size.width - 60, 5, 50, 30);
+    
     [self setupOverlayImageView];
 }
 
@@ -282,42 +276,14 @@
 
     [self updateLikersAndSharersVisuals];
 
-    [self updateSharersFrame];
-
 }
 
-- (void)updateSharersFrame
-{
-    NSInteger originX = self.detailSharersSubview.frame.origin.x;
-    if ([_likers count] > 0) {
-        if (self.detailLikersSubview.frame.origin.x == self.detailSharersSubview.frame.origin.x) {
-            originX = self.detailLikersAndSharers.frame.size.width/2.f;
-        }
-    } else if (self.detailLikersSubview.frame.origin.x != self.detailSharersSubview.frame.origin.x) {
-        originX = self.detailLikersSubview.frame.origin.x;
-    }
-
-    if (originX != self.detailSharersSubview.frame.origin.x) {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.detailSharersSubview.frame = CGRectMake(originX, self.detailSharersSubview.frame.origin.y, self.detailSharersSubview.frame.size.width, self.detailSharersSubview.frame.size.height);
-        }];
-    }
-}
 
 - (void)updateLikersAndSharersVisuals
 {
     // Sharers
     for (UIImageView *iv in _sharerImageViews) {
         iv.image = nil;
-    }
-    if ([_sharers count]) {
-        self.detailSharersSubview.hidden = NO;
-        for (NSUInteger i = 0; i < MIN([_sharers count], [_sharerImageViews count]); i++) {
-            User *sharer = _sharers[i];
-            [((UIImageView *)_sharerImageViews[i]) setImageWithURL:sharer.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
-        }
-    } else {
-        self.detailSharersSubview.hidden = YES;
     }
 
     // Likers
@@ -406,12 +372,7 @@
 
     //update likers and sharers based on the white background box
     self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y + self.detailWhiteBackground.frame.size.height + detailLikersAndSharersPadding, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
-    self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
-    if ([_likers count] > 0) {
-        self.detailSharersSubview.frame = CGRectMake(self.detailLikersAndSharers.frame.size.width/2.f, 0, self.detailLikersAndSharers.frame.size.width/2.f, self.detailLikersAndSharers.frame.size.height);
-    } else {
-        self.detailSharersSubview.frame = self.detailLikersSubview.frame;
-    }
+    self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width - 50, self.detailLikersAndSharers.frame.size.height);
     //recommendation view
     self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
 }
@@ -440,6 +401,11 @@
 
     //extend the overlay on top and bottom to account for motion effects
     self.overlayImageView.frame = CGRectMake(-400, [kShelbyMotionForegroundYMin floatValue], self.frame.size.width + 800, self.frame.size.height + [kShelbyMotionForegroundYMax floatValue] + (-[kShelbyMotionForegroundYMin floatValue]));
+}
+
+- (IBAction)shareVideo:(id)sender
+{
+    [self.delegate shareVideoWasTapped];
 }
 
 - (IBAction)playVideoInCell:(id)sender
@@ -495,7 +461,6 @@
             self.detailWhiteBackground.hidden = NO;
             self.detailUserView.hidden = YES;
             self.detailCommentView.hidden = YES;
-            self.detailLikersAndSharers.hidden = YES;
             return;
         }
     } else if (!_videoFrame.creator) {
@@ -506,7 +471,6 @@
         self.detailWhiteBackground.hidden = YES;
         self.detailUserView.hidden = YES;
         self.detailCommentView.hidden = YES;
-        self.detailLikersAndSharers.hidden = NO;
         return;
     }
 

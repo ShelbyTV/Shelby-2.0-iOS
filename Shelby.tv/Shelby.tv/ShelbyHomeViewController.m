@@ -16,6 +16,7 @@
 #import "ShelbyAlert.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyErrorUtility.h"
+#import "ShelbyVideoContainer.h"
 #import "SPVideoReel.h"
 #import "User+Helper.h"
 
@@ -875,12 +876,12 @@
     return didLike;
 }
 
-- (void)videoControlsShareCurrentVideo:(VideoControlsViewController *)vcvc
+- (void)shareCurrentVideo:(id<ShelbyVideoContainer>)videoContainer
 {
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                          withAction:kAnalyticsUXShareStart
                                 withNicknameAsLabel:YES];
-    Frame *frame = [Frame frameForEntity:vcvc.currentEntity];
+    Frame *frame = [Frame frameForEntity:videoContainer];
     SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:frame fromViewController:self atRect:CGRectZero];
     shareController.delegate = self;
     BOOL shouldResume = [self.videoReel isCurrentPlayerPlaying];

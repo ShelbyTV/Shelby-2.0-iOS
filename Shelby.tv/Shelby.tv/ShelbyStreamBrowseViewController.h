@@ -10,6 +10,7 @@
 #import "DisplayChannel.h"
 #import "ShelbyStreamBrowseViewCell.h"
 #import "ShelbyViewController.h"
+#import "ShelbyVideoContainer.h"
 
 @class ShelbyStreamBrowseViewController;
 
@@ -33,6 +34,7 @@
 - (void)shelbyStreamBrowseViewControllerTitleTapped:(ShelbyStreamBrowseViewController *)vc;
 - (void)inviteFacebookFriendsWasTapped:(ShelbyStreamBrowseViewController *)vc;
 - (void)userProfileWasTapped:(ShelbyStreamBrowseViewController *)vc withUserID:(NSString *)userID;
+- (void)shareCurrentVideo:(id<ShelbyVideoContainer>)videoContainer;
 @end
 
 @interface ShelbyStreamBrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ShelbyStreamBrowseViewCellDelegate>

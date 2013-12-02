@@ -12,6 +12,7 @@
 
 @protocol StreamBrowseCellForegroundViewDelegate <NSObject>
 - (void)streamBrowseCellForegroundViewTitleWasTapped;
+- (void)shareVideoWasTapped;
 - (void)inviteFacebookFriendsWasTapped;
 - (void)userProfileWasTapped:(NSString *)userID;
 @end
