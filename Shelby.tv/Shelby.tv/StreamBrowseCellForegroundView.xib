@@ -81,10 +81,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Pcg-3D-pf9">
-                            <rect key="frame" x="0.0" y="7" width="40" height="43"/>
+                            <rect key="frame" x="0.0" y="7" width="250" height="43"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title=":-)">
+                            <state key="normal">
                                 <color key="titleColor" red="1" green="0.17371703990000001" blue="0.1903429619" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
@@ -137,6 +137,17 @@
                             </state>
                             <connections>
                                 <action selector="sendFacebookRequest:" destination="1" eventType="touchUpInside" id="bOk-RD-fDe"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pur-Do-qd0">
+                            <rect key="frame" x="10" y="8" width="250" height="43"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="0.17371703990000001" blue="0.1903429619" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="goToUserProfile:" destination="1" eventType="touchUpInside" id="Z1K-TK-96m"/>
                             </connections>
                         </button>
                     </subviews>
@@ -279,6 +290,7 @@
         </view>
     </objects>
     <resources>
+        <image name="avatar-blank.png" width="40" height="40"/>
         <image name="avatar-blank.png" width="40" height="40"/>
         <image name="overlay-likers.png" width="17" height="16"/>
         <image name="overlay-sharers.png" width="17" height="18"/>
