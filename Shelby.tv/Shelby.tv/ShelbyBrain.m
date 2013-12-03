@@ -17,6 +17,7 @@
 #import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
 #import "ShelbyABTestManager.h"
+#import "ShelbyLikersViewController.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
 #import "ShelbyUserProfileViewController.h"
@@ -889,6 +890,18 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 - (void)inviteFacebookFriendsWasTapped
 {
     [[ShelbyDataMediator sharedInstance] inviteFacebookFriends];
+}
+
+- (void)openLikersViewForVideo:(NSString *)videoID
+{
+    ShelbyLikersViewController *likersVC = [[ShelbyLikersViewController alloc] initWithNibName:@"ShelbyLikersView" bundle:nil];
+    
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while ([topViewController presentedViewController]) {
+        topViewController = [topViewController presentedViewController];
+    }
+    
+    [topViewController presentViewController:likersVC animated:YES completion:nil];
 }
 
 - (void)userProfileWasTapped:(NSString *)userID

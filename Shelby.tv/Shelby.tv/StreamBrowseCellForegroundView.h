@@ -15,6 +15,7 @@
 - (void)shareVideoWasTapped;
 - (void)inviteFacebookFriendsWasTapped;
 - (void)userProfileWasTapped:(NSString *)userID;
+- (void)openLikersView;
 @end
 
 

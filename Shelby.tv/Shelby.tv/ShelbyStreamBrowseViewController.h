@@ -35,6 +35,7 @@
 - (void)inviteFacebookFriendsWasTapped:(ShelbyStreamBrowseViewController *)vc;
 - (void)userProfileWasTapped:(ShelbyStreamBrowseViewController *)vc withUserID:(NSString *)userID;
 - (void)shareCurrentVideo:(id<ShelbyVideoContainer>)videoContainer;
+- (void)openLikersView:(id<ShelbyVideoContainer>)videoContainer;
 @end
 
 @interface ShelbyStreamBrowseViewController : ShelbyViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ShelbyStreamBrowseViewCellDelegate>

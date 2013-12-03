@@ -340,4 +340,8 @@
     [self.delegate userProfileWasTapped:self withUserID:userID];
 }
 
+- (void)openLikersView
+{
+    [self.delegate openLikersView:self];
+}
 @end

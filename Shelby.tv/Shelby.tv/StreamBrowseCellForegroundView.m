@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *detailInviteFacebookFriends;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersAndSharers;
+@property (weak, nonatomic) IBOutlet UIButton *likersButton;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersSubview;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
 @property (weak, nonatomic) IBOutlet UIButton *detailTitleButton;
@@ -63,6 +64,7 @@
 - (IBAction)sendFacebookRequest:(id)sender;
 - (IBAction)goToUserProfile:(id)sender;
 - (IBAction)shareVideo:(id)sender;
+- (IBAction)openLikersView:(id)sender;
 @end
 
 @implementation StreamBrowseCellForegroundView
@@ -373,6 +375,7 @@
     //update likers and sharers based on the white background box
     self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y + self.detailWhiteBackground.frame.size.height + detailLikersAndSharersPadding, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
     self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width - 50, self.detailLikersAndSharers.frame.size.height);
+    self.likersButton.frame = self.detailLikersSubview.frame;
     //recommendation view
     self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
 }
@@ -406,6 +409,11 @@
 - (IBAction)shareVideo:(id)sender
 {
     [self.delegate shareVideoWasTapped];
+}
+
+- (IBAction)openLikersView:(id)sender
+{
+    [self.delegate openLikersView];
 }
 
 - (IBAction)playVideoInCell:(id)sender

@@ -720,6 +720,8 @@
 
 - (void)userProfileWasTapped:(ShelbyStreamBrowseViewController *)vc withUserID:(NSString *)userID
 {
+    [self dismissVideoReel];
+    
     [self.masterDelegate userProfileWasTapped:userID];
 }
 
@@ -905,6 +907,12 @@
             [Appirater userDidSignificantEvent:YES];
         }
     }];
+}
+
+- (void)openLikersView:(id<ShelbyVideoContainer>)videoContainer
+{
+    [self dismissVideoReel];
+    [self.masterDelegate openLikersViewForVideo:nil]; //pass video id KP KP
 }
 
 - (void)scrollToTopOfCurrentStreamBrowseVC
