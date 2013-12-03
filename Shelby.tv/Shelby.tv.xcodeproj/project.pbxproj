@@ -1107,7 +1107,7 @@
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
 		9188F239178CBA3C002F342B /* ShelbyNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarView.h; sourceTree = "<group>"; };
 		9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarView.m; sourceTree = "<group>"; };
-		918C5275184E1DE000A4DFB8 /* Shelby 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shelby 7.xcdatamodel"; sourceTree = "<group>"; };
+		918C5275184E1DE000A4DFB8 /* Shelby 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 7.xcdatamodel"; sourceTree = "<group>"; };
 		918C5280184E223B00A4DFB8 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		918C5281184E223B00A4DFB8 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
