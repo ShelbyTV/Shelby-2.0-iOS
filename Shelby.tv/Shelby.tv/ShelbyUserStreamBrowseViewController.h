@@ -10,5 +10,5 @@
 #import "User.h"
 
 @interface ShelbyUserStreamBrowseViewController : ShelbyStreamBrowseViewController
-@property (nonatomic, strong) User *currentUser;
+@property (nonatomic, strong) User *user;
 @end
