@@ -7,13 +7,17 @@
 //
 
 #import "ShelbyUserProfileViewController.h"
+#import "ShelbyDataMediator.h"
 #import "ShelbyUserStreamBrowseViewController.h"
 
 @interface ShelbyUserProfileViewController()
 @property (nonatomic, strong) ShelbyUserStreamBrowseViewController *currentBrowseVC;
 @end
 
-@implementation ShelbyUserProfileViewController
+@implementation ShelbyUserProfileViewController {
+    UIButton *_followButton;
+    BOOL _followButtonShowsFollowing;
+}
 
 - (CGFloat)swapAnimationTime
 {
@@ -29,7 +33,7 @@
 
     UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.frame.size.width-100, 24)];
     username.textAlignment = NSTextAlignmentCenter;
-    username.text = self.currentUser.nickname;
+    username.text = self.profileUser.nickname;
     username.backgroundColor = [UIColor clearColor];
     username.textColor = kShelbyColorGray;
     
@@ -45,13 +49,13 @@
     [self.navBar addSubview:closeButton];
     
     // Follow Button
-    UIButton *followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    followButton.frame = CGRectMake(250, 5, 60, 34);
-    [followButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
-    [followButton addTarget:self action:@selector(followUserProfile) forControlEvents:UIControlEventTouchUpInside];
-    [followButton setTitle:@"Follow" forState:UIControlStateNormal];
-    followButton.titleLabel.font = kShelbyFontH4Bold;
-    [self.navBar addSubview:followButton];
+    _followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _followButton.frame = CGRectMake(230, 5, 80, 34);
+    [_followButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
+    [_followButton addTarget:self action:@selector(followButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self updateFollowButtonToShowFollowing:!_followButtonShowsFollowing];
+    _followButton.titleLabel.font = kShelbyFontH4Bold;
+    [self.navBar addSubview:_followButton];
     
 }
 
@@ -61,23 +65,30 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)followUserProfile
-{
-    [self.masterDelegate followUser:self.currentUser.publicRollID];
-}
-
 - (void)setCurrentUser:(User *)currentUser
 {
-    [super setCurrentUser:currentUser];
-    
-    self.currentBrowseVC.currentUser = currentUser;
+    STVAssert(NO, @"Should not set currentUser on a ProfileVC -- use profileUser");
+}
+
+- (void)setProfileUser:(User *)profileUser
+{
+    if (_profileUser != profileUser) {
+        [self willChangeValueForKey:@"profileUser"];
+        _profileUser = profileUser;
+
+        self.currentBrowseVC.user = profileUser;
+        
+        User *currentLoggedInUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        [self updateFollowButtonToShowFollowing:[currentLoggedInUser isFollowing:profileUser.publicRollID]];
+        
+        [self didChangeValueForKey:@"profileUser"];
+    }
 }
 
 - (ShelbyStreamBrowseViewController *)initializeStreamBrowseViewController
 {
     self.currentBrowseVC = [[ShelbyUserStreamBrowseViewController alloc] initWithNibName:@"ShelbyStreamBrowseView" bundle:nil];
-    self.currentBrowseVC.currentUser = self.currentUser;
-    
+    self.currentBrowseVC.user = self.profileUser;
     
     return self.currentBrowseVC;
 }
@@ -85,6 +96,28 @@
 - (ShelbyStreamBrowseViewController *)streamBrowseViewControllerForChannel:(DisplayChannel *)channel
 {
     return self.currentBrowseVC;
+}
+
+- (void)followButtonClicked
+{
+    if (_followButtonShowsFollowing) {
+        [self.masterDelegate followRoll:self.profileUser.publicRollID];
+        [self updateFollowButtonToShowFollowing:YES];
+    } else {
+        [self.masterDelegate unfollowRoll:self.profileUser.publicRollID];
+        [self updateFollowButtonToShowFollowing:NO];
+    }
+}
+
+- (void)updateFollowButtonToShowFollowing:(BOOL)doesFollow
+{
+    if (doesFollow) {
+        [_followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+        _followButtonShowsFollowing = NO;
+    } else {
+        [_followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        _followButtonShowsFollowing = YES;
+    }
 }
 
 @end

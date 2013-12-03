@@ -29,9 +29,9 @@
 
 }
 
-- (void)setCurrentUser:(User *)currentUser
+- (void)setUser:(User *)user
 {
-    _currentUser = currentUser;
+    _user = user;
    
     // KP KP: Will be needed when we have 2 sections
 //    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];

@@ -858,9 +858,14 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 
 // Some of these methods are also for SettingsViewDelefate
 #pragma mark - ShelbyUserProfileDelegate
-- (void)followUser:(NSString *)publicRollID
+- (void)followRoll:(NSString *)rollID
 {
-    [[ShelbyDataMediator sharedInstance] followRoll:publicRollID];
+    [[ShelbyDataMediator sharedInstance] followRoll:rollID];
+}
+
+- (void)unfollowRoll:(NSString *)rollID
+{
+    [[ShelbyDataMediator sharedInstance] unfollowRoll:rollID];
 }
 
 #pragma mark - ShelbyHomeDelegate
@@ -921,7 +926,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
             
             userProfileVC.masterDelegate = self;
             userProfileVC.channels = @[rollChannel];
-            userProfileVC.currentUser = fetchedUser;
+            userProfileVC.profileUser = fetchedUser;
             
             UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
             while ([topViewController presentedViewController]) {
@@ -930,8 +935,6 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
             
             [topViewController presentViewController:userProfileVC animated:YES completion:^{
                 [userProfileVC setEntries:entries forChannel:displayChannel];
-                // KP KP: Setting the user was done for the case where we have 2 sections. No harm in leaving it here for now
-                [userProfileVC setCurrentUser:fetchedUser];
                 [userProfileVC focusOnChannel:displayChannel];
             }];
         }];

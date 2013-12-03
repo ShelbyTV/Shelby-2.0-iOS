@@ -10,9 +10,12 @@
 #import "ShelbyHomeViewController.h"
 
 @protocol ShelbyUserProfileDelegate <NSObject>
-- (void)followUser:(NSString *)publicRollID;
+- (void)followRoll:(NSString *)rollID;
+- (void)unfollowRoll:(NSString *)rollID;
 @end
 
 @interface ShelbyUserProfileViewController : ShelbyHomeViewController
+
+@property (nonatomic, weak) User *profileUser;
 
 @end
