@@ -122,6 +122,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
         User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
         if (currentUser) {
             [self fetchUserChannelsForceSwitchToUsersStream:YES];
+            [[ShelbyDataMediator sharedInstance] updateRollFollowingsForCurrentUser];
         } else {
             [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
         }

@@ -566,6 +566,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             }
             [self.delegate loginUserDidComplete];
             [self syncLikes];
+            [self updateRollFollowingsForCurrentUser];
             id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
             [ShelbyAPIClient putGoogleAnalyticsClientID:[tracker get:kGAIClientId] forUser:user];
             return;
@@ -739,7 +740,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
     STVAssert(user.token, @"expect user to have a valid token (so we can follow rolls)");
     for (NSString *rollID in followRolls) {
-        [self followRoll:rollID withAuthToken:user.token];
+        [self followRoll:rollID];
     }
 
     [self updateUserName:name
@@ -750,22 +751,49 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
               completion:completion];
 }
 
+#pragma mark - Roll Followings
+- (void)updateRollFollowingsForCurrentUser
+{
+    User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
+    STVAssert(user.token, @"expect user to have token (so we can fetch roll followings)");
+    
+    [ShelbyAPIClient fetchRollFollowingsForUser:user withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
+        if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSArray class]]) {
+            //we are now on main thread, good
+            [user updateRollFollowingsForArray:JSON[@"result"]];
+            NSError *err;
+            [user.managedObjectContext save:&err];
+            STVDebugAssert(!err, @"context save failed on roll followings fetch");
+        } else {
+            //TODO: try to reschedule this smartly
+        }
+    }];
+}
+
 - (void)followRoll:(NSString *)rollID
 {
+    STVAssert(rollID, @"must pass rollID");
     User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
     STVAssert(user.token, @"expect user to have a valid token (so we can follow rolls)");
     
-    [self followRoll:rollID withAuthToken:user.token];
-    
+    [ShelbyAPIClient followRoll:rollID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
+        if (!error) {
+            [user didFollowRoll:rollID];
+        } else {
+            // TODO: In the future, try to reschedule it
+        }
+    }];
 }
 
-- (void)followRoll:(NSString *)rollID withAuthToken:(NSString *)authToken
+- (void)unfollowRoll:(NSString *)rollID
 {
-    STVAssert(rollID && authToken, @"Expected rollID & authToken");
-  
-    [ShelbyAPIClient followRoll:rollID withAuthToken:authToken andBlock:^(id JSON, NSError *error) {
+    STVAssert(rollID, @"must pass rollID");
+    User *user = [User currentAuthenticatedUserInContext:[self mainThreadMOC]];
+    STVAssert(user.token, @"expect user to have a valid token (so we can follow rolls)");
+    
+    [ShelbyAPIClient unfollowRoll:rollID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
         if (!error) {
-            // Fire and forget
+            [user didUnfollowRoll:rollID];
         } else {
             // TODO: In the future, try to reschedule it
         }

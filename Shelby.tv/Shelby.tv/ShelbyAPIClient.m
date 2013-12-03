@@ -24,6 +24,7 @@ NSString * const kShelbyAPIGetRollFramesPath =              @"v1/roll/%@/frames"
 NSString * const kShelbyAPIGetAllChannelsPath =             @"v1/roll/featured";
 NSString * const kShelbyAPIGetChannelDashboardEntriesPath = @"v1/user/%@/dashboard";
 NSString * const kShelbyAPIGetUserPath =                    @"v1/user/%@";
+NSString * const kShelbyAPIGetRollsUserFollows =            @"v1/user/%@/rolls/following";
 NSString * const POST =    @"POST";
 NSString * const kShelbyAPIPostFrameLikePath =              @"v1/frame/%@/like";
 NSString * const kShelbyAPIPostExternalShare =              @"v1/frame/%@/share";
@@ -411,6 +412,29 @@ static AFHTTPClient *httpClient = nil;
 }
 
 #pragma mark - Rolls
++ (void)fetchRollFollowingsForUser:(User *)user
+                     withAuthToken:(NSString *)authToken
+                          andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSMutableDictionary *params = [@{} mutableCopy];
+    if (authToken) {
+        params[kShelbyAPIParamAuthToken] = authToken;
+    }
+    
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:[NSString stringWithFormat:kShelbyAPIGetRollsUserFollows, user.userID]
+                                withQueryParameters:params
+                                      shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    
+    [operation start];
+}
+
 + (void)followRoll:(NSString *)rollID
      withAuthToken:(NSString *)authToken
           andBlock:(shelby_api_request_complete_block_t)completionBlock

@@ -66,6 +66,10 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
                                    andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 // -- Rolls
++ (void)fetchRollFollowingsForUser:(User *)user
+                     withAuthToken:(NSString *)authToken
+                          andBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 + (void)followRoll:(NSString *)rollID
      withAuthToken:(NSString *)authToken
           andBlock:(shelby_api_request_complete_block_t)completionBlock;

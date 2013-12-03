@@ -331,4 +331,36 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     return [NSString stringWithFormat:@"sessionPausedByUser:%@", user.userID];
 }
 
+#pragma mark - Roll Following
+- (void)updateRollFollowingsForArray:(NSArray *)rollsArray
+{
+    self.rollFollowings = @"";
+    for (NSDictionary *rollInfo in rollsArray) {
+        if (rollInfo[@"id"]) {
+            [self didFollowRoll:rollInfo[@"id"]];
+        }
+    }
+}
+
+- (BOOL)isFollowing:(NSString *)rollID
+{
+    STVAssert(rollID, @"rollID must not be nil");
+    return [self.rollFollowings rangeOfString:rollID].location != NSNotFound;
+}
+
+- (void)didFollowRoll:(NSString *)rollID
+{
+    if (![self isFollowing:rollID]) {
+        self.rollFollowings = [self.rollFollowings stringByAppendingString:[NSString stringWithFormat:@"%@;", rollID]];
+    }
+}
+
+- (void)didUnfollowRoll:(NSString *)rollID
+{
+    if ([self isFollowing:rollID]) {
+        self.rollFollowings = [self.rollFollowings stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@;", rollID] withString:@""];
+    }
+}
+
+
 @end

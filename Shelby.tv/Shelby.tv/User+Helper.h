@@ -49,4 +49,9 @@
 
 - (NSURL *)avatarURL;
 
+- (void)updateRollFollowingsForArray:(NSArray *)rollsArray;
+- (BOOL)isFollowing:(NSString *)rollID;
+- (void)didFollowRoll:(NSString *)rollID;
+- (void)didUnfollowRoll:(NSString *)rollID;
+
 @end
