@@ -203,9 +203,6 @@
 		1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42C175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
 		1C8AB42D175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */; };
-		1C9369AD17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
-		1C9369AE17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
-		1C9369AF17DA58E600AC2132 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9369AC17DA58E600AC2132 /* User.m */; };
 		1C96DED217975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */; };
 		1C96DED317975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */; };
 		1C96DED417975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */; };
@@ -626,6 +623,9 @@
 		9188F23B178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
 		9188F23C178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
 		9188F23D178CBA3C002F342B /* ShelbyNavBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */; };
+		918C5282184E223B00A4DFB8 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 918C5281184E223B00A4DFB8 /* User.m */; };
+		918C5283184E223B00A4DFB8 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 918C5281184E223B00A4DFB8 /* User.m */; };
+		918C5284184E223B00A4DFB8 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 918C5281184E223B00A4DFB8 /* User.m */; };
 		9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */; };
 		9192ED0317C3EA3D00294440 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */; };
 		9192ED0417C3EA3D00294440 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */; };
@@ -839,8 +839,6 @@
 		1C85A22A16D6CF4A00B6EE49 /* DeviceUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtilities.h; sourceTree = "<group>"; };
 		1C85A22B16D6CF4A00B6EE49 /* DeviceUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtilities.m; sourceTree = "<group>"; };
 		1C8AB42A175CE734001D5853 /* AuthorizationView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AuthorizationView-iPhone.xib"; sourceTree = "<group>"; };
-		1C9369AB17DA58E600AC2132 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		1C9369AC17DA58E600AC2132 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1C96DED017975EC100D845DF /* SignupFlowStepTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepTwoViewController.h; sourceTree = "<group>"; };
 		1C96DED117975EC100D845DF /* SignupFlowStepTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupFlowStepTwoViewController.m; sourceTree = "<group>"; };
 		1C96DED517975EE200D845DF /* SignupFlowStepThreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepThreeViewController.h; sourceTree = "<group>"; };
@@ -1109,6 +1107,9 @@
 		9188F235178C9A1E002F342B /* ShelbyNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarViewController.m; sourceTree = "<group>"; };
 		9188F239178CBA3C002F342B /* ShelbyNavBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavBarView.h; sourceTree = "<group>"; };
 		9188F23A178CBA3C002F342B /* ShelbyNavBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavBarView.m; sourceTree = "<group>"; };
+		918C5275184E1DE000A4DFB8 /* Shelby 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Shelby 7.xcdatamodel"; sourceTree = "<group>"; };
+		918C5280184E223B00A4DFB8 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		918C5281184E223B00A4DFB8 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9192ECFD17C3EA3D00294440 /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
 		9192ECFE17C3EA3D00294440 /* Ubuntu-C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-C.ttf"; sourceTree = "<group>"; };
 		9192ECFF17C3EA3D00294440 /* Ubuntu-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-L.ttf"; sourceTree = "<group>"; };
@@ -1528,12 +1529,12 @@
 				912AECA5182060F500395281 /* DashboardEntry.h */,
 				912AECA6182060F500395281 /* DashboardEntry.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				918C5280184E223B00A4DFB8 /* User.h */,
+				918C5281184E223B00A4DFB8 /* User.m */,
 				915ACBBF17EB52D900FA3EFF /* Frame.h */,
 				915ACBC017EB52D900FA3EFF /* Frame.m */,
 				915ACBC417EB52DE00FA3EFF /* Conversation.h */,
 				915ACBC517EB52DE00FA3EFF /* Conversation.m */,
-				1C9369AB17DA58E600AC2132 /* User.h */,
-				1C9369AC17DA58E600AC2132 /* User.m */,
 				91D03F5A173314A0008131D2 /* Video.h */,
 				91D03F5B173314A0008131D2 /* Video.m */,
 				91D03F551733149F008131D2 /* Dashboard.h */,
@@ -2544,6 +2545,7 @@
 				1C81097E16EE2CBF0030077C /* AppDelegate.m in Sources */,
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
 				1C81098316EE2CBF0030077C /* NSDate+Extension.m in Sources */,
+				918C5283184E223B00A4DFB8 /* User.m in Sources */,
 				1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				912AECA8182060F500395281 /* DashboardEntry.m in Sources */,
 				1C81098616EE2CBF0030077C /* BigButton.m in Sources */,
@@ -2622,7 +2624,6 @@
 				91D1C81B1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */,
-				1C9369AE17DA58E600AC2132 /* User.m in Sources */,
 				914FEA7C175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
@@ -2681,6 +2682,7 @@
 				1C810A3416EE5EED0030077C /* AppDelegate.m in Sources */,
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
 				1C810A3916EE5EED0030077C /* NSDate+Extension.m in Sources */,
+				918C5284184E223B00A4DFB8 /* User.m in Sources */,
 				1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				912AECA9182060F500395281 /* DashboardEntry.m in Sources */,
 				1C810A3C16EE5EED0030077C /* BigButton.m in Sources */,
@@ -2759,7 +2761,6 @@
 				91D1C81C1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */,
-				1C9369AF17DA58E600AC2132 /* User.m in Sources */,
 				914FEA7D175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
@@ -2818,6 +2819,7 @@
 				8E209722162F3A61000A2DFD /* AppDelegate.m in Sources */,
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
 				8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */,
+				918C5282184E223B00A4DFB8 /* User.m in Sources */,
 				8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				912AECA7182060F500395281 /* DashboardEntry.m in Sources */,
 				8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */,
@@ -2896,7 +2898,6 @@
 				91D1C81A1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */,
-				1C9369AD17DA58E600AC2132 /* User.m in Sources */,
 				914FEA7B175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
 				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
@@ -3447,6 +3448,7 @@
 		8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				918C5275184E1DE000A4DFB8 /* Shelby 7.xcdatamodel */,
 				9143A77618205F8900C9689F /* Shelby 6.xcdatamodel */,
 				91F4243217EB503600264C90 /* Shelby 5.xcdatamodel */,
 				91B7DC4517B29621009ABF02 /* Shelby 4.xcdatamodel */,
@@ -3454,7 +3456,7 @@
 				91D03EFF1731C28B008131D2 /* Shelby 2.xcdatamodel */,
 				8E9182DD16B8921C00F2BDCF /* Shelby.xcdatamodel */,
 			);
-			currentVersion = 9143A77618205F8900C9689F /* Shelby 6.xcdatamodel */;
+			currentVersion = 918C5275184E1DE000A4DFB8 /* Shelby 7.xcdatamodel */;
 			path = Shelby.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

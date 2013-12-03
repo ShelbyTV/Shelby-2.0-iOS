@@ -96,8 +96,10 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 // Facebook Invite
 - (void)inviteFacebookFriends;
 
-// Follow Roll
+// Roll Followings
+- (void)updateRollFollowingsForCurrentUser;
 - (void)followRoll:(NSString *)rollID;
+- (void)unfollowRoll:(NSString *)rollID;
 
 - (void)updateUserName:(NSString *)name
               nickname:(NSString *)nickname
