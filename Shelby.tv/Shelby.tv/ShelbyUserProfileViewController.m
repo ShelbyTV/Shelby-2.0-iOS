@@ -65,11 +65,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)setCurrentUser:(User *)currentUser
-{
-    STVAssert(NO, @"Should not set currentUser on a ProfileVC -- use profileUser");
-}
-
 - (void)setProfileUser:(User *)profileUser
 {
     if (_profileUser != profileUser) {
@@ -111,12 +106,17 @@
 
 - (void)updateFollowButtonToShowFollowing:(BOOL)doesFollow
 {
-    if (doesFollow) {
-        [_followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
-        _followButtonShowsFollowing = NO;
+    if ([self.currentUser.userID isEqualToString:self.profileUser.userID]) {
+        _followButton.hidden = YES;
     } else {
-        [_followButton setTitle:@"Follow" forState:UIControlStateNormal];
-        _followButtonShowsFollowing = YES;
+        _followButton.hidden = NO;
+        if (doesFollow) {
+            [_followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+            _followButtonShowsFollowing = NO;
+        } else {
+            [_followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            _followButtonShowsFollowing = YES;
+        }
     }
 }
 

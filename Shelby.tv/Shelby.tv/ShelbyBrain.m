@@ -933,6 +933,8 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
             userProfileVC.masterDelegate = self;
             userProfileVC.channels = @[rollChannel];
             userProfileVC.profileUser = fetchedUser;
+            User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+            userProfileVC.currentUser = currentUser;
             
             UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
             while ([topViewController presentedViewController]) {
