@@ -16,7 +16,6 @@
 - (void)connectToTwitter;
 @optional
 - (void)launchMyRoll;
-- (void)launchMyLikes;
 @end
 
 @interface SettingsViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>

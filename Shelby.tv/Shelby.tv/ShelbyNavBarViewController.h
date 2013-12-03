@@ -16,7 +16,6 @@
 - (void)navBarViewControllerWillExpand:(ShelbyNavBarViewController *)navBarVC;
 - (void)navBarViewControllerWillContract:(ShelbyNavBarViewController *)navBarVC;
 - (void)navBarViewControllerStreamWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
-- (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
@@ -34,7 +33,6 @@
 
 - (void)didNavigateToCommunityChannel;
 - (void)didNavigateToUsersStream;
-- (void)didNavigateToUsersLikes;
 - (void)didNavigateToUsersShares;
 - (void)didNavigateToSettings;
 

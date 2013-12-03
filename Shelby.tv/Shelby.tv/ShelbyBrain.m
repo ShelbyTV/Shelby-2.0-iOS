@@ -1000,18 +1000,6 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
    });
 }
 
-- (void)goToUsersLikes
-{
-    User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-    if (user) {
-        [self goToRollForID:user.likesRollID];
-    } else {
-        [self populateChannel:self.offlineLikesChannel withActivityIndicator:NO];
-        [self goToDisplayChannel:self.offlineLikesChannel];
-    }
-    [self.homeVC didNavigateToUsersLikes];
-}
-
 - (void)goToUsersRoll
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];

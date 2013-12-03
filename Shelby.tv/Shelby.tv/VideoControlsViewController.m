@@ -8,6 +8,7 @@
 
 #import "VideoControlsViewController.h"
 #import "DashboardEntry+Helper.h"
+#import "Intercom.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "VideoControlsView.h"
 
@@ -165,6 +166,7 @@
     BOOL airplayVisible = NO;
     if (self.airPlayButton.alpha == 1) {
         airplayVisible = YES;
+        [Intercom updateAttributes:@{@"iosAirPlayDetected" : @1}];
     }
     
     if (landscapeOrientation) {
