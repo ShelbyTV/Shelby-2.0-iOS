@@ -11,12 +11,13 @@
 
 @protocol ShelbyLikersViewDelegate <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
-- (void)followUser:(NSString *)publicRollID;
+- (void)followRoll:(NSString *)rollID;
+- (void)unfollowRoll:(NSString *)rollID;
 @end
 
 
 @interface ShelbyLikersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LikerCellDelegate>
 @property (nonatomic, strong) NSMutableOrderedSet *localLikers;
-
+@property (nonatomic, strong) User *currentUser;
 @property (nonatomic, weak) id<ShelbyLikersViewDelegate> delegate;
 @end

@@ -14,11 +14,11 @@
 @end
 
 @interface LikerCell : UITableViewCell
-@property (nonatomic, weak) IBOutlet UIImageView *avatar;
-@property (nonatomic, weak) IBOutlet UILabel *nickname;
-@property (nonatomic, weak) IBOutlet UILabel *name;
-@property (nonatomic, strong) User *user;
 @property (nonatomic, weak) id<LikerCellDelegate> delegate;
+@property (nonatomic, weak) IBOutlet UIButton *toggleFollow;
+
+- (void)setupCellForLiker:(User *)user;
+- (void)updateFollowButtonToShowFollowing:(BOOL)following;
 
 - (IBAction)toggleFollow:(id)sender;
 @end

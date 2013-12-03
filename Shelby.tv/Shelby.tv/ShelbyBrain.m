@@ -904,6 +904,8 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
     
     likersVC.localLikers = likers;
     likersVC.delegate = self;
+    User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+    likersVC.currentUser = currentUser;
     
     UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     while ([topViewController presentedViewController]) {

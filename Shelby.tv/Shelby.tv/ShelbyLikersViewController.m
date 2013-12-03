@@ -8,7 +8,6 @@
 
 #import "ShelbyLikersViewController.h"
 #import "User+Helper.h"
-#import "UIImageView+AFNetworking.h"
 
 @interface ShelbyLikersViewController ()
 @property (nonatomic, strong) NSMutableArray *likers;
@@ -62,7 +61,13 @@
 #pragma mark - LikerCellDelegate Method
 - (void)toggleFollowForUser:(User *)user
 {
-    [self.delegate followUser:user.publicRollID];
+    BOOL isFollowing = [self.currentUser isFollowing:user.publicRollID];
+    
+    if (isFollowing) {
+        [self.delegate unfollowRoll:user.publicRollID];
+    } else {
+        [self.delegate followRoll:user.publicRollID];
+    }
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
@@ -78,21 +83,20 @@
     LikerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikerViewCell" forIndexPath:indexPath];
     
     User *user = self.likers[indexPath.row];
-    
-    cell.name.text = user.name;
-    cell.nickname.text = user.nickname;
-    cell.user = user;
-    cell.delegate = self;
-    NSURL *url = [user avatarURL];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    UIImage *defaultAvatar = [UIImage imageNamed:@"avatar-blank.png"];
-    __weak LikerCell *weakCell =  cell;
-    [cell.avatar setImageWithURLRequest:request placeholderImage:defaultAvatar success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        weakCell.avatar.image = image;
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        //ignore for now
-    }];
+    if ([user.userID isEqualToString:self.currentUser.userID ]) {
+        cell.toggleFollow.hidden = YES;
+    } else {
+        cell.toggleFollow.hidden = NO;
+        if (user.publicRollID && [self.currentUser isFollowing:user.publicRollID]) {
+            [cell updateFollowButtonToShowFollowing:YES];
+        } else {
+            [cell updateFollowButtonToShowFollowing:NO];
+        }
+    }
 
+    cell.delegate = self;
+  
+    [cell setupCellForLiker:user];
     
     return cell;
 }
