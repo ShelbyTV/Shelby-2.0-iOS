@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LikerCell.h"
 
-@interface ShelbyLikersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@protocol ShelbyLikersViewDelegate <NSObject>
+- (void)userProfileWasTapped:(NSString *)userID;
+- (void)followUser:(NSString *)publicRollID;
+@end
 
+
+@interface ShelbyLikersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LikerCellDelegate>
+@property (nonatomic, strong) NSMutableOrderedSet *localLikers;
+
+@property (nonatomic, weak) id<ShelbyLikersViewDelegate> delegate;
 @end

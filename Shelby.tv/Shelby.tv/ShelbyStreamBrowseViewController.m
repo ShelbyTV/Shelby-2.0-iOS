@@ -390,9 +390,9 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 }
 
 #pragma mark - ShelbyStreamBrowseViewCellDelegate
-- (void)openLikersView:(ShelbyStreamBrowseViewCell *)cell
+- (void)openLikersView:(ShelbyStreamBrowseViewCell *)cell withLikers:(NSMutableOrderedSet *)likers
 {
-    [self.browseViewDelegate openLikersView:cell.entry];
+    [self.browseViewDelegate openLikersView:cell.entry withLikers:likers];
 }
 
 - (void)shareVideo:(ShelbyStreamBrowseViewCell *)cell

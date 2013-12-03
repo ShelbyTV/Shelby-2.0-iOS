@@ -69,14 +69,6 @@
                         <outlet property="delegate" destination="-1" id="x8h-Tw-7ce"/>
                     </connections>
                 </tableView>
-                <tableViewCell contentMode="scaleToFill" fixedFrame="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="ANR-Ev-0jh">
-                    <rect key="frame" x="0.0" y="91" width="320" height="60"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ANR-Ev-0jh" id="aSC-Px-paB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tableViewCellContentView>
-                </tableViewCell>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

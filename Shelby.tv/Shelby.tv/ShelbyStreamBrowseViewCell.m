@@ -340,8 +340,8 @@
     [self.delegate userProfileWasTapped:self withUserID:userID];
 }
 
-- (void)openLikersView
+- (void)openLikersView:(NSMutableOrderedSet *)likers
 {
-    [self.delegate openLikersView:self];
+    [self.delegate openLikersView:self withLikers:likers];
 }
 @end

@@ -17,7 +17,6 @@
 #import "ShelbyModelArrayUtility.h"
 #import "Roll+Helper.h"
 #import "ShelbyABTestManager.h"
-#import "ShelbyLikersViewController.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
 #import "ShelbyUserProfileViewController.h"
@@ -858,6 +857,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 
 // Some of these methods are also for SettingsViewDelefate
 #pragma mark - ShelbyUserProfileDelegate
+// follow user is also called from another delegate..
 - (void)followUser:(NSString *)publicRollID
 {
     [[ShelbyDataMediator sharedInstance] followRoll:publicRollID];
@@ -893,9 +893,12 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
     [[ShelbyDataMediator sharedInstance] inviteFacebookFriends];
 }
 
-- (void)openLikersViewForVideo:(NSString *)videoID
+- (void)openLikersViewForVideo:(NSString *)videoID withLikers:(NSMutableOrderedSet *)likers
 {
     ShelbyLikersViewController *likersVC = [[ShelbyLikersViewController alloc] initWithNibName:@"ShelbyLikersView" bundle:nil];
+    
+    likersVC.localLikers = likers;
+    likersVC.delegate = self;
     
     UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     while ([topViewController presentedViewController]) {
@@ -905,6 +908,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
     [topViewController presentViewController:likersVC animated:YES completion:nil];
 }
 
+// This method is going to be called from two protocols.. not that great. Need to have a nicer protocols.
 - (void)userProfileWasTapped:(NSString *)userID
 {
     [[ShelbyDataMediator sharedInstance] forceFetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {

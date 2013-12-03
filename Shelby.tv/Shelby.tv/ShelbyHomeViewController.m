@@ -897,10 +897,10 @@
     }];
 }
 
-- (void)openLikersView:(id<ShelbyVideoContainer>)videoContainer
+- (void)openLikersView:(id<ShelbyVideoContainer>)videoContainer withLikers:(NSMutableOrderedSet *)likers
 {
     [self dismissVideoReel];
-    [self.masterDelegate openLikersViewForVideo:nil]; //pass video id KP KP
+    [self.masterDelegate openLikersViewForVideo:nil withLikers:likers];
 }
 
 - (void)scrollToTopOfCurrentStreamBrowseVC

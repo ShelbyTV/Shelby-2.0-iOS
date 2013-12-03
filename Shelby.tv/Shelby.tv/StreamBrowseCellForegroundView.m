@@ -413,7 +413,7 @@
 
 - (IBAction)openLikersView:(id)sender
 {
-    [self.delegate openLikersView];
+    [self.delegate openLikersView:_likers];
 }
 
 - (IBAction)playVideoInCell:(id)sender

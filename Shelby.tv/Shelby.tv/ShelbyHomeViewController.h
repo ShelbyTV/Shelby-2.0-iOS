@@ -26,7 +26,7 @@
 - (void)goToCommunityChannel;
 - (void)inviteFacebookFriendsWasTapped;
 - (void)userProfileWasTapped:(NSString *)userID;
-- (void)openLikersViewForVideo:(NSString *)videoID;
+- (void)openLikersViewForVideo:(NSString *)videoID withLikers:(NSMutableOrderedSet *)likers;
 @end
 
 

@@ -29,6 +29,12 @@
 		1C253B73184D45A200FBE054 /* ShelbyLikersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C253B72184D45A200FBE054 /* ShelbyLikersView.xib */; };
 		1C253B74184D45A200FBE054 /* ShelbyLikersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C253B72184D45A200FBE054 /* ShelbyLikersView.xib */; };
 		1C253B75184D45A200FBE054 /* ShelbyLikersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C253B72184D45A200FBE054 /* ShelbyLikersView.xib */; };
+		1C253B77184E452D00FBE054 /* LikerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C253B76184E452D00FBE054 /* LikerViewCell.xib */; };
+		1C253B78184E452D00FBE054 /* LikerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C253B76184E452D00FBE054 /* LikerViewCell.xib */; };
+		1C253B79184E452D00FBE054 /* LikerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C253B76184E452D00FBE054 /* LikerViewCell.xib */; };
+		1C253B7C184E468C00FBE054 /* LikerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C253B7B184E468C00FBE054 /* LikerCell.m */; };
+		1C253B7D184E468C00FBE054 /* LikerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C253B7B184E468C00FBE054 /* LikerCell.m */; };
+		1C253B7E184E468C00FBE054 /* LikerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C253B7B184E468C00FBE054 /* LikerCell.m */; };
 		1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
 		1C309AB417A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
 		1C309AB517A70B1B00D690A8 /* ShelbyShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */; };
@@ -787,6 +793,9 @@
 		1C253B6D184D458300FBE054 /* ShelbyLikersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyLikersViewController.h; sourceTree = "<group>"; };
 		1C253B6E184D458300FBE054 /* ShelbyLikersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyLikersViewController.m; sourceTree = "<group>"; };
 		1C253B72184D45A200FBE054 /* ShelbyLikersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyLikersView.xib; sourceTree = "<group>"; };
+		1C253B76184E452D00FBE054 /* LikerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LikerViewCell.xib; sourceTree = "<group>"; };
+		1C253B7A184E468C00FBE054 /* LikerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikerCell.h; sourceTree = "<group>"; };
+		1C253B7B184E468C00FBE054 /* LikerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikerCell.m; sourceTree = "<group>"; };
 		1C309AB217A70B1B00D690A8 /* ShelbyShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyShareView.xib; sourceTree = "<group>"; };
 		1C309AB717A714B900D690A8 /* check-social.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-social.png"; sourceTree = "<group>"; };
 		1C309AB817A714B900D690A8 /* check-social@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-social@2x.png"; sourceTree = "<group>"; };
@@ -1447,6 +1456,7 @@
 				1C154E5117A06EBA00C0B76B /* NoLikesView.xib */,
 				1CDB0C1F17A96CF90031C2C9 /* UserDetailsViewCell.xib */,
 				1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */,
+				1C253B76184E452D00FBE054 /* LikerViewCell.xib */,
 				9178C9D517CE398400913256 /* Welcome.storyboard */,
 				9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */,
 				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
@@ -1850,6 +1860,8 @@
 				1CA191511774DE360039358B /* ShelbyStreamBrowseViewCell.h */,
 				1CA191521774DE360039358B /* ShelbyStreamBrowseViewCell.m */,
 				1CCAC9D51848F128008E603C /* ShelbyUserProfileCell.h */,
+				1C253B7A184E468C00FBE054 /* LikerCell.h */,
+				1C253B7B184E468C00FBE054 /* LikerCell.m */,
 				1CCAC9D61848F128008E603C /* ShelbyUserProfileCell.m */,
 				91D1C8181778DD5B00CAC1E9 /* STVParallaxView.h */,
 				91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */,
@@ -2230,6 +2242,7 @@
 				1CA1914A1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE074A1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				1CCE4C4D17E226F700F0BF5A /* user_default_avatar.png in Resources */,
+				1C253B78184E452D00FBE054 /* LikerViewCell.xib in Resources */,
 				9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C3178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
 				1C7B63DF178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
@@ -2336,6 +2349,7 @@
 				1CA1914B1774DD450039358B /* ShelbyStreamBrowseView.xib in Resources */,
 				91CE074B1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				1CCE4C4E17E226F700F0BF5A /* user_default_avatar.png in Resources */,
+				1C253B79184E452D00FBE054 /* LikerViewCell.xib in Resources */,
 				9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C4178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
 				1C7B63E0178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
@@ -2440,6 +2454,7 @@
 				1CD8111217CCF6C0002FD84B /* play-airplay.png in Resources */,
 				1C56F13C17BABD8C00EE9206 /* Appirater.podspec in Resources */,
 				1CE5586E17DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
+				1C253B77184E452D00FBE054 /* LikerViewCell.xib in Resources */,
 				912261D917B97F070092AF30 /* overlay-sharers.png in Resources */,
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
@@ -2561,6 +2576,7 @@
 				91AA342618194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B70184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
+				1C253B7D184E468C00FBE054 /* LikerCell.m in Sources */,
 				1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */,
 				1C8109A316EE2CBF0030077C /* AFJSONRequestOperation.m in Sources */,
 				9125AACE17C55525007CD95F /* ShelbyAirPlayController.m in Sources */,
@@ -2698,6 +2714,7 @@
 				91AA342718194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B71184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
+				1C253B7E184E468C00FBE054 /* LikerCell.m in Sources */,
 				1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */,
 				1C810A5916EE5EED0030077C /* AFJSONRequestOperation.m in Sources */,
 				9125AACF17C55525007CD95F /* ShelbyAirPlayController.m in Sources */,
@@ -2835,6 +2852,7 @@
 				91AA342518194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B6F184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
+				1C253B7C184E468C00FBE054 /* LikerCell.m in Sources */,
 				8E01AFBD16E67365000567D4 /* AFImageRequestOperation.m in Sources */,
 				8E01AFBE16E67365000567D4 /* AFJSONRequestOperation.m in Sources */,
 				9125AACD17C55525007CD95F /* ShelbyAirPlayController.m in Sources */,
