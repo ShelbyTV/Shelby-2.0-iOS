@@ -29,7 +29,6 @@
 - (IBAction)connectoToFacebook:(id)sender;
 - (IBAction)connectoToTwitter:(id)sender;
 - (IBAction)goToMyRoll:(id)sender;
-- (IBAction)goToMyLikes:(id)sender;
 - (IBAction)logout:(id)sender;
 
 /// 
@@ -116,13 +115,6 @@
 }
 
 #pragma mark - User Interaction Methods
-- (IBAction)goToMyLikes:(id)sender
-{
-    if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(launchMyLikes)]) {
-        [self.delegate launchMyLikes];
-    }
-}
-
 - (IBAction)goToMyRoll:(id)sender
 {
     if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(launchMyRoll)]) {

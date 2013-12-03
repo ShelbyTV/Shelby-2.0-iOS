@@ -22,7 +22,6 @@
 - (void)logoutUser;
 - (void)goToDVR;
 - (void)goToUsersRoll;
-- (void)goToUsersLikes;
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
 - (void)inviteFacebookFriendsWasTapped;
@@ -65,7 +64,6 @@
 //allow brain to manage the navigation when necessary
 - (void)didNavigateToCommunityChannel;
 - (void)didNavigateToUsersStream;
-- (void)didNavigateToUsersLikes;
 - (void)didNavigateToUsersRoll;
 
 - (void)videoDidAutoadvance;

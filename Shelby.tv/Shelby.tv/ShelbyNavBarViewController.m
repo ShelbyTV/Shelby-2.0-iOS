@@ -56,14 +56,6 @@
     _lastSelectedRow = self.navBarView.streamButton;
 }
 
-- (void)didNavigateToUsersLikes
-{
-    if (self.navBarView.likesButton != self.navBarView.currentRow) {
-        self.navBarView.currentRow = self.navBarView.likesButton;
-    }
-    _lastSelectedRow = self.navBarView.likesButton;
-}
-
 - (void)didNavigateToUsersShares
 {
     if (self.navBarView.sharesButton != self.navBarView.currentRow) {
@@ -100,11 +92,6 @@
             [self.delegate navBarViewControllerStreamWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
             [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                    withAction:kAnalyticsUXTapNavBarRowStream
-                                          withNicknameAsLabel:YES];
-        } else if (sender == self.navBarView.likesButton) {
-            [self.delegate navBarViewControllerLikesWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
-            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
-                                                   withAction:kAnalyticsUXTapNavBarRowLikes
                                           withNicknameAsLabel:YES];
         } else if (sender == self.navBarView.sharesButton) {
             [self.delegate navBarViewControllerSharesWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];

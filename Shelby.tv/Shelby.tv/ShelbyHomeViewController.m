@@ -572,11 +572,6 @@
     [self.navBarVC didNavigateToUsersStream];
 }
 
-- (void)didNavigateToUsersLikes
-{
-    [self.navBarVC didNavigateToUsersLikes];
-}
-
 - (void)didNavigateToUsersRoll
 {
     [self.navBarVC didNavigateToUsersShares];
@@ -729,13 +724,6 @@
 {
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersRoll)]) {
         [self.masterDelegate goToUsersRoll];
-    }
-}
-
-- (void)launchMyLikes
-{
-    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersLikes)]) {
-        [self.masterDelegate goToUsersLikes];
     }
 }
 
@@ -1091,19 +1079,6 @@
         [self scrollToTopOfCurrentStreamBrowseVC];
     }
 
-}
-
-- (void)navBarViewControllerLikesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
-{
-    if (selectedNewRow) {
-        if (self.videoReel) {
-            [self dismissVideoReel];
-        }
-        [self updateVideoControlsForPage:0];
-        [self launchMyLikes];
-    } else {
-        [self scrollToTopOfCurrentStreamBrowseVC];
-    }
 }
 
 - (void)navBarViewControllerSharesWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
