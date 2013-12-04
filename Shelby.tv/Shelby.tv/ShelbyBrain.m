@@ -39,6 +39,7 @@ NSString * const kShelbyBrainFocusOnEntityNotification = @"kShelbyBrainFocusOnEn
 NSString * const kShelbyBrainDidBecomeActiveNotification = @"kShelbyBrainDidBecomeActiveNotification";
 NSString * const kShelbyBrainWillResignActiveNotification = @"kShelbyBrainWillResignActiveNotification";
 NSString * const kShelbyBrainDismissVideoReelNotification = @"kShelbyBrainDismissVideoReelNotification";
+NSString * const kShelbyBrainDidAutoadvanceNotification = @"kShelbyBrainDidAutoadvanceNotification";
 
 NSString * const kShelbyBrainChannelKey = @"channel";
 NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
@@ -751,7 +752,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 
 - (void)videoDidAutoadvance
 {
-    [self.homeVC videoDidAutoadvance];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainDidAutoadvanceNotification object:self];
 }
 
 - (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel

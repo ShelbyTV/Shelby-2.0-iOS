@@ -107,7 +107,12 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(dismissVideoReelNotification:)
-                                                 name:kShelbyBrainDismissVideoReelNotification object:nil];}
+                                                 name:kShelbyBrainDismissVideoReelNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                         selector:@selector(videoDidAutoadvanceNotification:)
+                                             name:kShelbyBrainDidAutoadvanceNotification object:nil];
+}
 
 - (void)dealloc
 {
@@ -638,8 +643,9 @@
     self.videoReel.airPlayView = self.videoControlsVC.airPlayView;
 }
 
-- (void)videoDidAutoadvance
+- (void)videoDidAutoadvanceNotification:(NSNotification *)notification
 {
+    // This is fine even if someone else auto advance.
     [self doPeekAndHide];
 }
 
