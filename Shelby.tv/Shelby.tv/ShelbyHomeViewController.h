@@ -66,8 +66,6 @@
 - (void)didNavigateToUsersStream;
 - (void)didNavigateToUsersRoll;
 
-- (void)videoDidAutoadvance;
-
 // Methods to Override by subclass
 - (CGFloat)swapAnimationTime;
 - (void)setupNavBarView;
