@@ -14,10 +14,13 @@
 #import "Roll+Helper.h"
 #import "SettingsViewController.h"
 #import "ShelbyAlert.h"
+#import "ShelbyBrain.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyErrorUtility.h"
+#import "ShelbyModelArrayUtility.h"
 #import "ShelbyVideoContainer.h"
 #import "SPVideoReel.h"
+#import "SPVideoExtractor.h"
 #import "User+Helper.h"
 
 @interface ShelbyHomeViewController () {
@@ -80,6 +83,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(noInternetConnection:)
                                                  name:kShelbyNoInternetConnectionNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchEntriesDidCompleteForChannel:)
+                                                 name:kShelbyBrainFetchEntriesDidCompleteForChannelNotification object:nil];
 }
 
 - (void)dealloc
@@ -285,6 +292,60 @@
     [[self streamBrowseViewControllerForChannel:channel] focusOnEntity:entity inChannel:channel animated:YES];
     if (!self.airPlayController.isAirPlayActive) {
         self.videoControlsVC.currentEntity = entity;
+    }
+}
+
+- (BOOL)mergeCurrentChannelEntries:(NSArray *)curEntries forChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries
+{
+    ShelbyModelArrayUtility *mergeUtil = [ShelbyModelArrayUtility determineHowToMergePossiblyNew:channelEntries intoExisting:curEntries];
+    if ([mergeUtil.actuallyNewEntities count]) {
+        [self addEntries:mergeUtil.actuallyNewEntities toEnd:mergeUtil.actuallyNewEntitiesShouldBeAppended ofChannel:channel];
+        if (!mergeUtil.actuallyNewEntitiesShouldBeAppended) {
+            [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:mergeUtil.actuallyNewEntities[0]];
+            
+            //if there's a gap between prepended entities and existing entities, fetch again to fill that gap
+            if (mergeUtil.gapAfterNewEntitiesBeforeExistingEntities) {
+                [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel
+                                                                sinceEntry:[mergeUtil.actuallyNewEntities lastObject]];
+            }
+            return YES;
+        }
+    } else {
+        //full subset, nothing to add
+    }
+    
+    return NO;
+}
+
+- (void)fetchEntriesDidCompleteForChannel:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[@"channel"];
+    if (![self streamBrowseViewControllerForChannel:channel]) {
+        return;
+    }
+    
+    NSArray *channelEntries = userInfo[@"channelEntries"];
+    BOOL cached =  [((NSNumber *)userInfo[@"cached"]) boolValue];
+    
+    NSArray *curEntries = [self entriesForChannel:channel];
+    if(curEntries && [curEntries count] && [channelEntries count]){
+        [self mergeCurrentChannelEntries:curEntries forChannel:channel withChannelEntries:channelEntries];
+    } else {
+        // Don't update entries if we have zero entries in cache
+        if ([channelEntries count] != 0 || !cached) {
+            [self setEntries:channelEntries forChannel:channel];
+        }
+        
+        if ([channelEntries count]) {
+            [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:channelEntries[0]];
+        }
+    }
+    
+    if(!cached){
+        [self fetchDidCompleteForChannel:channel];
+        [self refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
+        [self loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
 }
 

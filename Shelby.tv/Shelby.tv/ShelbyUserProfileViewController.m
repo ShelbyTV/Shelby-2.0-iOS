@@ -90,7 +90,11 @@
 
 - (ShelbyStreamBrowseViewController *)streamBrowseViewControllerForChannel:(DisplayChannel *)channel
 {
-    return self.currentBrowseVC;
+    if ([self.currentBrowseVC.channel.channelID isEqualToString:channel.channelID]) {
+        return self.currentBrowseVC;
+    }
+    
+    return nil;
 }
 
 - (void)followButtonClicked

@@ -56,6 +56,8 @@
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 - (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate;
 
+- (BOOL)mergeCurrentChannelEntries:(NSArray *)curEntries forChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries;
+
 // *** NEW API ***
 // We should use the following two methods exclusively on start/remove playback
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;

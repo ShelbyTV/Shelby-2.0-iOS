@@ -33,6 +33,11 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen";
 
+NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelNotification";
+NSString * const kShelbyBrainChannelKey = @"channel";
+NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
+NSString * const kShelbyBrainCachedKey = @"cached";
+
 @interface ShelbyBrain()
 
 //our two primary view controllers
@@ -309,7 +314,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
                     curEntries = @[];
                 }
                 
-                if ([self mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
+                if ([self.homeVC mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
                     // Give some time for thumbnails to load in view - a little hackish
                     [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
                     
@@ -511,27 +516,6 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
     [self showErrorView:error];
 }
 
-- (BOOL)mergeCurrentChannelEntries:(NSArray *)curEntries forChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries
-{
-    ShelbyModelArrayUtility *mergeUtil = [ShelbyModelArrayUtility determineHowToMergePossiblyNew:channelEntries intoExisting:curEntries];
-    if ([mergeUtil.actuallyNewEntities count]) {
-        [self.homeVC addEntries:mergeUtil.actuallyNewEntities toEnd:mergeUtil.actuallyNewEntitiesShouldBeAppended ofChannel:channel];
-        if (!mergeUtil.actuallyNewEntitiesShouldBeAppended) {
-            [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:mergeUtil.actuallyNewEntities[0]];
-            
-            //if there's a gap between prepended entities and existing entities, fetch again to fill that gap
-            if (mergeUtil.gapAfterNewEntitiesBeforeExistingEntities) {
-                [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel
-                                                                sinceEntry:[mergeUtil.actuallyNewEntities lastObject]];
-            }
-            return YES;
-        }
-    } else {
-        //full subset, nothing to add
-    }
-    
-    return NO;
-}
 
 //channelEntries filled with ShelbyModel (specifically, a DashboardEntry or Frame)
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
@@ -546,26 +530,10 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
     }];
     channelEntries = [channelEntries filteredArrayUsingPredicate:onlyPlayableVideos];
     
-    NSArray *curEntries = [self.homeVC entriesForChannel:channel];
-    if(curEntries && [curEntries count] && [channelEntries count]){
-        [self mergeCurrentChannelEntries:curEntries forChannel:channel withChannelEntries:channelEntries];
-    } else {
-        // Don't update entries if we have zero entries in cache
-        if ([channelEntries count] != 0 || !cached) {
-            [self.homeVC setEntries:channelEntries forChannel:channel];
-        }
-
-        if ([channelEntries count]) {
-            [[SPVideoExtractor sharedInstance] warmCacheForVideoContainer:channelEntries[0]];
-        }
-    }
-    
-    if(!cached){
-        [self.homeVC fetchDidCompleteForChannel:channel];
-        [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
-        [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
-    }
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainFetchEntriesDidCompleteForChannelNotification
+                                                        object:self userInfo:@{kShelbyBrainChannelKey : channel,
+                                                                               kShelbyBrainChannelEntriesKey : channelEntries,
+                                                                               kShelbyBrainCachedKey : @(cached)}];
     
     if (self.postFetchInvocationForChannel && [channel objectID] && self.postFetchInvocationForChannel[channel.objectID]) {
         [self.postFetchInvocationForChannel[channel.objectID] invoke];
