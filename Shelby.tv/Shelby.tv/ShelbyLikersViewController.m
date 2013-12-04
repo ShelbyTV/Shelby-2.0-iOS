@@ -95,6 +95,8 @@
     User *user = self.likers[indexPath.row];
     
     [self.delegate userProfileWasTapped:user.userID];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
