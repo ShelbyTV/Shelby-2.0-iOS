@@ -56,6 +56,8 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 
 @property (nonatomic, strong) UIAlertView *currentAlertView;
+
+@property (nonatomic, assign) BOOL openingUserProfileInProgress;
 @end
 
 @implementation ShelbyBrain
@@ -75,6 +77,8 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
     [self refreshUsersStreamAfterDelay];
     
     [[ShelbyNotificationManager sharedInstance] cancelAllNotifications];
+    
+    self.openingUserProfileInProgress = NO;
 }
 
 - (void)handleWillResignActive
@@ -918,6 +922,12 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 // This method is going to be called from two protocols.. not that great. Need to have a nicer protocols.
 - (void)userProfileWasTapped:(NSString *)userID
 {
+    if (self.openingUserProfileInProgress) {
+        return;
+    }
+    
+    self.openingUserProfileInProgress = YES;
+    
     [[ShelbyDataMediator sharedInstance] forceFetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {
         
         DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedUser.publicRollID];
@@ -944,6 +954,7 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
             [topViewController presentViewController:userProfileVC animated:YES completion:^{
                 [userProfileVC setEntries:entries forChannel:displayChannel];
                 [userProfileVC focusOnChannel:displayChannel];
+                self.openingUserProfileInProgress = NO;
             }];
         }];
     }];
