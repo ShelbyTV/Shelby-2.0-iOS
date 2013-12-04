@@ -84,6 +84,11 @@
     [self updateBufferProgressForCurrentBufferedRange];
 }
 
+- (void)dealloc
+{
+    [self.airPlayButton removeObserver:self forKeyPath:@"alpha"];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
