@@ -21,6 +21,7 @@
 #import "WelcomeViewController.h"
 
 extern NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification;
+extern NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification;
 extern NSString * const kShelbyBrainChannelKey;
 extern NSString * const kShelbyBrainChannelEntriesKey;
 extern NSString * const kShelbyBrainCachedKey;

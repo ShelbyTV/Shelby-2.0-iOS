@@ -87,6 +87,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fetchEntriesDidCompleteForChannel:)
                                                  name:kShelbyBrainFetchEntriesDidCompleteForChannelNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchEntriesDidCompleteForChannelWithError:)
+                                                 name:kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification object:nil];
 }
 
 - (void)dealloc
@@ -317,16 +321,28 @@
     return NO;
 }
 
+- (void)fetchEntriesDidCompleteForChannelWithError:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    if (![self streamBrowseViewControllerForChannel:channel]) {
+        return;
+    }
+
+    [self refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
+    [self loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
+}
+
 - (void)fetchEntriesDidCompleteForChannel:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[@"channel"];
+    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
     if (![self streamBrowseViewControllerForChannel:channel]) {
         return;
     }
     
-    NSArray *channelEntries = userInfo[@"channelEntries"];
-    BOOL cached =  [((NSNumber *)userInfo[@"cached"]) boolValue];
+    NSArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
+    BOOL cached =  [((NSNumber *)userInfo[kShelbyBrainCachedKey]) boolValue];
     
     NSArray *curEntries = [self entriesForChannel:channel];
     if(curEntries && [curEntries count] && [channelEntries count]){

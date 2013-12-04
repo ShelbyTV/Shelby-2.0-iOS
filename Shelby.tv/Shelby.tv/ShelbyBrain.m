@@ -34,6 +34,7 @@ NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen";
 
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelNotification";
+NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification";
 NSString * const kShelbyBrainChannelKey = @"channel";
 NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
 NSString * const kShelbyBrainCachedKey = @"cached";
@@ -543,8 +544,7 @@ NSString * const kShelbyBrainCachedKey = @"cached";
 -(void)fetchEntriesDidCompleteForChannel:(DisplayChannel *)channel
                                withError:(NSError *)error
 {
-    [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
-    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification object:self userInfo:@{kShelbyBrainChannelKey : channel}];
     
     [self showErrorView:error];
 }
