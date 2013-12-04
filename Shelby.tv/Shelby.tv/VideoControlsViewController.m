@@ -60,6 +60,12 @@
                                  ];
     self.nonplaybackActionViews = @[self.controlsView.nonplaybackLikeButton,
                                     self.controlsView.nonplaybackUnlikeButton];
+    
+    self.controlsView.likeButton.hidden = YES;
+    self.controlsView.unlikeButton.hidden = YES;
+    self.controlsView.nonplaybackLikeButton.hidden = YES;
+    self.controlsView.nonplaybackUnlikeButton.hidden = YES;
+    
     [self updateViewForCurrentDisplayMode];
     [self setupAirPlay];
 }
