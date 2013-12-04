@@ -104,7 +104,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleWillResignActiveNotification:)
                                                  name:kShelbyBrainWillResignActiveNotification object:nil];
-}
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dismissVideoReelNotification:)
+                                                 name:kShelbyBrainDismissVideoReelNotification object:nil];}
 
 - (void)dealloc
 {
@@ -589,6 +592,11 @@
 {
     // prevent display from sleeping while watching video
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+}
+
+- (void)dismissVideoReelNotification:(NSNotification *)notification
+{
+    [self dismissVideoReel];
 }
 
 - (void)dismissVideoReel

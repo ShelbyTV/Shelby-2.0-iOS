@@ -25,6 +25,7 @@ extern NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNo
 extern NSString * const kShelbyBrainFocusOnEntityNotification;
 extern NSString * const kShelbyBrainDidBecomeActiveNotification;
 extern NSString * const kShelbyBrainWillResignActiveNotification;
+extern NSString * const kShelbyBrainDismissVideoReelNotification;
 
 extern NSString * const kShelbyBrainChannelKey;
 extern NSString * const kShelbyBrainChannelEntriesKey;

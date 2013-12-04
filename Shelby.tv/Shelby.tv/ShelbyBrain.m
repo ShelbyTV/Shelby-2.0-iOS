@@ -38,6 +38,7 @@ NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotificat
 NSString * const kShelbyBrainFocusOnEntityNotification = @"kShelbyBrainFocusOnEntityNotification";
 NSString * const kShelbyBrainDidBecomeActiveNotification = @"kShelbyBrainDidBecomeActiveNotification";
 NSString * const kShelbyBrainWillResignActiveNotification = @"kShelbyBrainWillResignActiveNotification";
+NSString * const kShelbyBrainDismissVideoReelNotification = @"kShelbyBrainDismissVideoReelNotification";
 
 NSString * const kShelbyBrainChannelKey = @"channel";
 NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
@@ -77,7 +78,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 {
     NSDate *lastActiveDate = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyLastActiveDate];
     if (lastActiveDate && [lastActiveDate isKindOfClass:[NSDate class]] && [lastActiveDate timeIntervalSinceNow] < kShelbyChannelsStaleTime) {
-        [self.homeVC dismissVideoReel];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainDismissVideoReelNotification object:self];
     }
     [User sessionDidBecomeActive];
 
