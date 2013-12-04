@@ -12,9 +12,13 @@
 #import "ShelbyDataMediator.h"
 #import "UIImage+Scale.h"
 
-NSString * const kShelbyAPIBaseURL =                        @"https://api.shelby.tv/";
-//live API: "https://api.shelby.tv/"
-//staging API: "http://api.staging.shelby.tv/"
+#ifdef DEBUG
+    NSString * const kShelbyAPIBaseURL =                    @"https://api.shelby.tv/";
+    //live API: "https://api.shelby.tv/"
+    //staging API: "http://api.staging.shelby.tv/"
+#else
+    NSString * const kShelbyAPIBaseURL =                    @"https://api.shelby.tv/";  // DON'T TOUCH
+#endif
 
 NSString * const DELETE =  @"DELETE";
 NSString * const kShelbyAPIDeleteFramePath =                @"v1/frame/%@";
