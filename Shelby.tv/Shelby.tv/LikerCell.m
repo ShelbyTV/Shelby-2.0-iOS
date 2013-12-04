@@ -35,28 +35,9 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)toggleFollow:(id)sender
-{
-    if ([self.toggleFollow.titleLabel.text isEqualToString:@"Follow"]) {
-        [self updateFollowButtonToShowFollowing:YES];
-    } else {
-        [self updateFollowButtonToShowFollowing:NO];
-    }
-
-    [self.delegate toggleFollowForUser:self.user];
-}
-
-- (void)updateFollowButtonToShowFollowing:(BOOL)following
-{
-    if (following) {
-        [self.toggleFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
-    } else {
-        [self.toggleFollow setTitle:@"Follow" forState:UIControlStateNormal];
-    }
-}
-
 - (void)setupCellForLiker:(User *)user
 {
+    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.user = user;
     self.name.text = user.name;
     self.nickname.text = user.nickname;

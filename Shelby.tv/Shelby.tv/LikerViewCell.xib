@@ -32,22 +32,12 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hq2-Pr-kdg">
-                        <rect key="frame" x="246" y="15" width="70" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="Follow"/>
-                        <state key="selected" title="Unfollow"/>
-                        <connections>
-                            <action selector="toggleFollow:" destination="XgD-af-Qv8" eventType="touchUpInside" id="p0a-ba-U4F"/>
-                        </connections>
-                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatar" destination="rni-nq-siQ" id="aCs-WF-cxp"/>
                 <outlet property="name" destination="gdm-le-BxC" id="FJl-uA-SMi"/>
                 <outlet property="nickname" destination="hOi-vE-8j0" id="nEE-Bc-Fko"/>
-                <outlet property="toggleFollow" destination="Hq2-Pr-kdg" id="Pp7-bh-9CD"/>
             </connections>
         </tableViewCell>
     </objects>

@@ -82,20 +82,9 @@
 {
     LikerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikerViewCell" forIndexPath:indexPath];
     
-    User *user = self.likers[indexPath.row];
-    if ([user.userID isEqualToString:self.currentUser.userID ]) {
-        cell.toggleFollow.hidden = YES;
-    } else {
-        cell.toggleFollow.hidden = NO;
-        if (user.publicRollID && [self.currentUser isFollowing:user.publicRollID]) {
-            [cell updateFollowButtonToShowFollowing:YES];
-        } else {
-            [cell updateFollowButtonToShowFollowing:NO];
-        }
-    }
-
     cell.delegate = self;
-  
+
+    User *user = self.likers[indexPath.row];
     [cell setupCellForLiker:user];
     
     return cell;
