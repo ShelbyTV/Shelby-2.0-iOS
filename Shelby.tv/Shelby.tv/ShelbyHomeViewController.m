@@ -95,6 +95,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(focusOnEntityNotification:)
                                                  name:kShelbyBrainFocusOnEntityNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleDidBecomeActiveNotification:)
+                                                 name:kShelbyBrainDidBecomeActiveNotification object:nil];
+
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleWillResignActiveNotification:)
+                                                 name:kShelbyBrainWillResignActiveNotification object:nil];
 }
 
 - (void)dealloc
@@ -102,12 +111,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)handleDidBecomeActive
+
+- (void)handleDidBecomeActiveNotification:(NSNotification *)notification
 {
     [self.airPlayController checkForExistingScreenAndInitializeIfPresent];
 }
 
-- (void)handleWillResignActive
+- (void)handleWillResignActiveNotification:(NSNotification *)notification
 {
     [self pauseCurrentVideo];
 }

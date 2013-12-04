@@ -36,6 +36,9 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelNotification";
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification";
 NSString * const kShelbyBrainFocusOnEntityNotification = @"kShelbyBrainFocusOnEntityNotification";
+NSString * const kShelbyBrainDidBecomeActiveNotification = @"kShelbyBrainDidBecomeActiveNotification";
+NSString * const kShelbyBrainWillResignActiveNotification = @"kShelbyBrainWillResignActiveNotification";
+
 NSString * const kShelbyBrainChannelKey = @"channel";
 NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
 NSString * const kShelbyBrainCachedKey = @"cached";
@@ -77,7 +80,8 @@ NSString * const kShelbyBrainEntityKey = @"entity";
         [self.homeVC dismissVideoReel];
     }
     [User sessionDidBecomeActive];
-    [self.homeVC handleDidBecomeActive];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainDidBecomeActiveNotification object:self];
     
     [self.signupFlowVC handleDidBecomeActive];
 
@@ -103,7 +107,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    [self.homeVC handleWillResignActive];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainWillResignActiveNotification object:self];
     [User sessionDidPause];
 }
 

@@ -23,6 +23,8 @@
 extern NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification;
 extern NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification;
 extern NSString * const kShelbyBrainFocusOnEntityNotification;
+extern NSString * const kShelbyBrainDidBecomeActiveNotification;
+extern NSString * const kShelbyBrainWillResignActiveNotification;
 
 extern NSString * const kShelbyBrainChannelKey;
 extern NSString * const kShelbyBrainChannelEntriesKey;

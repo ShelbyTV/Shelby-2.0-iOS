@@ -68,9 +68,6 @@
 
 - (void)videoDidAutoadvance;
 
-- (void)handleDidBecomeActive;
-- (void)handleWillResignActive;
-
 // Methods to Override by subclass
 - (CGFloat)swapAnimationTime;
 - (void)setupNavBarView;
