@@ -35,9 +35,11 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelNotification";
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification";
+NSString * const kShelbyBrainFocusOnEntityNotification = @"kShelbyBrainFocusOnEntityNotification";
 NSString * const kShelbyBrainChannelKey = @"channel";
 NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
 NSString * const kShelbyBrainCachedKey = @"cached";
+NSString * const kShelbyBrainEntityKey = @"entity";
 
 @interface ShelbyBrain()
 
@@ -562,7 +564,6 @@ NSString * const kShelbyBrainCachedKey = @"cached";
     [self.homeVC setEntries:channelEntries forChannel:channel];
     
     [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
-    [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
 }
 
 - (void)removeFrame:(Frame *)frame fromChannel:(DisplayChannel *)channel
@@ -670,7 +671,6 @@ NSString * const kShelbyBrainCachedKey = @"cached";
 {
     if (channel != self.dvrChannel) {
         //OPTIMIZE: could be smarter, don't ALWAYS send this fetch if we have an outstanding fetch
-        [self.homeVC loadMoreActivityIndicatorForChannel:channel shouldAnimate:YES];
         [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel sinceEntry:entry];
     }
 }
@@ -751,7 +751,8 @@ NSString * const kShelbyBrainCachedKey = @"cached";
 
 - (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
 {
-    [self.homeVC focusOnEntity:entity inChannel:channel];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainFocusOnEntityNotification object:self userInfo:@{kShelbyBrainEntityKey : entity,
+                                                                                                                            kShelbyBrainChannelKey : channel}];
 }
 
 - (BOOL)canRoll

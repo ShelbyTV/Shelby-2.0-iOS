@@ -81,16 +81,20 @@
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(noInternetConnection:)
+                                             selector:@selector(noInternetConnectionNotification:)
                                                  name:kShelbyNoInternetConnectionNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fetchEntriesDidCompleteForChannel:)
+                                             selector:@selector(fetchEntriesDidCompleteForChannelNotification:)
                                                  name:kShelbyBrainFetchEntriesDidCompleteForChannelNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fetchEntriesDidCompleteForChannelWithError:)
+                                             selector:@selector(fetchEntriesDidCompleteForChannelWithErrorNotification:)
                                                  name:kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(focusOnEntityNotification:)
+                                                 name:kShelbyBrainFocusOnEntityNotification object:nil];
 }
 
 - (void)dealloc
@@ -321,7 +325,19 @@
     return NO;
 }
 
-- (void)fetchEntriesDidCompleteForChannelWithError:(NSNotification *)notification
+- (void)focusOnEntityNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    if (![self streamBrowseViewControllerForChannel:channel]) {
+        return;
+    }
+    
+    id<ShelbyVideoContainer> entity = userInfo[kShelbyBrainEntityKey];
+    [self focusOnEntity:entity inChannel:channel];
+}
+
+- (void)fetchEntriesDidCompleteForChannelWithErrorNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
     DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
@@ -330,10 +346,9 @@
     }
 
     [self refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
-    [self loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
 }
 
-- (void)fetchEntriesDidCompleteForChannel:(NSNotification *)notification
+- (void)fetchEntriesDidCompleteForChannelNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
     DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
@@ -361,7 +376,6 @@
     if(!cached){
         [self fetchDidCompleteForChannel:channel];
         [self refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
-        [self loadMoreActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
 }
 
@@ -433,11 +447,6 @@
 - (void)refreshActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
 {
     [[self streamBrowseViewControllerForChannel:channel] refreshActivityIndicatorShouldAnimate:shouldAnimate];
-}
-
-- (void)loadMoreActivityIndicatorForChannel:(DisplayChannel *)channel shouldAnimate:(BOOL)shouldAnimate
-{
-    //not used on iphone
 }
 
 - (void)setMasterDelegate:(id)masterDelegate
@@ -654,7 +663,7 @@
     [self.navBarVC didNavigateToUsersShares];
 }
 
-- (void)noInternetConnection:(NSNotification *)notification
+- (void)noInternetConnectionNotification:(NSNotification *)notification
 {
     if (!self.videoReel) {
         return;
