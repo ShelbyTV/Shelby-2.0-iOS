@@ -29,19 +29,35 @@
 
 - (void)setupNavBarView
 {
-    self.navBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    self.navBar.backgroundColor = [UIColor blackColor];
+    self.navBar = [[UIView alloc] init];
     [self.view addSubview:self.navBar];
-    self.navBar.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.navBar.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
+    self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navBar]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"navBar":self.navBar}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navBar(44)]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"navBar":self.navBar}]];
 
     _username = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.frame.size.width-100, 24)];
     _username.textAlignment = NSTextAlignmentCenter;
     _username.text = self.profileUser.nickname;
     _username.backgroundColor = [UIColor clearColor];
     _username.textColor = kShelbyColorGray;
+    _username.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.navBar addSubview:_username];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-90-[username]-90-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"username":_username}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[username(24)]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"username":_username}]];
     
     // Close Button
     _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -54,19 +70,37 @@
     
     // Follow Button
     _followButton = [UIButton buttonWithType:kShelbyFontH3Bold];
-    _followButton.frame = CGRectMake(230, 5, 80, 34);
+    _followButton.translatesAutoresizingMaskIntoConstraints = NO;
+    
     [_followButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
     [_followButton addTarget:self action:@selector(followButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self updateFollowButtonToShowFollowing:!_followButtonShowsFollowing];
     _followButton.titleLabel.font = kShelbyFontH4Bold;
     [self.navBar addSubview:_followButton];
     
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[followButton(80)]-10-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"followButton":_followButton}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[followButton(34)]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"followButton":_followButton}]];
+    
     //loading spinner
     _loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _loadingSpinner.hidesWhenStopped = YES;
-    _loadingSpinner.center = CGPointMake(280, 22);
     [self.navBar addSubview:_loadingSpinner];
-    
+    _loadingSpinner.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[spinner]-15-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"spinner":_loadingSpinner}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-13-[spinner]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"spinner":_loadingSpinner}]];
+
 }
 
 - (void)dismissUserProfile
