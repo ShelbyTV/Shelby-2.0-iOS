@@ -13,7 +13,7 @@
 @interface ShelbyLikersViewController ()
 @property (nonatomic, strong) NSMutableOrderedSet *likers;
 @property (nonatomic, weak) IBOutlet UITableView *likersTable;
-@property (nonatomic, weak) IBOutlet UILabel *title;
+@property (nonatomic, weak) IBOutlet UILabel *videoTitle;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingSpinner;
 
 - (IBAction)close:(id)sender;
@@ -65,6 +65,8 @@
         [self willChangeValueForKey:@"likedVideo"];
         _likedVideo = likedVideo;
         [self didChangeValueForKey:@"likedVideo"];
+        
+        self.videoTitle.text = _likedVideo.title;
         
         [self.loadingSpinner startAnimating];
         [[ShelbyDataMediator sharedInstance] fetchAllLikersOfVideo:likedVideo completion:^(NSArray *users) {
