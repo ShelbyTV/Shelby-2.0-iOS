@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="likersTable" destination="mh6-Yt-5AX" id="Vej-mr-0pK"/>
                 <outlet property="loadingSpinner" destination="6tt-yZ-hb7" id="mXI-iW-48u"/>
+                <outlet property="topbar" destination="vqT-hX-hx8" id="KJX-JS-nBr"/>
                 <outlet property="videoTitle" destination="Cry-qk-IcQ" id="y95-iv-vj1"/>
                 <outlet property="view" destination="1" id="Hb1-Ay-gVT"/>
             </connections>

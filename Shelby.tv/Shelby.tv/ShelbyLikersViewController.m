@@ -14,7 +14,8 @@
 @property (nonatomic, strong) NSMutableOrderedSet *likers;
 @property (nonatomic, weak) IBOutlet UITableView *likersTable;
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingSpinner;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingSpinner;
+@property (nonatomic, weak) IBOutlet UIView *topbar;
 
 - (IBAction)close:(id)sender;
 @end
@@ -35,6 +36,8 @@
     [super viewDidLoad];
     
     [self.likersTable registerNib:[UINib nibWithNibName:@"LikerViewCell" bundle:nil] forCellReuseIdentifier:@"LikerViewCell"];
+    
+    self.topbar.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
 }
 
 - (void)didReceiveMemoryWarning

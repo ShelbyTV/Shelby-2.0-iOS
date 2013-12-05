@@ -33,6 +33,7 @@
     self.navBar.backgroundColor = [UIColor blackColor];
     [self.view addSubview:self.navBar];
     self.navBar.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.navBar.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
 
     _username = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.frame.size.width-100, 24)];
     _username.textAlignment = NSTextAlignmentCenter;
