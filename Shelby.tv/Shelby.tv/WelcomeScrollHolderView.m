@@ -153,15 +153,15 @@
 #define HIDE_DURATION 0.3
 #define HIDE_DELAY 0.0
 #define TITLE_SHOW_DURATION 0.5
-#define TIP_SHOW_DURATION 1.5
-#define TIP_SHOW_DELAY 1.5
+#define TIP_SHOW_DURATION 1.0
+#define TIP_SHOW_DELAY 0.5
 
 - (void)showTip:(NSUInteger)tipIdx
 {
     switch (tipIdx) {
         case 0:
             [self zoomOutOnPhone];
-            [self changeTitleText:@"Discovering new videos for you every day."
+            [self changeTitleText:@"Discover videos you and your friends will love."
                           tipText:@""];
             for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
@@ -172,7 +172,7 @@
             break;
         case 1:
             [self zoomInOnPhone];
-            [self changeTitleText:@"...powered by your favorite places."
+            [self changeTitleText:@"See what videos your friends Like."
                           tipText:@""];
             for (NSArray *tipCollection in @[self.tipIconsP2/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
@@ -184,8 +184,8 @@
             break;
         case 2:
             [self zoomInOnPhone];
-            [self changeTitleText:@"Like a video channel personalized for you."
-                          tipText:@"And it gets to know your tastes the more you Share and Like."];
+            [self changeTitleText:@"'Like' a video and Shelby uncovers more."
+                          tipText:@""];
             for (NSArray *tipCollection in @[self.tipIconsP1/*, self.tipIconsP3*/]) {
                 [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
             }
