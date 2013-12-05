@@ -25,11 +25,12 @@ extern NSString * const kShelbyShareFrameIDKey;
 - (void)logoutUser;
 - (void)goToDVR;
 - (void)goToUsersRoll;
+- (void)goToUsersOfflineLikes;
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
 - (void)inviteFacebookFriendsWasTapped;
 - (void)userProfileWasTapped:(NSString *)userID;
-- (void)openLikersViewForVideo:(NSString *)videoID withLikers:(NSMutableOrderedSet *)likers;
+- (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
 @end
 
 
@@ -67,6 +68,7 @@ extern NSString * const kShelbyShareFrameIDKey;
 //allow brain to manage the navigation when necessary
 - (void)didNavigateToCommunityChannel;
 - (void)didNavigateToUsersStream;
+- (void)didNavigateToUsersOfflineLikes;
 - (void)didNavigateToUsersRoll;
 
 // Methods to Override by subclass

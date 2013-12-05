@@ -689,6 +689,11 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     [self.navBarVC didNavigateToUsersStream];
 }
 
+- (void)didNavigateToUsersOfflineLikes
+{
+    [self.navBarVC didNavigateToUsersShares];
+}
+
 - (void)didNavigateToUsersRoll
 {
     [self.navBarVC didNavigateToUsersShares];
@@ -848,6 +853,13 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 {
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersStream)]) {
         [self.masterDelegate goToUsersStream];
+    }
+}
+
+- (void)launchMyOfflineLikes
+{
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersOfflineLikes)]) {
+        [self.masterDelegate goToUsersOfflineLikes];
     }
 }
 
@@ -1030,7 +1042,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)openLikersView:(id<ShelbyVideoContainer>)videoContainer withLikers:(NSMutableOrderedSet *)likers
 {
     [self dismissVideoReel];
-    [self.masterDelegate openLikersViewForVideo:nil withLikers:likers];
+    [self.masterDelegate openLikersViewForVideo:videoContainer.containedVideo withLikers:likers];
 }
 
 - (void)scrollToTopOfCurrentStreamBrowseVC
@@ -1218,7 +1230,13 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
             [self dismissVideoReel];
         }
         [self updateVideoControlsForPage:0];
-        [self launchMyRoll];
+        if (self.currentUser) {
+            //When logged in, likes == shares; both are on user's roll
+            [self launchMyRoll];
+        } else {
+            //If user isn't logged in, we show their offline likes
+            [self launchMyOfflineLikes];
+        }
     } else {
         [self scrollToTopOfCurrentStreamBrowseVC];
     }

@@ -15,7 +15,9 @@
 @end
 
 @implementation ShelbyUserProfileViewController {
-    UIButton *_followButton;
+    UIButton *_followButton, *_closeButton;
+    UILabel *_username;
+    UIActivityIndicatorView *_loadingSpinner;
     BOOL _followButtonShowsFollowing;
 }
 
@@ -31,22 +33,22 @@
     [self.view addSubview:self.navBar];
     self.navBar.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    UILabel *username = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.frame.size.width-100, 24)];
-    username.textAlignment = NSTextAlignmentCenter;
-    username.text = self.profileUser.nickname;
-    username.backgroundColor = [UIColor clearColor];
-    username.textColor = kShelbyColorGray;
+    _username = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.frame.size.width-100, 24)];
+    _username.textAlignment = NSTextAlignmentCenter;
+    _username.text = self.profileUser.nickname;
+    _username.backgroundColor = [UIColor clearColor];
+    _username.textColor = kShelbyColorGray;
     
-    [self.navBar addSubview:username];
+    [self.navBar addSubview:_username];
     
     // Close Button
-    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    closeButton.frame = CGRectMake(10, 5, 40, 34);
-    [closeButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
-    [closeButton addTarget:self action:@selector(dismissUserProfile) forControlEvents:UIControlEventTouchUpInside];
-    [closeButton setTitle:@"Close" forState:UIControlStateNormal];
-    closeButton.titleLabel.font = kShelbyFontH4Bold;
-    [self.navBar addSubview:closeButton];
+    _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _closeButton.frame = CGRectMake(10, 5, 40, 34);
+    [_closeButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
+    [_closeButton addTarget:self action:@selector(dismissUserProfile) forControlEvents:UIControlEventTouchUpInside];
+    [_closeButton setTitle:@"Close" forState:UIControlStateNormal];
+    _closeButton.titleLabel.font = kShelbyFontH4Bold;
+    [self.navBar addSubview:_closeButton];
     
     // Follow Button
     _followButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -57,6 +59,12 @@
     _followButton.titleLabel.font = kShelbyFontH4Bold;
     [self.navBar addSubview:_followButton];
     
+    //loading spinner
+    _loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    _loadingSpinner.hidesWhenStopped = YES;
+    _loadingSpinner.center = CGPointMake(280, 22);
+    [self.navBar addSubview:_loadingSpinner];
+    
 }
 
 - (void)dismissUserProfile
@@ -65,16 +73,26 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)setIsLoading:(BOOL)isLoading
+{
+    if (isLoading) {
+        [_loadingSpinner startAnimating];
+        _followButton.hidden = YES;
+    } else {
+        [_loadingSpinner stopAnimating];
+        _followButton.hidden = NO;
+    }
+}
+
 - (void)setProfileUser:(User *)profileUser
 {
     if (_profileUser != profileUser) {
         [self willChangeValueForKey:@"profileUser"];
         _profileUser = profileUser;
-
         self.currentBrowseVC.user = profileUser;
         
-        User *currentLoggedInUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        [self updateFollowButtonToShowFollowing:[currentLoggedInUser isFollowing:profileUser.publicRollID]];
+        [self updateFollowButtonToShowFollowing:[self.currentUser isFollowing:profileUser.publicRollID]];
+        _username.text = self.profileUser.nickname;
         
         [self didChangeValueForKey:@"profileUser"];
     }

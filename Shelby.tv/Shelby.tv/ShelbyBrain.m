@@ -69,8 +69,6 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 
 @property (nonatomic, strong) UIAlertView *currentAlertView;
-
-@property (nonatomic, assign) BOOL openingUserProfileInProgress;
 @end
 
 @implementation ShelbyBrain
@@ -91,8 +89,6 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [self refreshUsersStreamAfterDelay];
     
     [[ShelbyNotificationManager sharedInstance] cancelAllNotifications];
-    
-    self.openingUserProfileInProgress = NO;
 }
 
 - (void)handleWillResignActive
@@ -877,7 +873,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [[ShelbyDataMediator sharedInstance] inviteFacebookFriends];
 }
 
-- (void)openLikersViewForVideo:(NSString *)videoID withLikers:(NSMutableOrderedSet *)likers
+- (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers
 {
     ShelbyLikersViewController *likersVC = [[ShelbyLikersViewController alloc] initWithNibName:@"ShelbyLikersView" bundle:nil];
     
@@ -892,45 +888,42 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     }
     
     [topViewController presentViewController:likersVC animated:YES completion:nil];
+    
+    //setting video causes fetch to begin
+    likersVC.likedVideo = video;
 }
 
 // This method is going to be called from two protocols.. not that great. Need to have a nicer protocols.
 - (void)userProfileWasTapped:(NSString *)userID
 {
-    if (self.openingUserProfileInProgress) {
-        return;
+    ShelbyUserProfileViewController *userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
+    userProfileVC.masterDelegate = self;
+    User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+    userProfileVC.currentUser = currentUser;
+    
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while ([topViewController presentedViewController]) {
+        topViewController = [topViewController presentedViewController];
     }
     
-    self.openingUserProfileInProgress = YES;
+    [topViewController presentViewController:userProfileVC animated:YES completion:nil];
+    [userProfileVC setIsLoading:YES];
     
     [[ShelbyDataMediator sharedInstance] forceFetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {
-        
         DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedUser.publicRollID];
-        
         if (!rollChannel) {
             rollChannel = [DisplayChannel channelForTransientEntriesWithID:fetchedUser.publicRollID title:fetchedUser.nickname inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             Roll *userRoll = [Roll rollForDictionary:@{@"id" : fetchedUser.publicRollID} inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             rollChannel.roll = userRoll;
         }
+        
         [[ShelbyDataMediator sharedInstance] fetchFramesInChannel:rollChannel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
-            ShelbyUserProfileViewController *userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
-            
-            userProfileVC.masterDelegate = self;
             userProfileVC.channels = @[rollChannel];
             userProfileVC.profileUser = fetchedUser;
-            User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-            userProfileVC.currentUser = currentUser;
             
-            UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-            while ([topViewController presentedViewController]) {
-                topViewController = [topViewController presentedViewController];
-            }
-            
-            [topViewController presentViewController:userProfileVC animated:YES completion:^{
-                [userProfileVC setEntries:entries forChannel:displayChannel];
-                [userProfileVC focusOnChannel:displayChannel];
-                self.openingUserProfileInProgress = NO;
-            }];
+            [userProfileVC setEntries:entries forChannel:displayChannel];
+            [userProfileVC focusOnChannel:displayChannel];
+            [userProfileVC setIsLoading:NO];
         }];
     }];
 }
@@ -995,6 +988,19 @@ NSString * const kShelbyBrainEntityKey = @"entity";
         self.currentAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [self.currentAlertView show];
    });
+}
+
+- (void)goToUsersOfflineLikes
+{
+    if (DEBUG) {
+        User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+        STVDebugAssert(!user, "should not view offline likes when user is logged in");
+    }
+
+    [self populateChannel:self.offlineLikesChannel withActivityIndicator:NO];
+    [self goToDisplayChannel:self.offlineLikesChannel];
+
+    [self.homeVC didNavigateToUsersOfflineLikes];
 }
 
 - (void)goToUsersRoll

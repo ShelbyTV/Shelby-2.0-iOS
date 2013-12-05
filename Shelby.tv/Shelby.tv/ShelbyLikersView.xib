@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3017" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShelbyLikersViewController">
             <connections>
                 <outlet property="likersTable" destination="mh6-Yt-5AX" id="Vej-mr-0pK"/>
+                <outlet property="loadingSpinner" destination="6tt-yZ-hb7" id="mXI-iW-48u"/>
                 <outlet property="view" destination="1" id="Hb1-Ay-gVT"/>
             </connections>
         </placeholder>
@@ -37,6 +38,10 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="6tt-yZ-hb7">
+                            <rect key="frame" x="280" y="20" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -51,15 +56,6 @@
                         <constraint firstAttribute="trailing" secondItem="Cry-qk-IcQ" secondAttribute="trailing" constant="40" id="uKd-Yj-SFO"/>
                     </constraints>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Other" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TuU-5W-Afv">
-                    <rect key="frame" x="57" y="482" width="207" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="dRm-rl-nRe"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mh6-Yt-5AX">
                     <rect key="frame" x="0.0" y="60" width="320" height="508"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,11 +69,8 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="vqT-hX-hx8" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="8yD-97-IEd"/>
-                <constraint firstAttribute="bottom" secondItem="TuU-5W-Afv" secondAttribute="bottom" constant="65" id="Gbb-lU-Nfg"/>
-                <constraint firstItem="TuU-5W-Afv" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="57" id="Lnc-Cg-Ayd"/>
                 <constraint firstAttribute="trailing" secondItem="vqT-hX-hx8" secondAttribute="trailing" id="Xkh-Pi-aTg"/>
                 <constraint firstItem="vqT-hX-hx8" firstAttribute="top" secondItem="1" secondAttribute="top" id="hQs-lb-Nl3"/>
-                <constraint firstAttribute="trailing" secondItem="TuU-5W-Afv" secondAttribute="trailing" constant="56" id="pb7-Oo-bK0"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

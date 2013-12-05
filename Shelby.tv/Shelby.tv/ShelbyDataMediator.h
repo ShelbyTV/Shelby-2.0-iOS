@@ -11,7 +11,7 @@
 #import "DisplayChannel+Helper.h"
 #import "User+Helper.h"
 
-@class Frame;
+@class Frame, Video;
 
 extern NSString * const kShelbyOfflineLikesID;
 extern NSString * const kShelbyNotificationFacebookConnectCompleted;
@@ -79,6 +79,7 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 - (User *)forceFetchUserWithID:(NSString *)userID
                      inContext:(NSManagedObjectContext *)context
                     completion:(void (^)(User *fetchedUser))completion;
+- (void)fetchAllLikersOfVideo:(Video *)v completion:(void (^)(NSArray *users))completion;
 
 -(void)logoutCurrentUser;
 

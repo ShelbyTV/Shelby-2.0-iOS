@@ -8,11 +8,13 @@
 
 #import "ShelbyLikersViewController.h"
 #import "User+Helper.h"
+#import "ShelbyDataMediator.h"
 
 @interface ShelbyLikersViewController ()
-@property (nonatomic, strong) NSMutableArray *likers;
+@property (nonatomic, strong) NSMutableOrderedSet *likers;
 @property (nonatomic, weak) IBOutlet UITableView *likersTable;
 @property (nonatomic, weak) IBOutlet UILabel *title;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingSpinner;
 
 - (IBAction)close:(id)sender;
 @end
@@ -23,8 +25,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _likers = [@[] mutableCopy];
-        // Custom initialization
+        _likers = [[NSMutableOrderedSet alloc] init];
     }
     return self;
 }
@@ -49,12 +50,28 @@
 
 - (void)setLocalLikers:(NSMutableOrderedSet *)localLikers
 {
-    _localLikers = localLikers;
-    
-    for (User *user in localLikers) {
-        if (![self.likers containsObject:user]) {
-            [self.likers addObject:user];
-        }
+    if (_localLikers != localLikers) {
+        [self willChangeValueForKey:@"localLikers"];
+        _localLikers = localLikers;
+        [self.likers unionOrderedSet:localLikers];
+        [self didChangeValueForKey:@"localLikers"];
+    }
+
+}
+
+- (void)setLikedVideo:(Video *)likedVideo
+{
+    if (_likedVideo != likedVideo) {
+        [self willChangeValueForKey:@"likedVideo"];
+        _likedVideo = likedVideo;
+        [self didChangeValueForKey:@"likedVideo"];
+        
+        [self.loadingSpinner startAnimating];
+        [[ShelbyDataMediator sharedInstance] fetchAllLikersOfVideo:likedVideo completion:^(NSArray *users) {
+            [self.loadingSpinner stopAnimating];
+            [self.likers addObjectsFromArray:users];
+            [self.likersTable reloadData];
+        }];
     }
 }
 
