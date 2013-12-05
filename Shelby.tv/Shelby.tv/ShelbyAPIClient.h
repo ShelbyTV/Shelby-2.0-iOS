@@ -56,6 +56,7 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 
 // -- Video
 + (void)markUnplayableVideo:(NSString *)videoID;
++ (void)fetchAllLikersOfVideo:(NSString *)videoID withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 // -- Channels
 + (void)fetchGlobalChannelsWithBlock:(shelby_api_request_complete_block_t)completionBlock;

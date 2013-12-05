@@ -18,4 +18,6 @@
 
 @property (nonatomic, weak) User *profileUser;
 
+- (void)setIsLoading:(BOOL)isLoading;
+
 @end

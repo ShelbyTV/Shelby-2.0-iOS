@@ -29,6 +29,7 @@ NSString * const kShelbyAPIGetAllChannelsPath =             @"v1/roll/featured";
 NSString * const kShelbyAPIGetChannelDashboardEntriesPath = @"v1/user/%@/dashboard";
 NSString * const kShelbyAPIGetUserPath =                    @"v1/user/%@";
 NSString * const kShelbyAPIGetRollsUserFollows =            @"v1/user/%@/rolls/following";
+NSString * const kShelbyAPIGetAllLikersOfVideo =            @"v1/video/%@/likers";
 NSString * const POST =    @"POST";
 NSString * const kShelbyAPIPostFrameLikePath =              @"v1/frame/%@/like";
 NSString * const kShelbyAPIPostExternalShare =              @"v1/frame/%@/share";
@@ -325,7 +326,6 @@ static AFHTTPClient *httpClient = nil;
 #pragma mark - ABTest
 + (void)fetchABTestWithBlock:(shelby_api_request_complete_block_t)completionBlock
 {
-    
     NSURLRequest *request = [self requestWithMethod:GET
                                             forPath:kShelbyAPIMultivariateTests
                                 withQueryParameters:nil
@@ -352,6 +352,22 @@ static AFHTTPClient *httpClient = nil;
         // Do nothing
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         DLog(@"Problem marking video unplayable");
+    }];
+    
+    [operation start];
+}
+
++ (void)fetchAllLikersOfVideo:(NSString *)videoID withBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:[NSString stringWithFormat:kShelbyAPIGetAllLikersOfVideo, videoID]
+                                withQueryParameters:nil
+                                      shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
     }];
     
     [operation start];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LikerCell.h"
+#import "Video.h"
 
 @protocol ShelbyLikersViewDelegate <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
@@ -19,5 +20,6 @@
 @interface ShelbyLikersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LikerCellDelegate>
 @property (nonatomic, strong) NSMutableOrderedSet *localLikers;
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, strong) Video *likedVideo;
 @property (nonatomic, weak) id<ShelbyLikersViewDelegate> delegate;
 @end

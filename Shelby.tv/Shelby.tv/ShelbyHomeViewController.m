@@ -1022,7 +1022,7 @@
 - (void)openLikersView:(id<ShelbyVideoContainer>)videoContainer withLikers:(NSMutableOrderedSet *)likers
 {
     [self dismissVideoReel];
-    [self.masterDelegate openLikersViewForVideo:nil withLikers:likers];
+    [self.masterDelegate openLikersViewForVideo:videoContainer.containedVideo withLikers:likers];
 }
 
 - (void)scrollToTopOfCurrentStreamBrowseVC
