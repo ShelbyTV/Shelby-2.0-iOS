@@ -508,7 +508,6 @@
             self.summaryRecommendationView.hidden = NO;
             self.detailRecommendationView.hidden = NO;
             self.summaryUserView.hidden = YES;
-            self.detailWhiteBackground.hidden = NO;
             self.detailUserView.hidden = YES;
             self.detailCommentView.hidden = YES;
             return;
@@ -518,7 +517,6 @@
         self.summaryRecommendationView.hidden = YES;
         self.detailRecommendationView.hidden = YES;
         self.summaryUserView.hidden = YES;
-        self.detailWhiteBackground.hidden = YES;
         self.detailUserView.hidden = YES;
         self.detailCommentView.hidden = YES;
         return;
@@ -528,7 +526,6 @@
     self.summaryRecommendationView.hidden = YES;
     self.detailRecommendationView.hidden = YES;
     self.summaryUserView.hidden = NO;
-    self.detailWhiteBackground.hidden = NO;
     self.detailUserView.hidden = NO;
     self.detailCommentView.hidden = NO;
     self.detailLikersAndSharers.hidden = NO;
