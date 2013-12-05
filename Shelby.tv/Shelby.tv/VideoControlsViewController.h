@@ -51,5 +51,4 @@ typedef NS_ENUM(NSUInteger, VideoControlsDisplayMode)
 @property (nonatomic, assign) CMTime currentTime;
 @property (nonatomic, assign) CMTime duration;
 
-//- (void)resetShareButton;
 @end

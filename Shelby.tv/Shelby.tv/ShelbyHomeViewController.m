@@ -23,6 +23,9 @@
 #import "SPVideoExtractor.h"
 #import "User+Helper.h"
 
+NSString * const kShelbyShareVideoHasCompleted = @"kShelbyShareVideoHasCompleted";
+NSString * const kShelbyShareFrameIDKey = @"frameID";
+
 @interface ShelbyHomeViewController () {
     SettingsViewController *_settingsVC;
     UIViewController *_currentFullScreenVC;
@@ -986,13 +989,14 @@
     shareController.delegate = self;
     BOOL shouldResume = [self.videoReel isCurrentPlayerPlaying];
     [self.videoReel pauseCurrentPlayer];
+    NSString *frameID = frame.frameID;
     [shareController shareWithCompletionHandler:^(BOOL completed) {
         if (shouldResume) {
             [self.videoReel playCurrentPlayer];
         }
         
         // KP KP: Share is no longer in video controls
-//        [self.videoControlsVC resetShareButton];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyShareVideoHasCompleted object:self userInfo:@{kShelbyShareFrameIDKey: frameID}];
 
         if (completed) {
             // Analytics

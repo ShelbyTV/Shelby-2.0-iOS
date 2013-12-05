@@ -9,6 +9,7 @@
 #import "StreamBrowseCellForegroundView.h"
 #import "DashboardEntry+Helper.h"
 #import "DeviceUtilities.h"
+#import "ShelbyHomeViewController.h"
 #import "NSDate+Extension.h"
 #import "Video+Helper.h"
 #import "UIImageView+AFNetworking.h"
@@ -33,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailCreatedAt;
 @property (weak, nonatomic) IBOutlet UIButton *detailInviteFacebookFriends;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (strong, nonatomic) UIActivityIndicatorView *shareActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersAndSharers;
 @property (weak, nonatomic) IBOutlet UIButton *likersButton;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersSubview;
@@ -81,6 +83,7 @@
 - (void)dealloc
 {
     [self.videoFrame removeObserver:self forKeyPath:@"upvoters"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)awakeFromNib
@@ -204,6 +207,11 @@
     // Making sure we don't have an observer pointing at a dangling object
     [self.videoFrame removeObserver:self forKeyPath:@"upvoters"];
 
+    // Making sure we remove observer if previous cell was in the middle of share
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.shareActivityIndicator.hidden = YES;
+    self.shareButton.hidden = NO;
+    
     _dashboardEntry = dashboardEntry;
     _videoFrame = videoFrame;
 
@@ -408,7 +416,39 @@
 
 - (IBAction)shareVideo:(id)sender
 {
+    if (!self.shareActivityIndicator) {
+        self.shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        self.shareActivityIndicator.frame = self.shareButton.frame;
+        
+        [self.detailLikersAndSharers addSubview:self.shareActivityIndicator];
+    } else {
+        self.shareActivityIndicator.hidden = NO;
+    }
+    self.shareButton.hidden = YES;
+    
+    [self.shareActivityIndicator startAnimating];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(resetShareButton:)
+                                                 name:kShelbyShareVideoHasCompleted object:nil];
+  
     [self.delegate shareVideoWasTapped];
+}
+
+- (void)resetShareButton:(NSNotification *)notification
+{
+    // If we don't have an activity indicator or it is currently hidden, ignore notification
+    if (!self.shareActivityIndicator || self.shareActivityIndicator.hidden) {
+        return;
+    }
+
+    NSDictionary *userInfo = notification.userInfo;
+    if ([userInfo[kShelbyShareFrameIDKey] isEqualToString:self.videoFrame.frameID]) {
+        self.shareActivityIndicator.hidden = YES;
+        self.shareButton.hidden = NO;
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyShareVideoHasCompleted object:nil];
+    }
 }
 
 - (IBAction)openLikersView:(id)sender

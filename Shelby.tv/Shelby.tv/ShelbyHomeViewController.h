@@ -16,6 +16,9 @@
 #import "User.h"
 #import "VideoControlsViewController.h"
 
+extern NSString * const kShelbyShareVideoHasCompleted;
+extern NSString * const kShelbyShareFrameIDKey;
+
 @protocol ShelbyHomeDelegate <NSObject>
 - (void)presentUserLogin;
 - (void)presentUserSignup;

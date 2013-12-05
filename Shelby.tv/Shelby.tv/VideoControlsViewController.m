@@ -320,37 +320,6 @@
     [self updateViewForCurrentEntity];
 }
 
-// KP KP: For now just commentting so I could refer to it.
-//- (IBAction)shareTapped:(id)sender {
-//    _shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-//    if (self.displayMode == VideoControlsDisplayActionsOnly) {
-//        //non playback
-//        self.shareActivityIndicator.frame = self.controlsView.nonplaybackShareButton.frame;
-//        self.controlsView.nonplaybackShareButton.enabled = NO;
-//    } else {
-//        //playback
-//        self.shareActivityIndicator.frame = self.controlsView.shareButton.frame;
-//        self.controlsView.shareButton.hidden = YES;
-//    }
-//
-//    [self.shareActivityIndicator startAnimating];
-//    [self.controlsView addSubview:self.shareActivityIndicator];
-//    [self.delegate videoControlsShareCurrentVideo:self];
-//}
-//
-//- (void)resetShareButton
-//{
-//    [self.shareActivityIndicator removeFromSuperview];
-//    self.shareActivityIndicator = nil;
-//    if (self.displayMode == VideoControlsDisplayActionsOnly) {
-//        //non playback
-//        self.controlsView.nonplaybackShareButton.enabled = YES;
-//    } else {
-//        //playback
-//        self.controlsView.shareButton.hidden = NO;
-//    }
-//}
-
 #pragma mark - VideoPlaybackDelegate
 
 - (void)setVideoIsPlaying:(BOOL)videoIsPlaying
