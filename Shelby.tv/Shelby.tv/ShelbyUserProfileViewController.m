@@ -82,7 +82,7 @@
         _followButton.hidden = YES;
     } else {
         [_loadingSpinner stopAnimating];
-        _followButton.hidden = NO;
+        _followButton.hidden = (self.currentUser == nil);
     }
 }
 
