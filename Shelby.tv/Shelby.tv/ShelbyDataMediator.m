@@ -242,22 +242,15 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSDictionary class]] &&
             JSON[@"result"][@"likers"] && [JSON[@"result"][@"likers"] isKindOfClass:[NSArray class]]) {
             [v.managedObjectContext performBlock:^{
-                NSArray *likersJSON = JSON[@"result"][@"likers"];
-                NSMutableArray *likers = [NSMutableArray arrayWithCapacity:likersJSON.count];
-                for (NSDictionary *likerDict in likersJSON) {
-                    
-                    //XXX DS
-                    //Right now, user's id is saved as "user_id"
-                    //but it's expected as "id"
-                    //unless and until we fix that...
-                    NSMutableDictionary *x = [likerDict mutableCopy];
-                    if (!x[@"id"]) {
-                        x[@"id"] = x[@"user_id"];
+                NSArray *likersArray = JSON[@"result"][@"likers"];
+                NSMutableArray *likers = [NSMutableArray arrayWithCapacity:likersArray.count];
+                for (NSDictionary *likerWrapper in likersArray) {
+                    if (likerWrapper && [likerWrapper isKindOfClass:[NSDictionary class]] &&
+                        likerWrapper[@"user"]) {
+                        NSDictionary *likerUserDict = likerWrapper[@"user"];
+                        User *likingUser = [User userForDictionary:likerUserDict inContext:v.managedObjectContext];
+                        [likers addObject:likingUser];
                     }
-                    User *likingUser = [User userForDictionary:x inContext:v.managedObjectContext];
-                    //XXX DS
-                    
-                    [likers addObject:likingUser];
                 }
                 
                 NSError *err;
