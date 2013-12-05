@@ -194,8 +194,10 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qr3-Sv-rRb">
                             <rect key="frame" x="263" y="5" width="46" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="Share"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                            <state key="normal" title="Share">
+                                <color key="titleColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
                             <connections>
                                 <action selector="shareVideo:" destination="1" eventType="touchUpInside" id="Efa-sd-MJU"/>
                             </connections>
@@ -295,6 +297,7 @@
         </view>
     </objects>
     <resources>
+        <image name="avatar-blank.png" width="40" height="40"/>
         <image name="avatar-blank.png" width="40" height="40"/>
         <image name="overlay-likers.png" width="17" height="16"/>
         <image name="play-all" width="96" height="96"/>

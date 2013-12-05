@@ -314,14 +314,13 @@
 - (void)resizeViewsForContent
 {
     //padding adjustments for landscape vs portrait
-    CGFloat summaryUserPadding, detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment, detailLikersAndSharersPadding;
+    CGFloat summaryUserPadding, detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment;
     NSInteger detailTitleHeight;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         summaryUserPadding = 50;
         detailTitlePadding = 70;
         detailUserPadding = 0;
         detailCommentPadding = 60;
-        detailLikersAndSharersPadding = 0;
         detailWhiteBackgroundHeightAdjustment = 65;
         detailTitleHeight = 22;
     } else {
@@ -329,7 +328,6 @@
         detailTitlePadding = 90;
         detailUserPadding = 5;
         detailCommentPadding = 70;
-        detailLikersAndSharersPadding = 10;
         detailWhiteBackgroundHeightAdjustment = 80;
         detailTitleHeight = 44;
     }
@@ -362,7 +360,7 @@
     CGFloat yUnderDetailTitle = detailTitleDesiredHeight + detailTitlePadding;
     self.detailUserView.frame = CGRectMake(self.detailUserView.frame.origin.x, yUnderDetailTitle + detailUserPadding, self.detailUserView.frame.size.width, self.detailUserView.frame.size.height);
     self.detailCommentView.frame = CGRectMake(self.detailCommentView.frame.origin.x, yUnderDetailTitle + detailCommentPadding, self.detailCommentView.frame.size.width, self.detailCommentView.frame.size.height);
-    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, yUnderDetailTitle, self.detailWhiteBackground.frame.size.width, self.detailWhiteBackground.frame.size.height);
+    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, yUnderDetailTitle, self.detailWhiteBackground.frame.size.width, self.detailWhiteBackground.frame.size.height + self.detailCommentView.frame.size.height);
 
     //resize detail caption
     NSString *captionText = self.detailCaption.text;
@@ -377,13 +375,15 @@
                                           maxCaptionSize.width,
                                           ceil(textBasedHeight));
 
-    //tighting up the height of surrounding box as well
-    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, textBasedHeight + detailWhiteBackgroundHeightAdjustment);
 
     //update likers and sharers based on the white background box
-    self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y + self.detailWhiteBackground.frame.size.height + detailLikersAndSharersPadding, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
+    self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailCommentView.frame.origin.y + self.detailCommentView.frame.size.height, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
     self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width - 50, self.detailLikersAndSharers.frame.size.height);
     self.likersButton.frame = self.detailLikersSubview.frame;
+    
+    //tighting up the height of surrounding box as well
+    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, self.detailCommentView.frame.size.height + detailWhiteBackgroundHeightAdjustment + self.detailLikersAndSharers.frame.size.height);
+
     //recommendation view
     self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
 }
