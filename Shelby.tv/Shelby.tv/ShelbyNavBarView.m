@@ -160,8 +160,6 @@
     if (showUserRows) {
         _streamRowHeight.constant = 44;
         _streamButton.hidden = NO;
-        _sharesRowHeight.constant = 44;
-        _sharesButton.hidden = NO;
         _settingsRowHeight.constant = 44;
         _settingsButton.hidden = NO;
         _loginRowHeight.constant = 0;
@@ -169,8 +167,6 @@
     } else {
         _streamRowHeight.constant = 0;
         _streamButton.hidden = YES;
-        _sharesRowHeight.constant = 0;
-        _sharesButton.hidden = YES;
         _settingsRowHeight.constant = 0;
         _settingsButton.hidden = YES;
         _loginRowHeight.constant = 44;

@@ -22,6 +22,7 @@
 - (void)logoutUser;
 - (void)goToDVR;
 - (void)goToUsersRoll;
+- (void)goToUsersOfflineLikes;
 - (void)goToUsersStream;
 - (void)goToCommunityChannel;
 - (void)inviteFacebookFriendsWasTapped;
@@ -64,6 +65,7 @@
 //allow brain to manage the navigation when necessary
 - (void)didNavigateToCommunityChannel;
 - (void)didNavigateToUsersStream;
+- (void)didNavigateToUsersOfflineLikes;
 - (void)didNavigateToUsersRoll;
 
 // Methods to Override by subclass

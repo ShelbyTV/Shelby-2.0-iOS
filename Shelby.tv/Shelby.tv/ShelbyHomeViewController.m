@@ -682,6 +682,11 @@
     [self.navBarVC didNavigateToUsersStream];
 }
 
+- (void)didNavigateToUsersOfflineLikes
+{
+    [self.navBarVC didNavigateToUsersShares];
+}
+
 - (void)didNavigateToUsersRoll
 {
     [self.navBarVC didNavigateToUsersShares];
@@ -841,6 +846,13 @@
 {
     if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersStream)]) {
         [self.masterDelegate goToUsersStream];
+    }
+}
+
+- (void)launchMyOfflineLikes
+{
+    if ([self.masterDelegate conformsToProtocol:@protocol(ShelbyHomeDelegate)] && [self.masterDelegate respondsToSelector:@selector(goToUsersOfflineLikes)]) {
+        [self.masterDelegate goToUsersOfflineLikes];
     }
 }
 
@@ -1198,7 +1210,13 @@
             [self dismissVideoReel];
         }
         [self updateVideoControlsForPage:0];
-        [self launchMyRoll];
+        if (self.currentUser) {
+            //When logged in, likes == shares; both are on user's roll
+            [self launchMyRoll];
+        } else {
+            //If user isn't logged in, we show their offline likes
+            [self launchMyOfflineLikes];
+        }
     } else {
         [self scrollToTopOfCurrentStreamBrowseVC];
     }

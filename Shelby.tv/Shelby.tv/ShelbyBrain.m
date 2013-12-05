@@ -997,6 +997,19 @@ NSString * const kShelbyBrainEntityKey = @"entity";
    });
 }
 
+- (void)goToUsersOfflineLikes
+{
+    if (DEBUG) {
+        User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+        STVDebugAssert(!user, "should not view offline likes when user is logged in");
+    }
+
+    [self populateChannel:self.offlineLikesChannel withActivityIndicator:NO];
+    [self goToDisplayChannel:self.offlineLikesChannel];
+
+    [self.homeVC didNavigateToUsersOfflineLikes];
+}
+
 - (void)goToUsersRoll
 {
     User *user = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
