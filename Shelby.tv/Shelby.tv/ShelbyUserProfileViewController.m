@@ -52,9 +52,9 @@
     [self.navBar addSubview:_closeButton];
     
     // Follow Button
-    _followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _followButton = [UIButton buttonWithType:kShelbyFontH3Bold];
     _followButton.frame = CGRectMake(230, 5, 80, 34);
-    [_followButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
+    [_followButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
     [_followButton addTarget:self action:@selector(followButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self updateFollowButtonToShowFollowing:!_followButtonShowsFollowing];
     _followButton.titleLabel.font = kShelbyFontH4Bold;
@@ -134,10 +134,10 @@
     } else {
         _followButton.hidden = NO;
         if (doesFollow) {
-            [_followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+            [_followButton setTitle:@"UNFOLLOW" forState:UIControlStateNormal];
             _followButtonShowsFollowing = NO;
         } else {
-            [_followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            [_followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
             _followButtonShowsFollowing = YES;
         }
     }
