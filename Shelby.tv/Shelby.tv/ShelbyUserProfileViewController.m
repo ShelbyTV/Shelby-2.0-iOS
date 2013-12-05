@@ -9,6 +9,7 @@
 #import "ShelbyUserProfileViewController.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyUserStreamBrowseViewController.h"
+#import "Roll.h"
 
 @interface ShelbyUserProfileViewController()
 @property (nonatomic, strong) ShelbyUserStreamBrowseViewController *currentBrowseVC;
@@ -108,7 +109,7 @@
 
 - (ShelbyStreamBrowseViewController *)streamBrowseViewControllerForChannel:(DisplayChannel *)channel
 {
-    if ([self.currentBrowseVC.channel.channelID isEqualToString:channel.channelID]) {
+    if ([self.currentBrowseVC.channel.roll.rollID isEqualToString:channel.roll.rollID]) {
         return self.currentBrowseVC;
     }
     
