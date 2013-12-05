@@ -47,6 +47,8 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 @property (nonatomic, assign) NSInteger currentlyPlayingIndexInChannel;
 @property (nonatomic, strong) ShelbyAlert *currentAlertView;
 
+@property (nonatomic, assign) BOOL shareVideoInProgress;
+
 #define OVERLAY_ANIMATION_DURATION 0.2
 #define NAV_BUTTON_FADE_TIME 0.1
 #define AUTOADVANCE_INFO_PEEK_DURATION 5.0
@@ -80,6 +82,8 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     [self setupNavBarView];
     [self setupVideoControlsView];
     [self showNavBarButton];
+    
+    self.shareVideoInProgress = NO;
     
     [self.view bringSubviewToFront:self.channelsLoadingActivityIndicator];
     
@@ -981,16 +985,28 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)shareCurrentVideo:(id<ShelbyVideoContainer>)videoContainer
 {
+    Frame *frame = [Frame frameForEntity:videoContainer];
+    NSString *frameID = frame.frameID;
+
+    if (self.shareVideoInProgress) {
+        // Send share complete notification since we are not going to share this video. So need to reset the share button
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyShareVideoHasCompleted object:self userInfo:@{kShelbyShareFrameIDKey: frameID}];
+        return;
+    }
+    
+    self.shareVideoInProgress = YES;
+    
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                          withAction:kAnalyticsUXShareStart
                                 withNicknameAsLabel:YES];
-    Frame *frame = [Frame frameForEntity:videoContainer];
     SPShareController *shareController = [[SPShareController alloc] initWithVideoFrame:frame fromViewController:self atRect:CGRectZero];
     shareController.delegate = self;
     BOOL shouldResume = [self.videoReel isCurrentPlayerPlaying];
     [self.videoReel pauseCurrentPlayer];
-    NSString *frameID = frame.frameID;
+    
+    __weak ShelbyHomeViewController *weakSelf  = self;
     [shareController shareWithCompletionHandler:^(BOOL completed) {
+        weakSelf.shareVideoInProgress = NO;
         if (shouldResume) {
             [self.videoReel playCurrentPlayer];
         }

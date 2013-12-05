@@ -444,7 +444,9 @@
 
     NSDictionary *userInfo = notification.userInfo;
     if ([userInfo[kShelbyShareFrameIDKey] isEqualToString:self.videoFrame.frameID]) {
-        self.shareActivityIndicator.hidden = YES;
+        [self.shareActivityIndicator removeFromSuperview];
+        self.shareActivityIndicator = nil;
+        
         self.shareButton.hidden = NO;
         
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyShareVideoHasCompleted object:nil];
