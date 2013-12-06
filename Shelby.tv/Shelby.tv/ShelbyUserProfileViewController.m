@@ -47,7 +47,8 @@
     _username.textAlignment = NSTextAlignmentCenter;
     _username.text = self.profileUser.nickname;
     _username.backgroundColor = [UIColor clearColor];
-    _username.textColor = kShelbyColorGray;
+    _username.textColor = kShelbyColorWhite;
+    _username.font = kShelbyFontH3;
     _username.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.navBar addSubview:_username];
@@ -82,7 +83,7 @@
     
     [self.navBar addSubview:_followButton];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[followButton(80)]-10-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[followButton(90)]-10-|"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"followButton":_followButton}]];
