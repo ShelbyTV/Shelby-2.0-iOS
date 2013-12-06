@@ -174,14 +174,21 @@
                             <rect key="frame" x="0.0" y="0.0" width="240" height="40"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overlay-likers.png" id="dgz-Xc-tgU">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart-large.png" id="dgz-Xc-tgU">
                                     <rect key="frame" x="15" y="12" width="17" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                 </imageView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ze5-xV-J5o">
-                                    <rect key="frame" x="0.0" y="5" width="240" height="30"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8F4-MY-cHq" userLabel="No Likers Label">
+                                    <rect key="frame" x="42" y="10" width="170" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ze5-xV-J5o">
+                                    <rect key="frame" x="-1" y="5" width="240" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                     <state key="normal">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -275,6 +282,7 @@
                 <outlet property="detailInviteFacebookFriends" destination="Hom-Aq-NA5" id="0Gt-3r-itF"/>
                 <outlet property="detailLikersAndSharers" destination="373" id="hrp-ld-Bnu"/>
                 <outlet property="detailLikersSubview" destination="6tj-lo-aHn" id="RQJ-C0-ehU"/>
+                <outlet property="detailNoLikersLabel" destination="8F4-MY-cHq" id="ld6-Zs-Rfy"/>
                 <outlet property="detailRecommendationReasonLabel" destination="579" id="581"/>
                 <outlet property="detailRecommendationView" destination="574" id="575"/>
                 <outlet property="detailTitle" destination="246" id="281"/>
@@ -298,7 +306,8 @@
     </objects>
     <resources>
         <image name="avatar-blank.png" width="40" height="40"/>
-        <image name="overlay-likers.png" width="17" height="16"/>
+        <image name="avatar-blank.png" width="40" height="40"/>
+        <image name="heart-large.png" width="72" height="64"/>
         <image name="play-all" width="96" height="96"/>
     </resources>
 </document>

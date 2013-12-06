@@ -34,9 +34,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (strong, nonatomic) UIActivityIndicatorView *shareActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersAndSharers;
-@property (strong, nonatomic) IBOutlet UIView *detailLikersAndSharersTopBorder;
+@property (strong, nonatomic) UIView *detailLikersAndSharersTopBorder;
 @property (weak, nonatomic) IBOutlet UIButton *likersButton;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersSubview;
+@property (weak, nonatomic) IBOutlet UILabel *detailNoLikersLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
 @property (weak, nonatomic) IBOutlet UIButton *detailTitleButton;
 @property (weak, nonatomic) IBOutlet UIImageView *detailUserAvatar;
@@ -122,6 +123,11 @@
     UIView *shareButtonLeftBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.shareButton.frame.size.height)];
     shareButtonLeftBorder.backgroundColor = kShelbyColorLightGray;
     [self.shareButton addSubview:shareButtonLeftBorder];
+    
+    NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
+    self.detailNoLikersLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Be the first to like this!"
+                                                                              attributes:underlineAttribute];
+    self.detailNoLikersLabel.hidden = YES;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -301,13 +307,13 @@
         iv.image = nil;
     }
     if ([_likers count]) {
-        self.detailLikersSubview.hidden = NO;
+        self.detailNoLikersLabel.hidden = YES;
         for (NSUInteger i = 0; i < MIN([_likers count], [_likerImageViews count]); i++) {
             User *liker = _likers[i];
             [((UIImageView *)_likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
         }
     } else {
-        self.detailLikersSubview.hidden = YES;
+        self.detailNoLikersLabel.hidden = NO;
     }
 }
 

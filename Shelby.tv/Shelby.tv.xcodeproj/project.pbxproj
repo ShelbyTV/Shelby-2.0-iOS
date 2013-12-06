@@ -17,6 +17,12 @@
 		1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
 		1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */; };
+		1C0C7DF21852328B008F5506 /* heart-icon-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF01852328B008F5506 /* heart-icon-color.png */; };
+		1C0C7DF31852328B008F5506 /* heart-icon-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF01852328B008F5506 /* heart-icon-color.png */; };
+		1C0C7DF41852328B008F5506 /* heart-icon-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF01852328B008F5506 /* heart-icon-color.png */; };
+		1C0C7DF51852328B008F5506 /* heart-icon-color@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */; };
+		1C0C7DF61852328B008F5506 /* heart-icon-color@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */; };
+		1C0C7DF71852328B008F5506 /* heart-icon-color@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */; };
 		1C0E527C17BACBA8008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E527F17BACBBA008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E528117BACBCC008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
@@ -788,6 +794,8 @@
 		1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyViewController.m; sourceTree = "<group>"; };
 		1C06C5C91743E5D9004E8E20 /* ShelbyBrowseTutorialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyBrowseTutorialView.h; sourceTree = "<group>"; };
 		1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrowseTutorialView.m; sourceTree = "<group>"; };
+		1C0C7DF01852328B008F5506 /* heart-icon-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-icon-color.png"; sourceTree = "<group>"; };
+		1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-icon-color@2x.png"; sourceTree = "<group>"; };
 		1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1C154E5117A06EBA00C0B76B /* NoLikesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoLikesView.xib; sourceTree = "<group>"; };
 		1C253B6D184D458300FBE054 /* ShelbyLikersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyLikersViewController.h; sourceTree = "<group>"; };
@@ -1412,6 +1420,8 @@
 		1C90E51F17849DF200E87CC0 /* Parallax View */ = {
 			isa = PBXGroup;
 			children = (
+				1C0C7DF01852328B008F5506 /* heart-icon-color.png */,
+				1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */,
 				912261CF17B97F070092AF30 /* overlay-likers.png */,
 				912261D017B97F070092AF30 /* overlay-likers@2x.png */,
 				912261D117B97F070092AF30 /* overlay-sharers.png */,
@@ -2233,6 +2243,7 @@
 				912261D717B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C810A2216EE2CBF0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
+				1C0C7DF31852328B008F5506 /* heart-icon-color.png in Resources */,
 				8E7024ED1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F61715E71500E8DE46 /* README in Resources */,
 				91FCC6A8174BF118004255F5 /* Localizable.strings in Resources */,
@@ -2247,6 +2258,7 @@
 				1C7B63C3178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
 				1C7B63DF178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C56F14317BABD8C00EE9206 /* README.md in Resources */,
+				1C0C7DF61852328B008F5506 /* heart-icon-color@2x.png in Resources */,
 				9178C9DF17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F1178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
@@ -2340,6 +2352,7 @@
 				912261D817B97F070092AF30 /* overlay-likers@2x.png in Resources */,
 				1C810AD816EE5EED0030077C /* HockeySDKResources.bundle in Resources */,
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
+				1C0C7DF41852328B008F5506 /* heart-icon-color.png in Resources */,
 				8E7024EE1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F71715E71500E8DE46 /* README in Resources */,
 				91FCC6A9174BF118004255F5 /* Localizable.strings in Resources */,
@@ -2354,6 +2367,7 @@
 				1C7B63C4178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
 				1C7B63E0178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C56F14417BABD8C00EE9206 /* README.md in Resources */,
+				1C0C7DF71852328B008F5506 /* heart-icon-color@2x.png in Resources */,
 				9178C9E017CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F2178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
@@ -2450,6 +2464,7 @@
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024EC1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F51715E71500E8DE46 /* README in Resources */,
+				1C0C7DF51852328B008F5506 /* heart-icon-color@2x.png in Resources */,
 				91FCC6A7174BF118004255F5 /* Localizable.strings in Resources */,
 				1CD8111217CCF6C0002FD84B /* play-airplay.png in Resources */,
 				1C56F13C17BABD8C00EE9206 /* Appirater.podspec in Resources */,
@@ -2521,6 +2536,7 @@
 				1C309ABC17A714B900D690A8 /* check-social@2x.png in Resources */,
 				1C56F14217BABD8C00EE9206 /* README.md in Resources */,
 				1CE5586717DE87B200C18A30 /* no-content-bkgd.png in Resources */,
+				1C0C7DF21852328B008F5506 /* heart-icon-color.png in Resources */,
 				1CD8112517CCFCDF002FD84B /* logo-tv.png in Resources */,
 				1CE5586A17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
 				1CD8111B17CCF6C0002FD84B /* play-all@2x.png in Resources */,
