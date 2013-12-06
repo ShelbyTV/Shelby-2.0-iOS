@@ -122,8 +122,6 @@
     UIView *shareButtonLeftBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, self.shareButton.frame.size.height)];
     shareButtonLeftBorder.backgroundColor = kShelbyColorLightGray;
     [self.shareButton addSubview:shareButtonLeftBorder];
-    
-    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -189,9 +187,9 @@
         self.detailCreatedAt.frame = CGRectMake(xOrigin, 60, pageWidth - kShelbyInfoViewMargin * 2, 22);
         self.detailTitle.frame = CGRectMake(xOrigin, 80, 280, 44);
         self.detailWhiteBackground.frame = CGRectMake(xOrigin - kShelbyInfoViewMargin, 130, pageWidth, 200);
-        self.detailUserView.frame = CGRectMake(pageWidth, 135, 320, 60);
+        self.detailUserView.frame = CGRectMake(pageWidth, 120, 320, 60);
         self.detailUsername.frame = CGRectMake(self.detailUsername.frame.origin.x, self.detailUsername.frame.origin.y, 215, self.detailUsername.frame.size.height);
-        self.detailCommentView.frame = CGRectMake(xOrigin, 195, pageWidth - kShelbyInfoViewMargin * 2, 100);
+        self.detailCommentView.frame = CGRectMake(xOrigin, 165, pageWidth - kShelbyInfoViewMargin * 2, 100);
         self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
     }
     
@@ -316,21 +314,19 @@
 - (void)resizeViewsForContent
 {
     //padding adjustments for landscape vs portrait
-    CGFloat summaryUserPadding, detailTitlePadding, detailCommentPadding, detailUserPadding, detailWhiteBackgroundHeightAdjustment;
+    CGFloat summaryUserPadding, detailTitlePadding, detailCommentPadding, detailUserPadding;
     NSInteger detailTitleHeight;
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         summaryUserPadding = 50;
         detailTitlePadding = 70;
         detailUserPadding = 0;
         detailCommentPadding = 60;
-        detailWhiteBackgroundHeightAdjustment = 65;
         detailTitleHeight = 22;
     } else {
         summaryUserPadding = 70;
-        detailTitlePadding = 90;
-        detailUserPadding = 5;
-        detailCommentPadding = 70;
-        detailWhiteBackgroundHeightAdjustment = 80;
+        detailTitlePadding = 80;
+        detailUserPadding = 0;
+        detailCommentPadding = 60;
         detailTitleHeight = 44;
     }
 
@@ -386,7 +382,7 @@
     self.detailLikersAndSharersTopBorder.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width, 1);
     
     //tighting up the height of surrounding box as well
-    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, self.detailCommentView.frame.size.height + detailWhiteBackgroundHeightAdjustment + self.detailLikersAndSharers.frame.size.height);
+    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, self.detailCommentView.frame.size.height + self.detailUserView.frame.size.height + self.detailLikersAndSharers.frame.size.height);
 
     //recommendation view
     self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
