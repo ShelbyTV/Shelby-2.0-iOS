@@ -374,15 +374,16 @@
                                           ceil(textBasedHeight));
 
 
+    NSInteger padding = 10;
     //update likers and sharers based on the white background box
-    self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailCommentView.frame.origin.y + self.detailCommentView.frame.size.height, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
+    self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailCommentView.frame.origin.y + self.detailCaption.frame.size.height + padding, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
     self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width - 70, self.detailLikersAndSharers.frame.size.height);
     self.likersButton.frame = self.detailLikersSubview.frame;
     
     self.detailLikersAndSharersTopBorder.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width, 1);
     
     //tighting up the height of surrounding box as well
-    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, self.detailCommentView.frame.size.height + self.detailUserView.frame.size.height + self.detailLikersAndSharers.frame.size.height);
+    self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, self.detailCaption.frame.size.height + self.detailUserView.frame.size.height + self.detailLikersAndSharers.frame.size.height + padding);
 
     //recommendation view
     self.detailRecommendationView.frame = self.detailWhiteBackground.frame;
