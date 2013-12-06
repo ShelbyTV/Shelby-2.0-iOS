@@ -222,6 +222,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.shareActivityIndicator.hidden = YES;
     self.shareButton.hidden = NO;
+    [self.shareButton setImage:[UIImage imageNamed:@"share-icon"] forState:UIControlStateNormal];
     
     _dashboardEntry = dashboardEntry;
     _videoFrame = videoFrame;
@@ -427,7 +428,7 @@
 {
     if (!self.shareActivityIndicator) {
         self.shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        self.shareActivityIndicator.frame = CGRectMake(2, 2, self.shareButton.frame.size.width - 2, self.shareButton.frame.size.height - 2);
+        self.shareActivityIndicator.frame = CGRectMake(4, 2, self.shareButton.frame.size.width - 4, self.shareButton.frame.size.height - 2);
         [self.shareButton setImage:nil forState:UIControlStateNormal];
         
         [self.shareButton addSubview:self.shareActivityIndicator];
