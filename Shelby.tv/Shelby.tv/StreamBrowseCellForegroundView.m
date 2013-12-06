@@ -20,9 +20,7 @@
 
 @interface  StreamBrowseCellForegroundView() {
     NSMutableOrderedSet *_likers;
-    NSMutableOrderedSet *_sharers;
     NSArray *_likerImageViews;
-    NSArray *_sharerImageViews;
 }
 //model
 @property (strong, nonatomic) DashboardEntry *dashboardEntry;
@@ -131,7 +129,6 @@
 - (void)setupLikersAndSharersSubviews
 {
     NSMutableArray *likerViews = [@[] mutableCopy];
-    NSMutableArray *sharerViews = [@[] mutableCopy];
     CGFloat likerX = 40.f;
     CGFloat likerSharerHeight = 30.f;
     UIImageView *likerImageView;
@@ -145,7 +142,6 @@
     }
 
     _likerImageViews = likerViews;
-    _sharerImageViews = sharerViews;
 }
 
 - (void)layoutSubviews
@@ -291,11 +287,6 @@
 
 - (void)updateLikersAndSharersVisuals
 {
-    // Sharers
-    for (UIImageView *iv in _sharerImageViews) {
-        iv.image = nil;
-    }
-
     // Likers
     for (UIImageView *iv in _likerImageViews) {
         iv.image = nil;
@@ -378,7 +369,7 @@
 
     //update likers and sharers based on the white background box
     self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailCommentView.frame.origin.y + self.detailCommentView.frame.size.height, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
-    self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width - 50, self.detailLikersAndSharers.frame.size.height);
+    self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width - 70, self.detailLikersAndSharers.frame.size.height);
     self.likersButton.frame = self.detailLikersSubview.frame;
     
     //tighting up the height of surrounding box as well
@@ -480,21 +471,14 @@
         [_likers addObject:liker];
     }
 
-    _sharers = [NSMutableOrderedSet orderedSet];
     for (DashboardEntry *dupe in _dashboardEntry.duplicates) {
         Frame *dupeFrame = dupe.frame;
         if (dupeFrame) {
-            if (dupeFrame.creator) {
-                [_sharers addObject:dupeFrame.creator];
-            }
             for (User *liker in dupe.frame.upvoters) {
                 [_likers addObject:liker];
             }
         }
     }
-
-    //don't double-count primary sharer
-    [_sharers removeObject:_videoFrame.creator];
 }
 
 - (void)updateVisualsForRecommendation
