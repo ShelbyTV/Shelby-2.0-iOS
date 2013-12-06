@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (strong, nonatomic) UIActivityIndicatorView *shareActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersAndSharers;
+@property (strong, nonatomic) IBOutlet UIView *detailLikersAndSharersTopBorder;
 @property (weak, nonatomic) IBOutlet UIButton *likersButton;
 @property (weak, nonatomic) IBOutlet UIView *detailLikersSubview;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
@@ -113,6 +114,16 @@
         motionEffect.maximumRelativeValue = kShelbyMotionForegroundYMax;
         [self addMotionEffect:motionEffect];
     }
+    
+    self.detailLikersAndSharersTopBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width, 2)];
+    self.detailLikersAndSharersTopBorder.backgroundColor = kShelbyColorLightGray;
+    [self.detailLikersAndSharers addSubview:self.detailLikersAndSharersTopBorder];
+    
+    UIView *shareButtonLeftBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2, self.shareButton.frame.size.height)];
+    shareButtonLeftBorder.backgroundColor = kShelbyColorLightGray;
+    [self.shareButton addSubview:shareButtonLeftBorder];
+    
+    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -193,7 +204,7 @@
     self.detailTitleButton.frame = self.detailTitle.frame;
 
     [self resizeViewsForContent];
-    self.shareButton.frame = CGRectMake(self.detailLikersAndSharers.frame.size.width - 60, 5, 50, 30);
+    self.shareButton.frame = CGRectMake(self.detailLikersAndSharers.frame.size.width - 60, 0, 50, self.detailLikersAndSharers.frame.size.height);
     
     [self setupOverlayImageView];
 }
@@ -371,6 +382,8 @@
     self.detailLikersAndSharers.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailCommentView.frame.origin.y + self.detailCommentView.frame.size.height, self.detailWhiteBackground.frame.size.width, self.detailLikersAndSharers.frame.size.height);
     self.detailLikersSubview.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width - 70, self.detailLikersAndSharers.frame.size.height);
     self.likersButton.frame = self.detailLikersSubview.frame;
+    
+    self.detailLikersAndSharersTopBorder.frame = CGRectMake(0, 0, self.detailLikersAndSharers.frame.size.width, 2);
     
     //tighting up the height of surrounding box as well
     self.detailWhiteBackground.frame = CGRectMake(self.detailWhiteBackground.frame.origin.x, self.detailWhiteBackground.frame.origin.y, self.detailWhiteBackground.frame.size.width, self.detailCommentView.frame.size.height + detailWhiteBackgroundHeightAdjustment + self.detailLikersAndSharers.frame.size.height);

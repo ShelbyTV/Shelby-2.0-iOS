@@ -192,7 +192,7 @@
                             </subviews>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qr3-Sv-rRb">
-                            <rect key="frame" x="263" y="5" width="46" height="30"/>
+                            <rect key="frame" x="263" y="0.0" width="46" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                             <state key="normal" title="Share">
@@ -297,7 +297,6 @@
         </view>
     </objects>
     <resources>
-        <image name="avatar-blank.png" width="40" height="40"/>
         <image name="avatar-blank.png" width="40" height="40"/>
         <image name="overlay-likers.png" width="17" height="16"/>
         <image name="play-all" width="96" height="96"/>
