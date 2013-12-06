@@ -199,10 +199,11 @@
                             </subviews>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qr3-Sv-rRb">
-                            <rect key="frame" x="263" y="0.0" width="46" height="40"/>
+                            <rect key="frame" x="270" y="0.0" width="50" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                            <state key="normal" title="Share">
+                            <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" image="share-icon.png">
                                 <color key="titleColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
@@ -306,8 +307,8 @@
     </objects>
     <resources>
         <image name="avatar-blank.png" width="40" height="40"/>
-        <image name="avatar-blank.png" width="40" height="40"/>
         <image name="heart-large.png" width="72" height="64"/>
         <image name="play-all" width="96" height="96"/>
+        <image name="share-icon.png" width="19" height="24"/>
     </resources>
 </document>

@@ -64,7 +64,7 @@
     _closeButton.frame = CGRectMake(10, 5, 40, 34);
     [_closeButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
     [_closeButton addTarget:self action:@selector(dismissUserProfile) forControlEvents:UIControlEventTouchUpInside];
-    [_closeButton setTitle:@"Close" forState:UIControlStateNormal];
+    [_closeButton setImage:[UIImage imageNamed:@"close-icon"] forState:UIControlStateNormal];
     _closeButton.titleLabel.font = kShelbyFontH4Bold;
     [self.navBar addSubview:_closeButton];
     

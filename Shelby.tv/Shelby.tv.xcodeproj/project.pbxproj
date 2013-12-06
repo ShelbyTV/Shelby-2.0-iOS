@@ -23,6 +23,18 @@
 		1C0C7DF51852328B008F5506 /* heart-icon-color@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */; };
 		1C0C7DF61852328B008F5506 /* heart-icon-color@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */; };
 		1C0C7DF71852328B008F5506 /* heart-icon-color@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */; };
+		1C0C7DFA1852357C008F5506 /* share-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF81852357C008F5506 /* share-icon.png */; };
+		1C0C7DFB1852357C008F5506 /* share-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF81852357C008F5506 /* share-icon.png */; };
+		1C0C7DFC1852357C008F5506 /* share-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF81852357C008F5506 /* share-icon.png */; };
+		1C0C7DFD1852357C008F5506 /* share-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF91852357C008F5506 /* share-icon@2x.png */; };
+		1C0C7DFE1852357C008F5506 /* share-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF91852357C008F5506 /* share-icon@2x.png */; };
+		1C0C7DFF1852357C008F5506 /* share-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7DF91852357C008F5506 /* share-icon@2x.png */; };
+		1C0C7E0218523596008F5506 /* close-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0018523596008F5506 /* close-icon.png */; };
+		1C0C7E0318523596008F5506 /* close-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0018523596008F5506 /* close-icon.png */; };
+		1C0C7E0418523596008F5506 /* close-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0018523596008F5506 /* close-icon.png */; };
+		1C0C7E0518523596008F5506 /* close-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0118523596008F5506 /* close-icon@2x.png */; };
+		1C0C7E0618523596008F5506 /* close-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0118523596008F5506 /* close-icon@2x.png */; };
+		1C0C7E0718523596008F5506 /* close-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0118523596008F5506 /* close-icon@2x.png */; };
 		1C0E527C17BACBA8008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E527F17BACBBA008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E528117BACBCC008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
@@ -796,6 +808,10 @@
 		1C06C5CA1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyBrowseTutorialView.m; sourceTree = "<group>"; };
 		1C0C7DF01852328B008F5506 /* heart-icon-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-icon-color.png"; sourceTree = "<group>"; };
 		1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-icon-color@2x.png"; sourceTree = "<group>"; };
+		1C0C7DF81852357C008F5506 /* share-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-icon.png"; sourceTree = "<group>"; };
+		1C0C7DF91852357C008F5506 /* share-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-icon@2x.png"; sourceTree = "<group>"; };
+		1C0C7E0018523596008F5506 /* close-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-icon.png"; sourceTree = "<group>"; };
+		1C0C7E0118523596008F5506 /* close-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-icon@2x.png"; sourceTree = "<group>"; };
 		1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1C154E5117A06EBA00C0B76B /* NoLikesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoLikesView.xib; sourceTree = "<group>"; };
 		1C253B6D184D458300FBE054 /* ShelbyLikersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyLikersViewController.h; sourceTree = "<group>"; };
@@ -1420,6 +1436,8 @@
 		1C90E51F17849DF200E87CC0 /* Parallax View */ = {
 			isa = PBXGroup;
 			children = (
+				1C0C7DF81852357C008F5506 /* share-icon.png */,
+				1C0C7DF91852357C008F5506 /* share-icon@2x.png */,
 				1C0C7DF01852328B008F5506 /* heart-icon-color.png */,
 				1C0C7DF11852328B008F5506 /* heart-icon-color@2x.png */,
 				912261CF17B97F070092AF30 /* overlay-likers.png */,
@@ -1480,6 +1498,8 @@
 			children = (
 				1CD255C617A1DD170049FF30 /* top-nav-bkgd.png */,
 				1CD255C717A1DD170049FF30 /* top-nav-bkgd@2x.png */,
+				1C0C7E0018523596008F5506 /* close-icon.png */,
+				1C0C7E0118523596008F5506 /* close-icon@2x.png */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -2259,9 +2279,11 @@
 				1C7B63DF178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C56F14317BABD8C00EE9206 /* README.md in Resources */,
 				1C0C7DF61852328B008F5506 /* heart-icon-color@2x.png in Resources */,
+				1C0C7DFE1852357C008F5506 /* share-icon@2x.png in Resources */,
 				9178C9DF17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F1178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
+				1C0C7DFB1852357C008F5506 /* share-icon.png in Resources */,
 				1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 				9188F232178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 				9137187117DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
@@ -2286,6 +2308,7 @@
 				9192ED0317C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				91AEFE1317ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */,
 				1CE5584017DE1E1300C18A30 /* button-off.png in Resources */,
+				1C0C7E0618523596008F5506 /* close-icon@2x.png in Resources */,
 				1CDCA68E179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA691179F317A0098C4E1 /* overlay.png in Resources */,
 				1CDCA694179F317A0098C4E1 /* overlay@2x.png in Resources */,
@@ -2338,6 +2361,7 @@
 				911ED32517B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
 				1CE5586817DE87B200C18A30 /* no-content-bkgd.png in Resources */,
 				911ED32817B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */,
+				1C0C7E0318523596008F5506 /* close-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2368,9 +2392,11 @@
 				1C7B63E0178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C56F14417BABD8C00EE9206 /* README.md in Resources */,
 				1C0C7DF71852328B008F5506 /* heart-icon-color@2x.png in Resources */,
+				1C0C7DFF1852357C008F5506 /* share-icon@2x.png in Resources */,
 				9178C9E017CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F2178C5379000C1E84 /* navbar_back_button.png in Resources */,
 				1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
+				1C0C7DFC1852357C008F5506 /* share-icon.png in Resources */,
 				1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
 				9188F233178C99F7002F342B /* ShelbyNavBarView.xib in Resources */,
 				9137187217DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
@@ -2395,6 +2421,7 @@
 				9192ED0417C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				91AEFE1417ECF0BD00B2598B /* StreamBrowseGestureHintView.xib in Resources */,
 				1CE5584117DE1E1300C18A30 /* button-off.png in Resources */,
+				1C0C7E0718523596008F5506 /* close-icon@2x.png in Resources */,
 				1CDCA68F179F317A0098C4E1 /* overlay-568h@2x.png in Resources */,
 				1CDCA692179F317A0098C4E1 /* overlay.png in Resources */,
 				1CDCA695179F317A0098C4E1 /* overlay@2x.png in Resources */,
@@ -2447,6 +2474,7 @@
 				911ED32617B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
 				1CE5586917DE87B200C18A30 /* no-content-bkgd.png in Resources */,
 				911ED32917B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */,
+				1C0C7E0418523596008F5506 /* close-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2461,6 +2489,7 @@
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 				1CCAC9D21848F0DD008E603C /* ShelbyUserProfileCell.xib in Resources */,
 				1C0025FB16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
+				1C0C7DFA1852357C008F5506 /* share-icon.png in Resources */,
 				1C0025FE16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				8E7024EC1715E71500E8DE46 /* OATestServer.rb in Resources */,
 				8E7024F51715E71500E8DE46 /* README in Resources */,
@@ -2526,6 +2555,7 @@
 				1C534E3D17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
 				1CE5583F17DE1E1300C18A30 /* button-off.png in Resources */,
 				1C534E4017A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
+				1C0C7DFD1852357C008F5506 /* share-icon@2x.png in Resources */,
 				1CD255C817A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CB17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
@@ -2538,6 +2568,7 @@
 				1CE5586717DE87B200C18A30 /* no-content-bkgd.png in Resources */,
 				1C0C7DF21852328B008F5506 /* heart-icon-color.png in Resources */,
 				1CD8112517CCFCDF002FD84B /* logo-tv.png in Resources */,
+				1C0C7E0518523596008F5506 /* close-icon@2x.png in Resources */,
 				1CE5586A17DE87B200C18A30 /* no-content-bkgd@2x.png in Resources */,
 				1CD8111B17CCF6C0002FD84B /* play-all@2x.png in Resources */,
 				1CDB0C1C17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
@@ -2551,6 +2582,7 @@
 				1CD8111817CCF6C0002FD84B /* play-all.png in Resources */,
 				91B7DC5517B29D59009ABF02 /* scrub-track-progress.png in Resources */,
 				91B7DC5817B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
+				1C0C7E0218523596008F5506 /* close-icon.png in Resources */,
 				9192ED0217C3EA3D00294440 /* Ubuntu-B.ttf in Resources */,
 				911ED32117B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
 				911ED32417B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
