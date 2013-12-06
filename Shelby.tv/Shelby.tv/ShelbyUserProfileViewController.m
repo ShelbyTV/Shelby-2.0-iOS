@@ -10,6 +10,7 @@
 #import "ShelbyDataMediator.h"
 #import "ShelbyUserStreamBrowseViewController.h"
 #import "Roll.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ShelbyUserProfileViewController()
 @property (nonatomic, strong) ShelbyUserStreamBrowseViewController *currentBrowseVC;
@@ -72,17 +73,20 @@
     _followButton = [UIButton buttonWithType:kShelbyFontH3Bold];
     _followButton.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [_followButton setTitleColor:kShelbyColorGreen forState:UIControlStateNormal];
+    [_followButton setTitleColor:kShelbyColorWhite forState:UIControlStateNormal];
     [_followButton addTarget:self action:@selector(followButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self updateFollowButtonToShowFollowing:!_followButtonShowsFollowing];
-    _followButton.titleLabel.font = kShelbyFontH4Bold;
+    _followButton.titleLabel.font = kShelbyFontH5Bold;
+    _followButton.layer.cornerRadius = 5;
+    _followButton.layer.masksToBounds = YES;
+    
     [self.navBar addSubview:_followButton];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[followButton(80)]-10-|"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"followButton":_followButton}]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[followButton(34)]"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[followButton(28)]"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"followButton":_followButton}]];
@@ -164,15 +168,17 @@
 
 - (void)updateFollowButtonToShowFollowing:(BOOL)doesFollow
 {
-    if ([self.currentUser.userID isEqualToString:self.profileUser.userID]) {
+    if (!self.profileUser.userID || [self.currentUser.userID isEqualToString:self.profileUser.userID]) {
         _followButton.hidden = YES;
     } else {
         _followButton.hidden = NO;
         if (doesFollow) {
-            [_followButton setTitle:@"UNFOLLOW" forState:UIControlStateNormal];
+            [_followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
+            _followButton.backgroundColor = [UIColor colorWithHex:@"484848" andAlpha:1];
             _followButtonShowsFollowing = NO;
         } else {
             [_followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+            _followButton.backgroundColor = [UIColor colorWithHex:@"6fbe47" andAlpha:1];
             _followButtonShowsFollowing = YES;
         }
     }
