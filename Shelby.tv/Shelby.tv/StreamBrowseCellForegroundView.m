@@ -426,15 +426,14 @@
 - (IBAction)shareVideo:(id)sender
 {
     if (!self.shareActivityIndicator) {
-        self.shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        self.shareActivityIndicator.frame = self.shareButton.frame;
+        self.shareActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        self.shareActivityIndicator.frame = CGRectMake(2, 2, self.shareButton.frame.size.width - 2, self.shareButton.frame.size.height - 2);
+        [self.shareButton setImage:nil forState:UIControlStateNormal];
         
-        [self.detailLikersAndSharers addSubview:self.shareActivityIndicator];
+        [self.shareButton addSubview:self.shareActivityIndicator];
     } else {
         self.shareActivityIndicator.hidden = NO;
     }
-    self.shareButton.hidden = YES;
-    
     [self.shareActivityIndicator startAnimating];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -456,7 +455,7 @@
         [self.shareActivityIndicator removeFromSuperview];
         self.shareActivityIndicator = nil;
         
-        self.shareButton.hidden = NO;
+        [self.shareButton setImage:[UIImage imageNamed:@"share-icon"] forState:UIControlStateNormal];
         
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kShelbyShareVideoHasCompleted object:nil];
     }
