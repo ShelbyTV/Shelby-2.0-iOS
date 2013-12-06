@@ -330,7 +330,7 @@
         detailTitleHeight = 22;
     } else {
         summaryUserPadding = 70;
-        detailTitlePadding = 80;
+        detailTitlePadding = 90;
         detailUserPadding = 0;
         detailCommentPadding = 60;
         detailTitleHeight = 44;
