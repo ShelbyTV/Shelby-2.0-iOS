@@ -186,7 +186,7 @@
         if (airplayVisible) {
             xOriginForDurationLabel = self.controlsView.airPlayView.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8;
         } else {
-//            xOriginForDurationLabel = self.controlsView.shareButton.frame.origin.x - self.controlsView.durationLabel.frame.size.width - 8;
+            xOriginForDurationLabel = self.controlsView.frame.size.width - self.controlsView.durationLabel.frame.size.width - 8;
         }
 
         // Duration Label
