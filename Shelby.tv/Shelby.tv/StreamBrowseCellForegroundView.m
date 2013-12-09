@@ -124,9 +124,6 @@
     shareButtonLeftBorder.backgroundColor = kShelbyColorLightGray;
     [self.shareButton addSubview:shareButtonLeftBorder];
     
-    NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
-    self.detailNoLikersLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Be the first to like this!"
-                                                                              attributes:underlineAttribute];
     self.detailNoLikersLabel.hidden = YES;
 }
 
