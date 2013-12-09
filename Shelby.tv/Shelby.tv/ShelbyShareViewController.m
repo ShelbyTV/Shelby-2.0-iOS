@@ -73,6 +73,9 @@
     //style the "header"
     [self.headerView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd"]]];
     [self.sendButton setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+    self.sendButton.layer.cornerRadius = 5;
+    self.sendButton.layer.masksToBounds = YES;
+
 }
 
 -(void)dealloc
