@@ -202,11 +202,11 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view clipsSubviews="YES" contentMode="scaleToFill" id="373" userLabel="Detail LikeShare">
-                    <rect key="frame" x="320" y="338" width="320" height="40"/>
+                    <rect key="frame" x="320" y="338" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" id="6tj-lo-aHn" userLabel="likers subview">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="40"/>
+                            <rect key="frame" x="0.0" y="5" width="240" height="50"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart-large.png" id="dgz-Xc-tgU">
@@ -233,8 +233,8 @@
                                 </button>
                             </subviews>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qr3-Sv-rRb">
-                            <rect key="frame" x="270" y="0.0" width="50" height="40"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qr3-Sv-rRb" userLabel="ShareButton">
+                            <rect key="frame" x="270" y="0.0" width="50" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -306,6 +306,7 @@
         </view>
     </objects>
     <resources>
+        <image name="avatar-blank.png" width="40" height="40"/>
         <image name="avatar-blank.png" width="40" height="40"/>
         <image name="heart-large.png" width="72" height="64"/>
         <image name="play-all" width="96" height="96"/>
