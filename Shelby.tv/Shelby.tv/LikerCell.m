@@ -9,6 +9,7 @@
 #import "LikerCell.h"
 #import "User+Helper.h"
 #import "UIImageView+AFNetworking.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface LikerCell()
 @property (nonatomic, strong) User *user;
@@ -33,6 +34,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)prepareForReuse
+{
+    self.avatar.layer.cornerRadius = 5;
+    self.avatar.layer.masksToBounds = YES;
 }
 
 - (void)setupCellForLiker:(User *)user
