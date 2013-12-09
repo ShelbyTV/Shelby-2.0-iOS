@@ -23,8 +23,8 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RkN-do-aee">
-                            <rect key="frame" x="10" y="10" width="41" height="22"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RkN-do-aee" userLabel="CloseButton">
+                            <rect key="frame" x="15" y="10" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="close-icon.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -48,14 +48,14 @@
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Cry-qk-IcQ" secondAttribute="bottom" constant="4" id="1tq-zx-eIs"/>
-                        <constraint firstItem="Cry-qk-IcQ" firstAttribute="leading" secondItem="RkN-do-aee" secondAttribute="trailing" constant="6" id="6tm-bJ-nxc"/>
-                        <constraint firstAttribute="bottom" secondItem="RkN-do-aee" secondAttribute="bottom" constant="12" id="RVx-c0-0Z8"/>
-                        <constraint firstItem="RkN-do-aee" firstAttribute="leading" secondItem="vqT-hX-hx8" secondAttribute="leading" constant="10" id="Szo-z7-w6g"/>
+                        <constraint firstItem="RkN-do-aee" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="top" constant="10" id="4fS-GA-owc"/>
+                        <constraint firstAttribute="bottom" secondItem="RkN-do-aee" secondAttribute="bottom" constant="14" id="CZv-M0-tzx"/>
                         <constraint firstAttribute="height" constant="44" id="UGM-Ry-yCg"/>
                         <constraint firstItem="Cry-qk-IcQ" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="top" constant="2" id="eAE-3c-qci"/>
-                        <constraint firstItem="RkN-do-aee" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="top" constant="10" id="gok-7J-tWq"/>
                         <constraint firstItem="Cry-qk-IcQ" firstAttribute="leading" secondItem="vqT-hX-hx8" secondAttribute="leading" constant="57" id="ne5-aY-bF3"/>
                         <constraint firstAttribute="trailing" secondItem="Cry-qk-IcQ" secondAttribute="trailing" constant="44" id="uKd-Yj-SFO"/>
+                        <constraint firstItem="RkN-do-aee" firstAttribute="leading" secondItem="vqT-hX-hx8" secondAttribute="leading" constant="15" id="vEd-Or-gmE"/>
+                        <constraint firstItem="Cry-qk-IcQ" firstAttribute="leading" secondItem="RkN-do-aee" secondAttribute="trailing" constant="22" id="yz5-n9-vZE"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mh6-Yt-5AX">
