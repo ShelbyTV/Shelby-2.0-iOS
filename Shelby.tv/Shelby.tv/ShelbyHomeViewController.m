@@ -514,10 +514,12 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
             self.navBarButtonView.alpha = 1.0;
         }];
     } else if (!self.currentUser) {
-        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 84, 44)];
+        self.navBarButtonView = [[UIView alloc] initWithFrame:CGRectMake(5, 5, 80, 34)];
         UIButton *signup = [UIButton buttonWithType:UIButtonTypeCustom];
-        [signup setFrame:CGRectMake(4, 4, 80, 36)];
-        [signup setBackgroundImage:[[UIImage imageNamed:@"green-button-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2)] forState:UIControlStateNormal];
+        signup.frame = CGRectMake(10, 3, 70, 28);
+        signup.layer.cornerRadius = 5;
+        signup.layer.masksToBounds = YES;
+        signup.backgroundColor = kShelbyColorGreen;
         
         // Once user has logged in to the app, don't show them the Sign Up button.
         if ([[ShelbyDataMediator sharedInstance] hasUserLoggedIn]) {
