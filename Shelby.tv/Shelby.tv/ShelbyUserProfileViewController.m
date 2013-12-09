@@ -63,7 +63,7 @@
     
     // Close Button
     _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _closeButton.frame = CGRectMake(15, 12, 20, 20);
+    _closeButton.frame = CGRectMake(5, 2, 40, 40);
     [_closeButton setTitleColor:kShelbyColorGray forState:UIControlStateNormal];
     [_closeButton addTarget:self action:@selector(dismissUserProfile) forControlEvents:UIControlEventTouchUpInside];
     [_closeButton setImage:[UIImage imageNamed:@"close-icon"] forState:UIControlStateNormal];
