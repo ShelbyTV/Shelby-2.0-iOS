@@ -69,7 +69,7 @@
         _likedVideo = likedVideo;
         [self didChangeValueForKey:@"likedVideo"];
         
-        self.videoTitle.text = _likedVideo.title;
+        self.videoTitle.text =   [NSString stringWithFormat:@"Likes: %@", _likedVideo.title];
         
         [self.loadingSpinner startAnimating];
         [[ShelbyDataMediator sharedInstance] fetchAllLikersOfVideo:likedVideo completion:^(NSArray *users) {
