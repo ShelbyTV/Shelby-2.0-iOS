@@ -154,7 +154,7 @@
     }
 
     // nonplayback actions
-    CGFloat buttonHeight = 44.f;
+    CGFloat buttonHeight = 60.f;
     CGFloat buttonY = self.controlsView.frame.size.height - buttonHeight;
     self.controlsView.nonplaybackLikeButton.frame = CGRectMake(0, buttonY, width, buttonHeight);
     self.controlsView.nonplaybackUnlikeButton.frame = self.controlsView.nonplaybackLikeButton.frame;
