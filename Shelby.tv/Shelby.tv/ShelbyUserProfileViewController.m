@@ -83,7 +83,7 @@
     
     [self.navBar addSubview:_followButton];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[followButton(90)]-10-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[followButton(80)]-10-|"
                                                                       options:0
                                                                       metrics:nil
                                                                         views:@{@"followButton":_followButton}]];
