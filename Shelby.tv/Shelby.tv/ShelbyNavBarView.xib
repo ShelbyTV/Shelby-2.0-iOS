@@ -48,7 +48,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
                             <inset key="imageEdgeInsets" minX="205" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="My Videos" image="carrot">
+                            <state key="normal" title="My Activity" image="carrot">
                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
