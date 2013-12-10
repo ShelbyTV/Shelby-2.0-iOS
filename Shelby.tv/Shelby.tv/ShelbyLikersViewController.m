@@ -41,6 +41,11 @@
     
     self.topbar.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
 
+    [self updateViewPerLikerCount];
+}
+
+- (void)updateViewPerLikerCount
+{
     if ([self.likers count]) {
         self.noLikersView.hidden = YES;
         self.likersTable.hidden = NO;
@@ -85,6 +90,7 @@
         [[ShelbyDataMediator sharedInstance] fetchAllLikersOfVideo:likedVideo completion:^(NSArray *users) {
             [self.loadingSpinner stopAnimating];
             [self.likers addObjectsFromArray:users];
+            [self updateViewPerLikerCount];
             [self.likersTable reloadData];
         }];
     }
