@@ -2,7 +2,7 @@
 //  Video.h
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 5/2/13.
+//  Created by Dan Spinosa on 12/10/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * videoID;
+@property (nonatomic, retain) NSNumber * trackedLikerCount;
 @property (nonatomic, retain) NSSet *frame;
 @end
 

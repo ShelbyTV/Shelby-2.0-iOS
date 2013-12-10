@@ -11,6 +11,13 @@
 #import "ShelbyDuplicateContainer.h"
 #import "ShelbyVideoContainer.h"
 
+typedef NS_ENUM(NSInteger, FrameType){
+    //traditional shares
+    FrameTypeHeavyWeight,
+    //new "like" shares (without comment)
+    FrameTypeLightWeight
+};
+
 @interface Frame (Helper) <ShelbyModel, ShelbyDuplicateContainer, ShelbyVideoContainer>
 
 + (Frame *)frameForDictionary:(NSDictionary *)dict
@@ -46,5 +53,7 @@
 
 // The fallback when shortlinking fails
 - (NSString *)longLink;
+
+- (FrameType)typeOfFrame;
 
 @end

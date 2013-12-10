@@ -2,7 +2,7 @@
 //  Frame.m
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 9/19/13.
+//  Created by Dan Spinosa on 12/10/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -31,6 +31,7 @@
 @dynamic rollID;
 @dynamic timestamp;
 @dynamic videoID;
+@dynamic frameType;
 @dynamic conversation;
 @dynamic creator;
 @dynamic dashboardEntry;

@@ -36,6 +36,9 @@ NSString * const kShelbyCoreDataEntityVideoIDPredicate = @"videoID == %@";
         video.firstUnplayable =  [dict[@"first_unplayable_at"] nilOrSelfWhenNotNull];
         video.lastUnplayable = [dict[@"last_unplayable_at"] nilOrSelfWhenNotNull];
     }
+    
+    NSString *trackedLikerCount = dict[@"tracked_liker_count"];
+    video.trackedLikerCount =  @(trackedLikerCount ? [trackedLikerCount intValue] : 0);
 
     return video;
 }

@@ -2,7 +2,7 @@
 //  Frame.h
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 9/19/13.
+//  Created by Dan Spinosa on 12/10/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSString * rollID;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * videoID;
+@property (nonatomic, retain) NSNumber * frameType;
 @property (nonatomic, retain) Conversation *conversation;
 @property (nonatomic, retain) User *creator;
 @property (nonatomic, retain) NSSet *dashboardEntry;
