@@ -41,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailTitle;
 @property (weak, nonatomic) IBOutlet UIButton *detailTitleButton;
 @property (weak, nonatomic) IBOutlet UIImageView *detailUserAvatar;
+@property (weak, nonatomic) IBOutlet UIImageView *detailAvatarBadge;
 @property (weak, nonatomic) IBOutlet UILabel *detailUsername;
 @property (weak, nonatomic) IBOutlet UIView *detailUserView;
 @property (weak, nonatomic) IBOutlet UILabel *detailViaNetwork;
@@ -52,6 +53,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *summaryTitle;
 @property (weak, nonatomic) IBOutlet UIButton *summaryTitleButton;
 @property (nonatomic, weak) IBOutlet UIImageView *summaryUserAvatar;
+@property (weak, nonatomic) IBOutlet UIImageView *summaryAvatarBadge;
 @property (weak, nonatomic) IBOutlet UILabel *summaryUsername;
 @property (weak, nonatomic) IBOutlet UIView *summaryUserView;
 @property (weak, nonatomic) IBOutlet UILabel *summaryViaNetwork;
@@ -233,13 +235,12 @@
 
 - (void)updateStandardVisuals
 {
-    // createAt
+    // createdAt
     if (_dashboardEntry) {
         self.detailCreatedAt.text = [[NSDate dateFromBSONObjectID:_dashboardEntry.shelbyID] prettyRelativeTime];
     } else {
         self.detailCreatedAt.text = [[NSDate dateFromBSONObjectID:_videoFrame.shelbyID] prettyRelativeTime];
     }
-
 
     //title
     self.summaryTitle.text = _videoFrame.video.title;
@@ -271,8 +272,24 @@
         //ignore for now
     }];
     
+    //avatar badge + via network
+    UIImage *badgeImage;
+    NSString *viaNetwork = nil;
+    if ([self.videoFrame typeOfFrame] == FrameTypeLightWeight) {
+        badgeImage = [UIImage imageNamed:@"avatar-badge-heart"];
+    } else if ([self.videoFrame.creator isNonShelbyFacebookUser]) {
+        badgeImage = [UIImage imageNamed:@"avatar-badge-facebook"];
+        viaNetwork = @"facebook";
+    } else if ([self.videoFrame.creator isNonShelbyTwitterUser]) {
+        badgeImage = [UIImage imageNamed:@"avatar-badge-twitter"];
+        viaNetwork = @"twitter";
+    } else {
+        badgeImage = nil;
+    }
+    self.summaryAvatarBadge.image = badgeImage;
+    self.detailAvatarBadge.image = badgeImage;
+    
     // Via Network
-    NSString *viaNetwork = [_videoFrame originNetwork];
     if (viaNetwork) {
         viaNetwork = [NSString stringWithFormat:@"via %@", viaNetwork];
     }
@@ -281,7 +298,7 @@
     self.detailViaNetwork.text = self.summaryViaNetwork.text;
     
     // If the creator is not a shelby user but is a facebook user, show invite
-    if ([self.dashboardEntry.frame.creator isNonShelbyFacebookUser]) {
+    if ([self.videoFrame.creator isNonShelbyFacebookUser]) {
         self.detailInviteFacebookFriends.hidden = NO;
         self.detailViaNetwork.hidden = YES;
     } else {
