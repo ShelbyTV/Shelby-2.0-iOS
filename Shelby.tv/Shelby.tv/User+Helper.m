@@ -267,7 +267,7 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 - (Frame *)likedFrameWithVideoOfFrame:(Frame *)frame
 {
     Frame *frameOnLikedRoll = [Frame frameWithVideoID:frame.video.videoID
-                                         onRollWithID:self.likesRollID
+                                         onRollWithID:self.publicRollID
                                             inContext:self.managedObjectContext];
     if (frameOnLikedRoll && ![frameOnLikedRoll.clientUnliked boolValue]) {
         return frameOnLikedRoll;

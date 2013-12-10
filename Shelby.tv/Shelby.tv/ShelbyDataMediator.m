@@ -273,7 +273,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             frame.clientUnsyncedLike = @0;
             frame.clientLikedAt = nil;
             //API is NOT returning the liked frame, but we need it when deleting, so...
-            [self fetchEntriesInChannel:[user displayChannelForLikesRoll] sinceEntry:nil];
+            [self fetchEntriesInChannel:[user displayChannelForSharesRoll] sinceEntry:nil];
             
             NSError *err;
             [frame.managedObjectContext save:&err];
@@ -294,7 +294,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 {
     [ShelbyAPIClient deleteFrame:frame.frameID withAuthToken:user.token andBlock:^(id JSON, NSError *error) {
         if (JSON) {
-            [self.delegate removeFrame:frame fromChannel:[user displayChannelForLikesRoll]];
+            [self.delegate removeFrame:frame fromChannel:[user displayChannelForSharesRoll]];
 
             [frame.managedObjectContext deleteObject:frame];
             NSError *err;
