@@ -567,16 +567,17 @@
 
 - (NSAttributedString *)usernameStringFor:(Frame *)videoFrame
 {
+    NSString *nick = _videoFrame.creator.nickname ? _videoFrame.creator.nickname : @"reco";
     NSString *baseString;
     if (self.videoFrame.typeOfFrame == FrameTypeLightWeight) {
         baseString = [NSString stringWithFormat:@"%@ liked this", _videoFrame.creator.nickname];
     } else {
-        baseString = _videoFrame.creator.nickname;
+        baseString = nick;
     }
     
     NSMutableAttributedString *usernameString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName: kShelbyBodyFont2}];
     [usernameString setAttributes:@{NSFontAttributeName: kShelbyBodyFont2Bold}
-                            range:[baseString rangeOfString:_videoFrame.creator.nickname]];
+                            range:[baseString rangeOfString:nick]];
     
     return usernameString;
 }
