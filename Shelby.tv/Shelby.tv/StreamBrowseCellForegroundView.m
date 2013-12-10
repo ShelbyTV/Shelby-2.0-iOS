@@ -246,8 +246,9 @@
     self.detailTitle.text = _videoFrame.video.title;
     
     // Username
-    self.summaryUsername.text = _videoFrame.creator.nickname;
-    self.detailUsername.text = _videoFrame.creator.nickname;
+    NSAttributedString *usernameString = [self usernameStringFor:_videoFrame];
+    self.summaryUsername.attributedText = usernameString;
+    self.detailUsername.attributedText = usernameString;
     
     // User ID
     self.userID = _videoFrame.creator.userID;
@@ -289,14 +290,13 @@
     }
     
     // Caption
-    NSString *captionText = [NSString stringWithFormat:@"%@", [_videoFrame creatorsInitialCommentWithFallback:YES]];
+    NSString *captionText = [_videoFrame creatorsInitialCommentWithFallback:YES];
     [self.detailCaption setText:captionText];
     [self resizeViewsForContent];
 
     [self updateLikersAndSharersVisuals];
 
 }
-
 
 - (void)updateLikersAndSharersVisuals
 {
@@ -310,8 +310,12 @@
             User *liker = _likers[i];
             [((UIImageView *)_likerImageViews[i]) setImageWithURL:liker.avatarURL placeholderImage:[UIImage imageNamed:@"avatar-blank"]];
         }
+    } else if ([self.videoFrame.video.trackedLikerCount intValue]) {
+        self.detailNoLikersLabel.hidden = NO;
+        self.detailNoLikersLabel.text = @"See all likers...";
     } else {
         self.detailNoLikersLabel.hidden = NO;
+        self.detailNoLikersLabel.text = @"Be the first to like this!";
     }
 }
 
@@ -553,6 +557,22 @@
                                 range:[recoString rangeOfString:recoString]];
         return recoAttributed;
     }
+}
+
+- (NSAttributedString *)usernameStringFor:(Frame *)videoFrame
+{
+    NSString *baseString;
+    if (self.videoFrame.typeOfFrame == FrameTypeLightWeight) {
+        baseString = [NSString stringWithFormat:@"%@ liked this", _videoFrame.creator.nickname];
+    } else {
+        baseString = _videoFrame.creator.nickname;
+    }
+    
+    NSMutableAttributedString *usernameString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName: kShelbyBodyFont2}];
+    [usernameString setAttributes:@{NSFontAttributeName: kShelbyBodyFont2Bold}
+                            range:[baseString rangeOfString:_videoFrame.creator.nickname]];
+    
+    return usernameString;
 }
 
 @end

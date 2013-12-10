@@ -93,6 +93,7 @@ NSString * const kAnalyticsAppInviteFacebookSent                        = @"Face
 //--App Events of Interest--
 NSString * const kAnalyticsCategoryAppEventOfInterest                   = @"Interesting App Event";
 NSString * const kAnalyticsAppEventLoadMoreReturnedEmpty                = @"Load More Returned Empty";
+NSString * const kAnalyticsAppEventAirPlayDetected                      = @"iosAirPlayDetected";
 //--App Issues--
 NSString * const kAnalyticsCategoryIssues                               = @"App Issues";
 NSString * const kAnalyticsIssueContextSaveError                        = @"Context Save Error";

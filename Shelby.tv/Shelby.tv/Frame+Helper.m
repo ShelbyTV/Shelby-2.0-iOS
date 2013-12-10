@@ -41,15 +41,20 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
                                               inManagedObjectContext:context];
         frame.frameID = frameID;
         frame.createdAt = dict[@"created_at"];
-        NSDictionary *videoDict = dict[@"video"];
-        if([videoDict isKindOfClass:[NSDictionary class]]){
-            frame.video = [Video videoForDictionary:videoDict inContext:context];
-        }
-        NSDictionary *rollDict = dict[@"roll"];
-        if([rollDict isKindOfClass:[NSDictionary class]]){
-            frame.roll = [Roll rollForDictionary:rollDict inContext:context];
-        }
     }
+    
+    NSDictionary *videoDict = dict[@"video"];
+    if([videoDict isKindOfClass:[NSDictionary class]]){
+        frame.video = [Video videoForDictionary:videoDict inContext:context];
+    }
+    
+    NSDictionary *rollDict = dict[@"roll"];
+    if([rollDict isKindOfClass:[NSDictionary class]]){
+        frame.roll = [Roll rollForDictionary:rollDict inContext:context];
+    }
+    
+    NSString *frameType = dict[@"frame_type"];
+    frame.frameType = @(frameType ? [frameType intValue] : FrameTypeHeavyWeight);
     
     NSDictionary *creatorDict = dict[@"creator"];
     if([creatorDict isKindOfClass:[NSDictionary class]]){
@@ -203,7 +208,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
         }
     }
     
-    if (canUseVideoTitle){
+    if (canUseVideoTitle && [self typeOfFrame] == FrameTypeHeavyWeight){
         return self.video.title;
     }
     
@@ -269,6 +274,22 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
 - (NSString *)longLink
 {
     return [NSString stringWithFormat:kShelbyFrameLongLink, self.video.providerName, self.video.providerID, self.frameID];
+}
+
+- (FrameType)typeOfFrame
+{
+    if (!self.frameType) {
+        return FrameTypeHeavyWeight;
+    }
+    
+    switch ([self.frameType intValue]) {
+        case 0:
+            return FrameTypeHeavyWeight;
+        case 1:
+            return FrameTypeLightWeight;
+        default:
+            return FrameTypeHeavyWeight;
+    }
 }
 
 @end

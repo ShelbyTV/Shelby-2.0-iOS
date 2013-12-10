@@ -596,9 +596,6 @@
 		914FEA85175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
 		914FEA86175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
 		914FEA87175E40C700903FEA /* DVREntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA84175E40C600903FEA /* DVREntry.m */; };
-		915ACBC117EB52D900FA3EFF /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC017EB52D900FA3EFF /* Frame.m */; };
-		915ACBC217EB52D900FA3EFF /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC017EB52D900FA3EFF /* Frame.m */; };
-		915ACBC317EB52D900FA3EFF /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC017EB52D900FA3EFF /* Frame.m */; };
 		915ACBC617EB52DE00FA3EFF /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC517EB52DE00FA3EFF /* Conversation.m */; };
 		915ACBC717EB52DE00FA3EFF /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC517EB52DE00FA3EFF /* Conversation.m */; };
 		915ACBC817EB52DE00FA3EFF /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 915ACBC517EB52DE00FA3EFF /* Conversation.m */; };
@@ -719,6 +716,12 @@
 		91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
 		91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
 		91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC8981762976800838197 /* DVRDatePickerView.m */; };
+		91C4444818576B6F00A8F438 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444718576B6F00A8F438 /* Frame.m */; };
+		91C4444918576B6F00A8F438 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444718576B6F00A8F438 /* Frame.m */; };
+		91C4444A18576B6F00A8F438 /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444718576B6F00A8F438 /* Frame.m */; };
+		91C4444D18576B6F00A8F438 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444C18576B6F00A8F438 /* Video.m */; };
+		91C4444E18576B6F00A8F438 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444C18576B6F00A8F438 /* Video.m */; };
+		91C4444F18576B6F00A8F438 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C4444C18576B6F00A8F438 /* Video.m */; };
 		91CE07491779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */; };
 		91CE074A1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */; };
 		91CE074B1779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */; };
@@ -752,9 +755,6 @@
 		91D03F571733149F008131D2 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F561733149F008131D2 /* Dashboard.m */; };
 		91D03F581733149F008131D2 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F561733149F008131D2 /* Dashboard.m */; };
 		91D03F591733149F008131D2 /* Dashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F561733149F008131D2 /* Dashboard.m */; };
-		91D03F5C173314A0008131D2 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F5B173314A0008131D2 /* Video.m */; };
-		91D03F5D173314A0008131D2 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F5B173314A0008131D2 /* Video.m */; };
-		91D03F5E173314A0008131D2 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F5B173314A0008131D2 /* Video.m */; };
 		91D03F66173319D1008131D2 /* Video+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F65173319D0008131D2 /* Video+Helper.m */; };
 		91D03F67173319D1008131D2 /* Video+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F65173319D0008131D2 /* Video+Helper.m */; };
 		91D03F68173319D1008131D2 /* Video+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D03F65173319D0008131D2 /* Video+Helper.m */; };
@@ -1109,8 +1109,6 @@
 		914FEA7A175E3E6700903FEA /* DVREntry+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVREntry+Helper.m"; sourceTree = "<group>"; };
 		914FEA83175E40C600903FEA /* DVREntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVREntry.h; sourceTree = "<group>"; };
 		914FEA84175E40C600903FEA /* DVREntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVREntry.m; sourceTree = "<group>"; };
-		915ACBBF17EB52D900FA3EFF /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
-		915ACBC017EB52D900FA3EFF /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
 		915ACBC417EB52DE00FA3EFF /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		915ACBC517EB52DE00FA3EFF /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		915CDA7A17BE8FC7003C3A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Shelby.tv/Images.xcassets; sourceTree = SOURCE_ROOT; };
@@ -1176,6 +1174,10 @@
 		91BEC8931762961400838197 /* DVRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DVRDatePicker.xib; sourceTree = "<group>"; };
 		91BEC8971762976800838197 /* DVRDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVRDatePickerView.h; sourceTree = "<group>"; };
 		91BEC8981762976800838197 /* DVRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVRDatePickerView.m; sourceTree = "<group>"; };
+		91C4444618576B6F00A8F438 /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
+		91C4444718576B6F00A8F438 /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		91C4444B18576B6F00A8F438 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		91C4444C18576B6F00A8F438 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamBrowseCellForegroundView.xib; sourceTree = "<group>"; };
 		91CE074C1779087800024180 /* StreamBrowseCellForegroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBrowseCellForegroundView.h; sourceTree = "<group>"; };
 		91CE074D1779087800024180 /* StreamBrowseCellForegroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBrowseCellForegroundView.m; sourceTree = "<group>"; };
@@ -1196,8 +1198,6 @@
 		91D03F511733149E008131D2 /* Messages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messages.m; sourceTree = "<group>"; };
 		91D03F551733149F008131D2 /* Dashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dashboard.h; sourceTree = "<group>"; };
 		91D03F561733149F008131D2 /* Dashboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dashboard.m; sourceTree = "<group>"; };
-		91D03F5A173314A0008131D2 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
-		91D03F5B173314A0008131D2 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		91D03F64173319D0008131D2 /* Video+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Video+Helper.h"; sourceTree = "<group>"; };
 		91D03F65173319D0008131D2 /* Video+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Video+Helper.m"; sourceTree = "<group>"; };
 		91D03F6E1733201A008131D2 /* Conversation+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Conversation+Helper.h"; sourceTree = "<group>"; };
@@ -1560,6 +1560,10 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				91C4444B18576B6F00A8F438 /* Video.h */,
+				91C4444C18576B6F00A8F438 /* Video.m */,
+				91C4444618576B6F00A8F438 /* Frame.h */,
+				91C4444718576B6F00A8F438 /* Frame.m */,
 				914FEA83175E40C600903FEA /* DVREntry.h */,
 				914FEA84175E40C600903FEA /* DVREntry.m */,
 				91E5D461174E938100AD3746 /* Roll.h */,
@@ -1571,12 +1575,8 @@
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
 				918C5280184E223B00A4DFB8 /* User.h */,
 				918C5281184E223B00A4DFB8 /* User.m */,
-				915ACBBF17EB52D900FA3EFF /* Frame.h */,
-				915ACBC017EB52D900FA3EFF /* Frame.m */,
 				915ACBC417EB52DE00FA3EFF /* Conversation.h */,
 				915ACBC517EB52DE00FA3EFF /* Conversation.m */,
-				91D03F5A173314A0008131D2 /* Video.h */,
-				91D03F5B173314A0008131D2 /* Video.m */,
 				91D03F551733149F008131D2 /* Dashboard.h */,
 				91D03F561733149F008131D2 /* Dashboard.m */,
 				91D03F501733149E008131D2 /* Messages.h */,
@@ -2661,6 +2661,7 @@
 				1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
 				91F0CC01172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
+				91C4444918576B6F00A8F438 /* Frame.m in Sources */,
 				91F0CC061730154E008B5B34 /* User+Helper.m in Sources */,
 				91D03EFD1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 				91D03F081731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
@@ -2670,11 +2671,11 @@
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F531733149F008131D2 /* Messages.m in Sources */,
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
-				91D03F5D173314A0008131D2 /* Video.m in Sources */,
 				91D03F67173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F76173321AD008131D2 /* Messages+Helper.m in Sources */,
 				915ACBC717EB52DE00FA3EFF /* Conversation.m in Sources */,
+				91C4444E18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CC1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C71742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
@@ -2708,7 +2709,6 @@
 				1C7B63CD178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E4178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
 				1C56F13A17BABD8C00EE9206 /* Appirater.m in Sources */,
-				915ACBC217EB52D900FA3EFF /* Frame.m in Sources */,
 				1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605E17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
@@ -2799,6 +2799,7 @@
 				1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
 				91F0CC02172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
+				91C4444A18576B6F00A8F438 /* Frame.m in Sources */,
 				91F0CC071730154E008B5B34 /* User+Helper.m in Sources */,
 				91D03EFE1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 				91D03F091731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
@@ -2808,11 +2809,11 @@
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F541733149F008131D2 /* Messages.m in Sources */,
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
-				91D03F5E173314A0008131D2 /* Video.m in Sources */,
 				91D03F68173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F77173321AD008131D2 /* Messages+Helper.m in Sources */,
 				915ACBC817EB52DE00FA3EFF /* Conversation.m in Sources */,
+				91C4444F18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CD1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C81742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
@@ -2846,7 +2847,6 @@
 				1C7B63CE178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E5178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
 				1C56F13B17BABD8C00EE9206 /* Appirater.m in Sources */,
-				915ACBC317EB52D900FA3EFF /* Frame.m in Sources */,
 				1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605F17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
@@ -2937,6 +2937,7 @@
 				1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
 				91F0CC00172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
+				91C4444818576B6F00A8F438 /* Frame.m in Sources */,
 				91F0CC051730154E008B5B34 /* User+Helper.m in Sources */,
 				91D03EFC1731AB40008131D2 /* ShelbyBrain.m in Sources */,
 				91D03F071731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
@@ -2946,11 +2947,11 @@
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				91D03F521733149F008131D2 /* Messages.m in Sources */,
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
-				91D03F5C173314A0008131D2 /* Video.m in Sources */,
 				91D03F66173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F75173321AD008131D2 /* Messages+Helper.m in Sources */,
 				915ACBC617EB52DE00FA3EFF /* Conversation.m in Sources */,
+				91C4444D18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
 				1C06C5CB1743E5D9004E8E20 /* ShelbyBrowseTutorialView.m in Sources */,
 				1C06C5C61742F5CA004E8E20 /* ShelbyViewController.m in Sources */,
@@ -2984,7 +2985,6 @@
 				1C7B63CC178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E3178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
 				1C56F13917BABD8C00EE9206 /* Appirater.m in Sources */,
-				915ACBC117EB52D900FA3EFF /* Frame.m in Sources */,
 				1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
 				91AE605D17D64B1D009D6013 /* ShelbyModelArrayUtility.m in Sources */,
