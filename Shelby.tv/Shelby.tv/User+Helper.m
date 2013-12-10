@@ -362,5 +362,15 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
     }
 }
 
+- (BOOL)isShelbyUser
+{
+    /* user type enumeration:
+     :real => 0,
+     :faux => 1,
+     :converted => 2,
+     :service => 3
+     */
+    return self.userType && [self.userType intValue] != 1;
+}
 
 @end

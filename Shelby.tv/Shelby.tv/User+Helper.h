@@ -54,4 +54,6 @@
 - (void)didFollowRoll:(NSString *)rollID;
 - (void)didUnfollowRoll:(NSString *)rollID;
 
+- (BOOL)isShelbyUser;
+
 @end
