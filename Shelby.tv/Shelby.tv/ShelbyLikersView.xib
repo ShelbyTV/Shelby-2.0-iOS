@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="likersTable" destination="mh6-Yt-5AX" id="Vej-mr-0pK"/>
                 <outlet property="loadingSpinner" destination="6tt-yZ-hb7" id="mXI-iW-48u"/>
-                <outlet property="noLikersLabel" destination="qdY-lQ-udz" id="hpT-l4-H6R"/>
+                <outlet property="noLikersView" destination="XWc-3F-nBV" id="DPt-K6-gkG"/>
                 <outlet property="topbar" destination="vqT-hX-hx8" id="KJX-JS-nBr"/>
                 <outlet property="videoTitle" destination="Cry-qk-IcQ" id="y95-iv-vj1"/>
                 <outlet property="view" destination="1" id="Hb1-Ay-gVT"/>
@@ -62,17 +62,41 @@
                         <constraint firstAttribute="trailing" secondItem="Cry-qk-IcQ" secondAttribute="trailing" constant="44" id="uKd-Yj-SFO"/>
                     </constraints>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No one has liked this video… yet. Do you have what it takes to be first?" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="qdY-lQ-udz" userLabel="No Likers Label">
-                    <rect key="frame" x="40" y="144" width="240" height="70"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWc-3F-nBV" userLabel="No LikersView">
+                    <rect key="frame" x="30" y="144" width="260" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No one has liked this video… yet. " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdY-lQ-udz" userLabel="No Likers Label">
+                            <rect key="frame" x="0.0" y="15" width="260" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="1Rp-7D-PSi"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have what it takes to be first?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIf-Gr-2iS" userLabel="No Likers Label">
+                            <rect key="frame" x="0.0" y="40" width="260" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="70" id="1M2-A7-RJb"/>
-                        <constraint firstAttribute="width" constant="240" id="rDI-JX-yJX"/>
+                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="top" secondItem="qdY-lQ-udz" secondAttribute="bottom" constant="5" id="0PF-p5-trh"/>
+                        <constraint firstAttribute="trailing" secondItem="qdY-lQ-udz" secondAttribute="trailing" id="5jE-51-aBQ"/>
+                        <constraint firstItem="qdY-lQ-udz" firstAttribute="leading" secondItem="XWc-3F-nBV" secondAttribute="leading" id="JKi-9h-Plt"/>
+                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="trailing" secondItem="qdY-lQ-udz" secondAttribute="trailing" id="Jue-ff-rV7"/>
+                        <constraint firstItem="qdY-lQ-udz" firstAttribute="top" secondItem="XWc-3F-nBV" secondAttribute="top" constant="15" id="Pom-mA-CWI"/>
+                        <constraint firstAttribute="height" constant="100" id="cK9-Xn-K3Y"/>
+                        <constraint firstAttribute="width" constant="260" id="ht8-4a-IE8"/>
+                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="leading" secondItem="qdY-lQ-udz" secondAttribute="leading" id="kEk-If-if1"/>
+                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="centerY" secondItem="XWc-3F-nBV" secondAttribute="centerY" id="zzW-17-R6O"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mh6-Yt-5AX">
                     <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,16 +111,16 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="qdY-lQ-udz" secondAttribute="trailing" constant="40" id="2u7-m0-wg8"/>
+                <constraint firstAttribute="trailing" secondItem="XWc-3F-nBV" secondAttribute="trailing" constant="30" id="6Hh-8V-AoC"/>
                 <constraint firstItem="vqT-hX-hx8" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="8yD-97-IEd"/>
-                <constraint firstItem="qdY-lQ-udz" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="bottom" constant="100" id="Brp-q1-fCl"/>
                 <constraint firstItem="mh6-Yt-5AX" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="bottom" id="Kw8-nG-zjf"/>
                 <constraint firstAttribute="trailing" secondItem="mh6-Yt-5AX" secondAttribute="trailing" id="Rjw-Qg-Kxh"/>
                 <constraint firstAttribute="trailing" secondItem="vqT-hX-hx8" secondAttribute="trailing" id="Xkh-Pi-aTg"/>
-                <constraint firstItem="qdY-lQ-udz" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="e9Z-5G-Ur7"/>
                 <constraint firstItem="vqT-hX-hx8" firstAttribute="top" secondItem="1" secondAttribute="top" id="hQs-lb-Nl3"/>
                 <constraint firstAttribute="bottom" secondItem="mh6-Yt-5AX" secondAttribute="bottom" id="kby-Mv-V1M"/>
                 <constraint firstItem="mh6-Yt-5AX" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="reo-KA-Jd3"/>
+                <constraint firstItem="XWc-3F-nBV" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="30" id="t4M-PN-Sk3"/>
+                <constraint firstItem="XWc-3F-nBV" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="bottom" constant="100" id="yLC-fM-mS4"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
