@@ -67,18 +67,18 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No one has liked this video… yet. " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdY-lQ-udz" userLabel="No Likers Label">
-                            <rect key="frame" x="0.0" y="15" width="260" height="20"/>
+                            <rect key="frame" x="0.0" y="15" width="260" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="1Rp-7D-PSi"/>
-                            </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have what it takes to be first?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIf-Gr-2iS" userLabel="No Likers Label">
-                            <rect key="frame" x="0.0" y="40" width="260" height="20"/>
+                            <rect key="frame" x="0.0" y="38" width="250" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="18" id="rBQ-g8-fWg"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -86,15 +86,14 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="top" secondItem="qdY-lQ-udz" secondAttribute="bottom" constant="5" id="0PF-p5-trh"/>
-                        <constraint firstAttribute="trailing" secondItem="qdY-lQ-udz" secondAttribute="trailing" id="5jE-51-aBQ"/>
-                        <constraint firstItem="qdY-lQ-udz" firstAttribute="leading" secondItem="XWc-3F-nBV" secondAttribute="leading" id="JKi-9h-Plt"/>
-                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="trailing" secondItem="qdY-lQ-udz" secondAttribute="trailing" id="Jue-ff-rV7"/>
-                        <constraint firstItem="qdY-lQ-udz" firstAttribute="top" secondItem="XWc-3F-nBV" secondAttribute="top" constant="15" id="Pom-mA-CWI"/>
+                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="leading" secondItem="XWc-3F-nBV" secondAttribute="leading" id="4NR-SX-4mo"/>
+                        <constraint firstItem="qdY-lQ-udz" firstAttribute="top" secondItem="XWc-3F-nBV" secondAttribute="top" constant="15" id="MUB-32-ugo"/>
+                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="top" secondItem="qdY-lQ-udz" secondAttribute="bottom" constant="5" id="NDK-5t-ocb"/>
+                        <constraint firstItem="qdY-lQ-udz" firstAttribute="leading" secondItem="XWc-3F-nBV" secondAttribute="leading" id="QYt-be-G4P"/>
                         <constraint firstAttribute="height" constant="100" id="cK9-Xn-K3Y"/>
-                        <constraint firstAttribute="width" constant="260" id="ht8-4a-IE8"/>
-                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="leading" secondItem="qdY-lQ-udz" secondAttribute="leading" id="kEk-If-if1"/>
-                        <constraint firstItem="bIf-Gr-2iS" firstAttribute="centerY" secondItem="XWc-3F-nBV" secondAttribute="centerY" id="zzW-17-R6O"/>
+                        <constraint firstAttribute="width" priority="612" constant="260" id="ht8-4a-IE8"/>
+                        <constraint firstAttribute="trailing" secondItem="bIf-Gr-2iS" secondAttribute="trailing" constant="10" id="mmZ-qp-KBb"/>
+                        <constraint firstAttribute="trailing" secondItem="qdY-lQ-udz" secondAttribute="trailing" id="tEN-jZ-quq"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mh6-Yt-5AX">
