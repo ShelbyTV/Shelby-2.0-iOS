@@ -26,6 +26,8 @@ NSString * const kAnalyticsScreenLogin                                  = @"Logi
 /* created dynamically: signup, browse, videoReel */
 NSString * const kAnalyticsScreenSettings                               = @"Settings";
 NSString * const kAnalyticsScreenShelbyShare                            = @"Shelby Share";
+NSString * const kAnalyticsScreenUserProfile                            = @"User Profile";
+NSString * const kAnalyticsScreenLikersList                             = @"Likers List";
 
 // Localytics Constants
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
@@ -68,6 +70,9 @@ NSString * const kAnalyticsUXTapAirplay                                 = @"Tap 
 NSString * const kAnalyticsUXAirplayBegin                               = @"AirPlay Begin";
 NSString * const kAnalyticsUXAirplayEnd                                 = @"AirPlay End";
 NSString * const kAnalyticsUXTapCardPlayButton                          = @"Tap Card Play Button";
+NSString * const kAnalyticsUXTapCardSharingUser                         = @"Tap Card - Sharing User";
+NSString * const kAnalyticsUXTapCardLikersList                          = @"Tap Card - Likers List";
+NSString * const kAnalyticsUXTapLikerListLiker                          = @"Tap Likers List - Liker";
 NSString * const kAnalyticsUXVideoDidAutoadvance                        = @"Video Did Autoadvance";
 NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode      = @"Swipe Card to Change Video: Non-Playback";
 NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying  = @"Swipe Card to Chagne Video: Playback: Playing";

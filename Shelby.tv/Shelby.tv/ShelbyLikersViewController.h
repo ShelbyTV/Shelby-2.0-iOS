@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LikerCell.h"
+#import "ShelbyViewController.h"
 #import "Video.h"
 
 @protocol ShelbyLikersViewDelegate <NSObject>
@@ -17,7 +18,7 @@
 @end
 
 
-@interface ShelbyLikersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, LikerCellDelegate>
+@interface ShelbyLikersViewController : ShelbyViewController <UITableViewDataSource, UITableViewDelegate, LikerCellDelegate>
 @property (nonatomic, strong) NSMutableOrderedSet *localLikers;
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, strong) Video *likedVideo;

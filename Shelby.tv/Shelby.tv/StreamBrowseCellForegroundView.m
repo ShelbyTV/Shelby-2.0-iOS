@@ -463,6 +463,9 @@
 
 - (IBAction)openLikersView:(id)sender
 {
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                          action:kAnalyticsUXTapCardLikersList
+                                 nicknameAsLabel:YES];
     [self.delegate openLikersView:_likers];
 }
 
@@ -478,6 +481,9 @@
 
 - (IBAction)goToUserProfile:(id)sender
 {
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                          action:kAnalyticsUXTapCardSharingUser
+                                 nicknameAsLabel:YES];
     [self.delegate userProfileWasTapped:self.userID];
 }
 
@@ -535,7 +541,7 @@
 - (NSAttributedString *)recommendationStringFor:(DashboardEntry *)dashboardEntry
 {
     if (dashboardEntry.sourceFrameCreatorNickname) {
-        NSString *recoBase = @"This video is shared by people like ";
+        NSString *recoBase = @"This video is Liked by people like ";
         NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
         NSString *recoString = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
         NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
@@ -545,7 +551,7 @@
                                 range:[recoString rangeOfString:recoUsername]];
         return recoAttributed;
     } else if (dashboardEntry.sourceVideoTitle) {
-        NSString *recoString = [NSString stringWithFormat:@"Because you shared \"%@\"", dashboardEntry.sourceVideoTitle];
+        NSString *recoString = [NSString stringWithFormat:@"Because you Liked \"%@\"", dashboardEntry.sourceVideoTitle];
         NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
         [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2}
                                 range:[recoString rangeOfString:recoString]];
@@ -561,16 +567,17 @@
 
 - (NSAttributedString *)usernameStringFor:(Frame *)videoFrame
 {
+    NSString *nick = _videoFrame.creator.nickname ? _videoFrame.creator.nickname : @"reco";
     NSString *baseString;
     if (self.videoFrame.typeOfFrame == FrameTypeLightWeight) {
         baseString = [NSString stringWithFormat:@"%@ liked this", _videoFrame.creator.nickname];
     } else {
-        baseString = _videoFrame.creator.nickname;
+        baseString = nick;
     }
     
     NSMutableAttributedString *usernameString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName: kShelbyBodyFont2}];
     [usernameString setAttributes:@{NSFontAttributeName: kShelbyBodyFont2Bold}
-                            range:[baseString rangeOfString:_videoFrame.creator.nickname]];
+                            range:[baseString rangeOfString:nick]];
     
     return usernameString;
 }

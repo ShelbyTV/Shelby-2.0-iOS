@@ -35,6 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenLikersList];
     
     [self.likersTable registerNib:[UINib nibWithNibName:@"LikerViewCell" bundle:nil] forCellReuseIdentifier:@"LikerViewCell"];
     
@@ -128,6 +129,10 @@
     [self.delegate userProfileWasTapped:user.userID];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                          action:kAnalyticsUXTapLikerListLiker
+                                 nicknameAsLabel:YES];
 }
 
 @end

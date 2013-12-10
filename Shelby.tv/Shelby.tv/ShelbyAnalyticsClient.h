@@ -20,6 +20,8 @@ extern NSString * const kAnalyticsScreenLogin;
 /* created dynamically: signup, browse, videoReel */
 extern NSString * const kAnalyticsScreenSettings;
 extern NSString * const kAnalyticsScreenShelbyShare;
+extern NSString * const kAnalyticsScreenUserProfile;
+extern NSString * const kAnalyticsScreenLikersList;
 
 // Localytics Constants
 extern NSString * const kLocalyticsWatchVideo;
@@ -62,6 +64,9 @@ extern NSString * const kAnalyticsUXTapAirplay;
 extern NSString * const kAnalyticsUXAirplayBegin;
 extern NSString * const kAnalyticsUXAirplayEnd;
 extern NSString * const kAnalyticsUXTapCardPlayButton;
+extern NSString * const kAnalyticsUXTapCardSharingUser;
+extern NSString * const kAnalyticsUXTapCardLikersList;
+extern NSString * const kAnalyticsUXTapLikerListLiker;
 extern NSString * const kAnalyticsUXVideoDidAutoadvance;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying;

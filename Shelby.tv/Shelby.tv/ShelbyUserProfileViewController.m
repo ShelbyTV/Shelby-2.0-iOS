@@ -23,6 +23,12 @@
     BOOL _followButtonShowsFollowing;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenUserProfile];
+}
+
 - (CGFloat)swapAnimationTime
 {
     return 0;
@@ -121,7 +127,6 @@
         _followButton.hidden = YES;
     } else {
         [_loadingSpinner stopAnimating];
-        _followButton.hidden = (self.currentUser == nil);
     }
 }
 
@@ -169,15 +174,21 @@
 
 - (void)updateFollowButtonToShowFollowing:(BOOL)doesFollow
 {
-    if (!self.profileUser.userID || [self.currentUser.userID isEqualToString:self.profileUser.userID]) {
+    if (!self.currentUser || !self.profileUser.userID || [self.currentUser.userID isEqualToString:self.profileUser.userID]) {
+        //hide button when logged out or when viewing own profile
         _followButton.hidden = YES;
+        
     } else {
-        _followButton.hidden = NO;
         if (doesFollow) {
+            //allways allow unfollowing
+            _followButton.hidden = NO;
             [_followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
             _followButton.backgroundColor = [UIColor colorWithHex:@"484848" andAlpha:1];
             _followButtonShowsFollowing = NO;
+            
         } else {
+            //cannot follow a faux user
+            _followButton.hidden = ![self.profileUser isShelbyUser];
             [_followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
             _followButton.backgroundColor = [UIColor colorWithHex:@"6fbe47" andAlpha:1];
             _followButtonShowsFollowing = YES;
