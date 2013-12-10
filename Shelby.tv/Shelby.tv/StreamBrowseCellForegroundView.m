@@ -305,7 +305,6 @@
         iv.image = nil;
     }
     if ([_likers count]) {
-        self.detailLikersSubview.userInteractionEnabled = YES;
         self.detailNoLikersLabel.hidden = YES;
         for (NSUInteger i = 0; i < MIN([_likers count], [_likerImageViews count]); i++) {
             User *liker = _likers[i];
@@ -313,7 +312,6 @@
         }
     } else {
         self.detailNoLikersLabel.hidden = NO;
-        self.detailLikersSubview.userInteractionEnabled = NO;
     }
 }
 
