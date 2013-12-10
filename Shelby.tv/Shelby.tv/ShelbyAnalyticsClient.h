@@ -87,6 +87,7 @@ extern NSString * const kAnalyticsAppInviteFacebookSent;
 //--App Events of Interest--
 extern NSString * const kAnalyticsCategoryAppEventOfInterest;
 extern NSString * const kAnalyticsAppEventLoadMoreReturnedEmpty;
+extern NSString * const kAnalyticsAppEventAirPlayDetected;
 //--App Issues--
 extern NSString * const kAnalyticsCategoryIssues;
 extern NSString * const kAnalyticsIssueContextSaveError;

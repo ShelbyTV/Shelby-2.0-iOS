@@ -177,7 +177,10 @@
     BOOL airplayVisible = NO;
     if (self.airPlayButton.alpha == 1) {
         airplayVisible = YES;
-        [Intercom updateAttributes:@{@"iosAirPlayDetected" : @1}];
+        [Intercom updateAttributes:@{kAnalyticsAppEventAirPlayDetected : @1}];
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryAppEventOfInterest
+                                              action:kAnalyticsAppEventAirPlayDetected
+                                     nicknameAsLabel:YES];
     }
     
     if (landscapeOrientation) {
