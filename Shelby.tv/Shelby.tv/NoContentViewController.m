@@ -9,8 +9,6 @@
 #import "NoContentViewController.h"
 
 @interface NoContentViewController ()
-@property (nonatomic, weak) IBOutlet UILabel *noContentTitle;
-@property (nonatomic, weak) IBOutlet UIImageView *imageToAnimate;
 
 @end
 

@@ -693,13 +693,9 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     } else if (self.offlineLikesChannel == channel) {
         likesChannel = YES;
     }
-    
-    // TODO: add MyStream for NoSharesView - in case user has nothing in their roll and they switch to their shares.
-    
-    if (likesChannel) {
+
+    if (likesChannel || sharesChannel) {
         return @"NoLikesView";
-    } else if (sharesChannel) {
-        return @"NoSharesView";
     } else {
         return nil;
     }

@@ -11,7 +11,6 @@
 #import "DisplayChannel+Helper.h"
 #import "DeduplicationUtility.h"
 #import "Frame.h"
-#import "NoContentViewController.h"
 #import "Video.h"
 
 #define REFRESH_PULL_THRESHOLD 50
@@ -99,10 +98,21 @@ NSString * const kShelbyBrowseViewGestureInitiationComplete = @"browse_gesture_i
     }
 }
 
+// This is kinda of a hack. Maybe it's time to take this code out of the brain?
+- (NSString *)noContentViewName
+{
+    return [self.browseManagementDelegate nameForNoContentViewForDisplayChannel:self.channel];
+}
+
+- (void)setupNoContentView:(NoContentViewController *)noContentView withTitle:(NSString *)title
+{
+    // No-op for this VC. Subclasses might modify this controller.
+}
+
 - (void)updateVisibilityOfNoContentView
 {
     if ([self.deduplicatedEntries count] == 0) {
-        NSString *noContnetViewName = [self.browseManagementDelegate nameForNoContentViewForDisplayChannel:self.channel];
+        NSString *noContnetViewName = [self noContentViewName];
         self.hasNoContent = YES;
         
         if (noContnetViewName && !self.noContentVC) {
@@ -110,6 +120,7 @@ NSString * const kShelbyBrowseViewGestureInitiationComplete = @"browse_gesture_i
             [self addChildViewController:self.noContentVC];
             [self.view addSubview:self.noContentVC.view];
             [self.noContentVC didMoveToParentViewController:self];
+            [self setupNoContentView:self.noContentVC withTitle:self.channel.titleOverride];
         }
     } else {
         [self.browseViewDelegate shelbyStreamBrowseViewController:self hasNoContnet:NO];

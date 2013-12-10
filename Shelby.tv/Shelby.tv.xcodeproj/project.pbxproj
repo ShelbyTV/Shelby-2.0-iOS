@@ -321,9 +321,6 @@
 		1CDB0C3317A992E10031C2C9 /* UserDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */; };
 		1CDB0C3417A992E10031C2C9 /* UserDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */; };
 		1CDB0C3517A992E10031C2C9 /* UserDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */; };
-		1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
-		1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
-		1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */; };
 		1CDB27DD18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB27DC18453D2C008E1C36 /* ShelbyUserProfileViewController.m */; };
 		1CDB27DE18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB27DC18453D2C008E1C36 /* ShelbyUserProfileViewController.m */; };
 		1CDB27DF18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CDB27DC18453D2C008E1C36 /* ShelbyUserProfileViewController.m */; };
@@ -920,7 +917,6 @@
 		1CDB0C2817A991FE0031C2C9 /* SettingsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewCell.m; sourceTree = "<group>"; };
 		1CDB0C3117A992E10031C2C9 /* UserDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsCell.h; sourceTree = "<group>"; };
 		1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsCell.m; sourceTree = "<group>"; };
-		1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoSharesView.xib; sourceTree = "<group>"; };
 		1CDB27DB18453D2C008E1C36 /* ShelbyUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyUserProfileViewController.h; sourceTree = "<group>"; };
 		1CDB27DC18453D2C008E1C36 /* ShelbyUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyUserProfileViewController.m; sourceTree = "<group>"; };
 		1CDBEE701795EA20002ECD76 /* SignupFlowStepOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupFlowStepOneViewController.h; sourceTree = "<group>"; };
@@ -1480,7 +1476,6 @@
 				1C253B72184D45A200FBE054 /* ShelbyLikersView.xib */,
 				91F16824179840FF00AF8A2E /* Login.storyboard */,
 				1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */,
-				1CDB0C3617AACD3C0031C2C9 /* NoSharesView.xib */,
 				1C154E5117A06EBA00C0B76B /* NoLikesView.xib */,
 				1CDB0C1F17A96CF90031C2C9 /* UserDetailsViewCell.xib */,
 				1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */,
@@ -2343,7 +2338,6 @@
 				1CDB0C1D17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2117A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2517A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
-				1CDB0C3817AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
 				91B7DC4017B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4317B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				1CE5584317DE1E1300C18A30 /* button-off@2x.png in Resources */,
@@ -2456,7 +2450,6 @@
 				1CDB0C1E17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2217A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2617A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
-				1CDB0C3917AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
 				91B7DC4117B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4417B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				1CE5584417DE1E1300C18A30 /* button-off@2x.png in Resources */,
@@ -2575,7 +2568,6 @@
 				1CDB0C1C17A95BF10031C2C9 /* SettingsView-iPhone.xib in Resources */,
 				1CDB0C2017A96CF90031C2C9 /* UserDetailsViewCell.xib in Resources */,
 				1CDB0C2417A96D7B0031C2C9 /* SettingsViewCell.xib in Resources */,
-				1CDB0C3717AACD3C0031C2C9 /* NoSharesView.xib in Resources */,
 				91B7DC3F17B16447009ABF02 /* nav-shadow.png in Resources */,
 				91B7DC4217B16447009ABF02 /* nav-shadow@2x.png in Resources */,
 				91B7DC4F17B29D59009ABF02 /* scrub-track-background.png in Resources */,

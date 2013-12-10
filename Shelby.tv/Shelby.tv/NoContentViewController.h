@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface NoContentViewController : UIViewController
+@property (nonatomic, weak) IBOutlet UIButton *likeButton;
+@property (nonatomic, weak) IBOutlet UILabel *noContentTitle;
+@property (nonatomic, weak) IBOutlet UILabel *noContentSubtitle;
+@property (nonatomic, weak) IBOutlet UIImageView *imageToAnimate;
 
 @end

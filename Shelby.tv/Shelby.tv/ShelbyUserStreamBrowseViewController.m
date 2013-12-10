@@ -8,6 +8,7 @@
 
 #import "ShelbyUserStreamBrowseViewController.h"
 #import "ShelbyUserProfileCell.h"
+#import "NoContentViewController.h"
 
 @interface ShelbyUserStreamBrowseViewController ()
 
@@ -35,6 +36,20 @@
    
     // KP KP: Will be needed when we have 2 sections
 //    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+}
+
+- (NSString *)noContentViewName
+{
+    return @"NoLikesView";
+}
+
+- (void)setupNoContentView:(NoContentViewController *)noContentView withTitle:(NSString *)title
+{
+    noContentView.noContentTitle.text = [NSString stringWithFormat:@"%@ hasn't liked or shared any video yet.", title];
+    noContentView.noContentSubtitle.hidden = YES;
+    
+    noContentView.imageToAnimate.hidden = YES;
+    noContentView.likeButton.hidden = YES;
 }
 
 // KP KP: Will be needed when we have 2 sections

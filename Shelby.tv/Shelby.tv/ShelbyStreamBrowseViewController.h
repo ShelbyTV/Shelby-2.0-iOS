@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
+#import "NoContentViewController.h"
 #import "ShelbyStreamBrowseViewCell.h"
 #import "ShelbyViewController.h"
 #import "ShelbyVideoContainer.h"
@@ -73,6 +74,9 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus;
 
 - (NSIndexPath *)indexPathForCurrentFocus;
 - (id<ShelbyVideoContainer>)entityForCurrentFocus;
+
+- (void)setupNoContentView:(NoContentViewController *)noContentView withTitle:(NSString *)title;
+- (NSString *)noContentViewName;
 
 //which page (of the parallax of the cells) is currently showing
 @property (nonatomic, assign) NSUInteger currentPage;
