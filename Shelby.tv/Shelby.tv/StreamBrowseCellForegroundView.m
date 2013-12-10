@@ -541,7 +541,7 @@
 - (NSAttributedString *)recommendationStringFor:(DashboardEntry *)dashboardEntry
 {
     if (dashboardEntry.sourceFrameCreatorNickname) {
-        NSString *recoBase = @"This video is shared by people like ";
+        NSString *recoBase = @"This video is Liked by people like ";
         NSString *recoUsername = dashboardEntry.sourceFrameCreatorNickname;
         NSString *recoString = [NSString stringWithFormat:@"%@%@", recoBase, recoUsername];
         NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
@@ -551,7 +551,7 @@
                                 range:[recoString rangeOfString:recoUsername]];
         return recoAttributed;
     } else if (dashboardEntry.sourceVideoTitle) {
-        NSString *recoString = [NSString stringWithFormat:@"Because you shared \"%@\"", dashboardEntry.sourceVideoTitle];
+        NSString *recoString = [NSString stringWithFormat:@"Because you Liked \"%@\"", dashboardEntry.sourceVideoTitle];
         NSMutableAttributedString *recoAttributed = [[NSMutableAttributedString alloc] initWithString:recoString];
         [recoAttributed setAttributes:@{NSFontAttributeName: kShelbyBodyFont2}
                                 range:[recoString rangeOfString:recoString]];
