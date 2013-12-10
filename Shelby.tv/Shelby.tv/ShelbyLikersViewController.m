@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSMutableOrderedSet *likers;
 @property (nonatomic, weak) IBOutlet UITableView *likersTable;
 @property (nonatomic, weak) IBOutlet UILabel *videoTitle;
+@property (nonatomic, weak) IBOutlet UILabel *noLikersLabel;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingSpinner;
 @property (nonatomic, weak) IBOutlet UIView *topbar;
 
@@ -38,6 +39,14 @@
     [self.likersTable registerNib:[UINib nibWithNibName:@"LikerViewCell" bundle:nil] forCellReuseIdentifier:@"LikerViewCell"];
     
     self.topbar.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"top-nav-bkgd.png"]];
+
+    if ([self.likers count]) {
+        self.noLikersLabel.hidden = YES;
+        self.likersTable.hidden = NO;
+    } else {
+        self.noLikersLabel.hidden = NO;
+        self.likersTable.hidden = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
