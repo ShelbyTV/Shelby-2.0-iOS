@@ -45,21 +45,27 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="6tt-yZ-hb7">
-                            <rect key="frame" x="280" y="20" width="20" height="20"/>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="6tt-yZ-hb7">
+                            <rect key="frame" x="280" y="12" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="5FI-ZO-gn7"/>
+                                <constraint firstAttribute="height" constant="20" id="5I3-qH-Bu0"/>
+                            </constraints>
                         </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="Cry-qk-IcQ" secondAttribute="bottom" constant="4" id="1tq-zx-eIs"/>
                         <constraint firstAttribute="bottom" secondItem="RkN-do-aee" secondAttribute="bottom" constant="4" id="8jt-z6-s4o"/>
+                        <constraint firstAttribute="bottom" secondItem="Cry-qk-IcQ" secondAttribute="bottom" constant="4" id="HYP-BD-ect"/>
+                        <constraint firstItem="Cry-qk-IcQ" firstAttribute="leading" secondItem="RkN-do-aee" secondAttribute="trailing" constant="12" id="Haz-FX-Glu"/>
+                        <constraint firstItem="6tt-yZ-hb7" firstAttribute="leading" secondItem="Cry-qk-IcQ" secondAttribute="trailing" constant="4" id="HvB-JG-pCv"/>
+                        <constraint firstItem="Cry-qk-IcQ" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="top" constant="2" id="JXU-kG-uIN"/>
                         <constraint firstItem="RkN-do-aee" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="top" id="Kse-rm-xA3"/>
                         <constraint firstItem="RkN-do-aee" firstAttribute="leading" secondItem="vqT-hX-hx8" secondAttribute="leading" constant="5" id="KwQ-5U-L6a"/>
+                        <constraint firstItem="6tt-yZ-hb7" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="top" constant="12" id="TEV-k6-iBD"/>
                         <constraint firstAttribute="height" constant="44" id="UGM-Ry-yCg"/>
-                        <constraint firstItem="Cry-qk-IcQ" firstAttribute="top" secondItem="vqT-hX-hx8" secondAttribute="top" constant="2" id="eAE-3c-qci"/>
-                        <constraint firstItem="Cry-qk-IcQ" firstAttribute="leading" secondItem="vqT-hX-hx8" secondAttribute="leading" constant="57" id="ne5-aY-bF3"/>
-                        <constraint firstAttribute="trailing" secondItem="Cry-qk-IcQ" secondAttribute="trailing" constant="44" id="uKd-Yj-SFO"/>
+                        <constraint firstAttribute="trailing" secondItem="6tt-yZ-hb7" secondAttribute="trailing" constant="20" id="ve1-Du-iGJ"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWc-3F-nBV" userLabel="No LikersView">
