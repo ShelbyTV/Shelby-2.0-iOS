@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP1;
-@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP2;
+//@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP2;
 //@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *tipIconsP3;
 
 @property (weak, nonatomic) IBOutlet UIImageView *scrollUpImage;
@@ -40,7 +40,7 @@
 {
     //init tip icons w/o animation
     self.tipLabel.text = nil;
-    for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2, /*self.tipIconsP3*/]) {
+    for (NSArray *tipCollection in @[self.tipIconsP1/*, self.tipIconsP2, self.tipIconsP3*/]) {
         for (UIView *view in tipCollection) {
             view.alpha = 0.f;
         }
@@ -163,9 +163,7 @@
             [self zoomOutOnPhone];
             [self changeTitleText:@"Discover videos you and your friends will love."
                           tipText:@""];
-            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2/*, self.tipIconsP3*/]) {
-                [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
-            }
+            [self setViews:self.tipIconsP1 alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
             [self resetScrollUpHelper:2.0];
             [self cancelSwipeLeftHelper];
             [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA1];
@@ -174,9 +172,6 @@
             [self zoomInOnPhone];
             [self changeTitleText:@"See what videos your friends Like."
                           tipText:@""];
-            for (NSArray *tipCollection in @[self.tipIconsP2/*, self.tipIconsP3*/]) {
-                [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
-            }
             [self setViews:self.tipIconsP1 alpha:1.f duration:TIP_SHOW_DURATION delay:TIP_SHOW_DELAY];
             [self resetScrollUpHelper:4.0];
             [self cancelSwipeLeftHelper];
@@ -186,10 +181,7 @@
             [self zoomInOnPhone];
             [self changeTitleText:@"'Like' a video and Shelby uncovers more."
                           tipText:@""];
-            for (NSArray *tipCollection in @[self.tipIconsP1/*, self.tipIconsP3*/]) {
-                [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
-            }
-            [self setViews:self.tipIconsP2 alpha:1.f duration:TIP_SHOW_DURATION delay:TIP_SHOW_DELAY];
+            [self setViews:self.tipIconsP1 alpha:1.f duration:TIP_SHOW_DURATION delay:TIP_SHOW_DELAY];
             [self resetScrollUpHelper:5.0];
             [self cancelSwipeLeftHelper];
             [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenWelcomeA3];
@@ -198,10 +190,7 @@
             [self zoomInOnPhone];
             [self changeTitleText:@"...a TV channel powered by your friends."
                           tipText:@"Swipe left to see what your friend said."];
-            for (NSArray *tipCollection in @[self.tipIconsP1, self.tipIconsP2]) {
-                [self setViews:tipCollection alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
-            }
-            /*[self setViews:self.tipIconsP3 alpha:1.f];*/
+            [self setViews:self.tipIconsP1 alpha:0.f duration:HIDE_DURATION delay:HIDE_DELAY];
             [_parallaxView scrollToPage:0];
             [self didScrollToPage:0];
             //see didScrollToPage for continued view tracking
