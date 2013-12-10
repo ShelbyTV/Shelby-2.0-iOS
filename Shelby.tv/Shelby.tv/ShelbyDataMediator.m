@@ -647,6 +647,7 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             [Intercom beginSessionForUserWithUserId:newUser.userID andEmail:newUser.email];
             [Intercom updateAttributes:@{@"ios" : @1,
                                          @"name" : newUser.name}];
+            [self updateRollFollowingsForCurrentUser];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyNotificationUserSignupDidSucceed
                                                                 object:nil];
         } else {
