@@ -329,7 +329,7 @@
         }
     } else if ([self.videoFrame.video.trackedLikerCount intValue]) {
         self.detailNoLikersLabel.hidden = NO;
-        self.detailNoLikersLabel.text = @"See all likers...";
+        self.detailNoLikersLabel.text = @"See all who liked this...";
     } else {
         self.detailNoLikersLabel.hidden = NO;
         self.detailNoLikersLabel.text = @"Be the first to like this!";
