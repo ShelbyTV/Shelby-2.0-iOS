@@ -463,6 +463,9 @@
 
 - (IBAction)openLikersView:(id)sender
 {
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                          action:kAnalyticsUXTapCardLikersList
+                                 nicknameAsLabel:YES];
     [self.delegate openLikersView:_likers];
 }
 
@@ -478,6 +481,9 @@
 
 - (IBAction)goToUserProfile:(id)sender
 {
+    [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                          action:kAnalyticsUXTapCardSharingUser
+                                 nicknameAsLabel:YES];
     [self.delegate userProfileWasTapped:self.userID];
 }
 

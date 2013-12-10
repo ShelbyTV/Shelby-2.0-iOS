@@ -23,6 +23,12 @@
     BOOL _followButtonShowsFollowing;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [ShelbyAnalyticsClient trackScreen:kAnalyticsScreenUserProfile];
+}
+
 - (CGFloat)swapAnimationTime
 {
     return 0;
