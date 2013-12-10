@@ -44,27 +44,35 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xXr-83-vhM" userLabel="tip icons view">
-                            <rect key="frame" x="10" y="411" width="280" height="40"/>
+                            <rect key="frame" x="10" y="372" width="280" height="100"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-youtube" translatesAutoresizingMaskIntoConstraints="NO" id="5d4-Cp-VcD" userLabel="p1 youtube">
-                                    <rect key="frame" x="30" y="0.0" width="40" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="4hA-uS-HET"/>
-                                        <constraint firstAttribute="height" constant="40" id="pBd-tf-fHz"/>
-                                    </constraints>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heart-colored-small" translatesAutoresizingMaskIntoConstraints="NO" id="yzp-pn-CPX" userLabel="heart">
+                                    <rect key="frame" x="43" y="62" width="13" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-vimeo" translatesAutoresizingMaskIntoConstraints="NO" id="eLl-vp-HCW" userLabel="p1 vimeo">
-                                    <rect key="frame" x="90" y="0.0" width="40" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="aHW-kX-jb9"/>
-                                        <constraint firstAttribute="height" constant="40" id="gg0-Tg-cUI"/>
-                                    </constraints>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-blank-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="5W1-1Y-z3F" userLabel="blankman 1">
+                                    <rect key="frame" x="64" y="56" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-blank-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="tj7-gS-nPO" userLabel="blankman 2">
+                                    <rect key="frame" x="96" y="56" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-blank-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="h0o-l6-izj" userLabel="blankman 3">
+                                    <rect key="frame" x="128" y="56" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-blank-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="8GK-Uc-6ii" userLabel="blankman 4">
+                                    <rect key="frame" x="160" y="56" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default-blank-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="0Mo-dy-0Zv" userLabel="blankman 5">
+                                    <rect key="frame" x="192" y="56" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-fb" translatesAutoresizingMaskIntoConstraints="NO" id="9jg-Ni-MdS" userLabel="p1 fb">
-                                    <rect key="frame" x="150" y="0.0" width="40" height="40"/>
+                                    <rect key="frame" x="90" y="5" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="Qcf-24-RhD"/>
@@ -72,53 +80,21 @@
                                     </constraints>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-twitter" translatesAutoresizingMaskIntoConstraints="NO" id="SKC-oG-bCn" userLabel="p1 twitter">
-                                    <rect key="frame" x="210" y="0.0" width="40" height="40"/>
+                                    <rect key="frame" x="150" y="5" width="40" height="40"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="QxI-DL-cyj"/>
                                         <constraint firstAttribute="height" constant="40" id="qGz-LY-xtU"/>
                                     </constraints>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-heart" translatesAutoresizingMaskIntoConstraints="NO" id="jL4-jM-ybv" userLabel="p2 heart">
-                                    <rect key="frame" x="150" y="0.0" width="40" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="ShT-06-gq9"/>
-                                        <constraint firstAttribute="width" constant="40" id="mm5-T3-DZ6"/>
-                                    </constraints>
-                                </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome-icon-plus" translatesAutoresizingMaskIntoConstraints="NO" id="imc-gC-ful" userLabel="p2 plus">
-                                    <rect key="frame" x="90" y="0.0" width="40" height="40"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="DYp-06-3GX"/>
-                                        <constraint firstAttribute="height" constant="40" id="Y6q-yX-pMa"/>
-                                    </constraints>
-                                </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="D2r-wC-GkA"/>
-                                <constraint firstItem="SKC-oG-bCn" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="210" id="FuW-p4-sk2"/>
-                                <constraint firstItem="9jg-Ni-MdS" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="GIa-lp-OHH"/>
-                                <constraint firstItem="eLl-vp-HCW" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="J46-cY-YwS"/>
-                                <constraint firstAttribute="bottom" secondItem="imc-gC-ful" secondAttribute="bottom" id="Kbf-UT-bcG"/>
-                                <constraint firstAttribute="trailing" secondItem="imc-gC-ful" secondAttribute="trailing" constant="150" id="YFE-UW-yKz"/>
-                                <constraint firstAttribute="trailing" secondItem="5d4-Cp-VcD" secondAttribute="trailing" constant="210" id="crQ-E3-FQz"/>
-                                <constraint firstItem="eLl-vp-HCW" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="cty-qv-aC7"/>
-                                <constraint firstItem="9jg-Ni-MdS" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="hRd-g1-ZQR"/>
-                                <constraint firstItem="jL4-jM-ybv" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="i1a-yN-1jf"/>
-                                <constraint firstItem="5d4-Cp-VcD" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="iJg-pd-ufV"/>
-                                <constraint firstItem="SKC-oG-bCn" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="jQr-pS-bef"/>
-                                <constraint firstAttribute="bottom" secondItem="jL4-jM-ybv" secondAttribute="bottom" id="k7f-La-H4v"/>
-                                <constraint firstAttribute="bottom" secondItem="5d4-Cp-VcD" secondAttribute="bottom" id="lrM-LS-eP6"/>
-                                <constraint firstItem="imc-gC-ful" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" id="lx2-Sh-wMn"/>
-                                <constraint firstAttribute="bottom" secondItem="eLl-vp-HCW" secondAttribute="bottom" id="nKX-SL-6wa"/>
-                                <constraint firstItem="5d4-Cp-VcD" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="30" id="onp-vZ-PAV"/>
-                                <constraint firstItem="jL4-jM-ybv" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="pHT-OD-fd9"/>
-                                <constraint firstAttribute="trailing" secondItem="eLl-vp-HCW" secondAttribute="trailing" constant="150" id="qOg-ay-y9E"/>
-                                <constraint firstItem="imc-gC-ful" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="uey-hB-ZB0"/>
-                                <constraint firstAttribute="trailing" secondItem="jL4-jM-ybv" secondAttribute="trailing" constant="90" id="zUR-DL-fBb"/>
+                                <constraint firstAttribute="height" constant="100" id="D2r-wC-GkA"/>
+                                <constraint firstItem="SKC-oG-bCn" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="150" id="FuW-p4-sk2"/>
+                                <constraint firstItem="9jg-Ni-MdS" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" constant="5" id="GIa-lp-OHH"/>
+                                <constraint firstItem="9jg-Ni-MdS" firstAttribute="leading" secondItem="xXr-83-vhM" secondAttribute="leading" constant="90" id="hRd-g1-ZQR"/>
+                                <constraint firstItem="SKC-oG-bCn" firstAttribute="top" secondItem="xXr-83-vhM" secondAttribute="top" constant="5" id="jQr-pS-bef"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -128,7 +104,7 @@
                         <constraint firstItem="dFP-0u-qS2" firstAttribute="leading" secondItem="eSh-Og-UGs" secondAttribute="leading" constant="20" id="NoU-LK-sxF"/>
                         <constraint firstAttribute="trailing" secondItem="dFP-0u-qS2" secondAttribute="trailing" constant="20" id="dQt-B5-2s8"/>
                         <constraint firstItem="5UI-S6-Scj" firstAttribute="leading" secondItem="eSh-Og-UGs" secondAttribute="leading" constant="10" id="fHS-Kt-983"/>
-                        <constraint firstItem="xXr-83-vhM" firstAttribute="top" secondItem="dFP-0u-qS2" secondAttribute="bottom" constant="4" id="jxg-66-IjL"/>
+                        <constraint firstItem="xXr-83-vhM" firstAttribute="top" secondItem="dFP-0u-qS2" secondAttribute="bottom" constant="-35" id="jxg-66-IjL"/>
                         <constraint firstAttribute="trailing" secondItem="xXr-83-vhM" secondAttribute="trailing" constant="10" id="pUO-eR-fiN"/>
                         <constraint firstAttribute="trailing" secondItem="5UI-S6-Scj" secondAttribute="trailing" constant="10" id="yFf-W9-LbS"/>
                         <constraint firstAttribute="bottom" secondItem="dFP-0u-qS2" secondAttribute="bottom" constant="56" id="yp7-74-Qag"/>
@@ -197,13 +173,15 @@
                 <outlet property="swipeLeftImage" destination="B3Z-df-b1w" id="V32-SD-teZ"/>
                 <outlet property="tipLabel" destination="dFP-0u-qS2" id="4Gv-Uv-eQ4"/>
                 <outlet property="titleLabel" destination="5UI-S6-Scj" id="gDl-Fl-W51"/>
-                <outletCollection property="tipIconsP1" destination="5d4-Cp-VcD" id="Njq-YF-MCX"/>
-                <outletCollection property="tipIconsP1" destination="eLl-vp-HCW" id="8bs-NY-Xqa"/>
-                <outletCollection property="tipIconsP2" destination="jL4-jM-ybv" id="Ffi-GO-jfQ"/>
-                <outletCollection property="tipIconsP2" destination="imc-gC-ful" id="95D-md-rge"/>
                 <outletCollection property="gestureRecognizers" destination="VV4-TT-DEx" appends="YES" id="Mfz-LK-YYg"/>
                 <outletCollection property="tipIconsP1" destination="SKC-oG-bCn" id="HHe-YB-gRi"/>
                 <outletCollection property="tipIconsP1" destination="9jg-Ni-MdS" id="Jax-8g-p2I"/>
+                <outletCollection property="tipIconsP1" destination="h0o-l6-izj" id="f8b-0V-sAl"/>
+                <outletCollection property="tipIconsP1" destination="tj7-gS-nPO" id="xIm-eG-fBk"/>
+                <outletCollection property="tipIconsP1" destination="5W1-1Y-z3F" id="nTV-Qw-bJl"/>
+                <outletCollection property="tipIconsP1" destination="8GK-Uc-6ii" id="FqO-62-xHR"/>
+                <outletCollection property="tipIconsP1" destination="0Mo-dy-0Zv" id="7GV-bb-htf"/>
+                <outletCollection property="tipIconsP1" destination="yzp-pn-CPX" id="erS-eC-374"/>
             </connections>
         </view>
         <tapGestureRecognizer id="VV4-TT-DEx">
@@ -213,14 +191,12 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
+        <image name="default-blank-avatar" width="24" height="24"/>
+        <image name="heart-colored-small" width="13" height="12"/>
         <image name="welcome-h-iphone" width="375" height="190"/>
         <image name="welcome-h-logo" width="119" height="34"/>
         <image name="welcome-icon-fb" width="40" height="40"/>
-        <image name="welcome-icon-heart" width="40" height="40"/>
-        <image name="welcome-icon-plus" width="40" height="40"/>
         <image name="welcome-icon-twitter" width="40" height="40"/>
-        <image name="welcome-icon-vimeo" width="40" height="40"/>
-        <image name="welcome-icon-youtube" width="42" height="42"/>
         <image name="welcome-swipe-left" width="73" height="80"/>
         <image name="welcome-swipe-up" width="64" height="104"/>
     </resources>
