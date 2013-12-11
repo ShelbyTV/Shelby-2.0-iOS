@@ -66,17 +66,17 @@
             <color key="tintColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="8" firstAttribute="top" secondItem="1" secondAttribute="top" priority="614" constant="240" id="37"/>
-                <constraint firstItem="3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1" secondAttribute="top" constant="55" id="39"/>
                 <constraint firstAttribute="centerX" secondItem="8" secondAttribute="centerX" id="60"/>
                 <constraint firstAttribute="centerX" secondItem="3" secondAttribute="centerX" id="62"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8" secondAttribute="bottom" priority="742" constant="50" id="63"/>
-                <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="65" id="128"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3" secondAttribute="bottom" priority="390" constant="130" id="130"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8" secondAttribute="bottom" priority="742" constant="80" id="63"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3" secondAttribute="bottom" constant="170" id="130"/>
                 <constraint firstItem="vAL-QX-ge4" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="EJi-jc-K57"/>
                 <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" constant="15" id="Km1-vZ-QnU"/>
                 <constraint firstAttribute="trailing" secondItem="vAL-QX-ge4" secondAttribute="trailing" id="NG1-9C-CuP"/>
                 <constraint firstAttribute="bottom" secondItem="41" secondAttribute="bottom" id="VYo-9f-Hpb"/>
                 <constraint firstAttribute="trailing" secondItem="41" secondAttribute="trailing" constant="-10" id="YUf-Ad-JXM"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="65" id="ZeR-A0-ctV"/>
+                <constraint firstItem="3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1" secondAttribute="top" priority="613" constant="45" id="abL-k4-3of"/>
                 <constraint firstAttribute="bottom" secondItem="vAL-QX-ge4" secondAttribute="bottom" id="jjd-Cf-0NH"/>
                 <constraint firstItem="41" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="10" id="sf8-Kq-Zsf"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="15" id="ugq-pW-gXK"/>
