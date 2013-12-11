@@ -37,7 +37,7 @@
                     <rect key="frame" x="15" y="65" width="290" height="130"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="130" id="m0h-zm-acp"/>
+                        <constraint firstAttribute="height" priority="718" constant="130" id="m0h-zm-acp"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
