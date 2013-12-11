@@ -254,9 +254,14 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     return self.video;
 }
 
-- (BOOL)toggleLike
+- (BOOL)doLike
 {
-    return [[ShelbyDataMediator sharedInstance] toggleLikeForFrame:self];
+    return [[ShelbyDataMediator sharedInstance] likeFrame:self];
+}
+
+- (BOOL)doUnlike
+{
+    return [[ShelbyDataMediator sharedInstance] unlikeFrame:self];
 }
 
 - (BOOL)videoIsLiked

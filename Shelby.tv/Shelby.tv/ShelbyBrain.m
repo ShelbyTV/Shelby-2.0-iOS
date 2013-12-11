@@ -40,6 +40,7 @@ NSString * const kShelbyBrainDidBecomeActiveNotification = @"kShelbyBrainDidBeco
 NSString * const kShelbyBrainWillResignActiveNotification = @"kShelbyBrainWillResignActiveNotification";
 NSString * const kShelbyBrainDismissVideoReelNotification = @"kShelbyBrainDismissVideoReelNotification";
 NSString * const kShelbyBrainDidAutoadvanceNotification = @"kShelbyBrainDidAutoadvanceNotification";
+NSString * const kShelbyBrainSetEntriesNotification = @"kShelbyBrainSetEntriesNotification";
 
 NSString * const kShelbyBrainChannelKey = @"channel";
 NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
@@ -563,9 +564,9 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     }
     STVAssert(self.offlineLikesChannel == channel, @"we have multiple offline likes channels, not good");
 
-    [self.homeVC setEntries:channelEntries forChannel:channel];
-    
-    [self.homeVC refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                        object:self userInfo:@{kShelbyBrainChannelKey : channel,
+                                                                               kShelbyBrainChannelEntriesKey : channelEntries}];
 }
 
 - (void)removeFrame:(Frame *)frame fromChannel:(DisplayChannel *)channel
@@ -574,7 +575,10 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     STVAssert(channelEntries && [channelEntries[0] isKindOfClass:[Frame class]], @"can't remove frame from channel that doesn't have frames");
     NSMutableArray *newChannelEntries = [channelEntries mutableCopy];
     [newChannelEntries removeObject:frame];
-    [self.homeVC setEntries:newChannelEntries forChannel:channel];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                        object:self userInfo:@{kShelbyBrainChannelKey : channel,
+                                                                               kShelbyBrainChannelEntriesKey : newChannelEntries}];
 }
 
 // 100% of the logic of channel ordering.
@@ -914,10 +918,12 @@ NSString * const kShelbyBrainEntityKey = @"entity";
         }
         
         [[ShelbyDataMediator sharedInstance] fetchFramesInChannel:rollChannel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
-            userProfileVC.channels = @[rollChannel];
+            userProfileVC.channels = @[displayChannel];
             userProfileVC.profileUser = fetchedUser;
             
-            [userProfileVC setEntries:entries forChannel:displayChannel];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
+                                                                                       kShelbyBrainChannelEntriesKey : entries}];
             [userProfileVC focusOnChannel:displayChannel];
             [userProfileVC setIsLoading:NO];
         }];

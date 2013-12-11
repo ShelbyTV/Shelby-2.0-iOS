@@ -98,12 +98,15 @@
     //TODO: figure out how an entity can be set as a duplicate of itself and fix that.
     STVDebugAssert(dupeChild != dupeParent, @"BUG: dupeChild == dupeParent: %@", dupeParent);
     dupeChild.duplicateOf = dupeParent;
+    STVDebugAssert([dupeParent.duplicates containsObject:dupeChild], @"inverse not set");
+
     if(flatten && dupeChild.duplicates && [dupeChild.duplicates count]){
         NSArray *duplicatesArray = [[dupeChild.duplicates array] copy];
         for (NSUInteger i = 0; i < [duplicatesArray count]; i++) {
             id<ShelbyDuplicateContainer> child = duplicatesArray[i];
             STVDebugAssert(child != dupeParent, @"BUG: child == dupeParent: %@", dupeParent);
-            child.duplicateOf = dupeParent;
+            [self addDuplicateChild:child toParent:dupeParent flatteningHierarchy:flatten];
+            STVDebugAssert([child.duplicates count] == 0, @"should be empty now");
         }
     }
 }

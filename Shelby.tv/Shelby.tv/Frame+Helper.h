@@ -44,8 +44,9 @@ typedef NS_ENUM(NSInteger, FrameType){
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 - (NSString *)originNetwork;
 - (BOOL)isPlayable;
-//returns YES if the toggle should result in this frame being liked
-- (BOOL)toggleLike;
+
+- (BOOL)doLike;
+- (BOOL)doUnlike;
 
 //Is this frame, or another with same video, on the likes roll
 //of the current user.  Or has it been offline liked.

@@ -124,9 +124,11 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
                      rolls:(NSArray *)followRolls
                 completion:(void (^)(NSError *error))completion;
 
-//returns YES if the toggle should result in this frame being liked
+//both returns YES if attempting to like/unlike per request
+//will return NO if you try to like an already-liked video and vice versa
 //NB: does not guarantee async post will succeed
-- (BOOL)toggleLikeForFrame:(Frame *)frame;
+- (BOOL)likeFrame:(Frame *)frame;
+- (BOOL)unlikeFrame:(Frame *)frame;
 
 //do whatever it takes to get us to a clean state, guaranteed
 - (void)nuclearCleanup;

@@ -346,10 +346,16 @@ maintainingCurrentFocus:(BOOL)shouldMaintainCurrentFocus
 {
     @synchronized(self) {
         // if our collection view hasn't yet moved to superview -- isn't on screen -- then it will
-        // return nil for -indexPahtsForVisibleItems: but we expect row 0.
+        // return nil for -indexPathsForVisibleItems: but we expect row 0.
         NSIndexPath *idxPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(self.collectionView.contentOffset.x + self.collectionView.frame.size.width/2.f, self.collectionView.contentOffset.y + self.collectionView.frame.size.height/2.f)];
         if (!idxPath && [self.deduplicatedEntries count] > 0) {
-            return [NSIndexPath indexPathForRow:0 inSection:[self sectionForVideoCards]];
+            if (self.collectionView.contentOffset.y > self.collectionView.frame.size.height) {
+                return [NSIndexPath indexPathForRow:[self.deduplicatedEntries count]-1
+                                          inSection:[self sectionForVideoCards]];
+            } else {
+                return [NSIndexPath indexPathForRow:0
+                                          inSection:[self sectionForVideoCards]];
+            }
         }
         return idxPath;
     }

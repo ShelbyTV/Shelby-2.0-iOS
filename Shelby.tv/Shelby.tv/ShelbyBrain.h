@@ -27,6 +27,7 @@ extern NSString * const kShelbyBrainDidBecomeActiveNotification;
 extern NSString * const kShelbyBrainWillResignActiveNotification;
 extern NSString * const kShelbyBrainDismissVideoReelNotification;
 extern NSString * const kShelbyBrainDidAutoadvanceNotification;
+extern NSString * const kShelbyBrainSetEntriesNotification;
 
 extern NSString * const kShelbyBrainChannelKey;
 extern NSString * const kShelbyBrainChannelEntriesKey;

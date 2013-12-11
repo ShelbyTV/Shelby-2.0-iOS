@@ -119,6 +119,10 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                          selector:@selector(videoDidAutoadvanceNotification:)
                                              name:kShelbyBrainDidAutoadvanceNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setEntriesNotification:)
+                                                 name:kShelbyBrainSetEntriesNotification object:nil];
 }
 
 - (void)dealloc
@@ -402,6 +406,19 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         [self fetchDidCompleteForChannel:channel];
         [self refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
+}
+
+- (void)setEntriesNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    if (![self streamBrowseViewControllerForChannel:channel]) {
+        return;
+    }
+    
+    NSArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
+    [self setEntries:channelEntries forChannel:channel];
+    [self refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
 }
 
 - (void)setEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
@@ -948,9 +965,9 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     // Appirater Event
     [Appirater userDidSignificantEvent:YES];
     
-    BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
+    BOOL didLike = [self likeVideo:vcvc.currentEntity];
     if (!didLike) {
-        DLog(@"***ERROR*** Tried to Like, but action resulted in UNLIKE of the video");
+        DLog(@"***ERROR*** Tried to Like '%@', but action resulted in UNLIKE of the video", vcvc.currentEntity.containedVideo.title);
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -984,17 +1001,24 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                          withAction:kAnalyticsUXUnlike
                                 withNicknameAsLabel:YES];
-    BOOL didLike = [self toggleLikeCurrentVideo:vcvc.currentEntity];
-    if (didLike) {
-        DLog(@"***ERROR*** Tried to unlike, but action resulted in LIKE of the video");
+    BOOL didUnlike = [self unlikeVideo:vcvc.currentEntity];
+    if (!didUnlike) {
+        DLog(@"***ERROR*** Tried to unlike '%@', but action resulted in LIKE of the video", vcvc.currentEntity.containedVideo.title);
     }
 }
 
-- (BOOL)toggleLikeCurrentVideo:(id<ShelbyVideoContainer>)entity
+- (BOOL)likeVideo:(id<ShelbyVideoContainer>)entity
 {
-    Frame *currentFrame = [Frame frameForEntity:entity];
-    BOOL didLike = [currentFrame toggleLike];
+    Frame *f = [Frame frameForEntity:entity];
+    BOOL didLike = [f doLike];
     return didLike;
+}
+
+- (BOOL)unlikeVideo:(id<ShelbyVideoContainer>)entity
+{
+    Frame *f = [Frame frameForEntity:entity];
+    BOOL didUnlike = [f doUnlike];
+    return didUnlike;
 }
 
 - (void)shareCurrentVideo:(id<ShelbyVideoContainer>)videoContainer

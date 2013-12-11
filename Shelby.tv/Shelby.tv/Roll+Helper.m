@@ -76,6 +76,9 @@ NSString * const kShelbyCoreDataEntityRollIDPredicate = @"rollID == %@";
     roll.title = @"My Likes";
     
     NSSet *frames = [[NSSet alloc] initWithArray:likes];
+    //copy&paste warning: setting roll.frame directly can cause terrible bugs
+    //make sure frames is the complete set on the roll
+    //otherwise, frames previously on the roll will have their roll nil'd
     roll.frame = frames;
     
     return roll;

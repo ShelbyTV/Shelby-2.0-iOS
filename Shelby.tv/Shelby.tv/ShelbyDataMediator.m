@@ -177,12 +177,10 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
                                     if(JSON){
                                         // 1) store this in core data (with a new background context)
                                         [self privateContextPerformBlock:^(NSManagedObjectContext *privateMOC) {
-                                            DisplayChannel *privateContextChannel = (DisplayChannel *)[privateMOC objectWithID:channel.objectID];
                                             Roll *privateContextRoll = (Roll *)[privateMOC objectWithID:roll.objectID];
                                             NSArray *frames = [self findOrCreateFramesForJSON:JSON
                                                                                      withRoll:privateContextRoll
                                                                                     inContext:privateMOC];
-                                            privateContextChannel.roll.frame = [NSSet setWithArray:frames];
                                             
                                             dispatch_async(dispatch_get_main_queue(), ^{
                                                 NSManagedObjectContext *mainMOC = [self mainThreadMOC];
@@ -330,14 +328,13 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }
 }
 
-- (BOOL)toggleLikeForFrame:(Frame *)frame
+- (BOOL)likeFrame:(Frame *)frame
 {
     STVDebugAssert(frame.managedObjectContext == [self mainThreadContext], @"frame expected on main context (b/c action is from there)");
-    
     User *user = [self fetchAuthenticatedUserOnMainThreadContext];
     
     if (user) {
-        if (![user hasLikedVideoOfFrame:frame]) {
+        if (![user hasLikedVideoOfFrame:frame] && ![frame.roll.rollID isEqualToString:user.publicRollID]) {
             [self likeFrame:frame forUser:user];
             
             //represent liked state until the API call succeeds
@@ -352,11 +349,38 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             return YES;
             
         } else {
+            //asked to like, frame is already liked... fail
+            return NO;
+        }
+        
+    } else {
+        //not logged in
+        if ([frame.clientUnsyncedLike boolValue]) {
+            //asked to like, frame is already liked... fail
+            return NO;
+        }
+        [self toggleUnsyncedLikeForFrame:frame];
+        [self fetchAllUnsyncedLikes];
+        return YES;
+    }
+}
+
+- (BOOL)unlikeFrame:(Frame *)frame
+{
+    STVDebugAssert(frame.managedObjectContext == [self mainThreadContext], @"frame expected on main context (b/c action is from there)");
+    User *user = [self fetchAuthenticatedUserOnMainThreadContext];
+
+    if (user) {
+        if (![user hasLikedVideoOfFrame:frame]) {
+            //asked to unlike, but user has not liked frame... fail
+            return NO;
+            
+        } else {
             //Do Unlike
             Frame *likedFrame = [user likedFrameWithVideoOfFrame:frame];
             STVDebugAssert(likedFrame, @"expected liked frame");
             
-            //represnt unliked state assuming the API call will succeed
+            //represent unliked state assuming the API call will succeed
             frame.clientUnsyncedLike = @0;
             [frame removeUpvotersObject:user];
             frame.clientLikedAt = nil;
@@ -368,17 +392,18 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 
             [self unlikeFrame:likedFrame forUser:user];
 
-            return NO;
+            return YES;
         }
         
     } else {
         //not logged in
-        BOOL shouldBeLiked = ![frame.clientUnsyncedLike boolValue];
+        if (![frame.clientUnsyncedLike boolValue]) {
+            //asked to unlike, but user has not liked frame... fail
+            return NO;
+        }
         [self toggleUnsyncedLikeForFrame:frame];
-
         [self fetchAllUnsyncedLikes];
-        
-        return shouldBeLiked;
+        return YES;
     }
 }
 
@@ -415,12 +440,10 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             if(JSON){
                 // 1) store this in core data (with a new background context)
                 [self privateContextPerformBlock:^(NSManagedObjectContext *privateMOC) {
-                    DisplayChannel *privateContextChannel = (DisplayChannel *)[privateMOC objectWithID:channel.objectID];
                     Roll *privateContextRoll = (Roll *)[privateMOC objectWithID:roll.objectID];
                     NSArray *frames = [self findOrCreateFramesForJSON:JSON
                                                              withRoll:privateContextRoll
                                                             inContext:privateMOC];
-                    privateContextChannel.roll.frame = [NSSet setWithArray:frames];
 
                     dispatch_async(dispatch_get_main_queue(), ^{
                         NSManagedObjectContext *mainMOC = [self mainThreadMOC];
@@ -1166,13 +1189,13 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }
     
     NSDictionary *jsonDict = (NSDictionary *)JSON;
-    NSDictionary *rollDictArray = jsonDict[@"result"];
+    NSDictionary *frameDictArray = jsonDict[@"result"];
     
-    if(![rollDictArray isKindOfClass:[NSDictionary class]]){
+    if(![frameDictArray isKindOfClass:[NSDictionary class]]){
         return nil;
     }
     
-    NSArray *frames = rollDictArray[@"frames"];
+    NSArray *frames = frameDictArray[@"frames"];
     if (![frames isKindOfClass:[NSArray class]]){
         return nil;
     }
@@ -1184,10 +1207,11 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             continue;
         }
 
-        Frame *entry = [Frame frameForDictionary:frameDict requireCreator:NO inContext:context];
+        Frame *f = [Frame frameForDictionary:frameDict requireCreator:NO inContext:context];
+        STVDebugAssert(f.roll == roll, @"roll should have been found & set");
  
-        if (entry) {
-            [resultFrames addObject:entry];
+        if (f) {
+            [resultFrames addObject:f];
         }
     }
     
