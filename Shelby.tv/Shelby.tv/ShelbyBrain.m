@@ -564,6 +564,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     }
     STVAssert(self.offlineLikesChannel == channel, @"we have multiple offline likes channels, not good");
 
+    channelEntries = channelEntries ? channelEntries : @[];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
                                                         object:self userInfo:@{kShelbyBrainChannelKey : channel,
                                                                                kShelbyBrainChannelEntriesKey : channelEntries}];
@@ -576,6 +577,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     NSMutableArray *newChannelEntries = [channelEntries mutableCopy];
     [newChannelEntries removeObject:frame];
     
+    newChannelEntries = newChannelEntries ? newChannelEntries : [@[] mutableCopy];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
                                                         object:self userInfo:@{kShelbyBrainChannelKey : channel,
                                                                                kShelbyBrainChannelEntriesKey : newChannelEntries}];
@@ -921,6 +923,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
             userProfileVC.channels = @[displayChannel];
             userProfileVC.profileUser = fetchedUser;
             
+            entries = entries ? entries : @[];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
                                                                 object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
                                                                                        kShelbyBrainChannelEntriesKey : entries}];
