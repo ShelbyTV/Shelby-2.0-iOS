@@ -45,6 +45,7 @@
 
 - (void)setupNoContentView:(NoContentViewController *)noContentView withTitle:(NSString *)title
 {
+    title = title ? title : @"This user";
     noContentView.noContentTitle.text = [NSString stringWithFormat:@"%@ hasn't liked or shared any video yet.", title];
     noContentView.noContentSubtitle.hidden = YES;
     
