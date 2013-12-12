@@ -35,6 +35,9 @@
 		1C0C7E0518523596008F5506 /* close-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0118523596008F5506 /* close-icon@2x.png */; };
 		1C0C7E0618523596008F5506 /* close-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0118523596008F5506 /* close-icon@2x.png */; };
 		1C0C7E0718523596008F5506 /* close-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0C7E0118523596008F5506 /* close-icon@2x.png */; };
+		1C0C7E0A185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C0C7E09185A19AD008F5506 /* ShelbySingleVideoViewController.m */; };
+		1C0C7E0B185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C0C7E09185A19AD008F5506 /* ShelbySingleVideoViewController.m */; };
+		1C0C7E0C185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C0C7E09185A19AD008F5506 /* ShelbySingleVideoViewController.m */; };
 		1C0E527C17BACBA8008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E527F17BACBBA008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E528117BACBCC008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
@@ -809,6 +812,8 @@
 		1C0C7DF91852357C008F5506 /* share-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-icon@2x.png"; sourceTree = "<group>"; };
 		1C0C7E0018523596008F5506 /* close-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-icon.png"; sourceTree = "<group>"; };
 		1C0C7E0118523596008F5506 /* close-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-icon@2x.png"; sourceTree = "<group>"; };
+		1C0C7E08185A19AD008F5506 /* ShelbySingleVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySingleVideoViewController.h; sourceTree = "<group>"; };
+		1C0C7E09185A19AD008F5506 /* ShelbySingleVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySingleVideoViewController.m; sourceTree = "<group>"; };
 		1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1C154E5117A06EBA00C0B76B /* NoLikesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoLikesView.xib; sourceTree = "<group>"; };
 		1C253B6D184D458300FBE054 /* ShelbyLikersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyLikersViewController.h; sourceTree = "<group>"; };
@@ -1935,6 +1940,8 @@
 				1C4110DE17319468009022EA /* ShelbyHomeViewController.m */,
 				1CDB27DB18453D2C008E1C36 /* ShelbyUserProfileViewController.h */,
 				1CDB27DC18453D2C008E1C36 /* ShelbyUserProfileViewController.m */,
+				1C0C7E08185A19AD008F5506 /* ShelbySingleVideoViewController.h */,
+				1C0C7E09185A19AD008F5506 /* ShelbySingleVideoViewController.m */,
 				1C06C5C41742F5CA004E8E20 /* ShelbyViewController.h */,
 				1C06C5C51742F5CA004E8E20 /* ShelbyViewController.m */,
 				1CCAC9CC1848EFCF008E603C /* ShelbyUserStreamBrowseViewController.h */,
@@ -2610,6 +2617,7 @@
 				1C81099316EE2CBF0030077C /* PageControl.m in Sources */,
 				1C81099716EE2CBF0030077C /* SPShareController.m in Sources */,
 				1C81099816EE2CBF0030077C /* DeviceUtilities.m in Sources */,
+				1C0C7E0B185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */,
 				1C81099916EE2CBF0030077C /* SPVideoDownloader.m in Sources */,
 				1C81099A16EE2CBF0030077C /* ImageUtilities.m in Sources */,
 				1C81099B16EE2CBF0030077C /* UIImage+Scale.m in Sources */,
@@ -2748,6 +2756,7 @@
 				1C810A4916EE5EED0030077C /* PageControl.m in Sources */,
 				1C810A4D16EE5EED0030077C /* SPShareController.m in Sources */,
 				1C810A4E16EE5EED0030077C /* DeviceUtilities.m in Sources */,
+				1C0C7E0C185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */,
 				1C810A4F16EE5EED0030077C /* SPVideoDownloader.m in Sources */,
 				1C810A5016EE5EED0030077C /* ImageUtilities.m in Sources */,
 				1C810A5116EE5EED0030077C /* UIImage+Scale.m in Sources */,
@@ -2886,6 +2895,7 @@
 				1CCCB55216D2A33600C8C216 /* PageControl.m in Sources */,
 				8E7C341A16D58252007494DF /* SPShareController.m in Sources */,
 				1C85A22C16D6CF4A00B6EE49 /* DeviceUtilities.m in Sources */,
+				1C0C7E0A185A19AD008F5506 /* ShelbySingleVideoViewController.m in Sources */,
 				8E91173216DC288600719F9B /* SPVideoDownloader.m in Sources */,
 				1C72B8B016DBF1FA008BA3AD /* ImageUtilities.m in Sources */,
 				1C72B8B816DD4290008BA3AD /* UIImage+Scale.m in Sources */,

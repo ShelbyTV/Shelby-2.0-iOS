@@ -234,6 +234,22 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     return nil;
 }
 
+- (void)fetchFrameWithID:(NSString *)frameID
+               inContext:(NSManagedObjectContext *)context
+              completion:(void (^)(Frame *fetchedFrame))completion
+{
+    [ShelbyAPIClient fetchFrameForFrameID:frameID withBlock:^(id JSON, NSError *error) {
+        if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSDictionary class]]) {
+            [context performBlock:^{
+                Frame *fetchedFrame = [Frame frameForDictionary:JSON[@"result"] requireCreator:NO inContext:context];
+                completion(fetchedFrame);
+            }];
+        } else {
+            completion(nil);
+        }
+    }];
+}
+
 - (void)fetchAllLikersOfVideo:(Video *)v completion:(void (^)(NSArray *))completion
 {
     [ShelbyAPIClient fetchAllLikersOfVideo:v.videoID withBlock:^(id JSON, NSError *error) {

@@ -81,6 +81,10 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
                     completion:(void (^)(User *fetchedUser))completion;
 - (void)fetchAllLikersOfVideo:(Video *)v completion:(void (^)(NSArray *users))completion;
 
+- (void)fetchFrameWithID:(NSString *)frameID
+               inContext:(NSManagedObjectContext *)context
+              completion:(void (^)(Frame *fetchedFrame))completion;
+
 -(void)logoutCurrentUser;
 
 - (void)loginUserWithEmail:(NSString *)email password:(NSString *)password;

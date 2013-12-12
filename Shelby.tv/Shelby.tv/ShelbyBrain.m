@@ -19,6 +19,7 @@
 #import "ShelbyABTestManager.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
+#import "ShelbySingleVideoViewController.h"
 #import "ShelbyUserProfileViewController.h"
 #import "SignupFlowViewController.h"
 #import "SPVideoExtractor.h"
@@ -893,6 +894,35 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     
     //setting video causes fetch to begin
     likersVC.likedVideo = video;
+}
+
+- (void)openSingleVideoView:(NSString *)frameID
+{
+    ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
+    singleVideoVC.masterDelegate = self;
+    
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while ([topViewController presentedViewController]) {
+        topViewController = [topViewController presentedViewController];
+    }
+    
+    [topViewController presentViewController:singleVideoVC animated:YES completion:nil];
+    
+    [[ShelbyDataMediator sharedInstance] fetchFrameWithID:frameID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(Frame *fetchedFrame) {
+        if (fetchedFrame) {
+            DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedFrame.rollID];
+            if (rollChannel) {
+                Roll *roll = [Roll rollForDictionary:@{@"id" : fetchedFrame.roll.rollID} inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+                rollChannel.roll = roll;
+                
+                singleVideoVC.channels = @[rollChannel];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                    object:self userInfo:@{kShelbyBrainChannelKey : rollChannel,
+                                                                                           kShelbyBrainChannelEntriesKey : @[fetchedFrame]}];
+                [singleVideoVC focusOnChannel:rollChannel];
+            }
+        }
+    }];
 }
 
 // This method is going to be called from two protocols.. not that great. Need to have a nicer protocols.
