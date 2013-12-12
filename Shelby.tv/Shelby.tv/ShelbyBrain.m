@@ -909,18 +909,19 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [topViewController presentViewController:singleVideoVC animated:YES completion:nil];
     
     [[ShelbyDataMediator sharedInstance] fetchFrameWithID:frameID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(Frame *fetchedFrame) {
+        NSString *rollID = fetchedFrame.roll.rollID;
         if (fetchedFrame) {
-            DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedFrame.rollID];
-            if (rollChannel) {
-                Roll *roll = [Roll rollForDictionary:@{@"id" : fetchedFrame.roll.rollID} inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-                rollChannel.roll = roll;
-                
-                singleVideoVC.channels = @[rollChannel];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
-                                                                    object:self userInfo:@{kShelbyBrainChannelKey : rollChannel,
-                                                                                           kShelbyBrainChannelEntriesKey : @[fetchedFrame]}];
-                [singleVideoVC focusOnChannel:rollChannel];
+            DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:rollID];
+            if (!rollChannel) {
+                rollChannel = [DisplayChannel channelForTransientEntriesWithID:rollID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             }
+            rollChannel.roll = fetchedFrame.roll;
+            
+            singleVideoVC.channels = @[rollChannel];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                object:self userInfo:@{kShelbyBrainChannelKey : rollChannel,
+                                                                                       kShelbyBrainChannelEntriesKey : @[fetchedFrame]}];
+            [singleVideoVC focusOnChannel:rollChannel];
         }
     }];
 }
