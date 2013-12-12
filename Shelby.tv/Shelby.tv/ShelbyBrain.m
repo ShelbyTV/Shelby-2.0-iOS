@@ -896,7 +896,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     likersVC.likedVideo = video;
 }
 
-- (void)openSingleVideoView:(NSString *)frameID
+- (void)openSingleVideoViewWithFrameID:(NSString *)frameID
 {
     ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
     singleVideoVC.masterDelegate = self;
