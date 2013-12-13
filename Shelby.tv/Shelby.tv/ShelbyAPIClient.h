@@ -83,6 +83,10 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 + (void)fetchFrameForFrameID:(NSString *)frameID
                    withBlock:(shelby_api_request_complete_block_t)completionBlock;
 
+// -- DashboardEntry
++ (void)fetchDashboardEntryForDashboardID:(NSString *)dashboardID
+                                 withBlock:(shelby_api_request_complete_block_t)completionBlock;
+
 // -- Frames
 + (void)fetchFramesForRollID:(NSString *)rollID
                   sinceEntry:(Frame *)sinceFrame

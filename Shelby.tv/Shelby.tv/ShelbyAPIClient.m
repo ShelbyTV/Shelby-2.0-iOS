@@ -31,6 +31,7 @@ NSString * const kShelbyAPIGetUserPath =                    @"v1/user/%@";
 NSString * const kShelbyAPIGetRollsUserFollows =            @"v1/user/%@/rolls/following";
 NSString * const kShelbyAPIGetAllLikersOfVideo =            @"v1/video/%@/likers";
 NSString * const kShelbyAPIGetFramePath =                   @"v1/frame/%@?include_children=true";
+NSString * const kShelbyAPIGetDashboardPath =               @"v1/dashboard/%@?include_children=true";
 NSString * const POST =    @"POST";
 NSString * const kShelbyAPIPostFrameLikePath =              @"v1/frame/%@/like";
 NSString * const kShelbyAPIPostExternalShare =              @"v1/frame/%@/share";
@@ -518,6 +519,26 @@ static AFHTTPClient *httpClient = nil;
     }];
     
     [operation start];
+}
+
+#pragma mark - Dashboard
+// -- Dashboard
++ (void)fetchDashboardEntryForDashboardID:(NSString *)dashboardID
+                                 withBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    NSURLRequest *request = [self requestWithMethod:GET
+                                            forPath:[NSString stringWithFormat:kShelbyAPIGetDashboardPath, dashboardID]
+                                withQueryParameters:nil
+                                      shouldAddAuth:NO];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        completionBlock(JSON, nil);
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        completionBlock(nil, error);
+    }];
+    
+    [operation start];
+ 
 }
 
 #pragma mark - Frames

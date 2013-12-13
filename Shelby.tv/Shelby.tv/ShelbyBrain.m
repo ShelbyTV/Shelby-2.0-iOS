@@ -896,6 +896,42 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     likersVC.likedVideo = video;
 }
 
+- (void)openSingleVideoViewWithDashboardEntryID:(NSString *)dashboardID
+{
+    ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
+    singleVideoVC.masterDelegate = self;
+    
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while ([topViewController presentedViewController]) {
+        topViewController = [topViewController presentedViewController];
+    }
+    
+    [topViewController presentViewController:singleVideoVC animated:YES completion:nil];
+    NSString *channelTitle = @"Video";
+    
+    [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:dashboardID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboardEntry) {
+        NSString *dashboardID = fetchedDashboardEntry.dashboardEntryID;
+
+        Dashboard *dashboard = [Dashboard dashboardForDashboardDictionary:@{@"user_id" : dashboardID, @"display_title" : channelTitle} inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        
+        if (fetchedDashboardEntry) {
+            DisplayChannel *displayChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:dashboardID];
+            if (!displayChannel) {
+                displayChannel = [DisplayChannel channelForTransientEntriesWithID:dashboardID title:channelTitle inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+            }
+            
+            fetchedDashboardEntry.dashboard = dashboard;
+            displayChannel.dashboard = dashboard;
+            
+            singleVideoVC.channels = @[displayChannel];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
+                                                                                kShelbyBrainChannelEntriesKey : @[fetchedDashboardEntry]}];
+            [singleVideoVC focusOnChannel:displayChannel];
+        }
+    }];
+}
+
 - (void)openSingleVideoViewWithFrameID:(NSString *)frameID
 {
     ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];

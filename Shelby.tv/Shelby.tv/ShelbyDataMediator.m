@@ -250,6 +250,22 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }];
 }
 
+- (void)fetchDashboardEntryWithID:(NSString *)dashboardID
+                        inContext:(NSManagedObjectContext *)context
+                       completion:(void (^)(DashboardEntry *fetchedDashboard))completion
+{
+    [ShelbyAPIClient fetchDashboardEntryForDashboardID:dashboardID withBlock:^(id JSON, NSError *error) {
+        if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSDictionary class]]) {
+            [context performBlock:^{
+                DashboardEntry *fetchedDashboard = [DashboardEntry dashboardEntryForDictionary:JSON[@"result"] withDashboard:nil inContext:context];
+                completion(fetchedDashboard);
+            }];
+        } else {
+            completion(nil);
+        }
+    }];
+}
+
 - (void)fetchAllLikersOfVideo:(Video *)v completion:(void (^)(NSArray *))completion
 {
     [ShelbyAPIClient fetchAllLikersOfVideo:v.videoID withBlock:^(id JSON, NSError *error) {

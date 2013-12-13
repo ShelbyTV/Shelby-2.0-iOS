@@ -8,6 +8,7 @@
 //  You want Shelby Data?  You come here.  Nowhere else.
 
 #import <Foundation/Foundation.h>
+#import "Dashboard+Helper.h"
 #import "DisplayChannel+Helper.h"
 #import "User+Helper.h"
 
@@ -84,6 +85,10 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 - (void)fetchFrameWithID:(NSString *)frameID
                inContext:(NSManagedObjectContext *)context
               completion:(void (^)(Frame *fetchedFrame))completion;
+- (void)fetchDashboardEntryWithID:(NSString *)dashboardID
+                        inContext:(NSManagedObjectContext *)context
+                       completion:(void (^)(DashboardEntry *fetchedDashboard))completion;
+
 
 -(void)logoutCurrentUser;
 
