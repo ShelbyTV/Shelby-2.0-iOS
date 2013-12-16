@@ -41,6 +41,24 @@
 		1C0E527C17BACBA8008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E527F17BACBBA008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
 		1C0E528117BACBCC008D5D81 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */; };
+		1C100DC7185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DC6185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m */; };
+		1C100DC8185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DC6185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m */; };
+		1C100DC9185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DC6185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m */; };
+		1C100DCF185F8E01002ADAF2 /* FollowNoticationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DCE185F8E01002ADAF2 /* FollowNoticationViewCell.xib */; };
+		1C100DD0185F8E01002ADAF2 /* FollowNoticationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DCE185F8E01002ADAF2 /* FollowNoticationViewCell.xib */; };
+		1C100DD1185F8E01002ADAF2 /* FollowNoticationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DCE185F8E01002ADAF2 /* FollowNoticationViewCell.xib */; };
+		1C100DD3185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DD2185F8E16002ADAF2 /* LikeNotificationViewCell.xib */; };
+		1C100DD4185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DD2185F8E16002ADAF2 /* LikeNotificationViewCell.xib */; };
+		1C100DD5185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DD2185F8E16002ADAF2 /* LikeNotificationViewCell.xib */; };
+		1C100DD8185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DD7185F8E57002ADAF2 /* LikeNotificationViewCell.m */; };
+		1C100DD9185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DD7185F8E57002ADAF2 /* LikeNotificationViewCell.m */; };
+		1C100DDA185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DD7185F8E57002ADAF2 /* LikeNotificationViewCell.m */; };
+		1C100DDD185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DDC185F8E63002ADAF2 /* FollowNotificationViewCell.m */; };
+		1C100DDE185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DDC185F8E63002ADAF2 /* FollowNotificationViewCell.m */; };
+		1C100DDF185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C100DDC185F8E63002ADAF2 /* FollowNotificationViewCell.m */; };
+		1C100DE1185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DE0185F997D002ADAF2 /* ShelbyNotificationCenterView.xib */; };
+		1C100DE2185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DE0185F997D002ADAF2 /* ShelbyNotificationCenterView.xib */; };
+		1C100DE3185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C100DE0185F997D002ADAF2 /* ShelbyNotificationCenterView.xib */; };
 		1C154E5217A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
 		1C154E5317A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
 		1C154E5417A06EBB00C0B76B /* NoLikesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C154E5117A06EBA00C0B76B /* NoLikesView.xib */; };
@@ -815,6 +833,15 @@
 		1C0C7E08185A19AD008F5506 /* ShelbySingleVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbySingleVideoViewController.h; sourceTree = "<group>"; };
 		1C0C7E09185A19AD008F5506 /* ShelbySingleVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbySingleVideoViewController.m; sourceTree = "<group>"; };
 		1C0E527B17BACBA8008D5D81 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1C100DC5185F872C002ADAF2 /* ShelbyNotificationCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNotificationCenterViewController.h; sourceTree = "<group>"; };
+		1C100DC6185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNotificationCenterViewController.m; sourceTree = "<group>"; };
+		1C100DCE185F8E01002ADAF2 /* FollowNoticationViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowNoticationViewCell.xib; sourceTree = "<group>"; };
+		1C100DD2185F8E16002ADAF2 /* LikeNotificationViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LikeNotificationViewCell.xib; sourceTree = "<group>"; };
+		1C100DD6185F8E57002ADAF2 /* LikeNotificationViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeNotificationViewCell.h; sourceTree = "<group>"; };
+		1C100DD7185F8E57002ADAF2 /* LikeNotificationViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeNotificationViewCell.m; sourceTree = "<group>"; };
+		1C100DDB185F8E63002ADAF2 /* FollowNotificationViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowNotificationViewCell.h; sourceTree = "<group>"; };
+		1C100DDC185F8E63002ADAF2 /* FollowNotificationViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowNotificationViewCell.m; sourceTree = "<group>"; };
+		1C100DE0185F997D002ADAF2 /* ShelbyNotificationCenterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShelbyNotificationCenterView.xib; sourceTree = "<group>"; };
 		1C154E5117A06EBA00C0B76B /* NoLikesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoLikesView.xib; sourceTree = "<group>"; };
 		1C253B6D184D458300FBE054 /* ShelbyLikersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyLikersViewController.h; sourceTree = "<group>"; };
 		1C253B6E184D458300FBE054 /* ShelbyLikersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyLikersViewController.m; sourceTree = "<group>"; };
@@ -1471,6 +1498,7 @@
 				91BEC8931762961400838197 /* DVRDatePicker.xib */,
 				1CA191451774DD440039358B /* ShelbyStreamBrowseView.xib */,
 				91CE07481779086400024180 /* StreamBrowseCellForegroundView.xib */,
+				1C100DE0185F997D002ADAF2 /* ShelbyNotificationCenterView.xib */,
 				1CCAC9D11848F0DC008E603C /* ShelbyUserProfileCell.xib */,
 				9119AB6D17821133001C9190 /* VideoControlsView.xib */,
 				1C7B63C1178B0AC2000C1E84 /* SignupFlow.storyboard */,
@@ -1485,6 +1513,8 @@
 				1CDB0C1F17A96CF90031C2C9 /* UserDetailsViewCell.xib */,
 				1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */,
 				1C253B76184E452D00FBE054 /* LikerViewCell.xib */,
+				1C100DCE185F8E01002ADAF2 /* FollowNoticationViewCell.xib */,
+				1C100DD2185F8E16002ADAF2 /* LikeNotificationViewCell.xib */,
 				9178C9D517CE398400913256 /* Welcome.storyboard */,
 				9178C9DD17CE3B6C00913256 /* WelcomeScrollHolderView.xib */,
 				913D854717CEA9A700A6C534 /* WelcomeLoginView.xib */,
@@ -1892,6 +1922,10 @@
 				1CCAC9D51848F128008E603C /* ShelbyUserProfileCell.h */,
 				1C253B7A184E468C00FBE054 /* LikerCell.h */,
 				1C253B7B184E468C00FBE054 /* LikerCell.m */,
+				1C100DD6185F8E57002ADAF2 /* LikeNotificationViewCell.h */,
+				1C100DD7185F8E57002ADAF2 /* LikeNotificationViewCell.m */,
+				1C100DDB185F8E63002ADAF2 /* FollowNotificationViewCell.h */,
+				1C100DDC185F8E63002ADAF2 /* FollowNotificationViewCell.m */,
 				1CCAC9D61848F128008E603C /* ShelbyUserProfileCell.m */,
 				91D1C8181778DD5B00CAC1E9 /* STVParallaxView.h */,
 				91D1C8191778DD5B00CAC1E9 /* STVParallaxView.m */,
@@ -1948,6 +1982,8 @@
 				1CCAC9CD1848EFCF008E603C /* ShelbyUserStreamBrowseViewController.m */,
 				1CA191431774DD440039358B /* ShelbyStreamBrowseViewController.h */,
 				1CA191441774DD440039358B /* ShelbyStreamBrowseViewController.m */,
+				1C100DC5185F872C002ADAF2 /* ShelbyNotificationCenterViewController.h */,
+				1C100DC6185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m */,
 				1C7B63C5178B15B5000C1E84 /* SignupFlowViewController.h */,
 				1C7B63C6178B15B5000C1E84 /* SignupFlowViewController.m */,
 				1CDBEE701795EA20002ECD76 /* SignupFlowStepOneViewController.h */,
@@ -2285,6 +2321,7 @@
 				1C0C7DFE1852357C008F5506 /* share-icon@2x.png in Resources */,
 				9178C9DF17CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F1178C5379000C1E84 /* navbar_back_button.png in Resources */,
+				1C100DE2185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */,
 				1C7B63F4178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
 				1C0C7DFB1852357C008F5506 /* share-icon.png in Resources */,
 				1CC5763D178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
@@ -2333,6 +2370,7 @@
 				1C534E3B17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3E17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
 				1CD8112617CCFCDF002FD84B /* logo-tv.png in Resources */,
+				1C100DD4185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
 				1C534E4117A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
 				1CD255C917A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CC17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
@@ -2354,6 +2392,7 @@
 				1CE5585A17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585017DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
 				1CE5586017DE73CA00C18A30 /* share-large.png in Resources */,
+				1C100DD0185F8E01002ADAF2 /* FollowNoticationViewCell.xib in Resources */,
 				1CCE4C5017E226F700F0BF5A /* user_default_avatar@2x.png in Resources */,
 				91B7DC5317B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				1C253B74184D45A200FBE054 /* ShelbyLikersView.xib in Resources */,
@@ -2397,6 +2436,7 @@
 				1C0C7DFF1852357C008F5506 /* share-icon@2x.png in Resources */,
 				9178C9E017CE3B6C00913256 /* WelcomeScrollHolderView.xib in Resources */,
 				1C7B63F2178C5379000C1E84 /* navbar_back_button.png in Resources */,
+				1C100DE3185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */,
 				1C7B63F5178C5379000C1E84 /* navbar_back_button@2x.png in Resources */,
 				1C0C7DFC1852357C008F5506 /* share-icon.png in Resources */,
 				1CC5763E178DDE7000ED2424 /* SignupUserInfoViewCell.xib in Resources */,
@@ -2445,6 +2485,7 @@
 				1C534E3C17A1792700B6B3D5 /* bkgd-landscape-568h.png in Resources */,
 				1C534E3F17A1792700B6B3D5 /* bkgd-landscape.png in Resources */,
 				1CD8112717CCFCDF002FD84B /* logo-tv.png in Resources */,
+				1C100DD5185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
 				1C534E4217A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
 				1CD255CA17A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CD17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
@@ -2466,6 +2507,7 @@
 				1CE5585B17DE73CA00C18A30 /* heart-large.png in Resources */,
 				1CE5585117DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
 				1CE5586117DE73CA00C18A30 /* share-large.png in Resources */,
+				1C100DD1185F8E01002ADAF2 /* FollowNoticationViewCell.xib in Resources */,
 				1CCE4C5117E226F700F0BF5A /* user_default_avatar@2x.png in Resources */,
 				91B7DC5417B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				1C253B75184D45A200FBE054 /* ShelbyLikersView.xib in Resources */,
@@ -2486,6 +2528,7 @@
 				8E20971C162F3A61000A2DFD /* InfoPlist.strings in Resources */,
 				91AEFE2117F126D000B2598B /* welcome-1.mov in Resources */,
 				912261D317B97F070092AF30 /* overlay-likers.png in Resources */,
+				1C100DD3185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
 				9137187617DE94F00021A99B /* LICENSE in Resources */,
 				1C81096716EE21230030077C /* HockeySDKResources.bundle in Resources */,
 				1CCAC9D21848F0DD008E603C /* ShelbyUserProfileCell.xib in Resources */,
@@ -2500,6 +2543,7 @@
 				1C56F13C17BABD8C00EE9206 /* Appirater.podspec in Resources */,
 				1CE5586E17DE883C00C18A30 /* no-content-bkgd-568h@2x.png in Resources */,
 				1C253B77184E452D00FBE054 /* LikerViewCell.xib in Resources */,
+				1C100DE1185F997D002ADAF2 /* ShelbyNotificationCenterView.xib in Resources */,
 				912261D917B97F070092AF30 /* overlay-sharers.png in Resources */,
 				1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
 				1C8AB42B175CE734001D5853 /* AuthorizationView-iPhone.xib in Resources */,
@@ -2542,6 +2586,7 @@
 				1CE5585F17DE73CA00C18A30 /* share-large.png in Resources */,
 				1CDCA693179F317A0098C4E1 /* overlay@2x.png in Resources */,
 				1CDCA698179F34BC0098C4E1 /* overlay-landscape.png in Resources */,
+				1C100DCF185F8E01002ADAF2 /* FollowNoticationViewCell.xib in Resources */,
 				1CDCA69B179F34BC0098C4E1 /* overlay-landscape@2x.png in Resources */,
 				1CDCA6A0179F3FB80098C4E1 /* play-standard.png in Resources */,
 				1CDCA6A3179F3FB80098C4E1 /* play-standard@2x.png in Resources */,
@@ -2600,6 +2645,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C100DDE185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */,
 				1C81097616EE2CBF0030077C /* TopAlignedLabel.m in Sources */,
 				1C81097716EE2CBF0030077C /* SPVideoReel.m in Sources */,
 				1C81097816EE2CBF0030077C /* SPVideoPlayer.m in Sources */,
@@ -2609,6 +2655,7 @@
 				1C81098116EE2CBF0030077C /* ShelbyAPIClient.m in Sources */,
 				1C81098316EE2CBF0030077C /* NSDate+Extension.m in Sources */,
 				918C5283184E223B00A4DFB8 /* User.m in Sources */,
+				1C100DC8185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m in Sources */,
 				1C81098416EE2CBF0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				912AECA8182060F500395281 /* DashboardEntry.m in Sources */,
 				1C81098616EE2CBF0030077C /* BigButton.m in Sources */,
@@ -2669,6 +2716,7 @@
 				91D03F211732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
+				1C100DD9185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F531733149F008131D2 /* Messages.m in Sources */,
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F67173319D1008131D2 /* Video+Helper.m in Sources */,
@@ -2739,6 +2787,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C100DDF185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */,
 				1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */,
 				1C810A2D16EE5EED0030077C /* SPVideoReel.m in Sources */,
 				1C810A2E16EE5EED0030077C /* SPVideoPlayer.m in Sources */,
@@ -2748,6 +2797,7 @@
 				1C810A3716EE5EED0030077C /* ShelbyAPIClient.m in Sources */,
 				1C810A3916EE5EED0030077C /* NSDate+Extension.m in Sources */,
 				918C5284184E223B00A4DFB8 /* User.m in Sources */,
+				1C100DC9185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m in Sources */,
 				1C810A3A16EE5EED0030077C /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				912AECA9182060F500395281 /* DashboardEntry.m in Sources */,
 				1C810A3C16EE5EED0030077C /* BigButton.m in Sources */,
@@ -2808,6 +2858,7 @@
 				91D03F221732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
+				1C100DDA185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F541733149F008131D2 /* Messages.m in Sources */,
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F68173319D1008131D2 /* Video+Helper.m in Sources */,
@@ -2878,6 +2929,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C100DDD185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */,
 				8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */,
 				8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */,
 				8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */,
@@ -2887,6 +2939,7 @@
 				8E888988166FB0B40040D28D /* ShelbyAPIClient.m in Sources */,
 				8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */,
 				918C5282184E223B00A4DFB8 /* User.m in Sources */,
+				1C100DC7185F872C002ADAF2 /* ShelbyNotificationCenterViewController.m in Sources */,
 				8ED3159316AD1F5E00B177EC /* UIColor+ColorWithHexAndAlpha.m in Sources */,
 				912AECA7182060F500395281 /* DashboardEntry.m in Sources */,
 				8E41EF2E16B0742400C831A4 /* BigButton.m in Sources */,
@@ -2947,6 +3000,7 @@
 				91D03F201732BC98008131D2 /* Dashboard+Helper.m in Sources */,
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
+				1C100DD8185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F521733149F008131D2 /* Messages.m in Sources */,
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F66173319D1008131D2 /* Video+Helper.m in Sources */,
