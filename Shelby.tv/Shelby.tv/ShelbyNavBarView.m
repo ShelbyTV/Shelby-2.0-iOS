@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sharesRowHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsRowHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginRowHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *notificationCenterRowHeight;
 @end
 
 #define FRAME_ANIMATION_TIME 0.4
@@ -47,7 +48,7 @@
 {
     [super awakeFromNib];
 
-    _orderedButtons = @[_streamButton, _sharesButton, _communityButton, _settingsButton, _signupButton];
+    _orderedButtons = @[_streamButton, _sharesButton, _communityButton, _settingsButton, _signupButton, _notificationCenterButton];
 
     for (UIButton *b in _orderedButtons) {
         b.titleLabel.font = kShelbyFontH3;
@@ -164,6 +165,8 @@
         _settingsButton.hidden = NO;
         _loginRowHeight.constant = 0;
         _signupButton.hidden = YES;
+        _notificationCenterButton.hidden = NO;
+        _notificationCenterRowHeight.constant = 44;
     } else {
         _streamRowHeight.constant = 0;
         _streamButton.hidden = YES;
@@ -171,6 +174,8 @@
         _settingsButton.hidden = YES;
         _loginRowHeight.constant = 44;
         _signupButton.hidden = NO;
+        _notificationCenterRowHeight.constant = 0;
+        _notificationCenterButton.hidden = YES;
     }
 
     [self layoutIfNeeded];

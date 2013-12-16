@@ -84,6 +84,7 @@ extern NSString * const kAnalyticsUXTapNavBarRowLogin;
 extern NSString * const kAnalyticsUXTapNavBarRowSettings;
 extern NSString * const kAnalyticsUXTapNavBarRowShares;
 extern NSString * const kAnalyticsUXTapNavBarRowStream;
+extern NSString * const kAnalyticsUXTapNavBarRowNotificationCenter;
 //--Facebook App Invite--
 extern NSString * const kAnalyticsCategoryAppInvite;
 extern NSString * const kAnalyticsAppInviteFacebookOpened;

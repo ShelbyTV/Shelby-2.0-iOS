@@ -18,6 +18,7 @@
 #import "ShelbyDataMediator.h"
 #import "ShelbyErrorUtility.h"
 #import "ShelbyModelArrayUtility.h"
+#import "ShelbyNotificationCenterViewController.h"
 #import "ShelbyVideoContainer.h"
 #import "SPVideoReel.h"
 #import "SPVideoExtractor.h"
@@ -36,6 +37,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 @property (nonatomic, strong) NSMutableArray *streamBrowseVCs;
 @property (nonatomic, strong) ShelbyStreamBrowseViewController *currentStreamBrowseVC;
+@property (nonatomic, strong) ShelbyNotificationCenterViewController *notificationCenterVC;
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @property (nonatomic, assign) BOOL animationInProgress;
 
@@ -1303,6 +1305,19 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
 }
 
+- (void)navBarViewControllerNotificationCenterWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
+{
+    if (selectedNewRow) {
+        if (self.videoReel) {
+            [self dismissVideoReel];
+        }
+        [self presentNotificationCenter];
+        [navBarVC didNavigateToNotificationCenter];
+    } else {
+        //already showing settings, nothing to do
+    }
+}
+
 - (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow
 {
     [self dismissVideoReel];
@@ -1329,6 +1344,28 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                                                                               metrics:nil
                                                                                 views:@{@"settings":_settingsVC.view}]];
 
+            self.videoControlsVC.view.hidden = YES;
+        }];
+    }
+}
+
+- (void)presentNotificationCenter
+{
+    if (!self.notificationCenterVC) {
+        self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
+        //this gets overriden by autolayout, just using it to set starting point for transition
+        self.notificationCenterVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+        [self swapOutViewController:_currentFullScreenVC forViewController:self.notificationCenterVC completion:^(BOOL finished) {
+            self.notificationCenterVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[notificationCenter]|"
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:@{@"notificationCenter":self.notificationCenterVC.view}]];
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[notificationCenter]|"
+                                                                              options:0
+                                                                              metrics:nil
+                                                                                views:@{@"notificationCenter":self.notificationCenterVC.view}]];
+            
             self.videoControlsVC.view.hidden = YES;
         }];
     }

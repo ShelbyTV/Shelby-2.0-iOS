@@ -72,6 +72,14 @@
     _lastSelectedRow = self.navBarView.settingsButton;
 }
 
+- (void)didNavigateToNotificationCenter
+{
+    if (self.navBarView.settingsButton != self.navBarView.currentRow) {
+        self.navBarView.currentRow = self.navBarView.notificationCenterButton;
+    }
+    _lastSelectedRow = self.navBarView.notificationCenterButton;
+}
+
 - (IBAction)navTapped:(UIButton *)sender
 {
     [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
@@ -113,6 +121,11 @@
             [self.delegate navBarViewControllerLoginWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
             [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                                    withAction:kAnalyticsUXTapNavBarRowLogin
+                                          withNicknameAsLabel:YES];
+        } else if (sender == self.navBarView.notificationCenterButton) {
+            [self.delegate navBarViewControllerNotificationCenterWasTapped:self selectionShouldChange:(_lastSelectedRow != sender)];
+            [ShelbyNavBarViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                                   withAction:kAnalyticsUXTapNavBarRowNotificationCenter
                                           withNicknameAsLabel:YES];
         } else {
             STVAssert(NO, @"unhandled nav row");

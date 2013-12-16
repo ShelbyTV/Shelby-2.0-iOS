@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *communityButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
+@property (weak, nonatomic) IBOutlet UIButton *notificationCenterButton;
 
 //our model, set to update display state
 @property (weak, nonatomic) UIView *currentRow;

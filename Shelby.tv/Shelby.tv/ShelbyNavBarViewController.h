@@ -20,6 +20,7 @@
 - (void)navBarViewControllerCommunityWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerSettingsWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerSignupWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
+- (void)navBarViewControllerNotificationCenterWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 - (void)navBarViewControllerLoginWasTapped:(ShelbyNavBarViewController *)navBarVC selectionShouldChange:(BOOL)selectedNewRow;
 
 @end
@@ -35,6 +36,7 @@
 - (void)didNavigateToUsersStream;
 - (void)didNavigateToUsersShares;
 - (void)didNavigateToSettings;
+- (void)didNavigateToNotificationCenter;
 
 - (void)returnSelectionToPreviousRow;
 

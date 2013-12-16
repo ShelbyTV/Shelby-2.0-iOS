@@ -90,6 +90,7 @@ NSString * const kAnalyticsUXTapNavBarRowLogin                          = @"Tap 
 NSString * const kAnalyticsUXTapNavBarRowSettings                       = @"Tap Nav Bar - Settings";
 NSString * const kAnalyticsUXTapNavBarRowShares                         = @"Tap Nav Bar - Shares";
 NSString * const kAnalyticsUXTapNavBarRowStream                         = @"Tap Nav Bar - Stream";
+NSString * const kAnalyticsUXTapNavBarRowNotificationCenter             = @"Tap Nav Bar - Notification Center";
 //--App Invite--
 NSString * const kAnalyticsCategoryAppInvite                            = @"App Invite";
 NSString * const kAnalyticsAppInviteFacebookOpened                      = @"Facebook App Invite: Opened";
