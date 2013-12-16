@@ -48,7 +48,7 @@
 {
     [super awakeFromNib];
 
-    _orderedButtons = @[_streamButton, _sharesButton, _communityButton, _settingsButton, _signupButton, _notificationCenterButton];
+    _orderedButtons = @[_streamButton, _sharesButton, _communityButton, _notificationCenterButton, _settingsButton, _signupButton];
 
     for (UIButton *b in _orderedButtons) {
         b.titleLabel.font = kShelbyFontH3;

@@ -87,8 +87,8 @@
                                 <constraint firstAttribute="height" constant="44" id="695"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                            <inset key="imageEdgeInsets" minX="170" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Settings" image="carrot">
+                            <inset key="imageEdgeInsets" minX="250" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Notification Center" image="carrot">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -107,8 +107,8 @@
                                 <constraint firstAttribute="height" constant="44" id="667"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                            <inset key="imageEdgeInsets" minX="150" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Login">
+                            <inset key="imageEdgeInsets" minX="170" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Settings">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -127,8 +127,8 @@
                                 <constraint firstAttribute="height" constant="44" id="CHF-db-52x"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                            <inset key="imageEdgeInsets" minX="250" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Notification Center" image="carrot">
+                            <inset key="imageEdgeInsets" minX="150" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Login" image="carrot">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -176,14 +176,14 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="communityButton" destination="157" id="458"/>
-                <outlet property="loginRowHeight" destination="667" id="680"/>
-                <outlet property="notificationCenterButton" destination="ddG-R3-8Xm" id="lRM-aV-Afe"/>
-                <outlet property="notificationCenterRowHeight" destination="CHF-db-52x" id="nQa-Dd-Ksc"/>
-                <outlet property="settingsButton" destination="683" id="696"/>
-                <outlet property="settingsRowHeight" destination="695" id="697"/>
+                <outlet property="loginRowHeight" destination="CHF-db-52x" id="hvA-3w-cDw"/>
+                <outlet property="notificationCenterButton" destination="683" id="BYS-NN-K1u"/>
+                <outlet property="notificationCenterRowHeight" destination="695" id="cxH-zu-VNF"/>
+                <outlet property="settingsButton" destination="659" id="IqD-Hs-nYH"/>
+                <outlet property="settingsRowHeight" destination="667" id="bor-3r-Ovw"/>
                 <outlet property="sharesButton" destination="152" id="468"/>
                 <outlet property="sharesRowHeight" destination="656" id="678"/>
-                <outlet property="signupButton" destination="659" id="zck-kd-1kc"/>
+                <outlet property="signupButton" destination="ddG-R3-8Xm" id="bde-U2-ZQQ"/>
                 <outlet property="slider" destination="1" id="471"/>
                 <outlet property="sliderY" destination="528" id="547"/>
                 <outlet property="streamButton" destination="147" id="473"/>
@@ -192,10 +192,6 @@
         </view>
     </objects>
     <resources>
-        <image name="carrot" width="10" height="5"/>
-        <image name="carrot" width="10" height="5"/>
-        <image name="carrot" width="10" height="5"/>
-        <image name="carrot" width="10" height="5"/>
         <image name="carrot" width="10" height="5"/>
     </resources>
 </document>

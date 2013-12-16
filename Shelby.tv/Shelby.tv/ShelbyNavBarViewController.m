@@ -74,7 +74,7 @@
 
 - (void)didNavigateToNotificationCenter
 {
-    if (self.navBarView.settingsButton != self.navBarView.currentRow) {
+    if (self.navBarView.notificationCenterButton != self.navBarView.currentRow) {
         self.navBarView.currentRow = self.navBarView.notificationCenterButton;
     }
     _lastSelectedRow = self.navBarView.notificationCenterButton;
