@@ -280,7 +280,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     //but our bounds reflects this, so we use bounds to set frame on our children...
     sbvc.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
 
-    [self swapOutViewController:_currentFullScreenVC forViewController:sbvc completion:^(BOOL finished) {
+    [self swapOutViewController:_currentFullScreenVC forViewController:sbvc viewDidInsert:^{
         self.currentStreamBrowseVC = sbvc;
 
         if (!self.airPlayController.isAirPlayActive) {
@@ -292,7 +292,6 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
             // video controls represent airplay video when in airplay mode, don't touch 'em
         }
 
-        [self dismissSettings];
     }];
 }
 
@@ -301,29 +300,30 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     return 0.5;
 }
 
-- (void)swapOutViewController:(UIViewController *)oldVC forViewController:(UIViewController *)newVC completion:(void (^)(BOOL finished))completion
+- (void)swapOutViewController:(UIViewController *)oldVC forViewController:(UIViewController *)newVC viewDidInsert:(void (^)())viewDidInsert
 {
     [oldVC willMoveToParentViewController:nil];
     [self addChildViewController:newVC];
     [self.view insertSubview:newVC.view belowSubview:self.videoControlsVC.view];
 
+    viewDidInsert();
+  
     CGAffineTransform scaleAndTranslateIntoNav = CGAffineTransformConcat(CGAffineTransformMakeScale(.2f, .2f), CGAffineTransformMakeTranslation(0, -self.view.bounds.size.height));
     newVC.view.transform = scaleAndTranslateIntoNav;
     newVC.view.alpha = 1.f;
+
     [UIView transitionWithView:self.view duration:[self swapAnimationTime] options:(UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionCurveEaseOut) animations:^{
         oldVC.view.transform = scaleAndTranslateIntoNav;
         oldVC.view.alpha = 0.f;
         newVC.view.transform = CGAffineTransformIdentity;
         newVC.view.alpha = 1.f;
-
     } completion:^(BOOL finished) {
         [oldVC removeFromParentViewController];
         [oldVC.view removeFromSuperview];
         oldVC.view.transform = CGAffineTransformIdentity;
         [newVC didMoveToParentViewController:self];
         _currentFullScreenVC = newVC;
-        completion(finished);
-    }];
+   }];
 }
 
 - (void)focusOnEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
@@ -1332,53 +1332,45 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         _settingsVC = [[SettingsViewController alloc] initWithUser:self.currentUser andNibName:@"SettingsView-iPhone"];
         _settingsVC.delegate = self.masterDelegate;
         //this gets overriden by autolayout, just using it to set starting point for transition
-        _settingsVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-        [self swapOutViewController:_currentFullScreenVC forViewController:_settingsVC completion:^(BOOL finished) {
-            _settingsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[settings]|"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:@{@"settings":_settingsVC.view}]];
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[settings]|"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:@{@"settings":_settingsVC.view}]];
-
-            self.videoControlsVC.view.hidden = YES;
-        }];
     }
+
+    _settingsVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+
+    [self swapOutViewController:_currentFullScreenVC forViewController:_settingsVC viewDidInsert:^{
+        _settingsVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[settings]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"settings":_settingsVC.view}]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[settings]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"settings":_settingsVC.view}]];
+        
+        self.videoControlsVC.view.hidden = YES;
+    }];
 }
 
 - (void)presentNotificationCenter
 {
     if (!self.notificationCenterVC) {
         self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
-        //this gets overriden by autolayout, just using it to set starting point for transition
-        self.notificationCenterVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-        [self swapOutViewController:_currentFullScreenVC forViewController:self.notificationCenterVC completion:^(BOOL finished) {
-            self.notificationCenterVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[notificationCenter]|"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:@{@"notificationCenter":self.notificationCenterVC.view}]];
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[notificationCenter]|"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:@{@"notificationCenter":self.notificationCenterVC.view}]];
-            
-            self.videoControlsVC.view.hidden = YES;
-        }];
     }
+    //this gets overriden by autolayout, just using it to set starting point for transition
+    self.notificationCenterVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    
+    [self swapOutViewController:_currentFullScreenVC forViewController:self.notificationCenterVC viewDidInsert:^{
+        self.notificationCenterVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[notificationCenter]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"notificationCenter":self.notificationCenterVC.view}]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[notificationCenter]|"
+                                                                          options:0
+                                                                          metrics:nil
+                                                                            views:@{@"notificationCenter":self.notificationCenterVC.view}]];
+        
+        self.videoControlsVC.view.hidden = YES;
+    }];
 }
-
-- (void)dismissSettings
-{
-    if (_settingsVC) {
-        [_settingsVC willMoveToParentViewController:nil];
-        [_settingsVC.view removeFromSuperview];
-        [_settingsVC removeFromParentViewController];
-        _settingsVC = nil;
-    }
-}
-
 @end
