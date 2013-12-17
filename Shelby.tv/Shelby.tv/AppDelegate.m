@@ -108,6 +108,11 @@
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAISessionControl value:@"start"];
 
+    // TODO: Add Shelbytv URL Schema to Shelby.tv and Beta targets
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
+        // KP KP: TODO: Check for LaunchOptionsURL and open App accordingly
+    }
+    
     return YES;
 }
 
@@ -183,6 +188,8 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     NSString *fbAppID = [NSString stringWithFormat:@"fb%@", [[FacebookHandler sharedInstance] facebookAppID]];
+    
+    // KP KP: TODO: handle Shelbytv URLS
     
     if ([[url absoluteString] hasPrefix:fbAppID]) {
         return [[FacebookHandler sharedInstance] handleOpenURL:url];
