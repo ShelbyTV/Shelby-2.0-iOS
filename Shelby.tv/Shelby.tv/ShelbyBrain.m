@@ -916,6 +916,11 @@ NSString * const kShelbyBrainEntityKey = @"entity";
         if (!rollChannel) {
             rollChannel = [DisplayChannel channelForTransientEntriesWithID:fetchedUser.publicRollID title:fetchedUser.nickname inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             Roll *userRoll = [Roll rollForDictionary:@{@"id" : fetchedUser.publicRollID} inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+
+            NSError *err;
+            [userRoll.managedObjectContext save:&err];
+            STVDebugAssert(!err, @"context save failed after tapping user profile");
+            
             rollChannel.roll = userRoll;
         }
         
