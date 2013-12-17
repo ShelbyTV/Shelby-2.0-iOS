@@ -266,7 +266,6 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
 
 - (Frame *)likedFrameWithVideoOfFrame:(Frame *)frame
 {
-    STVDebugAssert(frame.roll.rollID, @"should have rollID");
     Frame *frameOnLikedRoll = [Frame frameWithVideoID:frame.video.videoID
                                          onRollWithID:self.publicRollID
                                             inContext:self.managedObjectContext];
