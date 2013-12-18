@@ -2,14 +2,14 @@
 //  DashboardEntry.h
 //  Shelby.tv
 //
-//  Created by Daniel Spinosa on 10/29/13.
+//  Created by Keren on 12/18/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class DVREntry, Dashboard, DashboardEntry, Frame;
+@class DVREntry, Dashboard, DashboardEntry, Frame, User;
 
 @interface DashboardEntry : NSManagedObject
 
@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSOrderedSet *duplicates;
 @property (nonatomic, retain) DVREntry *dvrEntry;
 @property (nonatomic, retain) Frame *frame;
+@property (nonatomic, retain) User *actor;
 @end
 
 @interface DashboardEntry (CoreDataGeneratedAccessors)

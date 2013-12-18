@@ -2,11 +2,12 @@
 //  User.m
 //  Shelby.tv
 //
-//  Created by Dan Spinosa on 12/3/13.
+//  Created by Keren on 12/18/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import "User.h"
+#import "DashboardEntry.h"
 #import "Frame.h"
 
 
@@ -22,6 +23,7 @@
 @dynamic name;
 @dynamic nickname;
 @dynamic publicRollID;
+@dynamic rollFollowings;
 @dynamic token;
 @dynamic tumblrNickname;
 @dynamic tumblrUID;
@@ -30,8 +32,8 @@
 @dynamic userID;
 @dynamic userImage;
 @dynamic userType;
-@dynamic rollFollowings;
 @dynamic frames;
 @dynamic upvoted;
+@dynamic dashboardEntriesFromActions;
 
 @end

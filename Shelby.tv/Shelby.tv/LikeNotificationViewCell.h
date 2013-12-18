@@ -10,5 +10,5 @@
 #import "FollowNotificationViewCell.h"
 
 @interface LikeNotificationViewCell : FollowNotificationViewCell
-
+@property (nonatomic, weak) IBOutlet UIImageView *thumbnail;
 @end

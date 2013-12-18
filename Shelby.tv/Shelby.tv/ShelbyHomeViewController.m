@@ -101,6 +101,8 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                                              selector:@selector(fetchEntriesDidCompleteForChannelWithErrorNotification:)
                                                  name:kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchNotificationEntriesDidCompletelNotification:) name:kShelbyBrainFetchNotificationEntriesDidCompleteNotification object:nil];
+   
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(focusOnEntityNotification:)
                                                  name:kShelbyBrainFocusOnEntityNotification object:nil];
@@ -125,6 +127,8 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(setEntriesNotification:)
                                                  name:kShelbyBrainSetEntriesNotification object:nil];
+
+    self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
 }
 
 - (void)dealloc
@@ -408,6 +412,15 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         [self fetchDidCompleteForChannel:channel];
         [self refreshActivityIndicatorForChannel:channel shouldAnimate:NO];
     }
+}
+
+- (void)fetchNotificationEntriesDidCompletelNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    
+    NSArray *notificationEntries = userInfo[kShelbyBrainChannelEntriesKey];
+    
+    [self.notificationCenterVC setNotificationEntries:notificationEntries];
 }
 
 - (void)setEntriesNotification:(NSNotification *)notification
@@ -1353,9 +1366,6 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)presentNotificationCenter
 {
-    if (!self.notificationCenterVC) {
-        self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
-    }
     //this gets overriden by autolayout, just using it to set starting point for transition
     self.notificationCenterVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     

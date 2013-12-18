@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, FrameType){
 - (NSString *)creatorsInitialCommentWithFallback:(BOOL)canUseVideoTitle;
 - (NSString *)originNetwork;
 - (BOOL)isPlayable;
+- (BOOL)isNotification;
 
 - (BOOL)doLike;
 - (BOOL)doUnlike;

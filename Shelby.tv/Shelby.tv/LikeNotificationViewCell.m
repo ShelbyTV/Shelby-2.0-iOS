@@ -8,7 +8,6 @@
 
 #import "LikeNotificationViewCell.h"
 @interface LikeNotificationViewCell()
-@property (nonatomic, weak) IBOutlet UIImageView *thumbnail;
 @end
 
 @implementation LikeNotificationViewCell

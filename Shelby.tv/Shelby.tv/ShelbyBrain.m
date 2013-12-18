@@ -34,6 +34,7 @@ NSString * const kShelbyCommunityChannelID = @"521264b4b415cc44c9000001";
 NSString *const kShelbyLastActiveDate = @"kShelbyLastActiveDate";
 NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen";
 
+NSString * const kShelbyBrainFetchNotificationEntriesDidCompleteNotification = @"kShelbyBrainFetchNotificationEntriesDidCompleteNotification";
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelNotification";
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification";
 NSString * const kShelbyBrainFocusOnEntityNotification = @"kShelbyBrainFocusOnEntityNotification";
@@ -259,6 +260,18 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     return channel;
 }
 
+- (void)filterNotificationEntriesAndPostNotification:(NSArray *)entries
+{
+    // Filter notifications from regular entries
+    NSPredicate *onlyNotification = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
+        return [entry isNotification];
+    }];
+    NSArray *notificationEntries = [entries filteredArrayUsingPredicate:onlyNotification];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainFetchNotificationEntriesDidCompleteNotification
+                                                        object:self
+                                                      userInfo:@{kShelbyBrainChannelEntriesKey : notificationEntries}];
+}
+
 - (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     DisplayChannel *channel = [self getMainChannel];
@@ -269,10 +282,13 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 
         __block NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
 
+        __weak ShelbyBrain *weakSelf = self;
         [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
 
+            [weakSelf filterNotificationEntriesAndPostNotification:entries];
+            
             NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
-                return [entry isPlayable];
+                return [entry isPlayable] && ![entry isNotification];
             }];
             entries = [entries filteredArrayUsingPredicate:onlyPlayableVideos];
 
@@ -530,10 +546,12 @@ NSString * const kShelbyBrainEntityKey = @"entity";
                                fromCache:(BOOL)cached
 {
     STVDebugAssert([NSThread isMainThread], @"expecting to be called on main thread");
+
+    [self filterNotificationEntriesAndPostNotification:channelEntries];
     
     //the choke point where unplayable videos may not pass
     NSPredicate *onlyPlayableVideos = [NSPredicate predicateWithBlock:^BOOL(id entry, NSDictionary *bindings) {
-        return [entry isPlayable];
+        return [entry isPlayable] && ![entry isNotification];
     }];
     channelEntries = [channelEntries filteredArrayUsingPredicate:onlyPlayableVideos];
     

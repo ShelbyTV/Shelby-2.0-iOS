@@ -17,4 +17,5 @@
 
 @property (nonatomic, assign) id<ShelbyNotificationDelegate> delegate;
 
+- (void)setNotificationEntries:(NSArray *)notificationEntries;
 @end

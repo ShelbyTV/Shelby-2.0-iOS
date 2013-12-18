@@ -11,6 +11,7 @@
 #import "NSManagedObject+Helper.h"
 #import "NSObject+NullHelper.h"
 #import "ShelbyAnalyticsClient.h"
+#import "User+Helper.h"
 
 NSString * const kShelbyCoreDataEntityDashboardEntry = @"DashboardEntry";
 NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEntryID == %@";
@@ -56,6 +57,11 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
         }
     }
 
+    NSDictionary *actorDict = dict[@"actor"];
+    if ([actorDict isKindOfClass:[NSDictionary class]]) {
+        dashboardEntry.actor = [User userForDictionary:actorDict inContext:context];
+    }
+    
     //NB: intentionally not duplicating timestamp out of BSON id
     NSDictionary *frameDict = dict[@"frame"];
     if([frameDict isKindOfClass:[NSDictionary class]]){
@@ -115,6 +121,15 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
     return NO;
 }
 
+- (BOOL)isNotification
+{
+    if ([self typeOfEntry] == DashboardEntryTypeLike || [self typeOfEntry] == DashboardEntryTypeShare) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (DashboardEntryType)typeOfEntry
 {
     //From API business logic model: dashboard_entry.rb
@@ -139,6 +154,10 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
             return DashboardEntryTypeWatch;
         case 10:
             return DashboardEntryTypeComment;
+        case 11:
+            return DashboardEntryTypeLike;
+        case 13:
+            return DashboardEntryTypeShare;
         case 30:
             return DashboardEntryTypePrioritizedFrame;
         case 31:

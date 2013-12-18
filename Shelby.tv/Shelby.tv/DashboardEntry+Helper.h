@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, DashboardEntryType){
     DashboardEntryTypeReRoll,
     DashboardEntryTypeWatch,
     DashboardEntryTypeComment,
+    DashboardEntryTypeLike,
+    DashboardEntryTypeShare,
     DashboardEntryTypePrioritizedFrame,
     DashboardEntryTypeVideoGraphRecommendation,
     DashboardEntryTypeEntertainmentGraphRecommendation,
@@ -39,6 +41,7 @@ typedef NS_ENUM(NSInteger, DashboardEntryType){
                      inContext:(NSManagedObjectContext *)context;
 
 - (BOOL)isPlayable;
+- (BOOL)isNotification;
 
 - (DashboardEntryType)typeOfEntry;
 

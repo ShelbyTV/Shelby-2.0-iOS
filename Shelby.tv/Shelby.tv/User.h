@@ -2,14 +2,14 @@
 //  User.h
 //  Shelby.tv
 //
-//  Created by Dan Spinosa on 12/3/13.
+//  Created by Keren on 12/18/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Frame;
+@class DashboardEntry, Frame;
 
 @interface User : NSManagedObject
 
@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * nickname;
 @property (nonatomic, retain) NSString * publicRollID;
+@property (nonatomic, retain) NSString * rollFollowings;
 @property (nonatomic, retain) NSString * token;
 @property (nonatomic, retain) NSString * tumblrNickname;
 @property (nonatomic, retain) NSString * tumblrUID;
@@ -31,9 +32,9 @@
 @property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSString * userImage;
 @property (nonatomic, retain) NSNumber * userType;
-@property (nonatomic, retain) NSString * rollFollowings;
 @property (nonatomic, retain) NSSet *frames;
 @property (nonatomic, retain) NSSet *upvoted;
+@property (nonatomic, retain) NSSet *dashboardEntriesFromActions;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
@@ -47,5 +48,10 @@
 - (void)removeUpvotedObject:(Frame *)value;
 - (void)addUpvoted:(NSSet *)values;
 - (void)removeUpvoted:(NSSet *)values;
+
+- (void)addDashboardEntriesFromActionsObject:(DashboardEntry *)value;
+- (void)removeDashboardEntriesFromActionsObject:(DashboardEntry *)value;
+- (void)addDashboardEntriesFromActions:(NSSet *)values;
+- (void)removeDashboardEntriesFromActions:(NSSet *)values;
 
 @end

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FollowNotificationViewCell : UITableViewCell
-
+@property (nonatomic, weak) IBOutlet UIImageView *avatar;
+@property (nonatomic, weak) IBOutlet UILabel *notificationText;
 @end

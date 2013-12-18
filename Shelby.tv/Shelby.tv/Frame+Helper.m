@@ -244,6 +244,11 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     return NO;
 }
 
+- (BOOL)isNotification
+{
+    return NO;
+}
+
 - (NSString *)shelbyID
 {
     return self.frameID;

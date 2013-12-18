@@ -20,6 +20,7 @@
 #import "TwitterHandler.h"
 #import "WelcomeViewController.h"
 
+extern NSString * const kShelbyBrainFetchNotificationEntriesDidCompleteNotification;
 extern NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification;
 extern NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification;
 extern NSString * const kShelbyBrainFocusOnEntityNotification;
