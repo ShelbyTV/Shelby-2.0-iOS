@@ -154,7 +154,7 @@
         Video *video = videoFrame.video;
         //images
         if (video && video.thumbnailURL) {
-            [self tryMaxResThumbnailURLForEntry:entry withVide0:video];
+            [self tryMaxResThumbnailURLForEntry:entry withVideo:video];
         } else {
             [self displayPlaceholderThumbnails];
         }
@@ -164,7 +164,7 @@
     }
 }
 
-- (void)tryMaxResThumbnailURLForEntry:(id<ShelbyVideoContainer>)entry withVide0:(Video *)video
+- (void)tryMaxResThumbnailURLForEntry:(id<ShelbyVideoContainer>)entry withVideo:(Video *)video
 {
     NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[video maxResThumbnailURL]];
     [[AFImageRequestOperation imageRequestOperationWithRequest:imageRequest
