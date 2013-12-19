@@ -91,16 +91,20 @@
 {
     DashboardEntry *dashboardEntry = self.notifications[indexPath.row];
 
-    if (NO) {  // Placeholder for where follow notifications will go to
+    DashboardEntryType dashboardEntryType = [dashboardEntry typeOfEntry];
+    
+    NSString *likerName = dashboardEntry.actor.name;
+    if (!likerName) {
+        likerName = @"Somebody";
+    }
+
+    if (dashboardEntryType == DashboardEntryTypeFollow) {
         FollowNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FollowNotificationCell" forIndexPath:indexPath];
+        cell.notificationText.text = [NSString stringWithFormat:@"%@ started following you", likerName];
         return cell;
     } else {
         LikeNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeNotificationCell" forIndexPath:indexPath];
-        NSString *likerName = dashboardEntry.actor.name;
-        if (!likerName) {
-            likerName = @"Somebody";
-        }
-        if ([dashboardEntry typeOfEntry] == DashboardEntryTypeLike) {
+        if (dashboardEntryType == DashboardEntryTypeLike) {
             cell.notificationText.text = [NSString stringWithFormat:@"%@ liked your video", likerName];
         } else { // Share
             cell.notificationText.text = [NSString stringWithFormat:@"%@ shared your video", likerName];

@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, DashboardEntryType){
     DashboardEntryTypeComment,
     DashboardEntryTypeLike,
     DashboardEntryTypeShare,
+    DashboardEntryTypeFollow,
     DashboardEntryTypePrioritizedFrame,
     DashboardEntryTypeVideoGraphRecommendation,
     DashboardEntryTypeEntertainmentGraphRecommendation,
