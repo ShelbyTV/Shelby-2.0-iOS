@@ -39,5 +39,5 @@
 - (void)didNavigateToNotificationCenter;
 
 - (void)returnSelectionToPreviousRow;
-
+- (void)setUnseenNotificationCount:(NSInteger)unseenNotificationCount;
 @end

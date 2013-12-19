@@ -129,6 +129,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                                                  name:kShelbyBrainSetEntriesNotification object:nil];
 
     self.notificationCenterVC = [[ShelbyNotificationCenterViewController alloc] initWithNibName:@"ShelbyNotificationCenterView" bundle:nil];
+    self.notificationCenterVC.delegate = self;
 }
 
 - (void)dealloc
@@ -1337,6 +1338,22 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     [self.masterDelegate presentUserLogin];
     //presentation is modal, nav hasn't actually changed...
     [navBarVC performSelector:@selector(returnSelectionToPreviousRow) withObject:nil afterDelay:0.3];
+}
+
+#pragma mark - ShelbyNotificationDelegate Methods
+- (void)unseenNotificationCountChanged
+{
+    [self.navBarVC setUnseenNotificationCount:self.notificationCenterVC.unseenNotifications];
+}
+
+- (void)userProfileWasTapped:(NSString *)userID
+{
+    // KP KP: TODO
+}
+
+- (void)videoWasTapped:(NSString *)videoID
+{
+    // KP KP: TODO
 }
 
 - (void)presentSettings

@@ -43,7 +43,10 @@
 {
     [super viewDidAppear:animated];
     
+    // KP KP: TODO: save last seen notification so we can have the number of notifications accurate 
     self.unseenNotifications = 0;
+    
+    [self.delegate unseenNotificationCountChanged];
     [self.notificationTable reloadData];
 }
 
@@ -55,6 +58,8 @@
 
 - (void)setNotificationEntries:(NSArray *)notificationEntries
 {
+    NSInteger currentUnseenNotifications = self.unseenNotifications;
+    
     if (!self.notifications) {
         self.notifications = [@[] mutableCopy];
     }
@@ -66,6 +71,10 @@
         }
     }
     
+    if (currentUnseenNotifications != self.unseenNotifications) {
+        [self.delegate unseenNotificationCountChanged];
+    }
+
     [self.notificationTable reloadData];
 }
 

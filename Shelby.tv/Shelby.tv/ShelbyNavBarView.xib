@@ -139,6 +139,14 @@
                                 <action selector="navTapped:" destination="-1" eventType="touchUpInside" id="VcY-G6-PC8"/>
                             </connections>
                         </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POX-5F-iDR">
+                            <rect key="frame" x="52" y="143" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="1" green="0.17371703990000001" blue="0.1903429619" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
@@ -179,6 +187,7 @@
                 <outlet property="loginRowHeight" destination="CHF-db-52x" id="hvA-3w-cDw"/>
                 <outlet property="notificationCenterButton" destination="683" id="BYS-NN-K1u"/>
                 <outlet property="notificationCenterRowHeight" destination="695" id="cxH-zu-VNF"/>
+                <outlet property="notificationLabel" destination="POX-5F-iDR" id="1Uy-vg-1h2"/>
                 <outlet property="settingsButton" destination="659" id="IqD-Hs-nYH"/>
                 <outlet property="settingsRowHeight" destination="667" id="bor-3r-Ovw"/>
                 <outlet property="sharesButton" destination="152" id="468"/>

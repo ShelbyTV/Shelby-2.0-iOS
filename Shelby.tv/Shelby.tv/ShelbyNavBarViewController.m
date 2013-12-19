@@ -139,6 +139,16 @@
     [self.delegate navBarViewControllerWillContract:self];
 }
 
+- (void)setUnseenNotificationCount:(NSInteger)unseenNotificationCount
+{
+    self.navBarView.notificationLabel.text = [NSString stringWithFormat:@"%d", unseenNotificationCount];
+    if (unseenNotificationCount) {
+        self.navBarView.shouldHideNotificationLabel = NO;
+    } else {
+        self.navBarView.shouldHideNotificationLabel = YES;
+    }
+}
+
 // When the nav bar view is expanded, it returns YES for all touches on screen, but then doesn't handle the touch.
 // So the event bubbles up to here where we get to handle it.
 // In this case, we simply want to collapse the nav bar.

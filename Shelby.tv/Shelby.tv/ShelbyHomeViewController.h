@@ -11,6 +11,7 @@
 #import "SettingsViewController.h"
 #import "ShelbyAirPlayController.h"
 #import "ShelbyNavBarViewController.h"
+#import "ShelbyNotificationCenterViewController.h"
 #import "ShelbyStreamBrowseViewController.h"
 #import "SPShareController.h"
 #import "User.h"
@@ -34,7 +35,7 @@ extern NSString * const kShelbyShareFrameIDKey;
 @end
 
 
-@interface ShelbyHomeViewController : ShelbyViewController <UIPopoverControllerDelegate, UIAlertViewDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate, ShelbyAirPlayControllerDelegate>
+@interface ShelbyHomeViewController : ShelbyViewController <UIPopoverControllerDelegate, UIAlertViewDelegate, ShelbyStreamBrowseViewDelegate, VideoControlsDelegate, SPShareControllerDelegate, ShelbyNavBarDelegate, ShelbyAirPlayControllerDelegate, ShelbyNotificationDelegate>
 
 // We assume these are all of our channels, in the correct order
 @property (nonatomic, strong) NSArray *channels;

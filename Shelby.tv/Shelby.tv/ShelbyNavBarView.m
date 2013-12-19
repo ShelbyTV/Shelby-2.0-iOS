@@ -122,6 +122,7 @@
     }
 
     if (_currentRow) {
+        self.notificationLabel.alpha = 0;
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
             self.sliderY.constant = -(_currentRow.frame.origin.y);
             [self layoutIfNeeded];
@@ -137,6 +138,11 @@
         //show all rows
         [UIView animateWithDuration:FRAME_ANIMATION_TIME animations:^{
             self.sliderY.constant = 0;
+            if (self.shouldHideNotificationLabel) {
+                self.notificationLabel.alpha = 0;
+            } else {
+                self.notificationLabel.alpha = 1;
+            }
             [self layoutIfNeeded];
         }];
 

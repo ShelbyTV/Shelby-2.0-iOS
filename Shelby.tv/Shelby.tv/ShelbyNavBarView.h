@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
 @property (weak, nonatomic) IBOutlet UIButton *notificationCenterButton;
+@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
+@property (assign, nonatomic) BOOL shouldHideNotificationLabel;
 
 //our model, set to update display state
 @property (weak, nonatomic) UIView *currentRow;

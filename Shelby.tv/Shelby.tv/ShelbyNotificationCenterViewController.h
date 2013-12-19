@@ -11,10 +11,11 @@
 @protocol ShelbyNotificationDelegate <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)videoWasTapped:(NSString *)videoID;
+- (void)unseenNotificationCountChanged;
 @end
 
 @interface ShelbyNotificationCenterViewController : ShelbyViewController <UITableViewDataSource, UITableViewDelegate>
-
+@property (nonatomic, readonly, assign) NSInteger unseenNotifications;
 @property (nonatomic, assign) id<ShelbyNotificationDelegate> delegate;
 
 - (void)setNotificationEntries:(NSArray *)notificationEntries;
