@@ -76,6 +76,17 @@
     [self.notificationTable reloadData];
 }
 
+- (void)fetchAvatarForCell:(FollowNotificationViewCell *)cell withAvatarURL:(NSURL *)avatarURL
+{
+    NSMutableURLRequest *avatarRequest = [NSMutableURLRequest requestWithURL:avatarURL];
+    [cell.avatar setImageWithURLRequest:avatarRequest placeholderImage:[UIImage imageNamed:@"avatar-blank.png"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        if (image) {
+            cell.avatar.image = image;
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+    }];
+}
+
 #pragma mark - FollowNotificationDelegate
 - (void)viewUserWasTappedForNotificationCell:(FollowNotificationViewCell *)cell
 {
@@ -112,6 +123,8 @@
         cell.notificationText.text = [NSString stringWithFormat:@"%@ started following you", likerName];
         cell.userID = actorID;
         cell.delegate = self;
+        [self fetchAvatarForCell:cell withAvatarURL:[dashboardEntry.actor avatarURL]];
+
         return cell;
     } else {
         LikeNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeNotificationCell" forIndexPath:indexPath];
@@ -124,7 +137,7 @@
         } else { // Share
             cell.notificationText.text = [NSString stringWithFormat:@"%@ shared your video", likerName];
         }
-        
+ 
         NSMutableURLRequest *thumbnailRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:dashboardEntry.frame.video.thumbnailURL]];
         // KP KP: TODO: default thumbnail
         [cell.thumbnail setImageWithURLRequest:thumbnailRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -134,14 +147,9 @@
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         }];
 
-        NSMutableURLRequest *avatarRequest = [NSMutableURLRequest requestWithURL:[dashboardEntry.actor avatarURL]];
-        [cell.avatar setImageWithURLRequest:avatarRequest placeholderImage:[UIImage imageNamed:@"avatar-blank.png"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-            if (image) {
-                cell.avatar.image = image;
-            }
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        }];
-
+        [self fetchAvatarForCell:cell withAvatarURL:[dashboardEntry.actor avatarURL]];
+ 
+ 
         return cell;
     }
 }

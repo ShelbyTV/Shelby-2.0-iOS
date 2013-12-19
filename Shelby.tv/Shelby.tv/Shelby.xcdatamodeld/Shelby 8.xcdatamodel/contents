@@ -27,7 +27,7 @@
         <relationship name="duplicateOf" optional="YES" transient="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="DashboardEntry" inverseName="duplicates" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="duplicates" optional="YES" transient="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DashboardEntry" inverseName="duplicateOf" inverseEntity="DashboardEntry" syncable="YES"/>
         <relationship name="dvrEntry" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="DVREntry" inverseName="dashboardEntry" inverseEntity="DVREntry" syncable="YES"/>
-        <relationship name="frame" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="dashboardEntry" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="frame" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="dashboardEntry" inverseEntity="Frame" syncable="YES"/>
     </entity>
     <entity name="DisplayChannel" representedClassName="DisplayChannel" syncable="YES">
         <attribute name="channelID" optional="YES" attributeType="String" syncable="YES"/>

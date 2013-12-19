@@ -67,24 +67,26 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
     if([frameDict isKindOfClass:[NSDictionary class]]){
         dashboardEntry.frame = [Frame frameForDictionary:frameDict requireCreator:NO inContext:context];
     }
-    if (!dashboardEntry.frame) {
-        //must have a frame
-        if (dashboardEntry.objectID.isTemporaryID) {
-            [context deleteObject:dashboardEntry];
-        }
-        return nil;
-    } else if (!dashboardEntry.frame.creator){
-        //frame must have a creator, or dashboard entry must be a (supported) recommendation
-        DashboardEntryType dbeType = [dashboardEntry typeOfEntry];
-        if (dbeType != DashboardEntryTypeVideoGraphRecommendation &&
-            dbeType != DashboardEntryTypeMortarRecommendation) {
-            if (dashboardEntry.frame.objectID.isTemporaryID) {
-                [context deleteObject:dashboardEntry.frame];
-            }
+    if ([dashboardEntry typeOfEntry] != DashboardEntryTypeFollow) {
+        if (!dashboardEntry.frame) {
+            //must have a frame
             if (dashboardEntry.objectID.isTemporaryID) {
                 [context deleteObject:dashboardEntry];
             }
             return nil;
+        } else if (!dashboardEntry.frame.creator){
+            //frame must have a creator, or dashboard entry must be a (supported) recommendation
+            DashboardEntryType dbeType = [dashboardEntry typeOfEntry];
+            if (dbeType != DashboardEntryTypeVideoGraphRecommendation &&
+                dbeType != DashboardEntryTypeMortarRecommendation) {
+                if (dashboardEntry.frame.objectID.isTemporaryID) {
+                    [context deleteObject:dashboardEntry.frame];
+                }
+                if (dashboardEntry.objectID.isTemporaryID) {
+                    [context deleteObject:dashboardEntry];
+                }
+                return nil;
+            }
         }
     }
 
