@@ -123,7 +123,10 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
 
 - (BOOL)isNotification
 {
-    if ([self typeOfEntry] == DashboardEntryTypeLike || [self typeOfEntry] == DashboardEntryTypeShare || [self typeOfEntry] == DashboardEntryTypeFollow) {
+    if ([self typeOfEntry] == DashboardEntryTypeLike ||
+        [self typeOfEntry] ==DashboardEntryTypeAnonymousLike ||
+        [self typeOfEntry] == DashboardEntryTypeShare ||
+        [self typeOfEntry] == DashboardEntryTypeFollow) {
         return YES;
     }
     
@@ -156,6 +159,8 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
             return DashboardEntryTypeComment;
         case 11:
             return DashboardEntryTypeLike;
+        case 12:
+            return DashboardEntryTypeAnonymousLike;
         case 13:
             return DashboardEntryTypeShare;
         case 14:

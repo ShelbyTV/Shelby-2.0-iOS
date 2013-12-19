@@ -104,7 +104,7 @@
         return cell;
     } else {
         LikeNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeNotificationCell" forIndexPath:indexPath];
-        if (dashboardEntryType == DashboardEntryTypeLike) {
+        if (dashboardEntryType == DashboardEntryTypeLike || dashboardEntryType == DashboardEntryTypeAnonymousLike) {
             cell.notificationText.text = [NSString stringWithFormat:@"%@ liked your video", likerName];
         } else { // Share
             cell.notificationText.text = [NSString stringWithFormat:@"%@ shared your video", likerName];
