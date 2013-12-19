@@ -32,6 +32,7 @@ extern NSString * const kShelbyShareFrameIDKey;
 - (void)inviteFacebookFriendsWasTapped;
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
+- (void)openVideoViewForDashboardID:(NSString *)dashboardID;
 @end
 
 

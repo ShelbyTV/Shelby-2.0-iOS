@@ -1348,12 +1348,12 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)userProfileWasTapped:(NSString *)userID
 {
-    // KP KP: TODO
+    [self.masterDelegate userProfileWasTapped:userID];
 }
 
 - (void)videoWasTapped:(NSString *)videoID
 {
-    // KP KP: TODO
+    [self.masterDelegate openVideoViewForDashboardID:videoID];
 }
 
 - (void)presentSettings

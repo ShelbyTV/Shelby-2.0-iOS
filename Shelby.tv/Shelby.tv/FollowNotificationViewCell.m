@@ -36,4 +36,8 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)viewUser:(id)sender
+{
+    [self.delegate viewUserWasTappedForNotificationCell:self];
+}
 @end

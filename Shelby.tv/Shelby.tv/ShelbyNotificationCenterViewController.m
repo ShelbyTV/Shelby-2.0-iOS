@@ -8,8 +8,6 @@
 
 #import "ShelbyNotificationCenterViewController.h"
 #import "DashboardEntry+Helper.h"
-#import "FollowNotificationViewCell.h"
-#import "LikeNotificationViewCell.h"
 #import "ShelbyBrain.h"
 #import "ShelbyModelArrayUtility.h"
 #import "UIImageView+AFNetworking.h"
@@ -78,7 +76,17 @@
     [self.notificationTable reloadData];
 }
 
+#pragma mark - FollowNotificationDelegate
+- (void)viewUserWasTappedForNotificationCell:(FollowNotificationViewCell *)cell
+{
+    [self.delegate userProfileWasTapped:cell.userID];
+}
 
+#pragma mark - LikeNotificationDelegate
+- (void)viewVideoWasTappedForNotificationCell:(LikeNotificationViewCell *)cell
+{
+    [self.delegate videoWasTapped:cell.dashboardID];
+}
 
 #pragma mark - UITableViewDataSource Delegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -94,6 +102,7 @@
     DashboardEntryType dashboardEntryType = [dashboardEntry typeOfEntry];
     
     NSString *likerName = dashboardEntry.actor.name;
+    NSString *actorID = actorID = dashboardEntry.actor.userID;
     if (!likerName) {
         likerName = @"Somebody";
     }
@@ -101,9 +110,15 @@
     if (dashboardEntryType == DashboardEntryTypeFollow) {
         FollowNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FollowNotificationCell" forIndexPath:indexPath];
         cell.notificationText.text = [NSString stringWithFormat:@"%@ started following you", likerName];
+        cell.userID = actorID;
+        cell.delegate = self;
         return cell;
     } else {
         LikeNotificationViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeNotificationCell" forIndexPath:indexPath];
+        cell.userID = actorID;
+        cell.dashboardID = dashboardEntry.dashboardEntryID;
+        cell.delegate = self;
+        
         if (dashboardEntryType == DashboardEntryTypeLike || dashboardEntryType == DashboardEntryTypeAnonymousLike) {
             cell.notificationText.text = [NSString stringWithFormat:@"%@ liked your video", likerName];
         } else { // Share

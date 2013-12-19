@@ -28,4 +28,9 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)viewVideo:(id)sender
+{
+    [self.delegate viewVideoWasTappedForNotificationCell:self];
+}
+
 @end

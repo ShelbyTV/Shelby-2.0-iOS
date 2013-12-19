@@ -7,8 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FollowNotificationViewCell;
+
+@protocol FollowNotificationDelegate <NSObject>
+- (void)viewUserWasTappedForNotificationCell:(FollowNotificationViewCell *)cell;
+@end
 
 @interface FollowNotificationViewCell : UITableViewCell
 @property (nonatomic, weak) IBOutlet UIImageView *avatar;
 @property (nonatomic, weak) IBOutlet UILabel *notificationText;
+@property (nonatomic, weak) id<FollowNotificationDelegate>delegate;
+@property (nonatomic, strong) NSString *userID;
+
+- (IBAction)viewUser:(id)sender;
 @end

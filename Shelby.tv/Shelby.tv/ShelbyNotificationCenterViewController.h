@@ -7,6 +7,9 @@
 //
 
 #import "ShelbyViewController.h"
+#import "FollowNotificationViewCell.h"
+#import "LikeNotificationViewCell.h"
+
 
 @protocol ShelbyNotificationDelegate <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
@@ -14,7 +17,7 @@
 - (void)unseenNotificationCountChanged;
 @end
 
-@interface ShelbyNotificationCenterViewController : ShelbyViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ShelbyNotificationCenterViewController : ShelbyViewController <UITableViewDataSource, UITableViewDelegate, LikeNotificationDelegate, FollowNotificationDelegate>
 @property (nonatomic, readonly, assign) NSInteger unseenNotifications;
 @property (nonatomic, assign) id<ShelbyNotificationDelegate> delegate;
 
