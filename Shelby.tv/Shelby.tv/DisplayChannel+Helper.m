@@ -140,7 +140,7 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
 - (BOOL) canFetchRemoteEntries
 {
     //only offline Likes cannot refresh
-    return !(self.roll && [self.roll.rollID isEqualToString:kShelbyOfflineLikesID]);
+    return self.shouldFetchRemoteEntries && !(self.roll && [self.roll.rollID isEqualToString:kShelbyOfflineLikesID]);
 }
 
 - (BOOL)canRoll

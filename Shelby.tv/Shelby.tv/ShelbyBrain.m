@@ -933,16 +933,15 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     NSString *channelTitle = @"Video";
     
     [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:dashboardID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboardEntry) {
-        NSString *dashboardID = fetchedDashboardEntry.dashboardEntryID;
 
-        
         if (fetchedDashboardEntry) {
-            DisplayChannel *displayChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:dashboardID];
+            DisplayChannel *displayChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:fetchedDashboardEntry.dashboard.dashboardID];
             if (!displayChannel) {
                 displayChannel = [DisplayChannel channelForTransientEntriesWithID:dashboardID title:channelTitle inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             }
             
             displayChannel.dashboard = fetchedDashboardEntry.dashboard;
+            displayChannel.shouldFetchRemoteEntries = NO;
             
             singleVideoVC.channels = @[displayChannel];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
@@ -972,7 +971,9 @@ NSString * const kShelbyBrainEntityKey = @"entity";
             if (!rollChannel) {
                 rollChannel = [DisplayChannel channelForTransientEntriesWithID:rollID title:@"Video" inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             }
+            
             rollChannel.roll = fetchedFrame.roll;
+            rollChannel.shouldFetchRemoteEntries = NO;
             
             singleVideoVC.channels = @[rollChannel];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification

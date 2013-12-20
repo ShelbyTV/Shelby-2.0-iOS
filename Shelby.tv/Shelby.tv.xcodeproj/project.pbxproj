@@ -725,9 +725,6 @@
 		91B7DC5817B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */; };
 		91B7DC5917B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */; };
 		91B7DC5A17B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */; };
-		91BEC890176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
-		91BEC891176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
-		91BEC892176274BD00838197 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91BEC88F176274BD00838197 /* DisplayChannel.m */; };
 		91BEC8941762961400838197 /* DVRDatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BEC8931762961400838197 /* DVRDatePicker.xib */; };
 		91BEC8951762961400838197 /* DVRDatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BEC8931762961400838197 /* DVRDatePicker.xib */; };
 		91BEC8961762961400838197 /* DVRDatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91BEC8931762961400838197 /* DVRDatePicker.xib */; };
@@ -809,6 +806,9 @@
 		91F1682A1798422F00AF8A2E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F168291798422F00AF8A2E /* LoginViewController.m */; };
 		91F1682B1798422F00AF8A2E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F168291798422F00AF8A2E /* LoginViewController.m */; };
 		91F1682C1798422F00AF8A2E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F168291798422F00AF8A2E /* LoginViewController.m */; };
+		91F655BB1864F01A000B9843 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F655BA1864F01A000B9843 /* DisplayChannel.m */; };
+		91F655BC1864F01A000B9843 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F655BA1864F01A000B9843 /* DisplayChannel.m */; };
+		91F655BD1864F01A000B9843 /* DisplayChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F655BA1864F01A000B9843 /* DisplayChannel.m */; };
 		91FCC6A0174A8F14004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 		91FCC6A1174A8F1F004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
 		91FCC6A2174A8F25004255F5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FCC69F174A8F14004255F5 /* MessageUI.framework */; };
@@ -1198,8 +1198,6 @@
 		91B7DC4C17B29D59009ABF02 /* scrub-track-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrub-track-background@2x.png"; sourceTree = "<group>"; };
 		91B7DC4D17B29D59009ABF02 /* scrub-track-progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrub-track-progress.png"; sourceTree = "<group>"; };
 		91B7DC4E17B29D59009ABF02 /* scrub-track-progress@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scrub-track-progress@2x.png"; sourceTree = "<group>"; };
-		91BEC88E176274BD00838197 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
-		91BEC88F176274BD00838197 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
 		91BEC8931762961400838197 /* DVRDatePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DVRDatePicker.xib; sourceTree = "<group>"; };
 		91BEC8971762976800838197 /* DVRDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVRDatePickerView.h; sourceTree = "<group>"; };
 		91BEC8981762976800838197 /* DVRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVRDatePickerView.m; sourceTree = "<group>"; };
@@ -1251,6 +1249,8 @@
 		91F168281798422F00AF8A2E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		91F168291798422F00AF8A2E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		91F4243217EB503600264C90 /* Shelby 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 5.xcdatamodel"; sourceTree = "<group>"; };
+		91F655B91864F01A000B9843 /* DisplayChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayChannel.h; sourceTree = "<group>"; };
+		91F655BA1864F01A000B9843 /* DisplayChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayChannel.m; sourceTree = "<group>"; };
 		91FCC69F174A8F14004255F5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		91FCC6AA174BF118004255F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1603,9 +1603,9 @@
 				914FEA84175E40C600903FEA /* DVREntry.m */,
 				91E5D461174E938100AD3746 /* Roll.h */,
 				91E5D462174E938100AD3746 /* Roll.m */,
-				91BEC88E176274BD00838197 /* DisplayChannel.h */,
-				91BEC88F176274BD00838197 /* DisplayChannel.m */,
 				8E9182DC16B8921C00F2BDCF /* Shelby.xcdatamodeld */,
+				91F655B91864F01A000B9843 /* DisplayChannel.h */,
+				91F655BA1864F01A000B9843 /* DisplayChannel.m */,
 				915ACBC417EB52DE00FA3EFF /* Conversation.h */,
 				915ACBC517EB52DE00FA3EFF /* Conversation.m */,
 				91D03F551733149F008131D2 /* Dashboard.h */,
@@ -2721,6 +2721,7 @@
 				91D03F67173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F76173321AD008131D2 /* Messages+Helper.m in Sources */,
+				91F655BC1864F01A000B9843 /* DisplayChannel.m in Sources */,
 				915ACBC717EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444E18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
@@ -2739,7 +2740,6 @@
 				914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7C175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA86175E40C700903FEA /* DVREntry.m in Sources */,
-				91BEC891176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89A1762976800838197 /* DVRDatePickerView.m in Sources */,
 				1C836DDA17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5617DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
@@ -2863,6 +2863,7 @@
 				91D03F68173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F77173321AD008131D2 /* Messages+Helper.m in Sources */,
+				91F655BD1864F01A000B9843 /* DisplayChannel.m in Sources */,
 				915ACBC817EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444F18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
@@ -2881,7 +2882,6 @@
 				914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7D175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA87175E40C700903FEA /* DVREntry.m in Sources */,
-				91BEC892176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC89B1762976800838197 /* DVRDatePickerView.m in Sources */,
 				1C836DDB17F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5717DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
@@ -3005,6 +3005,7 @@
 				91D03F66173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F75173321AD008131D2 /* Messages+Helper.m in Sources */,
+				91F655BB1864F01A000B9843 /* DisplayChannel.m in Sources */,
 				915ACBC617EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444D18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
@@ -3023,7 +3024,6 @@
 				914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */,
 				914FEA7B175E3E6800903FEA /* DVREntry+Helper.m in Sources */,
 				914FEA85175E40C700903FEA /* DVREntry.m in Sources */,
-				91BEC890176274BD00838197 /* DisplayChannel.m in Sources */,
 				91BEC8991762976800838197 /* DVRDatePickerView.m in Sources */,
 				1C836DD917F9C7A500A2BBEF /* ShelbyABTestManager.m in Sources */,
 				9184FE5517DA5757006E23E4 /* UITextViewWithPlaceholder.m in Sources */,
