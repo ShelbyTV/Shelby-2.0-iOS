@@ -32,6 +32,8 @@
     [super viewDidLoad];
 
     self.navBarView = (ShelbyNavBarView *)self.view;
+    
+    [self setUnseenNotificationCount:[self.navBarView.notificationLabel.text intValue]];
 }
 
 - (void)setCurrentUser:(User *)currentUser

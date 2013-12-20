@@ -18,6 +18,8 @@
 @property (nonatomic, assign) NSInteger unseenNotifications;
 @end
 
+NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotificationCenterLastNotificationIDKey";
+
 @implementation ShelbyNotificationCenterViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,6 +46,14 @@
     // KP KP: TODO: save last seen notification so we can have the number of notifications accurate 
     self.unseenNotifications = 0;
     
+    if ([self.notifications count]) {
+        NSString *lastSeenNotificationID = ((DashboardEntry *)self.notifications[0]).dashboardEntryID;
+        [[NSUserDefaults standardUserDefaults] setObject:lastSeenNotificationID forKey:kShelbyNotificationCenterLastNotificationIDKey];
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyNotificationCenterLastNotificationIDKey];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [self.delegate unseenNotificationCountChanged];
     [self.notificationTable reloadData];
 }
@@ -56,18 +66,31 @@
 
 - (void)setNotificationEntries:(NSArray *)notificationEntries
 {
+    // KP KP: TODO: make sure notfications are for current user. For that ShelbyHomeVC will have to pass in the Current User
     NSInteger currentUnseenNotifications = self.unseenNotifications;
+    NSMutableArray *notificationsToAdd = [@[] mutableCopy];
     
     if (!self.notifications) {
         self.notifications = [@[] mutableCopy];
     }
-    // KP KP: TODO: make sure notfications are for current user. For that ShelbyHomeVC will have to pass in the Current User
+    BOOL olderNotifications = NO;
+    NSString *lastNotificationIDSeenByUser = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyNotificationCenterLastNotificationIDKey];
     for (DashboardEntry *dashboardEntry in notificationEntries) {
         if (![self.notifications containsObject:dashboardEntry]) {
-            self.unseenNotifications++;
-            [self.notifications addObject:dashboardEntry];
+            if (!olderNotifications && [lastNotificationIDSeenByUser isEqualToString:dashboardEntry.dashboardEntryID]) {
+                olderNotifications = YES;
+            }
+
+            if (!olderNotifications) {
+                self.unseenNotifications++;
+            }
+            
+            [notificationsToAdd addObject:dashboardEntry];
         }
     }
+    
+    [notificationsToAdd addObjectsFromArray:self.notifications];
+    self.notifications = notificationsToAdd;
     
     if (currentUnseenNotifications != self.unseenNotifications) {
         [self.delegate unseenNotificationCountChanged];
