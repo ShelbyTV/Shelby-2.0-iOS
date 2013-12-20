@@ -935,7 +935,6 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [[ShelbyDataMediator sharedInstance] fetchDashboardEntryWithID:dashboardID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(DashboardEntry *fetchedDashboardEntry) {
         NSString *dashboardID = fetchedDashboardEntry.dashboardEntryID;
 
-        Dashboard *dashboard = [Dashboard dashboardForDashboardDictionary:@{@"user_id" : dashboardID, @"display_title" : channelTitle} inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
         
         if (fetchedDashboardEntry) {
             DisplayChannel *displayChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForDashboardID:dashboardID];
@@ -943,8 +942,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
                 displayChannel = [DisplayChannel channelForTransientEntriesWithID:dashboardID title:channelTitle inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
             }
             
-            fetchedDashboardEntry.dashboard = dashboard;
-            displayChannel.dashboard = dashboard;
+            displayChannel.dashboard = fetchedDashboardEntry.dashboard;
             
             singleVideoVC.channels = @[displayChannel];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
