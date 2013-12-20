@@ -111,6 +111,10 @@
     // TODO: Add Shelbytv URL Schema to Shelby.tv and Beta targets
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
         // KP KP: TODO: Check for LaunchOptionsURL and open App accordingly
+        NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+        if ([[url scheme] isEqualToString:@"shelbytv"]) {
+            [self handleOpenURL:url];
+        }
     }
     
     return YES;
@@ -141,6 +145,15 @@
     [self.brain performBackgroundFetchWithCompletionHandler:completionHandler];
 }
 
+- (void)handleOpenURL:(NSURL *)url
+{
+    // KP KP: TODO: lets put error check
+    if ([[url host] isEqualToString:@"user"]) {
+        [self.brain userProfileWasTapped:[url lastPathComponent]];
+    } else if ([[url host] isEqualToString:@"frame"]) {
+        [self.brain openSingleVideoViewWithFrameID:[url lastPathComponent]];
+    }
+}
 
 - (void)fireLocalNotification:(UILocalNotification *)notifcation
 {
@@ -190,6 +203,10 @@
     NSString *fbAppID = [NSString stringWithFormat:@"fb%@", [[FacebookHandler sharedInstance] facebookAppID]];
     
     // KP KP: TODO: handle Shelbytv URLS
+    if ([[url scheme] isEqualToString:@"shelbytv"]) {
+        [self handleOpenURL:url];
+        return YES;
+    }
     
     if ([[url absoluteString] hasPrefix:fbAppID]) {
         return [[FacebookHandler sharedInstance] handleOpenURL:url];

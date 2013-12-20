@@ -45,5 +45,8 @@ extern NSString * const kShelbyBrainEntityKey;
 - (void)handleDidFinishLaunching;
 - (void)handleLocalNotificationReceived:(UILocalNotification *)notification;
 - (void)performBackgroundFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
+// KP KP: TODO: these two methods should not be exposed. Instead, we will have another method that check if user/frame is valid to prevent garbage input.
+- (void)userProfileWasTapped:(NSString *)userID;
+- (void)openSingleVideoViewWithFrameID:(NSString *)frameID;
 
 @end
