@@ -12,6 +12,7 @@
 #import "ShelbyVideoContainer.h"
 
 typedef NS_ENUM(NSInteger, DashboardEntryType){
+    DashboardEntryTypeUnsupported,
     DashboardEntryTypeSocialFrame,
     DashboardEntryTypeBookmarkFrame,
     DashboardEntryTypeInAppFrame,

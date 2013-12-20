@@ -52,6 +52,11 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
             case DashboardEntryTypeMortarRecommendation:
                 dashboardEntry.sourceVideoTitle = [[dict valueForKeyPath:@"src_video.title"] nilOrSelfWhenNotNull];
                 break;
+            case DashboardEntryTypeUnsupported:
+                if (dashboardEntry.objectID.isTemporaryID) {
+                    [context deleteObject:dashboardEntry];
+                }
+                return nil;
             default:
                 break;
         }
@@ -137,6 +142,10 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
 
 - (DashboardEntryType)typeOfEntry
 {
+    if (!self.action) {
+        return DashboardEntryTypeUnsupported;
+    }
+    
     //From API business logic model: dashboard_entry.rb
     switch ([self.action intValue]) {
         case 0:
@@ -146,7 +155,7 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
         case 2:
             return DashboardEntryTypeInAppFrame;
         case 3:
-            return DashboardEntryTypeGeniusFrame;
+            return DashboardEntryTypeUnsupported;//DashboardEntryTypeGeniusFrame;
         case 4:
             return DashboardEntryTypeHashtagFrame;
         case 5:
@@ -156,9 +165,9 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
         case 8:
             return DashboardEntryTypeReRoll;
         case 9:
-            return DashboardEntryTypeWatch;
+            return DashboardEntryTypeUnsupported;//DashboardEntryTypeWatch;
         case 10:
-            return DashboardEntryTypeComment;
+            return DashboardEntryTypeUnsupported;//DashboardEntryTypeComment;
         case 11:
             return DashboardEntryTypeLike;
         case 12:
@@ -172,13 +181,13 @@ NSString * const kShelbyCoreDataEntityDashboardEntryIDPredicate = @"dashboardEnt
         case 31:
             return DashboardEntryTypeVideoGraphRecommendation;
         case 32:
-            return DashboardEntryTypeEntertainmentGraphRecommendation;
+            return DashboardEntryTypeUnsupported;//DashboardEntryTypeEntertainmentGraphRecommendation;
         case 33:
             return DashboardEntryTypeMortarRecommendation;
         case 34:
             return DashboardEntryTypeChannelRecommendation;
         default:
-            return DashboardEntryTypeSocialFrame;
+            return DashboardEntryTypeUnsupported;
     }
 }
 
