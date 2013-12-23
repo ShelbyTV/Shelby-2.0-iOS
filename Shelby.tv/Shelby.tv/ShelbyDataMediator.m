@@ -922,6 +922,18 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }   
 }
 
+- (void)registerDeviceToken:(NSString *)token
+{
+    if (token) {
+        User *user = [User currentAuthenticatedUserInContext:[self mainThreadContext]];
+        if (user.token) {
+            [ShelbyAPIClient postDeviceToken:token forUser:user andBlock:^(id JSON, NSError *error) {
+                // Do Nothing
+            }];
+        }
+    }
+}
+
 - (void)userAskForFacebookPublishPermissions
 {
     [self openFacebookSessionWithAllowLoginUI:NO andAskPublishPermissions:YES];

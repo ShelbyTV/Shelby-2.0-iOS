@@ -50,6 +50,9 @@ typedef void (^shelby_api_shortlink_request_complete_block_t)(NSString *link, BO
 + (void)fetchUserForUserID:(NSString *)userID
                   andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
++ (void)postDeviceToken:(NSString *)token
+                forUser:(User *)user
+               andBlock:(shelby_api_request_complete_block_t)completionBlock;
 
 // -- ABTest
 + (void)fetchABTestWithBlock:(shelby_api_request_complete_block_t)completionBlock;

@@ -49,4 +49,6 @@ extern NSString * const kShelbyBrainEntityKey;
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openSingleVideoViewWithFrameID:(NSString *)frameID;
 
+- (void)registerDeviceToken:(NSString *)token;
+
 @end

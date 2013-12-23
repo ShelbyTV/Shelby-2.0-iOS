@@ -96,6 +96,7 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 - (void)loginUserFacebook;
 - (BOOL)hasUserLoggedIn;
 - (void)userLoggedIn;
+- (void)registerDeviceToken:(NSString *)token;
 
 - (void)syncLikes; // Syncs unsycs likes after user logs in
 

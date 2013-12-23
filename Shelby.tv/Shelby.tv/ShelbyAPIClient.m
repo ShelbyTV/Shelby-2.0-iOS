@@ -42,6 +42,7 @@ NSString * const kShelbyAPIPostRollUnfollow =               @"v1/roll/%@/leave";
 NSString * const kShelbyAPIPostLoginPath =                  @"v1/token";
 NSString * const kShelbyAPIPostThirdPartyTokenPath =        @"v1/token";
 NSString * const kShelbyAPIPostSignupPath =                 @"v1/user";
+NSString * const kShelbyAPIPostDeviceTokenPath =            @"v1/user/%@/apn_token";
 NSString * const PUT =     @"PUT";
 NSString * const kShelbyAPIPutUserPath =                    @"v1/user/%@";
 NSString * const kShelbyAPIPutUserSessionVisitPath =        @"v1/user/%@/visit";
@@ -818,4 +819,31 @@ toExternalDestinations:(NSArray *)destinations
     [operation start];
 }
 
++ (void)postDeviceToken:(NSString *)token
+                forUser:(User *)user
+               andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    if (!token || !user.token || !user.userID) {
+        return;
+    }
+
+    NSURLRequest *request = [self requestWithMethod:POST
+                                            forPath:[NSString stringWithFormat:kShelbyAPIPostDeviceTokenPath, user.userID]
+                                withQueryParameters:@{kShelbyAPIParamOAuthToken: token,
+                                                      kShelbyAPIParamAuthToken: user.token}
+                                      shouldAddAuth:YES];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        if (completionBlock) {
+            completionBlock(JSON, nil);
+        }
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if (completionBlock) {
+            completionBlock(nil, error);
+        }
+    }];
+    
+    [operation start];
+}
 @end

@@ -301,20 +301,23 @@
 #pragma mark - Push Notifications
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    
+    NSString *token = [NSString stringWithFormat:@"%@",deviceToken];
+    [self.brain registerDeviceToken:token];
+    DLog(@"%@", token);
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    
+    DLog(@"Error registering push notifications: %@", error.localizedDescription);
 }
 
+// Push Notifications for iOS 6
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     
 }
 
+// Push Notifications for iOS 7
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
-
 {
     
 }

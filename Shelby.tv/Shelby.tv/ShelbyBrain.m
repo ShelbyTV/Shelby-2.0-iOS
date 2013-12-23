@@ -140,11 +140,18 @@ NSString * const kShelbyBrainEntityKey = @"entity";
         if (currentUser) {
             [self fetchUserChannelsForceSwitchToUsersStream:YES];
             [[ShelbyDataMediator sharedInstance] updateRollFollowingsForCurrentUser];
+            [self registerForPushNotifications];
         } else {
             [[ShelbyDataMediator sharedInstance] fetchAllUnsyncedLikes];
         }
     }
     [self.mainWindow makeKeyAndVisible];
+}
+
+- (void)registerForPushNotifications
+{
+    // KP KP: TODO: if user doesn't want push, don't ask!
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 }
 
 - (void)activateWelcomeViewController
@@ -354,6 +361,12 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     } else {
         completionHandler(UIBackgroundFetchResultNoData);
     }
+}
+
+- (void)registerDeviceToken:(NSString *)token
+{
+    // KP KP: TODO: if user doesn't want push, don't ask!
+    [[ShelbyDataMediator sharedInstance] registerDeviceToken:token];
 }
 
 // Should only be called from performBackgroundFetchWithCompletionHandler method
@@ -802,6 +815,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     if (user) {
         [[ShelbyDataMediator sharedInstance] syncLikes];
         [[ShelbyDataMediator sharedInstance] userLoggedIn];
+        [self registerForPushNotifications];
     }
 }
 
