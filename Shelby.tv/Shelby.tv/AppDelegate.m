@@ -309,6 +309,10 @@
         return;
     }
     
+    // KP KP: TODO: remove alert view - this is for debug only to show the JSON sent.
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Push" message:[NSString stringWithFormat:@"JSON=%@", userInfo] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
+
     NSDictionary *customData = userInfo[@"custom_data"];
     if (![customData isKindOfClass:[NSDictionary class]]) {
         return;
