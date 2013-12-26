@@ -210,7 +210,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
 }
 
--(BOOL) shouldAutorotate {
+-(BOOL)shouldAutorotate {
     return YES;
 }
 
@@ -1383,6 +1383,11 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)presentNotificationCenter
 {
+    [self presentNotificationCenterWithCompletionBlock:nil];
+}
+
+- (void)presentNotificationCenterWithCompletionBlock:(shelby_home_complete_block_t)completionBlock
+{
     //this gets overriden by autolayout, just using it to set starting point for transition
     self.notificationCenterVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     
@@ -1398,6 +1403,11 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                                                                             views:@{@"notificationCenter":self.notificationCenterVC.view}]];
         
         self.videoControlsVC.view.hidden = YES;
+        
+        if (completionBlock) {
+            [self.navBarVC didNavigateToNotificationCenter];
+            completionBlock();
+        }
     }];
 }
 @end

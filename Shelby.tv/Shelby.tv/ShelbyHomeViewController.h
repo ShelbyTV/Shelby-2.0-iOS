@@ -20,6 +20,8 @@
 extern NSString * const kShelbyShareVideoHasCompleted;
 extern NSString * const kShelbyShareFrameIDKey;
 
+typedef void (^shelby_home_complete_block_t)(void);
+
 @protocol ShelbyHomeDelegate <NSObject>
 - (void)presentUserLogin;
 - (void)presentUserSignup;
@@ -77,4 +79,5 @@ extern NSString * const kShelbyShareFrameIDKey;
 - (void)setupNavBarView;
 - (ShelbyStreamBrowseViewController *)initializeStreamBrowseViewController;
 - (ShelbyStreamBrowseViewController *)streamBrowseViewControllerForChannel:(DisplayChannel *)channel;
+- (void)presentNotificationCenterWithCompletionBlock:(shelby_home_complete_block_t)completionBlock;
 @end

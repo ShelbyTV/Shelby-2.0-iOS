@@ -972,6 +972,20 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     }];
 }
 
+- (void)openNotificationCenterWithDashboardEntryID:(NSString *)dashboardEntryID
+{
+    [self.homeVC presentNotificationCenterWithCompletionBlock:^{
+        [self openSingleVideoViewWithDashboardEntryID:dashboardEntryID];
+    }];
+}
+
+- (void)openNotificationCenterWithUserID:(NSString *)userID
+{
+    [self.homeVC presentNotificationCenterWithCompletionBlock:^{
+        [self userProfileWasTapped:userID];        
+    }];
+}
+
 - (void)openSingleVideoViewWithFrameID:(NSString *)frameID
 {
     ShelbySingleVideoViewController *singleVideoVC = [[ShelbySingleVideoViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];

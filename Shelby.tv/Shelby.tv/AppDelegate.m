@@ -313,15 +313,10 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Push" message:[NSString stringWithFormat:@"JSON=%@", userInfo] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alertView show];
 
-    NSDictionary *customData = userInfo[@"custom_data"];
-    if (![customData isKindOfClass:[NSDictionary class]]) {
-        return;
-    }
-    
-    if (customData[@"user_id"]) {
-        [self.brain userProfileWasTapped:customData[@"user_id"]];
-    } else if (customData[@"dashboard_entry_id"]) {
-        [self.brain openSingleVideoViewWithFrameID:customData[@"dashboard_entry_id"]];
+    if (userInfo[@"user_id"]) {
+        [self.brain openNotificationCenterWithUserID:userInfo[@"user_id"]];
+    } else if (userInfo[@"dashboard_entry_id"]) {
+        [self.brain openNotificationCenterWithDashboardEntryID:userInfo[@"dashboard_entry_id"]];
     }
 }
 
