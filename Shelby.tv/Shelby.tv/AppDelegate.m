@@ -117,6 +117,11 @@
         }
     }
     
+    // Handle Push Notification
+    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+        [self handlePushNotification:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
+    }
+    
     return YES;
 }
 
@@ -298,6 +303,24 @@
     }
 }
 
+- (void)handlePushNotification:(NSDictionary *)userInfo
+{
+    if (![userInfo isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    
+    NSDictionary *customData = userInfo[@"custom_data"];
+    if (![customData isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    
+    if (customData[@"user_id"]) {
+        [self.brain userProfileWasTapped:customData[@"user_id"]];
+    } else if (customData[@"dashboard_entry_id"]) {
+        [self.brain openSingleVideoViewWithFrameID:customData[@"dashboard_entry_id"]];
+    }
+}
+
 #pragma mark - Push Notifications
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -313,14 +336,18 @@
 // Push Notifications for iOS 6
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    
+    [self handlePushNotification:userInfo];
 }
 
 // Push Notifications for iOS 7
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
+    if (![userInfo isKindOfClass:[NSDictionary class]]) {
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
+    }
     
+    completionHandler(UIBackgroundFetchResultNewData);
+    [self handlePushNotification:userInfo];
 }
-
-
 @end

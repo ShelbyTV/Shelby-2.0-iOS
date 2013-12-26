@@ -363,6 +363,12 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     }
 }
 
+//- (void)handlePushNotification:(NSDictionary *)userInfo WithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+//
+//{
+//    
+//}
+
 - (void)registerDeviceToken:(NSString *)token
 {
     // KP KP: TODO: if user doesn't want push, don't ask!
@@ -1014,7 +1020,7 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [topViewController presentViewController:userProfileVC animated:YES completion:nil];
     [userProfileVC setIsLoading:YES];
     
-    [[ShelbyDataMediator sharedInstance] forceFetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {
+    [[ShelbyDataMediator sharedInstance] fetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {
         DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedUser.publicRollID];
         if (!rollChannel) {
             rollChannel = [DisplayChannel channelForTransientEntriesWithID:fetchedUser.publicRollID title:fetchedUser.nickname inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];

@@ -74,12 +74,12 @@ typedef void (^shelby_data_mediator_complete_block_t)(DisplayChannel *displayCha
 - (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForRollID:(NSString *)rollID;
 - (DisplayChannel *)fetchDisplayChannelOnMainThreadContextForDashboardID:(NSString *)dashboardID;
 //return user if cached, otherwise returns nil and calls completion block async after fetching user remotely
-- (User *)fetchUserWithID:(NSString *)userID
-                inContext:(NSManagedObjectContext *)context
-               completion:(void (^)(User *fetchedUser))completion;
-- (User *)forceFetchUserWithID:(NSString *)userID
-                     inContext:(NSManagedObjectContext *)context
-                    completion:(void (^)(User *fetchedUser))completion;
+- (void)fetchUserWithID:(NSString *)userID
+              inContext:(NSManagedObjectContext *)context
+             completion:(void (^)(User *fetchedUser))completion;
+- (void)forceFetchUserWithID:(NSString *)userID
+                   inContext:(NSManagedObjectContext *)context
+                  completion:(void (^)(User *fetchedUser))completion;
 - (void)fetchAllLikersOfVideo:(Video *)v completion:(void (^)(NSArray *users))completion;
 
 - (void)fetchFrameWithID:(NSString *)frameID

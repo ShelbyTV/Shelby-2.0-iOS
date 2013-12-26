@@ -77,7 +77,7 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
     if ([upvoters isKindOfClass:[NSArray class]] && [upvoters count] > 0) {
         for (NSString *upvoterId in upvoters) {
             //returns User if they exist, otherwise fetches and return async
-            User *upvoter = [[ShelbyDataMediator sharedInstance] fetchUserWithID:upvoterId inContext:context completion:^(User *upvoteUser) {
+            [[ShelbyDataMediator sharedInstance] fetchUserWithID:upvoterId inContext:context completion:^(User *upvoteUser) {
                 if (upvoteUser) {
                     Frame *localFrame = (Frame *)[context objectWithID:frame.objectID];
                     //frame should have been saved by now.  If not, it may have been deleted b/c it was
@@ -99,9 +99,6 @@ NSString * const kShelbyFrameLongLink = @"http://shelby.tv/video/%@/%@/?frame_id
                     DLog(@"upvoteUser fetched failed for userID %@", upvoterId);
                 }
             }];
-            if (upvoter) {
-                [frame addUpvotersObject:upvoter];
-            }
         }
     }
     

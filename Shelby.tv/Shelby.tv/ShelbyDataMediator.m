@@ -204,21 +204,21 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 }
 
 
-- (User *)fetchUserWithID:(NSString *)userID inContext:(NSManagedObjectContext *)context completion:(void (^)(User *fetchedUser))completion
+- (void)fetchUserWithID:(NSString *)userID inContext:(NSManagedObjectContext *)context completion:(void (^)(User *fetchedUser))completion
 {
     STVAssert(completion, @"expected a completion block");
     User *localUser = [User findUserWithID:userID inContext:context];
-    if (localUser) {
-        return localUser;
+    if (localUser && localUser.publicRollID) {
+        completion(localUser);
     } else {
-        return [self forceFetchUserWithID:userID inContext:context completion:completion];
+        [self forceFetchUserWithID:userID inContext:context completion:completion];
     }
 }
 
 // TODO: KP KP: Can we cache these? and not force fetch everytime?
-- (User *)forceFetchUserWithID:(NSString *)userID
-                     inContext:(NSManagedObjectContext *)context
-                    completion:(void (^)(User *fetchedUser))completion
+- (void)forceFetchUserWithID:(NSString *)userID
+                   inContext:(NSManagedObjectContext *)context
+                  completion:(void (^)(User *fetchedUser))completion
 {
     [ShelbyAPIClient fetchUserForUserID:userID andBlock:^(id JSON, NSError *error) {
         if (JSON && JSON[@"result"] && [JSON[@"result"] isKindOfClass:[NSDictionary class]]) {
@@ -231,7 +231,6 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
             completion(nil);
         }
     }];
-    return nil;
 }
 
 - (void)fetchFrameWithID:(NSString *)frameID
