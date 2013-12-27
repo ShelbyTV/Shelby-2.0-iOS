@@ -72,6 +72,10 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 @property (nonatomic, strong) NSDictionary *postFetchInvocationForChannel;
 
 @property (nonatomic, strong) UIAlertView *currentAlertView;
+
+// Notification properties
+@property (nonatomic, strong) NSString *notificationDashboardID;
+@property (nonatomic, strong) NSString *notificationUserID;
 @end
 
 @implementation ShelbyBrain
@@ -92,6 +96,31 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [self refreshUsersStreamAfterDelay];
     
     [[ShelbyNotificationManager sharedInstance] cancelAllNotifications];
+    
+    User *currentUser = [User currentAuthenticatedUserInContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+    if (self.notificationDashboardID) {
+        NSString *dashboardEntryID = self.notificationDashboardID;
+        if (currentUser) {
+            [self.homeVC presentNotificationCenterWithCompletionBlock:^{
+                [self openSingleVideoViewWithDashboardEntryID:dashboardEntryID];
+            }];
+        } else {
+            [self openSingleVideoViewWithDashboardEntryID:dashboardEntryID];
+        }
+
+        self.notificationDashboardID = nil;
+    } else if (self.notificationUserID) {
+        NSString *userID = self.notificationUserID;
+        if (currentUser) {
+            [self.homeVC presentNotificationCenterWithCompletionBlock:^{
+                [self userProfileWasTapped:userID];
+            }];
+        } else {
+            [self userProfileWasTapped:self.notificationUserID];
+        }
+
+        self.notificationUserID = nil;
+    }
 }
 
 - (void)handleWillResignActive
@@ -1012,16 +1041,13 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 
 - (void)openNotificationCenterWithDashboardEntryID:(NSString *)dashboardEntryID
 {
-    [self.homeVC presentNotificationCenterWithCompletionBlock:^{
-        [self openSingleVideoViewWithDashboardEntryID:dashboardEntryID];
-    }];
+    self.notificationDashboardID = dashboardEntryID;
+    
 }
 
 - (void)openNotificationCenterWithUserID:(NSString *)userID
 {
-    [self.homeVC presentNotificationCenterWithCompletionBlock:^{
-        [self userProfileWasTapped:userID];        
-    }];
+    self.notificationUserID = userID;
 }
 
 - (void)openSingleVideoViewWithFrameID:(NSString *)frameID

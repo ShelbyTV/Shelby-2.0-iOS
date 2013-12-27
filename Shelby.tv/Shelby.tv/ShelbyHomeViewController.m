@@ -297,7 +297,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
             // video controls represent airplay video when in airplay mode, don't touch 'em
         }
 
-    }];
+    } andTransitionAnimationCompleted:nil];
 }
 
 - (CGFloat)swapAnimationTime
@@ -305,7 +305,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     return 0.5;
 }
 
-- (void)swapOutViewController:(UIViewController *)oldVC forViewController:(UIViewController *)newVC viewDidInsert:(void (^)())viewDidInsert
+- (void)swapOutViewController:(UIViewController *)oldVC forViewController:(UIViewController *)newVC viewDidInsert:(void (^)())viewDidInsert andTransitionAnimationCompleted:(void (^)())transitionAnimationCompleted
 {
     [oldVC willMoveToParentViewController:nil];
     [self addChildViewController:newVC];
@@ -328,6 +328,10 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         oldVC.view.transform = CGAffineTransformIdentity;
         [newVC didMoveToParentViewController:self];
         _currentFullScreenVC = newVC;
+        
+        if (transitionAnimationCompleted) {
+            transitionAnimationCompleted();
+        }
    }];
 }
 
@@ -1378,7 +1382,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
                                                                             views:@{@"settings":_settingsVC.view}]];
         
         self.videoControlsVC.view.hidden = YES;
-    }];
+    } andTransitionAnimationCompleted:nil];
 }
 
 - (void)presentNotificationCenter
@@ -1404,10 +1408,11 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
         
         self.videoControlsVC.view.hidden = YES;
         
-        if (completionBlock) {
-            [self.navBarVC didNavigateToNotificationCenter];
-            completionBlock();
-        }
-    }];
+     } andTransitionAnimationCompleted:^{
+         if (completionBlock) {
+             [self.navBarVC didNavigateToNotificationCenter];
+             completionBlock();
+         }
+     }];
 }
 @end
