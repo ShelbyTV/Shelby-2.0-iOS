@@ -148,10 +148,23 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [self.mainWindow makeKeyAndVisible];
 }
 
+- (void)updatePushNotificationForUser:(BOOL)pushOn
+{
+    User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
+    
+    if ((pushOn && !currentUser.likeNotificationsIOS) || (!pushOn && currentUser.likeNotificationsIOS)) {
+        [[ShelbyDataMediator sharedInstance] updateUserPreferenesForCurrentUser];
+    }
+}
+
 - (void)registerForPushNotifications
 {
-    // KP KP: TODO: if user doesn't want push, don't ask!
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    if ([self checkPushNotificationStatus]) {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    } else {
+        // User turned off notification - let backend know!
+        [self updatePushNotificationForUser:NO];
+    }
 }
 
 - (void)activateWelcomeViewController
@@ -371,8 +384,13 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 
 - (void)registerDeviceToken:(NSString *)token
 {
-    // KP KP: TODO: if user doesn't want push, don't ask!
-    [[ShelbyDataMediator sharedInstance] registerDeviceToken:token];
+    if (!token) {
+        // Error let backend know
+        [self updatePushNotificationForUser:NO];
+    } else {
+        [[ShelbyDataMediator sharedInstance] registerDeviceToken:token];
+        [self updatePushNotificationForUser:YES];
+    }
 }
 
 // Should only be called from performBackgroundFetchWithCompletionHandler method
@@ -825,6 +843,15 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     }
 }
 
+- (BOOL)checkPushNotificationStatus
+{
+    if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes] == UIRemoteNotificationTypeNone) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 #pragma mark - SignupFlowNavigationViewDelegate
 
 - (void)createUserWithName:(NSString *)name
@@ -882,6 +909,17 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 - (void)unfollowRoll:(NSString *)rollID
 {
     [[ShelbyDataMediator sharedInstance] unfollowRoll:rollID];
+}
+
+- (void)togglePushPreferences
+{
+    self.homeVC.currentUser.likeNotificationsIOS = [self.homeVC.currentUser.likeNotificationsIOS boolValue] ? @NO : @YES;
+    
+    if (self.homeVC.currentUser.likeNotificationsIOS) {
+        [self registerForPushNotifications];
+    }
+
+    [[ShelbyDataMediator sharedInstance] updateUserPreferenesForCurrentUser];   
 }
 
 #pragma mark - ShelbyHomeDelegate

@@ -329,19 +329,22 @@
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
+    [self.brain registerDeviceToken:nil];
     DLog(@"Error registering push notifications: %@", error.localizedDescription);
 }
 
 // Push Notifications for iOS 6
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [self handlePushNotification:userInfo];
+    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+        [self handlePushNotification:userInfo];
+    }
 }
 
 // Push Notifications for iOS 7
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
-    if (![userInfo isKindOfClass:[NSDictionary class]]) {
+    if([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive || ![userInfo isKindOfClass:[NSDictionary class]]) {
         completionHandler(UIBackgroundFetchResultNoData);
         return;
     }

@@ -812,6 +812,19 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }];
 }
 
+- (void)updateUserPreferenesForCurrentUser
+{
+    User *currentUser = [self fetchAuthenticatedUserOnMainThreadContext];
+    NSDictionary *prefs = @{@"like_notifications_ios" : currentUser.likeNotificationsIOS};
+    
+    NSDictionary *params = @{@"preferences" : prefs};
+    [ShelbyAPIClient putUserWithParams:params andBlock:^(id JSON, NSError *error) {
+        if (JSON) {
+            [self saveUserFromJSON:JSON];
+        }
+    }];
+}
+
 - (void)updateUserWithName:(NSString *)name
                   nickname:(NSString *)nickname
                   password:(NSString *)password

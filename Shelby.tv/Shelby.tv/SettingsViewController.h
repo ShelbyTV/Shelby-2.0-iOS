@@ -9,16 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import <MessageUI/MessageUI.h>
+#import "UserPreferencesCell.h"
 
 @protocol SettingsViewDelegate <NSObject>
 - (void)logoutUser;
 - (void)connectToFacebook;
 - (void)connectToTwitter;
+- (void)togglePushPreferences;
 @optional
 - (void)launchMyRoll;
 @end
 
-@interface SettingsViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
+@interface SettingsViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate, UserPreferencesCellDelegate>
 
 @property (nonatomic, strong) User *user;
 @property (nonatomic, weak) id<SettingsViewDelegate> delegate;

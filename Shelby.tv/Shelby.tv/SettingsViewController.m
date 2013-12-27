@@ -60,6 +60,8 @@
     
     [self.table registerNib:[UINib nibWithNibName:@"UserDetailsViewCell" bundle:nil] forCellReuseIdentifier:@"UserDetailsViewCell"];
     [self.table registerNib:[UINib nibWithNibName:@"SettingsViewCell" bundle:nil] forCellReuseIdentifier:@"SettingsViewCell"];
+    [self.table registerNib:[UINib nibWithNibName:@"UserPreferencesViewCell" bundle:nil] forCellReuseIdentifier:@"UserPreferencesCell"];
+    
     
     [self.table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SettingsCell"];
 }
@@ -164,7 +166,7 @@
 #pragma mark - UITableViewDataSource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 7;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -177,6 +179,12 @@
         cell.avatar.layer.masksToBounds = YES;
         [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:[UIImage imageNamed:@"settings-default-avatar"]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    } else if (indexPath.row == 6) {
+        UserPreferencesCell *cell = (UserPreferencesCell *)[self.table dequeueReusableCellWithIdentifier:@"UserPreferencesCell" forIndexPath:indexPath];
+        cell.preferenceText.text = @"Push Notifications";
+        [cell.preferenceSwitch setOn:[self.user.likeNotificationsIOS boolValue]];
+        cell.delegate = self;
         return cell;
     } else {
         SettingsViewCell *cell = (SettingsViewCell *)[self.table dequeueReusableCellWithIdentifier:@"SettingsViewCell" forIndexPath:indexPath];
@@ -276,4 +284,11 @@
 }
 
 
+#pragma mark - UserPreferenecesCellDelegate Methods
+- (void)toggleUserPreferences
+{
+    if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(togglePushPreferences)]) {
+        [self.delegate togglePushPreferences];
+    }
+}
 @end

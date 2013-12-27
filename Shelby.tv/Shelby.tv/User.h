@@ -2,7 +2,7 @@
 //  User.h
 //  Shelby.tv
 //
-//  Created by Keren on 12/18/13.
+//  Created by Keren on 12/27/13.
 //  Copyright (c) 2013 Shelby TV, Inc. All rights reserved.
 //
 
@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString * facebookNickname;
 @property (nonatomic, retain) NSString * facebookUID;
 @property (nonatomic, retain) NSNumber * hasShelbyAvatar;
+@property (nonatomic, retain) NSNumber * likeNotificationsIOS;
 @property (nonatomic, retain) NSString * likesRollID;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * nickname;
@@ -32,12 +33,17 @@
 @property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSString * userImage;
 @property (nonatomic, retain) NSNumber * userType;
+@property (nonatomic, retain) NSSet *dashboardEntriesFromActions;
 @property (nonatomic, retain) NSSet *frames;
 @property (nonatomic, retain) NSSet *upvoted;
-@property (nonatomic, retain) NSSet *dashboardEntriesFromActions;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
+
+- (void)addDashboardEntriesFromActionsObject:(DashboardEntry *)value;
+- (void)removeDashboardEntriesFromActionsObject:(DashboardEntry *)value;
+- (void)addDashboardEntriesFromActions:(NSSet *)values;
+- (void)removeDashboardEntriesFromActions:(NSSet *)values;
 
 - (void)addFramesObject:(Frame *)value;
 - (void)removeFramesObject:(Frame *)value;
@@ -48,10 +54,5 @@
 - (void)removeUpvotedObject:(Frame *)value;
 - (void)addUpvoted:(NSSet *)values;
 - (void)removeUpvoted:(NSSet *)values;
-
-- (void)addDashboardEntriesFromActionsObject:(DashboardEntry *)value;
-- (void)removeDashboardEntriesFromActionsObject:(DashboardEntry *)value;
-- (void)addDashboardEntriesFromActions:(NSSet *)values;
-- (void)removeDashboardEntriesFromActions:(NSSet *)values;
 
 @end

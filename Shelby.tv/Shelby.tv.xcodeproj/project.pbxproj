@@ -272,9 +272,6 @@
 		1CB7090A1862320B00D1C803 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB709091862320B00D1C803 /* DashboardEntry.m */; };
 		1CB7090B1862320B00D1C803 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB709091862320B00D1C803 /* DashboardEntry.m */; };
 		1CB7090C1862320B00D1C803 /* DashboardEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB709091862320B00D1C803 /* DashboardEntry.m */; };
-		1CB7090F1862320C00D1C803 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7090E1862320C00D1C803 /* User.m */; };
-		1CB709101862320C00D1C803 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7090E1862320C00D1C803 /* User.m */; };
-		1CB709111862320C00D1C803 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7090E1862320C00D1C803 /* User.m */; };
 		1CBF0936175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
 		1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
 		1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */; };
@@ -438,6 +435,15 @@
 		1CE56C4F1714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C501714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
 		1CE56C511714BEC40049057F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE56C4E1714BEC40049057F /* FacebookSDK.framework */; };
+		1CFEB3AC186DF63F00179AE2 /* UserPreferencesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */; };
+		1CFEB3AD186DF63F00179AE2 /* UserPreferencesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */; };
+		1CFEB3AE186DF63F00179AE2 /* UserPreferencesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */; };
+		1CFEB3B0186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
+		1CFEB3B1186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
+		1CFEB3B2186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */; };
+		1CFEB3BF186E12BF00179AE2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3BE186E12BF00179AE2 /* User.m */; };
+		1CFEB3C0186E12BF00179AE2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3BE186E12BF00179AE2 /* User.m */; };
+		1CFEB3C1186E12BF00179AE2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFEB3BE186E12BF00179AE2 /* User.m */; };
 		8E0132DB16A7CC9C00195D9A /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */; };
 		8E01AFBB16E67365000567D4 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFA916E67365000567D4 /* AFHTTPClient.m */; };
 		8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E01AFAB16E67365000567D4 /* AFHTTPRequestOperation.m */; };
@@ -917,8 +923,6 @@
 		1CB708F818622EB600D1C803 /* Shelby 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 8.xcdatamodel"; sourceTree = "<group>"; };
 		1CB709081862320B00D1C803 /* DashboardEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardEntry.h; sourceTree = "<group>"; };
 		1CB709091862320B00D1C803 /* DashboardEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardEntry.m; sourceTree = "<group>"; };
-		1CB7090D1862320C00D1C803 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		1CB7090E1862320C00D1C803 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		1CBF0935175CD6C7001D471A /* ShelbyHomeView-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ShelbyHomeView-iPhone.xib"; sourceTree = "<group>"; };
 		1CC5763B178DDE7000ED2424 /* SignupUserInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupUserInfoViewCell.xib; sourceTree = "<group>"; };
 		1CC77A4E174AA48700AD7F05 /* ShelbyActivityItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyActivityItemProvider.h; sourceTree = "<group>"; };
@@ -987,6 +991,11 @@
 		1CE5586617DE87B200C18A30 /* no-content-bkgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-content-bkgd@2x.png"; sourceTree = "<group>"; };
 		1CE5586D17DE883C00C18A30 /* no-content-bkgd-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-content-bkgd-568h@2x.png"; sourceTree = "<group>"; };
 		1CE56C4E1714BEC40049057F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Library/FacebookSDK.framework; sourceTree = "<group>"; };
+		1CFEB3AA186DF63F00179AE2 /* UserPreferencesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferencesCell.h; sourceTree = "<group>"; };
+		1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferencesCell.m; sourceTree = "<group>"; };
+		1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserPreferencesViewCell.xib; sourceTree = "<group>"; };
+		1CFEB3BD186E12BF00179AE2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		1CFEB3BE186E12BF00179AE2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		8E0132D916A7CC9C00195D9A /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
 		8E0132DA16A7CC9C00195D9A /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		8E01AFA816E67365000567D4 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -1512,6 +1521,7 @@
 				1CDB0C1B17A95BF10031C2C9 /* SettingsView-iPhone.xib */,
 				1C154E5117A06EBA00C0B76B /* NoLikesView.xib */,
 				1CDB0C1F17A96CF90031C2C9 /* UserDetailsViewCell.xib */,
+				1CFEB3AF186DF68D00179AE2 /* UserPreferencesViewCell.xib */,
 				1CDB0C2317A96D7A0031C2C9 /* SettingsViewCell.xib */,
 				1C253B76184E452D00FBE054 /* LikerViewCell.xib */,
 				1C100DCE185F8E01002ADAF2 /* FollowNotificationViewCell.xib */,
@@ -1591,8 +1601,8 @@
 		8E0E7031163869B800BA0A24 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				1CB7090D1862320C00D1C803 /* User.h */,
-				1CB7090E1862320C00D1C803 /* User.m */,
+				1CFEB3BD186E12BF00179AE2 /* User.h */,
+				1CFEB3BE186E12BF00179AE2 /* User.m */,
 				1CB709081862320B00D1C803 /* DashboardEntry.h */,
 				1CB709091862320B00D1C803 /* DashboardEntry.m */,
 				91C4444B18576B6F00A8F438 /* Video.h */,
@@ -1948,6 +1958,8 @@
 				1CDB0C2817A991FE0031C2C9 /* SettingsViewCell.m */,
 				1CDB0C3117A992E10031C2C9 /* UserDetailsCell.h */,
 				1CDB0C3217A992E10031C2C9 /* UserDetailsCell.m */,
+				1CFEB3AA186DF63F00179AE2 /* UserPreferencesCell.h */,
+				1CFEB3AB186DF63F00179AE2 /* UserPreferencesCell.m */,
 				9178C9E117CE3B8600913256 /* WelcomeScrollHolderView.h */,
 				9178C9E217CE3B8700913256 /* WelcomeScrollHolderView.m */,
 				913D854B17CEAB0200A6C534 /* WelcomeLoginView.h */,
@@ -2398,6 +2410,7 @@
 				91B7DC5317B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				1C253B74184D45A200FBE054 /* ShelbyLikersView.xib in Resources */,
 				91B7DC5617B29D59009ABF02 /* scrub-track-progress.png in Resources */,
+				1CFEB3B1186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */,
 				91B7DC5917B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 				911ED32217B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
 				911ED32517B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
@@ -2513,6 +2526,7 @@
 				91B7DC5417B29D59009ABF02 /* scrub-track-background@2x.png in Resources */,
 				1C253B75184D45A200FBE054 /* ShelbyLikersView.xib in Resources */,
 				91B7DC5717B29D59009ABF02 /* scrub-track-progress.png in Resources */,
+				1CFEB3B2186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */,
 				91B7DC5A17B29D59009ABF02 /* scrub-track-progress@2x.png in Resources */,
 				911ED32317B2ECF0000FFBEB /* video-thumbnail-blank-568h@2x.png in Resources */,
 				911ED32617B2ECF0000FFBEB /* video-thumbnail-blank.png in Resources */,
@@ -2564,6 +2578,7 @@
 				1CD8111517CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
 				1CD8111517CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
 				9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
+				1CFEB3B0186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */,
 				913D854817CEA9A700A6C534 /* WelcomeLoginView.xib in Resources */,
 				9178C9D617CE398400913256 /* Welcome.storyboard in Resources */,
 				915CDA7B17BE8FC7003C3A38 /* Images.xcassets in Resources */,
@@ -2647,6 +2662,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C100DDE185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */,
+				1CFEB3AD186DF63F00179AE2 /* UserPreferencesCell.m in Sources */,
 				1C81097616EE2CBF0030077C /* TopAlignedLabel.m in Sources */,
 				1C81097716EE2CBF0030077C /* SPVideoReel.m in Sources */,
 				1C81097816EE2CBF0030077C /* SPVideoPlayer.m in Sources */,
@@ -2717,6 +2733,7 @@
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				1C100DD9185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F531733149F008131D2 /* Messages.m in Sources */,
+				1CFEB3C0186E12BF00179AE2 /* User.m in Sources */,
 				91D03F581733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F67173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */,
@@ -2756,7 +2773,6 @@
 				1CB7090B1862320B00D1C803 /* DashboardEntry.m in Sources */,
 				1C7B63CD178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E4178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
-				1CB709101862320C00D1C803 /* User.m in Sources */,
 				1C56F13A17BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63F9178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F237178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
@@ -2789,6 +2805,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C100DDF185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */,
+				1CFEB3AE186DF63F00179AE2 /* UserPreferencesCell.m in Sources */,
 				1C810A2C16EE5EED0030077C /* TopAlignedLabel.m in Sources */,
 				1C810A2D16EE5EED0030077C /* SPVideoReel.m in Sources */,
 				1C810A2E16EE5EED0030077C /* SPVideoPlayer.m in Sources */,
@@ -2859,6 +2876,7 @@
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				1C100DDA185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F541733149F008131D2 /* Messages.m in Sources */,
+				1CFEB3C1186E12BF00179AE2 /* User.m in Sources */,
 				91D03F591733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F68173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */,
@@ -2898,7 +2916,6 @@
 				1CB7090C1862320B00D1C803 /* DashboardEntry.m in Sources */,
 				1C7B63CE178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E5178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
-				1CB709111862320C00D1C803 /* User.m in Sources */,
 				1C56F13B17BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63FA178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F238178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,
@@ -2931,6 +2948,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C100DDD185F8E63002ADAF2 /* FollowNotificationViewCell.m in Sources */,
+				1CFEB3AC186DF63F00179AE2 /* UserPreferencesCell.m in Sources */,
 				8E1B2EE1167050BE00D2C0DC /* TopAlignedLabel.m in Sources */,
 				8EB950571665BD6F00E965E0 /* SPVideoReel.m in Sources */,
 				8EB950541665BD0E00E965E0 /* SPVideoPlayer.m in Sources */,
@@ -3001,6 +3019,7 @@
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				1C100DD8185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
 				91D03F521733149F008131D2 /* Messages.m in Sources */,
+				1CFEB3BF186E12BF00179AE2 /* User.m in Sources */,
 				91D03F571733149F008131D2 /* Dashboard.m in Sources */,
 				91D03F66173319D1008131D2 /* Video+Helper.m in Sources */,
 				91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */,
@@ -3040,7 +3059,6 @@
 				1CB7090A1862320B00D1C803 /* DashboardEntry.m in Sources */,
 				1C7B63CC178B33B1000C1E84 /* SignupFlowNavigationViewController.m in Sources */,
 				1C7B63E3178B7B61000C1E84 /* SignupVideoTypeViewCell.m in Sources */,
-				1CB7090F1862320C00D1C803 /* User.m in Sources */,
 				1C56F13917BABD8C00EE9206 /* Appirater.m in Sources */,
 				1C7B63F8178DD4B1000C1E84 /* SignupUserInfoCell.m in Sources */,
 				9188F236178C9A1F002F342B /* ShelbyNavBarViewController.m in Sources */,

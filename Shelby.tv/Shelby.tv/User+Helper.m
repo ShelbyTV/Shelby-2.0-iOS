@@ -98,6 +98,11 @@ NSString * const kShelbyCoreDataEntityUserIDPredicate = @"userID == %@";
         }
     }
     
+    NSDictionary *preferences = dict[@"preferences"];
+    if ([preferences isKindOfClass:[NSDictionary class]]) {
+        user.likeNotificationsIOS = preferences[@"like_notifications_ios"];
+    }
+    
     return user;
 }
 
