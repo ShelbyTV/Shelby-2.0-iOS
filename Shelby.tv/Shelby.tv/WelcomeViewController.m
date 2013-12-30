@@ -38,6 +38,8 @@ NSString * const kShelbyWelcomeStatusKey = @"welcome_status";
     [WelcomeViewController sendEventWithCategory:kAnalyticsCategoryWelcome
                                       withAction:kAnalyticsWelcomeStart
                                        withLabel:nil];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsWelcomeStart];
+    
     _viewLoadedAt = [NSDate date];
 
     //setup the scroller that holds everything

@@ -164,9 +164,19 @@
 - (void)followButtonClicked
 {
     if (_followButtonShowsFollowing) {
+        [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                             withAction:kAnalyticsUXFollow
+                                    withNicknameAsLabel:YES];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFollowUser];
+
         [self.masterDelegate followRoll:self.profileUser.publicRollID];
         [self updateFollowButtonToShowFollowing:YES];
     } else {
+        [ShelbyHomeViewController sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                             withAction:kAnalyticsUXFollowing
+                                    withNicknameAsLabel:YES];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsFollowingUser];
+
         [self.masterDelegate unfollowRoll:self.profileUser.publicRollID];
         [self updateFollowButtonToShowFollowing:NO];
     }

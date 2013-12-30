@@ -27,10 +27,20 @@ extern NSString * const kAnalyticsScreenLikersList;
 extern NSString * const kLocalyticsWatchVideo;
 extern NSString * const kLocalyticsLikeVideo;
 extern NSString * const kLocalyticsShareComplete;
+extern NSString * const kLocalyticsWelcomeStart;
 extern NSString * const kLocalyticsStartSignup;
 extern NSString * const kLocalyticsFinishSignup;
 extern NSString * const kLocalyticsDidLogin;
+extern NSString * const kLocalyticsDidLaunchAfterVideoPush;
+extern NSString * const kLocalyticsDidLaunchAfterUserPush;
 extern NSString * const kLocalyticsDidPreview;
+extern NSString * const kLocalyticsFollowUser;
+extern NSString * const kLocalyticsFollowingUser;
+extern NSString * const kLocalyticsTapCardSharingUser;
+extern NSString * const kLocalyticsTapCardLikersList;
+extern NSString * const kLocalyticsTapLikerListLiker;
+extern NSString * const kLocalyticsTapUserProfileFromNotificationView;
+extern NSString * const kLocalyticsTapVideoFromNotificationView;
 
 // Google Analytics Constants
 //--Welcome--
@@ -57,6 +67,10 @@ extern NSString * const kAnalyticsSignupStep3Complete;
 extern NSString * const kAnalyticsSignupSelectSourceToFollow;
 extern NSString * const kAnalyticsSignupDeselectSourceToFollow;
 extern NSString * const kAnalyticsSignupConnectAuth;
+//--Push--
+extern NSString * const kAnalyticsCategoryPush;
+extern NSString * const kAnalyticsPushAfterVideoPush;
+extern NSString * const kAnalyticsPushAfterUserPush;
 //--Primary UX--
 extern NSString * const kAnalyticsCategoryPrimaryUX;
 extern NSString * const kAnalyticsUXSwipeCardParallax;
@@ -67,6 +81,8 @@ extern NSString * const kAnalyticsUXTapCardPlayButton;
 extern NSString * const kAnalyticsUXTapCardSharingUser;
 extern NSString * const kAnalyticsUXTapCardLikersList;
 extern NSString * const kAnalyticsUXTapLikerListLiker;
+extern NSString * const kAnalyticsUXTapUserProfileFromNotificationView;
+extern NSString * const kAnalyticsUXTapVideoFromNotificationView;
 extern NSString * const kAnalyticsUXVideoDidAutoadvance;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying;
@@ -74,6 +90,9 @@ extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePaused;
 extern NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModeAirPlay;
 extern NSString * const kAnalyticsUXLike;
 extern NSString * const kAnalyticsUXUnlike;
+extern NSString * const kAnalyticsUXFollow;
+extern NSString * const kAnalyticsUXFollowing;
+
 extern NSString * const kAnalyticsUXShareStart;
 extern NSString * const kAnalyticsUXShareFinish;
 extern NSString * const kAnalyticsUXTapNavBar;

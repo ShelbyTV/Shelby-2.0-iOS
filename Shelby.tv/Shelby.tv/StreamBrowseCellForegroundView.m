@@ -483,6 +483,8 @@
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                           action:kAnalyticsUXTapCardLikersList
                                  nicknameAsLabel:YES];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardLikersList];
+    
     [self.delegate openLikersView:_likers];
 }
 
@@ -501,6 +503,8 @@
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                           action:kAnalyticsUXTapCardSharingUser
                                  nicknameAsLabel:YES];
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapCardSharingUser];
+    
     [self.delegate userProfileWasTapped:self.userID];
 }
 

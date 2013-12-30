@@ -33,10 +33,20 @@ NSString * const kAnalyticsScreenLikersList                             = @"Like
 NSString * const kLocalyticsWatchVideo                                  = @"watch";
 NSString * const kLocalyticsLikeVideo                                   = @"like";
 NSString * const kLocalyticsShareComplete                               = @"share_complete";
+NSString * const kLocalyticsWelcomeStart                                = @"welcome_start";
 NSString * const kLocalyticsStartSignup                                 = @"start_signup";
 NSString * const kLocalyticsFinishSignup                                = @"finish_signup";
 NSString * const kLocalyticsDidLogin                                    = @"did_login";
+NSString * const kLocalyticsDidLaunchAfterVideoPush                     = @"open_from_video_push";
+NSString * const kLocalyticsDidLaunchAfterUserPush                      = @"open_from_follow_push";
 NSString * const kLocalyticsDidPreview                                  = @"did_preview";
+NSString * const kLocalyticsFollowUser                                  = @"did_follow";
+NSString * const kLocalyticsFollowingUser                               = @"did_following";
+NSString * const kLocalyticsTapCardSharingUser                          = @"view_sharer_profile";
+NSString * const kLocalyticsTapCardLikersList                           = @"view_likers";
+NSString * const kLocalyticsTapLikerListLiker                           = @"view_liker";
+NSString * const kLocalyticsTapUserProfileFromNotificationView          = @"view_profile_notification";
+NSString * const kLocalyticsTapVideoFromNotificationView                = @"view_video_notification";
 
 // Google Analytics Constants
 //--Welcome--
@@ -63,6 +73,10 @@ NSString * const kAnalyticsSignupStep3Complete                          = @"Step
 NSString * const kAnalyticsSignupSelectSourceToFollow                   = @"Selected Source to Follow";
 NSString * const kAnalyticsSignupDeselectSourceToFollow                 = @"Deselected Source to Follow";
 NSString * const kAnalyticsSignupConnectAuth                            = @"Connected Auth";
+//--Push--
+NSString * const kAnalyticsCategoryPush                                 = @"Push Notification";
+NSString * const kAnalyticsPushAfterVideoPush                           = @"Video push";
+NSString * const kAnalyticsPushAfterUserPush                            = @"Follow push";
 //--Primary UX--
 NSString * const kAnalyticsCategoryPrimaryUX                            = @"Primary UX";
 NSString * const kAnalyticsUXSwipeCardParallax                          = @"Swipe Card Parallax";
@@ -73,6 +87,8 @@ NSString * const kAnalyticsUXTapCardPlayButton                          = @"Tap 
 NSString * const kAnalyticsUXTapCardSharingUser                         = @"Tap Card - Sharing User";
 NSString * const kAnalyticsUXTapCardLikersList                          = @"Tap Card - Likers List";
 NSString * const kAnalyticsUXTapLikerListLiker                          = @"Tap Likers List - Liker";
+NSString * const kAnalyticsUXTapUserProfileFromNotificationView         = @"Tap User Profile From Notification View";
+NSString * const kAnalyticsUXTapVideoFromNotificationView               =  @"Tap Video From Notification View";
 NSString * const kAnalyticsUXVideoDidAutoadvance                        = @"Video Did Autoadvance";
 NSString * const kAnalyticsUXSwipeCardToChangeVideoNonPlaybackMode      = @"Swipe Card to Change Video: Non-Playback";
 NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePlaying  = @"Swipe Card to Chagne Video: Playback: Playing";
@@ -80,6 +96,8 @@ NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModePaused   = @"Swip
 NSString * const kAnalyticsUXSwipeCardToChangeVideoPlaybackModeAirPlay  = @"Swipe Card to Chagne Video: Playback: AirPlay";
 NSString * const kAnalyticsUXLike                                       = @"Like";
 NSString * const kAnalyticsUXUnlike                                     = @"Unlike";
+NSString * const kAnalyticsUXFollow                                     = @"Tap Follow";
+NSString * const kAnalyticsUXFollowing                                  = @"Tap Following";
 NSString * const kAnalyticsUXShareStart                                 = @"Share Start";
 NSString * const kAnalyticsUXShareFinish                                = @"Share Finish";
 NSString * const kAnalyticsUXTapNavBar                                  = @"Tap Nav Bar";

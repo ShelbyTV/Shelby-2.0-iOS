@@ -114,6 +114,11 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
 - (void)viewUserWasTappedForNotificationCell:(FollowNotificationViewCell *)cell
 {
     if (cell.userID) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                              action:kAnalyticsUXTapUserProfileFromNotificationView
+                                     nicknameAsLabel:YES];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapUserProfileFromNotificationView];
+        
         [self.delegate userProfileWasTapped:cell.userID];
     }
 }
@@ -122,6 +127,11 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
 - (void)viewVideoWasTappedForNotificationCell:(LikeNotificationViewCell *)cell
 {
     if (cell.dashboardID) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
+                                              action:kAnalyticsUXTapVideoFromNotificationView
+                                     nicknameAsLabel:YES];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapVideoFromNotificationView];
+
         [self.delegate videoWasTapped:cell.dashboardID];
     }
 }

@@ -310,8 +310,18 @@
     }
     
     if (userInfo[@"user_id"]) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPush
+                                              action:kAnalyticsPushAfterUserPush
+                                     nicknameAsLabel:YES];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidLaunchAfterUserPush];
+        
         [self.brain openNotificationCenterWithUserID:userInfo[@"user_id"]];
     } else if (userInfo[@"dashboard_entry_id"]) {
+        [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPush
+                                              action:kAnalyticsPushAfterVideoPush
+                                     nicknameAsLabel:YES];
+        [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidLaunchAfterVideoPush];
+
         [self.brain openNotificationCenterWithDashboardEntryID:userInfo[@"dashboard_entry_id"]];
     }
 }

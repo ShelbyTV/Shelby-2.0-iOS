@@ -139,6 +139,8 @@
     [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
                                           action:kAnalyticsUXTapLikerListLiker
                                  nicknameAsLabel:YES];
+    
+    [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsTapLikerListLiker];
 }
 
 @end
