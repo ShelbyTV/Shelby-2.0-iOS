@@ -177,9 +177,8 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return NO;
 }
-
-
 @end
