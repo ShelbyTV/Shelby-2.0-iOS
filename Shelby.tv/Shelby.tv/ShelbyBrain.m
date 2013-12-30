@@ -942,9 +942,15 @@ NSString * const kShelbyBrainEntityKey = @"entity";
 
 - (void)togglePushPreferences
 {
-    self.homeVC.currentUser.likeNotificationsIOS = [self.homeVC.currentUser.likeNotificationsIOS boolValue] ? @NO : @YES;
+    BOOL pushEnabled = [self.homeVC.currentUser.likeNotificationsIOS boolValue];
+    pushEnabled =  pushEnabled ? NO : YES;
     
-    if (self.homeVC.currentUser.likeNotificationsIOS) {
+    self.homeVC.currentUser.likeNotificationsIOS = @(pushEnabled);
+    
+    if (![self checkPushNotificationStatus] && pushEnabled) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Almost There" message:@"Please enable Shelby TV in Settings -> Notification Center in order to receive push notifications." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    } if (pushEnabled) {
         [self registerForPushNotifications];
     }
 
