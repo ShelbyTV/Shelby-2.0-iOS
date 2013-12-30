@@ -180,7 +180,7 @@
         [cell.avatar setImageWithURL:self.user.avatarURL placeholderImage:[UIImage imageNamed:@"settings-default-avatar"]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-    } else if (indexPath.row == 6) {
+    } else if (indexPath.row == 5) {
         UserPreferencesCell *cell = (UserPreferencesCell *)[self.table dequeueReusableCellWithIdentifier:@"UserPreferencesCell" forIndexPath:indexPath];
         cell.preferenceText.text = @"Push Notifications";
         [cell.preferenceSwitch setOn:[self.user.likeNotificationsIOS boolValue]];
@@ -224,7 +224,7 @@
             cell.mainTitle.text = @"Give us Feedback";
         } else if (indexPath.row == 4) {
             cell.mainTitle.text = @"Review us on App Store";
-        } else if (indexPath.row == 5) {
+        } else if (indexPath.row == 6) {
             cell.mainTitle.text = @"Logout";
         }
         
@@ -243,6 +243,15 @@
     return 55;
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 5) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.table deselectRowAtIndexPath:indexPath animated:YES];
@@ -259,7 +268,7 @@
         } else {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", SHELBY_APP_ID]]];
         }
-    } else if (indexPath.row == 5) {
+    } else if (indexPath.row == 6) {
         [self logout:nil];
     }
 }
