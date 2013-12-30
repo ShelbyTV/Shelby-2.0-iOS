@@ -309,10 +309,6 @@
         return;
     }
     
-    // KP KP: TODO: remove alert view - this is for debug only to show the JSON sent.
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Push" message:[NSString stringWithFormat:@"JSON=%@", userInfo] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alertView show];
-
     if (userInfo[@"user_id"]) {
         [self.brain openNotificationCenterWithUserID:userInfo[@"user_id"]];
     } else if (userInfo[@"dashboard_entry_id"]) {
