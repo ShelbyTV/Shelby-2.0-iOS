@@ -132,6 +132,15 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     self.notificationCenterVC.delegate = self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+  
+    if ([_currentFullScreenVC isKindOfClass:[ShelbyNotificationCenterViewController class]] || [_currentFullScreenVC isKindOfClass:[SettingsViewController class]]) {
+        self.videoControlsVC.view.hidden = YES;
+    }
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
