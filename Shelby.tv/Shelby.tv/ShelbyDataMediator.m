@@ -814,8 +814,13 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
 
 - (void)updateUserPreferenesForCurrentUser
 {
+    // PUSH NOTIFICATION: For now, push notifications settings for iOS are ALL or NOTHING.
+    // We check the like_notifications_ios field but actually update also reroll_notifications_ios and roll_activity_notifications_ios
+    // Once we implement the other two, we will have to add the fields to CoreData and corresponding rows in the table.
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContext];
-    NSDictionary *prefs = @{@"like_notifications_ios" : currentUser.likeNotificationsIOS};
+    NSDictionary *prefs = @{@"like_notifications_ios" : currentUser.likeNotificationsIOS,
+                            @"reroll_notifications_ios" : currentUser.likeNotificationsIOS,
+                            @"roll_activity_notifications_ios" : currentUser.likeNotificationsIOS};
     
     NSDictionary *params = @{@"preferences" : prefs};
     [ShelbyAPIClient putUserWithParams:params andBlock:^(id JSON, NSError *error) {
