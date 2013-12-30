@@ -113,13 +113,17 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
 #pragma mark - FollowNotificationDelegate
 - (void)viewUserWasTappedForNotificationCell:(FollowNotificationViewCell *)cell
 {
-    [self.delegate userProfileWasTapped:cell.userID];
+    if (cell.userID) {
+        [self.delegate userProfileWasTapped:cell.userID];
+    }
 }
 
 #pragma mark - LikeNotificationDelegate
 - (void)viewVideoWasTappedForNotificationCell:(LikeNotificationViewCell *)cell
 {
-    [self.delegate videoWasTapped:cell.dashboardID];
+    if (cell.dashboardID) {
+        [self.delegate videoWasTapped:cell.dashboardID];
+    }
 }
 
 #pragma mark - UITableViewDataSource Delegate Methods
