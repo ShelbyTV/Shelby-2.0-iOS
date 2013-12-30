@@ -316,6 +316,10 @@ NSString * const kShelbyBrainEntityKey = @"entity";
         return [entry isNotification];
     }];
     NSArray *notificationEntries = [entries filteredArrayUsingPredicate:onlyNotification];
+    if (!notificationEntries) {
+        notificationEntries = @[];
+    }
+
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainFetchNotificationEntriesDidCompleteNotification
                                                         object:self
                                                       userInfo:@{kShelbyBrainChannelEntriesKey : notificationEntries}];

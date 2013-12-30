@@ -581,6 +581,9 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 
 - (id<ShelbyVideoContainer>)getCurrentPlaybackEntity
 {
+    if (![self.videoEntities count]) {
+        return nil;
+    }
     return self.videoEntities[self.currentVideoPlayingIndex];
 }
 
