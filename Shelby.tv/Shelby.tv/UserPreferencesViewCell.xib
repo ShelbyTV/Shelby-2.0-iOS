@@ -22,7 +22,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kEK-bK-NGV">
-                        <rect key="frame" x="251" y="11" width="51" height="31"/>
+                        <rect key="frame" x="240" y="11" width="51" height="31"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <connections>
                             <action selector="togglePreferences:" destination="aDm-sc-iMT" eventType="valueChanged" id="O0d-42-WxF"/>

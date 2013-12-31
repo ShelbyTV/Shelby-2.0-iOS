@@ -35,6 +35,8 @@ extern NSString * const kShelbyBrainChannelEntriesKey;
 extern NSString * const kShelbyBrainCachedKey;
 extern NSString * const kShelbyBrainEntityKey;
 
+extern NSString *const kShelbyDeviceToken;
+
 // KP KP: TODO: Once ShelbyDataM takes care of TwitterHandler, there would be no need for the TwitterHandlerDelegate. It would be part of the ShelbyDataMediatorProtocol
 @interface ShelbyBrain : NSObject <ShelbyDataMediatorProtocol, ShelbyStreamBrowseManagementDelegate, SPVideoReelDelegate, ShelbyHomeDelegate, ShelbyUserProfileDelegate, TwitterHandlerDelegate, SignupFlowNavigationViewDelegate, UIActionSheetDelegate, LoginViewControllerDelegate, SettingsViewDelegate, WelcomeViewDelegate, ShelbyLikersViewDelegate>
 
@@ -55,5 +57,5 @@ extern NSString * const kShelbyBrainEntityKey;
 - (void)openNotificationCenterWithUserID:(NSString *)userID;
 
 - (void)registerDeviceToken:(NSString *)token;
-
+- (void)deleteDeviceToken;
 @end

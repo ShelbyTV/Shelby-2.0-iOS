@@ -15,7 +15,7 @@
 - (void)logoutUser;
 - (void)connectToFacebook;
 - (void)connectToTwitter;
-- (void)togglePushPreferences;
+- (void)enablePushNotifications:(BOOL)enable;
 @optional
 - (void)launchMyRoll;
 @end

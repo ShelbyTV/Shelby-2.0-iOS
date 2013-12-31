@@ -335,7 +335,7 @@
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [self.brain registerDeviceToken:nil];
+    [self.brain deleteDeviceToken];
     DLog(@"Error registering push notifications: %@", error.localizedDescription);
 }
 

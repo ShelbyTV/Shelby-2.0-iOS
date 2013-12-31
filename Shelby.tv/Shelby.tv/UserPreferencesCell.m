@@ -7,6 +7,8 @@
 //
 
 #import "UserPreferencesCell.h"
+#import "DeviceUtilities.h"
+
 @interface UserPreferencesCell()
 - (IBAction)togglePreferences:(id)sender;
 @end
@@ -36,6 +38,6 @@
 
 - (IBAction)togglePreferences:(id)sender
 {
-    [self.delegate toggleUserPreferences];
+    [self.delegate userEnabledPushNotification:self.preferenceSwitch.on];
 }
 @end

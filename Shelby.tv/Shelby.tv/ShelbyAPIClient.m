@@ -819,15 +819,31 @@ toExternalDestinations:(NSArray *)destinations
     [operation start];
 }
 
++ (void)deleteDeviceToken:(NSString *)token
+                  forUser:(User *)user
+                 andBlock:(shelby_api_request_complete_block_t)completionBlock
+
+{
+    [ShelbyAPIClient sendDeviceToken:token forUser:user withRequestMethod:DELETE andBlock:completionBlock];
+}
+
 + (void)postDeviceToken:(NSString *)token
                 forUser:(User *)user
+               andBlock:(shelby_api_request_complete_block_t)completionBlock
+{
+    [ShelbyAPIClient sendDeviceToken:token forUser:user withRequestMethod:POST andBlock:completionBlock];
+}
+
++ (void)sendDeviceToken:(NSString *)token
+                forUser:(User *)user
+      withRequestMethod:(NSString *)requestMethod
                andBlock:(shelby_api_request_complete_block_t)completionBlock
 {
     if (!token || !user.token || !user.userID) {
         return;
     }
 
-    NSURLRequest *request = [self requestWithMethod:POST
+    NSURLRequest *request = [self requestWithMethod:requestMethod
                                             forPath:[NSString stringWithFormat:kShelbyAPIPostDeviceTokenPath, user.userID]
                                 withQueryParameters:@{kShelbyAPIParamOAuthToken: token,
                                                       kShelbyAPIParamAuthToken: user.token}

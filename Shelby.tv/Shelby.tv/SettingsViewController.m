@@ -294,10 +294,10 @@
 
 
 #pragma mark - UserPreferenecesCellDelegate Methods
-- (void)toggleUserPreferences
+- (void)userEnabledPushNotification:(BOOL)enable
 {
-    if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(togglePushPreferences)]) {
-        [self.delegate togglePushPreferences];
+    if ([self.delegate conformsToProtocol:@protocol(SettingsViewDelegate)] && [self.delegate respondsToSelector:@selector(enablePushNotifications:)]) {
+        [self.delegate enablePushNotifications:enable];
     }
 }
 @end

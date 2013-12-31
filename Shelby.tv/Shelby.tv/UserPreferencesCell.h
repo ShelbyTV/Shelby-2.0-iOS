@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @protocol UserPreferencesCellDelegate <NSObject>
-- (void)toggleUserPreferences;
+- (void)userEnabledPushNotification:(BOOL)enable;
 @end
 
 @interface UserPreferencesCell : UITableViewCell

@@ -939,6 +939,18 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
     }   
 }
 
+- (void)deleteDeviceToken:(NSString *)token
+{
+    if (token) {
+        User *user = [User currentAuthenticatedUserInContext:[self mainThreadContext]];
+        if (user.token) {
+            [ShelbyAPIClient deleteDeviceToken:token forUser:user andBlock:^(id JSON, NSError *error) {
+                // Do Nothing
+            }];
+        }
+    }
+}
+
 - (void)registerDeviceToken:(NSString *)token
 {
     if (token) {

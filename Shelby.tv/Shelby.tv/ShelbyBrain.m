@@ -49,6 +49,7 @@ NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
 NSString * const kShelbyBrainCachedKey = @"cached";
 NSString * const kShelbyBrainEntityKey = @"entity";
 
+NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 @interface ShelbyBrain()
 
 //our two primary view controllers
@@ -177,22 +178,13 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [self.mainWindow makeKeyAndVisible];
 }
 
-- (void)updatePushNotificationForUser:(BOOL)pushOn
-{
-    User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-    
-    if ((pushOn && !currentUser.likeNotificationsIOS) || (!pushOn && currentUser.likeNotificationsIOS)) {
-        [[ShelbyDataMediator sharedInstance] updateUserPreferenesForCurrentUser];
-    }
-}
-
 - (void)registerForPushNotifications
 {
     if ([self checkPushNotificationStatus]) {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     } else {
         // User turned off notification - let backend know!
-        [self updatePushNotificationForUser:NO];
+        [self deleteDeviceToken];
     }
 }
 
@@ -409,20 +401,24 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     }
 }
 
-//- (void)handlePushNotification:(NSDictionary *)userInfo WithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-//
-//{
-//    
-//}
+- (void)deleteDeviceToken
+{
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:kShelbyDeviceToken];
+    if (deviceToken) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kShelbyDeviceToken];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+ 
+        [[ShelbyDataMediator sharedInstance] deleteDeviceToken:deviceToken];
+    }
+}
 
 - (void)registerDeviceToken:(NSString *)token
 {
-    if (!token) {
-        // Error let backend know
-        [self updatePushNotificationForUser:NO];
-    } else {
+    if (token) {
+        [[NSUserDefaults standardUserDefaults] setObject:token forKey:kShelbyDeviceToken];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         [[ShelbyDataMediator sharedInstance] registerDeviceToken:token];
-        [self updatePushNotificationForUser:YES];
     }
 }
 
@@ -944,17 +940,14 @@ NSString * const kShelbyBrainEntityKey = @"entity";
     [[ShelbyDataMediator sharedInstance] unfollowRoll:rollID];
 }
 
-- (void)togglePushPreferences
+- (void)enablePushNotifications:(BOOL)pushEnabled
 {
-    BOOL pushEnabled = [self.homeVC.currentUser.likeNotificationsIOS boolValue];
-    pushEnabled =  pushEnabled ? NO : YES;
-    
     self.homeVC.currentUser.likeNotificationsIOS = @(pushEnabled);
     
     if (![self checkPushNotificationStatus] && pushEnabled) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Almost There" message:@"Please enable Shelby TV in Settings -> Notification Center in order to receive push notifications." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
-    } if (pushEnabled) {
+    } else if (pushEnabled) {
         [self registerForPushNotifications];
     }
 
