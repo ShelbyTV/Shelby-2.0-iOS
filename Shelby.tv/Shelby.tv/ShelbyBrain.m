@@ -180,12 +180,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)registerForPushNotifications
 {
-    if ([self checkPushNotificationStatus]) {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
-    } else {
-        // User turned off notification - let backend know!
-        [self deleteDeviceToken];
-    }
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
 }
 
 - (void)activateWelcomeViewController
@@ -947,7 +942,9 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     if (![self checkPushNotificationStatus] && pushEnabled) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Almost There" message:@"Please enable Shelby TV in Settings -> Notification Center in order to receive push notifications." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
-    } else if (pushEnabled) {
+    }
+    
+    if (pushEnabled) {
         [self registerForPushNotifications];
     }
 
