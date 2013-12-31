@@ -971,6 +971,8 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     [[ShelbyDataMediator sharedInstance] logoutCurrentUser];
     self.currentUser = nil;
 
+    [self deleteDeviceToken];
+    
     [self goToCommunityChannel];
 }
 
