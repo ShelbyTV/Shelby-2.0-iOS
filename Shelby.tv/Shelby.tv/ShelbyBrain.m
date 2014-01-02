@@ -371,7 +371,9 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
             }
             
             if (!entries) {
-                completionHandler(UIBackgroundFetchResultNoData);
+                if (completionHandler) {
+                    completionHandler(UIBackgroundFetchResultNoData);
+                }
             } else {
                 if (!curEntries) {
                     curEntries = @[];
@@ -379,7 +381,9 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
                 
                 if ([self.homeVC mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
                     // Give some time for thumbnails to load in view - a little hackish
-                    [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
+                    if (completionHandler) {
+                        [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
+                    }
                     
                     // If there is a notification message - schedule notification
                     if (notificationMessage) {
@@ -387,12 +391,16 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
                     }
                     
                 } else {
-                    completionHandler(UIBackgroundFetchResultNoData);
+                    if (completionHandler) {
+                        completionHandler(UIBackgroundFetchResultNoData);
+                    }
                 }
             }
         }];
     } else {
-        completionHandler(UIBackgroundFetchResultNoData);
+        if (completionHandler) {
+            completionHandler(UIBackgroundFetchResultNoData);
+        }
     }
 }
 
@@ -1041,13 +1049,12 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     }];
 }
 
-- (void)openNotificationCenterWithDashboardEntryID:(NSString *)dashboardEntryID
+- (void)onNextBecomeActiveOpenNotificationCenterWithDashboardEntryID:(NSString *)dashboardEntryID
 {
     self.notificationDashboardID = dashboardEntryID;
-    
 }
 
-- (void)openNotificationCenterWithUserID:(NSString *)userID
+- (void)onNextBecomeActiveOpenNotificationCenterWithUserID:(NSString *)userID
 {
     self.notificationUserID = userID;
 }

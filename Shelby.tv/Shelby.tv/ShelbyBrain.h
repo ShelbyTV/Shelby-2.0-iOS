@@ -53,8 +53,8 @@ extern NSString *const kShelbyDeviceToken;
 - (void)userProfileWasTapped:(NSString *)userID;
 - (void)openSingleVideoViewWithFrameID:(NSString *)frameID;
 
-- (void)openNotificationCenterWithDashboardEntryID:(NSString *)dashboardEntryID;
-- (void)openNotificationCenterWithUserID:(NSString *)userID;
+- (void)onNextBecomeActiveOpenNotificationCenterWithDashboardEntryID:(NSString *)dashboardEntryID;
+- (void)onNextBecomeActiveOpenNotificationCenterWithUserID:(NSString *)userID;
 
 - (void)registerDeviceToken:(NSString *)token;
 - (void)deleteDeviceToken;

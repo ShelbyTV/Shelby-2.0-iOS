@@ -119,7 +119,7 @@
     
     // Handle Push Notification
     if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        [self handlePushNotification:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
+        [self prepareToBecomeActiveFromPushNotification:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
     
     return YES;
@@ -303,7 +303,7 @@
     }
 }
 
-- (void)handlePushNotification:(NSDictionary *)userInfo
+- (void)prepareToBecomeActiveFromPushNotification:(NSDictionary *)userInfo
 {
     if (![userInfo isKindOfClass:[NSDictionary class]]) {
         return;
@@ -315,14 +315,14 @@
                                      nicknameAsLabel:YES];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidLaunchAfterUserPush];
         
-        [self.brain openNotificationCenterWithUserID:userInfo[@"user_id"]];
+        [self.brain onNextBecomeActiveOpenNotificationCenterWithUserID:userInfo[@"user_id"]];
     } else if (userInfo[@"dashboard_entry_id"]) {
         [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPush
                                               action:kAnalyticsPushAfterVideoPush
                                      nicknameAsLabel:YES];
         [ShelbyAnalyticsClient sendLocalyticsEvent:kLocalyticsDidLaunchAfterVideoPush];
 
-        [self.brain openNotificationCenterWithDashboardEntryID:userInfo[@"dashboard_entry_id"]];
+        [self.brain onNextBecomeActiveOpenNotificationCenterWithDashboardEntryID:userInfo[@"dashboard_entry_id"]];
     }
 }
 
@@ -342,20 +342,32 @@
 // Push Notifications for iOS 6
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    //not ideal, see discussion in -didReceiveRemoteNotification:fetchCompletionHandler:
+    [self.brain performBackgroundFetchWithCompletionHandler:nil];
+    
     if([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
-        [self handlePushNotification:userInfo];
+        [self prepareToBecomeActiveFromPushNotification:userInfo];
     }
 }
 
 // Push Notifications for iOS 7
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
-    if([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive || ![userInfo isKindOfClass:[NSDictionary class]]) {
+    if (![userInfo isKindOfClass:[NSDictionary class]]) {
         completionHandler(UIBackgroundFetchResultNoData);
         return;
     }
     
-    completionHandler(UIBackgroundFetchResultNewData);
-    [self handlePushNotification:userInfo];
+    //Ideally, all notifications would include the corresponding dashboard_entry_id in payload.
+    //We would then fetch just that DBE right here.  Being short on time, the short-cut is to
+    //fetch user's entire (recent) dashboard, which will include the item from this notification.
+    [self.brain performBackgroundFetchWithCompletionHandler:completionHandler];
+    
+    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+        [self prepareToBecomeActiveFromPushNotification:userInfo];
+    } else {
+        //when active we're not popping anything up right now
+        //but the fetch above will result in an updated notification center
+    }
 }
 @end
