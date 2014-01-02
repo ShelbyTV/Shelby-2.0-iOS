@@ -614,6 +614,9 @@
 		91405313174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
 		91405314174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
 		91405315174D0D9100E18A6B /* NSManagedObject+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */; };
+		914A2FF2187614530042E818 /* STVLabelWithMargins.m in Sources */ = {isa = PBXBuildFile; fileRef = 914A2FF1187614530042E818 /* STVLabelWithMargins.m */; };
+		914A2FF3187614530042E818 /* STVLabelWithMargins.m in Sources */ = {isa = PBXBuildFile; fileRef = 914A2FF1187614530042E818 /* STVLabelWithMargins.m */; };
+		914A2FF4187614530042E818 /* STVLabelWithMargins.m in Sources */ = {isa = PBXBuildFile; fileRef = 914A2FF1187614530042E818 /* STVLabelWithMargins.m */; };
 		914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA66175E365000903FEA /* ShelbyDVRController.m */; };
 		914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA66175E365000903FEA /* ShelbyDVRController.m */; };
 		914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */ = {isa = PBXBuildFile; fileRef = 914FEA66175E365000903FEA /* ShelbyDVRController.m */; };
@@ -1143,6 +1146,8 @@
 		91405311174D0D9100E18A6B /* NSManagedObject+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Helper.h"; sourceTree = "<group>"; };
 		91405312174D0D9100E18A6B /* NSManagedObject+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Helper.m"; sourceTree = "<group>"; };
 		9143A77618205F8900C9689F /* Shelby 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shelby 6.xcdatamodel"; sourceTree = "<group>"; };
+		914A2FF0187614530042E818 /* STVLabelWithMargins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVLabelWithMargins.h; sourceTree = "<group>"; };
+		914A2FF1187614530042E818 /* STVLabelWithMargins.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STVLabelWithMargins.m; sourceTree = "<group>"; };
 		914FEA65175E365000903FEA /* ShelbyDVRController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyDVRController.h; sourceTree = "<group>"; };
 		914FEA66175E365000903FEA /* ShelbyDVRController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyDVRController.m; sourceTree = "<group>"; };
 		914FEA79175E3E6700903FEA /* DVREntry+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVREntry+Helper.h"; sourceTree = "<group>"; };
@@ -1968,6 +1973,8 @@
 				9184FE5417DA5757006E23E4 /* UITextViewWithPlaceholder.m */,
 				91AEFE1517ECF3D500B2598B /* StreamBrowseGestureHintView.h */,
 				91AEFE1617ECF3D500B2598B /* StreamBrowseGestureHintView.m */,
+				914A2FF0187614530042E818 /* STVLabelWithMargins.h */,
+				914A2FF1187614530042E818 /* STVLabelWithMargins.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2739,6 +2746,7 @@
 				91D03F711733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F76173321AD008131D2 /* Messages+Helper.m in Sources */,
 				91F655BC1864F01A000B9843 /* DisplayChannel.m in Sources */,
+				914A2FF3187614530042E818 /* STVLabelWithMargins.m in Sources */,
 				915ACBC717EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444E18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECE1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
@@ -2882,6 +2890,7 @@
 				91D03F721733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F77173321AD008131D2 /* Messages+Helper.m in Sources */,
 				91F655BD1864F01A000B9843 /* DisplayChannel.m in Sources */,
+				914A2FF4187614530042E818 /* STVLabelWithMargins.m in Sources */,
 				915ACBC817EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444F18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECF1741B1A000A9265B /* DeduplicationUtility.m in Sources */,
@@ -3025,6 +3034,7 @@
 				91D03F701733201A008131D2 /* Conversation+Helper.m in Sources */,
 				91D03F75173321AD008131D2 /* Messages+Helper.m in Sources */,
 				91F655BB1864F01A000B9843 /* DisplayChannel.m in Sources */,
+				914A2FF2187614530042E818 /* STVLabelWithMargins.m in Sources */,
 				915ACBC617EB52DE00FA3EFF /* Conversation.m in Sources */,
 				91C4444D18576B6F00A8F438 /* Video.m in Sources */,
 				91649ECD1741B1A000A9265B /* DeduplicationUtility.m in Sources */,

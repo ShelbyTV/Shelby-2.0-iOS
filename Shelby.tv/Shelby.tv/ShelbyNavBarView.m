@@ -90,6 +90,12 @@
                                            multiplier:0.f 
                                              constant:0];
     [self.slider addConstraint:_shadowY];
+    
+    //tweak visuals of notification badge
+    self.notificationLabel.backgroundColor = kShelbyColorGreen;
+    self.notificationLabel.layer.cornerRadius = self.notificationLabel.bounds.size.height / 2.f;
+    self.notificationLabel.margins = CGSizeMake(10.f, 0);
+    self.notificationLabel.alpha = 0.f;
 }
 
 - (void)didMoveToSuperview

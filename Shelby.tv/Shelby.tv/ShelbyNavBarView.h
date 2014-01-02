@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STVLabelWithMargins.h"
 
 @interface ShelbyNavBarView : UIView
 
@@ -16,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
 @property (weak, nonatomic) IBOutlet UIButton *notificationCenterButton;
-@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
+@property (weak, nonatomic) IBOutlet STVLabelWithMargins *notificationLabel;
 @property (assign, nonatomic) BOOL shouldHideNotificationLabel;
 
 //our model, set to update display state
