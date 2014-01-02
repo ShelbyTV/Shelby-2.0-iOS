@@ -110,8 +110,7 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
     }];
 }
 
-#pragma mark - FollowNotificationDelegate
-- (void)viewUserWasTappedForNotificationCell:(FollowNotificationViewCell *)cell
+- (void)viewUserInNotificationCell:(FollowNotificationViewCell *)cell
 {
     if (cell.userID) {
         [ShelbyAnalyticsClient sendEventWithCategory:kAnalyticsCategoryPrimaryUX
@@ -121,6 +120,12 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
         
         [self.delegate userProfileWasTapped:cell.userID];
     }
+}
+
+#pragma mark - FollowNotificationDelegate
+- (void)viewUserWasTappedForNotificationCell:(FollowNotificationViewCell *)cell
+{
+    [self viewUserInNotificationCell:cell];
 }
 
 #pragma mark - LikeNotificationDelegate
@@ -191,8 +196,10 @@ NSString * const kShelbyNotificationCenterLastNotificationIDKey = @"kShelbyNotif
     }
 }
 
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NO;
+    FollowNotificationViewCell *cell = (FollowNotificationViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self viewUserInNotificationCell:cell];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 @end
