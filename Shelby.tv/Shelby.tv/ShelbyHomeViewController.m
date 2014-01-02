@@ -374,6 +374,12 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
     return NO;
 }
 
+- (void)logoutUser
+{
+    // User is logged out, there are no unseen notifications
+    [self.navBarVC setUnseenNotificationCount:0];
+}
+
 - (void)focusOnEntityNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;

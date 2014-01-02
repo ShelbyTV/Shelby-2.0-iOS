@@ -63,6 +63,8 @@ typedef void (^shelby_home_complete_block_t)(void);
 
 - (BOOL)mergeCurrentChannelEntries:(NSArray *)curEntries forChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries;
 
+- (void)logoutUser;
+
 // *** NEW API ***
 // We should use the following two methods exclusively on start/remove playback
 - (void)playChannel:(DisplayChannel *)channel atIndex:(NSInteger)index;
