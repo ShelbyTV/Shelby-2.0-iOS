@@ -1407,6 +1407,13 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (void)presentNotificationCenterWithCompletionBlock:(shelby_home_complete_block_t)completionBlock
 {
+    if (_currentFullScreenVC == self.notificationCenterVC && _currentFullScreenVC != nil) {
+        if (completionBlock) {
+            completionBlock();
+        }
+        return;
+    }
+    
     //this gets overriden by autolayout, just using it to set starting point for transition
     self.notificationCenterVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     
