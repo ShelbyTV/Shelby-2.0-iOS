@@ -316,12 +316,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 {
     DisplayChannel *channel = [self getMainChannel];
     
-    Dashboard *dashboard = nil;
     if (channel) {
-        dashboard = channel.dashboard;
-
-        __block NSArray *curEntries = [DashboardEntry entriesForDashboard:dashboard inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-
         __weak ShelbyBrain *weakSelf = self;
         [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:channel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
 
@@ -374,12 +369,11 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
                 if (completionHandler) {
                     completionHandler(UIBackgroundFetchResultNoData);
                 }
-            } else {
-                if (!curEntries) {
-                    curEntries = @[];
-                }
                 
-                if ([self.homeVC mergeCurrentChannelEntries:curEntries forChannel:displayChannel withChannelEntries:entries]) {
+            } else {
+                if ([self.homeVC mergeCurrentChannelEntries:[self.homeVC entriesForChannel:displayChannel]
+                                                 forChannel:displayChannel
+                                         withChannelEntries:entries]) {
                     // Give some time for thumbnails to load in view - a little hackish
                     if (completionHandler) {
                         [self performSelector:@selector(callCompletionBlock:) withObject:completionHandler afterDelay:2];
@@ -394,6 +388,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
                     if (completionHandler) {
                         completionHandler(UIBackgroundFetchResultNoData);
                     }
+                    
                 }
             }
         }];

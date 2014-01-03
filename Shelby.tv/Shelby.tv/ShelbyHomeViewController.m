@@ -354,6 +354,10 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 
 - (BOOL)mergeCurrentChannelEntries:(NSArray *)curEntries forChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries
 {
+    if (!curEntries) {
+        curEntries = @[];
+    }
+    
     ShelbyModelArrayUtility *mergeUtil = [ShelbyModelArrayUtility determineHowToMergePossiblyNew:channelEntries intoExisting:curEntries];
     if ([mergeUtil.actuallyNewEntities count]) {
         [self addEntries:mergeUtil.actuallyNewEntities toEnd:mergeUtil.actuallyNewEntitiesShouldBeAppended ofChannel:channel];
