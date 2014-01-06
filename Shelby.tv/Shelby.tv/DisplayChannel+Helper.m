@@ -139,8 +139,10 @@ NSString * const kShelbyCoreDataEntityDisplayChannelViaDashboardIDPredicate = @"
 
 - (BOOL) canFetchRemoteEntries
 {
-    //only offline Likes cannot refresh
-    return self.shouldFetchRemoteEntries && !(self.roll && [self.roll.rollID isEqualToString:kShelbyOfflineLikesID]);
+    // shouldFetchRemoteEntries is true unless explicitly set to NO
+    // (CoreData default values are only used when first creating models, which can fuck you on DB upgrades)
+    BOOL shouldFetchRemote = (self.shouldFetchRemoteEntries == nil ? YES : [self.shouldFetchRemoteEntries boolValue]);
+    return shouldFetchRemote && !(self.roll && [self.roll.rollID isEqualToString:kShelbyOfflineLikesID]);
 }
 
 - (BOOL)canRoll
