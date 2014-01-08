@@ -440,6 +440,10 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         // Set the new current player to auto play and get it going...
         self.currentVideoPlayingIndex = position;
         if (self.currentVideoPlayingIndex >= [self.videoPlayers count]) {
+            // Show the debug assert only if it is not the case that both counts are zero.
+            if (self.currentVideoPlayingIndex == 0 && [self.videoPlayers count] == 0) {
+                return;
+            }
             STVDebugAssert([self.videoPlayers count] > self.currentVideoPlayingIndex, @"can't play player[%i], we only have %i players. Previous player? %@", self.currentVideoPlayingIndex, [self.videoPlayers count], (previousPlayer?@"YES":@"NO"));
             return;
         }

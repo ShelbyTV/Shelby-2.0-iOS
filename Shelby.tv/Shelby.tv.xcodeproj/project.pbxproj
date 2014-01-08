@@ -89,6 +89,15 @@
 		1C382561187DE387002177C6 /* Main.Storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C382560187DE387002177C6 /* Main.Storyboard */; };
 		1C382562187DE387002177C6 /* Main.Storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C382560187DE387002177C6 /* Main.Storyboard */; };
 		1C382563187DE387002177C6 /* Main.Storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C382560187DE387002177C6 /* Main.Storyboard */; };
+		1C38256D187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38256C187E014C002177C6 /* ShelbyStreamInfoViewController.m */; };
+		1C38256E187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38256C187E014C002177C6 /* ShelbyStreamInfoViewController.m */; };
+		1C38256F187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38256C187E014C002177C6 /* ShelbyStreamInfoViewController.m */; };
+		1C382577187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */; };
+		1C382578187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */; };
+		1C382579187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */; };
+		1C38257C187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */; };
+		1C38257D187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */; };
+		1C38257E187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -867,6 +876,12 @@
 		1C309ABF17A7196800D690A8 /* ShelbyShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyShareViewController.h; sourceTree = "<group>"; };
 		1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyShareViewController.m; sourceTree = "<group>"; };
 		1C382560187DE387002177C6 /* Main.Storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.Storyboard; sourceTree = "<group>"; };
+		1C38256B187E014C002177C6 /* ShelbyStreamInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyStreamInfoViewController.h; sourceTree = "<group>"; };
+		1C38256C187E014C002177C6 /* ShelbyStreamInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyStreamInfoViewController.m; sourceTree = "<group>"; };
+		1C382575187E069A002177C6 /* ShelbyNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyNavigationViewController.h; sourceTree = "<group>"; };
+		1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavigationViewController.m; sourceTree = "<group>"; };
+		1C38257A187E06D0002177C6 /* ShelbyTopContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyTopContainerViewController.h; sourceTree = "<group>"; };
+		1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyTopContainerViewController.m; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1406,6 +1421,19 @@
 			name = "Xib-iPad";
 			sourceTree = "<group>";
 		};
+		1C38256A187E011D002177C6 /* View Controllers - iPad */ = {
+			isa = PBXGroup;
+			children = (
+				1C38256B187E014C002177C6 /* ShelbyStreamInfoViewController.h */,
+				1C38256C187E014C002177C6 /* ShelbyStreamInfoViewController.m */,
+				1C382575187E069A002177C6 /* ShelbyNavigationViewController.h */,
+				1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */,
+				1C38257A187E06D0002177C6 /* ShelbyTopContainerViewController.h */,
+				1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */,
+			);
+			name = "View Controllers - iPad";
+			sourceTree = "<group>";
+		};
 		1C56F11417BABD8C00EE9206 /* Appirater */ = {
 			isa = PBXGroup;
 			children = (
@@ -1725,6 +1753,7 @@
 				8EF5C353162F41C70075C35F /* Models */,
 				8EF5C351162F41BA0075C35F /* Views */,
 				8EF5C354162F41CC0075C35F /* Controllers */,
+				1C38256A187E011D002177C6 /* View Controllers - iPad */,
 				8EF5C352162F41BF0075C35F /* View Controllers */,
 				1C85A22916D6CEB300B6EE49 /* Utilities */,
 				8E0E7031163869B800BA0A24 /* Core Data */,
@@ -2745,6 +2774,7 @@
 				1C3D91271714C00100105839 /* FacebookHandler.m in Sources */,
 				1CACC0B017287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFC1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				1C38257D187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */,
 				91F0CC01172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91C4444918576B6F00A8F438 /* Frame.m in Sources */,
 				91F0CC061730154E008B5B34 /* User+Helper.m in Sources */,
@@ -2776,6 +2806,7 @@
 				91E5D464174E938100AD3746 /* Roll.m in Sources */,
 				91E5D46A1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				9178C9E417CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
+				1C38256E187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */,
 				91D1C81B1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4701757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA68175E365000903FEA /* ShelbyDVRController.m in Sources */,
@@ -2806,6 +2837,7 @@
 				91A3625F178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36267178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626A178F296B00381218 /* easing.c in Sources */,
+				1C382578187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */,
 				1CDBEE731795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
 				1CDBEE781795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 				1C96DED317975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
@@ -2889,6 +2921,7 @@
 				1C3D91281714C00100105839 /* FacebookHandler.m in Sources */,
 				1CACC0B117287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFD1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				1C38257E187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */,
 				91F0CC02172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91C4444A18576B6F00A8F438 /* Frame.m in Sources */,
 				91F0CC071730154E008B5B34 /* User+Helper.m in Sources */,
@@ -2920,6 +2953,7 @@
 				91E5D465174E938100AD3746 /* Roll.m in Sources */,
 				91E5D46B1757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				9178C9E517CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
+				1C38256F187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */,
 				91D1C81C1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D4711757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA69175E365000903FEA /* ShelbyDVRController.m in Sources */,
@@ -2950,6 +2984,7 @@
 				91A36260178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36268178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A3626B178F296B00381218 /* easing.c in Sources */,
+				1C382579187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */,
 				1CDBEE741795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
 				1CDBEE791795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 				1C96DED417975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,
@@ -3033,6 +3068,7 @@
 				1C3D91261714C00100105839 /* FacebookHandler.m in Sources */,
 				1CACC0AF17287276007EDD65 /* SettingsViewController.m in Sources */,
 				91F0CBFB1729DB5B008B5B34 /* Frame+Helper.m in Sources */,
+				1C38257C187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */,
 				91F0CC00172EEF96008B5B34 /* ShelbyDataMediator.m in Sources */,
 				91C4444818576B6F00A8F438 /* Frame.m in Sources */,
 				91F0CC051730154E008B5B34 /* User+Helper.m in Sources */,
@@ -3064,6 +3100,7 @@
 				91E5D463174E938100AD3746 /* Roll.m in Sources */,
 				91E5D4691757BA1F00AD3746 /* LBYouTubeExtractor.m in Sources */,
 				9178C9E317CE3B8700913256 /* WelcomeScrollHolderView.m in Sources */,
+				1C38256D187E014C002177C6 /* ShelbyStreamInfoViewController.m in Sources */,
 				91D1C81A1778DD5B00CAC1E9 /* STVParallaxView.m in Sources */,
 				91E5D46F1757C89F00AD3746 /* YTVimeoExtractor.m in Sources */,
 				914FEA67175E365000903FEA /* ShelbyDVRController.m in Sources */,
@@ -3094,6 +3131,7 @@
 				91A3625E178F290300381218 /* UIView+EasingFunctions.m in Sources */,
 				91A36266178F296B00381218 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				91A36269178F296B00381218 /* easing.c in Sources */,
+				1C382577187E069A002177C6 /* ShelbyNavigationViewController.m in Sources */,
 				1CDBEE721795EA21002ECD76 /* SignupFlowStepOneViewController.m in Sources */,
 				1CDBEE771795EF8D002ECD76 /* BlinkingLabel.m in Sources */,
 				1C96DED217975EC100D845DF /* SignupFlowStepTwoViewController.m in Sources */,

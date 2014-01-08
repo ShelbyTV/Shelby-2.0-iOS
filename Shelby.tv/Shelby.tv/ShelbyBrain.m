@@ -15,6 +15,7 @@
 #import "ShelbyErrorUtility.h"
 #import "SettingsViewController.h"
 #import "ShelbyModelArrayUtility.h"
+#import "ShelbyTopContainerViewController.h"
 #import "Roll+Helper.h"
 #import "ShelbyABTestManager.h"
 #import "ShelbyModel.h"
@@ -203,7 +204,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
     if (DEVICE_IPAD) {
         UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *initialVC = [mainStoryBoard instantiateInitialViewController];
+        ShelbyTopContainerViewController *initialVC = (ShelbyTopContainerViewController *)[mainStoryBoard instantiateInitialViewController];
         self.mainWindow.rootViewController = initialVC;
     } else {
         rootViewControllerNibName = @"ShelbyHomeView-iPhone";

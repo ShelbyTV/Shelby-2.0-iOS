@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Shelby Top Container View Controller-->
         <scene sceneID="tVL-lk-eaY">
             <objects>
-                <viewController id="yze-cc-arF" sceneMemberID="viewController">
+                <viewController id="yze-cc-arF" customClass="ShelbyTopContainerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bF9-mE-oNM"/>
                         <viewControllerLayoutGuide type="bottom" id="bvc-Yb-Lwg"/>
@@ -24,6 +24,14 @@
                                     <segue destination="ndb-XN-7ld" kind="embed" id="Snw-5I-IcK"/>
                                 </connections>
                             </containerView>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qeU-18-Fvh">
+                                <rect key="frame" x="320" y="0.0" width="704" height="768"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="XRC-TM-Lqo" kind="embed" id="9Mx-jw-L9V"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -32,12 +40,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R3y-yo-DG9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2593" y="-2538"/>
+            <point key="canvasLocation" x="-2605" y="-2530"/>
         </scene>
-        <!--View Controller-->
+        <!--Shelby Stream Info View Controller-->
         <scene sceneID="sCi-q8-3Pb">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="PH9-S8-EC9" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="PH9-S8-EC9" customClass="ShelbyStreamInfoViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IIV-Lg-H3m"/>
                         <viewControllerLayoutGuide type="bottom" id="rOl-Jh-UQx"/>
@@ -55,10 +63,10 @@
             </objects>
             <point key="canvasLocation" x="-999" y="-2514"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Shelby Navigation View Controller-->
         <scene sceneID="9zD-wS-hUm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ndb-XN-7ld" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ndb-XN-7ld" customClass="ShelbyNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kNL-Jr-pY3">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -71,7 +79,27 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rDo-F3-2Ac" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1525" y="-2566"/>
+            <point key="canvasLocation" x="-1421" y="-2522"/>
+        </scene>
+        <!--Video Reel-->
+        <scene sceneID="Yqb-zk-YU7">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="XRC-TM-Lqo" customClass="SPVideoReel" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IR0-mQ-39e"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hck-gS-awW"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bKk-gY-EZJ">
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gbh-jg-Dnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1409" y="-1618"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
