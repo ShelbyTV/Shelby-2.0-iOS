@@ -360,9 +360,7 @@
     //resize summary title
     NSString *summaryTitleText = self.summaryTitle.text;
     CGSize maxSummaryTitleSize = CGSizeMake(self.summaryTitle.frame.size.width, self.summaryTitle.frame.size.height);
-    CGFloat summaryTitleDesiredHeight = [summaryTitleText sizeWithFont:self.summaryTitle.font
-                                                     constrainedToSize:maxSummaryTitleSize
-                                                         lineBreakMode:self.summaryTitle.lineBreakMode].height;
+    CGFloat summaryTitleDesiredHeight = [summaryTitleText boundingRectWithSize:maxSummaryTitleSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:self.summaryTitle.font} context:nil].size.height;
     self.summaryTitle.frame = CGRectMake(self.summaryTitle.frame.origin.x, self.summaryTitle.frame.origin.y, self.summaryTitle.frame.size.width, summaryTitleDesiredHeight);
 
     //move the user + recommendation views just below the title
@@ -374,9 +372,7 @@
     //resize detail title
     NSString *detailTitleText = self.detailTitle.text;
     CGSize maxDetailTitleSize = CGSizeMake(self.detailTitle.frame.size.width, detailTitleHeight);
-    CGFloat detailTitleDesiredHeight = [detailTitleText sizeWithFont:self.detailTitle.font
-                                                   constrainedToSize:maxDetailTitleSize
-                                                       lineBreakMode:self.detailTitle.lineBreakMode].height;
+    CGFloat detailTitleDesiredHeight = [detailTitleText boundingRectWithSize:maxDetailTitleSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName : self.detailTitle.font} context:nil].size.height;
     self.detailTitle.frame = CGRectMake(self.detailTitle.frame.origin.x, self.detailTitle.frame.origin.y, self.detailTitle.frame.size.width, detailTitleDesiredHeight);
 
     //move the detail user view, caption holder, and white background up underneath the title
@@ -389,11 +385,8 @@
     NSString *captionText = self.detailCaption.text;
     
     CGSize maxCaptionSize = CGSizeMake(self.detailCommentView.frame.size.width - kShelbyCaptionMargin * 2, self.detailCommentView.frame.size.height - kShelbyCaptionMargin * 2);
-    //TODO: -sizeWithFont: is deprecated in iOS 7, should be using -boundingRectWithSize:options:attributes:context:
-    CGFloat textBasedHeight = [captionText sizeWithFont:[self.detailCaption font]
-                                      constrainedToSize:maxCaptionSize
-                                          lineBreakMode:NSLineBreakByWordWrapping].height;
-    self.detailCaption.frame = CGRectMake(self.detailCaption.frame.origin.x,
+    CGFloat textBasedHeight = [captionText boundingRectWithSize:maxCaptionSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName : self.detailCaption.font} context:nil].size.height;
+     self.detailCaption.frame = CGRectMake(self.detailCaption.frame.origin.x,
                                           0,
                                           maxCaptionSize.width,
                                           ceil(textBasedHeight));

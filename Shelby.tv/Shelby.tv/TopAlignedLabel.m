@@ -12,7 +12,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    rect.size.height = [self.text sizeWithFont:self.font constrainedToSize:rect.size lineBreakMode:self.lineBreakMode].height;
+    rect.size.height = [self.text boundingRectWithSize:rect.size options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName : self.font} context:nil].size.height;
     
     if (self.numberOfLines != 0) {
         rect.size.height = MIN(rect.size.height, self.numberOfLines * self.font.lineHeight);

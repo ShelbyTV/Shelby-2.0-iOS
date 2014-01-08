@@ -226,7 +226,7 @@
 {
     //navigation bars
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top-nav-bkgd"] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeFont:[UIFont fontWithName:@"Ubuntu-Medium" size:20.0], UITextAttributeTextColor: [UIColor whiteColor], UITextAttributeTextShadowColor: [UIColor clearColor]}];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Ubuntu-Medium" size:20.0], NSForegroundColorAttributeName: [UIColor whiteColor], NSShadowAttributeName: [UIColor clearColor]}];
 }
 
 - (void)setupCrashHandling
