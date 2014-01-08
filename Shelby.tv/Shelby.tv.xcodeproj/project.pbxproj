@@ -3150,7 +3150,7 @@
 				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Enterprise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
@@ -3209,7 +3209,7 @@
 				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Enterprise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
@@ -3268,7 +3268,7 @@
 				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Nightly-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
@@ -3328,7 +3328,7 @@
 				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Shelby.tv Nightly-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
@@ -3461,7 +3461,7 @@
 				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
@@ -3520,7 +3520,7 @@
 				);
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Shelby.tv/Shelby.tv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Library/GoogleAnalyticsSDK",
