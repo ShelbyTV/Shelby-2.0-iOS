@@ -1,26 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oNL-fF-aQs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="yze-cc-arF">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="hx8-xH-AdL">
+        <scene sceneID="tVL-lk-eaY">
             <objects>
-                <viewController id="oNL-fF-aQs" sceneMemberID="viewController">
+                <viewController id="yze-cc-arF" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Z29-5n-u1t"/>
-                        <viewControllerLayoutGuide type="bottom" id="wg0-E5-kR0"/>
+                        <viewControllerLayoutGuide type="top" id="bF9-mE-oNM"/>
+                        <viewControllerLayoutGuide type="bottom" id="bvc-Yb-Lwg"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="cnO-J3-dbJ">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                    <view key="view" contentMode="scaleToFill" id="e8E-bi-0Yr">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Igh-bX-Plx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="ndb-XN-7ld" kind="embed" id="Snw-5I-IcK"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="m5h-jg-OPo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R3y-yo-DG9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-238" y="-506"/>
+            <point key="canvasLocation" x="-2593" y="-2538"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="sCi-q8-3Pb">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="PH9-S8-EC9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IIV-Lg-H3m"/>
+                        <viewControllerLayoutGuide type="bottom" id="rOl-Jh-UQx"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4pm-pS-jsK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="jMb-6C-2bE"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KNz-If-0Qk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-999" y="-2514"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="9zD-wS-hUm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ndb-XN-7ld" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kNL-Jr-pY3">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PH9-S8-EC9" kind="relationship" relationship="rootViewController" id="l9R-rY-feU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rDo-F3-2Ac" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1525" y="-2566"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
