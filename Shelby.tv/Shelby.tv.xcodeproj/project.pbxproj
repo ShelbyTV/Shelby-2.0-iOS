@@ -86,6 +86,9 @@
 		1C309AC117A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
 		1C309AC217A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
 		1C309AC317A7196800D690A8 /* ShelbyShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */; };
+		1C382561187DE387002177C6 /* Main.Storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C382560187DE387002177C6 /* Main.Storyboard */; };
+		1C382562187DE387002177C6 /* Main.Storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C382560187DE387002177C6 /* Main.Storyboard */; };
+		1C382563187DE387002177C6 /* Main.Storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C382560187DE387002177C6 /* Main.Storyboard */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -863,6 +866,7 @@
 		1C309AB817A714B900D690A8 /* check-social@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-social@2x.png"; sourceTree = "<group>"; };
 		1C309ABF17A7196800D690A8 /* ShelbyShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyShareViewController.h; sourceTree = "<group>"; };
 		1C309AC017A7196800D690A8 /* ShelbyShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyShareViewController.m; sourceTree = "<group>"; };
+		1C382560187DE387002177C6 /* Main.Storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.Storyboard; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1394,6 +1398,14 @@
 			name = "Share Images";
 			sourceTree = "<group>";
 		};
+		1C38255F187DE373002177C6 /* Xib-iPad */ = {
+			isa = PBXGroup;
+			children = (
+				1C382560187DE387002177C6 /* Main.Storyboard */,
+			);
+			name = "Xib-iPad";
+			sourceTree = "<group>";
+		};
 		1C56F11417BABD8C00EE9206 /* Appirater */ = {
 			isa = PBXGroup;
 			children = (
@@ -1921,8 +1933,9 @@
 			children = (
 				91A3626C1790684F00381218 /* Signup Views */,
 				1CBF0934175CD69D001D471A /* Xib-iPhone */,
-				8E41EF2C16B0742400C831A4 /* BigButton.h */,
+				1C38255F187DE373002177C6 /* Xib-iPad */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
+				8E41EF2C16B0742400C831A4 /* BigButton.h */,
 				1CCCB55016D2A33500C8C216 /* PageControl.h */,
 				1CCCB55116D2A33600C8C216 /* PageControl.m */,
 				8E1B2EA316703BE500D2C0DC /* TopAlignedLabel.h */,
@@ -2424,6 +2437,7 @@
 				1CE5586817DE87B200C18A30 /* no-content-bkgd.png in Resources */,
 				911ED32817B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */,
 				1C0C7E0318523596008F5506 /* close-icon.png in Resources */,
+				1C382562187DE387002177C6 /* Main.Storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2540,6 +2554,7 @@
 				1CE5586917DE87B200C18A30 /* no-content-bkgd.png in Resources */,
 				911ED32917B2ECF0000FFBEB /* video-thumbnail-blank@2x.png in Resources */,
 				1C0C7E0418523596008F5506 /* close-icon.png in Resources */,
+				1C382563187DE387002177C6 /* Main.Storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2574,6 +2589,7 @@
 				91CE07491779086400024180 /* StreamBrowseCellForegroundView.xib in Resources */,
 				9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */,
 				1C7B63C2178B0AC2000C1E84 /* SignupFlow.storyboard in Resources */,
+				1C382561187DE387002177C6 /* Main.Storyboard in Resources */,
 				1CE5585217DE1E9A00C18A30 /* twitter-button-background@2x.png in Resources */,
 				1C7B63DE178B7B21000C1E84 /* SignupVideoTypeViewCell.xib in Resources */,
 				1C7B63F0178C5379000C1E84 /* navbar_back_button.png in Resources */,
@@ -3179,7 +3195,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3238,7 +3254,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3297,7 +3313,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
@@ -3357,7 +3373,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
@@ -3490,7 +3506,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3549,7 +3565,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				"WARNING_CFLAGS[arch=*]" = "-Wshorten-64-to-32";
 				WRAPPER_EXTENSION = app;
 			};

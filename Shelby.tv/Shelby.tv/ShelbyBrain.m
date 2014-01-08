@@ -193,23 +193,28 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 - (void)activateHomeViewController
 {
+    // KP KP: TODO: rearrange this method
     if (self.homeVC) {
         return;
     }
     
     NSString *rootViewControllerNibName = nil;
-//    if (DEVICE_IPAD) {
-//        rootViewControllerNibName = @"ShelbyHomeView";
-//    } else {
-    rootViewControllerNibName = @"ShelbyHomeView-iPhone";
-//    }
-    self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
-    self.mainWindow.rootViewController = self.homeVC;
-    self.welcomeVC = nil;
-
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-    self.homeVC.currentUser = currentUser;
-    self.homeVC.masterDelegate = self;
+
+    if (DEVICE_IPAD) {
+        UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *initialVC = [mainStoryBoard instantiateInitialViewController];
+        self.mainWindow.rootViewController = initialVC;
+    } else {
+        rootViewControllerNibName = @"ShelbyHomeView-iPhone";
+        self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
+
+        self.homeVC.currentUser = currentUser;
+        self.homeVC.masterDelegate = self;
+        self.mainWindow.rootViewController = self.homeVC;
+    }
+    
+    self.welcomeVC = nil;
 
     [self setupDVR];
 
