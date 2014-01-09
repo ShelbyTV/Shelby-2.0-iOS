@@ -8,6 +8,7 @@
 
 #import "ShelbyTopLevelNavigationViewController.h"
 #import "DisplayChannel+Helper.h"
+#import "SettingsViewController.h"
 #import "ShelbyDataMediator.h"
 #import "ShelbyNavigationViewController.h"
 
@@ -82,10 +83,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
-                                         
-                                                                          inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-    [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel shouldInitializeVideoReel:YES];
+    if (indexPath.row == 4) {
+        SettingsViewController *settingsVC = [[SettingsViewController alloc] initWithNibName:@"SettingsView-iPhone" bundle:nil];
+        [(ShelbyNavigationViewController *)self.navigationController pushViewController:settingsVC];
+    } else {
+        DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
+                                             
+                                                                              inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
+        [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel shouldInitializeVideoReel:YES];
+    }
 }
 
 

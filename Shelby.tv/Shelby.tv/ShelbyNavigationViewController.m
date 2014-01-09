@@ -47,6 +47,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)pushViewController:(UIViewController *)viewController
+{
+    [self pushViewController:viewController animated:YES];
+}
+
 - (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel
 {
     ShelbyStreamInfoViewController *streamInfoVC = [[ShelbyStreamInfoViewController alloc] init];

@@ -15,5 +15,6 @@
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, strong) User *currentUser;
 
+- (void)pushViewController:(UIViewController *)viewController;
 - (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel;
 @end
