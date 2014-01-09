@@ -7,11 +7,15 @@
 //
 
 #import "ShelbyStreamInfoViewController.h"
+#import "DashboardEntry.h"
+#import "Frame.h"
 #import "ShelbyBrain.h"
+#import "ShelbyStreamEntryCell.h"
 
 @interface ShelbyStreamInfoViewController ()
 @property (nonatomic, strong) NSMutableArray *channelEntries;
 @property (nonatomic, strong) NSMutableArray *deduplicatedEntries;
+@property (nonatomic, weak) IBOutlet UITableView *entriesTable;
 @end
 
 @implementation ShelbyStreamInfoViewController
@@ -29,6 +33,8 @@
 {
     [super viewDidLoad];
 
+    self.channelEntries = [NSMutableArray new];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fetchEntriesDidCompleteForChannelNotification:)
                                                  name:kShelbyBrainFetchEntriesDidCompleteForChannelNotification object:nil];
@@ -70,14 +76,14 @@
     }
     
     // TODO: Dedupes + don't just add
-    if (channel.channelID) {
-        [self.channelEntries addObjectsFromArray:channelEntries];
-    }
+    [self.channelEntries addObjectsFromArray:channelEntries];
     
     if (self.shouldInitializeVideoReel) {
         [self.videoReelVC loadChannel:self.displayChannel withChannelEntries:channelEntries andAutoPlay:YES];
         self.shouldInitializeVideoReel = NO;
     }
+    
+    [self.entriesTable reloadData];
 }
 
 
@@ -85,5 +91,31 @@
 {
     // TODO
 }
+
+#pragma mark UITableDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.channelEntries count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ShelbyStreamEntryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StreamEntry" forIndexPath:indexPath];
+    id streamEntry = self.channelEntries[indexPath.row];
+    Frame *videoFrame = nil;
+    if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
+        videoFrame = ((DashboardEntry *)streamEntry).frame;
+    }
+    
+    cell.videoFrame = videoFrame;
+    return cell;
+}
+
+#pragma mark UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 
 @end

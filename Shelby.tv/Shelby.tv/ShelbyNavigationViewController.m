@@ -54,7 +54,7 @@
 
 - (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel
 {
-    ShelbyStreamInfoViewController *streamInfoVC = [[ShelbyStreamInfoViewController alloc] init];
+    ShelbyStreamInfoViewController *streamInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StreamInfo"];
     streamInfoVC.videoReelVC = self.videoReelVC;
     streamInfoVC.shouldInitializeVideoReel = shouldInitializeVideoReel;
     streamInfoVC.displayChannel = channel;

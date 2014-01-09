@@ -104,6 +104,9 @@
 		1C382586187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */; };
 		1C382587187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */; };
 		1C382588187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */; };
+		1C38258C187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */; };
+		1C38258D187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */; };
+		1C38258E187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -892,6 +895,8 @@
 		1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyVideoReelViewController.m; sourceTree = "<group>"; };
 		1C382584187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyTopLevelNavigationViewController.h; sourceTree = "<group>"; };
 		1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyTopLevelNavigationViewController.m; sourceTree = "<group>"; };
+		1C38258A187F3F37002177C6 /* ShelbyStreamEntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyStreamEntryCell.h; sourceTree = "<group>"; };
+		1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyStreamEntryCell.m; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1448,6 +1453,16 @@
 			name = "View Controllers - iPad";
 			sourceTree = "<group>";
 		};
+		1C382589187F3F10002177C6 /* Views - iPad */ = {
+			isa = PBXGroup;
+			children = (
+				1C38255F187DE373002177C6 /* Xib-iPad */,
+				1C38258A187F3F37002177C6 /* ShelbyStreamEntryCell.h */,
+				1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */,
+			);
+			name = "Views - iPad";
+			sourceTree = "<group>";
+		};
 		1C56F11417BABD8C00EE9206 /* Appirater */ = {
 			isa = PBXGroup;
 			children = (
@@ -1766,6 +1781,7 @@
 				8E98F7B3165C2F750095E985 /* ShelbyPlayer */,
 				8EF5C353162F41C70075C35F /* Models */,
 				8EF5C351162F41BA0075C35F /* Views */,
+				1C382589187F3F10002177C6 /* Views - iPad */,
 				8EF5C354162F41CC0075C35F /* Controllers */,
 				1C38256A187E011D002177C6 /* View Controllers - iPad */,
 				8EF5C352162F41BF0075C35F /* View Controllers */,
@@ -1976,7 +1992,6 @@
 			children = (
 				91A3626C1790684F00381218 /* Signup Views */,
 				1CBF0934175CD69D001D471A /* Xib-iPhone */,
-				1C38255F187DE373002177C6 /* Xib-iPad */,
 				8E41EF2D16B0742400C831A4 /* BigButton.m */,
 				8E41EF2C16B0742400C831A4 /* BigButton.h */,
 				1CCCB55016D2A33500C8C216 /* PageControl.h */,
@@ -2798,6 +2813,7 @@
 				91D03F081731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0D1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F211732BC98008131D2 /* Dashboard+Helper.m in Sources */,
+				1C38258D187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */,
 				1C4110E017319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2B17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				1C100DD9185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
@@ -2947,6 +2963,7 @@
 				91D03F091731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0E1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F221732BC98008131D2 /* Dashboard+Helper.m in Sources */,
+				1C38258E187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */,
 				1C4110E117319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2C17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				1C100DDA185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
@@ -3096,6 +3113,7 @@
 				91D03F071731C49C008131D2 /* DisplayChannel+Helper.m in Sources */,
 				91D03F0C1732B507008131D2 /* Roll+Helper.m in Sources */,
 				91D03F201732BC98008131D2 /* Dashboard+Helper.m in Sources */,
+				1C38258C187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */,
 				1C4110DF17319468009022EA /* ShelbyHomeViewController.m in Sources */,
 				91D03F2A17330BD9008131D2 /* DashboardEntry+Helper.m in Sources */,
 				1C100DD8185F8E57002ADAF2 /* LikeNotificationViewCell.m in Sources */,
