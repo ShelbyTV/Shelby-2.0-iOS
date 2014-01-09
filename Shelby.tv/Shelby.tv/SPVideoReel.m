@@ -178,12 +178,16 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 
     CGSize contentSize;
-    NSInteger videoHeight = kShelbyFullscreenHeight;
+    NSInteger videoHeight = self.videoScrollView.bounds.size.height;
     if (UIInterfaceOrientationIsLandscape(_currentlyPresentedInterfaceOrientation)) {
-        videoHeight = kShelbyFullscreenWidth;
-        contentSize = CGSizeMake(kShelbyFullscreenHeight, [self.videoEntities count] * videoHeight);
+        STVDebugAssert(videoHeight == kShelbyFullscreenWidth, @"We set/assumed this pre-iPad");
+        STVDebugAssert(DEVICE_IPAD || self.videoScrollView.bounds.size.width == kShelbyFullscreenHeight, @"We set/assumed this pre-iPad");
+        contentSize = CGSizeMake(self.videoScrollView.bounds.size.width, [self.videoEntities count] * videoHeight);
     } else {
-        contentSize = CGSizeMake(kShelbyFullscreenWidth, [self.videoEntities count] * videoHeight);
+        //NB: portrait is iPhone only
+        STVDebugAssert(videoHeight == kShelbyFullscreenHeight, @"We set/assumed this pre-iPad");
+        STVDebugAssert(self.videoScrollView.bounds.size.width == kShelbyFullscreenWidth, @"We set/assumed this pre-iPad");
+        contentSize = CGSizeMake(self.videoScrollView.bounds.size.width, [self.videoEntities count] * videoHeight);
     }
     
     self.videoScrollView.contentSize = contentSize;

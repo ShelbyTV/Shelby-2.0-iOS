@@ -38,12 +38,15 @@
 
 - (void)loadChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries andAutoPlay:(BOOL)autoPlay
 {
+    //remove old video reel
     [self.videoReel shutdown];
     [self.videoReel willMoveToParentViewController:self];
     [self.videoReel removeFromParentViewController];
     
+    //replace with a new video reel
     self.videoReel = [[SPVideoReel alloc] initWithChannel:channel andVideoEntities:channelEntries atIndex:0];
     [self addChildViewController:self.videoReel];
+    self.videoReel.view.frame = self.view.bounds;
     [self.view addSubview:self.videoReel.view];
     [self.videoReel didMoveToParentViewController:self];
 
