@@ -709,10 +709,14 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 #pragma mark - UIScrollViewDelegate Methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    //this is never called
-    //videoScrollView's content offset is set in two ways:
+    //on iPhone, videoScrollView's content offset is set in two ways:
     //1) manually, when the StreamBrowseView's contentOffset changes
     //2) via setContentOffset:animated: which causes scrollViewDidEndScrollingAnimation: to fire
+    
+    //on iPad, we actually use this to change currently playing video
+    if (DEVICE_IPAD) {
+        [self endDecelerating];
+    }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
@@ -722,6 +726,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     if (!CGPointEqualToPoint(self.videoScrollView.contentOffset, _autoadvanceTargetOffset)) {
         [self.videoScrollView setContentOffset:_autoadvanceTargetOffset animated:NO];
     }
+    //NB: below hits brain which signals HomeVC (therefore, only matters on iPhone)
     [self.delegate videoDidAutoadvance];
 }
 
