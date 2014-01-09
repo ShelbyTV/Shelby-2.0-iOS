@@ -7,6 +7,7 @@
 //
 
 #import "ShelbyNavigationViewController.h"
+#import "ShelbyStreamInfoViewController.h"
 
 @interface ShelbyNavigationViewController ()
 
@@ -35,4 +36,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel
+{
+
+    ShelbyStreamInfoViewController *streamInfoVC = [[ShelbyStreamInfoViewController alloc] init];
+    streamInfoVC.videoReelVC = self.videoReelVC;
+    streamInfoVC.shouldInitializeVideoReel = shouldInitializeVideoReel;
+    streamInfoVC.displayChannel = channel;
+
+    [self pushViewController:streamInfoVC animated:YES];
+}
 @end

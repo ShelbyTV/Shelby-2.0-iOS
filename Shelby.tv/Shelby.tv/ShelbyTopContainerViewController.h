@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DisplayChannel.h"
+#import "User.h"
 
 @interface ShelbyTopContainerViewController : UIViewController
+@property (nonatomic, strong) User *currentUser;
 
 @end

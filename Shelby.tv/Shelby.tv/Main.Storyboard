@@ -17,11 +17,19 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Igh-bX-Plx">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="668"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="ndb-XN-7ld" kind="embed" id="Snw-5I-IcK"/>
+                                    <segue destination="ndb-XN-7ld" kind="embed" identifier="SideNavigation" id="Snw-5I-IcK"/>
+                                </connections>
+                            </containerView>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4r1-5u-tvJ">
+                                <rect key="frame" x="0.0" y="668" width="320" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="KoD-Bu-FZH" kind="embed" identifier="NowPlaying" id="9b1-Ct-zUz"/>
                                 </connections>
                             </containerView>
                             <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qeU-18-Fvh">
@@ -29,7 +37,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="XRC-TM-Lqo" kind="embed" id="9Mx-jw-L9V"/>
+                                    <segue destination="XRC-TM-Lqo" kind="embed" identifier="VideoReel" id="9Mx-jw-L9V"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -42,26 +50,50 @@
             </objects>
             <point key="canvasLocation" x="-2605" y="-2530"/>
         </scene>
-        <!--Shelby Stream Info View Controller-->
+        <!--Shelby Top Level Navigation View Controller-->
         <scene sceneID="sCi-q8-3Pb">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="PH9-S8-EC9" customClass="ShelbyStreamInfoViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="PH9-S8-EC9" customClass="ShelbyTopLevelNavigationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IIV-Lg-H3m"/>
                         <viewControllerLayoutGuide type="bottom" id="rOl-Jh-UQx"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4pm-pS-jsK">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="668"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ynf-C6-QiH">
+                                <rect key="frame" x="0.0" y="44" width="320" height="624"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TopLevelNavigationCell" id="ha2-w8-vzY">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ha2-w8-vzY">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="PH9-S8-EC9" id="Fsa-c8-Y3d"/>
+                                    <outlet property="delegate" destination="PH9-S8-EC9" id="kC7-Hy-lm7"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="jMb-6C-2bE"/>
+                    <connections>
+                        <outlet property="topLevelTable" destination="ynf-C6-QiH" id="Jfo-nO-Qv3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KNz-If-0Qk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-999" y="-2514"/>
+            <point key="canvasLocation" x="-1025" y="-2506"/>
         </scene>
         <!--Shelby Navigation View Controller-->
         <scene sceneID="9zD-wS-hUm">
@@ -81,10 +113,10 @@
             </objects>
             <point key="canvasLocation" x="-1421" y="-2522"/>
         </scene>
-        <!--Video Reel-->
+        <!--Shelby Video Reel View Controller-->
         <scene sceneID="Yqb-zk-YU7">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="XRC-TM-Lqo" customClass="SPVideoReel" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="XRC-TM-Lqo" customClass="ShelbyVideoReelViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IR0-mQ-39e"/>
                         <viewControllerLayoutGuide type="bottom" id="Hck-gS-awW"/>
@@ -100,6 +132,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gbh-jg-Dnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1409" y="-1618"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="kbM-a1-Euq">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="KoD-Bu-FZH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6oG-N1-p9Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="u4k-vI-QTw"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="VfA-Qb-X04">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.43529411759999997" green="0.74509803919999995" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hyz-EY-NI2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1421" y="-2831"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

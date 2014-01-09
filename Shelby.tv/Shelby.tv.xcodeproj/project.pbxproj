@@ -98,6 +98,12 @@
 		1C38257C187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */; };
 		1C38257D187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */; };
 		1C38257E187E06D0002177C6 /* ShelbyTopContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */; };
+		1C382581187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */; };
+		1C382582187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */; };
+		1C382583187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */; };
+		1C382586187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */; };
+		1C382587187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */; };
+		1C382588187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -882,6 +888,10 @@
 		1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyNavigationViewController.m; sourceTree = "<group>"; };
 		1C38257A187E06D0002177C6 /* ShelbyTopContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyTopContainerViewController.h; sourceTree = "<group>"; };
 		1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyTopContainerViewController.m; sourceTree = "<group>"; };
+		1C38257F187F033D002177C6 /* ShelbyVideoReelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyVideoReelViewController.h; sourceTree = "<group>"; };
+		1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyVideoReelViewController.m; sourceTree = "<group>"; };
+		1C382584187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyTopLevelNavigationViewController.h; sourceTree = "<group>"; };
+		1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyTopLevelNavigationViewController.m; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1424,12 +1434,16 @@
 		1C38256A187E011D002177C6 /* View Controllers - iPad */ = {
 			isa = PBXGroup;
 			children = (
-				1C38256B187E014C002177C6 /* ShelbyStreamInfoViewController.h */,
-				1C38256C187E014C002177C6 /* ShelbyStreamInfoViewController.m */,
 				1C382575187E069A002177C6 /* ShelbyNavigationViewController.h */,
 				1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */,
+				1C38256B187E014C002177C6 /* ShelbyStreamInfoViewController.h */,
+				1C38256C187E014C002177C6 /* ShelbyStreamInfoViewController.m */,
 				1C38257A187E06D0002177C6 /* ShelbyTopContainerViewController.h */,
+				1C382584187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.h */,
+				1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */,
 				1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */,
+				1C38257F187F033D002177C6 /* ShelbyVideoReelViewController.h */,
+				1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */,
 			);
 			name = "View Controllers - iPad";
 			sourceTree = "<group>";
@@ -2755,6 +2769,7 @@
 				8E7024C31715E71500E8DE46 /* NSURL+Base.m in Sources */,
 				913D854E17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C61715E71500E8DE46 /* Base64Transcoder.c in Sources */,
+				1C382582187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024C91715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CC1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024CF1715E71500E8DE46 /* OAAttachment.m in Sources */,
@@ -2766,6 +2781,7 @@
 				8E7024E11715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
 				8E7024E41715E71500E8DE46 /* OAProblem.m in Sources */,
 				8E7024E71715E71500E8DE46 /* OARequestParameter.m in Sources */,
+				1C382587187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */,
 				8E7024EA1715E71500E8DE46 /* OAServiceTicket.m in Sources */,
 				8E7024F01715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F31715E71500E8DE46 /* OATokenManager.m in Sources */,
@@ -2902,6 +2918,7 @@
 				8E7024C41715E71500E8DE46 /* NSURL+Base.m in Sources */,
 				913D854F17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C71715E71500E8DE46 /* Base64Transcoder.c in Sources */,
+				1C382583187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024CA1715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CD1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024D01715E71500E8DE46 /* OAAttachment.m in Sources */,
@@ -2913,6 +2930,7 @@
 				8E7024E21715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
 				8E7024E51715E71500E8DE46 /* OAProblem.m in Sources */,
 				8E7024E81715E71500E8DE46 /* OARequestParameter.m in Sources */,
+				1C382588187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */,
 				8E7024EB1715E71500E8DE46 /* OAServiceTicket.m in Sources */,
 				8E7024F11715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F41715E71500E8DE46 /* OATokenManager.m in Sources */,
@@ -3049,6 +3067,7 @@
 				8E7024C21715E71500E8DE46 /* NSURL+Base.m in Sources */,
 				913D854D17CEAB0200A6C534 /* WelcomeLoginView.m in Sources */,
 				8E7024C51715E71500E8DE46 /* Base64Transcoder.c in Sources */,
+				1C382581187F033D002177C6 /* ShelbyVideoReelViewController.m in Sources */,
 				8E7024C81715E71500E8DE46 /* hmac.c in Sources */,
 				8E7024CB1715E71500E8DE46 /* sha1.c in Sources */,
 				8E7024CE1715E71500E8DE46 /* OAAttachment.m in Sources */,
@@ -3060,6 +3079,7 @@
 				8E7024E01715E71500E8DE46 /* OAPlaintextSignatureProvider.m in Sources */,
 				8E7024E31715E71500E8DE46 /* OAProblem.m in Sources */,
 				8E7024E61715E71500E8DE46 /* OARequestParameter.m in Sources */,
+				1C382586187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m in Sources */,
 				8E7024E91715E71500E8DE46 /* OAServiceTicket.m in Sources */,
 				8E7024EF1715E71500E8DE46 /* OAToken.m in Sources */,
 				8E7024F21715E71500E8DE46 /* OATokenManager.m in Sources */,

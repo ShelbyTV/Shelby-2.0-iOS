@@ -7,9 +7,11 @@
 //
 
 #import "ShelbyStreamInfoViewController.h"
+#import "ShelbyBrain.h"
 
 @interface ShelbyStreamInfoViewController ()
-
+@property (nonatomic, strong) NSMutableArray *channelEntries;
+@property (nonatomic, strong) NSMutableArray *deduplicatedEntries;
 @end
 
 @implementation ShelbyStreamInfoViewController
@@ -26,13 +28,62 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchEntriesDidCompleteForChannelNotification:)
+                                                 name:kShelbyBrainFetchEntriesDidCompleteForChannelNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fetchEntriesDidCompleteForChannelWithErrorNotification:)
+                                                 name:kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification object:nil];
+
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setDisplayChannel:(DisplayChannel *)displayChannel
+{
+    if (self.displayChannel != displayChannel) {
+        _displayChannel = displayChannel;
+        [[ShelbyDataMediator sharedInstance] fetchEntriesInChannel:displayChannel sinceEntry:nil];
+    }
+}
+
+
+- (void)fetchEntriesDidCompleteForChannelNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    
+    if (channel != self.displayChannel) {
+        return;
+    }
+    
+    NSArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
+    
+    if (!channelEntries) {
+        channelEntries = @[];
+    }
+    
+    // TODO: Dedupes + don't just add
+    if (channel.channelID) {
+        [self.channelEntries addObjectsFromArray:channelEntries];
+    }
+    
+    if (self.shouldInitializeVideoReel) {
+        [self.videoReelVC loadChannel:self.displayChannel withChannelEntries:channelEntries andAutoPlay:YES];
+        self.shouldInitializeVideoReel = NO;
+    }
+}
+
+
+- (void)fetchEntriesDidCompleteForChannelWithErrorNotification:(NSNotification *)notification
+{
+    // TODO
 }
 
 @end

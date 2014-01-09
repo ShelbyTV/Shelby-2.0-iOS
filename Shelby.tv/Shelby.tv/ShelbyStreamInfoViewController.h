@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DisplayChannel.h"
+#import "ShelbyVideoReelViewController.h"
 
 @interface ShelbyStreamInfoViewController : UIViewController
+@property (nonatomic, strong) DisplayChannel *displayChannel;
+@property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
+@property (nonatomic, assign) BOOL shouldInitializeVideoReel;
 
 @end

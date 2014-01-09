@@ -7,9 +7,12 @@
 //
 
 #import "ShelbyTopContainerViewController.h"
+#import "ShelbyNavigationViewController.h"
+#import "ShelbyVideoReelViewController.h"
 
 @interface ShelbyTopContainerViewController ()
-
+@property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
+@property (nonatomic, strong) ShelbyNavigationViewController *sideNavigation;
 @end
 
 @implementation ShelbyTopContainerViewController
@@ -27,6 +30,22 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSString *segueIdentifier = segue.identifier;
+    if ([segueIdentifier isEqualToString:@"SideNavigation"]) {
+        self.sideNavigation = segue.destinationViewController;
+    } else if ([segueIdentifier isEqualToString:@"VideoReel"]) {
+        self.videoReelVC = segue.destinationViewController;
+    } else if ([segueIdentifier isEqualToString:@"NowPlaying"]) {
+        // TODO
+    }
+    
+    if (self.sideNavigation && self.videoReelVC) {
+        self.sideNavigation.videoReelVC = self.videoReelVC;
+    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DisplayChannel.h"
+#import "ShelbyVideoReelViewController.h"
+#import "User.h"
 
 @interface ShelbyNavigationViewController : UINavigationController
+@property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
+@property (nonatomic, strong) User *currentUser;
 
+- (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel;
 @end

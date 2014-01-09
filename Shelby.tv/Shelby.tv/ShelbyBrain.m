@@ -75,6 +75,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
 @property (nonatomic, strong) UIAlertView *currentAlertView;
 
+@property (nonatomic, strong) ShelbyTopContainerViewController *topContainerVC;
 // Notification properties
 @property (nonatomic, strong) NSString *notificationDashboardID;
 @property (nonatomic, strong) NSString *notificationUserID;
@@ -204,8 +205,9 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 
     if (DEVICE_IPAD) {
         UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        ShelbyTopContainerViewController *initialVC = (ShelbyTopContainerViewController *)[mainStoryBoard instantiateInitialViewController];
-        self.mainWindow.rootViewController = initialVC;
+        self.topContainerVC = (ShelbyTopContainerViewController *)[mainStoryBoard instantiateInitialViewController];
+        self.topContainerVC.currentUser = currentUser;
+        self.mainWindow.rootViewController = self.topContainerVC;
     } else {
         rootViewControllerNibName = @"ShelbyHomeView-iPhone";
         self.homeVC = [[ShelbyHomeViewController alloc] initWithNibName:rootViewControllerNibName bundle:nil];
