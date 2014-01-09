@@ -95,6 +95,66 @@
             </objects>
             <point key="canvasLocation" x="-1025" y="-2506"/>
         </scene>
+        <!--Shelby Stream Info View Controller-->
+        <scene sceneID="sPV-fa-zfw">
+            <objects>
+                <viewController storyboardIdentifier="StreamInfo" id="a5b-49-3Ot" customClass="ShelbyStreamInfoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WAb-p9-JuI"/>
+                        <viewControllerLayoutGuide type="bottom" id="ndb-Gc-EZ0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9gY-Ld-XSu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="624"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="250" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9cm-1S-le1">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="624"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StreamEntry" id="Ctu-El-3f2" customClass="ShelbyStreamEntryCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="250"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ctu-El-3f2" id="l6W-Cf-l6f">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="249"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Itb-fg-U9c">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="lbe-qQ-nS2">
+                                                    <rect key="frame" x="10" y="20" width="300" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="videoTitle" destination="lbe-qQ-nS2" id="2Zf-fI-Mo4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="a5b-49-3Ot" id="KqB-ok-1Sw"/>
+                                    <outlet property="delegate" destination="a5b-49-3Ot" id="FIa-Zn-Wag"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="entriesTable" destination="9cm-1S-le1" id="dtl-m9-30Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s0h-jp-rf6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-637" y="-2462"/>
+        </scene>
         <!--Shelby Navigation View Controller-->
         <scene sceneID="9zD-wS-hUm">
             <objects>
