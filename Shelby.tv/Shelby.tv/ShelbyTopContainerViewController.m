@@ -44,6 +44,7 @@
     }
     
     if (self.sideNavigation && self.videoReelVC) {
+        self.sideNavigation.currentUser = self.currentUser;
         self.sideNavigation.videoReelVC = self.videoReelVC;
     }
 }

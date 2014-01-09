@@ -46,13 +46,35 @@
 #pragma mark UITableDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if (!self.currentUser) {
+        return 3;
+    } else {
+        return 5;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TopLevelNavigationCell" forIndexPath:indexPath];
-    cell.textLabel.text = @"just work";
+    if (!self.currentUser) {
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"My Activity";
+        } else if (indexPath.row == 1) {
+            cell.textLabel.text = @"Featured";
+        } else {
+            cell.textLabel.text = @"Login";
+        }
+    } else if (indexPath.row == 0) {
+        cell.textLabel.text = @"Stream";
+    } else if (indexPath.row == 1) {
+        cell.textLabel.text = @"My Activity";
+    } else if (indexPath.row == 2) {
+        cell.textLabel.text = @"Featured";
+    } else if (indexPath.row == 3) {
+        cell.textLabel.text = @"Notifications";
+    } else {
+        cell.textLabel.text = @"Settings";
+    }
     return cell;
 }
 

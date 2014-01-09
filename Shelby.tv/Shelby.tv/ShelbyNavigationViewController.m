@@ -8,6 +8,7 @@
 
 #import "ShelbyNavigationViewController.h"
 #import "ShelbyStreamInfoViewController.h"
+#import "ShelbyTopLevelNavigationViewController.h"
 
 @interface ShelbyNavigationViewController ()
 
@@ -30,6 +31,16 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)setCurrentUser:(User *)currentUser
+{
+    if (_currentUser != currentUser) {
+        _currentUser = currentUser;
+    
+        ShelbyTopLevelNavigationViewController *topLevelNavigationVC = (ShelbyTopLevelNavigationViewController *)self.topViewController;
+        topLevelNavigationVC.currentUser = self.currentUser;
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -38,7 +49,6 @@
 
 - (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel
 {
-
     ShelbyStreamInfoViewController *streamInfoVC = [[ShelbyStreamInfoViewController alloc] init];
     streamInfoVC.videoReelVC = self.videoReelVC;
     streamInfoVC.shouldInitializeVideoReel = shouldInitializeVideoReel;
