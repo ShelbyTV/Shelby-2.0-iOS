@@ -7,12 +7,16 @@
 //
 
 #import "ShelbyStreamEntryCell.h"
-#import "Video.h"
+#import "Frame+Helper.h"
 #import "UIImageView+AFNetworking.h"
+#import "User+Helper.h"
+#import "Video.h"
 
 @interface ShelbyStreamEntryCell()
-@property (nonatomic, strong) IBOutlet UILabel *videoTitle;
-@property (nonatomic, strong) IBOutlet UIImageView *videoThumbnail;
+@property (nonatomic, weak) IBOutlet UILabel *videoTitle;
+@property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
+@property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
+@property (nonatomic, weak) IBOutlet UILabel *description;
 @end
 
 @implementation ShelbyStreamEntryCell
@@ -38,14 +42,24 @@
     _videoFrame = videoFrame;
     
     self.videoTitle.text = self.videoFrame.video.title;
-    NSURLRequest *urlRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
+    NSString *captionText = [videoFrame creatorsInitialCommentWithFallback:YES];
+    self.description.text = captionText;
+    NSURLRequest *thumbnailURLRequst = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:videoFrame.video.thumbnailURL]];
  
     __weak ShelbyStreamEntryCell *weakSelf = self;
-    [self.videoThumbnail setImageWithURLRequest:urlRequst placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    [self.videoThumbnail setImageWithURLRequest:thumbnailURLRequst placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         weakSelf.videoThumbnail.image = image;
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         
     }];
+    
+    NSURLRequest *avatarURLRequst = [[NSURLRequest alloc] initWithURL:[videoFrame.creator avatarURL]];
+    [self.userAvatar setImageWithURLRequest:avatarURLRequst placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        weakSelf.userAvatar.image = image;
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        
+    }];
+    
 }
 
 @end
