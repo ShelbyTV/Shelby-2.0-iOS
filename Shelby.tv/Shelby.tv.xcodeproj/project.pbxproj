@@ -107,6 +107,9 @@
 		1C38258C187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */; };
 		1C38258D187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */; };
 		1C38258E187F3F37002177C6 /* ShelbyStreamEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */; };
+		1C38259118806234002177C6 /* ShelbyUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */; };
+		1C38259218806234002177C6 /* ShelbyUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */; };
+		1C38259318806234002177C6 /* ShelbyUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */; };
 		1C3D91261714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91271714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
 		1C3D91281714C00100105839 /* FacebookHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D91251714C00100105839 /* FacebookHandler.m */; };
@@ -897,6 +900,8 @@
 		1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyTopLevelNavigationViewController.m; sourceTree = "<group>"; };
 		1C38258A187F3F37002177C6 /* ShelbyStreamEntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyStreamEntryCell.h; sourceTree = "<group>"; };
 		1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyStreamEntryCell.m; sourceTree = "<group>"; };
+		1C38258F18806234002177C6 /* ShelbyUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyUserInfoViewController.h; sourceTree = "<group>"; };
+		1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyUserInfoViewController.m; sourceTree = "<group>"; };
 		1C3D91241714C00100105839 /* FacebookHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookHandler.h; sourceTree = "<group>"; };
 		1C3D91251714C00100105839 /* FacebookHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookHandler.m; sourceTree = "<group>"; };
 		1C3D91331714C6CC00105839 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1443,6 +1448,8 @@
 				1C382576187E069A002177C6 /* ShelbyNavigationViewController.m */,
 				1C38256B187E014C002177C6 /* ShelbyStreamInfoViewController.h */,
 				1C38256C187E014C002177C6 /* ShelbyStreamInfoViewController.m */,
+				1C38258F18806234002177C6 /* ShelbyUserInfoViewController.h */,
+				1C38259018806234002177C6 /* ShelbyUserInfoViewController.m */,
 				1C38257A187E06D0002177C6 /* ShelbyTopContainerViewController.h */,
 				1C382584187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.h */,
 				1C382585187F0B74002177C6 /* ShelbyTopLevelNavigationViewController.m */,
@@ -2768,6 +2775,7 @@
 				91AA342618194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B70184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				1C8109A116EE2CBF0030077C /* AFHTTPRequestOperation.m in Sources */,
+				1C38259218806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7D184E468C00FBE054 /* LikerCell.m in Sources */,
 				1C8109A216EE2CBF0030077C /* AFImageRequestOperation.m in Sources */,
 				1C8109A316EE2CBF0030077C /* AFJSONRequestOperation.m in Sources */,
@@ -2918,6 +2926,7 @@
 				91AA342718194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B71184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				1C810A5716EE5EED0030077C /* AFHTTPRequestOperation.m in Sources */,
+				1C38259318806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7E184E468C00FBE054 /* LikerCell.m in Sources */,
 				1C810A5816EE5EED0030077C /* AFImageRequestOperation.m in Sources */,
 				1C810A5916EE5EED0030077C /* AFJSONRequestOperation.m in Sources */,
@@ -3068,6 +3077,7 @@
 				91AA342518194A2B00B8F558 /* STVVimeoExtractor.m in Sources */,
 				1C253B6F184D458300FBE054 /* ShelbyLikersViewController.m in Sources */,
 				8E01AFBC16E67365000567D4 /* AFHTTPRequestOperation.m in Sources */,
+				1C38259118806234002177C6 /* ShelbyUserInfoViewController.m in Sources */,
 				1C253B7C184E468C00FBE054 /* LikerCell.m in Sources */,
 				8E01AFBD16E67365000567D4 /* AFImageRequestOperation.m in Sources */,
 				8E01AFBE16E67365000567D4 /* AFJSONRequestOperation.m in Sources */,
