@@ -97,6 +97,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     [self.view setBackgroundColor:[UIColor blackColor]];
     
     // Any setup stuff that *doesn't* rely on frame sizing can go here
+    [self createVideoScrollView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -163,7 +164,7 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 }
 
-- (void)setupVideoScrollView
+- (void)createVideoScrollView
 {
     if (!self.videoScrollView) {
         _videoScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
@@ -176,6 +177,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         self.videoScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:self.videoScrollView];
     }
+}
+
+- (void)setupVideoScrollView
+{
+    [self createVideoScrollView];
 
     CGSize contentSize;
     NSInteger videoHeight = self.videoScrollView.bounds.size.height;
@@ -245,6 +251,11 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         player.view.frame = CGRectMake(0, newHeight * i, player.view.frame.size.width, player.view.frame.size.height);
         i++;
     }
+}
+
+- (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+{
+    [self.videoScrollView addGestureRecognizer:gestureRecognizer];
 }
 
 - (void)setupGestures
@@ -323,43 +334,6 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
         }
         [self createVideoPlayerForEntity:entity atPosition:i];
     }
-}
-
-- (void)animatePlaybackState:(BOOL)videoPlaying
-{
-    NSString *imageName = nil;
-    if (videoPlaying) {
-        imageName =  @"pauseButton.png";
-    } else {
-        imageName = @"playButton.png";
-    }
-    
-    UIImageView *playPauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-    [playPauseImage setContentMode:UIViewContentModeScaleAspectFill];
-    [self.view addSubview:playPauseImage];
-    [self.view bringSubviewToFront:playPauseImage];
-    
-    CGRect startFrame = CGRectMake((kShelbySPVideoWidth - playPauseImage.frame.size.width) / 2, (kShelbySPVideoHeight - playPauseImage.frame.size.height) / 2, playPauseImage.frame.size.width, playPauseImage.frame.size.height);
-    
-    [playPauseImage setFrame:startFrame];
-    
-    CGRect endFrame = CGRectMake(startFrame.origin.x - startFrame.size.width, startFrame.origin.y - startFrame.size.height, startFrame.size.width * 4, startFrame.size.height * 4);
-    [UIView animateWithDuration:1 animations:^{
-        [playPauseImage setFrame:endFrame];
-        [playPauseImage setAlpha:0];
-    } completion:^(BOOL finished) {
-        [playPauseImage removeFromSuperview];
-    }];
-}
-
-
-- (void)togglePlayback:(UIGestureRecognizer *)recognizer
-{
-    [self animatePlaybackState:self.currentPlayer.isPlaying];
-
-    [self.currentPlayer togglePlayback];
-    
-//    [ShelbyViewController sendEventWithCategory:kAnalyticsCategoryVideoPlayer withAction:kAnalyticsVideoPlayerActionDoubleTap withLabel:nil];
 }
 
 - (BOOL)isCurrentPlayerPlaying

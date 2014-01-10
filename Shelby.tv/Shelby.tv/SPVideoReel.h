@@ -47,6 +47,8 @@
 
 - (void)shutdown;
 
+- (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer;
+
 //New API for use by playback control elements
 //current player is actually playing
 - (BOOL)isCurrentPlayerPlaying;

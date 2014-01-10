@@ -44,8 +44,15 @@
     _fullscreenVideoWidth = 1024;
     _smallscreenVideoWidth = self.videoReelWidthConstraint.constant;
     
-    //Uncomment for some fun layout testing
-//    [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(toggleFullscreenVideo) userInfo:nil repeats:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(toggleFullscreenVideo)
+                                                 name:kShelbySingleTapOnVideReeloNotification
+                                               object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,7 +73,7 @@
         navTransform = CGAffineTransformMakeScale(0.8, 0.8);
     }
     
-    [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:12.f options:UIViewAnimationCurveEaseIn animations:^{
+    [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:.75 initialSpringVelocity:7.f options:UIViewAnimationCurveEaseIn animations:^{
         
         self.navigationViewContainer.transform = navTransform;
         self.currentlyPlayingViewContainer.transform = navTransform;

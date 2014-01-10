@@ -9,6 +9,8 @@
 #import "ShelbyVideoReelViewController.h"
 #import "SPVideoReel.h"
 
+NSString * const kShelbySingleTapOnVideReeloNotification = @"kShelbySingleTapOnVideReeloNotification";
+
 @interface ShelbyVideoReelViewController ()
 @property (nonatomic, strong) SPVideoReel *videoReel;
 @end
@@ -49,10 +51,20 @@
     self.videoReel.view.frame = self.view.bounds;
     [self.view addSubview:self.videoReel.view];
     [self.videoReel didMoveToParentViewController:self];
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapOnVideoReelDetected:)];
+    [self.videoReel addGestureRecognizer:singleTap];
 
     if (autoPlay) {
         [self.videoReel playCurrentPlayer];
     }
+}
+
+#pragma mark - custom gesture recognizers on video reel
+
+- (void)singleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySingleTapOnVideReeloNotification object:self];
 }
 
 @end
