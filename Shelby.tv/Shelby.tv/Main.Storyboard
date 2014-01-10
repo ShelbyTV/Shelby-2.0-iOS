@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="yze-cc-arF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="yze-cc-arF">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Shelby Top Container View Controller-->
@@ -16,32 +16,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Igh-bX-Plx">
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Igh-bX-Plx" userLabel="navigation Container View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="668"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="Hbb-1p-h4g"/>
+                                    <constraint firstAttribute="height" constant="668" id="L0V-Jk-dik"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="ndb-XN-7ld" kind="embed" identifier="SideNavigation" id="Snw-5I-IcK"/>
                                 </connections>
                             </containerView>
-                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4r1-5u-tvJ">
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4r1-5u-tvJ" userLabel="currentlyPlaying Container View">
                                 <rect key="frame" x="0.0" y="668" width="320" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="2vp-9k-s9W"/>
+                                    <constraint firstAttribute="height" constant="100" id="xcN-hj-Psd"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="KoD-Bu-FZH" kind="embed" identifier="NowPlaying" id="9b1-Ct-zUz"/>
                                 </connections>
                             </containerView>
-                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qeU-18-Fvh">
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeU-18-Fvh" userLabel="videoReel Container View">
                                 <rect key="frame" x="320" y="0.0" width="704" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="768" id="Bkz-bd-vE2"/>
+                                    <constraint firstAttribute="width" constant="704" id="fKP-01-oyq"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="XRC-TM-Lqo" kind="embed" identifier="VideoReel" id="9Mx-jw-L9V"/>
                                 </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Igh-bX-Plx" firstAttribute="leading" secondItem="e8E-bi-0Yr" secondAttribute="leading" id="4B7-ls-Wvc"/>
+                            <constraint firstItem="Igh-bX-Plx" firstAttribute="top" secondItem="e8E-bi-0Yr" secondAttribute="top" id="BpL-qL-4VO"/>
+                            <constraint firstItem="bvc-Yb-Lwg" firstAttribute="top" secondItem="4r1-5u-tvJ" secondAttribute="bottom" id="F4p-Df-bvi"/>
+                            <constraint firstItem="qeU-18-Fvh" firstAttribute="top" secondItem="e8E-bi-0Yr" secondAttribute="top" id="dcA-Pn-mkC"/>
+                            <constraint firstAttribute="trailing" secondItem="qeU-18-Fvh" secondAttribute="trailing" id="jL7-s6-Exc"/>
+                            <constraint firstItem="4r1-5u-tvJ" firstAttribute="leading" secondItem="e8E-bi-0Yr" secondAttribute="leading" id="qVi-5K-OXP"/>
+                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -49,6 +69,7 @@
                         <outlet property="currentlyPlayingViewContainer" destination="4r1-5u-tvJ" id="C3B-ef-d4h"/>
                         <outlet property="navigationViewContainer" destination="Igh-bX-Plx" id="3Ig-9S-syz"/>
                         <outlet property="videoReelViewContainer" destination="qeU-18-Fvh" id="A0x-VF-bGQ"/>
+                        <outlet property="videoReelWidthConstraint" destination="fKP-01-oyq" id="Gjd-8M-ERf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R3y-yo-DG9" userLabel="First Responder" sceneMemberID="firstResponder"/>

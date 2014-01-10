@@ -16,13 +16,16 @@
 @property (weak, nonatomic) IBOutlet UIView *currentlyPlayingViewContainer;
 @property (weak, nonatomic) IBOutlet UIView *videoReelViewContainer;
 
+//constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *videoReelWidthConstraint;
+
 //View Controllers
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, strong) ShelbyNavigationViewController *sideNavigation;
 @end
 
 @implementation ShelbyTopContainerViewController {
-    CGRect _fullscreenVideoFrame, _smallscreenVideoFrame;
+    CGFloat _fullscreenVideoWidth, _smallscreenVideoWidth;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,10 +40,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
-    _fullscreenVideoFrame = CGRectMake(0, 0, 1024, 768);
-    _smallscreenVideoFrame = self.videoReelViewContainer.frame;
+    _fullscreenVideoWidth = 1024;
+    _smallscreenVideoWidth = self.videoReelWidthConstraint.constant;
     
     //Uncomment for some fun layout testing
 //    [NSTimer scheduledTimerWithTimeInterval:3.0f target:self selector:@selector(toggleFullscreenVideo) userInfo:nil repeats:YES];
@@ -54,21 +56,30 @@
 
 - (void)toggleFullscreenVideo
 {
-    CGRect newFrame;
+    CGFloat newWidth;
+    CGAffineTransform navTransform;
     if ([self isVideoFullscreen]) {
-        newFrame = _smallscreenVideoFrame;
+        newWidth = _smallscreenVideoWidth;
+        navTransform = CGAffineTransformIdentity;
     } else {
-        newFrame = _fullscreenVideoFrame;
+        newWidth = _fullscreenVideoWidth;
+        navTransform = CGAffineTransformMakeScale(0.9, 0.9);
     }
+    
 
-    [UIView animateWithDuration:.5 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:12.f options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.videoReelViewContainer.frame = newFrame;
+    [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:12.f options:UIViewAnimationCurveEaseIn animations:^{
+        
+        self.navigationViewContainer.transform = navTransform;
+        self.currentlyPlayingViewContainer.transform = navTransform;
+        self.videoReelWidthConstraint.constant = newWidth;
+        [self.view layoutIfNeeded];
+
     } completion:nil];
 }
 
 - (BOOL)isVideoFullscreen
 {
-    return CGRectEqualToRect(self.videoReelViewContainer.frame, _fullscreenVideoFrame);
+    return self.videoReelWidthConstraint.constant == _fullscreenVideoWidth;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
