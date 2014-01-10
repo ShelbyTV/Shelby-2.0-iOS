@@ -22,6 +22,11 @@
 #import "TwitterHandler.h"
 #import "UIScreen+Resolution.h"
 
+//notifications
+NSString * const kShelbyVideoReelDidChangePlaybackEntityNotification = @"kShelbyVideoReelDidChangePlaybackEntityNotification";
+//userInfo keys
+NSString * const kShelbyVideoReelEntityKey = @"kShelbyVideoReelEntityKey";
+NSString * const kShelbyVideoReelChannelKey = @"kShelbyVideoReelChannelKey";
 
 #define kShelbySPSlowSpeed 0.2
 #define kShelbySPFastSpeed 0.5
@@ -435,8 +440,12 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
                                         previousPlayer:previousPlayer];
         [self warmURLExtractionCache];
 
-        STVDebugAssert([Frame frameForEntity:self.videoEntities[self.currentVideoPlayingIndex]] == self.currentPlayer.videoFrame);
-        [self.delegate didChangePlaybackToEntity:self.videoEntities[self.currentVideoPlayingIndex] inChannel:self.channel];
+        id<ShelbyVideoContainer> entity = self.videoEntities[self.currentVideoPlayingIndex];
+        STVDebugAssert([Frame frameForEntity:entity] == self.currentPlayer.videoFrame);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyVideoReelDidChangePlaybackEntityNotification
+                                                            object:self
+                                                          userInfo:@{kShelbyVideoReelEntityKey : entity,
+                                                                     kShelbyVideoReelChannelKey : self.channel}];
     }
 }
 

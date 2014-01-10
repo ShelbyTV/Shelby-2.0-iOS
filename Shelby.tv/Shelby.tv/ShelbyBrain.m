@@ -38,7 +38,6 @@ NSString *const kShelbyLastDashboardEntrySeen = @"kShelbyLastDashboardEntrySeen"
 NSString * const kShelbyBrainFetchNotificationEntriesDidCompleteNotification = @"kShelbyBrainFetchNotificationEntriesDidCompleteNotification";
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelNotification";
 NSString * const kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification = @"kShelbyBrainFetchEntriesDidCompleteForChannelWithErrorNotification";
-NSString * const kShelbyBrainFocusOnEntityNotification = @"kShelbyBrainFocusOnEntityNotification";
 NSString * const kShelbyBrainDidBecomeActiveNotification = @"kShelbyBrainDidBecomeActiveNotification";
 NSString * const kShelbyBrainWillResignActiveNotification = @"kShelbyBrainWillResignActiveNotification";
 NSString * const kShelbyBrainDismissVideoReelNotification = @"kShelbyBrainDismissVideoReelNotification";
@@ -842,12 +841,6 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 - (void)videoDidAutoadvance
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainDidAutoadvanceNotification object:self];
-}
-
-- (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainFocusOnEntityNotification object:self userInfo:@{kShelbyBrainEntityKey : entity,
-                                                                                                                            kShelbyBrainChannelKey : channel}];
 }
 
 - (BOOL)canRoll

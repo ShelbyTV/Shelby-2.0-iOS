@@ -7,13 +7,14 @@
 //
 
 #import "ShelbyTopContainerViewController.h"
+#import "ShelbyCurrentlyOnViewController.h"
 #import "ShelbyNavigationViewController.h"
 #import "ShelbyVideoReelViewController.h"
 
 @interface ShelbyTopContainerViewController ()
 //container Views
 @property (weak, nonatomic) IBOutlet UIView *navigationViewContainer;
-@property (weak, nonatomic) IBOutlet UIView *currentlyPlayingViewContainer;
+@property (weak, nonatomic) IBOutlet UIView *currentlyOnViewContainer;
 @property (weak, nonatomic) IBOutlet UIView *videoReelViewContainer;
 
 //constraints
@@ -21,7 +22,8 @@
 
 //View Controllers
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
-@property (nonatomic, strong) ShelbyNavigationViewController *sideNavigation;
+@property (nonatomic, strong) ShelbyNavigationViewController *sideNavigationVC;
+@property (nonatomic, strong) ShelbyCurrentlyOnViewController *currentlyOnVC;
 @end
 
 @implementation ShelbyTopContainerViewController {
@@ -76,7 +78,7 @@
     [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:.75 initialSpringVelocity:7.f options:UIViewAnimationCurveEaseIn animations:^{
         
         self.navigationViewContainer.transform = navTransform;
-        self.currentlyPlayingViewContainer.transform = navTransform;
+        self.currentlyOnViewContainer.transform = navTransform;
         self.videoReelWidthConstraint.constant = newWidth;
         [self.view layoutIfNeeded];
 
@@ -92,16 +94,16 @@
 {
     NSString *segueIdentifier = segue.identifier;
     if ([segueIdentifier isEqualToString:@"SideNavigation"]) {
-        self.sideNavigation = segue.destinationViewController;
+        self.sideNavigationVC = segue.destinationViewController;
     } else if ([segueIdentifier isEqualToString:@"VideoReel"]) {
         self.videoReelVC = segue.destinationViewController;
-    } else if ([segueIdentifier isEqualToString:@"NowPlaying"]) {
-        // TODO
+    } else if ([segueIdentifier isEqualToString:@"CurrentlyOn"]) {
+        self.currentlyOnVC = segue.destinationViewController;
     }
     
-    if (self.sideNavigation && self.videoReelVC) {
-        self.sideNavigation.currentUser = self.currentUser;
-        self.sideNavigation.videoReelVC = self.videoReelVC;
+    if (self.sideNavigationVC && self.videoReelVC) {
+        self.sideNavigationVC.currentUser = self.currentUser;
+        self.sideNavigationVC.videoReelVC = self.videoReelVC;
     }
 }
 
