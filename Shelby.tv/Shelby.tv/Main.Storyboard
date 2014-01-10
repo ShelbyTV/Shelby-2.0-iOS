@@ -55,12 +55,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Igh-bX-Plx" firstAttribute="leading" secondItem="e8E-bi-0Yr" secondAttribute="leading" id="4B7-ls-Wvc"/>
-                            <constraint firstItem="Igh-bX-Plx" firstAttribute="top" secondItem="e8E-bi-0Yr" secondAttribute="top" id="BpL-qL-4VO"/>
-                            <constraint firstItem="bvc-Yb-Lwg" firstAttribute="top" secondItem="4r1-5u-tvJ" secondAttribute="bottom" id="F4p-Df-bvi"/>
+                            <constraint firstAttribute="centerX" secondItem="Igh-bX-Plx" secondAttribute="centerX" constant="352" id="5os-gV-pIm"/>
+                            <constraint firstAttribute="centerY" secondItem="4r1-5u-tvJ" secondAttribute="centerY" constant="-334" id="b7B-ta-YNr"/>
                             <constraint firstItem="qeU-18-Fvh" firstAttribute="top" secondItem="e8E-bi-0Yr" secondAttribute="top" id="dcA-Pn-mkC"/>
                             <constraint firstAttribute="trailing" secondItem="qeU-18-Fvh" secondAttribute="trailing" id="jL7-s6-Exc"/>
-                            <constraint firstItem="4r1-5u-tvJ" firstAttribute="leading" secondItem="e8E-bi-0Yr" secondAttribute="leading" id="qVi-5K-OXP"/>
+                            <constraint firstAttribute="centerX" secondItem="4r1-5u-tvJ" secondAttribute="centerX" constant="352" id="qNl-sg-pc9"/>
+                            <constraint firstAttribute="centerY" secondItem="Igh-bX-Plx" secondAttribute="centerY" constant="50" id="z8O-Sw-INn"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>

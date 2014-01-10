@@ -63,10 +63,9 @@
         navTransform = CGAffineTransformIdentity;
     } else {
         newWidth = _fullscreenVideoWidth;
-        navTransform = CGAffineTransformMakeScale(0.9, 0.9);
+        navTransform = CGAffineTransformMakeScale(0.8, 0.8);
     }
     
-
     [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:.8 initialSpringVelocity:12.f options:UIViewAnimationCurveEaseIn animations:^{
         
         self.navigationViewContainer.transform = navTransform;
