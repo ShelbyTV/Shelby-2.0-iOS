@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
+#import "ShelbyStreamEntryCell.h"
 #import "ShelbyVideoReelViewController.h"
 
-@interface ShelbyStreamInfoViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ShelbyStreamInfoViewController : UIViewController <ShelbyStreamEntryProtocol, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) DisplayChannel *displayChannel;
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, assign) BOOL shouldInitializeVideoReel;

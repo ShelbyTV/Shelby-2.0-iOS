@@ -10,7 +10,6 @@
 #import "DashboardEntry.h"
 #import "Frame.h"
 #import "ShelbyBrain.h"
-#import "ShelbyStreamEntryCell.h"
 
 @interface ShelbyStreamInfoViewController ()
 @property (nonatomic, strong) NSMutableArray *channelEntries;
@@ -116,6 +115,28 @@
 {
     
 }
+
+#pragma mark ShelbyStreamEntryProtocol
+- (void)shareVideoWasTappedForFrame:(Frame *)videoFrame
+{
+    
+}
+
+- (void)toggleLikeForFrame:(Frame *)videoFrame
+{
+    
+}
+
+- (void)userProfileWasTapped:(NSString *)userID
+{
+    
+}
+
+- (void)openLikersView:(NSMutableOrderedSet *)likers
+{
+    
+}
+
 
 
 @end

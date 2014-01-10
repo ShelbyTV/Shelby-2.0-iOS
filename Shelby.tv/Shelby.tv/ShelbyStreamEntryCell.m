@@ -17,6 +17,10 @@
 @property (nonatomic, weak) IBOutlet UIImageView *videoThumbnail;
 @property (nonatomic, weak) IBOutlet UIImageView *userAvatar;
 @property (nonatomic, weak) IBOutlet UILabel *description;
+
+- (IBAction)shareVideo:(id)sender;
+- (IBAction)toggleLike:(id)sender;
+- (IBAction)openUserProfile:(id)sender;
 @end
 
 @implementation ShelbyStreamEntryCell
@@ -61,5 +65,21 @@
     }];
     
 }
+
+- (IBAction)shareVideo:(id)sender
+{
+    [self.delegate shareVideoWasTappedForFrame:self.videoFrame];
+}
+
+- (IBAction)toggleLike:(id)sender
+{
+    [self.delegate toggleLikeForFrame:self.videoFrame];
+}
+
+- (IBAction)openUserProfile:(id)sender
+{
+    [self.delegate userProfileWasTapped:self.videoFrame.creator.userID];
+}
+
 
 @end
