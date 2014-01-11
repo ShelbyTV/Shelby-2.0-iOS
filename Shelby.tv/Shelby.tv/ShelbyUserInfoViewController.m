@@ -8,10 +8,16 @@
 
 #import "ShelbyUserInfoViewController.h"
 #import "ShelbyBrain.h"
+#import "User+Helper.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface ShelbyUserInfoViewController ()
 @property (nonatomic, strong) UIViewController *followingVC;
 @property (nonatomic, strong) IBOutlet UIView *switchContainer;
+@property (nonatomic, strong) IBOutlet UIImageView *userAvatar;
+@property (nonatomic, strong) IBOutlet UILabel *userNickname;
+@property (nonatomic, strong) IBOutlet UILabel *userName;
+@property (nonatomic, strong) User *user;
 
 - (IBAction)ActivityFollowingToggle:(id)sender;
 - (IBAction)toggleFollowUser:(id)sender;
@@ -55,6 +61,18 @@
     
     NSMutableArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
     DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    
+    self.user = userInfo[kShelbyBrainFetchedUserKey];
+    self.userName.text = self.user.name;
+    self.userNickname.text = self.user.nickname;
+    
+    NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[self.user avatarURL]];
+    __weak ShelbyUserInfoViewController *weakSelf = self;
+    [self.userAvatar setImageWithURLRequest:imageRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        weakSelf.userAvatar.image = image;
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        //
+    }];
     
     [self.streamInfoVC setupEntries:channelEntries forChannel:channel];
 }

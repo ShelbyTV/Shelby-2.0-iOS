@@ -277,6 +277,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="switchContainer" destination="OYj-J5-xH1" id="CpW-ab-4yI"/>
+                        <outlet property="userAvatar" destination="ywq-wE-36J" id="KCg-0v-whF"/>
+                        <outlet property="userName" destination="2LL-Qa-7lL" id="fV2-Ig-Ueh"/>
+                        <outlet property="userNickname" destination="Fgs-kk-gaS" id="Flu-xq-l7S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rZG-FA-cmw" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -47,6 +47,7 @@ NSString * const kShelbyBrainSetEntriesNotification = @"kShelbyBrainSetEntriesNo
 
 NSString * const kShelbyBrainChannelKey = @"channel";
 NSString * const kShelbyBrainChannelEntriesKey = @"channelEntries";
+NSString * const kShelbyBrainFetchedUserKey = @"fetchedUser";
 NSString * const kShelbyBrainCachedKey = @"cached";
 NSString * const kShelbyBrainEntityKey = @"entity";
 
@@ -1140,7 +1141,8 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
             entries = entries ? entries : @[];
             [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
                                                                 object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
-                                                                                       kShelbyBrainChannelEntriesKey : entries}];
+                                                                                       kShelbyBrainChannelEntriesKey : entries,
+                                                                                       kShelbyBrainFetchedUserKey : fetchedUser}];
        }];
     }];
 }

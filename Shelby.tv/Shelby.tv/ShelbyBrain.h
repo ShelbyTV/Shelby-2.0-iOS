@@ -32,6 +32,7 @@ extern NSString * const kShelbyBrainSetEntriesNotification;
 
 extern NSString * const kShelbyBrainChannelKey;
 extern NSString * const kShelbyBrainChannelEntriesKey;
+extern NSString * const kShelbyBrainFetchedUserKey;
 extern NSString * const kShelbyBrainCachedKey;
 extern NSString * const kShelbyBrainEntityKey;
 
