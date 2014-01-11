@@ -109,11 +109,11 @@
 
 - (void)pushViewController:(UIViewController *)viewController
 {
-    [self.sideNavigation pushViewController:viewController];
+    [self.sideNavigationVC pushViewController:viewController];
 }
 
 - (void)setupTopLevelNavigationDelegate:(id<ShelbyNavigationProtocol>)delegate
 {
-    self.sideNavigation.masterDelegate = delegate;
+    self.sideNavigationVC.masterDelegate = delegate;
 }
 @end
