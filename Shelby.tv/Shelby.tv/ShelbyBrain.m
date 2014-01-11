@@ -210,7 +210,7 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         self.topContainerVC = (ShelbyTopContainerViewController *)[self.mainStoryboard instantiateInitialViewController];
         // Passing delegate to the top level navigation
-        [self.topContainerVC setupTopLevelNavigationDelegate:self];;
+        self.topContainerVC.topNavigationDelegate = self;
         self.topContainerVC.currentUser = currentUser;
         self.mainWindow.rootViewController = self.topContainerVC;
     } else {
@@ -1133,14 +1133,15 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
                 userProfileVC.channels = @[displayChannel];
                 userProfileVC.profileUser = fetchedUser;
                 
-                entries = entries ? entries : @[];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
-                                                                    object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
-                                                                                           kShelbyBrainChannelEntriesKey : entries}];
-                [userProfileVC focusOnChannel:displayChannel];
+                 [userProfileVC focusOnChannel:displayChannel];
                 [userProfileVC setIsLoading:NO];
             }
-        }];
+
+            entries = entries ? entries : @[];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
+                                                                                       kShelbyBrainChannelEntriesKey : entries}];
+       }];
     }];
 }
 

@@ -21,4 +21,5 @@
 @property (nonatomic, assign) BOOL shouldInitializeVideoReel;
 @property (nonatomic, assign) id<ShelbyStreamInfoProtocol> delegate;
 
+- (void)setupEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
 @end

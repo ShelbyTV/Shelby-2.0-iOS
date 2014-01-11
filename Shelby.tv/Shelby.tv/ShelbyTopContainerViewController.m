@@ -104,6 +104,7 @@
     if (self.sideNavigationVC && self.videoReelVC) {
         self.sideNavigationVC.currentUser = self.currentUser;
         self.sideNavigationVC.videoReelVC = self.videoReelVC;
+        self.sideNavigationVC.masterDelegate = self.topNavigationDelegate;
     }
 }
 
@@ -112,8 +113,4 @@
     [self.sideNavigationVC pushViewController:viewController];
 }
 
-- (void)setupTopLevelNavigationDelegate:(id<ShelbyNavigationProtocol>)delegate
-{
-    self.sideNavigationVC.masterDelegate = delegate;
-}
 @end

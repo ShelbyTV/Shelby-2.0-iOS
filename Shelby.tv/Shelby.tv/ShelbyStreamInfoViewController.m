@@ -59,17 +59,8 @@
 }
 
 
-- (void)fetchEntriesDidCompleteForChannelNotification:(NSNotification *)notification
+- (void)setupEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
 {
-    NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
-    
-    if (channel != self.displayChannel) {
-        return;
-    }
-    
-    NSArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
-    
     if (!channelEntries) {
         channelEntries = @[];
     }
@@ -83,6 +74,20 @@
     }
     
     [self.entriesTable reloadData];
+}
+
+- (void)fetchEntriesDidCompleteForChannelNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    
+    if (channel != self.displayChannel) {
+        return;
+    }
+    
+    NSArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
+    [self setupEntries:channelEntries forChannel:channel];
+    
 }
 
 
@@ -104,6 +109,8 @@
     Frame *videoFrame = nil;
     if ([streamEntry isKindOfClass:[DashboardEntry class]]) {
         videoFrame = ((DashboardEntry *)streamEntry).frame;
+    } else if ([streamEntry isKindOfClass:[Frame class]]) {
+        videoFrame = (Frame *)streamEntry;
     }
     
     cell.videoFrame = videoFrame;

@@ -41,6 +41,11 @@
     }
 }
 
+- (void)setMasterDelegate:(id<ShelbyNavigationProtocol>)masterDelegate
+{
+    _masterDelegate = masterDelegate;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -52,13 +57,20 @@
     [self pushViewController:viewController animated:YES];
 }
 
-- (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel
+- (ShelbyStreamInfoViewController *)setupStreamInfoViewControllerWithChannel:(DisplayChannel *)channel
 {
     ShelbyStreamInfoViewController *streamInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StreamInfo"];
     streamInfoVC.videoReelVC = self.videoReelVC;
-    streamInfoVC.shouldInitializeVideoReel = shouldInitializeVideoReel;
     streamInfoVC.displayChannel = channel;
     streamInfoVC.delegate = self;
+
+    return streamInfoVC;
+}
+
+- (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel
+{
+    ShelbyStreamInfoViewController *streamInfoVC = [self setupStreamInfoViewControllerWithChannel:channel];
+    streamInfoVC.shouldInitializeVideoReel = shouldInitializeVideoReel;
 
     [self pushViewController:streamInfoVC animated:YES];
 }
@@ -66,7 +78,8 @@
 #pragma mark - ShelbyStreamInfoProtocol
 - (void)userProfileWasTapped:(NSString *)userID
 {
-   ShelbyUserInfoViewController *userInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+    ShelbyUserInfoViewController *userInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+    userInfoVC.streamInfoVC = [self setupStreamInfoViewControllerWithChannel:nil];
     [self pushViewController:userInfoVC];
     
     [self.masterDelegate userProfileWasTapped:userID];

@@ -16,5 +16,5 @@
 
 - (void)pushViewController:(UIViewController *)viewController;
 
-- (void)setupTopLevelNavigationDelegate:(id<ShelbyNavigationProtocol>)delegate;
+@property (nonatomic, assign) id<ShelbyNavigationProtocol> topNavigationDelegate;
 @end

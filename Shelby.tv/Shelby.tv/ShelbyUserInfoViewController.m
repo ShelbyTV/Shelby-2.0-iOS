@@ -7,10 +7,9 @@
 //
 
 #import "ShelbyUserInfoViewController.h"
-#import "ShelbyStreamInfoViewController.h"
+#import "ShelbyBrain.h"
 
 @interface ShelbyUserInfoViewController ()
-@property (nonatomic, strong) ShelbyStreamInfoViewController *streamInfoVC;
 @property (nonatomic, strong) UIViewController *followingVC;
 @property (nonatomic, strong) IBOutlet UIView *switchContainer;
 
@@ -32,13 +31,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setEntriesNotification:)
+                                                 name:kShelbyBrainSetEntriesNotification object:nil];
+    
+
+    [self.streamInfoVC willMoveToParentViewController:self];
+    [self addChildViewController:self.streamInfoVC];
+    [self.switchContainer addSubview:self.streamInfoVC.view];
+    [self.streamInfoVC didMoveToParentViewController:self];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setEntriesNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    
+    NSMutableArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
+    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    
+    [self.streamInfoVC setupEntries:channelEntries forChannel:channel];
 }
 
 - (IBAction)ActivityFollowingToggle:(id)sender

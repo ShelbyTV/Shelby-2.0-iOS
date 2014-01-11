@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShelbyStreamInfoViewController.h"
 
 @interface ShelbyUserInfoViewController : UIViewController
+@property (nonatomic, strong) ShelbyStreamInfoViewController *streamInfoVC;
 
 @end
