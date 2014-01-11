@@ -107,6 +107,7 @@
     }
     
     cell.videoFrame = videoFrame;
+    cell.delegate = self;
     return cell;
 }
 
@@ -129,7 +130,7 @@
 
 - (void)userProfileWasTapped:(NSString *)userID
 {
-    
+    [self.delegate userProfileWasTapped:userID];
 }
 
 - (void)openLikersView:(NSMutableOrderedSet *)likers

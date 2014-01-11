@@ -15,13 +15,14 @@
 #import "ShelbyErrorUtility.h"
 #import "SettingsViewController.h"
 #import "ShelbyModelArrayUtility.h"
-#import "ShelbyTopContainerViewController.h"
 #import "Roll+Helper.h"
 #import "ShelbyABTestManager.h"
 #import "ShelbyModel.h"
 #import "ShelbyNotificationManager.h"
 #import "ShelbySingleVideoViewController.h"
 #import "ShelbyUserProfileViewController.h"
+#import "ShelbyUserInfoViewController.h"
+#import "ShelbyTopContainerViewController.h"
 #import "SignupFlowViewController.h"
 #import "SPVideoExtractor.h"
 #import "User+Helper.h"
@@ -56,6 +57,9 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 //our two primary view controllers
 @property (strong, nonatomic) WelcomeViewController *welcomeVC;
 @property (strong, nonatomic) ShelbyHomeViewController *homeVC;
+
+// ipad
+@property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
 //login and signup view controllers
 @property (strong, nonatomic) LoginViewController *loginVC;
@@ -204,8 +208,10 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
 
     if (DEVICE_IPAD) {
-        UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        self.topContainerVC = (ShelbyTopContainerViewController *)[mainStoryBoard instantiateInitialViewController];
+        self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        self.topContainerVC = (ShelbyTopContainerViewController *)[self.mainStoryboard instantiateInitialViewController];
+        // Passing delegate to the top level navigation
+        [self.topContainerVC setupTopLevelNavigationDelegate:self];;
         self.topContainerVC.currentUser = currentUser;
         self.mainWindow.rootViewController = self.topContainerVC;
     } else {
@@ -1098,18 +1104,21 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 // This method is going to be called from two protocols.. not that great. Need to have a nicer protocols.
 - (void)userProfileWasTapped:(NSString *)userID
 {
-    ShelbyUserProfileViewController *userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
-    userProfileVC.masterDelegate = self;
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
-    userProfileVC.currentUser = currentUser;
-    
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while ([topViewController presentedViewController]) {
-        topViewController = [topViewController presentedViewController];
+    ShelbyUserProfileViewController *userProfileVC = nil;
+    if (!DEVICE_IPAD) {
+        userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
+        userProfileVC.masterDelegate = self;
+        userProfileVC.currentUser = currentUser;
+        
+        UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while ([topViewController presentedViewController]) {
+            topViewController = [topViewController presentedViewController];
+        }
+        
+        [topViewController presentViewController:userProfileVC animated:YES completion:nil];
+        [userProfileVC setIsLoading:YES];
     }
-    
-    [topViewController presentViewController:userProfileVC animated:YES completion:nil];
-    [userProfileVC setIsLoading:YES];
     
     [[ShelbyDataMediator sharedInstance] fetchUserWithID:userID inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext] completion:^(User *fetchedUser) {
         DisplayChannel *rollChannel = [[ShelbyDataMediator sharedInstance] fetchDisplayChannelOnMainThreadContextForRollID:fetchedUser.publicRollID];
@@ -1125,15 +1134,19 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
         }
         
         [[ShelbyDataMediator sharedInstance] fetchFramesInChannel:rollChannel withCompletionHandler:^(DisplayChannel *displayChannel, NSArray *entries) {
-            userProfileVC.channels = @[displayChannel];
-            userProfileVC.profileUser = fetchedUser;
-            
-            entries = entries ? entries : @[];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
-                                                                object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
-                                                                                       kShelbyBrainChannelEntriesKey : entries}];
-            [userProfileVC focusOnChannel:displayChannel];
-            [userProfileVC setIsLoading:NO];
+            if (DEVICE_IPAD) {
+                // KP KP: TODO
+            } else {
+                userProfileVC.channels = @[displayChannel];
+                userProfileVC.profileUser = fetchedUser;
+                
+                entries = entries ? entries : @[];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShelbyBrainSetEntriesNotification
+                                                                    object:self userInfo:@{kShelbyBrainChannelKey : displayChannel,
+                                                                                           kShelbyBrainChannelEntriesKey : entries}];
+                [userProfileVC focusOnChannel:displayChannel];
+                [userProfileVC setIsLoading:NO];
+            }
         }];
     }];
 }

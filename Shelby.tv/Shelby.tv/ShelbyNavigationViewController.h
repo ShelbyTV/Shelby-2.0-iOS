@@ -8,12 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
+#import "ShelbyStreamInfoViewController.h"
 #import "ShelbyVideoReelViewController.h"
 #import "User.h"
 
-@interface ShelbyNavigationViewController : UINavigationController
+@protocol ShelbyNavigationProtocol <NSObject>
+- (void)userProfileWasTapped:(NSString *)userID;
+@end
+
+@interface ShelbyNavigationViewController : UINavigationController <ShelbyStreamInfoProtocol>
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, weak) id<ShelbyNavigationProtocol> masterDelegate;
 
 - (void)pushViewController:(UIViewController *)viewController;
 - (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel;

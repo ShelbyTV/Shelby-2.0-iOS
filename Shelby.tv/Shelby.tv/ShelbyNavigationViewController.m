@@ -7,8 +7,8 @@
 //
 
 #import "ShelbyNavigationViewController.h"
-#import "ShelbyStreamInfoViewController.h"
 #import "ShelbyTopLevelNavigationViewController.h"
+#import "ShelbyUserInfoViewController.h"
 
 @interface ShelbyNavigationViewController ()
 
@@ -58,7 +58,17 @@
     streamInfoVC.videoReelVC = self.videoReelVC;
     streamInfoVC.shouldInitializeVideoReel = shouldInitializeVideoReel;
     streamInfoVC.displayChannel = channel;
+    streamInfoVC.delegate = self;
 
     [self pushViewController:streamInfoVC animated:YES];
+}
+
+#pragma mark - ShelbyStreamInfoProtocol
+- (void)userProfileWasTapped:(NSString *)userID
+{
+   ShelbyUserInfoViewController *userInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+    [self pushViewController:userInfoVC];
+    
+    [self.masterDelegate userProfileWasTapped:userID];
 }
 @end

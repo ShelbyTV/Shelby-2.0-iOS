@@ -98,4 +98,13 @@
     }
 }
 
+- (void)pushViewController:(UIViewController *)viewController
+{
+    [self.sideNavigation pushViewController:viewController];
+}
+
+- (void)setupTopLevelNavigationDelegate:(id<ShelbyNavigationProtocol>)delegate
+{
+    self.sideNavigation.masterDelegate = delegate;
+}
 @end
