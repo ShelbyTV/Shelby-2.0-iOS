@@ -575,6 +575,9 @@
 		910933081743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		910933091743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
 		9109330A1743E47F00AC038E /* ShelbyAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 910933071743E47F00AC038E /* ShelbyAlert.m */; };
+		910F5B86188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */; };
+		910F5B87188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */; };
+		910F5B88188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */; };
 		9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
 		9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
 		9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
@@ -1152,6 +1155,8 @@
 		8EF5C35C162F431B0075C35F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		910933061743E47F00AC038E /* ShelbyAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyAlert.h; sourceTree = "<group>"; };
 		910933071743E47F00AC038E /* ShelbyAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlert.m; sourceTree = "<group>"; };
+		910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCurrentlyOnViewController.h; sourceTree = "<group>"; };
+		910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyCurrentlyOnViewController.m; sourceTree = "<group>"; };
 		9119AB6D17821133001C9190 /* VideoControlsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoControlsView.xib; sourceTree = "<group>"; };
 		9119AB71178211D5001C9190 /* VideoControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoControlsViewController.h; sourceTree = "<group>"; };
 		9119AB72178211D6001C9190 /* VideoControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoControlsViewController.m; sourceTree = "<group>"; };
@@ -1456,6 +1461,8 @@
 				1C38257B187E06D0002177C6 /* ShelbyTopContainerViewController.m */,
 				1C38257F187F033D002177C6 /* ShelbyVideoReelViewController.h */,
 				1C382580187F033D002177C6 /* ShelbyVideoReelViewController.m */,
+				910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */,
+				910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */,
 			);
 			name = "View Controllers - iPad";
 			sourceTree = "<group>";
@@ -2862,6 +2869,7 @@
 				91CE074F1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				1CDB27DE18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */,
 				9119AB74178211D6001C9190 /* VideoControlsViewController.m in Sources */,
+				910F5B87188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */,
 				9119AB7917821A5C001C9190 /* VideoControlsView.m in Sources */,
 				1C7B63C8178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1CCAC9CF1848EFCF008E603C /* ShelbyUserStreamBrowseViewController.m in Sources */,
@@ -3013,6 +3021,7 @@
 				91CE07501779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				1CDB27DF18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */,
 				9119AB75178211D6001C9190 /* VideoControlsViewController.m in Sources */,
+				910F5B88188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */,
 				9119AB7A17821A5C001C9190 /* VideoControlsView.m in Sources */,
 				1C7B63C9178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1CCAC9D01848EFCF008E603C /* ShelbyUserStreamBrowseViewController.m in Sources */,
@@ -3164,6 +3173,7 @@
 				91CE074E1779087800024180 /* StreamBrowseCellForegroundView.m in Sources */,
 				1CDB27DD18453D2C008E1C36 /* ShelbyUserProfileViewController.m in Sources */,
 				9119AB73178211D6001C9190 /* VideoControlsViewController.m in Sources */,
+				910F5B86188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */,
 				9119AB7817821A5C001C9190 /* VideoControlsView.m in Sources */,
 				1C7B63C7178B15B5000C1E84 /* SignupFlowViewController.m in Sources */,
 				1CCAC9CE1848EFCF008E603C /* ShelbyUserStreamBrowseViewController.m in Sources */,

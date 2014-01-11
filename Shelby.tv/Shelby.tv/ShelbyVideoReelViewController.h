@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
 
+extern NSString * const kShelbySingleTapOnVideReeloNotification;
+
 @interface ShelbyVideoReelViewController : UIViewController
 
 - (void)loadChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries andAutoPlay:(BOOL)autoPlay;

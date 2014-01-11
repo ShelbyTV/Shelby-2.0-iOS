@@ -10,6 +10,12 @@
 #import "ShelbyViewController.h"
 #import "SPVideoPlayer.h"
 
+//notifications
+extern NSString * const kShelbyVideoReelDidChangePlaybackEntityNotification;
+//userInfo keys
+extern NSString * const kShelbyVideoReelEntityKey;
+extern NSString * const kShelbyVideoReelChannelKey;
+
 @class SPVideoReel;
 
 @protocol SPVideoReelDelegate <NSObject>
@@ -21,7 +27,6 @@
 - (BOOL)canRoll;
 - (void)userAskForFacebookPublishPermissions;
 - (void)userAskForTwitterPublishPermissions;
-- (void)didChangePlaybackToEntity:(id<ShelbyVideoContainer>)entity inChannel:(DisplayChannel *)channel;
 @end
 
 @protocol VideoPlaybackDelegate <NSObject>
@@ -46,6 +51,8 @@
               atIndex:(NSUInteger)videoStartIndex;
 
 - (void)shutdown;
+
+- (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer;
 
 //New API for use by playback control elements
 //current player is actually playing

@@ -105,7 +105,7 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(focusOnEntityNotification:)
-                                                 name:kShelbyBrainFocusOnEntityNotification object:nil];
+                                                 name:kShelbyVideoReelDidChangePlaybackEntityNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleDidBecomeActiveNotification:)
@@ -387,12 +387,12 @@ NSString * const kShelbyShareFrameIDKey = @"frameID";
 - (void)focusOnEntityNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
+    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
     if (![self streamBrowseViewControllerForChannel:channel]) {
         return;
     }
     
-    id<ShelbyVideoContainer> entity = userInfo[kShelbyBrainEntityKey];
+    id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
     [self focusOnEntity:entity inChannel:channel];
 }
 
