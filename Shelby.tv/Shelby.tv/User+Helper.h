@@ -55,6 +55,8 @@
 - (void)didFollowRoll:(NSString *)rollID;
 - (void)didUnfollowRoll:(NSString *)rollID;
 
+// return YES unless user is faux
+// NB: anonymous users are considered real shelby users and will return YES.
 - (BOOL)isShelbyUser;
 
 @end
