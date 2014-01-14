@@ -581,6 +581,12 @@
 		910F5BE718847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */; };
 		910F5BE818847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */; };
 		910F5BE918847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */; };
+		910F5BEB1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */; };
+		910F5BEC1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */; };
+		910F5BED1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */; };
+		910F5BF01884D1A00069E380 /* VideoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BEF1884D1A00069E380 /* VideoOverlayView.m */; };
+		910F5BF11884D1A00069E380 /* VideoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BEF1884D1A00069E380 /* VideoOverlayView.m */; };
+		910F5BF21884D1A00069E380 /* VideoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5BEF1884D1A00069E380 /* VideoOverlayView.m */; };
 		9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
 		9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
 		9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
@@ -1161,6 +1167,9 @@
 		910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCurrentlyOnViewController.h; sourceTree = "<group>"; };
 		910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyCurrentlyOnViewController.m; sourceTree = "<group>"; };
 		910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "VideoControlsView-iPad.xib"; sourceTree = "<group>"; };
+		910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "VideoOverlayView-iPad.xib"; sourceTree = "<group>"; };
+		910F5BEE1884D1A00069E380 /* VideoOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoOverlayView.h; sourceTree = "<group>"; };
+		910F5BEF1884D1A00069E380 /* VideoOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoOverlayView.m; sourceTree = "<group>"; };
 		9119AB6D17821133001C9190 /* VideoControlsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoControlsView.xib; sourceTree = "<group>"; };
 		9119AB71178211D5001C9190 /* VideoControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoControlsViewController.h; sourceTree = "<group>"; };
 		9119AB72178211D6001C9190 /* VideoControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoControlsViewController.m; sourceTree = "<group>"; };
@@ -1447,6 +1456,7 @@
 			children = (
 				1C382560187DE387002177C6 /* Main.Storyboard */,
 				910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */,
+				910F5BEA1884D0FD0069E380 /* VideoOverlayView-iPad.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -1478,6 +1488,8 @@
 				1C38255F187DE373002177C6 /* Xib-iPad */,
 				1C38258A187F3F37002177C6 /* ShelbyStreamEntryCell.h */,
 				1C38258B187F3F37002177C6 /* ShelbyStreamEntryCell.m */,
+				910F5BEE1884D1A00069E380 /* VideoOverlayView.h */,
+				910F5BEF1884D1A00069E380 /* VideoOverlayView.m */,
 			);
 			name = "Views - iPad";
 			sourceTree = "<group>";
@@ -2414,6 +2426,7 @@
 				1C0025FF16F0D6020094FD0C /* Shelby.tv Nightly-Info.plist in Resources */,
 				1C0C7DF31852328B008F5506 /* heart-icon-color.png in Resources */,
 				8E7024ED1715E71500E8DE46 /* OATestServer.rb in Resources */,
+				910F5BEC1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */,
 				8E7024F61715E71500E8DE46 /* README in Resources */,
 				91FCC6A8174BF118004255F5 /* Localizable.strings in Resources */,
 				1CBF0937175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
@@ -2532,6 +2545,7 @@
 				1C0025FD16F0D6020094FD0C /* Shelby.tv Enterprise-Info.plist in Resources */,
 				1C0C7DF41852328B008F5506 /* heart-icon-color.png in Resources */,
 				8E7024EE1715E71500E8DE46 /* OATestServer.rb in Resources */,
+				910F5BED1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */,
 				8E7024F71715E71500E8DE46 /* README in Resources */,
 				91FCC6A9174BF118004255F5 /* Localizable.strings in Resources */,
 				1CBF0938175CD6C7001D471A /* ShelbyHomeView-iPhone.xib in Resources */,
@@ -2724,6 +2738,7 @@
 				1CD255C817A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CB17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB317A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
+				910F5BEB1884D0FD0069E380 /* VideoOverlayView-iPad.xib in Resources */,
 				1C56F14817BABFD500EE9206 /* AppiraterLocalizable.strings in Resources */,
 				1CCE4C4C17E226F700F0BF5A /* user_default_avatar.png in Resources */,
 				1CE5584217DE1E1300C18A30 /* button-off@2x.png in Resources */,
@@ -2813,6 +2828,7 @@
 				8E7024CF1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D21715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D51715E71500E8DE46 /* OAConsumer.m in Sources */,
+				910F5BF11884D1A00069E380 /* VideoOverlayView.m in Sources */,
 				8E7024D81715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DB1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DE1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
@@ -2965,6 +2981,7 @@
 				8E7024D01715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D31715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D61715E71500E8DE46 /* OAConsumer.m in Sources */,
+				910F5BF21884D1A00069E380 /* VideoOverlayView.m in Sources */,
 				8E7024D91715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DC1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DF1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,
@@ -3117,6 +3134,7 @@
 				8E7024CE1715E71500E8DE46 /* OAAttachment.m in Sources */,
 				8E7024D11715E71500E8DE46 /* OACall.m in Sources */,
 				8E7024D41715E71500E8DE46 /* OAConsumer.m in Sources */,
+				910F5BF01884D1A00069E380 /* VideoOverlayView.m in Sources */,
 				8E7024D71715E71500E8DE46 /* OADataFetcher.m in Sources */,
 				8E7024DA1715E71500E8DE46 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
 				8E7024DD1715E71500E8DE46 /* OAMutableURLRequest.m in Sources */,

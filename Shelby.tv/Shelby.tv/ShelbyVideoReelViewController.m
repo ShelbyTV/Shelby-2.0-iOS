@@ -34,6 +34,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
     [super viewDidLoad];
     
     [self setupVideoControls];
+    [self setupVideoOverlay];
     
     //we listen to current video changes same as everybody else (even tho we create the video reel)
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -51,6 +52,8 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - contained views (video reels, controls, overlay)
 
 - (void)loadChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries andAutoPlay:(BOOL)autoPlay
 {
@@ -76,27 +79,6 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
     }
 }
 
-#pragma mark - Notification Handlers
-
-- (void)videoReelDidChangePlaybackEntityNotification:(NSNotification *)notification
-{
-    NSDictionary *userInfo = notification.userInfo;
-    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
-    STVDebugAssert(self.videoReel.channel == channel, @"these should be in sync");
-    
-    id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
-    self.videoControlsVC.currentEntity = entity;
-}
-
-#pragma mark - custom gesture recognizers on video reel
-
-- (void)singleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySingleTapOnVideReelNotification object:self];
-}
-
-#pragma mark - Video Controls
-
 - (void)setupVideoControls
 {
     self.videoControlsVC = [[VideoControlsViewController alloc] initWithNibName:@"VideoControlsView-iPad" bundle:nil];
@@ -119,7 +101,43 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
     
     //if and when airPlayController takes control (from SPVideoReel), it will update video controls w/ current state of SPVideoPlayer
     //TODO iPad TODO airPlay
-//    self.airPlayController.videoControlsVC = _videoControlsVC;
+    //    self.airPlayController.videoControlsVC = _videoControlsVC;
+}
+
+- (void)setupVideoOverlay
+{
+    self.videoOverlayView = [[[NSBundle mainBundle] loadNibNamed:@"VideoOverlayView-iPad" owner:self options:nil] firstObject];
+    
+    [self.view insertSubview:self.videoOverlayView aboveSubview:self.videoControlsVC.view];
+    self.videoOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[overlay]|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"overlay":self.videoOverlayView}]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[overlay(250)]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:@{@"overlay":self.videoOverlayView}]];
+}
+
+#pragma mark - Notification Handlers
+
+- (void)videoReelDidChangePlaybackEntityNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    DisplayChannel *channel = userInfo[kShelbyVideoReelChannelKey];
+    STVDebugAssert(self.videoReel.channel == channel, @"these should be in sync");
+    
+    id<ShelbyVideoContainer> entity = userInfo[kShelbyVideoReelEntityKey];
+    self.videoControlsVC.currentEntity = entity;
+    self.videoOverlayView.currentEntity = entity;
+}
+
+#pragma mark - custom gesture recognizers on video reel
+
+- (void)singleTapOnVideoReelDetected:(UIGestureRecognizer *)gestureRecognizer
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShelbySingleTapOnVideReelNotification object:self];
 }
 
 #pragma mark - VideoControlsDelegate

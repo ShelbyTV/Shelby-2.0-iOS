@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
 #import "VideoControlsViewController.h"
+#import "VideoOverlayView.h"
 
 extern NSString * const kShelbySingleTapOnVideReelNotification;
 
 @interface ShelbyVideoReelViewController : ShelbyViewController <VideoControlsDelegate, SPVideoReelDelegate>
 
-- (void)loadChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries andAutoPlay:(BOOL)autoPlay;
-
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
+@property (nonatomic, strong) VideoOverlayView *videoOverlayView;
+
+- (void)loadChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries andAutoPlay:(BOOL)autoPlay;
 
 @end
