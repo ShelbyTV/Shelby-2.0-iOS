@@ -48,7 +48,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(toggleFullscreenVideo)
-                                                 name:kShelbySingleTapOnVideReeloNotification
+                                                 name:kShelbySingleTapOnVideReelNotification
                                                object:nil];
 }
 
@@ -65,14 +65,16 @@
 
 - (void)toggleFullscreenVideo
 {
-    CGFloat newWidth;
+    CGFloat newWidth, videoControlsAlpha;
     CGAffineTransform navTransform;
     if ([self isVideoFullscreen]) {
         newWidth = _smallscreenVideoWidth;
         navTransform = CGAffineTransformIdentity;
+        videoControlsAlpha = 1.f;
     } else {
         newWidth = _fullscreenVideoWidth;
         navTransform = CGAffineTransformMakeScale(0.8, 0.8);
+        videoControlsAlpha = 0.f;
     }
     
     [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:.75 initialSpringVelocity:7.f options:UIViewAnimationCurveEaseIn animations:^{
@@ -80,6 +82,7 @@
         self.navigationViewContainer.transform = navTransform;
         self.currentlyOnViewContainer.transform = navTransform;
         self.videoReelWidthConstraint.constant = newWidth;
+        self.videoReelVC.videoControlsVC.view.alpha = videoControlsAlpha;
         [self.view layoutIfNeeded];
 
     } completion:nil];

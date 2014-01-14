@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *unlikeButton;
 
 //-- nonplayback action buttons --
+// NB: not hooked up on iPad
 @property (weak, nonatomic) IBOutlet UIButton *nonplaybackLikeButton;
 @property (weak, nonatomic) IBOutlet UIButton *nonplaybackUnlikeButton;
 

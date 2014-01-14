@@ -13,7 +13,10 @@
 
 @end
 
-@implementation VideoControlsView
+@implementation VideoControlsView {
+    NSArray *_normalLikeButtons;
+    NSArray *_nonplaybackLikeButtons;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -37,8 +40,15 @@
         motionEffect.maximumRelativeValue = kShelbyMotionForegroundYMax;
         [self addMotionEffect:motionEffect];
     }
+    
+    _normalLikeButtons = @[self.likeButton, self.unlikeButton];
+    if (DEVICE_IPAD) {
+        _nonplaybackLikeButtons = @[];
+    } else {
+        _nonplaybackLikeButtons = @[self.nonplaybackLikeButton, self.nonplaybackUnlikeButton];
+    }
 
-    for (UIButton *b in @[self.nonplaybackLikeButton, self.nonplaybackUnlikeButton]) {
+    for (UIButton *b in _nonplaybackLikeButtons) {
         b.backgroundColor = [UIColor blackColor];
         //alpha is set in -[VideoControlsViewController updateViewForCurrentDisplayMode]
     }
@@ -49,7 +59,7 @@
 - (void)setFont
 {
     //buttons get title font (labels remain body copy)
-    for (UIButton *b in @[self.likeButton, self.unlikeButton, self.nonplaybackLikeButton, self.nonplaybackUnlikeButton]) {
+    for (UIButton *b in [_normalLikeButtons arrayByAddingObjectsFromArray:_nonplaybackLikeButtons]) {
         b.titleLabel.font = kShelbyFontH4Bold;
     }
 }

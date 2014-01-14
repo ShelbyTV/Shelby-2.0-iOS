@@ -578,6 +578,9 @@
 		910F5B86188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */; };
 		910F5B87188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */; };
 		910F5B88188093150069E380 /* ShelbyCurrentlyOnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */; };
+		910F5BE718847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */; };
+		910F5BE818847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */; };
+		910F5BE918847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */; };
 		9119AB6E17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
 		9119AB6F17821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
 		9119AB7017821133001C9190 /* VideoControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9119AB6D17821133001C9190 /* VideoControlsView.xib */; };
@@ -1157,6 +1160,7 @@
 		910933071743E47F00AC038E /* ShelbyAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyAlert.m; sourceTree = "<group>"; };
 		910F5B84188093150069E380 /* ShelbyCurrentlyOnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelbyCurrentlyOnViewController.h; sourceTree = "<group>"; };
 		910F5B85188093150069E380 /* ShelbyCurrentlyOnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelbyCurrentlyOnViewController.m; sourceTree = "<group>"; };
+		910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "VideoControlsView-iPad.xib"; sourceTree = "<group>"; };
 		9119AB6D17821133001C9190 /* VideoControlsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoControlsView.xib; sourceTree = "<group>"; };
 		9119AB71178211D5001C9190 /* VideoControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoControlsViewController.h; sourceTree = "<group>"; };
 		9119AB72178211D6001C9190 /* VideoControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoControlsViewController.m; sourceTree = "<group>"; };
@@ -1442,6 +1446,7 @@
 			isa = PBXGroup;
 			children = (
 				1C382560187DE387002177C6 /* Main.Storyboard */,
+				910F5BE618847BEB0069E380 /* VideoControlsView-iPad.xib */,
 			);
 			name = "Xib-iPad";
 			sourceTree = "<group>";
@@ -2477,6 +2482,7 @@
 				1CD8112617CCFCDF002FD84B /* logo-tv.png in Resources */,
 				1C100DD4185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
 				1C534E4117A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
+				910F5BE818847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */,
 				1CD255C917A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CC17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB417A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
@@ -2594,6 +2600,7 @@
 				1CD8112717CCFCDF002FD84B /* logo-tv.png in Resources */,
 				1C100DD5185F8E16002ADAF2 /* LikeNotificationViewCell.xib in Resources */,
 				1C534E4217A1792700B6B3D5 /* bkgd-landscape@2x.png in Resources */,
+				910F5BE918847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */,
 				1CD255CA17A1DD170049FF30 /* top-nav-bkgd.png in Resources */,
 				1CD255CD17A1DD170049FF30 /* top-nav-bkgd@2x.png in Resources */,
 				1C309AB517A70B1B00D690A8 /* ShelbyShareView.xib in Resources */,
@@ -2671,6 +2678,7 @@
 				9192ED0817C3EA3D00294440 /* Ubuntu-L.ttf in Resources */,
 				1CE5584F17DE1E9A00C18A30 /* twitter-button-background.png in Resources */,
 				1CD8111517CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
+				910F5BE718847BEB0069E380 /* VideoControlsView-iPad.xib in Resources */,
 				1CD8111517CCF6C0002FD84B /* play-airplay@2x.png in Resources */,
 				9137187017DE94EF0021A99B /* iOSa_2.18.5.version in Resources */,
 				1CFEB3B0186DF68D00179AE2 /* UserPreferencesViewCell.xib in Resources */,
