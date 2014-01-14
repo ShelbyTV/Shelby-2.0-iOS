@@ -58,38 +58,37 @@
     }
 }
 
-
-- (void)setupEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel
+- (void)setEntries:(NSArray *)rawEntries forChannel:(DisplayChannel *)channel
 {
-    if (!channelEntries) {
-        channelEntries = @[];
+    if (channel != self.displayChannel) {
+        return;
     }
     
-    // TODO: Dedupes + don't just add
-    [self.channelEntries addObjectsFromArray:channelEntries];
-    
-    if (self.shouldInitializeVideoReel) {
-        [self.videoReelVC loadChannel:self.displayChannel withChannelEntries:channelEntries andAutoPlay:YES];
-        self.shouldInitializeVideoReel = NO;
+    if (rawEntries == nil) {
+        rawEntries = @[];
     }
     
-    [self.entriesTable reloadData];
+    if (_channelEntries != rawEntries) {
+        _channelEntries = [rawEntries mutableCopy];
+        
+        //TODO iPad
+        //TODO: dedupe
+        self.deduplicatedEntries = _channelEntries;
+        
+        [self.videoReelVC setDeduplicatedEntries:self.channelEntries forChannel:self.displayChannel];
+        
+        [self.entriesTable reloadData];
+    }
 }
 
 - (void)fetchEntriesDidCompleteForChannelNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
     DisplayChannel *channel = userInfo[kShelbyBrainChannelKey];
-    
-    if (channel != self.displayChannel) {
-        return;
-    }
-    
     NSArray *channelEntries = userInfo[kShelbyBrainChannelEntriesKey];
-    [self setupEntries:channelEntries forChannel:channel];
     
+    [self setEntries:channelEntries forChannel:channel];
 }
-
 
 - (void)fetchEntriesDidCompleteForChannelWithErrorNotification:(NSNotification *)notification
 {
@@ -121,7 +120,9 @@
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [self.videoReelVC playChannel:self.displayChannel
+          withDeduplicatedEntries:self.channelEntries
+                          atIndex:indexPath.row];
 }
 
 #pragma mark ShelbyStreamEntryProtocol

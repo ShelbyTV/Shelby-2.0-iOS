@@ -67,11 +67,9 @@
     return streamInfoVC;
 }
 
-- (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel
+- (void)pushViewControllerForChannel:(DisplayChannel *)channel
 {
     ShelbyStreamInfoViewController *streamInfoVC = [self setupStreamInfoViewControllerWithChannel:channel];
-    streamInfoVC.shouldInitializeVideoReel = shouldInitializeVideoReel;
-
     [self pushViewController:streamInfoVC animated:YES];
 }
 

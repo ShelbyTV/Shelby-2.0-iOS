@@ -19,8 +19,9 @@
 @interface ShelbyStreamInfoViewController : UIViewController <ShelbyStreamEntryProtocol, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) DisplayChannel *displayChannel;
 @property (nonatomic, strong) ShelbyVideoReelViewController *videoReelVC;
-@property (nonatomic, assign) BOOL shouldInitializeVideoReel;
 @property (nonatomic, assign) id<ShelbyStreamInfoProtocol> delegate;
 
-- (void)setupEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
+//entries ignored if given channel does not match our displayChannel
+- (void)setEntries:(NSArray *)rawEntries forChannel:(DisplayChannel *)channel;
+
 @end

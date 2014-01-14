@@ -74,7 +74,7 @@
         //
     }];
     
-    [self.streamInfoVC setupEntries:channelEntries forChannel:channel];
+    [self.streamInfoVC setEntries:channelEntries forChannel:channel];
 }
 
 - (IBAction)ActivityFollowingToggle:(id)sender
