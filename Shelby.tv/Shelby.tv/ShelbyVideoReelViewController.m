@@ -93,7 +93,7 @@ NSString * const kShelbySingleTapOnVideReelNotification = @"kShelbySingleTapOnVi
             [self dismissCurrentVideoReel];
             [self presentVideoReelWithChannel:channel deduplicatedEntries:deduplicatedEntries atIndex:idx];
         }
-        [self.videoReel scrollForPlaybackAtIndex:idx forcingPlayback:NO];
+        [self.videoReel scrollForPlaybackAtIndex:idx forcingPlayback:YES];
         
     } else if (self.airPlayController) {
         //B) currently playing via AirPlay (simply play index requested, it has no queue)
