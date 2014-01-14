@@ -120,7 +120,8 @@ NSString * const kShelbyUserHasLoggedInKey = @"user_has_logged_in";
         }
         [self fetchDashboardEntriesForDashboard:channel.dashboard inChannel:channel sinceDashboardEntry:(DashboardEntry *)entry withAuthToken:authToken];
     } else {
-        STVAssert(NO, @"asked to fetch entries in channel with bad parameters");
+        //no need to crash, we can ignore this in production and still continue operating
+        STVDebugAssert(NO, @"asked to fetch entries in channel with bad parameters. channel:%@ roll:%@ dashboard:%@ entry:%@", channel, channel.roll, channel.dashboard, entry);
     }
 }
 
