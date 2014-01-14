@@ -90,7 +90,7 @@
         DisplayChannel *communityChannel =  [DisplayChannel fetchChannelWithDashboardID:@"521264b4b415cc44c9000001"
                                              
                                                                               inContext:[[ShelbyDataMediator sharedInstance] mainThreadContext]];
-        [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel shouldInitializeVideoReel:YES];
+        [(ShelbyNavigationViewController *)self.navigationController pushViewControllerForChannel:communityChannel];
     }
 }
 

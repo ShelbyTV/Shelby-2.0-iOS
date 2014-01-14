@@ -24,6 +24,7 @@
 @property (nonatomic, weak) id<ShelbyNavigationProtocol> masterDelegate;
 
 - (void)pushViewController:(UIViewController *)viewController;
-- (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel;
 - (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController;
+- (void)pushViewControllerForChannel:(DisplayChannel *)channel;
+
 @end

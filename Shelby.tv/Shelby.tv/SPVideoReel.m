@@ -384,7 +384,8 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
 {
     STVAssert([NSThread isMainThread], @"expecting to be called on main thread");
     //update view only
-    self.videoScrollView.contentOffset = contentOffset;
+    //NB: animating this causes some undesirable side affects (b/c we need location to be perfect)
+    [self.videoScrollView setContentOffset:contentOffset animated:NO];
 }
 
 - (void)endDecelerating
@@ -399,6 +400,17 @@ static SPVideoReelPreloadStrategy preloadStrategy = SPVideoReelPreloadStrategyNo
     }
 
     [self currentVideoShouldChangeToVideo:page autoplay:[self.currentPlayer shouldBePlaying]];
+}
+
+- (void)scrollForPlaybackAtIndex:(NSUInteger)idx forcingPlayback:(BOOL)forcePlaybackEvenIfPaused
+{
+    //start our new player (index out of bounds is handled by -currentVideoShouldChangeToVideo:shouldAutoplay:
+    BOOL shouldAutoplay = forcePlaybackEvenIfPaused || [self.currentPlayer shouldBePlaying];
+    [self currentVideoShouldChangeToVideo:idx autoplay:shouldAutoplay];
+    
+    //and scroll it into view
+    CGRect newPlayersRect = [self rectForPlayerAtPosition:idx];
+    [self scrollTo:newPlayersRect.origin];
 }
 
 #pragma mark -  Update Methods (Private)

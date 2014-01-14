@@ -70,7 +70,10 @@ extern NSString * const kShelbyVideoReelChannelKey;
 
 // using this to keep view in sync, not change playback
 - (void)scrollTo:(CGPoint)contentOffset;
-// using this to change playback
+// using this to change playback (on iPhone - reel is tied to streamBrowse scrolling)
 - (void)endDecelerating;
+// using this to change playback (on iPad - reel is independent)
+// will maintain playabck state unless told to force playback
+- (void)scrollForPlaybackAtIndex:(NSUInteger)idx forcingPlayback:(BOOL)shouldPlaybackEvenIfPaused;
 
 @end

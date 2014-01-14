@@ -8,16 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
+#import "ShelbyAirPlayController.h"
 #import "VideoControlsViewController.h"
 #import "VideoOverlayView.h"
 
 extern NSString * const kShelbySingleTapOnVideReelNotification;
 
-@interface ShelbyVideoReelViewController : ShelbyViewController <VideoControlsDelegate, SPVideoReelDelegate>
+@interface ShelbyVideoReelViewController : ShelbyViewController <VideoControlsDelegate, SPVideoReelDelegate, ShelbyAirPlayControllerDelegate>
 
 @property (nonatomic, strong) VideoControlsViewController *videoControlsVC;
 @property (nonatomic, strong) VideoOverlayView *videoOverlayView;
 
-- (void)loadChannel:(DisplayChannel *)channel withChannelEntries:(NSArray *)channelEntries andAutoPlay:(BOOL)autoPlay;
+// does not change playback
+- (void)setDeduplicatedEntries:(NSArray *)channelEntries forChannel:(DisplayChannel *)channel;
+
+// does affect playback
+- (void)playChannel:(DisplayChannel *)channel withDeduplicatedEntries:(NSArray *)channelEntries atIndex:(NSUInteger)idx;
 
 @end
