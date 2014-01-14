@@ -140,9 +140,9 @@
     [self.delegate userProfileWasTapped:userID];
 }
 
-- (void)openLikersView:(NSMutableOrderedSet *)likers
+- (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers
 {
-    
+    [self.delegate openLikersViewForVideo:video withLikers:likers];
 }
 
 

@@ -13,7 +13,7 @@
 - (void)shareVideoWasTappedForFrame:(Frame *)videoFrame;
 - (void)toggleLikeForFrame:(Frame *)videoFrame;
 - (void)userProfileWasTapped:(NSString *)userID;
-- (void)openLikersView:(NSMutableOrderedSet *)likers;
+- (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
 @end
 
 @interface ShelbyStreamEntryCell : UITableViewCell

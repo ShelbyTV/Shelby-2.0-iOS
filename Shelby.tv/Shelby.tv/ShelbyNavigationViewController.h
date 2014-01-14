@@ -14,6 +14,7 @@
 
 @protocol ShelbyNavigationProtocol <NSObject>
 - (void)userProfileWasTapped:(NSString *)userID;
+- (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers;
 @end
 
 @interface ShelbyNavigationViewController : UINavigationController <ShelbyStreamInfoProtocol>

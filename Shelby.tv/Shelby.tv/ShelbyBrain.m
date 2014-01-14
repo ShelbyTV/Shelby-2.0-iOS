@@ -1004,13 +1004,16 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     likersVC.currentUser = currentUser;
     
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while ([topViewController presentedViewController]) {
-        topViewController = [topViewController presentedViewController];
+    if (DEVICE_IPAD) {
+        [self.topContainerVC pushViewController:likersVC];
+    } else {
+        UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while ([topViewController presentedViewController]) {
+            topViewController = [topViewController presentedViewController];
+        }
+        
+        [topViewController presentViewController:likersVC animated:YES completion:nil];
     }
-    
-    [topViewController presentViewController:likersVC animated:YES completion:nil];
-    
     //setting video causes fetch to begin
     likersVC.likedVideo = video;
 }

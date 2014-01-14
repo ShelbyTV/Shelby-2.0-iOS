@@ -24,6 +24,7 @@
 - (IBAction)shareVideo:(id)sender;
 - (IBAction)toggleLike:(id)sender;
 - (IBAction)openUserProfile:(id)sender;
+- (IBAction)openLikersView:(id)sender;
 @end
 
 @implementation ShelbyStreamEntryCell
@@ -155,5 +156,9 @@
     [self.delegate userProfileWasTapped:self.videoFrame.creator.userID];
 }
 
+- (IBAction)openLikersView:(id)sender
+{
+    [self.delegate openLikersViewForVideo:self.videoFrame.video withLikers:self.likers];
+}
 
 @end

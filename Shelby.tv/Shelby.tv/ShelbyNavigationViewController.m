@@ -84,4 +84,9 @@
     
     [self.masterDelegate userProfileWasTapped:userID];
 }
+
+- (void)openLikersViewForVideo:(Video *)video withLikers:(NSMutableOrderedSet *)likers
+{
+    [self.masterDelegate openLikersViewForVideo:video withLikers:likers];
+}
 @end
