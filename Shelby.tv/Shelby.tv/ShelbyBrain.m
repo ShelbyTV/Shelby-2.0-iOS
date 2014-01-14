@@ -1103,7 +1103,10 @@ NSString *const kShelbyDeviceToken = @"ShelbyDeviceToken";
 {
     User *currentUser = [self fetchAuthenticatedUserOnMainThreadContextWithForceRefresh:NO];
     ShelbyUserProfileViewController *userProfileVC = nil;
-    if (!DEVICE_IPAD) {
+    if (DEVICE_IPAD) {
+        ShelbyUserInfoViewController *userInfoVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"UserProfile"];
+        [self.topContainerVC pushUserProfileViewController:userInfoVC];
+    } else {
         userProfileVC = [[ShelbyUserProfileViewController alloc] initWithNibName:@"ShelbyHomeView-iPhone" bundle:nil];
         userProfileVC.masterDelegate = self;
         userProfileVC.currentUser = currentUser;

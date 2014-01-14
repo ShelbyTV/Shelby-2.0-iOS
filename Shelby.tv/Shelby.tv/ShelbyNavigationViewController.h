@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
 #import "ShelbyStreamInfoViewController.h"
+#import "ShelbyUserInfoViewController.h"
 #import "ShelbyVideoReelViewController.h"
 #import "User.h"
 
@@ -24,4 +25,5 @@
 
 - (void)pushViewController:(UIViewController *)viewController;
 - (void)pushViewControllerForChannel:(DisplayChannel *)channel shouldInitializeVideoReel:(BOOL)shouldInitializeVideoReel;
+- (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController;
 @end

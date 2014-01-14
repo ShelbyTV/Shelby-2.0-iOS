@@ -8,7 +8,6 @@
 
 #import "ShelbyNavigationViewController.h"
 #import "ShelbyTopLevelNavigationViewController.h"
-#import "ShelbyUserInfoViewController.h"
 
 @interface ShelbyNavigationViewController ()
 
@@ -57,6 +56,12 @@
     [self pushViewController:viewController animated:YES];
 }
 
+- (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController
+{
+    viewController.streamInfoVC = [self setupStreamInfoViewControllerWithChannel:nil];
+    [self pushViewController:viewController];
+}
+
 - (ShelbyStreamInfoViewController *)setupStreamInfoViewControllerWithChannel:(DisplayChannel *)channel
 {
     ShelbyStreamInfoViewController *streamInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"StreamInfo"];
@@ -78,10 +83,6 @@
 #pragma mark - ShelbyStreamInfoProtocol
 - (void)userProfileWasTapped:(NSString *)userID
 {
-    ShelbyUserInfoViewController *userInfoVC = [self.storyboard instantiateViewControllerWithIdentifier:@"UserProfile"];
-    userInfoVC.streamInfoVC = [self setupStreamInfoViewControllerWithChannel:nil];
-    [self pushViewController:userInfoVC];
-    
     [self.masterDelegate userProfileWasTapped:userID];
 }
 

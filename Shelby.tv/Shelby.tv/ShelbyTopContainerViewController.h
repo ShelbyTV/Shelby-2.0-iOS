@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "DisplayChannel.h"
 #import "ShelbyNavigationViewController.h"
+#import "ShelbyUserInfoViewController.h"
 #import "User.h"
 
 @interface ShelbyTopContainerViewController : UIViewController
 @property (nonatomic, strong) User *currentUser;
 
 - (void)pushViewController:(UIViewController *)viewController;
+- (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController;
 
 @property (nonatomic, assign) id<ShelbyNavigationProtocol> topNavigationDelegate;
 @end

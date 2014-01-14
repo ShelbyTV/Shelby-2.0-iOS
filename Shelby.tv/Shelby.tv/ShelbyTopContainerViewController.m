@@ -117,4 +117,9 @@
     [self.sideNavigationVC pushViewController:viewController];
 }
 
+- (void)pushUserProfileViewController:(ShelbyUserInfoViewController *)viewController
+{
+    [self.sideNavigationVC pushUserProfileViewController:viewController];
+}
+
 @end
